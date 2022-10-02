@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-27 21:11+0000\n"
-"PO-Revision-Date: 2022-09-27 21:27\n"
+"POT-Creation-Date: 2022-10-02 08:08+0000\n"
+"PO-Revision-Date: 2022-10-02 08:43\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Wil U voortgaan?"
 
-#: ../src/core/control/Control.cpp:2222
+#: ../src/core/control/Control.cpp:2220
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
@@ -119,17 +119,17 @@ msgstr "Kenmerk \"{1}\" kon nie verwerk word as size_t nie, die waarde is nullpt
 msgid "Attribute color not set!"
 msgstr "Kenmerk kleur is nie gestel nie!"
 
-#: ../src/core/control/AudioController.cpp:116
+#: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "Oudio lêer is nie gestel of is nie geldig nie! Opname sal nie werk nie!\n"
 "Stel asseblief die opname lêer onder \"Voorkeure > Oudio opname\""
 
-#: ../src/core/control/Control.cpp:252
+#: ../src/core/control/Control.cpp:250
 msgid "Autosave failed with an error: {1}"
 msgstr "Autosave het misluk met fout: {1}"
 
-#: ../src/core/control/Control.cpp:232
+#: ../src/core/control/Control.cpp:230
 msgid "Autosave renamed from {1} to {2}"
 msgstr "Autosave vernoem van {1} na {2}"
 
@@ -155,7 +155,7 @@ msgstr "Bring vorentoe"
 msgid "Bring to front"
 msgstr "Bring na vore"
 
-#: ../src/core/control/Control.cpp:2234 ../src/core/control/Control.cpp:2705
+#: ../src/core/control/Control.cpp:2232 ../src/core/control/Control.cpp:2703
 #: ../src/core/control/XournalMain.cpp:182
 msgid "Cancel"
 msgstr "Kanselleer"
@@ -280,7 +280,7 @@ msgstr "Kon nie werktuig item van Taakbalk {1} op posisie {2} verwyder nie"
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Kon nie werktuig item {1} van Taakbalk {2} op posisie {3} verwyder nie"
 
-#: ../src/core/control/Control.cpp:243
+#: ../src/core/control/Control.cpp:241
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Kon nie autosave lêer vernoem van \"{1}\" na \"{2}\": {3}"
 
@@ -363,7 +363,7 @@ msgstr "Verwyder hierdie laag"
 msgid "Delete this page"
 msgstr "Verwyder hierdie bladsy"
 
-#: ../src/core/control/Control.cpp:2702
+#: ../src/core/control/Control.cpp:2700
 msgid "Discard"
 msgstr "Gooi weg"
 
@@ -371,7 +371,7 @@ msgstr "Gooi weg"
 msgid "Display advanced export options"
 msgstr "Wys gevorderde uitvoer opsies"
 
-#: ../src/core/control/Control.cpp:2147
+#: ../src/core/control/Control.cpp:2145
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -383,7 +383,7 @@ msgstr "Moet nie Autosave lêers oop maak nie. Hulle sal oorskryf word!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Moet nie die agtergrond PDF oorskryf nie! Hierdie sal foute veroorsaak!"
 
-#: ../src/core/control/Control.cpp:2696
+#: ../src/core/control/Control.cpp:2694
 msgid "Document file was removed."
 msgstr "Dokument lêer was verwyder."
 
@@ -498,7 +498,7 @@ msgstr "Verwyder penslag"
 msgid "Eraser"
 msgstr "Uitveër"
 
-#: ../src/core/control/Control.cpp:2442
+#: ../src/core/control/Control.cpp:2440
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Fout annoteer PDF lêer \"{1}\"\n"
@@ -508,7 +508,7 @@ msgstr "Fout annoteer PDF lêer \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Fout terwyl glade lêer gelaai was \"{1}\" (probeer om \"{2}\" te laai)"
 
-#: ../src/core/control/Control.cpp:2265
+#: ../src/core/control/Control.cpp:2263
 msgid "Error opening file \"{1}\""
 msgstr "Fout tydens oopmaak van lêer \"{1}\""
 
@@ -549,11 +549,11 @@ msgstr "Fout {1} met uitvoer van sisteem opdrag: {2}"
 msgid "Error: {1}"
 msgstr "Fout: {1}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:162
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Fout: {1} is nie n normale lêer nie. Kyk asseblief na jou LaTeX templaat lêer instellings. "
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Fout\" {1}. Kyk asseblief na die inhoud van {2}"
 
@@ -881,7 +881,7 @@ msgstr "Geen toestel nie"
 msgid "No pages to export!"
 msgstr "Geen bladsye om uit te voer nie!"
 
-#: ../src/core/control/Control.cpp:1398
+#: ../src/core/control/Control.cpp:1396
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Geen pdf blaai is beskikbaar om aan te heg nie. Jy moet dalk die dokument eers weer oop maak."
 
@@ -1033,7 +1033,7 @@ msgstr "Druk"
 msgid "Record Audio / Stop Recording"
 msgstr "Neem klank op / Stop klank opneming"
 
-#: ../src/core/control/Control.cpp:968
+#: ../src/core/control/Control.cpp:966
 msgid "Recorder could not be started."
 msgstr "Opnemer kon nie begin word nie."
 
@@ -1046,7 +1046,7 @@ msgstr "Doen weer"
 msgid "Redo: "
 msgstr "Doen weer: "
 
-#: ../src/core/control/Control.cpp:2233
+#: ../src/core/control/Control.cpp:2231
 msgid "Remove PDF Background"
 msgstr "Verwyder PDF agtergrond"
 
@@ -1094,20 +1094,20 @@ msgstr "Gereël met vertikale lyn"
 msgid "SVG graphics"
 msgstr "SVG grafieke"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:150
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
 msgstr "Voorbeeld LaTex lêer suksesvol gegenereer."
 
-#: ../src/core/control/Control.cpp:2697 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2695 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Save"
 msgstr "Save"
 
-#: ../src/core/control/Control.cpp:2697
+#: ../src/core/control/Control.cpp:2695
 msgid "Save As..."
 msgstr "Save As..."
 
-#: ../src/core/control/Control.cpp:2531
+#: ../src/core/control/Control.cpp:2529
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Save lêer"
@@ -1186,7 +1186,7 @@ msgstr "Kies Gebied"
 msgid "Select Text from pdf"
 msgstr "Kies Teks van pdf"
 
-#: ../src/core/control/Control.cpp:2232
+#: ../src/core/control/Control.cpp:2230
 msgid "Select another PDF"
 msgstr "Kies 'n ander PDF"
 
@@ -1360,15 +1360,15 @@ msgstr "Teks nie gevind nie"
 msgid "Text not found, searched on all pages"
 msgstr "Teks nie gevind nie, gesoek op alle blaaie"
 
-#: ../src/core/control/Control.cpp:1188
+#: ../src/core/control/Control.cpp:1186
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Die Nutsbalk-konfigurasie \"{1}\" is voorafgekies, wil jy 'n afskrif maak om te verander?"
 
-#: ../src/core/control/Control.cpp:2209
+#: ../src/core/control/Control.cpp:2207
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2212
+#: ../src/core/control/Control.cpp:2210
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
@@ -1377,7 +1377,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Die kontrole vir die oorskryf van die agtergrond het misluk met:\n"
 
-#: ../src/core/control/Control.cpp:2273
+#: ../src/core/control/Control.cpp:2271
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Die lêer wat gelaai word het 'n lêer formaat wat nuwer is as die een tans ondersteun deur hierdie weergawe van Xournal++, so dit mag dalk nie reg laai nie. Maak in elk geval oop?"
 
@@ -1421,7 +1421,7 @@ msgstr "Daar was 'n fout met die vertoning van hulp: {1}"
 msgid "Thick"
 msgstr "Dik"
 
-#: ../src/core/control/Control.cpp:2696
+#: ../src/core/control/Control.cpp:2694
 msgid "This document is not saved yet."
 msgstr "Hierdie dokument is nog nie gestoor nie."
 
@@ -1449,7 +1449,7 @@ msgstr "Taakbalke"
 msgid "Trying to emergency save the current open document…"
 msgstr "Probeer nood om die huidige oop dokument te stoor…"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:140
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Kan nie globale templaat by {1} oop maak nie. Bestaan dit?"
 
@@ -1457,7 +1457,7 @@ msgstr "Kan nie globale templaat by {1} oop maak nie. Bestaan dit?"
 msgid "Unable to play audio recording {1}"
 msgstr "Kan nie oudio opname speel nie {1}"
 
-#: ../src/core/control/Control.cpp:1412
+#: ../src/core/control/Control.cpp:1410
 msgid "Unable to retrieve pdf page."
 msgstr "Kan nie pdf bladsy haal nie."
 
@@ -1506,7 +1506,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2588
+#: ../src/core/control/Control.cpp:2586
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1514,7 +1514,7 @@ msgstr ""
 msgid "Unsupported graphics format: "
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2230
+#: ../src/core/control/Control.cpp:2228
 msgid "Use proposed PDF"
 msgstr ""
 
@@ -1566,7 +1566,7 @@ msgstr "Xournal lêers"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2537
+#: ../src/core/control/Control.cpp:2535
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr ""
@@ -1611,7 +1611,7 @@ msgstr "Zoem uit"
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2531
+#: ../src/core/control/Control.cpp:2529
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1624,7 +1624,7 @@ msgstr ""
 msgid "_Open"
 msgstr "_Maak oop"
 
-#: ../src/core/control/Control.cpp:2532
+#: ../src/core/control/Control.cpp:2530
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1667,7 +1667,7 @@ msgstr "elemente"
 msgid "eraser"
 msgstr "uitveër"
 
-#: ../src/core/control/Control.cpp:2161
+#: ../src/core/control/Control.cpp:2159
 msgid "file: {1}"
 msgstr "lêer: {1}"
 
@@ -1784,11 +1784,11 @@ msgstr "%"
 msgid "% greater than the initial distance between the two touches."
 msgstr ""
 
-#: ../ui/latexSettings.glade:185
+#: ../ui/latexSettings.glade:217
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr ""
 
-#: ../ui/latexSettings.glade:148
+#: ../ui/latexSettings.glade:180
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
@@ -2099,7 +2099,7 @@ msgstr ""
 msgid "Authors"
 msgstr ""
 
-#: ../ui/latexSettings.glade:415
+#: ../ui/latexSettings.glade:447
 msgid "Auto-indent"
 msgstr ""
 
@@ -2180,7 +2180,7 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
-#: ../ui/latexSettings.glade:173
+#: ../ui/latexSettings.glade:205
 msgid "Choose a global LaTeX template file"
 msgstr ""
 
@@ -2262,6 +2262,10 @@ msgstr ""
 
 #: ../ui/settings.glade:1046
 msgid "Deadzone radius"
+msgstr ""
+
+#: ../ui/latexSettings.glade:119
+msgid "Default LaTeX Text"
 msgstr ""
 
 #: ../ui/settings.glade:630
@@ -2378,7 +2382,7 @@ msgstr ""
 msgid "Edit (not implemented yet)"
 msgstr ""
 
-#: ../ui/latexSettings.glade:574
+#: ../ui/latexSettings.glade:606
 msgid "Editor settings"
 msgstr ""
 
@@ -2483,7 +2487,7 @@ msgstr ""
 msgid "First Page Offset "
 msgstr ""
 
-#: ../ui/latexSettings.glade:517
+#: ../ui/latexSettings.glade:549
 msgid "Font: "
 msgstr ""
 
@@ -2511,7 +2515,7 @@ msgstr ""
 msgid "Global"
 msgstr ""
 
-#: ../ui/latexSettings.glade:122
+#: ../ui/latexSettings.glade:154
 msgid "Global template file path"
 msgstr ""
 
@@ -2661,11 +2665,11 @@ msgstr ""
 msgid "LaTeX"
 msgstr ""
 
-#: ../ui/latexSettings.glade:322
+#: ../ui/latexSettings.glade:354
 msgid "LaTeX executable settings"
 msgstr ""
 
-#: ../ui/latexSettings.glade:265
+#: ../ui/latexSettings.glade:297
 msgid "LaTeX generation command"
 msgstr ""
 
@@ -2689,7 +2693,7 @@ msgstr ""
 msgid "License"
 msgstr ""
 
-#: ../ui/latexSettings.glade:401
+#: ../ui/latexSettings.glade:433
 msgid "Line numbers"
 msgstr ""
 
@@ -2881,7 +2885,7 @@ msgstr ""
 msgid "Performance"
 msgstr ""
 
-#: ../ui/latexSettings.glade:532
+#: ../ui/latexSettings.glade:564
 msgid "Pick the Editor's Font"
 msgstr ""
 
@@ -3147,7 +3151,7 @@ msgstr ""
 msgid "Successive (ms)"
 msgstr ""
 
-#: ../ui/latexSettings.glade:429
+#: ../ui/latexSettings.glade:461
 msgid "Syntax highlighting"
 msgstr ""
 
@@ -3164,7 +3168,7 @@ msgstr ""
 msgid "TeX Source"
 msgstr ""
 
-#: ../ui/latexSettings.glade:233
+#: ../ui/latexSettings.glade:265
 msgid "Template file settings"
 msgstr ""
 
@@ -3176,11 +3180,11 @@ msgstr ""
 msgid "Test"
 msgstr ""
 
-#: ../ui/latexSettings.glade:286
+#: ../ui/latexSettings.glade:318
 msgid "Test configuration"
 msgstr ""
 
-#: ../ui/latexSettings.glade:290
+#: ../ui/latexSettings.glade:322
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
@@ -3188,19 +3192,19 @@ msgstr ""
 msgid "Text Font..."
 msgstr ""
 
-#: ../ui/latexSettings.glade:120
+#: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr ""
 
-#: ../ui/latexSettings.glade:197
+#: ../ui/latexSettings.glade:229
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr ""
 
-#: ../ui/latexSettings.glade:134
+#: ../ui/latexSettings.glade:166
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr ""
 
-#: ../ui/latexSettings.glade:160
+#: ../ui/latexSettings.glade:192
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr ""
 
@@ -3249,7 +3253,7 @@ msgstr ""
 msgid "Use available Stock Icons (requires restart)"
 msgstr ""
 
-#: ../ui/latexSettings.glade:497
+#: ../ui/latexSettings.glade:529
 msgid "Use font from system theme."
 msgstr ""
 
@@ -3319,7 +3323,7 @@ msgstr ""
 msgid "With help from the community"
 msgstr ""
 
-#: ../ui/latexSettings.glade:461
+#: ../ui/latexSettings.glade:493
 msgid "Wrap text"
 msgstr ""
 
