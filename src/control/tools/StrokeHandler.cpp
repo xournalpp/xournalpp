@@ -292,14 +292,13 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
     recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
 
     // snapping
-    Stroke* snappedStroke = recognized->cloneStroke();
     if (xournal->getControl()->getSettings()->getSnapRecognizedShapesEnabled()) {
         Rectangle<double> oldSnappedBounds = recognized->getSnappedBounds();
         Point topLeft = Point(oldSnappedBounds.x, oldSnappedBounds.y);
         Point topLeftSnapped = snappingHandler.snapToGrid(topLeft, false);
 
-        snappedStroke->move(topLeftSnapped.x - topLeft.x, topLeftSnapped.y - topLeft.y);
-        Rectangle<double> snappedBounds = snappedStroke->getSnappedBounds();
+        recognized->move(topLeftSnapped.x - topLeft.x, topLeftSnapped.y - topLeft.y);
+        Rectangle<double> snappedBounds = recognized->getSnappedBounds();
         Point belowRight = Point(snappedBounds.x + snappedBounds.width, snappedBounds.y + snappedBounds.height);
         Point belowRightSnapped = snappingHandler.snapToGrid(belowRight, false);
 
@@ -309,19 +308,19 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
         double fy = (std::abs(snappedBounds.height) > DBL_EPSILON) ?
                             (belowRightSnapped.y - topLeftSnapped.y) / snappedBounds.height :
                             1;
-        snappedStroke->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
+        recognized->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
     }
 
-    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, snappedStroke);
+    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, recognized);
     auto& locRecUndo = *recognizerUndo;
 
     UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
     undo->addUndoAction(std::move(recognizerUndo));
-    layer->addElement(snappedStroke);
+    layer->addElement(recognized);
 
-    Range range(snappedStroke->getX(), snappedStroke->getY());
-    range.addPoint(snappedStroke->getX() + snappedStroke->getElementWidth(),
-                   snappedStroke->getY() + snappedStroke->getElementHeight());
+    Range range(recognized->getX(), recognized->getY());
+    range.addPoint(recognized->getX() + recognized->getElementWidth(),
+                   recognized->getY() + recognized->getElementHeight());
 
     range.addPoint(stroke->getX(), stroke->getY());
     range.addPoint(stroke->getX() + stroke->getElementWidth(), stroke->getY() + stroke->getElementHeight());
