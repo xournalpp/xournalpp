@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-27 21:11+0000\n"
-"PO-Revision-Date: 2022-09-27 21:27\n"
+"POT-Creation-Date: 2022-10-02 08:08+0000\n"
+"PO-Revision-Date: 2022-10-02 08:43\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Přejete si pokračovat?"
 
-#: ../src/core/control/Control.cpp:2222
+#: ../src/core/control/Control.cpp:2220
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
@@ -120,16 +120,16 @@ msgstr "Atribut \"{1}\" nelze analyzovat jako size_t, hodnota je nullptr"
 msgid "Attribute color not set!"
 msgstr "Atribut color není nastaven!"
 
-#: ../src/core/control/AudioController.cpp:116
+#: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "Audio složka nenastavena, nebo neplatná! Nahrávání nebude fungovat! Prosím nastavte složku pro nahrávání v „Preference > Nahrávání zvuku\""
 
-#: ../src/core/control/Control.cpp:252
+#: ../src/core/control/Control.cpp:250
 msgid "Autosave failed with an error: {1}"
 msgstr "Automatické uložení selhalo s chybou: {1}"
 
-#: ../src/core/control/Control.cpp:232
+#: ../src/core/control/Control.cpp:230
 msgid "Autosave renamed from {1} to {2}"
 msgstr "Automatické uložení přejmenováno z {1} na {2}"
 
@@ -155,7 +155,7 @@ msgstr "Přenést blíž"
 msgid "Bring to front"
 msgstr "Přenést do popředí"
 
-#: ../src/core/control/Control.cpp:2234 ../src/core/control/Control.cpp:2705
+#: ../src/core/control/Control.cpp:2232 ../src/core/control/Control.cpp:2703
 #: ../src/core/control/XournalMain.cpp:182
 msgid "Cancel"
 msgstr "Zrušit"
@@ -280,7 +280,7 @@ msgstr "Nástroj z panelu nástrojů {1} nelze odstranit z pozice {2}"
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Nástroj {1} z panelu nástrojů {2} nelze odstranit z pozice {3}"
 
-#: ../src/core/control/Control.cpp:243
+#: ../src/core/control/Control.cpp:241
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nelze přejmenovat soubor automatického ukládání z \"{1}\" na \"{2}\": {3}"
 
@@ -363,7 +363,7 @@ msgstr "Smazat tuto vrstvu"
 msgid "Delete this page"
 msgstr "Odstranit tuto stránku"
 
-#: ../src/core/control/Control.cpp:2702
+#: ../src/core/control/Control.cpp:2700
 msgid "Discard"
 msgstr "Zahodit"
 
@@ -371,7 +371,7 @@ msgstr "Zahodit"
 msgid "Display advanced export options"
 msgstr "Zobrazit pokročilé možnosti exportu"
 
-#: ../src/core/control/Control.cpp:2147
+#: ../src/core/control/Control.cpp:2145
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -383,7 +383,7 @@ msgstr "Neotevírejte soubory automatického ukládání. Může dojít k jejich
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Nepřepisuj PDF na pozadí! Toto způsobí chyby!"
 
-#: ../src/core/control/Control.cpp:2696
+#: ../src/core/control/Control.cpp:2694
 msgid "Document file was removed."
 msgstr "Soubor s dokumentem byl odstraněn."
 
@@ -498,7 +498,7 @@ msgstr "Vymazat čáru"
 msgid "Eraser"
 msgstr "Guma"
 
-#: ../src/core/control/Control.cpp:2442
+#: ../src/core/control/Control.cpp:2440
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Chyba anotování PDF souboru „{1}“\n"
@@ -508,7 +508,7 @@ msgstr "Chyba anotování PDF souboru „{1}“\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Chyba načítání glade souboru „{1}“ (zkuste načíst „{2}“)"
 
-#: ../src/core/control/Control.cpp:2265
+#: ../src/core/control/Control.cpp:2263
 msgid "Error opening file \"{1}\""
 msgstr "Chyba otevírání souboru „{1}“"
 
@@ -549,11 +549,11 @@ msgstr "Chyba {1} při provádění systémového příkazu: {2}"
 msgid "Error: {1}"
 msgstr "Chyba: {1}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:162
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Chyba: {1} není obvyklý soubor. Prosím, zkontrolujte si nastavení šablony LaTeXu pro soubory. "
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Chyba: {1}. Zkontrolujte prosím obsah {2}"
 
@@ -881,7 +881,7 @@ msgstr "Žádné zařízení"
 msgid "No pages to export!"
 msgstr "Žádné stránky k exportu!"
 
-#: ../src/core/control/Control.cpp:1398
+#: ../src/core/control/Control.cpp:1396
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Žádné pdf stránky k přidání nejsou k dispozici. Můžete potřebovat dokument znovu otevřít."
 
@@ -1034,7 +1034,7 @@ msgstr "Tisk"
 msgid "Record Audio / Stop Recording"
 msgstr "Nahrát zvuk / Zastavit nahrávání"
 
-#: ../src/core/control/Control.cpp:968
+#: ../src/core/control/Control.cpp:966
 msgid "Recorder could not be started."
 msgstr "Nelze spustit nahrávání."
 
@@ -1047,7 +1047,7 @@ msgstr "Znovu"
 msgid "Redo: "
 msgstr "Znovu: "
 
-#: ../src/core/control/Control.cpp:2233
+#: ../src/core/control/Control.cpp:2231
 msgid "Remove PDF Background"
 msgstr "Odstranit PDF pozadí"
 
@@ -1095,20 +1095,20 @@ msgstr "Linkovaný se svislou čarou"
 msgid "SVG graphics"
 msgstr "SVG grafika"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:150
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
 msgstr "Vzorový LaTeX soubor úspěšně vygenerován."
 
-#: ../src/core/control/Control.cpp:2697 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2695 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Save"
 msgstr "Uložit"
 
-#: ../src/core/control/Control.cpp:2697
+#: ../src/core/control/Control.cpp:2695
 msgid "Save As..."
 msgstr "Uložit jako..."
 
-#: ../src/core/control/Control.cpp:2531
+#: ../src/core/control/Control.cpp:2529
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Uložit soubor"
@@ -1187,7 +1187,7 @@ msgstr "Výběr oblasti"
 msgid "Select Text from pdf"
 msgstr "Vybrat text z PDF"
 
-#: ../src/core/control/Control.cpp:2232
+#: ../src/core/control/Control.cpp:2230
 msgid "Select another PDF"
 msgstr "Vybrat jiné PDF"
 
@@ -1361,15 +1361,15 @@ msgstr "Text nenalezen"
 msgid "Text not found, searched on all pages"
 msgstr "Text nenalezen, prohledány byly všechny stránky"
 
-#: ../src/core/control/Control.cpp:1188
+#: ../src/core/control/Control.cpp:1186
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Konfigurace nástrojové lišty „{1}“ je předdefinována. Přejete si vytvořit kopii pro úpravy?"
 
-#: ../src/core/control/Control.cpp:2209
+#: ../src/core/control/Control.cpp:2207
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2212
+#: ../src/core/control/Control.cpp:2210
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
@@ -1378,7 +1378,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Kontrola přepisu pozadí selhala:\n"
 
-#: ../src/core/control/Control.cpp:2273
+#: ../src/core/control/Control.cpp:2271
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Nahraný soubor má novější formát, než který je podporován touto verzí Xournal++, takže nemusí být načten správně. Přesto otevřít?"
 
@@ -1422,7 +1422,7 @@ msgstr "Při zobrazování nápovědy došlo k chybě: {1}"
 msgid "Thick"
 msgstr "Tlustá"
 
-#: ../src/core/control/Control.cpp:2696
+#: ../src/core/control/Control.cpp:2694
 msgid "This document is not saved yet."
 msgstr "Tento dokument ještě nebyl uložen."
 
@@ -1450,7 +1450,7 @@ msgstr "Nástrojové lišty"
 msgid "Trying to emergency save the current open document…"
 msgstr "Pokus o nouzové uložení aktuálně otevřeného dokumentu…"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:140
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nepodařilo se otevřít soubor globální šablony {1}. Existuje?"
 
@@ -1458,7 +1458,7 @@ msgstr "Nepodařilo se otevřít soubor globální šablony {1}. Existuje?"
 msgid "Unable to play audio recording {1}"
 msgstr "Nebylo možno přehrát zvukovou nahrávku {1}"
 
-#: ../src/core/control/Control.cpp:1412
+#: ../src/core/control/Control.cpp:1410
 msgid "Unable to retrieve pdf page."
 msgstr "Nelze načíst stránku PDF."
 
@@ -1507,7 +1507,7 @@ msgstr "Neznámý typ konců čáry: \"{1}\", předpokládám zaoblené"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Neznámý typ čáry: „{1}“, bereme jej jako pero"
 
-#: ../src/core/control/Control.cpp:2588
+#: ../src/core/control/Control.cpp:2586
 msgid "Unsaved Document"
 msgstr "Neuložený dokument"
 
@@ -1515,7 +1515,7 @@ msgstr "Neuložený dokument"
 msgid "Unsupported graphics format: "
 msgstr "Nepodporovaný grafický formát: "
 
-#: ../src/core/control/Control.cpp:2230
+#: ../src/core/control/Control.cpp:2228
 msgid "Use proposed PDF"
 msgstr ""
 
@@ -1567,7 +1567,7 @@ msgstr "Soubory Xournalu"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ naposledy spadnul. Chcete obnovit poslední upravený soubor?"
 
-#: ../src/core/control/Control.cpp:2537
+#: ../src/core/control/Control.cpp:2535
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Soubory Xournalu++"
@@ -1615,7 +1615,7 @@ msgstr "Oddálit"
 msgid "Zoom to 100%"
 msgstr "Přiblížit na 100%"
 
-#: ../src/core/control/Control.cpp:2531
+#: ../src/core/control/Control.cpp:2529
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1628,7 +1628,7 @@ msgstr "_Zrušit"
 msgid "_Open"
 msgstr "_Otevřít"
 
-#: ../src/core/control/Control.cpp:2532
+#: ../src/core/control/Control.cpp:2530
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1671,7 +1671,7 @@ msgstr "prvky"
 msgid "eraser"
 msgstr "guma"
 
-#: ../src/core/control/Control.cpp:2161
+#: ../src/core/control/Control.cpp:2159
 msgid "file: {1}"
 msgstr "soubor: {1}"
 
@@ -1788,11 +1788,11 @@ msgstr "%"
 msgid "% greater than the initial distance between the two touches."
 msgstr "% větší než počáteční vzdálenost mezi těmito dvěma kontakty."
 
-#: ../ui/latexSettings.glade:185
+#: ../ui/latexSettings.glade:217
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr "%%XPP_TEXT_COLOR%%"
 
-#: ../ui/latexSettings.glade:148
+#: ../ui/latexSettings.glade:180
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
@@ -2133,7 +2133,7 @@ msgstr "Autor: "
 msgid "Authors"
 msgstr "Autoři"
 
-#: ../ui/latexSettings.glade:415
+#: ../ui/latexSettings.glade:447
 msgid "Auto-indent"
 msgstr "Automatické odsazení"
 
@@ -2214,7 +2214,7 @@ msgstr "Tlačítko 2"
 msgid "Change"
 msgstr "Změnit"
 
-#: ../ui/latexSettings.glade:173
+#: ../ui/latexSettings.glade:205
 msgid "Choose a global LaTeX template file"
 msgstr "Vyberte soubor globálních šablon pro LaTeX"
 
@@ -2297,6 +2297,10 @@ msgstr "Mrtvá zóna"
 #: ../ui/settings.glade:1046
 msgid "Deadzone radius"
 msgstr "Poloměr mrtvé zóny"
+
+#: ../ui/latexSettings.glade:119
+msgid "Default LaTeX Text"
+msgstr ""
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
@@ -2418,7 +2422,7 @@ msgstr "Duplikovat"
 msgid "Edit (not implemented yet)"
 msgstr "Upravit (zatím neimplementováno)"
 
-#: ../ui/latexSettings.glade:574
+#: ../ui/latexSettings.glade:606
 msgid "Editor settings"
 msgstr "Nastavení editoru"
 
@@ -2523,7 +2527,7 @@ msgstr "Najít předchozí výskyt vyhledávacího řetězce"
 msgid "First Page Offset "
 msgstr "Posun první stránky "
 
-#: ../ui/latexSettings.glade:517
+#: ../ui/latexSettings.glade:549
 msgid "Font: "
 msgstr "Písmo: "
 
@@ -2551,7 +2555,7 @@ msgstr "Git commit"
 msgid "Global"
 msgstr "Globální"
 
-#: ../ui/latexSettings.glade:122
+#: ../ui/latexSettings.glade:154
 msgid "Global template file path"
 msgstr "Cesta k globálnímu souboru šablony"
 
@@ -2703,11 +2707,11 @@ msgstr "Vložit stránku před"
 msgid "LaTeX"
 msgstr "LaTeX"
 
-#: ../ui/latexSettings.glade:322
+#: ../ui/latexSettings.glade:354
 msgid "LaTeX executable settings"
 msgstr "Nastavení spouštění programu LaTeX"
 
-#: ../ui/latexSettings.glade:265
+#: ../ui/latexSettings.glade:297
 msgid "LaTeX generation command"
 msgstr "Příkaz pro vygenerovaní LaTeX dokumentu"
 
@@ -2731,7 +2735,7 @@ msgstr "Levo/pravo ruký"
 msgid "License"
 msgstr "Licence"
 
-#: ../ui/latexSettings.glade:401
+#: ../ui/latexSettings.glade:433
 msgid "Line numbers"
 msgstr "Číslování řádků"
 
@@ -2925,7 +2929,7 @@ msgstr "N_astavení pera"
 msgid "Performance"
 msgstr "Výkon"
 
-#: ../ui/latexSettings.glade:532
+#: ../ui/latexSettings.glade:564
 msgid "Pick the Editor's Font"
 msgstr "Vyberte písmo editoru"
 
@@ -3192,7 +3196,7 @@ msgstr "Tlačítka Stylusu"
 msgid "Successive (ms)"
 msgstr "Postupně (ms)"
 
-#: ../ui/latexSettings.glade:429
+#: ../ui/latexSettings.glade:461
 msgid "Syntax highlighting"
 msgstr "Zvýraznění syntaxe"
 
@@ -3209,7 +3213,7 @@ msgstr "Ná_strojové lišty"
 msgid "TeX Source"
 msgstr "TeX Zdroj"
 
-#: ../ui/latexSettings.glade:233
+#: ../ui/latexSettings.glade:265
 msgid "Template file settings"
 msgstr "Nastavení souboru šablony"
 
@@ -3221,11 +3225,11 @@ msgstr "Šablona:"
 msgid "Test"
 msgstr "Test"
 
-#: ../ui/latexSettings.glade:286
+#: ../ui/latexSettings.glade:318
 msgid "Test configuration"
 msgstr "Test konfigurace"
 
-#: ../ui/latexSettings.glade:290
+#: ../ui/latexSettings.glade:322
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Vyzkoušejte, zda je aktuální konfigurace platná tak, že spustíte příkaz generování LaTeX se souborem globální šablony se zkušebním vzorcem."
 
@@ -3233,19 +3237,19 @@ msgstr "Vyzkoušejte, zda je aktuální konfigurace platná tak, že spustíte p
 msgid "Text Font..."
 msgstr "Písmo textu..."
 
-#: ../ui/latexSettings.glade:120
+#: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr "Soubor LaTeX sloužící jako šablona pro nástroj LaTeX."
 
-#: ../ui/latexSettings.glade:197
+#: ../ui/latexSettings.glade:229
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr "Aktuální barva textového nástroje v hex RGB formátu."
 
-#: ../ui/latexSettings.glade:134
+#: ../ui/latexSettings.glade:166
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr "Následující řetězce budou nahrazeny v globálním souboru šablony při spuštění nástroje LaTeX:"
 
-#: ../ui/latexSettings.glade:160
+#: ../ui/latexSettings.glade:192
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr "Vzorec matematického režimu zadaný v nástroji LaTeX."
 
@@ -3294,7 +3298,7 @@ msgstr "Podtrhnout vybraný text"
 msgid "Use available Stock Icons (requires restart)"
 msgstr "Použít dostupné Stock ikony (vyžaduje restart)"
 
-#: ../ui/latexSettings.glade:497
+#: ../ui/latexSettings.glade:529
 msgid "Use font from system theme."
 msgstr "Používat písmo ze systémového motivu."
 
@@ -3366,7 +3370,7 @@ msgstr "Šířka:"
 msgid "With help from the community"
 msgstr "S pomocí komunity"
 
-#: ../ui/latexSettings.glade:461
+#: ../ui/latexSettings.glade:493
 msgid "Wrap text"
 msgstr "Zalomit text"
 
