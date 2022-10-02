@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-27 21:11+0000\n"
-"PO-Revision-Date: 2022-09-27 21:27\n"
+"POT-Creation-Date: 2022-10-02 08:08+0000\n"
+"PO-Revision-Date: 2022-10-02 08:43\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 " Продолжить?"
 
-#: ../src/core/control/Control.cpp:2222
+#: ../src/core/control/Control.cpp:2220
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -121,17 +121,17 @@ msgstr "Атрибут \"{1}\" не может быть обработан ка�
 msgid "Attribute color not set!"
 msgstr "Цвет атрибута не установлен!"
 
-#: ../src/core/control/AudioController.cpp:116
+#: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "Папка для аудио не установлена! Записи не будут сохранены!\n"
 "Пожалуйста, задайте папку для аудиозаписей в разделе «Настройки > Запись аудио»"
 
-#: ../src/core/control/Control.cpp:252
+#: ../src/core/control/Control.cpp:250
 msgid "Autosave failed with an error: {1}"
 msgstr "Ошибка автосохранения: {1}"
 
-#: ../src/core/control/Control.cpp:232
+#: ../src/core/control/Control.cpp:230
 msgid "Autosave renamed from {1} to {2}"
 msgstr "Автосохранение переименовано из {1} в {2}"
 
@@ -157,7 +157,7 @@ msgstr "Переместить вперед"
 msgid "Bring to front"
 msgstr "На передний план"
 
-#: ../src/core/control/Control.cpp:2234 ../src/core/control/Control.cpp:2705
+#: ../src/core/control/Control.cpp:2232 ../src/core/control/Control.cpp:2703
 #: ../src/core/control/XournalMain.cpp:182
 msgid "Cancel"
 msgstr "Отмена"
@@ -282,7 +282,7 @@ msgstr "Не удалось удалить элемент инструмента
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Не удалось удалить элемент инструмента {1} из панели инструментов {2} на позиции {3}"
 
-#: ../src/core/control/Control.cpp:243
+#: ../src/core/control/Control.cpp:241
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Не удалось переименовать файл автосохранения из «{1}» в «{2}»: {3}"
 
@@ -365,7 +365,7 @@ msgstr "Удалить этот слой"
 msgid "Delete this page"
 msgstr "Удалить эту страницу"
 
-#: ../src/core/control/Control.cpp:2702
+#: ../src/core/control/Control.cpp:2700
 msgid "Discard"
 msgstr "Не сохранять"
 
@@ -373,7 +373,7 @@ msgstr "Не сохранять"
 msgid "Display advanced export options"
 msgstr "Показать расширенные параметры экспорта"
 
-#: ../src/core/control/Control.cpp:2147
+#: ../src/core/control/Control.cpp:2145
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -385,7 +385,7 @@ msgstr "Не открывайте автоматически сохранённ�
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Не перезаписывайте фоновый PDF! Это приведёт к ошибкам!"
 
-#: ../src/core/control/Control.cpp:2696
+#: ../src/core/control/Control.cpp:2694
 msgid "Document file was removed."
 msgstr "Файл документа был удален."
 
@@ -500,7 +500,7 @@ msgstr "Удалить черту"
 msgid "Eraser"
 msgstr "Ластик"
 
-#: ../src/core/control/Control.cpp:2442
+#: ../src/core/control/Control.cpp:2440
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Ошибка аннотации PDF файла «{1}»\n"
@@ -510,7 +510,7 @@ msgstr "Ошибка аннотации PDF файла «{1}»\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Ошибка загрузки glade файла «{1}» (попробуйте загрузить «{2}»)"
 
-#: ../src/core/control/Control.cpp:2265
+#: ../src/core/control/Control.cpp:2263
 msgid "Error opening file \"{1}\""
 msgstr "Ошибка при открытии файла «{1}»"
 
@@ -551,11 +551,11 @@ msgstr "Ошибка {1} при выполнении системной кома
 msgid "Error: {1}"
 msgstr "Ошибка: {1}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:162
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Ошибка: {1} не является обычным файлом. Пожалуйста, проверьте настройки шаблона LaTeX. "
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Ошибка: {1}. Пожалуйста, проверьте содержимое {2}"
 
@@ -883,7 +883,7 @@ msgstr "Нет устройства"
 msgid "No pages to export!"
 msgstr "Нет страниц для экспорта!"
 
-#: ../src/core/control/Control.cpp:1398
+#: ../src/core/control/Control.cpp:1396
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Нет доступных страниц pdf для добавления. Вам может потребоваться переоткрыть документ."
 
@@ -1035,7 +1035,7 @@ msgstr "Печать"
 msgid "Record Audio / Stop Recording"
 msgstr "Запись аудио / Остановить запись"
 
-#: ../src/core/control/Control.cpp:968
+#: ../src/core/control/Control.cpp:966
 msgid "Recorder could not be started."
 msgstr "Запись не может быть запущена."
 
@@ -1048,7 +1048,7 @@ msgstr "Вернуть"
 msgid "Redo: "
 msgstr "Вернуть: "
 
-#: ../src/core/control/Control.cpp:2233
+#: ../src/core/control/Control.cpp:2231
 msgid "Remove PDF Background"
 msgstr "Удалить PDF фон"
 
@@ -1096,20 +1096,20 @@ msgstr "В линейку с полями"
 msgid "SVG graphics"
 msgstr "SVG графика"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:150
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
 msgstr "Пример файла LaTeX успешно генерирован."
 
-#: ../src/core/control/Control.cpp:2697 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2695 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../src/core/control/Control.cpp:2697
+#: ../src/core/control/Control.cpp:2695
 msgid "Save As..."
 msgstr "Сохранить как..."
 
-#: ../src/core/control/Control.cpp:2531
+#: ../src/core/control/Control.cpp:2529
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Сохранить файл"
@@ -1188,7 +1188,7 @@ msgstr "Выделение лассо"
 msgid "Select Text from pdf"
 msgstr "Выбрать текст из PDF"
 
-#: ../src/core/control/Control.cpp:2232
+#: ../src/core/control/Control.cpp:2230
 msgid "Select another PDF"
 msgstr "Выбрать другой PDF"
 
@@ -1362,15 +1362,15 @@ msgstr "Текст не найден"
 msgid "Text not found, searched on all pages"
 msgstr "Текст не найден, поиск на всех страницах"
 
-#: ../src/core/control/Control.cpp:1188
+#: ../src/core/control/Control.cpp:1186
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Конфигурация панели инструментов \"{1}\" предопределена. Создать копию для редактирования?"
 
-#: ../src/core/control/Control.cpp:2209
+#: ../src/core/control/Control.cpp:2207
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2212
+#: ../src/core/control/Control.cpp:2210
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
@@ -1379,7 +1379,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Проверка на перезапись фона не удалась с:\n"
 
-#: ../src/core/control/Control.cpp:2273
+#: ../src/core/control/Control.cpp:2271
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Загружаемый файл имеет более новую версию файлового формата, чем поддерживаемый этой версией Xournal++, так что он может загрузиться некорректно. Всё равно открыть?"
 
@@ -1423,7 +1423,7 @@ msgstr "Произошла ошибка при отображении справ
 msgid "Thick"
 msgstr "Жирный"
 
-#: ../src/core/control/Control.cpp:2696
+#: ../src/core/control/Control.cpp:2694
 msgid "This document is not saved yet."
 msgstr "Этот документ еще не сохранен."
 
@@ -1451,7 +1451,7 @@ msgstr "Панели инструментов"
 msgid "Trying to emergency save the current open document…"
 msgstr "Попытка аварийного сохранения текущего открытого документа…"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:140
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Не удается открыть глобальный файл шаблона из {1}. Существует ли он?"
 
@@ -1459,7 +1459,7 @@ msgstr "Не удается открыть глобальный файл шаб�
 msgid "Unable to play audio recording {1}"
 msgstr "Не удалось воспроизвести аудиозапись {1}"
 
-#: ../src/core/control/Control.cpp:1412
+#: ../src/core/control/Control.cpp:1410
 msgid "Unable to retrieve pdf page."
 msgstr "Не удалось извлечь страницу pdf."
 
@@ -1508,7 +1508,7 @@ msgstr "Неизвестный тип обводки: \"{1}\", предполо�
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Неизвестный тип черты: \"{1}\", предполагается, что это перо"
 
-#: ../src/core/control/Control.cpp:2588
+#: ../src/core/control/Control.cpp:2586
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
 
@@ -1516,7 +1516,7 @@ msgstr "Несохранённый документ"
 msgid "Unsupported graphics format: "
 msgstr "Неподдерживаемый графический формат: "
 
-#: ../src/core/control/Control.cpp:2230
+#: ../src/core/control/Control.cpp:2228
 msgid "Use proposed PDF"
 msgstr "Использовать предложенный PDF"
 
@@ -1568,7 +1568,7 @@ msgstr "Xournal файлы"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "В последний раз программа Xournal++ аварийно завершилась. Хотите восстановить последний редактируемый файл?"
 
-#: ../src/core/control/Control.cpp:2537
+#: ../src/core/control/Control.cpp:2535
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ файлы"
@@ -1616,7 +1616,7 @@ msgstr "Отдалить"
 msgid "Zoom to 100%"
 msgstr "Увеличить до 100%"
 
-#: ../src/core/control/Control.cpp:2531
+#: ../src/core/control/Control.cpp:2529
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1629,7 +1629,7 @@ msgstr "_Отмена"
 msgid "_Open"
 msgstr "_Открыть"
 
-#: ../src/core/control/Control.cpp:2532
+#: ../src/core/control/Control.cpp:2530
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1672,7 +1672,7 @@ msgstr "элементы"
 msgid "eraser"
 msgstr "ластик"
 
-#: ../src/core/control/Control.cpp:2161
+#: ../src/core/control/Control.cpp:2159
 msgid "file: {1}"
 msgstr "файл: {1}"
 
@@ -1789,11 +1789,11 @@ msgstr "%"
 msgid "% greater than the initial distance between the two touches."
 msgstr "% большее, чем начальное расстояние между двумя касаниями."
 
-#: ../ui/latexSettings.glade:185
+#: ../ui/latexSettings.glade:217
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr "%%XPP_TEXT_COLOR%%"
 
-#: ../ui/latexSettings.glade:148
+#: ../ui/latexSettings.glade:180
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
@@ -2134,7 +2134,7 @@ msgstr "Автор: "
 msgid "Authors"
 msgstr "Авторы"
 
-#: ../ui/latexSettings.glade:415
+#: ../ui/latexSettings.glade:447
 msgid "Auto-indent"
 msgstr "Автоматический отступ"
 
@@ -2215,7 +2215,7 @@ msgstr "Кнопка 2"
 msgid "Change"
 msgstr "Изменить"
 
-#: ../ui/latexSettings.glade:173
+#: ../ui/latexSettings.glade:205
 msgid "Choose a global LaTeX template file"
 msgstr "Выберите глобальный шаблон LaTeX"
 
@@ -2298,6 +2298,10 @@ msgstr "Мертвая зона"
 #: ../ui/settings.glade:1046
 msgid "Deadzone radius"
 msgstr "Радиус мертвой зоны"
+
+#: ../ui/latexSettings.glade:119
+msgid "Default LaTeX Text"
+msgstr ""
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
@@ -2419,7 +2423,7 @@ msgstr "Дублировать"
 msgid "Edit (not implemented yet)"
 msgstr "Редактировать (пока не реализовано)"
 
-#: ../ui/latexSettings.glade:574
+#: ../ui/latexSettings.glade:606
 msgid "Editor settings"
 msgstr "Настройки редактора"
 
@@ -2524,7 +2528,7 @@ msgstr "Найти предыдущее вхождение искомой стр
 msgid "First Page Offset "
 msgstr "Отступ первой страницы "
 
-#: ../ui/latexSettings.glade:517
+#: ../ui/latexSettings.glade:549
 msgid "Font: "
 msgstr "Шрифт:"
 
@@ -2552,7 +2556,7 @@ msgstr "Git коммит"
 msgid "Global"
 msgstr "Общие"
 
-#: ../ui/latexSettings.glade:122
+#: ../ui/latexSettings.glade:154
 msgid "Global template file path"
 msgstr "Путь к глобальному файлу шаблона"
 
@@ -2704,11 +2708,11 @@ msgstr "Вставить страницу перед"
 msgid "LaTeX"
 msgstr "LaTeX"
 
-#: ../ui/latexSettings.glade:322
+#: ../ui/latexSettings.glade:354
 msgid "LaTeX executable settings"
 msgstr "Настройки исполняемого файла LaTeX"
 
-#: ../ui/latexSettings.glade:265
+#: ../ui/latexSettings.glade:297
 msgid "LaTeX generation command"
 msgstr "Команда генерации LaTeX"
 
@@ -2732,7 +2736,7 @@ msgstr "Левша / правша"
 msgid "License"
 msgstr "Лицензия"
 
-#: ../ui/latexSettings.glade:401
+#: ../ui/latexSettings.glade:433
 msgid "Line numbers"
 msgstr "Номера строк"
 
@@ -2925,7 +2929,7 @@ msgstr "Параметры _пера"
 msgid "Performance"
 msgstr "Производительность"
 
-#: ../ui/latexSettings.glade:532
+#: ../ui/latexSettings.glade:564
 msgid "Pick the Editor's Font"
 msgstr "Выбрать шрифт редактора"
 
@@ -3192,7 +3196,7 @@ msgstr "Кнопки стилуса"
 msgid "Successive (ms)"
 msgstr "Последовательно (мс)"
 
-#: ../ui/latexSettings.glade:429
+#: ../ui/latexSettings.glade:461
 msgid "Syntax highlighting"
 msgstr "Подсветка синтаксиса"
 
@@ -3209,7 +3213,7 @@ msgstr "_Панели инструментов"
 msgid "TeX Source"
 msgstr "Исходник TeX"
 
-#: ../ui/latexSettings.glade:233
+#: ../ui/latexSettings.glade:265
 msgid "Template file settings"
 msgstr "Настройки файла шаблона"
 
@@ -3221,11 +3225,11 @@ msgstr "Шаблон:"
 msgid "Test"
 msgstr "Проверить"
 
-#: ../ui/latexSettings.glade:286
+#: ../ui/latexSettings.glade:318
 msgid "Test configuration"
 msgstr "Проверить конфигурацию"
 
-#: ../ui/latexSettings.glade:290
+#: ../ui/latexSettings.glade:322
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Проверить, действительна ли текущая конфигурация, с помощью исполнения команды генерации LaTeX на глобальном файле шаблона с тестовой формулой."
 
@@ -3233,19 +3237,19 @@ msgstr "Проверить, действительна ли текущая ко�
 msgid "Text Font..."
 msgstr "Шрифт текста..."
 
-#: ../ui/latexSettings.glade:120
+#: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr "Файл LaTeX для использования в качестве шаблона для инструмента LaTeX."
 
-#: ../ui/latexSettings.glade:197
+#: ../ui/latexSettings.glade:229
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr "Текущий цвет инструмента \"Текст\" в формате hex RGB."
 
-#: ../ui/latexSettings.glade:134
+#: ../ui/latexSettings.glade:166
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr "Следующие строки будут заменены в глобальном файле шаблона при запуске инструмента LaTeX:"
 
-#: ../ui/latexSettings.glade:160
+#: ../ui/latexSettings.glade:192
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr "Математическая формула, набранная в LaTeX."
 
@@ -3294,7 +3298,7 @@ msgstr "Подчеркнуть выделенный текст"
 msgid "Use available Stock Icons (requires restart)"
 msgstr "Использовать доступные стандартные иконки (необходим перезапуск)"
 
-#: ../ui/latexSettings.glade:497
+#: ../ui/latexSettings.glade:529
 msgid "Use font from system theme."
 msgstr "Использовать шрифт из системной темы."
 
@@ -3366,7 +3370,7 @@ msgstr "Ширина:"
 msgid "With help from the community"
 msgstr "С помощью сообщества"
 
-#: ../ui/latexSettings.glade:461
+#: ../ui/latexSettings.glade:493
 msgid "Wrap text"
 msgstr "Обернуть текст"
 
