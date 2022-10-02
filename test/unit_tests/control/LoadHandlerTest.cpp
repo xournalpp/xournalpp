@@ -29,7 +29,13 @@
 using std::string;
 
 // Common test Functions
-void testLoadStoreLoad() {
+
+/**
+ * Unit test implementation for the "suite.xopp" file and its derivatives.
+ * \param filepath The path to the actual file to load.
+ * \param tol The absolute tolerance used when checking stroke coordinate data.
+ */
+void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
     auto getElements = [](Document* doc) {
         EXPECT_EQ((size_t)1, doc->getPageCount());
         PageRef page = doc->getPage(0);
@@ -67,7 +73,7 @@ void testLoadStoreLoad() {
         return elements;
     };
     LoadHandler handler;
-    Document* doc1 = handler.loadDocument(GET_TESTFILE("packaged_xopp/suite.xopp"));
+    Document* doc1 = handler.loadDocument(filepath);
     auto elements1 = getElements(doc1);
 
     SaveHandler h;
@@ -81,7 +87,7 @@ void testLoadStoreLoad() {
     auto elements2 = getElements(doc2);
 
     // Check that the coordinates from both files don't differ more than the precision they were saved with
-    auto coordEq = [](double a, double b) { return std::abs(a - b) <= 1e-8; };
+    auto coordEq = [tol](double a, double b) { return std::abs(a - b) <= tol; };
 
     for (unsigned long i = 0; i < elements1.size(); i++) {
         Element* a = elements1.at(i);
@@ -415,7 +421,9 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     checkImageFormat(img, "png");
 }
 
-TEST(ControlLoadHandler, testLoadStoreLoadDefault) { testLoadStoreLoad(); }
+TEST(ControlLoadHandler, testLoadStoreLoadDefault) {
+    testLoadStoreLoadHelper(GET_TESTFILE("packaged_xopp/suite.xopp"), /*tol=*/1e-8);
+}
 
 
 #ifdef __linux__
@@ -434,7 +442,13 @@ TEST(ControlLoadHandler, testLoadStoreLoadGerman) {
                       << std::endl;
         }
     }
-    testLoadStoreLoad();
+    testLoadStoreLoadHelper(GET_TESTFILE("packaged_xopp/suite.xopp"), /*tol=*/1e-8);
     setlocale(LC_ALL, "C");
 }
 #endif
+
+// Backwards compatibility test that checks that full-precision float strings can be loaded.
+// See https://github.com/xournalpp/xournalpp/pull/4065
+TEST(ControlLoadHandler, testLoadStoreLoadFloatBwCompat) {
+    testLoadStoreLoadHelper(GET_TESTFILE("packaged_xopp/suite_float_bw_compat.xopp"), /*tol=*/1e-5);
+}
