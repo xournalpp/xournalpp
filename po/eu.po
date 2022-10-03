@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-02 08:08+0000\n"
-"PO-Revision-Date: 2022-10-03 20:46\n"
+"PO-Revision-Date: 2022-10-03 21:46\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -1374,7 +1374,8 @@ msgstr "Ezin izan da erantsitako atzeko planoa aurkitu. Baliteke mugitu, izena a
 #: ../src/core/control/Control.cpp:2210
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr ""
+msgstr "Ezin izan da atzeko planoaren {1} fitxategia aurkitu. Baliteke mugitu, izena aldatu edo ezabatu izana.\n"
+"Ikusi zen azken aldia: \"{2}\""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
@@ -1519,7 +1520,7 @@ msgstr "Onartu gabeko formatu grafikoa: "
 
 #: ../src/core/control/Control.cpp:2228
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Erabili proposatutako PDFa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
@@ -2303,7 +2304,7 @@ msgstr "Deadzone-erradioa"
 
 #: ../ui/latexSettings.glade:119
 msgid "Default LaTeX Text"
-msgstr ""
+msgstr "LaTeX testu lehenetsia"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
