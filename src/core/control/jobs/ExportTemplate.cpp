@@ -114,31 +114,25 @@ auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry
 void ExportTemplate::exportPageLayers(const size_t pageNo) {
     PageRef page = doc->getPage(pageNo);
 
-    std::map<Layer*, bool> initialVisibility = clearLayerVisibilityStateOfPage(page);
+    std::optional<LayerRangeVector> layerRange = this->layerRange;
 
-    // We draw as many pages as there are layers. The first page has
-    // only Layer 1 visible, the last has all layers visible.
-    for (const auto& layer: *page->getLayers()) {
-        layer->setVisible(true);
+    struct isIncluded {
+        size_t val;
+        isIncluded(size_t const& i): val{i} {}
+        auto operator()(const LayerRangeEntry& e) -> bool { return e.first <= val && e.last >= val; }
+    };
+    LayerRangeVector rangeVector;
+    for (size_t i = 0; i < (*page->getLayers()).size(); ++i) {
+        if (layerRange && !std::any_of(layerRange.value().begin(), layerRange.value().end(), isIncluded{i})) {
+            // there is a layerRange, but layer i is not part of it => don't draw layer i
+            continue;
+        }
+        rangeVector.push_back(ElementRangeEntry(i, i));
+        setLayerRange(rangeVector);
         exportPage(pageNo);
     }
 
-    setLayerVisibilityStateOfPage(page, initialVisibility);
-}
-
-auto clearLayerVisibilityStateOfPage(const PageRef& page) -> std::map<Layer*, bool> {
-    std::map<Layer*, bool> layerVisibilityState;
-    for (const auto& layer: *page->getLayers()) {
-        layerVisibilityState[layer] = layer->isVisible();
-        layer->setVisible(false);
-    }
-    return layerVisibilityState;
-}
-
-void setLayerVisibilityStateOfPage(const PageRef& page, std::map<Layer*, bool> visibilityState) {
-    for (const auto& layer: *page->getLayers()) {
-        layer->setVisible(visibilityState[layer]);
-    }
+    this->layerRange = layerRange;
 }
 
 auto ExportTemplate::exportPage(const size_t pageNo) -> bool {
