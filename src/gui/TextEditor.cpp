@@ -57,6 +57,8 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
 }
 
 TextEditor::~TextEditor() {
+    gtk_im_context_focus_out(this->imContext);
+
     this->text->setInEditing(false);
     this->widget = nullptr;
 
