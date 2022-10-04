@@ -34,7 +34,7 @@ public:
     void render(cairo_t* cr) const override;
     void renderForPrinting(cairo_t* cr) const override;
 
-    std::vector<XojPdfRectangle> findText(std::string& text) override;
+    std::vector<XojPdfRectangle> findText(const std::string& text) override;
 
     std::string selectText(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) override;
 

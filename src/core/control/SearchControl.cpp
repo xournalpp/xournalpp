@@ -35,7 +35,7 @@ void SearchControl::paint(cairo_t* cr, double zoom, const GdkRGBA& color) {
     }
 }
 
-auto SearchControl::search(std::string text, int* occures, double* top) -> bool {
+auto SearchControl::search(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch) -> bool {
     freeSearchResults();
 
     if (text.empty()) {
@@ -62,21 +62,23 @@ auto SearchControl::search(std::string text, int* occures, double* top) -> bool 
         }
     }
 
-    if (occures) {
-        *occures = this->results.size();
+    if (occurrences) {
+        *occurrences = this->results.size();
     }
 
-    if (top) {
+    if (yOfUpperMostMatch) {
         if (this->results.empty()) {
-            *top = 0;
+            *yOfUpperMostMatch = 0;
         } else {
 
-            XojPdfRectangle first = this->results[0];
+            const XojPdfRectangle& first = this->results.front();
 
             double min = first.y1;
-            for (XojPdfRectangle rect: this->results) { min = std::min(min, rect.y1); }
+            for (const XojPdfRectangle& rect: this->results) {
+                min = std::min(min, rect.y1);
+            }
 
-            *top = min;
+            *yOfUpperMostMatch = min;
         }
     }
 
