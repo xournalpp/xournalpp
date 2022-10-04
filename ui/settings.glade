@@ -156,13 +156,7 @@
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
-  <object class="GtkAdjustment" id="adjustmentStrokeRecognizerMinX">
-    <property name="lower">1</property>
-    <property name="upper">200</property>
-    <property name="step-increment">1</property>
-    <property name="page-increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustmentStrokeRecognizerMinY">
+  <object class="GtkAdjustment" id="adjustmentStrokeRecognizerMinSize">
     <property name="lower">1</property>
     <property name="upper">200</property>
     <property name="step-increment">1</property>
@@ -4807,7 +4801,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         <property name="can-focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <!-- n-columns=3 n-rows=2 -->
+                                          <!-- n-columns=3 n-rows=1 -->
                                           <object class="GtkGrid" id="sid6">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
@@ -4815,10 +4809,10 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="column-spacing">5</property>
                                             <child>
                                               <object class="GtkLabel">
-                                                <property name="name">lbStrokeRecognizerMinX</property>
+                                                <property name="name">lbStrokeRecognizerMinSize</property>
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">Minimum X</property>
+                                                <property name="label" translatable="yes">Minimum Stroke Size</property>
                                                 <property name="xalign">0</property>
                                               </object>
                                               <packing>
@@ -4827,25 +4821,12 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel">
-                                                <property name="name">lbStrokeRecognizerMinY</property>
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">Minimum Y</property>
-                                                <property name="xalign">0</property>
-                                              </object>
-                                              <packing>
-                                                <property name="left-attach">0</property>
-                                                <property name="top-attach">1</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <object class="GtkSpinButton" id="spStrokeRecognizerMinX">
-                                                <property name="name">spStrokeRecognizerMinX</property>
+                                              <object class="GtkSpinButton" id="spStrokeRecognizerMinSize">
+                                                <property name="name">spStrokeRecognizerMinSize</property>
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">True</property>
                                                 <property name="text" translatable="yes">0.20</property>
-                                                <property name="adjustment">adjustmentStrokeRecognizerMinX</property>
+                                                <property name="adjustment">adjustmentStrokeRecognizerMinSize</property>
                                                 <property name="climb-rate">2</property>
                                                 <property name="value">25</property>
                                               </object>
@@ -4853,24 +4834,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                 <property name="left-attach">1</property>
                                                 <property name="top-attach">0</property>
                                               </packing>
-                                            </child>
-                                            <child>
-                                              <object class="GtkSpinButton" id="spStrokeRecognizerMinY">
-                                                <property name="name">spStrokeRecognizerMinY</property>
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">True</property>
-                                                <property name="text" translatable="yes">0.25</property>
-                                                <property name="adjustment">adjustmentStrokeRecognizerMinY</property>
-                                                <property name="climb-rate">2</property>
-                                                <property name="value">25</property>
-                                              </object>
-                                              <packing>
-                                                <property name="left-attach">1</property>
-                                                <property name="top-attach">1</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <placeholder/>
                                             </child>
                                             <child>
                                               <placeholder/>

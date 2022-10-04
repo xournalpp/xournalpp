@@ -133,8 +133,7 @@ void Settings::loadDefault() {
     this->snapGridTolerance = 0.50;
     this->snapGridSize = DEFAULT_GRID_SIZE;
 
-    this->strokeRecognizerMinX = 30;
-    this->strokeRecognizerMinY = 30;
+    this->strokeRecognizerMinSize = 40;
 
     this->touchDrawing = false;
     this->gtkTouchInertialScrolling = true;
@@ -491,10 +490,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapGridSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridTolerance")) == 0) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeRecognizerMinX")) == 0) {
-        this->strokeRecognizerMinX = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeRecognizerMinY")) == 0) {
-        this->strokeRecognizerMinY = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeRecognizerMinSize")) == 0) {
+        this->strokeRecognizerMinSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchDrawing")) == 0) {
         this->touchDrawing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("gtkTouchInertialScrolling")) == 0) {
@@ -962,8 +959,7 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(snapGridTolerance);
     SAVE_DOUBLE_PROP(snapGridSize);
 
-    SAVE_DOUBLE_PROP(strokeRecognizerMinX);
-    SAVE_DOUBLE_PROP(strokeRecognizerMinY);
+    SAVE_DOUBLE_PROP(strokeRecognizerMinSize);
 
     SAVE_BOOL_PROP(touchDrawing);
     SAVE_BOOL_PROP(gtkTouchInertialScrolling);
@@ -1375,22 +1371,13 @@ void Settings::setSnapGridSize(double gridSize) {
     save();
 }
 
-auto Settings::getStrokeRecognizerMinX() const -> double { return this->strokeRecognizerMinX; };
-void Settings::setStrokeRecognizerMinX(double value) {
-    if (this->strokeRecognizerMinX == value) {
+auto Settings::getStrokeRecognizerMinSize() const -> double { return this->strokeRecognizerMinSize; };
+void Settings::setStrokeRecognizerMinSize(double value) {
+    if (this->strokeRecognizerMinSize == value) {
         return;
     }
 
-    this->strokeRecognizerMinX = value;
-    save();
-};
-auto Settings::getStrokeRecognizerMinY() const -> double { return this->strokeRecognizerMinY; };
-void Settings::setStrokeRecognizerMinY(double value) {
-    if (this->strokeRecognizerMinY == value) {
-        return;
-    }
-
-    this->strokeRecognizerMinY = value;
+    this->strokeRecognizerMinSize = value;
     save();
 };
 

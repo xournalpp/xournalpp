@@ -244,26 +244,25 @@ void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks
     }
 }
 
-auto ShapeRecognizer::isStrokeLargeEnough(Stroke* stroke, double strokeMinX, double strokeMinY) -> bool {
+/**
+ * Determine if a particular stroke is large enough as to make a shape out of it
+ */
+auto ShapeRecognizer::isStrokeLargeEnough(Stroke* stroke, double strokeMinSize) -> bool {
     if (stroke->getPointCount() < 3) {
         return false;
     }
 
     auto rect = stroke->getSnappedBounds();
-    if (rect.width < strokeMinX && rect.height < strokeMinY) {
-        return false;
-    }
-
-    return true;
+    return std::hypot(rect.width, rect.height) >= strokeMinSize;
 }
 
 /**
  * The main pattern recognition function
  */
-auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinX, double strokeMinY) -> Stroke* {
+auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) -> Stroke* {
     this->stroke = stroke;
 
-    if (!isStrokeLargeEnough(stroke, strokeMinX, strokeMinY)) {
+    if (!isStrokeLargeEnough(stroke, strokeMinSize)) {
         return nullptr;
     }
 

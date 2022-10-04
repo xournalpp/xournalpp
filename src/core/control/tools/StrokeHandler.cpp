@@ -274,10 +274,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
         ShapeRecognizer reco;
 
-        auto settings = control->getSettings();
-        auto strokeMinX = settings->getStrokeRecognizerMinX();
-        auto strokeMinY = settings->getStrokeRecognizerMinY();
-        Stroke* recognized = reco.recognizePatterns(stroke.get(), strokeMinX, strokeMinY);
+        Stroke* recognized = reco.recognizePatterns(stroke.get(), control->getSettings()->getStrokeRecognizerMinSize());
 
         if (recognized) {
             strokeRecognizerDetected(recognized, layer);

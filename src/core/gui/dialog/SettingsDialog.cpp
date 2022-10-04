@@ -435,11 +435,8 @@ void SettingsDialog::load() {
     GtkWidget* spSnapGridSize = get("spSnapGridSize");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridSize), settings->getSnapGridSize() / DEFAULT_GRID_SIZE);
 
-    GtkWidget* spStrokeRecognizerX = get("spStrokeRecognizerMinX");
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeRecognizerX), settings->getStrokeRecognizerMinX());
-
-    GtkWidget* spStrokeRecognizerY = get("spStrokeRecognizerMinY");
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeRecognizerY), settings->getStrokeRecognizerMinY());
+    GtkWidget* spStrokeRecognizerMinSize = get("spStrokeRecognizerMinSize");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeRecognizerMinSize), settings->getStrokeRecognizerMinSize());
 
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("edgePanSpeed")), settings->getEdgePanSpeed());
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("edgePanMaxMult")), settings->getEdgePanMaxMult());
@@ -921,10 +918,8 @@ void SettingsDialog::save() {
     settings->setSnapGridSize(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridSize"))) * DEFAULT_GRID_SIZE));
 
-    settings->setStrokeRecognizerMinX(
-            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spStrokeRecognizerMinX")))));
-    settings->setStrokeRecognizerMinY(
-            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spStrokeRecognizerMinY")))));
+    settings->setStrokeRecognizerMinSize(
+            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spStrokeRecognizerMinSize")))));
 
     int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
     if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < static_cast<int>(this->audioInputDevices.size())) {

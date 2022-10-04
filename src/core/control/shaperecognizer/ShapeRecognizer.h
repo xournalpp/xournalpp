@@ -26,7 +26,7 @@ public:
     ShapeRecognizer();
     virtual ~ShapeRecognizer();
 
-    Stroke* recognizePatterns(Stroke* stroke, double strokeMinX, double strokeMinY);
+    Stroke* recognizePatterns(Stroke* stroke, double strokeMinSize);
     void resetRecognizer();
 
 private:
@@ -37,7 +37,7 @@ private:
 
     int findPolygonal(const Point* pt, int start, int end, int nsides, int* breaks, Inertia* ss);
 
-    bool isStrokeLargeEnough(Stroke* stroke, double strokeMinX, double strokeMinY);
+    static bool isStrokeLargeEnough(Stroke* stroke, double strokeMinSize);
 
 private:
     std::array<RecoSegment, MAX_POLYGON_SIDES + 1> queue{};
