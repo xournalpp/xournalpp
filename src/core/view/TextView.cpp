@@ -75,7 +75,7 @@ void TextView::draw(const Context& ctx) const {
     cairo_restore(ctx.cr);
 }
 
-auto TextView::findText(const Text* t, std::string& search) -> std::vector<XojPdfRectangle> {
+auto TextView::findText(const Text* t, const std::string& search) -> std::vector<XojPdfRectangle> {
     size_t patternLength = search.length();
     if (patternLength == 0) {
         return {};

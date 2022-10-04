@@ -1749,8 +1749,9 @@ auto Control::getCurrentPageNo() -> size_t {
     return 0;
 }
 
-auto Control::searchTextOnPage(string text, int p, int* occures, double* top) -> bool {
-    return getWindow()->getXournal()->searchTextOnPage(std::move(text), p, occures, top);
+auto Control::searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences,
+                               double* yOfUpperMostMatch) -> bool {
+    return getWindow()->getXournal()->searchTextOnPage(text, pageNumber, occurrences, yOfUpperMostMatch);
 }
 
 auto Control::getCurrentPage() -> PageRef {

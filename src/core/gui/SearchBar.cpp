@@ -53,10 +53,10 @@ SearchBar::SearchBar(Control* control): control(control) {
 
 SearchBar::~SearchBar() { this->control = nullptr; }
 
-auto SearchBar::searchTextonCurrentPage(const char* text, int* occures, double* top) -> bool {
-    int p = control->getCurrentPageNo();
+auto SearchBar::searchTextonCurrentPage(const char* text, size_t* occurrences, double* yOfUpperMostMatch) -> bool {
+    size_t p = control->getCurrentPageNo();
 
-    return control->searchTextOnPage(text, p, occures, top);
+    return control->searchTextOnPage(text, p, occurrences, yOfUpperMostMatch);
 }
 
 void SearchBar::search(const char* text) {
@@ -64,15 +64,15 @@ void SearchBar::search(const char* text) {
     GtkWidget* lbSearchState = win->get("lbSearchState");
 
     bool found = true;
-    int occures = 0;
+    size_t occurrences = 0;
 
     if (*text != 0) {
-        found = searchTextonCurrentPage(text, &occures, nullptr);
+        found = searchTextonCurrentPage(text, &occurrences, nullptr);
         if (found) {
-            if (occures == 1) {
+            if (occurrences == 1) {
                 gtk_label_set_text(GTK_LABEL(lbSearchState), _("Text found on this page"));
             } else {
-                char* msg = g_strdup_printf(_("Text %i times found on this page"), occures);
+                char* msg = g_strdup_printf(_("Text %zu times found on this page"), occurrences);
                 gtk_label_set_text(GTK_LABEL(lbSearchState), msg);
                 g_free(msg);
             }
@@ -99,15 +99,15 @@ void SearchBar::searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar)
 void SearchBar::buttonCloseSearchClicked(GtkButton* button, SearchBar* searchBar) { searchBar->showSearchBar(false); }
 
 void SearchBar::searchNext() {
-    int page = control->getCurrentPageNo();
-    int count = control->getDocument()->getPageCount();
+    size_t currentPage = control->getCurrentPageNo();
+    size_t count = control->getDocument()->getPageCount();
     if (count < 2) {
         // Nothing to do
         return;
     }
 
     MainWindow* win = control->getWindow();
-    int x = page + 1;
+    size_t searchedPage = currentPage + 1;
     GtkWidget* searchTextField = win->get("searchTextField");
     const char* text = gtk_entry_get_text(GTK_ENTRY(searchTextField));
     GtkWidget* lbSearchState = win->get("lbSearchState");
@@ -115,27 +115,28 @@ void SearchBar::searchNext() {
         return;
     }
 
-    if (x >= count) {
-        x = 0;
+    if (searchedPage >= count) {
+        searchedPage = 0;
     }
 
-    double top = 0;
-    int occures = 0;
+    double yOfUpperMostMatch = 0;
+    size_t occurrences = 0;
 
-    while (x != page) {
+    while (searchedPage != currentPage) {
 
-        bool found = control->searchTextOnPage(text, x, &occures, &top);
+        bool found = control->searchTextOnPage(text, searchedPage, &occurrences, &yOfUpperMostMatch);
         if (found) {
-            control->getScrollHandler()->scrollToPage(x, top);
-            gtk_label_set_text(GTK_LABEL(lbSearchState),
-                               (occures == 1 ? FC(_F("Text found once on page {1}") % (x + 1)) :
-                                               FC(_F("Text found {1} times on page {2}") % occures % (x + 1))));
+            control->getScrollHandler()->scrollToPage(searchedPage, yOfUpperMostMatch);
+            gtk_label_set_text(
+                    GTK_LABEL(lbSearchState),
+                    (occurrences == 1 ? FC(_F("Text found once on page {1}") % (searchedPage + 1)) :
+                                        FC(_F("Text found {1} times on page {2}") % occurrences % (searchedPage + 1))));
             return;
         }
 
-        x++;
-        if (x >= count) {
-            x = 0;
+        searchedPage++;
+        if (searchedPage >= count) {
+            searchedPage = 0;
         }
     }
 
@@ -143,15 +144,14 @@ void SearchBar::searchNext() {
 }
 
 void SearchBar::searchPrevious() {
-    int page = control->getCurrentPageNo();
-    int count = control->getDocument()->getPageCount();
+    size_t currentPage = control->getCurrentPageNo();
+    size_t count = control->getDocument()->getPageCount();
     if (count < 2) {
         // Nothing to do
         return;
     }
 
     MainWindow* win = control->getWindow();
-    int x = page - 1;
     GtkWidget* searchTextField = win->get("searchTextField");
     const char* text = gtk_entry_get_text(GTK_ENTRY(searchTextField));
     GtkWidget* lbSearchState = win->get("lbSearchState");
@@ -159,27 +159,23 @@ void SearchBar::searchPrevious() {
         return;
     }
 
-    if (x < 0) {
-        x = count - 1;
-    }
+    double yOfUpperMostMatch = 0;
+    size_t occurrences = 0;
 
-    double top = 0;
-    int occures = 0;
+    auto backwardsNext = [count](size_t n) { return n == 0 ? count - 1 : n - 1; };
 
-    while (x != page) {
+    // Search backwards through the pages, wrapping around if needed.
+    for (size_t searchedPage = backwardsNext(currentPage); searchedPage != currentPage;
+         searchedPage = backwardsNext(searchedPage)) {
 
-        bool found = control->searchTextOnPage(text, x, &occures, &top);
+        bool found = control->searchTextOnPage(text, searchedPage, &occurrences, &yOfUpperMostMatch);
         if (found) {
-            control->getScrollHandler()->scrollToPage(x, top);
-            gtk_label_set_text(GTK_LABEL(lbSearchState),
-                               (occures == 1 ? FC(_F("Text found once on page {1}") % (x + 1)) :
-                                               FC(_F("Text found {1} times on page {2}") % occures % (x + 1))));
+            control->getScrollHandler()->scrollToPage(searchedPage, yOfUpperMostMatch);
+            gtk_label_set_text(
+                    GTK_LABEL(lbSearchState),
+                    (occurrences == 1 ? FC(_F("Text found once on page {1}") % (searchedPage + 1)) :
+                                        FC(_F("Text found {1} times on page {2}") % occurrences % (searchedPage + 1))));
             return;
-        }
-
-        x--;
-        if (x < 0) {
-            x = count - 1;
         }
     }
 

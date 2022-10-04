@@ -25,7 +25,7 @@ public:
     SearchControl(const PageRef& page, XojPdfPageSPtr pdf);
     virtual ~SearchControl();
 
-    bool search(std::string text, int* occures, double* top);
+    bool search(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
     void paint(cairo_t* cr, double zoom, const GdkRGBA& color);
 
 private:

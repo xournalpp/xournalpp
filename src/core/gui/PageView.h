@@ -84,7 +84,7 @@ public:
 
     void endText();
 
-    bool searchTextOnPage(std::string& text, int* occures, double* top);
+    bool searchTextOnPage(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
 
     bool onKeyPressEvent(GdkEventKey* event);
     bool onKeyReleaseEvent(GdkEventKey* event);

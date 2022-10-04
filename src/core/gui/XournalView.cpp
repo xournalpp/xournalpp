@@ -322,13 +322,14 @@ void XournalView::onSettingsChanged() {
 // send the focus back to the appropriate widget
 void XournalView::requestFocus() { gtk_widget_grab_focus(this->widget); }
 
-auto XournalView::searchTextOnPage(std::string text, size_t p, int* occures, double* top) -> bool {
-    if (p == npos || p >= this->viewPages.size()) {
+auto XournalView::searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences,
+                                   double* yOfUpperMostMatch) -> bool {
+    if (pageNumber == npos || pageNumber >= this->viewPages.size()) {
         return false;
     }
-    XojPageView* v = this->viewPages[p];
+    XojPageView* v = this->viewPages[pageNumber];
 
-    return v->searchTextOnPage(text, occures, top);
+    return v->searchTextOnPage(text, occurrences, yOfUpperMostMatch);
 }
 
 void XournalView::forceUpdatePagenumbers() {

@@ -34,7 +34,7 @@ private:
     void searchPrevious();
 
     void search(const char* text);
-    bool searchTextonCurrentPage(const char* text, int* occures, double* top);
+    bool searchTextonCurrentPage(const char* text, size_t* occurrences, double* yOfUpperMostMatch);
 
 private:
     Control* control;

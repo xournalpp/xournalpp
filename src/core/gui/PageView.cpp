@@ -138,7 +138,7 @@ auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
     return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
 }
 
-auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> bool {
+auto XojPageView::searchTextOnPage(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch) -> bool {
     if (this->search == nullptr) {
         if (text.empty()) {
             return true;
@@ -156,7 +156,7 @@ auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> b
         this->search = new SearchControl(page, pdf);
     }
 
-    bool found = this->search->search(text, occures, top);
+    bool found = this->search->search(text, occurrences, yOfUpperMostMatch);
 
     repaintPage();
 
