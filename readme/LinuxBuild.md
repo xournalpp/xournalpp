@@ -17,7 +17,7 @@ The installation instructions don't assume any specific build tool (other than C
 but they do require make, ninja, or another supported CMake generator. It is required 
 that such a tool is installed in order to build xournalpp.
 
-The minimum required CMake version is 3.10, but we recommend to use >=3.15.
+The minimum required CMake version is 3.13, but we recommend to use >=3.15.
 
 ### Distribution specific commands
 
