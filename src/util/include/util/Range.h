@@ -36,6 +36,7 @@ public:
     [[nodiscard]] double getHeight() const;
 
     void addPadding(double padding);
+    void translate(double dx, double dy);
 
     [[nodiscard]] bool empty() const;
     [[nodiscard]] bool isValid() const;

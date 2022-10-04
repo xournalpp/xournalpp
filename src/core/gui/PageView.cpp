@@ -370,14 +370,11 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
         if (this->verticalSpace) {
             control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
-            this->getXournal()->getControl()->getZoomControl()->removeZoomListener(this->verticalSpace);
-            delete this->verticalSpace;
+            this->verticalSpace.reset();
         }
-        auto* window = gtk_widget_get_window(xournal->getWidget());
         auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
-        this->verticalSpace =
-                new VerticalToolHandler(this, this->page, this->settings, y, pos.isControlDown(), zoomControl, window);
-        zoomControl->addZoomListener(this->verticalSpace);
+        this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->settings, y, pos.isControlDown());
+        this->overlayViews.emplace_back(this->verticalSpace->createView(this, zoomControl, this->settings));
     } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
                h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
@@ -650,9 +647,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 
     if (this->verticalSpace) {
         control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
-        this->getXournal()->getControl()->getZoomControl()->removeZoomListener(this->verticalSpace);
-        delete this->verticalSpace;
-        this->verticalSpace = nullptr;
+        this->verticalSpace.reset();
     }
 
     auto* pdfToolbox = control->getWindow()->getPdfToolbox();
@@ -754,7 +749,7 @@ void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
 
 void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg) {
-    if (v->isViewOf(this->inputHandler)) {
+    if (v->isViewOf(this->inputHandler) || v->isViewOf(this->verticalSpace.get())) {
         // Draw the inputHandler's view onto the page buffer.
         std::lock_guard lock(this->drawingMutex);
         xoj::util::CairoSPtr cr(cairo_create(this->crBuffer.get()));
@@ -929,10 +924,6 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
      */
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_scale(cr, zoom, zoom);
-
-    if (this->verticalSpace) {
-        this->verticalSpace->paint(cr);
-    }
 
     if (this->textEditor) {
         this->textEditor->paint(cr, zoom);

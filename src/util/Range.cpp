@@ -39,6 +39,13 @@ void Range::addPadding(double padding) {
     this->maxY += padding;
 }
 
+void Range::translate(double dx, double dy) {
+    this->minX += dx;
+    this->maxX += dx;
+    this->minY += dy;
+    this->maxY += dy;
+}
+
 auto Range::empty() const -> bool {
     Range empty;
     return this->minX == empty.minX && this->minY == empty.minY && this->maxX == empty.maxX && this->maxY == empty.maxY;
@@ -46,4 +53,4 @@ auto Range::empty() const -> bool {
 
 bool Range::isValid() const { return minX <= maxX && minY <= maxY; }
 
-bool Range::contains(double x, double y) const { return x > minX && x < maxX && y > minY && y < maxY; }
+bool Range::contains(double x, double y) const { return x >= minX && x <= maxX && y >= minY && y <= maxY; }
