@@ -9,7 +9,7 @@
 
 Would you like to see Xournal++ in your own language? Translators are welcome to contribute to Xournal++.
 
-Xournal++ resources to translate are available at:
+Translation resources are in the following locations:
 * [Crowdin](https://crowdin.com/project/xournalpp/)
 * [desktop/com.github.xournalpp.xournalpp.appdata.xml](desktop/com.github.xournalpp.xournalpp.appdata.xml)
 * [desktop/com.github.xournalpp.xournalpp.desktop](desktop/com.github.xournalpp.xournalpp.desktop)
