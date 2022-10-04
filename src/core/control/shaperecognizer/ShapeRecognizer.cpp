@@ -87,7 +87,9 @@ auto ShapeRecognizer::tryRectangle() -> Stroke* {
     auto* s = new Stroke();
     s->applyStyleFrom(this->stroke);
 
-    for (int i = 0; i <= 3; i++) { rs[i].angle = avgAngle + i * M_PI / 2; }
+    for (int i = 0; i <= 3; i++) {
+        rs[i].angle = avgAngle + i * M_PI / 2;
+    }
 
     for (int i = 0; i <= 3; i++) {
         Point p = rs[i].calcEdgeIsect(&rs[(i + 1) % 4]);
@@ -242,13 +244,26 @@ void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks
     }
 }
 
+auto ShapeRecognizer::isStrokeLargeEnough(Stroke* stroke, double strokeMinX, double strokeMinY) -> bool {
+    if (stroke->getPointCount() < 3) {
+        return false;
+    }
+
+    auto rect = stroke->getSnappedBounds();
+    if (rect.width < strokeMinX && rect.height < strokeMinY) {
+        return false;
+    }
+
+    return true;
+}
+
 /**
  * The main pattern recognition function
  */
-auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> Stroke* {
+auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinX, double strokeMinY) -> Stroke* {
     this->stroke = stroke;
 
-    if (stroke->getPointCount() < 3) {
+    if (!isStrokeLargeEnough(stroke, strokeMinX, strokeMinY)) {
         return nullptr;
     }
 
@@ -271,7 +286,9 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> Stroke* {
         while (n + queueLength > MAX_POLYGON_SIDES) {
             // remove oldest polygonal stroke
             int i = 1;
-            while (i < queueLength && queue[i].startpt != 0) { i++; }
+            while (i < queueLength && queue[i].startpt != 0) {
+                i++;
+            }
             queueLength -= i;
             std::move(std::next(begin(queue), i), std::next(begin(queue), i + queueLength), begin(queue));
         }

@@ -172,10 +172,14 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 }
 
 SettingsDialog::~SettingsDialog() {
-    for (ButtonConfigGui* bcg: this->buttonConfigs) { delete bcg; }
+    for (ButtonConfigGui* bcg: this->buttonConfigs) {
+        delete bcg;
+    }
     this->buttonConfigs.clear();
 
-    for (DeviceClassConfigGui* dev: this->deviceClassConfigs) { delete dev; }
+    for (DeviceClassConfigGui* dev: this->deviceClassConfigs) {
+        delete dev;
+    }
     this->deviceClassConfigs.clear();
 
     // DO NOT delete settings!
@@ -430,6 +434,12 @@ void SettingsDialog::load() {
 
     GtkWidget* spSnapGridSize = get("spSnapGridSize");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridSize), settings->getSnapGridSize() / DEFAULT_GRID_SIZE);
+
+    GtkWidget* spStrokeRecognizerX = get("spStrokeRecognizerMinX");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeRecognizerX), settings->getStrokeRecognizerMinX());
+
+    GtkWidget* spStrokeRecognizerY = get("spStrokeRecognizerMinY");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeRecognizerY), settings->getStrokeRecognizerMinY());
 
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("edgePanSpeed")), settings->getEdgePanSpeed());
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("edgePanMaxMult")), settings->getEdgePanMaxMult());
@@ -877,7 +887,9 @@ void SettingsDialog::save() {
 
     settings->setDisplayDpi(dpi);
 
-    for (ButtonConfigGui* bcg: this->buttonConfigs) { bcg->saveSettings(); }
+    for (ButtonConfigGui* bcg: this->buttonConfigs) {
+        bcg->saveSettings();
+    }
 
     languageConfig->saveSettings();
 
@@ -908,6 +920,11 @@ void SettingsDialog::save() {
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridTolerance")))));
     settings->setSnapGridSize(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spSnapGridSize"))) * DEFAULT_GRID_SIZE));
+
+    settings->setStrokeRecognizerMinX(
+            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spStrokeRecognizerMinX")))));
+    settings->setStrokeRecognizerMinY(
+            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spStrokeRecognizerMinY")))));
 
     int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
     if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < static_cast<int>(this->audioInputDevices.size())) {
@@ -941,7 +958,9 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
-    for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) { deviceClassConfigGui->saveSettings(); }
+    for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) {
+        deviceClassConfigGui->saveSettings();
+    }
 
     this->latexPanel.save(settings->latexSettings);
 
