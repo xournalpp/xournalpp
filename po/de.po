@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-02 08:08+0000\n"
-"PO-Revision-Date: 2022-10-02 08:43\n"
+"PO-Revision-Date: 2022-10-05 10:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2304,7 +2304,7 @@ msgstr "Totzonen-Radius"
 
 #: ../ui/latexSettings.glade:119
 msgid "Default LaTeX Text"
-msgstr ""
+msgstr "Standard LaTeX Text"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
