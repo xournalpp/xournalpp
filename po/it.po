@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-02 08:08+0000\n"
-"PO-Revision-Date: 2022-10-02 08:42\n"
+"PO-Revision-Date: 2022-10-05 23:18\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2309,7 +2309,7 @@ msgstr "Raggio per la zona morta"
 
 #: ../ui/latexSettings.glade:119
 msgid "Default LaTeX Text"
-msgstr ""
+msgstr "Testo LaTeX Predefinito"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
