@@ -2,6 +2,34 @@
 
 ## 1.1.2~dev (Unreleased)
 
+Bugfixes from various community contributors.
+
+* Fixed application window being dragged unintentionally when dragging from
+  toolbox or menu bars (#3901, #3907).
+* Fixed CLI export failures caused by not using the C locale (#3939, #3944).
+* Fixed a bug where the Default Tool does not update the tool icon (#3918,
+  #3947).
+* Fixed a bug where currently editing text boxes would not unfocus when moving
+  to a different page (#3765, #4027).
+* Fixed stylus/mouse inputs being detected twice for some tools (#4162).
+* Fixed a crash that occurs when a plugin calls `app.getDocumentStructure()`
+  (#4192, #4196).
+* Fixed a memory leak that occurs when using the Stroke Recognizer (#4258).
+* Fixed a crash that occurs on some Linux distros when opening a save dialog
+  after using the text tool (#4279, #4280).
+* Fixed a potential crash in toolbar customization (#4293).
+* Fixed a crash that can occur when "Apply Background to All Pages" is undoed
+  and then another action is performed (#4139, #4297).
+* Fixed PDF Attach Mode settings not loading correctly (#3189, #4228).
+* Improved performance of Text Tool rendering by eliminating unnecessary redraws
+  (#3810, #4000, #4074, #4135, #4136).
+* Improved LaTeX Tool error message when running inside Flatpak by providing
+  steps on how to install the TeXLive extension (#3996, #4259).
+* Windows: fixed a crash in the installer (#4041, #4062).
+* macOS: changed the way the Xournal++ is launched to avoid some potential
+  issues (#4087, #4090, #4287).
+* Linux: fixed linker errors associated with backtrace library (#3817, #3819).
+
 ## 1.1.1
 
 Bugfixes from various community contributors.
