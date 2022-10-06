@@ -34,7 +34,7 @@ auto gdk_context_set_icon_from_image(GdkDragContext* ctx, GtkWidget* widget) -> 
         }
         case GTK_IMAGE_SURFACE: {
             cairo_surface_t* surface{};
-            g_object_get(G_OBJECT(image), "surface", &surface);
+            g_object_get(G_OBJECT(image), "surface", &surface, nullptr);
             cairo_surface_set_device_offset(surface, -2, -2);
             gtk_drag_set_icon_surface(ctx, surface);
             return true;
