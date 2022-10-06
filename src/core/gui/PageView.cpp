@@ -62,6 +62,7 @@
 #include "util/i18n.h"                              // for FS, _, _F
 #include "view/DebugShowRepaintBounds.h"            // for IF_DEBUG_REPAINT
 #include "view/overlays/OverlayView.h"
+#include "view/overlays/SearchResultView.h"
 #include "view/overlays/ShapeToolView.h"
 
 #include "PageViewFindObjectHelper.h"  // for SelectObject, Pla...
@@ -98,7 +99,6 @@ XojPageView::~XojPageView() {
     delete this->eraser;
     endText();
     deleteViewBuffer();  // Ensures the mutex is locked during the buffer's destruction
-    delete this->search;
 }
 
 void XojPageView::setIsVisible(bool visible) {
@@ -139,7 +139,7 @@ auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
 }
 
 auto XojPageView::searchTextOnPage(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch) -> bool {
-    if (this->search == nullptr) {
+    if (!this->search) {
         if (text.empty()) {
             return true;
         }
@@ -153,7 +153,9 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t* occurrences,
             pdf = doc->getPdfPage(pNr);
             doc->unlock();
         }
-        this->search = new SearchControl(page, pdf);
+        this->search = std::make_unique<SearchControl>(page, pdf);
+        this->overlayViews.emplace_back(
+                std::make_unique<xoj::view::SearchResultView>(this->search.get(), this, settings->getSelectionColor()));
     }
 
     bool found = this->search->search(text, occurrences, yOfUpperMostMatch);
@@ -945,10 +947,6 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
     if (auto* selection = pdfToolbox->getSelection(); selection) {
         selection->paint(cr, pdfToolbox->selectionStyle);
-    }
-
-    if (this->search) {
-        this->search->paint(cr, zoom, getSelectionColor());
     }
 
     if (this->inputHandler) {
