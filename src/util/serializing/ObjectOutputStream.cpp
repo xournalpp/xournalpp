@@ -60,11 +60,6 @@ void ObjectOutputStream::writeData(const void* data, int len, int width) {
     }
 }
 
-static auto cairoWriteFunction(GString* string, const unsigned char* data, unsigned int length) -> cairo_status_t {
-    g_string_append_len(string, reinterpret_cast<const gchar*>(data), length);
-    return CAIRO_STATUS_SUCCESS;
-}
-
 void ObjectOutputStream::writeImage(const std::string_view& imgData) {
     this->encoder->addStr("_m");
     size_t len = imgData.length();
