@@ -92,5 +92,4 @@ private:
     int floatingToolboxX = 0;
     int floatingToolboxY = 0;
     FloatingToolBoxState floatingToolboxState = recalcSize;
-    int numWidgets = 0;
 };

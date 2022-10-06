@@ -521,13 +521,13 @@ void ToolMenuHandler::initToolItems() {
      * Footer tools
      * ------------------------------------------------------------------------
      */
-    toolPageSpinner = new ToolPageSpinner(gui, listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN, iconNameHelper);
+    toolPageSpinner = new ToolPageSpinner(listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN, iconNameHelper);
     addToolItem(toolPageSpinner);
 
     auto* toolZoomSlider = new ToolZoomSlider("ZOOM_SLIDER", listener, ACTION_FOOTER_ZOOM_SLIDER, zoom, iconNameHelper);
     addToolItem(toolZoomSlider);
 
-    toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER,
+    toolPageLayer = new ToolPageLayer(control->getLayerController(), listener, "LAYER", ACTION_FOOTER_LAYER,
                                       iconNameHelper);
     addToolItem(toolPageLayer);
 

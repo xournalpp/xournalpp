@@ -22,13 +22,12 @@
 
 #include "AbstractToolItem.h"  // for AbstractToolItem
 
-class GladeGui;
 class SpinPageAdapter;
 class ActionHandler;
 
 class ToolPageSpinner: public AbstractToolItem {
 public:
-    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, std::string id, ActionType type,
+    ToolPageSpinner(ActionHandler* handler, std::string id, ActionType type,
                     IconNameHelper iconNameHelper);
     ~ToolPageSpinner() override;
 
@@ -48,8 +47,6 @@ private:
     void updateLabels();
 
 private:
-    GladeGui* gui = nullptr;
-
     SpinPageAdapter* pageSpinner = nullptr;
     GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
 

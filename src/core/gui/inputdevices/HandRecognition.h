@@ -102,11 +102,6 @@ private:
     TouchDisableInterface* touchImpl = nullptr;
 
     /**
-     * XournalView
-     */
-    GtkWidget* widget;
-
-    /**
      * InputContext
      */
     InputContext* inputContext;

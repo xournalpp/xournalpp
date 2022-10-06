@@ -138,7 +138,6 @@ void TouchInputHandler::zoomStart() {
         zoomControl->setZoomFitMode(false);
     }
 
-    auto* mainWindow = inputContext->getView()->getControl()->getWindow();
     zoomControl->startZoomSequence(center);
 }
 

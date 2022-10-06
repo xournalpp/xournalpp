@@ -77,6 +77,5 @@ private:
     std::string toolbarName;
     MainWindow* window;
 
-    GtkToolItem* spacerItem{};
     ToolMenuHandler* toolHandler;
 };

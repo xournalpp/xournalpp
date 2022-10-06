@@ -20,9 +20,6 @@ class PositionInputData;
 class XojPageView;
 
 class PenInputHandler: public AbstractInputHandler {
-private:
-    XojPageView* lastActivePage = nullptr;
-
 protected:
     /**
      * Whether the current device class has a device with button 1 in pressed state

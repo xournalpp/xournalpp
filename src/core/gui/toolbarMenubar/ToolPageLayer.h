@@ -31,7 +31,7 @@ class ActionHandler;
 
 class ToolPageLayer: public AbstractToolItem, public LayerCtrlListener {
 public:
-    ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, std::string id, ActionType type,
+    ToolPageLayer(LayerController* lc, ActionHandler* handler, std::string id, ActionType type,
                   IconNameHelper iconNameHelper);
     ~ToolPageLayer() override;
 
@@ -76,7 +76,6 @@ private:
 
 private:
     LayerController* lc = nullptr;
-    GladeGui* gui = nullptr;
 
     GtkWidget* layerLabel = nullptr;
     GtkWidget* layerButton = nullptr;

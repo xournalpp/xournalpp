@@ -68,11 +68,6 @@ auto migrateSettings() -> MigrateResult;
 void checkForErrorlog();
 void checkForEmergencySave(Control* control);
 
-auto exportPdf(const char* input, const char* output, const char* range, ExportBackgroundType exportBackground,
-               bool progressiveMode) -> int;
-auto exportImg(const char* input, const char* output, const char* range, int pngDpi, int pngWidth, int pngHeight,
-               ExportBackgroundType exportBackground) -> int;
-
 void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound = true);
 
 void initCAndCoutLocales() {

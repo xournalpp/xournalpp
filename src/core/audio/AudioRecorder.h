@@ -34,12 +34,10 @@ public:
 
     bool start(fs::path const& file);
     void stop();
-    bool isRecording() const;
+    [[nodiscard]] bool isRecording() const;
     std::vector<DeviceInfo> getInputDevices() const;
 
 private:
-    Settings& settings;
-
     std::unique_ptr<AudioQueue<float>> audioQueue;
     std::unique_ptr<PortAudioProducer> portAudioProducer;
     std::unique_ptr<VorbisConsumer> vorbisConsumer;
