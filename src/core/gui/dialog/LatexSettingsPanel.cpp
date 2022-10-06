@@ -28,8 +28,8 @@ class GladeSearchpath;
 LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
         GladeGui(gladeSearchPath, "latexSettings.glade", "latexSettingsPanel"),
         cbAutoDepCheck(GTK_TOGGLE_BUTTON(this->get("latexSettingsRunCheck"))),
-        cbUseSystemFont(GTK_TOGGLE_BUTTON(this->get("cbUseSystemFont"))),
-        globalTemplateChooser(GTK_FILE_CHOOSER(this->get("latexSettingsTemplateFile"))) {
+        globalTemplateChooser(GTK_FILE_CHOOSER(this->get("latexSettingsTemplateFile"))),
+        cbUseSystemFont(GTK_TOGGLE_BUTTON(this->get("cbUseSystemFont"))) {
     g_object_ref(this->cbAutoDepCheck);
     g_object_ref(this->cbUseSystemFont);
     g_object_ref(this->globalTemplateChooser);

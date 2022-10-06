@@ -24,7 +24,8 @@ enum NonAudioTreatment : bool { FADE_OUT_NON_AUDIO_ = true, NORMAL_NON_AUDIO = f
 enum EditionTreatment : bool { SHOW_CURRENT_EDITING = true, HIDE_CURRENT_EDITING = false };
 enum ColorTreatment : bool { COLORBLIND = true, NORMAL_COLOR = false };
 
-struct Context {
+class Context {
+public:
     cairo_t* cr;
     NonAudioTreatment fadeOutNonAudio;
     EditionTreatment showCurrentEdition;

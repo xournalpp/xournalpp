@@ -16,7 +16,7 @@
 #include "previews/page/SidebarPreviewPages.h"        // for SidebarPreviewP...
 #include "util/Util.h"                                // for npos
 
-Sidebar::Sidebar(GladeGui* gui, Control* control): toolbar(this, gui), control(control), gui(gui) {
+Sidebar::Sidebar(GladeGui* gui, Control* control): control(control), gui(gui), toolbar(this, gui) {
     this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
     this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
 

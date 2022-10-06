@@ -5,11 +5,11 @@
 
 Tool::Tool(std::string name, ToolType type, Color color, unsigned int capabilities,
            std::optional<std::array<double, toolSizes>> thickness):
-        name{std::move(name)}, type{type}, capabilities{capabilities}, thickness{std::move(thickness)} {
+        name{std::move(name)}, type{type}, thickness{std::move(thickness)}, capabilities{capabilities} {
     setColor(color);
 }
 
-Tool::Tool(const Tool& t): name{t.name}, type{t.type}, capabilities{t.capabilities}, thickness{t.thickness} {
+Tool::Tool(const Tool& t): name{t.name}, type{t.type}, thickness{t.thickness}, capabilities{t.capabilities} {
     setColor(t.getColor());
 }
 

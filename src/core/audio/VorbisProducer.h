@@ -19,7 +19,8 @@
 template <typename T>
 class AudioQueue;
 
-struct VorbisProducer final {
+class VorbisProducer final {
+public:
     explicit VorbisProducer(AudioQueue<float>& audioQueue): audioQueue(audioQueue) {}
 
     bool start(fs::path const& file, unsigned int timestamp);
