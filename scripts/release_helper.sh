@@ -59,6 +59,10 @@ function compare_versions() {
 # $1 the version as a string
 # Returns 1 if the version is valid
 function validate_version() {
+    if [ -z "$1" ]; then
+        return 0
+    fi
+
     if ! [[ $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+([+~][A-Za-z0-9+~\.-]*)*?$ ]]; then
         return 1
     else
@@ -526,7 +530,7 @@ if [ -z ${SOURCE_ONLY+x} ]; then
         echo "Usage: $0 <command> <arguments>"
         echo ""
         echo "Commands:"
-        echo "  prepare <version>  Prepares a release in the form of a new branch with correct version strings."
+        echo "    prepare <version>  Prepares a release in the form of a new branch with correct version strings."
         echo "                     This command may only be run on a clean HEAD from:"
         echo "                       - The main development branch (master)"
         echo "                           The supplied version must differ from the current version in the major"
@@ -564,7 +568,7 @@ if [ -z ${SOURCE_ONLY+x} ]; then
     if [[ $command == "prepare" ]]; then
         version=$2
 
-        if validate_version $1; then
+        if validate_version "$version"; then
             print_version_help
             abort 4 "No valid version string provided"
         fi
