@@ -70,7 +70,6 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) -> 
 auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event)
         -> PositionInputData {
     g_assert(page != nullptr);
-    GtkXournal* xournal = inputContext->getXournal();
 
     gdouble eventX = event.relativeX;
     gdouble eventY = event.relativeY;

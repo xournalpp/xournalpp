@@ -419,7 +419,6 @@ auto SetsquareInputHandler::getCoords(double xCoord, double yCoord) -> utl::Poin
     const auto view = inputContext->getView();
     const auto setsquareView = view->getSetsquareView();
     const auto zoom = view->getZoom();
-    const auto xournal = inputContext->getXournal();
     const auto page = setsquareView->getView();
     const auto posX = xCoord - static_cast<double>(page->getX());
     const auto posY = yCoord - static_cast<double>(page->getY());

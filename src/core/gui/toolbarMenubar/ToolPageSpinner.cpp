@@ -10,9 +10,9 @@
 
 class ActionHandler;
 
-ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, std::string id, ActionType type,
+ToolPageSpinner::ToolPageSpinner(ActionHandler* handler, std::string id, ActionType type,
                                  IconNameHelper iconNameHelper):
-        AbstractToolItem(std::move(id), handler, type, nullptr), gui(gui), iconNameHelper(iconNameHelper) {
+        AbstractToolItem(std::move(id), handler, type, nullptr), iconNameHelper(iconNameHelper) {
     this->pageSpinner = new SpinPageAdapter();
 }
 

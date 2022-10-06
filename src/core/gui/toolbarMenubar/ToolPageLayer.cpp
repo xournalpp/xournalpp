@@ -19,11 +19,10 @@
 
 class ActionHandler;
 
-ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, std::string id,
+ToolPageLayer::ToolPageLayer(LayerController* lc, ActionHandler* handler, std::string id,
                              ActionType type, IconNameHelper iconNameHelper):
         AbstractToolItem(std::move(id), handler, type, nullptr),
         lc(lc),
-        gui(gui),
         menu(gtk_menu_new()),
         iconNameHelper(iconNameHelper) {
     this->layerLabel = gtk_label_new(_("Loading..."));
