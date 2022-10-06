@@ -251,7 +251,7 @@ private:
     /**
      * Search handling
      */
-    SearchControl* search = nullptr;
+    std::unique_ptr<SearchControl> search;
 
     /**
      * Unixtimestam when the page was last time in the visible area
