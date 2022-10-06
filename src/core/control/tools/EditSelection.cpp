@@ -52,13 +52,13 @@ constexpr int ROTATE_PADDING = 8;
 constexpr unsigned int PAN_TIMER_RATE = 30;
 
 EditSelection::EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view):
-        snappingHandler(view->getXournal()->getControl()->getSettings()),
         x(0),
         y(0),
         rotation(0),
         width(0),
         height(0),
-        snappedBounds(Rectangle<double>{}) {
+        snappedBounds(Rectangle<double>{}),
+        snappingHandler(view->getXournal()->getControl()->getSettings()) {
     construct(undo, view, page);
 }
 

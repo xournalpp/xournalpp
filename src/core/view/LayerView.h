@@ -13,7 +13,7 @@
 
 class Layer;
 namespace xoj::view {
-struct Context;
+class Context;
 
 class LayerView {
 public:

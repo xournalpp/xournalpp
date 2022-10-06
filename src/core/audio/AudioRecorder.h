@@ -23,7 +23,8 @@ class PortAudioProducer;
 class Settings;
 class VorbisConsumer;
 
-struct AudioRecorder final {
+class AudioRecorder final {
+public:
     explicit AudioRecorder(Settings& settings);
     AudioRecorder(AudioRecorder const&) = delete;
     AudioRecorder(AudioRecorder&&) = delete;

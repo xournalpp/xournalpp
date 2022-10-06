@@ -41,8 +41,8 @@ using xoj::util::Rectangle;
 
 EditSelectionContents::EditSelectionContents(Rectangle<double> bounds, Rectangle<double> snappedBounds,
                                              const PageRef& sourcePage, Layer* sourceLayer, XojPageView* sourceView):
-        lastBounds(bounds),
         originalBounds(bounds),
+        lastBounds(bounds),
         lastSnappedBounds(snappedBounds),
         sourcePage(sourcePage),
         sourceLayer(sourceLayer),
