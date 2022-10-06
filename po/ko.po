@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-02 08:08+0000\n"
-"PO-Revision-Date: 2022-10-02 08:43\n"
+"PO-Revision-Date: 2022-10-06 17:49\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -456,7 +456,7 @@ msgstr ""
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:43
 msgid "Edit text"
-msgstr ""
+msgstr "텍스트 편집"
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
