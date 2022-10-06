@@ -454,7 +454,9 @@ void on_startup(GApplication* application, XMPtr app_data) {
             }
         }
 
-        for (auto& p: iconLoadOrder) { gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str()); }
+        for (auto& p: iconLoadOrder) {
+            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str());
+        }
     }
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
@@ -526,9 +528,9 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
     initCAndCoutLocales();
 
     auto print_version = [&] {
-        if(!std::string(GIT_COMMIT_ID).empty()){
+        if (!std::string(GIT_COMMIT_ID).empty()) {
             std::cout << PROJECT_NAME << " " << PROJECT_VERSION << " (" << GIT_COMMIT_ID << ")" << std::endl;
-        } else{
+        } else {
             std::cout << PROJECT_NAME << " " << PROJECT_VERSION << std::endl;
         }
         std::cout << "└──libgtk: " << gtk_get_major_version() << "."  //

@@ -27,8 +27,7 @@ class ActionHandler;
 
 class ToolPageSpinner: public AbstractToolItem {
 public:
-    ToolPageSpinner(ActionHandler* handler, std::string id, ActionType type,
-                    IconNameHelper iconNameHelper);
+    ToolPageSpinner(ActionHandler* handler, std::string id, ActionType type, IconNameHelper iconNameHelper);
     ~ToolPageSpinner() override;
 
 public:

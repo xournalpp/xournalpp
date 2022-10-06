@@ -19,8 +19,8 @@
 
 class ActionHandler;
 
-ToolPageLayer::ToolPageLayer(LayerController* lc, ActionHandler* handler, std::string id,
-                             ActionType type, IconNameHelper iconNameHelper):
+ToolPageLayer::ToolPageLayer(LayerController* lc, ActionHandler* handler, std::string id, ActionType type,
+                             IconNameHelper iconNameHelper):
         AbstractToolItem(std::move(id), handler, type, nullptr),
         lc(lc),
         menu(gtk_menu_new()),
@@ -214,7 +214,9 @@ void ToolPageLayer::updateLayerData() {
 
     inMenuUpdate = true;
 
-    for (GtkWidget* widgetPtr: layerItems) { gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widgetPtr), false); }
+    for (GtkWidget* widgetPtr: layerItems) {
+        gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widgetPtr), false);
+    }
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(layerItems[layerId]), true);
 
     PageRef page = lc->getCurrentPage();
