@@ -11,6 +11,7 @@
 #include "control/tools/StrokeStabilizerEnum.h"  // for Preprocessor, Averag...
 #include "model/SplineSegment.h"                 // for SplineSegment
 #include "model/Stroke.h"                        // for Stroke
+#include "model/path/PiecewiseLinearPath.h"
 
 /**
  * StrokeStabilizer::get
@@ -86,28 +87,26 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     /**
      * Using the last two points of the stroke, draw a spline quadratic segment to the coordinates of ev.
      */
-    Stroke* stroke = strokeHandler->getStroke();
-    size_t pointCount = stroke->getPointCount();
-    if (pointCount <= 0) {
+    const Stroke& stroke = *strokeHandler->getStroke();
+    const Path& path = stroke.getPath();
+
+    if (path.empty()) {
         return;
     }
 
-    if (pointCount == 1) {
-        /**
-         * Draw a line segment
-         */
+    if (path.getType() == Path::SPLINE || path.nbSegments() == 0) {
         drawEvent(ev);
         return;
     }
 
+    xoj_assert(path.getData().size() >= 2);
     /**
      * Draw a quadratic spline segment, with first tangent vector parallel to AB
      */
-    Point B = stroke->getPoint(pointCount - 1);
-    const Point A = stroke->getPoint(pointCount - 2);
-
-    const bool usePressure = ev.pressure != Point::NO_PRESSURE && stroke->getToolType().isPressureSensitive();
-    const Point C(ev.x / zoom, ev.y / zoom, usePressure ? ev.pressure * stroke->getWidth() : Point::NO_PRESSURE);
+    Point B = path.getLastKnot();
+    const Point A = path.getData()[path.getData().size() - 2];
+    const bool usePressure = ev.pressure != Point::NO_PRESSURE && stroke.getToolType().isPressureSensitive();
+    const Point C(ev.x / zoom, ev.y / zoom, usePressure ? ev.pressure * stroke.getWidth() : Point::NO_PRESSURE);
 
     MathVect2 vAB(A, B);
     MathVect2 vBC(B, C);
@@ -129,15 +128,6 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
      * The std::min and its second argument ensure the spline segment stays reasonably close to its nodes
      */
     double distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect2::scalarProduct(vAB, vBC))), normBC);
-
-    /**
-     * Rebalance the pressure values.
-     */
-    if (usePressure) {
-        double coeff = normBC / 2 + distance;  // Very rough estimation of the spline's length
-        B.z = (coeff * A.z + normAB * C.z) / (normAB + coeff);
-        stroke->setLastPressure(B.z);
-    }
 
     // Quadratic control point
     Point Q = B.lineTo(A, -distance);
@@ -236,13 +226,11 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
 }
 
 void StrokeStabilizer::Deadzone::rebalanceStrokePressures() {
-    Stroke* stroke = strokeHandler->getStroke();
-    size_t pointCount = stroke->getPointCount();
-    if (pointCount >= 3) {
-        /**
-         * Smoothen a little bit the pressure variations
-         */
-        stroke->setSecondToLastPressure((stroke->getPoint(pointCount - 2).z + stroke->getPoint(pointCount - 3).z) / 2);
+    if (strokeHandler->path) {  // Live spline approximation does not need any rebalancing
+        PiecewiseLinearPath& path = *strokeHandler->path;
+        if (auto n = path.nbSegments(); n >= 2) {
+            path.setSecondToLastPressure((path.getPoint(n - 1).z + path.getPoint(n - 2).z) / 2);
+        }
     }
 }
 
@@ -276,13 +264,11 @@ void StrokeStabilizer::Inertia::processEvent(const PositionInputData& pos) {
 }
 
 void StrokeStabilizer::Inertia::rebalanceStrokePressures() {
-    Stroke* stroke = strokeHandler->getStroke();
-    size_t pointCount = stroke->getPointCount();
-    if (pointCount >= 3) {
-        /**
-         * Smoothen a little bit the pressure variations
-         */
-        stroke->setSecondToLastPressure((stroke->getPoint(pointCount - 2).z + stroke->getPoint(pointCount - 3).z) / 2);
+    if (strokeHandler->path) {  // Live spline approximation does not need any rebalancing
+        PiecewiseLinearPath& path = *strokeHandler->path;
+        if (auto n = path.nbSegments(); n >= 2) {
+            path.setSecondToLastPressure((path.getPoint(n - 1).z + path.getPoint(n - 2).z) / 2);
+        }
     }
 }
 

@@ -35,6 +35,7 @@ class Layer;
 class Stroke;
 class TexImage;
 class Text;
+class PiecewiseLinearPath;
 
 
 enum ParserPosition {
@@ -86,7 +87,7 @@ private:
     bool openFile(fs::path const& filepath);
     bool parseXml();
 
-    void fixNullPressureValues();
+    void fixNullPressureValues(const PiecewiseLinearPath& path);
     static void parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,
                            GError** error);
     static void parserEndElement(GMarkupParseContext* context, const gchar* elementName, gpointer userdata,

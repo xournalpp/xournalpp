@@ -6,16 +6,19 @@
 #include <memory>    // for allocator_traits<>::value_type
 #include <vector>    // for vector
 
-#include "model/LineStyle.h"              // for LineStyle
-#include "model/Point.h"                  // for Point
-#include "model/Stroke.h"                 // for Stroke, StrokeTool::HIGHLIG...
-#include "model/eraser/ErasableStroke.h"  // for ErasableStroke, ErasableStr...
-#include "model/path/Path.h"              // for Path
-#include "util/Assert.h"                  // for xoj_assert
-#include "util/Color.h"                   // for cairo_set_source_rgbi
-#include "util/Interval.h"                // for Interval
-#include "util/Rectangle.h"               // for Rectangle
-#include "util/Util.h"                    // for cairo_set_dash_from_vector
+#include "model/LineStyle.h"  // for LineStyle
+#include "model/Point.h"      // for Point
+#include "model/Stroke.h"     // for Stroke, StrokeTool::HIGHLIG...
+#include "model/eraser/ErasablePressureSpline.h"
+#include "model/eraser/ErasableStroke.h"     // for ErasableStroke, ErasableStr...
+#include "model/path/Path.h"                 // for Path
+#include "model/path/PiecewiseLinearPath.h"  // for PiecewiseLinearPath
+#include "model/path/Spline.h"               // for Spline
+#include "util/Assert.h"                     // for xoj_assert
+#include "util/Color.h"                      // for cairo_set_source_rgbi
+#include "util/Interval.h"                   // for Interval
+#include "util/Rectangle.h"                  // for Rectangle
+#include "util/Util.h"                       // for cairo_set_dash_from_vector
 
 #include "Mask.h"          // for Mask
 #include "StrokeView.h"    // for StrokeView, StrokeView::CAI...
@@ -27,24 +30,33 @@ using namespace xoj::view;
 ErasableStrokeView::ErasableStrokeView(const ErasableStroke& erasableStroke): erasableStroke(erasableStroke) {}
 
 void ErasableStrokeView::draw(cairo_t* cr) const {
-    std::vector<ErasableStroke::SubSection> sections = erasableStroke.getRemainingSubSectionsVector();
+    if (this->erasableStroke.getType() == ErasableStroke::PRESSURE_SPLINE) {
+        drawPressureSpline(cr);
+        return;
+    }
+
+    std::vector<Path::SubSection> sections = erasableStroke.getRemainingSubSectionsVector();
 
     if (sections.empty()) {
         return;
     }
 
     const Stroke& stroke = this->erasableStroke.stroke;
+    const Path& path = stroke.getPath();
 
     const auto& dashes = stroke.getLineStyle().getDashes();
-
-    const std::vector<Point>& data = stroke.getPointVector();
 
     xoj::util::CairoSaveGuard guard(cr);
 
     if (stroke.hasPressure()) {
+        /**
+         * No need to merge the first and last sections here (if the stroke is closed).
+         * This merging is only necessary for highlighter strokes, which are not pressure sensitive.
+         */
+        const std::vector<Point>& data = path.getData();
         double dashOffset = 0;
         for (const auto& interval: sections) {
-            Point p = stroke.getPoint(interval.min);
+            Point p = path.getPoint(interval.min);
             cairo_set_line_width(cr, p.z);
             cairo_move_to(cr, p.x, p.y);
 
@@ -67,7 +79,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
                 Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
             }
 
-            Point q = stroke.getPoint(interval.max);
+            Point q = path.getPoint(interval.max);
             cairo_line_to(cr, q.x, q.y);
             cairo_stroke(cr);
         }
@@ -78,7 +90,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
         bool mergeFirstAndLast = this->erasableStroke.isClosedStroke() &&
                                  stroke.getToolType() == StrokeTool::HIGHLIGHTER && sections.size() >= 2 &&
                                  sections.front().min == Path::Parameter(0, 0.0) &&
-                                 sections.back().max == Path::Parameter(data.size() - 2, 1.0);
+                                 sections.back().max == Path::Parameter(path.nbSegments() - 1, 1.0);
 
         auto sectionIt = sections.cbegin();
         auto sectionEndIt = sections.cend();
@@ -87,20 +99,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
             /**
              * Draw the first and last section as one
              */
-            const ErasableStroke::SubSection& first = sections.front();
-            const ErasableStroke::SubSection& last = sections.back();
-            Point p = stroke.getPoint(last.min);
-            cairo_move_to(cr, p.x, p.y);
-
-            auto endIt = data.cend();
-            for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)last.min.index + 1); it != endIt; ++it) {
-                cairo_line_to(cr, it->x, it->y);
-            }
-            endIt = std::next(data.cbegin(), (std::ptrdiff_t)first.max.index + 1);
-            for (auto it = data.cbegin(); it != endIt; ++it) { cairo_line_to(cr, it->x, it->y); }
-
-            Point q = stroke.getPoint(first.max);
-            cairo_line_to(cr, q.x, q.y);
+            path.addCircularSectionToCairo(cr, sections.back().min, sections.front().max);
             cairo_stroke(cr);
 
             // Avoid drawing those sections again
@@ -109,71 +108,133 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
         }
 
         for (; sectionIt != sectionEndIt; ++sectionIt) {
-            Point p = stroke.getPoint(sectionIt->min);
-            cairo_move_to(cr, p.x, p.y);
-
-            auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)sectionIt->max.index + 1);
-            for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)sectionIt->min.index + 1); it != endIt; ++it) {
-                cairo_line_to(cr, it->x, it->y);
-            }
-
-            Point q = stroke.getPoint(sectionIt->max);
-            cairo_line_to(cr, q.x, q.y);
+            path.addSectionToCairo(cr, *sectionIt);
             cairo_stroke(cr);
         }
     }
 
 #ifdef DEBUG_ERASABLE_STROKE_BOXES
-    if (!this->erasableStroke.debugMask.isInitialized()) {
-        cairo_matrix_t matrix;
-        cairo_get_matrix(cr, &matrix);
-
-        Range extents(0, 0, stroke.getElementWidth(), stroke.getElementHeight());
-        extents.addPadding(5 * stroke.getWidth());
-        erasableStroke.debugMask = Mask(cairo_get_target(cr), extents, matrix.xx, CAIRO_CONTENT_COLOR_ALPHA);
-        cairo_set_line_width(this->erasableStroke.debugMask.get(), 2);
-    } else {
-        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-        this->erasableStroke.debugMask.paintTo(cr);
-    }
+    blitDebugMask(cr);
 #endif
 }
 
+void ErasableStrokeView::drawPressureSpline(cairo_t* cr) const {
+    std::vector<Path::SubSection> sections = erasableStroke.getRemainingSubSectionsVector();
+
+    auto pointCache = dynamic_cast<const ErasablePressureSpline&>(this->erasableStroke).pointCache;
+    if (sections.empty()) {
+        pointCache.clear();
+        return;
+    }
+
+    const Stroke& stroke = this->erasableStroke.stroke;
+    const Path& path = stroke.getPath();
+
+    auto& dashes = stroke.getLineStyle().getDashes();
+
+    for (auto& interval: sections) {
+        Point p = path.getPoint(interval.min);
+        cairo_set_line_width(cr, p.z);
+        cairo_move_to(cr, p.x, p.y);
+
+        double dashOffset = 0.0;
+        const Point* lastPoint = &p;
+
+        auto pointCache = dynamic_cast<const ErasablePressureSpline&>(this->erasableStroke).pointCache;
+
+        auto pointCacheIt = pointCache.cbegin() + static_cast<std::ptrdiff_t>(interval.min.index);
+
+        // Iterator to the first point whose parameter is greater that interval.min.t
+        auto ptIt =
+                std::upper_bound(pointCacheIt->cbegin(), pointCacheIt->cend(), interval.min.t,
+                                 [](const double& t, const SplineSegment::ParametrizedPoint& pt) { return t < pt.t; });
+
+        auto endPointCacheIt = pointCache.cbegin() + static_cast<std::ptrdiff_t>(interval.max.index);
+        if (pointCacheIt != endPointCacheIt) {
+            // The drawn interval spans more than one spline segment
+            for (auto endPtIt = pointCacheIt->cend(); ptIt < endPtIt; ++ptIt) {
+                // First (portion of a) segment
+                if (!dashes.empty()) {
+                    Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
+                    dashOffset += lastPoint->lineLengthTo(*ptIt);
+                    lastPoint = &(*ptIt);
+                }
+                cairo_line_to(cr, ptIt->x, ptIt->y);
+                cairo_stroke(cr);
+                cairo_set_line_width(cr, ptIt->z);
+                cairo_move_to(cr, ptIt->x, ptIt->y);
+            }
+            ++pointCacheIt;
+            for (; pointCacheIt != endPointCacheIt; ++pointCacheIt) {
+                // Middle segments
+                for (auto& p: *pointCacheIt) {
+                    if (!dashes.empty()) {
+                        Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
+                        dashOffset += lastPoint->lineLengthTo(p);
+                        lastPoint = &p;
+                    }
+                    cairo_line_to(cr, p.x, p.y);
+                    cairo_stroke(cr);
+                    cairo_set_line_width(cr, p.z);
+                    cairo_move_to(cr, p.x, p.y);
+                }
+            }
+            ptIt = pointCacheIt->cbegin();
+        }
+        // Iterator to the first point whose parameter it greater or equal to interval.max.t
+        auto endPtIt =
+                std::lower_bound(ptIt, pointCacheIt->cend(), interval.max.t,
+                                 [](const SplineSegment::ParametrizedPoint& pt, const double& t) { return pt.t < t; });
+
+        for (; ptIt < endPtIt; ++ptIt) {
+            // Last (portion of a) segment
+            if (!dashes.empty()) {
+                Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
+                dashOffset += lastPoint->lineLengthTo(*ptIt);
+                lastPoint = &(*ptIt);
+            }
+            cairo_line_to(cr, ptIt->x, ptIt->y);
+            cairo_stroke(cr);
+            cairo_set_line_width(cr, ptIt->z);
+            cairo_move_to(cr, ptIt->x, ptIt->y);
+        }
+
+        if (!dashes.empty()) {
+            Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
+        }
+        Point q = path.getPoint(interval.max);
+        cairo_line_to(cr, q.x, q.y);
+        cairo_stroke(cr);
+    }
+
+#ifdef DEBUG_ERASABLE_STROKE_BOXES
+    blitDebugMask(cr);
+#endif
+}
+
+
 void ErasableStrokeView::drawFilling(cairo_t* cr) const {
-    std::vector<ErasableStroke::SubSection> sections = erasableStroke.getRemainingSubSectionsVector();
+    std::vector<Path::SubSection> sections = erasableStroke.getRemainingSubSectionsVector();
 
     if (sections.empty()) {
         return;
     }
 
     const Stroke& stroke = this->erasableStroke.stroke;
-    const std::vector<Point>& data = stroke.getPointVector();
-
-    bool mergeFirstAndLast = this->erasableStroke.isClosedStroke() && sections.size() >= 2 &&
-                             sections.front().min == Path::Parameter(0, 0.0) &&
-                             sections.back().max == Path::Parameter(data.size() - 2, 1.0);
+    const Path& path = stroke.getPath();
 
     auto sectionIt = sections.cbegin();
     auto sectionEndIt = sections.cend();
 
+    const bool mergeFirstAndLast = this->erasableStroke.isClosedStroke() && sections.size() >= 2 &&
+                                   sections.front().min == Path::Parameter(0, 0.0) &&
+                                   sections.back().max == Path::Parameter(path.nbSegments() - 1, 1.0);
+
     if (mergeFirstAndLast) {
         /**
-         * Draw the first and last sections as one
+         * Draw the first and last section as one
          */
-        const ErasableStroke::SubSection& first = sections.front();
-        const ErasableStroke::SubSection& last = sections.back();
-        Point p = stroke.getPoint(last.min);
-        cairo_move_to(cr, p.x, p.y);
-
-        auto endIt = data.cend();
-        for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)last.min.index + 1); it != endIt; ++it) {
-            cairo_line_to(cr, it->x, it->y);
-        }
-        endIt = std::next(data.cbegin(), (std::ptrdiff_t)first.max.index + 1);
-        for (auto it = data.cbegin(); it != endIt; ++it) { cairo_line_to(cr, it->x, it->y); }
-
-        Point q = stroke.getPoint(first.max);
-        cairo_line_to(cr, q.x, q.y);
+        path.addCircularSectionToCairo(cr, sections.back().min, sections.front().max);
         cairo_fill(cr);
 
         // Avoid drawing those sections again
@@ -182,23 +243,13 @@ void ErasableStrokeView::drawFilling(cairo_t* cr) const {
     }
 
     for (; sectionIt != sectionEndIt; ++sectionIt) {
-        Point p = stroke.getPoint(sectionIt->min);
-        cairo_move_to(cr, p.x, p.y);
-
-        auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)sectionIt->max.index + 1);
-        for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)sectionIt->min.index + 1); it != endIt; ++it) {
-            cairo_line_to(cr, it->x, it->y);
-        }
-
-        Point q = stroke.getPoint(sectionIt->max);
-        cairo_line_to(cr, q.x, q.y);
+        path.addSectionToCairo(cr, *sectionIt);
         cairo_fill(cr);
     }
 }
 
 void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
-    const Stroke& stroke = erasableStroke.stroke;
-    std::vector<ErasableStroke::SubSection> sections = erasableStroke.getRemainingSubSectionsVector();
+    std::vector<Path::SubSection> sections = erasableStroke.getRemainingSubSectionsVector();
 
     if (sections.empty()) {
         return;
@@ -206,7 +257,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
 
     xoj::util::CairoSaveGuard guard(cr);
 
-    const auto linecap = StrokeView::CAIRO_LINE_CAP[stroke.getStrokeCapStyle()];
+    const auto linecap = StrokeView::CAIRO_LINE_CAP[erasableStroke.stroke.getStrokeCapStyle()];
 
     /**
      * We create a mask for each subsection, paint on it and blit them all.
@@ -218,25 +269,26 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
     // We assume the matrix is an homothety
     xoj_assert(matrix.xx == matrix.yy && matrix.xy == 0 && matrix.yx == 0);
 
+    const Stroke& stroke = erasableStroke.stroke;
+    const Path& path = stroke.getPath();
+
     // Initialise the cairo context
     cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
     Util::cairo_set_source_rgbi(cr, stroke.getColor(), static_cast<double>(stroke.getFill()) / 255.0);
 
-    const std::vector<Point>& data = stroke.getPointVector();
-
-    bool mergeFirstAndLast = erasableStroke.isClosedStroke() && sections.size() >= 2 &&
-                             sections.front().min == Path::Parameter(0, 0.0) &&
-                             sections.back().max == Path::Parameter(data.size() - 2, 1.0);
+    const bool mergeFirstAndLast = erasableStroke.isClosedStroke() && sections.size() >= 2 &&
+                                   sections.front().min == Path::Parameter(0, 0.0) &&
+                                   sections.back().max == Path::Parameter(path.nbSegments() - 1, 1.0);
 
     auto sectionIt = sections.cbegin();
     auto sectionEndIt = sections.cend();
 
     if (mergeFirstAndLast) {
         /**
-         * Draw the first and last sections as one
+         * Draw the first and last section as one
          */
-        const ErasableStroke::SubSection& first = sections.front();
-        const ErasableStroke::SubSection& last = sections.back();
+        const Path::SubSection& first = sections.front();
+        const Path::SubSection& last = sections.back();
 
         /**
          * Create a mask tailored to the union of the sections' bounding boxes
@@ -248,18 +300,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
         cairo_set_line_cap(crMask, linecap);
 
         // Paint to the mask
-        Point p = stroke.getPoint(last.min);
-        cairo_move_to(crMask, p.x, p.y);
-
-        auto endIt = data.cend();
-        for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)last.min.index + 1); it != endIt; ++it) {
-            cairo_line_to(crMask, it->x, it->y);
-        }
-        endIt = std::next(data.cbegin(), (std::ptrdiff_t)first.max.index + 1);
-        for (auto it = data.cbegin(); it != endIt; ++it) { cairo_line_to(crMask, it->x, it->y); }
-
-        Point q = stroke.getPoint(first.max);
-        cairo_line_to(crMask, q.x, q.y);
+        path.addCircularSectionToCairo(crMask, last.min, first.max);
 
         cairo_fill_preserve(crMask);
         cairo_stroke(crMask);
@@ -278,16 +319,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
         cairo_set_line_cap(crMask, linecap);
 
         // Paint to the mask
-        Point p = stroke.getPoint(sectionIt->min);
-        cairo_move_to(crMask, p.x, p.y);
-
-        auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)sectionIt->max.index + 1);
-        for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)sectionIt->min.index + 1); it != endIt; ++it) {
-            cairo_line_to(crMask, it->x, it->y);
-        }
-
-        Point q = stroke.getPoint(sectionIt->max);
-        cairo_line_to(crMask, q.x, q.y);
+        path.addSectionToCairo(crMask, *sectionIt);
 
         cairo_fill_preserve(crMask);
         cairo_stroke(crMask);
@@ -307,3 +339,21 @@ auto ErasableStrokeView::createMask(cairo_t* target, const Range& box, double zo
 
     return mask;
 }
+
+#ifdef DEBUG_ERASABLE_STROKE_BOXES
+void ErasableStrokeView::blitDebugMask(cairo_t* cr) const {
+    const Stroke& stroke = this->erasableStroke.stroke;
+    if (!this->erasableStroke.debugMask.isInitialized()) {
+        cairo_matrix_t matrix;
+        cairo_get_matrix(cr, &matrix);
+
+        Range extents(0, 0, stroke.getElementWidth(), stroke.getElementHeight());
+        extents.addPadding(5 * stroke.getWidth());
+        erasableStroke.debugMask = Mask(cairo_get_target(cr), extents, matrix.xx, CAIRO_CONTENT_COLOR_ALPHA);
+        cairo_set_line_width(this->erasableStroke.debugMask.get(), 2);
+    } else {
+        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+        this->erasableStroke.debugMask.paintTo(cr);
+    }
+}
+#endif

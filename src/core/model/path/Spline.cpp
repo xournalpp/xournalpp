@@ -37,13 +37,7 @@ Spline::Spline(const SplineSegment& segment) {
 
 Spline::Spline(ObjectInputStream& in) {
     in.readObject("Spline");
-
-    Point* p{};
-    int count{};
-    in.readData(reinterpret_cast<void**>(&p), &count);
-    this->data = std::vector<Point>{p, p + count};
-    g_free(p);
-
+    in.readData(this->data);
     in.endObject();
 }
 
@@ -72,7 +66,7 @@ Spline::Spline(MakeEllipsePlaceholder, const Point& center, double radiusX, doub
 
 void Spline::serialize(ObjectOutputStream& out) const {
     out.writeObject("Spline");
-    out.writeData(this->data.data(), this->data.size(), sizeof(Point));
+    out.writeData(this->data);
     out.endObject();
 }
 

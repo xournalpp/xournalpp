@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "control/tools/BaseShapeHandler.h"
+#include "model/path/Path.h"
 #include "util/raii/CairoWrappers.h"
 #include "view/Repaintable.h"
 #include "view/StrokeViewHelper.h"
@@ -17,9 +18,9 @@ ShapeToolView::ShapeToolView(const BaseShapeHandler* toolHandler, Repaintable* p
 ShapeToolView::~ShapeToolView() noexcept { this->unregisterFromPool(); }
 
 void ShapeToolView::draw(cairo_t* cr) const {
-    const auto& pts = this->toolHandler->getShape();
+    const auto& path = this->toolHandler->getShape();
 
-    if (pts.empty()) {
+    if (!path || path->empty()) {
         // The input sequence has been cancelled. This view should soon be deleted
         return;
     }
@@ -28,7 +29,7 @@ void ShapeToolView::draw(cairo_t* cr) const {
 
     cairo_t* effCr = this->prepareContext(cr);
 
-    StrokeViewHelper::pathToCairo(effCr, pts);
+    path->addToCairo(effCr);
 
     this->commitDrawing(cr);
 }

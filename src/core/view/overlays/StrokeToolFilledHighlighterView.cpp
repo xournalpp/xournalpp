@@ -18,7 +18,7 @@ StrokeToolFilledHighlighterView::~StrokeToolFilledHighlighterView() noexcept = d
 
 void StrokeToolFilledHighlighterView::draw(cairo_t* cr) const {
 
-    std::vector<Point> pts = this->flushBuffer();
+    PiecewiseLinearPath pts = this->flushBuffer();
     if (pts.empty()) {
         // The input sequence has probably been cancelled. This view should soon be deleted
         return;
@@ -39,17 +39,14 @@ void StrokeToolFilledHighlighterView::draw(cairo_t* cr) const {
     }
 
     if (this->singleDot) {
-        this->drawDot(this->mask.get(), pts.back());
+        this->drawDot(this->mask.get(), pts.getLastKnot());
     } else {
         /*
          * Upon adding a segment, the filling can actually shrink.
          * We wipe the portion of the mask that can change: the convex hull of the added points + the first point
          */
-        Range wipe(filling.firstPoint.x, filling.firstPoint.y);
-
-        for (auto& p: pts) {
-            wipe.addPoint(p.x, p.y);
-        }
+        Range wipe = pts.getThinBoundingBox();
+        wipe.addPoint(filling.firstPoint.x, filling.firstPoint.y);
 
         if (wipe.isValid()) {
             this->mask.wipeRange(wipe);
@@ -60,7 +57,7 @@ void StrokeToolFilledHighlighterView::draw(cairo_t* cr) const {
          * Draw both the filling and the stroke alike on the mask
          */
         cairo_set_line_width(this->mask.get(), this->strokeWidth);
-        StrokeViewHelper::pathToCairo(this->mask.get(), this->filling.contour);
+        this->filling.contour.addToCairo(this->mask.get());
         cairo_fill_preserve(this->mask.get());
         cairo_stroke(this->mask.get());
     }

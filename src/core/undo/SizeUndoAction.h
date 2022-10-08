@@ -34,10 +34,7 @@ public:
     std::string getText() override;
 
     void addStroke(Stroke* s, double originalWidth, double newWidth, std::vector<double> originalPressure,
-                   std::vector<double> newPressure, size_t pressureCount);
-
-public:
-    static std::vector<double> getPressure(Stroke* s);
+                   std::vector<double> newPressure);
 
 private:
     std::vector<SizeUndoActionEntry*> data;

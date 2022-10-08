@@ -27,6 +27,6 @@ public:
 
 private:
     auto createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
-            -> std::pair<std::vector<Point>, Range> override;
+            -> std::pair<std::shared_ptr<Path>, Range> override;
     bool doubleEnded = false;
 };

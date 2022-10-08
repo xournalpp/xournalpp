@@ -22,6 +22,7 @@
 #include "model/Snapping.h"                  // for distanceLine
 #include "model/Stroke.h"                    // for Stroke
 #include "model/XojPage.h"                   // for XojPage
+#include "model/path/PiecewiseLinearPath.h"  // for PiecewiseLinearPath
 
 constexpr double MOVE_AMOUNT = HALF_CM / 2.0;
 constexpr double MOVE_AMOUNT_SMALL = HALF_CM / 20.0;
@@ -214,9 +215,9 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
     // time a finger has been put onto the screen
     for (const auto& e: layer->getElements()) {
         if (e->getType() == ELEMENT_STROKE) {
-            auto* s = dynamic_cast<Stroke*>(e.get());
-            if (s->getPointCount() == 2) {
-                lines.push_back(s);
+            auto p = dynamic_cast<Stroke*>(e.get())->getPathPointer();
+            if (p && p->getType() == Path::PIECEWISE_LINEAR && p->nbSegments() == 1) {
+                lines.emplace_back(std::dynamic_pointer_cast<const PiecewiseLinearPath>(p));
             }
         }
     }

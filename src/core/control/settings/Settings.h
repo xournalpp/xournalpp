@@ -26,8 +26,9 @@
 #include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
 
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
-#include "model/Font.h"                          // for XojFont
-#include "util/Color.h"                          // for Color
+#include "control/tools/splineapproximation/SplineApproximator.h"
+#include "model/Font.h"  // for XojFont
+#include "util/Color.h"  // for Color
 
 #include "LatexSettings.h"      // for LatexSettings
 #include "RecolorParameters.h"  // for RecolorParameters
@@ -579,6 +580,12 @@ public:
 
     void setUseSpacesAsTab(bool useSpaces);
     bool getUseSpacesAsTab() const;
+
+    /**
+     * Spline approximation
+     */
+    SplineApproximator::Type getSplineApproximatorType() const;
+    void setSplineApproximatorType(SplineApproximator::Type t);
 
 public:
     // Custom settings
@@ -1166,4 +1173,9 @@ private:
      */
     bool useSpacesForTab{};
     unsigned int numberOfSpacesForTab{};
+
+    /**
+     * Spline Approximation
+     */
+    SplineApproximator::Type splineApproximatorType{};
 };

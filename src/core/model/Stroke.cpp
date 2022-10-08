@@ -13,12 +13,15 @@
 #include <cairo.h>  // for cairo_matrix_translate
 #include <glib.h>   // for g_free, g_message
 
+#include "control/tools/splineapproximation/SplineApproximatorSchneider.h"
 #include "eraser/PaddedBox.h"                     // for PaddedBox
 #include "model/AudioElement.h"                   // for AudioElement
 #include "model/Element.h"                        // for Element, ELEMENT_ST...
 #include "model/LineStyle.h"                      // for LineStyle
 #include "model/Point.h"                          // for Point, Point::NO_PR...
 #include "model/path/Path.h"                      // for Path
+#include "model/path/PiecewiseLinearPath.h"       // for PiecewiseLinearPath
+#include "model/path/Spline.h"                    // for Spline
 #include "util/Assert.h"                          // for xoj_assert
 #include "util/BasePointerIterator.h"             // for BasePointerIterator
 #include "util/Interval.h"                        // for Interval
@@ -47,37 +50,6 @@ using xoj::util::Rectangle;
 #define DEBUG_ERASER(f)
 #endif
 
-template <typename Float>
-constexpr void updateBoundingBox(Float& x, Float& y, Float& width, Float& height, Point const& p, double half_width) {
-    {
-        Float x2 = x + width;
-        Float y2 = y + height;
-
-        x = std::min(x, p.x - half_width);
-        y = std::min(y, p.y - half_width);
-        x2 = std::max(x2, p.x + half_width);
-        y2 = std::max(y2, p.y + half_width);
-        width = x2 - x;
-        height = y2 - y;
-    }
-}
-
-template <typename Float>
-constexpr void updateSnappedBounds(Rectangle<Float>& snap, Point const& p) {
-    {
-        Float snapx2 = snap.x + snap.width;
-        Float snapy2 = snap.y + snap.height;
-
-        snap.x = std::min(snap.x, p.x);
-        snap.y = std::min(snap.y, p.y);
-        snapx2 = std::max(snapx2, p.x);
-        snapy2 = std::max(snapy2, p.y);
-        snap.width = snapx2 - snap.x;
-        snap.height = snapy2 - snap.y;
-    }
-}
-
-
 Stroke::Stroke(): AudioElement(ELEMENT_STROKE) {}
 
 Stroke::~Stroke() = default;
@@ -99,71 +71,18 @@ void Stroke::applyStyleFrom(const Stroke* other) {
 auto Stroke::cloneStroke() const -> std::unique_ptr<Stroke> {
     auto s = std::make_unique<Stroke>();
     s->applyStyleFrom(this);
-    s->points = this->points;
     s->x = this->x;
     s->y = this->y;
     s->Element::width = this->Element::width;
     s->Element::height = this->Element::height;
     s->snappedBounds = this->snappedBounds;
     s->sizeCalculated = this->sizeCalculated;
+    s->path = this->path->clone();
+    s->pressureSensitive = this->pressureSensitive;
     return s;
 }
 
 auto Stroke::clone() const -> ElementPtr { return this->cloneStroke(); }
-
-std::unique_ptr<Stroke> Stroke::cloneSection(const Path::Parameter& lowerBound,
-                                             const Path::Parameter& upperBound) const {
-    xoj_assert(lowerBound.isValid() && upperBound.isValid());
-    xoj_assert(lowerBound <= upperBound);
-    xoj_assert(upperBound.index < this->points.size() - 1);
-
-    auto s = std::make_unique<Stroke>();
-    s->applyStyleFrom(this);
-
-    s->points.reserve(upperBound.index - lowerBound.index + 2);
-
-    s->points.emplace_back(this->getPoint(lowerBound));
-
-    auto beginIt = std::next(this->points.cbegin(), (std::ptrdiff_t)lowerBound.index + 1);
-    auto endIt = std::next(this->points.cbegin(), (std::ptrdiff_t)upperBound.index + 1);
-    std::copy(beginIt, endIt, std::back_inserter(s->points));
-
-    s->points.emplace_back(this->getPoint(upperBound));
-
-    // Remove unused pressure value
-    s->points.back().z = Point::NO_PRESSURE;
-
-    return s;
-}
-
-std::unique_ptr<Stroke> Stroke::cloneCircularSectionOfClosedStroke(const Path::Parameter& startParam,
-                                                                   const Path::Parameter& endParam) const {
-    xoj_assert(startParam.isValid() && endParam.isValid());
-    xoj_assert(endParam < startParam);
-    xoj_assert(startParam.index < this->points.size() - 1);
-
-    auto s = std::make_unique<Stroke>();
-    s->applyStyleFrom(this);
-
-    s->points.reserve(this->points.size() - startParam.index + endParam.index + 1);
-
-    s->points.emplace_back(this->getPoint(startParam));
-
-    auto startIt = std::next(this->points.cbegin(), (std::ptrdiff_t)startParam.index + 1);
-    // Skip the last point: points.back().equalPos(points.front()) == true and we want this point only once
-    xoj_assert(startIt != this->points.cend());
-    std::copy(startIt, std::prev(this->points.cend()), std::back_inserter(s->points));
-
-    auto endIt = std::next(this->points.cbegin(), (std::ptrdiff_t)endParam.index + 1);
-    std::copy(this->points.cbegin(), endIt, std::back_inserter(s->points));
-
-    s->points.emplace_back(this->getPoint(endParam));
-
-    // Remove unused pressure value
-    s->points.back().z = Point::NO_PRESSURE;
-
-    return s;
-}
 
 void Stroke::serialize(ObjectOutputStream& out) const {
     out.writeObject("Stroke");
@@ -178,7 +97,9 @@ void Stroke::serialize(ObjectOutputStream& out) const {
 
     out.writeInt(this->capStyle);
 
-    out.writeData(this->points.data(), this->points.size(), sizeof(Point));
+    if (this->path) {
+        this->path->serialize(out);
+    }
 
     this->lineStyle.serialize(out);
 
@@ -198,10 +119,21 @@ void Stroke::readSerialized(ObjectInputStream& in) {
 
     this->capStyle = static_cast<StrokeCapStyle>(in.readInt());
 
-    in.readData(this->points);
+    std::string name = in.getNextObjectName();
+    if (name == "Spline") {
+        path = std::make_shared<Spline>(in);
+    } else if (name == "PiecewiseLinearPath") {
+        path = std::make_shared<PiecewiseLinearPath>(in);
+    } else {
+        path = nullptr;
+    }
+
     this->lineStyle.readSerialized(in);
 
     in.endObject();
+
+    this->pressureSensitive = this->toolType.isPressureSensitive() && this->path && !this->path->empty() &&
+                              this->path->getFirstKnot().z != Point::NO_PRESSURE;
 }
 
 /**
@@ -229,87 +161,15 @@ auto Stroke::getWidth() const -> double { return this->width; }
 auto Stroke::rescaleWithMirror() -> bool { return true; }
 
 auto Stroke::isInSelection(ShapeContainer* container) const -> bool {
-    for (auto&& p: this->points) {
-        double px = p.x;
-        double py = p.y;
-
-        if (!container->contains(px, py)) {
-            return false;
-        }
-    }
-
-    return true;
+    return this->path && (this->Element::isInSelection(container) || this->path->isInSelection(container));
 }
 
-void Stroke::addPoint(const Point& p) {
-    this->points.emplace_back(p);
-    if (!sizeCalculated) {
-        return;
-    }
 
-    if (hasPressure()) {
-        updateBoundsLastTwoPressures();
-    } else {
-        updateBoundingBox(Element::x, Element::y, Element::width, Element::height, p, 0.5 * this->width);
-        updateSnappedBounds(Element::snappedBounds, p);
+void Stroke::freeUnusedPointItems() {
+    if (path) {
+        this->path->freeUnusedPointItems();
     }
 }
-
-auto Stroke::getPointCount() const -> size_t { return this->points.size(); }
-
-auto Stroke::getPointVector() const -> std::vector<Point> const& { return points; }
-
-void Stroke::deletePointsFrom(size_t index) {
-    points.resize(std::min(index, points.size()));
-    this->sizeCalculated = false;
-}
-
-auto Stroke::getPoint(size_t index) const -> Point {
-    if (index < 0 || index >= this->points.size()) {
-        g_warning("Stroke::getPoint(%zu) out of bounds!", index);
-        return Point(0., 0., Point::NO_PRESSURE);
-    }
-    return points.at(index);
-}
-
-Point Stroke::getPoint(Path::Parameter parameter) const {
-    xoj_assert(parameter.isValid() && parameter.index < this->points.size() - 1);
-
-    const Point& p = this->points[parameter.index];
-    Point res = p.relativeLineTo(this->points[parameter.index + 1], parameter.t);
-    res.z = p.z;  // The point's width should be that of the segment's first point
-    return res;
-}
-
-auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
-
-void Stroke::setPointVectorInternal(const Range* const snappingBox) {
-    if (!snappingBox || this->points.empty() || this->points.front().z != Point::NO_PRESSURE) {
-        // We cannot deduce the bounding box from the snapping box if the stroke has pressure values
-        this->sizeCalculated = false;
-    } else {
-        xoj_assert(snappingBox->isValid());
-        this->snappedBounds = xoj::util::Rectangle<double>(*snappingBox);
-        Element::x = snappingBox->minX - 0.5 * this->width;
-        Element::y = snappingBox->minY - 0.5 * this->width;
-        Element::width = snappingBox->getWidth() + this->width;
-        Element::height = snappingBox->getHeight() + this->width;
-        this->sizeCalculated = true;
-    }
-}
-
-void Stroke::setPointVector(const std::vector<Point>& other, const Range* const snappingBox) {
-    this->points = other;
-    this->setPointVectorInternal(snappingBox);
-}
-
-void Stroke::setPointVector(std::vector<Point>&& other, const Range* const snappingBox) {
-    this->points = std::move(other);
-    this->setPointVectorInternal(snappingBox);
-}
-
-
-void Stroke::freeUnusedPointItems() { this->points = {begin(this->points), end(this->points)}; }
 
 void Stroke::setToolType(StrokeTool type) { this->toolType = type; }
 
@@ -320,488 +180,77 @@ void Stroke::setLineStyle(const LineStyle& style) { this->lineStyle = style; }
 auto Stroke::getLineStyle() const -> const LineStyle& { return this->lineStyle; }
 
 void Stroke::move(double dx, double dy) {
-    for (auto&& point: points) {
-        point.x += dx;
-        point.y += dy;
+    path->move(dx, dy);
+
+    for (auto&& p: pointCache) {
+        p.x += dx;
+        p.y += dy;
     }
-    Element::x += dx;
-    Element::y += dy;
-    Element::snappedBounds = Element::snappedBounds.translated(dx, dy);
+    if (this->sizeCalculated) {
+        Element::x += dx;
+        Element::y += dy;
+        Element::snappedBounds.x += dx;
+        Element::snappedBounds.y += dy;
+    }
 }
 
 void Stroke::rotate(double x0, double y0, double th) {
-    cairo_matrix_t rotMatrix;
-    cairo_matrix_init_identity(&rotMatrix);
-    cairo_matrix_translate(&rotMatrix, x0, y0);
-    cairo_matrix_rotate(&rotMatrix, th);
-    cairo_matrix_translate(&rotMatrix, -x0, -y0);
+    cairo_matrix_t mat = this->path->rotate(x0, y0, th);
 
-    for (auto&& p: points) {
-        cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
+    for (auto&& p: pointCache) {
+        cairo_matrix_transform_point(&mat, &p.x, &p.y);
     }
     this->sizeCalculated = false;
-    // Width and Height will likely be changed after this operation
 }
 
 void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
-    double fz = (restoreLineWidth) ? 1 : sqrt(std::abs(fx * fy));
-    cairo_matrix_t scaleMatrix;
-    cairo_matrix_init_identity(&scaleMatrix);
-    cairo_matrix_translate(&scaleMatrix, x0, y0);
-    cairo_matrix_rotate(&scaleMatrix, rotation);
-    cairo_matrix_scale(&scaleMatrix, fx, fy);
-    cairo_matrix_rotate(&scaleMatrix, -rotation);
-    cairo_matrix_translate(&scaleMatrix, -x0, -y0);
+    auto [matrix, widthFactor] = this->path->scale(x0, y0, fx, fy, rotation, restoreLineWidth);
 
-    for (auto&& p: points) {
-        cairo_matrix_transform_point(&scaleMatrix, &p.x, &p.y);
-
-        if (p.z != Point::NO_PRESSURE) {
-            p.z *= fz;
+    if (restoreLineWidth) {
+        for (auto&& p: pointCache) {
+            cairo_matrix_transform_point(&matrix, &p.x, &p.y);
         }
+    } else {
+        for (auto&& p: pointCache) {
+            cairo_matrix_transform_point(&matrix, &p.x, &p.y);
+            p.z *= widthFactor;
+        }
+        this->width *= widthFactor;
     }
-    this->width *= fz;
 
     this->sizeCalculated = false;
 }
 
-auto Stroke::hasPressure() const -> bool {
-    if (!this->points.empty()) {
-        return this->points[0].z != Point::NO_PRESSURE;
+auto Stroke::hasPressure() const -> bool { return pressureSensitive; }
+void Stroke::setPressureSensitive(bool b) { pressureSensitive = b; }
+
+std::vector<double> Stroke::getPressureValues() const {
+    if (this->hasPressure()) {
+        return this->path->getPressureValues();
     }
-    return false;
-}
-
-auto Stroke::getAvgPressure() const -> double {
-    return std::accumulate(begin(this->points), end(this->points), 0.0,
-                           [](double l, Point const& p) { return l + p.z; }) /
-           static_cast<double>(this->points.size());
-}
-
-void Stroke::updateBoundsLastTwoPressures() {
-    if (!sizeCalculated || this->points.empty()) {
-        return;
-    }
-
-    auto const pointCount = this->getPointCount();
-    xoj_assert(pointCount >= 2);
-
-    Point& p = this->points.back();
-    Point& p2 = this->points[pointCount - 2];
-    double pressure = p2.z;
-
-    updateSnappedBounds(snappedBounds, p);
-    updateBoundingBox(Element::x, Element::y, Element::width, Element::height, p, 0.5 * pressure);
-    updateBoundingBox(Element::x, Element::y, Element::width, Element::height, p2, 0.5 * pressure);
-}
-
-void Stroke::scalePressure(double factor) {
-    if (!hasPressure()) {
-        return;
-    }
-    for (auto&& p: this->points) {
-        p.z *= factor;
-    }
-    this->sizeCalculated = false;
-}
-
-void Stroke::setLastPressure(double pressure) {
-    if (!this->points.empty()) {
-        xoj_assert(pressure != Point::NO_PRESSURE);
-        Point& back = this->points.back();
-        back.z = pressure;
-    }
-}
-
-void Stroke::setSecondToLastPressure(double pressure) {
-    auto const pointCount = this->getPointCount();
-    if (pointCount >= 2) {
-        Point& p = this->points[pointCount - 2];
-        p.z = pressure;
-        updateBoundsLastTwoPressures();
-    }
-}
-
-void Stroke::setPressure(const std::vector<double>& pressure) {
-    // The last pressure is not used - as there is no line drawn from this point
-    if (this->points.size() - 1 != pressure.size()) {
-        g_warning("invalid pressure point count: %s, expected %s", std::to_string(pressure.size()).data(),
-                  std::to_string(this->points.size() - 1).data());
-    }
-
-    auto max_size = std::min(pressure.size(), this->points.size() - 1);
-    for (size_t i = 0U; i != max_size; ++i) {
-        this->points[i].z = pressure[i];
-    }
-}
-
-/**
- * checks if the stroke is intersected by the eraser rectangle
- */
-auto Stroke::intersects(double x, double y, double halfEraserSize) const -> bool {
-    return intersects(x, y, halfEraserSize, nullptr);
-}
-
-/**
- * checks if the stroke is intersected by the eraser rectangle
- */
-auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) const -> bool {
-    if (this->points.empty()) {
-        return false;
-    }
-
-    double x1 = x - halfEraserSize;
-    double x2 = x + halfEraserSize;
-    double y1 = y - halfEraserSize;
-    double y2 = y + halfEraserSize;
-
-    double lastX = points[0].x;
-    double lastY = points[0].y;
-    for (auto&& point: points) {
-        double px = point.x;
-        double py = point.y;
-
-        if (px >= x1 && py >= y1 && px <= x2 && py <= y2) {
-            if (gap) {
-                *gap = 0;
-            }
-            return true;
-        }
-
-        double len = hypot(px - lastX, py - lastY);
-        if (len >= halfEraserSize) {
-            /**
-             * The distance of the center of the eraser box to the line passing through (lastx, lasty) and (px, py)
-             */
-            double p = std::abs((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / len;
-
-            // If the distance p of the center of the eraser box to the (full) line is in the range,
-            // we check whether the eraser box is not too far from the line segment through the two points.
-
-            if (p <= halfEraserSize) {
-                double centerX = (lastX + px) / 2;
-                double centerY = (lastY + py) / 2;
-                double distance = hypot(x - centerX, y - centerY);
-
-                // For the above check we imagine a circle whose center is the mid point of the two points of the stroke
-                // and whose radius is half the length of the line segment plus half the diameter of the eraser box
-                // plus some small padding
-                // If the center of the eraser box lies within that circle then we consider it to be close enough
-
-                distance -= halfEraserSize * std::sqrt(2);
-
-                constexpr double PADDING = 0.1;
-
-                if (distance <= len / 2 + PADDING) {
-                    if (gap) {
-                        *gap = distance;
-                    }
-                    return true;
-                }
-            }
-        }
-
-        lastX = px;
-        lastY = py;
-    }
-
-    return false;
-}
-
-
-/**
- * @brief Get the interval of length parameters where the line (pq) is in the rectangle.
- * @param p First point
- * @param q Second point
- * @param rectangle The rectangle
- * @return Optional interval res.
- * The line enters the rectangle at the point  res.min * p + (1 - res.min) * q
- * The line leaves the rectangle at the point  res.max * p + (1 - res.max) * q
- */
-static std::optional<Interval<double>> intersectLineWithRectangle(const Point& p, const Point& q,
-                                                                  const Rectangle<double>& rectangle) {
-    auto intersectLineWithStrip = [](double a1, double a2, double stripAMin, double stripWidth) {
-        // a1, a2 are coordinates along an axis orthogonal to the strip
-        double norm = 1.0 / (a2 - a1);
-        double t1 = (stripAMin - a1) * norm;
-        double t2 = t1 + stripWidth * norm;
-        return Interval<double>::getInterval(t1, t2);
-    };
-
-    if (p.x == q.x) {
-        if (p.y == q.y) {
-            // Single dot
-            return std::nullopt;
-        }
-        // Vertical segment
-        if (rectangle.x < p.x && p.x < rectangle.x + rectangle.width) {
-            return intersectLineWithStrip(p.y, q.y, rectangle.y, rectangle.height);
-        }
-        return std::nullopt;
-    }
-
-    if (p.y == q.y) {
-        // Horizontal segment
-        if (rectangle.y < p.y && p.y < rectangle.y + rectangle.height) {
-            return intersectLineWithStrip(p.x, q.x, rectangle.x, rectangle.width);
-        }
-        return std::nullopt;
-    }
-
-    // Generic case
-    Interval<double> verticalIntersections = intersectLineWithStrip(p.y, q.y, rectangle.y, rectangle.height);
-    Interval<double> horizontalIntersections = intersectLineWithStrip(p.x, q.x, rectangle.x, rectangle.width);
-
-    return verticalIntersections.intersect(horizontalIntersections);
-}
-
-/**
- * Same as intersectLineWithRectangle but only returns parameters between 0 and 1
- * (corresponding to points between p and q)
- */
-static TinyVector<double, 2> intersectLineSegmentWithRectangle(const Point& p, const Point& q,
-                                                               const Rectangle<double>& rectangle) {
-    std::optional<Interval<double>> intersections = intersectLineWithRectangle(p, q, rectangle);
-
-    if (intersections) {
-        TinyVector<double, 2> result;
-        if (intersections->min > 0.0 && intersections->min <= 1.0) {
-            result.emplace_back(intersections->min);
-        }
-        if (intersections->max > 0.0 && intersections->max <= 1.0) {
-            result.emplace_back(intersections->max);
-        }
-        return result;
-    }
-
     return {};
 }
 
-auto Stroke::intersectWithPaddedBox(const PaddedBox& box) const -> IntersectionParametersContainer {
-    auto pointCount = this->points.size();
-    if (pointCount < 2) {
-        if (pointCount == 1 && this->points.back().isInside(box.getInnerRectangle())) {
-            IntersectionParametersContainer result;
-            result.emplace_back(0U, 0.0);
-            result.emplace_back(0U, 0.0);
-            return result;
+void Stroke::setPressureValues(const std::vector<double>& pressures) {
+    if (this->hasPressure()) {
+        this->path->setPressureValues(pressures);
+
+        if (this->path->getType() == Path::SPLINE) {
+            this->clearPointCache();
         }
-        return IntersectionParametersContainer();
     }
-    return this->intersectWithPaddedBox(box, 0, pointCount - 2);
 }
 
-auto Stroke::intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex, size_t lastIndex) const
-        -> IntersectionParametersContainer {
-    xoj_assert(firstIndex <= lastIndex && lastIndex < this->points.size() - 1);
+auto Stroke::isPointNearby(double x, double y, double veryClose, double toFar) const -> double {
+    return this->path->squaredDistanceToPoint(Point(x, y), veryClose, toFar);
+}
 
-    const auto innerBox = box.getInnerRectangle();
-    const auto outerBox = box.getOuterRectangle();
-
-    struct Flags {
-        bool isInsideOuter;
-        bool wentInsideInner;
-        bool lastSegmentEndedOnBoundary;
-    };
-
-    auto initializeFlagsFromHalfTangentAtFirstKnot =
-            [&outerBox, &innerBox](const Point& firstKnot, const Point& halfTangentControlPoint) -> Flags {
-        if (firstKnot.isInside(innerBox)) {
-            return {true, true, false};
-        } else if (firstKnot.isInside(outerBox)) {
-            std::optional<Interval<double>> innerLineIntersections =
-                    intersectLineWithRectangle(firstKnot, halfTangentControlPoint, innerBox);
-            // If the half tangent goes towards to inner box, say we've been inside the inner box
-            return {true, innerLineIntersections && innerLineIntersections.value().max <= 0.0, false};
-        }
-        return {false, false, false};
-    };
-
-    size_t index = firstIndex;
-
-    const PairView segments(this->points);
-    auto segmentIt = std::next(segments.begin(), (std::ptrdiff_t)index);
-
-    Flags flags = initializeFlagsFromHalfTangentAtFirstKnot(segmentIt.first(), segmentIt.second());
-
-    DEBUG_ERASER(auto debugstream = serdes_stream<std::stringstream>();
-                 debugstream << "Stroke::intersectWithPaddedBox debug:\n"; debugstream << std::boolalpha;
-                 debugstream << "| * flags.isInsideOuter              = " << flags.isInsideOuter << std::endl;
-                 debugstream << "| * flags.wentInsideInner            = " << flags.wentInsideInner << std::endl;
-                 debugstream << "| * flags.lastSegmentEndedOnBoundary = " << flags.lastSegmentEndedOnBoundary
-                             << std::endl;
-                 debugstream << std::fixed;)
-
-    IntersectionParametersContainer result;
-    if (flags.isInsideOuter) {
-        // We start inside the padded box. Add a fake intersection parameter
-        result.emplace_back(firstIndex, 0.0);
-    }
-
-    auto processSegment = [&flags, &outerBox, &innerBox, &result DEBUG_ERASER(COMMA & debugstream)](
-                                  const Point& firstKnot, const Point& secondKnot, size_t index) {
-        DEBUG_ERASER(debugstream << "| * Segment " << std::setw(3) << index << std::setprecision(5);
-                     debugstream << ": (" << std::setw(9) << firstKnot.x;
-                     debugstream << " ; " << std::setw(9) << firstKnot.y;
-                     debugstream << ") -- (" << std::setw(9) << secondKnot.x;
-                     debugstream << " ; " << std::setw(9) << secondKnot.y;
-                     debugstream << ")\n"
-                                 << std::setprecision(17);  // High precision to detect numerical inaccuracy
-        )
-
-        auto outerIntersections = intersectLineSegmentWithRectangle(firstKnot, secondKnot, outerBox);
-        if (!outerIntersections.empty() || firstKnot.isInside(outerBox) || secondKnot.isInside(outerBox)) {
-            // Some part of the segment lies inside the padded box
-            auto innerIntersections = intersectLineSegmentWithRectangle(firstKnot, secondKnot, innerBox);
-            auto itInner = innerIntersections.begin();
-            auto itInnerEnd = innerIntersections.end();
-
-            auto skipInnerIntersectionsBelowValue = [&itInner, itInnerEnd](double upToValue) -> bool {
-                bool skipSome = false;
-                while (itInner != itInnerEnd && *itInner < upToValue) {
-                    skipSome = true;
-                    ++itInner;
-                }
-                return skipSome;
-            };
-
-            if (flags.lastSegmentEndedOnBoundary) {
-                flags.lastSegmentEndedOnBoundary = false;
-                Point p = secondKnot;
-                if (!outerIntersections.empty()) {
-                    double t = 0.5 * outerIntersections.front();
-                    p = firstKnot.relativeLineTo(secondKnot, t);
-                }
-                if (p.isInside(outerBox) != (result.size() % 2 != 0)) {
-                    // The stroke bounced back on the box border and never got in or out
-                    // Remove the last intersection point
-                    xoj_assert(!result.empty());
-                    result.pop_back();
-                }
-            }
-
-            for (auto outerIntersection: outerIntersections) {
-                flags.wentInsideInner |= skipInnerIntersectionsBelowValue(outerIntersection);
-
-                DEBUG_ERASER(debugstream << "|  |  ** "
-                                         << "wentInsideInner = " << flags.wentInsideInner << std::endl;)
-
-                if (!flags.isInsideOuter || flags.wentInsideInner) {
-                    result.emplace_back(index, outerIntersection);
-                    if (outerIntersection == 1.0) {
-                        flags.lastSegmentEndedOnBoundary = true;
-                    }
-
-                    DEBUG_ERASER(
-                            if (!flags.isInsideOuter) {
-                                debugstream << "|  |  ** going-in  (" << std::setw(3) << index << "," << std::setw(20)
-                                            << outerIntersection << ")" << std::endl;
-                            } if (flags.wentInsideInner) {
-                                debugstream << "|  |  ** going-out (" << std::setw(3) << index << "," << std::setw(20)
-                                            << outerIntersection << ")" << std::endl;
-                            })
-                } else {
-                    xoj_assert(!result.empty());
-                    DEBUG_ERASER(debugstream << "|  |  ** popping   (" << std::setw(3) << result.back().index << ","
-                                             << std::setw(20) << result.back().t << ")" << std::endl;)
-                    result.pop_back();
-                }
-                flags.wentInsideInner = false;
-                flags.isInsideOuter = !flags.isInsideOuter;
-            }
-            if (itInner != itInnerEnd) {
-                flags.wentInsideInner = true;
-            }
-        }
-        DEBUG_ERASER(debugstream << "|  |__** result.size() = " << std::setw(3) << result.size() << std::endl;)
-    };
-
-    auto endSegmentIt = std::next(segments.begin(), (std::ptrdiff_t)(lastIndex + 1));
-    for (; segmentIt != endSegmentIt; segmentIt++, index++) {
-        processSegment(segmentIt.first(), segmentIt.second(), index);
-    }
-
-    auto isHalfTangentAtLastKnotGoingTowardInnerBox =
-            [&innerBox, &outerBox](const Point& lastKnot, const Point& halfTangentControlPoint) -> bool {
-        xoj_assert(lastKnot.isInside(outerBox));
-        std::optional<Interval<double>> innerLineIntersections =
-                intersectLineWithRectangle(lastKnot, halfTangentControlPoint, innerBox);
-        return innerLineIntersections && innerLineIntersections.value().max < 0.0;
-    };
-
-    /**
-     * Due to numerical imprecision, we could get inconsistent results
-     * (typically when a stroke's point lies on outerBox' boundary).
-     * We try and detect those cases, and simply drop them
-     */
-    bool inconsistentResults = false;
-    if (result.size() % 2) {
-        // Not necessarily inconsistent: could be the stroke ends in outerBox
-        --segmentIt;
-        const Point& lastPoint = segmentIt.second();
-
-        DEBUG_ERASER(debugstream << "|  |  Odd number of intersection points" << std::endl;)
-
-        if (lastPoint.isInside(outerBox)) {
-            if (flags.wentInsideInner || isHalfTangentAtLastKnotGoingTowardInnerBox(lastPoint, segmentIt.first())) {
-                result.emplace_back(index - 1, 1.0);
-                DEBUG_ERASER(debugstream << "|  |  ** pushing   (" << std::setw(3) << result.back().index << ","
-                                         << std::setw(20) << result.back().t << ")" << std::endl;)
-            } else {
-                DEBUG_ERASER(debugstream << "|  |  ** popping   (" << std::setw(3) << result.back().index << ","
-                                         << std::setw(20) << result.back().t << ")" << std::endl;)
-                result.pop_back();
-            }
-        } else {
-            inconsistentResults = true;
-        }
-    }
-
-    // Returns true if the result is inconsistent
-    auto checkSanity = [&outerBox,
-                        this DEBUG_ERASER(COMMA & debugstream)](const IntersectionParametersContainer& res) -> bool {
-        for (auto it1 = res.begin(), it2 = std::next(it1), end = res.end(); it1 != end; it1 += 2, it2 += 2) {
-            const auto& paramStart = *it1;
-            const auto& paramLast = *it2;
-            DEBUG_ERASER(debugstream << "| SanityCheck on parameters (" << paramStart.index << " ; " << paramStart.t
-                                     << ") -- (" << paramLast.index << " ; " << paramLast.t << ")" << std::endl;)
-            Point testPoint;
-            // Get a point on the stroke within the interval of parameters
-            if (paramStart.index == paramLast.index) {
-                testPoint = this->getPoint(Path::Parameter(paramStart.index, 0.5 * (paramStart.t + paramLast.t)));
-                DEBUG_ERASER(debugstream << "| -------- getting point (" << paramStart.index << " ; "
-                                         << 0.5 * (paramStart.t + paramLast.t) << ")" << std::endl;)
-            } else {
-                testPoint = this->getPoint((paramStart.index + paramLast.index + 1) / 2);
-                DEBUG_ERASER(debugstream << "| -------- getting point (" << (paramStart.index + paramLast.index + 1) / 2
-                                         << " ; 0.0)" << std::endl;)
-            }
-            if (!testPoint.isInside(outerBox)) {
-                DEBUG_ERASER(debugstream << "| --------- It is not in !!" << std::endl;)
-                return true;
-            }
-            DEBUG_ERASER(debugstream << "| --------- It is in." << std::endl;)
-        }
-        return false;
-    };
-
-    inconsistentResults = inconsistentResults || checkSanity(result);
-
-    if (inconsistentResults) {
-        DEBUG_ERASER(debugstream << "| Inconsistent results!\n"; debugstream << "| * innerBox = (";
-                     debugstream << std::setprecision(5); debugstream << std::setw(9) << innerBox.x << " ; ";
-                     debugstream << std::setw(9) << innerBox.x + innerBox.width << ") -- (";
-                     debugstream << std::setw(9) << innerBox.y << " ; ";
-                     debugstream << std::setw(9) << innerBox.y + innerBox.height << ")\n";
-                     debugstream << "| * outerBox = ("; debugstream << std::setw(9) << outerBox.x << " ; ";
-                     debugstream << std::setw(9) << outerBox.x + outerBox.width << ") -- (";
-                     debugstream << std::setw(9) << outerBox.y << " ; ";
-                     debugstream << std::setw(9) << outerBox.y + outerBox.height << ")\n";
-                     std::cout << debugstream.str();)
+auto Stroke::intersectWithPaddedBox(const PaddedBox& box) const -> Path::IntersectionParametersContainer {
+    if (!this->path) {
+        g_warning("Intersecting pathless stroke with padded box. This should never happen!");
         return {};
     }
-
-    return result;
+    return this->path->intersectWithPaddedBox(box);
 }
 
 /**
@@ -811,46 +260,56 @@ auto Stroke::intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex, siz
  * Also used for Selected Bounding box.
  */
 void Stroke::calcSize() const {
-    if (this->points.empty()) {
-        Element::x = 0;
-        Element::y = 0;
+    if (this->hasPressure()) {
+        const std::vector<Point>& pts = getPointsToDraw();
 
-        // The size of the rectangle, not the size of the pen!
-        Element::width = 0;
-        Element::height = 0;
+        if (pts.empty()) {
+            Element::x = 0.0;
+            Element::y = 0.0;
+            Element::width = 0.0;
+            Element::height = 0.0;
 
-        // used for snapping
-        Element::snappedBounds = Rectangle<double>{};
+            Element::snappedBounds = {0.0, 0.0, 0.0, 0.0};
+            return;
+        }
+
+        double minSnapX = std::numeric_limits<double>::max();
+        double maxSnapX = std::numeric_limits<double>::min();
+        double minSnapY = std::numeric_limits<double>::max();
+        double maxSnapY = std::numeric_limits<double>::min();
+
+        auto halfThick = 0.0;
+
+        // #pragma omp parralel
+        for (auto&& p: pts) {
+            halfThick = std::max(halfThick, p.z);
+            minSnapX = std::min(minSnapX, p.x);
+            minSnapY = std::min(minSnapY, p.y);
+            maxSnapX = std::max(maxSnapX, p.x);
+            maxSnapY = std::max(maxSnapY, p.y);
+        }
+
+        halfThick /= 2.0;
+
+        auto minX = minSnapX - halfThick;
+        auto minY = minSnapY - halfThick;
+        auto maxX = maxSnapX + halfThick;
+        auto maxY = maxSnapY + halfThick;
+
+        Element::x = minX;
+        Element::y = minY;
+        Element::width = maxX - minX;
+        Element::height = maxY - minY;
+        Element::snappedBounds = Rectangle<double>(minSnapX, minSnapY, maxSnapX - minSnapX, maxSnapY - minSnapY);
+    } else {
+        auto thinBox = this->path->getThinBoundingBox();
+        Element::snappedBounds = {thinBox.minX, thinBox.minY, thinBox.getWidth(), thinBox.getHeight()};
+        double halfWidth = 0.5 * this->width;
+        Element::x = Element::snappedBounds.x - halfWidth;
+        Element::y = Element::snappedBounds.y - halfWidth;
+        Element::width = Element::snappedBounds.width + this->width;
+        Element::height = Element::snappedBounds.height + this->width;
     }
-
-    double minSnapX = std::numeric_limits<double>::max();
-    double maxSnapX = std::numeric_limits<double>::min();
-    double minSnapY = std::numeric_limits<double>::max();
-    double maxSnapY = std::numeric_limits<double>::min();
-
-    auto halfThick = 0.0;
-
-    // #pragma omp parralel
-    for (auto&& p: points) {
-        halfThick = std::max(halfThick, p.z);
-        minSnapX = std::min(minSnapX, p.x);
-        minSnapY = std::min(minSnapY, p.y);
-        maxSnapX = std::max(maxSnapX, p.x);
-        maxSnapY = std::max(maxSnapY, p.y);
-    }
-
-    halfThick = points[0].z != Point::NO_PRESSURE ? halfThick / 2.0 : this->width / 2.0;
-
-    auto minX = minSnapX - halfThick;
-    auto minY = minSnapY - halfThick;
-    auto maxX = maxSnapX + halfThick;
-    auto maxY = maxSnapY + halfThick;
-
-    Element::x = minX;
-    Element::y = minY;
-    Element::width = maxX - minX;
-    Element::height = maxY - minY;
-    Element::snappedBounds = Rectangle<double>(minSnapX, minSnapY, maxSnapX - minSnapX, maxSnapY - minSnapY);
 }
 
 auto Stroke::getErasable() const -> ErasableStroke* { return this->erasable; }
@@ -864,9 +323,99 @@ void Stroke::setStrokeCapStyle(const StrokeCapStyle capStyle) { this->capStyle =
 void Stroke::debugPrint() const {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (int64_t)this % this->hasPressure()));
 
-    for (auto&& p: points) {
+    const std::vector<Point>& data = this->path->getData();
+    for (auto&& p: data) {
         g_message("%lf / %lf / %lf", p.x, p.y, p.z);
     }
 
     g_message("\n");
 }
+
+void Stroke::splineFromPLPath() {
+    if (!this->path || this->path->empty() || this->path->getType() != Path::PIECEWISE_LINEAR) {
+        g_warning("Stroke::splineFromPLPath called on stroke without a piecewise linear path");
+        return;
+    }
+
+    if (this->path->nbSegments() == 1) {
+        // Only 1 segment. No spline required
+        return;
+    }
+
+    if (this->hasPressure() && this->path->getLastKnot().z == Point::NO_PRESSURE) {
+        /**
+         * Backward compatiblity
+         * Set an extrapolated pressure value for the last point
+         */
+        std::shared_ptr<PiecewiseLinearPath> PLPath = std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path);
+        PLPath->extrapolateLastPressureValue();
+    }
+
+    SplineApproximator::Schneider approximator(this->path->getData());
+    approximator.run();
+    approximator.printStats();
+    this->path = std::make_shared<Spline>(approximator.getSpline());
+}
+
+const std::vector<Point>& Stroke::getPointsToDraw() const {
+    if (!this->path) {
+        g_warning("Stroke::getPointsToDraw call on empty stroke. This should never happen.");
+        return pointCache;
+    }
+    if (this->path->getType() == Path::SPLINE) {
+        if (!this->hasPressure()) {
+            g_warning("Stroke::getPointsToDraw call on pressureless spline. This should never happen.");
+        } else if (this->pointCache.empty()) {
+            // Fill the cache now
+            dynamic_cast<Spline*>(path.get())->toPoints(pointCache);
+        }
+        return pointCache;
+    }
+    if (this->path->getType() == Path::PIECEWISE_LINEAR) {
+        return this->path->getData();
+    }
+    g_warning("Stroke::getPointsToDraw call on unknown path type. This should never happen.");
+    return pointCache;
+}
+
+void Stroke::resizePointCache(size_t n) { this->pointCache.resize(n); }
+
+void Stroke::clearPointCache() { this->pointCache.clear(); }
+
+void Stroke::addToPointCache(const SplineSegment& seg) {
+    seg.toPoints(pointCache);
+    pointCache.emplace_back(seg.secondKnot);
+}
+
+size_t Stroke::getCacheSize() const { return this->pointCache.size(); }
+
+const Path& Stroke::getPath() const { return *(path.get()); }
+
+bool Stroke::hasPath() const { return path != nullptr; }
+
+auto Stroke::getPathPointer() const -> std::shared_ptr<const Path> { return path; }
+
+void Stroke::setPath(std::shared_ptr<Path> p, const Range* const snappingBox) {
+    path = p;
+
+    if (!snappingBox || !this->path || this->path->getFirstKnot().z != Point::NO_PRESSURE) {
+        // We cannot deduce the bounding box from the snapping box if the stroke has pressure values
+        this->sizeCalculated = false;
+    } else {
+        xoj_assert(snappingBox->isValid());
+        this->snappedBounds = xoj::util::Rectangle<double>(*snappingBox);
+        Element::x = snappingBox->minX - 0.5 * this->width;
+        Element::y = snappingBox->minY - 0.5 * this->width;
+        Element::width = snappingBox->getWidth() + this->width;
+        Element::height = snappingBox->getHeight() + this->width;
+        this->sizeCalculated = true;
+    }
+}
+
+void Stroke::unsetSizeCalculated() { this->sizeCalculated = false; }
+
+// TODO: Change the StrokeHandler's behaviour on pressure
+// TODO: Adapt SplineHandler
+// TODO: Stroke::rotate Stroke::scale Stroke::calcSize Stroke::isInSelection
+// TODO: Stroke::scalePressure, hasPressure
+// TODO: Stroke::intersects
