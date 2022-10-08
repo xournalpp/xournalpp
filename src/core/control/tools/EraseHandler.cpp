@@ -15,6 +15,7 @@
 #include "model/Layer.h"                  // for Layer
 #include "model/Stroke.h"                 // for Stroke
 #include "model/XojPage.h"                // for XojPage
+#include "model/eraser/ErasablePressureSpline.h"
 #include "model/eraser/ErasableStroke.h"  // for ErasableStroke
 #include "model/eraser/PaddedBox.h"       // for PaddedBox
 #include "undo/DeleteUndoAction.h"        // for DeleteUndoAction
@@ -63,9 +64,11 @@ void EraseHandler::erase(double x, double y) {
 
 void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& range) {
     ErasableStroke* erasable = s->getErasable();
+    const double paddingCoeff = PADDING_COEFFICIENT_CAP[s->getStrokeCapStyle()];
+    const PaddedBox paddedEraserBox{{x, y}, halfEraserSize, halfEraserSize + paddingCoeff * s->getWidth()};
     if (!erasable) {
         if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
-            if (!s->intersects(x, y, halfEraserSize)) {
+            if (s->intersectWithPaddedBox(paddedEraserBox).empty()) {
                 // The stroke does not intersect the eraser square
                 return;
             }
@@ -97,10 +100,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
                 return;
             }
 
-            const double paddingCoeff = PADDING_COEFFICIENT_CAP[s->getStrokeCapStyle()];
-            const PaddedBox paddedEraserBox{{x, y}, halfEraserSize, halfEraserSize + paddingCoeff * s->getWidth()};
             auto intersectionParameters = s->intersectWithPaddedBox(paddedEraserBox);
-
             if (intersectionParameters.empty()) {
                 // The stroke does not intersect the eraser square
                 return;
@@ -114,7 +114,8 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
             }
 
             doc->lock();
-            erasable = new ErasableStroke(*s);
+            erasable = (s->hasPressure() && s->getPath().getType() == Path::SPLINE) ? new ErasablePressureSpline(*s) :
+                                                                                      new ErasableStroke(*s);
             s->setErasable(erasable);
             doc->unlock();
             this->eraseUndoAction->addOriginal(l, s, pos);
@@ -129,8 +130,6 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
         if (pos == -1) {
             return;
         }
-        const double paddingCoeff = PADDING_COEFFICIENT_CAP[s->getStrokeCapStyle()];
-        const PaddedBox paddedEraserBox{{x, y}, halfEraserSize, halfEraserSize + paddingCoeff * s->getWidth()};
         erasable->erase(paddedEraserBox, range);
     }
 }

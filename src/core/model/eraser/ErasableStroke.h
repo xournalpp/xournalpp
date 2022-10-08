@@ -33,18 +33,19 @@
 
 class Range;
 struct PaddedBox;
+class Stroke;
 
 class ErasableStroke {
 public:
     ErasableStroke(const Stroke& stroke);
-    ~ErasableStroke();
+    virtual ~ErasableStroke();
 
-    /**
-     * @brief Type for subsections of a stroke
-     */
-    using SubSection = Interval<Path::Parameter>;
 
 public:
+    enum Type { NORMAL, PRESSURE_SPLINE };
+
+    virtual Type getType() const { return NORMAL; }
+
     /**
      * @brief Starts erasing the stroke, with the already computed intersection parameters
      * @param intersectionParameters Vector of even length containing the parameters of the sections to be erased
@@ -53,7 +54,7 @@ public:
      * view is only used when the stroke is from the highlighter tool.
      * The rerendered areas correspond to where the stroke overlaps itself after being split in two (or more)
      */
-    void beginErasure(const IntersectionParametersContainer& intersectionParameters, Range& range);
+    void beginErasure(const Path::IntersectionParametersContainer& intersectionParameters, Range& range);
 
     /**
      * @brief Erase the stroke
@@ -76,7 +77,7 @@ public:
      * @brief Get a clone of the data, in the form of a vector of sections
      * @return The clone
      */
-    std::vector<ErasableStroke::SubSection> getRemainingSubSectionsVector() const;
+    std::vector<Path::SubSection> getRemainingSubSectionsVector() const;
 
     /**
      * @return true if the stroke is closed (i.e. the first and last knots are very close), false otherwise.
@@ -88,21 +89,15 @@ public:
      * The bounding box is either pulled from cache or computed and added to cache
      * @return The bounding box.
      */
-    const Range& getSubSectionBoundingBox(const SubSection& section) const;
+    const Range& getSubSectionBoundingBox(const Path::SubSection& section) const;
 
 protected:
-    /**
-     * @brief Compute the bounding box of a subsection.
-     * @return The bounding box.
-     */
-    Range computeSubSectionBoundingBox(const SubSection& section) const;
-
     /**
      * @brief Given a vector of subsections, compute (coarsely) where those subsections overlap.
      * @param subsections The input subsections
      * @return Vector of disjoint rectangles. Altogether, those rectangles contains all the overlaps of the subsections
      */
-    void addOverlapsToRange(const std::vector<SubSection>& subsections, Range& range);
+    void addOverlapsToRange(const std::vector<Path::SubSection>& subsections, Range& range);
 
 public:
     /**
@@ -123,7 +118,7 @@ protected:
      * Usually pretty small (< 10): std::vector is faster than std::map
      * Protected by the associated mutex
      */
-    mutable std::vector<std::pair<SubSection, Range>> boundingBoxes;
+    mutable std::vector<std::pair<Path::SubSection, Range>> boundingBoxes;
     mutable std::mutex boxesMutex;
 
     /**

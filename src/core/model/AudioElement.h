@@ -33,8 +33,17 @@ public:
     void setAudioFilename(fs::path fn);
     auto getAudioFilename() const -> fs::path const&;
 
-    virtual bool intersects(double x, double y, double halfSize) const = 0;
-    virtual bool intersects(double x, double y, double halfSize, double* gap) const = 0;
+    /**
+     * @brief Get the squared distance between a point and the object
+     * @param p The point
+     * @param veryClose Lower bound for the distance
+     * @param toFar Upper bound for the distance
+     * @return The squared distance, unless this distance is bigger than toFar (in this case, returns toFar) or the
+     * distance is smaller than veryClose (returns veryClose)
+     *
+     * In practice, veryClose and toFar is used to limit the computation time.
+     */
+    virtual double isPointNearby(double x, double y, double veryClose, double toFar) const = 0;
 
 protected:
     void serialize(ObjectOutputStream& out) const override;

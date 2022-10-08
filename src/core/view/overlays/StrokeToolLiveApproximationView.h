@@ -14,11 +14,10 @@
 
 #include <cairo.h>
 
-#include "model/path/PiecewiseLinearPath.h"
 #include "util/DispatchPool.h"
 #include "view/Mask.h"
 
-#include "BaseStrokeToolView.h"
+#include "StrokeToolView.h"
 
 class StrokeHandler;
 class Point;
@@ -29,7 +28,7 @@ class OverlayBase;
 namespace xoj::view {
 class Repaintable;
 
-class StrokeToolView: public BaseStrokeToolView, public xoj::util::Listener<StrokeToolView> {
+class StrokeToolLiveApproximationView: public StrokeToolView, public xoj::util::Listener<StrokeToolView> {
 public:
     StrokeToolView(const StrokeHandler* strokeHandler, const Stroke& stroke, Repaintable* parent);
     virtual ~StrokeToolView() noexcept;
@@ -44,6 +43,10 @@ public:
     static constexpr struct AddPointRequest {
     } ADD_POINT_REQUEST = {};
     virtual void on(AddPointRequest, const Point& p);
+
+    static constexpr struct AddSplineSegmentRequest {
+    } ADD_SPLINE_SEGMENT_REQUEST = {};
+    virtual void on(AddSplineSegmentRequest, const Point& p);
 
     static constexpr struct ThickenFirstPointRequest {
     } THICKEN_FIRST_POINT_REQUEST = {};
@@ -70,13 +73,15 @@ protected:
      */
     auto getRepaintRange(const Point& lastPoint, const Point& addedPoint) const -> Range;
 
+    void drawDot(cairo_t* cr, const Point& p) const;
+
     /**
      * @brief (Thread-safe) Flush the communication buffer and returns its content.
      */
-    PiecewiseLinearPath flushBuffer() const;
+    std::vector<Point> flushBuffer() const;
 
     // Nothing in the base class
-    virtual void drawFilling(cairo_t*, const PiecewiseLinearPath&) const {}
+    virtual void drawFilling(cairo_t*, const std::vector<Point>&) const {}
 
 protected:
     const StrokeHandler* strokeHandler;
@@ -92,8 +97,9 @@ protected:
 
     /**
      * @brief Controller/View communication buffer
+     *      Those are in the same thread. Add mutex protection if this changes
      */
-    mutable PiecewiseLinearPath pointBuffer;
+    mutable std::vector<Point> pointBuffer;  // Todo: implement a lock-free fifo?
 
     /**
      * @brief Drawing mask.

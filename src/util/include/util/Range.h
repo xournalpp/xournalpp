@@ -40,6 +40,7 @@ public:
 
     [[nodiscard]] bool empty() const;
     [[nodiscard]] bool isValid() const;
+    [[nodiscard]] bool hasContent() const;  ///< Ranges with width or height == 0 has no actual content
     [[nodiscard]] bool contains(double x, double y) const;
     [[nodiscard]] bool contains(const xoj::util::Rectangle<double>& r) const;
 

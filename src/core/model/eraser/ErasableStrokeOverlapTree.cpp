@@ -4,16 +4,16 @@
 #include <optional>   // for optional
 #include <tuple>      // for tie, tuple
 
-#include "model/Point.h"                  // for Point
-#include "model/Stroke.h"                 // for Stroke
-#include "model/eraser/ErasableStroke.h"  // for ErasableStroke::SubSection
-#include "model/path/Path.h"              // for Path::Parameter
-#include "util/Assert.h"                  // for xoj_assert
-#include "util/Range.h"                   // for Range
+#include "model/Point.h"        // for Point
+#include "model/Stroke.h"       // for Stroke
+#include "model/path/Path.h"    // for Parameter, SubSection
+#include "model/path/Spline.h"  // for Spline
+#include "util/Assert.h"        // for xoj_assert
+#include "util/Range.h"         // for Range
 
 using xoj::util::Rectangle;
 
-void ErasableStroke::OverlapTree::populate(const SubSection& section, const Stroke& stroke) {
+void ErasableStroke::OverlapTree::populate(const Path::SubSection& section, const Stroke& stroke) {
     Populator populator(this->data, stroke);
     populator.populate(section, this->root);
     populated = true;
@@ -37,43 +37,83 @@ void ErasableStroke::OverlapTree::addOverlapsToRange(const ErasableStroke::Overl
 #endif
 }
 
-void ErasableStroke::OverlapTree::Populator::populate(const SubSection& section, Node& root) {
-    xoj_assert(section.min.index <= section.max.index && section.max.index < stroke.getPointCount());
+void ErasableStroke::OverlapTree::Populator::populate(const Path::SubSection& section, Node& root) {
+    xoj_assert(stroke.path != nullptr);
+
+    const Path& path = stroke.getPath();
+    xoj_assert(section.min.index <= section.max.index && section.max.index < path.nbSegments());
 
     size_t nbLeaves = section.max.index - section.min.index + 1;
     this->data.resize(nbLeaves - 1);
 
     this->nextFreeSlot = this->data.begin();
 
+    const double halfWidth = 0.5 * stroke.getWidth();
+
+    auto pathType = path.getType();
+    xoj_assert(pathType == Path::PIECEWISE_LINEAR || pathType == Path::SPLINE);
+
     if (section.min.index == section.max.index) {
         // The section spans on a single segment
-        root.initializeOnSegment(this->stroke.getPoint(section.min), this->stroke.getPoint(section.max));
+        if (pathType == Path::PIECEWISE_LINEAR) {
+            root.initializeOnSegment(path.getPoint(section.min), path.getPoint(section.max), halfWidth);
+            return;
+        }
+        const Spline& spline = dynamic_cast<const Spline&>(path);
+        root.initializeOnSegment(spline.getSegment(section.min.index).getSubsegment(section.min.t, section.max.t),
+                                 halfWidth);
         return;
     }
 
     if (section.max.t == 0.0) {
+        // Highly unlikely...
         if (section.min.index + 1 == section.max.index) {
             // The section spans on a single segment
-            root.initializeOnSegment(this->stroke.getPoint(section.min), this->stroke.getPoint(section.max.index));
+            if (pathType == Path::PIECEWISE_LINEAR) {
+                root.initializeOnSegment(path.getPoint(section.min), path.getPoint(section.max), halfWidth);
+                return;
+            }
+            const Spline& spline = dynamic_cast<const Spline&>(path);
+            root.initializeOnSegment(spline.getSegment(section.min.index).subdivide(section.min.t).second, halfWidth);
             return;
         }
         if (section.min.t == 0.0) {
-            this->populateNode(root, section.min.index, section.max.index, this->stroke.getPointVector());
+            if (pathType == Path::PIECEWISE_LINEAR) {
+                this->populateNode(root, section.min.index, section.max.index, path.getData());
+                return;
+            }
+            const Spline& spline = dynamic_cast<const Spline&>(path);
+            this->populateNode(root, section.min.index, section.max.index, spline.segments());
             return;
         }
-        this->populateNode(root, this->stroke.getPoint(section.min), section.min.index + 1, section.max.index,
-                           this->stroke.getPointVector());
+        if (pathType == Path::PIECEWISE_LINEAR) {
+            this->populateNode(root, path.getPoint(section.min), section.min.index + 1, section.max.index,
+                               path.getData());
+            return;
+        }
+        const Spline& spline = dynamic_cast<const Spline&>(path);
+        this->populateNode(root, section.min, section.max.index, spline.segments());
         return;
     }
 
     if (section.min.t == 0.0) {
-        this->populateNode(root, section.min.index, section.max.index, this->stroke.getPoint(section.max),
-                           this->stroke.getPointVector());
+        // This happens when erasing the end of a stroke
+        if (pathType == Path::PIECEWISE_LINEAR) {
+            this->populateNode(root, section.min.index, section.max.index, path.getPoint(section.max), path.getData());
+            return;
+        }
+        const Spline& spline = dynamic_cast<const Spline&>(path);
+        this->populateNode(root, section.min.index, section.max, spline.segments());
         return;
     }
 
-    this->populateNode(root, this->stroke.getPoint(section.min), section.min.index + 1, section.max.index,
-                       this->stroke.getPoint(section.max), this->stroke.getPointVector());
+    if (pathType == Path::PIECEWISE_LINEAR) {
+        this->populateNode(root, path.getPoint(section.min), section.min.index + 1, section.max.index,
+                           path.getPoint(section.max), path.getData());
+        return;
+    }
+    const Spline& spline = dynamic_cast<const Spline&>(path);
+    this->populateNode(root, section, spline.segments());
 }
 
 auto ErasableStroke::OverlapTree::Populator::getNextFreeSlot() -> std::pair<Node, Node>* {
@@ -81,6 +121,9 @@ auto ErasableStroke::OverlapTree::Populator::getNextFreeSlot() -> std::pair<Node
     return &*(nextFreeSlot++);
 }
 
+/**
+ * Nodes for PiecewiseLinearPath
+ */
 void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, const Point& firstPoint, size_t min, size_t max,
                                                           const Point& lastPoint, const std::vector<Point>& pts) {
     xoj_assert(min <= max && max < pts.size());
@@ -101,7 +144,7 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, const Poin
     xoj_assert(min <= max && max < pts.size());
     if (min == max) {
         // The node corresponds to a single segment
-        node.initializeOnSegment(firstPoint, pts[min]);
+        node.initializeOnSegment(firstPoint, pts[min], 0.5 * stroke.getWidth());
         return;
     }
     /**
@@ -122,7 +165,7 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, size_t min
     xoj_assert(min <= max && max < pts.size());
     if (min == max) {
         // The node corresponds to a single segment
-        node.initializeOnSegment(pts[min], lastPoint);
+        node.initializeOnSegment(pts[min], lastPoint, 0.5 * stroke.getWidth());
         return;
     }
     /**
@@ -143,7 +186,7 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, size_t min
     xoj_assert(max > min);
     if (min + 1 == max) {
         // The node corresponds to a single segment
-        node.initializeOnSegment(pts[min], pts[max]);
+        node.initializeOnSegment(pts[min], pts[max], 0.5 * stroke.getWidth());
         return;
     }
     /**
@@ -159,17 +202,103 @@ void ErasableStroke::OverlapTree::Populator::populateNode(Node& node, size_t min
     node.computeBoxFromChildren();
 }
 
-void ErasableStroke::OverlapTree::Node::initializeOnSegment(const Point& p1, const Point& p2) {
-    std::tie(this->minX, this->maxX) = std::minmax(p1.x, p2.x);
-    std::tie(this->minY, this->maxY) = std::minmax(p1.y, p2.y);
+void ErasableStroke::OverlapTree::Node::initializeOnSegment(const Point& p1, const Point& p2, const double halfWidth) {
+    this->box = Range(p1.x, p1.y);
+    this->box.addPoint(p2.x, p2.y);
+    this->box.addPadding(halfWidth);
+}
+
+/**
+ * Nodes for splines
+ */
+void ErasableStroke::OverlapTree::Populator::populateNode(
+        Node& node, const Path::SubSection& section, const Path::SegmentIteratable<const SplineSegment>& segments) {
+    xoj_assert(section.min.index < section.max.index && section.max.index < segments.size());
+    /**
+     * Split in two in the middle
+     */
+    size_t middle = (section.min.index + section.max.index + 1) / 2;
+
+    node.children = getNextFreeSlot();
+
+    this->populateNode(node.children->first, section.min, middle, segments);
+    this->populateNode(node.children->second, middle, section.max, segments);
+    node.computeBoxFromChildren();
+}
+
+void ErasableStroke::OverlapTree::Populator::populateNode(
+        Node& node, const Path::Parameter& startParam, size_t endIndex,
+        const Path::SegmentIteratable<const SplineSegment>& segments) {
+    xoj_assert(startParam.index <= endIndex && endIndex < segments.size());
+    if (startParam.index + 1 == endIndex) {
+        // The node corresponds to a single segment
+        node.initializeOnSegment(segments[endIndex].subdivide(startParam.t).second, 0.5 * stroke.getWidth());
+        return;
+    }
+    /**
+     * Split in two
+     */
+    size_t middle = (startParam.index + endIndex) / 2;
+    xoj_assert(middle >= startParam.index && middle < endIndex);
+
+    node.children = getNextFreeSlot();
+
+    this->populateNode(node.children->first, startParam, middle, segments);
+    this->populateNode(node.children->second, middle, endIndex, segments);
+    node.computeBoxFromChildren();
+}
+
+void ErasableStroke::OverlapTree::Populator::populateNode(
+        Node& node, size_t startIndex, const Path::Parameter& endParam,
+        const Path::SegmentIteratable<const SplineSegment>& segments) {
+    xoj_assert(startIndex <= endParam.index && endParam.index < segments.size());
+    if (startIndex == endParam.index) {
+        // The node corresponds to a single segment
+        node.initializeOnSegment(segments[startIndex].subdivide(endParam.t).first, 0.5 * stroke.getWidth());
+        return;
+    }
+    /**
+     * Split in two
+     */
+    size_t middle = (startIndex + endParam.index + 1) / 2;
+    xoj_assert(middle > startIndex && middle <= endParam.index);
+
+    node.children = getNextFreeSlot();
+
+    this->populateNode(node.children->first, startIndex, middle, segments);
+    this->populateNode(node.children->second, middle, endParam, segments);
+    node.computeBoxFromChildren();
+}
+
+void ErasableStroke::OverlapTree::Populator::populateNode(
+        Node& node, size_t startIndex, size_t endIndex, const Path::SegmentIteratable<const SplineSegment>& segments) {
+    xoj_assert(endIndex > startIndex);
+    if (startIndex + 1 == endIndex) {
+        // The node corresponds to a single segment
+        node.initializeOnSegment(segments[startIndex], 0.5 * stroke.getWidth());
+        return;
+    }
+    /**
+     * Split in two
+     */
+    size_t middle = (startIndex + endIndex) / 2;
+    xoj_assert(middle > startIndex && middle < endIndex);
+
+    node.children = getNextFreeSlot();
+
+    this->populateNode(node.children->first, startIndex, middle, segments);
+    this->populateNode(node.children->second, middle, endIndex, segments);
+    node.computeBoxFromChildren();
+}
+
+void ErasableStroke::OverlapTree::Node::initializeOnSegment(const SplineSegment& segment, const double halfWidth) {
+    this->box = segment.getThinBoundingBox();
+    this->box.addPadding(halfWidth);
 }
 
 void ErasableStroke::OverlapTree::Node::computeBoxFromChildren() {
     xoj_assert(children != nullptr);
-    minX = std::min(children->first.minX, children->second.minX);
-    maxX = std::max(children->first.maxX, children->second.maxX);
-    minY = std::min(children->first.minY, children->second.minY);
-    maxY = std::max(children->first.maxY, children->second.maxY);
+    box = children->first.box.unite(children->second.box);
 }
 
 #ifdef DEBUG_ERASABLE_STROKE_BOXES
@@ -178,10 +307,7 @@ void ErasableStroke::OverlapTree::Node::addOverlapsToRange(const Node& other, do
 #else
 void ErasableStroke::OverlapTree::Node::addOverlapsToRange(const Node& other, double halfWidth, Range& range) const {
 #endif
-    bool intersect = this->maxX + halfWidth > other.minX - halfWidth &&
-                     this->minX - halfWidth<other.maxX + halfWidth&& this->maxY + halfWidth> other.minY - halfWidth &&
-                     this->minY - halfWidth < other.maxY + halfWidth;
-    if (!intersect) {
+    if (this->box.intersect(other.box).empty()) {
         return;
     }
     if (other.children != nullptr) {
@@ -212,22 +338,11 @@ void ErasableStroke::OverlapTree::Node::addOverlapsToRange(const Node& other, do
      * Both this and other are leaves corresponding to single segments
      * Repaint the intersection of their bounding boxes
      */
-    auto rectThis = this->toRectangle(halfWidth);
-    auto rectOther = other.toRectangle(halfWidth);
-    auto inter = rectThis.intersects(rectOther);
+    range = range.unite(this->box.intersect(other.box));
 
-    xoj_assert(inter);
-
-    const Rectangle<double>& rect = inter.value();
 #ifdef DEBUG_ERASABLE_STROKE_BOXES
     paintDebugRect(rectThis, 'g', cr);
     paintDebugRect(rectOther, 'g', cr);
     paintDebugRect(rect, 'b', cr);
 #endif
-    range.addPoint(rect.x, rect.y);
-    range.addPoint(rect.x + rect.width, rect.y + rect.height);
-}
-
-auto ErasableStroke::OverlapTree::Node::toRectangle(double padding) const -> Rectangle<double> {
-    return {minX - padding, minY - padding, maxX - minX + 2 * padding, maxY - minY + 2 * padding};
 }

@@ -12,7 +12,6 @@
 
 #include "model/Point.h"
 
-class Stroke;
 class Inertia;
 
 struct RecoSegment final {
@@ -23,7 +22,6 @@ struct RecoSegment final {
      */
     void calcSegmentGeometry(const Point* pt, int start, int end, Inertia* s);
 
-    Stroke* stroke{nullptr};
     int startpt{0};
     int endpt{0};
 

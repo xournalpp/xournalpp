@@ -18,10 +18,9 @@
 #include "ErasableStrokeOverlapTree.h"  // for ErasableStroke::OverlapTree
 #include "PaddedBox.h"                  // for PaddedBox
 
-using xoj::util::Rectangle;
 
 ErasableStroke::ErasableStroke(const Stroke& stroke): stroke(stroke) {
-    const auto& pts = this->stroke.getPointVector();
+    const auto& pts = this->stroke.path->getData();
     closedStroke = pts.size() >= 3 && pts.front().lineLengthTo(pts.back()) < CLOSED_STROKE_DISTANCE;
 }
 
@@ -36,9 +35,16 @@ ErasableStroke::~ErasableStroke() = default;
  *  some point.
  *  This means we erase a little outside the visible box, but only when the stroke enters or leaves the visible box.
  */
-void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedIntersections, Range& range) {
-    size_t n = this->stroke.getPointCount();
-    if (n < 2) {
+void ErasableStroke::beginErasure(const Path::IntersectionParametersContainer& paddedIntersections, Range& range) {
+    if (!this->stroke.path) {
+        g_warning("Erasing pathless stroke. This should never happen!");
+        return;
+    }
+    const Path& path = *this->stroke.path;
+
+    auto nbSegments = path.nbSegments();
+    if (nbSegments == 0) {
+        g_warning("Erasing empty stroke. This should never happen!");
         return;
     }
 
@@ -50,11 +56,11 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
 
     // We will need to rerender everywhere a section was removed
     for (auto& s: sections.cloneToIntervalVector()) {
-        range = range.unite(computeSubSectionBoundingBox(s));
+        range = range.unite(path.getSubSectionBoundingBox(s, this->stroke.getWidth()));
     }
 
     // Now contains remaining sections
-    sections.complement({0, 0.0}, {n - 2, 1.0});
+    sections.complement({0, 0.0}, {nbSegments - 1, 1.0});
 
     const bool highlighter = this->stroke.getToolType() == StrokeTool::HIGHLIGHTER;
     const bool filled = this->stroke.getFill() != -1;
@@ -63,9 +69,9 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
         if (filled) {
             if (subsections.size() == 1) {
                 // We erased the stroke from its ends. Simply add the end points to ensure the filling is rerendered
-                const Point& p1 = this->stroke.getPointVector().front();
+                const Point& p1 = path.getFirstKnot();
                 range.addPoint(p1.x, p1.y);
-                const Point& p2 = this->stroke.getPointVector().back();
+                const Point& p2 = path.getLastKnot();
                 range.addPoint(p2.x, p2.y);
             } else {
                 // The stroke was split in two or more (and possibly shrank). Need to rerender its entire box.
@@ -89,13 +95,20 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
 }
 
 void ErasableStroke::erase(const PaddedBox& box, Range& range) {
-    size_t n = (size_t)this->stroke.getPointCount();
-    if (n < 2) {
-        g_warning("Erasing empty stroke");
+    if (!this->stroke.path) {
+        g_warning("Erasing pathless stroke. This should never happen!");
         return;
     }
 
-    std::vector<SubSection> sections = this->getRemainingSubSectionsVector();
+    const auto& path = this->stroke.getPath();
+
+    auto nbSegments = path.nbSegments();
+    if (nbSegments == 0) {
+        g_warning("Erasing empty stroke. This should never happen!");
+        return;
+    }
+
+    std::vector<Path::SubSection> sections = this->getRemainingSubSectionsVector();
 
     if (sections.empty()) {
         /** Nothing left to erase! **/
@@ -129,7 +142,7 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
      */
     std::vector<Interval<size_t>> indexIntervals;
 
-    for (const SubSection& section: sections) {
+    for (const Path::SubSection& section: sections) {
         if (!getSubSectionBoundingBox(section).intersect(Range(box.getInnerRectangle())).empty()) {
             if (indexIntervals.empty()) {
                 indexIntervals.emplace_back(section.min.index, section.max.index);
@@ -147,7 +160,7 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
     UnionOfIntervals<Path::Parameter> newErasedSections;
 
     for (auto& i: indexIntervals) {
-        newErasedSections.appendData(this->stroke.intersectWithPaddedBox(box, i.min, i.max));
+        newErasedSections.appendData(this->stroke.path->intersectWithPaddedBox(box, i.min, i.max));
     }
 
     changesAtLastIteration = !newErasedSections.empty();
@@ -155,7 +168,7 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
 
         // We will need to rerender everywhere a section was removed
         for (auto& s: newErasedSections.cloneToIntervalVector()) {
-            range = range.unite(computeSubSectionBoundingBox(s));
+            range = range.unite(path.getSubSectionBoundingBox(s, this->stroke.getWidth()));
         }
 
         const bool highlighter = this->stroke.getToolType() == StrokeTool::HIGHLIGHTER;
@@ -165,9 +178,9 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
              * Detect if a section has been modified. If so, rerender whatever needs rerendering.
              */
 
-            std::vector<SubSection> newRemainingSections;
+            std::vector<Path::SubSection> newRemainingSections;
             // Update the remaining sections
-            newErasedSections.complement({0, 0.0}, {n - 2, 1.0});
+            newErasedSections.complement({0, 0.0}, {nbSegments - 1, 1.0});
             {  // lock_guard scope
                 std::lock_guard<std::mutex> lock(sectionsMutex);
                 remainingSections.intersect(newErasedSections.getData());
@@ -178,7 +191,7 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
             auto itNewSectionEnd = newRemainingSections.end();
             for (auto& section: sections) {
                 // Find out which new sections belonged to the same section before
-                std::vector<SubSection> subsections;
+                std::vector<Path::SubSection> subsections;
                 while (itNewSection != itNewSectionEnd && itNewSection->max <= section.max) {
                     subsections.emplace_back(*itNewSection);
                     ++itNewSection;
@@ -195,13 +208,13 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
                             continue;
                         }
                         // The section shrank.
-                        Point p = this->stroke.getPoint(section.min);
+                        Point p = path.getPoint(section.min);
                         range.addPoint(p.x, p.y);
-                        p = this->stroke.getPoint(section.max);
+                        p = path.getPoint(section.max);
                         range.addPoint(p.x, p.y);
-                        p = this->stroke.getPoint(subsection.min);
+                        p = path.getPoint(subsection.min);
                         range.addPoint(p.x, p.y);
-                        p = this->stroke.getPoint(subsection.max);
+                        p = path.getPoint(subsection.max);
                         range.addPoint(p.x, p.y);
                         continue;
                     }
@@ -220,7 +233,7 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
             }
         } else {
             // Update the remaining sections
-            newErasedSections.complement({0, 0.0}, {n - 2, 1.0});
+            newErasedSections.complement({0, 0.0}, {nbSegments - 1, 1.0});
             {  // lock_guard scope
                 std::lock_guard<std::mutex> lock(sectionsMutex);
                 remainingSections.intersect(newErasedSections.getData());
@@ -230,14 +243,14 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
 }
 
 auto ErasableStroke::getStrokes() const -> std::vector<std::unique_ptr<Stroke>> {
-    std::vector<SubSection> sections = this->getRemainingSubSectionsVector();
+    std::vector<Path::SubSection> sections = this->getRemainingSubSectionsVector();
 
     std::vector<std::unique_ptr<Stroke>> strokes;
     strokes.reserve(sections.size());
 
     bool mergeFirstAndLast = this->closedStroke && sections.size() >= 2 &&
                              sections.front().min == Path::Parameter(0, 0.0) &&
-                             sections.back().max == Path::Parameter(this->stroke.getPointCount() - 2, 1.0);
+                             sections.back().max == Path::Parameter(this->stroke.path->nbSegments() - 1, 1.0);
 
     auto sectionIt = sections.cbegin();
     auto sectionEndIt = sections.cend();
@@ -246,7 +259,10 @@ auto ErasableStroke::getStrokes() const -> std::vector<std::unique_ptr<Stroke>> 
         /**
          * Clone the first and last sections as a single stroke
          */
-        strokes.push_back(this->stroke.cloneCircularSectionOfClosedStroke(sections.back().min, sections.front().max));
+        auto& newStroke = strokes.emplace_back(std::make_unique<Stroke>());
+        newStroke->applyStyleFrom(&stroke);
+        newStroke->path = stroke.path->cloneCircularSectionOfClosedPath(sections.back().min, sections.front().max);
+        newStroke->pressureSensitive = stroke.pressureSensitive;
 
         // Avoid cloning those sections again
         ++sectionIt;
@@ -254,28 +270,30 @@ auto ErasableStroke::getStrokes() const -> std::vector<std::unique_ptr<Stroke>> 
     }
 
     for (; sectionIt != sectionEndIt; ++sectionIt) {
-        strokes.push_back(this->stroke.cloneSection(sectionIt->min, sectionIt->max));
+        auto& newStroke = strokes.emplace_back(std::make_unique<Stroke>());
+        newStroke->applyStyleFrom(&stroke);
+        newStroke->path = stroke.path->cloneSection(*sectionIt);
+        newStroke->pressureSensitive = stroke.pressureSensitive;
     }
 
     return strokes;
 }
 
-std::vector<ErasableStroke::SubSection> ErasableStroke::getRemainingSubSectionsVector() const {
+std::vector<Path::SubSection> ErasableStroke::getRemainingSubSectionsVector() const {
     std::lock_guard<std::mutex> lock(this->sectionsMutex);
     return this->remainingSections.cloneToIntervalVector();
 }
 
 bool ErasableStroke::isClosedStroke() const { return this->closedStroke; }
 
-auto ErasableStroke::getSubSectionBoundingBox(const ErasableStroke::SubSection& section) const -> const Range& {
+auto ErasableStroke::getSubSectionBoundingBox(const Path::SubSection& section) const -> const Range& {
 
     std::lock_guard<std::mutex> lock(this->boxesMutex);
 
     //  First look for the box in the cache
     auto it = std::lower_bound(boundingBoxes.begin(), boundingBoxes.end(), section,
-                               [](const std::pair<SubSection, Range>& cacheData, const SubSection& section) {
-                                   return cacheData.first < section;
-                               });
+                               [](const std::pair<Path::SubSection, Range>& cacheData,
+                                  const Path::SubSection& section) { return cacheData.first < section; });
     if (it != boundingBoxes.end() && section == it->first) {
         // There was already a box computed for this section
         return it->second;
@@ -283,36 +301,14 @@ auto ErasableStroke::getSubSectionBoundingBox(const ErasableStroke::SubSection& 
 
     // Need to compute the bounding box
     // Assign the computed box to the cache
-    it = boundingBoxes.emplace(it, std::piecewise_construct, std::forward_as_tuple(section),
-                               std::forward_as_tuple(computeSubSectionBoundingBox(section)));
+    it = boundingBoxes.emplace(
+            it, std::piecewise_construct, std::forward_as_tuple(section),
+            std::forward_as_tuple(this->stroke.getPath().getSubSectionBoundingBox(section, this->stroke.getWidth())));
 
     return it->second;
 }
 
-auto ErasableStroke::computeSubSectionBoundingBox(const SubSection& section) const -> Range {
-
-    const bool hasPressure = this->stroke.hasPressure();
-    const double halfWidth = 0.5 * this->stroke.getWidth();
-    double lastPressure = 0;
-
-    auto pointRange = [&](const Point& p) {
-        const double padding = hasPressure ? 0.5 * std::max(lastPressure, p.z) : halfWidth;
-        lastPressure = p.z;
-        return Range(p.x - padding, p.y - padding, p.x + padding, p.y + padding);
-    };
-
-    Range rg = pointRange(this->stroke.getPoint(section.min));
-
-    auto data = this->stroke.getPointVector();
-    auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)section.max.index + 1);
-    for (auto ptIt = std::next(data.cbegin(), (std::ptrdiff_t)section.min.index + 1); ptIt != endIt; ++ptIt) {
-        rg = rg.unite(pointRange(*ptIt));
-    }
-
-    return rg.unite(pointRange(this->stroke.getPoint(section.max)));
-}
-
-void ErasableStroke::addOverlapsToRange(const std::vector<SubSection>& subsections, Range& range) {
+void ErasableStroke::addOverlapsToRange(const std::vector<Path::SubSection>& subsections, Range& range) {
 
     // Will contain the intersection trees of the subsections
     std::vector<OverlapTree> overlapTrees(subsections.size());
@@ -352,7 +348,7 @@ void ErasableStroke::addOverlapsToRange(const std::vector<SubSection>& subsectio
 }
 
 #ifdef DEBUG_ERASABLE_STROKE_BOXES
-void ErasableStroke::paintDebugRect(const Rectangle<double>& rect, char color, cairo_t* cr) {
+void ErasableStroke::paintDebugRect(const xoj::util::Rectangle<double>& rect, char color, cairo_t* cr) {
     if (cr == nullptr) {
         return;
     }

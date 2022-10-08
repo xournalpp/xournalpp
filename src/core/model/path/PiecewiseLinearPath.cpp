@@ -50,19 +50,13 @@ PiecewiseLinearPath::PiecewiseLinearPath(const Point& firstPoint, const Point& s
 
 PiecewiseLinearPath::PiecewiseLinearPath(ObjectInputStream& in) {
     in.readObject("PiecewiseLinearPath");
-
-    Point* p{};
-    int count{};
-    in.readData(reinterpret_cast<void**>(&p), &count);
-    this->data = std::vector<Point>{p, p + count};
-    g_free(p);
-
+    in.readData(this->data);
     in.endObject();
 }
 
 void PiecewiseLinearPath::serialize(ObjectOutputStream& out) const {
     out.writeObject("PiecewiseLinearPath");
-    out.writeData(this->data.data(), this->data.size(), sizeof(Point));
+    out.writeData(this->data);
     out.endObject();
 }
 
@@ -253,6 +247,12 @@ Range PiecewiseLinearPath::getSubSectionBoundingBox(const Path::SubSection& sect
 void PiecewiseLinearPath::setSecondToLastPressure(double pressure) {
     if (size_t size = this->data.size(); size >= 2) {
         this->data[size - 2].z = pressure;
+    }
+}
+
+void PiecewiseLinearPath::setLastPressure(double pressure) {
+    if (!this->data.empty()) {
+        this->data.back().z = pressure;
     }
 }
 

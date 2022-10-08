@@ -243,6 +243,11 @@ void Settings::loadDefault() {
     this->numberOfSpacesForTab = 4;
 
     this->colorPaletteSetting = Util::getBuiltInPaletteDirectoryPath() / DEFAULT_PALETTE_FILE;
+
+    /**
+     * Spline Approximator
+     */
+    this->splineApproximatorType = SplineApproximator::Type::NONE;
 }
 
 auto Settings::loadViewMode(ViewModeId mode) -> bool {
@@ -699,6 +704,12 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         if (!paletteConfig.empty()) {
             this->colorPaletteSetting = paletteConfig;
         }
+        /**
+         * Spline Approximation
+         */
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("splineApproximatorType")) == 0) {
+        this->splineApproximatorType =
+                (SplineApproximator::Type)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     }
     /**/
 
@@ -1167,6 +1178,11 @@ void Settings::save() {
     }
 
     /**/
+
+    /**
+     * Spline approximation
+     */
+    saveProperty("splineApproximatorType", static_cast<int>(splineApproximatorType), root);
 
     SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
     SAVE_STRING_PROP(latexSettings.defaultText);
@@ -2621,7 +2637,6 @@ auto Settings::getColorPaletteSetting() -> fs::path const& { return this->colorP
 
 void Settings::setColorPaletteSetting(fs::path palettePath) { this->colorPaletteSetting = palettePath; }
 
-
 void Settings::setUseSpacesAsTab(bool useSpaces) { this->useSpacesForTab = useSpaces; }
 bool Settings::getUseSpacesAsTab() const { return this->useSpacesForTab; }
 
@@ -2641,3 +2656,15 @@ void Settings::setNumberOfSpacesForTab(unsigned int numberOfSpaces) {
 }
 
 unsigned int Settings::getNumberOfSpacesForTab() const { return this->numberOfSpacesForTab; }
+
+SplineApproximator::Type Settings::getSplineApproximatorType() const { return this->splineApproximatorType; }
+
+void Settings::setSplineApproximatorType(SplineApproximator::Type t) {
+    const SplineApproximator::Type tt = SplineApproximator::isValid(t) ? t : SplineApproximator::Type::NONE;
+
+    if (splineApproximatorType == tt) {
+        return;
+    }
+    splineApproximatorType = tt;
+    save();
+}

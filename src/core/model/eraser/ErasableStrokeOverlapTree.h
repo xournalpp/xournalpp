@@ -15,6 +15,8 @@
 #include <utility>  // for pair
 #include <vector>   // for vector, vector<>::iterator
 
+#include "model/SplineSegment.h"
+#include "model/path/Path.h"
 #include "util/Rectangle.h"  // for Rectangle
 
 #include "ErasableStroke.h"  // for ErasableStroke::SubSection, ErasableStroke
@@ -35,7 +37,7 @@ public:
     /**
      * @brief Populate the tree, so that it corresponds to the given section of the given stroke.
      */
-    void populate(const SubSection& section, const Stroke& stroke);
+    void populate(const Path::SubSection& section, const Stroke& stroke);
 
     bool isPopulated() const;
 
@@ -67,6 +69,7 @@ private:
     class Node {
     public:
         Node() = default;
+
 #ifdef DEBUG_ERASABLE_STROKE_BOXES
         /**
          * @brief Add to a vector rectangles which altogether contain every overlap between the subsection corresponding
@@ -89,13 +92,9 @@ private:
 #endif
 
         /**
-         * Bounding box of the subsection represented by the node.
-         * WARNING: The bounding box does not take the stroke thickness into account
+         * Bounding box of the subsection represented by the node. The box takes the stroke thickness into account.
          */
-        double minX;
-        double maxX;
-        double minY;
-        double maxY;
+        Range box;
 
         /**
          * Descendants, corresponding to the two halves of the subsection represented by the node
@@ -106,19 +105,15 @@ private:
          * @brief Initialize the bounding box (minX, maxX, minY, maxY) when the node corresponds to a single segment
          * @param p1 The first endpoint of the segment
          * @param p2 The second endpoint of the segment
+         * @param halfWidth half the stroke's width
          */
-        void initializeOnSegment(const Point& p1, const Point& p2);
+        void initializeOnSegment(const Point& p1, const Point& p2, const double halfWidth);
+        void initializeOnSegment(const SplineSegment& segment, const double halfWidth);
 
         /**
          * @brief Compute the node's bounding box by taking the union of the children's boxes
          */
         void computeBoxFromChildren();
-
-        /**
-         * @brief Get a rectangle from the box (minX, maxX, minY, maxY), with an additional padding
-         * @param padding Padding added to the box (typically, half the stroke's width)
-         */
-        xoj::util::Rectangle<double> toRectangle(double padding) const;
     };
 
     Node root;
@@ -128,7 +123,7 @@ private:
     class Populator {
     public:
         Populator(std::vector<std::pair<Node, Node>>& data, const Stroke& stroke): data(data), stroke(stroke) {}
-        void populate(const SubSection& section, Node& root);
+        void populate(const Path::SubSection& section, Node& root);
 
     private:
         std::vector<std::pair<Node, Node>>& data;
@@ -161,5 +156,15 @@ private:
          *      pts[min] -- ... -- pts[max]
          */
         void populateNode(Node& node, size_t min, size_t max, const std::vector<Point>& pts);
+
+
+        void populateNode(Node& node, const Path::SubSection& section,
+                          const Path::SegmentIteratable<const SplineSegment>& segments);
+        void populateNode(Node& node, const Path::Parameter& startParam, size_t endIndex,
+                          const Path::SegmentIteratable<const SplineSegment>& segments);
+        void populateNode(Node& node, size_t startIndex, const Path::Parameter& endParam,
+                          const Path::SegmentIteratable<const SplineSegment>& segments);
+        void populateNode(Node& node, size_t startIndex, size_t endIndex,
+                          const Path::SegmentIteratable<const SplineSegment>& segments);
     };
 };

@@ -194,6 +194,7 @@ public:
     Range getSubSectionBoundingBox(const SubSection& section, const double fallbackWidth) const override;
 
     void setSecondToLastPressure(double pressure);
+    void setLastPressure(double pressure);
 
     /**
      */

@@ -99,6 +99,8 @@ void SaveHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement*
 void SaveHandler::visitStroke(XmlPointNode* stroke, const Stroke* s) {
     StrokeTool t = s->getToolType();
 
+    const Path& path = s->getPath();
+
     unsigned char alpha = 0xff;
 
     if (t == StrokeTool::PEN) {
@@ -116,15 +118,17 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, const Stroke* s) {
 
     stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
 
-    const auto& pts = s->getPointVector();
+    const std::vector<Point>& pathData = path.getData();
 
-    stroke->setPoints(pts);
+    stroke->setPoints(pathData);
 
     if (s->hasPressure()) {
         std::vector<double> values;
-        values.reserve(pts.size() + 1);
+        values.reserve(pathData.size() + 1);
         values.emplace_back(s->getWidth());
-        std::transform(pts.begin(), pts.end() - 1, std::back_inserter(values), [](const Point& p) { return p.z; });
+        // Only splines need to pressure value of the last point
+        auto end = std::prev(pathData.end(), path.getType() == Path::SPLINE ? 0 : 1);
+        std::transform(pathData.begin(), end, std::back_inserter(values), [](const Point& p) { return p.z; });
         stroke->setAttrib("width", std::move(values));
     } else {
         stroke->setAttrib("width", s->getWidth());

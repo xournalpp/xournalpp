@@ -24,13 +24,6 @@ using namespace xoj::view;
 StrokeView::StrokeView(const Stroke* s): s(s) {}
 
 void StrokeView::draw(const Context& ctx) const {
-
-    if (s->getPointCount() < 2) {
-        // Should not happen
-        g_warning("View::StrokeView::draw empty stroke...");
-        return;
-    }
-
     const bool highlighter = s->getToolType() == StrokeTool::HIGHLIGHTER;
     const bool filledHighlighter = highlighter && s->getFill() != -1;
     const bool drawTranslucent = ctx.fadeOutNonAudio && s->getAudioFilename().empty();
@@ -100,7 +93,7 @@ void StrokeView::draw(const Context& ctx) const {
             ErasableStrokeView erasableStrokeView(*erasable);
             erasableStrokeView.drawFilling(cr);
         } else {
-            StrokeViewHelper::pathToCairo(cr, s->getPointVector());
+            s->getPath().addToCairo(cr);
             cairo_fill(cr);
         }
     }
@@ -133,9 +126,9 @@ void StrokeView::draw(const Context& ctx) const {
         ErasableStrokeView erasableStrokeView(*erasable);
         erasableStrokeView.draw(cr);
     } else if (s->hasPressure() && !highlighter) {
-        StrokeViewHelper::drawWithPressure(cr, s->getPointVector(), s->getLineStyle());
+        StrokeViewHelper::drawWithPressure(cr, s->getPointsToDraw(), s->getLineStyle());
     } else {
-        StrokeViewHelper::drawNoPressure(cr, s->getPointVector(), s->getWidth(), s->getLineStyle());
+        StrokeViewHelper::drawNoPressure(cr, s->getPath(), s->getWidth(), s->getLineStyle());
     }
 
     if (useMask) {
