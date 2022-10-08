@@ -23,11 +23,11 @@
 #include "util/Interval.h"                        // for Interval
 #include "util/PairView.h"                        // for PairView<>::BaseIte...
 #include "util/PlaceholderString.h"               // for PlaceholderString
+#include "util/Range.h"                           // for Range
 #include "util/Rectangle.h"                       // for Rectangle
 #include "util/SmallVector.h"                     // for SmallVector
 #include "util/TinyVector.h"                      // for TinyVector
 #include "util/i18n.h"                            // for FC, FORMAT_STR
-#include "util/serdesstream.h"                    // for serdes_stream
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
