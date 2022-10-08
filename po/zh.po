@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-08 04:28+0000\n"
-"PO-Revision-Date: 2022-10-08 06:04\n"
+"PO-Revision-Date: 2022-10-08 12:49\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1369,12 +1369,13 @@ msgstr "工具条配置\"{1}\"是预置的，要产生一个拷贝到编辑?"
 
 #: ../src/core/control/Control.cpp:2207
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "无法找到所附的背景文件。它可能已被移动、重命名或删除。"
 
 #: ../src/core/control/Control.cpp:2210
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr ""
+msgstr "无法找到背景文件\"{1}\"。它可能已被移动、重命名或删除。\n"
+"它最后一次出现是在：\"{2}\""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
@@ -2303,7 +2304,7 @@ msgstr "盲区半径"
 
 #: ../ui/latexSettings.glade:119
 msgid "Default LaTeX Text"
-msgstr ""
+msgstr "默认 LaTeX 文本"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
