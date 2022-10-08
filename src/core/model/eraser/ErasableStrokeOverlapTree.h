@@ -15,12 +15,14 @@
 #include <utility>  // for pair
 #include <vector>   // for vector, vector<>::iterator
 
-#include <cairo.h>  // for cairo_t
-
 #include "util/Rectangle.h"  // for Rectangle
 
 #include "ErasableStroke.h"  // for ErasableStroke::SubSection, ErasableStroke
 #include "config-debug.h"    // for DEBUG_ERASABLE_STROKE_BOXES
+
+#ifdef DEBUG_ERASABLE_STROKE_BOXES
+#include <cairo.h>  // for cairo_t
+#endif
 
 class Point;
 class Range;
