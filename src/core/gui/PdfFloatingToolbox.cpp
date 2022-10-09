@@ -13,6 +13,7 @@
 #include "control/ToolHandler.h"    // for ToolHandler
 #include "gui/PageView.h"           // for XojPageView
 #include "gui/XournalView.h"        // for XournalView
+#include "model/Document.h"         // for Document
 #include "model/Layer.h"            // for Layer
 #include "model/PageRef.h"          // for PageRef
 #include "model/Point.h"            // for Point
@@ -147,8 +148,19 @@ void PdfFloatingToolbox::copyTextToClipboard() {
 }
 
 void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity) {
-    uint64_t currentPage = theMainWindow->getXournal()->getCurrentPage();
-    if (currentPage != this->pdfElemSelection->getSelectionPageNr()) {
+    const uint64_t pdfPageNo = this->pdfElemSelection->getSelectionPageNr();
+    const uint64_t currentPage = theMainWindow->getXournal()->getCurrentPage();
+
+    // Get the PDF page that the current page corresponds to.
+    // It should be the same as the PDF page of the selection.
+    auto doc = this->theMainWindow->getControl()->getDocument();
+    doc->lock();
+    const uint64_t pdfPageOfCurrentPage = doc->getPage(currentPage)->getPdfPageNr();
+    doc->unlock();
+
+    if (pdfPageOfCurrentPage != pdfPageNo) {
+        // There's probably a bug that violates our assumptions, so no-op.
+        g_warning("The current page's PDF page is not the same as the PDF page of the selection!");
         return;
     }
 
@@ -191,8 +203,8 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
     }
 
     auto undoAct = std::make_unique<GroupUndoAction>();
-    auto* view = theMainWindow->getXournal()->getViewFor(control->getCurrentPageNo());
-    for (auto&& stroke: strokes) {
+    auto* view = theMainWindow->getXournal()->getViewFor(currentPage);
+    for (Stroke* stroke: strokes) {
         undoAct->addAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
         view->rerenderElement(stroke);
     }
