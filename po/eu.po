@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-08 04:28+0000\n"
-"PO-Revision-Date: 2022-10-08 06:03\n"
+"POT-Creation-Date: 2022-10-09 00:31+0000\n"
+"PO-Revision-Date: 2022-10-09 01:27\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2109,7 +2109,7 @@ msgstr "Hiru baldintzak bete behar dira trazua ahazteko.\n"
 msgid "Always check LaTeX dependencies before running"
 msgstr "Egiaztatu beti LaTeX menpekotasunak erabili aurretik"
 
-#: ../ui/main.glade:1215
+#: ../ui/main.glade:1216
 msgid "Append New PDF Pages"
 msgstr "Erantsi Pdf orri berriak"
 
@@ -2246,7 +2246,7 @@ msgstr "Koloreak"
 msgid "Command Output"
 msgstr "Aginduaren irteera"
 
-#: ../ui/main.glade:1225
+#: ../ui/main.glade:1226
 msgid "Configure Page Template"
 msgstr "Konfiguratu orriaren txantiloia"
 
@@ -2262,7 +2262,7 @@ msgstr "Kopiatu haren ordez uneko orriaren atzeko planoa"
 msgid "Copy current page size instead"
 msgstr "Kopiatu haren ordez uneko orriaren tamaina"
 
-#: ../ui/main.glade:2707
+#: ../ui/main.glade:2708
 msgid "Copy selected text"
 msgstr "Kopiatu hautatutako testua"
 
@@ -2322,7 +2322,7 @@ msgstr "Izen lehenetsia: "
 msgid "Defaults"
 msgstr "Lehenetsiak"
 
-#: ../ui/main.glade:1263
+#: ../ui/main.glade:1264
 msgid "Delete Layer"
 msgstr "Ezabatu geruza"
 
@@ -2398,11 +2398,11 @@ msgstr "Arrastatu eta jaregin osagaiak hemendik tresna-barrara eta atzera."
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Arrastatu: balioa txikiegia bada, nahi ez diren oszilazioak ager daitezke. Balioa altuegia bada, ez da egonkortzerik egongo."
 
-#: ../ui/main.glade:1502
+#: ../ui/main.glade:1503
 msgid "Draw Coordinate System"
 msgstr "Marraztu koordenatuen sistema"
 
-#: ../ui/main.glade:1513
+#: ../ui/main.glade:1514
 msgid "Draw _Line"
 msgstr "Marraztu _lerroa"
 
@@ -2418,11 +2418,11 @@ msgstr "Marrazteko area"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Marrazteko tresnak - Ezarri aldatzaileak marrazkiaren norabidearen arabera (esperimentala)"
 
-#: ../ui/main.glade:2841 ../ui/main.glade:2878
+#: ../ui/main.glade:2842 ../ui/main.glade:2879
 msgid "Duplicate"
 msgstr "Bikoiztu"
 
-#: ../ui/main.glade:2915
+#: ../ui/main.glade:2916
 msgid "Edit (not implemented yet)"
 msgstr "Editatu (oraindik ezarri gabe)"
 
@@ -2482,7 +2482,7 @@ msgstr "Gaitu zoom mugimenduak (berrabiaraztea eskatzen du)"
 msgid "Enter / edit LaTeX Text"
 msgstr "Sartu / editatu Latex testua"
 
-#: ../ui/main.glade:1775
+#: ../ui/main.glade:1776
 msgid "Eraser Optio_ns"
 msgstr "Borragomaren aukerak"
 
@@ -2507,11 +2507,11 @@ msgstr "Esportatu geruzak pixkanaka"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "Esportatu dokumentua atzeko planorik gabe (Gabe), bakarrik PDF eta atzeko planoko irudiarekin (Saretarik gabe) edo atzeko plano guztiekin (Dena)."
 
-#: ../ui/main.glade:1751 ../ui/main.glade:1956
+#: ../ui/main.glade:1752 ../ui/main.glade:1957
 msgid "Fi_ll"
 msgstr "Bete"
 
-#: ../ui/main.glade:1761 ../ui/main.glade:1966
+#: ../ui/main.glade:1762 ../ui/main.glade:1967
 msgid "Fill opacity"
 msgstr "Bete opakutasuna"
 
@@ -2519,11 +2519,11 @@ msgstr "Bete opakutasuna"
 msgid "Finalize the stroke"
 msgstr "Bukatu trazua"
 
-#: ../ui/main.glade:2505
+#: ../ui/main.glade:2506
 msgid "Find next occurrence of the search string"
 msgstr "Bilatu bilaketa-katearen hurrengo agerraldia"
 
-#: ../ui/main.glade:2483
+#: ../ui/main.glade:2484
 msgid "Find previous occurrence of the search string"
 msgstr "Bilatu bilaketa-katearen aurreko agerraldia"
 
@@ -2535,7 +2535,7 @@ msgstr "Lehen orriaren desplazamendua "
 msgid "Font: "
 msgstr "Letra-tipoa: "
 
-#: ../ui/main.glade:550 ../ui/settings.glade:3631
+#: ../ui/main.glade:551 ../ui/settings.glade:3631
 msgid "Fullscreen"
 msgstr "Pantaila osoa"
 
@@ -2575,7 +2575,7 @@ msgstr "Saretaren tamaina"
 msgid "Grid snapping tolerance"
 msgstr "Saretara atxikitzeko tolerantzia"
 
-#: ../ui/main.glade:1601
+#: ../ui/main.glade:1602
 msgid "H_and Tool"
 msgstr "Esku_a tresna"
 
@@ -2591,7 +2591,7 @@ msgstr "Altuera"
 msgid "Height:"
 msgstr "Altuera:"
 
-#: ../ui/main.glade:969 ../ui/settings.glade:3593 ../ui/settings.glade:3660
+#: ../ui/main.glade:970 ../ui/settings.glade:3593 ../ui/settings.glade:3660
 msgid "Hide Menubar"
 msgstr "Ezkutatu menu-barra"
 
@@ -2611,11 +2611,11 @@ msgstr "Ezkutatu korritze barra bertikala"
 msgid "Highlight cursor position"
 msgstr "Nabarmendu kurtsorearen kokapena"
 
-#: ../ui/main.glade:2729
+#: ../ui/main.glade:2730
 msgid "Highlight selected text"
 msgstr "Nabarmendu hautatutako testua"
 
-#: ../ui/main.glade:1884
+#: ../ui/main.glade:1885
 msgid "Highlighter Opti_ons"
 msgstr "Nabarmentzailearen aukerak"
 
@@ -2699,11 +2699,11 @@ msgstr "Sarreraren egonkortzeak zure trazuaren amaieran hutsune bat sor dezake. 
 msgid "Insert Latex"
 msgstr "Txertatu Latex"
 
-#: ../ui/main.glade:2870
+#: ../ui/main.glade:2871
 msgid "Insert Page After"
 msgstr "Txertatu orria ondoren"
 
-#: ../ui/main.glade:2862
+#: ../ui/main.glade:2863
 msgid "Insert Page Before"
 msgstr "Txertatu orria aurretik"
 
@@ -2727,7 +2727,7 @@ msgstr "Hizkuntza"
 msgid "Language Settings"
 msgstr "Hizkuntza-ezarpenak"
 
-#: ../ui/main.glade:593
+#: ../ui/main.glade:594
 msgid "Layout"
 msgstr "Diseinua"
 
@@ -2779,11 +2779,11 @@ msgstr "Luzera maximoa (mm)"
 msgid "Max multiplier"
 msgstr "Gehienezko biderkatzailea"
 
-#: ../ui/main.glade:2833
+#: ../ui/main.glade:2834
 msgid "Merge Down"
 msgstr "Jeitsi"
 
-#: ../ui/main.glade:1274
+#: ../ui/main.glade:1275
 msgid "Merge Layer Down"
 msgstr "Batu beheko geruzarekin"
 
@@ -2813,11 +2813,11 @@ msgstr "Saguaren botoiak"
 msgid "Mouse+Keyboard Combo"
 msgstr "Sagua+teklatuaren konbinazioa"
 
-#: ../ui/main.glade:2825 ../ui/main.glade:2900
+#: ../ui/main.glade:2826 ../ui/main.glade:2901
 msgid "Move Down"
 msgstr "Mugitu behera"
 
-#: ../ui/main.glade:2817 ../ui/main.glade:2892
+#: ../ui/main.glade:2818 ../ui/main.glade:2893
 msgid "Move Up"
 msgstr "Mugitu gora"
 
@@ -2825,23 +2825,23 @@ msgstr "Mugitu gora"
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr "Biderkatu panoramika abiadura kopuru honetara arte, hautatutako elementutik bistatik kanpo dagoenaren arabera."
 
-#: ../ui/main.glade:1147
+#: ../ui/main.glade:1148
 msgid "N_ext Annotated Page"
 msgstr "Hurrengo ohar-orria"
 
-#: ../ui/main.glade:1194
+#: ../ui/main.glade:1195
 msgid "New Page _After"
 msgstr "Orri berria ondoren"
 
-#: ../ui/main.glade:1184
+#: ../ui/main.glade:1185
 msgid "New Page _Before"
 msgstr "Orri berria _aurretik"
 
-#: ../ui/main.glade:1205
+#: ../ui/main.glade:1206
 msgid "New Page at _End"
 msgstr "Orri berria _bukaeran"
 
-#: ../ui/main.glade:1252
+#: ../ui/main.glade:1253
 msgid "New _Layer"
 msgstr "_Geruza berria"
 
@@ -2883,7 +2883,7 @@ msgstr "LaTeXen aginduak sortutako irteera."
 msgid "PDF Cache"
 msgstr "PDF Cache"
 
-#: ../ui/main.glade:1158
+#: ../ui/main.glade:1159
 msgid "P_revious Annotated Page"
 msgstr "Aurreko ohar-orria"
 
@@ -2895,7 +2895,7 @@ msgstr "Orriak:"
 msgid "Paired Pages"
 msgstr "Parekatutako orriak"
 
-#: ../ui/main.glade:1322
+#: ../ui/main.glade:1323
 msgid "Paper B_ackground"
 msgstr "Paperaren atzeko planoa"
 
@@ -2903,11 +2903,11 @@ msgstr "Paperaren atzeko planoa"
 msgid "Paper Format"
 msgstr "Paper-formatua"
 
-#: ../ui/main.glade:1312
+#: ../ui/main.glade:1313
 msgid "Paper _Color"
 msgstr "Paperaren _kolorea"
 
-#: ../ui/main.glade:1302
+#: ../ui/main.glade:1303
 msgid "Paper _Format"
 msgstr "Paperaren _formatua"
 
@@ -2921,11 +2921,11 @@ msgstr "Xournal-en partzialki oinarritua\n"
 msgid "Path: "
 msgstr "Fitxategi-bidea: "
 
-#: ../ui/main.glade:2002
+#: ../ui/main.glade:2003
 msgid "Pause"
 msgstr "Pausatu"
 
-#: ../ui/main.glade:1629
+#: ../ui/main.glade:1630
 msgid "Pen _Options"
 msgstr "Arkatzaren aukerak"
 
@@ -2945,7 +2945,7 @@ msgstr "Erreprodukzio zerrendaren ezarpenak"
 msgid "Plugin Manager"
 msgstr "Plugin kudeatzailea"
 
-#: ../ui/main.glade:2067
+#: ../ui/main.glade:2068
 msgid "Plugin _Manager"
 msgstr "Plugin _kudeatzailea"
 
@@ -2961,7 +2961,7 @@ msgstr "Aurrez kargatutako orriak ondoren"
 msgid "Pre-load pages before"
 msgstr "Aurrez kargatutako orriak aurretik"
 
-#: ../ui/main.glade:505
+#: ../ui/main.glade:506
 msgid "Preferences"
 msgstr "Hobespenak"
 
@@ -3005,7 +3005,7 @@ msgstr "Bir-errendatu orriaren zooma aldatzen bada hau baino gehiago "
 msgid "Recent _Documents"
 msgstr "Azken _dokumentuak"
 
-#: ../ui/main.glade:1992
+#: ../ui/main.glade:1993
 msgid "Record / Stop"
 msgstr "Grabatu / Gelditu"
 
@@ -3013,7 +3013,7 @@ msgstr "Grabatu / Gelditu"
 msgid "Recording Quality"
 msgstr "Grabazioaren kalitatea"
 
-#: ../ui/main.glade:1285
+#: ../ui/main.glade:1286
 msgid "Rename Layer"
 msgstr "Berrizendatu geruza"
 
@@ -3069,7 +3069,7 @@ msgstr "Hautatu karpeta"
 msgid "Select Image"
 msgstr "Hautatu irudia"
 
-#: ../ui/main.glade:1370
+#: ../ui/main.glade:1371
 msgid "Select Linear Text"
 msgstr "Hautatu testu lerroetan"
 
@@ -3077,7 +3077,7 @@ msgstr "Hautatu testu lerroetan"
 msgid "Select PDF Page"
 msgstr "Hautatu PDF orria"
 
-#: ../ui/main.glade:1382
+#: ../ui/main.glade:1383
 msgid "Select Text In Rectangle"
 msgstr "Hautatu testua laukizuzenean"
 
@@ -3105,11 +3105,11 @@ msgstr "Eraman atzera"
 msgid "Sensitivity Scale"
 msgstr "Sentsibilitate-eskala"
 
-#: ../ui/main.glade:702
+#: ../ui/main.glade:703
 msgid "Set Columns"
 msgstr "Ezarri zutabeak"
 
-#: ../ui/main.glade:807
+#: ../ui/main.glade:808
 msgid "Set Rows"
 msgstr "Ezarri errenkadak"
 
@@ -3125,11 +3125,11 @@ msgstr "Erakutsi trena-barra mugikorra"
 msgid "Show Menubar on Startup"
 msgstr "Erakutsi menu-barra abioan"
 
-#: ../ui/main.glade:561
+#: ../ui/main.glade:562
 msgid "Show Sidebar"
 msgstr "Erakutsi alboko barra"
 
-#: ../ui/main.glade:577
+#: ../ui/main.glade:578
 msgid "Show Toolbars"
 msgstr "Erakutsi tresna-barrak"
 
@@ -3184,7 +3184,7 @@ msgstr "Distantzia baten ondoren hasi zooma egiten "
 msgid "Storage Folder"
 msgstr "Biltegiratzeko karpeta"
 
-#: ../ui/main.glade:2769
+#: ../ui/main.glade:2770
 msgid "Strikethrough selected text"
 msgstr "Marratu hautatutako testua"
 
@@ -3209,7 +3209,7 @@ msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr "Sistemaren kurtsorea"
 
-#: ../ui/main.glade:921
+#: ../ui/main.glade:922
 msgid "T_oolbars"
 msgstr "Tresna-barrak"
 
@@ -3237,7 +3237,7 @@ msgstr "Aztertu ezarpenak"
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Aztertu ea uneko ezarpenak baliozkoak diren LaTeX sortzeko komandoa txantiloi globala erabiliz frogako formula baten bidez."
 
-#: ../ui/main.glade:1980
+#: ../ui/main.glade:1981
 msgid "Text Font..."
 msgstr "Testuaren letra-tipoa..."
 
@@ -3269,7 +3269,7 @@ msgstr "Ezarpen hauek erabiliko dira orri berrietan"
 msgid "Timeout"
 msgstr "Denbora-muga"
 
-#: ../ui/main.glade:2789
+#: ../ui/main.glade:2790
 msgid "Toggle standard / region text selection"
 msgstr "Aldatu testuaren hautapena estandarra / laukizuzena"
 
@@ -3294,7 +3294,7 @@ msgstr "Saiatu lehenengo objektuak hautatzen."
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Saiatu lehenengo objektua hautatzen; ezer hautatuta ez badago, erakutsi tresna-barra mugikorra gaituta badago."
 
-#: ../ui/main.glade:2749
+#: ../ui/main.glade:2750
 msgid "Underline selected text"
 msgstr "Azpimarratu hautatutako testua"
 
@@ -3397,67 +3397,67 @@ msgstr "Zoom keinuak"
 msgid "Zoom Speed"
 msgstr "Zoomaren abiadura"
 
-#: ../ui/main.glade:714
+#: ../ui/main.glade:715
 msgid "_1 Column"
 msgstr "_1 zutabea"
 
-#: ../ui/main.glade:819
+#: ../ui/main.glade:820
 msgid "_1 Row"
 msgstr "_1 errenkada"
 
-#: ../ui/main.glade:725
+#: ../ui/main.glade:726
 msgid "_2 Columns"
 msgstr "_2 zutabe"
 
-#: ../ui/main.glade:830
+#: ../ui/main.glade:831
 msgid "_2 Rows"
 msgstr "_2 errenkada"
 
-#: ../ui/main.glade:736
+#: ../ui/main.glade:737
 msgid "_3 Columns"
 msgstr "_3 zutabe"
 
-#: ../ui/main.glade:841
+#: ../ui/main.glade:842
 msgid "_3 Rows"
 msgstr "_3 errenkada"
 
-#: ../ui/main.glade:747
+#: ../ui/main.glade:748
 msgid "_4 Columns"
 msgstr "_4 zutabe"
 
-#: ../ui/main.glade:852
+#: ../ui/main.glade:853
 msgid "_4 Rows"
 msgstr "_4 errenkada"
 
-#: ../ui/main.glade:758
+#: ../ui/main.glade:759
 msgid "_5 Columns"
 msgstr "_5 zutabe"
 
-#: ../ui/main.glade:863
+#: ../ui/main.glade:864
 msgid "_5 Rows"
 msgstr "_5 errenkada"
 
-#: ../ui/main.glade:769
+#: ../ui/main.glade:770
 msgid "_6 Columns"
 msgstr "_6 zutabe"
 
-#: ../ui/main.glade:874
+#: ../ui/main.glade:875
 msgid "_6 Rows"
 msgstr "_6 errenkada"
 
-#: ../ui/main.glade:780
+#: ../ui/main.glade:781
 msgid "_7 Columns"
 msgstr "_7 zutabe"
 
-#: ../ui/main.glade:885
+#: ../ui/main.glade:886
 msgid "_7 Rows"
 msgstr "_7 errenkada"
 
-#: ../ui/main.glade:791
+#: ../ui/main.glade:792
 msgid "_8 Columns"
 msgstr "_8 zutabe"
 
-#: ../ui/main.glade:896
+#: ../ui/main.glade:897
 msgid "_8 Rows"
 msgstr "_8 errenkada"
 
@@ -3465,23 +3465,23 @@ msgstr "_8 errenkada"
 msgid "_Annotate PDF"
 msgstr "_PDF oharrak"
 
-#: ../ui/main.glade:674
+#: ../ui/main.glade:675
 msgid "_Bottom to Top"
 msgstr "_Behetik gora"
 
-#: ../ui/main.glade:689
+#: ../ui/main.glade:690
 msgid "_Cols/Rows"
 msgstr "_Zutabe/Errenkada"
 
-#: ../ui/main.glade:949
+#: ../ui/main.glade:950
 msgid "_Customize"
 msgstr "_Pertsonalizatu"
 
-#: ../ui/main.glade:1430
+#: ../ui/main.glade:1431
 msgid "_Default Tools"
 msgstr "_Tresna lehenetsiak"
 
-#: ../ui/main.glade:1235
+#: ../ui/main.glade:1236
 msgid "_Delete Page"
 msgstr "_Ezabatu orria"
 
@@ -3489,7 +3489,7 @@ msgstr "_Ezabatu orria"
 msgid "_Edit"
 msgstr "_Editatu"
 
-#: ../ui/main.glade:1358
+#: ../ui/main.glade:1359
 msgid "_Eraser"
 msgstr "_Ezabatzailea"
 
@@ -3501,143 +3501,143 @@ msgstr "_Esportatu PDF gisa"
 msgid "_File"
 msgstr "_Fitxategia"
 
-#: ../ui/main.glade:1048
+#: ../ui/main.glade:1049
 msgid "_First Page"
 msgstr "_Lehenengo orria"
 
-#: ../ui/main.glade:1070
+#: ../ui/main.glade:1071
 msgid "_Goto Page"
 msgstr "_Joan orrira"
 
-#: ../ui/main.glade:2081
+#: ../ui/main.glade:2082
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: ../ui/main.glade:1394
+#: ../ui/main.glade:1395
 msgid "_Highlighter"
 msgstr "_Nabarmentzailea"
 
-#: ../ui/main.glade:605
+#: ../ui/main.glade:606
 msgid "_Horizontal"
 msgstr "_Horizontala"
 
-#: ../ui/main.glade:1418
+#: ../ui/main.glade:1419
 msgid "_Image"
 msgstr "_Irudia"
 
-#: ../ui/main.glade:1173
+#: ../ui/main.glade:1174
 msgid "_Journal"
 msgstr "_Koadernoa"
 
-#: ../ui/main.glade:1092
+#: ../ui/main.glade:1093
 msgid "_Last Page"
 msgstr "_Azken orria"
 
-#: ../ui/main.glade:634
+#: ../ui/main.glade:635
 msgid "_Left to Right"
 msgstr "_Ezkerretik eskuinera"
 
-#: ../ui/main.glade:939
+#: ../ui/main.glade:940
 msgid "_Manage"
 msgstr "_Kudeatu"
 
-#: ../ui/main.glade:1037
+#: ../ui/main.glade:1038
 msgid "_Navigation"
 msgstr "_Nabigazioa"
 
-#: ../ui/main.glade:1120
+#: ../ui/main.glade:1121
 msgid "_Next Layer"
 msgstr "_Hurrengo geruza"
 
-#: ../ui/main.glade:1081
+#: ../ui/main.glade:1082
 msgid "_Next Page"
 msgstr "Hurre_ngo orria"
 
-#: ../ui/main.glade:530
+#: ../ui/main.glade:531
 msgid "_Pair Pages"
 msgstr "_Parekatu orriak"
 
-#: ../ui/main.glade:1346
+#: ../ui/main.glade:1347
 msgid "_Pen"
 msgstr "_Arkatza"
 
-#: ../ui/main.glade:2056
+#: ../ui/main.glade:2057
 msgid "_Plugin"
 msgstr "_Pluginak"
 
-#: ../ui/main.glade:540
+#: ../ui/main.glade:541
 msgid "_Presentation Mode"
 msgstr "_Aurkezpen modua"
 
-#: ../ui/main.glade:1109
+#: ../ui/main.glade:1110
 msgid "_Previous Layer"
 msgstr "_Aurreko geruza"
 
-#: ../ui/main.glade:1059
+#: ../ui/main.glade:1060
 msgid "_Previous Page"
 msgstr "_Aurreko orria"
 
-#: ../ui/main.glade:645
+#: ../ui/main.glade:646
 msgid "_Right to Left"
 msgstr "_Eskuinetik ezkerrera"
 
-#: ../ui/main.glade:1447
+#: ../ui/main.glade:1448
 msgid "_Shape Recognizer"
 msgstr "_Formen identifikatzailea"
 
-#: ../ui/main.glade:1406
+#: ../ui/main.glade:1407
 msgid "_Text"
 msgstr "_Testua"
 
-#: ../ui/main.glade:1335
+#: ../ui/main.glade:1336
 msgid "_Tools"
 msgstr "_Tresnak"
 
-#: ../ui/main.glade:1131
+#: ../ui/main.glade:1132
 msgid "_Top Layer"
 msgstr "_Goiko geruza"
 
-#: ../ui/main.glade:663
+#: ../ui/main.glade:664
 msgid "_Top to Bottom"
 msgstr "_Goitik behera"
 
-#: ../ui/main.glade:616
+#: ../ui/main.glade:617
 msgid "_Vertical"
 msgstr "_Bertikala"
 
-#: ../ui/main.glade:1577
+#: ../ui/main.glade:1578
 msgid "_Vertical Space"
 msgstr "_Espazio bertikala"
 
-#: ../ui/main.glade:519
+#: ../ui/main.glade:520
 msgid "_View"
 msgstr "_Ikusi"
 
-#: ../ui/main.glade:1869
+#: ../ui/main.glade:1870
 msgid "_delete strokes"
 msgstr "_ezabatu trazuak"
 
-#: ../ui/main.glade:1651 ../ui/main.glade:1797 ../ui/main.glade:1906
+#: ../ui/main.glade:1652 ../ui/main.glade:1798 ../ui/main.glade:1907
 msgid "_fine"
 msgstr "_fina"
 
-#: ../ui/main.glade:1662 ../ui/main.glade:1808 ../ui/main.glade:1917
+#: ../ui/main.glade:1663 ../ui/main.glade:1809 ../ui/main.glade:1918
 msgid "_medium"
 msgstr "_ertaina"
 
-#: ../ui/main.glade:1847
+#: ../ui/main.glade:1848
 msgid "_standard"
 msgstr "_estandarra"
 
-#: ../ui/main.glade:1673 ../ui/main.glade:1819 ../ui/main.glade:1928
+#: ../ui/main.glade:1674 ../ui/main.glade:1820 ../ui/main.glade:1929
 msgid "_thick"
 msgstr "_lodia"
 
-#: ../ui/main.glade:1640 ../ui/main.glade:1786 ../ui/main.glade:1895
+#: ../ui/main.glade:1641 ../ui/main.glade:1787 ../ui/main.glade:1896
 msgid "_very fine"
 msgstr "_oso fina"
 
-#: ../ui/main.glade:1858
+#: ../ui/main.glade:1859
 msgid "_whiteout"
 msgstr "_tinta zuzentzailea"
 
@@ -3671,7 +3671,7 @@ msgstr "pixel"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(ondoren, ukipen-pantaila berriro aktibatuko da)</i>"
 
-#: ../ui/main.glade:1684 ../ui/main.glade:1830 ../ui/main.glade:1939
+#: ../ui/main.glade:1685 ../ui/main.glade:1831 ../ui/main.glade:1940
 msgid "ver_y thick"
 msgstr "_oso lodia"
 
