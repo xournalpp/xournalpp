@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-08 04:28+0000\n"
-"PO-Revision-Date: 2022-10-08 06:03\n"
+"POT-Creation-Date: 2022-10-09 00:31+0000\n"
+"PO-Revision-Date: 2022-10-09 01:27\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2108,7 +2108,7 @@ msgstr "A vonásírás figyelmen kívül hagyása előtt mindhárom feltételnek
 msgid "Always check LaTeX dependencies before running"
 msgstr "Mindig ellenőrizze a LaTeX függőségeit a futtatás előtt"
 
-#: ../ui/main.glade:1215
+#: ../ui/main.glade:1216
 msgid "Append New PDF Pages"
 msgstr "Új PDF-oldalak hozzáfűzése"
 
@@ -2245,7 +2245,7 @@ msgstr "Színek"
 msgid "Command Output"
 msgstr "Parancskimenet"
 
-#: ../ui/main.glade:1225
+#: ../ui/main.glade:1226
 msgid "Configure Page Template"
 msgstr "Oldalsablon beállítása"
 
@@ -2261,7 +2261,7 @@ msgstr "Jelenlegi oldal hátterének másolása"
 msgid "Copy current page size instead"
 msgstr "Másolja a jelenlegi oldalméretet helyette"
 
-#: ../ui/main.glade:2707
+#: ../ui/main.glade:2708
 msgid "Copy selected text"
 msgstr "Kijelölt szöveg másolása"
 
@@ -2321,7 +2321,7 @@ msgstr "Alapértelmezett név: "
 msgid "Defaults"
 msgstr "Alapértelmezések"
 
-#: ../ui/main.glade:1263
+#: ../ui/main.glade:1264
 msgid "Delete Layer"
 msgstr "Réteg törlése"
 
@@ -2397,11 +2397,11 @@ msgstr "Az alkatrészeket ide vagy az eszköztárra húzva helyezze el."
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Húzás: Ha az érték túl kicsi, nem kívánt rezgések jelenhetnek meg. Ha az érték túl magas, nem lesz stabilizálódás."
 
-#: ../ui/main.glade:1502
+#: ../ui/main.glade:1503
 msgid "Draw Coordinate System"
 msgstr "Koordinátarendszer rajzolása"
 
-#: ../ui/main.glade:1513
+#: ../ui/main.glade:1514
 msgid "Draw _Line"
 msgstr "_Vonal rajzolása"
 
@@ -2417,11 +2417,11 @@ msgstr "Rajzterület"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Rajzeszközök – Módosítók beállítása rajzolási irány szerint (kísérleti)"
 
-#: ../ui/main.glade:2841 ../ui/main.glade:2878
+#: ../ui/main.glade:2842 ../ui/main.glade:2879
 msgid "Duplicate"
 msgstr "Megkettőzés"
 
-#: ../ui/main.glade:2915
+#: ../ui/main.glade:2916
 msgid "Edit (not implemented yet)"
 msgstr "Szerkesztés (még nincsen megvalósítva)"
 
@@ -2481,7 +2481,7 @@ msgstr "Nagyítási kézmozdulatok engedélyezése (újraindítás szükséges)"
 msgid "Enter / edit LaTeX Text"
 msgstr "LaTeX-szöveg szerkesztése"
 
-#: ../ui/main.glade:1775
+#: ../ui/main.glade:1776
 msgid "Eraser Optio_ns"
 msgstr "Radír _beállításai"
 
@@ -2506,11 +2506,11 @@ msgstr "Rétegek fokozatos exportálása"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "Dokumentum exportálás háttér nélkül (Nincs), vagy csak PDF-fájl és kép hátterével (Nincs döntés), vagy minden háttértípussal (Mind)."
 
-#: ../ui/main.glade:1751 ../ui/main.glade:1956
+#: ../ui/main.glade:1752 ../ui/main.glade:1957
 msgid "Fi_ll"
 msgstr "_Kitöltés"
 
-#: ../ui/main.glade:1761 ../ui/main.glade:1966
+#: ../ui/main.glade:1762 ../ui/main.glade:1967
 msgid "Fill opacity"
 msgstr "Kitöltés átlátszatlansága"
 
@@ -2518,11 +2518,11 @@ msgstr "Kitöltés átlátszatlansága"
 msgid "Finalize the stroke"
 msgstr "Vonásírás véglegesítése"
 
-#: ../ui/main.glade:2505
+#: ../ui/main.glade:2506
 msgid "Find next occurrence of the search string"
 msgstr "Keresett szöveg következő előfordulása"
 
-#: ../ui/main.glade:2483
+#: ../ui/main.glade:2484
 msgid "Find previous occurrence of the search string"
 msgstr "Keresett szöveg előző előfordulása"
 
@@ -2534,7 +2534,7 @@ msgstr "Első oldal eltolás "
 msgid "Font: "
 msgstr "Betűkészlet: "
 
-#: ../ui/main.glade:550 ../ui/settings.glade:3631
+#: ../ui/main.glade:551 ../ui/settings.glade:3631
 msgid "Fullscreen"
 msgstr "Teljes képernyő"
 
@@ -2574,7 +2574,7 @@ msgstr "Rácsméret"
 msgid "Grid snapping tolerance"
 msgstr "Rács igazítás tűréshatára"
 
-#: ../ui/main.glade:1601
+#: ../ui/main.glade:1602
 msgid "H_and Tool"
 msgstr "_Kéz eszköz"
 
@@ -2590,7 +2590,7 @@ msgstr "Magasság"
 msgid "Height:"
 msgstr "Magasság:"
 
-#: ../ui/main.glade:969 ../ui/settings.glade:3593 ../ui/settings.glade:3660
+#: ../ui/main.glade:970 ../ui/settings.glade:3593 ../ui/settings.glade:3660
 msgid "Hide Menubar"
 msgstr "Menüsor elrejtése"
 
@@ -2610,11 +2610,11 @@ msgstr "Függőleges görgetősáv elrejtése"
 msgid "Highlight cursor position"
 msgstr "Kurzor pozíciójának kiemeléséhez"
 
-#: ../ui/main.glade:2729
+#: ../ui/main.glade:2730
 msgid "Highlight selected text"
 msgstr "Kijelölt szöveg kiemelése"
 
-#: ../ui/main.glade:1884
+#: ../ui/main.glade:1885
 msgid "Highlighter Opti_ons"
 msgstr "_Kiemelő beállításai"
 
@@ -2698,11 +2698,11 @@ msgstr "A bemeneti stabilizálás réseket képezhet a vonásírás végén. Ha 
 msgid "Insert Latex"
 msgstr "LaTeX beszúrása"
 
-#: ../ui/main.glade:2870
+#: ../ui/main.glade:2871
 msgid "Insert Page After"
 msgstr "Oldal beszúrása utána"
 
-#: ../ui/main.glade:2862
+#: ../ui/main.glade:2863
 msgid "Insert Page Before"
 msgstr "Új oldal beszúrása előtte"
 
@@ -2726,7 +2726,7 @@ msgstr "Nyelv"
 msgid "Language Settings"
 msgstr "Nyelvi beállítások"
 
-#: ../ui/main.glade:593
+#: ../ui/main.glade:594
 msgid "Layout"
 msgstr "Elrendezés"
 
@@ -2778,11 +2778,11 @@ msgstr "Legnagyobb hossz (mm)"
 msgid "Max multiplier"
 msgstr "Legfeljebb szorzó"
 
-#: ../ui/main.glade:2833
+#: ../ui/main.glade:2834
 msgid "Merge Down"
 msgstr "Egyesítése lefelé"
 
-#: ../ui/main.glade:1274
+#: ../ui/main.glade:1275
 msgid "Merge Layer Down"
 msgstr "Rétegek egyesítése lefelé"
 
@@ -2812,11 +2812,11 @@ msgstr "Egérgombok"
 msgid "Mouse+Keyboard Combo"
 msgstr "Egér+billentyűzet kombináció"
 
-#: ../ui/main.glade:2825 ../ui/main.glade:2900
+#: ../ui/main.glade:2826 ../ui/main.glade:2901
 msgid "Move Down"
 msgstr "Mozgatás le"
 
-#: ../ui/main.glade:2817 ../ui/main.glade:2892
+#: ../ui/main.glade:2818 ../ui/main.glade:2893
 msgid "Move Up"
 msgstr "Mozgatás fel"
 
@@ -2824,23 +2824,23 @@ msgstr "Mozgatás fel"
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr "A pásztázási sebességet legfeljebb ezzel az értékkel szorozza meg, attól függően, hogy a kijelölt elem mekkora része nem látható."
 
-#: ../ui/main.glade:1147
+#: ../ui/main.glade:1148
 msgid "N_ext Annotated Page"
 msgstr "_Következő széljegyzeteket tartalmazó lap"
 
-#: ../ui/main.glade:1194
+#: ../ui/main.glade:1195
 msgid "New Page _After"
 msgstr "Oldal beszúrása _utána"
 
-#: ../ui/main.glade:1184
+#: ../ui/main.glade:1185
 msgid "New Page _Before"
 msgstr "Új oldal beszúrása _előtte"
 
-#: ../ui/main.glade:1205
+#: ../ui/main.glade:1206
 msgid "New Page at _End"
 msgstr "Új oldal beszúrása a napló _végen"
 
-#: ../ui/main.glade:1252
+#: ../ui/main.glade:1253
 msgid "New _Layer"
 msgstr "Új _réteg"
 
@@ -2882,7 +2882,7 @@ msgstr "A LaTeX parancs által előállított kimenet."
 msgid "PDF Cache"
 msgstr "PDF-gyorsítótár"
 
-#: ../ui/main.glade:1158
+#: ../ui/main.glade:1159
 msgid "P_revious Annotated Page"
 msgstr "_Előző széljegyzeteket tartalmazó lap"
 
@@ -2894,7 +2894,7 @@ msgstr "Oldalak:"
 msgid "Paired Pages"
 msgstr "Oldalak párosítása"
 
-#: ../ui/main.glade:1322
+#: ../ui/main.glade:1323
 msgid "Paper B_ackground"
 msgstr "P_apír háttér"
 
@@ -2902,11 +2902,11 @@ msgstr "P_apír háttér"
 msgid "Paper Format"
 msgstr "Papírformátum"
 
-#: ../ui/main.glade:1312
+#: ../ui/main.glade:1313
 msgid "Paper _Color"
 msgstr "Papír_szín"
 
-#: ../ui/main.glade:1302
+#: ../ui/main.glade:1303
 msgid "Paper _Format"
 msgstr "Papír_formátum"
 
@@ -2920,11 +2920,11 @@ msgstr "Részben a Xournal alapján\n"
 msgid "Path: "
 msgstr "Elérési út: "
 
-#: ../ui/main.glade:2002
+#: ../ui/main.glade:2003
 msgid "Pause"
 msgstr "Szünet"
 
-#: ../ui/main.glade:1629
+#: ../ui/main.glade:1630
 msgid "Pen _Options"
 msgstr "Toll _tulajdonságok"
 
@@ -2944,7 +2944,7 @@ msgstr "Lejátszási beállítások"
 msgid "Plugin Manager"
 msgstr "Beépülő modul-kezelő"
 
-#: ../ui/main.glade:2067
+#: ../ui/main.glade:2068
 msgid "Plugin _Manager"
 msgstr "Beépülő modul-_kezelő"
 
@@ -2960,7 +2960,7 @@ msgstr "Oldalak-előzetes betöltése utána"
 msgid "Pre-load pages before"
 msgstr "Oldalak-előzetes betöltése előtte"
 
-#: ../ui/main.glade:505
+#: ../ui/main.glade:506
 msgid "Preferences"
 msgstr "Beállítások"
 
@@ -3004,7 +3004,7 @@ msgstr "Újra megjelenítés, ha az oldal nagyítása változik több mint: "
 msgid "Recent _Documents"
 msgstr "Legutóbbi _dokumentumok"
 
-#: ../ui/main.glade:1992
+#: ../ui/main.glade:1993
 msgid "Record / Stop"
 msgstr "Felvétel indítása/leállítása"
 
@@ -3012,7 +3012,7 @@ msgstr "Felvétel indítása/leállítása"
 msgid "Recording Quality"
 msgstr "Felvétel minősége"
 
-#: ../ui/main.glade:1285
+#: ../ui/main.glade:1286
 msgid "Rename Layer"
 msgstr "Réteg átnevezése"
 
@@ -3068,7 +3068,7 @@ msgstr "Mappa kiválasztása"
 msgid "Select Image"
 msgstr "Kép kiválasztása"
 
-#: ../ui/main.glade:1370
+#: ../ui/main.glade:1371
 msgid "Select Linear Text"
 msgstr "Lineáris szöveg kijelölése"
 
@@ -3076,7 +3076,7 @@ msgstr "Lineáris szöveg kijelölése"
 msgid "Select PDF Page"
 msgstr "PDF oldal kijelölése"
 
-#: ../ui/main.glade:1382
+#: ../ui/main.glade:1383
 msgid "Select Text In Rectangle"
 msgstr "Szöveg kijelölése téglalapban"
 
@@ -3104,11 +3104,11 @@ msgstr "Hátraküldés"
 msgid "Sensitivity Scale"
 msgstr "Érzékenységi méret"
 
-#: ../ui/main.glade:702
+#: ../ui/main.glade:703
 msgid "Set Columns"
 msgstr "Oszlopok beállítása"
 
-#: ../ui/main.glade:807
+#: ../ui/main.glade:808
 msgid "Set Rows"
 msgstr "Sorok beállítása"
 
@@ -3124,11 +3124,11 @@ msgstr "Lebegő eszköztár megjelenítése"
 msgid "Show Menubar on Startup"
 msgstr "Menüsor megjelenítése indításkor"
 
-#: ../ui/main.glade:561
+#: ../ui/main.glade:562
 msgid "Show Sidebar"
 msgstr "Oldalsáv megjelenítése"
 
-#: ../ui/main.glade:577
+#: ../ui/main.glade:578
 msgid "Show Toolbars"
 msgstr "Eszköztárak megjelenítése"
 
@@ -3183,7 +3183,7 @@ msgstr "Távolság után kezdje el a nagyítást "
 msgid "Storage Folder"
 msgstr "Tárolómappa"
 
-#: ../ui/main.glade:2769
+#: ../ui/main.glade:2770
 msgid "Strikethrough selected text"
 msgstr "Kijelölt szöveg áthúzása"
 
@@ -3208,7 +3208,7 @@ msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr "Rendszer kurzor"
 
-#: ../ui/main.glade:921
+#: ../ui/main.glade:922
 msgid "T_oolbars"
 msgstr "_Eszköztárak"
 
@@ -3236,7 +3236,7 @@ msgstr "Állapot vizsgálata"
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Tesztelje, hogy a jelenlegi beállítások érvényesek-e a LaTeX-létrehozó parancs futtatásával a globális sablonfájlban egy tesztképlettel."
 
-#: ../ui/main.glade:1980
+#: ../ui/main.glade:1981
 msgid "Text Font..."
 msgstr "Szöveg betűkészlete…"
 
@@ -3268,7 +3268,7 @@ msgstr "Ezeket a beállításokat a rendszer az új oldalakhoz használja"
 msgid "Timeout"
 msgstr "Időtúllépés"
 
-#: ../ui/main.glade:2789
+#: ../ui/main.glade:2790
 msgid "Toggle standard / region text selection"
 msgstr "Szabványos/régiószöveg-kijelölés váltása"
 
@@ -3293,7 +3293,7 @@ msgstr "Először próbálja meg kiválasztani az objektumot."
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Először próbálja meg kiválasztani az objektumot; ha nincs kiválasztva, akkor mutasson lebegő eszköztárat, ha engedélyezve van."
 
-#: ../ui/main.glade:2749
+#: ../ui/main.glade:2750
 msgid "Underline selected text"
 msgstr "Kijelölt szöveg aláhúzása"
 
@@ -3397,67 +3397,67 @@ msgstr "Nagyítási gesztusok"
 msgid "Zoom Speed"
 msgstr "Nagyítás sebessége"
 
-#: ../ui/main.glade:714
+#: ../ui/main.glade:715
 msgid "_1 Column"
 msgstr "_1 oszlop"
 
-#: ../ui/main.glade:819
+#: ../ui/main.glade:820
 msgid "_1 Row"
 msgstr "_1 sor"
 
-#: ../ui/main.glade:725
+#: ../ui/main.glade:726
 msgid "_2 Columns"
 msgstr "_2 oszlop"
 
-#: ../ui/main.glade:830
+#: ../ui/main.glade:831
 msgid "_2 Rows"
 msgstr "_2 sor"
 
-#: ../ui/main.glade:736
+#: ../ui/main.glade:737
 msgid "_3 Columns"
 msgstr "_3 oszlop"
 
-#: ../ui/main.glade:841
+#: ../ui/main.glade:842
 msgid "_3 Rows"
 msgstr "_3 sor"
 
-#: ../ui/main.glade:747
+#: ../ui/main.glade:748
 msgid "_4 Columns"
 msgstr "_4 oszlop"
 
-#: ../ui/main.glade:852
+#: ../ui/main.glade:853
 msgid "_4 Rows"
 msgstr "_4 sor"
 
-#: ../ui/main.glade:758
+#: ../ui/main.glade:759
 msgid "_5 Columns"
 msgstr "_5 oszlop"
 
-#: ../ui/main.glade:863
+#: ../ui/main.glade:864
 msgid "_5 Rows"
 msgstr "_5 sor"
 
-#: ../ui/main.glade:769
+#: ../ui/main.glade:770
 msgid "_6 Columns"
 msgstr "_6 oszlop"
 
-#: ../ui/main.glade:874
+#: ../ui/main.glade:875
 msgid "_6 Rows"
 msgstr "_6 sor"
 
-#: ../ui/main.glade:780
+#: ../ui/main.glade:781
 msgid "_7 Columns"
 msgstr "_7 oszlop"
 
-#: ../ui/main.glade:885
+#: ../ui/main.glade:886
 msgid "_7 Rows"
 msgstr "_7 sor"
 
-#: ../ui/main.glade:791
+#: ../ui/main.glade:792
 msgid "_8 Columns"
 msgstr "_8 oszlop"
 
-#: ../ui/main.glade:896
+#: ../ui/main.glade:897
 msgid "_8 Rows"
 msgstr "_8 sor"
 
@@ -3465,23 +3465,23 @@ msgstr "_8 sor"
 msgid "_Annotate PDF"
 msgstr "_Jegyzetkészítés PDF-fájlban"
 
-#: ../ui/main.glade:674
+#: ../ui/main.glade:675
 msgid "_Bottom to Top"
 msgstr "_Alulról felfelé"
 
-#: ../ui/main.glade:689
+#: ../ui/main.glade:690
 msgid "_Cols/Rows"
 msgstr "_Oszlopok/Sorok"
 
-#: ../ui/main.glade:949
+#: ../ui/main.glade:950
 msgid "_Customize"
 msgstr "_Testreszabás"
 
-#: ../ui/main.glade:1430
+#: ../ui/main.glade:1431
 msgid "_Default Tools"
 msgstr "_Alapértelmezett eszköz"
 
-#: ../ui/main.glade:1235
+#: ../ui/main.glade:1236
 msgid "_Delete Page"
 msgstr "_Oldal törlése"
 
@@ -3489,7 +3489,7 @@ msgstr "_Oldal törlése"
 msgid "_Edit"
 msgstr "S_zerkesztés"
 
-#: ../ui/main.glade:1358
+#: ../ui/main.glade:1359
 msgid "_Eraser"
 msgstr "_Radír"
 
@@ -3501,143 +3501,143 @@ msgstr "_Exportálás PDF-fájlként…"
 msgid "_File"
 msgstr "_Fájl"
 
-#: ../ui/main.glade:1048
+#: ../ui/main.glade:1049
 msgid "_First Page"
 msgstr "_Első oldal"
 
-#: ../ui/main.glade:1070
+#: ../ui/main.glade:1071
 msgid "_Goto Page"
 msgstr "_Menjen az oldalra"
 
-#: ../ui/main.glade:2081
+#: ../ui/main.glade:2082
 msgid "_Help"
 msgstr "_Súgó"
 
-#: ../ui/main.glade:1394
+#: ../ui/main.glade:1395
 msgid "_Highlighter"
 msgstr "_Kiemelő"
 
-#: ../ui/main.glade:605
+#: ../ui/main.glade:606
 msgid "_Horizontal"
 msgstr "_Vízszintes"
 
-#: ../ui/main.glade:1418
+#: ../ui/main.glade:1419
 msgid "_Image"
 msgstr "_Kép"
 
-#: ../ui/main.glade:1173
+#: ../ui/main.glade:1174
 msgid "_Journal"
 msgstr "N_apló"
 
-#: ../ui/main.glade:1092
+#: ../ui/main.glade:1093
 msgid "_Last Page"
 msgstr "_Utolsó oldal"
 
-#: ../ui/main.glade:634
+#: ../ui/main.glade:635
 msgid "_Left to Right"
 msgstr "_Balról jobbra"
 
-#: ../ui/main.glade:939
+#: ../ui/main.glade:940
 msgid "_Manage"
 msgstr "_ Kezelés"
 
-#: ../ui/main.glade:1037
+#: ../ui/main.glade:1038
 msgid "_Navigation"
 msgstr "Navigá_ció"
 
-#: ../ui/main.glade:1120
+#: ../ui/main.glade:1121
 msgid "_Next Layer"
 msgstr "_Következő réteg"
 
-#: ../ui/main.glade:1081
+#: ../ui/main.glade:1082
 msgid "_Next Page"
 msgstr "_Következő oldal"
 
-#: ../ui/main.glade:530
+#: ../ui/main.glade:531
 msgid "_Pair Pages"
 msgstr "Oldalak _párosítása"
 
-#: ../ui/main.glade:1346
+#: ../ui/main.glade:1347
 msgid "_Pen"
 msgstr "_Toll"
 
-#: ../ui/main.glade:2056
+#: ../ui/main.glade:2057
 msgid "_Plugin"
 msgstr "_Beépülő modul"
 
-#: ../ui/main.glade:540
+#: ../ui/main.glade:541
 msgid "_Presentation Mode"
 msgstr "_Bemutató mód"
 
-#: ../ui/main.glade:1109
+#: ../ui/main.glade:1110
 msgid "_Previous Layer"
 msgstr "_Előző réteg"
 
-#: ../ui/main.glade:1059
+#: ../ui/main.glade:1060
 msgid "_Previous Page"
 msgstr "_Előző oldal"
 
-#: ../ui/main.glade:645
+#: ../ui/main.glade:646
 msgid "_Right to Left"
 msgstr "_Jobbról balra"
 
-#: ../ui/main.glade:1447
+#: ../ui/main.glade:1448
 msgid "_Shape Recognizer"
 msgstr "_Alakzatfelismerő"
 
-#: ../ui/main.glade:1406
+#: ../ui/main.glade:1407
 msgid "_Text"
 msgstr "S_zöveg"
 
-#: ../ui/main.glade:1335
+#: ../ui/main.glade:1336
 msgid "_Tools"
 msgstr "_Eszközök"
 
-#: ../ui/main.glade:1131
+#: ../ui/main.glade:1132
 msgid "_Top Layer"
 msgstr "_Felső réteg"
 
-#: ../ui/main.glade:663
+#: ../ui/main.glade:664
 msgid "_Top to Bottom"
 msgstr "_Felülről lefelé"
 
-#: ../ui/main.glade:616
+#: ../ui/main.glade:617
 msgid "_Vertical"
 msgstr "_Függőleges"
 
-#: ../ui/main.glade:1577
+#: ../ui/main.glade:1578
 msgid "_Vertical Space"
 msgstr "Térköz _függőlegesen"
 
-#: ../ui/main.glade:519
+#: ../ui/main.glade:520
 msgid "_View"
 msgstr "_Nézet"
 
-#: ../ui/main.glade:1869
+#: ../ui/main.glade:1870
 msgid "_delete strokes"
 msgstr "vonásírások _törlése"
 
-#: ../ui/main.glade:1651 ../ui/main.glade:1797 ../ui/main.glade:1906
+#: ../ui/main.glade:1652 ../ui/main.glade:1798 ../ui/main.glade:1907
 msgid "_fine"
 msgstr "_finom"
 
-#: ../ui/main.glade:1662 ../ui/main.glade:1808 ../ui/main.glade:1917
+#: ../ui/main.glade:1663 ../ui/main.glade:1809 ../ui/main.glade:1918
 msgid "_medium"
 msgstr "_közepes"
 
-#: ../ui/main.glade:1847
+#: ../ui/main.glade:1848
 msgid "_standard"
 msgstr "_szabványos"
 
-#: ../ui/main.glade:1673 ../ui/main.glade:1819 ../ui/main.glade:1928
+#: ../ui/main.glade:1674 ../ui/main.glade:1820 ../ui/main.glade:1929
 msgid "_thick"
 msgstr "_vastag"
 
-#: ../ui/main.glade:1640 ../ui/main.glade:1786 ../ui/main.glade:1895
+#: ../ui/main.glade:1641 ../ui/main.glade:1787 ../ui/main.glade:1896
 msgid "_very fine"
 msgstr "_nagyon finom"
 
-#: ../ui/main.glade:1858
+#: ../ui/main.glade:1859
 msgid "_whiteout"
 msgstr "ki_fehéredés"
 
@@ -3671,7 +3671,7 @@ msgstr "képpont"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(miután az érintőképernyő újra engedélyezve lesz)</i>"
 
-#: ../ui/main.glade:1684 ../ui/main.glade:1830 ../ui/main.glade:1939
+#: ../ui/main.glade:1685 ../ui/main.glade:1831 ../ui/main.glade:1940
 msgid "ver_y thick"
 msgstr "nagy_on vastag"
 
