@@ -31,6 +31,11 @@ pid_t getPid();
 void systemWithMessage(const char* command);
 
 /**
+ * Check if currently running in a Flatpak sandbox
+ */
+bool isFlatpakInstallation();
+
+/**
  * Execute the callback in the UI Thread.
  *
  * Make sure the container class is not deleted before the UI stuff is finished!
