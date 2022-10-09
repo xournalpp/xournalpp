@@ -3,7 +3,7 @@
 GroupUndoAction::GroupUndoAction(): UndoAction("GroupUndoAction") {}
 
 GroupUndoAction::~GroupUndoAction() {
-    for (auto i = actions.size() - 1; i >= 0; i--) { delete actions[i]; }
+    for (auto i = actions.size(); i > 0; i--) { delete actions[i - 1]; }
 
     actions.clear();
 }
