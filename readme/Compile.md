@@ -1,0 +1,47 @@
+# Compilation and Testing
+
+## Get sources
+
+```sh
+git clone http://github.com/xournalpp/xournalpp
+cd xournalpp
+```
+
+## Compile
+
+```sh
+mkdir build
+cd build
+
+cmake ..
+cmake --build . # For a faster build, set the flag -DCMAKE_BUILD_TYPE=RelWithDebInfo
+```
+
+- Use `cmake-gui ..` to graphically configure CMake
+- With Cairo 1.16 PDF Bookmarks will be possible, but this version is not yet
+commonly available; therefore the Cairo PDF Export does not include PDF Bookmarks
+
+## Run
+
+```sh
+# Ensure you're in the './build' directory
+./xournalpp
+```
+
+## Test
+
+The unit tests can be enabled by setting `-DENABLE_GTEST=on` when running the
+CMake command. This requires having `googletest` available, either through your
+system's package manager or by setting `-DDOWNLOAD_GTEST=on` to automatically
+download and build `googletest`.
+
+```sh
+mkdir build
+cd build
+
+# Build unit test executables
+cmake --build . --target test-units
+
+# Run unit tests
+cmake --build . --target test
+```

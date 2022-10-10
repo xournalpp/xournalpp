@@ -1,100 +1,86 @@
-# Xournal++ Linux Build
+# Linux Build
 
-## Install dependencies
+## Introduction
 
-Xournal++ is programmed with c++17 and needs the <optional> header and one filesystem library, either the STL or the boost implementation.
+Xournal++ is programmed with C++17 and needs the `<optional>` header and one filesystem library, either the STL or the boost implementation.
 Therefore it is required to install a compiler implementing those features.
-We recommend g++-8 or clang-9 and above.
+We recommend using at least GCC 8 or Clang 9.
 
-Please create pull requests (or file issues) if you have more precise dependencies.
+Please create file an issue or create a pull request if you require more precise dependencies.
 
-Lua is needed for plugins, if it is missing, the plugins will be disabled.
+Lua is needed for plugins; if it is missing, the plugins will be disabled.
 
+### Install Dependencies
 
-### CMake Generator
+The minimum required CMake version is 3.13, but we recommend using >=3.15. Also, either `make` or `ninja` must be installed.
 
-The installation instructions don't assume any specific build tool (other than CMake), 
-but they do require make, ninja, or another supported CMake generator. It is required 
-that such a tool is installed in order to build xournalpp.
-
-The minimum required CMake version is 3.13, but we recommend to use >=3.15.
-
-### Distribution specific commands
-
-#### For Arch
-```bash
+#### For Arch Linux:
+```sh
 sudo pacman -S cmake gtk3 base-devel libxml2 portaudio libsndfile \
 poppler-glib texlive-bin texlive-pictures gettext libzip lua53 lua53-lgi \
 gtksourceview4
 ```
 
 #### For Fedora:
-```bash
+```sh
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel portaudio-devel libsndfile-devel \
-poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
-librsvg2-devel lua-devel lua-lgi gtksourceview4-devel
+  poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
+  librsvg2-devel lua-devel lua-lgi gtksourceview4-devel
 ```
 
 #### For CentOS/RHEL:
-```bash
+```sh
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
-poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
-librsvg2-devel gtksourceview4-devel
+  poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
+  librsvg2-devel gtksourceview4-devel
 ```
 
-
 #### For Ubuntu/Debian and Raspberry Pi OS:
-````bash
+```sh
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext lua-lgi \
-libgtksourceview-4-dev
-````
+  dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext lua-lgi \
+  libgtksourceview-4-dev
+```
 
 #### For openSUSE:
-```bash
+```sh
 sudo zypper install cmake gtk3-devel portaudio-devel libsndfile-devel \
-texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel lua-lgi \
-gtksourceview4-devel
+  texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel lua-lgi \
+  gtksourceview4-devel
 ```
 
 #### For Solus:
-```bash
+```sh
 sudo eopkg it -c system.devel
 sudo eopkg it cmake libgtk-3-devel libxml2-devel poppler-devel libzip-devel \
-portaudio-devel libsndfile-devel alsa-lib-devel lua-devel \
-librsvg-devel gettext libgtksourceview-devel
+  portaudio-devel libsndfile-devel alsa-lib-devel lua-devel \
+  librsvg-devel gettext libgtksourceview-devel
 ```
 
-## Compiling
+## Building and Testing
 
-The basic steps to compile Xournal++ are:
+See [Compile.md](./Compile.md)
 
-```bash
-git clone http://github.com/xournalpp/xournalpp.git
-cd xournalpp
-mkdir build
-cd build
-cmake ..
-cmake --build .
-# For a faster build, set the flag -DCMAKE_BUILD_TYPE=RelWithDebInfo
+## Building Documentation
+
+The code documentation is generated using Doxygen. Both Doxygen and graphviz must be
+installed. For example, with apt:
+
+```sh
+sudo apt install doxygen graphviz
 ```
 
-Use `cmake-gui ..` to graphically configure compilation.
-
-With Cairo 1.16 PDF Bookmarks will be possible, but this Version is not yet
-common available, therefore the Cairo PDF Export is without PDF Bookmarks.
-
-The binary executable will be placed directly into the `build/` directory. 
-You can run it by executing `./xournalpp` from that directory. For testing
-purposes packaging and installation on the system are not required.
+Then, execute `doxygen` in the root directory of the repository. The documentation
+can be found in `doc/html` and `doc/latex`. Conveniently view it in a browser with
+`python3 -m http.server 8000` and visit the URL it shows.
 
 ## Packaging and Installation
 
-### Creating Packages for Package Managers
+### Packaging
 
 Please ensure that the `translations` target has been built before
 attempting to generate any package.
-```bash
+```sh
 cmake --build . --target translations
 ```
 
@@ -102,7 +88,7 @@ After compilation, select which packages you want to generate (see the relevant
 sections below) and then run the `package` target. The generated packages will
 be located in `build/packages`. For example:
 
-```bash
+```sh
 cmake .. -DCPACK_GENERATOR="TGZ;DEB"  # Generate .tar.gz and .deb packages
 cmake --build . --target package
 ```
@@ -111,14 +97,14 @@ By default, a standalone `.tar.gz` package will be generated. For
 distro-agnostic packaging platforms such as AppImages and Flatpaks, see the
 relevant sections below.
 
-#### .deb packages
+#### `.deb` packages
 
-```bash
+```sh
 cmake .. -DCPACK_GENERATOR="DEB" ..
 cmake --build . --target package
 ```
 
-#### .rpm packages
+#### `.rpm` packages
 
 TODO
 
@@ -128,7 +114,7 @@ The quickest way to generate an AppImage is to first generate the `.tar.gz`
 package and then use that with the `azure-pipelines/util/build_appimage.sh`
 script.
 
-```bash
+```sh
 cmake .. -DCPACK_GENERATOR="TGZ"
 cmake --build . --target package
 ../azure-pipelines/util/build_appimage.sh
@@ -147,8 +133,9 @@ The Flatpak manifest for Xournal++ is located at
 https://github.com/flathub/com.github.xournalpp.xournalpp, which should be
 cloned into a separate directory before building.
 
-```bash
+```sh
 git clone https://github.com/flathub/com.github.xournalpp.xournalpp xournalpp-flatpak
+cd xournalpp-flatpak
 ```
 
 By default, the Flatpak manifest will build the latest stable version of
@@ -180,32 +167,16 @@ package, an AppImage or Flatpak instead. Instructions are above.
 If you don't want to make a package, you can install Xournal++ into your user
 folder (or any other folder) by specifying `CMAKE_INSTALL_PREFIX`:
 
-```bash
-cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/.local
+```sh
+cmake .. -DCMAKE_INSTALL_PREFIX="$HOME/.local"
 cmake --build . --target install
 ./cmake/postinst configure
 ```
 
-If you want to install Xournal++ systemwide directly from the build directory, run
+If you want to install Xournal++ system-wide directly from the build directory, run
 
-```bash
+```sh
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 sudo cmake --build . --target install
 ./cmake/postinst configure
-```
-
-## Running tests
-
-The unit tests can be enabled by setting `-DENABLE_GTEST=on` when running the
-CMake command. This requires having `googletest` available, either through your
-system's package manager or by setting `-DDOWNLOAD_GTEST=on` to automatically
-download and build `googletest`.
-
-The tests can be run as follows:
-```
-# build unit test executables
-cmake --build . --target test-units
-
-# run unit tests
-cmake --build . --target test
 ```

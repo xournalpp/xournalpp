@@ -1,9 +1,11 @@
-# Versioning
+# Releases
+
+## Versioning
 
 Every release of Xournal++ is tagged with a unique incrementing version. In the history of the project, two changes to the versioning scheme happened. Be careful when trying to automatically parse older versions.
 The current versioning scheme adheres to the rules of [Debian upstream_version](https://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-version).
 
-## Main Version
+### Main Version
 
 We follow the common versioning scheme of major, minor and patch versions in this order, separated by dots.
 
@@ -22,7 +24,7 @@ To help you understand when we use what version increment, use these rules:
 
 Whenever a bump of the major version happens, minor and patch versions are reset to `0`. Equally the patch version is reset to `0` when the minor version is bumped.
 
-## Version Suffix
+### Version Suffix
 
 The main version string may be followed by a suffix. This suffix is used to describe unreleased versions and hotfixes.
 
@@ -37,7 +39,7 @@ We mainly use suffixes to specify development versions. Our main development bra
 
 When we start our release process, we branch off a release branch. At this point of time it is clear what changes we include in the release and we can use the above rules to determine the correct version. From this point on we will change the main version string to this new version and use the suffix `~dev`. This describes our intent of working towards this release.
 
-# Branching Strategy
+## Branching Strategy
 
 Our branching model knows five types of branches:
 
@@ -47,11 +49,11 @@ Our branching model knows five types of branches:
 - Feature branches (`feature-*`) are commonly used for Pull Requests with new features. Such branches are always merged into the main development branch.
 - Bugfix branches (`bugfix-*`) are used for Pull Requests with a bugfix for a maintained release or the current development version. Depending on their target they must be merged into the appropriate branch.
 
-# Helper Script
+## Helper Script
 
 To help with the task of versioning, we provide a helper script, that does most of the work for you. You can find the script at `scripts/release_helper.sh`.
 
-## Preparing a new minor/major release
+### Preparing a new minor/major release
 The starting point of a new minor/major release is always the main development branch. You may use `release_helper.sh prepare <version>` to prepare the release. `<version>` Shall be replaced with the appropriate version. Be aware that the patch version must be `0`.
 
 The script will:
@@ -62,7 +64,7 @@ The script will:
 
 Whatever version suffix you choose, will be appended by `~dev` to signify that this is not yet the release version but development progresses towards this release.
 
-## Preparing a hotfix
+### Preparing a hotfix
 The starting point of a hotfix release is the tagged commit of the release this hotfix is based upon. You must check out this release and then call `release_helper.sh prepare <version><+suffix>` where the version equals the currently checked out version and the chosen suffix. The suffix must start with a `+` as only hotfixes based on top of this version are allowed.
 
 The script will:
@@ -71,7 +73,7 @@ The script will:
 2. Check the new branch out
 3. Apply the supplied version to all relevant files suffixed by `~dev`.
 
-## Publishing a release
+### Publishing a release
 Publishing a release can only happen on a release branch or a hotfix branch. It can be triggered by `release_helper.sh publish` and will initiate the process of publishing the release.
 
 The script will:
