@@ -31,7 +31,7 @@
 #include "undo/UndoRedoHandler.h"                 // for UndoRedoHandler
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
-#include "view/SelectionView.h"                   // for SelectionView
+#include "view/ElementContainerView.h"            // for ElementContainerView
 #include "view/View.h"                            // for Context
 
 class XojFont;
@@ -506,7 +506,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
         cairo_translate(cr2, -dx, -dy);
         cairo_scale(cr2, zoom, zoom);
 
-        xoj::view::SelectionView view(this);
+        xoj::view::ElementContainerView view(this);
         view.draw(xoj::view::Context::createDefault(cr2));
 
         cairo_destroy(cr2);

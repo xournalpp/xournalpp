@@ -16,9 +16,9 @@ class ElementContainer;
 namespace xoj::view {
 class Context;
 
-class SelectionView {
+class ElementContainerView {
 public:
-    SelectionView(const ElementContainer* container);
+    ElementContainerView(const ElementContainer* container);
 
     /**
      * @brief Draws the container to the given context

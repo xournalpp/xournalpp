@@ -19,7 +19,7 @@
 #include "util/LoopUtil.h"                         // for for_first_then_each
 #include "util/Rectangle.h"                        // for Rectangle
 #include "view/DebugShowRepaintBounds.h"           // for IF_DEBUG_REPAINT
-#include "view/SelectionView.h"                    // for SelectionView
+#include "view/ElementContainerView.h"             // for ElementContainerView
 #include "view/View.h"                             // for Context
 
 class Settings;
@@ -96,7 +96,7 @@ void VerticalToolHandler::redrawBuffer() {
     } else {
         g_assert(this->spacingSide == Side::Above);
     }
-    xoj::view::SelectionView v(this);
+    xoj::view::ElementContainerView v(this);
     v.draw(xoj::view::Context::createDefault(cr));
 
     cairo_destroy(cr);

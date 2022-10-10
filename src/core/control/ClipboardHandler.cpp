@@ -16,7 +16,7 @@
 #include "util/serializing/BinObjectEncoding.h"   // for BinObjectEncoding
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
-#include "view/SelectionView.h"                   // for SelectionView
+#include "view/ElementContainerView.h"            // for ElementContainerView
 #include "view/View.h"                            // for Context
 
 #include "config.h"  // for PROJECT_STRING
@@ -176,7 +176,7 @@ auto ClipboardHandler::copy() -> bool {
 
     cairo_translate(crPng, -selection->getXOnView(), -selection->getYOnView());
 
-    xoj::view::SelectionView view(this->selection);
+    xoj::view::ElementContainerView view(this->selection);
     view.draw(xoj::view::Context::createDefault(crPng));
 
     cairo_destroy(crPng);
