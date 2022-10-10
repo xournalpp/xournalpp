@@ -45,3 +45,5 @@ auto Range::empty() const -> bool {
 }
 
 bool Range::isValid() const { return minX <= maxX && minY <= maxY; }
+
+bool Range::contains(double x, double y) const { return x > minX && x < maxX && y > minY && y < maxY; }

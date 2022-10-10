@@ -382,19 +382,15 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
         if (h->getToolType() == TOOL_SELECT_RECT) {
-            if (this->selection) {
-                delete this->selection;
-                this->selection = nullptr;
-                repaintPage();
-            }
-            this->selection = new RectSelection(x, y, this);
+            assert(!selection);
+            this->selection = std::make_unique<RectSelection>(x, y);
+            this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
+                    this->selection.get(), this, this->settings->getSelectionColor()));
         } else if (h->getToolType() == TOOL_SELECT_REGION) {
-            if (this->selection) {
-                delete this->selection;
-                this->selection = nullptr;
-                repaintPage();
-            }
-            this->selection = new RegionSelect(x, y, this);
+            assert(!selection);
+            this->selection = std::make_unique<RegionSelect>(x, y);
+            this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
+                    this->selection.get(), this, this->settings->getSelectionColor()));
         } else if (h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
             // so if we selected something && the pdf selection toolbox is hidden && we hit within the selection
             // we could call the pdf floating toolbox again
@@ -666,20 +662,15 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 
     if (this->selection) {
         if (this->selection->finalize(this->page)) {
-            xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection, this));
-            delete this->selection;
-            this->selection = nullptr;
+            xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection.get(), this));
         } else {
             double zoom = xournal->getZoom();
             if (this->selection->userTapped(zoom)) {
                 SelectObject select(this);
                 select.at(pos.x / zoom, pos.y / zoom);
             }
-            delete this->selection;
-            this->selection = nullptr;
-
-            repaintPage();
         }
+        this->selection.reset();
     } else if (this->textEditor) {
         this->textEditor->mouseReleased();
     }
@@ -766,6 +757,10 @@ void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg)
         xoj::util::CairoSPtr cr(cairo_create(this->crBuffer.get()));
         v->drawWithoutDrawingAids(cr.get());
     }
+    this->deleteOverlayView(v, rg);
+}
+
+void XojPageView::deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) {
     this->deleteView(v);
     this->flagDirtyRegion(rg);
 }
@@ -938,10 +933,6 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
 
     if (this->textEditor) {
         this->textEditor->paint(cr, zoom);
-    }
-
-    if (this->selection) {
-        this->selection->paint(cr, zoom);
     }
 
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
