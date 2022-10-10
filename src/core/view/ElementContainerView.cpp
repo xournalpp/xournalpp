@@ -1,4 +1,4 @@
-#include "SelectionView.h"
+#include "ElementContainerView.h"
 
 #include <memory>  // for unique_ptr
 #include <vector>  // for vector
@@ -11,9 +11,9 @@ class Element;
 
 using namespace xoj::view;
 
-SelectionView::SelectionView(const ElementContainer* container): container(container) {}
+ElementContainerView::ElementContainerView(const ElementContainer* container): container(container) {}
 
-void SelectionView::draw(const Context& ctx) const {
+void ElementContainerView::draw(const Context& ctx) const {
     for (Element* e: container->getElements()) {
         auto elementView = ElementView::createFromElement(e);
         elementView->draw(ctx);
