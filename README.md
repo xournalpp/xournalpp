@@ -165,7 +165,7 @@ of some popular GNU/Linux distros and platforms.
 
 On Debian bookworm and Debian sid the `xournalpp` package (stable version) is contained in the official repositories. Simply install via
 
-```bash
+```sh
 sudo apt install xournalpp
 ```
 
@@ -177,14 +177,14 @@ _unstable_ [automated nightly releases](https://github.com/xournalpp/xournalpp/r
 On distros based on Ubuntu 22.04 Jammy Jellyfish (and later) the `xournalpp` package (stable version) is contained in the official repositories.
 Simply install via
 
-```bash
+```sh
 sudo apt install xournalpp
 ```
 
 #### Stable PPA
 The latest stable version is available via the following [_unofficial_ PPA](https://github.com/xournalpp/xournalpp/issues/1013#issuecomment-692656810):
 
-```bash
+```sh
 sudo add-apt-repository ppa:apandada1/xournalpp-stable
 sudo apt update
 sudo apt install xournalpp
@@ -193,7 +193,7 @@ sudo apt install xournalpp
 #### Unstable PPA
 An _unstable_, nightly release is available for Ubuntu-based distributions via the following PPA:
 
-```bash
+```sh
 sudo add-apt-repository ppa:andreasbutti/xournalpp-master
 sudo apt update
 sudo apt install xournalpp
@@ -210,13 +210,13 @@ xournalpp](https://src.fedoraproject.org/rpms/xournalpp) is available in the
 [main repository](https://bodhi.fedoraproject.org/updates/?packages=xournalpp)
 via _Software_ application or the following command:
 
-```bash
+```sh
 sudo dnf install xournalpp
 ```
 
 or
 
-```bash
+```sh
 pkcon install xournalpp
 ```
 
@@ -228,7 +228,7 @@ The bleeding edge packages synced to xournalpp git master on a daily basis are a
 On openSUSE Tumbleweed, the released version of Xournal++ is available from the
 main repository:
 
-```bash
+```sh
 sudo zypper in xournalpp
 ```
 
@@ -251,7 +251,7 @@ package](https://aur.archlinux.org/packages/xournalpp-git/).
 
 The latest stable release is available in the main repository:
 
-```bash
+```sh
 sudo eopkg it xournalpp
 ```
 
@@ -261,7 +261,7 @@ The Xournal++ team officially supports a [FlatHub
 release](https://flathub.org/apps/details/com.github.xournalpp.xournalpp), which
 can be installed with
 
-```bash
+```sh
 flatpak install flathub com.github.xournalpp.xournalpp
 ```
 
@@ -269,7 +269,7 @@ Note that for Xournal++ to work properly, you must have at least one GTK theme
 and one icon theme installed on Flatpak. To enable LaTeX support, you will also
 need to install the TeX Live extension:
 
-```bash
+```sh
 flatpak install flathub org.freedesktop.Sdk.Extension.texlive
 ```
 
@@ -320,38 +320,24 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 ## File format
 
-The file format _.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. _.xopp is basically the same file format as _.xoj, which is used by Xournal. Therefore Xournal++ is able to read _.xoj files, and can also export to _.xoj. As soon as notes are exported to a _.xoj-file, all Xournal++ specific extensions, like additional background types, are lost.
+The file extension `.xopp` is a gzipped XML file. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. `.xopp` is basically the same file format as `.xoj`, which is used by Xournal. Therefore, Xournal++ is able to read `.xoj` files, and can also export to `.xoj`. As soon as notes are exported to a `.xoj` file, all Xournal++ specific extensions like additional background types, are lost.
 
-\*.xopp can theoretically be read by Xournal, as long as you do not use any new feature. Xournal does not open files that contain new attributes or unknown values, so Xournal++ will add the extension .xopp to all saved files to indicate the potential presence of Xournal++-only features.
+`.xopp` files can theoretically be read by Xournal, as long as you do not use any new features. Xournal does not open files that contain new attributes or unknown values, so Xournal++ will add the extension `.xopp` to all saved files to indicate the potential presence of Xournal++-only features.
 
-All new files will be saved as _.xopp. If an _.xoj file that was created by Xournal is opened, the Save-As dialog will be displayed on save. If the \*.xoj file was created by Xournal++, the file will be overwritten on save and the file extension will not change.
+All new files will be saved as `.xopp`. If an `.xoj` file that was created by Xournal is opened, the Save-As dialog will be displayed on save. If the `.xoj` file was created by Xournal++, the file will be overwritten on save and the file extension will not change.
 
 **We are currently introducing a new file format that can efficiently store attached PDF files and other attachments internally. We will still allow for attachments that are linked to external files. Please refer to [#937](https://github.com/xournalpp/xournalpp/issues/937) for further details.**
 
-## Development
+## Building
 
-For developing new features, create an issue or comment on an existing issue to let others know what you are doing.
-For development, create a fork and use the master as base. Create a pull request for each fix.
-Do not create big pull requests, as long as you don't break anything features also can be
-merged, even if they are not 100% finished.
+We support building on five operating systems:
 
-See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
-our Gitter channel via the badge on top.
+- [Linux](readme/LinuxBuild.md)
+- [MacOS](readme/MacBuild.md)
+- [Windows](readme/WindowsBuild.md)
+- [Android](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
+- [iOS](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
 
-Also take a look at our [coding conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions)
+## Contributing
 
-## Code documentation
-
-The code documentation is generated using Doxygen.
-
-In order to generate the documentation yourself, first install Doxygen and graphviz, i.e.
-
-```bash
-sudo apt install doxygen
-sudo apt install graphviz
-```
-
-on Debian or Ubuntu. Finally, execute `doxygen` in the root directory of the repository.
-The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
-documentation with `python3 -m http.server 8000` and visit the shown URL to view the
-documentation.
+See [CONTRIBUTING.md](./CONTRIBUTING.md)
