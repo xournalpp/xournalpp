@@ -66,6 +66,11 @@ public:
      *      Used to avoid blinking when a tool finished editing an element
      */
     void drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg) override;
+    /**
+     * @brief Simply deletes an overlay and any trace of it on the display (provided the overlay is contained in the
+     * given range)
+     */
+    void deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) override;
 
     int getDPIScaling() const override;
     double getZoom() const override;
@@ -224,7 +229,7 @@ private:
     /**
      * The selected (while selection)
      */
-    Selection* selection = nullptr;
+    std::unique_ptr<Selection> selection;
 
     /**
      * The text editor View

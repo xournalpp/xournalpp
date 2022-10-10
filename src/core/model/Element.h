@@ -26,7 +26,7 @@ enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_
 
 class ShapeContainer {
 public:
-    virtual bool contains(double x, double y) = 0;
+    virtual bool contains(double x, double y) const = 0;
 
     virtual ~ShapeContainer() = default;
 };

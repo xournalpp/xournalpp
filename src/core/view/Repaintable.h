@@ -13,6 +13,7 @@
 class Range;
 
 namespace xoj::view {
+class OverlayView;
 class ToolView;
 
 class Repaintable {
@@ -44,9 +45,16 @@ public:
     virtual void flagDirtyRegion(const Range& rg) const = 0;
 
     /**
-     * @brief Remove a tool view and repaint the given range
+     * @brief Draw the ToolView to the repaintable buffer (if any), remove a tool view and repaint the given range
      *      Called just before the tool sequence ends and the handler is deleted.
      */
     virtual void drawAndDeleteToolView(ToolView* v, const Range& rg) = 0;
+
+    /**
+     * @brief Remove a overlay view and repaint the given range
+     *      The given range is supposed to be big enough so that repainting this area will indeed erase the overlay from
+     * the display
+     */
+    virtual void deleteOverlayView(OverlayView* v, const Range& rg) = 0;
 };
 };  // namespace xoj::view
