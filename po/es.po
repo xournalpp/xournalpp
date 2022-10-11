@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-09 05:10+0000\n"
-"PO-Revision-Date: 2022-10-09 05:18\n"
+"POT-Creation-Date: 2022-10-11 03:11+0000\n"
+"PO-Revision-Date: 2022-10-11 03:14\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -286,11 +286,11 @@ msgstr "No se pudo quitar el elemento {1} de la barra de herramientas {2} en la 
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "No se pudo cambiar el nombre del archivo de guardado automático de «{1}» a «{2}»: {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:81
+#: ../src/core/control/latex/LatexGenerator.cpp:95
 msgid "Could not save .tex file: {1}"
 msgstr "No se pudo guardar el archivo .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:96
+#: ../src/core/control/latex/LatexGenerator.cpp:110
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "No se pudo iniciar {1}: {2} (código de salida: {3})"
 
@@ -611,9 +611,15 @@ msgid "Export without ruling\n"
 msgstr "Exportar sin lineas\n"
 "                                 El archivo exportado no tiene lineas en el papel (una hoja lisa)\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:74
+#: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "No se pudo encontrar el programa generador LaTeX en PATH: {1}"
+
+#: ../src/core/control/latex/LatexGenerator.cpp:78
+msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
+"Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
+msgstr ""
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
@@ -628,11 +634,11 @@ msgstr "¡Error al cargar la imagen, no se pudo determinar el tamaño de la imag
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Error al abrir content.xml en el archivo zip: \"{1}\""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:70
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Error al procesar el comando del generador LaTeX: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:59
+#: ../src/core/control/latex/LatexGenerator.cpp:60
 msgid "Failed to parse LaTeX generator path: {1}"
 msgstr "Error al procesar la ruta del generador LaTeX: {1}"
 
