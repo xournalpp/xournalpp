@@ -105,7 +105,7 @@ Multiple page background, easy selectable on the toolbar
 
 ## Multiple predefined and fully customizable toolbars
 
-<img src="readme/toolbar.png" width=100% title="Xournal++"/>
+<img src="readme/toolbar.png" width=100% title="Custom toolbars in Xournal++"/>
 
 </td></tr></table>
 
