@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-09 05:10+0000\n"
-"PO-Revision-Date: 2022-10-09 05:18\n"
+"POT-Creation-Date: 2022-10-11 03:11+0000\n"
+"PO-Revision-Date: 2022-10-11 03:14\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -286,11 +286,11 @@ msgstr "Не удалось удалить элемент инструмента
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Не удалось переименовать файл автосохранения из «{1}» в «{2}»: {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:81
+#: ../src/core/control/latex/LatexGenerator.cpp:95
 msgid "Could not save .tex file: {1}"
 msgstr "Не удалось сохранить .tex файл: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:96
+#: ../src/core/control/latex/LatexGenerator.cpp:110
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Не удалось запустить {1}: {2} (код выхода: {3})"
 
@@ -611,9 +611,15 @@ msgid "Export without ruling\n"
 msgstr "Экспорт без линования\n"
 "                                 Экспортированный файл не разлинован\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:74
+#: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Не удалось найти программу генератора LaTeX в PATH: {1}"
+
+#: ../src/core/control/latex/LatexGenerator.cpp:78
+msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
+"Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
+msgstr ""
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
@@ -628,11 +634,11 @@ msgstr "Не удалось загрузить изображение, нево�
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Не удалось открыть content.xml в zip-архиве: \"{1}\""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:70
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Не удалось интерпретировать команду генератора LaTeX: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:59
+#: ../src/core/control/latex/LatexGenerator.cpp:60
 msgid "Failed to parse LaTeX generator path: {1}"
 msgstr "Не удалось проанализировать путь генератора LaTeX: {1}"
 
