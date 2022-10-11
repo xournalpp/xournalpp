@@ -239,6 +239,13 @@ public:
     Tool& getTool(ToolType type) const;
 
     /**
+     * @brief Get the active Tool, returns nullptr if no tool is active
+     * 
+     * @return Tool&
+    */
+    Tool& getActiveTool() const;
+
+    /**
      * @brief Set the Eraser Type of the Eraser in the toolbar
      * @note Here the Eraser Tool in the toolbar is changed regardless of the the tool currently selected.
      * This is necessary to allow users to change the Eraser type for their Button Tools while having another tool

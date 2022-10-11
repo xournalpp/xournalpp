@@ -410,7 +410,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
     //   2) zoom action (toolbox will be hidden in ZoomControl::zoomChanged)
     if (getWindow() && getWindow()->getPdfToolbox()->hasSelection()) {
         bool keepPdfToolbox = type == ACTION_TOOL_HAND || type == ACTION_ZOOM_100 || type == ACTION_ZOOM_FIT ||
-                              type == ACTION_ZOOM_IN || type == ACTION_ZOOM_OUT;
+                              type == ACTION_ZOOM_IN || type == ACTION_ZOOM_OUT || type == ACTION_TOOL_SELECT_OBJECT;
         if (!keepPdfToolbox) {
             getWindow()->getPdfToolbox()->userCancelSelection();
         }
@@ -588,16 +588,47 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_TOOL_SELECT_RECT:
             if (enabled) {
+                // TODO
+                std::cout << "selected SELECT_RECT" << std::endl;
                 selectTool(TOOL_SELECT_RECT);
             }
             break;
         case ACTION_TOOL_SELECT_REGION:
             if (enabled) {
+                // TODO
+                std::cout << "selected SELECT_REGION" << std::endl;
                 selectTool(TOOL_SELECT_REGION);
             }
             break;
         case ACTION_TOOL_SELECT_OBJECT:
             if (enabled) {
+                // check for active and non-empty text tool
+                auto oldTool = getToolHandler()->getActiveTool();
+                if (oldTool.getName().compare("text") == 0 && this->win->getXournal()->getTextEditor()->getText()->getText().length() != 0) { // TODO check tooltype, not name
+                    // steal current text object
+                    Text* textobj = this->win->getXournal()->getTextEditor()->getText();
+                    // add object to selection, create selection if necessary
+                    auto selection = this->win->getXournal()->getSelection();
+                    if (!selection) {
+                        auto pageNr = getCurrentPageNo();
+                        this->doc->lock();
+                        XojPageView* view = win->getXournal()->getViewFor(pageNr);
+                        if (view == nullptr) {
+                            this->doc->unlock();
+                            return;
+                        }
+                        PageRef page = this->doc->getPage(pageNr);
+                        Layer* layer = page->getSelectedLayer();
+                        // add to layer
+                        layer->addElement(textobj);
+                        // TODO remove textobj from page to avoid duplicate
+                        // add to selection
+                        selection = new EditSelection(this->undoRedo, textobj, view, page);
+                        this->doc->unlock();
+                    }
+                    win->getXournal()->setSelection(selection);
+                }
+
                 selectTool(TOOL_SELECT_OBJECT);
             }
             break;
