@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-09 05:10+0000\n"
-"PO-Revision-Date: 2022-10-09 05:17\n"
+"POT-Creation-Date: 2022-10-11 03:11+0000\n"
+"PO-Revision-Date: 2022-10-11 03:13\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -284,11 +284,11 @@ msgstr "Không thể gỡ công cụ {1} từ Thanh công cụ {2} ở vị trí
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Không thể đổi tên tệp lưu tự động từ \"{1}\" sang \"{2}\": {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:81
+#: ../src/core/control/latex/LatexGenerator.cpp:95
 msgid "Could not save .tex file: {1}"
 msgstr "Không thể lưu tệp .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:96
+#: ../src/core/control/latex/LatexGenerator.cpp:110
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Không thể khởi động {1}: {2} (mã lỗi: {3})"
 
@@ -609,9 +609,15 @@ msgid "Export without ruling\n"
 msgstr "Xuất không quy định\n"
 "                                 Tệp đã xuất không có quy định về giấy tờ\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:74
+#: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Không tìm thấy chương trình tạo LaTeX trong ĐƯỜNG DẪN: {1}"
+
+#: ../src/core/control/latex/LatexGenerator.cpp:78
+msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
+"Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
+msgstr ""
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
@@ -626,11 +632,11 @@ msgstr ""
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:70
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Không thể phân tích cú pháp lệnh của trình tạo LaTeX: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:59
+#: ../src/core/control/latex/LatexGenerator.cpp:60
 msgid "Failed to parse LaTeX generator path: {1}"
 msgstr ""
 
