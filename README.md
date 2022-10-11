@@ -93,7 +93,7 @@ According to the Apple App Store guidelines, it is prohibited to publish unstabl
 ## Toolbar / Page Background / Layer
 
 Multiple page background, easy selectable on the toolbar
-<img src="readme/background.png" width=100% title="Xournal++"/>
+<img src="readme/background.png" width=100% title="Changing the page background in Xournal++"/>
 
 </td><td>
 
