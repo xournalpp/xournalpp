@@ -9,11 +9,12 @@
 
 Would you like to see Xournal++ in your own language? Translators are welcome to contribute to Xournal++.
 
-Translation resources are in the following locations:
+You can contribute translations to the following locations:
 * [Crowdin](https://crowdin.com/project/xournalpp/)
-* [desktop/com.github.xournalpp.xournalpp.appdata.xml](desktop/com.github.xournalpp.xournalpp.appdata.xml)
-* [desktop/com.github.xournalpp.xournalpp.desktop](desktop/com.github.xournalpp.xournalpp.desktop)
-* [desktop/com.github.xournalpp.xournalpp.xml](desktop/com.github.xournalpp.xournalpp.xml)
+* Submit a pull request on GitHub to change:
+  * [desktop/com.github.xournalpp.xournalpp.appdata.xml](desktop/com.github.xournalpp.xournalpp.appdata.xml) (
+  * [desktop/com.github.xournalpp.xournalpp.desktop](desktop/com.github.xournalpp.xournalpp.desktop)
+  * [desktop/com.github.xournalpp.xournalpp.xml](desktop/com.github.xournalpp.xournalpp.xml)
 
 Interested in translating a new language? Discuss on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a [new issue](https://github.com/xournalpp/xournalpp/issues) to unlock the language on Crowdin.
 
