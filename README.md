@@ -99,7 +99,7 @@ Multiple page background, easy selectable on the toolbar
 
 ## Layer sidebar and advanced layer selection
 
-<img src="readme/layer.png" width=100% title="Xournal++"/>
+<img src="readme/layer.png" width=100% title="Layers in Xournal++"/>
 
 </td></tr><tr><td>
 
