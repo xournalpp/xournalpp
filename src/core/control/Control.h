@@ -209,6 +209,8 @@ public:
     void updateDeletePageButton();
 
     // selection handling
+    void closeAndSelectTextTool();
+
     void clearSelection();
 
     void setCopyPasteEnabled(bool enabled);

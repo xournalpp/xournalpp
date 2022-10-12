@@ -205,6 +205,13 @@ void XojPageView::endText() {
     this->rerenderPage();
 }
 
+void XojPageView::removeTextEditor() {
+    delete this->textEditor;
+    this->textEditor = nullptr;
+    this->xournal->getControl()->getWindow()->setFontButtonFont(settings->getFont());
+    this->rerenderPage();
+}
+
 void XojPageView::startText(double x, double y) {
     this->xournal->endTextAllPages(this);
     this->xournal->getControl()->getSearchBar()->showSearchBar(false);

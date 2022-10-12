@@ -588,47 +588,19 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_TOOL_SELECT_RECT:
             if (enabled) {
-                // TODO
-                std::cout << "selected SELECT_RECT" << std::endl;
+                closeAndSelectTextTool();
                 selectTool(TOOL_SELECT_RECT);
             }
             break;
         case ACTION_TOOL_SELECT_REGION:
             if (enabled) {
-                // TODO
-                std::cout << "selected SELECT_REGION" << std::endl;
+                closeAndSelectTextTool();
                 selectTool(TOOL_SELECT_REGION);
             }
             break;
         case ACTION_TOOL_SELECT_OBJECT:
             if (enabled) {
-                // check for active and non-empty text tool
-                auto oldTool = getToolHandler()->getActiveTool();
-                if (oldTool.getName().compare("text") == 0 && this->win->getXournal()->getTextEditor()->getText()->getText().length() != 0) { // TODO check tooltype, not name
-                    // steal current text object
-                    Text* textobj = this->win->getXournal()->getTextEditor()->getText();
-                    // add object to selection, create selection if necessary
-                    auto selection = this->win->getXournal()->getSelection();
-                    if (!selection) {
-                        auto pageNr = getCurrentPageNo();
-                        this->doc->lock();
-                        XojPageView* view = win->getXournal()->getViewFor(pageNr);
-                        if (view == nullptr) {
-                            this->doc->unlock();
-                            return;
-                        }
-                        PageRef page = this->doc->getPage(pageNr);
-                        Layer* layer = page->getSelectedLayer();
-                        // add to layer
-                        layer->addElement(textobj);
-                        // TODO remove textobj from page to avoid duplicate
-                        // add to selection
-                        selection = new EditSelection(this->undoRedo, textobj, view, page);
-                        this->doc->unlock();
-                    }
-                    win->getXournal()->setSelection(selection);
-                }
-
+                closeAndSelectTextTool();
                 selectTool(TOOL_SELECT_OBJECT);
             }
             break;
@@ -1112,6 +1084,32 @@ void Control::selectFillAlpha(bool pen) {
         toolHandler->setPenFill(alpha);
     } else {
         toolHandler->setHighlighterFill(alpha);
+    }
+}
+
+void Control::closeAndSelectTextTool() {
+    auto oldTool = getToolHandler()->getActiveTool();
+    if (oldTool.getName().compare("text") == 0 && this->win->getXournal()->getTextEditor()->getText()->getText().length() != 0) { // TODO check tooltype, not name
+        Text* textobj = std::move(this->win->getXournal()->getTextEditor()->getText());
+        auto selection = this->win->getXournal()->getSelection();
+        if (!selection) {
+            auto pageNr = getCurrentPageNo();
+
+            this->doc->lock();
+            XojPageView* view = win->getXournal()->getViewFor(pageNr);
+            if (view == nullptr) {
+                this->doc->unlock();
+                return;
+            }
+            PageRef page = this->doc->getPage(pageNr);
+            selection = new EditSelection(this->undoRedo, textobj, view, page);
+
+            this->win->getXournal()->getTextEditor()->textCopyed();
+            this->win->getXournal()->getViewPages()[0]->removeTextEditor();
+            this->doc->unlock();
+
+        }
+    win->getXournal()->setSelection(selection);
     }
 }
 

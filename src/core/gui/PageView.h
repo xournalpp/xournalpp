@@ -123,6 +123,7 @@ public:
      */
     int getLastVisibleTime();
     TextEditor* getTextEditor();
+    void removeTextEditor();
 
     /**
      * Returns a reference to the XojPage belonging to
