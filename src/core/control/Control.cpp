@@ -1088,28 +1088,27 @@ void Control::selectFillAlpha(bool pen) {
 }
 
 void Control::closeAndSelectTextTool() {
+    auto xournal = this->win->getXournal();
     auto oldTool = getToolHandler()->getActiveTool();
-    if (oldTool.getName().compare("text") == 0 && this->win->getXournal()->getTextEditor()->getText()->getText().length() != 0) { // TODO check tooltype, not name
-        Text* textobj = std::move(this->win->getXournal()->getTextEditor()->getText());
-        auto selection = this->win->getXournal()->getSelection();
+    if (oldTool.getToolType() == ToolType::TOOL_TEXT && !(xournal->getTextEditor()->getText()->getText().empty())) {
+        Text* textobj = std::move(xournal->getTextEditor()->getText());
+        auto selection = xournal->getSelection();
         if (!selection) {
             auto pageNr = getCurrentPageNo();
 
-            this->doc->lock();
-            XojPageView* view = win->getXournal()->getViewFor(pageNr);
+            XojPageView* view = xournal->getViewFor(pageNr);
             if (view == nullptr) {
                 this->doc->unlock();
                 return;
             }
             PageRef page = this->doc->getPage(pageNr);
+            xournal->getViewPages()[xournal->getCurrentPage()]->endText(false);
             selection = new EditSelection(this->undoRedo, textobj, view, page);
-
-            this->win->getXournal()->getTextEditor()->textCopyed();
-            this->win->getXournal()->getViewPages()[0]->removeTextEditor();
-            this->doc->unlock();
-
+    
+            xournal->getTextEditor()->textCopyed();
+            xournal->getViewPages()[0]->deleteTextEditor();
         }
-    win->getXournal()->setSelection(selection);
+    xournal->setSelection(selection);
     }
 }
 

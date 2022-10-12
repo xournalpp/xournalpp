@@ -82,7 +82,8 @@ public:
 
     bool isSelected() const;
 
-    void endText();
+    void endText(bool removeTextEditor = true);
+    void deleteTextEditor();
 
     bool searchTextOnPage(std::string& text, int* occures, double* top);
 
@@ -123,7 +124,6 @@ public:
      */
     int getLastVisibleTime();
     TextEditor* getTextEditor();
-    void removeTextEditor();
 
     /**
      * Returns a reference to the XojPage belonging to
