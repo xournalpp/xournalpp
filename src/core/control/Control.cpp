@@ -588,19 +588,19 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_TOOL_SELECT_RECT:
             if (enabled) {
-                selectTextAndCloseTextTool();
+                selectAndEndText();
                 selectTool(TOOL_SELECT_RECT);
             }
             break;
         case ACTION_TOOL_SELECT_REGION:
             if (enabled) {
-                selectTextAndCloseTextTool();
+                selectAndEndText();
                 selectTool(TOOL_SELECT_REGION);
             }
             break;
         case ACTION_TOOL_SELECT_OBJECT:
             if (enabled) {
-                selectTextAndCloseTextTool();
+                selectAndEndText();
                 selectTool(TOOL_SELECT_OBJECT);
             }
             break;
@@ -1087,7 +1087,7 @@ void Control::selectFillAlpha(bool pen) {
     }
 }
 
-void Control::selectTextAndCloseTextTool() {
+void Control::selectAndEndText() {
     auto xournal = this->win->getXournal();
     auto oldTool = getToolHandler()->getActiveTool();
     if (oldTool.getToolType() == ToolType::TOOL_TEXT && !(xournal->getTextEditor()->getText()->getText().empty())) {
