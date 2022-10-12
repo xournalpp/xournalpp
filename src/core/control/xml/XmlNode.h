@@ -24,6 +24,7 @@ class OutputStream;
 class XmlNode {
 public:
     XmlNode(const char* tag);
+    virtual ~XmlNode() = default;
 
 public:
     void setAttrib(const char* attrib, std::string value);
