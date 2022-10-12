@@ -410,7 +410,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
     //   2) zoom action (toolbox will be hidden in ZoomControl::zoomChanged)
     if (getWindow() && getWindow()->getPdfToolbox()->hasSelection()) {
         bool keepPdfToolbox = type == ACTION_TOOL_HAND || type == ACTION_ZOOM_100 || type == ACTION_ZOOM_FIT ||
-                              type == ACTION_ZOOM_IN || type == ACTION_ZOOM_OUT || type == ACTION_TOOL_SELECT_OBJECT;
+                              type == ACTION_ZOOM_IN || type == ACTION_ZOOM_OUT;
         if (!keepPdfToolbox) {
             getWindow()->getPdfToolbox()->userCancelSelection();
         }
@@ -588,19 +588,19 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_TOOL_SELECT_RECT:
             if (enabled) {
-                closeAndSelectTextTool();
+                selectTextAndCloseTextTool();
                 selectTool(TOOL_SELECT_RECT);
             }
             break;
         case ACTION_TOOL_SELECT_REGION:
             if (enabled) {
-                closeAndSelectTextTool();
+                selectTextAndCloseTextTool();
                 selectTool(TOOL_SELECT_REGION);
             }
             break;
         case ACTION_TOOL_SELECT_OBJECT:
             if (enabled) {
-                closeAndSelectTextTool();
+                selectTextAndCloseTextTool();
                 selectTool(TOOL_SELECT_OBJECT);
             }
             break;
@@ -1087,7 +1087,7 @@ void Control::selectFillAlpha(bool pen) {
     }
 }
 
-void Control::closeAndSelectTextTool() {
+void Control::selectTextAndCloseTextTool() {
     auto xournal = this->win->getXournal();
     auto oldTool = getToolHandler()->getActiveTool();
     if (oldTool.getToolType() == ToolType::TOOL_TEXT && !(xournal->getTextEditor()->getText()->getText().empty())) {
@@ -1105,6 +1105,12 @@ void Control::closeAndSelectTextTool() {
             xournal->getViewPages()[xournal->getCurrentPage()]->endText(false);
             selection = new EditSelection(this->undoRedo, textobj, view, page);
     
+            xournal->getViewPages()[0]->deleteTextEditor();
+        }
+        else {
+            // selection already exists
+            xournal->getViewPages()[xournal->getCurrentPage()]->endText(false);
+            xournal->getSelection()->addElement(textobj);
             xournal->getTextEditor()->textCopyed();
             xournal->getViewPages()[0]->deleteTextEditor();
         }

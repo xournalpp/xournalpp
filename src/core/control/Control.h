@@ -209,7 +209,7 @@ public:
     void updateDeletePageButton();
 
     // selection handling
-    void closeAndSelectTextTool();
+    void selectTextAndCloseTextTool();
 
     void clearSelection();
 
