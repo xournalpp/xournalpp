@@ -1209,6 +1209,16 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkMenuItem" id="menuJournalDuplicatePage">
+                            <property name="name">menuJournalDuplicatePage</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Duplicate Page</property>
+                            <property name="use-underline">True</property>
+                            <signal name="activate" handler="ACTION_DUPLICATE_PAGE" swapped="no"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkMenuItem" id="menuJournalAddNewPdfPages">
                             <property name="name">menuJournalNewPageAtEnd</property>
                             <property name="visible">True</property>

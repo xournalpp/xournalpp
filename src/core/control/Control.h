@@ -205,6 +205,7 @@ public:
     void firePageSelected(size_t page);
 
     void addDefaultPage(std::string pageTemplate);
+    void duplicatePage();
     void insertNewPage(size_t position);
     void appendNewPdfPages();
     void insertPage(const PageRef& page, size_t position);

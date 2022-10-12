@@ -516,6 +516,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_NEW_PAGE_BEFORE:
             insertNewPage(getCurrentPageNo());
             break;
+        case ACTION_DUPLICATE_PAGE:
+            duplicatePage();
+            break;
         case ACTION_NEW_PAGE_AFTER:
             insertNewPage(getCurrentPageNo() + 1);
             break;
@@ -1373,6 +1376,16 @@ void Control::deletePage() {
 
     scrollHandler->scrollToPage(pNr, 0);
     this->win->getXournal()->forceUpdatePagenumbers();
+}
+
+void Control::duplicatePage() {
+    auto page = getCurrentPage();
+    if (!page) {
+        return;
+    }
+    auto pageCopy = std::make_shared<XojPage>(*page);
+
+    insertPage(pageCopy, getCurrentPageNo() + 1);
 }
 
 void Control::insertNewPage(size_t position) { pageBackgroundChangeController->insertNewPage(position); }

@@ -152,6 +152,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_NEW_PAGE_BEFORE;
     }
 
+    if (value == "ACTION_DUPLICATE_PAGE") {
+        return ACTION_DUPLICATE_PAGE;
+    }
+
     if (value == "ACTION_NEW_PAGE_AFTER") {
         return ACTION_NEW_PAGE_AFTER;
     }
@@ -776,6 +780,10 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_NEW_PAGE_BEFORE) {
         return "ACTION_NEW_PAGE_BEFORE";
+    }
+
+    if (value == ACTION_DUPLICATE_PAGE) {
+        return "ACTION_DUPLICATE_PAGE";
     }
 
     if (value == ACTION_NEW_PAGE_AFTER) {
