@@ -29,9 +29,8 @@ void Setsquare::notify() const {
     Range repaintRange = rg.unite(this->lastRepaintRange);
     this->lastRepaintRange = rg;
 
-    cairo_matrix_t matrix{};
-    this->getMatrix(matrix);
-    viewPool->dispatch(xoj::view::SetsquareView::UPDATE_VALUES, this->getHeight(), this->getRotation(), matrix);
+    viewPool->dispatch(xoj::view::SetsquareView::UPDATE_VALUES, this->getHeight(), this->getRotation(),
+                       this->getMatrix());
     viewPool->dispatch(xoj::view::SetsquareView::FLAG_DIRTY_REGION, repaintRange);
     handlerPool->dispatch(SetsquareInputHandler::UPDATE_VALUES, this->getHeight(), this->getRotation(),
                           this->getTranslationX(), this->getTranslationY());

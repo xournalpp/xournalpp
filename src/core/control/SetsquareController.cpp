@@ -17,8 +17,7 @@ SetsquareController::~SetsquareController() = default;
 auto SetsquareController::getType() const -> std::string { return "setsquare"; }
 
 auto SetsquareController::posRelToSide(Leg leg, double x, double y) const -> utl::Point<double> {
-    cairo_matrix_t matrix{};
-    s->getMatrix(matrix);
+    cairo_matrix_t matrix = s->getMatrix();
     cairo_matrix_invert(&matrix);
     cairo_matrix_transform_point(&matrix, &x, &y);
     switch (leg) {
@@ -39,10 +38,9 @@ auto SetsquareController::isInsideGeometryTool(double x, double y, double border
 }
 
 auto SetsquareController::getPointForPos(double xCoord) const -> utl::Point<double> {
-    cairo_matrix_t matrix{};
     double x = xCoord;
     double y = 0.0;
-    s->getMatrix(matrix);
+    cairo_matrix_t matrix = s->getMatrix();
     cairo_matrix_transform_point(&matrix, &x, &y);
 
     return utl::Point<double>(x, y);
@@ -94,10 +92,9 @@ void SetsquareController::updateRadius(double x, double y) {
         this->strokeAngle = std::atan2(p.y, p.x);
         stroke->addPoint(Point(x, y));
     } else {
-        cairo_matrix_t matrix{};
+        cairo_matrix_t matrix = s->getMatrix();
         auto qx = rad * std::cos(this->strokeAngle);
         auto qy = -rad * std::sin(this->strokeAngle);
-        s->getMatrix(matrix);
         cairo_matrix_transform_point(&matrix, &qx, &qy);
 
         stroke->addPoint(Point(qx, qy));
