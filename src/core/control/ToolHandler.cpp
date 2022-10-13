@@ -199,7 +199,7 @@ void ToolHandler::addToolChangedListener(ToolChangedCallback listener) {
 
 auto ToolHandler::getTool(ToolType type) const -> Tool& { return *(this->tools[type - TOOL_PEN]); }
 
-auto ToolHandler::getActiveTool() const -> Tool& {return *(this->activeTool); }
+auto ToolHandler::getActiveTool() const -> Tool* {return this->activeTool; }
 
 auto ToolHandler::getToolType() const -> ToolType {
     Tool* tool = this->activeTool;

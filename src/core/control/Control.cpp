@@ -588,19 +588,19 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_TOOL_SELECT_RECT:
             if (enabled) {
-                selectAndEndText();
+                handleSelectToolAction();
                 selectTool(TOOL_SELECT_RECT);
             }
             break;
         case ACTION_TOOL_SELECT_REGION:
             if (enabled) {
-                selectAndEndText();
+                handleSelectToolAction();
                 selectTool(TOOL_SELECT_REGION);
             }
             break;
         case ACTION_TOOL_SELECT_OBJECT:
             if (enabled) {
-                selectAndEndText();
+                handleSelectToolAction();
                 selectTool(TOOL_SELECT_OBJECT);
             }
             break;
@@ -1087,10 +1087,10 @@ void Control::selectFillAlpha(bool pen) {
     }
 }
 
-void Control::selectAndEndText() {
+void Control::handleSelectToolAction() {
     auto xournal = this->win->getXournal();
     auto oldTool = getToolHandler()->getActiveTool();
-    if (oldTool.getToolType() == ToolType::TOOL_TEXT && !(xournal->getTextEditor()->getText()->getText().empty())) {
+    if (oldTool->getToolType() == ToolType::TOOL_TEXT && !(xournal->getTextEditor()->getText()->getText().empty())) {
         Text* textobj = std::move(xournal->getTextEditor()->getText());
         clearSelectionEndText();
 
@@ -1101,7 +1101,6 @@ void Control::selectAndEndText() {
             return;
         }
         PageRef page = this->doc->getPage(pageNr);
-        xournal->getViewPages()[xournal->getCurrentPage()]->endText();
         auto selection = new EditSelection(this->undoRedo, textobj, view, page);
     
         xournal->setSelection(selection);

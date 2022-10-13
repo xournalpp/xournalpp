@@ -241,9 +241,9 @@ public:
     /**
      * @brief Get the active Tool, returns nullptr if no tool is active
      * 
-     * @return Tool&
+     * @return Tool*
     */
-    Tool& getActiveTool() const;
+    Tool* getActiveTool() const;
 
     /**
      * @brief Set the Eraser Type of the Eraser in the toolbar
