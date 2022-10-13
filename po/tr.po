@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-11 03:11+0000\n"
-"PO-Revision-Date: 2022-10-11 03:13\n"
+"PO-Revision-Date: 2022-10-13 19:02\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -2307,7 +2307,7 @@ msgstr "Ölü bölge yarıçapı"
 
 #: ../ui/latexSettings.glade:119
 msgid "Default LaTeX Text"
-msgstr ""
+msgstr "Varsayılan LaTeX Metni"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
