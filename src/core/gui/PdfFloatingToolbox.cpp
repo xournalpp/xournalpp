@@ -205,7 +205,7 @@ void PdfFloatingToolbox::switchSelectTypeCb(GtkButton* button, PdfFloatingToolbo
     type = type == ToolType::TOOL_SELECT_PDF_TEXT_LINEAR ? ToolType::TOOL_SELECT_PDF_TEXT_RECT :
                                                            ToolType::TOOL_SELECT_PDF_TEXT_LINEAR;
 
-    pft->theMainWindow->getControl()->selectTool(type);
+    pft->theMainWindow->getControl()->handleSelectToolAction(type);
 
     pft->pdfElemSelection->setToolType(type);
     pft->pdfElemSelection->finalizeSelection(PdfElemSelection::selectionStyleForToolType(type));

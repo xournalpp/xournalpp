@@ -295,7 +295,7 @@ void Control::saveSettings() {
 
 void Control::initWindow(MainWindow* win) {
     win->setRecentMenu(recent->getMenu());
-    selectTool(toolHandler->getToolType());
+    handleSelectToolAction(toolHandler->getToolType());
     this->win = win;
     this->sidebar = new Sidebar(win, this);
 
@@ -542,13 +542,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_TOOL_PEN:
             clearSelection();
             if (enabled) {
-                selectTool(TOOL_PEN);
+                handleSelectToolAction(TOOL_PEN);
             }
             break;
         case ACTION_TOOL_ERASER:
             clearSelection();
             if (enabled) {
-                selectTool(TOOL_ERASER);
+                handleSelectToolAction(TOOL_ERASER);
             }
             break;
 
@@ -571,66 +571,63 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_TOOL_HIGHLIGHTER:
             clearSelection();
             if (enabled) {
-                selectTool(TOOL_HIGHLIGHTER);
+                handleSelectToolAction(TOOL_HIGHLIGHTER);
             }
             break;
         case ACTION_TOOL_TEXT:
             clearSelection();
             if (enabled) {
-                selectTool(TOOL_TEXT);
+                handleSelectToolAction(TOOL_TEXT);
             }
             break;
         case ACTION_TOOL_IMAGE:
             clearSelection();
             if (enabled) {
-                selectTool(TOOL_IMAGE);
+                handleSelectToolAction(TOOL_IMAGE);
             }
             break;
         case ACTION_TOOL_SELECT_RECT:
             if (enabled) {
-                handleSelectToolAction();
-                selectTool(TOOL_SELECT_RECT);
+                handleSelectToolAction(TOOL_SELECT_RECT);
             }
             break;
         case ACTION_TOOL_SELECT_REGION:
             if (enabled) {
-                handleSelectToolAction();
-                selectTool(TOOL_SELECT_REGION);
+                handleSelectToolAction(TOOL_SELECT_REGION);
             }
             break;
         case ACTION_TOOL_SELECT_OBJECT:
             if (enabled) {
-                handleSelectToolAction();
-                selectTool(TOOL_SELECT_OBJECT);
+                handleSelectToolAction(TOOL_SELECT_OBJECT);
             }
             break;
         case ACTION_TOOL_PLAY_OBJECT:
             if (enabled) {
-                selectTool(TOOL_PLAY_OBJECT);
+                handleSelectToolAction(TOOL_PLAY_OBJECT);
             }
             break;
         case ACTION_TOOL_SELECT_PDF_TEXT_LINEAR:
             clearSelection();
             if (enabled) {
-                selectTool(TOOL_SELECT_PDF_TEXT_LINEAR);
+                handleSelectToolAction(TOOL_SELECT_PDF_TEXT_LINEAR);
             }
             break;
         case ACTION_TOOL_SELECT_PDF_TEXT_RECT:
             clearSelection();
             if (enabled) {
-                selectTool(TOOL_SELECT_PDF_TEXT_RECT);
+                handleSelectToolAction(TOOL_SELECT_PDF_TEXT_RECT);
             }
             break;
         case ACTION_TOOL_VERTICAL_SPACE:
             clearSelection();
             if (enabled) {
-                selectTool(TOOL_VERTICAL_SPACE);
+                handleSelectToolAction(TOOL_VERTICAL_SPACE);
             }
             break;
 
         case ACTION_TOOL_HAND:
             if (enabled) {
-                selectTool(TOOL_HAND);
+                handleSelectToolAction(TOOL_HAND);
             }
             break;
         case ACTION_SETSQUARE:
@@ -652,7 +649,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_TOOL_FLOATING_TOOLBOX:
             if (enabled) {
-                selectTool(TOOL_FLOATING_TOOLBOX);
+                handleSelectToolAction(TOOL_FLOATING_TOOLBOX);
             }
             break;
         case ACTION_TOOL_DRAW_RECT:
@@ -1084,26 +1081,6 @@ void Control::selectFillAlpha(bool pen) {
         toolHandler->setPenFill(alpha);
     } else {
         toolHandler->setHighlighterFill(alpha);
-    }
-}
-
-void Control::handleSelectToolAction() {
-    auto xournal = this->win->getXournal();
-    auto oldTool = getToolHandler()->getActiveTool();
-    if (oldTool->getToolType() == ToolType::TOOL_TEXT && !(xournal->getTextEditor()->getText()->getText().empty())) {
-        Text* textobj = std::move(xournal->getTextEditor()->getText());
-        clearSelectionEndText();
-
-        auto pageNr = getCurrentPageNo();
-
-        XojPageView* view = xournal->getViewFor(pageNr);
-        if (view == nullptr) {
-            return;
-        }
-        PageRef page = this->doc->getPage(pageNr);
-        auto selection = new EditSelection(this->undoRedo, textobj, view, page);
-    
-        xournal->setSelection(selection);
     }
 }
 
@@ -1802,7 +1779,28 @@ void Control::undoRedoPageChanged(PageRef page) {
     }
 }
 
-void Control::selectTool(ToolType type) {
+void Control::handleSelectToolAction(ToolType type) {
+    // keep text-selection when switching from text to seletion tool
+    auto oldTool = getToolHandler()->getActiveTool();
+    if (oldTool && win
+                && (type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_OBJECT)
+                && oldTool->getToolType() == ToolType::TOOL_TEXT
+                && !(this->win->getXournal()->getTextEditor()->getText()->getText().empty())) {
+        auto xournal = this->win->getXournal();
+        Text* textobj = std::move(xournal->getTextEditor()->getText());
+        clearSelectionEndText();
+
+        auto pageNr = getCurrentPageNo();
+        XojPageView* view = xournal->getViewFor(pageNr);
+        if (view == nullptr) {
+            return;
+        }
+        PageRef page = this->doc->getPage(pageNr);
+        auto selection = new EditSelection(this->undoRedo, textobj, view, page);
+    
+        xournal->setSelection(selection);
+    }
+
     toolHandler->selectTool(type);
     toolHandler->fireToolChanged();
 
@@ -1816,7 +1814,7 @@ void Control::selectDefaultTool() {
     cfg->applyConfigToToolbarTool(toolHandler);
 
     if (toolHandler->getToolType() != TOOL_NONE) {
-        selectTool(toolHandler->getToolType());
+        handleSelectToolAction(toolHandler->getToolType());
     }
 }
 
