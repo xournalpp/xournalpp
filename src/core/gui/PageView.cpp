@@ -163,7 +163,7 @@ auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> b
     return found;
 }
 
-void XojPageView::endText(bool removeTextEditor) {
+void XojPageView::endText() {
     if (!this->textEditor) {
         return;
     }
@@ -199,12 +199,6 @@ void XojPageView::endText(bool removeTextEditor) {
         }
     }
 
-    if (removeTextEditor) {
-        deleteTextEditor();
-    }
-}
-
-void XojPageView::deleteTextEditor() {
     delete this->textEditor;
     this->textEditor = nullptr;
     this->xournal->getControl()->getWindow()->setFontButtonFont(settings->getFont());

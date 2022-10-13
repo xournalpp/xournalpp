@@ -82,8 +82,7 @@ public:
 
     bool isSelected() const;
 
-    void endText(bool removeTextEditor = true);
-    void deleteTextEditor();
+    void endText();
 
     bool searchTextOnPage(std::string& text, int* occures, double* top);
 
