@@ -8,10 +8,11 @@
 
 #include <glib.h>  // for g_error, g_warning
 
-#include "gui/XournalView.h"  // for XournalView
-#include "model/Setsquare.h"  // for Setsquare
-#include "model/Stroke.h"     // for Stroke
-#include "view/View.h"        // for Context
+#include "gui/XournalView.h"          // for XournalView
+#include "model/Setsquare.h"          // for Setsquare
+#include "model/Stroke.h"             // for Stroke
+#include "util/raii/CairoWrappers.h"  // for CairoSaveGuard
+#include "view/View.h"                // for Context
 
 #include "StrokeView.h"  // for StrokeView
 
@@ -70,8 +71,7 @@ void SetsquareView::deleteOn(SetsquareView::FinalizationRequest, const Range& rg
 }
 
 void SetsquareView::drawGeometryTool(cairo_t* cr) const {
-    cairo_save(cr);
-
+    xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_transform(cr, &matrix);
     cairo_set_line_width(cr, LINE_WIDTH);
     cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
@@ -100,13 +100,10 @@ void SetsquareView::drawGeometryTool(cairo_t* cr) const {
 
     cairo_set_source_rgb(cr, .0, .5, .5);  // turquoise
     drawRotation(cr);
-
-    cairo_restore(cr);
 }
 
 void SetsquareView::drawOutline(cairo_t* cr) const {
-    cairo_save(cr);
-
+    xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_move_to(cr, this->height, .0);
     cairo_line_to(cr, -this->height, .0);
     cairo_line_to(cr, .0, this->height);
@@ -115,12 +112,10 @@ void SetsquareView::drawOutline(cairo_t* cr) const {
 
     cairo_set_source_rgba(cr, .2, .2, .2, .1);  // transparent gray
     cairo_fill(cr);
-
-    cairo_restore(cr);
 }
 
 void SetsquareView::drawRotation(cairo_t* cr) const {
-    cairo_save(cr);
+    xoj::util::CairoSaveGuard saveGuard(cr);
 
     // write the angle between hypotenuse and horizontal axis within a small circle
     std::stringstream ss;
@@ -132,13 +127,10 @@ void SetsquareView::drawRotation(cairo_t* cr) const {
     cairo_new_sub_path(cr);
     cairo_arc(cr, .0, this->circlePos, CIRCLE_RAD, .0, 2. * M_PI);
     cairo_stroke(cr);
-
-    cairo_restore(cr);
 }
 
 void SetsquareView::drawAngularMarks(cairo_t* cr) const {
-    cairo_save(cr);
-
+    xoj::util::CairoSaveGuard saveGuard(cr);
     // BEGIN: 45 degree marks
     clipHorizontalStripes(cr);
     clipVerticalStripes(cr);
@@ -199,13 +191,10 @@ void SetsquareView::drawAngularMarks(cairo_t* cr) const {
     }
     cairo_stroke(cr);
     // END: marks and numbers around semicircle
-
-    cairo_restore(cr);
 }
 
 void SetsquareView::drawVerticalMarks(cairo_t* cr) const {
-    cairo_save(cr);
-
+    xoj::util::CairoSaveGuard saveGuard(cr);
     const auto max = this->maxVmark / 10;  // number of full centimeters
 
     // BEGIN: VERTICAL marks within semicircle
@@ -240,13 +229,10 @@ void SetsquareView::drawVerticalMarks(cairo_t* cr) const {
     }
     cairo_stroke(cr);
     // END: vertical measuring marks with numbers
-
-    cairo_restore(cr);
 }
 
 void SetsquareView::drawHorizontalMarks(cairo_t* cr) const {
-    cairo_save(cr);
-
+    xoj::util::CairoSaveGuard saveGuard(cr);
     const auto max = this->maxVmark / 10;  // number of full centimeters
 
     // BEGIN: line indicating horizontal 0
@@ -272,8 +258,6 @@ void SetsquareView::drawHorizontalMarks(cairo_t* cr) const {
     }
     cairo_stroke(cr);
     // END: measuring marks on top
-
-    cairo_restore(cr);
 }
 
 void SetsquareView::clipVerticalStripes(cairo_t* cr) const {
