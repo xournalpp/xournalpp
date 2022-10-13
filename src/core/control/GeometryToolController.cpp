@@ -22,10 +22,8 @@ void GeometryToolController::move(double x, double y) {
 
 void GeometryToolController::rotate(double da, double cx, double cy) {
     s->setRotation(s->getRotation() + da);
-    const auto tx = s->getTranslationX();
-    const auto ty = s->getTranslationY();
-    const auto offsetX = tx - cx;
-    const auto offsetY = ty - cy;
+    const auto offsetX = s->getTranslationX() - cx;
+    const auto offsetY = s->getTranslationY() - cy;
     const auto mx = offsetX * cos(da) - offsetY * sin(da);
     const auto my = offsetX * sin(da) + offsetY * cos(da);
     s->setTranslationX(cx + mx);
@@ -35,10 +33,8 @@ void GeometryToolController::rotate(double da, double cx, double cy) {
 
 void GeometryToolController::scale(double f, double cx, double cy) {
     s->setHeight(s->getHeight() * f);
-    const auto tx = s->getTranslationX();
-    const auto ty = s->getTranslationY();
-    const auto offsetX = tx - cx;
-    const auto offsetY = ty - cy;
+    const auto offsetX = s->getTranslationX() - cx;
+    const auto offsetY = s->getTranslationY() - cy;
     const auto mx = offsetX * f;
     const auto my = offsetY * f;
     s->setTranslationX(cx + mx);
