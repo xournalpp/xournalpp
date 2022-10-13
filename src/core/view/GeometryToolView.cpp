@@ -1,9 +1,10 @@
 #include "GeometryToolView.h"
 
-#include "model/GeometryTool.h"  // for GeometryTool
-#include "model/Stroke.h"        // for Stroke
-#include "view/Repaintable.h"    // for Repaintable
-#include "view/View.h"           // for Context
+#include "model/GeometryTool.h"       // for GeometryTool
+#include "model/Stroke.h"             // for Stroke
+#include "util/raii/CairoWrappers.h"  // for CairoSaveGuard
+#include "view/Repaintable.h"         // for Repaintable
+#include "view/View.h"                // for Context
 
 #include "StrokeView.h"  // for StrokeView
 
@@ -14,10 +15,9 @@ GeometryToolView::GeometryToolView(const GeometryTool* s, Repaintable* parent): 
 GeometryToolView::~GeometryToolView() = default;
 
 void GeometryToolView::draw(cairo_t* cr) const {
-    cairo_save(cr);
+    xoj::util::CairoSaveGuard saveGuard(cr);
     this->drawGeometryTool(cr);
     this->drawTemporaryStroke(cr);
-    cairo_restore(cr);
 }
 
 bool GeometryToolView::isViewOf(const OverlayBase* overlay) const { return overlay == this->s; }
@@ -31,8 +31,7 @@ void GeometryToolView::drawTemporaryStroke(cairo_t* cr) const {
 }
 
 void GeometryToolView::showTextCenteredAndRotated(cairo_t* cr, std::string text, double angle) const {
-    cairo_save(cr);
-
+    xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_text_extents_t te;
     cairo_text_extents(cr, text.c_str(), &te);
     const double dx = te.x_bearing + te.width / 2.0;
@@ -41,6 +40,4 @@ void GeometryToolView::showTextCenteredAndRotated(cairo_t* cr, std::string text,
     cairo_rotate(cr, rad(angle));
     cairo_rel_move_to(cr, -dx, -dy);
     cairo_text_path(cr, text.c_str());
-
-    cairo_restore(cr);
 }
