@@ -70,6 +70,20 @@ void GeometryToolController::initializeStroke() {
     stroke->setColor(h->getColor());
     stroke->setFill(h->getFill());
     stroke->setLineStyle(h->getLineStyle());
+    switch (h->getToolType()) {
+        case TOOL_PEN:
+            stroke->setToolType(StrokeTool::PEN);
+            break;
+        case TOOL_HIGHLIGHTER:
+            stroke->setToolType(StrokeTool::HIGHLIGHTER);
+            break;
+        case TOOL_ERASER:
+            stroke->setToolType(StrokeTool::ERASER);
+            break;
+        default:
+            g_warning("Unhandled tool when initializing stroke in geometry tool controller");
+            break;
+    }
 }
 
 auto GeometryToolController::getPage() const -> PageRef { return view->getPage(); }
