@@ -24,11 +24,13 @@ auto GeometryTool::getTranslationX() const -> double { return this->translationX
 void GeometryTool::setTranslationY(double y) { this->translationY = y; }
 auto GeometryTool::getTranslationY() const -> double { return this->translationY; }
 
-void GeometryTool::getMatrix(cairo_matrix_t& matrix) const {
+auto GeometryTool::getMatrix() const -> cairo_matrix_t {
+    cairo_matrix_t matrix;
     cairo_matrix_init_identity(&matrix);
     cairo_matrix_translate(&matrix, this->translationX, this->translationY);
     cairo_matrix_rotate(&matrix, this->rotation);
     cairo_matrix_scale(&matrix, CM, CM);
+    return matrix;
 }
 
 auto GeometryTool::getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::GeometryToolView>>& {

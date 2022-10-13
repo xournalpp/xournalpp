@@ -60,7 +60,7 @@ public:
     void setTranslationY(double y);
     double getTranslationY() const;
 
-    void getMatrix(cairo_matrix_t& matrix) const;
+    cairo_matrix_t getMatrix() const;
 
     Stroke* getStroke() const;
     void setStroke(Stroke* s);
