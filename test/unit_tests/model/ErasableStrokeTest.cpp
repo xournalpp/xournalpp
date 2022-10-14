@@ -32,7 +32,7 @@ TEST(ErasableStroke, testOverlapTree) {
 
     stroke.setWidth(2);
     stroke.setFill(-1);
-    stroke.setToolType(StrokeTool::STROKE_TOOL_PEN);
+    stroke.setToolType(StrokeTool::PEN);
 
     std::array<ErasableStroke::OverlapTree, 6> trees;
     trees[0].populate({{0, 0.0}, {3, 0.5}}, stroke);
@@ -96,7 +96,7 @@ TEST(ErasableStroke, testGetStrokes) {
     strokes[0].addPoint({1, 3});
     strokes[0].setWidth(3);
     strokes[0].setFill(-1);
-    strokes[0].setToolType(StrokeTool::STROKE_TOOL_PEN);
+    strokes[0].setToolType(StrokeTool::PEN);
 
     // Closed stroke. Filled. Audio
     strokes[1].addPoint({0, 0, 2});
@@ -107,7 +107,7 @@ TEST(ErasableStroke, testGetStrokes) {
     strokes[1].addPoint({0, 0});
     strokes[1].setWidth(3);
     strokes[1].setFill(123);
-    strokes[1].setToolType(StrokeTool::STROKE_TOOL_PEN);
+    strokes[1].setToolType(StrokeTool::PEN);
     strokes[1].setAudioFilename("assets/bar.mp3");
 
     // Closed stroke. Highlighter.
@@ -119,7 +119,7 @@ TEST(ErasableStroke, testGetStrokes) {
     strokes[2].addPoint({0, 0});
     strokes[2].setWidth(3);
     strokes[2].setFill(-1);
-    strokes[2].setToolType(StrokeTool::STROKE_TOOL_HIGHLIGHTER);
+    strokes[2].setToolType(StrokeTool::HIGHLIGHTER);
 
     std::array<ErasableStroke, 3> erasables = {ErasableStroke(strokes[0]), ErasableStroke(strokes[1]),
                                                ErasableStroke(strokes[2])};
@@ -188,7 +188,7 @@ TEST(ErasableStroke, testIntersectWithPaddedBox) {
     stroke.addPoint({1, 3});        // 11 = (10, 1.0)
     stroke.setWidth(3);
     stroke.setFill(-1);
-    stroke.setToolType(StrokeTool::STROKE_TOOL_PEN);
+    stroke.setToolType(StrokeTool::PEN);
 
     std::array<PaddedBox, 10> boxes;
     std::array<IntersectionParametersContainer, 10> expectedResult;

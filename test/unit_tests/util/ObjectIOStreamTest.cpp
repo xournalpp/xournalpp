@@ -309,7 +309,7 @@ TEST(UtilObjectIOStream, testReadStroke) {
 
     strokes[3].setFill(245);
 
-    strokes[4].setToolType(StrokeTool::STROKE_TOOL_ERASER);
+    strokes[4].setToolType(StrokeTool::ERASER);
 
     strokes[5].setAudioFilename("foo.mp3");
 
@@ -320,7 +320,7 @@ TEST(UtilObjectIOStream, testReadStroke) {
     strokes[6].setPressure({42., 1332.});
     strokes[6].setWidth(1337.);
     strokes[6].setFill(-1);
-    strokes[6].setToolType(StrokeTool::STROKE_TOOL_PEN);
+    strokes[6].setToolType(StrokeTool::PEN);
     strokes[6].setAudioFilename("assets/bar.mp3");
 
     // strokes[7]: invalid stroke
@@ -329,7 +329,7 @@ TEST(UtilObjectIOStream, testReadStroke) {
     strokes[7].addPoint(Point(1., 2.));
     strokes[7].setPressure({42., 1332.});
     strokes[7].setFill(-42);
-    strokes[7].setToolType((StrokeTool)42);
+    strokes[7].setToolType(static_cast<StrokeTool::Value>(42));
     strokes[7].setWidth(-1337.);
 
     size_t i = 0;

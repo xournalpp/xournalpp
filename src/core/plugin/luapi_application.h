@@ -441,7 +441,7 @@ static void addStrokeHelper(lua_State* L, Stroke* stroke) {
 
     // Set tool type
     if (strcmp("highlighter", tool) == 0) {
-        stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
+        stroke->setToolType(StrokeTool::HIGHLIGHTER);
 
         size = toolSizeToString(toolHandler->getHighlighterSize());
         thickness = toolHandler->getToolThickness(TOOL_HIGHLIGHTER)[toolSizeFromString(size)];
@@ -455,7 +455,7 @@ static void addStrokeHelper(lua_State* L, Stroke* stroke) {
         if (!(strcmp("pen", tool) == 0))
             g_warning("%s", FC(_F("Unknown stroke type: \"{1}\", defaulting to pen") % tool));
 
-        stroke->setToolType(STROKE_TOOL_PEN);
+        stroke->setToolType(StrokeTool::PEN);
 
         size = toolSizeToString(toolHandler->getPenSize());
         thickness = toolHandler->getToolThickness(TOOL_PEN)[toolSizeFromString(size)];

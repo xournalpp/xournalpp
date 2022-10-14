@@ -30,7 +30,7 @@
 #include "model/Document.h"                     // for Document
 #include "model/Element.h"                      // for Element, ELEMENT_STROKE
 #include "model/PageRef.h"                      // for PageRef
-#include "model/Stroke.h"                       // for Stroke, STROKE_TOOL_E...
+#include "model/Stroke.h"                       // for Stroke, StrokeTool::E...
 #include "model/XojPage.h"                      // for XojPage
 #include "undo/DeleteUndoAction.h"              // for DeleteUndoAction
 #include "undo/UndoRedoHandler.h"               // for UndoRedoHandler
@@ -639,14 +639,14 @@ void XournalView::setSelection(EditSelection* selection) {
                 canChangeSize = true;
 
                 const auto* s = dynamic_cast<const Stroke*>(e);
-                if (s->getToolType() == STROKE_TOOL_PEN) {
+                if (s->getToolType() == StrokeTool::PEN) {
                     // can change everything, leave loop with break
                     canChangeColor = true;
                     canChangeFill = true;
                     canChangeLineStyle = true;
                     break;
                 }
-                if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+                if (s->getToolType() == StrokeTool::HIGHLIGHTER) {
                     canChangeColor = true;
                     canChangeFill = true;
                 }

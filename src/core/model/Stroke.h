@@ -24,7 +24,20 @@ class ObjectInputStream;
 class ObjectOutputStream;
 class ShapeContainer;
 
-enum StrokeTool { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
+class StrokeTool {
+public:
+    enum Value { PEN, ERASER, HIGHLIGHTER };
+    StrokeTool(Value v): value(v) {}
+
+    [[nodiscard]] bool isPressureSensitive() const { return value == PEN; }
+    [[nodiscard]] bool hasLineStyle() const { return value == PEN; }
+    operator const Value&() const { return value; }
+    operator Value&() { return value; }
+
+private:
+    Value value = PEN;
+};
+
 enum StrokeCapStyle {
     ROUND = 0,
     BUTT = 1,
@@ -179,7 +192,7 @@ protected:
 private:
     // The stroke width cannot be inherited from Element
     double width = 0;
-    StrokeTool toolType = STROKE_TOOL_PEN;
+    StrokeTool toolType = StrokeTool::PEN;
 
     // The array with the points
     std::vector<Point> points{};

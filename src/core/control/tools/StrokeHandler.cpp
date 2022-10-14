@@ -52,7 +52,7 @@ void StrokeHandler::draw(cairo_t* cr) {
     assert(stroke && stroke->getPointCount() > 0);
 
     auto setColorAndBlendMode = [stroke = this->stroke.get(), cr]() {
-        if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+        if (stroke->getToolType() == StrokeTool::HIGHLIGHTER) {
             if (auto fill = stroke->getFill(); fill != -1) {
                 Util::cairo_set_source_rgbi(cr, stroke->getColor(), static_cast<double>(fill) / 255.0);
             } else {
@@ -345,7 +345,7 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom
 
         stroke = createStroke(this->control);
 
-        this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
+        this->hasPressure = this->stroke->getToolType().isPressureSensitive() && pos.pressure != Point::NO_PRESSURE;
 
         double p = this->hasPressure ? pos.pressure : Point::NO_PRESSURE;
         stroke->addPoint(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, p));

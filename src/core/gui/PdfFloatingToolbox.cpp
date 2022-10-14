@@ -16,7 +16,7 @@
 #include "model/Layer.h"            // for Layer
 #include "model/PageRef.h"          // for PageRef
 #include "model/Point.h"            // for Point
-#include "model/Stroke.h"           // for Stroke, BUTT, STROKE_TOOL_HIGHLIG...
+#include "model/Stroke.h"           // for Stroke, BUTT, StrokeTool::HIGHLIG...
 #include "model/XojPage.h"          // for XojPage
 #include "undo/GroupUndoAction.h"   // for GroupUndoAction
 #include "undo/InsertUndoAction.h"  // for InsertUndoAction
@@ -179,7 +179,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         auto* stroke = new Stroke();
         stroke->setColor(color);
         stroke->setFill(markerOpacity);
-        stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
+        stroke->setToolType(StrokeTool::HIGHLIGHTER);
         stroke->setWidth(w);
         stroke->addPoint(Point(rect.x1, h, -1));
         stroke->addPoint(Point(rect.x2, h, -1));

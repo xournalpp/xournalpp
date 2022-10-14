@@ -187,7 +187,7 @@ void Stroke::readSerialized(ObjectInputStream& in) {
 
     this->width = in.readDouble();
 
-    this->toolType = static_cast<StrokeTool>(in.readInt());
+    this->toolType = static_cast<StrokeTool::Value>(in.readInt());
 
     this->fill = in.readInt();
 
