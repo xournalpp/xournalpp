@@ -6,7 +6,7 @@
 
 #include <glib.h>  // for g_warning
 
-#include "model/Stroke.h"     // for Stroke, STROKE_TOOL_HIGHLIGHTER
+#include "model/Stroke.h"     // for Stroke, StrokeTool::HIGHLIGHTER
 #include "util/Color.h"       // for cairo_set_source_rgbi
 #include "util/Rectangle.h"   // for Rectangle
 #include "view/View.h"        // for Context, OPACITY_NO_AUDIO, view
@@ -31,7 +31,7 @@ void StrokeView::draw(const Context& ctx) const {
         return;
     }
 
-    const bool highlighter = s->getToolType() == STROKE_TOOL_HIGHLIGHTER;
+    const bool highlighter = s->getToolType() == StrokeTool::HIGHLIGHTER;
     const bool filledHighlighter = highlighter && s->getFill() != -1;
     const bool drawTranslucent = ctx.fadeOutNonAudio && s->getAudioFilename().empty();
     const bool useMask = (!ctx.noColor && filledHighlighter) || drawTranslucent;

@@ -2024,7 +2024,7 @@ auto Control::getLineStyleToSelect() -> std::optional<string> const {
         if (e->getType() == ELEMENT_STROKE) {
             const auto* s = dynamic_cast<const Stroke*>(e);
 
-            if (s->getToolType() == STROKE_TOOL_PEN) {
+            if (s->getToolType().hasLineStyle()) {
                 style = StrokeStyle::formatStyle(s->getLineStyle());
 
                 if (isFirstPenStrokeElement) {

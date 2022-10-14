@@ -130,7 +130,7 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     /**
      * Set the pressure values. Only the usual pen strokes are pressure sensitive
      */
-    bool usePressure = ev.pressure != Point::NO_PRESSURE && stroke->getToolType() == STROKE_TOOL_PEN;
+    bool usePressure = ev.pressure != Point::NO_PRESSURE && stroke->getToolType().isPressureSensitive();
     if (usePressure) {
         C.z = ev.pressure * stroke->getWidth();
         double coeff = normBC / 2 + distance;  // Very rough estimation of the spline's length

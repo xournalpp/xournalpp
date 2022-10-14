@@ -10,7 +10,7 @@
 #include "control/ToolEnums.h"        // for TOOL_ERASER, TOOL_HIGHLIGHTER
 #include "control/ToolHandler.h"      // for ToolHandler
 #include "model/Point.h"              // for Point, Point::NO_PRESSURE
-#include "model/Stroke.h"             // for Stroke, STROKE_TOOL_ERASER, STR...
+#include "model/Stroke.h"             // for Stroke, StrokeTool::ERASER, STR...
 #include "util/Color.h"               // for Color
 
 #include "filesystem.h"  // for path
@@ -31,7 +31,7 @@ auto InputHandler::createStroke(Control* control) -> std::unique_ptr<Stroke> {
     s->setLineStyle(h->getLineStyle());
 
     if (h->getToolType() == TOOL_PEN) {
-        s->setToolType(STROKE_TOOL_PEN);
+        s->setToolType(StrokeTool::PEN);
 
         if (control->getAudioController()->isRecording()) {
             fs::path audioFilename = control->getAudioController()->getAudioFilename();
@@ -41,9 +41,9 @@ auto InputHandler::createStroke(Control* control) -> std::unique_ptr<Stroke> {
             s->setAudioFilename(audioFilename);
         }
     } else if (h->getToolType() == TOOL_HIGHLIGHTER) {
-        s->setToolType(STROKE_TOOL_HIGHLIGHTER);
+        s->setToolType(StrokeTool::HIGHLIGHTER);
     } else if (h->getToolType() == TOOL_ERASER) {
-        s->setToolType(STROKE_TOOL_ERASER);
+        s->setToolType(StrokeTool::ERASER);
         s->setColor(Color(0xffffffU));
     }
 

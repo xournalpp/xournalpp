@@ -98,12 +98,12 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 
     unsigned char alpha = 0xff;
 
-    if (t == STROKE_TOOL_PEN) {
+    if (t == StrokeTool::PEN) {
         stroke->setAttrib("tool", "pen");
         writeTimestamp(s, stroke);
-    } else if (t == STROKE_TOOL_ERASER) {
+    } else if (t == StrokeTool::ERASER) {
         stroke->setAttrib("tool", "eraser");
-    } else if (t == STROKE_TOOL_HIGHLIGHTER) {
+    } else if (t == StrokeTool::HIGHLIGHTER) {
         stroke->setAttrib("tool", "highlighter");
         alpha = 0x7f;
     } else {
