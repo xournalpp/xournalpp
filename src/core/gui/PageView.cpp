@@ -102,6 +102,10 @@ XojPageView::~XojPageView() {
     deleteViewBuffer();  // Ensures the mutex is locked during the buffer's destruction
 }
 
+void XojPageView::addOverlayView(std::unique_ptr<xoj::view::OverlayView> overlay) {
+    this->overlayViews.emplace_back(std::move(overlay));
+}
+
 void XojPageView::setIsVisible(bool visible) {
     if (visible) {
         this->lastVisibleTime = 0;

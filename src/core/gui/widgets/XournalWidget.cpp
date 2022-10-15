@@ -20,7 +20,6 @@
 #include "gui/scroll/ScrollHandling.h"      // for ScrollHandling
 #include "util/Color.h"                     // for cairo_set_source_rgbi
 #include "util/Rectangle.h"                 // for Rectangle
-#include "view/SetsquareView.h"             // for SetsquareView
 
 
 using xoj::util::Rectangle;
@@ -71,8 +70,6 @@ auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget
     xoj->scrollHandling = inputContext->getScrollHandling();
     xoj->layout = new Layout(view, inputContext->getScrollHandling());
     xoj->selection = nullptr;
-    xoj->setsquareView = nullptr;
-
     xoj->input = inputContext;
 
     xoj->input->connect(GTK_WIDGET(xoj));
@@ -293,19 +290,6 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
         cairo_restore(cr);
     }
 
-    if (xournal->setsquareView) {
-        auto&& pv = xournal->setsquareView->getView();
-        int px = pv->getX();
-        int py = pv->getY();
-
-        if (clippingRect.intersects(pv->getRect())) {
-            cairo_save(cr);
-            cairo_translate(cr, px, py);
-            xournal->setsquareView->paint(cr);
-            cairo_restore(cr);
-        }
-    }
-
     return true;
 }
 
@@ -316,8 +300,6 @@ static void gtk_xournal_dispose(GObject* object) {
 
     delete xournal->selection;
     xournal->selection = nullptr;
-
-    xournal->setsquareView = nullptr;
 
     delete xournal->layout;
     xournal->layout = nullptr;

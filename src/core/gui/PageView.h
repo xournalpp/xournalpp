@@ -53,6 +53,7 @@ public:
     ~XojPageView() override;
 
 public:
+    void addOverlayView(std::unique_ptr<xoj::view::OverlayView>);
     void rerenderPage() override;
     void rerenderRect(double x, double y, double width, double height) override;
 

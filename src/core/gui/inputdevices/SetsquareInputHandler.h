@@ -16,11 +16,14 @@
 
 #include <gdk/gdk.h>  // for GdkEventSequence
 
-#include "util/Point.h"  // for Point
+#include "util/DispatchPool.h"  // for xoj::util::Listener
+#include "util/Point.h"         // for Point
 
 #include "InputContext.h"  // for InputContext::DeviceType, InputContext
 
+
 class Stroke;
+class SetsquareController;
 struct InputEvent;
 
 /**
@@ -31,13 +34,29 @@ struct InputEvent;
  *
  * The touch handling part is adopted from the TouchInputHandler class
  */
-class SetsquareInputHandler {
+
+class SetsquareInputHandler: public xoj::util::Listener<SetsquareInputHandler> {
+
+public:
+    explicit SetsquareInputHandler(XournalView* xournalView, SetsquareController* controller);
+    ~SetsquareInputHandler();
 
 private:
     /**
-     * @brief the input context attached to this handler
+     * @brief the XournalView attached to this handler
      */
-    InputContext* inputContext;
+    XournalView* xournal;
+
+    /**
+     * @brief the setsquare controller
+     *
+     */
+    SetsquareController* controller;
+
+    double height;
+    double rotation = 0.;
+    double translationX;
+    double translationY;
 
     /**
      * @brief saves which devices are blocked, so they don't need to be handled
@@ -99,7 +118,6 @@ private:
      */
     std::vector<Stroke*> lines;
 
-private:
     /**
      * @brief initializes an input sequence (right after the first or second finger is put onto the screen)
      * @param event the input event initializing the sequence
@@ -138,6 +156,7 @@ private:
      */
     bool handlePointer(InputEvent const& event);
 
+private:
     /**
      * @brief the document coordinates derived from an input event
      * @param event an input event
@@ -151,11 +170,18 @@ private:
      */
     utl::Point<double> getCoords(double x, double y);
 
-public:
-    explicit SetsquareInputHandler(InputContext* inputContext);
-    ~SetsquareInputHandler() = default;
+    double getMinHeight() const;
+    double getMaxHeight() const;
 
+public:
     bool handle(InputEvent const& event);
     void blockDevice(InputContext::DeviceType deviceType);
     void unblockDevice(InputContext::DeviceType deviceType);
+
+    /**
+     * Listener interface
+     */
+    static constexpr struct UpdateValuesRequest {
+    } UPDATE_VALUES = {};
+    void on(UpdateValuesRequest, double h, double rot, double tx, double ty);
 };

@@ -21,9 +21,8 @@
 #include "gui/inputdevices/TouchDrawingInputHandler.h"  // for TouchDrawingI...
 #include "gui/inputdevices/TouchInputHandler.h"         // for TouchInputHan...
 
-#include "InputEvents.h"            // for InputEvent
-#include "SetsquareInputHandler.h"  // for SetsquareInpu...
-#include "config-debug.h"           // for DEBUG_INPUT
+#include "InputEvents.h"   // for InputEvent
+#include "config-debug.h"  // for DEBUG_INPUT
 
 class ScrollHandling;
 class ToolHandler;
@@ -37,7 +36,6 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
     this->touchDrawingHandler = new TouchDrawingInputHandler(this);
     this->mouseHandler = new MouseInputHandler(this);
     this->keyboardHandler = new KeyboardInputHandler(this);
-    this->setsquareHandler = std::make_unique<SetsquareInputHandler>(this);
 
     for (const InputDevice& savedDevices: this->view->getControl()->getSettings()->getKnownInputDevices()) {
         this->knownDevices.insert(savedDevices.getName());
@@ -127,7 +125,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
 
     // separate events to appropriate handlers
     // handle setsquare
-    if (this->setsquareHandler->handle(event)) {
+    if (auto handler = view->getSetsquareHandler(); handler && handler->handle(event)) {
         return true;
     }
 
@@ -194,7 +192,9 @@ void InputContext::focusWidget() {
 }
 
 void InputContext::blockDevice(InputContext::DeviceType deviceType) {
-    this->setsquareHandler->blockDevice(deviceType);
+    if (auto handler = view->getSetsquareHandler()) {
+        handler->blockDevice(deviceType);
+    }
     switch (deviceType) {
         case MOUSE:
             this->mouseHandler->block(true);
@@ -210,7 +210,9 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType) {
 }
 
 void InputContext::unblockDevice(InputContext::DeviceType deviceType) {
-    this->setsquareHandler->unblockDevice(deviceType);
+    if (auto handler = view->getSetsquareHandler()) {
+        handler->unblockDevice(deviceType);
+    }
     switch (deviceType) {
         case MOUSE:
             this->mouseHandler->block(false);

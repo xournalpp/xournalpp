@@ -22,7 +22,6 @@
 
 #include "gui/widgets/XournalWidget.h"  // for GtkXournal
 
-class SetsquareInputHandler;
 class KeyboardInputHandler;
 class MouseInputHandler;
 class ScrollHandling;
@@ -37,7 +36,6 @@ class InputContext {
 
 private:
     gulong signal_id{0};
-    std::unique_ptr<SetsquareInputHandler> setsquareHandler;
     StylusInputHandler* stylusHandler;
     MouseInputHandler* mouseHandler;
     TouchDrawingInputHandler* touchDrawingHandler;
