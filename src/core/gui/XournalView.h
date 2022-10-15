@@ -22,12 +22,12 @@
 #include <gtk/gtk.h>  // for GtkWidget, GtkAllocation
 
 #include "control/SetsquareController.h"             // for SetsquareController
-#include "control/zoom/ZoomListener.h"  // for ZoomListener
+#include "control/zoom/ZoomListener.h"               // for ZoomListener
 #include "gui/inputdevices/SetsquareInputHandler.h"  // for SetsquareInputHandler
-#include "model/DocumentChangeType.h"   // for DocumentChangeType
-#include "model/DocumentListener.h"     // for DocumentListener
-#include "model/Setsquare.h"            // for Setsquare
-#include "util/Util.h"                  // for npos
+#include "model/DocumentChangeType.h"                // for DocumentChangeType
+#include "model/DocumentListener.h"                  // for DocumentListener
+#include "model/Setsquare.h"                         // for Setsquare
+#include "util/Util.h"                               // for npos
 
 class Control;
 class XournalppCursor;
