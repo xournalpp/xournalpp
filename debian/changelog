@@ -1,3 +1,9 @@
+xournalpp (1.1.3~dev-1) UNRELEASED; urgency=medium
+
+  * 
+
+ -- Bryan Tan <bryantan@technius.net>  Sat, 15 Oct 2022 01:00:44 -0700
+
 xournalpp (1.1.2-1) unstable; urgency=medium
 
   * This is a new minor version of Xournal++ with many new bug fixes and improvements
