@@ -87,6 +87,7 @@
 #include "util/serializing/InputStreamException.h"               // for Inpu...
 #include "util/serializing/ObjectInputStream.h"                  // for Obje...
 #include "view/SetsquareView.h"                                  // for Sets...
+#include "view/overlays/OverlayView.h"                           // for Over...
 
 #include "CrashHandler.h"                    // for emer...
 #include "FullscreenHandler.h"               // for Full...
@@ -646,21 +647,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             }
             break;
         case ACTION_SETSQUARE:
-            if (!this->win->getXournal()->getSetsquareView()) {
-                // bring up setsquare in page center
-                auto setsquare = std::make_unique<Setsquare>();
-                auto view = win->getXournal()->getViewFor(getCurrentPageNo());
-                std::unique_ptr<SetsquareView> setsquareView = std::make_unique<SetsquareView>(view, setsquare);
-                if (!view) {
-                    setsquareView.reset(nullptr);
-                }
-                this->win->getXournal()->setSetsquareView(std::move(setsquareView));
-                fireActionSelected(GROUP_SETSQUARE, ACTION_SETSQUARE);
+            if (auto xournal = this->win->getXournal(); !xournal->getSetsquareController()) {
+                xournal->resetSetsquare();
+                xournal->makeSetsquare();
+                xournal->getViewFor(getCurrentPageNo())->rerenderPage();
             } else {
-                // hide setsquare
-                this->win->getXournal()->resetSetsquareView();
+                xournal->resetSetsquare();
+                xournal->getViewFor(getCurrentPageNo())->rerenderPage();
             }
-            win->getXournal()->repaintSetsquare(true);
             break;
         case ACTION_TOOL_FLOATING_TOOLBOX:
             if (enabled) {
@@ -1365,9 +1359,9 @@ void Control::deletePage() {
 
     // if the current page contains the Setsquare, reset it
     size_t pNr = getCurrentPageNo();
-    auto setsquareView = win->getXournal()->getSetsquareView();
-    if (setsquareView && doc->indexOf(setsquareView->getPage()) == pNr) {
-        win->getXournal()->resetSetsquareView();
+    auto setsquareController = win->getXournal()->getSetsquareController();
+    if (setsquareController && doc->indexOf(setsquareController->getPage()) == pNr) {
+        win->getXournal()->resetSetsquare();
     }
     // don't allow delete pages if we have less than 2 pages,
     // so we can be (more or less) sure there is at least one page.
@@ -2785,7 +2779,7 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
     if (allowDestroy && discard) {
         this->closeDocument();
     }
-    win->getXournal()->resetSetsquareView();
+    win->getXournal()->resetSetsquare();
     return true;
 }
 

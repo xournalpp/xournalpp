@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Draw setsquare
+ * A setsquare view
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -11,197 +11,159 @@
 
 #pragma once
 
-#include <cmath>   // for NAN
-#include <memory>  // for unique_ptr
+#include <cmath>
 
 #include <cairo.h>  // for cairo_t
 
-#include "model/PageRef.h"    // for PageRef
 #include "model/Setsquare.h"  // for Setsquare
-#include "util/Point.h"       // for Point
+#include "util/DispatchPool.h"
+#include "view/overlays/BaseStrokeToolView.h"
 
 class Stroke;
 class XojPageView;
+class OverlayBase;
 
-enum Leg { HYPOTENUSE, LEFT_LEG, RIGHT_LEG };
+/**
+ * @brief A class that renders a setsquare
+ *
+ * The setsquare has vertical, horizontal and angular marks.
+ * The intersection angle with the x-axis is displayed as well.
+ *
+ * See the file development/documentation/Setsquare_Readme.md for
+ * details how the setsquare is rendered.
+ *
+ * A temporary stroke is displayed when it is created near the
+ * longest side of the setsquare or from a point to the mid point
+ * of the longest side of the setsquare.
+ */
 
-class SetsquareView {
+namespace xoj::view {
+class Repaintable;
+
+constexpr double rad(double n) { return n * M_PI / 180.; }
+constexpr double rad(int n) { return rad(static_cast<double>(n)); }
+constexpr double deg(double a) { return a * 180.0 / M_PI; }
+inline double cathete(double h, double o) { return std::sqrt(std::pow(h, 2) - std::pow(o, 2)); }
+
+class SetsquareView: public ToolView, public xoj::util::Listener<SetsquareView> {
+
 public:
-    SetsquareView(XojPageView* view, std::unique_ptr<Setsquare>& s);
-    ~SetsquareView() = default;
+    SetsquareView(const Setsquare* s, Repaintable* parent);
+    ~SetsquareView() override;
 
-public:
     /**
-     * @brief paints the setsquare to a cairo context, after scaling it by the zoom factor
+     * Listener interface
+     */
+    static constexpr struct FlagDirtyRegionRequest {
+    } FLAG_DIRTY_REGION = {};
+    void on(FlagDirtyRegionRequest, const Range& rg);
+
+    static constexpr struct UpdateValuesRequest {
+    } UPDATE_VALUES = {};
+    void on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m);
+
+    static constexpr struct FinalizationRequest {
+    } FINALIZATION_REQUEST = {};
+    /**
+     * @brief Called before the setsquare's destruction
+     * @param rg The bounding box of the entire setsquare
+     */
+    void deleteOn(FinalizationRequest, const Range& rg);
+
+    /**
+     * @brief draws the setsquare and temporary stroke to a cairo context
      * @param cr the cairo context
      */
-    void paint(cairo_t* cr);
+    void draw(cairo_t* cr) const override;
 
-    /**
-     * @brief moves the setquare in x- and y-direction
-     * @param x the translation in x-direction (in document coordinates)
-     * @param y the translation in y-direction (in document coordinates)
-     */
-    void move(double x, double y);
-
-    /**
-     * @brief rotates the setsquare around a given center
-     * @param da the rotation angle
-     * @param cx the x-coordinate of the rotation center (in document coordinates)
-     * @param cy the y-coordinate of the rotation center (in document coordinates)
-     */
-    void rotate(double da, double cx, double cy);
-
-    /**
-     * @brief resizes the setsquare by the factor f with respect to a given scaling center
-     * @param f the scaling factor
-     * @param cx the x-coordinate of the scaling center (in document coordinates)
-     * @param cy the y-coordinate of the scaling center (in document coordiantes)
-     */
-    void scale(double f, double cx, double cy);
-
-    /**
-     * @brief the height of the setsquare
-     */
-    double getHeight() const;
-
-    /**
-     * @brief the rotation angle of the setsquare
-     */
-    double getRotation() const;
-
-    /**
-     * @brief the x-coordinate of the midpoint of the setsquare (in document coordinates)
-     */
-    double getTranslationX() const;
-
-    /**
-     * @brief the y-coordinate of the midpoint of the setsquare (in document coordinates)
-     */
-    double getTranslationY() const;
-
-    /**
-     * @brief the page view of the page with respect to which the setsquare is initialized
-     */
-    XojPageView* getView() const;
-
-    /**
-     * @brief the page with respect to which the setsquare is initialized
-     */
-    PageRef getPage() const;
-
-    /**
-     * @brief returns the position of a point relative to a coordinate system, in which the given setsquare leg lies on
-     * the x-axis with the origin in its center (where the unit is 1 cm)
-     * @param leg the leg of the setsquare
-     * @param x the x-coordinate of the point (in document coordinates)
-     * @param y the y-coordinate of the point (in document coordinates)
-     */
-    utl::Point<double> posRelToSide(Leg leg, double x, double y) const;
-
-    /**
-     * @brief checks whether a point with given coordinates lies in the setsquare with an additional border enlarging
-     * (or shrinked) it
-     * @param x the x-coordinate of the given point (in document coordinates)
-     * @param y the y-coordinate of the given point (in document coordinates)
-     * @param border the size of the border (if negative, the setsquare is shrinked via the border)
-     */
-    bool isInsideSetsquare(double x, double y, double border = 0.0) const;
-
-    /**
-     * @brief the point (in document coordinates) for a given position on the longest side of the setsquare
-     * @param x the x-coordinate of the point on the longest side of the setsquare (when unrotated and untranslated)
-     */
-    utl::Point<double> getPointForPos(double x) const;
-
-    /**
-     * @brief creates a stroke starting at the given position of the longest side of the setsquare
-     * @param x the x-coordinate of the point on the longest side of the setsquare (when unrotated and untranslated)
-     */
-    void createStroke(double x);
-
-    /**
-     * @brief updates the stroke aligned to the longest side of the setsquare
-     * @param x the x-coordinate of the point on the longest side of the setsquare (when unrotated and untranslated)
-     * updating the stroke
-     */
-    void updateStroke(double x);
-
-    /**
-     * @brief finishes the stroke aligned to the longest side of the setsquare
-     */
-    void finalizeStroke();
-
-    /**
-     * @brief creates a radius starting at the given position to the origin of the setsquare
-     * @param x the x-coordinate of the current point
-     * @param y the y-coordinate of the current point
-     */
-    void createRadius(double x, double y);
-
-    /**
-     * @brief updates the radius to the origin of the setsquare
-     * @param x the x-coordinate of the current point
-     * @param y the y-coordinate of the current point
-     * updating the stroke
-     */
-    void updateRadius(double x, double y);
-
-    /**
-     * @brief finishes the radius to the origin of the setsquare
-     */
-    void finalizeRadius();
-
-    /**
-     * @brief adds the stroke to the layer and rerenders the stroke area
-     */
-    void addStrokeToLayer();
-
-    /**
-     * @brief initializes the stroke by using the properties from the tool handler
-     */
-    void initializeStroke();
-
-    /**
-     * checks whether a stroke already exists
-     */
-    bool existsStroke();
-
-    /**
-     * checks whether a radius already exists
-     */
-    bool existsRadius();
+    bool isViewOf(const OverlayBase* overlay) const override;
 
 private:
     /**
-     * @brief draws the temporary stroke at the longest side of the setsquare to a cairo context
+     * @brief draws the setsquare to a cairo context
      * @param cr the cairo context drawn to
      */
-    void drawTemporaryStroke(cairo_t* cr);
+    void drawSetsquare(cairo_t* cr) const;
 
-private:
-    XojPageView* view;
+    /**
+     * @brief draws the temporary stroke to a cairo context
+     * @param cr the cairo context drawn to
+     */
+    void drawTemporaryStroke(cairo_t* cr) const;
 
     /**
      * @brief the underlying setsquare
      */
-    std::unique_ptr<Setsquare> s;
+    const Setsquare* s;
 
     /**
-     * @brief The stroke drawn aligned to the longest side of the setsquare
+     * @brief The stroke drawn aligned to the longest side of the setsquare or ending at the midpoint of the longest
+     * side of the setsquare
      */
     Stroke* stroke = nullptr;
 
     /**
-     * @brief when a stroke aligned to the longest side (hypotenuse) of the setsquare is drawn, the minimal and maximal
-     * x-coordinates of the point to be drawn (with respect to an unrotated, and untranslated coordinate system) are
-     * saved in the variables hypotenuseMin and hypotenuseMax
+     * @brief renders text centered and possibly rotated at the current position on a cairo context
+     * @param cr the cairo context
+     * @param text the text string
+     * @param angle the rotation angle
      */
-    double hypotenuseMax = NAN;
-    double hypotenuseMin = NAN;
+    void showTextCenteredAndRotated(cairo_t* cr, std::string text, double angle) const;
+
+    double height = Setsquare::INITIAL_HEIGHT;
+    double rotation = 0.;
+    cairo_matrix_t matrix{CM, 0., 0., CM, Setsquare::INITIAL_X, Setsquare::INITIAL_Y};
+
 
     /**
-     * @brief
+     * @brief the radius of the semi-circle for the angular marks
      */
-    double strokeAngle = NAN;
+    double radius = 4.5;
+
+    /**
+     * @brief the distance of the circle containing the rotation angle display from the mid point of the longest side of
+     * the setsquare
+     */
+    double circlePos = 6.0;
+
+    /**
+     * @brief the distance (in cm) of the vertical marks from the symmetry axis of the setsquare
+     */
+    double horPosVmarks = 2.5;
+
+    /**
+     * @brief the index of the first vertical mark which should be drawn (which should not overlap with the measuring
+     * marks)
+     */
+    int minVmark = 3;
+
+    /**
+     * @brief the index of the last vertical mark to be drawn
+     */
+    int maxVmark = 35;
+
+    /**
+     * @brief the number of angular marks that are left away on both ends (in order not to overlap with the measuring
+     * marks)
+     */
+    int offset = 4;
+
+    /**
+     * @brief the index of the last horizontal mark to be drawn
+     */
+    int maxHmark = 70;
+
+    void drawVerticalMarks(cairo_t* cr) const;
+    void drawHorizontalMarks(cairo_t* cr) const;
+    void drawAngularMarks(cairo_t* cr) const;
+    void drawOutline(cairo_t* cr) const;
+    void drawRotation(cairo_t* cr) const;
+    void clipVerticalStripes(cairo_t* cr) const;
+    void clipHorizontalStripes(cairo_t* cr) const;
+
+    /**
+     * @brief updates the values radius, horPosVmarks, minVmark, maxVmark computed from the height of the setsquare
+     */
+    void updateValues(double h, double rot, cairo_matrix_t m);
 };
+};  // namespace xoj::view

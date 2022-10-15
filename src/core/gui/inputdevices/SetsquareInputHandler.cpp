@@ -1,29 +1,18 @@
 #include "SetsquareInputHandler.h"
 
-#include <algorithm>  // for max
-#include <cmath>      // for atan2, abs, cos, remainder
-#include <memory>     // for __shared_ptr_access, shar...
+#include <memory>  // for __shared_ptr_access, shar...
 
-#include <gdk/gdkkeysyms.h>  // for GDK_KEY_Down, GDK_KEY_Left
-#include <glib.h>            // for g_warning
-
-#include "control/Control.h"                // for Control
-#include "control/ToolEnums.h"              // for TOOL_HAND, TOOL_HIGHLIGHTER
-#include "control/ToolHandler.h"            // for ToolHandler
-#include "control/settings/Settings.h"      // for Settings
-#include "gui/PageView.h"                   // for XojPageView
-#include "gui/XournalView.h"                // for XournalView
-#include "gui/inputdevices/InputContext.h"  // for InputContext::DeviceType
-#include "gui/inputdevices/InputEvents.h"   // for InputEvent, BUTTON_PRESS_...
-#include "gui/widgets/XournalWidget.h"      // for GtkXournal
-#include "model/Element.h"                  // for Element, ELEMENT_STROKE
-#include "model/Layer.h"                    // for Layer
-#include "model/Point.h"                    // for Point
-#include "model/Setsquare.h"                // for HALF_CM
-#include "model/Snapping.h"                 // for distanceLine
-#include "model/Stroke.h"                   // for Stroke
-#include "model/XojPage.h"                  // for XojPage
-#include "view/SetsquareView.h"             // for SetsquareView, HYPOTENUSE
+#include "control/Control.h"               // for Control
+#include "control/SetsquareController.h"   // for SetsquareController, HYPOTENUSE
+#include "control/ToolEnums.h"             // for TOOL_HAND, TOOL_HIGHLIGHTER
+#include "control/ToolHandler.h"           // for ToolHandler
+#include "control/settings/Settings.h"     // for Settings
+#include "gui/PageView.h"                  // for XojPageView
+#include "gui/XournalView.h"               // for XournalView
+#include "gui/inputdevices/InputEvents.h"  // for InputEvent
+#include "model/Setsquare.h"               // for Setsquare::INITIAL_HEIGHT,...
+#include "model/Snapping.h"                // for distanceLine
+#include "model/XojPage.h"                 // for XojPage
 
 constexpr double MOVE_AMOUNT = HALF_CM / 2.0;
 constexpr double MOVE_AMOUNT_SMALL = HALF_CM / 20.0;
@@ -37,11 +26,17 @@ constexpr double SNAPPING_DISTANCE_TOLERANCE = 5.0;                 // pt
 constexpr double SNAPPING_ROTATION_TOLERANCE = 3.0 * M_PI / 180.0;  // rad
 constexpr double ZOOM_DISTANCE_MIN = 0.01;
 
-SetsquareInputHandler::SetsquareInputHandler(InputContext* inputContext): inputContext(inputContext) {}
+SetsquareInputHandler::SetsquareInputHandler(XournalView* xournal, SetsquareController* controller):
+        xournal(xournal),
+        controller(controller),
+        height(Setsquare::INITIAL_HEIGHT),
+        translationX(Setsquare::INITIAL_X),
+        translationY(Setsquare::INITIAL_Y) {}
+
+SetsquareInputHandler::~SetsquareInputHandler() noexcept { this->unregisterFromPool(); }
 
 auto SetsquareInputHandler::handle(InputEvent const& event) -> bool {
-    if (!inputContext->getView()->getSetsquareView() || inputContext->getXournal()->selection ||
-        inputContext->getView()->getControl()->getTextEditor()) {
+    if (xournal->getSelection() || xournal->getControl()->getTextEditor()) {
         return false;
     }
     const auto device = event.deviceClass;
@@ -67,8 +62,15 @@ auto SetsquareInputHandler::handle(InputEvent const& event) -> bool {
     }
 }
 
+void SetsquareInputHandler::on(UpdateValuesRequest, double h, double rot, double tx, double ty) {
+    height = h;
+    rotation = rot;
+    translationX = tx;
+    translationY = ty;
+}
+
 auto SetsquareInputHandler::handleTouchscreen(InputEvent const& event) -> bool {
-    const auto zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
+    const auto zoomGesturesEnabled = xournal->getControl()->getSettings()->isZoomGesturesEnabled();
     // Don't handle more then 2 inputs
     if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
         this->secondarySequence != event.sequence) {
@@ -77,11 +79,9 @@ auto SetsquareInputHandler::handleTouchscreen(InputEvent const& event) -> bool {
     if (event.type == BUTTON_PRESS_EVENT) {
         // Start scrolling when a sequence starts and we currently have none other
         if (this->primarySequence == nullptr && this->secondarySequence == nullptr) {
-            const auto view = inputContext->getView();
-            const auto setsquareView = view->getSetsquareView();
             auto coords = getCoords(event);
 
-            if (setsquareView->isInsideSetsquare(coords.x, coords.y, 0)) {
+            if (controller->isInsideSetsquare(coords.x, coords.y, 0)) {
                 // Set sequence data
                 this->primarySequence = event.sequence;
                 sequenceStart(event);
@@ -148,9 +148,6 @@ auto SetsquareInputHandler::handleKeyboard(InputEvent const& event) -> bool {
         double angle = 0.0;
         double scale = 1.0;
 
-        const auto view = inputContext->getView();
-        const auto setsquareView = view->getSetsquareView();
-
         switch (keyEvent->keyval) {
             case GDK_KEY_Left:
                 xdir = -1;
@@ -174,8 +171,8 @@ auto SetsquareInputHandler::handleKeyboard(InputEvent const& event) -> bool {
             case GDK_KEY_S: {
                 scale = (event.state & GDK_MOD1_MASK) ? SCALE_AMOUNT_SMALL : SCALE_AMOUNT;
                 scale = (event.state & GDK_SHIFT_MASK) ? 1.0 / scale : scale;
-                const auto height = setsquareView->getHeight() * scale;
-                if (height > MAX_HEIGHT || height < MIN_HEIGHT) {
+                const auto h = height * scale;
+                if (h > getMaxHeight() || h < getMinHeight()) {
                     scale = 1.0;
                 }
                 break;
@@ -183,8 +180,8 @@ auto SetsquareInputHandler::handleKeyboard(InputEvent const& event) -> bool {
         }
 
         if (xdir != 0 || ydir != 0) {
-            const auto c = std::cos(setsquareView->getRotation());
-            const auto s = std::sin(setsquareView->getRotation());
+            const auto c = std::cos(rotation);
+            const auto s = std::sin(rotation);
             double xshift{0.0};
             double yshift{0.0};
             const auto amount = (event.state & GDK_MOD1_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
@@ -195,20 +192,17 @@ auto SetsquareInputHandler::handleKeyboard(InputEvent const& event) -> bool {
                 xshift = amount * xdir;
                 yshift = amount * ydir;
             }
-            setsquareView->move(xshift, yshift);
-            view->repaintSetsquare();
+            controller->move(xshift, yshift);
             return true;
         }
 
-        auto p = utl::Point(setsquareView->getTranslationX(), setsquareView->getTranslationY());
+        auto p = utl::Point(translationX, translationY);
         if (angle != 0) {
-            setsquareView->rotate(angle, p.x, p.y);
-            view->repaintSetsquare();
+            controller->rotate(angle, p.x, p.y);
             return true;
         }
         if (scale != 1.0) {
-            setsquareView->scale(scale, p.x, p.y);
-            view->repaintSetsquare();
+            controller->scale(scale, p.x, p.y);
             return true;
         }
     }
@@ -216,27 +210,26 @@ auto SetsquareInputHandler::handleKeyboard(InputEvent const& event) -> bool {
 }
 
 auto SetsquareInputHandler::handlePointer(InputEvent const& event) -> bool {
-    const auto view = inputContext->getView();
-    const auto setsquareView = view->getSetsquareView();
     const auto coords = getCoords(event);
+    SetsquareController* setsquareController = static_cast<SetsquareController*>(controller);
 
-    const auto toolHandler = view->getControl()->getToolHandler();
+    const auto toolHandler = xournal->getControl()->getToolHandler();
     switch (toolHandler->getToolType()) {
         case TOOL_HIGHLIGHTER:
         case TOOL_PEN:
             if (event.type == BUTTON_PRESS_EVENT) {
-                if (setsquareView->isInsideSetsquare(coords.x, coords.y, 0) &&
-                    setsquareView->posRelToSide(HYPOTENUSE, coords.x, coords.y).y >= -0.5) {
+                if (controller->isInsideSetsquare(coords.x, coords.y, 0) &&
+                    setsquareController->posRelToSide(HYPOTENUSE, coords.x, coords.y).y >= -0.5) {
                     // initialize range
-                    const auto proj = setsquareView->posRelToSide(HYPOTENUSE, coords.x, coords.y).x;
-                    setsquareView->createStroke(proj);
+                    const auto proj = setsquareController->posRelToSide(HYPOTENUSE, coords.x, coords.y).x;
+                    setsquareController->createStroke(proj);
                     return true;
-                } else if (setsquareView->isInsideSetsquare(coords.x, coords.y, 0) &&
-                           (setsquareView->posRelToSide(LEFT_LEG, coords.x, coords.y).y >= -0.5 ||
-                            setsquareView->posRelToSide(RIGHT_LEG, coords.x, coords.y).y >= -0.5)) {
+                } else if (controller->isInsideSetsquare(coords.x, coords.y, 0) &&
+                           (setsquareController->posRelToSide(LEFT_LEG, coords.x, coords.y).y >= -0.5 ||
+                            setsquareController->posRelToSide(RIGHT_LEG, coords.x, coords.y).y >= -0.5)) {
 
                     // initialize point
-                    setsquareView->createRadius(coords.x, coords.y);
+                    setsquareController->createRadius(coords.x, coords.y);
                     return true;
                 } else {
                     return false;
@@ -244,29 +237,29 @@ auto SetsquareInputHandler::handlePointer(InputEvent const& event) -> bool {
 
             } else if (event.type == MOTION_EVENT) {
                 // update range and paint
-                if (setsquareView->existsStroke()) {
-                    const auto proj = setsquareView->posRelToSide(HYPOTENUSE, coords.x, coords.y).x;
-                    setsquareView->updateStroke(proj);
+                if (setsquareController->existsStroke()) {
+                    const auto proj = setsquareController->posRelToSide(HYPOTENUSE, coords.x, coords.y).x;
+                    setsquareController->updateStroke(proj);
                     return true;
-                } else if (setsquareView->existsRadius()) {
-                    setsquareView->updateRadius(coords.x, coords.y);
+                } else if (setsquareController->existsRadius()) {
+                    setsquareController->updateRadius(coords.x, coords.y);
                     return true;
                 }
                 return false;
             } else if (event.type == BUTTON_RELEASE_EVENT) {
                 // add stroke to layer and reset
-                if (setsquareView->existsStroke()) {
-                    setsquareView->finalizeStroke();
+                if (setsquareController->existsStroke()) {
+                    setsquareController->finalizeStroke();
                     return true;
-                } else if (setsquareView->existsRadius()) {
-                    setsquareView->finalizeRadius();
+                } else if (setsquareController->existsRadius()) {
+                    setsquareController->finalizeRadius();
                     return true;
                 }
             }
             return false;
         case TOOL_HAND:
             if (event.type == BUTTON_PRESS_EVENT) {
-                if (!setsquareView->isInsideSetsquare(coords.x, coords.y, 0)) {
+                if (!controller->isInsideSetsquare(coords.x, coords.y, 0)) {
                     return false;
                 } else {
                     sequenceStart(event);
@@ -292,9 +285,7 @@ void SetsquareInputHandler::sequenceStart(InputEvent const& event) {
         this->secLastAbs = {event.absoluteX, event.absoluteY};
         this->secLastRel = {event.relativeX, event.relativeY};
     }
-    const auto view = inputContext->getView();
-    const auto setsquareView = view->getSetsquareView();
-    const auto page = setsquareView->getView()->getPage();
+    const auto page = controller->getPage();
 
     const auto l = page->getSelectedLayer();
     this->lines.clear();
@@ -322,16 +313,13 @@ void SetsquareInputHandler::scrollMotion(InputEvent const& event) {
             return offset;
         }
     }();
-    const auto view = inputContext->getView();
-    const auto setsquareView = view->getSetsquareView();
-    const auto zoom = view->getZoom();
-    auto p = utl::Point(setsquareView->getTranslationX(), setsquareView->getTranslationY());
+    const auto zoom = xournal->getZoom();
+    auto p = utl::Point(translationX, translationY);
     p.x += offset.x / zoom;
     p.y += offset.y / zoom;
     const auto pos = Point(p.x, p.y);
     double minDist = SNAPPING_DISTANCE_TOLERANCE;
-    // Point snappedPoint{};
-    const auto angleSetsquare = setsquareView->getRotation();
+    const auto angleSetsquare = rotation;
     double diffAngle{NAN};
     for (const auto& l: lines) {
         auto first = l->getPoint(0);
@@ -342,15 +330,12 @@ void SetsquareInputHandler::scrollMotion(InputEvent const& event) {
         if (dist < minDist && std::abs(diff) <= SNAPPING_ROTATION_TOLERANCE) {
             minDist = dist;
             diffAngle = diff;
-            // snappedPoint = Snapping::snapToLine(pos, first, second, SNAPPING_DISTANCE_TOLERANCE);
         }
     }
     if (!std::isnan(diffAngle)) {
-        setsquareView->rotate(diffAngle, p.x, p.y);
-        //    setsquareView->move(snappedPoint.x - p.x, snappedPoint.y - p.y);
+        controller->rotate(diffAngle, p.x, p.y);
     }
-    setsquareView->move(offset.x / zoom, offset.y / zoom);
-    view->repaintSetsquare();
+    controller->move(offset.x / zoom, offset.y / zoom);
 }
 
 void SetsquareInputHandler::zoomStart() {
@@ -377,7 +362,7 @@ void SetsquareInputHandler::zoomMotion(InputEvent const& event) {
 
     const double dist = std::max(this->priLastAbs.distance(this->secLastAbs), ZOOM_DISTANCE_MIN);
 
-    const auto zoomTriggerThreshold = inputContext->getSettings()->getTouchZoomStartThreshold();
+    const auto zoomTriggerThreshold = xournal->getControl()->getSettings()->getTouchZoomStartThreshold();
     const double zoomChangePercentage = std::abs(dist - startZoomDistance) / startZoomDistance * 100;
 
     // Has the touch points moved far enough to trigger a zoom?
@@ -389,26 +374,22 @@ void SetsquareInputHandler::zoomMotion(InputEvent const& event) {
     const auto shift = this->secLastAbs - priLastAbs;
     const auto angle = atan2(shift.y, shift.x);
 
-    const auto view = inputContext->getView();
-    const auto setsquareView = view->getSetsquareView();
     const auto offset = center - lastZoomScrollCenter;
-    const auto zoom = view->getZoom();
-    setsquareView->move(offset.x / zoom, offset.y / zoom);
+    const auto zoom = xournal->getZoom();
+    controller->move(offset.x / zoom, offset.y / zoom);
     const auto angleIncrease = angle - lastAngle;
     const auto centerRel = (this->priLastRel + this->secLastRel) / 2.0;
     const auto coords = getCoords(centerRel.x, centerRel.y);
     const auto secondary = getCoords(this->secLastRel.x, this->secLastRel.y);
-    if (setsquareView->isInsideSetsquare(secondary.x, secondary.y, 0.0)) {
-        setsquareView->rotate(angleIncrease, coords.x, coords.y);
-    }  // allow moving without accidental rotation (snapping)0.01
+    if (controller->isInsideSetsquare(secondary.x, secondary.y, 0.0)) {
+        controller->rotate(angleIncrease, coords.x, coords.y);
+    }  // allow moving without accidental rotation
     const auto scaleFactor = dist / lastDist;
-    const auto height = setsquareView->getHeight() * scaleFactor;
+    const auto h = height * scaleFactor;
 
-    if (!canBlockZoom && height <= MAX_HEIGHT && height >= MIN_HEIGHT) {
-        setsquareView->scale(scaleFactor, coords.x, coords.y);
+    if (!canBlockZoom && h <= getMaxHeight() && h >= getMinHeight()) {
+        controller->scale(scaleFactor, coords.x, coords.y);
     }
-    view->repaintSetsquare();
-
 
     this->lastZoomScrollCenter = center;
     this->lastAngle = angle;
@@ -416,12 +397,10 @@ void SetsquareInputHandler::zoomMotion(InputEvent const& event) {
 }
 
 auto SetsquareInputHandler::getCoords(double xCoord, double yCoord) -> utl::Point<double> {
-    const auto view = inputContext->getView();
-    const auto setsquareView = view->getSetsquareView();
-    const auto zoom = view->getZoom();
-    const auto page = setsquareView->getView();
-    const auto posX = xCoord - static_cast<double>(page->getX());
-    const auto posY = yCoord - static_cast<double>(page->getY());
+    const auto zoom = xournal->getZoom();
+    const auto view = controller->getView();
+    const auto posX = xCoord - static_cast<double>(view->getX());
+    const auto posY = yCoord - static_cast<double>(view->getY());
     return utl::Point<double>(posX / zoom, posY / zoom);
 }
 
@@ -432,3 +411,5 @@ auto SetsquareInputHandler::getCoords(InputEvent const& event) -> utl::Point<dou
 void SetsquareInputHandler::blockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = true; }
 
 void SetsquareInputHandler::unblockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = false; }
+auto SetsquareInputHandler::getMinHeight() const -> double { return MIN_HEIGHT; }
+auto SetsquareInputHandler::getMaxHeight() const -> double { return MAX_HEIGHT; }

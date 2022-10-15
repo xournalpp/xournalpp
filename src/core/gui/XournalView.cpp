@@ -10,36 +10,37 @@
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Page_Down
 #include <glib-object.h>     // for g_object_ref_sink
 
-#include "control/Control.h"                    // for Control
-#include "control/PdfCache.h"                   // for PdfCache
-#include "control/ScrollHandler.h"              // for ScrollHandler
-#include "control/ToolHandler.h"                // for ToolHandler
-#include "control/jobs/XournalScheduler.h"      // for XournalScheduler
-#include "control/settings/MetadataManager.h"   // for MetadataManager
-#include "control/settings/Settings.h"          // for Settings
-#include "control/tools/CursorSelectionType.h"  // for CURSOR_SELECTION_NONE
-#include "control/tools/EditSelection.h"        // for EditSelection
-#include "control/zoom/ZoomControl.h"           // for ZoomControl
-#include "enums/ActionGroup.enum.h"             // for GROUP_SETSQUARE
-#include "enums/ActionType.enum.h"              // for ACTION_NONE
-#include "gui/MainWindow.h"                     // for MainWindow
-#include "gui/PdfFloatingToolbox.h"             // for PdfFloatingToolbox
-#include "gui/inputdevices/HandRecognition.h"   // for HandRecognition
-#include "gui/inputdevices/InputContext.h"      // for InputContext
-#include "gui/toolbarMenubar/ColorToolItem.h"   // for ColorToolItem
-#include "gui/toolbarMenubar/ToolMenuHandler.h" // for ToolMenuHandler
-#include "gui/widgets/XournalWidget.h"          // for gtk_xournal_get_layout
-#include "model/Document.h"                     // for Document
-#include "model/Element.h"                      // for Element, ELEMENT_STROKE
-#include "model/PageRef.h"                      // for PageRef
-#include "model/Stroke.h"                       // for Stroke, StrokeTool::E...
-#include "model/XojPage.h"                      // for XojPage
-#include "undo/DeleteUndoAction.h"              // for DeleteUndoAction
-#include "undo/UndoRedoHandler.h"               // for UndoRedoHandler
-#include "util/Point.h"                         // for Point
-#include "util/Rectangle.h"                     // for Rectangle
-#include "util/Util.h"                          // for npos
-#include "view/SetsquareView.h"                 // for SetsquareView
+#include "control/Control.h"                     // for Control
+#include "control/PdfCache.h"                    // for PdfCache
+#include "control/ScrollHandler.h"               // for ScrollHandler
+#include "control/SetsquareController.h"         // for SetsquareController
+#include "control/ToolHandler.h"                 // for ToolHandler
+#include "control/jobs/XournalScheduler.h"       // for XournalScheduler
+#include "control/settings/MetadataManager.h"    // for MetadataManager
+#include "control/settings/Settings.h"           // for Settings
+#include "control/tools/CursorSelectionType.h"   // for CURSOR_SELECTION_NONE
+#include "control/tools/EditSelection.h"         // for EditSelection
+#include "control/zoom/ZoomControl.h"            // for ZoomControl
+#include "enums/ActionGroup.enum.h"              // for GROUP_SETSQUARE
+#include "enums/ActionType.enum.h"               // for ACTION_NONE
+#include "gui/MainWindow.h"                      // for MainWindow
+#include "gui/PdfFloatingToolbox.h"              // for PdfFloatingToolbox
+#include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
+#include "gui/inputdevices/InputContext.h"       // for InputContext
+#include "gui/toolbarMenubar/ColorToolItem.h"    // for ColorToolItem
+#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
+#include "gui/widgets/XournalWidget.h"           // for gtk_xournal_get_layout
+#include "model/Document.h"                      // for Document
+#include "model/Element.h"                       // for Element, ELEMENT_STROKE
+#include "model/PageRef.h"                       // for PageRef
+#include "model/Stroke.h"                        // for Stroke, StrokeTool::E...
+#include "model/XojPage.h"                       // for XojPage
+#include "undo/DeleteUndoAction.h"               // for DeleteUndoAction
+#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
+#include "util/Point.h"                          // for Point
+#include "util/Rectangle.h"                      // for Rectangle
+#include "util/Util.h"                           // for npos
+#include "view/SetsquareView.h"
 
 #include "Layout.h"           // for Layout
 #include "PageView.h"         // for XojPageView
@@ -92,7 +93,9 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 XournalView::~XournalView() {
     g_source_remove(this->cleanupTimeout);
 
-    for (auto&& page: viewPages) { delete page; }
+    for (auto&& page: viewPages) {
+        delete page;
+    }
     viewPages.clear();
 
     delete this->repaintHandler;
@@ -290,18 +293,14 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     // Switch color on number key
-    auto &colors = control->getWindow()->getToolMenuHandler()->getColorToolItems();
-    if ((event->keyval >= GDK_KEY_0)
-        && (event->keyval < GDK_KEY_0 + std::min((std::size_t)10,
-                                                 colors.size()))) {
-            std::size_t index = std::min(colors.size() - 1,
-                                         (std::size_t)(9 + (event->keyval - GDK_KEY_0)) % 10);
-            auto colorToolItem = colors.at(index);
-            if (colorToolItem->isEnabled()) {
-                gtk_toggle_tool_button_set_active(
-                    GTK_TOGGLE_TOOL_BUTTON(colorToolItem->getItem()), true);
-            }
-            return true;
+    auto& colors = control->getWindow()->getToolMenuHandler()->getColorToolItems();
+    if ((event->keyval >= GDK_KEY_0) && (event->keyval < GDK_KEY_0 + std::min((std::size_t)10, colors.size()))) {
+        std::size_t index = std::min(colors.size() - 1, (std::size_t)(9 + (event->keyval - GDK_KEY_0)) % 10);
+        auto colorToolItem = colors.at(index);
+        if (colorToolItem->isEnabled()) {
+            gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(colorToolItem->getItem()), true);
+        }
+        return true;
     }
     return false;
 }
@@ -697,14 +696,9 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-void XournalView::setSetsquareView(std::unique_ptr<SetsquareView> setsquareView) {
-    GTK_XOURNAL(this->widget)->setsquareView = std::move(setsquareView);
-}
+auto XournalView::getSetsquareHandler() -> SetsquareInputHandler* { return setsquareHandler; }
 
-void XournalView::resetSetsquareView() {
-    GTK_XOURNAL(this->widget)->setsquareView.reset();
-    this->control->fireActionSelected(GROUP_SETSQUARE, ACTION_NONE);
-}
+auto XournalView::getSetsquareController() -> SetsquareController* { return setsquareController; }
 
 auto XournalView::getSetsquareView() const -> SetsquareView* {
     g_return_val_if_fail(this->widget != nullptr, nullptr);
@@ -713,12 +707,14 @@ auto XournalView::getSetsquareView() const -> SetsquareView* {
     return GTK_XOURNAL(this->widget)->setsquareView.get();
 }
 
-void XournalView::repaintSetsquare(bool evenWithoutSetsquare) {
-    if (getSetsquareView() || evenWithoutSetsquare) {
-        // repaint always the whole widget
-        gtk_widget_queue_draw(this->widget);
-    }
-    return;
+void XournalView::resetSetsquare() {
+    delete setsquareController;
+    setsquareController = nullptr;
+    delete setsquareHandler;
+    setsquareHandler = nullptr;
+    delete setsquare;
+    setsquare = nullptr;
+    this->control->fireActionSelected(GROUP_SETSQUARE, ACTION_NONE);
 }
 
 void XournalView::layoutPages() {
@@ -772,7 +768,9 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     clearSelection();
 
-    for (auto&& page: viewPages) { delete page; }
+    for (auto&& page: viewPages) {
+        delete page;
+    }
     viewPages.clear();
 
     this->cache.reset();
@@ -785,7 +783,9 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     size_t pagecount = doc->getPageCount();
     viewPages.reserve(pagecount);
-    for (size_t i = 0; i < pagecount; i++) { viewPages.push_back(new XojPageView(this, doc->getPage(i))); }
+    for (size_t i = 0; i < pagecount; i++) {
+        viewPages.push_back(new XojPageView(this, doc->getPage(i)));
+    }
 
     doc->unlock();
 
