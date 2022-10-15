@@ -16,6 +16,8 @@
 #include "gui/PageView.h"
 #include "util/Point.h"
 
+#include "GeometryToolController.h"
+
 class Setsquare;
 class Stroke;
 
@@ -31,54 +33,13 @@ enum Leg { HYPOTENUSE, LEFT_LEG, RIGHT_LEG };
  * the midpoint to the longest side of the setsquare.
  */
 
-class SetsquareController {
+class SetsquareController: public GeometryToolController {
 public:
     SetsquareController(XojPageView* view, Setsquare* s);
     ~SetsquareController();
 
 public:
-    /**
-     * @brief moves the setsquare in x- and y-direction
-     * @param x the translation in x-direction (in document coordinates)
-     * @param y the translation in y-direction (in document coordinates)
-     */
-    void move(double x, double y);
-
-    /**
-     * @brief rotates the setsquare around its rotation center
-     * @param da the rotation angle
-     * @param cx the x-coordinate of the rotation center (in document coordinates)
-     * @param cy the y-coordinate of the rotation center (in document coordinates)
-     */
-    void rotate(double da, double cx, double cy);
-
-    /**
-     * @brief resizes the setsquare by the factor f with respect to a given scaling center
-     * @param f the scaling factor
-     * @param cx the x-coordinate of the scaling center (in document coordinates)
-     * @param cy the y-coordinate of the scaling center (in document coordiantes)
-     */
-    void scale(double f, double cx, double cy);
-
-    /**
-     * @brief adds the stroke to the layer and rerenders the stroke area
-     */
-    void addStrokeToLayer();
-
-    /**
-     * @brief initializes the stroke by using the properties from the tool handler
-     */
-    void initializeStroke();
-
-    /**
-     * @brief the page view of the page with respect to which the setsquare is initialized
-     */
-    XojPageView* getView() const;
-
-    /**
-     * @brief the page with respect to which the setsquare is initialized
-     */
-    PageRef getPage() const;
+    std::string getType() const override;
 
     /**
      * @brief returns the position of a point relative to a coordinate system, in which the given setsquare leg lies on
@@ -96,7 +57,7 @@ public:
      * @param y the y-coordinate of the given point (in document coordinates)
      * @param border the size of the border (if negative, the setsquare is shrinked via the border)
      */
-    bool isInsideSetsquare(double x, double y, double border = 0.0) const;
+    bool isInsideGeometryTool(double x, double y, double border = 0.0) const override;
 
     /**
      * @brief the point (in document coordinates) for a given position on the longest side of the setsquare
@@ -165,17 +126,4 @@ private:
      * @brief the current angle at which the temporary radius is drawn
      */
     double strokeAngle = NAN;
-
-public:
-    XojPageView* view;
-
-    /**
-     * @brief the underlying setsquare
-     */
-    Setsquare* s;
-
-    /**
-     * @brief The stroke drawn
-     */
-    Stroke* stroke = nullptr;
 };

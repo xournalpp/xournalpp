@@ -21,13 +21,13 @@
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkWidget, GtkAllocation
 
-#include "control/SetsquareController.h"             // for SetsquareController
-#include "control/zoom/ZoomListener.h"               // for ZoomListener
-#include "gui/inputdevices/SetsquareInputHandler.h"  // for SetsquareInputHandler
-#include "model/DocumentChangeType.h"                // for DocumentChangeType
-#include "model/DocumentListener.h"                  // for DocumentListener
-#include "model/Setsquare.h"                         // for Setsquare
-#include "util/Util.h"                               // for npos
+#include "control/GeometryToolController.h"        // for GeometryToolController
+#include "control/zoom/ZoomListener.h"             // for ZoomListener
+#include "gui/inputdevices/GeometryToolHandler.h"  // for GeometryToolHandler
+#include "model/DocumentChangeType.h"              // for DocumentChangeType
+#include "model/DocumentListener.h"                // for DocumentListener
+#include "model/GeometryTool.h"                    // for GeometryTool
+#include "util/Util.h"                             // for npos
 
 class Control;
 class XournalppCursor;
@@ -94,10 +94,10 @@ public:
     void deleteSelection(EditSelection* sel = nullptr);
     void repaintSelection(bool evenWithoutSelection = false);
 
-    SetsquareInputHandler* getSetsquareHandler();
-    SetsquareController* getSetsquareController();
-    void makeSetsquare();
-    void resetSetsquare();
+    GeometryToolHandler* getGeometryToolHandler();
+    GeometryToolController* getGeometryToolController();
+    void makeGeometryTool(std::string tool);
+    void resetGeometryTool();
 
     TextEditor* getTextEditor() const;
     std::vector<XojPageView*> const& getViewPages() const;
@@ -186,11 +186,11 @@ private:
     RepaintHandler* repaintHandler = nullptr;
 
     /**
-     * Setsquare, if active
+     * Geometry tool, if active
      */
-    Setsquare* setsquare = nullptr;
-    SetsquareController* setsquareController = nullptr;
-    SetsquareInputHandler* setsquareHandler = nullptr;
+    GeometryTool* geometryTool = nullptr;
+    GeometryToolController* geometryToolController = nullptr;
+    GeometryToolHandler* geometryToolHandler = nullptr;
 
     /**
      * Memory cleanup timeout

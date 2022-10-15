@@ -96,8 +96,8 @@ auto ActionGroup_fromString(const string& value) -> ActionGroup {
         return GROUP_HIGHLIGHT_POSITION;
     }
 
-    if (value == "GROUP_SETSQUARE") {
-        return GROUP_SETSQUARE;
+    if (value == "GROUP_GEOMETRY_TOOL") {
+        return GROUP_GEOMETRY_TOOL;
     }
 
     if (value == "GROUP_FILL") {
@@ -210,8 +210,8 @@ auto ActionGroup_toString(ActionGroup value) -> string {
         return "GROUP_HIGHLIGHT_POSITION";
     }
 
-    if (value == GROUP_SETSQUARE) {
-        return "GROUP_SETSQUARE";
+    if (value == GROUP_GEOMETRY_TOOL) {
+        return "GROUP_GEOMETRY_TOOL";
     }
 
     if (value == GROUP_FILL) {

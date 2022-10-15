@@ -3,82 +3,18 @@
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
-#include "gui/XournalppCursor.h"
+#include "model/GeometryTool.h"
 #include "model/Setsquare.h"
 #include "model/Stroke.h"
 #include "model/XojPage.h"
 #include "undo/InsertUndoAction.h"  // for InsertUndoAction
 
 using xoj::util::Rectangle;
-SetsquareController::SetsquareController(XojPageView* view, Setsquare* s): view(view), s(s) {}
+SetsquareController::SetsquareController(XojPageView* view, Setsquare* s): GeometryToolController(view, s) {}
 
 SetsquareController::~SetsquareController() = default;
 
-void SetsquareController::move(double x, double y) {
-    s->setTranslationX(s->getTranslationX() + x);
-    s->setTranslationY(s->getTranslationY() + y);
-    s->notify();
-}
-
-void SetsquareController::rotate(double da, double cx, double cy) {
-    s->setRotation(s->getRotation() + da);
-    const auto tx = s->getTranslationX();
-    const auto ty = s->getTranslationY();
-    const auto offsetX = tx - cx;
-    const auto offsetY = ty - cy;
-    const auto mx = offsetX * cos(da) - offsetY * sin(da);
-    const auto my = offsetX * sin(da) + offsetY * cos(da);
-    s->setTranslationX(cx + mx);
-    s->setTranslationY(cy + my);
-    s->notify();
-}
-
-void SetsquareController::scale(double f, double cx, double cy) {
-    s->setHeight(s->getHeight() * f);
-    const auto tx = s->getTranslationX();
-    const auto ty = s->getTranslationY();
-    const auto offsetX = tx - cx;
-    const auto offsetY = ty - cy;
-    const auto mx = offsetX * f;
-    const auto my = offsetY * f;
-    s->setTranslationX(cx + mx);
-    s->setTranslationY(cy + my);
-    s->notify();
-}
-
-
-void SetsquareController::addStrokeToLayer() {
-    const auto xournal = view->getXournal();
-    const auto control = xournal->getControl();
-    const auto page = view->getPage();
-    control->getLayerController()->ensureLayerExists(page);
-    const auto layer = page->getSelectedLayer();
-
-    const auto undo = control->getUndoRedoHandler();
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
-
-    layer->addElement(stroke);
-
-    const Rectangle<double> rect{stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()};
-    view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
-    stroke = nullptr;
-    s->setStroke(nullptr);
-    xournal->getCursor()->updateCursor();
-}
-
-void SetsquareController::initializeStroke() {
-    const auto h = view->getXournal()->getControl()->getToolHandler();
-    stroke = new Stroke();
-    s->setStroke(stroke);
-    stroke->setWidth(h->getThickness());
-    stroke->setColor(h->getColor());
-    stroke->setFill(h->getFill());
-    stroke->setLineStyle(h->getLineStyle());
-}
-
-auto SetsquareController::getPage() const -> PageRef { return view->getPage(); }
-
-auto SetsquareController::getView() const -> XojPageView* { return view; }
+auto SetsquareController::getType() const -> std::string { return "setsquare"; }
 
 auto SetsquareController::posRelToSide(Leg leg, double x, double y) const -> utl::Point<double> {
     cairo_matrix_t matrix{};
@@ -97,7 +33,7 @@ auto SetsquareController::posRelToSide(Leg leg, double x, double y) const -> utl
     }
 }
 
-auto SetsquareController::isInsideSetsquare(double x, double y, double border) const -> bool {
+auto SetsquareController::isInsideGeometryTool(double x, double y, double border) const -> bool {
     return posRelToSide(HYPOTENUSE, x, y).y < border && posRelToSide(LEFT_LEG, x, y).y < border &&
            posRelToSide(RIGHT_LEG, x, y).y < border;
 }

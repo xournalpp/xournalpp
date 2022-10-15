@@ -124,8 +124,8 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     this->modifierState = event.state;
 
     // separate events to appropriate handlers
-    // handle setsquare
-    if (auto handler = view->getSetsquareHandler(); handler && handler->handle(event)) {
+    // handle geometry tool
+    if (auto handler = view->getGeometryToolHandler(); handler && handler->handle(event)) {
         return true;
     }
 
@@ -192,7 +192,7 @@ void InputContext::focusWidget() {
 }
 
 void InputContext::blockDevice(InputContext::DeviceType deviceType) {
-    if (auto handler = view->getSetsquareHandler()) {
+    if (auto handler = view->getGeometryToolHandler()) {
         handler->blockDevice(deviceType);
     }
     switch (deviceType) {
@@ -210,7 +210,7 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType) {
 }
 
 void InputContext::unblockDevice(InputContext::DeviceType deviceType) {
-    if (auto handler = view->getSetsquareHandler()) {
+    if (auto handler = view->getGeometryToolHandler()) {
         handler->unblockDevice(deviceType);
     }
     switch (deviceType) {
