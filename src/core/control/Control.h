@@ -146,7 +146,7 @@ public:
     void toolFillChanged() override;
     void toolLineStyleChanged() override;
 
-    void handleSelectToolAction(ToolType type);
+    void selectTool(ToolType type);
     void selectDefaultTool();
 
     void updatePageNumbers(size_t page, size_t pdfPage);
@@ -209,7 +209,6 @@ public:
     void updateDeletePageButton();
 
     // selection handling
-
     void clearSelection();
 
     void setCopyPasteEnabled(bool enabled);

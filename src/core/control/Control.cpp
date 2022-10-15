@@ -16,6 +16,7 @@
 #include "control/ScrollHandler.h"                               // for Scro...
 #include "control/Tool.h"                                        // for Tool
 #include "control/ToolHandler.h"                                 // for Tool...
+#include "control/ToolEnums.h"                                   // for Tool...
 #include "control/jobs/AutosaveJob.h"                            // for Auto...
 #include "control/jobs/BaseExportJob.h"                          // for Base...
 #include "control/jobs/CustomExportJob.h"                        // for Cust...
@@ -295,7 +296,7 @@ void Control::saveSettings() {
 
 void Control::initWindow(MainWindow* win) {
     win->setRecentMenu(recent->getMenu());
-    handleSelectToolAction(toolHandler->getToolType());
+    selectTool(toolHandler->getToolType());
     this->win = win;
     this->sidebar = new Sidebar(win, this);
 
@@ -542,13 +543,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_TOOL_PEN:
             clearSelection();
             if (enabled) {
-                handleSelectToolAction(TOOL_PEN);
+                selectTool(TOOL_PEN);
             }
             break;
         case ACTION_TOOL_ERASER:
             clearSelection();
             if (enabled) {
-                handleSelectToolAction(TOOL_ERASER);
+                selectTool(TOOL_ERASER);
             }
             break;
 
@@ -571,63 +572,63 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_TOOL_HIGHLIGHTER:
             clearSelection();
             if (enabled) {
-                handleSelectToolAction(TOOL_HIGHLIGHTER);
+                selectTool(TOOL_HIGHLIGHTER);
             }
             break;
         case ACTION_TOOL_TEXT:
             clearSelection();
             if (enabled) {
-                handleSelectToolAction(TOOL_TEXT);
+                selectTool(TOOL_TEXT);
             }
             break;
         case ACTION_TOOL_IMAGE:
             clearSelection();
             if (enabled) {
-                handleSelectToolAction(TOOL_IMAGE);
+                selectTool(TOOL_IMAGE);
             }
             break;
         case ACTION_TOOL_SELECT_RECT:
             if (enabled) {
-                handleSelectToolAction(TOOL_SELECT_RECT);
+                selectTool(TOOL_SELECT_RECT);
             }
             break;
         case ACTION_TOOL_SELECT_REGION:
             if (enabled) {
-                handleSelectToolAction(TOOL_SELECT_REGION);
+                selectTool(TOOL_SELECT_REGION);
             }
             break;
         case ACTION_TOOL_SELECT_OBJECT:
             if (enabled) {
-                handleSelectToolAction(TOOL_SELECT_OBJECT);
+                selectTool(TOOL_SELECT_OBJECT);
             }
             break;
         case ACTION_TOOL_PLAY_OBJECT:
             if (enabled) {
-                handleSelectToolAction(TOOL_PLAY_OBJECT);
+                selectTool(TOOL_PLAY_OBJECT);
             }
             break;
         case ACTION_TOOL_SELECT_PDF_TEXT_LINEAR:
             clearSelection();
             if (enabled) {
-                handleSelectToolAction(TOOL_SELECT_PDF_TEXT_LINEAR);
+                selectTool(TOOL_SELECT_PDF_TEXT_LINEAR);
             }
             break;
         case ACTION_TOOL_SELECT_PDF_TEXT_RECT:
             clearSelection();
             if (enabled) {
-                handleSelectToolAction(TOOL_SELECT_PDF_TEXT_RECT);
+                selectTool(TOOL_SELECT_PDF_TEXT_RECT);
             }
             break;
         case ACTION_TOOL_VERTICAL_SPACE:
             clearSelection();
             if (enabled) {
-                handleSelectToolAction(TOOL_VERTICAL_SPACE);
+                selectTool(TOOL_VERTICAL_SPACE);
             }
             break;
 
         case ACTION_TOOL_HAND:
             if (enabled) {
-                handleSelectToolAction(TOOL_HAND);
+                selectTool(TOOL_HAND);
             }
             break;
         case ACTION_SETSQUARE:
@@ -649,7 +650,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_TOOL_FLOATING_TOOLBOX:
             if (enabled) {
-                handleSelectToolAction(TOOL_FLOATING_TOOLBOX);
+                selectTool(TOOL_FLOATING_TOOLBOX);
             }
             break;
         case ACTION_TOOL_DRAW_RECT:
@@ -1779,22 +1780,20 @@ void Control::undoRedoPageChanged(PageRef page) {
     }
 }
 
-void Control::handleSelectToolAction(ToolType type) {
+void Control::selectTool(ToolType type) {
     // keep text-selection when switching from text to seletion tool
     auto oldTool = getToolHandler()->getActiveTool();
     if (oldTool && win
-                && (type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_OBJECT)
+                && isSelectToolType(type)
                 && oldTool->getToolType() == ToolType::TOOL_TEXT
                 && !(this->win->getXournal()->getTextEditor()->getText()->getText().empty())) {
         auto xournal = this->win->getXournal();
-        Text* textobj = std::move(xournal->getTextEditor()->getText());
+        Text* textobj = xournal->getTextEditor()->getText();
         clearSelectionEndText();
 
         auto pageNr = getCurrentPageNo();
         XojPageView* view = xournal->getViewFor(pageNr);
-        if (view == nullptr) {
-            return;
-        }
+        g_assert(view != nullptr);
         PageRef page = this->doc->getPage(pageNr);
         auto selection = new EditSelection(this->undoRedo, textobj, view, page);
     
@@ -1814,7 +1813,7 @@ void Control::selectDefaultTool() {
     cfg->applyConfigToToolbarTool(toolHandler);
 
     if (toolHandler->getToolType() != TOOL_NONE) {
-        handleSelectToolAction(toolHandler->getToolType());
+        selectTool(toolHandler->getToolType());
     }
 }
 
