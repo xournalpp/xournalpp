@@ -408,7 +408,7 @@ void ToolMenuHandler::initToolItems() {
                      _("Rotation Snapping"));
     addCustomItemTgl("GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false, "snapping-grid",
                      _("Grid Snapping"));
-    addCustomItemTgl("SETSQUARE", ACTION_SETSQUARE, GROUP_SETSQUARE, false, "setsquare", _("Setsquare"));
+    addCustomItemTgl("SETSQUARE", ACTION_SETSQUARE, GROUP_GEOMETRY_TOOL, false, "setsquare", _("Setsquare"));
 
     /*
      * Menu View

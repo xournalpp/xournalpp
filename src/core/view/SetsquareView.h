@@ -19,6 +19,8 @@
 #include "util/DispatchPool.h"
 #include "view/overlays/BaseStrokeToolView.h"
 
+#include "GeometryToolView.h"
+
 class Stroke;
 class XojPageView;
 class OverlayBase;
@@ -40,75 +42,18 @@ class OverlayBase;
 namespace xoj::view {
 class Repaintable;
 
-constexpr double rad(double n) { return n * M_PI / 180.; }
-constexpr double rad(int n) { return rad(static_cast<double>(n)); }
-constexpr double deg(double a) { return a * 180.0 / M_PI; }
-inline double cathete(double h, double o) { return std::sqrt(std::pow(h, 2) - std::pow(o, 2)); }
-
-class SetsquareView: public ToolView, public xoj::util::Listener<SetsquareView> {
+class SetsquareView: public GeometryToolView {
 
 public:
     SetsquareView(const Setsquare* s, Repaintable* parent);
     ~SetsquareView() override;
 
-    /**
-     * Listener interface
-     */
-    static constexpr struct FlagDirtyRegionRequest {
-    } FLAG_DIRTY_REGION = {};
-    void on(FlagDirtyRegionRequest, const Range& rg);
-
-    static constexpr struct UpdateValuesRequest {
-    } UPDATE_VALUES = {};
-    void on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m);
-
-    static constexpr struct FinalizationRequest {
-    } FINALIZATION_REQUEST = {};
-    /**
-     * @brief Called before the setsquare's destruction
-     * @param rg The bounding box of the entire setsquare
-     */
-    void deleteOn(FinalizationRequest, const Range& rg);
-
-    /**
-     * @brief draws the setsquare and temporary stroke to a cairo context
-     * @param cr the cairo context
-     */
-    void draw(cairo_t* cr) const override;
-
-    bool isViewOf(const OverlayBase* overlay) const override;
+    void on(FlagDirtyRegionRequest, const Range& rg) override;
+    void on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m) override;
+    void deleteOn(FinalizationRequest, const Range& rg) override;
 
 private:
-    /**
-     * @brief draws the setsquare to a cairo context
-     * @param cr the cairo context drawn to
-     */
-    void drawSetsquare(cairo_t* cr) const;
-
-    /**
-     * @brief draws the temporary stroke to a cairo context
-     * @param cr the cairo context drawn to
-     */
-    void drawTemporaryStroke(cairo_t* cr) const;
-
-    /**
-     * @brief the underlying setsquare
-     */
-    const Setsquare* s;
-
-    /**
-     * @brief The stroke drawn aligned to the longest side of the setsquare or ending at the midpoint of the longest
-     * side of the setsquare
-     */
-    Stroke* stroke = nullptr;
-
-    /**
-     * @brief renders text centered and possibly rotated at the current position on a cairo context
-     * @param cr the cairo context
-     * @param text the text string
-     * @param angle the rotation angle
-     */
-    void showTextCenteredAndRotated(cairo_t* cr, std::string text, double angle) const;
+    void drawGeometryTool(cairo_t* cr) const override;
 
     double height = Setsquare::INITIAL_HEIGHT;
     double rotation = 0.;

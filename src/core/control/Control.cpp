@@ -345,7 +345,7 @@ void Control::initWindow(MainWindow* win) {
 
     fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
     fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
-    fireActionSelected(GROUP_SETSQUARE, ACTION_NONE);
+    fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
 }
 
 auto Control::autosaveCallback(Control* control) -> bool {
@@ -647,12 +647,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             }
             break;
         case ACTION_SETSQUARE:
-            if (auto xournal = this->win->getXournal(); !xournal->getSetsquareController()) {
-                xournal->resetSetsquare();
-                xournal->makeSetsquare();
+            if (auto xournal = this->win->getXournal();
+                !xournal->getGeometryToolController() ||
+                xournal->getGeometryToolController()->getType() != "setsquare") {
+                xournal->resetGeometryTool();
+                xournal->makeGeometryTool("setsquare");
                 xournal->getViewFor(getCurrentPageNo())->rerenderPage();
             } else {
-                xournal->resetSetsquare();
+                xournal->resetGeometryTool();
                 xournal->getViewFor(getCurrentPageNo())->rerenderPage();
             }
             break;
@@ -1357,11 +1359,11 @@ void Control::updateDeletePageButton() {
 void Control::deletePage() {
     clearSelectionEndText();
 
-    // if the current page contains the Setsquare, reset it
+    // if the current page contains the geometry tool, reset it
     size_t pNr = getCurrentPageNo();
-    auto setsquareController = win->getXournal()->getSetsquareController();
-    if (setsquareController && doc->indexOf(setsquareController->getPage()) == pNr) {
-        win->getXournal()->resetSetsquare();
+    auto geometryToolController = win->getXournal()->getGeometryToolController();
+    if (geometryToolController && doc->indexOf(geometryToolController->getPage()) == pNr) {
+        win->getXournal()->resetGeometryTool();
     }
     // don't allow delete pages if we have less than 2 pages,
     // so we can be (more or less) sure there is at least one page.
@@ -2779,7 +2781,7 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
     if (allowDestroy && discard) {
         this->closeDocument();
     }
-    win->getXournal()->resetSetsquare();
+    win->getXournal()->resetGeometryTool();
     return true;
 }
 

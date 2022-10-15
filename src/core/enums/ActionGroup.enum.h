@@ -56,7 +56,7 @@ enum ActionGroup {
 
     GROUP_HIGHLIGHT_POSITION,
 
-    GROUP_SETSQUARE,
+    GROUP_GEOMETRY_TOOL,
 
     GROUP_FILL,
 

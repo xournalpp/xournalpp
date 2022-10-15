@@ -36,7 +36,7 @@ constexpr int OFFSET_FROM_SEMICIRCLE = 2.;
 constexpr double ZERO_MARK_TICK = .5;
 constexpr int SKIPPED_HMARKS = 8;
 
-SetsquareView::SetsquareView(const Setsquare* s, Repaintable* parent): ToolView(parent), s(s) {
+SetsquareView::SetsquareView(const Setsquare* s, Repaintable* parent): GeometryToolView(s, parent) {
     this->registerToPool(s->getViewPool());
 }
 
@@ -69,39 +69,7 @@ void SetsquareView::deleteOn(SetsquareView::FinalizationRequest, const Range& rg
     this->parent->drawAndDeleteToolView(this, rg);
 }
 
-void SetsquareView::draw(cairo_t* cr) const {
-    cairo_save(cr);
-    this->drawSetsquare(cr);
-    this->drawTemporaryStroke(cr);
-    cairo_restore(cr);
-}
-
-bool SetsquareView::isViewOf(const OverlayBase* overlay) const { return overlay == this->s; }
-
-void SetsquareView::drawTemporaryStroke(cairo_t* cr) const {
-    if (s->getStroke()) {
-        auto context = xoj::view::Context::createDefault(cr);
-        xoj::view::StrokeView strokeView(s->getStroke());
-        strokeView.draw(context);
-    }
-}
-
-void SetsquareView::showTextCenteredAndRotated(cairo_t* cr, std::string text, double angle) const {
-    cairo_save(cr);
-
-    cairo_text_extents_t te;
-    cairo_text_extents(cr, text.c_str(), &te);
-    const double dx = te.x_bearing + te.width / 2.0;
-    const double dy = te.y_bearing + te.height / 2.0;
-
-    cairo_rotate(cr, rad(angle));
-    cairo_rel_move_to(cr, -dx, -dy);
-    cairo_text_path(cr, text.c_str());
-
-    cairo_restore(cr);
-}
-
-void SetsquareView::drawSetsquare(cairo_t* cr) const {
+void SetsquareView::drawGeometryTool(cairo_t* cr) const {
     cairo_save(cr);
 
     cairo_transform(cr, &matrix);
