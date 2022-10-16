@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-11 03:11+0000\n"
-"PO-Revision-Date: 2022-10-11 03:14\n"
+"POT-Creation-Date: 2022-10-16 14:34+0000\n"
+"PO-Revision-Date: 2022-10-16 15:30\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 " Продолжить?"
 
-#: ../src/core/control/Control.cpp:2220
+#: ../src/core/control/Control.cpp:2221
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -157,7 +157,7 @@ msgstr "Переместить вперед"
 msgid "Bring to front"
 msgstr "На передний план"
 
-#: ../src/core/control/Control.cpp:2232 ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2233 ../src/core/control/Control.cpp:2704
 #: ../src/core/control/XournalMain.cpp:177
 msgid "Cancel"
 msgstr "Отмена"
@@ -365,7 +365,7 @@ msgstr "Удалить этот слой"
 msgid "Delete this page"
 msgstr "Удалить эту страницу"
 
-#: ../src/core/control/Control.cpp:2700
+#: ../src/core/control/Control.cpp:2701
 msgid "Discard"
 msgstr "Не сохранять"
 
@@ -373,7 +373,7 @@ msgstr "Не сохранять"
 msgid "Display advanced export options"
 msgstr "Показать расширенные параметры экспорта"
 
-#: ../src/core/control/Control.cpp:2145
+#: ../src/core/control/Control.cpp:2146
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -385,7 +385,7 @@ msgstr "Не открывайте автоматически сохранённ�
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Не перезаписывайте фоновый PDF! Это приведёт к ошибкам!"
 
-#: ../src/core/control/Control.cpp:2694
+#: ../src/core/control/Control.cpp:2695
 msgid "Document file was removed."
 msgstr "Файл документа был удален."
 
@@ -500,7 +500,7 @@ msgstr "Удалить черту"
 msgid "Eraser"
 msgstr "Ластик"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2441
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Ошибка аннотации PDF файла «{1}»\n"
@@ -510,7 +510,7 @@ msgstr "Ошибка аннотации PDF файла «{1}»\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Ошибка загрузки glade файла «{1}» (попробуйте загрузить «{2}»)"
 
-#: ../src/core/control/Control.cpp:2263
+#: ../src/core/control/Control.cpp:2264
 msgid "Error opening file \"{1}\""
 msgstr "Ошибка при открытии файла «{1}»"
 
@@ -830,7 +830,7 @@ msgstr "Слой {1}"
 msgid "Layerstack Preview"
 msgstr "Предпросмотр стопки слоёв"
 
-#: ../src/core/gui/PageView.cpp:864
+#: ../src/core/gui/PageView.cpp:866
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:97
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:28
 msgid "Loading..."
@@ -1054,7 +1054,7 @@ msgstr "Вернуть"
 msgid "Redo: "
 msgstr "Вернуть: "
 
-#: ../src/core/control/Control.cpp:2231
+#: ../src/core/control/Control.cpp:2232
 msgid "Remove PDF Background"
 msgstr "Удалить PDF фон"
 
@@ -1106,16 +1106,16 @@ msgstr "SVG графика"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Пример файла LaTeX успешно генерирован."
 
-#: ../src/core/control/Control.cpp:2695 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2696 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../src/core/control/Control.cpp:2695
+#: ../src/core/control/Control.cpp:2696
 msgid "Save As..."
 msgstr "Сохранить как..."
 
-#: ../src/core/control/Control.cpp:2529
+#: ../src/core/control/Control.cpp:2530
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Сохранить файл"
@@ -1194,7 +1194,7 @@ msgstr "Выделение лассо"
 msgid "Select Text from pdf"
 msgstr "Выбрать текст из PDF"
 
-#: ../src/core/control/Control.cpp:2230
+#: ../src/core/control/Control.cpp:2231
 msgid "Select another PDF"
 msgstr "Выбрать другой PDF"
 
@@ -1341,8 +1341,8 @@ msgstr "Текст"
 
 #: ../src/core/gui/SearchBar.cpp:75
 #, c-format
-msgid "Text %i times found on this page"
-msgstr "Текст найден %i раз(а) на этой странице"
+msgid "Text %zu times found on this page"
+msgstr ""
 
 #: ../src/core/undo/TextUndoAction.cpp:35
 msgid "Text changes"
@@ -1352,11 +1352,11 @@ msgstr "Изменения текста"
 msgid "Text found on this page"
 msgstr "Текст найден на этой странице"
 
-#: ../src/core/gui/SearchBar.cpp:131 ../src/core/gui/SearchBar.cpp:175
+#: ../src/core/gui/SearchBar.cpp:129
 msgid "Text found once on page {1}"
 msgstr "Текст найден один раз на странице {1}"
 
-#: ../src/core/gui/SearchBar.cpp:132 ../src/core/gui/SearchBar.cpp:176
+#: ../src/core/gui/SearchBar.cpp:130
 msgid "Text found {1} times on page {2}"
 msgstr "Текст найден {1} раз(а) на странице {2}"
 
@@ -1364,7 +1364,7 @@ msgstr "Текст найден {1} раз(а) на странице {2}"
 msgid "Text not found"
 msgstr "Текст не найден"
 
-#: ../src/core/gui/SearchBar.cpp:142 ../src/core/gui/SearchBar.cpp:186
+#: ../src/core/gui/SearchBar.cpp:135
 msgid "Text not found, searched on all pages"
 msgstr "Текст не найден, поиск на всех страницах"
 
@@ -1372,11 +1372,11 @@ msgstr "Текст не найден, поиск на всех страница�
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Конфигурация панели инструментов \"{1}\" предопределена. Создать копию для редактирования?"
 
-#: ../src/core/control/Control.cpp:2207
+#: ../src/core/control/Control.cpp:2208
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2210
+#: ../src/core/control/Control.cpp:2211
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
@@ -1385,7 +1385,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Проверка на перезапись фона не удалась с:\n"
 
-#: ../src/core/control/Control.cpp:2271
+#: ../src/core/control/Control.cpp:2272
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Загружаемый файл имеет более новую версию файлового формата, чем поддерживаемый этой версией Xournal++, так что он может загрузиться некорректно. Всё равно открыть?"
 
@@ -1429,7 +1429,7 @@ msgstr "Произошла ошибка при отображении справ
 msgid "Thick"
 msgstr "Жирный"
 
-#: ../src/core/control/Control.cpp:2694
+#: ../src/core/control/Control.cpp:2695
 msgid "This document is not saved yet."
 msgstr "Этот документ еще не сохранен."
 
@@ -1461,7 +1461,7 @@ msgstr "Попытка аварийного сохранения текущег�
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Не удается открыть глобальный файл шаблона из {1}. Существует ли он?"
 
-#: ../src/core/gui/PageView.cpp:425
+#: ../src/core/gui/PageView.cpp:427
 msgid "Unable to play audio recording {1}"
 msgstr "Не удалось воспроизвести аудиозапись {1}"
 
@@ -1514,7 +1514,7 @@ msgstr "Неизвестный тип обводки: \"{1}\", предполо�
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Неизвестный тип черты: \"{1}\", предполагается, что это перо"
 
-#: ../src/core/control/Control.cpp:2586
+#: ../src/core/control/Control.cpp:2587
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
 
@@ -1522,7 +1522,7 @@ msgstr "Несохранённый документ"
 msgid "Unsupported graphics format: "
 msgstr "Неподдерживаемый графический формат: "
 
-#: ../src/core/control/Control.cpp:2228
+#: ../src/core/control/Control.cpp:2229
 msgid "Use proposed PDF"
 msgstr "Использовать предложенный PDF"
 
@@ -1574,7 +1574,7 @@ msgstr "Xournal файлы"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "В последний раз программа Xournal++ аварийно завершилась. Хотите восстановить последний редактируемый файл?"
 
-#: ../src/core/control/Control.cpp:2535
+#: ../src/core/control/Control.cpp:2536
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ файлы"
@@ -1622,7 +1622,7 @@ msgstr "Отдалить"
 msgid "Zoom to 100%"
 msgstr "Увеличить до 100%"
 
-#: ../src/core/control/Control.cpp:2529
+#: ../src/core/control/Control.cpp:2530
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1635,7 +1635,7 @@ msgstr "_Отмена"
 msgid "_Open"
 msgstr "_Открыть"
 
-#: ../src/core/control/Control.cpp:2530
+#: ../src/core/control/Control.cpp:2531
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1678,7 +1678,7 @@ msgstr "элементы"
 msgid "eraser"
 msgstr "ластик"
 
-#: ../src/core/control/Control.cpp:2159
+#: ../src/core/control/Control.cpp:2160
 msgid "file: {1}"
 msgstr "файл: {1}"
 
