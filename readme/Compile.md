@@ -1,5 +1,11 @@
 # Compilation and Testing
 
+This file contains cross-platform instructions for compiling and developing locally. For instructions on how to create platform-specific packages, or instructions on preliminary steps for building Xournal++, please see your see these platform-specific instructions:
+
+- [LinuxBuild.md](./LinuxBuild.md)
+- [MacBuild.md](./MacBuild.md)
+- [WindowsBuild.md](./WindowsBuild.md)
+
 ## Get sources
 
 ```sh
@@ -24,7 +30,7 @@ commonly available; therefore the Cairo PDF Export does not include PDF Bookmark
 ## Run
 
 ```sh
-# Ensure you're in the './build' directory
+# Before running this command, ensure you're in the './build' directory
 ./xournalpp
 ```
 

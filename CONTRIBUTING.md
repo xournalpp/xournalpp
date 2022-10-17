@@ -12,7 +12,7 @@ the badge at the top of `./README.md`.
 
 Several of the main ways that you can contribute to the project include:
 
-* [Contributing website improvements](#contributing-website-improvements)
+* Updating the [website](https://github.com/xournalpp/xournalpp.github.io)
 * [Contributing translation improvements](#contributing-translation-improvements)
 * [Contributing code improvements](#contributing-code-improvements)
 
@@ -22,9 +22,9 @@ For making changes to the website, please go to [xournalpp/xournalpp.github.io](
 
 ## Contributing translation improvements
 
-We use via [Crowdin](https://crowdin.com) for contributing translation
-improvements. To do this, see [our project on Crowdin](https://crowdin.com/project/xournalpp). The Crowdin
-translations are merged back into the main code periodically, after which, they
+If you would like to contribute translations, you can submit improvements to
+[our project on Crowdin](https://crowdin.com/project/xournalpp). The Crowdin
+translations are merged back into the main code periodically, after which they
 become available available in the nightly builds.
 
 ## Contributing code improvements
@@ -48,15 +48,6 @@ The process for contributing code changes works as follows:
 3. Wait for maintainers to review the PR and address the relevant feedback.
 4. After receiving maintainer approval, the PR is merged after a short grace
    period.
-
-You may want to see some details on the [Branching Strategy](./readme/Releases.md#branching-strategy).
-
-When developing new features, create an issue or comment on an existing issue to let others know what you are doing.
-
-During development, create a fork and use the master as base. Create a pull request for each fix.
-
-_Do not_ create big pull requests. As long as you don't break anything features also can be
-merged, even if they are not 100% finished.
 
 ### Creating a fork
 
@@ -152,7 +143,7 @@ Mechanical issues:
     reduce the time others must spend to verify your code because it is correct
     by design.
 
-See more details on coding conventions [at the Wiki](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions).
+See [the corresponding Wiki article](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions) for more details on coding conventions.
 
 ### Sending your contributions for review
 

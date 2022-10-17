@@ -1,6 +1,6 @@
 # MacOS Build (.app)
 
-Do not install macports or homebrew. If you have installed it, you need to
+Do not install with MacPorts or Homebrew. If you have installed it, you need to
 create a new user, and use this for the whole process. jhbuild does not work,
 if there is such an environment installed.
 
@@ -130,7 +130,7 @@ Should you still want to build your own version please refer to the app-build ab
 
 ## Install dependencies
 
-Brew must be installed. See [https://brew.sh](https://brew.sh) for installation instructions
+Homebrew must be installed. See [https://brew.sh](https://brew.sh) for installation instructions
 
 ```sh
 brew install cmake pkg-config gtk+3 poppler librsvg adwaita-icon-theme libzip portaudio libsndfile

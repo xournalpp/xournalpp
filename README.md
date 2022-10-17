@@ -335,8 +335,6 @@ We support building on five operating systems:
 - [Linux](readme/LinuxBuild.md)
 - [MacOS](readme/MacBuild.md)
 - [Windows](readme/WindowsBuild.md)
-- [Android](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
-- [iOS](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#getting-started)
 
 ## Contributing
 
