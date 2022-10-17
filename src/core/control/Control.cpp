@@ -1793,8 +1793,10 @@ void Control::selectTool(ToolType type) {
         auto pageNr = getCurrentPageNo();
         XojPageView* view = xournal->getViewFor(pageNr);
         g_assert(view != nullptr);
+        this->doc->lock()
         PageRef page = this->doc->getPage(pageNr);
         auto selection = new EditSelection(this->undoRedo, textobj, view, page);
+        this->doc->unlock();
     
         xournal->setSelection(selection);
     }
