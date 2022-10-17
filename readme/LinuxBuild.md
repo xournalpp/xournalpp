@@ -71,31 +71,10 @@ sudo apt install doxygen graphviz
 ```
 
 Then, execute `doxygen` in the root directory of the repository. The documentation
-can be found in `doc/html` and `doc/latex`. Conveniently view it in a browser with
-`python3 -m http.server 8000` and visit the URL it shows.
+can be found in `doc/html` and `doc/latex`. Launch a server hosting the files with
+`python3 -m http.server 8000` and visit the URL that the command shows.
 
 ## Packaging and Installation
-
-### Packaging
-
-Please ensure that the `translations` target has been built before
-attempting to generate any package.
-```sh
-cmake --build . --target translations
-```
-
-After compilation, select which packages you want to generate (see the relevant
-sections below) and then run the `package` target. The generated packages will
-be located in `build/packages`. For example:
-
-```sh
-cmake .. -DCPACK_GENERATOR="TGZ;DEB"  # Generate .tar.gz and .deb packages
-cmake --build . --target package
-```
-
-By default, a standalone `.tar.gz` package will be generated. For
-distro-agnostic packaging platforms such as AppImages and Flatpaks, see the
-relevant sections below.
 
 #### `.deb` packages
 

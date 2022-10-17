@@ -2,39 +2,35 @@
 
 ![Screenshot](./main-win.png?raw=true "Xournal++ Screenshot on Win10")
 
-### Install Dependencies
+## Install Dependencies
 
-Xournall requires the following software to build:
+Xournal++ requires the following software to build:
 
 1. Install [MSYS2](https://www.msys2.org/) to a short path without spaces.
 2. Install [NSIS](https://nsis.sourceforge.io/Download) to the standard directory.
 3. Start Mingw-w64 64bit. (Always check if it says **MINGW64** - not 32bit and not MSYS2)
 
-This will open a console. The following steps happen in this console:
+This will open the MINGW64 console. All following steps in this document happen in this console, unless specified otherwise.
 
 ### Update MSYS2
 
-Do this multiple times, close the Terminal after each update
+Open a MSYS2 console (**not** the MINGW64 console -- close them if you have any open) and run the following command twice. Reopen the MSYS2 console each time you run the command.
 
 ```sh
 pacman -Syuu
 ```
 
-### Install Git
-
-```sh
-pacman -S git
-```
-
 ### Install Build tools
 
 ```sh
-pacman -S mingw-w64-x86_64-toolchain \
+pacman -S \
+  mingw-w64-x86_64-toolchain \
   mingw-w64-x86_64-cmake \
   mingw-w64-x86_64-ninja \
+  mingw-w64-x86_64-imagemagick \
   patch \
   make \
-  mingw-w64-x86_64-imagemagick
+  git
 ```
 
 If prompted, confirm or use all default values.
@@ -42,7 +38,8 @@ If prompted, confirm or use all default values.
 ### Install dependencies
 
 ```sh
-pacman -S mingw-w64-x86_64-poppler \
+pacman -S \
+  mingw-w64-x86_64-poppler \
   mingw-w64-x86_64-gtk3 \
   mingw-w64-x86_64-libsndfile \
   mingw-w64-x86_64-libzip \
