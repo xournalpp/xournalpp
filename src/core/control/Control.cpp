@@ -1781,6 +1781,27 @@ void Control::undoRedoPageChanged(PageRef page) {
 }
 
 void Control::selectTool(ToolType type) {
+    // keep text-selection when switching from text to seletion tool
+    auto oldTool = getToolHandler()->getActiveTool();
+    if (oldTool && win
+                && isSelectToolType(type)
+                && oldTool->getToolType() == ToolType::TOOL_TEXT
+                && !(this->win->getXournal()->getTextEditor()->getText()->getText().empty())) {
+        auto xournal = this->win->getXournal();
+        Text* textobj = xournal->getTextEditor()->getText();
+        clearSelectionEndText();
+
+        auto pageNr = getCurrentPageNo();
+        XojPageView* view = xournal->getViewFor(pageNr);
+        g_assert(view != nullptr);
+        this->doc->lock();
+        PageRef page = this->doc->getPage(pageNr);
+        auto selection = new EditSelection(this->undoRedo, textobj, view, page);
+        this->doc->unlock();
+    
+        xournal->setSelection(selection);
+    }
+
     toolHandler->selectTool(type);
     toolHandler->fireToolChanged();
 

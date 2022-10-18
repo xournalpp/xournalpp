@@ -17,6 +17,8 @@ Tool::~Tool() {}
 
 auto Tool::getName() const -> std::string { return this->name; }
 
+auto Tool::getToolType() const -> ToolType { return this->type; }
+
 void Tool::setCapability(unsigned int capability, bool enabled) {
     if (enabled) {
         this->capabilities |= capability;

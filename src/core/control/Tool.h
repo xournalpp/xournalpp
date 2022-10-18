@@ -41,6 +41,8 @@ public:
 public:
     std::string getName() const;
 
+    ToolType getToolType() const;
+
     bool hasCapability(ToolCapabilities cap) const;
 
     double getThickness(ToolSize size) const;
