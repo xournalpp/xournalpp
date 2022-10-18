@@ -54,7 +54,9 @@ void setupEnvironment() {
             char buffer[128];
             if (CFStringGetCString(langCode, buffer, sizeof(buffer), kCFStringEncodingUTF8)) {
                 std::string lang = buffer;             // e.g. "de-DE"
-                lang.replace(lang.find("-"), 1, "_");  // e.g. "de_DE"
+                if (auto pos = lang.find("-"); pos != std::string::npos) {
+                    lang.replace(pos, 1, "_");  // e.g. "de_DE"
+                }
                 lang += ".UTF-8";                      // e.g. "de_DE.UTF-8"
                 g_message("Setting LANG and LC_MESSAGES to %s", lang.c_str());
                 setenv("LANG", lang.c_str(), 0);
