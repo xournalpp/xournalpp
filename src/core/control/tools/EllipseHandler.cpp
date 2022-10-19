@@ -64,7 +64,7 @@ auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isContro
      * Set resolution depending on the radius (heuristic)
      */
     auto nbPtsPerQuadrant =
-            static_cast<unsigned int>(std::ceil(5 + 0.5 * std::max(std::abs(radiusX), std::abs(radiusY))));
+            static_cast<unsigned int>(std::ceil(5 + 0.2 * std::max(std::abs(radiusX), std::abs(radiusY))));
     const double stepAngle = M_PI_2 / nbPtsPerQuadrant;
 
     std::pair<std::vector<Point>, Range> res;
@@ -79,7 +79,8 @@ auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isContro
 
     shape.emplace_back(center_x + radiusX, center_y);
     for (unsigned int j = 1U; j < nbPtsPerQuadrant; j++) {
-        const double centerAngle = stepAngle * j;
+        const double tgtAngle = stepAngle * j;
+        const double centerAngle = 0.25 * (std::atan2(std::abs(radiusY) * std::sin(tgtAngle), std::abs(radiusX) * std::cos(tgtAngle))) + 0.75 * tgtAngle;
         double xp = center_x + radiusX * std::cos(centerAngle);
         double yp = center_y + radiusY * std::sin(centerAngle);
         shape.emplace_back(xp, yp);
