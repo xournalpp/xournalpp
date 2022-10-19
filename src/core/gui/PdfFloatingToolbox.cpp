@@ -9,9 +9,10 @@
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <gtk/gtk.h>
 
-#include "control/Control.h"        // for Control
-#include "control/ToolEnums.h"      // for ToolType, TOOL_SELECT_PDF_TEXT_LI...
-#include "control/ToolHandler.h"    // for ToolHandler
+#include "control/Control.h"      // for Control
+#include "control/ToolEnums.h"    // for ToolType, TOOL_SELECT_PDF_TEXT_LI...
+#include "control/ToolHandler.h"  // for ToolHandler
+#include "control/tools/PdfElemSelection.h"
 #include "gui/PageView.h"           // for XojPageView
 #include "gui/XournalView.h"        // for XournalView
 #include "model/Document.h"         // for Document
@@ -46,13 +47,16 @@ PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* ov
     this->hide();
 }
 
+PdfFloatingToolbox::~PdfFloatingToolbox() = default;
+
 PdfElemSelection* PdfFloatingToolbox::getSelection() const { return this->pdfElemSelection.get(); }
 bool PdfFloatingToolbox::hasSelection() const { return this->getSelection() != nullptr; }
 
 void PdfFloatingToolbox::clearSelection() { this->pdfElemSelection.reset(); }
 
-void PdfFloatingToolbox::newSelection(double x, double y, XojPageView* pageView) {
-    this->pdfElemSelection = std::make_unique<PdfElemSelection>(x, y, pageView);
+auto PdfFloatingToolbox::newSelection(double x, double y) -> const PdfElemSelection* {
+    this->pdfElemSelection = std::make_unique<PdfElemSelection>(x, y, this->theMainWindow->getControl());
+    return this->pdfElemSelection.get();
 }
 
 void PdfFloatingToolbox::show(int x, int y) {
@@ -81,7 +85,6 @@ auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widg
         allocation->width = natural.width;
         allocation->height = natural.height;
 
-        if (self->pdfElemSelection && self->pdfElemSelection->getPageView()) {
             // Make sure the "pdfFloatingToolbox" is fully displayed.
             const int gap = 5;
 
@@ -96,25 +99,15 @@ auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widg
 
             allocation->x = rightOK ? self->position.x + gap : self->position.x - allocation->width - gap;
             allocation->y = bottomOK ? self->position.y + gap : self->position.y - allocation->height - gap;
-        } else {
-            allocation->x = self->position.x;
-            allocation->y = self->position.y;
-        }
 
-        return true;
+            return true;
     }
 
     return false;
 }
 
 void PdfFloatingToolbox::userCancelSelection() {
-    if (this->pdfElemSelection) {
-        auto view = this->pdfElemSelection->getPageView();
-
-        this->pdfElemSelection = nullptr;
-        view->rerenderPage();
-    }
-
+    this->pdfElemSelection.reset();
     this->hide();
 }
 
@@ -168,8 +161,9 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
     }
 
     const auto textRects = this->pdfElemSelection->getSelectedTextRects();
-    if (textRects.empty())
+    if (textRects.empty()) {
         return;
+    }
 
     auto* control = this->theMainWindow->getControl();
     PageRef page = control->getCurrentPage();
@@ -177,6 +171,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
 
     auto color = theMainWindow->getXournal()->getControl()->getToolHandler()->getColor();
 
+    Range dirtyRange;
     std::vector<Stroke*> strokes;
     for (XojPdfRectangle rect: textRects) {
         const double topOfLine = std::min(rect.y1, rect.y2);
@@ -200,16 +195,22 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         stroke->addPoint(Point(rect.x2, h, -1));
         stroke->setStrokeCapStyle(StrokeCapStyle::BUTT);
 
+        dirtyRange.addPoint(rect.x1, h - 0.5 * w);
+        dirtyRange.addPoint(rect.x2, h + 0.5 * w);
+
         strokes.push_back(stroke);
-        layer->addElement(stroke);
-        page->fireElementChanged(stroke);
     }
 
+    doc->lock();
+    for (Stroke* s: strokes) {
+        layer->addElement(s);
+    }
+    doc->unlock();
+    page->fireRangeChanged(dirtyRange);
+
     auto undoAct = std::make_unique<GroupUndoAction>();
-    auto* view = theMainWindow->getXournal()->getViewFor(currentPage);
     for (Stroke* stroke: strokes) {
         undoAct->addAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
-        view->rerenderElement(stroke);
     }
     control->getUndoRedoHandler()->addUndoAction(std::move(undoAct));
 }
@@ -224,7 +225,6 @@ void PdfFloatingToolbox::switchSelectTypeCb(GtkButton* button, PdfFloatingToolbo
 
     pft->pdfElemSelection->setToolType(type);
     pft->pdfElemSelection->finalizeSelection(PdfElemSelection::selectionStyleForToolType(type));
-    pft->pdfElemSelection->getPageView()->repaintPage();
 }
 
 bool PdfFloatingToolbox::isHidden() const { return !gtk_widget_is_visible(this->floatingToolbox); }
