@@ -3,40 +3,27 @@
 [![Build Status](https://dev.azure.com/xournalpp/xournalpp/_apis/build/status/CI?branchName=master)](https://dev.azure.com/xournalpp/xournalpp/_build/latest?definitionId=1&branchName=master)
 [![Join the chat at https://gitter.im/xournalpp/xournalpp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/xournalpp/xournalpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-<table border="0px" ><tr><td width = 600px>
+<img src="readme/main.png" width=550px% title="Xournal++ on GNU/Linux"/>
 
-<img src="readme/main.png" width=550px% title="Xournal++ Screenshot on Linux"/>
+## Translations
 
-</td><td>
+Would you like to see Xournal++ in your own language? Translators are welcome to contribute to Xournal++.
 
-## Shout out - Translators Needed!
+You can contribute translations to the following locations:
+* [Crowdin](https://crowdin.com/project/xournalpp/)
+* Submit a pull request on GitHub to change:
+  * [com.github.xournalpp.xournalpp.appdata.xml](desktop/com.github.xournalpp.xournalpp.appdata.xml)
+  * [com.github.xournalpp.xournalpp.desktop](desktop/com.github.xournalpp.xournalpp.desktop)
+  * [com.github.xournalpp.xournalpp.xml](desktop/com.github.xournalpp.xournalpp.xml)
 
-Recently we revisited the settings dialog to improve the feeling and usability.
-While doing that we also added better descriptions, for which we require
-new translations.
-
-Partial translations, which need to be updated:
-
-- Czech
-- Polish
-- Chinese
-
-Full translations for all languages not mentioned previously **except**:
-
-- English
-- German
-- Italian
-
-If you would like to help us improve the localization of Xournal++, take a look at [our Crowdin project](https://crowdin.com/project/xournalpp). If you are interested in translating a new language, contact us on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a new issue and we will unlock the language on Crowdin.
+Interested in translating a new language? Discuss on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a [new issue](https://github.com/xournalpp/xournalpp/issues) to unlock the language on Crowdin.
 
 **Thanks in advance!**
-
-</td></tr></table>
 
 ## Features
 
 Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is a hand note-taking software written in C++ with the target of flexibility, functionality and speed.
-Stroke recognizer and other parts are based on Xournal Code, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
+Stroke recognizer and other parts are based on Xournal Code, which you can find at [SourceForge](http://sourceforge.net/projects/xournal/).
 
 Xournal++ features:
 
@@ -79,46 +66,46 @@ According to the Apple App Store guidelines, it is prohibited to publish unstabl
 <tr>
 <td>
 
-## Linux
+## GNU/Linux
 
-<img src="readme/main.png" width=100% title="Xournal++ Screenshot on Linux"/>
+<img src="readme/main.png" width=100% title="Xournal++ on GNU/Linux"/>
 
 </td><td>
 
 ## Windows 10
 
-<img src="readme/main-win.png" width=100% title="Xournal++ Screenshot on Win10"/>
+<img src="readme/main-win.png" width=100% title="Xournal++ on Windows 10"/>
 
 </td></tr><tr><td>
 
 ## macOS Catalina
 
-<img src="readme/main-mac.png" width=100% title="Xournal++ Screenshot on macOS"/>
+<img src="readme/main-mac.png" width=100% title="Xournal++ on macOS Catalina"/>
 
 </td><td>
 
-## Xournal++ Mobile
+## Xournal++ Mobile on Chromium OS
 
-<img src="https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/raw/master/fastlane/metadata/android/en_US/images/tenInchScreenshots/03.png" width=100% title="Xournal++ Mobile Screenshot on Chromium OS"/>
+<img src="https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile/-/raw/master/fastlane/metadata/android/en_US/images/tenInchScreenshots/03.png" width=100% title="Xournal++ Mobile on Chromium OS"/>
 
 </td></tr><tr><td>
 
 ## Toolbar / Page Background / Layer
 
 Multiple page background, easy selectable on the toolbar
-<img src="readme/background.png" width=100% title="Xournal++ Screenshot"/>
+<img src="readme/background.png" width=100% title="Changing the page background in Xournal++"/>
 
 </td><td>
 
 ## Layer sidebar and advanced layer selection
 
-<img src="readme/layer.png" width=100% title="Xournal++ Screenshot"/>
+<img src="readme/layer.png" width=100% title="Layers in Xournal++"/>
 
 </td></tr><tr><td>
 
 ## Multiple predefined and fully customizable toolbars
 
-<img src="readme/toolbar.png" width=100% title="Xournal++ Screenshot"/>
+<img src="readme/toolbar.png" width=100% title="Custom toolbars in Xournal++"/>
 
 </td></tr></table>
 
@@ -136,7 +123,7 @@ Try these out and give us some feedback.
 
 Here are a few under development that you can play with now:
 
-- <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++ Screenshot"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor. You can also modify what is in the toolbox through the usual View → Toolbars → Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** (or selected a toolbar configuration that uses it).
+- <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor. You can also modify what is in the toolbox through the usual View → Toolbars → Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** (or selected a toolbar configuration that uses it).
 
   - This is an experimental feature because not everything you can put in the toolbox behaves. So be aware.
 
@@ -155,7 +142,7 @@ Here are a few under development that you can play with now:
 The official releases of Xournal++ can be found on the
 [Releases](https://github.com/xournalpp/xournalpp/releases) page. We provide
 binaries for Debian (Buster), Ubuntu (16.04), MacOS (10.15 and newer), and
-Windows. For other Linux distributions (or older/newer ones), we also provide an
+Windows. For other GNU/Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
 after Ubuntu 16.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
 
@@ -172,7 +159,7 @@ release](https://github.com/xournalpp/xournalpp/releases/tag/nightly) that
 includes the very latest features and bug fixes.
 
 With the help of the community, Xournal++ is also available on official repositories
-of some popular Linux distros and platforms.
+of some popular GNU/Linux distros and platforms.
 
 ### Debian
 
@@ -321,7 +308,7 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 ## Building
 
-[Linux Build](readme/LinuxBuild.md)
+[GNU/Linux Build](readme/LinuxBuild.md)
 
 [Mac Build](readme/MacBuild.md)
 

@@ -23,7 +23,7 @@ static double getFillingAlpha(const InputHandler* h) {
 BaseShapeOrSplineToolView::BaseShapeOrSplineToolView(const InputHandler* toolHandler, Repaintable* parent):
         BaseStrokeToolView(parent, safeGetStroke(toolHandler)),
         fillingAlpha(getFillingAlpha(toolHandler)),
-        needMask(this->fillingAlpha != 0.0 && safeGetStroke(toolHandler).getToolType() == STROKE_TOOL_HIGHLIGHTER) {}
+        needMask(this->fillingAlpha != 0.0 && safeGetStroke(toolHandler).getToolType() == StrokeTool::HIGHLIGHTER) {}
 
 BaseShapeOrSplineToolView::~BaseShapeOrSplineToolView() noexcept = default;
 

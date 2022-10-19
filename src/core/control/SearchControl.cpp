@@ -9,38 +9,25 @@
 #include "model/Text.h"     // for Text
 #include "model/XojPage.h"  // for XojPage
 #include "view/TextView.h"  // for TextView
+#include "view/overlays/SearchResultView.h"
 
-using std::string;
+SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf):
+        page(page),
+        pdf(std::move(pdf)),
+        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SearchResultView>>()) {}
 
-SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf) {
-    this->page = page;
-    this->pdf = std::move(pdf);
-}
+SearchControl::~SearchControl() = default;
 
-SearchControl::~SearchControl() { freeSearchResults(); }
-
-void SearchControl::freeSearchResults() { this->results.clear(); }
-
-void SearchControl::paint(cairo_t* cr, double zoom, const GdkRGBA& color) {
-    // set the line always the same size on display
-    cairo_set_line_width(cr, 1 / zoom);
-
-    for (XojPdfRectangle rect: this->results) {
-        cairo_rectangle(cr, rect.x1, rect.y1, rect.x2 - rect.x1, rect.y2 - rect.y1);
-        gdk_cairo_set_source_rgba(cr, &color);
-        cairo_stroke_preserve(cr);
-        auto applied = GdkRGBA{color.red, color.green, color.blue, 0.3};
-        gdk_cairo_set_source_rgba(cr, &applied);
-        cairo_fill(cr);
-    }
-}
-
-auto SearchControl::search(std::string text, int* occures, double* top) -> bool {
-    freeSearchResults();
-
+auto SearchControl::search(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch) -> bool {
     if (text.empty()) {
+        if (!this->results.empty()) {
+            this->results.clear();
+            this->viewPool->dispatch(xoj::view::SearchResultView::SEARCH_CHANGED_NOTIFICATION);
+        }
         return true;
     }
+
+    this->results.clear();
 
     if (this->pdf) {
         this->results = this->pdf->findText(text);
@@ -62,23 +49,26 @@ auto SearchControl::search(std::string text, int* occures, double* top) -> bool 
         }
     }
 
-    if (occures) {
-        *occures = this->results.size();
+    if (occurrences) {
+        *occurrences = this->results.size();
     }
 
-    if (top) {
+    if (yOfUpperMostMatch) {
         if (this->results.empty()) {
-            *top = 0;
+            *yOfUpperMostMatch = 0;
         } else {
 
-            XojPdfRectangle first = this->results[0];
+            const XojPdfRectangle& first = this->results.front();
 
             double min = first.y1;
-            for (XojPdfRectangle rect: this->results) { min = std::min(min, rect.y1); }
+            for (const XojPdfRectangle& rect: this->results) {
+                min = std::min(min, rect.y1);
+            }
 
-            *top = min;
+            *yOfUpperMostMatch = min;
         }
     }
 
+    this->viewPool->dispatch(xoj::view::SearchResultView::SEARCH_CHANGED_NOTIFICATION);
     return !this->results.empty();
 }

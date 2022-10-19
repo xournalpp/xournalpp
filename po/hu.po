@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:54\n"
+"POT-Creation-Date: 2022-10-16 14:34+0000\n"
+"PO-Revision-Date: 2022-10-16 15:30\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -17,32 +17,38 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/core/control/XournalMain.cpp:375
+#: ../src/core/control/XournalMain.cpp:395
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "A program megpróbál enélkül a fájl nélkül futni."
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:47
+#: ../src/core/control/jobs/BaseExportJob.cpp:53
 msgid "\n"
 " Do you want to continue?"
 msgstr "\n"
 "Kívánja folytatni?"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:35
+#: ../src/core/control/Control.cpp:2221
+msgid "\n"
+"Proposed replacement file: \"{1}\""
+msgstr "\n"
+"Javasolt cserefájl: {1}"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " / {1}"
 
-#: ../src/core/control/settings/Settings.cpp:123
+#: ../src/core/control/settings/Settings.cpp:139
 msgid "%F-Note-%H-%M"
 msgstr "%F-Jegyzet-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:152
+#: ../src/core/gui/dialog/SettingsDialog.cpp:166
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Nem található eszköz. Ez gyanús - talán egy jelenteni való hiba?</b>"
 
-#: ../src/core/control/XournalMain.cpp:370
+#: ../src/core/control/XournalMain.cpp:390
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -56,135 +62,135 @@ msgstr "<span foreground='red' size='x-large'>A szükséges UI fájl hiányzik:\
 "  A munkakönyvtárban nem található\n"
 "  A {2} könyvtárban nem található"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Add/Edit TeX"
 msgstr "TeX hozzáadása/szerkesztése"
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:669
 msgid "Advanced export options"
 msgstr "Haladó exportálási lehetőségek"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:36
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:40
 msgid "All files"
 msgstr "Minden fájl"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:193
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:198
 msgid "Apply to all pages"
 msgstr "Alkalmazás az összes oldalra"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:184
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:189
 msgid "Apply to current page"
 msgstr "Alkalmazás a jelenlegi oldalra"
 
-#: ../src/core/control/tools/EditSelection.cpp:369
+#: ../src/core/control/tools/EditSelection.cpp:378
 msgid "Arrange"
 msgstr "Elrendezés"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:28
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:112
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
 msgid "Attach file to the journal"
 msgstr "Fájl csatolása a naplóhoz"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:122
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "A(z) „{1}” tulajdonság nem olvasható be double számként, az értéke „{2}”"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:107
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:115
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr "A(z) „{1}” tulajdonság nem olvasható be double számként, az értéke nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:131
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:150
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:139
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:158
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "A(z) „{1}” tulajdonság nem olvasható be egész számként, az értéke „{2}”"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr "A(z) „{1}” tulajdonság nem olvasható be egész számként, az értéke nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:177
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "A(z) „{1}” tulajdonság nem olvasható be size_t számként, az értéke „{2}”"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:170
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr "A(z) „{1}” tulajdonság nem olvasható be size_t számként, az értéke nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Attribute color not set!"
 msgstr "A tulajdonság színe nincs beállítva!"
 
-#: ../src/core/control/AudioController.cpp:99
+#: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "A hangmappa nincs beállítva vagy érvénytelen! A felvétel nem fog működni!\n"
 "Kérjük, állítsa be a felvétel mappáját a „Beállítások > Hangfelvétel” menüpontban"
 
-#: ../src/core/control/Control.cpp:208
+#: ../src/core/control/Control.cpp:250
 msgid "Autosave failed with an error: {1}"
 msgstr "Az automatikus mentés során hiba lépett fel: {1}"
 
-#: ../src/core/control/Control.cpp:188
+#: ../src/core/control/Control.cpp:230
 msgid "Autosave renamed from {1} to {2}"
 msgstr "Az automatikus mentés átnevezve {1}-ról {2}-ra"
 
-#: ../src/core/control/jobs/AutosaveJob.cpp:42
+#: ../src/core/control/jobs/AutosaveJob.cpp:48
 msgid "Autosaving to {1}"
 msgstr "Automatikus mentés ide: {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:517
 msgid "Back"
 msgstr "Vissza"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:187
-#: ../src/core/model/XojPage.cpp:160
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:196
+#: ../src/core/model/XojPage.cpp:161
 msgid "Background"
 msgstr "Háttér"
 
-#: ../src/core/control/tools/EditSelection.cpp:384
+#: ../src/core/control/tools/EditSelection.cpp:393
 msgid "Bring forward"
 msgstr "Előbbre hozás"
 
-#: ../src/core/control/tools/EditSelection.cpp:374
+#: ../src/core/control/tools/EditSelection.cpp:383
 msgid "Bring to front"
 msgstr "Előrehozás"
 
-#: ../src/core/control/Control.cpp:2106 ../src/core/control/Control.cpp:2568
-#: ../src/core/control/XournalMain.cpp:164
+#: ../src/core/control/Control.cpp:2233 ../src/core/control/Control.cpp:2704
+#: ../src/core/control/XournalMain.cpp:177
 msgid "Cancel"
 msgstr "Mégse"
 
-#: ../src/core/undo/ColorUndoAction.cpp:84
+#: ../src/core/undo/ColorUndoAction.cpp:90
 msgid "Change color"
 msgstr "Szín változtatása"
 
-#: ../src/core/undo/FontUndoAction.cpp:104
+#: ../src/core/undo/FontUndoAction.cpp:110
 msgid "Change font"
 msgstr "Betűkészlet megváltoztatása"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:72
+#: ../src/core/undo/LineStyleUndoAction.cpp:78
 msgid "Change line style"
 msgstr "Vonalstílus módosítása"
 
-#: ../src/core/undo/FillUndoAction.cpp:76
+#: ../src/core/undo/FillUndoAction.cpp:81
 msgid "Change stroke fill"
 msgstr "Vonalkitöltés megváltoztatása"
 
-#: ../src/core/undo/SizeUndoAction.cpp:101
+#: ../src/core/undo/SizeUndoAction.cpp:106
 msgid "Change stroke width"
 msgstr "Vonalvastagság megváltoztatása"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:88
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "A(z) „{1}” szín ismeretlen (nincs definiálva az alapértelmezett színlistában)!"
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:226
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:236
 msgid "Contents"
 msgstr "Tartalom"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:81
 msgid "Copy"
@@ -194,21 +200,21 @@ msgstr "Másolás"
 msgid "Copy current"
 msgstr "Jelenlegi kijelölés másolása"
 
-#: ../src/core/undo/CopyUndoAction.cpp:59
+#: ../src/core/undo/CopyUndoAction.cpp:62
 msgid "Copy page"
 msgstr "Oldal másolása"
 
-#: ../src/util/PathUtil.cpp:257
+#: ../src/util/PathUtil.cpp:265
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "A következő mappa nem hozható létre: {1}\n"
 "Hiba: {2}"
 
-#: ../src/core/control/LatexController.cpp:273
+#: ../src/core/control/LatexController.cpp:339
 msgid "Could not load LaTeX PDF file"
 msgstr "Nem sikerült a LaTeX PDF-fájl betöltése"
 
-#: ../src/core/control/LatexController.cpp:267
+#: ../src/core/control/LatexController.cpp:333
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nem sikerült a LaTeX PDF-fájl betöltése: {1}"
 
@@ -216,158 +222,158 @@ msgstr "Nem sikerült a LaTeX PDF-fájl betöltése: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Nem sikerült a pagetemplates.ini fájl betöltése"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:806
+#: ../src/core/control/xojfile/LoadHandler.cpp:838
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: A fájl nem olvasható"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:816
+#: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: A fájl nem írható"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:786
-#: ../src/core/control/xojfile/LoadHandler.cpp:1037
-#: ../src/core/control/xojfile/LoadHandler.cpp:1055
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1069
+#: ../src/core/control/xojfile/LoadHandler.cpp:1087
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: A fájlméret érvénytelen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:777
-#: ../src/core/control/xojfile/LoadHandler.cpp:793
-#: ../src/core/control/xojfile/LoadHandler.cpp:1030
-#: ../src/core/control/xojfile/LoadHandler.cpp:1044
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1062
+#: ../src/core/control/xojfile/LoadHandler.cpp:1076
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:166
+#: ../src/core/control/xojfile/LoadHandler.cpp:179
 msgid "Could not open file: \"{1}\""
 msgstr "Nem sikerült megnyitni a(z) „{1}” fájlt"
 
-#: ../src/core/gui/MainWindow.cpp:95
+#: ../src/core/gui/MainWindow.cpp:106
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Nem sikerült beolvasni az egyéni toolbar.ini fájlt: {1}\n"
 "Az eszköztár nem lesz elérhető"
 
-#: ../src/core/gui/MainWindow.cpp:86
+#: ../src/core/gui/MainWindow.cpp:97
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Nem sikerült beolvasni az egyedi toolbar.ini fájlt: {1}\n"
 "Az eszköztár nem lesz elérhető"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:364
-#: ../src/core/control/xojfile/LoadHandler.cpp:387
+#: ../src/core/control/xojfile/LoadHandler.cpp:395
+#: ../src/core/control/xojfile/LoadHandler.cpp:418
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "A kép nem olvasható: {1}. Hibaüzenet: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:397
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "A klónozott háttérkép {1} oldalszámának olvasása sikertelen."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:137
+#: ../src/core/undo/UndoRedoHandler.cpp:142
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Az előrelépés nem sikerült „{1}”\n"
 "Valami nem sikerült… Kérem írjon hibajelentést…"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:173
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "Nem sikerült eltávolítani az eszközt az {1} eszköztár {2} pozíciójáról"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Nem sikerült eltávolítani a(z) {1} eszközt a(z) {2} eszköztár {3} pozíciójáról"
 
-#: ../src/core/control/Control.cpp:199
+#: ../src/core/control/Control.cpp:241
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nem sikerült átnevezni az automatikusan mentett fájlt erről: „{1}” erre: „{2}”: {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:72
+#: ../src/core/control/latex/LatexGenerator.cpp:95
 msgid "Could not save .tex file: {1}"
 msgstr "Nem sikerült elmenteni a .tex fájlt: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:88
+#: ../src/core/control/latex/LatexGenerator.cpp:110
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr "A(z) {1} elindítása sikertelen: {2} (kilépési kód: {3})"
+msgstr "A(z) {1} elindítása sikertelen: {2} (visszatérési érték: {3})"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:108
+#: ../src/core/undo/UndoRedoHandler.cpp:113
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "A visszalépés nem sikerült „{1}”\n"
 "Valami nem sikerült… Kérem írjon hibajelentést…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:230
+#: ../src/core/control/xojfile/SaveHandler.cpp:248
 msgid "Could not write background \"{1}\", {2}"
 msgstr "A(z) „{1}” háttér nem írható, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:326
+#: ../src/core/control/xojfile/SaveHandler.cpp:362
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "A(z) \"{1}\" háttér nem írható. Folytatás ettől függetlenül."
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:78
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:87
 msgid "Create new layer"
 msgstr "Új réteg létrehozása"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:65
+#: ../src/core/gui/dialog/FormatDialog.cpp:71
 msgid "Custom"
 msgstr "Egyéni"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:20
+#: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "Custom Export"
 msgstr "Egyéni exportálás"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Customize Toolbars"
 msgstr "Eszköztárak testreszabása"
 
-#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:28
+#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
 msgid "Customized"
 msgstr "Testreszabott"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Cut"
 msgstr "Kivágás"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Default Tool"
 msgstr "Alapértelmezett eszköz"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
-#: ../src/core/undo/DeleteUndoAction.cpp:55
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+#: ../src/core/undo/DeleteUndoAction.cpp:64
 msgid "Delete"
 msgstr "Törlés"
 
-#: ../src/core/control/XournalMain.cpp:163
+#: ../src/core/control/XournalMain.cpp:176
 msgid "Delete Logfile"
 msgstr "Eseménynapló fájl törlése"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Delete current page"
 msgstr "Jelenlegi oldal törlése"
 
-#: ../src/core/control/XournalMain.cpp:205
+#: ../src/core/control/XournalMain.cpp:218
 msgid "Delete file"
 msgstr "Fájl törlése"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:25
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
 msgstr "Réteg törlése"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Delete this layer"
 msgstr "Réteg törlése"
 
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
 msgid "Delete this page"
 msgstr "Oldal törlése"
 
-#: ../src/core/control/Control.cpp:2565
+#: ../src/core/control/Control.cpp:2701
 msgid "Discard"
 msgstr "Módosítások elvetése"
 
-#: ../src/core/control/XournalMain.cpp:623
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Display advanced export options"
 msgstr "A haladó exportálási lehetőségek megjelenítése"
 
-#: ../src/core/control/Control.cpp:2051
+#: ../src/core/control/Control.cpp:2146
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -375,24 +381,24 @@ msgstr "Ne nyissa meg az automatikusan mentett fájlokat. Felülíródhatnak!\n"
 "Másolja a fájlokat egy másik mappába.\n"
 "A(z) {1} mappában található fájlok nem nyithatók meg."
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:40
+#: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ne írja felül a PDF-hátterét! Ez hibákat okozhat!"
 
-#: ../src/core/control/Control.cpp:2559
+#: ../src/core/control/Control.cpp:2695
 msgid "Document file was removed."
 msgstr "A dokumentumfájl eltávolításra került."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:250
+#: ../src/core/control/xojfile/LoadHandler.cpp:263
 msgid "Document is corrupted (no pages found in file)"
 msgstr "A dokumentum hibás (nem találhatók oldalak a fájlban)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:246
+#: ../src/core/control/xojfile/LoadHandler.cpp:259
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "A dokumentum nem teljes (talán a vége le lett vágva?)"
 
-#: ../src/core/model/Document.cpp:291 ../src/core/model/Document.cpp:300
-#: ../src/core/model/Document.cpp:303
+#: ../src/core/model/Document.cpp:296 ../src/core/model/Document.cpp:305
+#: ../src/core/model/Document.cpp:308
 msgid "Document not loaded! ({1}), {2}"
 msgstr "A dokumentum nincs betöltve! ({1}), {2}"
 
@@ -400,154 +406,170 @@ msgstr "A dokumentum nincs betöltve! ({1}), {2}"
 msgid "Dotted"
 msgstr "Pontozott"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:471
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:134
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Draw Arrow"
 msgstr "Nyíl rajzolása"
 
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Draw Double Arrow"
 msgstr "Kettős nyíl rajzolása"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:470
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:132
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Draw Ellipse"
 msgstr "Ellipszis rajzolása"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:476
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:128
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Draw Line"
 msgstr "Vonal rajzolása"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:97
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:130
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:100
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:103
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Draw Rectangle"
 msgstr "Téglalap rajzolása"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:43
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:477
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:46
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
 msgid "Draw Spline"
 msgstr "Görbe rajzolása"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:136
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
 msgid "Draw coordinate system"
 msgstr "Koordinátarendszer rajzolása"
 
-#: ../src/core/undo/InsertUndoAction.cpp:29
+#: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Draw stroke"
 msgstr "Vonalrajzolás"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:124
 msgid "Drawing Type - don't change"
 msgstr "Rajzolási típus - ne változzon"
 
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 msgid "Drawing Type Combo"
 msgstr "Kombinált rajzolástípus"
 
-#: ../src/core/undo/TextBoxUndoAction.cpp:37
+#: ../src/core/undo/TextBoxUndoAction.cpp:43
 msgid "Edit text"
 msgstr "Szöveg szerkesztése"
 
-#: ../src/core/undo/EmergencySaveRestore.cpp:19
+#: ../src/util/ElementRange.cpp:101
+msgid "ElementRange::parse(): element indices start with 1"
+msgstr "ElementRange::parse(): az elemmutatók 1-gyel kezdődnek"
+
+#: ../src/util/ElementRange.cpp:95
+msgid "ElementRange::parse(): given element index is larger than maximum count."
+msgstr "ElementRange::parse(): adott elemmutató nagyobb, mint a legfeljebb szám."
+
+#: ../src/util/ElementRange.cpp:98
+msgid "ElementRange::parse(): interval bounds must be in increasing order."
+msgstr "ElementRange::parse(): az intervallumhatároknak növekvő sorrendben kell lenniük."
+
+#: ../src/util/ElementRange.cpp:91
+msgid "ElementRange::parse(): invalid element range."
+msgstr "ElementRange::parse(): érvénytelen elemtartomány."
+
+#: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
 msgstr "Biztonsági mentett dokumentum"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:280
+#: ../src/core/gui/dialog/SettingsDialog.cpp:294
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Az opció módosításához engedélyezd a nyomásérzékelést vagy a nyomáskövetkeztetést!"
 
-#: ../src/core/undo/AddUndoAction.cpp:55
-#: ../src/core/undo/DeleteUndoAction.cpp:52
-#: ../src/core/undo/EraseUndoAction.cpp:52
+#: ../src/core/undo/AddUndoAction.cpp:64
+#: ../src/core/undo/DeleteUndoAction.cpp:61
+#: ../src/core/undo/EraseUndoAction.cpp:60
 msgid "Erase stroke"
 msgstr "Vonásírás kiradírozása"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:276
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:291
 msgid "Eraser"
 msgstr "Radír"
 
-#: ../src/core/control/Control.cpp:2305
+#: ../src/core/control/Control.cpp:2441
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Hiba történt a(z) „{1}” PDF-fájl megjegyzése közben\n"
 "{2}"
 
-#: ../src/core/gui/GladeGui.cpp:23
+#: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Hiba a(z) „{1}” glade-fájl betöltése közben (próbálja meg betölteni a(z) „{2}” fájlt)"
 
-#: ../src/core/control/Control.cpp:2128
+#: ../src/core/control/Control.cpp:2264
 msgid "Error opening file \"{1}\""
 msgstr "Hiba történt a fájl megnyitása közben: {1}"
 
-#: ../src/util/OutputStream.cpp:23
+#: ../src/util/OutputStream.cpp:24
 msgid "Error opening file: \"{1}\""
 msgstr "Hiba történt a fájl megnyitása közben: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:449
-#: ../src/core/control/xojfile/LoadHandler.cpp:469
+#: ../src/core/control/xojfile/LoadHandler.cpp:481
+#: ../src/core/control/xojfile/LoadHandler.cpp:501
 msgid "Error reading PDF: {1}"
 msgstr "Hiba történt a PDF-fájl olvasásakor: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:524
+#: ../src/core/control/xojfile/LoadHandler.cpp:556
 msgid "Error reading width of a stroke: {1}"
 msgstr "Hiba történt a vonalvastagság olvasása során: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:145
+#: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
 msgstr "Hiba történt a kép mentése közben! #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:165
+#: ../src/core/control/jobs/ImageExport.cpp:195
 msgid "Error save image #2"
 msgstr "Hiba történt a kép mentése közben! #2"
 
-#: ../src/core/control/jobs/AutosaveJob.cpp:15
+#: ../src/core/control/jobs/AutosaveJob.cpp:21
 msgid "Error while autosaving: {1}"
 msgstr "Hiba történt az automatikus mentés közben: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "Hiba történt a pdf-háttér exportálása közben: nem található a pdf-oldalszám: "
 
-#: ../src/util/Util.cpp:74
+#: ../src/util/Util.cpp:78
 msgid "Error {1} executing system command: {2}"
 msgstr "Hibakód {1} a(z) {2} rendszerutasítás végrehajtása közben"
 
-#: ../src/core/control/CrashHandler.cpp:38
+#: ../src/core/control/CrashHandler.cpp:37
 msgid "Error: {1}"
 msgstr "Hiba: {1}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr "Hiba történt: A(z) {1} fájl nem szabályos. Ellenőrizze a LaTeX sablonfájl beállításait."
+msgstr "Hiba történt: A(z) {1} fájl nem szabályos. Kérjük, ellenőrizze a LaTeX-sablonfájl beállításokat! "
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Hiba történt: {1}. Ellenőrizze a(z) {2} tartalmát"
 
-#: ../src/core/control/XournalMain.cpp:183
+#: ../src/core/control/XournalMain.cpp:196
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr "A hibanapló nem törölhető. Manuálisan kell törölnie.\n"
 "Naplófájl: {1}"
 
-#: ../src/core/control/XournalMain.cpp:580
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Export FILE as PDF"
 msgstr "FILE exportálása PDF-fájlként"
 
-#: ../src/core/control/XournalMain.cpp:582
+#: ../src/core/control/XournalMain.cpp:625
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -555,15 +577,15 @@ msgstr "FILE exportálása képfájlként (egy kép oldalanként)\n"
 "                                 Formátum meghatározása a(z) IMGFILE kiterjesztéséből\n"
 "                                 Támogatott formátumok: .png, .svg"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:17
+#: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
 msgstr "PDF-fájl exportálása"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "Export as PDF"
 msgstr "Exportálás PDF-fájlként"
 
-#: ../src/core/control/XournalMain.cpp:596
+#: ../src/core/control/XournalMain.cpp:639
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -575,7 +597,7 @@ msgstr "Rétegek exportálása sorredben\n"
 "                                 végighaladva az egymásra helyezett rétegeken.\n"
 "                                 Az végleges PDF így használható prezentációként.\n"
 
-#: ../src/core/control/XournalMain.cpp:587
+#: ../src/core/control/XournalMain.cpp:630
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -583,109 +605,121 @@ msgstr "Háttér nélküli exportálás\n"
 "                                 Az exportált fájl háttere a támogatott formátumtól\n"
 "                                 függően átlátszó vagy fehér lesz\n"
 
-#: ../src/core/control/XournalMain.cpp:592
+#: ../src/core/control/XournalMain.cpp:635
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Margó nélküli exportálás\n"
 "                                 Az exportált fájl papírmargó nélküli\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:63
+#: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "A LaTeX generáló program nem található a PATH helyen: {1}"
+msgstr "Nem sikerült megtalálni a LaTeX-létrehozó programot a PATH helyen: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/control/latex/LatexGenerator.cpp:78
+msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
+"Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
+msgstr "Nem sikerült megtalálni a LaTeX generátor programot a PATH-ban: {1}\n\n"
+"Mivel a telepítés a Flatpakon belül észlelhető, telepítenie kell a Flatpak freedesktop Tex Live bővítményt. Például futva:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
+
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Nem sikerült a PDF-Kairó felületének inicializálása"
 
-#: ../src/core/control/tools/ImageHandler.cpp:60
+#: ../src/core/control/tools/ImageHandler.cpp:71
 msgid "Failed to load image, could not determine image size!"
 msgstr "Nem sikerült betölteni a képet, nem sikerült meghatározni a kép méretét!"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:158
+#: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Nem sikerült megnyitni a content.xml-fájlt a zip-archívumban: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:59
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr "Hiba a LaTeX parancs értelmezése közben: {1}"
+msgstr "Nem sikerült a LaTeX-létrehozó parancs értelmezése közben: {1}"
 
-#: ../src/core/control/LatexController.cpp:58
+#: ../src/core/control/latex/LatexGenerator.cpp:60
+msgid "Failed to parse LaTeX generator path: {1}"
+msgstr "Nem sikerült a LaTeX-létrehozó elérési útjának elemzése: {1}"
+
+#: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
-msgstr "Hiba a globális sablonfájl olvasása közben. Kérem ellenőrizze a beállításait."
+msgstr "Nem sikerült beolvasni a globális sablonfájlt. Kérjük, ellenőrizze a beállításokat!"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:102
+#: ../src/core/control/jobs/BaseExportJob.cpp:108
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr "Az adott hely értelmezése közben az alábbi hiba lépett fel: {1}"
 
-#: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
+#: ../src/util/PathUtil.cpp:166 ../src/util/PathUtil.cpp:183
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "A fájl megnyitása nem sikerült. Manuálisan kell megnyitnia:\n"
 "URL: {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:544
 msgid "Fill"
 msgstr "Kitöltés"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:284
+#: ../src/core/gui/dialog/SettingsDialog.cpp:298
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Nyomásszűrés. A nyomást a nyomási szorzóval szorozza. Ha az eredmény kevesebb a minimális értéknél, akkor a minimális nyomást alkalmazza."
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:564
 msgid "Fine"
 msgstr "Finom"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Floating Toolbox (experimental)"
 msgstr "Lebegő eszköztár (kísérleti)"
 
-#: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
+#: ../src/core/gui/toolbarMenubar/FontButton.cpp:65
 msgid "Font"
 msgstr "Betűkészlet"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:514
 msgid "Forward"
 msgstr "Következő"
 
-#: ../src/core/gui/dialog/AboutDialog.cpp:42
+#: ../src/core/gui/dialog/AboutDialog.cpp:46
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 vagy újabb"
 
-#: ../src/core/control/XournalMain.cpp:571
+#: ../src/core/control/XournalMain.cpp:614
 msgid "Get version of xournalpp"
 msgstr "A xournalpp verzió lehívása"
 
-#: ../src/core/control/LatexController.cpp:53
+#: ../src/core/control/LatexController.cpp:76
 msgid "Global template file does not exist. Please check your settings."
-msgstr "A globális sablonfájl nem létezik. Kérem ellenőrizze a beállításait."
+msgstr "A globális sablonfájl nem létezik. Kérjük, ellenőrizze a beállításokat!"
 
-#: ../src/core/control/LatexController.cpp:64
+#: ../src/core/control/LatexController.cpp:87
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr "A globális sablonfájl nem szabályos. Kérem ellenőrizze a beállításait. "
+msgstr "A globális sablonfájl nem szabályos. Kérjük, ellenőrizze a beállításokat! "
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Go to first page"
 msgstr "Ugrás az első oldalra"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Go to last page"
 msgstr "Ugrás az utolsó oldalra"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Go to next layer"
 msgstr "Ugrás a következő oldalra"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Go to page"
 msgstr "Ugrás oldalra"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Go to previous layer"
 msgstr "Váltás előző rétegre"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Go to top layer"
 msgstr "Váltás legfelső rétegre"
 
@@ -693,63 +727,67 @@ msgstr "Váltás legfelső rétegre"
 msgid "Graph"
 msgstr "Grafikon"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Grid Snapping"
 msgstr "Rács igazítása"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
+msgstr "A GtkSourceView le volt tiltva a Xournal++ készítésekor! Egyes kapcsolók nem lesznek elérhetők."
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
 msgid "Hand"
 msgstr "Kéz"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:72
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:81
 msgid "Hide all"
 msgstr "Összes elrejtése"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:472
 msgid "Highlighter"
 msgstr "Kiemelő"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 msgid "Image"
 msgstr "Kép"
 
-#: ../src/core/control/ExportHelper.cpp:61
+#: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
 msgstr "Képfájl sikeresen létrehozva"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
 msgid "Images"
 msgstr "Képek"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Insert a copy of the current layer below"
 msgstr "Jelenlegi réteg másolatának beillesztése alulra"
 
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
 msgid "Insert a copy of the current page below"
 msgstr "Jelenlegi oldal másolatának beillesztése alulra"
 
-#: ../src/core/undo/InsertUndoAction.cpp:78
+#: ../src/core/undo/InsertUndoAction.cpp:82
 msgid "Insert elements"
 msgstr "Elemek beszúrása"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
-#: ../src/core/undo/InsertUndoAction.cpp:33
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
+#: ../src/core/undo/InsertUndoAction.cpp:37
 msgid "Insert image"
 msgstr "Kép beszúrása"
 
-#: ../src/core/undo/InsertUndoAction.cpp:35
+#: ../src/core/undo/InsertUndoAction.cpp:39
 msgid "Insert latex"
 msgstr "LaTeX beszúrása"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:27
+#: ../src/core/undo/InsertLayerUndoAction.cpp:29
 msgid "Insert layer"
 msgstr "Réteg beszúrása"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Insert page"
 msgstr "Oldal beszúrása"
 
@@ -761,53 +799,57 @@ msgstr "Izometrikus pontozott"
 msgid "Isometric Graph"
 msgstr "Izometrikus rácsos"
 
-#: ../src/core/control/XournalMain.cpp:567
+#: ../src/core/control/XournalMain.cpp:610
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ugrás adott oldalra (első oldal: 1)"
 
-#: ../src/core/control/LatexController.cpp:192
-msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "A LaTeX létrehozási közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
+msgid "LaTeX editor theme:"
+msgstr "LaTeX-szerkesztő téma:"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
+#: ../src/core/control/LatexController.cpp:242
+msgid "Latex generation encountered an error: {1} (exit code: {2})"
+msgstr "A LaTeX-létrehozó közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
+
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
 msgstr "Réteg"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:236
 msgid "Layer Combo"
 msgstr "Rétegkombináció"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:82
 msgid "Layer Preview"
 msgstr "Réteg előnézete"
 
-#: ../src/core/control/layer/LayerController.cpp:364
+#: ../src/core/control/layer/LayerController.cpp:372
 msgid "Layer {1}"
 msgstr "{1}. réteg"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:82
 msgid "Layerstack Preview"
 msgstr "Egymásra helyezett rétegek előnézete"
 
-#: ../src/core/gui/PageView.cpp:778
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
+#: ../src/core/gui/PageView.cpp:866
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:97
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:28
 msgid "Loading..."
 msgstr "Betöltés…"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Manage Toolbars"
 msgstr "Eszköztárak kezelése"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:550
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:565
 msgid "Medium"
 msgstr "Közepes"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:32
 msgid "Merge layer down"
 msgstr "Rétegek egyesítése lefelé"
 
-#: ../src/core/undo/MoveUndoAction.cpp:15
+#: ../src/core/undo/MoveUndoAction.cpp:19
 msgid "Move"
 msgstr "Mozgatás"
 
@@ -815,165 +857,159 @@ msgstr "Mozgatás"
 msgid "Move layer"
 msgstr "Réteg Mozgatása"
 
-#: ../src/core/undo/SwapUndoAction.cpp:62
+#: ../src/core/undo/SwapUndoAction.cpp:68
 msgid "Move page downwards"
 msgstr "Oldal mozgatása lefelé"
 
-#: ../src/core/undo/SwapUndoAction.cpp:62
+#: ../src/core/undo/SwapUndoAction.cpp:68
 msgid "Move page upwards"
 msgstr "Oldal mozgatása felfelé"
 
-#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:69
+#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:75
 msgid "New"
 msgstr "Új"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "New Xournal"
 msgstr "Új Xournal"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Next"
 msgstr "Tovább"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Next annotated page"
 msgstr "Következő széljegyzeteket tartalmazó lap"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:63
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:68
 msgid "No device"
 msgstr "Nincs eszköz"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
 msgid "No pages to export!"
 msgstr "Nincs exportálandó oldal!"
 
-#: ../src/core/control/Control.cpp:1354
+#: ../src/core/control/Control.cpp:1396
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Nem érhető el több hozzáfűzhető pdf oldal. Szükséges lehet a dokumentum újbóli megnyitása."
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:126
 msgid "Normal drawing"
 msgstr "Normál rajz"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
-#: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
+#: ../src/core/plugin/Plugin.cpp:229 ../src/core/plugin/Plugin.cpp:252
 msgid "OK"
 msgstr "Rendben"
 
-#: ../src/core/control/XournalMain.cpp:603
+#: ../src/core/control/XournalMain.cpp:650
+msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr "Csak az alábbi rétegeket exportálja (pl. \"2-3,5,7-\")\n"
+"                                 Nincs hatása -p/--create-pdf vagy -i/--create-img használata nélkül"
+
+#: ../src/core/control/XournalMain.cpp:646
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Csak az alábbi oldalakat exportálja (pl. \"2-3,5,7-\")\n"
 "                                 Nincs hatása -p/--create-pdf vagy -i/--create-img használata nélkül"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
 msgstr "Kép megnyitása"
 
-#: ../src/core/control/XournalMain.cpp:161
+#: ../src/core/control/XournalMain.cpp:174
 msgid "Open Logfile"
 msgstr "Eseménynapló megnyitása"
 
-#: ../src/core/control/XournalMain.cpp:162
+#: ../src/core/control/XournalMain.cpp:175
 msgid "Open Logfile directory"
 msgstr "Eseménynaplók helyének megnyitása"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Open file"
 msgstr "Fájl megnyitása"
 
-#: ../src/core/control/RecentManager.cpp:193
+#: ../src/core/control/RecentManager.cpp:197
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "{1} megnyitása"
 
-#: ../src/core/control/jobs/PdfExportJob.cpp:8
+#: ../src/core/control/jobs/PdfExportJob.cpp:15
 msgid "PDF Export"
 msgstr "PDF-export"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:39
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:41
 msgid "PDF Page {1}"
 msgstr "PDF oldal {1}"
 
-#: ../src/core/control/PdfCache.cpp:143
+#: ../src/core/control/PdfCache.cpp:154
 msgid "PDF background missing"
 msgstr "PDF-háttér hiányzik"
 
-#: ../src/core/control/ExportHelper.cpp:102
+#: ../src/core/control/ExportHelper.cpp:121
 msgid "PDF file successfully created"
 msgstr "PDF fájl sikeresen létrehozva"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:22
-#: ../src/core/control/jobs/PdfExportJob.cpp:12
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:43
+#: ../src/core/control/jobs/CustomExportJob.cpp:26
+#: ../src/core/control/jobs/PdfExportJob.cpp:19
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
 msgid "PDF files"
 msgstr "PDF-fájlok"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:45
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:47
 msgid "PDF {1}"
 msgstr "PDF {1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:23
+#: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "PNG graphics"
 msgstr "PNG kép"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:86
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:88
 msgid "Page"
 msgstr "Oldal"
 
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:85
 msgid "Page Preview"
 msgstr "Oldal előnézete"
 
-#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:80
+#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:84
 msgid "Page background changed"
 msgstr "Háttérkép megváltozott"
 
-#: ../src/core/undo/InsertDeletePageUndoAction.cpp:97
+#: ../src/core/undo/InsertDeletePageUndoAction.cpp:100
 msgid "Page deleted"
 msgstr "Oldal törölve"
 
-#: ../src/core/undo/InsertDeletePageUndoAction.cpp:93
+#: ../src/core/undo/InsertDeletePageUndoAction.cpp:96
 msgid "Page inserted"
 msgstr "Oldal beszúrva"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:59
+#: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:61
 msgid "Page number"
 msgstr "Oldalszám"
 
-#: ../src/util/PageRange.cpp:96
-msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr "PageRange::parse(): egy adott oldalszám nagyobb, mint a legfeljebb oldalszám."
+#: ../src/core/control/xojfile/SaveHandler.cpp:311
+msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
+msgstr "Az oldaltípus formátuma másolatról (PageTypeFormat::Copy) simára (PageTypeFormat::Plain) átalakítva a sérült fájl elkerülése érdekében"
 
-#: ../src/util/PageRange.cpp:99
-msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr "PageRange::parse(): az oldal tartományának növekvő sorrendben kell lennie."
-
-#: ../src/util/PageRange.cpp:92
-msgid "PageRange::parse(): invalid page range."
-msgstr "PageRange::parse(): érvénytelen oldaltartomány."
-
-#: ../src/util/PageRange.cpp:102
-msgid "PageRange::parse(): page numbers start with 1"
-msgstr "PageRange::parse(): az oldalszámok 1-gyel kezdődnek"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Paired pages"
 msgstr "Oldalak párosítása"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
-#: ../src/core/undo/AddUndoAction.cpp:57
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/core/undo/AddUndoAction.cpp:66
 msgid "Paste"
 msgstr "Beillesztés"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:508
 msgid "Pause / Play"
 msgstr "Szünet/Lejátszás"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:257
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:272
 msgid "Pen"
 msgstr "Toll"
 
@@ -981,78 +1017,78 @@ msgstr "Toll"
 msgid "Plain"
 msgstr "Sima"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:80
 msgid "Play Object"
 msgstr "Objektum lejátszása"
 
-#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:16
+#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
 msgid "Predefined"
 msgstr "Előre meghatározott"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Presentation mode"
 msgstr "Bemutató mód"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:56
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:62
 msgid "Previously selected language not available anymore!"
 msgstr "Az előzőleg választott nyelv már nem elérhető el!"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Print"
 msgstr "Nyomtatás"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:506
 msgid "Record Audio / Stop Recording"
 msgstr "Hangfelvétel indítása/leállítása"
 
-#: ../src/core/control/Control.cpp:924
+#: ../src/core/control/Control.cpp:966
 msgid "Recorder could not be started."
 msgstr "A felvételt nem sikerült elindítani."
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
-#: ../src/core/undo/UndoRedoHandler.cpp:215
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/core/undo/UndoRedoHandler.cpp:220
 msgid "Redo"
 msgstr "Ismétlés"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:210
+#: ../src/core/undo/UndoRedoHandler.cpp:215
 msgid "Redo: "
 msgstr "Ismétlés: "
 
-#: ../src/core/control/Control.cpp:2105
+#: ../src/core/control/Control.cpp:2232
 msgid "Remove PDF Background"
 msgstr "PDF-háttér eltávolítása"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "Eszköz eltávolítva a(z) {1} ID {2} eszköztárról"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:162
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "Eszköz {1} eltávolítva a(z) {2} ID {3} eszköztárról"
 
-#: ../src/core/undo/LayerRenameUndoAction.cpp:15
+#: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
 msgstr "Réteg átnevezése"
 
-#: ../src/util/XojMsgBox.cpp:77
+#: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
 msgstr "Csere"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1074
+#: ../src/core/control/xojfile/LoadHandler.cpp:1106
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "A(z) {1} melléklethez kért ideiglenes fájl nem található"
 
-#: ../src/core/control/XournalMain.cpp:206
+#: ../src/core/control/XournalMain.cpp:219
 msgid "Restore file"
 msgstr "Fájlt helyreállítása"
 
-#: ../src/core/undo/RotateUndoAction.cpp:50
+#: ../src/core/undo/RotateUndoAction.cpp:56
 msgid "Rotation"
 msgstr "Forgatás"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Rotation Snapping"
 msgstr "Forgatás igazítása"
 
@@ -1064,153 +1100,153 @@ msgstr "Vonalas"
 msgid "Ruled with vertical line"
 msgstr "Vonalas vertikális vonallal"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:24
+#: ../src/core/control/jobs/CustomExportJob.cpp:28
 msgid "SVG graphics"
 msgstr "SVG ábra"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
-msgstr "A LaTeX-mintafájl sikeresen generálva."
+msgstr "A LaTeX-mintafájl sikeresen létrehozva."
 
-#: ../src/core/control/Control.cpp:2560 ../src/core/control/jobs/SaveJob.cpp:15
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+#: ../src/core/control/Control.cpp:2696 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Save"
 msgstr "Mentés"
 
-#: ../src/core/control/Control.cpp:2560
+#: ../src/core/control/Control.cpp:2696
 msgid "Save As..."
 msgstr "Mentés másként..."
 
-#: ../src/core/control/Control.cpp:2394
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/core/control/Control.cpp:2530
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Fájl mentése"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:123
-#: ../src/core/control/jobs/SaveJob.cpp:115
+#: ../src/core/control/jobs/CustomExportJob.cpp:127
+#: ../src/core/control/jobs/SaveJob.cpp:127
 msgid "Save file error: {1}"
 msgstr "Hiba történt a fájl mentése közben: {1}"
 
-#: ../src/core/undo/ScaleUndoAction.cpp:55
+#: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
 msgstr "Méretezés"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Search"
 msgstr "Keresés"
 
-#: ../src/core/gui/dialog/AboutDialog.cpp:35
+#: ../src/core/gui/dialog/AboutDialog.cpp:39
 msgid "See the full list of contributors"
 msgstr "A közreműködők teljes listája"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
 msgid "Select Area Text from pdf"
 msgstr "Területszöveg kijelölése PDF-fájlból"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
 msgid "Select Font"
 msgstr "Betűkészlet kijelölése"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:466
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:22
 msgid "Select Linear PDF Text"
 msgstr "Lineáris PDF-szöveg kijelölése"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:74
 msgid "Select Object"
 msgstr "Objektum kijelölése"
 
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
 msgstr "PDF-területszöveg kijelölése"
 
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
 msgstr "PDF-szöveg kijelölése"
 
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
 msgstr "PDF-szöveg kijelölése téglalapban"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Select PDF Text in Rectangle"
 msgstr "PDF-szöveg kijelölése téglalapban"
 
-#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
+#: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
 msgstr "PDF-szöveg kijelölése"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:62
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:95
 msgid "Select Rectangle"
 msgstr "Téglalap alakú kijelölése"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:68
 msgid "Select Region"
 msgstr "Terület kijelölése"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
 msgid "Select Text from pdf"
 msgstr "Szöveg kijelölése PDF-fájlból"
 
-#: ../src/core/control/Control.cpp:2104
+#: ../src/core/control/Control.cpp:2231
 msgid "Select another PDF"
 msgstr "Másik PDF kijelölése"
 
-#: ../src/util/XojMsgBox.cpp:76
+#: ../src/util/XojMsgBox.cpp:81
 msgid "Select another name"
 msgstr "Másik név kijelölése"
 
-#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:101
+#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:106
 msgid "Select background color"
 msgstr "Háttérszín kijelölése"
 
-#: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:83
+#: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:85
 msgid "Select color"
 msgstr "Szín kijelölése"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
 msgid "Select rectangle"
 msgstr "Téglalap alakú kijelölése"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select region"
 msgstr "Terület kijelölése"
 
-#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
+#: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Selection Combo"
 msgstr "Kombinált kijelölés"
 
-#: ../src/core/control/XournalMain.cpp:160
+#: ../src/core/control/XournalMain.cpp:173
 msgid "Send Bugreport"
 msgstr "Hibabejelentés"
 
-#: ../src/core/control/tools/EditSelection.cpp:395
+#: ../src/core/control/tools/EditSelection.cpp:404
 msgid "Send backward"
 msgstr "Hátrébb küldés"
 
-#: ../src/core/control/tools/EditSelection.cpp:403
+#: ../src/core/control/tools/EditSelection.cpp:412
 msgid "Send to back"
 msgstr "Hátraküldés"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:63
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:72
 msgid "Separator"
 msgstr "Elválasztó"
 
-#: ../src/core/control/XournalMain.cpp:607
+#: ../src/core/control/XournalMain.cpp:654
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "DPI beállítása PNG exportokhoz. Az alapértelmezett érték 300\n"
 "                                 nincs hatása -i/--create-img=foo.png nélkül"
 
-#: ../src/core/control/XournalMain.cpp:617
+#: ../src/core/control/XournalMain.cpp:664
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1218,7 +1254,7 @@ msgstr "Oldalmagasság beállítása PNG exportokhoz\n"
 "                                 Nincs hatása -i/--create-img=foo.png nélkül\n"
 "                                 Figyelmen kívül hagyva ha --export-png-dpi vagy --export-png-width használatban van"
 
-#: ../src/core/control/XournalMain.cpp:611
+#: ../src/core/control/XournalMain.cpp:658
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1226,33 +1262,33 @@ msgstr "Oldalszélesség beállítása PNG exportokhoz\n"
 "                                 Nincs hatása -i/--create-img=foo.png nélkül\n"
 "                                 Figyelmen kívül hagyva ha --export-png-dpi használatban van"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Setsquare"
 msgstr "Háromszögű vonalzó"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Shape Recognizer"
 msgstr "Alakzatfelismerő"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:67
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:76
 msgid "Show all"
 msgstr "Összes megjelenítése"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:102
 msgid "Show only not used pages (one unused page)"
 msgstr "Nem használt oldalak megjelenítése (egy nem használt oldal)"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Nem használt oldalak megjelenítése ({1} nem használt oldal)"
 
-#: ../src/core/control/XournalMain.cpp:445
+#: ../src/core/control/XournalMain.cpp:482
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Elnézést, a Xournal++ egyszerre csak egy fájlt tud megnyitni.\n"
 "A további fájlok figyelmen kívül hagyva."
 
-#: ../src/core/control/XournalMain.cpp:460
+#: ../src/core/control/XournalMain.cpp:497
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "Elnézést, a Xournal++ jelenleg nem tud távoli fájlokat megnyitni.\n"
@@ -1262,248 +1298,250 @@ msgstr "Elnézést, a Xournal++ jelenleg nem tud távoli fájlokat megnyitni.\n"
 msgid "Staves"
 msgstr "Kottavonalas"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:511
 msgid "Stop"
 msgstr "Leállítás"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:44
-#: ../src/core/undo/RecognizerUndoAction.cpp:69
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
+#: ../src/core/undo/RecognizerUndoAction.cpp:76
 msgid "Stroke recognizer"
 msgstr "Vonalfelismerő"
 
-#: ../src/core/control/CrashHandler.cpp:40
+#: ../src/core/control/CrashHandler.cpp:39
 msgid "Successfully saved document to \"{1}\""
 msgstr "Sikeresen elmentett dokumentum „{1}”"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:93
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
 msgid "Supported files"
 msgstr "Támogatott fájltípusok"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:76
 msgid "Swap the current layer with the one above"
 msgstr "Jelenlegi réteg megcserélése a felette levővel"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:77
 msgid "Swap the current layer with the one below"
 msgstr "Jelenlegi réteg megcserélése az alatta levővel"
 
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
 msgid "Swap the current page with the one above"
 msgstr "Jelenlegi oldal megcserélése a felette levővel"
 
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
 msgid "Swap the current page with the one below"
 msgstr "Jelenlegi oldal megcserélése az alatta levővel"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:40
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:46
 msgid "System Default"
 msgstr "Alapértelmezett"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Text"
 msgstr "Szöveg"
 
-#: ../src/core/gui/SearchBar.cpp:66
+#: ../src/core/gui/SearchBar.cpp:75
 #, c-format
-msgid "Text %i times found on this page"
-msgstr "A szöveg %i alkalommal fordul elő ezen az oldalon"
+msgid "Text %zu times found on this page"
+msgstr ""
 
-#: ../src/core/undo/TextUndoAction.cpp:31
+#: ../src/core/undo/TextUndoAction.cpp:35
 msgid "Text changes"
 msgstr "Szövegváltozások"
 
-#: ../src/core/gui/SearchBar.cpp:64
+#: ../src/core/gui/SearchBar.cpp:73
 msgid "Text found on this page"
 msgstr "A keresett szöveg megtalálható ezen az oldalon"
 
-#: ../src/core/gui/SearchBar.cpp:122 ../src/core/gui/SearchBar.cpp:166
+#: ../src/core/gui/SearchBar.cpp:129
 msgid "Text found once on page {1}"
 msgstr "A keresett szöveg egyszer megtalálható a(z) {1} oldalon"
 
-#: ../src/core/gui/SearchBar.cpp:123 ../src/core/gui/SearchBar.cpp:167
+#: ../src/core/gui/SearchBar.cpp:130
 msgid "Text found {1} times on page {2}"
 msgstr "A keresett szöveg {1} alkalommal található meg a(z) {2} oldalon"
 
-#: ../src/core/gui/SearchBar.cpp:71
+#: ../src/core/gui/SearchBar.cpp:80
 msgid "Text not found"
 msgstr "A keresett szöveg nem található"
 
-#: ../src/core/gui/SearchBar.cpp:133 ../src/core/gui/SearchBar.cpp:177
+#: ../src/core/gui/SearchBar.cpp:135
 msgid "Text not found, searched on all pages"
 msgstr "A keresett szöveg nem található egyik oldalon sem"
 
-#: ../src/core/control/Control.cpp:1144
+#: ../src/core/control/Control.cpp:1186
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Az eszköztárbeállítás \"{1}\" rögzítve van, szeretne belőle egy módosítható másolatot készíteni?"
 
-#: ../src/core/control/Control.cpp:2093
-msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
-"It was last seen at: {2}"
-msgstr "A mellékelt háttérfájl {1} nem található. Lehetséges, hogy áthelyezték, átnevezték vagy törölték.\n"
-"Legutóbb az alábbi helyen volt megtalálható: {2}"
+#: ../src/core/control/Control.cpp:2208
+msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
+msgstr "A csatolt háttérfájl nem található. Lehet, hogy áthelyezték, átnevezték vagy törölték."
 
-#: ../src/core/control/Control.cpp:2097
-msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
-"It was last seen at: {2}"
-msgstr "A háttérfájl {1} nem található. Lehetséges, hogy áthelyezték, átnevezték vagy törölték.\n"
-"Legutóbb az alábbi helyen volt megtalálható: {2}"
+#: ../src/core/control/Control.cpp:2211
+msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
+"It was last seen at: \"{2}\""
+msgstr "A(z) {1}-háttérfájl nem található. Lehet, hogy áthelyezték, átnevezték vagy törölték.\n"
+"Utoljára itt látták: {2}"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:46
+#: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
 msgstr "A háttér felülírásának ellenőrzése sikertelen volt:\n"
 
-#: ../src/core/control/Control.cpp:2136
+#: ../src/core/control/Control.cpp:2272
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "A betöltendő fájl fájlformátumának verziója újabb, mint a Xournal++ jelen verziója által jelenleg támogatott, ezért előfordulhat, hogy nem töltődik be megfelelően. Megnyitás mégis?"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:119
+#: ../src/core/control/xojfile/LoadHandler.cpp:132
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "A fájl nem érvényes .xopp fájl (hiányzó mimetípus): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:127
+#: ../src/core/control/xojfile/LoadHandler.cpp:140
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "A fájl nem érvényes .xopp fájl (hibás mimetípus): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:136
+#: ../src/core/control/xojfile/LoadHandler.cpp:149
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "A fájl nem érvényes .xopp fájl (hiányzó verzió): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:149
+#: ../src/core/control/xojfile/LoadHandler.cpp:162
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "A fájl nem érvényes .xopp fájl (a verzió karakterlánca sérült): „{1}”"
 
-#: ../src/core/control/LatexController.cpp:240
+#: ../src/core/control/LatexController.cpp:301
 msgid "The formula is empty when rendered or invalid."
 msgstr "A képlet üres, vagy érvénytelen."
 
-#: ../src/core/control/XournalMain.cpp:155
+#: ../src/core/control/XournalMain.cpp:168
 msgid "The most recent log file name: {1}"
 msgstr "A legfrissebb eseménynapló neve: {1}"
 
-#: ../src/core/control/XournalMain.cpp:150
+#: ../src/core/control/XournalMain.cpp:163
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "A Xournal++ hibanaplókat mentett. Kérem írjon hibajelentést, hogy a hibákat kijavíthassuk."
 
-#: ../src/core/control/XournalMain.cpp:149
+#: ../src/core/control/XournalMain.cpp:162
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "A Xournal++ hibanaplót mentett. Kérem írjon hibajelentést, hogy a hibákat kijavíthassuk."
 
-#: ../src/util/XojMsgBox.cpp:95
+#: ../src/util/XojMsgBox.cpp:100
 msgid "There was an error displaying help: {1}"
 msgstr "Hiba a súgó megjelenítésekor: {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:551
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:566
 msgid "Thick"
 msgstr "Vastag"
 
-#: ../src/core/control/Control.cpp:2559
+#: ../src/core/control/Control.cpp:2695
 msgid "This document is not saved yet."
 msgstr "Ez a dokumentum még nincs elmentve."
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:144
+#: ../src/core/control/PageBackgroundChangeController.cpp:161
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "A kép betöltése nem sikerült. Hibaüzenet: {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Toggle fullscreen"
 msgstr "Teljes képernyőre váltás"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Tool - don't change"
 msgstr "Eszköz - ne változzon"
 
-#: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:102
+#: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
 msgstr "Eszköztár megtalálva: {1}"
 
-#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:44
+#: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
 msgstr "Eszköztárak"
 
-#: ../src/core/control/CrashHandler.cpp:29
+#: ../src/core/control/CrashHandler.cpp:28
 msgid "Trying to emergency save the current open document…"
 msgstr "Megkíséreljük menteni az éppen megnyitott dokumentumot…"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nem lehet megnyitni a globális sablonfájlt itt: {1}. Létezik?"
 
-#: ../src/core/gui/PageView.cpp:378
+#: ../src/core/gui/PageView.cpp:427
 msgid "Unable to play audio recording {1}"
 msgstr "Nem sikerült a hangfelvétel lejátszása: {1}"
 
-#: ../src/core/control/Control.cpp:1368
+#: ../src/core/control/Control.cpp:1410
 msgid "Unable to retrieve pdf page."
 msgstr "Nem sikerült a PDF-oldal lekérése."
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
-#: ../src/core/undo/UndoRedoHandler.cpp:203
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
+#: ../src/core/undo/UndoRedoHandler.cpp:208
 msgid "Undo"
 msgstr "Visszavonás"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:198
+#: ../src/core/undo/UndoRedoHandler.cpp:203
 msgid "Undo: "
 msgstr "Visszavonás: "
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:295
+#: ../src/core/control/xojfile/LoadHandler.cpp:308
 msgid "Unexpected root tag: {1}"
 msgstr "Váratlan gyökércímke: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:316
+#: ../src/core/control/xojfile/LoadHandler.cpp:329
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Váratlan címke a dokumentumban: „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:500
+#: ../src/core/control/xojfile/LoadHandler.cpp:532
 msgid "Unknown background type: {1}"
 msgstr "Ismeretlen háttértípus: {1}"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
 msgid "Unknown color value \"{1}\""
 msgstr "Ismeretlen színérték: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:456
+#: ../src/core/control/xojfile/LoadHandler.cpp:488
 msgid "Unknown domain type: {1}"
 msgstr "Ismeretlen tartománytípus: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:235
+#: ../src/core/control/xojfile/LoadHandler.cpp:248
 msgid "Unknown parser error"
-msgstr "Ismeretlen értelmezőhiba történt"
+msgstr "Ismeretlen elemzési hiba történt"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:405
+#: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Ismeretlen pixmap::domain típus: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:592
+#: ../src/core/control/xojfile/LoadHandler.cpp:624
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Ismeretlen vonásírásvégtípus: „{1}”, kereket feltételezve"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:610
+#: ../src/core/control/xojfile/LoadHandler.cpp:642
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Ismeretlen vonásírás típusa: „{1}”, tollat feltételezve"
 
-#: ../src/core/control/Control.cpp:2451
+#: ../src/core/control/Control.cpp:2587
 msgid "Unsaved Document"
 msgstr "Nem mentett dokumentum"
 
-#: ../src/core/control/jobs/ImageExport.cpp:85
+#: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
 msgstr "Nem támogatott grafikus formátum: "
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
+#: ../src/core/control/Control.cpp:2229
+msgid "Use proposed PDF"
+msgstr "Használja a javasolt PDF-fájlt"
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
 msgid "Vertical Space"
 msgstr "Függőleges térköz"
 
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Vertical space"
 msgstr "Függőleges térköz"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:563
 msgid "Very Fine"
 msgstr "Nagyon vékony"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:552
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:567
 msgid "Very Thick"
 msgstr "Nagyon vastag"
 
@@ -1511,55 +1549,55 @@ msgstr "Nagyon vastag"
 msgid "With PDF background"
 msgstr "PDF-háttérrel"
 
-#: ../src/core/undo/InsertUndoAction.cpp:31
+#: ../src/core/undo/InsertUndoAction.cpp:35
 msgid "Write text"
 msgstr "Szöveg írása"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:931
+#: ../src/core/control/xojfile/LoadHandler.cpp:963
 msgid "Wrong count of points ({1})"
 msgstr "Hibás pontszám ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:941
+#: ../src/core/control/xojfile/LoadHandler.cpp:973
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Rossz számú pont, {1} kapott, várható: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:232
+#: ../src/core/control/xojfile/LoadHandler.cpp:245
 msgid "XML Parser error: {1}"
-msgstr "XML-elemzőhiba történt: {1}"
+msgstr "XML-elemzési hiba történt: {1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:25
+#: ../src/core/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (kompatibilitás)"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:51
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
 msgid "Xournal files"
 msgstr "Xournal fájlok"
 
-#: ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/XournalMain.cpp:213
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "A Xournal++ legutóbb összeomlott. Szeretné visszaállítani az utoljára szerkesztett fájlt?"
 
-#: ../src/core/control/Control.cpp:2400
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/core/control/Control.cpp:2536
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ fájlok"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:65
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:83
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:91
 msgid "Xournal++ template"
 msgstr "Xournal++ sablon"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:179
+#: ../src/core/control/PageBackgroundChangeController.cpp:196
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "Nincsenek PDF-oldalak, amelyek közül választhat. A művelet megszakítása.\n"
 "Kérjük, válasszon másik háttértípust: Menü „Napló” → „Oldalsablon beállítása”."
 
-#: ../src/core/control/XournalMain.cpp:152
+#: ../src/core/control/XournalMain.cpp:165
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr "Ön a(z) „{1}/{2}” ágat használja. A hibajelentés küldése a lerakat hibakövetőjéhez irányítja."
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:77
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:87
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
@@ -1567,184 +1605,184 @@ msgstr "Jelenlegi napló nem tartalmaz PDF-oldalszámot: {1}\n"
 "Szeretné beszúrni ezt az oldalt?\n\n"
 "Tipp: PDF-oldal beszúrásához válassza a Napló → Papírháttér → PDF-háttérrel lehetőséget."
 
-#: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:131
+#: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
 msgstr "Nagyítócsúszka"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Zoom fit to screen"
 msgstr "Képernyőhöz igazítás"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Zoom in"
 msgstr "Nagyítás"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Zoom to 100%"
 msgstr "Tényleges méret"
 
-#: ../src/core/control/Control.cpp:2394
-#: ../src/core/control/jobs/BaseExportJob.cpp:18
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
+#: ../src/core/control/Control.cpp:2530
+#: ../src/core/control/jobs/BaseExportJob.cpp:24
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Cancel"
 msgstr "_Mégse"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:12
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:13
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 msgid "_Open"
 msgstr "_Megnyitás…"
 
-#: ../src/core/control/Control.cpp:2395
-#: ../src/core/control/jobs/BaseExportJob.cpp:18
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
+#: ../src/core/control/Control.cpp:2531
+#: ../src/core/control/jobs/BaseExportJob.cpp:24
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
 msgstr "M_entés"
 
-#: ../src/core/control/DeviceListHelper.cpp:98
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
 msgstr "kurzor"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:265
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
 msgid "dash-/ dotted"
 msgstr "szaggatott/pontozott"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:262
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:277
 msgid "dashed"
 msgstr "szaggatott"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default disabled"
 msgstr "alapértelmezetten tiltva"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default enabled"
 msgstr "alapértelmezetten engedélyezve"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:295
 msgid "delete stroke"
 msgstr "vonásírás törlése"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:268
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
 msgid "dotted"
 msgstr "pontozott"
 
-#: ../src/core/undo/AddUndoAction.cpp:65
-#: ../src/core/undo/DeleteUndoAction.cpp:63
+#: ../src/core/undo/AddUndoAction.cpp:74
+#: ../src/core/undo/DeleteUndoAction.cpp:72
 msgid "elements"
 msgstr "elemek"
 
-#: ../src/core/control/DeviceListHelper.cpp:96
+#: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
 msgstr "radír"
 
-#: ../src/core/control/Control.cpp:2065
+#: ../src/core/control/Control.cpp:2160
 msgid "file: {1}"
 msgstr "fájl: {1}"
 
-#: ../src/core/undo/AddUndoAction.cpp:76
-#: ../src/core/undo/DeleteUndoAction.cpp:74
+#: ../src/core/undo/AddUndoAction.cpp:85
+#: ../src/core/undo/DeleteUndoAction.cpp:83
 msgid "image"
 msgstr "kép"
 
-#: ../src/core/control/DeviceListHelper.cpp:101
+#: ../src/core/control/DeviceListHelper.cpp:104
 msgid "keyboard"
 msgstr "billentyűzet"
 
-#: ../src/core/undo/AddUndoAction.cpp:79
-#: ../src/core/undo/DeleteUndoAction.cpp:77
+#: ../src/core/undo/AddUndoAction.cpp:88
+#: ../src/core/undo/DeleteUndoAction.cpp:86
 msgid "latex"
 msgstr "latex"
 
-#: ../src/core/control/DeviceListHelper.cpp:92
+#: ../src/core/control/DeviceListHelper.cpp:95
 msgid "mouse"
 msgstr "egér"
 
-#: ../src/core/control/DeviceListHelper.cpp:94
+#: ../src/core/control/DeviceListHelper.cpp:97
 msgid "pen"
 msgstr "toll"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:153
 msgid "show"
 msgstr "megjelenítés"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:259
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:278
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:274
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
 msgid "standard"
 msgstr "szabványos"
 
-#: ../src/core/undo/AddUndoAction.cpp:73
-#: ../src/core/undo/DeleteUndoAction.cpp:71
+#: ../src/core/undo/AddUndoAction.cpp:82
+#: ../src/core/undo/DeleteUndoAction.cpp:80
 msgid "stroke"
 msgstr "vonásírás"
 
-#: ../src/core/control/DeviceListHelper.cpp:110
+#: ../src/core/control/DeviceListHelper.cpp:113
 msgid "tablet pad"
 msgstr "grafikai tablet"
 
-#: ../src/core/undo/AddUndoAction.cpp:82
-#: ../src/core/undo/DeleteUndoAction.cpp:80
+#: ../src/core/undo/AddUndoAction.cpp:91
+#: ../src/core/undo/DeleteUndoAction.cpp:89
 msgid "text"
 msgstr "szöveg"
 
-#: ../src/core/control/DeviceListHelper.cpp:105
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchpad"
 msgstr "touchpad"
 
-#: ../src/core/control/DeviceListHelper.cpp:103
+#: ../src/core/control/DeviceListHelper.cpp:106
 msgid "touchscreen"
 msgstr "érintőképernyő"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:111
 msgid "trackpoint"
 msgstr "trackpoint"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:279
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:294
 msgid "whiteout"
 msgstr "kifehéredés"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:940
+#: ../src/core/control/xojfile/LoadHandler.cpp:972
 msgid "xoj-File: {1}"
 msgstr "xoj-fájl: {1}"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:113
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr "xoj-preview-extractor: hívása INPUT.xoj-jal és OUTPUT.png-vel"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:177
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: nem található az ikon \"{1}\""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr "xoj-preview-extractor: a fájl \"{1}\" nem tartalmaz előnézetet"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:126
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: a fájl \"{1}\" nem .xoj fájl"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:139
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: nem található előnézet és oldal, talán érvénytelen a fájl?"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:130
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr "xoj-preview-extractor: a bemeneti fájl \"{1}\" megnyitása sikertelen"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:194
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: a kimeneti fájl \"{1}\" megnyitása sikertelen"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:201
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:209
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: sikeresen kibontva"
 
-#: ../src/util/PathUtil.cpp:247
+#: ../src/util/PathUtil.cpp:255
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
@@ -1752,7 +1790,7 @@ msgstr "xournalpp-{1}"
 msgid " = Floating Toolbox (experimental) ="
 msgstr " = Lebegő eszköztár (kísérleti) ="
 
-#: ../ui/settings.glade:3923 ../ui/settings.glade:3934
+#: ../ui/settings.glade:3981 ../ui/settings.glade:3992
 msgid "%"
 msgstr "%"
 
@@ -1760,15 +1798,15 @@ msgstr "%"
 msgid "% greater than the initial distance between the two touches."
 msgstr "% nagyobb mint az érintések közötti kezdeti távolság."
 
-#: ../ui/latexSettings.glade:188
+#: ../ui/latexSettings.glade:217
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr "%%XPP_TEXT_COLOR%%"
 
-#: ../ui/latexSettings.glade:127
+#: ../ui/latexSettings.glade:180
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
-#: ../ui/settings.glade:5003
+#: ../ui/settings.glade:5061
 msgid "%."
 msgstr "%."
 
@@ -1820,7 +1858,11 @@ msgstr "%a\t\tRövidített hétköznap (pl. K)\n"
 "%Z\t\tIdőzóna neve vagy rövidítése (pl CDT)\n"
 "%%\t\tSzázalék"
 
-#: ../ui/settings.glade:4843
+#: ../ui/settings.glade:2963
+msgid "(requires restart)"
+msgstr "(újraindítás szükséges)"
+
+#: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr "... ÉS mennyi idő telt el az utolsó vonalhúzás között.\n"
@@ -1834,7 +1876,7 @@ msgstr "0,4"
 msgid "0,50"
 msgstr "0,50"
 
-#: ../ui/settings.glade:4987
+#: ../ui/settings.glade:5045
 msgid "0.00"
 msgstr "0.00"
 
@@ -1842,7 +1884,7 @@ msgstr "0.00"
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:5634
+#: ../ui/settings.glade:5692
 msgid "1,00"
 msgstr "1,00"
 
@@ -1858,7 +1900,7 @@ msgstr "1.0"
 msgid "20"
 msgstr "20"
 
-#: ../ui/settings.glade:3175
+#: ../ui/settings.glade:3233
 msgid "30"
 msgstr "30"
 
@@ -1886,7 +1928,7 @@ msgstr "<b>Szín</b>"
 msgid "<b>Default Tools</b>"
 msgstr "<b>Alapértelmezett eszközök</b>"
 
-#: ../ui/settings.glade:5180
+#: ../ui/settings.glade:5238
 msgid "<b>Default</b>"
 msgstr "<b>Alapértelmezett</b>"
 
@@ -1924,11 +1966,11 @@ msgstr "<b>Elválasztó</b>"
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr "<i>Rendeljen eszközosztályokat a rendszer minden egyes bemeneti eszközéhez. Csak akkor módosítsa ezeket az értékeket, ha az eszközök nincsenek megfelelően illesztve. (pl. a toll érintőképernyőként jelenik meg)</i>"
 
-#: ../ui/settings.glade:5271
+#: ../ui/settings.glade:5329
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>A hangfelvételek jelenleg egy külön mappában vannak tárolva, és a naplóból hivatkoznak rájuk.</i>"
 
-#: ../ui/settings.glade:5689
+#: ../ui/settings.glade:5747
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>A változtatások csak az új felvételekre és lejátszásokra vonatkoznak.</i>"
 
@@ -1950,7 +1992,7 @@ msgid "<i>If the document already was saved you can find it in the same folder w
 msgstr "<i>Ha a dokumentumot már elmentették, akkor ugyanabban a mappában található .autosave.xoj fájlkiterjesztéssel\n"
 "Ha a fájl még nincs elmentve, akkor a ~/.cache/xournalpp/autosaves mappában található.</i>"
 
-#: ../ui/settings.glade:4163
+#: ../ui/settings.glade:4221
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Ha további helyet ad az oldalak mellé, kijelölheti a képernyő azon területét, amelyen dolgozni szeretne.</i>"
 
@@ -1966,21 +2008,21 @@ msgstr "<i>Bemeneti stabilizációs algoritmus kijelölése és paraméterei</i>
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr "<i>A nyomásérzékenység lehetővé teszi, hogy különböző szélességű vonalakat rajzoljon, attól függően, hogy mekkora nyomást gyakorol a tollra. Ha táblagépe nem támogatja ezt a funkciót, ennek a beállításnak nincs hatása.</i>"
 
-#: ../ui/settings.glade:4010
+#: ../ui/settings.glade:4068
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Helyezzen egy vonalzót a képernyőre, és mozgassa a csúszkát, amíg a két vonalzó megegyezik.</i>"
 
-#: ../ui/settings.glade:4946
+#: ../ui/settings.glade:5004
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr "<i>A jobb megjelenítési minőség érdekében nagyítás közben gyakrabban jelenítse meg újra a PDF-háttereket.\n"
 "<b>Megjegyzés:</b> Ez nem befolyásolja a nyomtatás minőségét.</i>"
 
-#: ../ui/settings.glade:5798
+#: ../ui/settings.glade:5856
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>Nyelv kiválasztása (újraindítás szükséges)</i>"
 
-#: ../ui/settings.glade:5126
+#: ../ui/settings.glade:5184
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Eszköz és beállítások kijelölése az Alapértelmezett gomb megnyomásakor.</i>"
 
@@ -1992,7 +2034,7 @@ msgstr "<i>Egyes eszközök váratlanul kicsi vagy nagy nyomást jeleznek. Ez a 
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>Adja meg azokat a parancsokat, amelyeket a kézfelismerés indításakor hívnak meg. A parancsok a felhasználói felület szálában kerülnek végrehajtásra, győződjön meg arról, hogy nem zárról!</i>"
 
-#: ../ui/settings.glade:5382
+#: ../ui/settings.glade:5440
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Adja meg a hangmellékletek rögzítéséhez és lejátszásához használt hangeszközöket.\n"
@@ -2006,7 +2048,7 @@ msgstr "<i>Adja meg azokat az eszközöket, amelyek a mutató valamelyik gombjá
 msgid "<i>This name will be proposed if you save a new document.</i>"
 msgstr "<i>A rendszer ezt a nevet javasolja, ha új dokumentumot ment el.</i>"
 
-#: ../ui/settings.glade:3989
+#: ../ui/settings.glade:4047
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
 msgstr "<i>A tényleges méret megtekintésekor az elemek mérete természetes. (újraindítás szükséges)</i>"
 
@@ -2030,7 +2072,7 @@ msgstr "<i>Bizonyos beállításokkal a tollvonások elején műtermékek vannak
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>A GTK által nem érintőképernyőként azonosított eszközöket beállíthatja úgy, hogy azok úgy viselkedjenek, mintha azok lennének.</i>"
 
-#: ../ui/about.glade:203
+#: ../ui/about.glade:206
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2040,19 +2082,19 @@ msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 msgid "About Xournal++"
 msgstr "A Xournal++ névjegye"
 
-#: ../ui/settings.glade:4915
+#: ../ui/settings.glade:4973
 msgid "Action on Tool Tap"
 msgstr "Eszközkoppintás művelete"
 
-#: ../ui/settings.glade:4216
+#: ../ui/settings.glade:4274
 msgid "Add additional horizontal space of"
 msgstr "További vízszintes terület hozzáadása:"
 
-#: ../ui/settings.glade:4194
+#: ../ui/settings.glade:4252
 msgid "Add additional vertical space of"
 msgstr "További függőleges terület hozzáadása:"
 
-#: ../ui/settings.glade:4519
+#: ../ui/settings.glade:4577
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "Egy kijelölés átméretezése után az összes vonásírási szélessége megegyezik az átméretezés előttivel. "
 
@@ -2064,7 +2106,7 @@ msgstr "Mind"
 msgid "All pages"
 msgstr "Minden oldal"
 
-#: ../ui/settings.glade:4880
+#: ../ui/settings.glade:4938
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "A vonásírás figyelmen kívül hagyása előtt mindhárom feltételnek teljesülnie kell.\n"
@@ -2074,7 +2116,7 @@ msgstr "A vonásírás figyelmen kívül hagyása előtt mindhárom feltételnek
 msgid "Always check LaTeX dependencies before running"
 msgstr "Mindig ellenőrizze a LaTeX függőségeit a futtatás előtt"
 
-#: ../ui/main.glade:1215
+#: ../ui/main.glade:1216
 msgid "Append New PDF Pages"
 msgstr "Új PDF-oldalak hozzáfűzése"
 
@@ -2086,11 +2128,11 @@ msgstr "Számtani közep"
 msgid "Artifact workaround"
 msgstr "Műtermékek megoldása"
 
-#: ../ui/settings.glade:5478
+#: ../ui/settings.glade:5536
 msgid "Audio Devices"
 msgstr "Hangeszközök"
 
-#: ../ui/settings.glade:5721
+#: ../ui/settings.glade:5779
 msgid "Audio Recording"
 msgstr "Hangfelvétel"
 
@@ -2098,9 +2140,13 @@ msgstr "Hangfelvétel"
 msgid "Author: "
 msgstr "Szerző(k): "
 
-#: ../ui/about.glade:449
+#: ../ui/about.glade:452
 msgid "Authors"
 msgstr "Szerzők"
+
+#: ../ui/latexSettings.glade:447
+msgid "Auto-indent"
+msgstr "Önműködő behúzás"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2122,32 +2168,32 @@ msgstr "Elérhető helyőrzők"
 msgid "Averaging method"
 msgstr "Átlagoló módszer"
 
-#: ../ui/settings.glade:2842
+#: ../ui/settings.glade:2847
 msgid "Background color between pages"
 msgstr "Háttérszín az oldalak között"
 
-#: ../ui/settings.glade:3478
+#: ../ui/settings.glade:3536
 msgid "Base speed"
 msgstr "Alapsebesség"
 
-#: ../ui/settings.glade:3025
+#: ../ui/settings.glade:3083
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr "Nagy toll ikonra"
 
-#: ../ui/settings.glade:3230
+#: ../ui/settings.glade:3288
 msgid "Border Color"
 msgstr "Szegélyszín"
 
-#: ../ui/settings.glade:3191
+#: ../ui/settings.glade:3249
 msgid "Border Width"
 msgstr "Szegélyszélesség"
 
-#: ../ui/settings.glade:2831
+#: ../ui/settings.glade:2836
 msgid "Border color"
 msgstr "Szegélyszín"
 
-#: ../ui/settings.glade:2816
+#: ../ui/settings.glade:2821
 msgid "Border color for current page and other selections"
 msgstr "Szegélyszín a jelenlegi oldalhoz és többi kijelöléséhez"
 
@@ -2163,7 +2209,7 @@ msgstr "Előrehozás"
 msgid "Buffersize"
 msgstr "Pufferméret"
 
-#: ../ui/about.glade:99
+#: ../ui/about.glade:100
 msgid "Built on"
 msgstr "Készítési időpont"
 
@@ -2179,27 +2225,35 @@ msgstr "2. gomb"
 msgid "Change"
 msgstr "Módosítás"
 
-#: ../ui/latexSettings.glade:176
+#: ../ui/latexSettings.glade:205
 msgid "Choose a global LaTeX template file"
 msgstr "Válasszon ki egy globális LaTeX-sablonfájlt"
 
-#: ../ui/settings.glade:3073 ../ui/settings.glade:3216
+#: ../ui/settings.glade:3131 ../ui/settings.glade:3274
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr "Válassza ki a „Kurzor pozíciójának kiemeléséhez” használandó színt"
 
-#: ../ui/settings.glade:3087
+#: ../ui/settings.glade:3145
 msgid "Circle Color"
 msgstr "Kör színe"
 
-#: ../ui/settings.glade:3754
+#: ../ui/settings.glade:3812
 msgid "Clear cached paged while scrolling"
 msgstr "Gyorsítótárazott oldalak törlése görgetés közben"
 
-#: ../ui/settings.glade:2952
+#: ../ui/settings.glade:2949
+msgid "Color"
+msgstr "Szín"
+
+#: ../ui/settings.glade:3010
 msgid "Colors"
 msgstr "Színek"
 
-#: ../ui/main.glade:1225
+#: ../ui/texdialog.glade:163
+msgid "Command Output"
+msgstr "Parancskimenet"
+
+#: ../ui/main.glade:1226
 msgid "Configure Page Template"
 msgstr "Oldalsablon beállítása"
 
@@ -2215,7 +2269,7 @@ msgstr "Jelenlegi oldal hátterének másolása"
 msgid "Copy current page size instead"
 msgstr "Másolja a jelenlegi oldalméretet helyette"
 
-#: ../ui/main.glade:2707
+#: ../ui/main.glade:2708
 msgid "Copy selected text"
 msgstr "Kijelölt szöveg másolása"
 
@@ -2227,11 +2281,11 @@ msgstr "Másolja a jelenlegi oldal hátterét a fenti háttérkészlet használa
 msgid "Current page"
 msgstr "Jelenlegi oldal"
 
-#: ../ui/settings.glade:3273
+#: ../ui/settings.glade:3331
 msgid "Cursor"
 msgstr "Kurzor"
 
-#: ../ui/settings.glade:3007
+#: ../ui/settings.glade:3065
 msgid "Cursor icon for pen"
 msgstr "Kurzor ikon a tollhoz"
 
@@ -2243,7 +2297,7 @@ msgstr "Csücsökérzékelés"
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Egyéni parancsok (az „Egyéni” módszerhez)"
 
-#: ../ui/settings.glade:2890
+#: ../ui/settings.glade:2895
 msgid "Dark Theme (requires restart)"
 msgstr "Sötét téma (újraindítás szükséges)"
 
@@ -2255,11 +2309,15 @@ msgstr "Holtzóna"
 msgid "Deadzone radius"
 msgstr "Holtzóna sugara"
 
+#: ../ui/latexSettings.glade:119
+msgid "Default LaTeX Text"
+msgstr "Alapértelmezett LaTeX-szöveg"
+
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
 msgstr "Alapértelmezett mentési név"
 
-#: ../ui/settings.glade:5621
+#: ../ui/settings.glade:5679
 msgid "Default Seek Time (in seconds)"
 msgstr "Alapértelmezett keresési idő (másodperc)"
 
@@ -2267,11 +2325,11 @@ msgstr "Alapértelmezett keresési idő (másodperc)"
 msgid "Default name: "
 msgstr "Alapértelmezett név: "
 
-#: ../ui/settings.glade:5220
+#: ../ui/settings.glade:5278
 msgid "Defaults"
 msgstr "Alapértelmezések"
 
-#: ../ui/main.glade:1263
+#: ../ui/main.glade:1264
 msgid "Delete Layer"
 msgstr "Réteg törlése"
 
@@ -2295,7 +2353,7 @@ msgstr "GTK beépített inerciális görgetési funkciója letiltsa (újraindít
 msgid "Disable drawing for this device"
 msgstr "Rajzolás letiltása az eszközön"
 
-#: ../ui/settings.glade:3399
+#: ../ui/settings.glade:3457
 msgid "Disable scrollbar fade out"
 msgstr "Görgetősáv elhalványításának letiltása"
 
@@ -2307,11 +2365,11 @@ msgstr "Letiltva"
 msgid "Disabling Method"
 msgstr "Letiltási módszer"
 
-#: ../ui/settings.glade:4081
+#: ../ui/settings.glade:4139
 msgid "Display DPI Calibration"
 msgstr "Hüvelykenkénti pontok száma (DPI) kalibrálása megjelenítése"
 
-#: ../ui/settings.glade:4755
+#: ../ui/settings.glade:4813
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Ne rajzoljon rövid időre és hosszúságú bemenetekre, hacsak nem rövid egymásutánban érkezik. Ehelyett mutasson lebegő eszköztárat."
 
@@ -2329,7 +2387,7 @@ msgstr "A BALRA húzás a kezdőponttól úgy működik, mintha a Shift billenty
 "            Meghatározási sugár: Az a sugár, amelynél a módosítók bezáródnak a rajzolás befejezéséig.\n\n"
 "\t    <i>Hasznos billentyűzet nélküli működéshez.</i>"
 
-#: ../ui/settings.glade:4419
+#: ../ui/settings.glade:4477
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -2347,39 +2405,43 @@ msgstr "Az alkatrészeket ide vagy az eszköztárra húzva helyezze el."
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Húzás: Ha az érték túl kicsi, nem kívánt rezgések jelenhetnek meg. Ha az érték túl magas, nem lesz stabilizálódás."
 
-#: ../ui/main.glade:1502
+#: ../ui/main.glade:1503
 msgid "Draw Coordinate System"
 msgstr "Koordinátarendszer rajzolása"
 
-#: ../ui/main.glade:1513
+#: ../ui/main.glade:1514
 msgid "Draw _Line"
 msgstr "_Vonal rajzolása"
 
-#: ../ui/settings.glade:3055
+#: ../ui/settings.glade:3113
 msgid "Draw a transparent circle around the cursor"
 msgstr "Rajzolj átlátszó kört a kurzor köré"
 
-#: ../ui/settings.glade:5075
+#: ../ui/settings.glade:5133
 msgid "Drawing Area"
 msgstr "Rajzterület"
 
-#: ../ui/settings.glade:4487
+#: ../ui/settings.glade:4545
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Rajzeszközök – Módosítók beállítása rajzolási irány szerint (kísérleti)"
 
-#: ../ui/main.glade:2841 ../ui/main.glade:2878
+#: ../ui/main.glade:2842 ../ui/main.glade:2879
 msgid "Duplicate"
 msgstr "Megkettőzés"
 
-#: ../ui/main.glade:2915
+#: ../ui/main.glade:2916
 msgid "Edit (not implemented yet)"
 msgstr "Szerkesztés (még nincsen megvalósítva)"
+
+#: ../ui/latexSettings.glade:606
+msgid "Editor settings"
+msgstr "Szerkesztő beállításai"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
 msgstr "Engedélyezés"
 
-#: ../ui/settings.glade:4414
+#: ../ui/settings.glade:4472
 msgid "Enable  with determination radius of "
 msgstr "Engedélyezés a következő meghatározási sugárral: "
 
@@ -2399,7 +2461,7 @@ msgstr "Nyomáskövetkeztetés engedélyezése <i>(Nyomás kitalálása a rajz s
 msgid "Enable Pressure Sensitivity"
 msgstr "Nyomásérzékenység engedélyezése"
 
-#: ../ui/settings.glade:4750
+#: ../ui/settings.glade:4808
 msgid "Enable Tap action"
 msgstr "Koppintási művelet engedélyezése"
 
@@ -2423,11 +2485,11 @@ msgstr "Érintéses rajzolás engedélyezése"
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Nagyítási kézmozdulatok engedélyezése (újraindítás szükséges)"
 
-#: ../ui/texdialog.glade:72
+#: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
 msgstr "LaTeX-szöveg szerkesztése"
 
-#: ../ui/main.glade:1775
+#: ../ui/main.glade:1776
 msgid "Eraser Optio_ns"
 msgstr "Radír _beállításai"
 
@@ -2452,11 +2514,11 @@ msgstr "Rétegek fokozatos exportálása"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "Dokumentum exportálás háttér nélkül (Nincs), vagy csak PDF-fájl és kép hátterével (Nincs döntés), vagy minden háttértípussal (Mind)."
 
-#: ../ui/main.glade:1751 ../ui/main.glade:1956
+#: ../ui/main.glade:1752 ../ui/main.glade:1957
 msgid "Fi_ll"
 msgstr "_Kitöltés"
 
-#: ../ui/main.glade:1761 ../ui/main.glade:1966
+#: ../ui/main.glade:1762 ../ui/main.glade:1967
 msgid "Fill opacity"
 msgstr "Kitöltés átlátszatlansága"
 
@@ -2464,23 +2526,27 @@ msgstr "Kitöltés átlátszatlansága"
 msgid "Finalize the stroke"
 msgstr "Vonásírás véglegesítése"
 
-#: ../ui/main.glade:2505
+#: ../ui/main.glade:2506
 msgid "Find next occurrence of the search string"
 msgstr "Keresett szöveg következő előfordulása"
 
-#: ../ui/main.glade:2483
+#: ../ui/main.glade:2484
 msgid "Find previous occurrence of the search string"
 msgstr "Keresett szöveg előző előfordulása"
 
-#: ../ui/settings.glade:4331
+#: ../ui/settings.glade:4389
 msgid "First Page Offset "
 msgstr "Első oldal eltolás "
 
-#: ../ui/main.glade:550 ../ui/settings.glade:3573
+#: ../ui/latexSettings.glade:549
+msgid "Font: "
+msgstr "Betűkészlet: "
+
+#: ../ui/main.glade:551 ../ui/settings.glade:3631
 msgid "Fullscreen"
 msgstr "Teljes képernyő"
 
-#: ../ui/settings.glade:5523
+#: ../ui/settings.glade:5581
 msgid "Gain"
 msgstr "Erősítés"
 
@@ -2488,19 +2554,19 @@ msgstr "Erősítés"
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr "Gauss-paraméter: minél magasabb, annál nagyobb a stabilitás, és annál nagyobb a késés a kurzor és a festési csúcs között."
 
-#: ../ui/latexSettings.glade:66
+#: ../ui/latexSettings.glade:87
 msgid "General LaTeX tool settings"
 msgstr "LaTeX-eszköz általános beállításai"
 
-#: ../ui/about.glade:114
+#: ../ui/about.glade:115
 msgid "Git commit"
 msgstr "Git commit"
 
-#: ../ui/settings.glade:2970
+#: ../ui/settings.glade:3028
 msgid "Global"
 msgstr "Globális"
 
-#: ../ui/latexSettings.glade:101
+#: ../ui/latexSettings.glade:154
 msgid "Global template file path"
 msgstr "Globális sablonfájl elérési útja"
 
@@ -2508,15 +2574,15 @@ msgstr "Globális sablonfájl elérési útja"
 msgid "Go to Page"
 msgstr "Ugrás az oldalra"
 
-#: ../ui/settings.glade:4657
+#: ../ui/settings.glade:4715
 msgid "Grid size"
 msgstr "Rácsméret"
 
-#: ../ui/settings.glade:4614
+#: ../ui/settings.glade:4672
 msgid "Grid snapping tolerance"
 msgstr "Rács igazítás tűréshatára"
 
-#: ../ui/main.glade:1601
+#: ../ui/main.glade:1602
 msgid "H_and Tool"
 msgstr "_Kéz eszköz"
 
@@ -2532,51 +2598,55 @@ msgstr "Magasság"
 msgid "Height:"
 msgstr "Magasság:"
 
-#: ../ui/main.glade:969 ../ui/settings.glade:3535 ../ui/settings.glade:3602
+#: ../ui/main.glade:970 ../ui/settings.glade:3593 ../ui/settings.glade:3660
 msgid "Hide Menubar"
 msgstr "Menüsor elrejtése"
 
-#: ../ui/settings.glade:3551 ../ui/settings.glade:3618
+#: ../ui/settings.glade:3609 ../ui/settings.glade:3676
 msgid "Hide Sidebar"
 msgstr "Oldalsáv elrejtése"
 
-#: ../ui/settings.glade:3369
+#: ../ui/settings.glade:3427
 msgid "Hide the horizontal scrollbar"
 msgstr "Vízszintes görgetősáv elrejtése"
 
-#: ../ui/settings.glade:3384
+#: ../ui/settings.glade:3442
 msgid "Hide the vertical scrollbar"
 msgstr "Függőleges görgetősáv elrejtése"
 
-#: ../ui/settings.glade:3050
+#: ../ui/settings.glade:3108
 msgid "Highlight cursor position"
 msgstr "Kurzor pozíciójának kiemeléséhez"
 
-#: ../ui/main.glade:2729
+#: ../ui/main.glade:2730
 msgid "Highlight selected text"
 msgstr "Kijelölt szöveg kiemelése"
 
-#: ../ui/main.glade:1884
+#: ../ui/main.glade:1885
 msgid "Highlighter Opti_ons"
 msgstr "_Kiemelő beállításai"
 
-#: ../ui/settings.glade:4800
+#: ../ui/settings.glade:4858
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr "Vonásírás hosszúság (képernyő mm) ÉS…\n\n"
 "<i>Javasolt: 1 mm</i>"
 
-#: ../ui/settings.glade:4780
+#: ../ui/settings.glade:4838
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr "Milyen rövid (idő) ÉS…\n\n"
 "<i>Javasolt: 150 ezredmásodperc</i>"
 
-#: ../ui/about.glade:243
+#: ../ui/about.glade:246
 msgid "Icon Designers"
 msgstr "Ikontervezők"
 
-#: ../ui/settings.glade:4702
+#: ../ui/settings.glade:2933
+msgid "Icon Theme"
+msgstr "Ikon téma"
+
+#: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr "When activated, the shapes recognized by the shape recognizer are automatically aligned to the grid. This can lead to unexpected results if shape recognition is turned on while writing."
 
@@ -2596,7 +2666,7 @@ msgstr "Ha engedélyezve van, az egyes oldalak rétegei egyenként kerülnek hoz
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr "Ha megnyit egy PDF-fájlt, és rendelkezik egy azonos nevű Xournal-fájllal, az xoj-fájl megnyílik."
 
-#: ../ui/settings.glade:4768
+#: ../ui/settings.glade:4826
 msgid "Ignore Time (ms)"
 msgstr "Figyelmen kívül hagyás időtartama (ezredmásodperc)"
 
@@ -2612,7 +2682,7 @@ msgstr "Képminőség"
 msgid "Inertia"
 msgstr "Tehetetlenség"
 
-#: ../ui/settings.glade:5406
+#: ../ui/settings.glade:5464
 msgid "Input Device"
 msgstr "Bemeneti eszköz"
 
@@ -2636,45 +2706,49 @@ msgstr "A bemeneti stabilizálás réseket képezhet a vonásírás végén. Ha 
 msgid "Insert Latex"
 msgstr "LaTeX beszúrása"
 
-#: ../ui/main.glade:2870
+#: ../ui/main.glade:2871
 msgid "Insert Page After"
 msgstr "Oldal beszúrása utána"
 
-#: ../ui/main.glade:2862
+#: ../ui/main.glade:2863
 msgid "Insert Page Before"
 msgstr "Új oldal beszúrása előtte"
 
-#: ../ui/settings.glade:5746
+#: ../ui/settings.glade:5804
 msgid "LaTeX"
 msgstr "LaTeX"
 
-#: ../ui/latexSettings.glade:289
+#: ../ui/latexSettings.glade:354
 msgid "LaTeX executable settings"
 msgstr "LaTeX végrehajtható beállítások"
 
-#: ../ui/latexSettings.glade:247
+#: ../ui/latexSettings.glade:297
 msgid "LaTeX generation command"
-msgstr "LaTeX létrehozási parancs"
+msgstr "LaTeX-létrehozó parancs"
 
-#: ../ui/settings.glade:5835 ../ui/settings.glade:5883
+#: ../ui/settings.glade:5893 ../ui/settings.glade:5941
 msgid "Language"
 msgstr "Nyelv"
 
-#: ../ui/settings.glade:5853
+#: ../ui/settings.glade:5911
 msgid "Language Settings"
 msgstr "Nyelvi beállítások"
 
-#: ../ui/main.glade:593
+#: ../ui/main.glade:594
 msgid "Layout"
 msgstr "Elrendezés"
 
-#: ../ui/settings.glade:3340
+#: ../ui/settings.glade:3398
 msgid "Left / Right-Handed"
 msgstr "Bal / Jobbkezes"
 
-#: ../ui/about.glade:421
+#: ../ui/about.glade:424
 msgid "License"
 msgstr "Licenc"
+
+#: ../ui/latexSettings.glade:433
+msgid "Line numbers"
+msgstr "Sorok számozása"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2688,6 +2762,10 @@ msgstr "Fájl betöltése"
 msgid "Load from file"
 msgstr "Betöltés fájlból"
 
+#: ../ui/settings.glade:2950
+msgid "Lucide"
+msgstr "Lucide"
+
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "Eszköztár kezelése"
@@ -2700,19 +2778,19 @@ msgstr "Tömeg"
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "Tömeg: minél nagyobb a tömeg, annál nagyobb a tehetetlenség és annál nagyobb a stabilizáció"
 
-#: ../ui/settings.glade:4820
+#: ../ui/settings.glade:4878
 msgid "Max Length (mm)"
 msgstr "Legnagyobb hossz (mm)"
 
-#: ../ui/settings.glade:3491
+#: ../ui/settings.glade:3549
 msgid "Max multiplier"
 msgstr "Legfeljebb szorzó"
 
-#: ../ui/main.glade:2833
+#: ../ui/main.glade:2834
 msgid "Merge Down"
 msgstr "Egyesítése lefelé"
 
-#: ../ui/main.glade:1274
+#: ../ui/main.glade:1275
 msgid "Merge Layer Down"
 msgstr "Rétegek egyesítése lefelé"
 
@@ -2742,39 +2820,39 @@ msgstr "Egérgombok"
 msgid "Mouse+Keyboard Combo"
 msgstr "Egér+billentyűzet kombináció"
 
-#: ../ui/main.glade:2825 ../ui/main.glade:2900
+#: ../ui/main.glade:2826 ../ui/main.glade:2901
 msgid "Move Down"
 msgstr "Mozgatás le"
 
-#: ../ui/main.glade:2817 ../ui/main.glade:2892
+#: ../ui/main.glade:2818 ../ui/main.glade:2893
 msgid "Move Up"
 msgstr "Mozgatás fel"
 
-#: ../ui/settings.glade:3489
+#: ../ui/settings.glade:3547
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr "A pásztázási sebességet legfeljebb ezzel az értékkel szorozza meg, attól függően, hogy a kijelölt elem mekkora része nem látható."
 
-#: ../ui/main.glade:1147
+#: ../ui/main.glade:1148
 msgid "N_ext Annotated Page"
 msgstr "_Következő széljegyzeteket tartalmazó lap"
 
-#: ../ui/main.glade:1194
+#: ../ui/main.glade:1195
 msgid "New Page _After"
 msgstr "Oldal beszúrása _utána"
 
-#: ../ui/main.glade:1184
+#: ../ui/main.glade:1185
 msgid "New Page _Before"
 msgstr "Új oldal beszúrása _előtte"
 
-#: ../ui/main.glade:1205
+#: ../ui/main.glade:1206
 msgid "New Page at _End"
 msgstr "Új oldal beszúrása a napló _végen"
 
-#: ../ui/main.glade:1252
+#: ../ui/main.glade:1253
 msgid "New _Layer"
 msgstr "Új _réteg"
 
-#: ../ui/settings.glade:3023
+#: ../ui/settings.glade:3081
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr "Nincs ikon"
@@ -2788,7 +2866,7 @@ msgstr "Nincs döntés"
 msgid "None"
 msgstr "Nincs"
 
-#: ../ui/settings.glade:4330
+#: ../ui/settings.glade:4388
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Az első oldal eltolása ennyi oldallal, ha engedélyezve van az <b>Oldalak párosítása</b>"
 
@@ -2800,15 +2878,19 @@ msgstr "Átlátszatlanság beállításai"
 msgid "Options"
 msgstr "Tulajdonságok"
 
-#: ../ui/settings.glade:5429
+#: ../ui/settings.glade:5487
 msgid "Output Device"
 msgstr "Kimeneti eszköz"
 
-#: ../ui/settings.glade:5044
+#: ../ui/texdialog.glade:143
+msgid "Output generated by the LaTeX command."
+msgstr "A LaTeX parancs által előállított kimenet."
+
+#: ../ui/settings.glade:5102
 msgid "PDF Cache"
 msgstr "PDF-gyorsítótár"
 
-#: ../ui/main.glade:1158
+#: ../ui/main.glade:1159
 msgid "P_revious Annotated Page"
 msgstr "_Előző széljegyzeteket tartalmazó lap"
 
@@ -2816,11 +2898,11 @@ msgstr "_Előző széljegyzeteket tartalmazó lap"
 msgid "Pages:"
 msgstr "Oldalak:"
 
-#: ../ui/settings.glade:4384
+#: ../ui/settings.glade:4442
 msgid "Paired Pages"
 msgstr "Oldalak párosítása"
 
-#: ../ui/main.glade:1322
+#: ../ui/main.glade:1323
 msgid "Paper B_ackground"
 msgstr "P_apír háttér"
 
@@ -2828,33 +2910,41 @@ msgstr "P_apír háttér"
 msgid "Paper Format"
 msgstr "Papírformátum"
 
-#: ../ui/main.glade:1312
+#: ../ui/main.glade:1313
 msgid "Paper _Color"
 msgstr "Papír_szín"
 
-#: ../ui/main.glade:1302
+#: ../ui/main.glade:1303
 msgid "Paper _Format"
 msgstr "Papír_formátum"
 
-#: ../ui/about.glade:296
+#: ../ui/about.glade:299
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "Részben a Xournal alapján\n"
 "írta: Auroux Denis"
 
-#: ../ui/main.glade:2002
+#: ../ui/pluginEntry.glade:94
+msgid "Path: "
+msgstr "Elérési út: "
+
+#: ../ui/main.glade:2003
 msgid "Pause"
 msgstr "Szünet"
 
-#: ../ui/main.glade:1629
+#: ../ui/main.glade:1630
 msgid "Pen _Options"
 msgstr "Toll _tulajdonságok"
 
-#: ../ui/settings.glade:3783
+#: ../ui/settings.glade:3841
 msgid "Performance"
 msgstr "Teljesítmény"
 
-#: ../ui/settings.glade:5675
+#: ../ui/latexSettings.glade:564
+msgid "Pick the Editor's Font"
+msgstr "A szerkesztő-betűkészlet kijelölése"
+
+#: ../ui/settings.glade:5733
 msgid "Playback Settings"
 msgstr "Lejátszási beállítások"
 
@@ -2862,7 +2952,7 @@ msgstr "Lejátszási beállítások"
 msgid "Plugin Manager"
 msgstr "Beépülő modul-kezelő"
 
-#: ../ui/main.glade:2067
+#: ../ui/main.glade:2068
 msgid "Plugin _Manager"
 msgstr "Beépülő modul-_kezelő"
 
@@ -2870,15 +2960,15 @@ msgstr "Beépülő modul-_kezelő"
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr "A beépülő modulok módosításai csak a Xournal++ újraindítása után kerülnek alkalmazásra"
 
-#: ../ui/settings.glade:3717
+#: ../ui/settings.glade:3775
 msgid "Pre-load pages after"
 msgstr "Oldalak-előzetes betöltése utána"
 
-#: ../ui/settings.glade:3705
+#: ../ui/settings.glade:3763
 msgid "Pre-load pages before"
 msgstr "Oldalak-előzetes betöltése előtte"
 
-#: ../ui/main.glade:505
+#: ../ui/main.glade:506
 msgid "Preferences"
 msgstr "Beállítások"
 
@@ -2886,11 +2976,11 @@ msgstr "Beállítások"
 msgid "Preprocessor"
 msgstr "Előfeldolgozó"
 
-#: ../ui/settings.glade:3674
+#: ../ui/settings.glade:3732
 msgid "Presentation Mode"
 msgstr "Bemutató mód"
 
-#: ../ui/settings.glade:4514
+#: ../ui/settings.glade:4572
 msgid "Preserve line width"
 msgstr "Vonal szélességének megőrzése"
 
@@ -2902,11 +2992,11 @@ msgstr "Nyomásszorzó: "
 msgid "Pressure Sensitivity"
 msgstr "Nyomásérzékenység"
 
-#: ../ui/about.glade:129
+#: ../ui/about.glade:130
 msgid "RELEASE_IDENTIFIER"
 msgstr "RELEASE_IDENTIFIER"
 
-#: ../ui/settings.glade:3139
+#: ../ui/settings.glade:3197
 msgid "Radius"
 msgstr "Sugár"
 
@@ -2914,7 +3004,7 @@ msgstr "Sugár"
 msgid "Range"
 msgstr "Tartomány"
 
-#: ../ui/settings.glade:4974
+#: ../ui/settings.glade:5032
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "Újra megjelenítés, ha az oldal nagyítása változik több mint: "
 
@@ -2922,15 +3012,15 @@ msgstr "Újra megjelenítés, ha az oldal nagyítása változik több mint: "
 msgid "Recent _Documents"
 msgstr "Legutóbbi _dokumentumok"
 
-#: ../ui/main.glade:1992
+#: ../ui/main.glade:1993
 msgid "Record / Stop"
 msgstr "Felvétel indítása/leállítása"
 
-#: ../ui/settings.glade:5588
+#: ../ui/settings.glade:5646
 msgid "Recording Quality"
 msgstr "Felvétel minősége"
 
-#: ../ui/main.glade:1285
+#: ../ui/main.glade:1286
 msgid "Rename Layer"
 msgstr "Réteg átnevezése"
 
@@ -2938,7 +3028,7 @@ msgstr "Réteg átnevezése"
 msgid "Rename selected layer"
 msgstr "Kiválasztott réteg átnevezése"
 
-#: ../ui/settings.glade:4561
+#: ../ui/settings.glade:4619
 msgid "Resizing"
 msgstr "Átméretezés"
 
@@ -2950,11 +3040,11 @@ msgstr "Felbontás"
 msgid "Right Mouse Button"
 msgstr "Jobb egérgomb"
 
-#: ../ui/settings.glade:4601
+#: ../ui/settings.glade:4659
 msgid "Rotation snapping tolerance"
 msgstr "Forgatás igazítás tűréshatára"
 
-#: ../ui/settings.glade:5511
+#: ../ui/settings.glade:5569
 msgid "Sample Rate"
 msgstr "Mintavételi frekvencia"
 
@@ -2966,11 +3056,11 @@ msgstr "Minta rétegnév"
 msgid "Save to file"
 msgstr "Mentés fájlba"
 
-#: ../ui/settings.glade:3419
+#: ../ui/settings.glade:3477
 msgid "Scrollbars"
 msgstr "Görgetősávok"
 
-#: ../ui/settings.glade:4297
+#: ../ui/settings.glade:4355
 msgid "Scrolling outside the page"
 msgstr "Görgetés az oldalon kívül"
 
@@ -2978,7 +3068,7 @@ msgstr "Görgetés az oldalon kívül"
 msgid "Select Background Color"
 msgstr "Háttérszín kijelölése"
 
-#: ../ui/settings.glade:5308
+#: ../ui/settings.glade:5366
 msgid "Select Folder"
 msgstr "Mappa kiválasztása"
 
@@ -2986,7 +3076,7 @@ msgstr "Mappa kiválasztása"
 msgid "Select Image"
 msgstr "Kép kiválasztása"
 
-#: ../ui/main.glade:1370
+#: ../ui/main.glade:1371
 msgid "Select Linear Text"
 msgstr "Lineáris szöveg kijelölése"
 
@@ -2994,19 +3084,19 @@ msgstr "Lineáris szöveg kijelölése"
 msgid "Select PDF Page"
 msgstr "PDF oldal kijelölése"
 
-#: ../ui/main.glade:1382
+#: ../ui/main.glade:1383
 msgid "Select Text In Rectangle"
 msgstr "Szöveg kijelölése téglalapban"
 
-#: ../ui/settings.glade:3639
+#: ../ui/settings.glade:3697
 msgid "Select toolbar:"
 msgstr "Eszköztár kiválasztása:"
 
-#: ../ui/settings.glade:2867
+#: ../ui/settings.glade:2872
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Kijelölt szín (szöveg, vonásírás kijelölése stb.)"
 
-#: ../ui/settings.glade:3506
+#: ../ui/settings.glade:3564
 msgid "Selection Edge Panning"
 msgstr "Kijelölés élpásztázás"
 
@@ -3022,19 +3112,19 @@ msgstr "Hátraküldés"
 msgid "Sensitivity Scale"
 msgstr "Érzékenységi méret"
 
-#: ../ui/main.glade:702
+#: ../ui/main.glade:703
 msgid "Set Columns"
 msgstr "Oszlopok beállítása"
 
-#: ../ui/main.glade:807
+#: ../ui/main.glade:808
 msgid "Set Rows"
 msgstr "Sorok beállítása"
 
-#: ../ui/settings.glade:4883
+#: ../ui/settings.glade:4941
 msgid "Settings:"
 msgstr "Beállítások:"
 
-#: ../ui/settings.glade:4892
+#: ../ui/settings.glade:4950
 msgid "Show Floating Toolbox"
 msgstr "Lebegő eszköztár megjelenítése"
 
@@ -3042,23 +3132,23 @@ msgstr "Lebegő eszköztár megjelenítése"
 msgid "Show Menubar on Startup"
 msgstr "Menüsor megjelenítése indításkor"
 
-#: ../ui/main.glade:561
+#: ../ui/main.glade:562
 msgid "Show Sidebar"
 msgstr "Oldalsáv megjelenítése"
 
-#: ../ui/main.glade:577
+#: ../ui/main.glade:578
 msgid "Show Toolbars"
 msgstr "Eszköztárak megjelenítése"
 
-#: ../ui/settings.glade:2772
+#: ../ui/settings.glade:2777
 msgid "Show filepath in title bar"
 msgstr "Fájl elérési útjának megjelenítése a címsorban"
 
-#: ../ui/settings.glade:3302
+#: ../ui/settings.glade:3360
 msgid "Show sidebar on the right side"
 msgstr "Oldalsáv megjelenítése a jobb oldalon"
 
-#: ../ui/settings.glade:3318
+#: ../ui/settings.glade:3376
 msgid "Show vertical scrollbar on the left side"
 msgstr "Függőleges görgetősáv megjelenítése a bal oldalon"
 
@@ -3068,24 +3158,24 @@ msgid "Slower strokes are assigned a greater pressure than faster strokes, if pr
 msgstr "A lassabb vonásírásokhoz nagyobb nyomást rendelnek, mint a gyorsabb vonásírásokhoz, ha a nyomásadatok hiányoznak.\n\n"
 "<i>Ez a funkció hasznos lehet azoknál az eszközöknél, amelyek nem rendelkeznek nyomásérzékenységgel. Például egy egér vagy érintőképernyő.</i>"
 
-#: ../ui/settings.glade:3024
+#: ../ui/settings.glade:3082
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr "Kis toll ikonra"
 
-#: ../ui/settings.glade:4720
+#: ../ui/settings.glade:4778
 msgid "Snapping"
 msgstr "Igazítás"
 
-#: ../ui/about.glade:356
+#: ../ui/about.glade:359
 msgid "Source Code / Bug Tracker"
 msgstr "Forráskód/Hibakövető"
 
-#: ../ui/settings.glade:3867
+#: ../ui/settings.glade:3925
 msgid "Speed for Ctrl + Scroll"
 msgstr "Ctrl+Görgetés nagyítási lépés sebessége"
 
-#: ../ui/settings.glade:3895
+#: ../ui/settings.glade:3953
 msgid "Speed for a Zoomstep"
 msgstr "Nagyítási lépés sebessége"
 
@@ -3097,11 +3187,11 @@ msgstr "Szabványos"
 msgid "Start zooming after a distance "
 msgstr "Távolság után kezdje el a nagyítást "
 
-#: ../ui/settings.glade:5293 ../ui/settings.glade:5351
+#: ../ui/settings.glade:5351 ../ui/settings.glade:5409
 msgid "Storage Folder"
 msgstr "Tárolómappa"
 
-#: ../ui/main.glade:2769
+#: ../ui/main.glade:2770
 msgid "Strikethrough selected text"
 msgstr "Kijelölt szöveg áthúzása"
 
@@ -3113,20 +3203,28 @@ msgstr "Mutató"
 msgid "Stylus Buttons"
 msgstr "Mutató gombok"
 
-#: ../ui/settings.glade:4831
+#: ../ui/settings.glade:4889
 msgid "Successive (ms)"
 msgstr "Egymást követő (ezredmásodperc)"
 
-#: ../ui/settings.glade:3026
+#: ../ui/latexSettings.glade:461
+msgid "Syntax highlighting"
+msgstr "Szintaxis kiemelése"
+
+#: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr "Rendszer kurzor"
 
-#: ../ui/main.glade:921
+#: ../ui/main.glade:922
 msgid "T_oolbars"
 msgstr "_Eszköztárak"
 
-#: ../ui/latexSettings.glade:215
+#: ../ui/texdialog.glade:125
+msgid "TeX Source"
+msgstr "TeX-forrás"
+
+#: ../ui/latexSettings.glade:265
 msgid "Template file settings"
 msgstr "Sablonfájl beállításai"
 
@@ -3138,35 +3236,35 @@ msgstr "Sablon:"
 msgid "Test"
 msgstr "Teszt"
 
-#: ../ui/latexSettings.glade:268
+#: ../ui/latexSettings.glade:318
 msgid "Test configuration"
 msgstr "Állapot vizsgálata"
 
-#: ../ui/latexSettings.glade:272
+#: ../ui/latexSettings.glade:322
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr "Tesztelje, hogy a jelenlegi beállítások érvényesek-e a LaTeX létrehozási parancs futtatásával a globális sablonfájlban egy tesztképlettel."
+msgstr "Tesztelje, hogy a jelenlegi beállítások érvényesek-e a LaTeX-létrehozó parancs futtatásával a globális sablonfájlban egy tesztképlettel."
 
-#: ../ui/main.glade:1980
+#: ../ui/main.glade:1981
 msgid "Text Font..."
 msgstr "Szöveg betűkészlete…"
 
-#: ../ui/latexSettings.glade:99
+#: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr "A LaTeX-fájl a LaTeX-eszköz sablonjaként."
 
-#: ../ui/latexSettings.glade:200
+#: ../ui/latexSettings.glade:229
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr "Szövegeszköz jelenlegi színe hexadecimális vörös-zöld-kék formátumban."
 
-#: ../ui/latexSettings.glade:114
+#: ../ui/latexSettings.glade:166
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr "A következő karakterláncok helyettesítésre kerülnek a globális sablonfájlban a LaTeX eszköz futtatásakor:"
 
-#: ../ui/latexSettings.glade:139
+#: ../ui/latexSettings.glade:192
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr "A LaTeX eszközbe beírt matematikai mód képlet."
 
-#: ../ui/settings.glade:4058
+#: ../ui/settings.glade:4116
 msgid "The unit of the ruler is cm"
 msgstr "A vonalzó mértékegysége cm"
 
@@ -3178,7 +3276,7 @@ msgstr "Ezeket a beállításokat a rendszer az új oldalakhoz használja"
 msgid "Timeout"
 msgstr "Időtúllépés"
 
-#: ../ui/main.glade:2789
+#: ../ui/main.glade:2790
 msgid "Toggle standard / region text selection"
 msgstr "Szabványos/régiószöveg-kijelölés váltása"
 
@@ -3195,23 +3293,27 @@ msgstr "Görgetés érintése"
 msgid "Touchscreen"
 msgstr "Érintőképernyő"
 
-#: ../ui/settings.glade:4860
+#: ../ui/settings.glade:4918
 msgid "Try to select object first."
 msgstr "Először próbálja meg kiválasztani az objektumot."
 
-#: ../ui/settings.glade:4865 ../ui/settings.glade:4897
+#: ../ui/settings.glade:4923 ../ui/settings.glade:4955
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Először próbálja meg kiválasztani az objektumot; ha nincs kiválasztva, akkor mutasson lebegő eszköztárat, ha engedélyezve van."
 
-#: ../ui/main.glade:2749
+#: ../ui/main.glade:2750
 msgid "Underline selected text"
 msgstr "Kijelölt szöveg aláhúzása"
 
-#: ../ui/settings.glade:2906
-msgid "Use  available Stock Icons (requires restart)"
-msgstr "Használja a rendelkezésre álló árfolyamikonokat (újraindítás szükséges)"
+#: ../ui/settings.glade:2911
+msgid "Use available Stock Icons (requires restart)"
+msgstr "Rendelkezésre álló részvényikonok használata (újraindítás szükséges)"
 
-#: ../ui/settings.glade:4698
+#: ../ui/latexSettings.glade:529
+msgid "Use font from system theme."
+msgstr "Betűkészlet használata a rendszertémából."
+
+#: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
 msgstr "Igazítás használata felismert alakzatokhoz"
 
@@ -3223,7 +3325,7 @@ msgstr "Használja a jelenlegi oldalméretet a fenti oldalméret helyett."
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr "Két ujjal pásztázhat/nagyíthat és egy ujjal pedig a kiválasztott eszközt használhatja."
 
-#: ../ui/settings.glade:4343
+#: ../ui/settings.glade:4401
 msgid "Usually 0 or 1"
 msgstr "Általában 0 vagy 1"
 
@@ -3231,23 +3333,23 @@ msgstr "Általában 0 vagy 1"
 msgid "Velocity based Gaussian weights"
 msgstr "Sebesség alapú Gauss-súlyok"
 
-#: ../ui/about.glade:181
+#: ../ui/about.glade:184
 msgid "Version"
 msgstr "Verzió"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:131
 msgid "Version: "
 msgstr "Verzió: "
 
-#: ../ui/settings.glade:3814
+#: ../ui/settings.glade:3872
 msgid "View"
 msgstr "Nézet"
 
-#: ../ui/about.glade:328
+#: ../ui/about.glade:331
 msgid "Website"
 msgstr "Honlap"
 
-#: ../ui/settings.glade:3476
+#: ../ui/settings.glade:3534
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
 msgstr "Ha egy elemet kijelöl, és a vászon látható részén túl van mozgatva, pásztázzon a képernyőn a vászon látható részének ezen százalékával megegyező mértékben. "
 
@@ -3257,7 +3359,7 @@ msgid "When drawing with touch, two-finger gestures intended to pan the view can
 msgstr "Amikor érintéssel rajzol, a nézet pásztázására szolgáló kétujjas kézmozdulatok ehelyett nagyítást okozhatnak, ami teljesítménybeli problémákat okozhat. \n"
 "Ez a beállítás megkönnyítheti az érintéssel történő rajzolást. "
 
-#: ../ui/settings.glade:4971
+#: ../ui/settings.glade:5029
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "Ha nagy felbontású PDF-re nagyít, minden újrarenderelés hosszú ideig tarthat. Ha ezt nagy értékre állítja, ezek az újramegjelenítések ritkábban fordulnak elő.\n\n"
@@ -3275,11 +3377,15 @@ msgstr "Szélesség"
 msgid "Width:"
 msgstr "Szélesség:"
 
-#: ../ui/about.glade:393
+#: ../ui/about.glade:396
 msgid "With help from the community"
 msgstr "A Közösségtől kapott segítséggel"
 
-#: ../ui/about.glade:156
+#: ../ui/latexSettings.glade:493
+msgid "Wrap text"
+msgstr "Szöveg körbefuttatása"
+
+#: ../ui/about.glade:158
 msgid "X.X.X"
 msgstr "X.X.X"
 
@@ -3287,7 +3393,7 @@ msgstr "X.X.X"
 msgid "Xournal++ Preferences"
 msgstr "Xournal++ beállításai"
 
-#: ../ui/settings.glade:4112
+#: ../ui/settings.glade:4170
 msgid "Zoom"
 msgstr "Nagyítás"
 
@@ -3295,71 +3401,71 @@ msgstr "Nagyítás"
 msgid "Zoom Gestures"
 msgstr "Nagyítási gesztusok"
 
-#: ../ui/settings.glade:3958
+#: ../ui/settings.glade:4016
 msgid "Zoom Speed"
 msgstr "Nagyítás sebessége"
 
-#: ../ui/main.glade:714
+#: ../ui/main.glade:715
 msgid "_1 Column"
 msgstr "_1 oszlop"
 
-#: ../ui/main.glade:819
+#: ../ui/main.glade:820
 msgid "_1 Row"
 msgstr "_1 sor"
 
-#: ../ui/main.glade:725
+#: ../ui/main.glade:726
 msgid "_2 Columns"
 msgstr "_2 oszlop"
 
-#: ../ui/main.glade:830
+#: ../ui/main.glade:831
 msgid "_2 Rows"
 msgstr "_2 sor"
 
-#: ../ui/main.glade:736
+#: ../ui/main.glade:737
 msgid "_3 Columns"
 msgstr "_3 oszlop"
 
-#: ../ui/main.glade:841
+#: ../ui/main.glade:842
 msgid "_3 Rows"
 msgstr "_3 sor"
 
-#: ../ui/main.glade:747
+#: ../ui/main.glade:748
 msgid "_4 Columns"
 msgstr "_4 oszlop"
 
-#: ../ui/main.glade:852
+#: ../ui/main.glade:853
 msgid "_4 Rows"
 msgstr "_4 sor"
 
-#: ../ui/main.glade:758
+#: ../ui/main.glade:759
 msgid "_5 Columns"
 msgstr "_5 oszlop"
 
-#: ../ui/main.glade:863
+#: ../ui/main.glade:864
 msgid "_5 Rows"
 msgstr "_5 sor"
 
-#: ../ui/main.glade:769
+#: ../ui/main.glade:770
 msgid "_6 Columns"
 msgstr "_6 oszlop"
 
-#: ../ui/main.glade:874
+#: ../ui/main.glade:875
 msgid "_6 Rows"
 msgstr "_6 sor"
 
-#: ../ui/main.glade:780
+#: ../ui/main.glade:781
 msgid "_7 Columns"
 msgstr "_7 oszlop"
 
-#: ../ui/main.glade:885
+#: ../ui/main.glade:886
 msgid "_7 Rows"
 msgstr "_7 sor"
 
-#: ../ui/main.glade:791
+#: ../ui/main.glade:792
 msgid "_8 Columns"
 msgstr "_8 oszlop"
 
-#: ../ui/main.glade:896
+#: ../ui/main.glade:897
 msgid "_8 Rows"
 msgstr "_8 sor"
 
@@ -3367,23 +3473,23 @@ msgstr "_8 sor"
 msgid "_Annotate PDF"
 msgstr "_Jegyzetkészítés PDF-fájlban"
 
-#: ../ui/main.glade:674
+#: ../ui/main.glade:675
 msgid "_Bottom to Top"
 msgstr "_Alulról felfelé"
 
-#: ../ui/main.glade:689
+#: ../ui/main.glade:690
 msgid "_Cols/Rows"
 msgstr "_Oszlopok/Sorok"
 
-#: ../ui/main.glade:949
+#: ../ui/main.glade:950
 msgid "_Customize"
 msgstr "_Testreszabás"
 
-#: ../ui/main.glade:1430
+#: ../ui/main.glade:1431
 msgid "_Default Tools"
 msgstr "_Alapértelmezett eszköz"
 
-#: ../ui/main.glade:1235
+#: ../ui/main.glade:1236
 msgid "_Delete Page"
 msgstr "_Oldal törlése"
 
@@ -3391,7 +3497,7 @@ msgstr "_Oldal törlése"
 msgid "_Edit"
 msgstr "S_zerkesztés"
 
-#: ../ui/main.glade:1358
+#: ../ui/main.glade:1359
 msgid "_Eraser"
 msgstr "_Radír"
 
@@ -3403,143 +3509,143 @@ msgstr "_Exportálás PDF-fájlként…"
 msgid "_File"
 msgstr "_Fájl"
 
-#: ../ui/main.glade:1048
+#: ../ui/main.glade:1049
 msgid "_First Page"
 msgstr "_Első oldal"
 
-#: ../ui/main.glade:1070
+#: ../ui/main.glade:1071
 msgid "_Goto Page"
 msgstr "_Menjen az oldalra"
 
-#: ../ui/main.glade:2081
+#: ../ui/main.glade:2082
 msgid "_Help"
 msgstr "_Súgó"
 
-#: ../ui/main.glade:1394
+#: ../ui/main.glade:1395
 msgid "_Highlighter"
 msgstr "_Kiemelő"
 
-#: ../ui/main.glade:605
+#: ../ui/main.glade:606
 msgid "_Horizontal"
 msgstr "_Vízszintes"
 
-#: ../ui/main.glade:1418
+#: ../ui/main.glade:1419
 msgid "_Image"
 msgstr "_Kép"
 
-#: ../ui/main.glade:1173
+#: ../ui/main.glade:1174
 msgid "_Journal"
 msgstr "N_apló"
 
-#: ../ui/main.glade:1092
+#: ../ui/main.glade:1093
 msgid "_Last Page"
 msgstr "_Utolsó oldal"
 
-#: ../ui/main.glade:634
+#: ../ui/main.glade:635
 msgid "_Left to Right"
 msgstr "_Balról jobbra"
 
-#: ../ui/main.glade:939
+#: ../ui/main.glade:940
 msgid "_Manage"
 msgstr "_ Kezelés"
 
-#: ../ui/main.glade:1037
+#: ../ui/main.glade:1038
 msgid "_Navigation"
 msgstr "Navigá_ció"
 
-#: ../ui/main.glade:1120
+#: ../ui/main.glade:1121
 msgid "_Next Layer"
 msgstr "_Következő réteg"
 
-#: ../ui/main.glade:1081
+#: ../ui/main.glade:1082
 msgid "_Next Page"
 msgstr "_Következő oldal"
 
-#: ../ui/main.glade:530
+#: ../ui/main.glade:531
 msgid "_Pair Pages"
 msgstr "Oldalak _párosítása"
 
-#: ../ui/main.glade:1346
+#: ../ui/main.glade:1347
 msgid "_Pen"
 msgstr "_Toll"
 
-#: ../ui/main.glade:2056
+#: ../ui/main.glade:2057
 msgid "_Plugin"
 msgstr "_Beépülő modul"
 
-#: ../ui/main.glade:540
+#: ../ui/main.glade:541
 msgid "_Presentation Mode"
 msgstr "_Bemutató mód"
 
-#: ../ui/main.glade:1109
+#: ../ui/main.glade:1110
 msgid "_Previous Layer"
 msgstr "_Előző réteg"
 
-#: ../ui/main.glade:1059
+#: ../ui/main.glade:1060
 msgid "_Previous Page"
 msgstr "_Előző oldal"
 
-#: ../ui/main.glade:645
+#: ../ui/main.glade:646
 msgid "_Right to Left"
 msgstr "_Jobbról balra"
 
-#: ../ui/main.glade:1447
+#: ../ui/main.glade:1448
 msgid "_Shape Recognizer"
 msgstr "_Alakzatfelismerő"
 
-#: ../ui/main.glade:1406
+#: ../ui/main.glade:1407
 msgid "_Text"
 msgstr "S_zöveg"
 
-#: ../ui/main.glade:1335
+#: ../ui/main.glade:1336
 msgid "_Tools"
 msgstr "_Eszközök"
 
-#: ../ui/main.glade:1131
+#: ../ui/main.glade:1132
 msgid "_Top Layer"
 msgstr "_Felső réteg"
 
-#: ../ui/main.glade:663
+#: ../ui/main.glade:664
 msgid "_Top to Bottom"
 msgstr "_Felülről lefelé"
 
-#: ../ui/main.glade:616
+#: ../ui/main.glade:617
 msgid "_Vertical"
 msgstr "_Függőleges"
 
-#: ../ui/main.glade:1577
+#: ../ui/main.glade:1578
 msgid "_Vertical Space"
 msgstr "Térköz _függőlegesen"
 
-#: ../ui/main.glade:519
+#: ../ui/main.glade:520
 msgid "_View"
 msgstr "_Nézet"
 
-#: ../ui/main.glade:1869
+#: ../ui/main.glade:1870
 msgid "_delete strokes"
 msgstr "vonásírások _törlése"
 
-#: ../ui/main.glade:1651 ../ui/main.glade:1797 ../ui/main.glade:1906
+#: ../ui/main.glade:1652 ../ui/main.glade:1798 ../ui/main.glade:1907
 msgid "_fine"
 msgstr "_finom"
 
-#: ../ui/main.glade:1662 ../ui/main.glade:1808 ../ui/main.glade:1917
+#: ../ui/main.glade:1663 ../ui/main.glade:1809 ../ui/main.glade:1918
 msgid "_medium"
 msgstr "_közepes"
 
-#: ../ui/main.glade:1847
+#: ../ui/main.glade:1848
 msgid "_standard"
 msgstr "_szabványos"
 
-#: ../ui/main.glade:1673 ../ui/main.glade:1819 ../ui/main.glade:1928
+#: ../ui/main.glade:1674 ../ui/main.glade:1820 ../ui/main.glade:1929
 msgid "_thick"
 msgstr "_vastag"
 
-#: ../ui/main.glade:1640 ../ui/main.glade:1786 ../ui/main.glade:1895
+#: ../ui/main.glade:1641 ../ui/main.glade:1787 ../ui/main.glade:1896
 msgid "_very fine"
 msgstr "_nagyon finom"
 
-#: ../ui/main.glade:1858
+#: ../ui/main.glade:1859
 msgid "_whiteout"
 msgstr "ki_fehéredés"
 
@@ -3547,7 +3653,7 @@ msgstr "ki_fehéredés"
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:130
+#: ../ui/pluginEntry.glade:167
 msgid "enabled,"
 msgstr "engedélyezve,"
 
@@ -3563,9 +3669,9 @@ msgstr "minden"
 msgid "minutes"
 msgstr "perc"
 
-#: ../ui/settings.glade:3111 ../ui/settings.glade:3162
-#: ../ui/settings.glade:4255 ../ui/settings.glade:4266
-#: ../ui/settings.glade:4454
+#: ../ui/settings.glade:3169 ../ui/settings.glade:3220
+#: ../ui/settings.glade:4313 ../ui/settings.glade:4324
+#: ../ui/settings.glade:4512
 msgid "pixels"
 msgstr "képpont"
 
@@ -3573,11 +3679,11 @@ msgstr "képpont"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(miután az érintőképernyő újra engedélyezve lesz)</i>"
 
-#: ../ui/main.glade:1684 ../ui/main.glade:1830 ../ui/main.glade:1939
+#: ../ui/main.glade:1685 ../ui/main.glade:1831 ../ui/main.glade:1940
 msgid "ver_y thick"
 msgstr "nagy_on vastag"
 
-#: ../ui/about.glade:141
+#: ../ui/about.glade:143
 msgid "with libgtk"
 msgstr "a libgtk segítségével"
 

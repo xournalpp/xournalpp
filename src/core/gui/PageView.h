@@ -84,7 +84,7 @@ public:
 
     void endText();
 
-    bool searchTextOnPage(std::string& text, int* occures, double* top);
+    bool searchTextOnPage(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
 
     bool onKeyPressEvent(GdkEventKey* event);
     bool onKeyReleaseEvent(GdkEventKey* event);
@@ -251,7 +251,7 @@ private:
     /**
      * Search handling
      */
-    SearchControl* search = nullptr;
+    std::unique_ptr<SearchControl> search;
 
     /**
      * Unixtimestam when the page was last time in the visible area

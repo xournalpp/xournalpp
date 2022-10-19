@@ -14,26 +14,34 @@
 #include <string>  // for string
 #include <vector>  // for vector
 
-#include <cairo.h>    // for cairo_t
-#include <gdk/gdk.h>  // for GdkRGBA
-
+#include "model/OverlayBase.h"
 #include "model/PageRef.h"        // for PageRef
 #include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr, XojPdfRectangle
+#include "util/DispatchPool.h"
 
-class SearchControl {
+namespace xoj::view {
+class OverlayView;
+class Repaintable;
+class SearchResultView;
+};  // namespace xoj::view
+
+class SearchControl: public OverlayBase {
 public:
     SearchControl(const PageRef& page, XojPdfPageSPtr pdf);
     virtual ~SearchControl();
 
-    bool search(std::string text, int* occures, double* top);
-    void paint(cairo_t* cr, double zoom, const GdkRGBA& color);
+    bool search(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
 
-private:
-    void freeSearchResults();
+    const std::vector<XojPdfRectangle>& getResults() const { return results; }
+
+    const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SearchResultView>>& getViewPool() const {
+        return viewPool;
+    }
 
 private:
     PageRef page;
     XojPdfPageSPtr pdf;
 
     std::vector<XojPdfRectangle> results;
+    std::shared_ptr<xoj::util::DispatchPool<xoj::view::SearchResultView>> viewPool;
 };

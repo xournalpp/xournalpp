@@ -10,7 +10,7 @@
 #include "model/LineStyle.h"              // for LineStyle
 #include "model/PathParameter.h"          // for PathParameter
 #include "model/Point.h"                  // for Point
-#include "model/Stroke.h"                 // for Stroke, STROKE_TOOL_HIGHLIG...
+#include "model/Stroke.h"                 // for Stroke, StrokeTool::HIGHLIG...
 #include "model/eraser/ErasableStroke.h"  // for ErasableStroke, ErasableStr...
 #include "util/Color.h"                   // for cairo_set_source_rgbi
 #include "util/Interval.h"                // for Interval
@@ -77,7 +77,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
         cairo_set_dash(cr, dashes, dashCount, 0);
 
         bool mergeFirstAndLast = this->erasableStroke.isClosedStroke() &&
-                                 stroke.getToolType() == STROKE_TOOL_HIGHLIGHTER && sections.size() >= 2 &&
+                                 stroke.getToolType() == StrokeTool::HIGHLIGHTER && sections.size() >= 2 &&
                                  sections.front().min == PathParameter(0, 0.0) &&
                                  sections.back().max == PathParameter(data.size() - 2, 1.0);
 

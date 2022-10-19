@@ -112,11 +112,11 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
             int pointCount = s->getPointCount();
             vector<double> originalPressure = SizeUndoAction::getPressure(s);
 
-            if (tool == STROKE_TOOL_PEN) {
+            if (tool == StrokeTool::PEN) {
                 s->setWidth(thicknessPen[size]);
-            } else if (tool == STROKE_TOOL_HIGHLIGHTER) {
+            } else if (tool == StrokeTool::HIGHLIGHTER) {
                 s->setWidth(thicknessHighlighter[size]);
-            } else if (tool == STROKE_TOOL_ERASER) {
+            } else if (tool == StrokeTool::ERASER) {
                 s->setWidth(thicknessEraser[size]);
             }
 
@@ -159,9 +159,9 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
             StrokeTool tool = s->getToolType();
             int newFill = 128;
 
-            if (tool == STROKE_TOOL_PEN) {
+            if (tool == StrokeTool::PEN) {
                 newFill = alphaPen;
-            } else if (tool == STROKE_TOOL_HIGHLIGHTER) {
+            } else if (tool == StrokeTool::HIGHLIGHTER) {
                 newFill = alphaHighligther;
             } else {
                 continue;

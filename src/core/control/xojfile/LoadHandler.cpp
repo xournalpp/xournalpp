@@ -633,11 +633,11 @@ void LoadHandler::parseStroke() {
     const char* tool = LoadHandlerHelper::getAttrib("tool", false, this);
 
     if (strcmp("eraser", tool) == 0) {
-        stroke->setToolType(STROKE_TOOL_ERASER);
+        stroke->setToolType(StrokeTool::ERASER);
     } else if (strcmp("pen", tool) == 0) {
-        stroke->setToolType(STROKE_TOOL_PEN);
+        stroke->setToolType(StrokeTool::PEN);
     } else if (strcmp("highlighter", tool) == 0) {
-        stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
+        stroke->setToolType(StrokeTool::HIGHLIGHTER);
     } else {
         g_warning("%s", FC(_F("Unknown stroke type: \"{1}\", assuming pen") % tool));
     }

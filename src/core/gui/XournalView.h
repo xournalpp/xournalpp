@@ -68,7 +68,7 @@ public:
 
     XojPageView* getViewFor(size_t pageNr) const;
 
-    bool searchTextOnPage(std::string text, size_t p, int* occures, double* top);
+    bool searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences, double* yOfUpperMostMatch);
 
     bool cut();
     bool copy();
