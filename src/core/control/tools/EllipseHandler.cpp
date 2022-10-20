@@ -63,8 +63,16 @@ auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isContro
     /*
      * Set resolution depending on the radius (heuristic)
      */
-    auto nbPtsPerQuadrant =
-            static_cast<unsigned int>(std::ceil(5 + 0.2 * std::max(std::abs(radiusX), std::abs(radiusY))));
+    unsigned int nbPtsPerQuadrant;
+
+    const double excentricity = std::abs(radiusY / radiusX);
+
+
+    // Change the formula used to compute the points to construct the ellipse on the basis of the ellipse's excentricity 
+    if (excentricity < 0.4)
+        nbPtsPerQuadrant = static_cast<unsigned int>(std::ceil(5 + 0.3 * std::abs(radiusX) + std::abs(radiusY)));
+    else
+        nbPtsPerQuadrant = static_cast<unsigned int>(std::ceil(5 + 0.3 * std::max(std::abs(radiusX), std::abs(radiusY))));
     const double stepAngle = M_PI_2 / nbPtsPerQuadrant;
 
     std::pair<std::vector<Point>, Range> res;
