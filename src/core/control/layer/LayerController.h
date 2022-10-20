@@ -47,6 +47,9 @@ protected:
     void fireLayerVisibilityChanged();
 
 public:
+    /**
+     * @return ActionType type was legal type
+    */
     bool actionPerformed(ActionType type);
 
     /**
