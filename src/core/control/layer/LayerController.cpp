@@ -124,22 +124,33 @@ auto LayerController::actionPerformed(ActionType type) -> bool {
 /**
  * Moves all selected objects to the given layer and switches to it
 */
-void LayerController::moveSelectionToLayer(int layerNo) {
+void LayerController::moveSelectionToLayer(size_t layerNo) {
     std::cout << "T-log: moveSelectionToLayer(" << layerNo << ")" << std::endl;
     PageRef currentP = getCurrentPage();
     // check layer existance
-    if (layerNo < 0 || layerNo >= p->getLayerCount()) {
+    if (layerNo < 0 || layerNo >= currentP->getLayerCount()) {
         std::cout << "T-log:    layer " << layerNo << " not existing" << std::endl;
         return;
     }
     // get selected objects
+    auto selection = control->getWindow()->getXournal()->getSelection();
+    if (!selection) {
+        std::cout << "T-log:    there is no selection" << std::endl;
+        return;
+    }
+    auto selectedElements = std::vector<Element*>();
+    //auto selectedElements = selection->getElements();
     // remove selection
+    std::cout << "T-log:    removing selection" << std::endl;
     control->clearSelectionEndText();
-    // remove objects from old layer
-    // add objects to new layer
+    // move objects to new layer
+    std::cout << "T-log:    moving elements to new layer" << std::endl;
+    for (auto e : selectedElements) {
+        currentP->getSelectedLayer()->removeElement(e,false);
+        currentP->getSelectedLayer()->addElement(e);
+    }
     // add undo action
     // switch to new layer
-    switchToLay(layerNo);
 }
 
 /**

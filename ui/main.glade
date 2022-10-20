@@ -1290,6 +1290,28 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkMenuItem" id="menuJournalMoveSelectionLayerUp">
+                            <property name="name">menuJournalMoveSelectionLayerUp</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Move Selection Layer Up</property>
+                            <property name="use-underline">True</property>
+                            <signal name="activate" handler="ACTION_MOVE_SELECTION_LAYER_UP" swapped="no"/>
+                            <accelerator key="+" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkMenuItem" id="menuJournalMoveSelectionLayerDown">
+                            <property name="name">menuJournalMoveSelectionLayerDown</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Move Selection Layer Down</property>
+                            <property name="use-underline">True</property>
+                            <signal name="activate" handler="ACTION_MOVE_SELECTION_LAYER_DOWN" swapped="no"/>
+                            <accelerator key="-" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem11">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
