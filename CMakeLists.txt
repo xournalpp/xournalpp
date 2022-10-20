@@ -4,7 +4,7 @@ cmake_policy(VERSION ${CMAKE_VERSION})
 ## Project related Variables
 ## Also update changelog in debian folder!
 project(xournalpp
-        VERSION 1.1.1
+        VERSION 1.1.2
         DESCRIPTION "Xournal++ - Open source hand note-taking program"
         HOMEPAGE_URL "https://xournalpp.github.io/"
         LANGUAGES CXX C)

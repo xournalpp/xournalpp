@@ -51,12 +51,12 @@
     </ul>
 
     <p xml:lang="hu">
-      A Xournal++ egy kézi jegyzetkészítő szoftver C++ programozási nyelven, a 
-      rugalmasság, a funkcionalitás és a sebesség céljával. A ütésfelismerő és 
-      egyéb részek a Xournal kódon alapulnak, amelyet a sourceforge oldalon 
-      találhat meg. Támogatja a GNU/Linuxot (pl. Ubuntu, Debian, Arch, SUSE), 
-      macOS-t és Windows 10-et. Támogatja a tollbevitelt olyan eszközökről, mint 
-      a Wacom Tablet. 
+      A Xournal++ egy kézi jegyzetkészítő szoftver C++ programozási nyelven, a
+      rugalmasság, a funkcionalitás és a sebesség céljával. A ütésfelismerő és
+      egyéb részek a Xournal kódon alapulnak, amelyet a sourceforge oldalon
+      találhat meg. Támogatja a GNU/Linuxot (pl. Ubuntu, Debian, Arch, SUSE),
+      macOS-t és Windows 10-et. Támogatja a tollbevitelt olyan eszközökről, mint
+      a Wacom Tablet.
     </p>
     <p xml:lang="hu">
       A Xournal++ jellemzői:
@@ -117,7 +117,8 @@
     <!-- Could be automated more:
 	 `git tag -l | grep "^[0-9]*\.[0-9]*\.[0-9]*$`"
     -->
-    <release date="2022-02-13" version="1.1.1+dev" />
+    <release date="2022-10-15" version="1.1.2+dev" />
+    <release date="2022-10-15" version="1.1.2" />
     <release date="2022-02-13" version="1.1.1" />
     <release date="2021-07-18" version="1.1.0" />
     <release date="2020-12-17" version="1.0.20" />

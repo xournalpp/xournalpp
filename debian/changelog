@@ -1,8 +1,20 @@
-xournalpp (1.1.1+dev-1) UNRELEASED; urgency=medium
+xournalpp (1.1.2+dev-1) UNRELEASED; urgency=medium
 
-  * 
+  *
 
- -- Bryan Tan <bryantan@technius.net>  Sun, 13 Feb 2022 13:18:01 -0800
+ -- Bryan Tan <bryantan@technius.net>  Sat, 15 Oct 2022 01:00:44 -0700
+
+xournalpp (1.1.2-1) unstable; urgency=medium
+
+  * This is a new minor version of Xournal++ with many new bug fixes and improvements
+    thanks to contributions from the community.
+  * Fixed several UX problems.
+  * Fixed several crashes.
+  * Fixed PDF Attach Mode not being loaded correctly.
+  * Improved the performance of the text tool.
+  * See the full changelog located on GitHub.
+
+ -- Bryan Tan <bryantan@technius.net>  Sat, 15 Oct 2022 01:00:44 -0700
 
 xournalpp (1.1.1-1) unstable; urgency=medium
 
@@ -82,4 +94,3 @@ xournalpp (1.0.2-0) unstable; urgency=low
   * Initial release Debian Packaging
 
  -- Andreas Butti <andreasbutti@gmail.com>  Mon, 03 Dec 2018 20:00:00 +0100
-
