@@ -74,6 +74,14 @@ auto LayerController::actionPerformed(ActionType type) -> bool {
             mergeCurrentLayerDown();
             return true;
 
+        case ACTION_MOVE_SELECTION_LAYER_UP:
+            moveSelectionToLayer(this->control->getCurrentPageNo() + 1);
+            return true;
+        
+        case ACTION_MOVE_SELECTION_LAYER_DOWN:
+            moveSelectionToLayer(this->control->getCurrentPageNo() - 1);
+            return true;
+
         case ACTION_FOOTER_LAYER:
             // This event is not fired anymore
             // This controller is called directly
@@ -111,6 +119,27 @@ auto LayerController::actionPerformed(ActionType type) -> bool {
         default:
             return false;
     }
+}
+
+/**
+ * Moves all selected objects to the given layer and switches to it
+*/
+void LayerController::moveSelectionToLayer(int layerNo) {
+    std::cout << "T-log: moveSelectionToLayer(" << layerNo << ")" << std::endl;
+    PageRef currentP = getCurrentPage();
+    // check layer existance
+    if (layerNo < 0 || layerNo >= p->getLayerCount()) {
+        std::cout << "T-log:    layer " << layerNo << " not existing" << std::endl;
+        return;
+    }
+    // get selected objects
+    // remove selection
+    control->clearSelectionEndText();
+    // remove objects from old layer
+    // add objects to new layer
+    // add undo action
+    // switch to new layer
+    switchToLay(layerNo);
 }
 
 /**
