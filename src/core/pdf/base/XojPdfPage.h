@@ -63,7 +63,7 @@ public:
     virtual void render(cairo_t* cr) const = 0;
     virtual void renderForPrinting(cairo_t* cr) const = 0;
 
-    virtual std::vector<XojPdfRectangle> findText(std::string& text) = 0;
+    virtual std::vector<XojPdfRectangle> findText(const std::string& text) = 0;
 
     /// Retrieve the text contained in the provided rectangle using the given
     /// selection style.

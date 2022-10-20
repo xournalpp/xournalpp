@@ -39,7 +39,7 @@ public:
     /**
      * Searches text within a Text model
      */
-    static std::vector<XojPdfRectangle> findText(const Text* t, std::string& search);
+    static std::vector<XojPdfRectangle> findText(const Text* t, const std::string& search);
 
     /**
      * Initialize a Pango layout

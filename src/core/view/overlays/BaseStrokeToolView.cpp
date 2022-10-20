@@ -14,7 +14,7 @@ using namespace xoj::view;
 
 static Color strokeColorWithAlpha(const Stroke& s) {
     Color c = s.getColor();
-    if (s.getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+    if (s.getToolType() == StrokeTool::HIGHLIGHTER) {
         c.alpha = s.getFill() == -1 ? 120U : static_cast<uint8_t>(s.getFill());
     } else {
         c.alpha = 255U;
@@ -24,7 +24,7 @@ static Color strokeColorWithAlpha(const Stroke& s) {
 
 BaseStrokeToolView::BaseStrokeToolView(Repaintable* parent, const Stroke& stroke):
         ToolView(parent),
-        cairoOp(stroke.getToolType() == STROKE_TOOL_HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER),
+        cairoOp(stroke.getToolType() == StrokeTool::HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER),
         strokeColor(strokeColorWithAlpha(stroke)),
         lineStyle(stroke.getLineStyle()),
         strokeWidth(stroke.getWidth()) {}

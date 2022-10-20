@@ -63,7 +63,7 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
     // Now remaining sections
     erasedSections.complement({0, 0.0}, {n - 2, 1.0});
 
-    const bool highlighter = this->stroke.getToolType() == STROKE_TOOL_HIGHLIGHTER;
+    const bool highlighter = this->stroke.getToolType() == StrokeTool::HIGHLIGHTER;
     const bool filled = this->stroke.getFill() != -1;
     if (highlighter || filled) {
         auto subsections = erasedSections.cloneToIntervalVector();
@@ -164,7 +164,7 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
 
     changesAtLastIteration = !newErasedSections.empty();
     if (changesAtLastIteration) {
-        const bool highlighter = this->stroke.getToolType() == STROKE_TOOL_HIGHLIGHTER;
+        const bool highlighter = this->stroke.getToolType() == StrokeTool::HIGHLIGHTER;
         const bool filled = this->stroke.getFill() != -1;
         if (highlighter || filled) {
             /**

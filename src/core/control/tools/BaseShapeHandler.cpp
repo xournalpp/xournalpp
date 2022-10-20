@@ -93,6 +93,12 @@ void BaseShapeHandler::onSequenceCancelEvent() { this->cancelStroke(); }
 void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
     control->getCursor()->activateDrawDirCursor(false);  // in case released within  fixate_Dir_Mods_Dist
 
+    if (this->shape.size() <= 1) {
+        // We need at least two points to make a stroke (it can be twice the same)
+        this->cancelStroke();
+        return;
+    }
+
     Settings* settings = control->getSettings();
 
     if (settings->getStrokeFilterEnabled())  // Note: For simple strokes see StrokeHandler which has a slightly
@@ -154,6 +160,7 @@ void BaseShapeHandler::onButtonPressEvent(const PositionInputData& pos, double z
 
     this->startStrokeTime = pos.timestamp;
     this->startPoint = snappingHandler.snapToGrid(this->buttonDownPoint, pos.isAltDown());
+    this->currPoint = this->startPoint;
 
     this->stroke = createStroke(this->control);
 }
