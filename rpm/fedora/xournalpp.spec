@@ -4,7 +4,7 @@
 #This spec file is intended for daily development snapshot release
 %global	build_repo https://github.com/xournalpp/xournalpp/
 %global	build_branch master
-%global	version_string 1.1.1+dev
+%global	version_string 1.1.2+dev
 %define	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-41)
 %define	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
 %global	build_timestamp %(date +"%Y%m%d")
@@ -80,7 +80,7 @@ The %{name}-ui package contains a graphical user interface for  %{name}.
         -DENABLE_MATHTEX=ON \
         -DGIT_VERSION=%{build_shortcommit} \
         -DMAC_INTEGRATION=OFF
-        
+
 %cmake_build
 
 %install
