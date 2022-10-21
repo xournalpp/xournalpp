@@ -528,6 +528,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_DELETE_PAGE:
             deletePage();
             break;
+        case ACTION_MOVE_SELECTION_LAYER_UP:
+            moveSelectionToLayer(getCurrentPageNo() + 1);
+            break;
+        case ACTION_MOVE_SELECTION_LAYER_DOWN:
+            moveSelectionToLayer(getCurrentPageNo() - 1);
+            break;
         case ACTION_PAPER_FORMAT:
             paperFormat();
             break;
@@ -1018,14 +1024,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_ABOUT:
             showAbout();
-            break;
-
-        case ACTION_MOVE_SELECTION_LAYER_UP:
-            moveSelectionToLayer(getCurrentPageNo() + 1);
-            break;
-        
-        case ACTION_MOVE_SELECTION_LAYER_DOWN:
-            moveSelectionToLayer(getCurrentPageNo() - 1);
             break;
 
         case ACTION_NONE:
@@ -2987,35 +2985,28 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
     }
 }
 
-/**
- * Moves all selected objects to the given layer and switches to it
-*/
 void Control::moveSelectionToLayer(size_t layerNo) {
-    std::cout << "T-log: moveSelectionToLayer(" << layerNo << ")" << std::endl;
     PageRef currentP = getCurrentPage();
     // check layer existance
     if (layerNo < 0 || layerNo >= currentP->getLayerCount()) {
-        std::cout << "T-log:    layer " << layerNo << " not existing" << std::endl;
         return;
     }
     // get selected objects
     auto selection = getWindow()->getXournal()->getSelection();
     if (!selection) {
-        std::cout << "T-log:    there is no selection" << std::endl;
         return;
     }
     auto selectedElements = selection->getElements();
     // remove selection
-    std::cout << "T-log:    removing selection" << std::endl;
     clearSelectionEndText();
     // move objects to new layer
-    std::cout << "T-log:    moving elements to new layer" << std::endl;
     for (auto e : selectedElements) {
         currentP->getSelectedLayer()->removeElement(e,false);
         currentP->getLayers()->at(layerNo)->addElement(e);
     }
     // add undo action
     // switch to new layer
+    this->getLayerController()->switchToLay(layerNo + 1);
 }
 
 void Control::deleteSelection() {
