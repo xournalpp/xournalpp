@@ -1297,7 +1297,6 @@
                             <property name="label" translatable="yes">Move Selection Layer Up</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_MOVE_SELECTION_LAYER_UP" swapped="no"/>
-                            <accelerator key="+" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1308,7 +1307,6 @@
                             <property name="label" translatable="yes">Move Selection Layer Down</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_MOVE_SELECTION_LAYER_DOWN" swapped="no"/>
-                            <accelerator key="-" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>

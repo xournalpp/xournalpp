@@ -14,7 +14,6 @@
 #include "undo/MergeLayerDownUndoAction.h"      // for MergeLayerDownUndoAction
 #include "undo/MoveLayerUndoAction.h"           // for MoveLayerUndoAction
 #include "undo/RemoveLayerUndoAction.h"         // for RemoveLayerUndoAction
-#include "undo/MoveSelectionToLayerUndoAction.h"// for MoveSelectionToLayerUndoAction
 #include "undo/UndoAction.h"                    // for UndoActionPtr, UndoAction
 #include "undo/UndoRedoHandler.h"               // for UndoRedoHandler
 #include "util/Util.h"                          // for npos

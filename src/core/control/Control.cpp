@@ -532,7 +532,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             moveSelectionToLayer(getCurrentPageNo() + 1);
             break;
         case ACTION_MOVE_SELECTION_LAYER_DOWN:
-            moveSelectionToLayer(getCurrentPageNo() - 1);
+            moveSelectionToLayer(getCurrentPageNo());
             break;
         case ACTION_PAPER_FORMAT:
             paperFormat();
@@ -2987,26 +2987,22 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
 
 void Control::moveSelectionToLayer(size_t layerNo) {
     PageRef currentP = getCurrentPage();
-    // check layer existance
     if (layerNo < 0 || layerNo >= currentP->getLayerCount()) {
         return;
     }
-    // get selected objects
+
     auto selection = getWindow()->getXournal()->getSelection();
     if (!selection) {
         return;
     }
     auto selectedElements = selection->getElements();
-    // remove selection
     clearSelectionEndText();
-    // move objects to new layer
     for (auto e : selectedElements) {
         currentP->getSelectedLayer()->removeElement(e,false);
         currentP->getLayers()->at(layerNo)->addElement(e);
     }
-    // add undo action
-    // switch to new layer
-    this->getLayerController()->switchToLay(layerNo + 1);
+
+    getLayerController()->switchToLay(layerNo + 1);
 }
 
 void Control::deleteSelection() {
