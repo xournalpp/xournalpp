@@ -71,7 +71,7 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
         }
 
         g_strfreev(argv);
-        g_error_free(err);
+        g_clear_error(&err);
         return res;
     }
     g_free(argv[0]);
