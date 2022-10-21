@@ -4,20 +4,21 @@
 #include <utility>  // for move
 #include <vector>   // for vector
 
-#include "control/Control.h"                // for Control
-#include "gui/MainWindow.h"                 // for MainWindow
-#include "gui/XournalView.h"                // for XournalView
-#include "gui/dialog/RenameLayerDialog.h"   // for RenameLayerDialog
-#include "model/Document.h"                 // for Document
-#include "model/XojPage.h"                  // for XojPage
-#include "undo/InsertLayerUndoAction.h"     // for InsertLayerUndoAction
-#include "undo/MergeLayerDownUndoAction.h"  // for MergeLayerDownUndoAction
-#include "undo/MoveLayerUndoAction.h"       // for MoveLayerUndoAction
-#include "undo/RemoveLayerUndoAction.h"     // for RemoveLayerUndoAction
-#include "undo/UndoAction.h"                // for UndoActionPtr, UndoAction
-#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler
-#include "util/Util.h"                      // for npos
-#include "util/i18n.h"                      // for FS, _F
+#include "control/Control.h"                    // for Control
+#include "gui/MainWindow.h"                     // for MainWindow
+#include "gui/XournalView.h"                    // for XournalView
+#include "gui/dialog/RenameLayerDialog.h"       // for RenameLayerDialog
+#include "model/Document.h"                     // for Document
+#include "model/XojPage.h"                      // for XojPage
+#include "undo/InsertLayerUndoAction.h"         // for InsertLayerUndoAction
+#include "undo/MergeLayerDownUndoAction.h"      // for MergeLayerDownUndoAction
+#include "undo/MoveLayerUndoAction.h"           // for MoveLayerUndoAction
+#include "undo/RemoveLayerUndoAction.h"         // for RemoveLayerUndoAction
+#include "undo/MoveSelectionToLayerUndoAction.h"// for MoveSelectionToLayerUndoAction
+#include "undo/UndoAction.h"                    // for UndoActionPtr, UndoAction
+#include "undo/UndoRedoHandler.h"               // for UndoRedoHandler
+#include "util/Util.h"                          // for npos
+#include "util/i18n.h"                          // for FS, _F
 
 #include "LayerCtrlListener.h"  // for LayerCtrlListener
 
@@ -74,14 +75,6 @@ auto LayerController::actionPerformed(ActionType type) -> bool {
             mergeCurrentLayerDown();
             return true;
 
-        case ACTION_MOVE_SELECTION_LAYER_UP:
-            moveSelectionToLayer(this->control->getCurrentPageNo() + 1);
-            return true;
-        
-        case ACTION_MOVE_SELECTION_LAYER_DOWN:
-            moveSelectionToLayer(this->control->getCurrentPageNo() - 1);
-            return true;
-
         case ACTION_FOOTER_LAYER:
             // This event is not fired anymore
             // This controller is called directly
@@ -119,38 +112,6 @@ auto LayerController::actionPerformed(ActionType type) -> bool {
         default:
             return false;
     }
-}
-
-/**
- * Moves all selected objects to the given layer and switches to it
-*/
-void LayerController::moveSelectionToLayer(size_t layerNo) {
-    std::cout << "T-log: moveSelectionToLayer(" << layerNo << ")" << std::endl;
-    PageRef currentP = getCurrentPage();
-    // check layer existance
-    if (layerNo < 0 || layerNo >= currentP->getLayerCount()) {
-        std::cout << "T-log:    layer " << layerNo << " not existing" << std::endl;
-        return;
-    }
-    // get selected objects
-    auto selection = control->getWindow()->getXournal()->getSelection();
-    if (!selection) {
-        std::cout << "T-log:    there is no selection" << std::endl;
-        return;
-    }
-    auto selectedElements = std::vector<Element*>();
-    //auto selectedElements = selection->getElements();
-    // remove selection
-    std::cout << "T-log:    removing selection" << std::endl;
-    control->clearSelectionEndText();
-    // move objects to new layer
-    std::cout << "T-log:    moving elements to new layer" << std::endl;
-    for (auto e : selectedElements) {
-        currentP->getSelectedLayer()->removeElement(e,false);
-        currentP->getSelectedLayer()->addElement(e);
-    }
-    // add undo action
-    // switch to new layer
 }
 
 /**

@@ -216,6 +216,8 @@ public:
     void updateDeletePageButton();
 
     // selection handling
+    void moveSelectionToLayer(size_t layerNo);
+
     void clearSelection();
 
     void setCopyPasteEnabled(bool enabled);

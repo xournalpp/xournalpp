@@ -70,7 +70,6 @@ public:
     void addNewLayer();
     void deleteCurrentLayer();
     void copyCurrentLayer();
-    void moveSelectionToLayer(size_t layerNo);
     void moveCurrentLayer(bool up);
     void mergeCurrentLayerDown();
     void switchToLay(Layer::Index layerId, bool hideShow = false);
