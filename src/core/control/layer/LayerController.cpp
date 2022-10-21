@@ -4,20 +4,20 @@
 #include <utility>  // for move
 #include <vector>   // for vector
 
-#include "control/Control.h"                    // for Control
-#include "gui/MainWindow.h"                     // for MainWindow
-#include "gui/XournalView.h"                    // for XournalView
-#include "gui/dialog/RenameLayerDialog.h"       // for RenameLayerDialog
-#include "model/Document.h"                     // for Document
-#include "model/XojPage.h"                      // for XojPage
-#include "undo/InsertLayerUndoAction.h"         // for InsertLayerUndoAction
-#include "undo/MergeLayerDownUndoAction.h"      // for MergeLayerDownUndoAction
-#include "undo/MoveLayerUndoAction.h"           // for MoveLayerUndoAction
-#include "undo/RemoveLayerUndoAction.h"         // for RemoveLayerUndoAction
-#include "undo/UndoAction.h"                    // for UndoActionPtr, UndoAction
-#include "undo/UndoRedoHandler.h"               // for UndoRedoHandler
-#include "util/Util.h"                          // for npos
-#include "util/i18n.h"                          // for FS, _F
+#include "control/Control.h"                // for Control
+#include "gui/MainWindow.h"                 // for MainWindow
+#include "gui/XournalView.h"                // for XournalView
+#include "gui/dialog/RenameLayerDialog.h"   // for RenameLayerDialog
+#include "model/Document.h"                 // for Document
+#include "model/XojPage.h"                  // for XojPage
+#include "undo/InsertLayerUndoAction.h"     // for InsertLayerUndoAction
+#include "undo/MergeLayerDownUndoAction.h"  // for MergeLayerDownUndoAction
+#include "undo/MoveLayerUndoAction.h"       // for MoveLayerUndoAction
+#include "undo/RemoveLayerUndoAction.h"     // for RemoveLayerUndoAction
+#include "undo/UndoAction.h"                // for UndoActionPtr, UndoAction
+#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler
+#include "util/Util.h"                      // for npos
+#include "util/i18n.h"                      // for FS, _F
 
 #include "LayerCtrlListener.h"  // for LayerCtrlListener
 
