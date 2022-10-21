@@ -64,7 +64,7 @@ auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isContro
      * Set resolution depending on the radius (heuristic)
      */
     auto nbPtsPerQuadrant =
-            static_cast<unsigned int>(std::ceil(5 + 0.3 * std::max(std::abs(radiusX), std::abs(radiusY))));
+            static_cast<unsigned int>(std::ceil(5 + 0.3 * (std::abs(radiusX) + std::abs(radiusY))));
     const double stepAngle = M_PI_2 / nbPtsPerQuadrant;
 
     std::pair<std::vector<Point>, Range> res;
