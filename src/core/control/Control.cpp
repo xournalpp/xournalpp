@@ -539,10 +539,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             changePageBackgroundColor();
             break;
         case ACTION_MOVE_SELECTION_LAYER_UP:
-            moveSelectionToLayer(getCurrentPageNo() + 1);
+            moveSelectionToLayer(getCurrentPage()->getSelectedLayerId());
             break;
         case ACTION_MOVE_SELECTION_LAYER_DOWN:
-            moveSelectionToLayer(getCurrentPageNo());
+            moveSelectionToLayer(getCurrentPage()->getSelectedLayerId() - 2);
             break;
 
             // Menu Tools
@@ -2987,21 +2987,25 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
 }
 
 void Control::moveSelectionToLayer(size_t layerNo) {
+    std::cout << "moveSelectionToLayer(" << layerNo << ")" << std::endl;
     PageRef currentP = getCurrentPage();
     if (layerNo < 0 || layerNo >= currentP->getLayerCount()) {
+        std::cout << "    no legal layer: " << layerNo << std::endl;
         return;
     }
     auto selection = getWindow()->getXournal()->getSelection();
     if (!selection) {
+        std::cout << "    no selection" << std::endl;
         return;
     }
 
     auto selectedElements = selection->getElements();
     auto oldLayer = currentP->getSelectedLayer();
     auto newLayer = currentP->getLayers()->at(layerNo);
-    auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer, getCurrentPageNo(), layerNo);
+    auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer, currentP->getSelectedLayerId() - 1, layerNo);
     clearSelectionEndText();
     for (auto e : selectedElements) {
+        std::cout << "    moving object from layer " << currentP->getSelectedLayerId() << " to layer " << layerNo << std::endl;
         currentP->getSelectedLayer()->removeElement(e,false);
         currentP->getLayers()->at(layerNo)->addElement(e);
         moveSelUndo->addElement(newLayer, e, newLayer->indexOf(e));
@@ -3009,6 +3013,7 @@ void Control::moveSelectionToLayer(size_t layerNo) {
 
     undoRedo->addUndoAction(std::move(moveSelUndo));
     getLayerController()->switchToLay(layerNo + 1);
+    std::cout << "    END" << std::endl;
 }
 
 void Control::deleteSelection() {

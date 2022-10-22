@@ -28,12 +28,14 @@ auto MoveSelectionToLayerUndoAction::getText() -> std::string {
 }
 
 auto MoveSelectionToLayerUndoAction::undo(Control* control) -> bool {
+    std::cout << "UNDO" << std::endl;
     if (elements.empty()) {
         this->undone = false;
         return false;
     }
 
     for (const auto& elem: elements) {
+        std::cout << "    undoing object" << std::endl;
         elem.layer->removeElement(elem.element, false);
         this->oldLayer->addElement(elem.element);
         this->page->fireElementChanged(elem.element);
@@ -41,6 +43,7 @@ auto MoveSelectionToLayerUndoAction::undo(Control* control) -> bool {
     this->layerController->switchToLay(oldLayerNo + 1);
 
     this->undone = false;
+    std::cout << "    END" << std::endl;
     return true;
 }
 
