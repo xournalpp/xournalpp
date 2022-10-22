@@ -2996,19 +2996,20 @@ void Control::moveSelectionToLayer(size_t layerNo) {
     if (!selection) {
         return;
     }
+
     auto selectedElements = selection->getElements();
-    clearSelectionEndText();
-    Layer* oldLayer = currentP->getSelectedLayer();
-    Layer* newLayer = currentP->getLayers()->at(layerNo);
+    auto oldLayer = currentP->getSelectedLayer();
+    auto newLayer = currentP->getLayers()->at(layerNo);
     auto insertUndo = std::make_unique<AddUndoAction>(currentP, false);
     auto removeUndo = std::make_unique<DeleteUndoAction>(currentP, false);
+    clearSelectionEndText();
     for (auto e : selectedElements) {
-        std::cout << "moving element" << std::endl;
         currentP->getSelectedLayer()->removeElement(e,false);
         removeUndo->addElement(oldLayer, e, oldLayer->indexOf(e));
         currentP->getLayers()->at(layerNo)->addElement(e);
         insertUndo->addElement(newLayer, e, newLayer->indexOf(e));
     }
+
     undoRedo->addUndoAction(std::move(removeUndo));
     undoRedo->addUndoAction(std::move(insertUndo));
     getLayerController()->switchToLay(layerNo + 1);
