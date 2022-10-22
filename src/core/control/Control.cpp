@@ -75,6 +75,8 @@
 #include "undo/AddUndoAction.h"                                  // for AddU...
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
+#include "undo/DeleteUndoAction.h"                               // for Dele...
+#include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
 #include "undo/UndoAction.h"                                     // for Undo...
 #include "util/Color.h"                                          // for oper...
 #include "util/PathUtil.h"                                       // for clea...
@@ -2990,18 +2992,25 @@ void Control::moveSelectionToLayer(size_t layerNo) {
     if (layerNo < 0 || layerNo >= currentP->getLayerCount()) {
         return;
     }
-
     auto selection = getWindow()->getXournal()->getSelection();
     if (!selection) {
         return;
     }
     auto selectedElements = selection->getElements();
     clearSelectionEndText();
+    Layer* oldLayer = currentP->getSelectedLayer();
+    Layer* newLayer = currentP->getLayers()->at(layerNo);
+    auto insertUndo = std::make_unique<AddUndoAction>(currentP, false);
+    auto removeUndo = std::make_unique<DeleteUndoAction>(currentP, false);
     for (auto e : selectedElements) {
+        std::cout << "moving element" << std::endl;
         currentP->getSelectedLayer()->removeElement(e,false);
+        removeUndo->addElement(oldLayer, e, oldLayer->indexOf(e));
         currentP->getLayers()->at(layerNo)->addElement(e);
+        insertUndo->addElement(newLayer, e, newLayer->indexOf(e));
     }
-
+    undoRedo->addUndoAction(std::move(removeUndo));
+    undoRedo->addUndoAction(std::move(insertUndo));
     getLayerController()->switchToLay(layerNo + 1);
 }
 
