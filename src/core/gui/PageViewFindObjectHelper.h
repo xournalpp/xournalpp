@@ -48,17 +48,14 @@ public:
 
         std::lock_guard lock(*ctrl->getDocument());
         if (multiLayer) {
-            size_t initialLayer = this->view->getPage()->getSelectedLayerId();
-            auto* layers = this->view->getPage()->getLayers();
-            for (auto it = layers->rbegin(); it != layers->rend(); it++) {
-                Layer* layer = *it;
-                Layer::Index index = layers->size() - as_unsigned(std::distance(layers->rbegin(), it));
-                ctrl->getLayerController()->switchToLay(index);
-                if (checkLayer(layer)) {
+            const auto& layers = this->view->getPage()->getLayers();
+            size_t layerNo = layers.size();
+            for (auto l = layers.rbegin(); l != layers.rend(); l++, layerNo--) {
+                if (checkLayer(*l)) {
+                    ctrl->getLayerController()->switchToLay(as_unsigned(std::distance(l, layers.rend())));
                     return true;
                 }
             }
-            ctrl->getLayerController()->switchToLay(initialLayer);
             return false;
         } else {
             Layer* layer = this->view->getPage()->getSelectedLayer();
@@ -67,7 +64,7 @@ public:
     }
 
 protected:
-    bool checkLayer(Layer* l) {
+    bool checkLayer(const Layer* l) {
         /* Search for Element whose bounding box center is closest to the place (x,y) where the object is searched for.
          * Only those strokes are taken into account that pass the appropriate checkElement test.
          */

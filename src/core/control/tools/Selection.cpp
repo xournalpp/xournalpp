@@ -23,7 +23,8 @@ auto Selection::finalize(PageRef page, bool disableMultilayer, Document* doc) ->
 
     if (multiLayer && !disableMultilayer) {
         std::lock_guard lock(*doc);
-        for (auto it = page->getLayers()->rbegin(); it != page->getLayers()->rend(); it++) {
+        const auto layers = page->getLayers();
+        for (auto it = layers.rbegin(); it != layers.rend(); it++) {
             Layer* l = *it;
             if (!l->isVisible()) {
                 continue;
@@ -38,7 +39,7 @@ auto Selection::finalize(PageRef page, bool disableMultilayer, Document* doc) ->
                 pos++;
             }
             if (selectionOnLayer) {
-                layerId = page->getLayers()->size() - as_unsigned(std::distance(page->getLayers()->rbegin(), it));
+                layerId = layers.size() - as_unsigned(std::distance(layers.rbegin(), it));
                 break;
             }
         }

@@ -1986,7 +1986,7 @@ void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
         // No need to backup the old saved file, as there is none
         this->doc->lock();
         this->doc->setCreateBackupOnSave(false);
-        auto suggestedPath = this->doc->createSaveFolder(this->settings->getLastSavePath());
+        auto suggestedPath = this->doc->createSaveFoldername(this->settings->getLastSavePath());
         suggestedPath /= this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
         this->doc->unlock();
         xoj::SaveExportDialog::showSaveFileDialog(getGtkWindow(), settings, std::move(suggestedPath),
@@ -2353,7 +2353,7 @@ void Control::moveSelectionToLayer(size_t layerNo) {
     }
 
     auto* oldLayer = currentP->getSelectedLayer();
-    auto* newLayer = currentP->getLayers()->at(layerNo);
+    auto* newLayer = currentP->getLayers().at(layerNo);
     auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer,
                                                                         currentP->getSelectedLayerId() - 1, layerNo);
     for (auto* e: selection->getElements()) {

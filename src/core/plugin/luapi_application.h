@@ -2222,7 +2222,7 @@ static int applib_getDocumentStructure(lua_State* L) {
         // add (non-background) layers
         int currLayer = 0;
 
-        for (auto l: *page->getLayers()) {
+        for (auto l: page->getLayers()) {
             lua_pushinteger(L, ++currLayer);  // key of the layer
             lua_newtable(L);                  // beginning of table for layer l
 

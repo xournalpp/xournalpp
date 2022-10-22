@@ -54,7 +54,7 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
     Settings* settings = control->getSettings();
     Document* doc = control->getDocument();
     doc->lock();
-    fs::path suggestedPath = doc->createSaveFolder(settings->getLastSavePath());
+    fs::path suggestedPath = doc->createSaveFoldername(settings->getLastSavePath());
     suggestedPath /=
             doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName(), settings->getDefaultPdfExportName());
     doc->unlock();

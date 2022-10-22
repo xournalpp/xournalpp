@@ -26,7 +26,7 @@ void DocumentView::setPdfCache(PdfCache* cache) { pdfCache = cache; }
  * @param cr Draw to this context
  * @param dontRenderEditingStroke false to draw currently drawing stroke
  */
-void DocumentView::initDrawing(PageRef page, cairo_t* cr, bool dontRenderEditingStroke) {
+void DocumentView::initDrawing(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke) {
     this->cr = cr;
     this->page = page;
     this->dontRenderEditingStroke = dontRenderEditingStroke;
@@ -65,14 +65,15 @@ void DocumentView::drawBackground(xoj::view::BackgroundFlags bgFlags) const {
     bgView->draw(cr);
 }
 
-void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, xoj::view::BackgroundFlags flags) {
+void DocumentView::drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke,
+                            xoj::view::BackgroundFlags flags) {
     initDrawing(page, cr, dontRenderEditingStroke);
 
     drawBackground(flags);
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
-    for (Layer* layer: *page->getLayers()) {
+    for (const Layer* layer: page->getLayersView()) {
         if (layer->isVisible()) {
             xoj::view::LayerView layerView(layer);
             layerView.draw(context);
@@ -83,7 +84,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 }
 
 
-void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, PageRef page, cairo_t* cr,
+void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, ConstPageRef page, cairo_t* cr,
                                     bool dontRenderEditingStroke, xoj::view::BackgroundFlags flags) {
     initDrawing(page, cr, dontRenderEditingStroke);
 
@@ -105,7 +106,7 @@ void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, PageRef 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
     auto visibilityIt = visible.begin();
-    for (Layer* l: *page->getLayers()) {
+    for (const Layer* l: page->getLayersView()) {
         if (!*(visibilityIt++)) {
             continue;
         }

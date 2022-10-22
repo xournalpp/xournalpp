@@ -36,27 +36,27 @@ public:
     SaveHandler();
 
 public:
-    void prepareSave(Document* doc);
+    void prepareSave(const Document* doc);
     void saveTo(const fs::path& filepath, ProgressListener* listener = nullptr);
     void saveTo(OutputStream* out, const fs::path& filepath, ProgressListener* listener = nullptr);
-    std::string getErrorMessage();
+    const std::string& getErrorMessage();
 
 protected:
     static std::string getColorStr(Color c, unsigned char alpha = 0xff);
 
-    virtual void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
-    virtual void visitLayer(XmlNode* page, Layer* l);
-    virtual void visitStroke(XmlPointNode* stroke, Stroke* s);
+    virtual void visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id);
+    virtual void visitLayer(XmlNode* page, const Layer* l);
+    virtual void visitStroke(XmlPointNode* stroke, const Stroke* s);
 
     /**
      * Export the fill attributes
      */
-    virtual void visitStrokeExtended(XmlPointNode* stroke, Stroke* s);
+    virtual void visitStrokeExtended(XmlPointNode* stroke, const Stroke* s);
 
     virtual void writeHeader();
-    virtual void writeSolidBackground(XmlNode* background, PageRef p);
-    virtual void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode);
-    virtual void writeBackgroundName(XmlNode* background, PageRef p);
+    virtual void writeSolidBackground(XmlNode* background, ConstPageRef p);
+    virtual void writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement);
+    virtual void writeBackgroundName(XmlNode* background, ConstPageRef p);
 
 protected:
     std::unique_ptr<XmlNode> root{};
