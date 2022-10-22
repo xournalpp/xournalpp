@@ -1794,7 +1794,6 @@ void Control::selectTool(ToolType type) {
     if (oldTool && win
                 && isSelectToolType(type)
                 && oldTool->getToolType() == ToolType::TOOL_TEXT
-                && this->win->getXournal()->getTextEditor()
                 && !(this->win->getXournal()->getTextEditor()->getText()->getText().empty())) {
         auto xournal = this->win->getXournal();
         Text* textobj = xournal->getTextEditor()->getText();
