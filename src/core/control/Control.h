@@ -218,6 +218,8 @@ public:
     // selection handling
     void clearSelection();
 
+    void moveSelectionToLayer(size_t layerNo);
+
     void setCopyPasteEnabled(bool enabled);
 
     void enableAutosave(bool enable);

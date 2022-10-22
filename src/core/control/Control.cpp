@@ -538,6 +538,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_PAPER_BACKGROUND_COLOR:
             changePageBackgroundColor();
             break;
+        case ACTION_MOVE_SELECTION_LAYER_UP:
+            moveSelectionToLayer(getCurrentPageNo() + 1);
+            break;
+        case ACTION_MOVE_SELECTION_LAYER_DOWN:
+            moveSelectionToLayer(getCurrentPageNo());
+            break;
 
             // Menu Tools
         case ACTION_TOOL_PEN:
@@ -2978,6 +2984,31 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
             delete selection;
         }
     }
+}
+
+void Control::moveSelectionToLayer(size_t layerNo) {
+    PageRef currentP = getCurrentPage();
+    if (layerNo < 0 || layerNo >= currentP->getLayerCount()) {
+        return;
+    }
+    auto selection = getWindow()->getXournal()->getSelection();
+    if (!selection) {
+        return;
+    }
+
+    auto selectedElements = selection->getElements();
+    auto oldLayer = currentP->getSelectedLayer();
+    auto newLayer = currentP->getLayers()->at(layerNo);
+    auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer, getCurrentPageNo(), layerNo);
+    clearSelectionEndText();
+    for (auto e : selectedElements) {
+        currentP->getSelectedLayer()->removeElement(e,false);
+        currentP->getLayers()->at(layerNo)->addElement(e);
+        moveSelUndo->addElement(newLayer, e, newLayer->indexOf(e));
+    }
+
+    undoRedo->addUndoAction(std::move(moveSelUndo));
+    getLayerController()->switchToLay(layerNo + 1);
 }
 
 void Control::deleteSelection() {
