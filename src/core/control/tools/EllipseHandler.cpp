@@ -64,9 +64,8 @@ auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isContro
      * Set resolution depending on the radius (heuristic)
      */
     auto nbPtsPerQuadrant =
-            static_cast<unsigned int>(std::ceil(5 + 0.1 * std::max(std::abs(radiusX), std::abs(radiusY))));
+            static_cast<unsigned int>(std::ceil(5 + 0.3 * (std::abs(radiusX) + std::abs(radiusY))));
     const double stepAngle = M_PI_2 / nbPtsPerQuadrant;
-    const double excentricity = std::abs(radiusY / radiusX);
 
     std::pair<std::vector<Point>, Range> res;
     std::vector<Point>& shape = res.first;
@@ -81,8 +80,7 @@ auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isContro
     shape.emplace_back(center_x + radiusX, center_y);
     for (unsigned int j = 1U; j < nbPtsPerQuadrant; j++) {
         const double tgtAngle = stepAngle * j;
-        // This formula dispatches the points, so that points are denser where the ellipse has higher curvature.
-        const double centerAngle = 0.5 * (std::atan(excentricity * std::tan(tgtAngle)) + tgtAngle);
+        const double centerAngle = 0.25 * (std::atan2(std::abs(radiusY) * std::sin(tgtAngle), std::abs(radiusX) * std::cos(tgtAngle))) + 0.75 * tgtAngle;
         double xp = center_x + radiusX * std::cos(centerAngle);
         double yp = center_y + radiusY * std::sin(centerAngle);
         shape.emplace_back(xp, yp);
