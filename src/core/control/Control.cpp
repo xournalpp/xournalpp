@@ -3000,18 +3000,15 @@ void Control::moveSelectionToLayer(size_t layerNo) {
     auto selectedElements = selection->getElements();
     auto oldLayer = currentP->getSelectedLayer();
     auto newLayer = currentP->getLayers()->at(layerNo);
-    auto insertUndo = std::make_unique<AddUndoAction>(currentP, false);
-    auto removeUndo = std::make_unique<DeleteUndoAction>(currentP, false);
+    auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, oldLayer, getCurrentPageNo());
     clearSelectionEndText();
     for (auto e : selectedElements) {
         currentP->getSelectedLayer()->removeElement(e,false);
-        removeUndo->addElement(oldLayer, e, oldLayer->indexOf(e));
         currentP->getLayers()->at(layerNo)->addElement(e);
-        insertUndo->addElement(newLayer, e, newLayer->indexOf(e));
+        moveSelUndo->addElement(newLayer, e, newLayer->indexOf(e));
     }
 
-    undoRedo->addUndoAction(std::move(removeUndo));
-    undoRedo->addUndoAction(std::move(insertUndo));
+    undoRedo->addUndoAction(std::move(moveSelUndo));
     getLayerController()->switchToLay(layerNo + 1);
 }
 
