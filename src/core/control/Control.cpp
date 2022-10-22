@@ -1794,6 +1794,7 @@ void Control::selectTool(ToolType type) {
     if (oldTool && win
                 && isSelectToolType(type)
                 && oldTool->getToolType() == ToolType::TOOL_TEXT
+                && this->win->getXournal()->getTextEditor()
                 && !(this->win->getXournal()->getTextEditor()->getText()->getText().empty())) {
         auto xournal = this->win->getXournal();
         Text* textobj = xournal->getTextEditor()->getText();
@@ -3000,7 +3001,7 @@ void Control::moveSelectionToLayer(size_t layerNo) {
     auto selectedElements = selection->getElements();
     auto oldLayer = currentP->getSelectedLayer();
     auto newLayer = currentP->getLayers()->at(layerNo);
-    auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, oldLayer, getCurrentPageNo());
+    auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer, getCurrentPageNo(), layerNo);
     clearSelectionEndText();
     for (auto e : selectedElements) {
         currentP->getSelectedLayer()->removeElement(e,false);

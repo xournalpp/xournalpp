@@ -17,6 +17,7 @@
 #include "model/Element.h"  // for Element
 #include "model/PageRef.h"  // for PageRef
 
+#include "control/layer/LayerController.h"  // for LayerController
 #include "PageLayerPosEntry.h"  // for PageLayerPosEntry
 #include "UndoAction.h"  // for UndoAction
 
@@ -25,7 +26,7 @@ class Layer;
 
 class MoveSelectionToLayerUndoAction: public UndoAction {
 public:
-    MoveSelectionToLayerUndoAction(const PageRef& page, Layer* oldLayer, size_t oldLayerNo);
+    MoveSelectionToLayerUndoAction(const PageRef& page, LayerController* layerController, Layer* oldLayer, size_t oldLayerNo, size_t newLayerNo);
 
 public:
     bool undo(Control* control) override;
@@ -37,6 +38,8 @@ public:
 
 private:
     std::multiset<PageLayerPosEntry<Element>> elements{};
+    LayerController* layerController;
     Layer* oldLayer;
     size_t oldLayerNo;
+    size_t newLayerNo;
 };
