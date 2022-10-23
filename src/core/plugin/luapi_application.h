@@ -25,6 +25,7 @@
 #include "control/layer/LayerController.h"
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/settings/Settings.h"
+#include "control/tools/EditSelection.h"
 #include "gui/Layout.h"
 #include "gui/MainWindow.h"
 #include "gui/XournalView.h"
@@ -42,7 +43,7 @@
 #include "undo/InsertUndoAction.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
-#include "util/i18n.h"                  // for _
+#include "util/i18n.h"  // for _
 #include "util/safe_casts.h"
 
 extern "C" {
@@ -809,6 +810,141 @@ static int applib_addStrokes(lua_State* L) {
     lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
 
     return 0;
+}
+
+/**
+ * Puts a Lua Table of the Strokes (from the selection tool / selected layer) onto the stack.
+ * Is inverse to app.addStrokes
+ *
+ * Required argument: type ("selection" or "layer")
+ *
+ * Example: local strokes = app.getStrokes("selection")
+ *
+ * possible return value:
+ * {
+ *         {   -- Inside a stroke are three tables of equivalent length that represent a series of points
+ *             ["x"]        = { [1] = 110.0, [2] = 120.0, [3] = 130.0, ... },
+ *             ["y"]        = { [1] = 200.0, [2] = 205.0, [3] = 210.0, ... },
+ *             -- pressure is only present if pressure is set -> pressure member might be nil
+ *             ["pressure"] = { [1] = 0.8,   [2] = 0.9,   [3] = 1.1, ... },
+ *             -- Each stroke has individually handled options
+ *             ["tool"] = "pen",
+ *             ["width"] = 3.8,
+ *             ["color"] = 0xa000f0,
+ *             ["fill"] = 0,
+ *             ["lineStyle"] = "plain",
+ *         },
+ *         {
+ *             ["x"]         = {207, 207.5, 315.2, 315.29, 207.5844},
+ *             ["y"]         = {108, 167.4, 167.4, 108.70, 108.7094},
+ *             ["tool"]      = "pen",
+ *             ["width"]     = 0.85,
+ *             ["color"]     = 16744448,
+ *             ["fill"]      = -1,
+ *             ["lineStyle"] = "plain",
+ *         },
+ *         {
+ *             ["x"]         = {387.60, 387.6042, 500.879, 500.87, 387.604},
+ *             ["y"]         = {153.14, 215.8661, 215.866, 153.14, 153.148},
+ *             ["tool"]      = "pen",
+ *             ["width"]     = 0.85,
+ *             ["color"]     = 16744448,
+ *             ["fill"]      = -1,
+ *             ["lineStyle"] = "plain",
+ *         },
+ * }
+ */
+static int applib_getStrokes(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    std::string type = luaL_checkstring(L, 1);
+    std::vector<Element*> elements = {};
+    Control* control = plugin->getControl();
+
+    if (type == "Layer") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            control->clearSelection();  // otherwise strokes in the selection won't be recognized
+        }
+        elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+    } else if (type == "selection") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            elements = sel->getElements();
+        } else {
+            g_warning("There is no selection! ");
+            return 0;
+        }
+    } else {
+        g_warning("Unknown argument: %s", type.c_str());
+        return 0;
+    }
+
+    lua_newtable(L);  // create table of the elements
+    int currStrokeNo = 0;
+    int currPointNo = 0;
+
+    for (Element* e: elements) {
+        if (e->getType() == ELEMENT_STROKE) {
+            auto* s = static_cast<Stroke*>(e);
+            lua_pushnumber(L, ++currStrokeNo);  // index for later (settable)
+            lua_newtable(L);                    // create stroke table
+
+            lua_newtable(L);  // create table of x-coordinates
+            for (auto p: s->getPointVector()) {
+                lua_pushnumber(L, ++currPointNo);
+                lua_pushnumber(L, p.x);
+                lua_settable(L, -3);  // pops key and value from stack
+            }
+            lua_setfield(L, -2, "x");  // add x-coordinates to stroke
+            currPointNo = 0;
+
+            lua_newtable(L);  // create table for y-coordinates
+            for (auto p: s->getPointVector()) {
+                lua_pushnumber(L, ++currPointNo);
+                lua_pushnumber(L, p.y);
+                lua_settable(L, -3);
+            }
+            lua_setfield(L, -2, "y");  // add y-coordinates to stroke
+            currPointNo = 0;
+
+            if (s->hasPressure()) {
+                lua_newtable(L);  // create table for pressures
+                for (auto p: s->getPointVector()) {
+                    lua_pushnumber(L, ++currPointNo);
+                    lua_pushnumber(L, p.z);
+                    lua_settable(L, -3);
+                }
+                lua_setfield(L, -2, "pressure");  // add pressures to stroke
+                currPointNo = 0;
+            }
+
+            StrokeTool tool = s->getToolType();
+            if (tool == StrokeTool::PEN) {
+                lua_pushstring(L, "pen");
+            } else if (tool == StrokeTool::HIGHLIGHTER) {
+                lua_pushstring(L, "highlighter");
+            } else {
+                g_warning("Unknown STROKE_TOOL. ");
+                return 0;
+            }
+            lua_setfield(L, -2, "tool");  // add tool to stroke
+
+            lua_pushnumber(L, s->getWidth());
+            lua_setfield(L, -2, "width");  // add width to stroke
+
+            lua_pushinteger(L, int(uint32_t(s->getColor())));
+            lua_setfield(L, -2, "color");  // add color to stroke
+
+            lua_pushinteger(L, s->getFill());
+            lua_setfield(L, -2, "fill");  // add fill to stroke
+
+            lua_pushstring(L, StrokeStyle::formatStyle(s->getLineStyle()).c_str());
+            lua_setfield(L, -2, "lineStyle");  // add linestyle to stroke
+
+            lua_settable(L, -3);  // add stroke to elements
+        }
+    }
+    return 1;
 }
 
 /**
@@ -1762,6 +1898,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"addSplines", applib_addSplines},
                                   {"getFilePath", applib_getFilePath},
                                   {"refreshPage", applib_refreshPage},
+                                  {"getStrokes", applib_getStrokes},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 
