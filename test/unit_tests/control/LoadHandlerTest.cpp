@@ -452,3 +452,52 @@ TEST(ControlLoadHandler, testLoadStoreLoadGerman) {
 TEST(ControlLoadHandler, testLoadStoreLoadFloatBwCompat) {
     testLoadStoreLoadHelper(GET_TESTFILE("packaged_xopp/suite_float_bw_compat.xopp"), /*tol=*/1e-5);
 }
+
+TEST(ControlLoadHandler, testStrokeWidthRecovery) {
+    LoadHandler handler;
+    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/stroke/width_recovery.xopp"));
+
+    EXPECT_EQ((size_t)1, doc->getPageCount());
+    PageRef page = doc->getPage(0);
+
+    EXPECT_EQ((size_t)1, page->getLayerCount());
+
+    Layer* layer = (*(page->getLayers()))[0];
+
+    EXPECT_EQ(7U, layer->getElements().size());
+
+    Stroke* s1 = (Stroke*)layer->getElements()[0];
+    EXPECT_EQ(ELEMENT_STROKE, s1->getType());
+    for (auto& p: s1->getPointVector()) {
+        EXPECT_EQ(p.z, Point::NO_PRESSURE);
+    }
+
+    auto testPressureValues = [&elts = layer->getElements()](size_t n, const std::vector<double>& pressures) {
+        Stroke* s = (Stroke*)elts[n];
+        printf("Testing stroke %zu\n", n);
+        EXPECT_EQ(ELEMENT_STROKE, s->getType());
+        EXPECT_EQ(Color(0x0000ff00), s->getColor());
+        EXPECT_EQ(1.41, s->getWidth());
+        auto pts = s->getPointVector();
+        EXPECT_EQ(pts.size(), pressures.size());
+        EXPECT_EQ(std::mismatch(pressures.begin(), pressures.end(), pts.begin(),
+                                [](double v, const Point& p) { return v == p.z; })
+                          .first,
+                  pressures.end());
+    };
+
+    // This stroke got its last point removed and a negative pressure value got straightened up
+    testPressureValues(1, {0.16, 0.16, 0.20, 0.22, 0.26, 0.14, Point::NO_PRESSURE});
+
+    // The stroke is split in 4 bits due to null pressure values at various places
+    testPressureValues(2, {0.16, Point::NO_PRESSURE});
+
+    testPressureValues(3, {0.28, 0.30, 0.34, 0.22, 0.18, Point::NO_PRESSURE});
+
+    testPressureValues(4, {0.16, 0.16, 0.22, 0.28, 0.30, Point::NO_PRESSURE});
+
+    testPressureValues(5, {0.30, 0.34, 0.34, 0.38, 0.40, 0.40, 0.42, 0.46, 0.46, 0.46, 0.50, 0.52, Point::NO_PRESSURE});
+
+    testPressureValues(
+            6, {0.56, 0.56, 0.58, 0.60, 0.56, 0.40, 0.32, 0.18, 0.12, 0.16, 0.16, 0.20, 0.22, Point::NO_PRESSURE});
+}

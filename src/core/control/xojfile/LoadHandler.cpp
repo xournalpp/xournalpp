@@ -24,8 +24,9 @@
 #include "model/Text.h"                        // for Text
 #include "model/XojPage.h"                     // for XojPage
 #include "util/GzUtil.h"                       // for GzUtil
-#include "util/PlaceholderString.h"            // for PlaceholderString
-#include "util/i18n.h"                         // for _F, FC, FS, _
+#include "util/LoopUtil.h"
+#include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/i18n.h"               // for _F, FC, FS, _
 
 #include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
@@ -925,6 +926,73 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
     }
 }
 
+void LoadHandler::fixNullPressureValues() {
+    /*
+     * Due to various bugs (see e.g. https://github.com/xournalpp/xournalpp/issues/3643), old files may contain strokes
+     * with non-positive pressure values.
+     *
+     * Those strokes thus fails the somewhat reasonable assumption that pressure values should be positive.
+     * The portions of stroke with non-positive pressure values are in any case invisible.
+     *
+     * This function fixes corrupted strokes by
+     *  1- removing every point with a non-positive pressure value.
+     *  2- if required, splitting the affected stroke into several strokes.
+     *  3- entirely deleting strokes without any valid pressure value
+     */
+    auto& pts = stroke->getPointVector();
+    if (pressureBuffer.size() >= pts.size()) {
+        // Too many pressure values. Drop the last ones
+        assert(pts.size() >= 2);  // An error has already been returned otherwise
+        pressureBuffer.resize(pts.size() - 1);
+    }
+
+    auto nextPositive = std::find_if(pressureBuffer.begin(), pressureBuffer.end(), [](double v) { return v > 0; });
+
+    std::vector<std::vector<Point>> strokePortions;
+    while (nextPositive != pressureBuffer.end()) {
+        auto nextNonPositive = std::find_if(nextPositive, pressureBuffer.end(), [](double v) { return v <= 0; });
+        size_t nValidPressureValues = static_cast<size_t>(std::distance(nextPositive, nextNonPositive));
+
+        std::vector<Point> ps;
+        ps.reserve(nValidPressureValues + 1);
+
+        std::transform(nextPositive, nextNonPositive,
+                       std::next(pts.begin(), std::distance(pressureBuffer.begin(), nextPositive)),
+                       std::back_inserter(ps), [](double v, const Point& p) { return Point(p.x, p.y, v); });
+
+        // pts.size() == pressureBuffer.size() + 1 so the following iterator is always dereferencable, even if
+        // nextNonPositive == pressureBuffer.end()
+        ps.emplace_back(*std::next(pts.begin(), std::distance(pressureBuffer.begin(), nextNonPositive)));
+
+        assert(ps.size() == nValidPressureValues + 1);
+        strokePortions.emplace_back(std::move(ps));
+
+        if (nextNonPositive == pressureBuffer.end()) {
+            break;
+        }
+        nextPositive = std::find_if(nextNonPositive, pressureBuffer.end(), [](double v) { return v > 0; });
+    }
+
+    if (strokePortions.empty()) {
+        // There was no valid pressure values! Delete the stroke entirely
+        g_warning("Found a stroke with only non-positive pressure values! Removing this invisible stroke.");
+        layer->removeElement(stroke, true);
+        stroke = nullptr;
+        return;
+    }
+
+    g_warning("Found a stroke with some non-positive pressure values. Removing the affected points.");
+    for_first_then_each(
+            strokePortions, [&](std::vector<Point>& points) { stroke->setPointVector(std::move(points)); },
+            [&](std::vector<Point>& points) {
+                Stroke* s = new Stroke();
+                s->applyStyleFrom(stroke);
+                s->setPointVector(std::move(points));
+                layer->addElement(s);
+                stroke = s;
+            });
+}
+
 void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,
                              GError** error) {
     // Return on error
@@ -965,16 +1033,23 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
         }
 
         if (!handler->pressureBuffer.empty()) {
-            if (static_cast<int>(handler->pressureBuffer.size()) >= handler->stroke->getPointCount() - 1) {
-                handler->stroke->setPressure(handler->pressureBuffer);
-                handler->pressureBuffer.clear();
+            if (handler->pressureBuffer.size() + 1 >= handler->stroke->getPointCount()) {
+                auto firstNonPositive = std::find_if(handler->pressureBuffer.begin(), handler->pressureBuffer.end(),
+                                                     [](double v) { return v <= 0; });
+                if (firstNonPositive != handler->pressureBuffer.end()) {
+                    // Warning: this may delete handler->stroke if no positive pressure values are provided
+                    // Do not dereference handler->stroke after that
+                    handler->fixNullPressureValues();
+                } else {
+                    handler->stroke->setPressure(handler->pressureBuffer);
+                }
             } else {
                 g_warning("%s", FC(_F("xoj-File: {1}") % handler->filepath.string().c_str()));
-                g_warning("%s", FC(_F("Wrong number of points, got {1}, expected {2}") %
+                g_warning("%s", FC(_F("Wrong number of pressure values, got {1}, expected {2}") %
                                    handler->pressureBuffer.size() % (handler->stroke->getPointCount() - 1)));
             }
+            handler->pressureBuffer.clear();
         }
-        handler->pressureBuffer.clear();
     } else if (handler->pos == PARSER_POS_IN_TEXT) {
         gchar* txt = g_strndup(text, textLen);
         handler->text->setText(txt);

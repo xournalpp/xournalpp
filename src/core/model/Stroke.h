@@ -126,9 +126,14 @@ public:
      * recomputation of the bounding boxes if the new points have no pressure values.
      */
     void setPointVector(const std::vector<Point>& other, const Range* const snappingBox = nullptr);
+    void setPointVector(std::vector<Point>&& other, const Range* const snappingBox = nullptr);
 
+private:
+    void setPointVectorInternal(const Range* const snappingBox);
+
+public:
     void deletePoint(int index);
-    void deletePointsFrom(int index);
+    void deletePointsFrom(size_t index);
 
     void setToolType(StrokeTool type);
     StrokeTool getToolType() const;
