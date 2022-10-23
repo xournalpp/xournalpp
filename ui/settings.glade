@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.18"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
@@ -153,6 +153,12 @@
   <object class="GtkAdjustment" id="adjustmentStrokeIgnoreTime">
     <property name="upper">1000</property>
     <property name="value">150</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentStrokeRecognizerMinSize">
+    <property name="lower">1</property>
+    <property name="upper">200</property>
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
@@ -2592,7 +2598,7 @@ This setting can make it easier to draw with touch. </property>
                               <object class="GtkFrame" id="frameTouchScrolling">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label-xalign">0.01</property>
+                                <property name="label-xalign">0.009999999776482582</property>
                                 <child>
                                   <object class="GtkAlignment" id="touchScrollingFrameAlignment">
                                     <property name="visible">True</property>
@@ -2974,12 +2980,6 @@ This setting can make it easier to draw with touch. </property>
                                                         <property name="top-attach">3</property>
                                                         <property name="width">2</property>
                                                       </packing>
-                                                    </child>
-                                                    <child>
-                                                      <placeholder/>
-                                                    </child>
-                                                    <child>
-                                                      <placeholder/>
                                                     </child>
                                                     <child>
                                                       <placeholder/>
@@ -4786,6 +4786,84 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkFrame" id="strokeRecognizerFrrame">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0</property>
+                                <child>
+                                  <object class="GtkAlignment">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="left-padding">12</property>
+                                    <child>
+                                      <object class="GtkBox">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <!-- n-columns=3 n-rows=1 -->
+                                          <object class="GtkGrid" id="sid6">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="row-spacing">5</property>
+                                            <property name="column-spacing">5</property>
+                                            <child>
+                                              <object class="GtkLabel">
+                                                <property name="name">lbStrokeRecognizerMinSize</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Minimum Stroke Size</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">0</property>
+                                                <property name="top-attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkSpinButton" id="spStrokeRecognizerMinSize">
+                                                <property name="name">spStrokeRecognizerMinSize</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="text" translatable="yes">0.20</property>
+                                                <property name="adjustment">adjustmentStrokeRecognizerMinSize</property>
+                                                <property name="climb-rate">2</property>
+                                                <property name="value">25</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">1</property>
+                                                <property name="top-attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <placeholder/>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Stroke Recognizer</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">5</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkFrame" id="sid154">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -4977,7 +5055,7 @@ It must be short in time and length and we can't have ignored another stroke rec
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">5</property>
+                                <property name="position">6</property>
                               </packing>
                             </child>
                             <child>
@@ -5106,7 +5184,7 @@ Set this to 0% to always re-render on zoom.</property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">6</property>
+                                <property name="position">7</property>
                               </packing>
                             </child>
                           </object>

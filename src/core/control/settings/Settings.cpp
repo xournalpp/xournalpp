@@ -133,6 +133,8 @@ void Settings::loadDefault() {
     this->snapGridTolerance = 0.50;
     this->snapGridSize = DEFAULT_GRID_SIZE;
 
+    this->strokeRecognizerMinSize = 40;
+
     this->touchDrawing = false;
     this->gtkTouchInertialScrolling = true;
 
@@ -488,6 +490,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapGridSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridTolerance")) == 0) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeRecognizerMinSize")) == 0) {
+        this->strokeRecognizerMinSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchDrawing")) == 0) {
         this->touchDrawing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("gtkTouchInertialScrolling")) == 0) {
@@ -955,6 +959,8 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(snapGridTolerance);
     SAVE_DOUBLE_PROP(snapGridSize);
 
+    SAVE_DOUBLE_PROP(strokeRecognizerMinSize);
+
     SAVE_BOOL_PROP(touchDrawing);
     SAVE_BOOL_PROP(gtkTouchInertialScrolling);
     SAVE_BOOL_PROP(pressureGuessing);
@@ -1049,7 +1055,9 @@ void Settings::save() {
     xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("size"), reinterpret_cast<const xmlChar*>(sSize));
 
 
-    for (std::map<string, SElement>::value_type p: data) { saveData(root, p.first, p.second); }
+    for (std::map<string, SElement>::value_type p: data) {
+        saveData(root, p.first, p.second);
+    }
 
     xmlSaveFormatFileEnc(filepath.u8string().c_str(), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
@@ -1111,7 +1119,9 @@ void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem) {
         }
     }
 
-    for (std::map<string, SElement>::value_type p: elem.children()) { saveData(xmlNode, p.first, p.second); }
+    for (std::map<string, SElement>::value_type p: elem.children()) {
+        saveData(xmlNode, p.first, p.second);
+    }
 }
 
 // Getter- / Setter
@@ -1360,6 +1370,16 @@ void Settings::setSnapGridSize(double gridSize) {
     this->snapGridSize = gridSize;
     save();
 }
+
+auto Settings::getStrokeRecognizerMinSize() const -> double { return this->strokeRecognizerMinSize; };
+void Settings::setStrokeRecognizerMinSize(double value) {
+    if (this->strokeRecognizerMinSize == value) {
+        return;
+    }
+
+    this->strokeRecognizerMinSize = value;
+    save();
+};
 
 auto Settings::getTouchDrawingEnabled() const -> bool { return this->touchDrawing; }
 
