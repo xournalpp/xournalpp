@@ -33,8 +33,7 @@ void AbstractItem::setMenuItem(GtkWidget* menuitem) {
 
     menuSignalHandler = g_signal_connect(
             menuitem, "activate",
-            G_CALLBACK(+[](GtkMenuItem* menuitem, AbstractItem* self) { self->activated(nullptr, menuitem, nullptr); }),
-            this);
+            G_CALLBACK(+[](GtkMenuItem* menuitem, AbstractItem* self) { self->activated(menuitem, nullptr); }), this);
 
     g_object_ref(G_OBJECT(menuitem));
     this->menuitem = menuitem;
@@ -79,7 +78,7 @@ void AbstractItem::actionEnabledAction(ActionType action, bool enabled) {
     }
 }
 
-void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
+void AbstractItem::activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
     bool selected = true;
 
     if (menuitem) {
@@ -113,12 +112,11 @@ void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButt
         return;
     }
 
-    actionPerformed(action, group, event, menuitem, toolbutton, selected);
+    actionPerformed(action, group, toolbutton, selected);
 }
 
-void AbstractItem::actionPerformed(ActionType action, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
-                                   GtkToolButton* toolbutton, bool selected) {
-    handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
+void AbstractItem::actionPerformed(ActionType action, ActionGroup group, GtkToolButton* toolbutton, bool selected) {
+    handler->actionPerformed(action, group, toolbutton, selected);
 }
 
 auto AbstractItem::getId() const -> std::string { return id; }

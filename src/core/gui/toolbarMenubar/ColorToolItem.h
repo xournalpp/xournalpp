@@ -43,7 +43,7 @@ public:
 public:
     void actionSelected(ActionGroup group, ActionType action) override;
     void enableColor(Color color);
-    void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton) override;
+    void activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) override;
 
     std::string getToolDisplayName() const override;
     GtkWidget* getNewToolIcon() const override;

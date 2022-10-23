@@ -323,12 +323,10 @@ static int applib_uiAction(lua_State* L) {
     }
 
     ActionType action = ActionType_fromString(actionStr);
-    GdkEvent* event = nullptr;
-    GtkMenuItem* menuitem = nullptr;
     GtkToolButton* toolbutton = nullptr;
 
     Control* ctrl = plugin->getControl();
-    ctrl->actionPerformed(action, group, event, menuitem, toolbutton, enabled);
+    ctrl->actionPerformed(action, group, toolbutton, enabled);
 
     // Make sure to remove all vars which are put to the stack before!
     lua_pop(L, 3);
