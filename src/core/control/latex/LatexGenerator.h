@@ -50,6 +50,10 @@ public:
      */
     static std::string templateSub(const std::string& input, const std::string& templ, Color textColor);
 
+    /**
+     * Clear inputted latex from empty lines
+     */
+     static std::string deleteEmptyStrings(const std::string& input);
 private:
     const LatexSettings& settings;
 };

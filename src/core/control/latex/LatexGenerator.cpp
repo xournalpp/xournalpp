@@ -109,3 +109,17 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
     return GenError(
             {FS(_F("Could not start {1}: {2} (exit code: {3})") % progName.c_str() % err->message % err->code)});
 }
+
+auto LatexGenerator::deleteEmptyStrings(const std::string &input) -> std::string {
+    std::string ans;
+    auto ss = std::stringstream(input);
+    for (std::string line; std::getline(ss, line, '\n');) {
+        if(!line.empty()){
+            if(!ans.empty()){
+                ans += '\n';
+            }
+            ans += line;
+        }
+    }
+    return ans;
+}

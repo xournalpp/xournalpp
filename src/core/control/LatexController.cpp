@@ -181,8 +181,9 @@ void LatexController::triggerImageUpdate(const string& texString) {
         this->dlg.setPreviewBackgroundColor(DARK_PREVIEW_BACKGROUND);
     }
 
+    const std::string formatted = LatexGenerator::deleteEmptyStrings(texString);
     this->lastPreviewedTex = texString;
-    const std::string texContents = LatexGenerator::templateSub(texString, this->latexTemplate, textColor);
+    const std::string texContents = LatexGenerator::templateSub(formatted, this->latexTemplate, textColor);
     auto result = generator.asyncRun(this->texTmpDir, texContents);
     if (auto* err = std::get_if<LatexGenerator::GenError>(&result)) {
         XojMsgBox::showErrorToUser(this->control->getGtkWindow(), err->message);
