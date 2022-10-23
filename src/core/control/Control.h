@@ -17,10 +17,9 @@
 #include <vector>   // for vector
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
-#include <gdk/gdk.h>                // for GdkEvent
 #include <gio/gio.h>                // for GApplication
 #include <glib.h>                   // for guint
-#include <gtk/gtk.h>                // for GtkLabel, GtkMenuItem
+#include <gtk/gtk.h>                // for GtkLabel
 
 #include "control/ToolEnums.h"              // for ToolSize, ToolType
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
@@ -127,8 +126,7 @@ public:
     // Menu Help
     void showAbout();
 
-    void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
-                         GtkToolButton* toolbutton, bool enabled) override;
+    void actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled) override;
 
     /**
      * @brief Update the Cursor and the Toolbar based on the active color

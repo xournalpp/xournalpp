@@ -24,7 +24,7 @@ FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionT
 
 FontButton::~FontButton() = default;
 
-void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
+void FontButton::activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
     GtkFontButton* button = GTK_FONT_BUTTON(fontButton);
 
     string name = gtk_font_button_get_font_name(button);
@@ -33,7 +33,7 @@ void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton
     this->font.setName(name.substr(0, pos));
     this->font.setSize(std::stod(name.substr(pos + 1)));
 
-    handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, event, menuitem, nullptr, true);
+    handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, nullptr, true);
 }
 
 void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font) {

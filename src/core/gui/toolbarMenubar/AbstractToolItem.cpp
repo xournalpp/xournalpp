@@ -54,7 +54,7 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToo
         item->toolToggleButtonActive = selected;
     }
 
-    item->activated(nullptr, nullptr, toolbutton);
+    item->activated(nullptr, toolbutton);
 }
 
 auto AbstractToolItem::createItem(bool horizontal) -> GtkToolItem* {

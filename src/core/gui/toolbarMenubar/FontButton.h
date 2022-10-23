@@ -33,7 +33,7 @@ public:
     ~FontButton() override;
 
 public:
-    void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton) override;
+    void activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) override;
     void setFont(XojFont& font);
     XojFont getFont() const;
     std::string getToolDisplayName() const override;

@@ -122,7 +122,7 @@ void ColorToolItem::enable(bool enabled) {
     }
 }
 
-void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
+void ColorToolItem::activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
     if (inUpdate) {
         return;
     }
