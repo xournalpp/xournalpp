@@ -9,6 +9,7 @@
 
 #include "control/tools/PdfElemSelection.h"  // for PdfElemSelection
 #include "pdf/base/XojPdfPage.h"             // for XojPdfPageSelectionStyle
+#include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
 
 class MainWindow;
 class XojPageView;
@@ -33,8 +34,9 @@ public:
     ~PdfFloatingToolbox() = default;
 
 public:
-    /// Show the toolbox at the provided coordinates. Must have an active
-    /// selection.
+    /// Show the toolbox at the provided coordinates (relative to the application GTK window).
+    ///
+    /// Must have an active selection.
     void show(int x, int y);
 
     /// Hide the floating toolbox widget (keeping the current selection).
@@ -79,6 +81,9 @@ private:
 private:
     GtkWidget* floatingToolbox;
     MainWindow* theMainWindow;
+
+    /// The overlay that the toolbox should be displayed in.
+    xoj::util::GObjectSPtr<GtkOverlay> overlay;
 
     std::unique_ptr<PdfElemSelection> pdfElemSelection = nullptr;
 

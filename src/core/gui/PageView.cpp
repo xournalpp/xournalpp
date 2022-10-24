@@ -591,12 +591,15 @@ void XojPageView::onSequenceCancelEvent() {
 }
 
 auto XojPageView::showPdfToolbox(const PositionInputData& pos) -> void {
+    // Compute coords of the canvas relative to the application window origin.
     gint wx = 0, wy = 0;
     GtkWidget* widget = xournal->getWidget();
     gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
-    wx += static_cast<gint>(std::lround(pos.x)) + this->getX();
-    wy += static_cast<gint>(std::lround(pos.y)) + this->getY();
+    // Add the position of the current page view widget (relative to canvas origin)
+    // and add the input position (relative to the current page view widget).
+    wx += this->getX() + static_cast<gint>(std::lround(pos.x));
+    wy += this->getY() + static_cast<gint>(std::lround(pos.y));
 
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
     pdfToolbox->show(wx, wy);
