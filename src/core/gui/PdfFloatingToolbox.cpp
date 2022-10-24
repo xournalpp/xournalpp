@@ -7,6 +7,7 @@
 #include <vector>     // for vector
 
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+#include <gtk/gtk.h>
 
 #include "control/Control.h"        // for Control
 #include "control/ToolEnums.h"      // for ToolType, TOOL_SELECT_PDF_TEXT_LI...
@@ -27,7 +28,9 @@
 #include "MainWindow.h"  // for MainWindow
 
 PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay):
-        theMainWindow(theMainWindow), position({0, 0}) {
+        theMainWindow(theMainWindow),
+        overlay(overlay, xoj::util::GObjectSPtr<GtkOverlay>::Ref{}),
+        position({0, 0}) {
     this->floatingToolbox = theMainWindow->get("pdfFloatingToolbox");
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
@@ -56,8 +59,11 @@ void PdfFloatingToolbox::newSelection(double x, double y, XojPageView* pageView)
 
 void PdfFloatingToolbox::show(int x, int y) {
     g_assert_nonnull(this->getSelection());
-    this->position.x = x;
-    this->position.y = y;
+
+    // (x, y) are in the gtk window's coordinates.
+    // However, we actually show the toolbox in the overlay's coordinate system.
+    gtk_widget_translate_coordinates(gtk_widget_get_toplevel(this->floatingToolbox), GTK_WIDGET(overlay.get()), x, y,
+                                     &this->position.x, &this->position.y);
     this->show();
 }
 
@@ -71,8 +77,7 @@ void PdfFloatingToolbox::hide() {
 auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
                                             PdfFloatingToolbox* self) -> gboolean {
     if (widget == self->floatingToolbox) {
-        gtk_widget_get_allocation(widget, allocation);  // get existing width and height
-
+        // Get existing width and height
         GtkRequisition natural;
         gtk_widget_get_preferred_size(widget, nullptr, &natural);
         allocation->width = natural.width;
@@ -80,19 +85,19 @@ auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widg
 
         if (self->pdfElemSelection && self->pdfElemSelection->getPageView()) {
             // Make sure the "pdfFloatingToolbox" is fully displayed.
-            int gap = 5;
+            const int gap = 5;
 
-            GtkWidget* widget = self->theMainWindow->getWindow();
-            GtkAllocation* alloc = g_new(GtkAllocation, 1);
-            gtk_widget_get_allocation(gtk_widget_get_toplevel(widget), alloc);
+            // By default, we show the toolbox below and to the right of the selected text.
+            // If the toolbox will go out of the window, then we'll flip the corresponding directions.
 
-            bool rightOK = self->position.x + allocation->width + gap <= alloc->width;
-            bool bottomOK = self->position.y + allocation->height + gap <= alloc->height;
+            GtkAllocation windowAlloc{};
+            gtk_widget_get_allocation(GTK_WIDGET(overlay), &windowAlloc);
+
+            bool rightOK = self->position.x + allocation->width + gap <= windowAlloc.width;
+            bool bottomOK = self->position.y + allocation->height + gap <= windowAlloc.height;
 
             allocation->x = rightOK ? self->position.x + gap : self->position.x - allocation->width - gap;
             allocation->y = bottomOK ? self->position.y + gap : self->position.y - allocation->height - gap;
-
-            g_free(alloc);
         } else {
             allocation->x = self->position.x;
             allocation->y = self->position.y;

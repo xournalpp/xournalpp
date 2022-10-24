@@ -39,6 +39,10 @@ public:
 };
 };  // namespace specialization
 
-using WidgetSPtr = CLibrariesSPtr<GtkWidget, raii::specialization::GObjectHandler<GtkWidget>>;
+template <typename GlibClass>
+using GObjectSPtr = CLibrariesSPtr<GlibClass, raii::specialization::GObjectHandler<GlibClass>>;
+
+using WidgetSPtr = GObjectSPtr<GtkWidget>;
+
 };  // namespace raii
 };  // namespace xoj::util
