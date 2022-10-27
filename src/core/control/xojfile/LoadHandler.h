@@ -88,6 +88,7 @@ private:
     bool openFile(fs::path const& filepath);
     bool parseXml();
 
+    void fixNullPressureValues();
     static void parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,
                            GError** error);
     static void parserEndElement(GMarkupParseContext* context, const gchar* elementName, gpointer userdata,

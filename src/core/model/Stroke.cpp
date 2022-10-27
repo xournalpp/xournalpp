@@ -268,8 +268,8 @@ auto Stroke::getPointCount() const -> int { return this->points.size(); }
 
 auto Stroke::getPointVector() const -> std::vector<Point> const& { return points; }
 
-void Stroke::deletePointsFrom(int index) {
-    points.resize(std::min(size_t(index), points.size()));
+void Stroke::deletePointsFrom(size_t index) {
+    points.resize(std::min(index, points.size()));
     this->sizeCalculated = false;
 }
 
@@ -302,8 +302,7 @@ Point Stroke::getPoint(PathParameter parameter) const {
 
 auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
 
-void Stroke::setPointVector(const std::vector<Point>& other, const Range* const snappingBox) {
-    this->points = other;
+void Stroke::setPointVectorInternal(const Range* const snappingBox) {
     if (!snappingBox || this->points.empty() || this->points.front().z != Point::NO_PRESSURE) {
         // We cannot deduce the bounding box from the snapping box if the stroke has pressure values
         this->sizeCalculated = false;
@@ -317,6 +316,17 @@ void Stroke::setPointVector(const std::vector<Point>& other, const Range* const 
         this->sizeCalculated = true;
     }
 }
+
+void Stroke::setPointVector(const std::vector<Point>& other, const Range* const snappingBox) {
+    this->points = other;
+    this->setPointVectorInternal(snappingBox);
+}
+
+void Stroke::setPointVector(std::vector<Point>&& other, const Range* const snappingBox) {
+    this->points = std::move(other);
+    this->setPointVectorInternal(snappingBox);
+}
+
 
 void Stroke::freeUnusedPointItems() { this->points = {begin(this->points), end(this->points)}; }
 
