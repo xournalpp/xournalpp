@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE moduleset SYSTEM "moduleset.dtd">
+
+<!-- A jhbuild moduleset that can be used to compile xournalpp dependencies. -->
+
+<?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
+<moduleset>
+  <repository type="tarball" name="github-tarball" href="https://github.com/"/>
+  <repository type="tarball" name="poppler" href="https://poppler.freedesktop.org/"/>
+  <repository type="tarball" name="libzip" href="https://libzip.org/download/"/>
+  <repository type="tarball" name="portaudio" href="http://files.portaudio.com/archives/"/>
+  <repository type="tarball" name="lua" href="http://www.lua.org/ftp/"/>
+
+  <cmake id="openjpeg">
+    <branch repo="github-tarball"
+            module="uclouvain/openjpeg/archive/v2.5.0.tar.gz"
+            version="2.5.0"
+            checkoutdir="openjpeg-2.5.0"/>
+  </cmake>
+
+  <cmake id="poppler-data">
+    <branch repo="poppler"
+            version="0.4.11"
+            module="poppler-data-0.4.11.tar.gz"/>
+  </cmake>
+
+  <!-- For poppler-glib -->
+  <cmake id="poppler" cmakeargs="-DENABLE_QT5=OFF -DENABLE_QT6=OFF -DENABLE_BOOST=OFF -DENABLE_CPP=OFF -DENABLE_LIBOPENJPEG=none -DENABLE_CMS=none -DCMAKE_INSTALL_NAME_DIR='&#36;&lt;INSTALL_PREFIX&gt;/lib'">
+    <branch repo="poppler"
+            version="22.10.0"
+            module="poppler-22.10.0.tar.xz"/>
+    <dependencies>
+
+      <!-- openjpeg doesn't work with g-ir-scanner right now
+      <dep package="openjpeg"/>
+      -->
+
+    </dependencies>
+  </cmake>
+
+  <cmake id="libzip" cmakeargs="-DENABLE_ZSTD=OFF -DCMAKE_INSTALL_NAME_DIR='&#36;&lt;INSTALL_PREFIX&gt;/lib'">
+    <branch repo="libzip"
+            version="1.9.2"
+            module="libzip-1.9.2.tar.gz"/>
+  </cmake>
+
+  <autotools id="portaudio" autogenargs="--enable-cxx --disable-mac-universal">
+    <branch repo="portaudio"
+            version="v190700_20210406"
+            checkoutdir="portaudio"
+            module="pa_stable_v190700_20210406.tgz"
+            checkout_mode="clobber"/>
+  </autotools>
+
+  <cmake id="libsndfile" cmakeargs="-DBUILD_PROGRAMS=off -DBUILD_EXAMPLES=off -DENABLE_EXTERNAL_LIBS=off">
+    <branch repo="github-tarball"
+            version="1.1.0"
+            module="erikd/libsndfile/archive/1.1.0.tar.gz"
+            checkoutdir="libsndfile-1.1.0"/>
+  </cmake>
+
+  <autotools id="lua"
+             skip-autogen="true"
+             supports-non-srcdir-builds="no"
+             supports-install-destdir="no"
+             uninstall-before-install="yes"
+             makeinstallargs="INSTALL_TOP='$(DESTDIR)/${prefix}' install"
+  >
+    <branch repo="lua"
+            version="5.4.4"
+            module="lua-5.4.4.tar.gz"
+            checkoutdir="lua-5.4.4"/>
+  </autotools>
+
+  <metamodule id="meta-xournalpp-deps">
+    <dependencies>
+      <dep package="poppler"/>
+      <dep package="libzip"/>
+      <dep package="portaudio"/>
+      <dep package="libsndfile"/>
+      <dep package="lua"/>
+    </dependencies>
+  </metamodule>
+
+</moduleset>
