@@ -313,8 +313,10 @@ void LayerController::setLayerVisible(Layer::Index layerId, bool visible) {
  * @param hideShow	Auto hide / show other layers,
  * 					as it was before the advance layer menu
  */
-void LayerController::switchToLay(Layer::Index layerId, bool hideShow) {
-    control->clearSelectionEndText();
+void LayerController::switchToLay(Layer::Index layerId, bool hideShow, bool clearSelection) {
+    if (clearSelection) {
+        control->clearSelectionEndText();
+    }
 
     PageRef p = getCurrentPage();
     if (!p) {

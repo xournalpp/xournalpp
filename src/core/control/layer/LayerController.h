@@ -69,7 +69,7 @@ public:
     void copyCurrentLayer();
     void moveCurrentLayer(bool up);
     void mergeCurrentLayerDown();
-    void switchToLay(Layer::Index layerId, bool hideShow = false);
+    void switchToLay(Layer::Index layerId, bool hideShow = false, bool clearSelection = true);
     void setLayerVisible(Layer::Index layerId, bool visible);
 
     PageRef getCurrentPage() const;
