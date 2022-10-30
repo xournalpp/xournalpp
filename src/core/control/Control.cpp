@@ -3002,15 +3002,14 @@ void Control::moveSelectionToLayer(size_t layerNo) {
         return;
     }
 
-    auto selectedElements = selection->getElements();
     auto* oldLayer = currentP->getSelectedLayer();
     auto* newLayer = currentP->getLayers()->at(layerNo);
     auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer, currentP->getSelectedLayerId() - 1, layerNo);
-    for (auto* e : selectedElements) {
+    for (auto* e : selection->getElements()) {
         moveSelUndo->addElement(newLayer, e, newLayer->indexOf(e));
     }
-
     undoRedo->addUndoAction(std::move(moveSelUndo));
+
     getLayerController()->switchToLay(layerNo + 1, false, false);
 }
 

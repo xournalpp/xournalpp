@@ -36,9 +36,9 @@ auto MoveSelectionToLayerUndoAction::undo(Control* control) -> bool {
     for (const auto& elem: elements) {
         elem.layer->removeElement(elem.element, false);
         this->oldLayer->addElement(elem.element);
-        this->page->fireElementChanged(elem.element);
     }
 
+    this->layerController->switchToLay(oldLayerNo + 1, false, false);
     this->undone = false;
     return true;
 }
@@ -52,10 +52,9 @@ auto MoveSelectionToLayerUndoAction::redo(Control* control) -> bool {
     for (const auto& elem: elements) {
         this->oldLayer->removeElement(elem.element, false);
         elem.layer->insertElement(elem.element, elem.pos);
-        this->page->fireElementChanged(elem.element);
     }
-    this->layerController->switchToLay(newLayerNo + 1);
 
+    this->layerController->switchToLay(newLayerNo + 1);
     this->undone = true;
     return true;
 }
