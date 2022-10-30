@@ -139,7 +139,7 @@ void HandRecognition::penEvent() {
  */
 void HandRecognition::enableTouch() {
     if (inputContext) {
-        inputContext->unblockDevice(InputContext::TOUCHSCREEN);
+        inputContext->unblockDevice(InputContext::DeviceType::TOUCHSCREEN);
     }
     if (touchImpl && enabled) {
         touchImpl->enableTouch();
@@ -151,7 +151,7 @@ void HandRecognition::enableTouch() {
  */
 void HandRecognition::disableTouch() {
     if (inputContext) {
-        inputContext->blockDevice(InputContext::TOUCHSCREEN);
+        inputContext->blockDevice(InputContext::DeviceType::TOUCHSCREEN);
     }
     if (touchImpl) {
         touchImpl->disableTouch();
