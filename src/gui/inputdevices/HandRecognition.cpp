@@ -3,7 +3,6 @@
 #include "control/settings/Settings.h"
 #include "gtk/gtk.h"
 #include "gui/inputdevices/touchdisable/TouchDisableCustom.h"
-#include "gui/inputdevices/touchdisable/TouchDisableGdk.h"
 #include "gui/inputdevices/touchdisable/TouchDisableX11.h"
 
 #include "InputContext.h"
@@ -76,7 +75,6 @@ void HandRecognition::reload() {
         touchImpl = new TouchDisableCustom(enableCommand, disableCommand);
     } else  // Auto detect
     {
-        // touchImpl = new TouchDisableGdk(this->widget);
 #ifdef X11_ENABLED
         if (x11Session) {
             touchImpl = new TouchDisableX11();
