@@ -544,7 +544,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             moveSelectionToLayer(getCurrentPage()->getSelectedLayerId());
             break;
         case ACTION_MOVE_SELECTION_LAYER_DOWN:
-            if(getSelectedLayerId() >= 2) {
+            if(this->getLayerController()->getCurrentLayerId() >= 2) {
                 // moveSelectionToLayer takes layer number (layerid - 1) not id
                 // therefor the new layer is "layerid - 1 - 1"
                 moveSelectionToLayer(getCurrentPage()->getSelectedLayerId() - 2);
