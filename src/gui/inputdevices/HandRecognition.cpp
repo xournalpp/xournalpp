@@ -160,6 +160,9 @@ void HandRecognition::disableTouch() {
  * An event from a device occurred
  */
 void HandRecognition::event(InputDeviceClass device) {
+    if (!enabled) {
+        return;
+    }
     if (device == INPUT_DEVICE_PEN || device == INPUT_DEVICE_ERASER) {
         penEvent();
     }
