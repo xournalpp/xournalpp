@@ -159,17 +159,6 @@ void HandRecognition::disableTouch() {
 /**
  * An event from a device occurred
  */
-void HandRecognition::event(GdkDevice* device) {
-    GdkInputSource dev = gdk_device_get_source(device);
-
-    if (dev == GDK_SOURCE_PEN || dev == GDK_SOURCE_ERASER) {
-        penEvent();
-    }
-}
-
-/**
- * An event from a device occurred
- */
 void HandRecognition::event(InputDeviceClass device) {
     if (device == INPUT_DEVICE_PEN || device == INPUT_DEVICE_ERASER) {
         penEvent();
