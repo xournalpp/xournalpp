@@ -37,11 +37,6 @@ public:
     /**
      * An event from a device occurred
      */
-    void event(GdkDevice* device);
-
-    /**
-     * An event from a device occurred
-     */
     void event(InputDeviceClass device);
 
     /**
