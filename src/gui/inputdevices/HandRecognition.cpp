@@ -24,8 +24,8 @@ HandRecognition::HandRecognition(GtkWidget* widget, InputContext* inputContext, 
 
 HandRecognition::~HandRecognition() {
     // Enable touchscreen on quit application
-    if (!touchState) {
-        enableTouch();
+    if (!touchState && enabled && touchImpl) {
+        touchImpl->enableTouch();
     }
 
     delete touchImpl;
