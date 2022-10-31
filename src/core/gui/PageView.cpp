@@ -382,15 +382,25 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
         if (h->getToolType() == TOOL_SELECT_RECT) {
-            assert(!selection);
-            this->selection = std::make_unique<RectSelection>(x, y);
-            this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                    this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selection) {
+                this->selection = std::make_unique<RectSelection>(x, y);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
+                        this->selection.get(), this, this->settings->getSelectionColor()));
+            } else {
+                assert(settings->getInputSystemTPCButtonEnabled() &&
+                       "the selection has already been created by a stylus button press while the stylus was "
+                       "hovering!");
+            }
         } else if (h->getToolType() == TOOL_SELECT_REGION) {
-            assert(!selection);
-            this->selection = std::make_unique<RegionSelect>(x, y);
-            this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
-                    this->selection.get(), this, this->settings->getSelectionColor()));
+            if (!selection) {
+                this->selection = std::make_unique<RegionSelect>(x, y);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
+                        this->selection.get(), this, this->settings->getSelectionColor()));
+            } else {
+                assert(settings->getInputSystemTPCButtonEnabled() &&
+                       "the selection has already been created by a stylus button press while the stylus was "
+                       "hovering!");
+            }
         } else if (h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
             // so if we selected something && the pdf selection toolbox is hidden && we hit within the selection
             // we could call the pdf floating toolbox again
