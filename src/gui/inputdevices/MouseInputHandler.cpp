@@ -124,11 +124,11 @@ auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
 
     if (toolChanged) {
         ToolType toolType = toolHandler->getToolType();
-        if(toolType == TOOL_TEXT) 
+        if (toolType == TOOL_TEXT)
             toolHandler->selectTool(toolType);
         toolHandler->fireToolChanged();
     }
-    
+
     return true;
 }
 
