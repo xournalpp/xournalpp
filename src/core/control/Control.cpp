@@ -3010,7 +3010,7 @@ void Control::moveSelectionToLayer(size_t layerNo) {
     }
     undoRedo->addUndoAction(std::move(moveSelUndo));
 
-    getLayerController()->switchToLay(layerNo + 1, false, false);
+    getLayerController()->switchToLay(layerNo + 1, /*hideShow=*/false, /*clearSelection=*/false);
 }
 
 void Control::deleteSelection() {
