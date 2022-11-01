@@ -32,11 +32,11 @@ ToolbarData::~ToolbarData() {
     contents.clear();
 }
 
-auto ToolbarData::getName() -> string { return this->name; }
+auto ToolbarData::getName() const -> const std::string& { return this->name; }
 
 void ToolbarData::setName(string name) { this->name = std::move(name); }
 
-auto ToolbarData::getId() -> string { return this->id; }
+auto ToolbarData::getId() const -> const std::string& { return this->id; }
 
 void ToolbarData::setId(string id) { this->id = std::move(id); }
 

@@ -28,9 +28,9 @@ public:
     void operator=(const ToolbarData& other);
 
 public:
-    std::string getName();
+    const std::string& getName() const;
     void setName(std::string name);
-    std::string getId();
+    const std::string& getId() const;
     void setId(std::string id);
     bool isPredefined() const;
 

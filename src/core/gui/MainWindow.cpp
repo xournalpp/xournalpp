@@ -333,7 +333,7 @@ void MainWindow::initHideMenu() {
     }
 }
 
-auto MainWindow::getLayout() -> Layout* { return gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget())); }
+auto MainWindow::getLayout() const -> Layout* { return gtk_xournal_get_layout(this->xournal->getWidget()); }
 
 auto cancellable_cancel(GCancellable* cancel) -> bool {
     g_cancellable_cancel(cancel);
@@ -434,7 +434,7 @@ void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* wi
     win->setToolbarVisible(showToolbar);
 }
 
-auto MainWindow::getControl() -> Control* { return control; }
+auto MainWindow::getControl() const -> Control* { return control; }
 
 void MainWindow::updateScrollbarSidebarPosition() {
     GtkWidget* panelMainContents = get("panelMainContents");
@@ -586,7 +586,7 @@ void MainWindow::setMaximized(bool maximized) { this->maximized = maximized; }
 
 auto MainWindow::isMaximized() const -> bool { return this->maximized; }
 
-auto MainWindow::getXournal() -> XournalView* { return xournal; }
+auto MainWindow::getXournal() const -> XournalView* { return xournal; }
 
 auto MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win) -> bool {
     win->setMaximized(gtk_window_is_maximized(GTK_WINDOW(window)));
@@ -648,14 +648,14 @@ void MainWindow::loadToolbar(ToolbarData* d) {
     this->floatingToolbox->flagRecalculateSizeRequired();
 }
 
-auto MainWindow::getSelectedToolbar() -> ToolbarData* { return this->selectedToolbar; }
+auto MainWindow::getSelectedToolbar() const -> ToolbarData* { return this->selectedToolbar; }
 
-auto MainWindow::getToolbarWidgets(int& length) -> GtkWidget** {
+auto MainWindow::getToolbarWidgets(int& length) const -> GtkWidget** {
     length = TOOLBAR_DEFINITIONS_LEN;
     return this->toolbarWidgets;
 }
 
-auto MainWindow::getToolbarName(GtkToolbar* toolbar) -> const char* {
+auto MainWindow::getToolbarName(GtkToolbar* toolbar) const -> const char* {
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         if (static_cast<void*>(this->toolbarWidgets[i]) == static_cast<void*>(toolbar)) {
             return TOOLBAR_DEFINITIONS[i].propName;
@@ -696,7 +696,7 @@ void MainWindow::createToolbarAndMenu() {
 
 void MainWindow::setFontButtonFont(XojFont& font) { toolbar->setFontButtonFont(font); }
 
-auto MainWindow::getFontButtonFont() -> XojFont { return toolbar->getFontButtonFont(); }
+auto MainWindow::getFontButtonFont() const -> XojFont { return toolbar->getFontButtonFont(); }
 
 void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage) {
     SpinPageAdapter* spinPageNo = getSpinPageNo();
@@ -751,11 +751,11 @@ void MainWindow::setUndoDescription(const string& description) { toolbar->setUnd
 
 void MainWindow::setRedoDescription(const string& description) { toolbar->setRedoDescription(description); }
 
-auto MainWindow::getSpinPageNo() -> SpinPageAdapter* { return toolbar->getPageSpinner(); }
+auto MainWindow::getSpinPageNo() const -> SpinPageAdapter* { return toolbar->getPageSpinner(); }
 
-auto MainWindow::getToolbarModel() -> ToolbarModel* { return this->toolbar->getModel(); }
+auto MainWindow::getToolbarModel() const -> ToolbarModel* { return this->toolbar->getModel(); }
 
-auto MainWindow::getToolMenuHandler() -> ToolMenuHandler* { return this->toolbar; }
+auto MainWindow::getToolMenuHandler() const -> ToolMenuHandler* { return this->toolbar; }
 
 void MainWindow::disableAudioPlaybackButtons() {
     setAudioPlaybackPaused(false);
@@ -776,4 +776,4 @@ void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssF
     g_object_unref(provider);
 }
 
-PdfFloatingToolbox* MainWindow::getPdfToolbox() { return this->pdfFloatingToolBox.get(); }
+PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloatingToolBox.get(); }

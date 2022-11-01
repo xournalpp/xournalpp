@@ -53,11 +53,11 @@ auto GladeGui::get(const std::string& name) -> GtkWidget* {
     return w;
 }
 
-auto GladeGui::getWindow() -> GtkWidget* { return this->window; }
+auto GladeGui::getWindow() const -> GtkWidget* { return this->window; }
 
-auto GladeGui::getGladeSearchPath() -> GladeSearchpath* { return this->gladeSearchPath; }
+auto GladeGui::getGladeSearchPath() const -> GladeSearchpath* { return this->gladeSearchPath; }
 
-auto GladeGui::getBuilder() -> GtkBuilder* { return this->builder; }
+auto GladeGui::getBuilder() const -> GtkBuilder* { return this->builder; }
 
 GladeGui::operator GdkWindow*() { return gtk_widget_get_window(GTK_WIDGET(getWindow())); }
 
