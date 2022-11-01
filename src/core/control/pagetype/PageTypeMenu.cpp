@@ -52,7 +52,7 @@ auto PageTypeMenu::createPreviewImage(const PageType& pt) -> cairo_surface_t* {
     cairo_t* cr = cairo_create(surface);
     cairo_scale(cr, zoom, zoom);
 
-    auto bgView = xoj::view::BackgroundView::createRuled(previewWidth / zoom, previewHeight / zoom, Color(0xffffffU),
+    auto bgView = xoj::view::BackgroundView::createRuled(previewWidth / zoom, previewHeight / zoom, Colors::white,
                                                          pt, 2.0);
     bgView->draw(cr);
 

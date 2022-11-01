@@ -17,6 +17,7 @@
 
 #include <glib.h>  // for g_error_new, G_MARKUP_ERROR, G_M...
 
+#include "util/Color.h"
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/i18n.h"               // for FC, _F, _
 
@@ -33,10 +34,17 @@ struct PredefinedColor {
 };
 
 constexpr PredefinedColor PREDEFINED_COLORS[] = {
-        {"black", Color(0x000000U)},      {"blue", Color(0x3333ccU)},    {"red", Color(0xff0000U)},
-        {"green", Color(0x008000U)},      {"gray", Color(0x808080U)},    {"lightblue", Color(0x00c0ffU)},
-        {"lightgreen", Color(0x00ff00U)}, {"magenta", Color(0xff00ffU)}, {"orange", Color(0xff8000U)},
-        {"yellow", Color(0xffff00U)},     {"white", Color(0xffffffU)}};
+        {"black", Colors::black},
+        {"blue", Colors::xopp_royalblue},
+        {"red", Colors::red},
+        {"green", Colors::green},
+        {"gray", Colors::gray},
+        {"lightblue", Colors::xopp_deepskyblue},
+        {"lightgreen", Colors::lime},
+        {"magenta", Colors::magenta},
+        {"orange", Colors::xopp_darkorange},
+        {"yellow", Colors::yellow},
+        {"white", Colors::white}};
 
 auto LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler) -> Color {
     const char* sColor = LoadHandlerHelper::getAttrib("color", false, loadHandler);

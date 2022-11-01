@@ -35,7 +35,7 @@ protected:
 protected:
     double triangleSize = 14.17;  // 5mm
 
-    constexpr static Color DEFAULT_LINE_COLOR = Color(0xBDBDBDU);
-    constexpr static Color ALT_DEFAULT_LINE_COLOR = Color(0x434343U);
+    constexpr static Color DEFAULT_LINE_COLOR = Colors::xopp_silver;
+    constexpr static Color ALT_DEFAULT_LINE_COLOR = Colors::xopp_darkslategray;
 };
 };  // namespace xoj::view

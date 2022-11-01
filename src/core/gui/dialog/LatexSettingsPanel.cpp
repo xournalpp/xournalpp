@@ -143,7 +143,7 @@ void LatexSettingsPanel::checkDeps() {
                      settings.globalTemplatePath.u8string().c_str());
         } else {
             std::string templ(std::istreambuf_iterator<char>(is), {});
-            std::string sample = LatexGenerator::templateSub(settings.defaultText, templ, Color(0x000000U));
+            std::string sample = LatexGenerator::templateSub(settings.defaultText, templ, Colors::black);
             auto const& tmpDir = Util::getTmpDirSubfolder("tex");
             auto result = LatexGenerator(settings).asyncRun(tmpDir, sample);
             if (auto* proc = std::get_if<GSubprocess*>(&result)) {

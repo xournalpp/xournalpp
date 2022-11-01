@@ -30,8 +30,8 @@ public:
 protected:
     double lineSpacing = 24.0;  // Between two horizontal lines
 
-    constexpr static Color DEFAULT_H_LINE_COLOR = Color(0x40A0FFU);
-    constexpr static Color ALT_DEFAULT_H_LINE_COLOR = Color(0x434343U);
+    constexpr static Color DEFAULT_H_LINE_COLOR = Colors::xopp_dodgerblue;
+    constexpr static Color ALT_DEFAULT_H_LINE_COLOR = Colors::xopp_darkslategray;
     constexpr static double DEFAULT_LINE_WIDTH = 0.5;
 
     constexpr static double HEADER_SIZE = 80.0;
