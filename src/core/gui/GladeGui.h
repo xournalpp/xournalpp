@@ -32,10 +32,10 @@ public:
 
     void setThemePath(std::string themePath);
 
-    GtkWidget* getWindow();
-    GladeSearchpath* getGladeSearchPath();
+    GtkWidget* getWindow() const;
+    GladeSearchpath* getGladeSearchPath() const;
 
-    GtkBuilder* getBuilder();
+    GtkBuilder* getBuilder() const;
 
 private:
     /**

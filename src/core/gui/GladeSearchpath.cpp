@@ -15,7 +15,7 @@ GladeSearchpath::GladeSearchpath() = default;
 
 GladeSearchpath::~GladeSearchpath() { directories.clear(); }
 
-auto GladeSearchpath::findFile(fs::path const& subdir, fs::path const& file) -> fs::path {
+auto GladeSearchpath::findFile(fs::path const& subdir, fs::path const& file) const -> fs::path {
     fs::path filepath;
     if (subdir.empty()) {
         filepath = file;

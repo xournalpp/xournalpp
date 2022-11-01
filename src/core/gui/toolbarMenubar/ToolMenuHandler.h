@@ -58,7 +58,7 @@ public:
      *
      * @param d Data Object representing the selected toolbars (e.g Portrait)
      * @param toolbar reference to the widget representing the toolbar
-     * @param toolbarName tollbarName which should be read from the file
+     * @param toolbarName toolbarName which should be read from the file
      * @param horizontal whether the toolbar is horizontal
      */
     void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);

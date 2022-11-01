@@ -55,7 +55,7 @@ public:
 
     void setRecentMenu(GtkWidget* submenu);
     void toolbarSelected(ToolbarData* d);
-    ToolbarData* getSelectedToolbar();
+    ToolbarData* getSelectedToolbar() const;
     [[maybe_unused]] void reloadToolbars();
 
     /**
@@ -68,30 +68,30 @@ public:
     void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
 
     void setFontButtonFont(XojFont& font);
-    XojFont getFontButtonFont();
+    XojFont getFontButtonFont() const;
 
     void saveSidebarSize();
 
     void setMaximized(bool maximized);
     bool isMaximized() const;
 
-    XournalView* getXournal();
+    XournalView* getXournal() const;
 
     void setSidebarVisible(bool visible);
     void setToolbarVisible(bool visible);
 
-    Control* getControl();
+    Control* getControl() const;
 
-    PdfFloatingToolbox* getPdfToolbox();
+    PdfFloatingToolbox* getPdfToolbox() const;
 
     void updateScrollbarSidebarPosition();
 
     void setUndoDescription(const std::string& description);
     void setRedoDescription(const std::string& description);
 
-    SpinPageAdapter* getSpinPageNo();
-    ToolbarModel* getToolbarModel();
-    ToolMenuHandler* getToolMenuHandler();
+    SpinPageAdapter* getSpinPageNo() const;
+    ToolbarModel* getToolbarModel() const;
+    ToolMenuHandler* getToolMenuHandler() const;
 
     void disableAudioPlaybackButtons();
     void enableAudioPlaybackButtons();
@@ -102,12 +102,12 @@ public:
     void updateToolbarMenu();
     void updateColorscheme();
 
-    GtkWidget** getToolbarWidgets(int& length);
-    const char* getToolbarName(GtkToolbar* toolbar);
+    GtkWidget** getToolbarWidgets(int& length) const;
+    const char* getToolbarName(GtkToolbar* toolbar) const;
 
-    Layout* getLayout();
+    Layout* getLayout() const;
 
-    bool isGestureActive();
+    bool isGestureActive() const;
 
 
     /**
