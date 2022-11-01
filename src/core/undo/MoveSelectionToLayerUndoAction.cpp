@@ -15,12 +15,13 @@
 class Control;
 
 
-MoveSelectionToLayerUndoAction::MoveSelectionToLayerUndoAction(const PageRef& page, LayerController* layerController, Layer* oldLayer, size_t oldLayerNo, size_t newLayerNo): UndoAction("MoveSelectionToLayerUndoAction") {
+MoveSelectionToLayerUndoAction::MoveSelectionToLayerUndoAction(const PageRef& page, LayerController* layerController, Layer* oldLayer, size_t oldLayerNo, size_t newLayerNo):
+        UndoAction("MoveSelectionToLayerUndoAction"),
+        layerController(layerController),
+        oldLayer(oldLayer),
+        oldLayerNo(oldLayerNo),
+        newLayerNo(newLayerNo) {
     this->page = page;
-    this->layerController = layerController;
-    this->oldLayer = oldLayer;
-    this->oldLayerNo = oldLayerNo;
-    this->newLayerNo = newLayerNo;
 }
 
 auto MoveSelectionToLayerUndoAction::getText() -> std::string {
@@ -38,7 +39,7 @@ auto MoveSelectionToLayerUndoAction::undo(Control* control) -> bool {
         this->oldLayer->addElement(elem.element);
     }
 
-    this->layerController->switchToLay(oldLayerNo + 1,  /*hideShow=*/false, /*clearSelection=*/false);
+    this->layerController->switchToLay(oldLayerNo + 1);
     this->undone = false;
     return true;
 }
@@ -54,7 +55,7 @@ auto MoveSelectionToLayerUndoAction::redo(Control* control) -> bool {
         elem.layer->insertElement(elem.element, elem.pos);
     }
 
-    this->layerController->switchToLay(newLayerNo + 1, /*hideShow=*/false, /*clearSelection=*/false);
+    this->layerController->switchToLay(newLayerNo + 1);
     this->undone = true;
     return true;
 }
