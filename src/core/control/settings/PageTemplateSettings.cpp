@@ -14,7 +14,7 @@ PageTemplateSettings::PageTemplateSettings():
         copyLastPageSize(false),
         pageWidth(595.275591),
         pageHeight(841.889764),
-        backgroundColor(Color{0xffffffU}) {
+        backgroundColor(Colors::white) {
     backgroundType.format = PageTypeFormat::Lined;
 }
 

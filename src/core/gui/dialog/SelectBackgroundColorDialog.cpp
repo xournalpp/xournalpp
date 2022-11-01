@@ -7,40 +7,41 @@
 
 #include "control/Control.h"            // for Control
 #include "control/settings/Settings.h"  // for SElement, Settings
+#include "util/Color.h"
 #include "util/i18n.h"                  // for _
 
 static inline std::array<GdkRGBA, 9> background1 = {
-        Util::rgb_to_GdkRGBA(Color(0xfabebeU)),  //
-        Util::rgb_to_GdkRGBA(Color(0xfee7c4U)),  //
-        Util::rgb_to_GdkRGBA(Color(0xfef8c9U)),  //
-        Util::rgb_to_GdkRGBA(Color(0xdcf6c1U)),  //
-        Util::rgb_to_GdkRGBA(Color(0xd4e2f0U)),  //
-        Util::rgb_to_GdkRGBA(Color(0xe6d8e4U)),  //
-        Util::rgb_to_GdkRGBA(Color(0xf8ead3U)),  //
-        Util::rgb_to_GdkRGBA(Color(0xdadcdaU)),  //
-        Util::rgb_to_GdkRGBA(Color(0xfafaf9U))   //
+        Util::rgb_to_GdkRGBA(Colors::xopp_lightpink),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_bisque),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_lemonchifon),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_palegoldenrod),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_lavender),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_lightgray),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_antiquewhite),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_gainsboro),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_snow)   //
 };
 
 static inline std::array<GdkRGBA, 6> backgroundXournal = {
-        Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
-        Util::rgb_to_GdkRGBA(Color(0xa0e8ffU)),  //
-        Util::rgb_to_GdkRGBA(Color(0x80ffc0U)),  //
-        Util::rgb_to_GdkRGBA(Color(0xffc0d4U)),  //
-        Util::rgb_to_GdkRGBA(Color(0xffc080U)),  //
-        Util::rgb_to_GdkRGBA(Color(0xffff80U))   //
+        Util::rgb_to_GdkRGBA(Colors::white),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_paleturqoise),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_aquamarine),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_pink),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_lightsalmon),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_khaki)   //
 };
 
 SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control):
         control(control),
-        lastBackgroundColors{Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
-                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
-                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
-                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
-                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
-                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
-                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
-                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
-                             Util::rgb_to_GdkRGBA(Color(0xffffffU))}
+        lastBackgroundColors{Util::rgb_to_GdkRGBA(Colors::white),  //
+                             Util::rgb_to_GdkRGBA(Colors::white),  //
+                             Util::rgb_to_GdkRGBA(Colors::white),  //
+                             Util::rgb_to_GdkRGBA(Colors::white),  //
+                             Util::rgb_to_GdkRGBA(Colors::white),  //
+                             Util::rgb_to_GdkRGBA(Colors::white),  //
+                             Util::rgb_to_GdkRGBA(Colors::white),  //
+                             Util::rgb_to_GdkRGBA(Colors::white),  //
+                             Util::rgb_to_GdkRGBA(Colors::white)}
 
 {
     Settings* settings = control->getSettings();

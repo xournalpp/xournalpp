@@ -133,7 +133,6 @@ float get_color_contrast(Color color1, Color color2);
  *          red might be #ff0000, green, #00ff00, and blue, #0000ff.
  */
 std::string rgb_to_hex_string(Color rgb);
-
 }  // namespace Util
 
 constexpr auto Util::rgb_to_GdkRGBA(Color color) -> GdkRGBA {  //
@@ -203,3 +202,44 @@ constexpr auto Util::GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16 {
             floatToColorU16(color.blue),   //
             floatToColorU16(color.alpha)};
 }
+
+namespace Colors {
+    /*
+     * A palette of predefined colors. The names are the relevant CSS4 named
+     * color, if exists, else the name of the named color with the smallest
+     * distance from it as an (r, g, b) vector with the prefix "xopp_",
+     * see https://www.w3.org/TR/css-color-4/#named-colors
+     */
+    constexpr Color black = Color(0x000000U);
+    constexpr Color gray = Color(0x808080U);
+    constexpr Color green = Color(0x008000U);
+    constexpr Color lime = Color(0x00ff00U);
+    constexpr Color magenta = Color(0xff00ffU);
+    constexpr Color red = Color(0xff0000U);
+    constexpr Color silver = Color(0xc0c0c0);
+    constexpr Color white = Color(0xffffffU);
+    constexpr Color yellow = Color(0xffff00U);
+    constexpr Color xopp_antiquewhite = Color(0xf8ead3U);
+    constexpr Color xopp_aquamarine = Color(0x80ffc0U);
+    constexpr Color xopp_bisque = Color(0xfee7c4U);
+    constexpr Color xopp_darkorange = Color(0xff8000U);
+    constexpr Color xopp_darkslategray = Color(0x434343U);
+    constexpr Color xopp_deeppink = Color(0xff0080U);
+    constexpr Color xopp_deepskyblue = Color(0x00c0ffU);
+    constexpr Color xopp_dodgerblue = Color(0x40a0ffU);
+    constexpr Color xopp_gainsboro = Color(0xdadcdaU);
+    constexpr Color xopp_khaki = Color(0xffff80U);
+    constexpr Color xopp_lavender = Color(0xd4e2f0U);
+    constexpr Color xopp_lemonchifon = Color(0xfef8c9U);
+    constexpr Color xopp_lightgray = Color(0xe6d8e4U);
+    constexpr Color xopp_lightpink = Color(0xfabebeU);
+    constexpr Color xopp_lightsalmon = Color(0xffc080U);
+    constexpr Color xopp_midnightblue = Color(0x220080U);
+    constexpr Color xopp_palegoldenrod = Color(0xdcf6c1U);
+    constexpr Color xopp_paleturqoise = Color(0xa0e8ffU);
+    constexpr Color xopp_pink = Color(0xffc0d4U);
+    constexpr Color xopp_royalblue = Color(0x3333ccU);
+    constexpr Color xopp_silver = Color(0xbdbdbdU);
+    constexpr Color xopp_snow = Color(0xfafaf9U);
+} // namespace Colors
+

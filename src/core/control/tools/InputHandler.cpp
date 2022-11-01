@@ -44,7 +44,7 @@ auto InputHandler::createStroke(Control* control) -> std::unique_ptr<Stroke> {
         s->setToolType(StrokeTool::HIGHLIGHTER);
     } else if (h->getToolType() == TOOL_ERASER) {
         s->setToolType(StrokeTool::ERASER);
-        s->setColor(Color(0xffffffU));
+        s->setColor(Colors::white);
     }
 
     return s;
