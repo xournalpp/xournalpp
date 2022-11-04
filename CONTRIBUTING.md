@@ -5,8 +5,7 @@ completely by volunteers in their spare time, so any contribution--no matter how
 small--is greatly appreciated. In this file, we'll outline how you can
 contribute to the project.
 
-If you have questions after reading this, you can join our Gitter channel via
-the badge at the top of `./README.md`.
+If you have questions after reading this file, feel free to ask them on our [Gitter channel](https://gitter.im/xournalpp/xournalpp).
 
 ## Overview
 

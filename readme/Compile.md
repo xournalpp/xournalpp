@@ -1,6 +1,6 @@
 # Compilation and Testing
 
-This file contains cross-platform instructions for compiling and developing locally. For instructions on how to create platform-specific packages, or instructions on preliminary steps for building Xournal++, please see your see these platform-specific instructions:
+This file contains platform-independent instructions for compiling and developing locally. For instructions on how to create platform-specific packages, or instructions on preliminary steps for building Xournal++, please see these platform-specific instructions:
 
 - [LinuxBuild.md](./LinuxBuild.md)
 - [MacBuild.md](./MacBuild.md)
@@ -24,8 +24,6 @@ cmake --build . # For a faster build, set the flag -DCMAKE_BUILD_TYPE=RelWithDeb
 ```
 
 - Use `cmake-gui ..` to graphically configure CMake
-- With Cairo 1.16 PDF Bookmarks will be possible, but this version is not yet
-commonly available; therefore the Cairo PDF Export does not include PDF Bookmarks
 
 ## Run
 

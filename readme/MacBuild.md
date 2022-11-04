@@ -121,14 +121,14 @@ make install
 ./build-app.sh "$HOME/gtk"
 ```
 
-# Xournal++ Mac Homebrew Build
+## Xournal++ Mac Homebrew Build
 
 **We do not officially support builds with Homebrew. They are solely for convenience.**
 
 It is highly recommended to either use an official or nightly release.
 Should you still want to build your own version please refer to the app-build above.
 
-## Install dependencies
+### Install dependencies
 
 Homebrew must be installed. See [https://brew.sh](https://brew.sh) for installation instructions
 
@@ -136,6 +136,6 @@ Homebrew must be installed. See [https://brew.sh](https://brew.sh) for installat
 brew install cmake pkg-config gtk+3 poppler librsvg adwaita-icon-theme libzip portaudio libsndfile
 ```
 
-## Building and Testing
+### Building and Testing
 
 See [Compile.md](./Compile.md)
