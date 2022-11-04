@@ -156,26 +156,7 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
             break;
         }
         case SIDEBAR_ACTION_COPY: {
-            Document* doc = control->getDocument();
-            PageRef currentPage = control->getCurrentPage();
-            if (!currentPage) {
-                return;
-            }
-
-            doc->lock();
-            size_t page = doc->indexOf(currentPage);
-
-            auto newPage = PageRef(currentPage->clone());
-            doc->insertPage(newPage, page + 1);
-            doc->unlock();
-
-            UndoRedoHandler* undo = control->getUndoRedoHandler();
-            undo->addUndoAction(std::make_unique<CopyUndoAction>(newPage, page + 1));
-
-            control->firePageInserted(page + 1);
-            control->firePageSelected(page + 1);
-
-            control->getScrollHandler()->scrollToPage(page + 1);
+            control->duplicatePage();
             break;
         }
         case SIDEBAR_ACTION_DELETE:
