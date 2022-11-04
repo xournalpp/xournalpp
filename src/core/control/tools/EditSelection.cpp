@@ -272,6 +272,26 @@ auto EditSelection::getRect() const -> Rectangle<double> {
 }
 
 /**
+ * gets the minimal bounding box containing all elements of the selection used for e.g. grid snapping
+ */
+auto EditSelection::getSnappedBounds() const -> Rectangle<double> { return Rectangle<double>{this->snappedBounds}; }
+
+/**
+ * get the original bounding rectangle in document coordinates
+ */
+auto EditSelection::getOriginalBounds() const -> Rectangle<double> { return Rectangle<double>{this->contents->getOriginalBounds()}; }
+
+/**
+ * Get the rotation angle of the selection
+ */
+auto EditSelection::getRotation() const -> double { return this->rotation; }
+
+/**
+ * Get if the selection supports being rotated
+ */
+auto EditSelection::isRotationSupported() const -> bool { return this->supportRotation; }
+
+/**
  * Get the source page (where the selection was done)
  */
 auto EditSelection::getSourcePage() -> PageRef { return this->sourcePage; }

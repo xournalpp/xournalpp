@@ -392,6 +392,8 @@ auto EditSelectionContents::getOriginalX() const -> double { return this->origin
 
 auto EditSelectionContents::getOriginalY() const -> double { return this->originalBounds.y; }
 
+auto EditSelectionContents::getOriginalBounds() const -> Rectangle<double> { return Rectangle<double>{this->originalBounds}; }
+
 auto EditSelectionContents::getSourceView() -> XojPageView* { return this->sourceView; }
 
 

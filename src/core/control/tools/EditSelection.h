@@ -103,6 +103,26 @@ public:
     xoj::util::Rectangle<double> getRect() const;
 
     /**
+     * gets the minimal bounding box containing all elements of the selection used for e.g. grid snapping
+     */
+    xoj::util::Rectangle<double> getSnappedBounds() const;
+
+    /**
+     * get the original bounding rectangle in document coordinates
+     */
+    xoj::util::Rectangle<double> getOriginalBounds() const;
+
+    /**
+     * Get the rotation angle of the selection
+     */
+    double getRotation() const;
+
+    /**
+     * Get if the selection supports being rotated
+     */
+    bool isRotationSupported() const;
+
+    /**
      * Get the source page (where the selection was done)
      */
     PageRef getSourcePage();
