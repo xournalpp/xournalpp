@@ -330,7 +330,7 @@ All new files will be saved as `.xopp`. If an `.xoj` file that was created by Xo
 
 ## Building
 
-We support building on five operating systems:
+We support building on three operating systems:
 
 - [Linux](readme/LinuxBuild.md)
 - [MacOS](readme/MacBuild.md)
