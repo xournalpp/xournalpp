@@ -1116,6 +1116,24 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
 }
 
 /*
+ * pushes an rectangle (width, height, x, y) to the lua stack as a new table
+ * in most cases you'll want to do a
+ * lua_newtable(L);  // create rectangle table
+ * before and a
+ * lua_setfield(L, -2, "rectangleTable");  // add rectangle table to other table
+ * after this function
+ */
+static void pushRectangleHelper(lua_State* L, xoj::util::Rectangle<double> rect) {
+    lua_pushnumber(L, rect.width);
+    lua_setfield(L, -2, "width");
+    lua_pushnumber(L, rect.height);
+    lua_setfield(L, -2, "height");
+    lua_pushnumber(L, rect.x);
+    lua_setfield(L, -2, "x");
+    lua_pushnumber(L, rect.y);
+    lua_setfield(L, -2, "y");
+}
+/*
  * Returns a table encoding all info on the chosen tool (active, pen, highlighter, eraser or text)
  * in a Lua table of one of the following shapes
  *
@@ -1175,6 +1193,33 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
  *
  * See /src/control/ToolEnums.cpp for possible values of "size".
  *
+ * for seiection:
+ * {
+ *   -- bounding box as drawn in the UI (includes padding on all sides)
+ *   "boundingBox" = {
+ *      "width"  = number
+ *      "height" = number
+ *      "x"      = number
+ *      "y"      = number
+ *   }
+ *   -- same as "boundingBox" but the state before any transformation was applied
+ *   "originalBounds" = {
+ *      "width"  = number
+ *      "height" = number
+ *      "x"      = number
+ *      "y"      = number
+ *   }
+ *   -- bounds used for snapping (doesn't include padding and doesn't account to line width)
+ *   -- for more information see https://github.com/xournalpp/xournalpp/pull/4359#issuecomment-1304395011
+ *   "snappedBounds" = {
+ *      "width"  = number
+ *      "height" = number
+ *      "x"      = number
+ *      "y"      = number
+ *   }
+ *   "rotation" = number
+ *   "isRotationSupported" = bool
+ * }
  *
  * Example 1: local penInfo = app.getToolInfo("pen")
  *            local size = penInfo["size"]
@@ -1202,6 +1247,11 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
  * Example 6: local highlighterInfo = app.getToolInfo("highlighter")
  *            local sizeName = highlighterInfo["size"]["name"]
  *            local opacity = highlighterInfo["fillOpacity"]
+ *
+ * Example 7: local selectionInfo = app.getToolInfo("selection")
+ *            local rotation = selectionInfo["rotation"]
+ *            local boundingX = selectionInfo["boundingBox"]["x"]
+ *            local snappedBoundsWidth = selectionInfo["snappedBounds"]["width"]
  */
 
 static int applib_getToolInfo(lua_State* L) {
@@ -1388,6 +1438,32 @@ static int applib_getToolInfo(lua_State* L) {
         lua_pushliteral(L, "color");
         lua_pushinteger(L, int(uint32_t(color)));
         lua_settable(L, -3);
+    } else if (strcmp(mode, "selection") == 0) {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (!sel) {
+            g_warning("There is no selection! ");
+            return 0;
+        }
+        auto rect = sel->getRect();
+
+        lua_newtable(L);  // create return table
+                          //
+        lua_pushnumber(L, sel->getRotation());
+        lua_setfield(L, -2, "rotation");
+        lua_pushboolean(L, sel->isRotationSupported());
+        lua_setfield(L, -2, "isRotationSupported");
+
+        lua_newtable(L);  // create originalBounds table
+        pushRectangleHelper(L, sel->getOriginalBounds());
+        lua_setfield(L, -2, "originalBounds");  // add originalBounds table to return table
+
+        lua_newtable(L);  // create snappedBounds table
+        pushRectangleHelper(L, sel->getSnappedBounds());
+        lua_setfield(L, -2, "snappedBounds");  // add snappedBounds table to return table
+
+        lua_newtable(L);  // create boundingBox table
+        pushRectangleHelper(L, rect);
+        lua_setfield(L, -2, "boundingBox");  // add boundingBox table to return table
     }
     return 1;
 }

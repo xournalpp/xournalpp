@@ -150,6 +150,11 @@ public:
      */
     double getOriginalY() const;
 
+    /**
+     * Gets the complete original bounding box as rectangle
+     */
+    xoj::util::Rectangle<double> getOriginalBounds() const;
+
     UndoAction* copySelection(PageRef page, XojPageView* view, double x, double y);
 
     const static struct {
