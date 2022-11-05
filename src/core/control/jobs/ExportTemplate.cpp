@@ -97,7 +97,7 @@ auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry
 
     for (auto i = rangeEntry.first; i <= lastPage; ++i, ++exportedPagesInEntry) {
         if (progressiveMode) {
-            exportPageLayers(i);
+            exportPageLayersProgressivelyForPage(i);
         } else {
             exportPage(i);
         }
@@ -111,7 +111,7 @@ auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry
     return exportedPagesInEntry;
 }
 
-void ExportTemplate::exportPageLayers(const size_t pageNo) {
+void ExportTemplate::exportPageLayersProgressivelyForPage(const size_t pageNo) {
     PageRef page = doc->getPage(pageNo);
 
     std::optional<LayerRangeVector> layerRange = this->layerRange;

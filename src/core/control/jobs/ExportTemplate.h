@@ -122,7 +122,7 @@ private:
      * @brief Export all layers of a single page one by one (each layer a new page)
      * @return true on successful export
      */
-    void exportPageLayers(const size_t pageNo);
+    void exportPageLayersProgressivelyForPage(const size_t pageNo);
 
     /**
      * @brief Export a single page
