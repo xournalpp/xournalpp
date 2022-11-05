@@ -75,6 +75,7 @@
 #include "undo/AddUndoAction.h"                                  // for AddU...
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
+#include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
 #include "undo/UndoAction.h"                                     // for Undo...
 #include "util/Color.h"                                          // for oper...
 #include "util/PathUtil.h"                                       // for clea...
@@ -539,6 +540,18 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_PAPER_BACKGROUND_COLOR:
             changePageBackgroundColor();
+            break;
+        case ACTION_MOVE_SELECTION_LAYER_UP:
+            // moveSelectionToLayer takes layer number (layerid - 1) not id 
+            // therefor the new layer is "layerid - 1 + 1"
+            moveSelectionToLayer(getCurrentPage()->getSelectedLayerId());
+            break;
+        case ACTION_MOVE_SELECTION_LAYER_DOWN:
+            if(this->getLayerController()->getCurrentLayerId() >= 2) {
+                // moveSelectionToLayer takes layer number (layerid - 1) not id
+                // therefor the new layer is "layerid - 1 - 1"
+                moveSelectionToLayer(getCurrentPage()->getSelectedLayerId() - 2);
+            }
             break;
 
             // Menu Tools
@@ -2991,6 +3004,27 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
             delete selection;
         }
     }
+}
+
+void Control::moveSelectionToLayer(size_t layerNo) {
+    PageRef currentP = getCurrentPage();
+    if (layerNo >= currentP->getLayerCount()) {
+        return;
+    }
+    auto selection = getWindow()->getXournal()->getSelection();
+    if (!selection) {
+        return;
+    }
+
+    auto* oldLayer = currentP->getSelectedLayer();
+    auto* newLayer = currentP->getLayers()->at(layerNo);
+    auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer, currentP->getSelectedLayerId() - 1, layerNo);
+    for (auto* e : selection->getElements()) {
+        moveSelUndo->addElement(newLayer, e, newLayer->indexOf(e));
+    }
+    undoRedo->addUndoAction(std::move(moveSelUndo));
+
+    getLayerController()->switchToLay(layerNo + 1, /*hideShow=*/false, /*clearSelection=*/false);
 }
 
 void Control::deleteSelection() {

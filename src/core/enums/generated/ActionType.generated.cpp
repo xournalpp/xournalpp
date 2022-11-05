@@ -192,6 +192,14 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_RENAME_LAYER;
     }
 
+    if (value == "ACTION_MOVE_SELECTION_LAYER_UP") {
+        return ACTION_MOVE_SELECTION_LAYER_UP;
+    }
+
+    if (value == "ACTION_MOVE_SELECTION_LAYER_DOWN") {
+        return ACTION_MOVE_SELECTION_LAYER_DOWN;
+    }
+
     if (value == "ACTION_PAPER_FORMAT") {
         return ACTION_PAPER_FORMAT;
     }
@@ -820,6 +828,14 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_RENAME_LAYER) {
         return "ACTION_RENAME_LAYER";
+    }
+
+    if (value == ACTION_MOVE_SELECTION_LAYER_UP) {
+        return "ACTION_MOVE_SELECTION_LAYER_UP";
+    }
+
+    if (value == ACTION_MOVE_SELECTION_LAYER_DOWN) {
+        return "ACTION_MOVE_SELECTION_LAYER_DOWN";
     }
 
     if (value == ACTION_PAPER_FORMAT) {

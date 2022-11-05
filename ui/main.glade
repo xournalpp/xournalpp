@@ -467,6 +467,32 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkSeparatorMenuItem" id="separatormenuitem19">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkMenuItem" id="menuJournalMoveSelectionLayerUp">
+                            <property name="name">menuJournalMoveSelectionLayerUp</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Move Selection Layer Up</property>
+                            <property name="use-underline">True</property>
+                            <signal name="activate" handler="ACTION_MOVE_SELECTION_LAYER_UP" swapped="no"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkMenuItem" id="menuJournalMoveSelectionLayerDown">
+                            <property name="name">menuJournalMoveSelectionLayerDown</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Move Selection Layer Down</property>
+                            <property name="use-underline">True</property>
+                            <signal name="activate" handler="ACTION_MOVE_SELECTION_LAYER_DOWN" swapped="no"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkSeparatorMenuItem" id="menuitem5">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>

@@ -732,6 +732,8 @@ void MainWindow::layerVisibilityChanged() {
 
     control->fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
     control->fireEnableAction(ACTION_MERGE_LAYER_DOWN, layer > 1);
+    control->fireEnableAction(ACTION_MOVE_SELECTION_LAYER_UP, layer < maxLayer);
+    control->fireEnableAction(ACTION_MOVE_SELECTION_LAYER_DOWN, layer > 1);
     control->fireEnableAction(ACTION_GOTO_NEXT_LAYER, layer < maxLayer);
     control->fireEnableAction(ACTION_GOTO_PREVIOUS_LAYER, layer > 0);
     control->fireEnableAction(ACTION_GOTO_TOP_LAYER, layer < maxLayer);
