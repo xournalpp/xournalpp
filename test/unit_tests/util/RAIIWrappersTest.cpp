@@ -44,7 +44,7 @@ TEST(UtilsRAII, testCLibbrairiesSPtr_Constructors) {
         EXPECT_EQ(TestData::nbData, 0);
 
         TestData* p = nullptr;
-        TestRAII t1(p = new TestData());  // Adoption
+        TestRAII t1(p = new TestData(), xoj::util::adopt);  // Adoption
         EXPECT_EQ(t1.get(), p);
         EXPECT_EQ(TestData::nbData, 1);
         EXPECT_EQ(p->ref_count, 1);
@@ -61,7 +61,7 @@ TEST(UtilsRAII, testCLibbrairiesSPtr_Constructors) {
         EXPECT_EQ(p->ref_count, 2);
         EXPECT_EQ(TestData::nbData, 1);
 
-        TestRAII t4(t2.get(), TestRAII::ref);  // ref
+        TestRAII t4(t2.get(), xoj::util::ref);  // ref
         EXPECT_EQ(t4.get(), p);
         EXPECT_EQ(p->ref_count, 3);
         EXPECT_EQ(TestData::nbData, 1);
@@ -73,8 +73,8 @@ TEST(UtilsRAII, testCLibbrairiesSPtr_MoveAssignments) {
     {
         TestData* p = nullptr;
         TestData* q = nullptr;
-        TestRAII t1(p = new TestData());
-        TestRAII t2(q = new TestData());
+        TestRAII t1(p = new TestData(), xoj::util::adopt);
+        TestRAII t2(q = new TestData(), xoj::util::adopt);
         EXPECT_EQ(TestData::nbData, 2);
         EXPECT_EQ(t1.get(), p);
         EXPECT_EQ(t2.get(), q);
@@ -102,7 +102,7 @@ TEST(UtilsRAII, testCLibbrairiesSPtr_MoveAssignments) {
         EXPECT_TRUE(t1);
         EXPECT_FALSE(t2);
 
-        TestRAII t3(p, TestRAII::ref);
+        TestRAII t3(p, xoj::util::ref);
         EXPECT_EQ(p->ref_count, 2);
         t1 = std::move(t3);  // move assignment - non empty to non empty - same data
         EXPECT_EQ(TestData::nbData, 1);
@@ -138,8 +138,8 @@ TEST(UtilsRAII, testCLibbrairiesSPtr_CopyAssignments) {
     {
         TestData* p = nullptr;
         TestData* q = nullptr;
-        TestRAII t1(p = new TestData());
-        TestRAII t2(q = new TestData());
+        TestRAII t1(p = new TestData(), xoj::util::adopt);
+        TestRAII t2(q = new TestData(), xoj::util::adopt);
         EXPECT_EQ(TestData::nbData, 2);
         EXPECT_EQ(t1.get(), p);
         EXPECT_EQ(t2.get(), q);
@@ -190,7 +190,7 @@ TEST(UtilsRAII, testCLibbrairiesSPtr_Reset) {
     {
         TestData* p = nullptr;
         TestData* q = nullptr;
-        TestRAII t1(p = new TestData());
+        TestRAII t1(p = new TestData(), xoj::util::adopt);
         TestRAII t2;
         EXPECT_EQ(TestData::nbData, 1);
         EXPECT_EQ(t1.get(), p);
@@ -198,13 +198,13 @@ TEST(UtilsRAII, testCLibbrairiesSPtr_Reset) {
         EXPECT_EQ(p->ref_count, 1);
         t1->value = 4;
 
-        t2.reset(q = new TestData());  // Reset - non-nullptr to empty
+        t2.reset(q = new TestData(), xoj::util::adopt);  // Reset - non-nullptr to empty
         EXPECT_EQ(TestData::nbData, 2);
         EXPECT_EQ(t2.get(), q);
         EXPECT_TRUE(t2);
         EXPECT_EQ(q->ref_count, 1);
 
-        t2.reset(q = new TestData());  // Reset - non-nullptr to non-empty
+        t2.reset(q = new TestData(), xoj::util::adopt);  // Reset - non-nullptr to non-empty
         EXPECT_EQ(t2.get(), q);
         EXPECT_EQ(TestData::nbData, 2);
 
@@ -261,7 +261,7 @@ TEST(UtilsRAII, testGObjectSPtrConstructors) {
     using TestPtr = xoj::util::GObjectSPtr<TestObject>;
     EXPECT_EQ(TestObjectCount, 0);
     {
-        TestPtr t(TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr)));
+        TestPtr t(TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr)), xoj::util::adopt);
         EXPECT_FALSE(g_object_is_floating(t.get()));
         EXPECT_EQ(TestObjectCount, 1);
     }
@@ -272,7 +272,7 @@ TEST(UtilsRAII, testGObjectSPtrConstructors) {
         g_object_force_floating(G_OBJECT(t));
         EXPECT_TRUE(g_object_is_floating(t));
         EXPECT_EQ(TestObjectCount, 1);
-        TestPtr t1(t);  // Adopt a floating ref
+        TestPtr t1(t, xoj::util::adopt);  // Adopt a floating ref
         EXPECT_EQ(t1.get(), t);
         EXPECT_FALSE(g_object_is_floating(t1.get()));
     }
@@ -280,7 +280,7 @@ TEST(UtilsRAII, testGObjectSPtrConstructors) {
     {
         TestObject* t = TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr));
         EXPECT_EQ(TestObjectCount, 1);
-        TestPtr t1(t, TestPtr::ref);
+        TestPtr t1(t, xoj::util::ref);
         g_object_unref(t);
         EXPECT_EQ(TestObjectCount, 1);
     }
@@ -292,7 +292,7 @@ TEST(UtilsRAII, testGObjectSPtrReset) {
     EXPECT_EQ(TestObjectCount, 0);
     {
         TestPtr t;
-        t.reset(TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr)));
+        t.reset(TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr)), xoj::util::adopt);
         EXPECT_FALSE(g_object_is_floating(t.get()));
         EXPECT_EQ(TestObjectCount, 1);
     }
@@ -304,7 +304,7 @@ TEST(UtilsRAII, testGObjectSPtrReset) {
         EXPECT_TRUE(g_object_is_floating(t));
         EXPECT_EQ(TestObjectCount, 1);
         TestPtr t1;
-        t1.reset(t);  // Adopt a floating ref
+        t1.reset(t, xoj::util::adopt);  // Adopt a floating ref
         EXPECT_EQ(t1.get(), t);
         EXPECT_FALSE(g_object_is_floating(t1.get()));
     }
@@ -313,7 +313,7 @@ TEST(UtilsRAII, testGObjectSPtrReset) {
         TestObject* t = TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr));
         EXPECT_EQ(TestObjectCount, 1);
         TestPtr t1;
-        t1.reset(t, TestPtr::ref);
+        t1.reset(t, xoj::util::ref);
         g_object_unref(t);
         EXPECT_EQ(TestObjectCount, 1);
     }

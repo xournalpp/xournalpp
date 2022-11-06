@@ -28,9 +28,7 @@
 #include "MainWindow.h"  // for MainWindow
 
 PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay):
-        theMainWindow(theMainWindow),
-        overlay(overlay, xoj::util::GObjectSPtr<GtkOverlay>::Ref{}),
-        position({0, 0}) {
+        theMainWindow(theMainWindow), overlay(overlay, xoj::util::ref), position({0, 0}) {
     this->floatingToolbox = theMainWindow->get("pdfFloatingToolbox");
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);

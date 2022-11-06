@@ -15,6 +15,24 @@
 
 namespace xoj::util {
 /**
+ * @brief Placeholder type for C-lib smart pointer wrappers' contructors and reset methods: adopt the element
+ */
+constexpr static struct Adopt {
+} adopt = Adopt();
+
+/**
+ * @brief Placeholder type for C-lib smart pointer wrappers' contructors and reset methods: add a ref to the element
+ */
+constexpr static struct Ref {
+} ref = Ref();
+
+/**
+ * @brief Placeholder type for C-lib smart pointer wrappers' contructors and reset methods: ref_sink the element
+ */
+constexpr static struct RefSink {
+} refsink = RefSink();
+
+/**
  * @brief Simple template class for RAII smart pointer (aimed at Cairo/GTK/Poppler ref-counting classes)
  * @param T The wrapper will store a pointer of type T
  * @param H Handler class containing at least
@@ -61,18 +79,12 @@ public:
         return *this;
     }
 
-    constexpr static struct Adopt {
-    } adopt = Adopt();
-    constexpr static struct Ref {
-    } ref = Ref();
-    constexpr static struct RefSink {
-    } refsink = RefSink();
-
-    explicit CLibrariesSPtr(T* p, Adopt = adopt): p(safeAdopt(p)) {}
+    explicit CLibrariesSPtr(T* p, Adopt): p(safeAdopt(p)) {}
     explicit CLibrariesSPtr(T* p, Ref): p(safeRef(p)) {}
     explicit CLibrariesSPtr(T* p, RefSink): p(safeRefSink(p)) {}
 
-    void reset(T* other = nullptr, Adopt = adopt) { safeReset(p, safeAdopt(other)); }
+    void reset() { safeReset(p, nullptr); }
+    void reset(T* other, Adopt) { safeReset(p, safeAdopt(other)); }
     void reset(T* other, Ref) { safeReset(p, safeRef(other)); }
     void reset(T* other, RefSink) { safeReset(p, safeRefSink(other)); }
 
