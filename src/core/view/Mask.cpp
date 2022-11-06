@@ -51,7 +51,7 @@ Mask::Mask(cairo_surface_t* target, const Range& extent, double zoom, int dpiSca
     cairo_surface_set_device_offset(surf, xOffset * dpiScaling, yOffset * dpiScaling);
     cairo_surface_set_device_scale(surf, zoom * dpiScaling, zoom * dpiScaling);
 
-    this->cr.reset(cairo_create(surf));
+    this->cr.reset(cairo_create(surf), xoj::util::adopt);
     cairo_surface_destroy(surf);  // surf is now owned by this->cr
 
     IF_DBG_MASKS({

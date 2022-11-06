@@ -762,7 +762,7 @@ void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg)
     if (v->isViewOf(this->inputHandler) || v->isViewOf(this->verticalSpace.get())) {
         // Draw the inputHandler's view onto the page buffer.
         std::lock_guard lock(this->drawingMutex);
-        xoj::util::CairoSPtr cr(cairo_create(this->crBuffer.get()));
+        xoj::util::CairoSPtr cr(cairo_create(this->crBuffer.get()), xoj::util::adopt);
         v->drawWithoutDrawingAids(cr.get());
     }
     this->deleteOverlayView(v, rg);

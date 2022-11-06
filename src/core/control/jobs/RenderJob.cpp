@@ -38,14 +38,15 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     const auto width = int(std::ceil(rect.width * ratio)) + 1;
     const auto height = int(std::ceil(rect.height * ratio)) + 1;
 
-    xoj::util::CairoSurfaceSPtr rectBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height));
+    xoj::util::CairoSurfaceSPtr rectBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height),
+                                           xoj::util::adopt);
     cairo_surface_set_device_offset(rectBuffer.get(), -x, -y);
     cairo_surface_set_device_scale(rectBuffer.get(), ratio, ratio);
 
     renderToBuffer(rectBuffer.get());
 
     std::lock_guard lock(this->view->drawingMutex);
-    xoj::util::CairoSPtr crPageBuffer(cairo_create(view->crBuffer.get()));
+    xoj::util::CairoSPtr crPageBuffer(cairo_create(view->crBuffer.get()), xoj::util::adopt);
 
     cairo_set_operator(crPageBuffer.get(), CAIRO_OPERATOR_SOURCE);
     cairo_set_source_surface(crPageBuffer.get(), rectBuffer.get(), 0, 0);
@@ -70,7 +71,8 @@ void RenderJob::run() {
         const int dispHeight = this->view->getDisplayHeight() * dpiScaleFactor;
         const double ratio = this->view->xournal->getZoom() * dpiScaleFactor;
 
-        xoj::util::CairoSurfaceSPtr newBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight));
+        xoj::util::CairoSurfaceSPtr newBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight),
+                                              xoj::util::adopt);
         cairo_surface_set_device_scale(newBuffer.get(), ratio, ratio);
 
         renderToBuffer(newBuffer.get());
@@ -86,7 +88,7 @@ void RenderJob::run() {
 }
 
 void RenderJob::renderToBuffer(cairo_surface_t* buffer) const {
-    xoj::util::CairoSPtr crRect(cairo_create(buffer));
+    xoj::util::CairoSPtr crRect(cairo_create(buffer), xoj::util::adopt);
 
     DocumentView localView;
     localView.setMarkAudioStroke(this->view->getXournal()->getControl()->getToolHandler()->getToolType() ==
