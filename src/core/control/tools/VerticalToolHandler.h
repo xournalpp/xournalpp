@@ -80,12 +80,12 @@ public:
         Below = 1,
     };
 
-    double getStartY() const { return startY; }
-    double getEndY() const { return endY; }
-    Side getSide() const { return spacingSide; }
+    inline double getStartY() const { return startY; }
+    inline double getEndY() const { return endY; }
+    inline Side getSide() const { return spacingSide; }
     double getPageWidth() const;
 
-    auto getViewPool() const -> std::shared_ptr<xoj::util::DispatchPool<xoj::view::VerticalToolView>> {
+    inline auto getViewPool() const -> std::shared_ptr<xoj::util::DispatchPool<xoj::view::VerticalToolView>> {
         return viewPool;
     }
 
@@ -107,6 +107,10 @@ private:
     PageRef page;
     Layer* layer;
     std::vector<Element*> elements;
+    /**
+     * @brief Stores the smallest box containing all the adopted elements. 
+     *     Used to only refresh the part of the screen that needs refreshing.
+     */
     Range ownedElementsOriginalBoundingBox;
 
     double startY;
