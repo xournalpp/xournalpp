@@ -473,8 +473,8 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkMenuItem" id="menuJournalMoveSelectionLayerUp">
-                            <property name="name">menuJournalMoveSelectionLayerUp</property>
+                          <object class="GtkMenuItem" id="menuEditMoveSelectionLayerUp">
+                            <property name="name">menuEditMoveSelectionLayerUp</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Move Selection Layer Up</property>
@@ -483,8 +483,8 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkMenuItem" id="menuJournalMoveSelectionLayerDown">
-                            <property name="name">menuJournalMoveSelectionLayerDown</property>
+                          <object class="GtkMenuItem" id="menuEditMoveSelectionLayerDown">
+                            <property name="name">menuEditMoveSelectionLayerDown</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Move Selection Layer Down</property>
