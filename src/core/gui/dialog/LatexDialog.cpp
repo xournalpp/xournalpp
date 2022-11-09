@@ -34,7 +34,7 @@
 class GladeSearchpath;
 
 // Default background color of the preview.
-constexpr Color DEFAULT_PREVIEW_BACKGROUND{0xFFFFFFFF};
+const Color DEFAULT_PREVIEW_BACKGROUND = Colors::white;
 
 // Callbacks for gtk to render the dialog's preview.
 extern "C" {

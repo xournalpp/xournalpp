@@ -19,6 +19,7 @@
 #include "control/settings/SettingsEnums.h"         // for InputDeviceTypeOp...
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
+#include "util/Color.h"
 #include "util/PathUtil.h"                          // for getConfigFile
 #include "util/Util.h"                              // for PRECISION_FORMAT_...
 #include "util/i18n.h"                              // for _
@@ -173,10 +174,10 @@ void Settings::loadDefault() {
     this->preloadPagesAfter = 5U;
     this->eagerPageCleanup = true;
 
-    this->selectionBorderColor = 0xff0000U;  // red
-    this->selectionMarkerColor = 0x729fcfU;  // light blue
+    this->selectionBorderColor = Colors::red;
+    this->selectionMarkerColor = Colors::xopp_cornflowerblue;
 
-    this->backgroundColor = 0xdcdad5U;
+    this->backgroundColor = Colors::xopp_gainsboro02;
 
     // clang-format off
 	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";

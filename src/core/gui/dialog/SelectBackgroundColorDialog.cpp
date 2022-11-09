@@ -16,7 +16,7 @@ static inline std::array<GdkRGBA, 9> background1 = {
         Util::rgb_to_GdkRGBA(Colors::xopp_lemonchifon),  //
         Util::rgb_to_GdkRGBA(Colors::xopp_palegoldenrod),  //
         Util::rgb_to_GdkRGBA(Colors::xopp_lavender),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_lightgray),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_gainsboro03),  //
         Util::rgb_to_GdkRGBA(Colors::xopp_antiquewhite),  //
         Util::rgb_to_GdkRGBA(Colors::xopp_gainsboro),  //
         Util::rgb_to_GdkRGBA(Colors::xopp_snow)   //

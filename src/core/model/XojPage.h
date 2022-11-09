@@ -119,7 +119,7 @@ private:
     /**
      * The background color if the background type is plain
      */
-    Color backgroundColor{0xffffffU};
+    Color backgroundColor{Colors::white};
 
     /**
      * Background visible

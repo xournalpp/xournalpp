@@ -106,7 +106,7 @@ private:
     /**
      * Color of the tool for all drawing tools
      */
-    Color color{0x000000U};
+    Color color = Colors::black;
 
     /**
      * Size of a drawing tool
