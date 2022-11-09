@@ -49,17 +49,17 @@ constexpr PredefinedColor PREDEFINED_COLORS[] = {
 auto LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler) -> Color {
     const char* sColor = LoadHandlerHelper::getAttrib("color", false, loadHandler);
 
-    Color color{0xffffffU};
+    Color color = Colors::white;
     if (strcmp("blue", sColor) == 0) {
-        color = 0xa0e8ffU;
+        color = Colors::xopp_paleturqoise;
     } else if (strcmp("pink", sColor) == 0) {
-        color = 0xffc0d4U;
+        color = Colors::xopp_pink;
     } else if (strcmp("green", sColor) == 0) {
-        color = 0x80FFC0U;
+        color = Colors::xopp_aquamarine;
     } else if (strcmp("orange", sColor) == 0) {
-        color = 0xFFC080U;
+        color = Colors::xopp_lightsalmon;
     } else if (strcmp("yellow", sColor) == 0) {
-        color = 0xFFFF80U;
+        color = Colors::xopp_khaki;
     } else {
         LoadHandlerHelper::parseColor(sColor, color, loadHandler);
     }

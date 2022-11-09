@@ -42,8 +42,8 @@
 
 using std::string;
 
-constexpr Color LIGHT_PREVIEW_BACKGROUND{0xFFFFFF};
-constexpr Color DARK_PREVIEW_BACKGROUND{0x000000};
+const Color LIGHT_PREVIEW_BACKGROUND = Colors::white;
+const Color DARK_PREVIEW_BACKGROUND = Colors::black;
 
 LatexController::LatexController(Control* control):
         control(control),
