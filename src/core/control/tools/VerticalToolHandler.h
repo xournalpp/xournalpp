@@ -18,34 +18,40 @@
 #include <cairo.h>    // for cairo_surface_t, cairo_t
 #include <gdk/gdk.h>  // for GdkEventKey, GdkWindow
 
-#include "control/zoom/ZoomListener.h"  // for ZoomListener
-#include "model/ElementContainer.h"     // for ElementContainer
-#include "model/PageRef.h"              // for PageRef
+#include "model/ElementContainer.h"  // for ElementContainer
+#include "model/OverlayBase.h"
+#include "model/PageRef.h"  // for PageRef
+#include "util/Range.h"
 
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
 
-class ZoomControl;
 class Element;
 class Layer;
 class MoveUndoAction;
-class LegacyRedrawable;
 class Settings;
+class ZoomControl;
+
+namespace xoj::view {
+class OverlayView;
+class Repaintable;
+class VerticalToolView;
+};  // namespace xoj::view
+
 namespace xoj::util {
 template <class T>
-class Rectangle;
-}  // namespace xoj::util
+class DispatchPool;
+};  // namespace xoj::util
 
 /**
  * Handler class for the Vertical Spacing tool.
  */
-class VerticalToolHandler: public ElementContainer, public ZoomListener {
+class VerticalToolHandler: public ElementContainer, public OverlayBase {
 public:
     /**
      * @param initiallyReverse Set this to true if the user has the reverse mode
      * button (e.g., Ctrl) held down when a vertical selection is started.
      */
-    VerticalToolHandler(LegacyRedrawable* view, const PageRef& page, Settings* settings, double y,
-                        bool initiallyReverse, ZoomControl* zoomControl, GdkWindow* window);
+    VerticalToolHandler(const PageRef& page, Settings* settings, double y, bool initiallyReverse);
     ~VerticalToolHandler() override;
     VerticalToolHandler(VerticalToolHandler&) = delete;
     VerticalToolHandler& operator=(VerticalToolHandler&) = delete;
@@ -64,9 +70,9 @@ public:
 
     const std::vector<Element*>& getElements() const override;
 
-    void zoomChanged() override;
+    auto createView(xoj::view::Repaintable* parent, ZoomControl* zoomControl, const Settings* settings) const
+            -> std::unique_ptr<xoj::view::OverlayView>;
 
-private:
     enum class Side {
         /** elements above the reference line */
         Above = -1,
@@ -74,6 +80,16 @@ private:
         Below = 1,
     };
 
+    inline double getStartY() const { return startY; }
+    inline double getEndY() const { return endY; }
+    inline Side getSide() const { return spacingSide; }
+    double getPageWidth() const;
+
+    inline auto getViewPool() const -> std::shared_ptr<xoj::util::DispatchPool<xoj::view::VerticalToolView>> {
+        return viewPool;
+    }
+
+private:
     /**
      * Clear the currently moved elements, and then select all elements
      * above/below startY (depending on the side) to use for the spacing.
@@ -82,33 +98,20 @@ private:
     void adoptElements(Side side);
 
     /**
-     * Recreate the buffer if the new zoom value is higher.
+     * @brief Get the bounding range of the collection of elements we have adopted
+     * @return The returned range may be empty if no elements have been adopted
      */
-    void updateZoom(double newZoom);
+    Range computeElementsBoundingBox() const;
 
-    /**
-     * Clear the buffer and redraw the elements being spaced.
-     */
-    void redrawBuffer();
 
-    /**
-     * @brief Get the bounding rect of the collection of elements we have adopted
-     * @return std::nullopt if no elements have been adopted, otherwise, the bounding rectangle
-     */
-    std::optional<xoj::util::Rectangle<double>> getElementsBoundingRect() const;
-
-    GdkWindow* window;
-    LegacyRedrawable* view;
     PageRef page;
     Layer* layer;
     std::vector<Element*> elements;
-
     /**
-     * Image buffer containing a rendering of the elements being spaced. This
-     * buffer is rendered below the endY if direction is below, or above the
-     * endY if the direction is above.
+     * @brief Stores the smallest box containing all the adopted elements. 
+     *     Used to only refresh the part of the screen that needs refreshing.
      */
-    cairo_surface_t* crBuffer = nullptr;
+    Range ownedElementsOriginalBoundingBox;
 
     double startY;
     double endY;
@@ -119,13 +122,9 @@ private:
     Side spacingSide;
 
     /**
-     * Current zoom level.
-     */
-    double zoom;
-    ZoomControl* zoomControl;
-
-    /**
      * The handler for snapping points
      */
     SnapToGridInputHandler snappingHandler;
+
+    std::shared_ptr<xoj::util::DispatchPool<xoj::view::VerticalToolView>> viewPool;
 };

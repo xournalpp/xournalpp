@@ -39,8 +39,23 @@ public:
          cairo_content_t contentType = CAIRO_CONTENT_ALPHA);
     cairo_t* get();
     bool isInitialized() const;
+    /**
+     * @brief Use the surface as a mask
+     */
     void blitTo(cairo_t* targetCr) const;
+    /**
+     * @brief Paint the content of the surface to the target cairo context
+     */
+    void paintTo(cairo_t* targetCr) const;
+    /**
+     * @brief Erase all the surface's content
+     */
     void wipe();
+
+    /**
+     * @brief Delete the mask
+     */
+    void reset();
 
 private:
     xoj::util::CairoSPtr cr;

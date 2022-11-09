@@ -251,7 +251,7 @@ private:
     /**
      * Vertical Space
      */
-    VerticalToolHandler* verticalSpace{};
+    std::unique_ptr<VerticalToolHandler> verticalSpace;
 
     /**
      * Search handling
