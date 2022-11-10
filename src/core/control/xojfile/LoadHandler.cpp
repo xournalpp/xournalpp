@@ -1,6 +1,7 @@
 #include "LoadHandler.h"
 
 #include <algorithm>    // for copy
+#include <cmath>        // for isnan
 #include <cstdlib>      // for atoi, size_t
 #include <cstring>      // for strcmp, strlen
 #include <memory>       // for __shared_ptr_access
@@ -950,7 +951,8 @@ void LoadHandler::fixNullPressureValues() {
 
     std::vector<std::vector<Point>> strokePortions;
     while (nextPositive != pressureBuffer.end()) {
-        auto nextNonPositive = std::find_if(nextPositive, pressureBuffer.end(), [](double v) { return v <= 0; });
+        auto nextNonPositive =
+                std::find_if(nextPositive, pressureBuffer.end(), [](double v) { return v <= 0 || std::isnan(v); });
         size_t nValidPressureValues = static_cast<size_t>(std::distance(nextPositive, nextNonPositive));
 
         std::vector<Point> ps;
@@ -1035,7 +1037,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
         if (!handler->pressureBuffer.empty()) {
             if (handler->pressureBuffer.size() + 1 >= handler->stroke->getPointCount()) {
                 auto firstNonPositive = std::find_if(handler->pressureBuffer.begin(), handler->pressureBuffer.end(),
-                                                     [](double v) { return v <= 0; });
+                                                     [](double v) { return v <= 0 || std::isnan(v); });
                 if (firstNonPositive != handler->pressureBuffer.end()) {
                     // Warning: this may delete handler->stroke if no positive pressure values are provided
                     // Do not dereference handler->stroke after that
