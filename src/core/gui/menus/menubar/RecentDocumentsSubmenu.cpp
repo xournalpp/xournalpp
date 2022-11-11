@@ -6,13 +6,15 @@
 
 #include "control/Control.h"
 #include "control/RecentManager.h"
-#include "gui/MainWindow.h"
 #include "gui/menus/StaticAssertActionNamespace.h"
+#include "util/Assert.h"
 #include "util/PathUtil.h"           // for fromUri, toUri, hasPdfFileExt
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/StringUtils.h"        // for replace_pair, StringUtils
 #include "util/TinyVector.h"         // for TinyVector
 #include "util/i18n.h"               // for FS, FORMAT_STR, C_F
+
+#include "Menubar.h"
 
 namespace {
 constexpr auto SUBMENU_ID = "menuFileRecent";
@@ -119,31 +121,30 @@ void RecentDocumentsSubmenu::updateMenu() {
     this->menuXoppFiles = createRecentMenu(fileList.recentXoppFiles, 0);
     this->menuPdfFiles = createRecentMenu(fileList.recentPdfFiles, fileList.recentXoppFiles.size());
 
-    xoj::util::GObjectSPtr<GMenu> submenu(g_menu_new(), xoj::util::adopt);
+    xoj_assert(recentFilesSubmenu);
+    g_menu_remove_all(recentFilesSubmenu.get());
+
     if (this->menuXoppFiles) {
-        g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(this->menuXoppFiles.get()));
+        g_menu_append_section(recentFilesSubmenu.get(), nullptr, G_MENU_MODEL(this->menuXoppFiles.get()));
     }
     if (this->menuPdfFiles) {
-        g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(this->menuPdfFiles.get()));
+        g_menu_append_section(recentFilesSubmenu.get(), nullptr, G_MENU_MODEL(this->menuPdfFiles.get()));
     }
     if (this->menuXoppFiles || this->menuPdfFiles) {
-        g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(createClearListSection().get()));
+        g_menu_append_section(recentFilesSubmenu.get(), nullptr, G_MENU_MODEL(createClearListSection().get()));
     } else {
-        g_menu_append_item(submenu.get(), createEmptyListPlaceholder().get());
+        g_menu_append_item(recentFilesSubmenu.get(), createEmptyListPlaceholder().get());
     }
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(this->menuItem.get()),
-                              gtk_menu_new_from_model(G_MENU_MODEL(submenu.get())));
 }
 
-void RecentDocumentsSubmenu::addToMenubar(MainWindow* win) {
-    this->menuItem.reset(win->get(SUBMENU_ID), xoj::util::ref);
+void RecentDocumentsSubmenu::addToMenubar(Menubar& menubar) {
+    recentFilesSubmenu.reset(menubar.get<GMenu>(SUBMENU_ID, [](auto* p) { return G_MENU(p); }), xoj::util::ref);
     updateMenu();
 }
 
 void RecentDocumentsSubmenu::setDisabled(bool disabled) {
     g_simple_action_set_enabled(openFileAction.get(), !disabled);
     g_simple_action_set_enabled(clearListAction.get(), !disabled);
-    gtk_widget_set_sensitive(menuItem.get(), !disabled);
 }
 
 void RecentDocumentsSubmenu::openFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self) {

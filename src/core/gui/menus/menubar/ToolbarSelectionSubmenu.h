@@ -29,7 +29,7 @@ public:
     void update(ToolMenuHandler* toolbarHandler, const ToolbarData* selectedToolbar);
 
     void setDisabled(bool disabled) override;
-    void addToMenubar(MainWindow* win) override;
+    void addToMenubar(Menubar& menubar) override;
 
 private:
     xoj::util::GObjectSPtr<GMenu> stockConfigurationsSection;

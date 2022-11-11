@@ -51,7 +51,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     gtk_window_set_application(GTK_WINDOW(getWindow()), parent);
 
     toolbar->populate(gladeSearchPath);
-    menubar->populate(this);
+    menubar->populate(gladeSearchPath, this);
 
     panedContainerWidget.reset(get("panelMainContents"), xoj::util::ref);
     boxContainerWidget.reset(get("mainContentContainer"), xoj::util::ref);
@@ -92,12 +92,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     setToolbarVisible(control->getSettings()->isToolbarVisible());
 
-    GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
-    g_signal_connect(menuViewSidebarVisible, "toggled", G_CALLBACK(viewShowSidebar), this);
-
-    GtkWidget* menuViewToolbarsVisible = get("menuViewToolbarsVisible");
-    g_signal_connect(menuViewToolbarsVisible, "toggled", G_CALLBACK(viewShowToolbar), this);
-
     updateScrollbarSidebarPosition();
 
     gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(),
@@ -112,11 +106,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     getSpinPageNo()->addListener(this->control->getScrollHandler());
 
 
-    Util::execInUiThread([=]() {
-        // Execute after the window is visible, else the check won't work
-        initHideMenu();
-    });
-
     // Drag and Drop
     g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
 
@@ -128,73 +117,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     LayerCtrlListener::registerListener(control->getLayerController());
 }
 
-gboolean MainWindow::isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data) { return closure == data; }
-
-gboolean MainWindow::invokeMenu(GtkWidget* widget) {
-    // g_warning("invoke_menu %s", gtk_widget_get_name(widget));
-    gtk_widget_activate(widget);
-    return TRUE;
-}
-
-void MainWindow::rebindAcceleratorsMenuItem(GtkWidget* widget, gpointer user_data) {
-    if (GTK_IS_MENU_ITEM(widget)) {
-        GtkAccelGroup* newAccelGroup = reinterpret_cast<GtkAccelGroup*>(user_data);
-        GList* menuAccelClosures = gtk_widget_list_accel_closures(widget);
-        for (GClosure& closure: GListView<GClosure>(menuAccelClosures)) {
-            GtkAccelGroup* accelGroup = gtk_accel_group_from_accel_closure(&closure);
-            GtkAccelKey* key = gtk_accel_group_find(accelGroup, isKeyForClosure, &closure);
-            gtk_accel_group_connect(newAccelGroup, key->accel_key, key->accel_mods, GtkAccelFlags(0),
-                                    g_cclosure_new_swap(G_CALLBACK(MainWindow::invokeMenu), widget, nullptr));
-        }
-        g_list_free(menuAccelClosures);
-        MainWindow::rebindAcceleratorsSubMenu(widget, newAccelGroup);
-    }
-}
-
-void MainWindow::rebindAcceleratorsSubMenu(GtkWidget* widget, gpointer user_data) {
-    if (GTK_IS_MENU_ITEM(widget)) {
-        GtkMenuItem* menuItem = reinterpret_cast<GtkMenuItem*>(widget);
-        GtkWidget* subMenu = gtk_menu_item_get_submenu(menuItem);
-        if (GTK_IS_CONTAINER(subMenu)) {
-            gtk_container_foreach(reinterpret_cast<GtkContainer*>(subMenu), rebindAcceleratorsMenuItem, user_data);
-        }
-    }
-}
-
-// When the Menubar is hidden, accelerators no longer work so rebind them to the MainWindow
-// It should be called after all plugins have been initialised so that their injected menu items are captured
-void MainWindow::rebindMenubarAccelerators() {
-    this->globalAccelGroup = gtk_accel_group_new();
-    gtk_window_add_accel_group(GTK_WINDOW(this->getWindow()), this->globalAccelGroup);
-
-    GtkMenuBar* menuBar = (GtkMenuBar*)this->get("mainMenubar");
-    gtk_container_foreach(reinterpret_cast<GtkContainer*>(menuBar), rebindAcceleratorsSubMenu, this->globalAccelGroup);
-}
+GMenuModel* MainWindow::getMenuModel() const { return menubar->getModel(); }
 
 MainWindow::~MainWindow() = default;
-
-/**
- * Topmost widgets, to check if there is a menu above
- */
-const char* TOP_WIDGETS[] = {"tbTop1", "tbTop2", "mainContainerBox", nullptr};
-
-
-void MainWindow::toggleMenuBar(MainWindow* win) {
-    GtkWidget* menu = win->get("mainMenubar");
-    bool visible = gtk_widget_is_visible(menu);
-    if (visible) {
-        gtk_widget_hide(menu);
-    } else {
-        gtk_widget_show(menu);
-    }
-    Settings* settings = win->control->getSettings();
-    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
-        settings->setMenubarVisible(!visible);
-        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
-        viewMode.showMenubar = !visible;
-        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
-    }
-}
 
 void MainWindow::updateColorscheme() {
     bool darkMode = control->getSettings()->isDarkTheme();
@@ -260,38 +185,6 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
                 gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), touchScrollEnabled);
             },
             G_PRIORITY_HIGH);
-}
-
-/**
- * Allow to hide menubar, but only if global menu is not enabled
- */
-void MainWindow::initHideMenu() {
-    int top = -1;
-    for (int i = 0; TOP_WIDGETS[i]; i++) {
-        GtkWidget* w = get(TOP_WIDGETS[i]);
-        GtkAllocation allocation;
-        gtk_widget_get_allocation(w, &allocation);
-        if (allocation.y != -1) {
-            top = allocation.y;
-            break;
-        }
-    }
-
-    GtkWidget* menuItem = get("menuHideMenu");
-    if (top < 5) {
-        // There is no menu to hide, the menu is in the globalmenu!
-        gtk_widget_hide(menuItem);
-    } else {
-        // Menu found, allow to hide it
-        g_signal_connect(menuItem, "activate",
-                         G_CALLBACK(+[](GtkMenuItem* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
-    }
-
-    // Hide menubar at startup if specified in settings
-    Settings* settings = control->getSettings();
-    if (settings && !settings->isMenubarVisible()) {
-        toggleMenuBar(this);
-    }
 }
 
 auto MainWindow::getLayout() const -> Layout* { return gtk_xournal_get_layout(this->xournal->getWidget()); }
@@ -376,36 +269,6 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
     gtk_drag_finish(dragContext, false, false, time);
 }
 
-void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
-    bool showSidebar = gtk_check_menu_item_get_active(checkmenuitem);
-    Settings* settings = win->control->getSettings();
-    if (settings->isSidebarVisible() == showSidebar) {
-        return;
-    }
-    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
-        settings->setSidebarVisible(showSidebar);
-        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
-        viewMode.showSidebar = showSidebar;
-        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
-    }
-    win->setSidebarVisible(showSidebar);
-}
-
-void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
-    bool showToolbar = gtk_check_menu_item_get_active(checkmenuitem);
-    Settings* settings = win->control->getSettings();
-    if (settings->isToolbarVisible() == showToolbar) {
-        return;
-    }
-    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
-        settings->setToolbarVisible(showToolbar);
-        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
-        viewMode.showToolbar = showToolbar;
-        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
-    }
-    win->setToolbarVisible(showToolbar);
-}
-
 auto MainWindow::getControl() const -> Control* { return control; }
 
 void MainWindow::updateScrollbarSidebarPosition() {
@@ -487,19 +350,7 @@ auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control
     return true;
 }
 
-void MainWindow::setMenubarVisible(bool visible) {
-    GtkWidget* menu = get("mainMenubar");
-    if (visible && !gtk_widget_is_visible(menu)) {
-        toggleMenuBar(this);
-    } else if (!visible && gtk_widget_is_visible(menu)) {
-        toggleMenuBar(this);
-    }
-}
-
 void MainWindow::setSidebarVisible(bool visible) {
-    Settings* settings = control->getSettings();
-
-    settings->setSidebarVisible(visible);
     if (!visible && (control->getSidebar() != nullptr)) {
         saveSidebarSize();
     }
@@ -527,17 +378,20 @@ void MainWindow::setSidebarVisible(bool visible) {
     gtk_widget_set_visible(sidebarWidget.get(), visible);
 
     if (visible) {
-        gtk_paned_set_position(GTK_PANED(panedContainerWidget.get()), settings->getSidebarWidth());
+        gtk_paned_set_position(GTK_PANED(panedContainerWidget.get()), control->getSettings()->getSidebarWidth());
     }
 
-    GtkWidget* w = get("menuViewSidebarVisible");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+    Settings* settings = this->control->getSettings();
+    if (settings->isSidebarVisible() != visible &&
+        settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setSidebarVisible(visible);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showSidebar = visible;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
 }
 
 void MainWindow::setToolbarVisible(bool visible) {
-    Settings* settings = control->getSettings();
-
-    settings->setToolbarVisible(visible);
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         auto* widget = this->toolbarWidgets[i].get();
         if (!visible || (GTK_IS_CONTAINER(widget))) {
@@ -545,8 +399,27 @@ void MainWindow::setToolbarVisible(bool visible) {
         }
     }
 
-    GtkWidget* w = get("menuViewToolbarsVisible");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+    Settings* settings = this->control->getSettings();
+    if (settings->isToolbarVisible() != visible &&
+        settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setToolbarVisible(visible);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showToolbar = visible;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
+}
+
+void MainWindow::setMenubarVisible(bool visible) {
+    gtk_application_window_set_show_menubar(GTK_APPLICATION_WINDOW(this->getWindow()), visible);
+
+    Settings* settings = this->control->getSettings();
+    if (settings->isMenubarVisible() != visible &&
+        settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setMenubarVisible(!visible);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showMenubar = !visible;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
 }
 
 void MainWindow::saveSidebarSize() {

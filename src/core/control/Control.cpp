@@ -340,7 +340,6 @@ void Control::initWindow(MainWindow* win) {
 
     win->setFontButtonFont(settings->getFont());
 
-    win->rebindMenubarAccelerators();
 
     fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
     fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
@@ -1418,8 +1417,8 @@ void Control::addDefaultPage(string pageTemplate) {
 
 void Control::updateDeletePageButton() {
     if (this->win) {
-        GtkWidget* w = this->win->get("menuDeletePage");
-        gtk_widget_set_sensitive(w, this->doc->getPageCount() > 1);
+        // GtkWidget* w = this->win->get("menuDeletePage");
+        // gtk_widget_set_sensitive(w, this->doc->getPageCount() > 1);
     }
 }
 
@@ -1562,14 +1561,14 @@ void Control::updateBackgroundSizeButton() {
     if (!p || this->win == nullptr) {
         return;
     }
-    GtkWidget* paperColor = win->get("menuJournalPaperColor");
-    GtkWidget* pageSize = win->get("menuJournalPaperFormat");
-
-    PageType bg = p->getBackgroundType();
-    gtk_widget_set_sensitive(paperColor, !bg.isSpecial());
-
-    // PDF page size is defined, you cannot change it
-    gtk_widget_set_sensitive(pageSize, !bg.isPdfPage());
+    // GtkWidget* paperColor = win->get("menuJournalPaperColor");
+    // GtkWidget* pageSize = win->get("menuJournalPaperFormat");
+    //
+    // PageType bg = p->getBackgroundType();
+    // gtk_widget_set_sensitive(paperColor, !bg.isSpecial());
+    //
+    // // PDF page size is defined, you cannot change it
+    // gtk_widget_set_sensitive(pageSize, !bg.isPdfPage());
 }
 
 void Control::paperTemplate() {
@@ -1672,8 +1671,8 @@ void Control::setViewPresentationMode(bool enabled) {
     fireEnableAction(ACTION_ZOOM_100, !enabled);
     fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !enabled);
 
-    gtk_widget_set_sensitive(win->get("menuitemLayout"), !enabled);
-    gtk_widget_set_sensitive(win->get("menuitemViewDimensions"), !enabled);
+    // gtk_widget_set_sensitive(win->get("menuitemLayout"), !enabled);
+    // gtk_widget_set_sensitive(win->get("menuitemViewDimensions"), !enabled);
 
     // disable selection of scroll hand tool
     fireEnableAction(ACTION_TOOL_HAND, !enabled);
