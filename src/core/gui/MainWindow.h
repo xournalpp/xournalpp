@@ -23,6 +23,7 @@
 
 #include "control/layer/LayerCtrlListener.h"  // for LayerCtrlListener
 #include "model/Font.h"                       // for XojFont
+#include "util/raii/GObjectSPtr.h"
 
 #include "GladeGui.h"  // for GladeGui
 
@@ -184,7 +185,7 @@ private:
     std::unique_ptr<PdfFloatingToolbox> pdfFloatingToolBox;
 
     // Toolbars
-    ToolMenuHandler* toolbar;
+    std::unique_ptr<ToolMenuHandler> toolbar;
     ToolbarData* selectedToolbar = nullptr;
     bool toolbarIntialized = false;
 
@@ -197,8 +198,8 @@ private:
 
     bool sidebarVisible = true;
 
-    GtkWidget* boxContainerWidget;
-    GtkWidget* panedContainerWidget;
-    GtkWidget* mainContentWidget;
-    GtkWidget* sidebarWidget;
+    xoj::util::WidgetSPtr boxContainerWidget;
+    xoj::util::WidgetSPtr panedContainerWidget;
+    xoj::util::WidgetSPtr mainContentWidget;
+    xoj::util::WidgetSPtr sidebarWidget;
 };
