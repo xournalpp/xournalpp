@@ -1,7 +1,10 @@
 #include "Menubar.h"
 
 #include "control/Control.h"
+#include "gui/GladeSearchpath.h"
 #include "gui/MainWindow.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 #include "PageTypeSubmenu.h"
 #include "PluginsSubmenu.h"
@@ -9,10 +12,32 @@
 #include "ToolbarSelectionSubmenu.h"
 #include "config-features.h"  // for ENABLE_PLUGINS
 
+constexpr auto MENU_XML_FILE = "mainmenubar.xml";
+constexpr auto MENU_ID = "menubar";
+
 Menubar::Menubar() = default;
 Menubar::~Menubar() noexcept = default;
 
-void Menubar::populate(MainWindow* win) {
+void Menubar::populate(const GladeSearchpath* gladeSearchPath, MainWindow* win) {
+    builder.reset(gtk_builder_new(), xoj::util::adopt);
+
+    auto filepath = gladeSearchPath->findFile("", MENU_XML_FILE);
+    GError* error = nullptr;
+
+    if (!gtk_builder_add_from_file(builder.get(), filepath.u8string().c_str(), &error)) {
+        std::string msg = FS(_F("Error loading menubar XML file (try to load \"{1}\")") % filepath.u8string());
+
+        if (error != nullptr) {
+            msg += "\n";
+            msg += error->message;
+            g_error_free(error);
+        }
+        XojMsgBox::showErrorToUser(nullptr, msg);
+        return;
+    }
+
+    menu = G_MENU_MODEL(gtk_builder_get_object(builder.get(), MENU_ID));
+
     Control* ctrl = win->getControl();
 
     recentDocumentsSubmenu = std::make_unique<RecentDocumentsSubmenu>(ctrl, GTK_APPLICATION_WINDOW(win->getWindow()));
@@ -23,12 +48,9 @@ void Menubar::populate(MainWindow* win) {
 #ifdef ENABLE_PLUGINS
     pluginsSubmenu =
             std::make_unique<PluginsSubmenu>(ctrl->getPluginController(), GTK_APPLICATION_WINDOW(win->getWindow()));
-#else
-    // If plugins are disabled - hide the entire menu
-    gtk_widget_hide(win->get("menuitemPlugin"));
 #endif
 
-    forEachSubmenu([&](auto& subm) { subm.addToMenubar(win); });
+    forEachSubmenu([&](auto& subm) { subm.addToMenubar(*this); });
 }
 
 void Menubar::setDisabled(bool disabled) {

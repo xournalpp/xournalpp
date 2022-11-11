@@ -1,55 +1,33 @@
 #include "PluginsSubmenu.h"
 
-#include "gui/MainWindow.h"
 #include "plugin/PluginController.h"
+#include "util/Assert.h"
+#include "util/i18n.h"
 
-static constexpr auto SUBMENU_ID = "menuitemPlugin";
+#include "Menubar.h"
 
-PluginsSubmenu::PluginsSubmenu(PluginController* pluginController, GtkApplicationWindow* win) {
-    sections = pluginController->createMenuSections(win);
+/// position of the plugin submenu, from the end of the menu bar: 1 means just before the last one (About)
+static constexpr int POSITION_IN_MENUBAR_FROM_END = 1;
+
+PluginsSubmenu::PluginsSubmenu(PluginController* pluginController, GtkApplicationWindow* win):
+        submenu(g_menu_new(), xoj::util::adopt) {
+    xoj::util::GObjectSPtr<GMenu> firstSection(g_menu_new(), xoj::util::adopt);
+    g_menu_append(firstSection.get(), _("Plugin Manager"), "win.plugin-manager");
+
+    g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(firstSection.get()));
+
+    for (auto* section: pluginController->createMenuSections(win)) {
+        g_menu_append_section(submenu.get(), nullptr, section);
+    }
 }
 
 void PluginsSubmenu::setDisabled(bool disabled) {
-    if (this->menuItem) {
-        gtk_widget_set_sensitive(this->menuItem.get(), !disabled);
-    }
+    // TODO!!
 }
 
-static void moveAndPrependAllContent(GtkWidget* from, GtkWidget* to) {
-    gtk_menu_shell_prepend(GTK_MENU_SHELL(to), gtk_separator_menu_item_new());
-    struct Data {
-        GtkContainer* c;
-        GtkMenuShell* shell;
-    } data = {GTK_CONTAINER(from), GTK_MENU_SHELL(to)};
-    gtk_container_foreach(
-            data.c,
-            +[](GtkWidget* item, gpointer d) {
-                Data* data = reinterpret_cast<Data*>(d);
-                g_object_ref(item);
-                gtk_container_remove(data->c, item);
-                gtk_menu_shell_prepend(data->shell, item);
-                g_object_unref(item);
-            },
-            &data);
-    gtk_widget_show_all(to);
-}
-
-void PluginsSubmenu::addToMenubar(MainWindow* win) {
-    if (sections.empty()) {
-        return;
-    }
-    GtkWidget* parent = win->get(SUBMENU_ID);
-    GtkWidget* previousMenu = win->get("menuPlugin");
-
-    xoj::util::GObjectSPtr<GMenu> submenu(g_menu_new(), xoj::util::adopt);
-    for (auto* section: sections) {
-        g_menu_append_section(submenu.get(), nullptr, section);
-    }
-
-    this->menuItem.reset(gtk_menu_new_from_model(G_MENU_MODEL(submenu.get())), xoj::util::adopt);
-    // Move everything that was in previousMenu to the new menu
-    // The other way around does not work (for some reason, the menu entries are not connected to the actions)
-    moveAndPrependAllContent(previousMenu, this->menuItem.get());
-
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(parent), this->menuItem.get());
+void PluginsSubmenu::addToMenubar(Menubar& menubar) {
+    GMenuModel* mainmenu = menubar.getModel();
+    int insertionPlace = g_menu_model_get_n_items(mainmenu) - POSITION_IN_MENUBAR_FROM_END;
+    xoj_assert(insertionPlace >= 0);
+    g_menu_insert_submenu(G_MENU(mainmenu), insertionPlace, _("Plugin"), G_MENU_MODEL(submenu.get()));
 }
