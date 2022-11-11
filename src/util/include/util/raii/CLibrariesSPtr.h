@@ -46,6 +46,7 @@ template <typename T, class H>
 class CLibrariesSPtr {
 public:
     CLibrariesSPtr() = default;
+    CLibrariesSPtr(std::nullptr_t) {}
 
     using handler_type = H;
 
