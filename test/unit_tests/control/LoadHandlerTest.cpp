@@ -464,7 +464,7 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
 
     Layer* layer = (*(page->getLayers()))[0];
 
-    EXPECT_EQ(7U, layer->getElements().size());
+    EXPECT_EQ(9U, layer->getElements().size());
 
     Stroke* s1 = (Stroke*)layer->getElements()[0];
     EXPECT_EQ(ELEMENT_STROKE, s1->getType());
@@ -500,4 +500,9 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
 
     testPressureValues(
             6, {0.56, 0.56, 0.58, 0.60, 0.56, 0.40, 0.32, 0.18, 0.12, 0.16, 0.16, 0.20, 0.22, Point::NO_PRESSURE});
+
+    // The stroke is split in 2 bits due to "nan" pressure values at various places
+    testPressureValues(7, {0.20, 0.30, 0.10, Point::NO_PRESSURE});
+
+    testPressureValues(8, {0.25, 0.30, 0.40, Point::NO_PRESSURE});
 }
