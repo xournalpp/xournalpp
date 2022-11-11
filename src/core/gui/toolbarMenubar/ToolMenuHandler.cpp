@@ -255,10 +255,6 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
     } else {
         gtk_widget_show(toolbar);
     }
-
-    if (!this->control->getAudioController()) {
-        hideAudioMenuItems();
-    }
 }
 
 void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it) {
@@ -290,8 +286,8 @@ void ToolMenuHandler::setTmpDisabled(bool disabled) {
         it->setTmpDisabled(disabled);
     }
 
-    GtkWidget* menuViewSidebarVisible = gui->get("menuViewSidebarVisible");
-    gtk_widget_set_sensitive(menuViewSidebarVisible, !disabled);
+    // GtkWidget* menuViewSidebarVisible = gui->get("menuViewSidebarVisible");
+    // gtk_widget_set_sensitive(menuViewSidebarVisible, !disabled);
 }
 
 void ToolMenuHandler::addToolItem(AbstractToolItem* it) { this->toolItems.push_back(it); }
@@ -635,12 +631,10 @@ void ToolMenuHandler::showFontSelectionDlg() { this->fontButton->showFontDialog(
 
 void ToolMenuHandler::setUndoDescription(const string& description) {
     this->undoButton->updateDescription(description);
-    gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditUndo")), description.c_str());
 }
 
 void ToolMenuHandler::setRedoDescription(const string& description) {
     this->redoButton->updateDescription(description);
-    gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")), description.c_str());
 }
 
 auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* { return this->toolPageSpinner->getPageSpinner(); }
@@ -677,10 +671,10 @@ void ToolMenuHandler::disableAudioPlaybackButtons() {
     this->audioSeekBackwardsButton->enable(false);
     this->audioSeekForwardsButton->enable(false);
 
-    gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), false);
-    gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), false);
-    gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), false);
-    gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), false);
+    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), false);
+    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), false);
+    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), false);
+    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), false);
 }
 
 void ToolMenuHandler::enableAudioPlaybackButtons() {
@@ -689,24 +683,15 @@ void ToolMenuHandler::enableAudioPlaybackButtons() {
     this->audioSeekBackwardsButton->enable(true);
     this->audioSeekForwardsButton->enable(true);
 
-    gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), true);
-    gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), true);
-    gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), true);
-    gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), true);
-}
-
-void ToolMenuHandler::hideAudioMenuItems() {
-    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioRecord")));
-    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioPausePlayback")));
-    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioStopPlayback")));
-    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioSeekForwards")));
-    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioSeekBackwards")));
-    gtk_widget_hide(GTK_WIDGET(gui->get("menuToolsPlayObject")));
+    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), true);
+    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), true);
+    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), true);
+    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), true);
 }
 
 void ToolMenuHandler::setAudioPlaybackPaused(bool paused) {
     this->audioPausePlaybackButton->setActive(paused);
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
+    // gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
 }
 
 auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNameHelper.iconName(icon); }

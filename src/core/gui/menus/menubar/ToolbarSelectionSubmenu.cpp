@@ -66,43 +66,12 @@ ToolbarSelectionSubmenu::ToolbarSelectionSubmenu(MainWindow* win, Settings* sett
 
 ToolbarSelectionSubmenu::~ToolbarSelectionSubmenu() = default;
 
-void ToolbarSelectionSubmenu::setDisabled(bool disabled) {
-    g_simple_action_set_enabled(gAction.get(), !disabled);
-    gtk_widget_set_sensitive(menuItem.get(), !disabled);
-}
+void ToolbarSelectionSubmenu::setDisabled(bool disabled) { g_simple_action_set_enabled(gAction.get(), !disabled); }
 
-static void moveAndAppendAllContent(GtkWidget* from, GtkWidget* to) {
-    struct Data {
-        GtkContainer* c;
-        GtkMenuShell* shell;
-    } data = {GTK_CONTAINER(from), GTK_MENU_SHELL(to)};
-    gtk_container_foreach(
-            data.c,
-            +[](GtkWidget* item, gpointer d) {
-                Data* data = reinterpret_cast<Data*>(d);
-                g_object_ref(item);
-                gtk_container_remove(data->c, item);
-                gtk_menu_shell_append(data->shell, item);
-                g_object_unref(item);
-            },
-            &data);
-}
-
-void ToolbarSelectionSubmenu::addToMenubar(MainWindow* win) {
-    GtkWidget* parent = win->get("menuitemViewToolbar");
-    GtkWidget* previousMenu = win->get(SUBMENU_ID);
-
-    xoj::util::GObjectSPtr<GMenu> submenu(g_menu_new(), xoj::util::adopt);
-    g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(this->stockConfigurationsSection.get()));
-    g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(this->customConfigurationsSection.get()));
-
-    this->menuItem.reset(gtk_menu_new_from_model(G_MENU_MODEL(submenu.get())), xoj::util::adopt);
-
-    // Move everything that was in previousMenu to the new menu
-    // The other way around does not work (for some reason, the menu entries are not connected to the actions)
-    moveAndAppendAllContent(previousMenu, this->menuItem.get());
-
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(parent), this->menuItem.get());
+void ToolbarSelectionSubmenu::addToMenubar(Menubar& menubar) {
+    GMenu* submenu = menubar.get<GMenu>(SUBMENU_ID, [](auto* p) { return G_MENU(p); });
+    g_menu_prepend_section(submenu, nullptr, G_MENU_MODEL(customConfigurationsSection.get()));
+    g_menu_prepend_section(submenu, nullptr, G_MENU_MODEL(stockConfigurationsSection.get()));
 }
 
 void ToolbarSelectionSubmenu::update(ToolMenuHandler* toolbarHandler, const ToolbarData* selectedToolbar) {
