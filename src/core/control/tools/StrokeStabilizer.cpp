@@ -1,10 +1,11 @@
 #include "StrokeStabilizer.h"
 
 #include <algorithm>  // for min
-#include <iterator>   // for begin, end
-#include <list>       // for list, operator!=
-#include <numeric>    // for accumulate
-#include <vector>     // for vector
+#include <cfloat>
+#include <iterator>  // for begin, end
+#include <list>      // for list, operator!=
+#include <numeric>   // for accumulate
+#include <vector>    // for vector
 
 #include "control/settings/Settings.h"           // for Settings
 #include "control/tools/StrokeStabilizerEnum.h"  // for Preprocessor, Averag...
@@ -111,6 +112,15 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     const double squaredNormBC = vBC.dx * vBC.dx + vBC.dy * vBC.dy;
     const double normBC = std::sqrt(squaredNormBC);
     const double normAB = vAB.norm();
+
+    if (normBC < DBL_EPSILON) {
+        return;
+    }
+    if (normAB < DBL_EPSILON) {
+        g_warning("Last two points of stroke coincide. ");
+        drawEvent(ev);
+        return;
+    }
 
     /**
      * The first argument of std::min would give a symmetric quadratic spline segment.
