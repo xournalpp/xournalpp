@@ -8,4 +8,4 @@ InputStreamException::InputStreamException(const std::string& message, const std
 
 InputStreamException::~InputStreamException() = default;
 
-auto InputStreamException::what() -> const char* { return this->message.c_str(); }
+const char* InputStreamException::what() const noexcept { return this->message.c_str(); }
