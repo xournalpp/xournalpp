@@ -21,7 +21,7 @@ public:
     ~InputStreamException() override;
 
 public:
-    virtual const char* what();
+    const char* what() const noexcept override;
 
 private:
     std::string message;
