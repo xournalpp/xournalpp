@@ -67,6 +67,8 @@ public:
      */
     void enable(bool enabled) override;
 
+    GtkToolItem* getItem() const;
+
 protected:
     virtual GtkToolItem* newItem() = 0;
 

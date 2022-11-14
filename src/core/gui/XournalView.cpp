@@ -26,6 +26,8 @@
 #include "gui/PdfFloatingToolbox.h"             // for PdfFloatingToolbox
 #include "gui/inputdevices/HandRecognition.h"   // for HandRecognition
 #include "gui/inputdevices/InputContext.h"      // for InputContext
+#include "gui/toolbarMenubar/ColorToolItem.h"   // for ColorToolItem
+#include "gui/toolbarMenubar/ToolMenuHandler.h" // for ToolMenuHandler
 #include "gui/widgets/XournalWidget.h"          // for gtk_xournal_get_layout
 #include "model/Document.h"                     // for Document
 #include "model/Element.h"                      // for Element, ELEMENT_STROKE
@@ -287,6 +289,20 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
+    // Switch color on number key
+    auto &colors = control->getWindow()->getToolMenuHandler()->getColorToolItems();
+    if ((event->keyval >= GDK_KEY_0)
+        && (event->keyval < GDK_KEY_0 + std::min((std::size_t)10,
+                                                 colors.size()))) {
+            std::size_t index = std::min(colors.size() - 1,
+                                         (std::size_t)(9 + (event->keyval - GDK_KEY_0)) % 10);
+            auto colorToolItem = colors.at(index);
+            if (colorToolItem->isEnabled()) {
+                gtk_toggle_tool_button_set_active(
+                    GTK_TOGGLE_TOOL_BUTTON(colorToolItem->getItem()), true);
+            }
+            return true;
+    }
     return false;
 }
 

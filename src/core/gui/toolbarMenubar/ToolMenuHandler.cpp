@@ -610,6 +610,8 @@ auto ToolMenuHandler::isColorInUse(Color color) -> bool {
 
 auto ToolMenuHandler::getToolItems() -> std::vector<AbstractToolItem*>* { return &this->toolItems; }
 
+auto ToolMenuHandler::getColorToolItems() const -> const std::vector<ColorToolItem*>& { return this->toolbarColorItems; }
+
 void ToolMenuHandler::disableAudioPlaybackButtons() {
     setAudioPlaybackPaused(false);
 
