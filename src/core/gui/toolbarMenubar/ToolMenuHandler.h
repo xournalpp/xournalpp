@@ -86,6 +86,7 @@ public:
     ToolbarModel* getModel();
 
     std::vector<AbstractToolItem*>* getToolItems();
+    const std::vector<ColorToolItem*>& getColorToolItems() const;
 
     Control* getControl();
 

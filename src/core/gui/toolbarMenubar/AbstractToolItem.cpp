@@ -20,6 +20,10 @@ AbstractToolItem::~AbstractToolItem() {
     }
 }
 
+auto AbstractToolItem::getItem() const -> GtkToolItem* {
+    return this->item;
+}
+
 void AbstractToolItem::selected(ActionGroup group, ActionType action) {
     if (this->item == nullptr) {
         return;
