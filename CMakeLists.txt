@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 cmake_policy(VERSION ${CMAKE_VERSION})
+## The CMAKE_OSX_DEPLOYMENT_TARGET must be set before project(), so don't move the following line further down.
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version" FORCE)
 
 ## Project related Variables
 ## Also update changelog in debian folder!
