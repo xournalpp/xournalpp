@@ -83,37 +83,40 @@ void Sidebar::askInsertPdfPage(size_t pdfPage) {
                                                      "Would you like to insert this page?\n\n"
                                                      "Tip: You can select Journal → Paper Background → PDF Background "
                                                      "to insert a PDF page.") %
-                                                  (pdfPage + 1)));
+                                                  static_cast<int64_t>(pdfPage + 1)));
 
-    gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 1);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert at end", 3);
+    using Responses = enum { CANCEL = 1, AFTER = 2, END = 3 };
+
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), Responses::CANCEL);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Insert after current page"), Responses::AFTER);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Insert at end"), Responses::END);
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
     int res = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
-    if (res == 1) {
+    if (res == Responses::CANCEL) {
         return;
     }
 
-    int position = 0;
 
     Document* doc = control->getDocument();
 
-    if (res == 2) {
-        position = control->getCurrentPageNo() + 1;
-    } else if (res == 3) {
-        position = doc->getPageCount();
-    }
-
+    size_t position = 0;
     doc->lock();
+    if (res == Responses::AFTER) {
+        position = control->getCurrentPageNo() + 1;
+    } else if (res == Responses::END) {
+        position = doc->getPageCount();
+    } else {
+        assert(false && "unhandled case");
+    }
     XojPdfPageSPtr pdf = doc->getPdfPage(pdfPage);
     doc->unlock();
 
     if (pdf) {
         auto page = std::make_shared<XojPage>(pdf->getWidth(), pdf->getHeight());
         page->setBackgroundPdfPageNr(pdfPage);
-        control->insertPage(std::move(page), position);
+        control->insertPage(page, position);
     }
 }
 
