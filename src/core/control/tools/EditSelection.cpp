@@ -1037,8 +1037,10 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
     // bottom right
     drawAnchorRect(cr, x + width, y + height, zoom);
 
-
-    drawDeleteRect(cr, std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom, y, zoom);
+    ToolHandler* toolHandler = view->getXournal()->getControl()->getToolHandler();
+    if (toolHandler->getToolType() != TOOL_HAND) {
+        drawDeleteRect(cr, std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom, y, zoom);
+    }
 }
 
 void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom) {
