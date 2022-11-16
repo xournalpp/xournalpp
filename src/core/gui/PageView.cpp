@@ -1057,6 +1057,12 @@ void XojPageView::elementChanged(Element* elem) {
     }
 }
 
+void XojPageView::elementsChanged(const std::vector<Element*>& elements, const Range& range) {
+    if (!range.empty()) {
+        rerenderRange(range);
+    }
+}
+
 void XojPageView::showFloatingToolbox(const PositionInputData& pos) {
     Control* control = xournal->getControl();
 

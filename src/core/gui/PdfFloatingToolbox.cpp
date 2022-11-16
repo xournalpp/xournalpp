@@ -85,22 +85,22 @@ auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widg
         allocation->width = natural.width;
         allocation->height = natural.height;
 
-            // Make sure the "pdfFloatingToolbox" is fully displayed.
-            const int gap = 5;
+        // Make sure the "pdfFloatingToolbox" is fully displayed.
+        const int gap = 5;
 
-            // By default, we show the toolbox below and to the right of the selected text.
-            // If the toolbox will go out of the window, then we'll flip the corresponding directions.
+        // By default, we show the toolbox below and to the right of the selected text.
+        // If the toolbox will go out of the window, then we'll flip the corresponding directions.
 
-            GtkAllocation windowAlloc{};
-            gtk_widget_get_allocation(GTK_WIDGET(overlay), &windowAlloc);
+        GtkAllocation windowAlloc{};
+        gtk_widget_get_allocation(GTK_WIDGET(overlay), &windowAlloc);
 
-            bool rightOK = self->position.x + allocation->width + gap <= windowAlloc.width;
-            bool bottomOK = self->position.y + allocation->height + gap <= windowAlloc.height;
+        bool rightOK = self->position.x + allocation->width + gap <= windowAlloc.width;
+        bool bottomOK = self->position.y + allocation->height + gap <= windowAlloc.height;
 
-            allocation->x = rightOK ? self->position.x + gap : self->position.x - allocation->width - gap;
-            allocation->y = bottomOK ? self->position.y + gap : self->position.y - allocation->height - gap;
+        allocation->x = rightOK ? self->position.x + gap : self->position.x - allocation->width - gap;
+        allocation->y = bottomOK ? self->position.y + gap : self->position.y - allocation->height - gap;
 
-            return true;
+        return true;
     }
 
     return false;
@@ -172,7 +172,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
     auto color = theMainWindow->getXournal()->getControl()->getToolHandler()->getColor();
 
     Range dirtyRange;
-    std::vector<Stroke*> strokes;
+    std::vector<Element*> strokes;
     for (XojPdfRectangle rect: textRects) {
         const double topOfLine = std::min(rect.y1, rect.y2);
         const double middleOfLine = (rect.y1 + rect.y2) / 2;
@@ -202,14 +202,14 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
     }
 
     doc->lock();
-    for (Stroke* s: strokes) {
+    for (auto* s: strokes) {
         layer->addElement(s);
     }
     doc->unlock();
-    page->fireRangeChanged(dirtyRange);
+    page->fireElementsChanged(strokes, dirtyRange);
 
     auto undoAct = std::make_unique<GroupUndoAction>();
-    for (Stroke* stroke: strokes) {
+    for (auto* stroke: strokes) {
         undoAct->addAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
     }
     control->getUndoRedoHandler()->addUndoAction(std::move(undoAct));

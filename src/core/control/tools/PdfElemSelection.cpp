@@ -72,7 +72,7 @@ XojPdfPageSelectionStyle PdfElemSelection::selectionStyleForToolType(ToolType ty
 
 Range PdfElemSelection::getRegionBbox() const {
     if (this->selectedTextRegion && cairo_region_num_rectangles(this->selectedTextRegion.get()) > 0) {
-        cairo_rectangle_int_t bbox;
+        cairo_rectangle_int_t bbox{};
         cairo_region_get_extents(this->selectedTextRegion.get(), &bbox);
         return Range(bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
     }

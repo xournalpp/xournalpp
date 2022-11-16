@@ -24,9 +24,6 @@
 #include "PageHandler.h"      // for PageHandler
 #include "PageType.h"         // for PageType
 
-template <class T>
-using optional = std::optional<T>;
-
 class XojPage: public PageHandler {
 public:
     XojPage(double width, double height);
@@ -129,7 +126,7 @@ private:
     /**
      * Background name
      */
-    optional<std::string> backgroundName;
+    std::optional<std::string> backgroundName;
 
     // Allow LoadHandler to add layers directly
     friend class LoadHandler;

@@ -72,7 +72,7 @@ public:
     /// Returns the selection style corresponding to the given tool type.
     static XojPdfPageSelectionStyle selectionStyleForToolType(ToolType type);
 
-    const std::shared_ptr<xoj::util::DispatchPool<xoj::view::PdfElementSelectionView>>& getViewPool() const {
+    inline const std::shared_ptr<xoj::util::DispatchPool<xoj::view::PdfElementSelectionView>>& getViewPool() const {
         return viewPool;
     }
 

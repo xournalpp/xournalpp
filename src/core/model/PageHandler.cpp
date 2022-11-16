@@ -29,6 +29,12 @@ void PageHandler::fireElementChanged(Element* elem) {
     for (PageListener* pl: this->listeners) { pl->elementChanged(elem); }
 }
 
+void PageHandler::fireElementsChanged(const std::vector<Element*>& elements, Range range) {
+    for (PageListener* pl: this->listeners) {
+        pl->elementsChanged(elements, range);
+    }
+}
+
 void PageHandler::firePageChanged() {
     for (PageListener* pl: this->listeners) { pl->pageChanged(); }
 }
