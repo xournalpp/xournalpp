@@ -16,7 +16,7 @@
 class ObjectInputStream;
 class ObjectOutputStream;
 
-extern const char* XML_VERSION_STR;
+const static char* const XML_VERSION_STR = "XojStrm1:";
 
 class Serializable {
 public:
