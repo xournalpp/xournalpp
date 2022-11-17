@@ -12,9 +12,7 @@
 #include "util/serializing/HexObjectEncoding.h"
 #include "util/serializing/ObjectInputStream.h"
 #include "util/serializing/ObjectOutputStream.h"
-
-extern const char* XML_VERSION_STR;
-
+#include "util/serializing/Serializable.h"
 
 template <typename T, unsigned N>
 std::string serializeData(const std::array<T, N>& data) {
