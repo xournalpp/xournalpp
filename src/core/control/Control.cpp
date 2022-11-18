@@ -878,6 +878,18 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             setFullscreen(enabled);
             break;
 
+        case ACTION_TOGGLE_PAIRS_PARITY: {
+            int pairsOffset = settings->getPairsOffset();
+            bool pairsEnabled = settings->isShowPairedPages();
+            if (pairsOffset % 2 == 0) {
+                setPairsOffset(pairsOffset + 1);
+            } else {
+                setPairsOffset(pairsOffset - 1);
+            };
+            setViewPairedPages(pairsEnabled);
+            break;
+        }
+
         case ACTION_SET_COLUMNS_1:
             setViewColumns(1);
             break;
