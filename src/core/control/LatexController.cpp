@@ -114,10 +114,9 @@ void LatexController::findSelectedTexElement() {
     if (this->selectedElem) {
         // this will get the position of the Latex properly
         EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
-        // when latex is edited by double-clicking on it the selection is updated to the double clicked latex element
-        // therefore we can assume there's exactly one element in the selection
-        this->posx = theSelection->getElements()[0]->getX();
-        this->posy = theSelection->getElements()[0]->getY();
+        xoj::util::Rectangle<double> rect = theSelection->getSnappedBounds();
+        this->posx = rect.x;
+        this->posy = rect.y;
 
         if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
             this->initialTex = img->getText();
