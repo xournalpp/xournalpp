@@ -676,33 +676,37 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         }
     }
 
+    ToolType toolType = control->getToolHandler()->getActiveTool()->getToolType();
+    if (xoj::tool::isPdfSelectionTool(toolType)) {
+        const double zoom = xournal->getZoom();
+        // Attempt PDF selection
+        auto& pdfDoc = this->xournal->getDocument()->getPdfDocument();
+        if (this->getPage()->getPdfPageNr() != npos) {
+            auto page = pdfDoc.getPage(this->getPage()->getPdfPageNr());
+
+            Layer* layer = this->page->getSelectedLayer();
+            const Layer::Index layerId = this->page->getSelectedLayerId();
+            const bool isBackgroundLayer = (layerId == 0);
+
+            const double pageX = pos.x / zoom;
+            const double pageY = pos.y / zoom;
+
+            // If there's nothing to select (e.g. the background layer)
+            // or we're holding alt...
+            if (isBackgroundLayer || !layer->isAnnotated() || pos.isAltDown()) {
+                displayLinkPopover(page, pageX, pageY);
+            }
+        }
+    }
+
     if (this->selection) {
         if (this->selection->finalize(this->page)) {
             xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection.get(), this));
         } else {
-            double zoom = xournal->getZoom();
+            const double zoom = xournal->getZoom();
             if (this->selection->userTapped(zoom)) {
-                Layer* layer = this->page->getSelectedLayer();
-                const Layer::Index layerId = this->page->getSelectedLayerId();
-                const bool isBackgroundLayer = (layerId == 0);
-
-                // If there's nothing to select (e.g. the background layer)
-                // or we're holding alt...
-                if (isBackgroundLayer || !layer->isAnnotated() || pos.isAltDown()) {
-                    // Attempt PDF selection
-                    auto& pdfDoc = this->xournal->getDocument()->getPdfDocument();
-                    if (this->getPage()->getPdfPageNr() != npos) {
-                        auto page = pdfDoc.getPage(this->getPage()->getPdfPageNr());
-
-                        const double pageX = pos.x / zoom;
-                        const double pageY = pos.y / zoom;
-
-                        displayLinkPopover(page, pageX, pageY);
-                    }
-                } else {
-                    SelectObject select(this);
-                    select.at(pos.x / zoom, pos.y / zoom);
-                }
+                SelectObject select(this);
+                select.at(pos.x / zoom, pos.y / zoom);
             }
         }
         this->selection.reset();
