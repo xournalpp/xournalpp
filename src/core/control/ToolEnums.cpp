@@ -244,3 +244,8 @@ auto eraserTypeFromString(const std::string& type) -> EraserType {
     }
     return ERASER_TYPE_NONE;
 }
+
+
+bool xoj::tool::isPdfSelectionTool(ToolType toolType) {
+    return toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT;
+}

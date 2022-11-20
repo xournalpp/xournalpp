@@ -108,3 +108,8 @@ enum ToolCapabilities : unsigned int {
     TOOL_CAP_SPLINE = 1 << 11,
     TOOL_CAP_LINE_STYLE = 1 << 12
 };
+
+namespace xoj::tool {
+/// \return Whether the provided tool is used for selecting objects on a PDF.
+bool isPdfSelectionTool(ToolType toolType);
+}  // namespace xoj::tool
