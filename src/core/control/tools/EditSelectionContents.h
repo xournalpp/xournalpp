@@ -155,8 +155,6 @@ public:
      */
     xoj::util::Rectangle<double> getOriginalBounds() const;
 
-    UndoAction* copySelection(PageRef page, XojPageView* view, double x, double y);
-
     const static struct {
         bool operator()(std::pair<Element*, Element::Index> p1, std::pair<Element*, Element::Index> p2) {
             return p1.second < p2.second;

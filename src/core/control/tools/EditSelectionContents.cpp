@@ -316,7 +316,9 @@ void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo) {
     // and owned by the selection, therefore the layer
     // doesn't know the index anymore
     int index = layer->getElements().size();
-    for (Element* e: this->selected) { undo->addElement(layer, e, index); }
+    for (Element* e: this->selected) {
+        undo->addElement(layer, e, index);
+    }
 
     this->selected.clear();
     this->insertOrder.clear();
@@ -392,7 +394,9 @@ auto EditSelectionContents::getOriginalX() const -> double { return this->origin
 
 auto EditSelectionContents::getOriginalY() const -> double { return this->originalBounds.y; }
 
-auto EditSelectionContents::getOriginalBounds() const -> Rectangle<double> { return Rectangle<double>{this->originalBounds}; }
+auto EditSelectionContents::getOriginalBounds() const -> Rectangle<double> {
+    return Rectangle<double>{this->originalBounds};
+}
 
 auto EditSelectionContents::getSourceView() -> XojPageView* { return this->sourceView; }
 
@@ -539,25 +543,6 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
     cairo_paint(cr);
 
     cairo_restore(cr);
-}
-
-auto EditSelectionContents::copySelection(PageRef page, XojPageView* view, double x, double y) -> UndoAction* {
-    Layer* layer = page->getSelectedLayer();
-
-    vector<Element*> new_elems;
-
-    for (Element* e: getElements()) {
-        Element* ec = e->clone();
-
-        ec->move(x - this->originalBounds.x, y - this->originalBounds.y);
-
-        layer->addElement(ec);
-        new_elems.push_back(ec);
-    }
-
-    view->rerenderPage();
-
-    return new InsertsUndoAction(page, layer, new_elems);
 }
 
 void EditSelectionContents::serialize(ObjectOutputStream& out) const {
