@@ -114,8 +114,9 @@ void LatexController::findSelectedTexElement() {
     if (this->selectedElem) {
         // this will get the position of the Latex properly
         EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
-        this->posx = theSelection->getXOnView();
-        this->posy = theSelection->getYOnView();
+        xoj::util::Rectangle<double> rect = theSelection->getSnappedBounds();
+        this->posx = rect.x;
+        this->posy = rect.y;
 
         if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
             this->initialTex = img->getText();
