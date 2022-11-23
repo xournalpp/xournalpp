@@ -21,12 +21,12 @@
 #include "control/AudioController.h"                // for AudioController
 #include "control/Control.h"                        // for Control
 #include "control/ScrollHandler.h"                  // for ScrollHandler
-#include "control/layer/LayerController.h"          // for LayerControl
 #include "control/SearchControl.h"                  // for SearchControl
 #include "control/Tool.h"                           // for Tool
 #include "control/ToolEnums.h"                      // for DRAWING_TYPE_SPLINE
 #include "control/ToolHandler.h"                    // for ToolHandler
 #include "control/jobs/XournalScheduler.h"          // for XournalScheduler
+#include "control/layer/LayerController.h"          // for LayerControl
 #include "control/settings/Settings.h"              // for Settings
 #include "control/tools/ArrowHandler.h"             // for ArrowHandler
 #include "control/tools/CoordinateSystemHandler.h"  // for CoordinateSystemH...
@@ -78,6 +78,7 @@
 #include "view/overlays/PdfElementSelectionView.h"  // for PdfElementSelecti...
 #include "view/overlays/SearchResultView.h"         // for SearchResultView
 #include "view/overlays/SelectionView.h"            // for SelectionView
+#include "view/overlays/TextEditionView.h"          // for TextEditionView
 
 #include "PageViewFindObjectHelper.h"  // for SelectObject, Pla...
 #include "RepaintHandler.h"            // for RepaintHandler
@@ -170,44 +171,9 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t* occurrences,
 }
 
 void XojPageView::endText() {
-    if (!this->textEditor) {
-        return;
+    if (this->textEditor) {
+        this->textEditor.reset();
     }
-    Text* txt = this->textEditor->getText();
-    Layer* layer = this->page->getSelectedLayer();
-    UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
-
-    // Text deleted
-    if (txt->getText().empty()) {
-        // old element
-        auto pos = layer->indexOf(txt);
-        if (pos != -1) {
-            auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
-            layer->removeElement(txt, false);
-            eraseDeleteUndoAction->addElement(layer, txt, pos);
-            undo->addUndoAction(std::move(eraseDeleteUndoAction));
-        }
-    } else {
-        // new element
-        if (layer->indexOf(txt) == -1) {
-            undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, txt));
-            layer->addElement(txt);
-            this->textEditor->textCopyed();
-        }
-        // or if the file was saved and reopened
-        // and/or if we click away from the text window
-        else {
-            // TextUndoAction does not work because the textEdit object is destroyed
-            // after endText() so we need to instead copy the information between an
-            // old and new element that we can push and pop to recover.
-            undo->addUndoAction(std::make_unique<TextBoxUndoAction>(page, layer, txt, this->oldtext));
-        }
-    }
-
-    delete this->textEditor;
-    this->textEditor = nullptr;
-    this->xournal->getControl()->getWindow()->setFontButtonFont(settings->getFont());
-    this->rerenderPage();
 }
 
 void XojPageView::startText(double x, double y) {
@@ -215,7 +181,7 @@ void XojPageView::startText(double x, double y) {
     this->xournal->getControl()->getSearchBar()->showSearchBar(false);
 
     if (this->textEditor != nullptr) {
-        Text* text = this->textEditor->getText();
+        const Text* text = this->textEditor->getTextElement();
         GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
         if (!text->intersectsArea(&matchRect)) {
             endText();
@@ -225,66 +191,8 @@ void XojPageView::startText(double x, double y) {
     }
 
     if (this->textEditor == nullptr) {
-        // Is there already a textfield?
-        Text* text = nullptr;
-
-        for (Element* e: this->page->getSelectedLayer()->getElements()) {
-            if (e->getType() == ELEMENT_TEXT) {
-                GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
-                if (e->intersectsArea(&matchRect)) {
-                    text = dynamic_cast<Text*>(e);
-                    break;
-                }
-            }
-        }
-
-        bool ownText = false;
-        if (text == nullptr) {
-            ToolHandler* h = xournal->getControl()->getToolHandler();
-            ownText = true;
-            text = new Text();
-            text->setColor(h->getColor());
-            text->setFont(settings->getFont());
-            text->setX(x);
-            text->setY(y - text->getElementHeight() / 2);
-
-            if (xournal->getControl()->getAudioController()->isRecording()) {
-                fs::path audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
-                size_t sttime = xournal->getControl()->getAudioController()->getStartTime();
-                size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
-                text->setTimestamp(milliseconds);
-                text->setAudioFilename(audioFilename);
-            }
-        } else {
-
-            // We can try to add an undo action here. The initial text shows up in this
-            // textEditor element.
-            this->oldtext = text;
-            // text = new Text(*oldtext);
-            // need to clone the old text so that references still work properly.
-            // cloning breaks things a little. do it manually
-            text = new Text();
-            text->setX(oldtext->getX());
-            text->setY(oldtext->getY());
-            text->setColor(oldtext->getColor());
-            text->setFont(oldtext->getFont());
-            this->xournal->getControl()->getWindow()->setFontButtonFont(oldtext->getFont());
-            text->setText(oldtext->getText());
-            text->setTimestamp(oldtext->getTimestamp());
-            text->setAudioFilename(oldtext->getAudioFilename());
-
-            Layer* layer = this->page->getSelectedLayer();
-            layer->removeElement(this->oldtext, false);
-            layer->addElement(text);
-            // perform the old swap onto the new text drawn.
-        }
-
-        this->textEditor = new TextEditor(this, xournal->getWidget(), text, ownText);
-        if (!ownText) {
-            this->textEditor->mousePressed(x - text->getX(), y - text->getY());
-        }
-
-        this->rerenderElement(text);
+        this->textEditor = std::make_unique<TextEditor>(xournal->getControl(), page, xournal->getWidget(), x, y);
+        this->overlayViews.emplace_back(std::make_unique<xoj::view::TextEditionView>(this->textEditor.get(), this));
     }
 }
 
@@ -617,7 +525,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         XournalppCursor* cursor = getXournal()->getCursor();
         cursor->setInvisible(false);
 
-        Text* text = this->textEditor->getText();
+        const Text* text = this->textEditor->getTextElement();
         this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
@@ -853,7 +761,8 @@ void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
 
 void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg) {
-    if (v->isViewOf(this->inputHandler) || v->isViewOf(this->verticalSpace.get())) {
+    if (v->isViewOf(this->inputHandler) || v->isViewOf(this->verticalSpace.get()) ||
+        v->isViewOf(this->textEditor.get())) {
         // Draw the inputHandler's view onto the page buffer.
         std::lock_guard lock(this->drawingMutex);
         v->drawWithoutDrawingAids(buffer.get());
@@ -886,6 +795,11 @@ Range XojPageView::getVisiblePart() const {
 double XojPageView::getWidth() const { return page->getWidth(); }
 
 double XojPageView::getHeight() const { return page->getHeight(); }
+
+auto XojPageView::toWindowCoordinates(const xoj::util::Rectangle<double>& r) const -> xoj::util::Rectangle<double> {
+    double zoom = this->getZoom();
+    return {r.x * zoom + this->getX(), r.y * zoom + this->getY(), r.width * zoom, r.height * zoom};
+}
 
 void XojPageView::rerenderRect(double x, double y, double width, double height) {
     if (this->rerenderComplete) {
@@ -1092,15 +1006,11 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
        // restoring the state of cr ensures this->buffer.surface is not longer referenced as the source in cr.
 
     /**
-     * All the tool painters below follow the assumption:
+     * All the overlay painters below follow the assumption:
      *  * The given cairo context is in page coordinates: no further scaling/offset is ever required.
      *
      * To anyone adding another painter here: please keep this assumption true
      */
-    if (this->textEditor) {
-        this->textEditor->paint(cr, zoom);
-    }
-
     for (const auto& v: this->overlayViews) {
         v->draw(cr);
     }
@@ -1118,7 +1028,7 @@ auto XojPageView::hasBuffer() const -> bool { return this->buffer.isInitialized(
 
 auto XojPageView::getSelectionColor() -> GdkRGBA { return Util::rgb_to_GdkRGBA(settings->getSelectionColor()); }
 
-auto XojPageView::getTextEditor() -> TextEditor* { return textEditor; }
+auto XojPageView::getTextEditor() -> TextEditor* { return textEditor.get(); }
 
 auto XojPageView::getX() const -> int { return this->dispX; }
 

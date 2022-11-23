@@ -13,63 +13,89 @@
 
 #include <string>  // for string
 
-#include <gdk/gdk.h>           // for GdkEventKey
-#include <glib.h>              // for gint, gboolean, gchar
-#include <gtk/gtk.h>           // for GtkIMContext, GtkTextIter, GtkWidget
-#include <pango/pangocairo.h>  // for cairo_t, PangoAttrList, PangoLayout
+#include <gdk/gdk.h>      // for GdkEventKey
+#include <glib.h>         // for gint, gboolean, gchar
+#include <gtk/gtk.h>      // for GtkIMContext, GtkTextIter, GtkWidget
+#include <pango/pango.h>  // for PangoAttrList, PangoLayout
 
-#include "util/Color.h"  // for Color
+#include "model/OverlayBase.h"
+#include "model/PageRef.h"  // for PageRef
+#include "util/Color.h"     // for Color
 #include "util/Range.h"
 #include "util/raii/CStringWrapper.h"
 #include "util/raii/GObjectSPtr.h"
 #include "util/raii/PangoSPtr.h"
 
-class XojPageView;
 class Text;
 class XojFont;
+class Control;
+class TextEditorCallbacks;
 
 namespace xoj::util {
 template <class T>
-class Rectangle;
+class DispatchPool;
 };
 
-class TextEditor {
+namespace xoj::view {
+class TextEditionView;
+};
+
+class TextEditor: public OverlayBase {
 public:
-    TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText);
+    TextEditor(Control* control, const PageRef& page, GtkWidget* xournalWidget, double x, double y);
     virtual ~TextEditor();
 
     /** Represents the different kinds of text selection */
     enum class SelectType { WORD, PARAGRAPH, ALL };
 
-    void paint(cairo_t* cr, double zoom);
-
     bool onKeyPressEvent(GdkEventKey* event);
     bool onKeyReleaseEvent(GdkEventKey* event);
-
-    void toggleOverwrite();
-    void selectAtCursor(TextEditor::SelectType ty);
-    void toggleBoldFace();
-    void increaseFontSize();
-    void decreaseFontSize();
-    void moveCursor(GtkMovementStep step, int count, bool extendSelection);
-    void deleteFromCursor(GtkDeleteType type, int count);
-    void backspace();
-    void copyToClipboard() const;
-    void cutToClipboard();
-    void pasteFromClipboard();
-    std::string getSelection() const;
-
-    Text* getText() const;
-    void textCopyed();
-
     void mousePressed(double x, double y);
     void mouseMoved(double x, double y);
     void mouseReleased();
 
-    void replaceBufferContent(const std::string& text);
+    /**
+     * @brief Returns a pointer to the edited Text element.
+     * Warning: The content of the Text element does not need to be up to date with the buffer's content
+     * Use `updateTextElementContent` to sync them
+     */
+    Text* getTextElement() const;
+
+    bool bufferEmpty() const;
+
     void setFont(XojFont font);
-    void afterFontChange();
     void setColor(Color color);
+
+    PangoLayout* getUpToDateLayout() const;
+
+    const std::shared_ptr<xoj::util::DispatchPool<xoj::view::TextEditionView>>& getViewPool() const;
+
+    Color getSelectionColor() const;
+
+    const Range& getCursorBox() const;
+    const Range& getContentBoundingBox() const;
+
+    bool isCursorVisible() const;
+
+    void deleteFromCursor(GtkDeleteType type, int count);
+    void copyToClipboard() const;
+    void cutToClipboard();
+    void pasteFromClipboard();
+    void selectAtCursor(TextEditor::SelectType ty);
+
+private:
+    void toggleOverwrite();
+    void toggleBoldFace();
+    void increaseFontSize();
+    void decreaseFontSize();
+    void moveCursor(GtkMovementStep step, int count, bool extendSelection);
+    void backspace();
+
+    void afterFontChange();
+    void replaceBufferContent(const std::string& text);
+
+    void finalizeEdition();
+    void initializeEditionAt(double x, double y);
 
 private:
     /**
@@ -79,17 +105,21 @@ private:
      */
     void setTextToPangoLayout(PangoLayout* pl) const;
 
+    void setSelectionAttributesToPangoLayout(PangoLayout* pl) const;
+
     Range computeBoundingBox() const;
     void repaintEditor(bool sizeChanged = true);
 
     /**
-     * @brief Draws the cursor
+     * @brief Compute the cursor's location
      * @return The bounding box of the cursor, in TextBox coordinates (i.e relative to the text box upper left corner)
      *          The bounding box is returned even if the cursor is currently not visible (blinking...)
+     * WARNING: The returned box may have width == 0 (if in insertion mode or at the end of a line). In this case, the
+     *          width of the displayed cursor should be decided by the view class (depending on zoom for instance)
      */
-    xoj::util::Rectangle<double> drawCursor(cairo_t* cr, double zoom) const;
+    Range computeCursorBox() const;
 
-    void repaintCursor();
+    void repaintCursorAfterChange();
     void resetImContext();
 
     static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te);
@@ -108,16 +138,35 @@ private:
     void markPos(double x, double y, bool extendSelection);
 
     void contentsChanged(bool forceCreateUndoAction = false);
+    void updateCursorBox();
+
+    void updateTextElementContent();
 
 private:
-    XojPageView* gui;
-    GtkWidget* xournalWidget;
-    Text* text;
+    Control* control;
+    PageRef page;
 
+    /**
+     * @brief Pointer to the main window's widget. Used for fetching settings and clipboards, and ringing the bell.
+     */
+    GtkWidget* xournalWidget;
+
+    /**
+     * @brief Text element under edition, clone of the original Text element (if any)
+     */
+    std::unique_ptr<Text> textElement;
+    Text* originalTextElement;
+
+    /**
+     * @brief Invisible widget, used for signal catching
+     */
     xoj::util::GObjectSPtr<GtkWidget> textWidget;
     xoj::util::GObjectSPtr<GtkIMContext> imContext;
     xoj::util::GObjectSPtr<GtkTextBuffer> buffer;
     xoj::util::GObjectSPtr<PangoLayout> layout;
+
+    enum class LayoutStatus { UP_TO_DATE, NEEDS_ATTRIBUTES_UPDATE, NEEDS_COMPLETE_UPDATE };
+    mutable LayoutStatus layoutStatus;
 
     // InputMethod preedit data
     int preeditCursor;
@@ -131,6 +180,9 @@ private:
      * we need to repaint the union of the current and previous bboxes.
      */
     Range previousBoundingBox;
+    Range cursorBox;
+
+    std::shared_ptr<xoj::util::DispatchPool<xoj::view::TextEditionView>> viewPool;
 
     /**
      * @brief Coordinate of the virtual cursor, in Pango coordinates.
@@ -167,18 +219,15 @@ private:
     } blinkTimer;
     bool cursorBlink = true;
 
-    bool ownText = false;
     bool needImReset = false;
     bool mouseDown = false;
     bool cursorOverwrite = false;
     bool cursorVisible = false;
 
-    // Padding between the text logical box and the frame
-    static constexpr int PADDING_IN_PIXELS = 5;
-    // Width of the lines making the frame
-    static constexpr int BORDER_WIDTH_IN_PIXELS = 1;
     // In a blinking period, how much time is the cursor visible vs not visible
     static constexpr unsigned int CURSOR_ON_MULTIPLIER = 2;
     static constexpr unsigned int CURSOR_OFF_MULTIPLIER = 1;
     static constexpr unsigned int CURSOR_DIVIDER = CURSOR_ON_MULTIPLIER + CURSOR_OFF_MULTIPLIER;
+
+    friend class TextEditorCallbacks;
 };

@@ -87,6 +87,8 @@ public:
     double getHeight() const override;
     // End of Repaintable interface
 
+    xoj::util::Rectangle<double> toWindowCoordinates(const xoj::util::Rectangle<double>& r) const override;
+
 
     void setSelected(bool selected);
 
@@ -256,9 +258,9 @@ private:
     std::unique_ptr<Selection> selection;
 
     /**
-     * The text editor View
+     * The text editor
      */
-    TextEditor* textEditor = nullptr;
+    std::unique_ptr<TextEditor> textEditor;
 
     /**
      * For keeping old text changes to undo!
