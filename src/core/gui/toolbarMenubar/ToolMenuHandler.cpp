@@ -8,6 +8,7 @@
 #include "control/pagetype/PageTypeMenu.h"           // for PageTypeMenu
 #include "control/settings/Settings.h"               // for Settings
 #include "gui/GladeGui.h"                            // for GladeGui
+#include "gui/GladeSearchpath.h"                     // for GladeSearchpath
 #include "gui/ToolitemDragDrop.h"                    // for ToolitemDragDrop
 #include "gui/toolbarMenubar/AbstractToolItem.h"     // for AbstractToolItem
 #include "gui/toolbarMenubar/ColorToolItem.h"        // for ColorToolItem
@@ -18,7 +19,9 @@
 #include "gui/toolbarMenubar/model/ToolbarModel.h"   // for ToolbarModel
 #include "model/Font.h"                              // for XojFont
 #include "util/NamedColor.h"                         // for NamedColor
+#include "util/PathUtil.h"
 #include "util/StringUtils.h"                        // for StringUtils
+#include "util/XojMsgBox.h"
 #include "util/i18n.h"                               // for _
 
 #include "FontButton.h"              // for FontButton
@@ -30,19 +33,22 @@
 #include "ToolPdfCombocontrol.h"     // for ToolPdfCombocontrol
 #include "ToolSelectCombocontrol.h"  // for ToolSelectComboc...
 #include "ToolZoomSlider.h"          // for ToolZoomSlider
+#include "config-dev.h"
 
 using std::string;
 
-ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent):
-        parent(parent),
+ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui):
+        parent(GTK_WINDOW(gui->getWindow())),
         control(control),
         listener(control),
         zoom(control->getZoomControl()),
         gui(gui),
         toolHandler(control->getToolHandler()),
-        iconNameHelper(control->getSettings()) {
+        tbModel(std::make_unique<ToolbarModel>()),
+        pageBackgroundChangeController(control->getPageBackgroundChangeController()),
+        iconNameHelper(control->getSettings()) {}
 
-    this->tbModel = new ToolbarModel();
+void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
     // still owned by Control
     this->newPageType = control->getNewPageType();
     this->newPageType->addApplyBackgroundButton(control->getPageBackgroundChangeController(), false,
@@ -52,12 +58,28 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* par
     this->pageBackgroundChangeController = control->getPageBackgroundChangeController();
 
     initToolItems();
+
+    auto file = gladeSearchPath->findFile("", "toolbar.ini");
+    if (!tbModel->parse(file, true)) {
+
+        string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
+                           "No Toolbars will be available") %
+                        file.u8string());
+        XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
+    }
+
+    file = Util::getConfigFile(TOOLBAR_CONFIG);
+    if (fs::exists(file)) {
+        if (!tbModel->parse(file, false)) {
+            string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
+                               "Toolbars will not be available") %
+                            file.u8string());
+            XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
+        }
+    }
 }
 
 ToolMenuHandler::~ToolMenuHandler() {
-    delete this->tbModel;
-    this->tbModel = nullptr;
-
     // Owned by control
     this->pageBackgroundChangeController = nullptr;
 
@@ -604,7 +626,7 @@ void ToolMenuHandler::setPageInfo(const size_t pagecount, const size_t pdfpage) 
     this->toolPageSpinner->setPageInfo(pagecount, pdfpage);
 }
 
-auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel; }
+auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel.get(); }
 
 auto ToolMenuHandler::getControl() -> Control* { return this->control; }
 

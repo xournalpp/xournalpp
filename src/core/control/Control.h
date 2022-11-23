@@ -33,7 +33,6 @@
 
 #include "Actions.h"           // for ActionHandler
 #include "ClipboardHandler.h"  // for ClipboardListener
-#include "RecentManager.h"     // for RecentManagerListener
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
 
@@ -69,7 +68,6 @@ class Control:
         public ActionHandler,
         public ToolListener,
         public DocumentHandler,
-        public RecentManagerListener,
         public UndoRedoListener,
         public ClipboardListener,
         public ProgressListener {
@@ -151,8 +149,6 @@ public:
     void selectDefaultTool();
 
     void updatePageNumbers(size_t page, size_t pdfPage);
-
-    void fileOpened(fs::path const& path) override;
 
     /**
      * Save current state (selected tool etc.)
@@ -261,7 +257,6 @@ public:
     void setClipboardHandlerSelection(EditSelection* selection);
 
     MetadataManager* getMetadataManager() const;
-    RecentManager* getRecentManager() const;
     Settings* getSettings() const;
     ToolHandler* getToolHandler() const;
     ZoomControl* getZoomControl() const;
@@ -280,6 +275,7 @@ public:
     PageTypeMenu* getNewPageType() const;
     PageBackgroundChangeController* getPageBackgroundChangeController() const;
     LayerController* getLayerController() const;
+    PluginController* getPluginController() const;
 
 
     bool copy();
@@ -380,7 +376,6 @@ private:
      */
     auto getLineStyleToSelect() -> std::optional<std::string> const;
 
-    RecentManager* recent = nullptr;
     UndoRedoHandler* undoRedo = nullptr;
     ZoomControl* zoom = nullptr;
 

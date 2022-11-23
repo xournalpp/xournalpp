@@ -465,7 +465,8 @@ void on_startup(GApplication* application, XMPtr app_data) {
         app_data->control->getSettings()->save();
     }
 
-    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get());
+    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(),
+                                                 GTK_APPLICATION(application));
     app_data->control->initWindow(app_data->win.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
@@ -500,9 +501,9 @@ void on_startup(GApplication* application, XMPtr app_data) {
             opened = app_data->control->newFile("", p);
         }
     } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
-        auto most_recent = app_data->control->getRecentManager()->getMostRecent();
-        if (most_recent != nullptr) {
-            if (auto p = Util::fromUri(gtk_recent_info_get_uri(most_recent))) {
+        auto most_recent = RecentManager::getMostRecent();
+        if (most_recent) {
+            if (auto p = Util::fromUri(gtk_recent_info_get_uri(most_recent.get()))) {
                 opened = app_data->control->openFile(*p);
             }
         }
