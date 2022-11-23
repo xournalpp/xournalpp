@@ -14,8 +14,6 @@
 #include "model/PageRef.h"         // for PageRef
 #include "model/Text.h"            // for Text
 #include "model/XojPage.h"         // for XojPage
-#include "undo/ColorUndoAction.h"  // for ColorUndoAction
-#include "undo/TextUndoAction.h"   // for TextUndoAction
 #include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
 #include "util/Range.h"
 #include "util/raii/CStringWrapper.h"
@@ -110,7 +108,6 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
         gui(gui),
         xournalWidget(widget),
         text(text),
-        lastText(text->getText()),
         textWidget(gtk_xoj_int_txt_new(this), xoj::util::adopt),
         imContext(gtk_im_multicontext_new(), xoj::util::adopt),
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
@@ -119,7 +116,7 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
         ownText(ownText) {
     this->text->setInEditing(true);
 
-    this->replaceBufferContent(this->lastText);
+    this->replaceBufferContent(text->getText());
 
     g_signal_connect(this->buffer.get(), "paste-done", G_CALLBACK(bufferPasteDoneCallback), this);
 
@@ -164,14 +161,6 @@ TextEditor::~TextEditor() {
     this->contentsChanged(true);
 
     if (this->ownText) {
-        UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
-        for (TextUndoAction& undo: this->undoActions) { handler->removeUndoAction(&undo); }
-    } else {
-        for (TextUndoAction& undo: this->undoActions) { undo.textEditFinished(); }
-    }
-    this->undoActions.clear();
-
-    if (this->ownText) {
         delete this->text;
     }
     this->text = nullptr;
@@ -195,21 +184,9 @@ void TextEditor::replaceBufferContent(const std::string& text) {
     gtk_text_buffer_place_cursor(this->buffer.get(), &first);
 }
 
-auto TextEditor::setColor(Color color) -> UndoAction* {
-    auto origColor = this->text->getColor();
+void TextEditor::setColor(Color color) {
     this->text->setColor(color);
-
     repaintEditor(false);
-
-    // This is a new text, so we don't need to create a undo action
-    if (this->ownText) {
-        return nullptr;
-    }
-
-    auto* undo = new ColorUndoAction(gui->getPage(), gui->getPage()->getSelectedLayer());
-    undo->addStroke(this->text, origColor, color);
-
-    return undo;
 }
 
 void TextEditor::setFont(XojFont font) {
@@ -617,29 +594,8 @@ void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos) const {
 
 void TextEditor::contentsChanged(bool forceCreateUndoAction) {
     std::string currentText = getText()->getText();
-
-    // I know it's a little bit bulky, but ABS on subtracted size_t is a little bit unsafe
-    if (forceCreateUndoAction ||
-        ((lastText.length() >= currentText.length()) ? (lastText.length() - currentText.length()) :
-                                                       (currentText.length() - lastText.length())) > 100) {
-        if (!lastText.empty() && !this->undoActions.empty() &&
-            this->undoActions.front().get().getUndoText() != currentText) {
-            auto undo = std::make_unique<TextUndoAction>(gui->getPage(), gui->getPage()->getSelectedLayer(), this->text,
-                                                         lastText, this);
-            UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
-            this->undoActions.emplace_back(std::ref(*undo));
-            handler->addUndoAction(std::move(undo));
-        }
-        lastText = std::move(currentText);
-    }
+    // Todo: Reinstate text edition undo stack
     this->computeVirtualCursorPosition();
-}
-
-auto TextEditor::getFirstUndoAction() const -> UndoAction* {
-    if (!this->undoActions.empty()) {
-        return &this->undoActions.front().get();
-    }
-    return nullptr;
 }
 
 void TextEditor::markPos(double x, double y, bool extendSelection) {

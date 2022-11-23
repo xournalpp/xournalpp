@@ -2189,7 +2189,7 @@ void Control::changeColorOfSelection() {
 
         if (this->toolHandler->getToolType() == TOOL_TEXT && edit != nullptr) {
             // Todo move into selection
-            undoRedo->addUndoAction(UndoActionPtr(edit->setColor(toolHandler->getColor())));
+            edit->setColor(toolHandler->getColor());
         }
     }
 }

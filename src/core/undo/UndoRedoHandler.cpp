@@ -169,21 +169,6 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     printContents();
 }
 
-void UndoRedoHandler::addUndoActionBefore(UndoActionPtr action, UndoAction* before) {
-    auto iter = std::find_if(begin(this->undoList), end(this->undoList),
-                             [before](UndoActionPtr const& smtr_ptr) { return (smtr_ptr.get() == before); });
-
-    if (iter == end(this->undoList)) {
-        addUndoAction(std::move(action));
-        return;
-    }
-    this->undoList.emplace(iter, std::move(action));
-    clearRedo();
-    fireUpdateUndoRedoButtons(this->undoList.back()->getPages());
-
-    printContents();
-}
-
 auto UndoRedoHandler::removeUndoAction(UndoAction* action) -> bool {
     auto iter = std::find_if(begin(this->undoList), end(this->undoList),
                              [action](UndoActionPtr const& smtr_ptr) { return smtr_ptr.get() == action; });
