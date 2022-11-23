@@ -321,7 +321,6 @@ void SplineHandler::finalizeSpline() {
     Rectangle<double> rect = this->computeRepaintRectangle();
 
     stroke->freeUnusedPointItems();
-    control->getLayerController()->ensureLayerExists(page);
 
     Layer* layer = page->getSelectedLayer();
 

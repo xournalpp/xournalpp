@@ -261,8 +261,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
 
     stroke->freeUnusedPointItems();
 
-    control->getLayerController()->ensureLayerExists(page);
-
     Layer* layer = page->getSelectedLayer();
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();

@@ -413,18 +413,3 @@ std::string LayerController::getLayerNameById(Layer::Index id) const {
 
     return name;
 }
-
-/**
- * Make sure there is at least one layer on the page
- */
-void LayerController::ensureLayerExists(PageRef page) {
-    if (page->getSelectedLayerId() > 0) {
-        return;
-    }
-
-    // This creates a layer if none exists
-    page->getSelectedLayer();
-    page->setSelectedLayerId(1);
-
-    fireRebuildLayerMenu();
-}

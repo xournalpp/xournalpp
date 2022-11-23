@@ -100,11 +100,6 @@ public:
      */
     void setCurrentLayerName(const std::string& newName);
 
-    /**
-     * Make sure there is at least one layer on the page
-     */
-    void ensureLayerExists(PageRef page);
-
 private:
     Control* control;
 

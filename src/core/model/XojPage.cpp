@@ -10,7 +10,10 @@
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height): width(width), height(height), bgType(PageTypeFormat::Lined) {}
+XojPage::XojPage(double width, double height): width(width), height(height), bgType(PageTypeFormat::Lined) {
+    // ensure at least one valid layer exists
+    this->addLayer(new Layer());
+}
 
 XojPage::~XojPage() {
     for (Layer* l: this->layer) { delete l; }
@@ -28,6 +31,11 @@ XojPage::XojPage(XojPage const& page):
     this->layer.reserve(page.layer.size());
     std::transform(begin(page.layer), end(page.layer), std::back_inserter(this->layer),
                    [](auto* layer) { return layer->clone(); });
+    // ensure at least one valid layer exists
+    // (for files before refactor to always valid layer)
+    if (this->layer.empty()) {
+        this->addLayer(new Layer());
+    }
 }
 
 auto XojPage::clone() -> XojPage* { return new XojPage(*this); }
@@ -52,6 +60,10 @@ void XojPage::removeLayer(Layer* l) {
         this->layer.erase(it);
     }
     this->currentLayer = npos;
+    // ensure at least one valid layer exists
+    if (layer.empty()) {
+        addLayer(new Layer());
+    }
 }
 
 void XojPage::setSelectedLayerId(Layer::Index id) { this->currentLayer = id; }
@@ -146,9 +158,7 @@ auto XojPage::getBackgroundImage() -> BackgroundImage& { return this->background
 void XojPage::setBackgroundImage(BackgroundImage img) { this->backgroundImage = std::move(img); }
 
 auto XojPage::getSelectedLayer() -> Layer* {
-    if (this->layer.empty()) {
-        addLayer(new Layer());
-    }
+    g_assert(!layer.empty());
     size_t layer = getSelectedLayerId();
 
     if (layer > 0) {
