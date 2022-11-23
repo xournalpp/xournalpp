@@ -206,8 +206,7 @@ void XojPageView::endText() {
     } else {
         // new element
         if (layer->indexOf(txt) == -1) {
-            undo->addUndoActionBefore(std::make_unique<InsertUndoAction>(page, layer, txt),
-                                      this->textEditor->getFirstUndoAction());
+            undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, txt));
             layer->addElement(txt);
             this->textEditor->textCopyed();
         }

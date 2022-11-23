@@ -11,9 +11,7 @@
 
 #pragma once
 
-#include <functional>  // for reference_wrapper
-#include <string>      // for string
-#include <vector>      // for vector
+#include <string>  // for string
 
 #include <gdk/gdk.h>           // for GdkEventKey
 #include <glib.h>              // for gint, gboolean, gchar
@@ -28,8 +26,6 @@
 
 class XojPageView;
 class Text;
-class TextUndoAction;
-class UndoAction;
 class XojFont;
 
 namespace xoj::util {
@@ -70,12 +66,10 @@ public:
     void mouseMoved(double x, double y);
     void mouseReleased();
 
-    UndoAction* getFirstUndoAction() const;
-
     void replaceBufferContent(const std::string& text);
     void setFont(XojFont font);
     void afterFontChange();
-    UndoAction* setColor(Color color);
+    void setColor(Color color);
 
 private:
     /**
@@ -119,7 +113,6 @@ private:
     XojPageView* gui;
     GtkWidget* xournalWidget;
     Text* text;
-    std::string lastText;
 
     xoj::util::GObjectSPtr<GtkWidget> textWidget;
     xoj::util::GObjectSPtr<GtkIMContext> imContext;
@@ -130,8 +123,6 @@ private:
     int preeditCursor;
     xoj::util::PangoAttrListSPtr preeditAttrList;
     xoj::util::OwnedCString preeditString;
-
-    std::vector<std::reference_wrapper<TextUndoAction>> undoActions;
 
     /**
      * @brief Tracks the bounding box of the editor from the last render.
