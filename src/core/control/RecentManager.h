@@ -11,87 +11,60 @@
 
 #pragma once
 
-#include <vector>  // for vector
+#include <gtk/gtk.h>  // for GtkRecentInfo
 
-#include <glib.h>     // for gulong
-#include <gtk/gtk.h>  // for GtkWidget, GtkRecentInfo
+#include "util/TinyVector.h"
+#include "util/raii/CLibrariesSPtr.h"
 
 #include "filesystem.h"  // for path
 
-class RecentManagerListener {
-public:
-    virtual ~RecentManagerListener();
-
-    /**
-     * This function is called whenever some file
-     * from the recent menu is opened
-     */
-    virtual void fileOpened(fs::path const& file) = 0;
-};
+class Control;
 
 /**
  * @brief Handles the GtkMenu displaying the recent files
  */
-class RecentManager {
+namespace RecentManager {
+constexpr auto const* MIME = "application/x-xoj";
+constexpr auto const* MIME_PDF = "application/x-pdf";
+constexpr auto const* GROUP = "xournal++";
+constexpr int MAX_RECENT = 10;
+
+/**
+ * Adds a file to the underlying GtkRecentManager
+ */
+void addRecentFileFilename(const fs::path& filename);
+
+/**
+ * Removes a file from the underlying GtkRecentManager
+ */
+[[maybe_unused]] void removeRecentFileFilename(const fs::path& filename);
+
+/**
+ * Remove all supported files from the recent file list
+ */
+void clearRecentFiles();
+
+class GtkRecentInfoHandler {
 public:
-    RecentManager();
-    virtual ~RecentManager();
-
-public:
-    /**
-     * Adds a file to the underlying GtkRecentManager
-     * without altering the menu
-     */
-    static void addRecentFileFilename(const fs::path& filename);
-
-    /**
-     * Removes a file from the underlying GtkRecentManager
-     * without altering the menu
-     */
-    [[maybe_unused]] static void removeRecentFileFilename(const fs::path& filename);
-
-    /**
-     * Removes all of the menu items corresponding to recent files
-     */
-    void freeOldMenus();
-
-    /**
-     * Updates the menu of recent files
-     */
-    void updateMenu();
-
-    /**
-     * Notifies all RecentManagerListener%s that a new
-     * file is opened
-     */
-    void openRecent(const fs::path& p);
-
-    /**
-     * Returns the root menu containing all the items
-     * corresponding to the recent files
-     */
-    GtkWidget* getMenu();
-
-    /**
-     * Adds a new RecentManagerListener to be notified
-     * of opened files
-     */
-    void addListener(RecentManagerListener* l);
-
-    /**
-     * Returns the most recent xoj item from the underlying GtkRecentManager
-     * or nullptr, if no recent files exist
-     */
-    GtkRecentInfo* getMostRecent();
-
-private:
-    void addRecentMenu(GtkRecentInfo* info, int i);
-
-private:
-    gulong recentHandlerId{};
-
-    std::vector<RecentManagerListener*> listener;
-
-    GtkWidget* menu;
-    std::vector<GtkWidget*> menuItemList;
+    constexpr static auto ref = gtk_recent_info_ref;
+    constexpr static auto unref = gtk_recent_info_unref;
+    // Todo(cpp20): replace with std:identity()
+    constexpr static auto adopt = [](GtkRecentInfo* p) { return p; };
 };
+using GtkRecentInfoSPtr = xoj::util::CLibrariesSPtr<GtkRecentInfo, GtkRecentInfoHandler>;
+
+/**
+ * Returns the most recent xoj item from the underlying GtkRecentManager
+ * or nullptr, if no recent files exist
+ */
+GtkRecentInfoSPtr getMostRecent();
+
+/**
+ *
+ */
+struct RecentFiles {
+    TinyVector<GtkRecentInfoSPtr, MAX_RECENT> recentXoppFiles;
+    TinyVector<GtkRecentInfoSPtr, MAX_RECENT> recentPdfFiles;
+};
+RecentFiles getRecentFiles();
+};  // namespace RecentManager

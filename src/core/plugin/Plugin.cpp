@@ -15,6 +15,7 @@
 #include <utility>  // for move, pair
 
 #include "util/i18n.h"  // for _
+#include "util/raii/GObjectSPtr.h"
 
 #include "config.h"  // for PROJECT_VERSION
 
@@ -70,34 +71,42 @@ void Plugin::registerToolbar() {
     inInitUi = false;
 }
 
-void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu) {
+size_t Plugin::populateMenuSection(GtkApplicationWindow* win, size_t startId) {
     if (menuEntries.empty() || !this->enabled) {
         // No entries - nothing to do
-        return;
+        return startId;
     }
 
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), gtk_separator_menu_item_new());
+    // The menu should never be populated twice.
+    // If this assert ever fails, do not recreate the GSimpleAction's below
+    assert(!menuSection);
 
-    GtkAccelGroup* accelGroup = gtk_accel_group_new();
+    this->menuSection.reset(g_menu_new(), xoj::util::adopt);
 
-    for (auto&& m: menuEntries) {
-        GtkWidget* mi = gtk_menu_item_new_with_label(m.menu.c_str());
-        m.widget = mi;
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    for (auto& m: menuEntries) {
+        std::string actionName = G_ACTION_NAME_PREFIX;
+        actionName += std::to_string(startId++);
+        m.action.reset(g_simple_action_new(actionName.c_str(), nullptr), xoj::util::adopt);
 
-        if (!m.accelerator.empty()) {
-            auto acceleratorKey = guint(0);
-            auto mods = GdkModifierType(0);
-            gtk_accelerator_parse(m.accelerator.c_str(), &acceleratorKey, &mods);
-            gtk_widget_add_accelerator(mi, "activate", accelGroup, acceleratorKey, mods, GTK_ACCEL_VISIBLE);
-        }
+        actionName = "win." + actionName;
+        xoj::util::GObjectSPtr<GMenuItem> entry(g_menu_item_new(m.label.c_str(), actionName.c_str()), xoj::util::adopt);
+
+        g_menu_append_item(menuSection.get(), entry.get());
 
         // This might fail, when the vector reallocates, but then the order of initialisation is violated
-        g_signal_connect(mi, "activate",
-                         G_CALLBACK(+[](GtkWidget* bt, MenuEntry* me) { me->plugin->executeMenuEntry(me); }), &m);
-    }
+        g_signal_connect(
+                m.action.get(), "activate",
+                G_CALLBACK(+[](GSimpleAction*, GVariant*, MenuEntry* me) { me->plugin->executeMenuEntry(me); }), &m);
 
-    gtk_window_add_accel_group(GTK_WINDOW(mainWindow), accelGroup);
+        g_action_map_add_action(G_ACTION_MAP(win), G_ACTION(m.action.get()));
+
+        if (!m.accelerator.empty()) {
+            const char* accels[2] = {m.accelerator.c_str(), nullptr};
+            gtk_application_set_accels_for_action(gtk_window_get_application(GTK_WINDOW(win)), actionName.c_str(),
+                                                  accels);
+        }
+    }
+    return startId;
 }
 
 void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback, entry->mode); }

@@ -6,10 +6,12 @@
 #include "control/Control.h"
 #include "gui/MainWindow.h"
 
+#include "config-features.h"
+
 #ifdef ENABLE_PLUGINS
+#include <algorithm>
 #include <tuple>
 #include <utility>
-#include <algorithm>
 
 #include "control/settings/Settings.h"
 #include "gui/GladeSearchpath.h"
@@ -18,7 +20,6 @@
 #include "util/StringUtils.h"
 
 #include "Plugin.h"
-#include "config-features.h"
 
 namespace {
 
@@ -154,15 +155,20 @@ void PluginController::showPluginManager() const {
 #endif
 }
 
-void PluginController::registerMenu() {
+auto PluginController::createMenuSections(GtkApplicationWindow* win) -> std::vector<GMenuModel*> {
 #ifdef ENABLE_PLUGINS
-    GtkWidget* menuPlugin = control->getWindow()->get("menuPlugin");
-    for (auto&& p: this->plugins) { p->registerMenu(control->getGtkWindow(), menuPlugin); }
-    gtk_widget_show_all(menuPlugin);
+    size_t id = 0;
+    std::vector<GMenuModel*> sections;
+    for (auto&& p: this->plugins) {
+        id = p->populateMenuSection(win, id);
+        auto* section = p->getMenuSection();
+        if (section) {
+            sections.emplace_back(section);
+        }
+    }
+    return sections;
 #else
-    // If plugins are disabled - disable menu also
-    GtkWidget* menuitemPlugin = control->getWindow()->get("menuitemPlugin");
-    gtk_widget_hide(menuitemPlugin);
+    return {};
 #endif
 }
 

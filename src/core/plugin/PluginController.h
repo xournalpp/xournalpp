@@ -15,6 +15,8 @@
 #include <string>
 #include <vector>
 
+#include <gtk/gtk.h>  // for GtkApplicationWindow
+
 #include "Plugin.h"
 #include "filesystem.h"
 
@@ -31,9 +33,10 @@ public:
     void registerToolbar();
 
     /**
-     * Register menu stuff
+     * @brief Create menu sections (one per enabled plugin with menu entries)
+     * The data is owned by the Plugin's themselves - do not unref
      */
-    void registerMenu();
+    std::vector<GMenuModel*> createMenuSections(GtkApplicationWindow* win);
 
     /**
      * Show Plugin manager Dialog

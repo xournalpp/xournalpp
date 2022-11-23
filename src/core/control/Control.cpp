@@ -109,9 +109,7 @@
 using std::string;
 
 Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp(gtkApp) {
-    this->recent = new RecentManager();
     this->undoRedo = new UndoRedoHandler(this);
-    this->recent->addListener(this);
     this->undoRedo->addUndoRedoListener(this);
     this->isBlocking = false;
 
@@ -181,8 +179,6 @@ Control::~Control() {
     this->pluginController = nullptr;
     delete this->clipboardHandler;
     this->clipboardHandler = nullptr;
-    delete this->recent;
-    this->recent = nullptr;
     delete this->undoRedo;
     this->undoRedo = nullptr;
     delete this->settings;
@@ -304,7 +300,6 @@ void Control::saveSettings() {
 }
 
 void Control::initWindow(MainWindow* win) {
-    win->setRecentMenu(recent->getMenu());
     selectTool(toolHandler->getToolType());
     this->win = win;
     this->sidebar = new Sidebar(win, this);
@@ -346,8 +341,6 @@ void Control::initWindow(MainWindow* win) {
     this->enableAutosave(settings->isAutosaveEnabled());
 
     win->setFontButtonFont(settings->getFont());
-
-    this->pluginController->registerMenu();
 
     win->rebindMenubarAccelerators();
 
@@ -1866,8 +1859,6 @@ auto Control::getCurrentPage() -> PageRef {
     return p;
 }
 
-void Control::fileOpened(fs::path const& path) { openFile(path); }
-
 void Control::undoRedoChanged() {
     fireEnableAction(ACTION_UNDO, undoRedo->canUndo());
     fireEnableAction(ACTION_REDO, undoRedo->canRedo());
@@ -3260,8 +3251,6 @@ auto Control::getTextEditor() -> TextEditor* {
 
 auto Control::getGladeSearchPath() const -> GladeSearchpath* { return this->gladeSearchPath; }
 
-auto Control::getRecentManager() const -> RecentManager* { return recent; }
-
 auto Control::getSettings() const -> Settings* { return settings; }
 
 auto Control::getScrollHandler() const -> ScrollHandler* { return this->scrollHandler; }
@@ -3283,3 +3272,5 @@ auto Control::getPageBackgroundChangeController() const -> PageBackgroundChangeC
 }
 
 auto Control::getLayerController() const -> LayerController* { return this->layerController; }
+
+auto Control::getPluginController() const -> PluginController* { return this->pluginController; }

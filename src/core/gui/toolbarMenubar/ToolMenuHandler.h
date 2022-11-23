@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
 #include <string>   // for string
 #include <vector>   // for vector
 
@@ -27,6 +28,7 @@
 class AbstractToolItem;
 class FontButton;
 class GladeGui;
+class GladeSearchpath;
 class ToolbarData;
 class ToolbarModel;
 class ToolButton;
@@ -45,8 +47,10 @@ class MenuItem;
 
 class ToolMenuHandler {
 public:
-    ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent);
+    ToolMenuHandler(Control* control, GladeGui* gui);
     virtual ~ToolMenuHandler();
+
+    void populate(const GladeSearchpath* gladeSearchPath);
 
 public:
     void freeDynamicToolbarItems();
@@ -133,7 +137,7 @@ private:
     GladeGui* gui = nullptr;
     ToolHandler* toolHandler = nullptr;
 
-    ToolbarModel* tbModel = nullptr;
+    std::unique_ptr<ToolbarModel> tbModel;
 
     PageTypeMenu* newPageType = nullptr;
     PageBackgroundChangeController* pageBackgroundChangeController = nullptr;

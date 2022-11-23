@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>  // for GtkWidget, GtkWindow
 
+#include "util/raii/GObjectSPtr.h"
+
 #include "filesystem.h"  // for path
 
 extern "C" {
@@ -36,21 +38,24 @@ class Control;
 
 struct MenuEntry final {
     MenuEntry() = default;
-    MenuEntry(Plugin* plugin, std::string menu, std::string callback, long mode, std::string accelerator):
+    MenuEntry(Plugin* plugin, std::string label, std::string callback, long mode, std::string accelerator):
             plugin(plugin),
-            menu(std::move(menu)),
+            label(std::move(label)),
             callback(std::move(callback)),
             mode(mode),
             accelerator(std::move(accelerator)) {}
 
-    GtkWidget* widget = nullptr;                  ///< Menu item
     Plugin* plugin = nullptr;                     ///< The Plugin
-    std::string menu{};                           ///< Menu display name
+    std::string label{};                          ///< Menu display name
     std::string callback{};                       ///< Callback function name
     long mode{std::numeric_limits<long>::max()};  ///< mode in which the callback function is run
+    /**
+     * @brief Accelerator key, see
+     *     https://developer.gnome.org/gtk3/stable/gtk3-Keyboard-Accelerators.html#gtk-accelerator-parse
+     */
     std::string accelerator{};
-    ///< Accelerator key, see
-    ///< https://developer.gnome.org/gtk3/stable/gtk3-Keyboard-Accelerators.html#gtk-accelerator-parse
+    /// Action activated when using the menu entry
+    xoj::util::GObjectSPtr<GSimpleAction> action;
 };
 
 struct LuaDeleter {
@@ -71,8 +76,15 @@ public:
     /// Register toolbar item and all other UI stuff
     void registerToolbar();
 
-    /// Register all menu entries to the menu
-    void registerMenu(GtkWindow* mainWindow, GtkWidget* menu);
+    /**
+     * @brief Create a GMenu section for the plugin
+     * @param startId next available id
+     * @return next available id after this menu is populated
+     */
+    size_t populateMenuSection(GtkApplicationWindow* win, size_t startId);
+
+    /// Get a model for the GMenu section for the plugin
+    inline GMenuModel* getMenuSection() const { return G_MENU_MODEL(menuSection.get()); }
 
     /// Execute menu entry
     void executeMenuEntry(MenuEntry* entry);
@@ -132,6 +144,7 @@ private:
     Control* control;                              ///< The main controller
     std::unique_ptr<lua_State, LuaDeleter> lua{};  ///< Lua engine
     std::vector<MenuEntry> menuEntries;            ///< All registered menu entries
+    xoj::util::GObjectSPtr<GMenu> menuSection;     ///< Menu section containing the menu entries
 
     std::string name;             ///< Plugin name
     std::string description;      ///< Description of the plugin
@@ -143,6 +156,8 @@ private:
     bool defaultEnabled = false;  ///< The plugin is default enabled
     bool inInitUi = false;        ///< Flag to check if init ui is currently running
     bool valid = false;           ///< Flag if the plugin is valid / correct loaded
+
+    static constexpr auto G_ACTION_NAME_PREFIX = "plugins.action-";
 };
 
 #else
