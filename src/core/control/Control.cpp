@@ -1890,10 +1890,9 @@ void Control::selectTool(ToolType type) {
     // keep text-selection when switching from text to seletion tool
     auto oldTool = getToolHandler()->getActiveTool();
     if (oldTool && win && isSelectToolType(type) && oldTool->getToolType() == ToolType::TOOL_TEXT &&
-        this->win->getXournal()->getTextEditor() &&
-        !(this->win->getXournal()->getTextEditor()->getText()->getText().empty())) {
+        this->win->getXournal()->getTextEditor() && !(this->win->getXournal()->getTextEditor()->bufferEmpty())) {
         auto xournal = this->win->getXournal();
-        Text* textobj = xournal->getTextEditor()->getText();
+        Text* textobj = xournal->getTextEditor()->getTextElement();
         clearSelectionEndText();
 
         auto pageNr = getCurrentPageNo();

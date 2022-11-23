@@ -9,15 +9,22 @@
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_B, GDK_KEY_ISO_Enter, GDK_...
 #include <glib-object.h>     // for g_object_get, g_object_unref, G_CA...
 
-#include "control/Control.h"       // for Control
+#include "control/AudioController.h"
+#include "control/Control.h"  // for Control
+#include "control/settings/Settings.h"
 #include "model/Font.h"            // for XojFont
-#include "model/PageRef.h"         // for PageRef
 #include "model/Text.h"            // for Text
 #include "model/XojPage.h"         // for XojPage
+#include "undo/DeleteUndoAction.h"
+#include "undo/InsertUndoAction.h"
+#include "undo/TextBoxUndoAction.h"
 #include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
+#include "util/DispatchPool.h"
 #include "util/Range.h"
 #include "util/raii/CStringWrapper.h"
+#include "view/overlays/TextEditionView.h"
 
+#include "MainWindow.h"
 #include "PageView.h"          // for XojPageView
 #include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
 #include "XournalView.h"       // for XournalView
@@ -42,7 +49,9 @@ static auto getByteOffsetOfIterator(GtkTextIter it) -> int {
     int pos = gtk_text_iter_get_line_index(&it);
     gtk_text_iter_set_line_index(&it, 0);
     // Count bytes of previous lines
-    while (gtk_text_iter_backward_line(&it)) { pos += gtk_text_iter_get_bytes_in_line(&it); }
+    while (gtk_text_iter_backward_line(&it)) {
+        pos += gtk_text_iter_get_bytes_in_line(&it);
+    }
     return pos;
 }
 
@@ -80,6 +89,13 @@ static auto cloneToCString(GtkTextBuffer* buf) {
 }
 
 /**
+ * @brief Clone the buffer's content
+ *
+ * This is pretty inefficient: the text gets copied twice
+ */
+static auto cloneToStdString(GtkTextBuffer* buf) -> std::string { return cloneToCString(buf).get(); }
+
+/**
  * @brief Clone the buffer's content and insert a string into the clone
  * This makes one less copy operation over using cloneToStdString followed by insert()
  * (The text is copied "only" twice, and not three times)
@@ -104,19 +120,16 @@ static auto cloneWithInsertToStdString(GtkTextBuffer* buf, std::string_view inse
     return res;
 }
 
-TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText):
-        gui(gui),
-        xournalWidget(widget),
-        text(text),
+TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournalWidget, double x, double y):
+        control(control),
+        page(page),
+        xournalWidget(xournalWidget),
         textWidget(gtk_xoj_int_txt_new(this), xoj::util::adopt),
         imContext(gtk_im_multicontext_new(), xoj::util::adopt),
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
-        layout(text->createPangoLayout()),
-        previousBoundingBox(text->boundingRect()),
-        ownText(ownText) {
-    this->text->setInEditing(true);
+        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::TextEditionView>>()) {
 
-    this->replaceBufferContent(text->getText());
+    this->initializeEditionAt(x, y);
 
     g_signal_connect(this->buffer.get(), "paste-done", G_CALLBACK(bufferPasteDoneCallback), this);
 
@@ -141,8 +154,10 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
     g_signal_connect(this->imContext.get(), "retrieve-surrounding", G_CALLBACK(iMRetrieveSurroundingCallback), this);
     g_signal_connect(this->imContext.get(), "delete-surrounding", G_CALLBACK(imDeleteSurroundingCallback), this);
 
-
-    if (this->cursorBlink) {
+    if (this->originalTextElement) {
+        // If editing a preexisting text, put the cursor at the right location
+        this->mousePressed(x - textElement->getX(), y - textElement->getY());
+    } else if (this->cursorBlink) {
         BlinkTimer::callback(this);
     } else {
         this->cursorVisible = true;
@@ -152,29 +167,21 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
 TextEditor::~TextEditor() {
     gtk_im_context_focus_out(this->imContext.get());
 
-    this->text->setInEditing(false);
     this->xournalWidget = nullptr;
-
-    Control* control = gui->getXournal()->getControl();
     control->setCopyCutEnabled(false);
 
     this->contentsChanged(true);
 
-    if (this->ownText) {
-        delete this->text;
-    }
-    this->text = nullptr;
+    finalizeEdition();
 }
 
-auto TextEditor::getText() const -> Text* {
-    GtkTextIter start, end;
-
-    gtk_text_buffer_get_bounds(this->buffer.get(), &start, &end);
-    auto text = xoj::util::OwnedCString::assumeOwnership(gtk_text_iter_get_text(&start, &end));
-    this->text->setText(text.get());
-
-    return this->text;
+auto TextEditor::getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::TextEditionView>>& {
+    return viewPool;
 }
+
+auto TextEditor::getTextElement() const -> Text* { return this->textElement.get(); }
+
+bool TextEditor::bufferEmpty() const { return gtk_text_buffer_get_char_count(this->buffer.get()) == 0; }
 
 void TextEditor::replaceBufferContent(const std::string& text) {
     gtk_text_buffer_set_text(this->buffer.get(), text.c_str(), -1);
@@ -182,25 +189,25 @@ void TextEditor::replaceBufferContent(const std::string& text) {
     GtkTextIter first = {nullptr};
     gtk_text_buffer_get_iter_at_offset(this->buffer.get(), &first, 0);
     gtk_text_buffer_place_cursor(this->buffer.get(), &first);
+    this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
+    this->cursorBox = computeCursorBox();
 }
 
 void TextEditor::setColor(Color color) {
-    this->text->setColor(color);
+    this->textElement->setColor(color);
     repaintEditor(false);
 }
 
 void TextEditor::setFont(XojFont font) {
-    this->text->setFont(font);
+    this->textElement->setFont(font);
     afterFontChange();
 }
 
 void TextEditor::afterFontChange() {
-    this->text->updatePangoFont(this->layout.get());
+    this->textElement->updatePangoFont(this->layout.get());
     this->computeVirtualCursorPosition();
     this->repaintEditor();
 }
-
-void TextEditor::textCopyed() { this->ownText = false; }
 
 void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextEditor* te) {
     gtk_text_buffer_begin_user_action(te->buffer.get());
@@ -344,8 +351,7 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     if (obscure) {
-        XournalppCursor* cursor = gui->getXournal()->getCursor();
-        cursor->setInvisible(true);
+        control->getCursor()->setInvisible(true);
     }
 
     return retval;
@@ -363,7 +369,7 @@ auto TextEditor::onKeyReleaseEvent(GdkEventKey* event) -> bool {
 
 void TextEditor::toggleOverwrite() {
     this->cursorOverwrite = !this->cursorOverwrite;
-    repaintCursor();
+    repaintCursorAfterChange();
 }
 
 /**
@@ -371,7 +377,7 @@ void TextEditor::toggleOverwrite() {
  * Improve that later on...
  */
 void TextEditor::decreaseFontSize() {
-    XojFont& font = text->getFont();
+    XojFont& font = textElement->getFont();
     if (double size = font.getSize(); size > 1) {
         font.setSize(font.getSize() - 1);
         afterFontChange();
@@ -379,14 +385,14 @@ void TextEditor::decreaseFontSize() {
 }
 
 void TextEditor::increaseFontSize() {
-    XojFont& font = text->getFont();
+    XojFont& font = textElement->getFont();
     font.setSize(font.getSize() + 1);
     afterFontChange();
 }
 
 void TextEditor::toggleBoldFace() {
     // get the current/used font
-    XojFont& font = text->getFont();
+    XojFont& font = textElement->getFont();
     std::string fontName = font.getName();
 
     std::size_t found = fontName.find(" Bold");
@@ -460,6 +466,8 @@ void TextEditor::selectAtCursor(TextEditor::SelectType ty) {
 
     gtk_text_buffer_select_range(this->buffer.get(), &startPos, &endPos);
 
+    // Selection highlighting is handled through Pango attributes
+    this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor(false);
 }
 
@@ -565,23 +573,12 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
     if (gtk_text_iter_equal(&insert, &newplace)) {
         gtk_widget_error_bell(this->xournalWidget);
     }
-
-    if (this->cursorBlink) {
-        this->cursorVisible = false;
-        BlinkTimer::callback(this);
-    } else {
-        repaintCursor();
-    }
 }
 
 void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos) const {
-    if (!this->layout) {
-        return;
-    }
-
     int index = 0;
     int trailing = 0;
-    pango_layout_xy_to_index(this->layout.get(), static_cast<int>(std::round(xPos * PANGO_SCALE)),
+    pango_layout_xy_to_index(this->getUpToDateLayout(), static_cast<int>(std::round(xPos * PANGO_SCALE)),
                              static_cast<int>(std::round(yPos * PANGO_SCALE)), &index, &trailing);
     /*
      * trailing is non-zero iff the abscissa is past the middle of the grapheme.
@@ -592,9 +589,11 @@ void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos) const {
     gtk_text_iter_forward_chars(iter, trailing);
 }
 
+void TextEditor::updateTextElementContent() { this->textElement->setText(cloneToStdString(this->buffer.get())); }
+
 void TextEditor::contentsChanged(bool forceCreateUndoAction) {
-    std::string currentText = getText()->getText();
     // Todo: Reinstate text edition undo stack
+    this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
     this->computeVirtualCursorPosition();
 }
 
@@ -606,11 +605,11 @@ void TextEditor::markPos(double x, double y, bool extendSelection) {
     // call moveCursor() even if the cursor hasn't moved, since it cancels the selection
     moveCursor(&newplace, extendSelection);
     computeVirtualCursorPosition();
-    repaintCursor();
 }
 
 void TextEditor::mousePressed(double x, double y) {
     this->mouseDown = true;
+    // Todo select if SHIFT is pressed
     markPos(x, y, false);
 }
 
@@ -649,22 +648,57 @@ void TextEditor::computeVirtualCursorPosition() {
     int offset = getByteOffsetOfCursor(this->buffer.get());
 
     PangoRectangle rect = {0};
-    pango_layout_index_to_pos(this->layout.get(), offset, &rect);
+    pango_layout_index_to_pos(this->getUpToDateLayout(), offset, &rect);
     this->virtualCursorAbscissa = rect.x;
 }
 
 void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelection) {
-    Control* control = gui->getXournal()->getControl();
-
+    bool selectionChanged = true;
     if (extendSelection) {
+        if (auto oldLoc = getIteratorAtCursor(this->buffer.get()); gtk_text_iter_equal(newLocation, &oldLoc)) {
+            // Nothing changed
+            return;
+        }
         gtk_text_buffer_move_mark_by_name(this->buffer.get(), "insert", newLocation);
         control->setCopyCutEnabled(true);
     } else {
+        // if !extendSelection, we clear the selection even if the cursor does not move
+        selectionChanged = gtk_text_buffer_get_has_selection(this->buffer.get());
         gtk_text_buffer_place_cursor(this->buffer.get(), newLocation);
         control->setCopyCutEnabled(false);
     }
 
-    this->repaintEditor(false);
+    if (this->cursorBlink) {
+        // Whenever the cursor moves, the blinking cycle restarts from the start (i.e. the cursor is first shown).
+        this->cursorVisible = false;  // Will be toggled to true by BlinkTimer::callback before the repaint
+        BlinkTimer::callback(this);
+    }
+
+    if (selectionChanged) {
+        // The selection background color is set through Pango attributes
+        this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
+        // Repaint the entire box. Computing the exact area that was (un)selected would be better but complicated
+        this->repaintEditor(false);
+    } else {
+        repaintCursorAfterChange();
+    }
+}
+
+void TextEditor::updateCursorBox() {
+    this->cursorBox = computeCursorBox();
+
+    if (!viewPool->empty()) {
+        // Inform the IM of the cursor location (for word selection popup's location)
+        // We use the first view as the main view, as far as the IM is concerned
+        auto box = viewPool->front().toWindowCoordinates(xoj::util::Rectangle<double>(this->cursorBox));
+
+        GdkRectangle cursorRect;  // cursor position in window coordinates
+        cursorRect.x = static_cast<int>(box.x);
+        cursorRect.y = static_cast<int>(box.y);
+        cursorRect.height = static_cast<int>(box.height);
+        cursorRect.width = static_cast<int>(box.width);
+        gtk_im_context_set_cursor_location(this->imContext.get(), &cursorRect);
+    }
 }
 
 static auto whitespace(gunichar ch, gpointer user_data) -> gboolean { return (ch == ' ' || ch == '\t'); }
@@ -817,16 +851,6 @@ void TextEditor::backspace() {
     }
 }
 
-auto TextEditor::getSelection() const -> std::string {
-    std::string s;
-
-    if (GtkTextIter start, end; gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end)) {
-        auto text = xoj::util::OwnedCString::assumeOwnership(gtk_text_iter_get_text(&start, &end));
-        s = text.get();
-    }
-    return s;
-}
-
 void TextEditor::copyToClipboard() const {
     GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget, GDK_SELECTION_CLIPBOARD);
     gtk_text_buffer_copy_clipboard(this->buffer.get(), clipboard);
@@ -857,8 +881,6 @@ void TextEditor::resetImContext() {
     }
 }
 
-void TextEditor::repaintCursor() { this->repaintEditor(false); }
-
 /*
  * Blink!
  */
@@ -867,7 +889,9 @@ auto TextEditor::BlinkTimer::callback(TextEditor* te) -> bool {
     auto time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
     te->blinkTimer = gdk_threads_add_timeout(time, reinterpret_cast<GSourceFunc>(callback), te);
 
-    te->repaintCursor();
+    Range dirtyRange = te->cursorBox;
+    dirtyRange.translate(te->textElement->getX(), te->textElement->getY());
+    te->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
 
     // Remove ourselves
     return false;
@@ -885,10 +909,34 @@ void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
         pango_attr_list_splice(attrlist.get(), this->preeditAttrList.get(), pos, static_cast<int>(preed.length()));
 
         pango_layout_set_attributes(pl, attrlist.get());
+
         pango_layout_set_text(pl, txt.c_str(), static_cast<int>(txt.length()));
     } else {
+        setSelectionAttributesToPangoLayout(pl);
         pango_layout_set_text(pl, cloneToCString(this->buffer.get()).get(), -1);
     }
+}
+
+Color TextEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
+
+void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
+    xoj::util::PangoAttrListSPtr attrlist(pango_attr_list_new(), xoj::util::adopt);
+
+    GtkTextIter start;
+    GtkTextIter end;
+    bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
+
+    if (hasSelection) {
+        auto selectionColorU16 = Util::argb_to_ColorU16(this->getSelectionColor());
+        PangoAttribute* attrib =
+                pango_attr_background_new(selectionColorU16.red, selectionColorU16.green, selectionColorU16.blue);
+        attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
+        attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
+
+        pango_attr_list_insert(attrlist.get(), attrib);  // attrlist takes ownership of attrib
+    }
+
+    pango_layout_set_attributes(pl, attrlist.get());
 }
 
 auto TextEditor::computeBoundingBox() const -> Range {
@@ -896,13 +944,9 @@ auto TextEditor::computeBoundingBox() const -> Range {
      * NB: we cannot rely on Text::calcSize directly, since it would not take the size changes due to the IM
      * preeditString into account.
      */
-    auto* textElement = this->getText();
-
-    setTextToPangoLayout(this->layout.get());
-
     int w = 0;
     int h = 0;
-    pango_layout_get_size(this->layout.get(), &w, &h);
+    pango_layout_get_size(getUpToDateLayout(), &w, &h);
     double width = (static_cast<double>(w)) / PANGO_SCALE;
     double height = (static_cast<double>(h)) / PANGO_SCALE;
     double x = textElement->getX();
@@ -914,127 +958,162 @@ auto TextEditor::computeBoundingBox() const -> Range {
     return res;
 }
 
+auto TextEditor::getUpToDateLayout() const -> PangoLayout* {
+    switch (layoutStatus) {
+        case LayoutStatus::NEEDS_COMPLETE_UPDATE:
+            setTextToPangoLayout(this->layout.get());
+            break;
+        case LayoutStatus::NEEDS_ATTRIBUTES_UPDATE:
+            setSelectionAttributesToPangoLayout(this->layout.get());
+            break;
+        case LayoutStatus::UP_TO_DATE:
+            break;
+    }
+    layoutStatus = LayoutStatus::UP_TO_DATE;
+    return this->layout.get();
+}
+
+auto TextEditor::getCursorBox() const -> const Range& { return this->cursorBox; }
+
+auto TextEditor::getContentBoundingBox() const -> const Range& { return this->previousBoundingBox; }
+
+bool TextEditor::isCursorVisible() const { return cursorVisible; }
+
+auto TextEditor::computeCursorBox() const -> Range {
+    // Compute the bounding box of the active grapheme (i.e. the one just after the cursor)
+    int offset = getByteOffsetOfCursor(this->buffer.get());
+    if (this->preeditString && this->preeditCursor != 0) {
+        const gchar* preeditText = this->preeditString.get();
+        offset += static_cast<int>(g_utf8_offset_to_pointer(preeditText, preeditCursor) - preeditText);
+    }
+    PangoRectangle rect = {0};
+    pango_layout_index_to_pos(getUpToDateLayout(), offset, &rect);
+    const double ratio = 1.0 / PANGO_SCALE;
+
+    // Warning: rect.width could be negative (e.g. for languages written from right to left).
+    Range res(rect.x * ratio, rect.y * ratio);
+    res.addPoint((rect.x + (cursorOverwrite ? rect.width : 0.0)) * ratio, (rect.y + rect.height) * ratio);
+    return res;
+}
+
 void TextEditor::repaintEditor(bool sizeChanged) {
     Range dirtyRange(this->previousBoundingBox);
     if (sizeChanged) {
         this->previousBoundingBox = this->computeBoundingBox();
         dirtyRange = dirtyRange.unite(this->previousBoundingBox);
     }
-    const double zoom = this->gui->getXournal()->getZoom();
-    const double padding = (BORDER_WIDTH_IN_PIXELS + PADDING_IN_PIXELS) / zoom;
-    dirtyRange.addPadding(padding);
-    this->gui->repaintArea(dirtyRange.minX, dirtyRange.minY, dirtyRange.maxX, dirtyRange.maxY);
+    this->updateCursorBox();
+    this->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
 }
 
-auto TextEditor::drawCursor(cairo_t* cr, double zoom) const -> xoj::util::Rectangle<double> {
-    xoj::util::Rectangle<double> cursorBox;
-    {  // Compute the bounding box of the active grapheme (i.e. the one just after the cursor)
-        int offset = getByteOffsetOfCursor(this->buffer.get());
-        if (this->preeditString && this->preeditCursor != 0) {
-            const gchar* preeditText = this->preeditString.get();
-            offset += static_cast<int>(g_utf8_offset_to_pointer(preeditText, preeditCursor) - preeditText);
+void TextEditor::repaintCursorAfterChange() {
+    Range dirtyRange = this->cursorBox;
+    this->updateCursorBox();
+    dirtyRange = dirtyRange.unite(this->cursorBox);
+    dirtyRange.translate(this->textElement->getX(), this->textElement->getY());
+    this->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
+}
+
+void TextEditor::finalizeEdition() {
+    Layer* layer = this->page->getSelectedLayer();
+    UndoRedoHandler* undo = this->control->getUndoRedoHandler();
+
+    this->control->getWindow()->setFontButtonFont(this->control->getSettings()->getFont());
+
+    if (this->bufferEmpty()) {
+        // Delete the edited element from layer
+        if (originalTextElement) {
+            auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
+            auto elementIndex = layer->indexOf(originalTextElement);
+            layer->removeElement(originalTextElement, false);
+            assert(elementIndex != Element::InvalidIndex);
+            eraseDeleteUndoAction->addElement(layer, originalTextElement, elementIndex);
+            undo->addUndoAction(std::move(eraseDeleteUndoAction));
+            originalTextElement = nullptr;
         }
-        PangoRectangle rect = {0};
-        pango_layout_index_to_pos(this->layout.get(), offset, &rect);
-        cursorBox = xoj::util::Rectangle<double>(rect.x, rect.y, rect.width, rect.height);
-        cursorBox *= 1.0 / PANGO_SCALE;
+        this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
+        return;
     }
 
-    if (!this->cursorOverwrite || cursorBox.width == 0.0) {
-        // cursorBox.width == 0.0 happens when the cursor is at the end of the line
-        cursorBox.width = 2.0 / zoom;
+    this->updateTextElementContent();
+    if (originalTextElement) {
+        // Modifying a preexisting element
+        this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
+
+        this->originalTextElement->setInEditing(false);
+
+        layer->removeElement(this->originalTextElement, false);
+        layer->addElement(this->textElement.get());
+
+        this->page->fireElementChanged(this->textElement.get());
+
+        undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, this->textElement.release(),
+                                                                this->originalTextElement));
+        originalTextElement = nullptr;
+    } else {
+        // Creating a new element
+        layer->addElement(textElement.get());
+        this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
+        this->page->fireElementChanged(textElement.get());
+        undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, textElement.release()));
     }
-
-    if (this->cursorVisible) {
-        xoj::util::CairoSaveGuard saveGuard(cr);
-
-        cairo_set_operator(cr, CAIRO_OPERATOR_DIFFERENCE);
-        cairo_set_source_rgb(cr, 1, 1, 1);
-        cairo_rectangle(cr, cursorBox.x, cursorBox.y, cursorBox.width, cursorBox.height);
-        cairo_fill(cr);
-    }
-
-    return cursorBox;
 }
 
-void TextEditor::paint(cairo_t* cr, double zoom) {
-    GdkRGBA selectionColor = this->gui->getSelectionColor();
+void TextEditor::initializeEditionAt(double x, double y) {
+    // Is there already a textfield?
+    Text* text = nullptr;
 
-    cairo_save(cr);
-
-    Util::cairo_set_source_rgbi(cr, this->text->getColor());
-
-    double x0 = this->text->getX();
-    double y0 = this->text->getY();
-    cairo_translate(cr, x0, y0);
-
-    // The cairo context might have changed. Update the pango layout
-    pango_cairo_update_layout(cr, this->layout.get());
-    // Workaround https://gitlab.gnome.org/GNOME/pango/-/issues/691
-    pango_context_set_matrix(pango_layout_get_context(this->layout.get()), nullptr);
-
-    this->setTextToPangoLayout(this->layout.get());
-
-    if (!this->preeditString) {
-        GtkTextIter start;
-        GtkTextIter end;
-        bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
-
-        if (hasSelection) {
-            auto selectionColorU16 = Util::GdkRGBA_to_ColorU16(selectionColor);
-            PangoAttribute* attrib =
-                    pango_attr_background_new(selectionColorU16.red, selectionColorU16.green, selectionColorU16.blue);
-            attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
-            attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
-
-            xoj::util::PangoAttrListSPtr attrlist(pango_attr_list_new(), xoj::util::adopt);
-            pango_attr_list_insert(attrlist.get(), attrib);  // attrlist takes ownership of attrib
-            pango_layout_set_attributes(this->layout.get(), attrlist.get());
-        } else {
-            // remove all attributes
-            PangoAttrList* attrlist = pango_attr_list_new();
-            pango_layout_set_attributes(this->layout.get(), attrlist);
-            pango_attr_list_unref(attrlist);
-            attrlist = nullptr;
+    // Should we reverse this loop to select the most recent text rather than the oldest?
+    for (Element* e: this->page->getSelectedLayer()->getElements()) {
+        if (e->getType() == ELEMENT_TEXT) {
+            GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
+            if (e->intersectsArea(&matchRect)) {
+                text = dynamic_cast<Text*>(e);
+                break;
+            }
         }
     }
 
-    pango_cairo_show_layout(cr, this->layout.get());
+    if (text == nullptr) {
+        ToolHandler* h = this->control->getToolHandler();
+        this->textElement = std::make_unique<Text>();
+        this->textElement->setColor(h->getColor());
+        this->textElement->setFont(control->getSettings()->getFont());
+        this->textElement->setX(x);
+        this->textElement->setY(y - this->textElement->getElementHeight() / 2);
 
-    {
-        auto cursorBox = drawCursor(cr, zoom);
+        if (auto audioController = control->getAudioController(); audioController && audioController->isRecording()) {
+            fs::path audioFilename = audioController->getAudioFilename();
+            size_t sttime = audioController->getStartTime();
+            size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
+            this->textElement->setTimestamp(milliseconds);
+            this->textElement->setAudioFilename(audioFilename);
+        }
+        this->originalTextElement = nullptr;
+    } else {
+        this->control->getWindow()->setFontButtonFont(text->getFont());
+        this->originalTextElement = text;
 
-        // Notify the IM of the app's window and cursor position.
-        double x1 = this->gui->getX();
-        double y1 = this->gui->getY();
-        GdkRectangle cursorRect;  // cursor position in window coordinates
-        cursorRect.x = static_cast<int>(zoom * x0 + x1 + zoom * cursorBox.x);
-        cursorRect.y = static_cast<int>(zoom * y0 + y1 + zoom * cursorBox.y);
-        cursorRect.height = static_cast<int>(zoom * cursorBox.height);
-        cursorRect.width = static_cast<int>(zoom * cursorBox.width);
-        gtk_im_context_set_cursor_location(this->imContext.get(), &cursorRect);
+        // The original code did not use clone here (but did the cloning by hand). Why?
+        this->textElement.reset(text->clone());
+
+        /*
+         * Original code
+         *
+        this->textElement = std::make_unique<Text>();
+        this->textElement->setX(text->getX());
+        this->textElement->setY(text->getY());
+        this->textElement->setColor(text->getColor());
+        this->textElement->setFont(text->getFont());
+        this->textElement->setText(text->getText());
+        this->textElement->setTimestamp(text->getTimestamp());
+        this->textElement->setAudioFilename(text->getAudioFilename());
+        **/
+
+        text->setInEditing(true);
+        this->page->fireElementChanged(text);
     }
-
-    cairo_restore(cr);
-
-    /*
-     * Draw the box around the text
-     *
-     * Set the line width independently of the zoom
-     */
-    cairo_set_line_width(cr, BORDER_WIDTH_IN_PIXELS / zoom);
-    gdk_cairo_set_source_rgba(cr, &selectionColor);
-
-    int w = 0;
-    int h = 0;
-    pango_layout_get_size(this->layout.get(), &w, &h);
-    double width = (static_cast<double>(w)) / PANGO_SCALE;
-    double height = (static_cast<double>(h)) / PANGO_SCALE;
-
-    cairo_rectangle(cr, x0 - PADDING_IN_PIXELS / zoom, y0 - PADDING_IN_PIXELS / zoom,
-                    width + 2 * PADDING_IN_PIXELS / zoom, height + 2 * PADDING_IN_PIXELS / zoom);
-    cairo_stroke(cr);
-
-    this->text->setWidth(width);
-    this->text->setHeight(height);
+    this->layout = this->textElement->createPangoLayout();
+    this->previousBoundingBox = Range(this->textElement->boundingRect());
+    this->replaceBufferContent(this->textElement->getText());
 }

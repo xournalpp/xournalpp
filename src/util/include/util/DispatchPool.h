@@ -80,6 +80,7 @@ public:
     }
 
     [[nodiscard]] bool empty() const { return pool.empty(); }
+    [[nodiscard]] const listener_type& front() const { return *pool.front(); }
 
 private:
     std::vector<listener_type*> pool;
