@@ -831,7 +831,7 @@ auto TextEditor::getSelection() const -> std::string {
     return s;
 }
 
-void TextEditor::copyToCliboard() const {
+void TextEditor::copyToClipboard() const {
     GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget, GDK_SELECTION_CLIPBOARD);
     gtk_text_buffer_copy_clipboard(this->buffer.get(), clipboard);
 }

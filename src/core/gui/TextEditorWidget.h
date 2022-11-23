@@ -86,7 +86,7 @@ static void gtk_xoj_int_txt_cut_clipboard(GtkWidget* widget) {
 
 static void gtk_xoj_int_txt_copy_clipboard(GtkWidget* widget) {
     GtkXojIntTxt* txt = GTK_XOJ_INT_TXT(widget);
-    txt->te->copyToCliboard();
+    txt->te->copyToClipboard();
 }
 
 static void gtk_xoj_int_txt_paste_clipboard(GtkWidget* widget) {

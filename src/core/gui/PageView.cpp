@@ -843,7 +843,7 @@ auto XojPageView::cut() -> bool {
 
 auto XojPageView::copy() -> bool {
     if (this->textEditor) {
-        this->textEditor->copyToCliboard();
+        this->textEditor->copyToClipboard();
         return true;
     }
     return false;

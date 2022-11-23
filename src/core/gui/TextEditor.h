@@ -52,7 +52,7 @@ public:
     void moveCursor(GtkMovementStep step, int count, bool extendSelection);
     void deleteFromCursor(GtkDeleteType type, int count);
     void backspace();
-    void copyToCliboard() const;
+    void copyToClipboard() const;
     void cutToClipboard();
     void pasteFromClipboard();
     std::string getSelection() const;
