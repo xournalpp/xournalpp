@@ -3,7 +3,7 @@
 #include <algorithm>  // for max
 #include <array>      // for array
 #include <cstdio>     // for fgets, pclose, popen, snprintf, FILE
-#include <iostream>   // for operator<<, basic_ostream, basic_ostream::...
+#include <sstream>   // for operator<<, basic_ostream, basic_ostream::...
 #include <string>     // for string
 
 #ifdef _WIN32

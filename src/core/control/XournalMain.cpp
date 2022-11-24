@@ -6,7 +6,7 @@
 #include <cstdio>     // for printf
 #include <cstdlib>    // for exit, size_t
 #include <exception>  // for exception
-#include <iostream>   // for operator<<, endl, basic_...
+#include <sstream>   // for operator<<, endl, basic_...
 #include <locale>     // for locale
 #include <memory>     // for unique_ptr, allocator
 #include <optional>   // for optional, nullopt

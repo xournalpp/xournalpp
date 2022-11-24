@@ -16,4 +16,4 @@
 
 namespace XournalMain {
 auto run(int argc, char** argv) -> int;
-}
+} // namespace XournalMain

@@ -118,9 +118,9 @@ void LatexController::findSelectedTexElement() {
         this->posx = rect.x;
         this->posy = rect.y;
 
-        if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
+        if (auto* img = dynamic_cast<TexImage*>(this->selectedElem); img) {
             this->initialTex = img->getText();
-        } else if (auto* txt = dynamic_cast<Text*>(this->selectedElem)) {
+        } else if (auto* txt = dynamic_cast<Text*>(this->selectedElem); img) {
             this->initialTex = "\\text{" + txt->getText() + "}";
         }
         this->imgwidth = this->selectedElem->getElementWidth();

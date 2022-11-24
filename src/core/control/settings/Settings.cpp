@@ -1144,9 +1144,7 @@ void Settings::setSidebarOnRight(bool right) {
     if (this->sidebarOnRight == right) {
         return;
     }
-
     this->sidebarOnRight = right;
-
     save();
 }
 
@@ -1156,9 +1154,7 @@ void Settings::setScrollbarOnLeft(bool right) {
     if (this->scrollbarOnLeft == right) {
         return;
     }
-
     this->scrollbarOnLeft = right;
-
     save();
 }
 
@@ -1168,9 +1164,7 @@ void Settings::setMenubarVisible(bool visible) {
     if (this->menubarVisible == visible) {
         return;
     }
-
     this->menubarVisible = visible;
-
     save();
 }
 
@@ -1180,9 +1174,7 @@ void Settings::setFilepathInTitlebarShown(const bool shown) {
     if (this->filepathShownInTitlebar == shown) {
         return;
     }
-
     this->filepathShownInTitlebar = shown;
-
     save();
 }
 
@@ -1192,9 +1184,7 @@ void Settings::setAutosaveTimeout(int autosave) {
     if (this->autosaveTimeout == autosave) {
         return;
     }
-
     this->autosaveTimeout = autosave;
-
     save();
 }
 
@@ -1204,9 +1194,7 @@ void Settings::setAutosaveEnabled(bool autosave) {
     if (this->autosaveEnabled == autosave) {
         return;
     }
-
     this->autosaveEnabled = autosave;
-
     save();
 }
 
@@ -1220,7 +1208,6 @@ void Settings::setAddVerticalSpaceAmount(int pixels) {
     if (this->addVerticalSpaceAmount == pixels) {
         return;
     }
-
     this->addVerticalSpaceAmount = pixels;
     save();
 }
@@ -1236,7 +1223,6 @@ void Settings::setAddHorizontalSpaceAmount(int pixels) {
     if (this->addHorizontalSpaceAmount == pixels) {
         return;
     }
-
     this->addHorizontalSpaceAmount = pixels;
     save();
 }
@@ -1252,7 +1238,6 @@ void Settings::setDrawDirModsRadius(int pixels) {
     if (this->drawDirModsRadius == pixels) {
         return;
     }
-
     this->drawDirModsRadius = pixels;
     save();
 }
@@ -1263,9 +1248,7 @@ void Settings::setStylusCursorType(StylusCursorType type) {
     if (this->stylusCursorType == type) {
         return;
     }
-
     this->stylusCursorType = type;
-
     save();
 }
 
@@ -1275,9 +1258,7 @@ void Settings::setIconTheme(IconTheme iconTheme) {
     if (this->iconTheme == iconTheme) {
         return;
     }
-
     this->iconTheme = iconTheme;
-
     save();
 }
 
@@ -1287,7 +1268,6 @@ void Settings::setHighlightPosition(bool highlight) {
     if (this->highlightPosition == highlight) {
         return;
     }
-
     this->highlightPosition = highlight;
     save();
 }
@@ -1295,37 +1275,41 @@ void Settings::setHighlightPosition(bool highlight) {
 auto Settings::getCursorHighlightColor() const -> Color { return this->cursorHighlightColor; }
 
 void Settings::setCursorHighlightColor(Color color) {
-    if (this->cursorHighlightColor != color) {
-        this->cursorHighlightColor = color;
-        save();
+    if (this->cursorHighlightColor == color) {
+        return;
     }
+    this->cursorHighlightColor = color;
+    save();
 }
 
 auto Settings::getCursorHighlightRadius() const -> double { return this->cursorHighlightRadius; }
 
 void Settings::setCursorHighlightRadius(double radius) {
-    if (this->cursorHighlightRadius != radius) {
-        this->cursorHighlightRadius = radius;
-        save();
+    if (this->cursorHighlightRadius == radius) {
+        return;
     }
+    this->cursorHighlightRadius = radius;
+    save();
 }
 
 auto Settings::getCursorHighlightBorderColor() const -> Color { return this->cursorHighlightBorderColor; }
 
 void Settings::setCursorHighlightBorderColor(Color color) {
-    if (this->cursorHighlightBorderColor != color) {
-        this->cursorHighlightBorderColor = color;
-        save();
+    if (this->cursorHighlightBorderColor == color) {
+        return;
     }
+    this->cursorHighlightBorderColor = color;
+    save();
 }
 
 auto Settings::getCursorHighlightBorderWidth() const -> double { return this->cursorHighlightBorderWidth; }
 
 void Settings::setCursorHighlightBorderWidth(double radius) {
     if (this->cursorHighlightBorderWidth != radius) {
-        this->cursorHighlightBorderWidth = radius;
-        save();
+        return;
     }
+    this->cursorHighlightBorderWidth = radius;
+    save();
 }
 
 auto Settings::isSnapRotation() const -> bool { return this->snapRotation; }
@@ -1334,7 +1318,6 @@ void Settings::setSnapRotation(bool b) {
     if (this->snapRotation == b) {
         return;
     }
-
     this->snapRotation = b;
     save();
 }
@@ -1352,7 +1335,6 @@ void Settings::setSnapGrid(bool b) {
     if (this->snapGrid == b) {
         return;
     }
-
     this->snapGrid = b;
     save();
 }
@@ -1377,7 +1359,6 @@ void Settings::setStrokeRecognizerMinSize(double value) {
     if (this->strokeRecognizerMinSize == value) {
         return;
     }
-
     this->strokeRecognizerMinSize = value;
     save();
 };
@@ -1388,7 +1369,6 @@ void Settings::setTouchDrawingEnabled(bool b) {
     if (this->touchDrawing == b) {
         return;
     }
-
     this->touchDrawing = b;
     save();
 }
@@ -1399,7 +1379,6 @@ void Settings::setGtkTouchInertialScrollingEnabled(bool b) {
     if (this->gtkTouchInertialScrolling == b) {
         return;
     }
-
     this->gtkTouchInertialScrolling = b;
     save();
 }
@@ -1409,7 +1388,6 @@ void Settings::setPressureGuessingEnabled(bool b) {
     if (this->pressureGuessing == b) {
         return;
     }
-
     this->pressureGuessing = b;
     save();
 }
@@ -1419,7 +1397,6 @@ void Settings::setMinimumPressure(double minimumPressure) {
     if (this->minimumPressure == minimumPressure) {
         return;
     }
-
     this->minimumPressure = minimumPressure;
     save();
 }
@@ -1429,7 +1406,6 @@ void Settings::setPressureMultiplier(double multiplier) {
     if (this->pressureMultiplier == multiplier) {
         return;
     }
-
     this->pressureMultiplier = multiplier;
     save();
 }
@@ -1440,9 +1416,7 @@ void Settings::setScrollbarHideType(ScrollbarHideType type) {
     if (this->scrollbarHideType == type) {
         return;
     }
-
     this->scrollbarHideType = type;
-
     save();
 }
 
@@ -1472,9 +1446,7 @@ void Settings::setDefaultSaveName(const string& name) {
     if (this->defaultSaveName == name) {
         return;
     }
-
     this->defaultSaveName = name;
-
     save();
 }
 
@@ -1484,9 +1456,7 @@ void Settings::setPageTemplate(const string& pageTemplate) {
     if (this->pageTemplate == pageTemplate) {
         return;
     }
-
     this->pageTemplate = pageTemplate;
-
     save();
 }
 
@@ -1496,9 +1466,7 @@ void Settings::setAudioFolder(fs::path audioFolder) {
     if (this->audioFolder == audioFolder) {
         return;
     }
-
     this->audioFolder = std::move(audioFolder);
-
     save();
 }
 
@@ -1508,9 +1476,7 @@ void Settings::setSizeUnit(const string& sizeUnit) {
     if (this->sizeUnit == sizeUnit) {
         return;
     }
-
     this->sizeUnit = sizeUnit;
-
     save();
 }
 
@@ -1536,7 +1502,6 @@ void Settings::setSizeUnitIndex(int sizeUnitId) {
     if (sizeUnitId < 0 || sizeUnitId >= XOJ_UNIT_COUNT) {
         sizeUnitId = 0;
     }
-
     setSizeUnit(XOJ_UNITS[sizeUnitId].name);
 }
 
@@ -1544,7 +1509,6 @@ void Settings::setShowPairedPages(bool showPairedPages) {
     if (this->showPairedPages == showPairedPages) {
         return;
     }
-
     this->showPairedPages = showPairedPages;
     save();
 }
@@ -1555,7 +1519,6 @@ void Settings::setPresentationMode(bool presentationMode) {
     if (this->presentationMode == presentationMode) {
         return;
     }
-
     this->presentationMode = presentationMode;
     save();
 }
@@ -1567,7 +1530,6 @@ void Settings::setPressureSensitivity(gboolean presureSensitivity) {
         return;
     }
     this->pressureSensitivity = presureSensitivity;
-
     save();
 }
 
@@ -1575,7 +1537,6 @@ void Settings::setPairsOffset(int numOffset) {
     if (this->numPairsOffset == numOffset) {
         return;
     }
-
     this->numPairsOffset = numOffset;
     save();
 }
@@ -1586,7 +1547,6 @@ void Settings::setViewColumns(int numColumns) {
     if (this->numColumns == numColumns) {
         return;
     }
-
     this->numColumns = numColumns;
     save();
 }
@@ -1598,7 +1558,6 @@ void Settings::setViewRows(int numRows) {
     if (this->numRows == numRows) {
         return;
     }
-
     this->numRows = numRows;
     save();
 }
@@ -1609,7 +1568,6 @@ void Settings::setViewFixedRows(bool viewFixedRows) {
     if (this->viewFixedRows == viewFixedRows) {
         return;
     }
-
     this->viewFixedRows = viewFixedRows;
     save();
 }
@@ -1620,7 +1578,6 @@ void Settings::setViewLayoutVert(bool vert) {
     if (this->layoutVertical == vert) {
         return;
     }
-
     this->layoutVertical = vert;
     save();
 }
@@ -1631,7 +1588,6 @@ void Settings::setViewLayoutR2L(bool r2l) {
     if (this->layoutRightToLeft == r2l) {
         return;
     }
-
     this->layoutRightToLeft = r2l;
     save();
 }
@@ -1642,7 +1598,6 @@ void Settings::setViewLayoutB2T(bool b2t) {
     if (this->layoutBottomToTop == b2t) {
         return;
     }
-
     this->layoutBottomToTop = b2t;
     save();
 }
@@ -1831,7 +1786,6 @@ void Settings::setTouchZoomStartThreshold(double threshold) {
     if (this->touchZoomStartThreshold == threshold) {
         return;
     }
-
     this->touchZoomStartThreshold = threshold;
     save();
 }
@@ -1842,7 +1796,6 @@ void Settings::setPDFPageRerenderThreshold(double threshold) {
     if (this->pageRerenderThreshold == threshold) {
         return;
     }
-
     this->pageRerenderThreshold = threshold;
     save();
 }

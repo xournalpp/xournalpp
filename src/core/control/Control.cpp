@@ -547,7 +547,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             moveSelectionToLayer(getCurrentPage()->getSelectedLayerId());
             break;
         case ACTION_MOVE_SELECTION_LAYER_DOWN:
-            if(this->getLayerController()->getCurrentLayerId() >= 2) {
+            if (this->getLayerController()->getCurrentLayerId() >= 2) {
                 // moveSelectionToLayer takes layer number (layerid - 1) not id
                 // therefor the new layer is "layerid - 1 - 1"
                 moveSelectionToLayer(getCurrentPage()->getSelectedLayerId() - 2);
@@ -2107,7 +2107,6 @@ void Control::changeColorOfSelection() {
 
         TextEditor* edit = getTextEditor();
 
-
         if (this->toolHandler->getToolType() == TOOL_TEXT && edit != nullptr) {
             // Todo move into selection
             undoRedo->addUndoAction(UndoActionPtr(edit->setColor(toolHandler->getColor())));
@@ -2338,7 +2337,6 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     // This is important because of the new .xopp format, where Xournal .xoj handled as import,
     // not as file to load
     settings->setLastSavePath(filepath.parent_path());
-
 
     fileLoaded(scrollToPage);
     return true;

@@ -12,10 +12,7 @@
 #include "util/PathUtil.h"   // for getConfigSubfolder
 #include "util/XojMsgBox.h"  // for XojMsgBox
 
-using namespace std;
-
 MetadataEntry::MetadataEntry(): valid(false), zoom(1), page(0), time(0) {}
-
 
 MetadataManager::MetadataManager(): metadata(nullptr) {}
 
@@ -58,10 +55,10 @@ auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool { return a.time > 
 /**
  * Load the metadata list (sorted)
  */
-auto MetadataManager::loadList() -> vector<MetadataEntry> {
+auto MetadataManager::loadList() -> std::vector<MetadataEntry> {
     auto folder = Util::getConfigSubfolder("metadata");
 
-    vector<MetadataEntry> data;
+    std::vector<MetadataEntry> data;
     try {
         for (auto const& f: fs::directory_iterator(folder)) {
             auto path = folder / f;
@@ -89,8 +86,8 @@ auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& fil
     MetadataEntry entry;
     entry.metadataFile = path;
 
-    string line;
-    ifstream infile(path);
+    std::string line;
+    std::ifstream infile(path);
 
     auto time = file.stem().string();
     entry.time = strtoll(time.c_str(), nullptr, 10);
@@ -106,7 +103,7 @@ auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& fil
         // Not valid
         return entry;
     }
-    istringstream iss(line);
+    std::istringstream iss(line);
     iss >> entry.path;
 
     if (!getline(infile, line) || line.length() < 6 || line.substr(0, 5) != "page=") {
@@ -131,7 +128,7 @@ auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& fil
  * Get the metadata for a file
  */
 auto MetadataManager::getForFile(fs::path const& file) -> MetadataEntry {
-    vector<MetadataEntry> files = loadList();
+    std::vector<MetadataEntry> files = loadList();
 
     MetadataEntry entry;
     for (const MetadataEntry& e: files) {
@@ -153,7 +150,7 @@ auto MetadataManager::getForFile(fs::path const& file) -> MetadataEntry {
  * Store metadata to file
  */
 void MetadataManager::storeMetadata(MetadataEntry* m) {
-    vector<MetadataEntry> files = loadList();
+    std::vector<MetadataEntry> files = loadList();
     for (const MetadataEntry& e: files) {
         if (e.path == m->path) {
             // This is an old entry with the same path
@@ -166,7 +163,7 @@ void MetadataManager::storeMetadata(MetadataEntry* m) {
     path /= std::to_string(time);
     path += ".metadata";
 
-    ofstream out(path);
+    std::ofstream out(path);
     out << "XOJ-METADATA/1.0\n";
     out << m->path << "\n";
     out << "page=" << m->page << "\n";

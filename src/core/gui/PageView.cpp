@@ -512,7 +512,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
         this->textEditor->selectAtCursor(TextEditor::SelectType::WORD);
     } else if (toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT) {
         auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
-        if (auto* selection = pdfToolbox->getSelection()) {
+        if (auto* selection = pdfToolbox->getSelection(); selection) {
             pdfToolbox->selectionStyle = XojPdfPageSelectionStyle::Word;
             selection->currentPos(x, y, pdfToolbox->selectionStyle);
         }
@@ -546,7 +546,7 @@ auto XojPageView::onButtonTriplePressEvent(const PositionInputData& pos) -> bool
         this->textEditor->selectAtCursor(TextEditor::SelectType::PARAGRAPH);
     } else if (toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT) {
         auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
-        if (auto* selection = pdfToolbox->getSelection()) {
+        if (auto* selection = pdfToolbox->getSelection(); selection) {
             pdfToolbox->selectionStyle = XojPdfPageSelectionStyle::Line;
             selection->currentPos(x, y, pdfToolbox->selectionStyle);
         }
@@ -661,7 +661,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     }
 
     auto* pdfToolbox = control->getWindow()->getPdfToolbox();
-    if (auto* selection = pdfToolbox->getSelection()) {
+    if (auto* selection = pdfToolbox->getSelection(); selection) {
         if (!selection->isFinalized() && selection->finalizeSelectionAndRepaint(pdfToolbox->selectionStyle)) {
             // Selection was created, so reposition the toolbox and display.
             showPdfToolbox(pos);

@@ -113,7 +113,7 @@ public:
      * @brief Register to a new dispatch pool. Unregisters from any pool the listener was previously registered to.
      */
     void registerToPool(const std::shared_ptr<pool_type>& newpool) {
-        if (auto p = this->pool.lock()) {
+        if (auto p = this->pool.lock(); p) {
             p->remove(static_cast<T*>(this));
         }
         newpool->add(static_cast<T*>(this));
@@ -124,7 +124,7 @@ public:
      * @brief Unregisters from the current pool (if any).
      */
     void unregisterFromPool() {
-        if (auto p = this->pool.lock()) {
+        if (auto p = this->pool.lock(); p) {
             p->remove(static_cast<T*>(this));
         }
         this->pool.reset();

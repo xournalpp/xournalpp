@@ -146,7 +146,7 @@ void LatexSettingsPanel::checkDeps() {
             std::string sample = LatexGenerator::templateSub(settings.defaultText, templ, Colors::black);
             auto const& tmpDir = Util::getTmpDirSubfolder("tex");
             auto result = LatexGenerator(settings).asyncRun(tmpDir, sample);
-            if (auto* proc = std::get_if<GSubprocess*>(&result)) {
+            if (auto* proc = std::get_if<GSubprocess*>(&result); proc) {
                 GError* err = nullptr;
                 if (g_subprocess_wait_check(*proc, nullptr, &err)) {
                     msg = _("Sample LaTeX file generated successfully.");
@@ -156,7 +156,7 @@ void LatexSettingsPanel::checkDeps() {
                     g_error_free(err);
                 }
                 g_object_unref(*proc);
-            } else if (auto* err = std::get_if<LatexGenerator::GenError>(&result)) {
+            } else if (auto* err = std::get_if<LatexGenerator::GenError>(&result); err) {
                 msg = err->message;
             }
         }

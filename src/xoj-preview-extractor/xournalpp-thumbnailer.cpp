@@ -87,7 +87,7 @@ fs::path findAppIcon() {
     // $HOME/.icons
     basedirs.emplace_back(fs::u8path(g_get_home_dir()) / ".icons");
     // $XDG_DATA_DIRS/icons
-    if (const char* datadirs = g_getenv("XDG_DATA_DIRS")) {
+    if (const char* datadirs = g_getenv("XDG_DATA_DIRS"); datadirs) {
         std::string dds = datadirs;
         std::string::size_type lastp = 0;
         std::string::size_type p;

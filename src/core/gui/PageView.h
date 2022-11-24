@@ -45,7 +45,7 @@ class TexImage;
 namespace xoj::view {
 class OverlayView;
 class ToolView;
-}
+} // namespace xoj::view
 
 class XojPageView: public LegacyRedrawable, public PageListener, public xoj::view::Repaintable {
 public:

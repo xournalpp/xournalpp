@@ -31,11 +31,11 @@ class PositionInputData;
 namespace xoj::util {
 template <class T>
 class DispatchPool;
-}
+} // namespace xoj::util
 
 namespace xoj::view {
 class ShapeToolView;
-};
+}; // namespace xoj::view
 
 enum DIRSET_MODIFIERS { NONE = 0, SET = 1, SHIFT = 1 << 1, CONTROL = 1 << 2 };
 

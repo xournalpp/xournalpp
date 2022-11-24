@@ -19,4 +19,4 @@ class Document;
 
 namespace PrintHandler {
 void print(Document* doc, size_t currentPage, GtkWindow* parent);
-}
+} // namespace PrintHandler
