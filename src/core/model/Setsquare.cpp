@@ -12,17 +12,30 @@ Setsquare::Setsquare(double height, double rotation, double x, double y): Geomet
 
 Setsquare::~Setsquare() { viewPool->dispatchAndClear(xoj::view::SetsquareView::FINALIZATION_REQUEST, Range()); }
 
-void Setsquare::notify() const {
-    double cs = std::cos(rotation);
-    double si = std::sin(rotation);
-    double h = height * CM;
+auto Setsquare::getToolRange(bool transformed) const -> Range {
+    const auto h = height * CM;
     Range rg;
-    rg.addPoint(translationX + cs * h, translationY - si * h);
-    rg.addPoint(translationX - cs * h, translationY + si * h);
-    rg.addPoint(translationX - si * h, translationY + cs * h);
+    if (transformed) {
+        const auto cs = std::cos(rotation);
+        const auto si = std::sin(rotation);
+        rg.addPoint(translationX + cs * h, translationY - si * h);
+        rg.addPoint(translationX - cs * h, translationY + si * h);
+        rg.addPoint(translationX - si * h, translationY + cs * h);
+    } else {
+        rg.addPoint(h, 0);
+        rg.addPoint(-h, 0);
+        rg.addPoint(0, h);
+    }
+    return rg;
+}
 
+void Setsquare::notify(bool resetMask) const {
+    if (resetMask) {
+        viewPool->dispatch(xoj::view::GeometryToolView::RESET_MASK);
+    }
     viewPool->dispatch(xoj::view::SetsquareView::UPDATE_VALUES, this->getHeight(), this->getRotation(),
                        this->getMatrix());
+    Range rg = this->getToolRange(true);
     viewPool->dispatch(xoj::view::SetsquareView::FLAG_DIRTY_REGION, this->computeRepaintRange(rg));
     handlerPool->dispatch(SetsquareInputHandler::UPDATE_VALUES, this->getHeight(), this->getRotation(),
                           this->getTranslationX(), this->getTranslationY());
