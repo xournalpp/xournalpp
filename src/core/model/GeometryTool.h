@@ -95,4 +95,16 @@ protected:
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::GeometryToolView>> viewPool;
     std::shared_ptr<xoj::util::DispatchPool<GeometryToolHandler>> handlerPool;
+
+    /**
+     * @brief Bounding box of the geometry tool and stroke after its last update
+     */
+    mutable Range lastRepaintRange;
+
+protected:
+    /**
+     * @brief computes the repaint range by uniting the stroke's repaint range with the geometry tool repaint range
+     * @param rg the geometry tool repaint range
+     */
+    Range computeRepaintRange(Range rg) const;
 };

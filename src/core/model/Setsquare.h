@@ -48,10 +48,4 @@ public:
     static constexpr double INITIAL_HEIGHT = 8.0;
     static constexpr double INITIAL_X = 21. * HALF_CM;
     static constexpr double INITIAL_Y = 15. * HALF_CM;
-
-private:
-    /**
-     * @brief Bounding box of the setsquare and stroke after its last update
-     */
-    mutable Range lastRepaintRange;
 };

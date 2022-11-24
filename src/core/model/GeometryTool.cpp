@@ -43,3 +43,14 @@ auto GeometryTool::getHandlerPool() const -> const std::shared_ptr<xoj::util::Di
 auto GeometryTool::getStroke() const -> Stroke* { return this->stroke; }
 
 void GeometryTool::setStroke(Stroke* s) { this->stroke = s; }
+
+auto GeometryTool::computeRepaintRange(Range rg) const -> Range {
+    Range lastRange = this->lastRepaintRange;
+    if (this->stroke) {
+        rg.addPoint(this->stroke->getX(), this->stroke->getY());
+        rg.addPoint(this->stroke->getX() + this->stroke->getElementWidth(),
+                    this->stroke->getY() + this->stroke->getElementHeight());
+    }
+    this->lastRepaintRange = rg;
+    return rg.unite(lastRange);
+}
