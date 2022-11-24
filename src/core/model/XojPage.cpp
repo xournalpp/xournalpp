@@ -10,9 +10,11 @@
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height): width(width), height(height), bgType(PageTypeFormat::Lined) {
-    // ensure at least one valid layer exists
-    this->addLayer(new Layer());
+XojPage::XojPage(double width, double height, bool rawCreate): width(width), height(height), bgType(PageTypeFormat::Lined) {
+    if (!rawCreate) {
+        // ensure at least one valid layer exists
+        this->addLayer(new Layer());
+    }
 }
 
 XojPage::~XojPage() {
@@ -32,7 +34,6 @@ XojPage::XojPage(XojPage const& page):
     std::transform(begin(page.layer), end(page.layer), std::back_inserter(this->layer),
                    [](auto* layer) { return layer->clone(); });
     // ensure at least one valid layer exists
-    // (for files before refactor to always valid layer)
     if (this->layer.empty()) {
         this->addLayer(new Layer());
     }
