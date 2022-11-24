@@ -10,36 +10,37 @@
 #include "undo/InsertUndoAction.h"
 
 using xoj::util::Rectangle;
-GeometryToolController::GeometryToolController(XojPageView* view, GeometryTool* s): view(view), s(s) {}
+GeometryToolController::GeometryToolController(XojPageView* view, GeometryTool* geometryTool):
+        view(view), geometryTool(geometryTool) {}
 
 GeometryToolController::~GeometryToolController() = default;
 
 void GeometryToolController::move(double x, double y) {
-    s->setTranslationX(s->getTranslationX() + x);
-    s->setTranslationY(s->getTranslationY() + y);
-    s->notify();
+    geometryTool->setTranslationX(geometryTool->getTranslationX() + x);
+    geometryTool->setTranslationY(geometryTool->getTranslationY() + y);
+    geometryTool->notify();
 }
 
 void GeometryToolController::rotate(double da, double cx, double cy) {
-    s->setRotation(s->getRotation() + da);
-    const auto offsetX = s->getTranslationX() - cx;
-    const auto offsetY = s->getTranslationY() - cy;
+    geometryTool->setRotation(geometryTool->getRotation() + da);
+    const auto offsetX = geometryTool->getTranslationX() - cx;
+    const auto offsetY = geometryTool->getTranslationY() - cy;
     const auto mx = offsetX * cos(da) - offsetY * sin(da);
     const auto my = offsetX * sin(da) + offsetY * cos(da);
-    s->setTranslationX(cx + mx);
-    s->setTranslationY(cy + my);
-    s->notify();
+    geometryTool->setTranslationX(cx + mx);
+    geometryTool->setTranslationY(cy + my);
+    geometryTool->notify();
 }
 
 void GeometryToolController::scale(double f, double cx, double cy) {
-    s->setHeight(s->getHeight() * f);
-    const auto offsetX = s->getTranslationX() - cx;
-    const auto offsetY = s->getTranslationY() - cy;
+    geometryTool->setHeight(geometryTool->getHeight() * f);
+    const auto offsetX = geometryTool->getTranslationX() - cx;
+    const auto offsetY = geometryTool->getTranslationY() - cy;
     const auto mx = offsetX * f;
     const auto my = offsetY * f;
-    s->setTranslationX(cx + mx);
-    s->setTranslationY(cy + my);
-    s->notify();
+    geometryTool->setTranslationX(cx + mx);
+    geometryTool->setTranslationY(cy + my);
+    geometryTool->notify();
 }
 
 
@@ -58,14 +59,14 @@ void GeometryToolController::addStrokeToLayer() {
     const Rectangle<double> rect{stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()};
     view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
     stroke = nullptr;
-    s->setStroke(nullptr);
+    geometryTool->setStroke(nullptr);
     xournal->getCursor()->updateCursor();
 }
 
 void GeometryToolController::initializeStroke() {
     const auto h = view->getXournal()->getControl()->getToolHandler();
     stroke = new Stroke();
-    s->setStroke(stroke);
+    geometryTool->setStroke(stroke);
     stroke->setWidth(h->getThickness());
     stroke->setColor(h->getColor());
     stroke->setFill(h->getFill());

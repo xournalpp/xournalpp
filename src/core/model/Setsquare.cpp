@@ -24,7 +24,6 @@ void Setsquare::notify() const {
         rg.addPoint(this->stroke->getX(), this->stroke->getY());
         rg.addPoint(this->stroke->getX() + this->stroke->getElementWidth(),
                     this->stroke->getY() + this->stroke->getElementHeight());
-        rg.addPadding(0.5 * this->stroke->getWidth());
     }
     Range repaintRange = rg.unite(this->lastRepaintRange);
     this->lastRepaintRange = rg;

@@ -22,7 +22,6 @@
 #include "GeometryToolView.h"
 
 class Stroke;
-class XojPageView;
 class OverlayBase;
 
 /**

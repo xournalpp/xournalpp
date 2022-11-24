@@ -10,23 +10,24 @@
 #include "undo/InsertUndoAction.h"  // for InsertUndoAction
 
 using xoj::util::Rectangle;
-SetsquareController::SetsquareController(XojPageView* view, Setsquare* s): GeometryToolController(view, s) {}
+SetsquareController::SetsquareController(XojPageView* view, Setsquare* setsquare):
+        GeometryToolController(view, setsquare) {}
 
 SetsquareController::~SetsquareController() = default;
 
 auto SetsquareController::getType() const -> std::string { return "setsquare"; }
 
 auto SetsquareController::posRelToSide(Leg leg, double x, double y) const -> utl::Point<double> {
-    cairo_matrix_t matrix = s->getMatrix();
+    cairo_matrix_t matrix = geometryTool->getMatrix();
     cairo_matrix_invert(&matrix);
     cairo_matrix_transform_point(&matrix, &x, &y);
     switch (leg) {
         case HYPOTENUSE:
             return utl::Point<double>(x, -y);
         case LEFT_LEG:
-            return utl::Point<double>((y + x) / sqrt(2.), (y - x - s->getHeight()) / sqrt(2.));
+            return utl::Point<double>((y + x) / sqrt(2.), (y - x - geometryTool->getHeight()) / sqrt(2.));
         case RIGHT_LEG:
-            return utl::Point<double>((y - x) / sqrt(2.), (y + x - s->getHeight()) / sqrt(2.));
+            return utl::Point<double>((y - x) / sqrt(2.), (y + x - geometryTool->getHeight()) / sqrt(2.));
         default:
             g_error("Invalid enum value: %d", leg);
     }
@@ -40,7 +41,7 @@ auto SetsquareController::isInsideGeometryTool(double x, double y, double border
 auto SetsquareController::getPointForPos(double xCoord) const -> utl::Point<double> {
     double x = xCoord;
     double y = 0.0;
-    cairo_matrix_t matrix = s->getMatrix();
+    cairo_matrix_t matrix = geometryTool->getMatrix();
     cairo_matrix_transform_point(&matrix, &x, &y);
 
     return utl::Point<double>(x, y);
@@ -55,7 +56,7 @@ void SetsquareController::createStroke(double x) {
         initializeStroke();
         stroke->addPoint(Point(p.x, p.y));
         stroke->addPoint(Point(p.x, p.y));  // doubled point
-        s->notify();
+        geometryTool->notify();
     } else {
         g_warning("No valid stroke from setsquare!");
     }
@@ -77,7 +78,7 @@ void SetsquareController::updateStroke(double x) {
 
     stroke->addPoint(Point(p1.x, p1.y));
     stroke->addPoint(Point(p2.x, p2.y));
-    s->notify();
+    geometryTool->notify();
 }
 
 void SetsquareController::updateRadius(double x, double y) {
@@ -88,18 +89,18 @@ void SetsquareController::updateRadius(double x, double y) {
     const auto p = posRelToSide(HYPOTENUSE, x, y);
     const auto rad = std::hypot(p.x, p.y);
 
-    if (rad >= s->getHeight() / std::sqrt(2.) - 1.15) {  // TODO
+    if (rad >= geometryTool->getHeight() / std::sqrt(2.) - 1.15) {  // TODO
         this->strokeAngle = std::atan2(p.y, p.x);
         stroke->addPoint(Point(x, y));
     } else {
-        cairo_matrix_t matrix = s->getMatrix();
+        cairo_matrix_t matrix = geometryTool->getMatrix();
         auto qx = rad * std::cos(this->strokeAngle);
         auto qy = -rad * std::sin(this->strokeAngle);
         cairo_matrix_transform_point(&matrix, &qx, &qy);
 
         stroke->addPoint(Point(qx, qy));
     }
-    s->notify();
+    geometryTool->notify();
 }
 
 void SetsquareController::finalizeStroke() {
