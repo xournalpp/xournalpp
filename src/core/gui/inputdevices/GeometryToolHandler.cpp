@@ -131,9 +131,7 @@ auto GeometryToolHandler::handleTouchscreen(InputEvent const& event) -> bool {
             // to nullptr. If it isn't, then it is now the primary sequence!
             this->primarySequence = this->secondarySequence;
             this->secondarySequence = nullptr;
-
-            this->priLastAbs = this->secLastAbs;
-            this->priLastRel = this->secLastRel;
+            this->priLastPageRel = this->secLastPageRel;
         } else {
             this->secondarySequence = nullptr;
         }
@@ -214,11 +212,9 @@ auto GeometryToolHandler::handleKeyboard(InputEvent const& event) -> bool {
 
 void GeometryToolHandler::sequenceStart(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
-        this->priLastAbs = {event.absoluteX, event.absoluteY};
-        this->priLastRel = {event.relativeX, event.relativeY};
+        this->priLastPageRel = this->getCoords(event);
     } else {
-        this->secLastAbs = {event.absoluteX, event.absoluteY};
-        this->secLastRel = {event.relativeX, event.relativeY};
+        this->secLastPageRel = this->getCoords(event);
     }
     const auto page = controller->getPage();
 
@@ -237,22 +233,18 @@ void GeometryToolHandler::sequenceStart(InputEvent const& event) {
 void GeometryToolHandler::scrollMotion(InputEvent const& event) {
     // Will only be called if there is a single sequence (zooming handles two sequences)
     auto offset = [&]() {
-        auto absolutePoint = utl::Point{event.absoluteX, event.absoluteY};
+        auto coords = this->getCoords(event);
         if (event.sequence == this->primarySequence) {
-            const auto offset = absolutePoint - this->priLastAbs;
-            this->priLastAbs = absolutePoint;
+            const auto offset = coords - this->priLastPageRel;
+            this->priLastPageRel = coords;
             return offset;
         } else {
-            const auto offset = absolutePoint - this->secLastAbs;
-            this->secLastAbs = absolutePoint;
+            const auto offset = coords - this->secLastPageRel;
+            this->secLastPageRel = coords;
             return offset;
         }
     }();
-    const auto zoom = xournal->getZoom();
-    auto p = utl::Point(translationX, translationY);
-    p.x += offset.x / zoom;
-    p.y += offset.y / zoom;
-    const auto pos = Point(p.x, p.y);
+    const auto pos = Point(translationX + offset.x, translationY + offset.y);
     double minDist = SNAPPING_DISTANCE_TOLERANCE;
     const auto angleSetsquare = rotation;
     double diffAngle{NAN};
@@ -268,34 +260,32 @@ void GeometryToolHandler::scrollMotion(InputEvent const& event) {
         }
     }
     if (!std::isnan(diffAngle)) {
-        controller->rotate(diffAngle, p.x, p.y);
+        controller->rotate(diffAngle, pos.x, pos.y);
     }
-    controller->move(offset.x / zoom, offset.y / zoom);
+    controller->move(offset.x, offset.y);
 }
 
 void GeometryToolHandler::zoomStart() {
-    this->startZoomDistance = std::max(this->priLastAbs.distance(this->secLastAbs), ZOOM_DISTANCE_MIN);
+    this->startZoomDistance = std::max(this->priLastPageRel.distance(this->secLastPageRel), ZOOM_DISTANCE_MIN);
 
     // Whether we can ignore the zoom portion of the gesture (e.g. distance between touch points
     // hasn't changed enough).
     this->canBlockZoom = true;
 
-    this->lastZoomScrollCenter = (this->priLastAbs + this->secLastAbs) / 2.0;
-    const auto shift = this->secLastAbs - this->priLastAbs;
+    this->lastZoomScrollCenter = (this->priLastPageRel + this->secLastPageRel) / 2.0;
+    const auto shift = this->secLastPageRel - this->priLastPageRel;
     this->lastAngle = atan2(shift.y, shift.x);
     this->lastDist = this->startZoomDistance;
 }
 
 void GeometryToolHandler::zoomMotion(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
-        this->priLastAbs = {event.absoluteX, event.absoluteY};
-        this->priLastRel = {event.relativeX, event.relativeY};
+        this->priLastPageRel = this->getCoords(event);
     } else {
-        this->secLastAbs = {event.absoluteX, event.absoluteY};
-        this->secLastRel = {event.relativeX, event.relativeY};
+        this->secLastPageRel = this->getCoords(event);
     }
 
-    const double dist = std::max(this->priLastAbs.distance(this->secLastAbs), ZOOM_DISTANCE_MIN);
+    const double dist = std::max(this->priLastPageRel.distance(this->secLastPageRel), ZOOM_DISTANCE_MIN);
 
     const auto zoomTriggerThreshold = xournal->getControl()->getSettings()->getTouchZoomStartThreshold();
     const double zoomChangePercentage = std::abs(dist - startZoomDistance) / startZoomDistance * 100;
@@ -305,25 +295,22 @@ void GeometryToolHandler::zoomMotion(InputEvent const& event) {
         this->canBlockZoom = false;
     }
 
-    const auto center = (this->priLastAbs + this->secLastAbs) / 2;
-    const auto shift = this->secLastAbs - priLastAbs;
+    const auto center = (this->priLastPageRel + this->secLastPageRel) / 2;
+    const auto shift = this->secLastPageRel - this->priLastPageRel;
     const auto angle = atan2(shift.y, shift.x);
 
     const auto offset = center - lastZoomScrollCenter;
-    const auto zoom = xournal->getZoom();
-    controller->move(offset.x / zoom, offset.y / zoom);
+    controller->move(offset.x, offset.y);
     const auto angleIncrease = angle - lastAngle;
-    const auto centerRel = (this->priLastRel + this->secLastRel) / 2.0;
-    const auto coords = getCoords(centerRel.x, centerRel.y);
-    const auto secondary = getCoords(this->secLastRel.x, this->secLastRel.y);
-    if (controller->isInsideGeometryTool(secondary.x, secondary.y, 0.0)) {
-        controller->rotate(angleIncrease, coords.x, coords.y);
+    const auto centerRel = (this->priLastPageRel + this->secLastPageRel) / 2.0;
+    if (controller->isInsideGeometryTool(secLastPageRel.x, secLastPageRel.y, 0.0)) {
+        controller->rotate(angleIncrease, centerRel.x, centerRel.y);
     }  // allow moving without accidental rotation
     const auto scaleFactor = dist / lastDist;
     const auto h = height * scaleFactor;
 
     if (!canBlockZoom && h <= getMaxHeight() && h >= getMinHeight()) {
-        controller->scale(scaleFactor, coords.x, coords.y);
+        controller->scale(scaleFactor, centerRel.x, centerRel.y);
     }
 
     this->lastZoomScrollCenter = center;
@@ -331,16 +318,12 @@ void GeometryToolHandler::zoomMotion(InputEvent const& event) {
     this->lastDist = dist;
 }
 
-auto GeometryToolHandler::getCoords(double xCoord, double yCoord) -> utl::Point<double> {
+auto GeometryToolHandler::getCoords(InputEvent const& event) -> utl::Point<double> {
     const auto zoom = xournal->getZoom();
     const auto view = controller->getView();
-    const auto posX = xCoord - static_cast<double>(view->getX());
-    const auto posY = yCoord - static_cast<double>(view->getY());
+    const auto posX = event.relativeX - static_cast<double>(view->getX());
+    const auto posY = event.relativeY - static_cast<double>(view->getY());
     return utl::Point<double>(posX / zoom, posY / zoom);
-}
-
-auto GeometryToolHandler::getCoords(InputEvent const& event) -> utl::Point<double> {
-    return getCoords(event.relativeX, event.relativeY);
 }
 
 void GeometryToolHandler::blockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = true; }

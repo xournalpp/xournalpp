@@ -79,12 +79,10 @@ protected:
     utl::Point<double> lastZoomScrollCenter{};
 
     /**
-     * @brief The current absolute and relative positions of the first (primary) finger and second (secondary) finger
+     * @brief The current positions of the first (primary) finger and second (secondary) finger in page coordinates
      */
-    utl::Point<double> priLastAbs{-1.0, -1.0};
-    utl::Point<double> secLastAbs{-1.0, -1.0};
-    utl::Point<double> priLastRel{-1.0, -1.0};
-    utl::Point<double> secLastRel{-1.0, -1.0};
+    utl::Point<double> priLastPageRel{-1.0, -1.0};
+    utl::Point<double> secLastPageRel{-1.0, -1.0};
 
     /**
      * @brief The previous angle between the line through the positions of the two fingers and the x-axis
@@ -157,13 +155,6 @@ protected:
      * @param event an input event
      */
     utl::Point<double> getCoords(InputEvent const& event);
-
-    /**
-     * @brief the document coordinates derived from relative view coordinates
-     * @param relative x coordinate
-     * @param relative y coordinate
-     */
-    utl::Point<double> getCoords(double x, double y);
 
     virtual double getMinHeight() const = 0;
     virtual double getMaxHeight() const = 0;
