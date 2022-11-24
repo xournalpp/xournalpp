@@ -318,7 +318,7 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        this->page = std::make_unique<XojPage>(width, height, /*rawCreate*/ true);
+        this->page = std::make_unique<XojPage>(width, height);
 
         pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {
@@ -902,9 +902,9 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
     if (handler->pos == PARSER_POS_STARTED && strcmp(elementName, handler->endRootTag) == 0) {
         handler->pos = PASER_POS_FINISHED;
     } else if (handler->pos == PARSER_POS_IN_PAGE && strcmp(elementName, "page") == 0) {
-        std::cout << "inserted page with " << handler->page->getLayerCount() << " layers" << std::endl;
-        if (handler->page->getLayerCount() == 0) {
-            handler->page->addLayer(new Layer());
+        // handle unnecessary layer insertion in case of existing layers in file
+        if (handler->page->getLayerCount() > 1) {
+            handler->page->removeLayer(handler->page->getLayers()->at(0));
         }
         handler->pos = PARSER_POS_STARTED;
         handler->page = nullptr;

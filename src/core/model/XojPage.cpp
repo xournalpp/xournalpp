@@ -10,11 +10,9 @@
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height, bool rawCreate): width(width), height(height), bgType(PageTypeFormat::Lined) {
-    if (!rawCreate) {
-        // ensure at least one valid layer exists
-        this->addLayer(new Layer());
-    }
+XojPage::XojPage(double width, double height): width(width), height(height), bgType(PageTypeFormat::Lined) {
+    // ensure at least one valid layer exists
+    this->addLayer(new Layer());
 }
 
 XojPage::~XojPage() {

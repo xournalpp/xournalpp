@@ -29,7 +29,7 @@ public:
     /**
      * @param rawInsert ensures no additional correting for validity
     */
-    XojPage(double width, double height, bool rawCreate = false);
+    XojPage(double width, double height);
     ~XojPage() override;
     XojPage(const XojPage& page);
     void operator=(const XojPage& p) = delete;
