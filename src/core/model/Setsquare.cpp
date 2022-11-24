@@ -20,17 +20,10 @@ void Setsquare::notify() const {
     rg.addPoint(translationX + cs * h, translationY - si * h);
     rg.addPoint(translationX - cs * h, translationY + si * h);
     rg.addPoint(translationX - si * h, translationY + cs * h);
-    if (this->stroke) {
-        rg.addPoint(this->stroke->getX(), this->stroke->getY());
-        rg.addPoint(this->stroke->getX() + this->stroke->getElementWidth(),
-                    this->stroke->getY() + this->stroke->getElementHeight());
-    }
-    Range repaintRange = rg.unite(this->lastRepaintRange);
-    this->lastRepaintRange = rg;
 
     viewPool->dispatch(xoj::view::SetsquareView::UPDATE_VALUES, this->getHeight(), this->getRotation(),
                        this->getMatrix());
-    viewPool->dispatch(xoj::view::SetsquareView::FLAG_DIRTY_REGION, repaintRange);
+    viewPool->dispatch(xoj::view::SetsquareView::FLAG_DIRTY_REGION, this->computeRepaintRange(rg));
     handlerPool->dispatch(SetsquareInputHandler::UPDATE_VALUES, this->getHeight(), this->getRotation(),
                           this->getTranslationX(), this->getTranslationY());
 }
