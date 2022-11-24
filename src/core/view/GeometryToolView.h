@@ -15,11 +15,15 @@
 
 #include <cairo.h>  // for cairo_t
 
+#include "control/zoom/ZoomListener.h"
 #include "model/GeometryTool.h"  // for GeometryTool
 #include "view/overlays/BaseStrokeToolView.h"
 
+#include "Mask.h"
+
 class Stroke;
 class OverlayBase;
+class ZoomControl;
 
 /**
  * @brief A class that renders a geometry tool
@@ -33,11 +37,16 @@ constexpr double rad(int n) { return rad(static_cast<double>(n)); }
 constexpr double deg(double a) { return a * 180.0 / M_PI; }
 inline double cathete(double h, double o) { return std::sqrt(std::pow(h, 2) - std::pow(o, 2)); }
 
-class GeometryToolView: public ToolView, public xoj::util::Listener<GeometryToolView> {
+class GeometryToolView: public ToolView, public ZoomListener, public xoj::util::Listener<GeometryToolView> {
 
 public:
-    GeometryToolView(const GeometryTool* geometryTool, Repaintable* parent);
+    GeometryToolView(const GeometryTool* geometryTool, Repaintable* parent, ZoomControl* zoomControl);
     virtual ~GeometryToolView();
+
+    /**
+     * Zoom interface
+     */
+    void zoomChanged() override;
 
     /**
      * Listener interface
@@ -58,6 +67,10 @@ public:
      */
     virtual void deleteOn(FinalizationRequest, const Range& rg) = 0;
 
+    static constexpr struct ResetMaskRequest {
+    } RESET_MASK = {};
+    void on(ResetMaskRequest);
+
     /**
      * @brief draws the geometry tool and temporary stroke to a cairo context
      * @param cr the cairo context
@@ -74,10 +87,23 @@ private:
     virtual void drawGeometryTool(cairo_t* cr) const = 0;
 
     /**
+     * @brief draws displays (that may change with rotation and/or translation)
+     * of the geometry tool
+     *
+     * @param cr the cairo context drawn to
+     */
+    virtual void drawDisplays(cairo_t* cr) const = 0;
+
+    /**
      * @brief draws the temporary stroke to a cairo context
      * @param cr the cairo context drawn to
      */
     void drawTemporaryStroke(cairo_t* cr) const;
+
+    /**
+     * @brief Creates a mask for caching the drawing of the geometry tool (without stroke)
+     */
+    Mask createMask(cairo_t* targetCr) const;
 
 protected:
     /**
@@ -98,5 +124,9 @@ protected:
      * @param angle the rotation angle
      */
     void showTextCenteredAndRotated(cairo_t* cr, const std::string& text, double angle) const;
+
+private:
+    mutable Mask mask;
+    ZoomControl* zoomControl;
 };
 };  // namespace xoj::view

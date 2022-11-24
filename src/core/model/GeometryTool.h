@@ -68,7 +68,14 @@ public:
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::GeometryToolView>>& getViewPool() const;
     const std::shared_ptr<xoj::util::DispatchPool<GeometryToolHandler>>& getHandlerPool() const;
 
-    virtual void notify() const = 0;  // calls the update method of all observers
+    virtual void notify(bool resetMask = false) const = 0;  // calls the update method of all observers
+    /**
+     * @brief Returns the range for the tool alone (without stroke)
+     *
+     * @param transformed whether the range should be rotated and translated
+     */
+    virtual Range getToolRange(bool transformed) const = 0;
+
 
 protected:
     /**

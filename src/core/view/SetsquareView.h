@@ -23,6 +23,7 @@
 
 class Stroke;
 class OverlayBase;
+class ZoomControl;
 
 /**
  * @brief A class that renders a setsquare
@@ -44,7 +45,7 @@ class Repaintable;
 class SetsquareView: public GeometryToolView {
 
 public:
-    SetsquareView(const Setsquare* s, Repaintable* parent);
+    SetsquareView(const Setsquare* s, Repaintable* parent, ZoomControl* zoomControl);
     ~SetsquareView() override;
 
     void on(FlagDirtyRegionRequest, const Range& rg) override;
@@ -53,6 +54,7 @@ public:
 
 private:
     void drawGeometryTool(cairo_t* cr) const override;
+    void drawDisplays(cairo_t* cr) const override;
 
     double height = Setsquare::INITIAL_HEIGHT;
     double rotation = 0.;

@@ -40,7 +40,7 @@ void GeometryToolController::scale(double f, double cx, double cy) {
     const auto my = offsetY * f;
     geometryTool->setTranslationX(cx + mx);
     geometryTool->setTranslationY(cy + my);
-    geometryTool->notify();
+    geometryTool->notify(true);
 }
 
 

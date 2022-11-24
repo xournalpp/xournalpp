@@ -42,7 +42,8 @@ public:
 
     virtual ~Setsquare();
 
-    void notify() const override;  // calls the update method of all observers
+    void notify(bool resetMask) const override;  // calls the update method of all observers
+    Range getToolRange(bool transformed) const override;
 
     // parameters used when initially displaying setsquare on a page
     static constexpr double INITIAL_HEIGHT = 8.0;

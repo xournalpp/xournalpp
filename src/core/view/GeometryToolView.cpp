@@ -1,5 +1,6 @@
 #include "GeometryToolView.h"
 
+#include "control/zoom/ZoomControl.h"
 #include "model/GeometryTool.h"       // for GeometryTool
 #include "model/Stroke.h"             // for Stroke
 #include "util/raii/CairoWrappers.h"  // for CairoSaveGuard
@@ -10,14 +11,27 @@
 
 using namespace xoj::view;
 
-GeometryToolView::GeometryToolView(const GeometryTool* geometryTool, Repaintable* parent):
-        ToolView(parent), geometryTool(geometryTool) {}
+GeometryToolView::GeometryToolView(const GeometryTool* geometryTool, Repaintable* parent, ZoomControl* zoomControl):
+        ToolView(parent), geometryTool(geometryTool), zoomControl(zoomControl) {
+    zoomControl->addZoomListener(this);
+}
 
-GeometryToolView::~GeometryToolView() = default;
+GeometryToolView::~GeometryToolView() { zoomControl->removeZoomListener(this); }
 
 void GeometryToolView::draw(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
-    this->drawGeometryTool(cr);
+    cairo_save(cr);
+
+    if (!mask.isInitialized()) {
+        // Initialize the mask on first call, when the geometry tool changes size and when zooming
+        mask = createMask(cr);
+        this->drawGeometryTool(mask.get());
+    }
+    cairo_translate(cr, geometryTool->getTranslationX(), geometryTool->getTranslationY());
+    cairo_rotate(cr, geometryTool->getRotation());
+    mask.paintTo(cr);
+    cairo_restore(cr);
+    this->drawDisplays(cr);
     this->drawTemporaryStroke(cr);
 }
 
@@ -31,6 +45,15 @@ void GeometryToolView::drawTemporaryStroke(cairo_t* cr) const {
     }
 }
 
+auto GeometryToolView::createMask(cairo_t* targetCr) const -> Mask {
+    const double zoom = this->parent->getZoom();
+    const int dpiScaling = this->parent->getDPIScaling();
+    Range rg = geometryTool->getToolRange(false);
+    return Mask(cairo_get_target(targetCr), rg, zoom, dpiScaling, CAIRO_CONTENT_COLOR_ALPHA);
+}
+
+void GeometryToolView::on(ResetMaskRequest) { mask.reset(); }
+
 void GeometryToolView::showTextCenteredAndRotated(cairo_t* cr, const std::string& text, double angle) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_text_extents_t te;
@@ -41,4 +64,9 @@ void GeometryToolView::showTextCenteredAndRotated(cairo_t* cr, const std::string
     cairo_rotate(cr, rad(angle));
     cairo_rel_move_to(cr, -dx, -dy);
     cairo_text_path(cr, text.c_str());
+}
+
+void GeometryToolView::zoomChanged() {
+    // If zooming in, the mask needs redrawing. Otherwise it gets blurry.
+    mask.reset();
 }

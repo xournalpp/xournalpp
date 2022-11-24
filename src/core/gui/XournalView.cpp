@@ -703,9 +703,11 @@ auto XournalView::getGeometryToolController() -> GeometryToolController* { retur
 
 void XournalView::makeGeometryTool(std::string tool) {
     auto view = getViewFor(control->getCurrentPageNo());
+    auto* zoomControl = this->getControl()->getZoomControl();
+
     if (tool == "setsquare") {
         auto setsquare = new Setsquare();
-        view->addOverlayView(std::make_unique<xoj::view::SetsquareView>(setsquare, view));
+        view->addOverlayView(std::make_unique<xoj::view::SetsquareView>(setsquare, view, zoomControl));
         this->geometryTool = setsquare;
         this->geometryToolController = new SetsquareController(view, setsquare);
         this->geometryToolHandler = new SetsquareInputHandler(this, this->geometryToolController);
