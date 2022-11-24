@@ -19,7 +19,6 @@
 #include "view/overlays/BaseStrokeToolView.h"
 
 class Stroke;
-class XojPageView;
 class OverlayBase;
 
 /**
@@ -37,7 +36,7 @@ inline double cathete(double h, double o) { return std::sqrt(std::pow(h, 2) - st
 class GeometryToolView: public ToolView, public xoj::util::Listener<GeometryToolView> {
 
 public:
-    GeometryToolView(const GeometryTool* s, Repaintable* parent);
+    GeometryToolView(const GeometryTool* geometryTool, Repaintable* parent);
     virtual ~GeometryToolView();
 
     /**
@@ -84,7 +83,7 @@ protected:
     /**
      * @brief the underlying GeometryTool
      */
-    const GeometryTool* s;
+    const GeometryTool* geometryTool;
 
     /**
      * @brief The stroke drawn aligned to the longest side of the GeometryTool or ending at the midpoint of the longest
@@ -98,6 +97,6 @@ protected:
      * @param text the text string
      * @param angle the rotation angle
      */
-    void showTextCenteredAndRotated(cairo_t* cr, std::string text, double angle) const;
+    void showTextCenteredAndRotated(cairo_t* cr, const std::string& text, double angle) const;
 };
 };  // namespace xoj::view

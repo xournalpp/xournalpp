@@ -10,7 +10,8 @@
 
 using namespace xoj::view;
 
-GeometryToolView::GeometryToolView(const GeometryTool* s, Repaintable* parent): ToolView(parent), s(s) {}
+GeometryToolView::GeometryToolView(const GeometryTool* geometryTool, Repaintable* parent):
+        ToolView(parent), geometryTool(geometryTool) {}
 
 GeometryToolView::~GeometryToolView() = default;
 
@@ -20,17 +21,17 @@ void GeometryToolView::draw(cairo_t* cr) const {
     this->drawTemporaryStroke(cr);
 }
 
-bool GeometryToolView::isViewOf(const OverlayBase* overlay) const { return overlay == this->s; }
+bool GeometryToolView::isViewOf(const OverlayBase* overlay) const { return overlay == this->geometryTool; }
 
 void GeometryToolView::drawTemporaryStroke(cairo_t* cr) const {
-    if (s->getStroke()) {
+    if (geometryTool->getStroke()) {
         auto context = xoj::view::Context::createDefault(cr);
-        xoj::view::StrokeView strokeView(s->getStroke());
+        xoj::view::StrokeView strokeView(geometryTool->getStroke());
         strokeView.draw(context);
     }
 }
 
-void GeometryToolView::showTextCenteredAndRotated(cairo_t* cr, std::string text, double angle) const {
+void GeometryToolView::showTextCenteredAndRotated(cairo_t* cr, const std::string& text, double angle) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_text_extents_t te;
     cairo_text_extents(cr, text.c_str(), &te);

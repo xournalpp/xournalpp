@@ -8,10 +8,10 @@
 
 #include <glib.h>  // for g_error, g_warning
 
-#include "gui/XournalView.h"          // for XournalView
 #include "model/Setsquare.h"          // for Setsquare
 #include "model/Stroke.h"             // for Stroke
 #include "util/raii/CairoWrappers.h"  // for CairoSaveGuard
+#include "view/Repaintable.h"         // for Repaintable
 #include "view/View.h"                // for Context
 
 #include "StrokeView.h"  // for StrokeView
@@ -37,8 +37,8 @@ constexpr int OFFSET_FROM_SEMICIRCLE = 2.;
 constexpr double ZERO_MARK_TICK = .5;
 constexpr int SKIPPED_HMARKS = 8;
 
-SetsquareView::SetsquareView(const Setsquare* s, Repaintable* parent): GeometryToolView(s, parent) {
-    this->registerToPool(s->getViewPool());
+SetsquareView::SetsquareView(const Setsquare* setsquare, Repaintable* parent): GeometryToolView(setsquare, parent) {
+    this->registerToPool(setsquare->getViewPool());
 }
 
 SetsquareView::~SetsquareView() noexcept { this->unregisterFromPool(); };

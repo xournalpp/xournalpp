@@ -29,7 +29,7 @@ class Stroke;
 
 class GeometryToolController {
 public:
-    GeometryToolController(XojPageView* view, GeometryTool* s);
+    GeometryToolController(XojPageView* view, GeometryTool* geometryTool);
     ~GeometryToolController();
 
 public:
@@ -86,7 +86,7 @@ public:
     /**
      * @brief the underlying geometry tool
      */
-    GeometryTool* s;
+    GeometryTool* geometryTool;
 
     /**
      * @brief The stroke drawn
