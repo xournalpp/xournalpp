@@ -26,9 +26,6 @@
 
 class XojPage: public PageHandler {
 public:
-    /**
-     * @param rawInsert ensures no additional correting for validity
-    */
     XojPage(double width, double height);
     ~XojPage() override;
     XojPage(const XojPage& page);
