@@ -89,7 +89,7 @@ void SetsquareController::updateRadius(double x, double y) {
     const auto p = posRelToSide(HYPOTENUSE, x, y);
     const auto rad = std::hypot(p.x, p.y);
 
-    if (rad >= geometryTool->getHeight() / std::sqrt(2.) - 1.15) {  // TODO
+    if (rad >= geometryTool->getHeight() / std::sqrt(2.) - 1.15 || p.y > 0) {  // TODO
         this->strokeAngle = std::atan2(p.y, p.x);
         stroke->addPoint(Point(x, y));
     } else {
