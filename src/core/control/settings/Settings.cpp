@@ -1305,7 +1305,7 @@ void Settings::setCursorHighlightBorderColor(Color color) {
 auto Settings::getCursorHighlightBorderWidth() const -> double { return this->cursorHighlightBorderWidth; }
 
 void Settings::setCursorHighlightBorderWidth(double radius) {
-    if (this->cursorHighlightBorderWidth != radius) {
+    if (this->cursorHighlightBorderWidth == radius) {
         return;
     }
     this->cursorHighlightBorderWidth = radius;
