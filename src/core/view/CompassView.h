@@ -73,6 +73,26 @@ private:
      */
     int maxHmark = 10 * Compass::INITIAL_HEIGHT;
 
+    /**
+     * @brief after how many degrees should a new small angular mark be drawn
+     */
+    int angularOffset = 1;
+
+    /**
+     * @brief after how many degrees should a new big angular mark be drawn and a number be added
+     */
+    int angularCaptionOffset = 30;
+
+    /**
+     * @brief should the numbers along the measuring marks be drawn
+     */
+    bool drawRadialCaption = true;
+
+    /**
+     * @brief should the display of the rotation be drawn
+     */
+    bool drawRotationDisplay = true;
+
     void drawHorizontalMarks(cairo_t* cr) const;
     void drawAngularMarks(cairo_t* cr) const;
     void drawOutline(cairo_t* cr) const;
