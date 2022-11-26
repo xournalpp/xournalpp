@@ -178,6 +178,10 @@ auto GeometryToolHandler::handleKeyboard(InputEvent const& event) -> bool {
                 }
                 break;
             }
+            case GDK_KEY_m: {
+                controller->markPoint(translationX, translationY);
+                return true;
+            }
         }
 
         if (xdir != 0 || ydir != 0) {
