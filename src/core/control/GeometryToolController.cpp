@@ -10,6 +10,9 @@
 #include "undo/InsertUndoAction.h"
 
 using xoj::util::Rectangle;
+
+constexpr double MARK_SIZE = 2.;
+
 GeometryToolController::GeometryToolController(XojPageView* view, GeometryTool* geometryTool):
         view(view), geometryTool(geometryTool) {}
 
@@ -43,6 +46,30 @@ void GeometryToolController::scale(double f, double cx, double cy) {
     geometryTool->notify(true);
 }
 
+void GeometryToolController::markPoint(double x, double y) {
+    const auto control = view->getXournal()->getControl();
+    const auto h = control->getToolHandler();
+    Stroke* cross = new Stroke();
+    cross->setWidth(h->getToolThickness(TOOL_PEN)[TOOL_SIZE_FINE]);
+    cross->setColor(h->getTool(TOOL_PEN).getColor());
+    cross->addPoint(Point(x + MARK_SIZE, y + MARK_SIZE));
+    cross->addPoint(Point(x - MARK_SIZE, y - MARK_SIZE));
+    cross->addPoint(Point(x, y));
+    cross->addPoint(Point(x + MARK_SIZE, y - MARK_SIZE));
+    cross->addPoint(Point(x - MARK_SIZE, y + MARK_SIZE));
+
+    const auto page = view->getPage();
+    control->getLayerController()->ensureLayerExists(page);
+    const auto layer = page->getSelectedLayer();
+
+    const auto undo = control->getUndoRedoHandler();
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, cross));
+
+    layer->addElement(cross);
+
+    const Rectangle<double> rect{cross->getX(), cross->getY(), cross->getElementWidth(), cross->getElementHeight()};
+    view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
+}
 
 void GeometryToolController::addStrokeToLayer() {
     const auto xournal = view->getXournal();

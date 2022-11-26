@@ -57,6 +57,13 @@ public:
     void scale(double f, double cx, double cy);
 
     /**
+     * @brief marks a point with a "x"
+     * @param x the x-coordinate of the point (in document coordinates)
+     * @param y the y-coordinate of the point (in document coordinates)
+     */
+    void markPoint(double x, double y);
+
+    /**
      * @brief adds the stroke to the layer and rerenders the stroke area
      */
     void addStrokeToLayer();
