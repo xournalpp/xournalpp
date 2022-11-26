@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.1.4~dev (Unreleased)
+
 ## 1.1.3
 
 * Fixed a crash that occurs when trying to add/edit/test LaTeX if LaTeX is not found (#4334, #4345)
