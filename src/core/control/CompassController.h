@@ -65,6 +65,13 @@ public:
     utl::Point<double> getPointForAngle(double a) const;
 
     /**
+     * @brief the point (in document coordinates) for a given radius on the marked radius of the compass
+     * @param r the x-coordinate with respect to a coordinate system, in which the positive x-axis
+     * coincides with the marked radius and the origin lies in the center of the compass
+     */
+    utl::Point<double> getPointForRadius(double r) const;
+
+    /**
      * @brief creates a stroke starting at the given angle of the outline of the compass
      * @param a the angle of the point on the outline of the compass (when unrotated and untranslated)
      */
@@ -83,11 +90,42 @@ public:
     void finalizeOutlineStroke();
 
     /**
+     * @brief finishes the stroke aligned to the marked radius of the compass
+     */
+    void finalizeRadialStroke();
+
+    /**
+     * @brief creates a stroke starting at the given point of the marked radius of the compass
+     * @param x the x-coordinate with respect to the marked radius
+     */
+    void createRadialStroke(double x);
+
+    /**
+     * @brief updates the stroke near the marked radius of the compass
+     * @param x the x-coordinate with respect to the marked radius
+     */
+    void updateRadialStroke(double x);
+
+    /**
      * checks whether a stroke near the outline already exists
      */
     bool existsOutlineStroke();
 
+    /**
+     * checks whether a radius already exists
+     */
+    bool existsRadialStroke();
+
 private:
+    /**
+     * @brief when a stroke near the radius with the measuring marks
+     * is drawn, the minimal and maximal radii are saved in
+     * the variables radiusMax and radiusMin
+     *
+     */
+    double radiusMax = std::numeric_limits<double>::lowest();
+    double radiusMin = std::numeric_limits<double>::max();
+
     /**
      * @brief when a stroke near the outline of the compass is drawn, the minimal and maximal
      * angles of the point to be drawn (with respect to an unrotated, and untranslated coordinate system)

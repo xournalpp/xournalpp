@@ -35,6 +35,15 @@ auto CompassController::getPointForAngle(double a) const -> utl::Point<double> {
     return utl::Point<double>(x, y);
 }
 
+auto CompassController::getPointForRadius(double r) const -> utl::Point<double> {
+    cairo_matrix_t matrix = geometryTool->getMatrix();
+    double x = r;
+    double y = 0.;
+    cairo_matrix_transform_point(&matrix, &x, &y);
+
+    return utl::Point<double>(x, y);
+}
+
 void CompassController::createOutlineStroke(double a) {
     if (!std::isnan(a)) {
         angleMax = a;
@@ -47,6 +56,21 @@ void CompassController::createOutlineStroke(double a) {
         geometryTool->notify();
     } else {
         g_warning("No valid stroke from compass!");
+    }
+}
+
+void CompassController::createRadialStroke(double x) {
+    if (!std::isnan(x)) {
+        radiusMax = x;
+        radiusMin = x;
+
+        const utl::Point<double> p = posRelToSide(x, 0.);
+        initializeStroke();
+        stroke->addPoint(Point(p.x, p.y));
+        stroke->addPoint(Point(p.x, p.y));  // doubled point
+        geometryTool->notify();
+    } else {
+        g_warning("No valid radius from compass!");
     }
 }
 
@@ -72,10 +96,30 @@ void CompassController::updateOutlineStroke(double x) {
     geometryTool->notify();
 }
 
+void CompassController::updateRadialStroke(double x) {
+    radiusMax = std::max(this->radiusMax, x);
+    radiusMin = std::min(this->radiusMin, x);
+    stroke->deletePointsFrom(0);
+    const utl::Point<double> p1 = getPointForRadius(radiusMin);
+    const utl::Point<double> p2 = getPointForRadius(radiusMax);
+
+    stroke->addPoint(Point(p1.x, p1.y));
+    stroke->addPoint(Point(p2.x, p2.y));
+    geometryTool->notify();
+}
+
 void CompassController::finalizeOutlineStroke() {
     angleMax = std::numeric_limits<double>::lowest();
     angleMin = std::numeric_limits<double>::max();
     addStrokeToLayer();
 }
 
+void CompassController::finalizeRadialStroke() {
+    radiusMax = std::numeric_limits<double>::lowest();
+    radiusMin = std::numeric_limits<double>::max();
+    addStrokeToLayer();
+}
+
 auto CompassController::existsOutlineStroke() -> bool { return angleMax != std::numeric_limits<double>::lowest(); }
+
+auto CompassController::existsRadialStroke() -> bool { return radiusMax != std::numeric_limits<double>::lowest(); }
