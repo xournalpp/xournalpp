@@ -22,6 +22,7 @@ CompassInputHandler::~CompassInputHandler() noexcept { this->unregisterFromPool(
 auto CompassInputHandler::handlePointer(InputEvent const& event) -> bool {
     const auto coords = getCoords(event);
     CompassController* compassController = static_cast<CompassController*>(controller);
+    const auto p = compassController->posRelToSide(coords.x, coords.y);
 
     const auto toolHandler = xournal->getControl()->getToolHandler();
     switch (toolHandler->getToolType()) {
@@ -31,21 +32,27 @@ auto CompassInputHandler::handlePointer(InputEvent const& event) -> bool {
                 if (controller->isInsideGeometryTool(coords.x, coords.y, 0) &&
                     !controller->isInsideGeometryTool(coords.x, coords.y, -0.5)) {
                     // initialize range
-                    const auto p = compassController->posRelToSide(coords.x, coords.y);
                     lastProj = std::atan2(-p.y, p.x);
                     compassController->createOutlineStroke(lastProj);
+                    return true;
+                } else if (controller->isInsideGeometryTool(coords.x, coords.y, 0.) &&
+                           std::abs(compassController->posRelToSide(coords.x, coords.y).y) <= 0.5 &&
+                           std::abs(compassController->posRelToSide(coords.x, coords.y).x - 0.5 * height) <=
+                                   0.5 * height) {
+                    compassController->createRadialStroke(std::hypot(p.x, p.y));
                     return true;
                 }
                 return false;
             } else if (event.type == MOTION_EVENT) {
                 // update range and paint
                 if (compassController->existsOutlineStroke()) {
-                    const auto p = compassController->posRelToSide(coords.x, coords.y);
                     auto proj = std::atan2(-p.y, p.x);
                     proj = lastProj + std::remainder(proj - lastProj, 2 * M_PI);
                     compassController->updateOutlineStroke(proj);
                     lastProj = proj;
                     return true;
+                } else if (compassController->existsRadialStroke()) {
+                    compassController->updateRadialStroke(std::hypot(p.x, p.y));
                 }
                 return false;
             } else if (event.type == BUTTON_RELEASE_EVENT) {
@@ -53,6 +60,9 @@ auto CompassInputHandler::handlePointer(InputEvent const& event) -> bool {
                 if (compassController->existsOutlineStroke()) {
                     compassController->finalizeOutlineStroke();
                     lastProj = NAN;
+                    return true;
+                } else if (compassController->existsRadialStroke()) {
+                    compassController->finalizeRadialStroke();
                     return true;
                 }
             }
