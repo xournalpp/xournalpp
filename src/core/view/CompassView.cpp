@@ -18,6 +18,7 @@
 
 using namespace xoj::view;
 
+// all lengths are in centimeter
 constexpr double FONT_SIZE = .2;
 constexpr double CIRCLE_RAD = .3;
 constexpr double TICK_SMALL = .1;
@@ -45,6 +46,10 @@ void CompassView::on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m
     circlePos = height * RELATIVE_CIRCLE_POS - OFFSET_CIRCLE_POS;
     angularCaptionPos = height * RELATIVE_ANGULAR_CAPTION_POS;
     maxHmark = static_cast<int>(std::round(height * 10.0));
+    drawRotationDisplay = height >= 2.;
+    drawRadialCaption = height >= 1.5;
+    angularOffset = (height >= 2.) ? 1 : (height >= 1.2) ? 2 : (height >= 0.8) ? 5 : 10;
+    angularCaptionOffset = (height >= 3.) ? 30 : (height >= 1.5) ? 45 : (height >= 1.) ? 90 : 360;
 }
 
 void CompassView::deleteOn(CompassView::FinalizationRequest, const Range& rg) {
@@ -92,6 +97,9 @@ void CompassView::drawOutline(cairo_t* cr) const {
 }
 
 void CompassView::drawRotation(cairo_t* cr) const {
+    if (!drawRotationDisplay) {
+        return;
+    }
     xoj::util::CairoSaveGuard saveGuard(cr);
     // write the angle within a small circle
     std::stringstream ss;
@@ -108,12 +116,12 @@ void CompassView::drawRotation(cairo_t* cr) const {
 void CompassView::drawAngularMarks(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
 
-    for (int i = 0; i < 360; i++) {
+    for (int i = angularOffset; i < 360; i += angularOffset) {
         const double cs = std::cos(rad(i));
         const double si = std::sin(rad(i));
         const double tick = (i % 5 == 0) ? TICK_LARGE : TICK_SMALL;
         cairo_move_to(cr, this->height * cs, this->height * si);
-        if (i % 30 == 0) {
+        if (i % angularCaptionOffset == 0) {
             const double radTickEnd = (i == 270) ? (this->circlePos + 1.5 * CIRCLE_RAD) : (angularCaptionPos + 0.3);
             cairo_line_to(cr, radTickEnd * cs, radTickEnd * si);
             cairo_move_to(cr, angularCaptionPos * cs, angularCaptionPos * si);
@@ -134,7 +142,7 @@ void CompassView::drawHorizontalMarks(cairo_t* cr) const {
         // draw marks
         cairo_move_to(cr, static_cast<double>(i) / 10.0, .0);
         cairo_rel_line_to(cr, .0, tick);
-        if (i % 10 == 0) {
+        if (i % 10 == 0 && drawRadialCaption) {
             // draw numbers
             cairo_rel_move_to(cr, .0, FONT_SIZE / 2.);
             const auto text = std::to_string(std::abs(i / 10));
