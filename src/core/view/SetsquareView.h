@@ -106,10 +106,5 @@ private:
     void drawRotation(cairo_t* cr) const;
     void clipVerticalStripes(cairo_t* cr) const;
     void clipHorizontalStripes(cairo_t* cr) const;
-
-    /**
-     * @brief updates the values radius, horPosVmarks, minVmark, maxVmark computed from the height of the setsquare
-     */
-    void updateValues(double h, double rot, cairo_matrix_t m);
 };
 };  // namespace xoj::view
