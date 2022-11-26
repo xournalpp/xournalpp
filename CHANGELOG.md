@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.3~dev (Unreleased)
+## 1.1.3
 
 * Fixed a crash that occurs when trying to add/edit/test LaTeX if LaTeX is not found (#4334, #4345)
 * Fixed a crash that could occur when quitting when using a touchscreen device (#4343, #4373)
