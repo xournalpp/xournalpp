@@ -18,7 +18,6 @@
 
 class OverlayBase;
 class SearchControl;
-class Settings;
 
 namespace xoj::view {
 class Repaintable;

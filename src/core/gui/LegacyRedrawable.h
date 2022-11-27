@@ -66,7 +66,7 @@ public:
      * Call this if you add an element, remove an element etc.
      */
     void rerenderElement(Element* e);
-    void rerenderRange(Range& r);
+    void rerenderRange(const Range& r);
 
     /**
      * This updated the view buffer and then rerender the the region, call this if you changed the document

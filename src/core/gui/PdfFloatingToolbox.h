@@ -7,12 +7,11 @@
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkButton, GtkOverlay
 
-#include "control/tools/PdfElemSelection.h"  // for PdfElemSelection
-#include "pdf/base/XojPdfPage.h"             // for XojPdfPageSelectionStyle
+#include "pdf/base/XojPdfPage.h"    // for XojPdfPageSelectionStyle
 #include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
 
 class MainWindow;
-class XojPageView;
+class PdfElemSelection;
 
 enum class PdfMarkerStyle : uint8_t {
     POS_TEXT_BOTTOM = 0,
@@ -31,7 +30,7 @@ public:
     PdfFloatingToolbox(const PdfFloatingToolbox&) = delete;
     PdfFloatingToolbox& operator=(PdfFloatingToolbox&&) = delete;
     PdfFloatingToolbox(PdfFloatingToolbox&&) = delete;
-    ~PdfFloatingToolbox() = default;
+    ~PdfFloatingToolbox();
 
 public:
     /// Show the toolbox at the provided coordinates (relative to the application GTK window).
@@ -52,7 +51,7 @@ public:
     void clearSelection();
 
     /// Create a new selection (without any visual effects)
-    void newSelection(double x, double y, XojPageView* pageView);
+    const PdfElemSelection* newSelection(double x, double y);
 
     /// Returns true iff a PDF element is selected;
     bool hasSelection() const;
@@ -85,7 +84,7 @@ private:
     /// The overlay that the toolbox should be displayed in.
     xoj::util::GObjectSPtr<GtkOverlay> overlay;
 
-    std::unique_ptr<PdfElemSelection> pdfElemSelection = nullptr;
+    std::unique_ptr<PdfElemSelection> pdfElemSelection;
 
     struct {
         int x;

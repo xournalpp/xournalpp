@@ -16,16 +16,24 @@
 
 #include <cairo.h>  // for cairo_region_t, cairo_t
 
-#include "control/ToolEnums.h"    // for ToolType
+#include "control/ToolEnums.h"  // for ToolType
+#include "model/OverlayBase.h"
 #include "pdf/base/XojPdfPage.h"  // for XojPdfPageSelectionStyle, XojPdfRec...
-#include "util/Util.h"            // for npos
+#include "util/DispatchPool.h"
+#include "util/Util.h"                // for npos
+#include "util/raii/CairoWrappers.h"  // for CairoRegionSPtr
 
-class XojPageView;
+class Range;
+class Control;
+
+namespace xoj::view {
+class PdfElementSelectionView;
+};
 
 /// Represents elements selected from a PDF page, such as text.
-class PdfElemSelection {
+class PdfElemSelection: public OverlayBase {
 public:
-    PdfElemSelection(double x, double y, XojPageView* view);
+    PdfElemSelection(double x, double y, Control* control);
     PdfElemSelection& operator=(const PdfElemSelection&) = delete;
     PdfElemSelection(const PdfElemSelection&) = delete;
     PdfElemSelection& operator=(PdfElemSelection&&) = default;
@@ -40,9 +48,6 @@ public:
     /// Returns true iff there is text contained within the selection bounds.
     bool finalizeSelection(XojPdfPageSelectionStyle style);
 
-    /// Render the selection visuals with the given style
-    void paint(cairo_t* cr, XojPdfPageSelectionStyle style);
-
     /// Update the (unfinalized) selection bounds with the given
     /// style.
     void currentPos(double x, double y, XojPdfPageSelectionStyle style);
@@ -56,28 +61,27 @@ public:
     /// Returns the text contained in the selection region.
     const std::string& getSelectedText() const;
 
-    XojPageView* getPageView() const;
-
     /// Returns true iff the final selections bounds are known.
     bool isFinalized() const;
-
-    /// Trigger double press selection action, with page repaint.
-    void doublePress();
-
-    /// Trigger triple press selection action, with page repaint.
-    void triplePress();
 
     uint64_t getSelectionPageNr() const;
     void setToolType(ToolType toolType);
 
+    const cairo_region_t* getSelectedRegion() const { return selectedTextRegion.get(); }
+
     /// Returns the selection style corresponding to the given tool type.
     static XojPdfPageSelectionStyle selectionStyleForToolType(ToolType type);
 
+    inline const std::shared_ptr<xoj::util::DispatchPool<xoj::view::PdfElementSelectionView>>& getViewPool() const {
+        return viewPool;
+    }
+
 private:
     /// Assigns the selected text region to the current selection bounds.
-    bool selectTextRegion(XojPdfPageSelectionStyle style);
+    void selectTextRegion(XojPdfPageSelectionStyle style);
 
-    XojPageView* view;
+    Range getRegionBbox() const;
+
     XojPdfPageSPtr pdf;
 
     /// The rectangles corresponding to the lines of selected text.
@@ -87,7 +91,7 @@ private:
     std::string selectedText;
 
     /// The area containing the selected text. Used for rendering.
-    cairo_region_t* selectedTextRegion = nullptr;
+    xoj::util::CairoRegionSPtr selectedTextRegion;
 
     /// The PDF selection tool used for the selection.
     ToolType toolType;
@@ -100,4 +104,6 @@ private:
     XojPdfRectangle bounds;
 
     bool finalized;
+
+    std::shared_ptr<xoj::util::DispatchPool<xoj::view::PdfElementSelectionView>> viewPool;
 };

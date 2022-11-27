@@ -192,6 +192,7 @@ public:  // listener
     void rangeChanged(Range& range) override;
     void pageChanged() override;
     void elementChanged(Element* elem) override;
+    void elementsChanged(const std::vector<Element*>& elements, const Range& range) override;
 
 private:
     void startText(double x, double y);

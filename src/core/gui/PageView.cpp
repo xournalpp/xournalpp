@@ -62,6 +62,7 @@
 #include "util/i18n.h"                              // for FS, _, _F
 #include "view/DebugShowRepaintBounds.h"            // for IF_DEBUG_REPAINT
 #include "view/overlays/OverlayView.h"
+#include "view/overlays/PdfElementSelectionView.h"
 #include "view/overlays/SearchResultView.h"
 #include "view/overlays/ShapeToolView.h"
 
@@ -416,7 +417,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
 
             if (this->page->getPdfPageNr() != npos && !pdfToolbox->hasSelection()) {
                 pdfToolbox->selectionStyle = PdfElemSelection::selectionStyleForToolType(h->getToolType());
-                pdfToolbox->newSelection(x, y, this);
+                auto sel = pdfToolbox->newSelection(x, y);
+                this->overlayViews.emplace_back(
+                        std::make_unique<xoj::view::PdfElementSelectionView>(sel, this, settings->getSelectionColor()));
             }
         } else if (h->getToolType() == TOOL_SELECT_OBJECT) {
             SelectObject select(this);
@@ -939,11 +942,6 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
         this->textEditor->paint(cr, zoom);
     }
 
-    auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
-    if (auto* selection = pdfToolbox->getSelection(); selection) {
-        selection->paint(cr, pdfToolbox->selectionStyle);
-    }
-
     if (this->inputHandler) {
         this->inputHandler->draw(cr);
     }
@@ -1056,6 +1054,12 @@ void XojPageView::elementChanged(Element* elem) {
      */
     if (!this->inputHandler || elem != this->inputHandler->getStroke()) {
         rerenderElement(elem);
+    }
+}
+
+void XojPageView::elementsChanged(const std::vector<Element*>& elements, const Range& range) {
+    if (!range.empty()) {
+        rerenderRange(range);
     }
 }
 

@@ -12,6 +12,7 @@
 #pragma once
 
 #include <memory>  // for shared_ptr, weak_ptr
+#include <vector>
 
 class Element;
 class PageHandler;
@@ -33,6 +34,7 @@ public:
     virtual void rectChanged(xoj::util::Rectangle<double>& rect) {}
     virtual void rangeChanged(Range& range) {}
     virtual void elementChanged(Element* elem) {}
+    virtual void elementsChanged(const std::vector<Element*>& elements, const Range& range) {}
     virtual void pageChanged() {}
 
 private:
