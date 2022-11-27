@@ -1009,36 +1009,36 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
     gdk_cairo_set_source_rgba(cr, &applied);
     cairo_fill(cr);
 
-    cairo_set_dash(cr, nullptr, 0, 0);
-
-    if (!this->aspectRatio) {
-        // top
-        drawAnchorRect(cr, x + width / 2, y, zoom);
-        // bottom
-        drawAnchorRect(cr, x + width / 2, y + height, zoom);
-        // left
-        drawAnchorRect(cr, x, y + height / 2, zoom);
-        // right
-        drawAnchorRect(cr, x + width, y + height / 2, zoom);
-
-        if (supportRotation) {
-            // rotation handle
-            drawAnchorRotation(cr, std::min(x, x + width) + std::abs(width) + (ROTATE_PADDING + this->btnWidth) / zoom,
-                               y + height / 2, zoom);
-        }
-    }
-
-    // top left
-    drawAnchorRect(cr, x, y, zoom);
-    // top right
-    drawAnchorRect(cr, x + width, y, zoom);
-    // bottom left
-    drawAnchorRect(cr, x, y + height, zoom);
-    // bottom right
-    drawAnchorRect(cr, x + width, y + height, zoom);
-
     ToolHandler* toolHandler = view->getXournal()->getControl()->getToolHandler();
     if (toolHandler->getToolType() != TOOL_HAND) {
+        cairo_set_dash(cr, nullptr, 0, 0);
+        if (!this->aspectRatio) {
+            // top
+            drawAnchorRect(cr, x + width / 2, y, zoom);
+            // bottom
+            drawAnchorRect(cr, x + width / 2, y + height, zoom);
+            // left
+            drawAnchorRect(cr, x, y + height / 2, zoom);
+            // right
+            drawAnchorRect(cr, x + width, y + height / 2, zoom);
+
+            if (supportRotation) {
+                // rotation handle
+                drawAnchorRotation(cr,
+                                   std::min(x, x + width) + std::abs(width) + (ROTATE_PADDING + this->btnWidth) / zoom,
+                                   y + height / 2, zoom);
+            }
+        }
+
+        // top left
+        drawAnchorRect(cr, x, y, zoom);
+        // top right
+        drawAnchorRect(cr, x + width, y, zoom);
+        // bottom left
+        drawAnchorRect(cr, x, y + height, zoom);
+        // bottom right
+        drawAnchorRect(cr, x + width, y + height, zoom);
+
         drawDeleteRect(cr, std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom, y, zoom);
     }
 }
