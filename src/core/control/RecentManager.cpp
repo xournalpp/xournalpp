@@ -70,6 +70,20 @@ void recentsMenuActivateCallback(GtkMenuItem* self, RecentManager* recentManager
     }
 }
 
+void recentsClearActivateCallback(GtkMenuItem* self, GtkRecentManager* recentManager) {
+    GList* items = gtk_recent_manager_get_items(recentManager);
+    auto item_view = GListView<GtkRecentInfo>(items);
+    for (auto& recent: item_view) {
+        if (filterRecent(recent, false) ||
+            filterRecent(recent, true)) {
+            gtk_recent_manager_remove_item(recentManager,
+                                           gtk_recent_info_get_uri(&recent),
+                                           nullptr);
+        }
+    }
+    g_list_free_full(items, GDestroyNotify(gtk_recent_info_unref));
+}
+
 }  // namespace
 
 RecentManagerListener::~RecentManagerListener() = default;
@@ -230,6 +244,18 @@ void RecentManager::updateMenu() {
             xoj_files.emplace_back(recent);
         }
     }
+
+    if (pdf_files.empty() && xoj_files.empty()) {
+        GtkWidget* noFilesItem = gtk_menu_item_new_with_mnemonic(
+            _("No recent files"));
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), noFilesItem);
+        gtk_widget_set_visible(GTK_WIDGET(noFilesItem), true);
+        gtk_widget_set_sensitive(GTK_WIDGET(noFilesItem), false);
+        this->menuItemList.push_back(noFilesItem);
+        g_list_free_full(items, GDestroyNotify(gtk_recent_info_unref));
+        return;
+    }
+
     std::sort(xoj_files.begin(), xoj_files.end(), std::greater<GtkRecentInfo>());
     std::sort(pdf_files.begin(), pdf_files.end(), std::greater<GtkRecentInfo>());
 
@@ -245,12 +271,28 @@ void RecentManager::updateMenu() {
 
     auto base = insert_items_job(xoj_files, 0);
 
-    GtkWidget* separator = gtk_separator_menu_item_new();
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
-    gtk_widget_set_visible(GTK_WIDGET(separator), true);
-    this->menuItemList.push_back(separator);
-
+    if (!xoj_files.empty()) {
+        GtkWidget* separatorTop = gtk_separator_menu_item_new();
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), separatorTop);
+        gtk_widget_set_visible(GTK_WIDGET(separatorTop), true);
+        this->menuItemList.push_back(separatorTop);
+    }
     insert_items_job(pdf_files, base);
+
+    if (!pdf_files.empty()) {
+        GtkWidget* separatorBottom = gtk_separator_menu_item_new();
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), separatorBottom);
+        gtk_widget_set_visible(GTK_WIDGET(separatorBottom), true);
+        this->menuItemList.push_back(separatorBottom);
+    }
+
+    GtkWidget* clearItem = gtk_menu_item_new_with_mnemonic(
+        _("Clear list"));
+    g_signal_connect(clearItem, "activate",
+                    G_CALLBACK(recentsClearActivateCallback), recentManager);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), clearItem);
+    gtk_widget_set_visible(GTK_WIDGET(clearItem), true);
+    this->menuItemList.push_back(clearItem);
 
     g_list_free_full(items, GDestroyNotify(gtk_recent_info_unref));
 }
