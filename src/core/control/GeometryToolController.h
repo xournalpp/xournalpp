@@ -14,9 +14,9 @@
 #include <gtk/gtk.h>
 
 #include "gui/PageView.h"
+#include "model/GeometryTool.h"
 #include "util/Point.h"
 
-class GeometryTool;
 class Stroke;
 
 /**
@@ -85,7 +85,7 @@ public:
 
     virtual bool isInsideGeometryTool(double x, double y, double border = 0.0) const = 0;
 
-    virtual std::string getType() const = 0;
+    virtual GeometryToolType getType() const = 0;
 
 public:
     XojPageView* view;
@@ -98,5 +98,5 @@ public:
     /**
      * @brief The stroke drawn
      */
-    Stroke* stroke = nullptr;
+    std::unique_ptr<Stroke> stroke;
 };
