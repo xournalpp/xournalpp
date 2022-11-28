@@ -4,6 +4,7 @@
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
+#include "model/Document.h"
 #include "model/GeometryTool.h"
 #include "model/Stroke.h"
 #include "model/XojPage.h"
@@ -74,14 +75,16 @@ void GeometryToolController::markPoint(double x, double y) {
 void GeometryToolController::addStrokeToLayer() {
     const auto xournal = view->getXournal();
     const auto control = xournal->getControl();
+    const auto doc = control->getDocument();
     const auto page = view->getPage();
+
+    doc->lock();
     control->getLayerController()->ensureLayerExists(page);
     const auto layer = page->getSelectedLayer();
-
+    layer->addElement(stroke.get());
+    doc->unlock();
     const auto undo = control->getUndoRedoHandler();
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
-    layer->addElement(stroke.get());
-
     const Rectangle<double> rect{stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()};
     view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
     stroke.release();
