@@ -125,7 +125,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
 
     // separate events to appropriate handlers
     // handle geometry tool
-    if (auto handler = view->getGeometryToolHandler(); handler && handler->handle(event)) {
+    if (auto handler = view->getGeometryToolInputHandler(); handler && handler->handle(event)) {
         return true;
     }
 
@@ -192,7 +192,7 @@ void InputContext::focusWidget() {
 }
 
 void InputContext::blockDevice(InputContext::DeviceType deviceType) {
-    if (auto handler = view->getGeometryToolHandler()) {
+    if (auto handler = view->getGeometryToolInputHandler()) {
         handler->blockDevice(deviceType);
     }
     switch (deviceType) {
@@ -210,7 +210,7 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType) {
 }
 
 void InputContext::unblockDevice(InputContext::DeviceType deviceType) {
-    if (auto handler = view->getGeometryToolHandler()) {
+    if (auto handler = view->getGeometryToolInputHandler()) {
         handler->unblockDevice(deviceType);
     }
     switch (deviceType) {

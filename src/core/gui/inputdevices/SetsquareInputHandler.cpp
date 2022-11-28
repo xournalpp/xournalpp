@@ -14,8 +14,8 @@ constexpr double MIN_HEIGHT = 4.5;
 constexpr double MAX_HEIGHT = 15.0;
 
 SetsquareInputHandler::SetsquareInputHandler(XournalView* xournal, GeometryToolController* controller):
-        GeometryToolHandler(xournal, controller, Setsquare::INITIAL_HEIGHT, Setsquare::INITIAL_X,
-                            Setsquare::INITIAL_Y) {}
+        GeometryToolInputHandler(xournal, controller, Setsquare::INITIAL_HEIGHT, Setsquare::INITIAL_X,
+                                 Setsquare::INITIAL_Y) {}
 
 SetsquareInputHandler::~SetsquareInputHandler() noexcept { this->unregisterFromPool(); }
 

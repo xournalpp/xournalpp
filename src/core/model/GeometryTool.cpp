@@ -8,7 +8,7 @@ GeometryTool::GeometryTool(double h, double r, double tx, double ty):
         translationX(tx),
         translationY(ty),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::GeometryToolView>>()),
-        handlerPool(std::make_shared<xoj::util::DispatchPool<GeometryToolHandler>>()) {}
+        handlerPool(std::make_shared<xoj::util::DispatchPool<GeometryToolInputHandler>>()) {}
 
 GeometryTool::~GeometryTool() {}
 
@@ -36,7 +36,7 @@ auto GeometryTool::getMatrix() const -> cairo_matrix_t {
 auto GeometryTool::getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::GeometryToolView>>& {
     return viewPool;
 }
-auto GeometryTool::getHandlerPool() const -> const std::shared_ptr<xoj::util::DispatchPool<GeometryToolHandler>>& {
+auto GeometryTool::getHandlerPool() const -> const std::shared_ptr<xoj::util::DispatchPool<GeometryToolInputHandler>>& {
     return handlerPool;
 }
 

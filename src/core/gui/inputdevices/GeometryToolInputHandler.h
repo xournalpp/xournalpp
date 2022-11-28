@@ -34,7 +34,7 @@ struct InputEvent;
  *
  * The touch handling part is adopted from the TouchInputHandler class
  */
-class GeometryToolHandler: public xoj::util::Listener<GeometryToolHandler> {
+class GeometryToolInputHandler: public xoj::util::Listener<GeometryToolInputHandler> {
 
 protected:
     /**
@@ -160,9 +160,9 @@ protected:
     virtual double getMaxHeight() const = 0;
 
 public:
-    explicit GeometryToolHandler(XournalView* xournalView, GeometryToolController* controller, double h, double tx,
-                                 double ty);
-    virtual ~GeometryToolHandler();
+    explicit GeometryToolInputHandler(XournalView* xournalView, GeometryToolController* controller, double h, double tx,
+                                      double ty);
+    virtual ~GeometryToolInputHandler();
 
     bool handle(InputEvent const& event);
     void blockDevice(InputContext::DeviceType deviceType);

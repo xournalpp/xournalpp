@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "GeometryToolHandler.h"
+#include "GeometryToolInputHandler.h"
 
 class Stroke;
 class GeometryToolController;
@@ -21,9 +21,9 @@ struct InputEvent;
  * @brief Input handler for the setsquare
  *
  * Only the pointer handling (mouse / stylus) is defined in this class.
- * The rest comes from the GeometryToolHandler
+ * The rest comes from the GeometryToolInputHandler
  * */
-class SetsquareInputHandler: public GeometryToolHandler {
+class SetsquareInputHandler: public GeometryToolInputHandler {
 
 public:
     explicit SetsquareInputHandler(XournalView* xournalView, GeometryToolController* controller);
