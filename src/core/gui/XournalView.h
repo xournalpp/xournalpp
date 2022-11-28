@@ -96,7 +96,7 @@ public:
 
     GeometryToolHandler* getGeometryToolHandler();
     GeometryToolController* getGeometryToolController();
-    void makeGeometryTool(std::string tool);
+    void makeGeometryTool(GeometryToolType);
     void resetGeometryTool();
 
     TextEditor* getTextEditor() const;

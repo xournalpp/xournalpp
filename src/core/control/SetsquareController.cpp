@@ -15,7 +15,7 @@ SetsquareController::SetsquareController(XojPageView* view, Setsquare* setsquare
 
 SetsquareController::~SetsquareController() = default;
 
-auto SetsquareController::getType() const -> std::string { return "setsquare"; }
+auto SetsquareController::getType() const -> GeometryToolType { return GeometryToolType::SETSQUARE; }
 
 auto SetsquareController::posRelToSide(Leg leg, double x, double y) const -> utl::Point<double> {
     cairo_matrix_t matrix = geometryTool->getMatrix();
@@ -25,9 +25,9 @@ auto SetsquareController::posRelToSide(Leg leg, double x, double y) const -> utl
         case HYPOTENUSE:
             return utl::Point<double>(x, -y);
         case LEFT_LEG:
-            return utl::Point<double>((y + x) / sqrt(2.), (y - x - geometryTool->getHeight()) / sqrt(2.));
+            return utl::Point<double>((y + x) / std::sqrt(2.), (y - x - geometryTool->getHeight()) / std::sqrt(2.));
         case RIGHT_LEG:
-            return utl::Point<double>((y - x) / sqrt(2.), (y + x - geometryTool->getHeight()) / sqrt(2.));
+            return utl::Point<double>((y - x) / std::sqrt(2.), (y + x - geometryTool->getHeight()) / std::sqrt(2.));
         default:
             g_error("Invalid enum value: %d", leg);
     }
@@ -104,8 +104,8 @@ void SetsquareController::updateRadius(double x, double y) {
 }
 
 void SetsquareController::finalizeStroke() {
-    hypotenuseMax = NAN;
-    hypotenuseMin = NAN;
+    hypotenuseMax = std::numeric_limits<double>::min();
+    hypotenuseMin = std::numeric_limits<double>::max();
     addStrokeToLayer();
 }
 
@@ -114,6 +114,6 @@ void SetsquareController::finalizeRadius() {
     addStrokeToLayer();
 }
 
-auto SetsquareController::existsStroke() -> bool { return !std::isnan(hypotenuseMax) && !std::isnan(hypotenuseMin); }
+auto SetsquareController::existsStroke() -> bool { return !(hypotenuseMax == std::numeric_limits<double>::min()); }
 
 auto SetsquareController::existsRadius() -> bool { return !std::isnan(strokeAngle); }

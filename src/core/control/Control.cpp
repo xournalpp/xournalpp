@@ -649,9 +649,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         case ACTION_SETSQUARE:
             if (auto xournal = this->win->getXournal();
                 !xournal->getGeometryToolController() ||
-                xournal->getGeometryToolController()->getType() != "setsquare") {
+                xournal->getGeometryToolController()->getType() != GeometryToolType::SETSQUARE) {
                 xournal->resetGeometryTool();
-                xournal->makeGeometryTool("setsquare");
+                xournal->makeGeometryTool(GeometryToolType::SETSQUARE);
                 xournal->getViewFor(getCurrentPageNo())->rerenderPage();
             } else {
                 xournal->resetGeometryTool();
@@ -1362,9 +1362,11 @@ void Control::deletePage() {
     // if the current page contains the geometry tool, reset it
     size_t pNr = getCurrentPageNo();
     auto geometryToolController = win->getXournal()->getGeometryToolController();
+    doc->lock();
     if (geometryToolController && doc->indexOf(geometryToolController->getPage()) == pNr) {
         win->getXournal()->resetGeometryTool();
     }
+    doc->unlock();
     // don't allow delete pages if we have less than 2 pages,
     // so we can be (more or less) sure there is at least one page.
     if (this->doc->getPageCount() < 2) {

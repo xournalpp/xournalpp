@@ -79,21 +79,20 @@ void GeometryToolController::addStrokeToLayer() {
     const auto layer = page->getSelectedLayer();
 
     const auto undo = control->getUndoRedoHandler();
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
-
-    layer->addElement(stroke);
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
+    layer->addElement(stroke.get());
 
     const Rectangle<double> rect{stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()};
     view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
-    stroke = nullptr;
+    stroke.release();
     geometryTool->setStroke(nullptr);
     xournal->getCursor()->updateCursor();
 }
 
 void GeometryToolController::initializeStroke() {
     const auto h = view->getXournal()->getControl()->getToolHandler();
-    stroke = new Stroke();
-    geometryTool->setStroke(stroke);
+    stroke = std::make_unique<Stroke>();
+    geometryTool->setStroke(stroke.get());
     stroke->setWidth(h->getThickness());
     stroke->setColor(h->getColor());
     stroke->setFill(h->getFill());

@@ -14,6 +14,7 @@
 #include <gtk/gtk.h>
 
 #include "gui/PageView.h"
+#include "model/GeometryTool.h"
 #include "util/Point.h"
 
 #include "GeometryToolController.h"
@@ -39,7 +40,7 @@ public:
     ~SetsquareController();
 
 public:
-    std::string getType() const override;
+    GeometryToolType getType() const override;
 
     /**
      * @brief returns the position of a point relative to a coordinate system, in which the given setsquare leg lies on
@@ -119,8 +120,8 @@ private:
      * x-coordinates of the point to be drawn (with respect to an unrotated, and untranslated coordinate system) are
      * saved in the variables hypotenuseMin and hypotenuseMax
      */
-    double hypotenuseMax = NAN;
-    double hypotenuseMin = NAN;
+    double hypotenuseMax = std::numeric_limits<double>::min();
+    double hypotenuseMin = std::numeric_limits<double>::max();
 
     /**
      * @brief the current angle at which the temporary radius is drawn
