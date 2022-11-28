@@ -47,7 +47,7 @@ auto SetsquareController::getPointForPos(double xCoord) const -> utl::Point<doub
     return utl::Point<double>(x, y);
 }
 
-void SetsquareController::createStroke(double x) {
+void SetsquareController::createEdgeStroke(double x) {
     if (!std::isnan(x)) {
         hypotenuseMax = x;
         hypotenuseMin = x;
@@ -62,14 +62,14 @@ void SetsquareController::createStroke(double x) {
     }
 }
 
-void SetsquareController::createRadius(double x, double y) {
+void SetsquareController::createRadialStroke(double x, double y) {
     const auto p = posRelToSide(HYPOTENUSE, x, y);
     this->strokeAngle = std::atan2(p.y, p.x);
     initializeStroke();
-    updateRadius(x, y);
+    updateRadialStroke(x, y);
 }
 
-void SetsquareController::updateStroke(double x) {
+void SetsquareController::updateEdgeStroke(double x) {
     hypotenuseMax = std::max(this->hypotenuseMax, x);
     hypotenuseMin = std::min(this->hypotenuseMin, x);
     stroke->deletePointsFrom(0);
@@ -81,7 +81,7 @@ void SetsquareController::updateStroke(double x) {
     geometryTool->notify();
 }
 
-void SetsquareController::updateRadius(double x, double y) {
+void SetsquareController::updateRadialStroke(double x, double y) {
     stroke->deletePointsFrom(0);
     const auto c = getPointForPos(0);
     stroke->addPoint(Point(c.x, c.y));
@@ -103,17 +103,17 @@ void SetsquareController::updateRadius(double x, double y) {
     geometryTool->notify();
 }
 
-void SetsquareController::finalizeStroke() {
+void SetsquareController::finalizeEdgeStroke() {
     hypotenuseMax = std::numeric_limits<double>::min();
     hypotenuseMin = std::numeric_limits<double>::max();
     addStrokeToLayer();
 }
 
-void SetsquareController::finalizeRadius() {
+void SetsquareController::finalizeRadialStroke() {
     strokeAngle = NAN;
     addStrokeToLayer();
 }
 
-auto SetsquareController::existsStroke() -> bool { return !(hypotenuseMax == std::numeric_limits<double>::min()); }
+auto SetsquareController::existsEdgeStroke() -> bool { return !(hypotenuseMax == std::numeric_limits<double>::min()); }
 
-auto SetsquareController::existsRadius() -> bool { return !std::isnan(strokeAngle); }
+auto SetsquareController::existsRadialStroke() -> bool { return !std::isnan(strokeAngle); }

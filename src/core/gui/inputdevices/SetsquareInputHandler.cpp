@@ -32,14 +32,14 @@ auto SetsquareInputHandler::handlePointer(InputEvent const& event) -> bool {
                     setsquareController->posRelToSide(HYPOTENUSE, coords.x, coords.y).y >= -0.5) {
                     // initialize range
                     const auto proj = setsquareController->posRelToSide(HYPOTENUSE, coords.x, coords.y).x;
-                    setsquareController->createStroke(proj);
+                    setsquareController->createEdgeStroke(proj);
                     return true;
                 } else if (controller->isInsideGeometryTool(coords.x, coords.y, 0) &&
                            (setsquareController->posRelToSide(LEFT_LEG, coords.x, coords.y).y >= -0.5 ||
                             setsquareController->posRelToSide(RIGHT_LEG, coords.x, coords.y).y >= -0.5)) {
 
                     // initialize point
-                    setsquareController->createRadius(coords.x, coords.y);
+                    setsquareController->createRadialStroke(coords.x, coords.y);
                     return true;
                 } else {
                     return false;
@@ -47,22 +47,22 @@ auto SetsquareInputHandler::handlePointer(InputEvent const& event) -> bool {
 
             } else if (event.type == MOTION_EVENT) {
                 // update range and paint
-                if (setsquareController->existsStroke()) {
+                if (setsquareController->existsEdgeStroke()) {
                     const auto proj = setsquareController->posRelToSide(HYPOTENUSE, coords.x, coords.y).x;
-                    setsquareController->updateStroke(proj);
+                    setsquareController->updateEdgeStroke(proj);
                     return true;
-                } else if (setsquareController->existsRadius()) {
-                    setsquareController->updateRadius(coords.x, coords.y);
+                } else if (setsquareController->existsRadialStroke()) {
+                    setsquareController->updateRadialStroke(coords.x, coords.y);
                     return true;
                 }
                 return false;
             } else if (event.type == BUTTON_RELEASE_EVENT) {
                 // add stroke to layer and reset
-                if (setsquareController->existsStroke()) {
-                    setsquareController->finalizeStroke();
+                if (setsquareController->existsEdgeStroke()) {
+                    setsquareController->finalizeEdgeStroke();
                     return true;
-                } else if (setsquareController->existsRadius()) {
-                    setsquareController->finalizeRadius();
+                } else if (setsquareController->existsRadialStroke()) {
+                    setsquareController->finalizeRadialStroke();
                     return true;
                 }
             }
