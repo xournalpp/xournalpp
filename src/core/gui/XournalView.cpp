@@ -697,7 +697,7 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-auto XournalView::getGeometryToolHandler() -> GeometryToolHandler* { return geometryToolHandler; }
+auto XournalView::getGeometryToolInputHandler() -> GeometryToolInputHandler* { return geometryToolInputHandler; }
 
 auto XournalView::getGeometryToolController() -> GeometryToolController* { return geometryToolController; }
 
@@ -710,8 +710,8 @@ void XournalView::makeGeometryTool(GeometryToolType tool) {
         view->addOverlayView(std::make_unique<xoj::view::SetsquareView>(setsquare, view, zoomControl));
         this->geometryTool = setsquare;
         this->geometryToolController = new SetsquareController(view, setsquare);
-        this->geometryToolHandler = new SetsquareInputHandler(this, this->geometryToolController);
-        geometryToolHandler->registerToPool(setsquare->getHandlerPool());
+        this->geometryToolInputHandler = new SetsquareInputHandler(this, this->geometryToolController);
+        geometryToolInputHandler->registerToPool(setsquare->getHandlerPool());
         control->fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
     }
 }
@@ -719,8 +719,8 @@ void XournalView::makeGeometryTool(GeometryToolType tool) {
 void XournalView::resetGeometryTool() {
     delete geometryToolController;
     geometryToolController = nullptr;
-    delete geometryToolHandler;
-    geometryToolHandler = nullptr;
+    delete geometryToolInputHandler;
+    geometryToolInputHandler = nullptr;
     delete geometryTool;
     geometryTool = nullptr;
     this->control->fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);

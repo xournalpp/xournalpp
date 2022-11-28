@@ -38,7 +38,7 @@ namespace xoj::view {
 class GeometryToolView;
 };
 
-class GeometryToolHandler;
+class GeometryToolInputHandler;
 
 class GeometryTool: public OverlayBase {
 public:
@@ -68,7 +68,7 @@ public:
     void setStroke(Stroke* s);
 
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::GeometryToolView>>& getViewPool() const;
-    const std::shared_ptr<xoj::util::DispatchPool<GeometryToolHandler>>& getHandlerPool() const;
+    const std::shared_ptr<xoj::util::DispatchPool<GeometryToolInputHandler>>& getHandlerPool() const;
 
     virtual void notify(bool resetMask = false) const = 0;  // calls the update method of all observers
     /**
@@ -103,7 +103,7 @@ protected:
     Stroke* stroke = nullptr;
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::GeometryToolView>> viewPool;
-    std::shared_ptr<xoj::util::DispatchPool<GeometryToolHandler>> handlerPool;
+    std::shared_ptr<xoj::util::DispatchPool<GeometryToolInputHandler>> handlerPool;
 
     /**
      * @brief Bounding box of the geometry tool and stroke after its last update

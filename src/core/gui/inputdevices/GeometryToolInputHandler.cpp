@@ -1,5 +1,3 @@
-#include "GeometryToolHandler.h"
-
 #include <algorithm>  // for max
 #include <cmath>      // for atan2, abs, cos, remainder
 #include <memory>     // for __shared_ptr_access, shar...
@@ -22,6 +20,8 @@
 #include "model/Stroke.h"                    // for Stroke
 #include "model/XojPage.h"                   // for XojPage
 
+#include "GeometryToolInputHandler.h"
+
 constexpr double MOVE_AMOUNT = HALF_CM / 2.0;
 constexpr double MOVE_AMOUNT_SMALL = HALF_CM / 20.0;
 constexpr double ROTATE_AMOUNT = M_PI * 5.0 / 180.0;
@@ -32,13 +32,13 @@ constexpr double SNAPPING_DISTANCE_TOLERANCE = 5.0;                 // pt
 constexpr double SNAPPING_ROTATION_TOLERANCE = 3.0 * M_PI / 180.0;  // rad
 constexpr double ZOOM_DISTANCE_MIN = 0.01;
 
-GeometryToolHandler::GeometryToolHandler(XournalView* xournal, GeometryToolController* controller, double h, double tx,
-                                         double ty):
+GeometryToolInputHandler::GeometryToolInputHandler(XournalView* xournal, GeometryToolController* controller, double h,
+                                                   double tx, double ty):
         xournal(xournal), controller(controller), height(h), translationX(tx), translationY(ty) {}
 
-GeometryToolHandler::~GeometryToolHandler() = default;
+GeometryToolInputHandler::~GeometryToolInputHandler() = default;
 
-auto GeometryToolHandler::handle(InputEvent const& event) -> bool {
+auto GeometryToolInputHandler::handle(InputEvent const& event) -> bool {
     if (xournal->getSelection() || xournal->getControl()->getTextEditor()) {
         return false;
     }
@@ -65,14 +65,14 @@ auto GeometryToolHandler::handle(InputEvent const& event) -> bool {
     }
 }
 
-void GeometryToolHandler::on(UpdateValuesRequest, double h, double rot, double tx, double ty) {
+void GeometryToolInputHandler::on(UpdateValuesRequest, double h, double rot, double tx, double ty) {
     height = h;
     rotation = rot;
     translationX = tx;
     translationY = ty;
 }
 
-auto GeometryToolHandler::handleTouchscreen(InputEvent const& event) -> bool {
+auto GeometryToolInputHandler::handleTouchscreen(InputEvent const& event) -> bool {
     const auto zoomGesturesEnabled = xournal->getControl()->getSettings()->isZoomGesturesEnabled();
     // Don't handle more then 2 inputs
     if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
@@ -139,7 +139,7 @@ auto GeometryToolHandler::handleTouchscreen(InputEvent const& event) -> bool {
     return false;
 }
 
-auto GeometryToolHandler::handleKeyboard(InputEvent const& event) -> bool {
+auto GeometryToolInputHandler::handleKeyboard(InputEvent const& event) -> bool {
     GdkEvent* gdkEvent = event.sourceEvent;
     if (gdkEvent->type == GDK_KEY_PRESS) {
         auto keyEvent = reinterpret_cast<GdkEventKey*>(gdkEvent);
@@ -214,7 +214,7 @@ auto GeometryToolHandler::handleKeyboard(InputEvent const& event) -> bool {
     return false;
 }
 
-void GeometryToolHandler::sequenceStart(InputEvent const& event) {
+void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
         this->priLastPageRel = this->getCoords(event);
     } else {
@@ -234,7 +234,7 @@ void GeometryToolHandler::sequenceStart(InputEvent const& event) {
     }
 }
 
-void GeometryToolHandler::scrollMotion(InputEvent const& event) {
+void GeometryToolInputHandler::scrollMotion(InputEvent const& event) {
     // Will only be called if there is a single sequence (zooming handles two sequences)
     auto offset = [&]() {
         auto coords = this->getCoords(event);
@@ -269,7 +269,7 @@ void GeometryToolHandler::scrollMotion(InputEvent const& event) {
     controller->move(offset.x, offset.y);
 }
 
-void GeometryToolHandler::zoomStart() {
+void GeometryToolInputHandler::zoomStart() {
     this->startZoomDistance = std::max(this->priLastPageRel.distance(this->secLastPageRel), ZOOM_DISTANCE_MIN);
 
     // Whether we can ignore the zoom portion of the gesture (e.g. distance between touch points
@@ -282,7 +282,7 @@ void GeometryToolHandler::zoomStart() {
     this->lastDist = this->startZoomDistance;
 }
 
-void GeometryToolHandler::zoomMotion(InputEvent const& event) {
+void GeometryToolInputHandler::zoomMotion(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
         this->priLastPageRel = this->getCoords(event);
     } else {
@@ -322,7 +322,7 @@ void GeometryToolHandler::zoomMotion(InputEvent const& event) {
     this->lastDist = dist;
 }
 
-auto GeometryToolHandler::getCoords(InputEvent const& event) -> utl::Point<double> {
+auto GeometryToolInputHandler::getCoords(InputEvent const& event) -> utl::Point<double> {
     const auto zoom = xournal->getZoom();
     const auto view = controller->getView();
     const auto posX = event.relativeX - static_cast<double>(view->getX());
@@ -330,6 +330,6 @@ auto GeometryToolHandler::getCoords(InputEvent const& event) -> utl::Point<doubl
     return utl::Point<double>(posX / zoom, posY / zoom);
 }
 
-void GeometryToolHandler::blockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = true; }
+void GeometryToolInputHandler::blockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = true; }
 
-void GeometryToolHandler::unblockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = false; }
+void GeometryToolInputHandler::unblockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = false; }

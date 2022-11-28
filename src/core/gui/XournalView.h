@@ -23,7 +23,7 @@
 
 #include "control/GeometryToolController.h"        // for GeometryToolController
 #include "control/zoom/ZoomListener.h"             // for ZoomListener
-#include "gui/inputdevices/GeometryToolHandler.h"  // for GeometryToolHandler
+#include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
 #include "model/DocumentChangeType.h"              // for DocumentChangeType
 #include "model/DocumentListener.h"                // for DocumentListener
 #include "model/GeometryTool.h"                    // for GeometryTool
@@ -94,7 +94,7 @@ public:
     void deleteSelection(EditSelection* sel = nullptr);
     void repaintSelection(bool evenWithoutSelection = false);
 
-    GeometryToolHandler* getGeometryToolHandler();
+    GeometryToolInputHandler* getGeometryToolInputHandler();
     GeometryToolController* getGeometryToolController();
     void makeGeometryTool(GeometryToolType);
     void resetGeometryTool();
@@ -190,7 +190,7 @@ private:
      */
     GeometryTool* geometryTool = nullptr;
     GeometryToolController* geometryToolController = nullptr;
-    GeometryToolHandler* geometryToolHandler = nullptr;
+    GeometryToolInputHandler* geometryToolInputHandler = nullptr;
 
     /**
      * Memory cleanup timeout
