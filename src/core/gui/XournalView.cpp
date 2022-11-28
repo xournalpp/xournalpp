@@ -410,7 +410,7 @@ void XournalView::pageSelected(size_t page) {
 
 auto XournalView::getControl() const -> Control* { return control; }
 
-void XournalView::scrollTo(size_t pageNo, double yDocument) {
+void XournalView::scrollTo(size_t pageNo, double yDocument, bool forceStablePagePos) {
     if (pageNo >= this->viewPages.size()) {
         return;
     }
@@ -424,6 +424,10 @@ void XournalView::scrollTo(size_t pageNo, double yDocument) {
     int y = v->getY() + std::lround(yDocument);
     int width = v->getDisplayWidth();
     int height = v->getDisplayHeight();
+    if (forceStablePagePos) {
+        width = this->getDisplayWidth();
+        height = this->getDisplayHeight();
+    }
 
     layout->ensureRectIsVisible(x, y, width, height);
 

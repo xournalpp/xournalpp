@@ -8,6 +8,7 @@
 #include "gui/MainWindow.h"               // for MainWindow
 #include "gui/XournalView.h"              // for XournalView
 #include "gui/sidebar/Sidebar.h"          // for Sidebar
+#include "control/settings/Settings.h"          // for Settings
 #include "gui/widgets/SpinPageAdapter.h"  // for SpinPageAdapter
 #include "model/Document.h"               // for Document
 #include "model/LinkDestination.h"        // for LinkDestination
@@ -63,7 +64,7 @@ void ScrollHandler::scrollToPage(size_t page, double top) {
         return;
     }
 
-    win->getXournal()->scrollTo(page, top);
+    win->getXournal()->scrollTo(page, top, /*forceStablePagePos*/ control->getSettings()->isPresentationMode());
 }
 
 void ScrollHandler::scrollToSpinPage() {
