@@ -21,13 +21,13 @@
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkWidget, GtkAllocation
 
-#include "control/GeometryToolController.h"        // for GeometryToolController
-#include "control/zoom/ZoomListener.h"             // for ZoomListener
+#include "control/GeometryToolController.h"             // for GeometryToolController
+#include "control/zoom/ZoomListener.h"                  // for ZoomListener
 #include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
-#include "model/DocumentChangeType.h"              // for DocumentChangeType
-#include "model/DocumentListener.h"                // for DocumentListener
-#include "model/GeometryTool.h"                    // for GeometryTool
-#include "util/Util.h"                             // for npos
+#include "model/DocumentChangeType.h"                   // for DocumentChangeType
+#include "model/DocumentListener.h"                     // for DocumentListener
+#include "model/GeometryTool.h"                         // for GeometryTool
+#include "util/Util.h"                                  // for npos
 
 class Control;
 class XournalppCursor;
@@ -188,9 +188,9 @@ private:
     /**
      * Geometry tool, if active
      */
-    GeometryTool* geometryTool = nullptr;
-    GeometryToolController* geometryToolController = nullptr;
-    GeometryToolInputHandler* geometryToolInputHandler = nullptr;
+    std::unique_ptr<GeometryTool> geometryTool;
+    std::unique_ptr<GeometryToolController> geometryToolController;
+    std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
 
     /**
      * Memory cleanup timeout

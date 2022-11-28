@@ -697,9 +697,9 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-auto XournalView::getGeometryToolInputHandler() -> GeometryToolInputHandler* { return geometryToolInputHandler; }
+auto XournalView::getGeometryToolInputHandler() -> GeometryToolInputHandler* { return geometryToolInputHandler.get(); }
 
-auto XournalView::getGeometryToolController() -> GeometryToolController* { return geometryToolController; }
+auto XournalView::getGeometryToolController() -> GeometryToolController* { return geometryToolController.get(); }
 
 void XournalView::makeGeometryTool(GeometryToolType tool) {
     auto view = getViewFor(control->getCurrentPageNo());
@@ -708,21 +708,19 @@ void XournalView::makeGeometryTool(GeometryToolType tool) {
     if (tool == GeometryToolType::SETSQUARE) {
         auto setsquare = new Setsquare();
         view->addOverlayView(std::make_unique<xoj::view::SetsquareView>(setsquare, view, zoomControl));
-        this->geometryTool = setsquare;
-        this->geometryToolController = new SetsquareController(view, setsquare);
-        this->geometryToolInputHandler = new SetsquareInputHandler(this, this->geometryToolController);
+        this->geometryTool = std::unique_ptr<GeometryTool>(setsquare);
+        this->geometryToolController = std::make_unique<SetsquareController>(view, setsquare);
+        this->geometryToolInputHandler =
+                std::make_unique<SetsquareInputHandler>(this, this->geometryToolController.get());
         geometryToolInputHandler->registerToPool(setsquare->getHandlerPool());
         control->fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
     }
 }
 
 void XournalView::resetGeometryTool() {
-    delete geometryToolController;
-    geometryToolController = nullptr;
-    delete geometryToolInputHandler;
-    geometryToolInputHandler = nullptr;
-    delete geometryTool;
-    geometryTool = nullptr;
+    geometryToolController.reset();
+    geometryToolInputHandler.reset();
+    geometryTool.reset();
     this->control->fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
 }
 
