@@ -70,26 +70,26 @@ public:
      * @brief creates a stroke starting at the given position of the longest side of the setsquare
      * @param x the x-coordinate of the point on the longest side of the setsquare (when unrotated and untranslated)
      */
-    void createStroke(double x);
+    void createEdgeStroke(double x);
 
     /**
      * @brief updates the stroke aligned to the longest side of the setsquare
      * @param x the x-coordinate of the point on the longest side of the setsquare (when unrotated and untranslated)
      * updating the stroke
      */
-    void updateStroke(double x);
+    void updateEdgeStroke(double x);
 
     /**
      * @brief finishes the stroke aligned to the longest side of the setsquare
      */
-    void finalizeStroke();
+    void finalizeEdgeStroke();
 
     /**
      * @brief creates a radius starting at the given position to the origin of the setsquare
      * @param x the x-coordinate of the current point
      * @param y the y-coordinate of the current point
      */
-    void createRadius(double x, double y);
+    void createRadialStroke(double x, double y);
 
     /**
      * @brief updates the radius to the origin of the setsquare
@@ -97,22 +97,22 @@ public:
      * @param y the y-coordinate of the current point
      * updating the stroke
      */
-    void updateRadius(double x, double y);
+    void updateRadialStroke(double x, double y);
 
     /**
      * @brief finishes the radius to the origin of the setsquare
      */
-    void finalizeRadius();
+    void finalizeRadialStroke();
 
     /**
      * checks whether a stroke already exists
      */
-    bool existsStroke();
+    bool existsEdgeStroke();
 
     /**
      * checks whether a radius already exists
      */
-    bool existsRadius();
+    bool existsRadialStroke();
 
 private:
     /**
