@@ -50,7 +50,7 @@ public:
     // Recalculate the layout width and height amd layout the pages with the updated layout size
     void layoutPages();
 
-    void scrollTo(size_t pageNo, double y = 0, bool forceStablePagePos = true);
+    void scrollTo(size_t pageNo, double y = 0, bool forceStablePagePos = false);
 
     // Relative navigation in current layout:
     void pageRelativeXY(int offCol, int offRow);
