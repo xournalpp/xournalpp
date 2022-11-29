@@ -254,6 +254,9 @@ auto ZoomControl::getZoom() const -> double { return this->zoom; }
 auto ZoomControl::getZoomReal() const -> double { return this->zoom / this->zoom100Value; }
 
 void ZoomControl::setZoom(double zoomI) {
+    if (this->zoom == zoomI) {
+        return;
+    }
     this->zoom = zoomI;
     fireZoomChanged();
 }

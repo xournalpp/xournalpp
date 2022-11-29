@@ -16,9 +16,9 @@
     <string>Xournal++</string>
 
     <key>CFBundleShortVersionString</key>
-    <string>1.1.2+dev</string>
+    <string>1.1.3+dev</string>
     <key>CFBundleVersion</key>
-    <string>1.1.2+dev.0</string>
+    <string>1.1.3+dev.0</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>NSHumanReadableCopyright</key>

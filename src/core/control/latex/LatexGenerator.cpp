@@ -78,13 +78,13 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
                     FS(_F("Failed to find LaTeX generator program in PATH: {1}\n\nSince installation is detected "
                           "within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For "
                           "example, by running:\n\n$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive") %
-                       prog)};
+                       argv[0])};
         } else {
-            res = GenError{FS(_F("Failed to find LaTeX generator program in PATH: {1}") % prog)};
+            res = GenError{FS(_F("Failed to find LaTeX generator program in PATH: {1}") % argv[0])};
         }
 
         g_strfreev(argv);
-        g_error_free(err);
+        g_clear_error(&err);
         return res;
     }
     g_free(argv[0]);
