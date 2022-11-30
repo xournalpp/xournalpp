@@ -10,39 +10,35 @@
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Page_Down
 #include <glib-object.h>     // for g_object_ref_sink
 
-#include "control/Control.h"                         // for Control
-#include "control/GeometryToolController.h"          // for GeometryToolController
-#include "control/PdfCache.h"                        // for PdfCache
-#include "control/ScrollHandler.h"                   // for ScrollHandler
-#include "control/SetsquareController.h"             // for SetsquareController
-#include "control/ToolHandler.h"                     // for ToolHandler
-#include "control/jobs/XournalScheduler.h"           // for XournalScheduler
-#include "control/settings/MetadataManager.h"        // for MetadataManager
-#include "control/settings/Settings.h"               // for Settings
-#include "control/tools/CursorSelectionType.h"       // for CURSOR_SELECTION_NONE
-#include "control/tools/EditSelection.h"             // for EditSelection
-#include "control/zoom/ZoomControl.h"                // for ZoomControl
-#include "enums/ActionGroup.enum.h"                  // for GROUP_GEOMETRY_TOOL
-#include "enums/ActionType.enum.h"                   // for ACTION_NONE
-#include "gui/MainWindow.h"                          // for MainWindow
-#include "gui/PdfFloatingToolbox.h"                  // for PdfFloatingToolbox
-#include "gui/inputdevices/HandRecognition.h"        // for HandRecognition
-#include "gui/inputdevices/InputContext.h"           // for InputContext
-#include "gui/inputdevices/SetsquareInputHandler.h"  // for SetsquareInputHandler
-#include "gui/toolbarMenubar/ColorToolItem.h"        // for ColorToolItem
-#include "gui/toolbarMenubar/ToolMenuHandler.h"      // for ToolMenuHandler
-#include "gui/widgets/XournalWidget.h"               // for gtk_xournal_get_layout
-#include "model/Document.h"                          // for Document
-#include "model/Element.h"                           // for Element, ELEMENT_STROKE
-#include "model/PageRef.h"                           // for PageRef
-#include "model/Stroke.h"                            // for Stroke, StrokeTool::E...
-#include "model/XojPage.h"                           // for XojPage
-#include "undo/DeleteUndoAction.h"                   // for DeleteUndoAction
-#include "undo/UndoRedoHandler.h"                    // for UndoRedoHandler
-#include "util/Point.h"                              // for Point
-#include "util/Rectangle.h"                          // for Rectangle
-#include "util/Util.h"                               // for npos
-#include "view/SetsquareView.h"                      // for SetsquareView
+#include "control/Control.h"                     // for Control
+#include "control/PdfCache.h"                    // for PdfCache
+#include "control/ScrollHandler.h"               // for ScrollHandler
+#include "control/ToolHandler.h"                 // for ToolHandler
+#include "control/jobs/XournalScheduler.h"       // for XournalScheduler
+#include "control/settings/MetadataManager.h"    // for MetadataManager
+#include "control/settings/Settings.h"           // for Settings
+#include "control/tools/CursorSelectionType.h"   // for CURSOR_SELECTION_NONE
+#include "control/tools/EditSelection.h"         // for EditSelection
+#include "control/zoom/ZoomControl.h"            // for ZoomControl
+#include "enums/ActionGroup.enum.h"              // for GROUP_GEOMETRY_TOOL
+#include "enums/ActionType.enum.h"               // for ACTION_NONE
+#include "gui/MainWindow.h"                      // for MainWindow
+#include "gui/PdfFloatingToolbox.h"              // for PdfFloatingToolbox
+#include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
+#include "gui/inputdevices/InputContext.h"       // for InputContext
+#include "gui/toolbarMenubar/ColorToolItem.h"    // for ColorToolItem
+#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
+#include "gui/widgets/XournalWidget.h"           // for gtk_xournal_get_layout
+#include "model/Document.h"                      // for Document
+#include "model/Element.h"                       // for Element, ELEMENT_STROKE
+#include "model/PageRef.h"                       // for PageRef
+#include "model/Stroke.h"                        // for Stroke, StrokeTool::E...
+#include "model/XojPage.h"                       // for XojPage
+#include "undo/DeleteUndoAction.h"               // for DeleteUndoAction
+#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
+#include "util/Point.h"                          // for Point
+#include "util/Rectangle.h"                      // for Rectangle
+#include "util/Util.h"                           // for npos
 
 #include "Layout.h"           // for Layout
 #include "PageView.h"         // for XojPageView
@@ -696,13 +692,6 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
 
     // repaint always the whole widget
     gtk_widget_queue_draw(this->widget);
-}
-
-void XournalView::setGeometryTool(std::unique_ptr<GeometryTool> tool) { this->geometryTool = std::move(tool); }
-
-void XournalView::resetGeometryTool() {
-    geometryTool.reset();
-    this->control->fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
 }
 
 void XournalView::layoutPages() {

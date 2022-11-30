@@ -446,6 +446,7 @@ private:
 
     LayerController* layerController;
 
+    std::unique_ptr<GeometryTool> geometryTool;
     std::unique_ptr<GeometryToolController> geometryToolController;
 
     /**

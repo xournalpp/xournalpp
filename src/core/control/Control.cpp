@@ -1069,23 +1069,23 @@ void Control::makeGeometryTool(GeometryToolType tool) {
     if (tool == GeometryToolType::SETSQUARE) {
         auto setsquare = new Setsquare();
         view->addOverlayView(std::make_unique<xoj::view::SetsquareView>(setsquare, view, zoom));
-        std::unique_ptr<GeometryTool> geometryTool = std::unique_ptr<GeometryTool>(setsquare);
+        this->geometryTool = std::unique_ptr<GeometryTool>(setsquare);
         this->geometryToolController = std::make_unique<SetsquareController>(view, setsquare);
         std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler =
                 std::make_unique<SetsquareInputHandler>(this->win->getXournal(), geometryToolController.get());
         geometryToolInputHandler->registerToPool(setsquare->getHandlerPool());
-        fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
-        this->win->getXournal()->setGeometryTool(std::move(geometryTool));
         auto xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
         xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
+        fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
     }
 }
 
 void Control::resetGeometryTool() {
     this->geometryToolController.reset();
-    this->win->getXournal()->resetGeometryTool();
+    this->geometryTool.reset();
     auto xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
     xournal->input->resetGeometryToolInputHandler();
+    fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
 }
 
 auto Control::copy() -> bool {

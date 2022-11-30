@@ -24,7 +24,6 @@
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
 #include "model/DocumentChangeType.h"   // for DocumentChangeType
 #include "model/DocumentListener.h"     // for DocumentListener
-#include "model/GeometryTool.h"         // for GeometryTool
 #include "util/Util.h"                  // for npos
 
 class Control;
@@ -91,9 +90,6 @@ public:
     EditSelection* getSelection() const;
     void deleteSelection(EditSelection* sel = nullptr);
     void repaintSelection(bool evenWithoutSelection = false);
-
-    void setGeometryTool(std::unique_ptr<GeometryTool> tool);
-    void resetGeometryTool();
 
     TextEditor* getTextEditor() const;
     std::vector<XojPageView*> const& getViewPages() const;
@@ -180,11 +176,6 @@ private:
      * Handler for rerendering pages / repainting pages
      */
     RepaintHandler* repaintHandler = nullptr;
-
-    /**
-     * Geometry tool, if active
-     */
-    std::unique_ptr<GeometryTool> geometryTool;
 
     /**
      * Memory cleanup timeout
