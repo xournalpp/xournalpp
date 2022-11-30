@@ -92,8 +92,7 @@ public:
     void deleteSelection(EditSelection* sel = nullptr);
     void repaintSelection(bool evenWithoutSelection = false);
 
-    GeometryToolInputHandler* getGeometryToolInputHandler();
-    void setGeometryTool(std::unique_ptr<GeometryTool> tool, std::unique_ptr<GeometryToolInputHandler> handler);
+    void setGeometryTool(std::unique_ptr<GeometryTool> tool);
     void resetGeometryTool();
 
     TextEditor* getTextEditor() const;
@@ -186,7 +185,6 @@ private:
      * Geometry tool, if active
      */
     std::unique_ptr<GeometryTool> geometryTool;
-    std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
 
     /**
      * Memory cleanup timeout

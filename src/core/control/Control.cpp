@@ -1075,13 +1075,17 @@ void Control::makeGeometryTool(GeometryToolType tool) {
                 std::make_unique<SetsquareInputHandler>(this->win->getXournal(), geometryToolController.get());
         geometryToolInputHandler->registerToPool(setsquare->getHandlerPool());
         fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
-        this->win->getXournal()->setGeometryTool(std::move(geometryTool), std::move(geometryToolInputHandler));
+        this->win->getXournal()->setGeometryTool(std::move(geometryTool));
+        auto xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
+        xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
     }
 }
 
 void Control::resetGeometryTool() {
     this->geometryToolController.reset();
     this->win->getXournal()->resetGeometryTool();
+    auto xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
+    xournal->input->resetGeometryToolInputHandler();
 }
 
 auto Control::copy() -> bool {
