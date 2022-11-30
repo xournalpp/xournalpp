@@ -1,13 +1,16 @@
 #include "PopplerGlibAction.h"
 
 #include <algorithm>  // for min
+#include <cstddef>    // for size_t
 
-#include <glib.h>              // for g_warning
-#include <poppler-action.h>    // for poppler_action_free, poppler_dest_free
-#include <poppler-document.h>  // for poppler_document_find_dest, poppler_do...
+#include <glib.h>              // for g_warning, gchar
+#include <poppler-action.h>    // for poppler_dest_free, PopplerActi...
+#include <poppler-document.h>  // for poppler_document_find_dest
 #include <poppler-page.h>      // for poppler_page_get_size
 
-#include "util/Util.h"  // for npos
+#include "model/LinkDestination.h"     // for LinkDestination
+#include "util/Util.h"                 // for npos
+#include "util/raii/CLibrariesSPtr.h"  // for ref
 
 using std::string;
 

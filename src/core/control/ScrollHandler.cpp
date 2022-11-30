@@ -1,21 +1,18 @@
 #include "ScrollHandler.h"
 
 #include <memory>  // for __shared_ptr_access
-#include "gui/Layout.h"
-#include "gui/XournalView.h"
-#include "gui/sidebar/Sidebar.h"
-#include "gui/widgets/SpinPageAdapter.h"
-#include "model/LinkDestination.h"
 
 #include <glib.h>  // for g_error
 
+#include "control/zoom/ZoomControl.h"     // for ZoomControl
 #include "gui/MainWindow.h"               // for MainWindow
 #include "gui/XournalView.h"              // for XournalView
+#include "gui/sidebar/Sidebar.h"          // for Sidebar
 #include "gui/widgets/SpinPageAdapter.h"  // for SpinPageAdapter
 #include "model/Document.h"               // for Document
+#include "model/LinkDestination.h"        // for LinkDestination
 #include "model/XojPage.h"                // for XojPage
 #include "util/Util.h"                    // for npos
-#include "control/zoom/ZoomControl.h"     // for ZoomControl
 
 #include "Control.h"  // for Control
 

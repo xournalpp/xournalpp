@@ -1,18 +1,22 @@
 #include "PopplerGlibPage.h"
 
 #include <algorithm>  // for max, min
-#include <cstdlib>    // for abs, ptrdiff_t
-#include <sstream>    // for operator<<, ostringstream, basic_os...
+#include <cstdlib>    // for abs, NULL, ptrdiff_t
+#include <memory>     // for make_unique
+#include <sstream>    // for operator<<, ostringstream, bas...
 
 #include <glib.h>          // for g_free, g_utf8_offset_to_pointer
-#include <poppler-page.h>  // for _PopplerRectangle, poppler_page_get...
-#include <poppler.h>       // for PopplerRectangle, g_object_ref, g_o...
+#include <poppler-page.h>  // for _PopplerRectangle, _PopplerLin...
+#include <poppler.h>       // for PopplerRectangle, g_object_ref
 
-#include "pdf/base/XojPdfPage.h"  // for XojPdfRectangle, XojPdfPageSelectio...
-#include "util/GListView.h"       // for GListView, GListView<>::GListViewIter
-#include "PopplerGlibAction.h"
+#include "pdf/base/XojPdfAction.h"     // for XojPdfAction
+#include "pdf/base/XojPdfPage.h"       // for XojPdfRectangle, XojPdfPage::Link
+#include "util/GListView.h"            // for GListView, GListView<>::GListV...
+#include "util/raii/CLibrariesSPtr.h"  // for adopt
+#include "util/raii/CairoWrappers.h"   // for CairoRegionSPtr
 
-#include "cairo.h"  // for cairo_region_create, cairo_region_c...
+#include "PopplerGlibAction.h"  // for PopplerGlibAction
+#include "cairo.h"              // for cairo_region_create, cairo_reg...
 
 PopplerGlibPage::PopplerGlibPage(PopplerPage* page, PopplerDocument* parentDoc): page(page), document(parentDoc) {
     if (page != nullptr) {

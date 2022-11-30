@@ -1,24 +1,28 @@
 #include "Sidebar.h"
 
-#include <memory>  // for allocator, make...
-#include <string>  // for string
+#include <cassert>    // for assert
+#include <cinttypes>  // for int64_t
+#include <memory>     // for make_shared
+#include <string>     // for string
+
 #include <config-features.h>
-#include <gtk/gtk.h>
 #include <gdk/gdk.h>      // for gdk_display_get...
 #include <glib-object.h>  // for G_CALLBACK, g_s...
+#include <gtk/gtk.h>      // for gtk_dialog_add_...
 
 #include "control/Control.h"                          // for Control
 #include "control/settings/Settings.h"                // for Settings
 #include "gui/GladeGui.h"                             // for GladeGui
 #include "gui/sidebar/AbstractSidebarPage.h"          // for AbstractSidebar...
 #include "gui/sidebar/indextree/SidebarIndexPage.h"   // for SidebarIndexPage
+#include "model/Document.h"                           // for Document
+#include "model/XojPage.h"                            // for XojPage
+#include "pdf/base/XojPdfPage.h"                      // for XojPdfPageSPtr
 #include "previews/layer/SidebarLayersContextMenu.h"  // for SidebarLayersCo...
 #include "previews/layer/SidebarPreviewLayers.h"      // for SidebarPreviewL...
 #include "previews/page/SidebarPreviewPages.h"        // for SidebarPreviewP...
 #include "util/Util.h"                                // for npos
-#include "util/i18n.h"
-#include "model/Document.h"
-#include "model/XojPage.h"
+#include "util/i18n.h"                                // for _, FC, _F
 
 Sidebar::Sidebar(GladeGui* gui, Control* control): control(control), gui(gui), toolbar(this, gui) {
     this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
