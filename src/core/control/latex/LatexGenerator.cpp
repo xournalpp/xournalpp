@@ -10,11 +10,11 @@
 #include "control/settings/LatexSettings.h"  // for LatexSettings
 #include "util/PathUtil.h"                   // for getLongPath
 #include "util/PlaceholderString.h"          // for PlaceholderString
+#include "util/Util.h"                       // for Util
 #include "util/i18n.h"                       // for FS, _F
 #include "util/raii/GLibGuards.h"            // for GErrorGuard, GStrvGuard
 #include "util/safe_casts.h"                 // for as_signed
 #include "util/serdesstream.h"               // for serdes_stream
-#include "util/Util.h"                       // for Util
 
 
 using namespace xoj::util;
@@ -72,20 +72,15 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
     }
     gchar* prog = argv[0];
     if (!prog || !(prog = g_find_program_in_path(prog))) {
-        GenError res{};
         if (Util::isFlatpakInstallation()) {
-            res = GenError{
+            return GenError{
                     FS(_F("Failed to find LaTeX generator program in PATH: {1}\n\nSince installation is detected "
                           "within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For "
                           "example, by running:\n\n$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive") %
                        argv[0])};
         } else {
-            res = GenError{FS(_F("Failed to find LaTeX generator program in PATH: {1}") % argv[0])};
+            return GenError{FS(_F("Failed to find LaTeX generator program in PATH: {1}") % argv[0])};
         }
-
-        g_strfreev(argv);
-        g_clear_error(&err);
-        return res;
     }
     g_free(argv[0]);
     argv[0] = prog;
