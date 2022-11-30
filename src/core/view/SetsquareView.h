@@ -106,5 +106,8 @@ private:
     void drawRotation(cairo_t* cr) const;
     void clipVerticalStripes(cairo_t* cr) const;
     void clipHorizontalStripes(cairo_t* cr) const;
+
+public:
+    static constexpr double LINE_WIDTH = .02;
 };
 };  // namespace xoj::view

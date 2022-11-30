@@ -19,7 +19,6 @@
 using namespace xoj::view;
 
 
-constexpr double LINE_WIDTH = .02;
 constexpr double FONT_SIZE = .2;
 constexpr double CIRCLE_RAD = .3;
 constexpr double TICK_SMALL = .1;
