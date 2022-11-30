@@ -698,16 +698,9 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-auto XournalView::getGeometryToolInputHandler() -> GeometryToolInputHandler* { return geometryToolInputHandler.get(); }
-
-void XournalView::setGeometryTool(std::unique_ptr<GeometryTool> tool,
-                                  std::unique_ptr<GeometryToolInputHandler> handler) {
-    this->geometryTool = std::move(tool);
-    this->geometryToolInputHandler = std::move(handler);
-}
+void XournalView::setGeometryTool(std::unique_ptr<GeometryTool> tool) { this->geometryTool = std::move(tool); }
 
 void XournalView::resetGeometryTool() {
-    geometryToolInputHandler.reset();
     geometryTool.reset();
     this->control->fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
 }

@@ -126,7 +126,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
 
     // separate events to appropriate handlers
     // handle geometry tool
-    if (auto handler = view->getGeometryToolInputHandler(); handler && handler->handle(event)) {
+    if (geometryToolInputHandler && geometryToolInputHandler->handle(event)) {
         return true;
     }
 
@@ -181,6 +181,12 @@ auto InputContext::getToolHandler() -> ToolHandler* { return view->getControl()-
 
 auto InputContext::getScrollHandling() -> ScrollHandling* { return this->scrollHandling; }
 
+void InputContext::setGeometryToolInputHandler(std::unique_ptr<GeometryToolInputHandler> handler) {
+    this->geometryToolInputHandler = std::move(handler);
+}
+
+void InputContext::resetGeometryToolInputHandler() { this->geometryToolInputHandler.reset(); }
+
 auto InputContext::getModifierState() -> GdkModifierType { return this->modifierState; }
 
 /**
@@ -193,8 +199,8 @@ void InputContext::focusWidget() {
 }
 
 void InputContext::blockDevice(InputContext::DeviceType deviceType) {
-    if (auto handler = view->getGeometryToolInputHandler()) {
-        handler->blockDevice(deviceType);
+    if (geometryToolInputHandler) {
+        geometryToolInputHandler->blockDevice(deviceType);
     }
     switch (deviceType) {
         case MOUSE:
@@ -211,8 +217,8 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType) {
 }
 
 void InputContext::unblockDevice(InputContext::DeviceType deviceType) {
-    if (auto handler = view->getGeometryToolInputHandler()) {
-        handler->unblockDevice(deviceType);
+    if (geometryToolInputHandler) {
+        geometryToolInputHandler->unblockDevice(deviceType);
     }
     switch (deviceType) {
         case MOUSE:
