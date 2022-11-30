@@ -1,9 +1,8 @@
 #include "LinkDestination.h"
 
 #include <utility>  // for move
-#include <variant>
 
-#include "util/Util.h"
+#include "util/Util.h"  // for npos
 
 struct _LinkDestClass {
     GObjectClass base_class;

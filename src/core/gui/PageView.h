@@ -11,22 +11,24 @@
 
 #pragma once
 
-#include <memory>  // for unique_ptr
-#include <mutex>   // for mutex
-#include <string>  // for string
-#include <vector>  // for vector
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr, shared_ptr
+#include <mutex>    // for mutex
+#include <string>   // for string
+#include <vector>   // for vector
 
-#include <cairo.h>    // for cairo_t, cairo_surface_t
-#include <gdk/gdk.h>  // for GdkEventKey, GdkRectangle, GdkEventB...
+#include <cairo.h>    // for cairo_t
+#include <gdk/gdk.h>  // for GdkEventKey, GdkRGBA, GdkRectangle
+#include <gtk/gtk.h>  // for GtkWidget
 
 #include "model/PageListener.h"       // for PageListener
 #include "model/PageRef.h"            // for PageRef
 #include "util/Rectangle.h"           // for Rectangle
-#include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr, CairoSPtr
-#include "view/Repaintable.h"
+#include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr
+#include "view/Repaintable.h"         // for Repaintable
 
-#include "Layout.h"      // for Layout
-#include "LegacyRedrawable.h"  // for Redrawable
+#include "Layout.h"            // for Layout
+#include "LegacyRedrawable.h"  // for LegacyRedrawable
 
 class EraseHandler;
 class InputHandler;

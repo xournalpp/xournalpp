@@ -1,22 +1,16 @@
 #include "SidebarIndexPage.h"
 
-#include <cstring>  // for size_t, strlen
-#include <memory>   // for __shared_ptr_a...
-#include <utility>  // for move
+#include <cstring>  // for strlen
 
 #include <glib-object.h>  // for g_object_unref
 #include <pango/pango.h>  // for PangoLogAttr
 
 #include "control/Control.h"                           // for Control
 #include "control/ScrollHandler.h"                     // for ScrollHandler
-#include "control/zoom/ZoomControl.h"                  // for ZoomControl
 #include "gui/sidebar/previews/base/SidebarToolbar.h"  // for SidebarToolbar
 #include "model/Document.h"                            // for Document
 #include "model/LinkDestination.h"                     // for XojLinkDest
-#include "model/XojPage.h"                             // for XojPage
-#include "pdf/base/XojPdfPage.h"                       // for XojPdfPageSPtr
-#include "util/Util.h"                                 // for npos
-#include "util/i18n.h"                                 // for FC, _, _F
+#include "util/i18n.h"                                 // for _
 
 SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
         AbstractSidebarPage(control, toolbar), iconNameHelper(control->getSettings()) {

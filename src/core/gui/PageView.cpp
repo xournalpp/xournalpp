@@ -1,21 +1,28 @@
 #include "PageView.h"
 
 #include <algorithm>  // for max, find_if
+#include <cassert>    // for assert
+#include <cinttypes>  // for int64_t
 #include <cmath>      // for lround
 #include <cstdlib>    // for size_t
-#include <memory>     // for __shared_ptr_access
+#include <iomanip>    // for operator<<, quoted
+#include <memory>     // for unique_ptr, make_...
 #include <optional>   // for optional
+#include <sstream>    // for operator<<, basic...
+#include <tuple>      // for tuple, tie
 #include <utility>    // for move
-#include <sstream>    // for stringstream
 
 #include <gdk/gdk.h>         // for GdkRectangle, Gdk...
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Escape
-#include <glib.h>            // for gint, g_get_curre...
-#include <gtk/gtk.h>         // for gtk_widget_get_to...
+#include <glib-object.h>     // for G_CALLBACK, g_sig...
+#include <glib.h>            // for gint, g_free, g_g...
+#include <gtk/gtk.h>         // for GtkWidget, gtk_co...
 
 #include "control/AudioController.h"                // for AudioController
 #include "control/Control.h"                        // for Control
+#include "control/ScrollHandler.h"                  // for ScrollHandler
 #include "control/SearchControl.h"                  // for SearchControl
+#include "control/Tool.h"                           // for Tool
 #include "control/ToolEnums.h"                      // for DRAWING_TYPE_SPLINE
 #include "control/ToolHandler.h"                    // for ToolHandler
 #include "control/jobs/XournalScheduler.h"          // for XournalScheduler
@@ -31,12 +38,10 @@
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
-#include "control/tools/Selection.h"                // for Selection, RectSe...
+#include "control/tools/Selection.h"                // for RectSelection
 #include "control/tools/SplineHandler.h"            // for SplineHandler
 #include "control/tools/StrokeHandler.h"            // for StrokeHandler
 #include "control/tools/VerticalToolHandler.h"      // for VerticalToolHandler
-#include "control/zoom/ZoomControl.h"               // for ZoomControl
-#include "control/ScrollHandler.h"
 #include "gui/FloatingToolbox.h"                    // for FloatingToolbox
 #include "gui/MainWindow.h"                         // for MainWindow
 #include "gui/PdfFloatingToolbox.h"                 // for PdfFloatingToolbox
@@ -44,13 +49,16 @@
 #include "gui/inputdevices/PositionInputData.h"     // for PositionInputData
 #include "model/Document.h"                         // for Document
 #include "model/Element.h"                          // for Element, ELEMENT_...
-#include "model/Layer.h"                            // for Layer
+#include "model/Layer.h"                            // for Layer, Layer::Index
+#include "model/LinkDestination.h"                  // for LinkDestination
 #include "model/PageRef.h"                          // for PageRef
 #include "model/Stroke.h"                           // for Stroke
 #include "model/TexImage.h"                         // for TexImage
 #include "model/Text.h"                             // for Text
 #include "model/XojPage.h"                          // for XojPage
-#include "pdf/base/XojPdfPage.h"                    // for XojPdfPageSPtr
+#include "pdf/base/XojPdfAction.h"                  // for XojPdfAction
+#include "pdf/base/XojPdfDocument.h"                // for XojPdfDocument
+#include "pdf/base/XojPdfPage.h"                    // for XojPdfRectangle
 #include "undo/DeleteUndoAction.h"                  // for DeleteUndoAction
 #include "undo/InsertUndoAction.h"                  // for InsertUndoAction
 #include "undo/MoveUndoAction.h"                    // for MoveUndoAction
@@ -66,10 +74,11 @@
 #include "util/serdesstream.h"                      // for serdes_stream
 #include "util/gtk4_helper.h"                       // for gtk_box_append
 #include "view/DebugShowRepaintBounds.h"            // for IF_DEBUG_REPAINT
-#include "view/overlays/OverlayView.h"
-#include "view/overlays/PdfElementSelectionView.h"
-#include "view/overlays/SearchResultView.h"
-#include "view/overlays/ShapeToolView.h"
+#include "view/overlays/OverlayView.h"              // for OverlayView, Tool...
+#include "view/overlays/PdfElementSelectionView.h"  // for PdfElementSelecti...
+#include "view/overlays/SearchResultView.h"         // for SearchResultView
+#include "view/overlays/SelectionView.h"            // for SelectionView
+#include "view/overlays/ShapeToolView.h"            // for ShapeToolView
 
 #include "PageViewFindObjectHelper.h"  // for SelectObject, Pla...
 #include "RepaintHandler.h"            // for RepaintHandler
@@ -77,6 +86,8 @@
 #include "XournalView.h"               // for XournalView
 #include "XournalppCursor.h"           // for XournalppCursor
 #include "filesystem.h"                // for path
+
+class OverlayBase;
 
 using std::string;
 using xoj::util::Rectangle;

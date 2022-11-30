@@ -11,13 +11,11 @@
 
 #pragma once
 
-#include <memory>
+#include <memory>  // for shared_ptr
 #include <string>  // for string
-#include <vector>
 
 #include <poppler.h>  // for PopplerAction, PopplerDocument
 
-#include "model/LinkDestination.h"  // for LinkDestination (ptr only), XojLi...
 #include "pdf/base/XojPdfAction.h"  // for XojPdfAction
 #include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
 
