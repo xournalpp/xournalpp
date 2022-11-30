@@ -14,6 +14,7 @@
 #include "control/ClipboardHandler.h"                            // for Clip...
 #include "control/RecentManager.h"                               // for Rece...
 #include "control/ScrollHandler.h"                               // for Scro...
+#include "control/SetsquareController.h"                         // for Sets...
 #include "control/Tool.h"                                        // for Tool
 #include "control/ToolHandler.h"                                 // for Tool...
 #include "control/jobs/AutosaveJob.h"                            // for Auto...
@@ -50,7 +51,9 @@
 #include "gui/dialog/SettingsDialog.h"                           // for Sett...
 #include "gui/dialog/ToolbarManageDialog.h"                      // for Tool...
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"  // for Tool...
+#include "gui/inputdevices/GeometryToolInputHandler.h"           // for Geom...
 #include "gui/inputdevices/HandRecognition.h"                    // for Hand...
+#include "gui/inputdevices/SetsquareInputHandler.h"              // for Sets...
 #include "gui/sidebar/Sidebar.h"                                 // for Sidebar
 #include "gui/toolbarMenubar/ToolMenuHandler.h"                  // for Tool...
 #include "gui/toolbarMenubar/model/ToolbarData.h"                // for Tool...
@@ -648,13 +651,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             break;
         case ACTION_SETSQUARE:
             if (auto xournal = this->win->getXournal();
-                !xournal->getGeometryToolController() ||
-                xournal->getGeometryToolController()->getType() != GeometryToolType::SETSQUARE) {
-                xournal->resetGeometryTool();
-                xournal->makeGeometryTool(GeometryToolType::SETSQUARE);
+                !this->geometryToolController ||
+                this->geometryToolController->getType() != GeometryToolType::SETSQUARE) {
+                resetGeometryTool();
+                makeGeometryTool(GeometryToolType::SETSQUARE);
                 xournal->getViewFor(getCurrentPageNo())->rerenderPage();
             } else {
-                xournal->resetGeometryTool();
+                resetGeometryTool();
                 xournal->getViewFor(getCurrentPageNo())->rerenderPage();
             }
             break;
@@ -1061,6 +1064,26 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
     }
 }
 
+void Control::makeGeometryTool(GeometryToolType tool) {
+    auto view = this->win->getXournal()->getViewFor(getCurrentPageNo());
+    if (tool == GeometryToolType::SETSQUARE) {
+        auto setsquare = new Setsquare();
+        view->addOverlayView(std::make_unique<xoj::view::SetsquareView>(setsquare, view, zoom));
+        std::unique_ptr<GeometryTool> geometryTool = std::unique_ptr<GeometryTool>(setsquare);
+        this->geometryToolController = std::make_unique<SetsquareController>(view, setsquare);
+        std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler =
+                std::make_unique<SetsquareInputHandler>(this->win->getXournal(), geometryToolController.get());
+        geometryToolInputHandler->registerToPool(setsquare->getHandlerPool());
+        fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
+        this->win->getXournal()->setGeometryTool(std::move(geometryTool), std::move(geometryToolInputHandler));
+    }
+}
+
+void Control::resetGeometryTool() {
+    this->geometryToolController.reset();
+    this->win->getXournal()->resetGeometryTool();
+}
+
 auto Control::copy() -> bool {
     if (this->win && this->win->getXournal()->copy()) {
         return true;
@@ -1361,10 +1384,9 @@ void Control::deletePage() {
 
     // if the current page contains the geometry tool, reset it
     size_t pNr = getCurrentPageNo();
-    auto geometryToolController = win->getXournal()->getGeometryToolController();
     doc->lock();
     if (geometryToolController && doc->indexOf(geometryToolController->getPage()) == pNr) {
-        win->getXournal()->resetGeometryTool();
+        resetGeometryTool();
     }
     doc->unlock();
     // don't allow delete pages if we have less than 2 pages,
@@ -2783,7 +2805,7 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
     if (allowDestroy && discard) {
         this->closeDocument();
     }
-    win->getXournal()->resetGeometryTool();
+    resetGeometryTool();
     return true;
 }
 

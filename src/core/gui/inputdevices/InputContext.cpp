@@ -14,6 +14,7 @@
 #include "control/DeviceListHelper.h"                   // for InputDevice
 #include "control/settings/Settings.h"                  // for Settings
 #include "gui/XournalView.h"                            // for XournalView
+#include "gui/inputdevices/GeometryToolInputHandler.h"  // for GeometryToolInputHandler
 #include "gui/inputdevices/HandRecognition.h"           // for HandRecognition
 #include "gui/inputdevices/KeyboardInputHandler.h"      // for KeyboardInput...
 #include "gui/inputdevices/MouseInputHandler.h"         // for MouseInputHan...

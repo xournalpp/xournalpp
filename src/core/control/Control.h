@@ -26,6 +26,7 @@
 #include "enums/ActionGroup.enum.h"         // for ActionGroup
 #include "enums/ActionType.enum.h"          // for ActionType
 #include "model/DocumentHandler.h"          // for DocumentHandler
+#include "model/GeometryTool.h"             // for GeometryTool
 #include "model/PageRef.h"                  // for PageRef
 #include "undo/UndoRedoHandler.h"           // for UndoRedoHandler (ptr only)
 
@@ -35,6 +36,7 @@
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
 
+class GeometryToolController;
 class AudioController;
 class FullscreenHandler;
 class Sidebar;
@@ -349,6 +351,9 @@ protected:
     bool loadPdf(fs::path const& filepath, int scrollToPage);
 
 private:
+    void makeGeometryTool(GeometryToolType tool);
+    void resetGeometryTool();
+
     /**
      * "Closes" the document, preparing the editor for a new document.
      */
@@ -440,6 +445,8 @@ private:
     PageBackgroundChangeController* pageBackgroundChangeController;
 
     LayerController* layerController;
+
+    std::unique_ptr<GeometryToolController> geometryToolController;
 
     /**
      * Manage all Xournal++ plugins
