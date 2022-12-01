@@ -84,3 +84,31 @@ The script will:
 4. Proposal to merge the release back to the main development branch
 
 During the merge it is imperative that the instructions of the script are followed stringently to not confuse our versioning scheme.
+
+
+## Release checklist
+
+To summarize all of the above information, the following checklist should be
+followed when publishing a release:
+
+* [ ] Update `CHANGELOG.md` with the latest changes.
+* [ ] After the `CHANGELOG.md` is fully updated, summarize the changes in
+      `debian/changelog`.
+* [ ] Run `scripts/release_helper.sh publish` to create the release commit.
+* [ ] Review the release commit and confirm that it has the correct contents.
+* [ ] Push the release to GitHub:
+  * [ ] Push the release commit to the release branch. **Do not create a merge
+        commit, the commit should be fast-forwarded.**
+  * [ ] Push the tag.
+* [ ] A tag push should trigger a run of the "Release" pipeline on Azure
+      Pipelines (not to be confused with the "Releases" tab); ensure that it
+      succeeds.
+  * [ ] Check that the "Release" pipeline succeeds.
+  * [ ] Go to "Releases" tab (not the pipeline) and trigger a manual deployment
+        with "Create Release".
+  * [ ] Check that the deployment successfully creates a GitHub release draft.
+* [ ] Last checks on the GitHub release draft
+  * [ ] Update the release description.
+  * [ ] Test the release draft artifacts for obvious issues.
+  * [ ] Publish the release.
+* [ ] After the release is created, merge back the release branch into `master`.
