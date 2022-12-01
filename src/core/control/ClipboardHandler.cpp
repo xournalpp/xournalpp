@@ -174,7 +174,7 @@ auto ClipboardHandler::copy() -> bool {
     cairo_t* crPng = cairo_create(surfacePng);
     cairo_scale(crPng, dpiFactor, dpiFactor);
 
-    cairo_translate(crPng, -selection->getXOnView(), -selection->getYOnView());
+    cairo_translate(crPng, -selection->getOriginalXOnView(), -selection->getOriginalYOnView());
 
     xoj::view::ElementContainerView view(this->selection);
     view.draw(xoj::view::Context::createDefault(crPng));
@@ -196,6 +196,7 @@ auto ClipboardHandler::copy() -> bool {
                                                 selection->getWidth(), selection->getHeight());
     cairo_t* crSVG = cairo_create(surfaceSVG);
 
+    cairo_translate(crSVG, -selection->getOriginalXOnView(), -selection->getOriginalYOnView());
     view.draw(xoj::view::Context::createDefault(crSVG));
 
     cairo_surface_destroy(surfaceSVG);
