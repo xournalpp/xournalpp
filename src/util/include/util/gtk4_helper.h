@@ -15,9 +15,9 @@
 #include <gtk/gtk.h>
 
 
-void gtk_box_append(GtkBox* box, GtkWidget* child) {
+inline void gtk_box_append(GtkBox* box, GtkWidget* child) {
     constexpr auto default_expand = false;
     gtk_box_pack_start(GTK_BOX(box), child, default_expand, true, 0);
 }
 
-void gtk_box_remove(GtkBox* box, GtkWidget* child) { gtk_container_remove(GTK_CONTAINER(box), child); }
+inline void gtk_box_remove(GtkBox* box, GtkWidget* child) { gtk_container_remove(GTK_CONTAINER(box), child); }
