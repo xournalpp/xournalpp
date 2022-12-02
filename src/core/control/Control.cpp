@@ -541,12 +541,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             changePageBackgroundColor();
             break;
         case ACTION_MOVE_SELECTION_LAYER_UP:
-            // moveSelectionToLayer takes layer number (layerid - 1) not id 
+            // moveSelectionToLayer takes layer number (layerid - 1) not id
             // therefor the new layer is "layerid - 1 + 1"
             moveSelectionToLayer(getCurrentPage()->getSelectedLayerId());
             break;
         case ACTION_MOVE_SELECTION_LAYER_DOWN:
-            if(this->getLayerController()->getCurrentLayerId() >= 2) {
+            if (this->getLayerController()->getCurrentLayerId() >= 2) {
                 // moveSelectionToLayer takes layer number (layerid - 1) not id
                 // therefor the new layer is "layerid - 1 - 1"
                 moveSelectionToLayer(getCurrentPage()->getSelectedLayerId() - 2);
@@ -1808,11 +1808,9 @@ void Control::undoRedoPageChanged(PageRef page) {
 void Control::selectTool(ToolType type) {
     // keep text-selection when switching from text to seletion tool
     auto oldTool = getToolHandler()->getActiveTool();
-    if (oldTool && win
-                && isSelectToolType(type)
-                && oldTool->getToolType() == ToolType::TOOL_TEXT
-                && this->win->getXournal()->getTextEditor()
-                && !(this->win->getXournal()->getTextEditor()->getText()->getText().empty())) {
+    if (oldTool && win && isSelectToolType(type) && oldTool->getToolType() == ToolType::TOOL_TEXT &&
+        this->win->getXournal()->getTextEditor() &&
+        !(this->win->getXournal()->getTextEditor()->getText()->getText().empty())) {
         auto xournal = this->win->getXournal();
         Text* textobj = xournal->getTextEditor()->getText();
         clearSelectionEndText();
@@ -1824,7 +1822,7 @@ void Control::selectTool(ToolType type) {
         PageRef page = this->doc->getPage(pageNr);
         auto selection = new EditSelection(this->undoRedo, textobj, view, page);
         this->doc->unlock();
-    
+
         xournal->setSelection(selection);
     }
 
@@ -3017,8 +3015,9 @@ void Control::moveSelectionToLayer(size_t layerNo) {
 
     auto* oldLayer = currentP->getSelectedLayer();
     auto* newLayer = currentP->getLayers()->at(layerNo);
-    auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer, currentP->getSelectedLayerId() - 1, layerNo);
-    for (auto* e : selection->getElements()) {
+    auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer,
+                                                                        currentP->getSelectedLayerId() - 1, layerNo);
+    for (auto* e: selection->getElements()) {
         moveSelUndo->addElement(newLayer, e, newLayer->indexOf(e));
     }
     undoRedo->addUndoAction(std::move(moveSelUndo));
