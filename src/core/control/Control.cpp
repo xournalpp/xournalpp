@@ -2831,7 +2831,7 @@ void Control::clipboardPasteText(string text) {
     Text* t = new Text();
     t->setText(text);
     t->setFont(settings->getFont());
-    t->setColor(toolHandler->getColor());
+    t->setColor(toolHandler->getTool(TOOL_TEXT).getColor());
 
     clipboardPaste(t);
 }
