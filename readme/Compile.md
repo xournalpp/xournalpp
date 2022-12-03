@@ -20,6 +20,7 @@ mkdir build
 cd build
 
 cmake ..
+
 cmake --build . # For a faster build, set the flag -DCMAKE_BUILD_TYPE=RelWithDebInfo
 ```
 
@@ -42,6 +43,8 @@ download and build `googletest`.
 ```sh
 mkdir build
 cd build
+
+cmake .. -DENABLE_GTEST=on
 
 # Build unit test executables
 cmake --build . --target test-units

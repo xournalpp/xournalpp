@@ -84,6 +84,3 @@ The script will:
 4. Proposal to merge the release back to the main development branch
 
 During the merge it is imperative that the instructions of the script are followed stringently to not confuse our versioning scheme.
-
-
-

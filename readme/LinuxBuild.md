@@ -17,8 +17,8 @@ The minimum required CMake version is 3.13, but we recommend using >=3.15. Also,
 #### For Arch Linux:
 ```sh
 sudo pacman -S cmake gtk3 base-devel libxml2 portaudio libsndfile \
-poppler-glib texlive-bin texlive-pictures gettext libzip lua53 lua53-lgi \
-gtksourceview4
+  poppler-glib texlive-bin texlive-pictures gettext libzip lua53 lua53-lgi \
+  gtksourceview4
 ```
 
 #### For Fedora:
@@ -76,18 +76,18 @@ can be found in `doc/html` and `doc/latex`. Launch a server hosting the files wi
 
 ## Packaging and Installation
 
-#### `.deb` packages
+### `.deb` packages
 
 ```sh
 cmake .. -DCPACK_GENERATOR="DEB" ..
 cmake --build . --target package
 ```
 
-#### `.rpm` packages
+### `.rpm` packages
 
 TODO
 
-#### AppImage
+### AppImage
 
 The quickest way to generate an AppImage is to first generate the `.tar.gz`
 package and then use that with the `azure-pipelines/util/build_appimage.sh`
@@ -106,7 +106,7 @@ directory, and run LinuxDeploy on the prepared app dir.
 By default, the `build_appimage.sh` script will copy the Adwaita GTK theme and
 the Adwaita icon theme into the AppImage.
 
-#### Flatpak
+### Flatpak
 
 The Flatpak manifest for Xournal++ is located at
 https://github.com/flathub/com.github.xournalpp.xournalpp, which should be
