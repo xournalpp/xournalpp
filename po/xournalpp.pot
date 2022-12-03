@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-02 19:31+0000\n"
+"POT-Creation-Date: 2022-12-03 07:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -178,6 +178,10 @@ msgstr ""
 
 #: ../src/core/undo/SizeUndoAction.cpp:106
 msgid "Change stroke width"
+msgstr ""
+
+#: ../src/core/control/RecentManager.cpp:290
+msgid "Clear list"
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
@@ -910,6 +914,10 @@ msgid ""
 "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
+#: ../src/core/control/RecentManager.cpp:250
+msgid "No recent files"
+msgstr ""
+
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:126
 msgid "Normal drawing"
 msgstr ""
@@ -950,7 +958,7 @@ msgstr ""
 msgid "Open file"
 msgstr ""
 
-#: ../src/core/control/RecentManager.cpp:197
+#: ../src/core/control/RecentManager.cpp:211
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr ""
