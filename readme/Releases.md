@@ -117,4 +117,6 @@ followed when publishing a release:
   * [ ] Update the release description.
   * [ ] Test the release draft artifacts for obvious issues.
   * [ ] Publish the release.
+* [ ] Check that the FlatHub release is built successfully.
+* [ ] Update the version on [the website repository](https://github.com/xournalpp/xournalpp.github.io).
 * [ ] After the release is created, merge back the release branch into `master`.
