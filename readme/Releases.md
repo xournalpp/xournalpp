@@ -91,14 +91,20 @@ During the merge it is imperative that the instructions of the script are follow
 To summarize all of the above information, the following checklist should be
 followed when publishing a release:
 
+* [ ] Checkout the release branch.
 * [ ] Update `CHANGELOG.md` with the latest changes.
-* [ ] After the `CHANGELOG.md` is fully updated, summarize the changes in
-      `debian/changelog`.
-* [ ] Run `scripts/release_helper.sh publish` to create the release commit.
-* [ ] Review the release commit and confirm that it has the correct contents.
+* [ ] Open a new pull request to allow all maintainers to review the release and
+      confirm that it has the correct contents. This should consist of three
+      commits in total:
+  * [ ] Summarize the changes in `debian/changelog`, and create a commit.
+  * [ ] Then run `scripts/release_helper.sh publish` to create the release
+        commit. This will also automatically create a commit bumping to the next
+        development version.
+  * [ ] **Do not merge using GitHub's web interface.** To avoid accidental
+        merges, mark the PR as draft.
 * [ ] Push the release to GitHub:
-  * [ ] Push the release commit to the release branch. **Do not create a merge
-        commit, the commit should be fast-forwarded.**
+  * [ ] Directly push the HEAD commit of the PR to the release branch. **Do not
+        create a merge commit, the commit should be fast-forwarded.**
   * [ ] Push the tag.
 * [ ] A tag push should trigger a run of the "Release" pipeline on Azure
       Pipelines (not to be confused with the "Releases" tab); ensure that it
