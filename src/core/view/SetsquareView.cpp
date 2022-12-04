@@ -23,7 +23,6 @@ constexpr double FONT_SIZE = .2;
 constexpr double CIRCLE_RAD = .3;
 constexpr double TICK_SMALL = .1;
 constexpr double TICK_LARGE = .2;
-constexpr double DISTANCE_SEMICIRCLE_FROM_LEGS = 1.15;
 constexpr double MAX_HOR_POS_VMARKS = 2.5;
 constexpr int MIN_OFFSET_ANG_MARKS = 2;
 constexpr double RELATIVE_CIRCLE_POS = .75;
@@ -49,7 +48,7 @@ void SetsquareView::on(UpdateValuesRequest, double h, double rot, cairo_matrix_t
     height = h;
     rotation = rot;
     matrix = m;
-    radius = height / std::sqrt(2.) - DISTANCE_SEMICIRCLE_FROM_LEGS;
+    radius = Setsquare::radiusFromHeight(height);
     circlePos = height * RELATIVE_CIRCLE_POS;
     horPosVmarks = std::min(MAX_HOR_POS_VMARKS, radius * RELATIVE_MAX_HOR_POS_VMARKS);
     minVmark = (std::abs(horPosVmarks - HMARK_POS - TICK_SMALL / 2.) < MIN_DIST_FROM_HMARK - TICK_SMALL / 2.) ?

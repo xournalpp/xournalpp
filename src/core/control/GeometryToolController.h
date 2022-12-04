@@ -34,11 +34,11 @@ public:
 
 public:
     /**
-     * @brief moves the geometry tool in x- and y-direction
+     * @brief translates the geometry tool in x- and y-direction
      * @param x the translation in x-direction (in document coordinates)
      * @param y the translation in y-direction (in document coordinates)
      */
-    void move(double x, double y);
+    void translate(double x, double y);
 
     /**
      * @brief rotates the geometry tool around its rotation center
@@ -57,7 +57,7 @@ public:
     void scale(double f, double cx, double cy);
 
     /**
-     * @brief marks a point with a "x"
+     * @brief marks a point with a "x" and puts the mark onto the current layer
      * @param x the x-coordinate of the point (in document coordinates)
      * @param y the y-coordinate of the point (in document coordinates)
      */
@@ -81,7 +81,7 @@ public:
     /**
      * @brief the page with respect to which the setsquare is initialized
      */
-    PageRef getPage() const;
+    const PageRef getPage() const;
 
     virtual bool isInsideGeometryTool(double x, double y, double border = 0.0) const = 0;
 

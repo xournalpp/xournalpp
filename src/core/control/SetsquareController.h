@@ -120,7 +120,7 @@ private:
      * x-coordinates of the point to be drawn (with respect to an unrotated, and untranslated coordinate system) are
      * saved in the variables hypotenuseMin and hypotenuseMax
      */
-    double hypotenuseMax = std::numeric_limits<double>::min();
+    double hypotenuseMax = std::numeric_limits<double>::lowest();
     double hypotenuseMin = std::numeric_limits<double>::max();
 
     /**
