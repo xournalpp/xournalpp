@@ -7,7 +7,6 @@
 #include "model/Setsquare.h"
 #include "model/Stroke.h"
 #include "model/XojPage.h"
-#include "undo/InsertUndoAction.h"  // for InsertUndoAction
 
 using xoj::util::Rectangle;
 SetsquareController::SetsquareController(XojPageView* view, Setsquare* setsquare):
@@ -89,7 +88,7 @@ void SetsquareController::updateRadialStroke(double x, double y) {
     const auto p = posRelToSide(HYPOTENUSE, x, y);
     const auto rad = std::hypot(p.x, p.y);
 
-    if (rad >= geometryTool->getHeight() / std::sqrt(2.) - 1.15 || p.y > 0) {  // TODO
+    if (rad >= Setsquare::radiusFromHeight(geometryTool->getHeight()) || p.y > 0) {
         this->strokeAngle = std::atan2(p.y, p.x);
         stroke->addPoint(Point(x, y));
     } else {
@@ -104,7 +103,7 @@ void SetsquareController::updateRadialStroke(double x, double y) {
 }
 
 void SetsquareController::finalizeEdgeStroke() {
-    hypotenuseMax = std::numeric_limits<double>::min();
+    hypotenuseMax = std::numeric_limits<double>::lowest();
     hypotenuseMin = std::numeric_limits<double>::max();
     addStrokeToLayer();
 }
@@ -114,6 +113,6 @@ void SetsquareController::finalizeRadialStroke() {
     addStrokeToLayer();
 }
 
-auto SetsquareController::existsEdgeStroke() -> bool { return !(hypotenuseMax == std::numeric_limits<double>::min()); }
+auto SetsquareController::existsEdgeStroke() -> bool { return hypotenuseMax != std::numeric_limits<double>::lowest(); }
 
 auto SetsquareController::existsRadialStroke() -> bool { return !std::isnan(strokeAngle); }

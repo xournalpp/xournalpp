@@ -49,7 +49,7 @@ public:
      * @param x the x-coordinate (in pt) of the rotation center
      * @param y the y-coordinate (in pt) of the rotation center
      */
-    GeometryTool(double height, double rotation, double x, double y);
+    GeometryTool(double height, double rotation, double x, double y, Range toolRange);
 
     virtual ~GeometryTool();
 

@@ -46,7 +46,7 @@ class SetsquareView: public GeometryToolView {
 
 public:
     SetsquareView(const Setsquare* s, Repaintable* parent, ZoomControl* zoomControl);
-    ~SetsquareView() override;
+    ~SetsquareView() noexcept override;
 
     void on(FlagDirtyRegionRequest, const Range& rg) override;
     void on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m) override;

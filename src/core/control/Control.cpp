@@ -649,18 +649,15 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
                 selectTool(TOOL_HAND);
             }
             break;
-        case ACTION_SETSQUARE:
-            if (auto xournal = this->win->getXournal();
-                !this->geometryToolController ||
-                this->geometryToolController->getType() != GeometryToolType::SETSQUARE) {
-                resetGeometryTool();
+        case ACTION_SETSQUARE: {
+            bool needsNewSetsquare = !this->geometryToolController ||
+                                     this->geometryToolController->getType() != GeometryToolType::SETSQUARE;
+            resetGeometryTool();
+            if (needsNewSetsquare) {
                 makeGeometryTool(GeometryToolType::SETSQUARE);
-                xournal->getViewFor(getCurrentPageNo())->rerenderPage();
-            } else {
-                resetGeometryTool();
-                xournal->getViewFor(getCurrentPageNo())->rerenderPage();
             }
             break;
+        }
         case ACTION_TOOL_FLOATING_TOOLBOX:
             if (enabled) {
                 selectTool(TOOL_FLOATING_TOOLBOX);
@@ -1066,25 +1063,40 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
 
 void Control::makeGeometryTool(GeometryToolType tool) {
     auto view = this->win->getXournal()->getViewFor(getCurrentPageNo());
-    if (tool == GeometryToolType::SETSQUARE) {
-        auto setsquare = new Setsquare();
-        view->addOverlayView(std::make_unique<xoj::view::SetsquareView>(setsquare, view, zoom));
-        this->geometryTool = std::unique_ptr<GeometryTool>(setsquare);
-        this->geometryToolController = std::make_unique<SetsquareController>(view, setsquare);
-        std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler =
-                std::make_unique<SetsquareInputHandler>(this->win->getXournal(), geometryToolController.get());
-        geometryToolInputHandler->registerToPool(setsquare->getHandlerPool());
-        auto xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
-        xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
-        fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
+    auto* xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
+    switch (tool) {
+        case SETSQUARE: {
+            auto setsquare = new Setsquare();
+            view->addOverlayView(std::make_unique<xoj::view::SetsquareView>(setsquare, view, zoom));
+            this->geometryTool = std::unique_ptr<GeometryTool>(setsquare);
+            this->geometryToolController = std::make_unique<SetsquareController>(view, setsquare);
+            std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler =
+                    std::make_unique<SetsquareInputHandler>(this->win->getXournal(), geometryToolController.get());
+            geometryToolInputHandler->registerToPool(setsquare->getHandlerPool());
+            xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
+            fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
+            geometryTool->notify();
+            break;
+        }
+        default:
+            g_warning("Unknown geometry tool type %d", tool);
     }
 }
 
 void Control::resetGeometryTool() {
+    Range rg;
+    bool hasGeometryTool = false;
+    if (this->geometryTool) {
+        hasGeometryTool = true;
+        rg = this->geometryTool->getToolRange(true);
+    }
     this->geometryToolController.reset();
     this->geometryTool.reset();
-    auto xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
+    auto* xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
     xournal->input->resetGeometryToolInputHandler();
+    if (win && hasGeometryTool) {
+        (win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderRange(rg);
+    }
     fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
 }
 
@@ -1388,11 +1400,14 @@ void Control::deletePage() {
 
     // if the current page contains the geometry tool, reset it
     size_t pNr = getCurrentPageNo();
-    doc->lock();
-    if (geometryToolController && doc->indexOf(geometryToolController->getPage()) == pNr) {
-        resetGeometryTool();
+    if (geometryToolController) {
+        doc->lock();
+        auto page = doc->indexOf(geometryToolController->getPage());
+        doc->unlock();
+        if (page == pNr) {
+            resetGeometryTool();
+        }
     }
-    doc->unlock();
     // don't allow delete pages if we have less than 2 pages,
     // so we can be (more or less) sure there is at least one page.
     if (this->doc->getPageCount() < 2) {
@@ -2271,8 +2286,8 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         parentFolderPath = missingFilePath.parent_path().string();
         filename = missingFilePath.filename().string();
 #else
-        // since POSIX systems detect the whole Windows path as a filename, this checks whether missingFilePath contains
-        // a Windows path
+        // since POSIX systems detect the whole Windows path as a filename, this checks whether missingFilePath
+        // contains a Windows path
         std::regex regex(R"([A-Z]:\\(?:.*\\)*(.*))");
         std::cmatch matchInfo;
 

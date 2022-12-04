@@ -19,7 +19,7 @@ GeometryToolController::GeometryToolController(XojPageView* view, GeometryTool* 
 
 GeometryToolController::~GeometryToolController() = default;
 
-void GeometryToolController::move(double x, double y) {
+void GeometryToolController::translate(double x, double y) {
     geometryTool->setTranslationX(geometryTool->getTranslationX() + x);
     geometryTool->setTranslationY(geometryTool->getTranslationY() + y);
     geometryTool->notify();
@@ -59,14 +59,16 @@ void GeometryToolController::markPoint(double x, double y) {
     cross->addPoint(Point(x + MARK_SIZE, y - MARK_SIZE));
     cross->addPoint(Point(x - MARK_SIZE, y + MARK_SIZE));
 
+    const auto doc = control->getDocument();
     const auto page = view->getPage();
+    doc->lock();
     control->getLayerController()->ensureLayerExists(page);
     const auto layer = page->getSelectedLayer();
+    layer->addElement(cross);
+    doc->unlock();
 
     const auto undo = control->getUndoRedoHandler();
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, cross));
-
-    layer->addElement(cross);
 
     const Rectangle<double> rect{cross->getX(), cross->getY(), cross->getElementWidth(), cross->getElementHeight()};
     view->rerenderRect(rect.x, rect.y, rect.width, rect.height);
@@ -116,6 +118,6 @@ void GeometryToolController::initializeStroke() {
     }
 }
 
-auto GeometryToolController::getPage() const -> PageRef { return view->getPage(); }
+auto GeometryToolController::getPage() const -> const PageRef { return view->getPage(); }
 
 auto GeometryToolController::getView() const -> XojPageView* { return view; }

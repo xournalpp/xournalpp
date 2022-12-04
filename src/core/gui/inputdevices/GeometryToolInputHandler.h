@@ -125,15 +125,16 @@ protected:
     void scrollMotion(InputEvent const& event);
 
     /**
-     * @brief start zooming (after the second finger is put onto the screen)
+     * @brief start rotating and zooming (after the second finger is put onto the screen)
+     * only zooms, when zoom gestures are enabled
      */
-    void zoomStart();
+    void rotateAndZoomStart();
 
     /**
-     * @brief zoooming method
+     * @brief rotation and zooming method, only zooms when zoom gestures are enabled
      * @param event the current input event
      */
-    void zoomMotion(InputEvent const& event);
+    void rotateAndZoomMotion(InputEvent const& event);
 
     /**
      * @brief handles input from the touchscreen for the geometry tool

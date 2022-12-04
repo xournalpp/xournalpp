@@ -2,13 +2,14 @@
 
 #include <initializer_list>  // for initializer_list
 
-GeometryTool::GeometryTool(double h, double r, double tx, double ty):
+GeometryTool::GeometryTool(double h, double r, double tx, double ty, Range toolRange):
         height(h),
         rotation(r),
         translationX(tx),
         translationY(ty),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::GeometryToolView>>()),
-        handlerPool(std::make_shared<xoj::util::DispatchPool<GeometryToolInputHandler>>()) {}
+        handlerPool(std::make_shared<xoj::util::DispatchPool<GeometryToolInputHandler>>()),
+        lastRepaintRange(toolRange) {}
 
 GeometryTool::~GeometryTool() {}
 
