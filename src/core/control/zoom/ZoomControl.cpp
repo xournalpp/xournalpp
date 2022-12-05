@@ -283,14 +283,12 @@ auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
 
     Rectangle widget_rect = getVisibleRect();
     double zoom_fit_width = (widget_rect.width - 14.0) / page->getWidth();
-    double zoom_fit_height = (widget_rect.height - 14.0) / page->getHeight();
-    double zoom_fit = zoom_fit_width < zoom_fit_height ? zoom_fit_width : zoom_fit_height;
     
-    if (zoom_fit < this->zoomMin || zoom_fit > this->zoomMax) {
+    if (zoom_fit_width < this->zoomMin || zoom_fit_width > this->zoomMax) {
         return false;
     }
 
-    this->zoomFitValue = zoom_fit;
+    this->zoomFitValue = zoom_fit_width;
     fireZoomRangeValueChanged();
     if (this->isZoomFitMode() && !this->zoomPresentationMode) {
         this->zoomFit();
