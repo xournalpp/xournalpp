@@ -263,13 +263,20 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     // Add a padding for the shadow of the pages
     Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
-    for (auto&& pv: xournal->view->getViewPages()) {
+    auto& pages = xournal->view->getViewPages();
+    for (size_t pageId = 0; pageId < pages.size(); pageId++) {
+        auto&& pv = pages.at(pageId);
         int px = pv->getX();
         int py = pv->getY();
         int pw = pv->getDisplayWidth();
         int ph = pv->getDisplayHeight();
 
         if (!clippingRect.intersects(pv->getRect())) {
+            continue;
+        }
+
+        // stop rendering non-selected pages in presentation mode
+        if (settings->isPresentationMode() && pageId != xournal->view->getCurrentPage()) {
             continue;
         }
 
