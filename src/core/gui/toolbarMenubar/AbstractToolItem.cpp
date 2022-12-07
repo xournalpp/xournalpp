@@ -12,13 +12,7 @@ class ActionHandler;
 AbstractToolItem::AbstractToolItem(std::string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem):
         AbstractItem(std::move(id), handler, type, menuitem) {}
 
-AbstractToolItem::~AbstractToolItem() {
-    this->item = nullptr;
-    if (this->popupMenu) {
-        g_object_unref(G_OBJECT(this->popupMenu));
-        this->popupMenu = nullptr;
-    }
-}
+AbstractToolItem::~AbstractToolItem() = default;
 
 auto AbstractToolItem::getItem() const -> GtkToolItem* {
     return this->item;
@@ -87,16 +81,7 @@ auto AbstractToolItem::createTmpItem(bool horizontal) -> GtkToolItem* {
     return item;
 }
 
-void AbstractToolItem::setPopupMenu(GtkWidget* popupMenu) {
-    if (this->popupMenu) {
-        g_object_unref(this->popupMenu);
-    }
-    if (popupMenu) {
-        g_object_ref(popupMenu);
-    }
-
-    this->popupMenu = popupMenu;
-}
+void AbstractToolItem::setPopupMenu(GtkWidget* popupMenu) { this->popupMenu.reset(popupMenu, xoj::util::refsink); }
 
 auto AbstractToolItem::isUsed() const -> bool { return used; }
 

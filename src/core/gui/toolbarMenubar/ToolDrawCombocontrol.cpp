@@ -63,7 +63,7 @@ void ToolDrawCombocontrol::createMenuItem(const string& name, const string& icon
     gtk_container_add(GTK_CONTAINER(box), gtk_label_new(name.c_str()));
     gtk_container_add(GTK_CONTAINER(menuItem), box);
 
-    gtk_container_add(GTK_CONTAINER(popupMenu), menuItem);
+    gtk_container_add(GTK_CONTAINER(popupMenu.get()), menuItem);
     toolMenuHandler->registerMenupoint(menuItem, type, GROUP_RULER);
     gtk_widget_show_all(menuItem);
 }
@@ -102,6 +102,6 @@ auto ToolDrawCombocontrol::newItem() -> GtkToolItem* {
 
     GtkToolItem* it = gtk_menu_tool_toggle_button_new(iconWidget, _("Draw Rectangle"));
     gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
-    gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
+    gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu.get());
     return it;
 }

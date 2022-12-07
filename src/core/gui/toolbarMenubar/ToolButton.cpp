@@ -34,7 +34,7 @@ ToolButton::~ToolButton() = default;
  * @return The created menu item
  */
 auto ToolButton::registerPopupMenuEntry(const string& name, const string& iconName) -> GtkWidget* {
-    if (this->popupMenu == nullptr) {
+    if (!this->popupMenu) {
         setPopupMenu(gtk_menu_new());
     }
 
@@ -57,7 +57,7 @@ auto ToolButton::registerPopupMenuEntry(const string& name, const string& iconNa
 
     gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(menuItem), true);
     gtk_widget_show_all(menuItem);
-    gtk_container_add(GTK_CONTAINER(this->popupMenu), menuItem);
+    gtk_container_add(GTK_CONTAINER(this->popupMenu.get()), menuItem);
 
     return menuItem;
 }
@@ -77,7 +77,7 @@ auto ToolButton::newItem() -> GtkToolItem* {
         if (popupMenu) {
             it = gtk_menu_tool_toggle_button_new(
                     gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR), description.c_str());
-            gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
+            gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu.get());
         } else {
             it = gtk_toggle_tool_button_new();
             gtk_tool_button_set_icon_widget(
@@ -87,7 +87,7 @@ auto ToolButton::newItem() -> GtkToolItem* {
         if (popupMenu) {
             it = gtk_menu_tool_button_new(gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR),
                                           description.c_str());
-            gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(it), popupMenu);
+            gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(it), popupMenu.get());
         } else {
             it = gtk_tool_button_new(gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR),
                                      description.c_str());

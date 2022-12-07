@@ -18,6 +18,7 @@
 
 #include "enums/ActionGroup.enum.h"  // for ActionGroup
 #include "enums/ActionType.enum.h"   // for ActionType
+#include "util/raii/GObjectSPtr.h"
 
 #include "AbstractItem.h"  // for AbstractItem
 
@@ -75,7 +76,7 @@ protected:
 public:
 protected:
     GtkToolItem* item = nullptr;
-    GtkWidget* popupMenu = nullptr;
+    xoj::util::WidgetSPtr popupMenu;
 
     bool toolToggleButtonActive = false;
     bool toolToggleOnlyEnable = false;
