@@ -86,6 +86,6 @@ auto ToolPdfCombocontrol::newItem() -> GtkToolItem* {
 
     it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");
     gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
-    gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
+    gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popup);
     return it;
 }
