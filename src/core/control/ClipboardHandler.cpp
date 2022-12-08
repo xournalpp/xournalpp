@@ -42,6 +42,12 @@ ClipboardHandler::~ClipboardHandler() { g_signal_handler_disconnect(this->clipbo
 static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
 
 auto ClipboardHandler::paste() -> bool {
+    /* Request targets again, since the owner-change signal is not emitted on MacOS and under X11 with no XFIXES
+     * extension. See https://docs.gtk.org/gdk3/struct.EventOwnerChange.html and
+     * https://gitlab.gnome.org/GNOME/gtk/-/issues/1757 */
+    gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
+                                   reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
+
     if (this->containsXournal) {
         gtk_clipboard_request_contents(this->clipboard, atomXournal,
                                        reinterpret_cast<GtkClipboardReceivedFunc>(pasteClipboardContents), this);
