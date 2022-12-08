@@ -263,7 +263,11 @@ void ClipboardHandler::clipboardUpdated(GdkAtom atom) {
 }
 
 void ClipboardHandler::pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf, ClipboardHandler* handler) {
-    handler->listener->clipboardPasteImage(pixbuf);
+    if (pixbuf) {
+        handler->listener->clipboardPasteImage(pixbuf);
+    } else {
+        g_warning("Trying to paste image, but pixbuf is null");
+    }
 }
 
 void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
