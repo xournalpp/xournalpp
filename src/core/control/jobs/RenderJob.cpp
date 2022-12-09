@@ -34,10 +34,18 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
      * For example, if rect.x = m + 0.9, rect.width = n + 0.2 and ratio = 1 and m and n are integers
      * We need a mask of width n+2 pixels for that...
      **/
-    const auto x = std::floor(rect.x * ratio);
-    const auto y = std::floor(rect.y * ratio);
-    const auto width = int(std::ceil(rect.width * ratio)) + 1;
-    const auto height = int(std::ceil(rect.height * ratio)) + 1;
+    constexpr int RENDER_PADDING_X_Y = 1;
+    constexpr int RENDER_PADDING_WIDTH_HEIGHT = 2;
+
+    const auto rx = rect.x - RENDER_PADDING_X_Y;
+    const auto ry = rect.y - RENDER_PADDING_X_Y;
+    const auto rwidth = rect.width + RENDER_PADDING_WIDTH_HEIGHT;
+    const auto rheight = rect.height + RENDER_PADDING_WIDTH_HEIGHT;
+
+    const auto x = std::floor(rx * ratio);
+    const auto y = std::floor(ry * ratio);
+    const auto width = int(std::ceil(rwidth * ratio)) + 1;
+    const auto height = int(std::ceil(rheight * ratio)) + 1;
 
     xoj::util::CairoSurfaceSPtr rectBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height),
                                            xoj::util::adopt);
@@ -51,7 +59,7 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
 
     cairo_set_operator(crPageBuffer.get(), CAIRO_OPERATOR_SOURCE);
     cairo_set_source_surface(crPageBuffer.get(), rectBuffer.get(), 0, 0);
-    cairo_rectangle(crPageBuffer.get(), rect.x, rect.y, rect.width, rect.height);
+    cairo_rectangle(crPageBuffer.get(), rx, ry, rwidth, rheight);
     cairo_fill(crPageBuffer.get());
 }
 
