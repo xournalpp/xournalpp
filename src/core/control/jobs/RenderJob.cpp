@@ -52,6 +52,8 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     cairo_set_source_surface(crPageBuffer.get(), rectBuffer.get(), 0, 0);
     cairo_rectangle(crPageBuffer.get(), rect.x, rect.y, rect.width, rect.height);
     cairo_fill(crPageBuffer.get());
+
+    this->view->repaintArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
 }
 
 void RenderJob::run() {
@@ -79,12 +81,10 @@ void RenderJob::run() {
 
         std::lock_guard lock(this->view->drawingMutex);
         std::swap(this->view->crBuffer, newBuffer);
+        this->view->repaintPage();
     } else {
         for (Rectangle<double> const& rect: rerenderRects) { rerenderRectangle(rect); }
     }
-
-    // Schedule a repaint of the widget
-    repaintWidget(this->view->getXournal()->getWidget());
 }
 
 void RenderJob::renderToBuffer(cairo_surface_t* buffer) const {
