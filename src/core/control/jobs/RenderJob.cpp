@@ -99,15 +99,4 @@ void RenderJob::renderToBuffer(cairo_surface_t* buffer) const {
     localView.drawPage(this->view->page, crRect.get(), false);
 }
 
-
-/**
- * Repaint the widget in UI Thread
- */
-void RenderJob::repaintWidget(GtkWidget* widget) {
-    // "this" is not needed, "widget" is in
-    // the closure, therefore no sync needed
-    // Because of this the argument "widget" is needed
-    Util::execInUiThread([=]() { gtk_widget_queue_draw(widget); });
-}
-
 auto RenderJob::getType() -> JobType { return JOB_TYPE_RENDER; }
