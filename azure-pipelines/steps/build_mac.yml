@@ -19,13 +19,12 @@ steps:
       mkdir build
     displayName: 'Create Build Directory'
   - bash: |
-      # Ninja >= 1.10.0 binaries depend on Catalina or newer, so use 1.9.0 instead.
-      curl -L -o ninja-mac.zip https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-mac.zip
+      curl -L -o ninja-mac.zip https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-mac.zip
 
       # curl -L -o ninja-mac.zip $(curl -s https://api.github.com/repos/ninja-build/ninja/releases/latest | grep "browser_download_url.*mac\.zip" | cut -d : -f 2,3 | tr -d '"')
-      # Fallback to version 1.9.0 if the previous request fails for some reason
+      # Fallback to version 1.11.1 if the previous request fails for some reason
       if [ ! -f ninja-mac.zip ]; then
-        curl -L -o ninja-mac.zip https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-mac.zip
+        curl -L -o ninja-mac.zip https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-mac.zip
       fi
       unzip ninja-mac.zip -d "${{parameters.generation_path}}"/gtk/inst/bin
     displayName: 'Get Ninja'
