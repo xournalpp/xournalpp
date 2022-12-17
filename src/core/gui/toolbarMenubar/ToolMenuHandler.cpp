@@ -409,6 +409,7 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false, "snapping-grid",
                      _("Grid Snapping"));
     addCustomItemTgl("SETSQUARE", ACTION_SETSQUARE, GROUP_GEOMETRY_TOOL, false, "setsquare", _("Setsquare"));
+    addCustomItemTgl("COMPASS", ACTION_COMPASS, GROUP_GEOMETRY_TOOL, false, "compass", _("Compass"));
 
     /*
      * Menu View
