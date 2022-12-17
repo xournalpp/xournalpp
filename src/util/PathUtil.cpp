@@ -316,7 +316,10 @@ auto Util::getDataPath() -> fs::path {
     return p;
 #elif defined(__APPLE__)
     fs::path p = Stacktrace::getExePath().parent_path();
-    if (fs::exists(p / "Resources")) {
+    // check if running in application bundle: *.app/Contents/Resources
+    // should be sufficient to check Contents & Resources only.
+    if (fs::exists(p / "Resources") && p.filename() == "Contents") {
+        // Install prefix is actually in Resources
         p = p / "Resources";
     }
     return p;
