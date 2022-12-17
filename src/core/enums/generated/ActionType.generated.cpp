@@ -444,6 +444,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_SETSQUARE;
     }
 
+    if (value == "ACTION_COMPASS") {
+        return ACTION_COMPASS;
+    }
+
     if (value == "ACTION_SELECT_COLOR") {
         return ACTION_SELECT_COLOR;
     }
@@ -1084,6 +1088,10 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_SETSQUARE) {
         return "ACTION_SETSQUARE";
+    }
+
+    if (value == ACTION_COMPASS) {
+        return "ACTION_COMPASS";
     }
 
     if (value == ACTION_SELECT_COLOR) {

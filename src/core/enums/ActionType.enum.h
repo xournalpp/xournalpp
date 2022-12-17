@@ -158,6 +158,7 @@ enum ActionType {
     ACTION_GRID_SNAPPING,
     ACTION_HIGHLIGHT_POSITION,
     ACTION_SETSQUARE,
+    ACTION_COMPASS,
 
     // Used for all colors
     ACTION_SELECT_COLOR,
