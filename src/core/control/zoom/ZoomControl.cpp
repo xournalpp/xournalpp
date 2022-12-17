@@ -229,8 +229,8 @@ void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalV
     gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
     g_signal_connect(widget, "scroll-event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
     g_signal_connect(widget, "event", G_CALLBACK(onTouchpadPinchEvent), this);
-    g_signal_connect(window, "signal_size_allocate", G_CALLBACK(onWindowSizeChangedEvent), this);
-    g_signal_connect(window, "configure_event", G_CALLBACK(onWindowSizeChangedEvent), this);
+    g_signal_connect(window, "configure-event", G_CALLBACK(onWindowSizeChangedEvent), this);
+    g_signal_connect(window, "size-allocate", G_CALLBACK(onWindowSizeChangedEvent), this);
     registerListener(this->control);
 }
 
