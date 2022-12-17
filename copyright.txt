@@ -87,20 +87,12 @@ Files: cmake/find/FindFilesystem.cmake
 Copyright: 2000-2021, Kitware, Inc. and Contributors
 License: BSD-3-clause
 
-Files: cmake/find/FindICU.cmake
-Copyright: 2011-2016, POINSOT Julien
-License: BSD-2-clause
-Comment: https://github.com/julp/FindICU.cmake
-         could maybe be replaced with
-         https://cmake.org/cmake/help/latest/module/FindICU.html
-
 Files: cmake/include/Copyright.txt
 Copyright: 2015, Marek Pikuła <marpirk@gmail.com>
            Xournal++ team
 License: BSD-3-clause
 
-Files: cmake/include/ExternalDeb.cmake
-       cmake/include/GitRepo.cmake
+Files: cmake/include/GitRepo.cmake
 Copyright: 2015, Marek Pikuła <marek@pikula.co>
 License: BSD-3-clause
 
