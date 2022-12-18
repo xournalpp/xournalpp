@@ -186,9 +186,9 @@ public:
     bool isInDragAndDropToolbar();
 
     /**
-     * Loads the view mode according to the settings
+     * Loads the view mode (hide/show menu-,tool-&sidebar)
      */
-    bool loadViewMode();
+    bool loadViewMode(size_t mode);
 
     bool isFullscreen();
 

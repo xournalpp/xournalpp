@@ -91,6 +91,8 @@ void Settings::loadDefault() {
     this->mainWndWidth = 800;
     this->mainWndHeight = 600;
 
+    this->fullscreenActive = false;
+
     this->showSidebar = true;
     this->sidebarWidth = 150;
 
@@ -168,7 +170,7 @@ void Settings::loadDefault() {
 
     // view modes
     this->viewModes = std::vector<std::string>{"default","fullscreen","presentation"};
-    this->showElements =std::vector<std::string>{"menubar,toolbar,sidebar","toolbar,sidebar",""};
+    this->viewModeAttributes =std::vector<std::string>{"showMenubar,showToolbar,showSidebar","showToolbar,showSidebar,fullscreen","fullscreen"};
     // deprecated since view modes introduced
     this->fullscreenHideElements = "mainMenubar";
     this->presentationHideElements = "mainMenubar,sidebarContents";
@@ -232,20 +234,23 @@ void Settings::loadDefault() {
 }
 
 auto Settings::loadViewMode(size_t mode) -> bool {
-    if (mode < 0 || mode > showElements.size()) {
+    if (mode < 0 || mode > viewModeAttributes.size()) {
         return false;
     }
-    auto elements = showElements.at(mode);
+    auto attributes = viewModeAttributes.at(mode);
     menubarVisible = false;
     showSidebar = false;
     showToolbar = false;
-    for (const string& element: StringUtils::split(elements, ',')) {
-        if (element == "menubar" || element == "mainMenubar") {
+    fullscreenActive = false;
+    for (const string& attr: StringUtils::split(attributes, ',')) {
+        if (attr == "showMenubar" || attr == "mainMenubar") {
             menubarVisible = true;
-        } else if (element == "sidebar" || element == "sidebarContents") {
+        } else if (attr == "showSidebar" || attr == "sidebarContents") {
             showSidebar = true;
-        } else if (element == "toolbar") {
+        } else if (attr == "showToolbar") {
             showToolbar = true;
+        } else if (attr == "fullscreen") {
+            fullscreenActive = true;
         }
     }
     this->activeViewMode = mode;
@@ -1793,6 +1798,12 @@ void Settings::setAreStockIconsUsed(bool use) {
 }
 
 auto Settings::areStockIconsUsed() const -> bool { return this->useStockIcons; }
+
+auto Settings::isFullscreen() const -> bool { return this->fullscreenActive; }
+
+void Settings::setIsFullscreen(bool isFullscreen) {
+    this->fullscreenActive = isFullscreen;
+}
 
 auto Settings::isSidebarVisible() const -> bool { return this->showSidebar; }
 

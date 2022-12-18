@@ -1618,6 +1618,8 @@ void Control::setViewPairedPages(bool enabled) {
 
 void Control::setViewPresentationMode(bool enabled) {
     if (enabled) {
+        this->loadViewMode(2);
+
         bool success = zoom->updateZoomPresentationValue();
         if (!success) {
             g_warning("Error calculating zoom value");
@@ -1625,6 +1627,8 @@ void Control::setViewPresentationMode(bool enabled) {
             return;
         }
     } else {
+        this->loadViewMode(0);
+
         if (settings->isViewFixedRows()) {
             setViewRows(settings->getViewRows());
         } else {
@@ -2882,7 +2886,10 @@ void Control::showAbout() {
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
 
-auto Control::loadViewMode() -> bool {
+auto Control::loadViewMode(size_t mode) -> bool {
+    if (!settings->loadViewMode(mode)) {
+        return false;
+    }
     if (settings->isMenubarVisible()) { // TODO move if...else into new method in MainWindow.cpp
         gtk_widget_hide(this->win->get("mainMenubar"));
     } else {
@@ -2890,6 +2897,7 @@ auto Control::loadViewMode() -> bool {
     }
     this->win->setToolbarVisible(settings->isToolbarVisible());
     this->win->setSidebarVisible(settings->isSidebarVisible());
+    setFullscreen(settings->isFullscreen());
     return false;
 }
 

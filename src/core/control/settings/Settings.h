@@ -209,6 +209,9 @@ public:
     int getMainWndHeight() const;
     bool isMainWndMaximized() const;
 
+    bool isFullscreen() const;
+    void setIsFullscreen(bool isFullscreen);
+
     bool isSidebarVisible() const;
     void setSidebarVisible(bool visible);
 
@@ -593,6 +596,11 @@ private:
     bool zoomGesturesEnabled{};
 
     /**
+     *  If fullscreen is active
+     */
+    bool fullscreenActive{};
+
+    /**
      *  If the sidebar is visible
      */
     bool showSidebar{};
@@ -878,10 +886,10 @@ private:
     std::vector<std::string> viewModes;
 
     /**
-     * Which gui elements are shown for different view modes,
-     * separated by a colon (,)
+     * View mode attributes, separated by a colon (,)
+     * showMenubar,showToolbar,showSidebar,fullscreen
      */
-    std::vector<std::string> showElements;
+    std::vector<std::string> viewModeAttributes;
     // deprecated since view mode introduction
     std::string fullscreenHideElements;
     std::string presentationHideElements;
