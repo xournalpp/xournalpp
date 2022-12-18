@@ -127,6 +127,7 @@ public:
     // Getter- / Setter
     bool getActiveViewMode() const;
     std::vector<std::string> getViewModeStrings() const;
+    std::vector<std::string> getViewModeAttributes() const;
 
     bool isPressureSensitivity() const;
     void setPressureSensitivity(gboolean presureSensitivity);
@@ -348,11 +349,7 @@ public:
 
     ButtonConfig* getButtonConfig(int id);
 
-    std::string const& getFullscreenHideElements() const;
-    void setFullscreenHideElements(std::string elements);
-
-    std::string const& getPresentationHideElements() const;
-    void setPresentationHideElements(std::string elements);
+    void setViewModeAttributes(size_t mode, std::string attributes);
 
     Color getBorderColor() const;
     void setBorderColor(Color color);
@@ -883,19 +880,17 @@ private:
     ButtonConfig* buttonConfig[BUTTON_COUNT]{};
 
     /**
-     * View-modes, 0=default, 1=fullscreen, 2=presentation, +3=custom
+     * View-modes, 0=default, 1=fullscreen, 2=presentation
      */
     size_t activeViewMode;
     std::vector<std::string> viewModes;
 
     /**
      * View mode attributes, separated by a colon (,)
-     * showMenubar,showToolbar,showSidebar,fullscreen
+     * - showMenubar,showToolbar,showSidebar = show widget
+     * - fullscreen                          = fullscreen
      */
     std::vector<std::string> viewModeAttributes;
-    // deprecated since view mode introduction
-    std::string fullscreenHideElements;
-    std::string presentationHideElements;
 
     /**
      *  The count of pages which will be cached

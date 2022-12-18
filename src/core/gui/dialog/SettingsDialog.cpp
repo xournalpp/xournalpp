@@ -528,27 +528,26 @@ void SettingsDialog::load() {
             break;
     }
 
-    bool hideFullscreenMenubar = false;
-    bool hideFullscreenSidebar = false;
-    bool hidePresentationMenubar = false;
-    bool hidePresentationSidebar = false;
+    bool hideFullscreenMenubar = true;
+    bool hideFullscreenSidebar = true;
+    bool hidePresentationMenubar = true;
+    bool hidePresentationSidebar = true;
 
-    string hidden = settings->getFullscreenHideElements();
-
+    string hidden = settings->getViewModeAttributes().at(1); // TODO replace hardcoded size_t
     for (const string& element: StringUtils::split(hidden, ',')) {
-        if (element == "mainMenubar") {
-            hideFullscreenMenubar = true;
-        } else if (element == "sidebarContents") {
-            hideFullscreenSidebar = true;
+        if (element == "showMenubar") {
+            hideFullscreenMenubar = false;
+        } else if (element == "showSidebar") {
+            hideFullscreenSidebar = false;
         }
     }
 
-    hidden = settings->getPresentationHideElements();
+    hidden = settings->getViewModeAttributes().at(2); // TODO replace hardcoded size_t
     for (const string& element: StringUtils::split(hidden, ',')) {
-        if (element == "mainMenubar") {
-            hidePresentationMenubar = true;
-        } else if (element == "sidebarContents") {
-            hidePresentationSidebar = true;
+        if (element == "showMenubar") {
+            hidePresentationMenubar = false;
+        } else if (element == "showSidebar") {
+            hidePresentationSidebar = false;
         }
     }
 
@@ -662,13 +661,13 @@ auto SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bo
     string newHidden;
 
     for (const string& element: StringUtils::split(hidden, ',')) {
-        if (element == "mainMenubar") {
+        if (element == "showMenubar") {
             if (hideMenubar) {
                 hideMenubar = false;
             } else {
                 continue;
             }
-        } else if (element == "sidebarContents") {
+        } else if (element == "showSidebar") {
             if (hideSidebar) {
                 hideSidebar = false;
             } else {
@@ -686,14 +685,14 @@ auto SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bo
         if (!newHidden.empty()) {
             newHidden += ",";
         }
-        newHidden += "mainMenubar";
+        newHidden += "showMenubar";
     }
 
     if (hideSidebar) {
         if (!newHidden.empty()) {
             newHidden += ",";
         }
-        newHidden += "sidebarContents";
+        newHidden += "showSidebar";
     }
 
     return newHidden;
@@ -800,13 +799,13 @@ void SettingsDialog::save() {
 
     bool hideFullscreenMenubar = getCheckbox("cbHideFullscreenMenubar");
     bool hideFullscreenSidebar = getCheckbox("cbHideFullscreenSidebar");
-    settings->setFullscreenHideElements(
-            updateHideString(settings->getFullscreenHideElements(), hideFullscreenMenubar, hideFullscreenSidebar));
+    settings->setViewModeAttributes(
+                    1, updateHideString(settings->getViewModeAttributes().at(1), !hideFullscreenMenubar, !hideFullscreenSidebar)); // TODO replace hardcoded size_t
 
     bool hidePresentationMenubar = getCheckbox("cbHidePresentationMenubar");
     bool hidePresentationSidebar = getCheckbox("cbHidePresentationSidebar");
-    settings->setPresentationHideElements(updateHideString(settings->getPresentationHideElements(),
-                                                           hidePresentationMenubar, hidePresentationSidebar));
+    settings->setViewModeAttributes(
+                    2, updateHideString(settings->getViewModeAttributes().at(2), !hidePresentationMenubar, !hidePresentationSidebar)); // TODO replace hardcoded size_t
 
     settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
     settings->setFilepathInTitlebarShown(getCheckbox("cbShowFilepathInTitlebar"));
