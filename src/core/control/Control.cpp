@@ -2882,6 +2882,17 @@ void Control::showAbout() {
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
 
+auto Control::loadViewMode() -> bool {
+    if (settings->isMenubarVisible()) { // TODO move if...else into new method in MainWindow.cpp
+        gtk_widget_hide(this->win->get("mainMenubar"));
+    } else {
+        gtk_widget_show(this->win->get("mainMenubar"));
+    }
+    this->win->setToolbarVisible(settings->isToolbarVisible());
+    this->win->setSidebarVisible(settings->isSidebarVisible());
+    return false;
+}
+
 void Control::clipboardCutCopyEnabled(bool enabled) {
     fireEnableAction(ACTION_CUT, enabled);
     fireEnableAction(ACTION_COPY, enabled);

@@ -118,7 +118,13 @@ private:
     void loadButtonConfig();
 
 public:
+    // View Mode
+    bool loadViewMode(size_t mode);
+
     // Getter- / Setter
+    bool getActiveViewMode() const;
+    std::vector<std::string> getViewModeStrings() const;
+
     bool isPressureSensitivity() const;
     void setPressureSensitivity(gboolean presureSensitivity);
 
@@ -866,9 +872,17 @@ private:
     ButtonConfig* buttonConfig[BUTTON_COUNT]{};
 
     /**
-     * Which gui elements are hidden if you are in Fullscreen mode,
+     * View-modes, 0=default, 1=fullscreen, 2=presentation, +3=custom
+     */
+    size_t activeViewMode;
+    std::vector<std::string> viewModes;
+
+    /**
+     * Which gui elements are shown for different view modes,
      * separated by a colon (,)
      */
+    std::vector<std::string> showElements;
+    // deprecated since view mode introduction
     std::string fullscreenHideElements;
     std::string presentationHideElements;
 

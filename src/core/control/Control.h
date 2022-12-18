@@ -185,6 +185,11 @@ public:
     void startDragDropToolbar();
     bool isInDragAndDropToolbar();
 
+    /**
+     * Loads the view mode according to the settings
+     */
+    bool loadViewMode();
+
     bool isFullscreen();
 
     /**
