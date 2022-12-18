@@ -169,6 +169,7 @@ void Settings::loadDefault() {
             new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
     // view modes
+    this->activeViewMode = VIEW_MODE_DEFAULT;
     this->viewModes = std::vector<std::string>{"default","fullscreen","presentation"};
     this->viewModeAttributes =std::vector<std::string>{"showMenubar,showToolbar,showSidebar","showToolbar,showSidebar,fullscreen","fullscreen"};
     // deprecated since view modes introduced
@@ -1601,11 +1602,12 @@ void Settings::setPresentationMode(bool presentationMode) {
         return;
     }
 
+    this->activeViewMode = VIEW_MODE_PRESENTATION;
     this->presentationMode = presentationMode;
     save();
 }
 
-auto Settings::isPresentationMode() const -> bool { return this->presentationMode; }
+auto Settings::isPresentationMode() const -> bool { return this->activeViewMode == VIEW_MODE_PRESENTATION; }
 
 void Settings::setPressureSensitivity(gboolean presureSensitivity) {
     if (this->pressureSensitivity == presureSensitivity) {

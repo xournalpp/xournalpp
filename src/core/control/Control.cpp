@@ -886,7 +886,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             break;
 
         case ACTION_FULLSCREEN:
-            setFullscreen(enabled);
+            setViewFullscreenMode(enabled);
             break;
 
         case ACTION_TOGGLE_PAIRS_PARITY: {
@@ -1614,6 +1614,14 @@ void Control::setViewPairedPages(bool enabled) {
     fireActionSelected(GROUP_PAIRED_PAGES, enabled ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
+}
+
+void Control::setViewFullscreenMode(bool enabled) {
+    if (enabled) {
+        this->loadViewMode(1);
+    } else {
+        this->loadViewMode(0);
+    }
 }
 
 void Control::setViewPresentationMode(bool enabled) {

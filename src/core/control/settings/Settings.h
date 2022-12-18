@@ -34,6 +34,9 @@
 struct Palette;
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
+constexpr auto VIEW_MODE_DEFAULT = 0;
+constexpr auto VIEW_MODE_FULLSCREEN = 1;
+constexpr auto VIEW_MODE_PRESENTATION = 2;
 
 class ButtonConfig;
 class InputDevice;

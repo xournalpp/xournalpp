@@ -160,6 +160,7 @@ public:
 
     void updateWindowTitle();
     void setViewPairedPages(bool enabled);
+    void setViewFullscreenMode(bool enabled);
     void setViewPresentationMode(bool enabled);
     void setPairsOffset(int numOffset);
     void setViewColumns(int numColumns);
