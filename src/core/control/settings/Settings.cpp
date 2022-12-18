@@ -171,7 +171,7 @@ void Settings::loadDefault() {
     // view modes
     this->activeViewMode = ViewMode::VIEW_MODE_DEFAULT;
     this->viewModes = std::vector<std::string>{"default","fullscreen","presentation"};
-    this->viewModeAttributes =std::vector<std::string>{"showMenubar,showToolbar,showSidebar","showToolbar,showSidebar,goFullscreen","goFullscreen"};
+    this->viewModeAttributes =std::vector<std::string>{"showMenubar,showToolbar,showSidebar","showToolbar,showSidebar,goFullscreen","showToolbar,goFullscreen"};
 
     this->touchZoomStartThreshold = 0.0;
 
