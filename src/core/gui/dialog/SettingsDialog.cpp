@@ -536,7 +536,7 @@ void SettingsDialog::load() {
     bool showPresentationSidebar = false;
     bool goPresentationFullscreen = false;
 
-    string hidden = settings->getViewModeAttributes().at(1); // TODO replace hardcoded size_t
+    string hidden = settings->getViewModeAttributes().at(ViewMode::VIEW_MODE_FULLSCREEN);
     for (const string& attr : StringUtils::split(hidden, ',')) {
         if (attr == "showMenubar") {
             showFullscreenMenubar = true;
@@ -547,7 +547,7 @@ void SettingsDialog::load() {
         }
     }
 
-    hidden = settings->getViewModeAttributes().at(2); // TODO replace hardcoded size_t
+    hidden = settings->getViewModeAttributes().at(ViewMode::VIEW_MODE_PRESENTATION);
     for (const string& attr : StringUtils::split(hidden, ',')) {
         if (attr == "showMenubar") {
             showPresentationMenubar = true;
@@ -838,15 +838,15 @@ void SettingsDialog::save() {
     bool showFullscreenMenubar = getCheckbox("cbShowFullscreenMenubar");
     bool showFullscreenToolbar = getCheckbox("cbShowFullscreenToolbar");
     bool showFullscreenSidebar = getCheckbox("cbShowFullscreenSidebar");
-    settings->setViewModeAttributes( // TODO replace hardcoded size_t 1
-                    1, updateHideString(settings->getViewModeAttributes().at(1), showFullscreenMenubar, showFullscreenToolbar, showFullscreenSidebar, true));
+    settings->setViewModeAttributes(
+                    ViewMode::VIEW_MODE_FULLSCREEN, updateHideString(settings->getViewModeAttributes().at(ViewMode::VIEW_MODE_FULLSCREEN), showFullscreenMenubar, showFullscreenToolbar, showFullscreenSidebar, true));
     
     bool showPresentationMenubar = getCheckbox("cbShowPresentationMenubar");
     bool showPresentationToolbar = getCheckbox("cbShowPresentationToolbar");
     bool showPresentationSidebar = getCheckbox("cbShowPresentationSidebar");
     bool goPresentationFullscreen = getCheckbox("cbPresentationGoFullscreen");
-    settings->setViewModeAttributes( // TODO replace hardcoded size_t 2
-                    2, updateHideString(settings->getViewModeAttributes().at(2), showPresentationMenubar, showPresentationToolbar, showPresentationSidebar, goPresentationFullscreen));
+    settings->setViewModeAttributes(
+                    ViewMode::VIEW_MODE_PRESENTATION, updateHideString(settings->getViewModeAttributes().at(ViewMode::VIEW_MODE_PRESENTATION), showPresentationMenubar, showPresentationToolbar, showPresentationSidebar, goPresentationFullscreen));
 
     settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
     settings->setFilepathInTitlebarShown(getCheckbox("cbShowFilepathInTitlebar"));
