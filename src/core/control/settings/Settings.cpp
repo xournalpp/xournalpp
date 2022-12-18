@@ -171,7 +171,7 @@ void Settings::loadDefault() {
     // view modes
     this->activeViewMode = VIEW_MODE_DEFAULT;
     this->viewModes = std::vector<std::string>{"default","fullscreen","presentation"};
-    this->viewModeAttributes =std::vector<std::string>{"showMenubar,showToolbar,showSidebar","showToolbar,showSidebar,fullscreen","fullscreen"};
+    this->viewModeAttributes =std::vector<std::string>{"showMenubar,showToolbar,showSidebar","showToolbar,showSidebar,goFullscreen","goFullscreen"};
 
     this->touchZoomStartThreshold = 0.0;
 
@@ -247,7 +247,7 @@ auto Settings::loadViewMode(size_t mode) -> bool {
             showSidebar = true;
         } else if (attr == "showToolbar") {
             showToolbar = true;
-        } else if (attr == "fullscreen") {
+        } else if (attr == "goFullscreen") {
             fullscreenActive = true;
         }
     }

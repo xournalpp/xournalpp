@@ -69,7 +69,7 @@ private:
     void loadSlider(const char* name, double value);
     double getSlider(const char* name);
 
-    static std::string updateHideString(const std::string& hidden, bool hideMenubar, bool hideSidebar);
+    static std::string updateHideString(const std::string& hidden, bool showMenubar, bool showToolbar, bool showSidebar, bool goFullscreen);
 
     void initMouseButtonEvents();
     void initMouseButtonEvents(const char* hbox, int button, bool withDevice = false);

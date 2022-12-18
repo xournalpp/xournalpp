@@ -2898,7 +2898,6 @@ auto Control::loadViewMode(size_t mode) -> bool {
     if (!settings->loadViewMode(mode)) {
         return false;
     }
-    std::cout << "Toolbar=" << settings->isToolbarVisible() << " & sidebar=" << settings->isSidebarVisible() << std::endl;
     if (settings->isMenubarVisible()) { // TODO move if...else into new method in MainWindow.cpp
         gtk_widget_hide(this->win->get("mainMenubar"));
     } else {
