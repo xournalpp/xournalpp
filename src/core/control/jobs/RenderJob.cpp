@@ -101,7 +101,7 @@ void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) {
     double zoom = view->xournal->getZoom();
     int x = view->getX();
     int y = view->getY();
-    repaintWidgetArea(view->xournal->getWidget(), std::floor(zoom * (x + x1)), std::floor(zoom * (y + y1)), std::ceil(zoom * (x + x2)), std::ceil(zoom * (y + y2)));
+    repaintWidgetArea(view->xournal->getWidget(), x + std::floor(zoom * x1), y + std::floor(zoom * y1), x + std::ceil(zoom * x2), y + std::ceil(zoom * y2));
 }
 
 void RenderJob::repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2) {
