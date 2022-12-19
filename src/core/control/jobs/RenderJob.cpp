@@ -6,6 +6,7 @@
 #include <vector>   // for vector
 
 #include <cairo.h>  // for cairo_create, cairo_destroy, cairo_...
+#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_repaint_area
 
 #include "control/Control.h"          // for Control
 #include "control/ToolEnums.h"        // for TOOL_PLAY_OBJECT
@@ -52,8 +53,6 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     cairo_set_source_surface(crPageBuffer.get(), rectBuffer.get(), 0, 0);
     cairo_rectangle(crPageBuffer.get(), rect.x, rect.y, rect.width, rect.height);
     cairo_fill(crPageBuffer.get());
-
-    this->view->repaintArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
 }
 
 void RenderJob::run() {
@@ -81,10 +80,31 @@ void RenderJob::run() {
 
         std::lock_guard lock(this->view->drawingMutex);
         std::swap(this->view->crBuffer, newBuffer);
-        this->view->repaintPage();
+        repaintPage();
     } else {
-        for (Rectangle<double> const& rect: rerenderRects) { rerenderRectangle(rect); }
+        for (Rectangle<double> const& rect: rerenderRects) {
+            rerenderRectangle(rect);
+            repaintPageArea(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+        }
     }
+}
+
+void RenderJob::repaintPage() {
+    int x1 = view->getX();
+    int y1 = view->getY();
+    int x2 = x1 + view->getDisplayWidth();
+    int y2 = y1 + view->getDisplayHeight();
+    repaintWidgetArea(view->xournal->getWidget(), x1, y1, x2, y2);
+}
+
+void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) {
+    int x = view->getX();
+    int y = view->getY();
+    repaintWidgetArea(view->xournal->getWidget(), std::floor(x + x1), std::floor(y + y1), std::ceil(x + x2), std::ceil(y + y2));
+}
+
+void RenderJob::repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2) {
+    Util::execInUiThread([=]() { gtk_xournal_repaint_area(widget, x1, y1, x2, y2); });
 }
 
 void RenderJob::renderToBuffer(cairo_surface_t* buffer) const {
