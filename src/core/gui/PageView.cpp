@@ -995,7 +995,7 @@ bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pa
 
                         delete state;
                     }),
-                    new std::tuple(this, dest, popover));
+                    new std::tuple(std::make_tuple(this, dest, popover)));
         }
 
         gtk_widget_show_all(popover);
