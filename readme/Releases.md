@@ -93,6 +93,10 @@ followed when publishing a release:
 
 * [ ] Checkout the release branch.
 * [ ] Update `CHANGELOG.md` with the latest changes.
+  * Run `git log --graph <last_version_tag>..HEAD` to get a quick
+    summary of the logs.
+  * You may want to also use GitHub's web interface to correlate commits with
+    PRs.
 * [ ] Open a new pull request to allow all maintainers to review the release and
       confirm that it has the correct contents. This should consist of three
       commits in total:
