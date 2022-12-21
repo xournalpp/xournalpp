@@ -90,11 +90,7 @@ void RenderJob::run() {
 }
 
 void RenderJob::repaintPage() {
-    int x1 = view->getX();
-    int y1 = view->getY();
-    int x2 = x1 + view->getDisplayWidth();
-    int y2 = y1 + view->getDisplayHeight();
-    repaintWidgetArea(view->xournal->getWidget(), x1, y1, x2, y2);
+    repaintWidgetArea(view->xournal->getWidget(), 0, 0, view->getWidth(), view->getHeight());
 }
 
 void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) {
