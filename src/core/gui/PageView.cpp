@@ -395,7 +395,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
         auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
         this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->settings, y, pos.isControlDown());
-        this->overlayViews.emplace_back(this->verticalSpace->createView(this, zoomControl, this->settings));
+        this->overlayViews.emplace_back(this->verticalSpace->createView(this, zoomControl, this->settings)); // TODO (willnilges) try moving this elsewhere?
     } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
                h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {

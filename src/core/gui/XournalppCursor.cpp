@@ -299,8 +299,14 @@ void XournalppCursor::updateCursor() {
         } else if (type == TOOL_FLOATING_TOOLBOX) {
             setCursor(CRSR_DEFAULT);
         } else if (type == TOOL_VERTICAL_SPACE) {
+            // FIXME: (willnilges) Why is this whole block an if/else tree? Could this be a switch statement instead?
             if (this->mouseDown) {
                 setCursor(CRSR_SB_V_DOUBLE_ARROW);
+            } else {
+                setCursor(CRSR_TCROSS);
+                GdkWindow* theWindow = gtk_widget_get_window(xournal->getWidget());
+
+                cursor = createHorizontalLineCursor(5, 120 / 255.0, theWindow);
             }
         } else if (type == TOOL_SELECT_OBJECT) {
             setCursor(CRSR_DEFAULT);
@@ -510,6 +516,49 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     cairo_surface_destroy(crCursor);
     GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
             gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
+    g_object_unref(pixbuf);
+    return gdkCursor;
+}
+
+
+auto XournalppCursor::createHorizontalLineCursor(int size, double alpha, GdkWindow* theWindow) -> GdkCursor* {
+    gint x, y;
+    GdkWindow *window;
+    GdkDevice *mouse_device;
+
+    #if GTK_CHECK_VERSION (3,20,0)
+    GdkSeat *seat = gdk_display_get_default_seat (gdk_display_get_default ());
+    mouse_device = gdk_seat_get_pointer (seat);
+    #else
+    GdkDeviceManager *devman = gdk_display_get_device_manager (gdk_display_get_default ());
+    mouse_device = gdk_device_manager_get_client_pointer (devman);
+    #endif
+
+    window = gdk_display_get_default_group (gdk_display_get_default ());
+    gdk_window_get_device_position (theWindow, mouse_device, &x, &y, NULL);
+    //g_message ("pointer: %i %i", x, y);
+
+    int height = size;
+    int width = gdk_window_get_width(theWindow);
+
+    // We change the drawing method, now the center with the colored dot of the pen
+    // is at the center of the cairo surface, and when we load the cursor, we load it
+    // with the relative offset
+    int centerY = height / 2;
+    cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+    cairo_t* cr = cairo_create(crCursor);
+
+    cairo_set_line_width(cr, 1.2);
+    cairo_move_to(cr, 0, centerY);
+    cairo_line_to(cr, width, centerY);
+    cairo_close_path(cr);
+    cairo_stroke(cr);
+
+    cairo_destroy(cr);
+    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
+    cairo_surface_destroy(crCursor);
+    GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
+            gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, x, centerY);
     g_object_unref(pixbuf);
     return gdkCursor;
 }
