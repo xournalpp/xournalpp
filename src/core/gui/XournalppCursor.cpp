@@ -557,6 +557,7 @@ auto XournalppCursor::createHorizontalLineCursor(int size, double alpha, GdkWind
     cairo_destroy(cr);
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
     cairo_surface_destroy(crCursor);
+    x = std::clamp(x, 0, width);
     GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
             gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, x, centerY);
     g_object_unref(pixbuf);
