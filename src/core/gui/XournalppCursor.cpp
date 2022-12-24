@@ -523,7 +523,6 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 
 auto XournalppCursor::createHorizontalLineCursor(int size, double alpha, GdkWindow* theWindow) -> GdkCursor* {
     gint x, y;
-    GdkWindow *window;
     GdkDevice *mouse_device;
 
     #if GTK_CHECK_VERSION (3,20,0)
@@ -534,9 +533,7 @@ auto XournalppCursor::createHorizontalLineCursor(int size, double alpha, GdkWind
     mouse_device = gdk_device_manager_get_client_pointer (devman);
     #endif
 
-    window = gdk_display_get_default_group (gdk_display_get_default ());
     gdk_window_get_device_position (theWindow, mouse_device, &x, &y, NULL);
-    //g_message ("pointer: %i %i", x, y);
 
     int height = size;
     int width = gdk_window_get_width(theWindow);
