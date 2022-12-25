@@ -299,7 +299,6 @@ void XournalppCursor::updateCursor() {
         } else if (type == TOOL_FLOATING_TOOLBOX) {
             setCursor(CRSR_DEFAULT);
         } else if (type == TOOL_VERTICAL_SPACE) {
-            // FIXME: (willnilges) Why is this whole block an if/else tree? Could this be a switch statement instead?
             if (this->mouseDown) {
                 setCursor(CRSR_SB_V_DOUBLE_ARROW);
             } else {
@@ -538,9 +537,6 @@ auto XournalppCursor::createHorizontalLineCursor(int size, double alpha, GdkWind
     int height = size;
     int width = gdk_window_get_width(theWindow);
 
-    // We change the drawing method, now the center with the colored dot of the pen
-    // is at the center of the cairo surface, and when we load the cursor, we load it
-    // with the relative offset
     int centerY = height / 2;
     cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
     cairo_t* cr = cairo_create(crCursor);
