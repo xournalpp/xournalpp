@@ -37,11 +37,9 @@ public:
     void run() override;
 
 private:
-    void repaintPage();
+    void repaintPage() const;
 
-    void repaintPageArea(double x1, double y1, double x2, double y2);
-
-    void repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2);
+    void repaintPageArea(double x1, double y1, double x2, double y2) const;
 
     void rerenderRectangle(xoj::util::Rectangle<double> const& rect);
 

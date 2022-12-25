@@ -91,19 +91,19 @@ void RenderJob::run() {
     }
 }
 
-void RenderJob::repaintPage() {
+static void repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2) {
+    Util::execInUiThread([=]() { gtk_xournal_repaint_area(widget, x1, y1, x2, y2); });
+}
+
+void RenderJob::repaintPage() const {
     repaintWidgetArea(view->xournal->getWidget(), 0, 0, view->getWidth(), view->getHeight());
 }
 
-void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) {
+void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) const {
     double zoom = view->xournal->getZoom();
     int x = view->getX();
     int y = view->getY();
     repaintWidgetArea(view->xournal->getWidget(), x + std::floor(zoom * x1), y + std::floor(zoom * y1), x + std::ceil(zoom * x2), y + std::ceil(zoom * y2));
-}
-
-void RenderJob::repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2) {
-    Util::execInUiThread([=]() { gtk_xournal_repaint_area(widget, x1, y1, x2, y2); });
 }
 
 void RenderJob::renderToBuffer(cairo_surface_t* buffer) const {
