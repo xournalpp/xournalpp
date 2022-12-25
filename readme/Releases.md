@@ -93,17 +93,26 @@ followed when publishing a release:
 
 * [ ] Checkout the release branch.
 * [ ] Update `CHANGELOG.md` with the latest changes.
+  * You may want to open a PR so that other maintainers can review the
+    changelog.
   * Run `git log --graph <last_version_tag>..HEAD` to get a quick
     summary of the logs.
-  * You may want to also use GitHub's web interface to correlate commits with
-    PRs.
+  * To correlate commits with PRs, you can go to
+    `https://github.com/xournalpp/xournalpp/commit/<commit_hash>`. The PR number
+    will be displayed next to the author information.
 * [ ] Open a new pull request to allow all maintainers to review the release and
-      confirm that it has the correct contents. This should consist of three
+      confirm that it has the correct contents. This should consist of two
       commits in total:
-  * [ ] Summarize the changes in `debian/changelog`, and create a commit.
+  * [ ] Summarize the changes in `debian/changelog`, and create a commit. Note
+        that this summary can and should be reused for the GitHub release
+        description later.
   * [ ] Then run `scripts/release_helper.sh publish` to create the release
         commit. This will also automatically create a commit bumping to the next
         development version.
+  * [ ] Squash the `debian/changelog` commit and the release commit into a
+        single commit. Do _not_ squash the version bump commit. This is needed
+        so that Debian helpers and the unofficial PPAs can pick up releases
+        correctly.
   * [ ] **Do not merge using GitHub's web interface.** To avoid accidental
         merges, mark the PR as draft.
 * [ ] Push the release to GitHub:
@@ -121,6 +130,10 @@ followed when publishing a release:
   * [ ] Update the release description.
   * [ ] Test the release draft artifacts for obvious issues.
   * [ ] Publish the release.
-* [ ] Check that the FlatHub release is built successfully.
-* [ ] Update the version on [the website repository](https://github.com/xournalpp/xournalpp.github.io).
+* [ ] Check that the [FlatHub release][flathub] is built successfully.
+* [ ] Update the version on [the website repository][website].
 * [ ] After the release is created, merge back the release branch into `master`.
+
+
+[flathub]: https://github.com/flathub/com.github.xournalpp.xournalpp
+[website]: https://github.com/xournalpp/xournalpp.github.io
