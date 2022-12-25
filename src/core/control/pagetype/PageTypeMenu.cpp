@@ -127,7 +127,14 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
                          }
 
                          for (MenuCallbackInfo& info: self->menuInfos) {
+
                              if (info.entry == togglebutton) {
+                                 // Disable "Apply to current page" if current format is "Copy."
+                                 if (info.info->page.format == PageTypeFormat::Copy) {
+                                     gtk_widget_set_sensitive(self->menuEntryApply, FALSE);
+                                 } else {
+                                     gtk_widget_set_sensitive(self->menuEntryApply, TRUE);
+                                 }
                                  self->entrySelected(info.info);
                                  break;
                              }
@@ -186,13 +193,17 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
     menuY++;
 
     if (!onlyAllMenu) {
-        GtkWidget* menuEntryApply = createApplyMenuItem(_("Apply to current page"));
+        menuEntryApply = createApplyMenuItem(_("Apply to current page"));
         gtk_menu_attach(GTK_MENU(menu), menuEntryApply, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
         menuY++;
         g_signal_connect(menuEntryApply, "activate", G_CALLBACK(+[](GtkWidget* menu, PageTypeMenu* self) {
                              self->pageTypeApplyListener->applySelectedPageBackground(false, self->pageTypeSource);
                          }),
                          this);
+        // Do not initially activate this option if the "Copy" format is selected
+        if (getSelected().format == PageTypeFormat::Copy) {
+            gtk_widget_set_sensitive(menuEntryApply, FALSE);
+        }
     }
 
     GtkWidget* menuEntryApplyAll = createApplyMenuItem(_("Apply to all pages"));

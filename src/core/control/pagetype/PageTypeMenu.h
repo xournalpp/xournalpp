@@ -95,4 +95,5 @@ private:
     bool showPreview;
 
     PageTypeApplyListener* pageTypeApplyListener;
+    GtkWidget* menuEntryApply;
 };
