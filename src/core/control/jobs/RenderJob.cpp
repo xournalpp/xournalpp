@@ -78,8 +78,10 @@ void RenderJob::run() {
 
         renderToBuffer(newBuffer.get());
 
-        std::lock_guard lock(this->view->drawingMutex);
-        std::swap(this->view->crBuffer, newBuffer);
+        {
+            std::lock_guard lock(this->view->drawingMutex);
+            std::swap(this->view->crBuffer, newBuffer);
+        }
         repaintPage();
     } else {
         for (Rectangle<double> const& rect: rerenderRects) {
