@@ -2492,6 +2492,7 @@ auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDo
         return false;
     }
 
+    // Prompt the user for a path if none is provided.
     if (filepath.empty()) {
         XojOpenDlg dlg(getGtkWindow(), this->settings);
         filepath = dlg.showOpenDialog(true, attachToDocument);
@@ -2500,34 +2501,40 @@ auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDo
         }
     }
 
-    this->closeDocument();
-
+    // First, we create a dummy document and load the PDF into it.
+    // We do NOT reset the current document yet because loading could fail.
     getCursor()->setCursorBusy(true);
+    auto newDoc = std::make_unique<Document>(this);
+    newDoc->setFilepath("");
 
-    this->doc->setFilepath("");
-    bool res = this->doc->readPdf(filepath, true, attachToDocument);
-
-    if (res) {
-        RecentManager::addRecentFileFilename(filepath.c_str());
-
-        this->doc->lock();
-        auto filepath = this->doc->getEvMetadataFilename();
-        this->doc->unlock();
-        MetadataEntry md = MetadataManager::getForFile(filepath);
-        loadMetadata(md);
-    } else {
-        this->doc->lock();
-        string errMsg = doc->getLastErrorMsg();
-        this->doc->unlock();
-
-        string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filepath.u8string() % errMsg);
-        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
-    }
+    const bool res = newDoc->readPdf(filepath, /*initPages=*/true, attachToDocument);
     getCursor()->setCursorBusy(false);
-
-    fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-
     getCursor()->updateCursor();
+
+    if (!res) {
+        // Loading failed, so display the error to the user.
+        newDoc->lock();
+        std::string errMsg = newDoc->getLastErrorMsg();
+        newDoc->unlock();
+
+        std::string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filepath.u8string() % errMsg);
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return false;
+    }
+
+    // Success, so we can close the current document.
+    this->closeDocument();
+    // Then we overwrite the global document with the new document.
+    // FIXME: there could potentially be a data race if a job requires the old document but runs after it is closed
+    {
+        std::lock_guard<Document> lg(*doc);
+        // TODO: allow Document to be moved
+        *doc = *newDoc;
+    }
+
+    // Trigger callbacks and update UI
+    fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
+    fileLoaded();
 
     return true;
 }
