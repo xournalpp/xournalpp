@@ -51,10 +51,14 @@ void GraphBackgroundView::draw(cairo_t* cr) const {
             getIndexBounds(minY - halfLineWidth, maxY + halfLineWidth, squareSize, squareSize, pageHeight);
 
     if (roundUpMargin) {
-        minX = minX == margin ? indexMinX * squareSize : minX;
-        maxX = maxX == pageWidth - margin ? indexMaxX * squareSize : maxX;
-        minY = minY == margin ? indexMinY * squareSize : minY;
-        maxY = maxY == pageHeight - margin ? indexMaxY * squareSize : maxY;
+        auto [pageIndexMinX, pageIndexMaxX] = getIndexBounds(margin - halfLineWidth, pageWidth - margin + halfLineWidth,
+                                                             squareSize, squareSize, pageWidth);
+        auto [pageIndexMinY, pageIndexMaxY] = getIndexBounds(
+                margin - halfLineWidth, pageHeight - margin + halfLineWidth, squareSize, squareSize, pageHeight);
+        minX = std::max(minX, squareSize * pageIndexMinX);
+        maxX = std::min(maxX, squareSize * pageIndexMaxX);
+        minY = std::max(minY, squareSize * pageIndexMinY);
+        maxY = std::min(maxY, squareSize * pageIndexMaxY);
     }
 
     for (int i = indexMinX; i <= indexMaxX; ++i) {
