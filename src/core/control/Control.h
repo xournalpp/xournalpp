@@ -351,7 +351,8 @@ protected:
     bool loadPdf(fs::path const& filepath, int scrollToPage);
 
 private:
-    void makeGeometryTool(GeometryToolType tool);
+    template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass, ActionType a>
+    void makeGeometryTool();
     void resetGeometryTool();
 
     /**
