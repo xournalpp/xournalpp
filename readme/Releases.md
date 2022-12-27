@@ -107,12 +107,13 @@ followed when publishing a release:
         that this summary can and should be reused for the GitHub release
         description later.
   * [ ] Then run `scripts/release_helper.sh publish` to create the release
-        commit. This will also automatically create a commit bumping to the next
-        development version.
+        commit and tag the commit. This will also automatically create a commit
+        bumping to the next development version.
   * [ ] Squash the `debian/changelog` commit and the release commit into a
         single commit. Do _not_ squash the version bump commit. This is needed
         so that Debian helpers and the unofficial PPAs can pick up releases
         correctly.
+  * [ ] Retag the release commit with `git tag -f <version_number> <commit>`
   * [ ] **Do not merge using GitHub's web interface.** To avoid accidental
         merges, mark the PR as draft.
 * [ ] Push the release to GitHub:
