@@ -1075,7 +1075,7 @@ void Control::makeGeometryTool(GeometryToolType tool) {
             geometryToolInputHandler->registerToPool(setsquare->getHandlerPool());
             xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
             fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
-            geometryTool->notify();
+            geometryTool->notify(true);
             break;
         }
         default:
@@ -1084,19 +1084,10 @@ void Control::makeGeometryTool(GeometryToolType tool) {
 }
 
 void Control::resetGeometryTool() {
-    Range rg;
-    bool hasGeometryTool = false;
-    if (this->geometryTool) {
-        hasGeometryTool = true;
-        rg = this->geometryTool->getToolRange(true);
-    }
     this->geometryToolController.reset();
     this->geometryTool.reset();
     auto* xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
     xournal->input->resetGeometryToolInputHandler();
-    if (win && hasGeometryTool) {
-        (win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderRange(rg);
-    }
     fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
 }
 
