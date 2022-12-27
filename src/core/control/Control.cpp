@@ -654,7 +654,8 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
                                      this->geometryToolController->getType() != GeometryToolType::SETSQUARE;
             resetGeometryTool();
             if (needsNewSetsquare) {
-                makeGeometryTool(GeometryToolType::SETSQUARE);
+                makeGeometryTool<Setsquare, xoj::view::SetsquareView, SetsquareController, SetsquareInputHandler,
+                                 ACTION_SETSQUARE>();
             }
             break;
         }
@@ -1061,26 +1062,20 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
     }
 }
 
-void Control::makeGeometryTool(GeometryToolType tool) {
-    auto view = this->win->getXournal()->getViewFor(getCurrentPageNo());
-    auto* xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
-    switch (tool) {
-        case SETSQUARE: {
-            auto setsquare = new Setsquare();
-            view->addOverlayView(std::make_unique<xoj::view::SetsquareView>(setsquare, view, zoom));
-            this->geometryTool = std::unique_ptr<GeometryTool>(setsquare);
-            this->geometryToolController = std::make_unique<SetsquareController>(view, setsquare);
-            std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler =
-                    std::make_unique<SetsquareInputHandler>(this->win->getXournal(), geometryToolController.get());
-            geometryToolInputHandler->registerToPool(setsquare->getHandlerPool());
-            xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
-            fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_SETSQUARE);
-            geometryTool->notify(true);
-            break;
-        }
-        default:
-            g_warning("Unknown geometry tool type %d", tool);
-    }
+template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass, ActionType a>
+void Control::makeGeometryTool() {
+    const auto view = this->win->getXournal()->getViewFor(getCurrentPageNo());
+    const auto* xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
+    auto tool = new ToolClass();
+    view->addOverlayView(std::make_unique<ViewClass>(tool, view, zoom));
+    this->geometryTool = std::unique_ptr<GeometryTool>(tool);
+    this->geometryToolController = std::make_unique<ControllerClass>(view, tool);
+    std::unique_ptr<InputHandlerClass> geometryToolInputHandler =
+            std::make_unique<InputHandlerClass>(this->win->getXournal(), geometryToolController.get());
+    geometryToolInputHandler->registerToPool(tool->getHandlerPool());
+    xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
+    fireActionSelected(GROUP_GEOMETRY_TOOL, a);
+    geometryTool->notify();
 }
 
 void Control::resetGeometryTool() {
