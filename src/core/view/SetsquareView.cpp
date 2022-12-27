@@ -34,6 +34,7 @@ constexpr int MIN_VMARK_LARGE = 5;
 constexpr int OFFSET_FROM_SEMICIRCLE = 2.;
 constexpr double ZERO_MARK_TICK = .5;
 constexpr int SKIPPED_HMARKS = 8;
+constexpr const char* FONT_FAMILY = "Arial";
 
 SetsquareView::SetsquareView(const Setsquare* setsquare, Repaintable* parent, ZoomControl* zoomControl):
         GeometryToolView(setsquare, parent, zoomControl) {
@@ -45,6 +46,9 @@ SetsquareView::~SetsquareView() noexcept { this->unregisterFromPool(); };
 void SetsquareView::on(FlagDirtyRegionRequest, const Range& rg) { this->parent->flagDirtyRegion(rg); }
 
 void SetsquareView::on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m) {
+    if (h <= 0.) {
+        g_warning("Non-positive setsquare height: %f", h);
+    }
     height = h;
     rotation = rot;
     matrix = m;
@@ -75,7 +79,7 @@ void SetsquareView::drawGeometryTool(cairo_t* cr) const {
 
     cairo_set_line_width(cr, LINE_WIDTH);
     cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
-    cairo_select_font_face(cr, "Arial", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+    cairo_select_font_face(cr, FONT_FAMILY, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
     cairo_set_font_size(cr, FONT_SIZE);
 
     // clip to slightly enlarged setsquare for performance reasons
@@ -103,7 +107,7 @@ void SetsquareView::drawDisplays(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_transform(cr, &matrix);
     cairo_set_line_width(cr, LINE_WIDTH);
-    cairo_select_font_face(cr, "Arial", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+    cairo_select_font_face(cr, FONT_FAMILY, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
     cairo_set_font_size(cr, FONT_SIZE);
 
     cairo_set_source_rgb(cr, .0, .5, .5);  // turquoise
