@@ -96,7 +96,7 @@ static void repaintWidgetArea(GtkWidget* widget, int x1, int y1, int x2, int y2)
 }
 
 void RenderJob::repaintPage() const {
-    repaintWidgetArea(view->xournal->getWidget(), 0, 0, view->getWidth(), view->getHeight());
+    repaintPageArea(0, 0, view->getWidth(), view->getHeight());
 }
 
 void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) const {
