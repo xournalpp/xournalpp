@@ -2523,7 +2523,6 @@ auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDo
 
     const bool res = newDoc->readPdf(filepath, /*initPages=*/true, attachToDocument);
     getCursor()->setCursorBusy(false);
-    getCursor()->updateCursor();
 
     if (!res) {
         // Loading failed, so display the error to the user.
