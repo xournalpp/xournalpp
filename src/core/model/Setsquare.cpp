@@ -8,10 +8,13 @@
 
 Setsquare::Setsquare(): Setsquare(INITIAL_HEIGHT, .0, INITIAL_X, INITIAL_Y) {}
 
-Setsquare::Setsquare(double height, double rotation, double x, double y):
-        GeometryTool(height, rotation, x, y, getToolRange(true)) {}
+Setsquare::Setsquare(double height, double rotation, double x, double y): GeometryTool(height, rotation, x, y) {
+    this->lastRepaintRange = getToolRange(true);
+}
 
-Setsquare::~Setsquare() { viewPool->dispatchAndClear(xoj::view::SetsquareView::FINALIZATION_REQUEST, Range()); }
+Setsquare::~Setsquare() {
+    viewPool->dispatchAndClear(xoj::view::SetsquareView::FINALIZATION_REQUEST, lastRepaintRange);
+}
 
 auto Setsquare::getToolRange(bool transformed) const -> Range {
     const auto h = height * CM;
