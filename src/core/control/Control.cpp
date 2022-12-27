@@ -33,6 +33,7 @@
 #include "control/settings/PageTemplateSettings.h"               // for Page...
 #include "control/settings/Settings.h"                           // for Sett...
 #include "control/settings/SettingsEnums.h"                      // for Button
+#include "control/settings/ViewModes.h"                          // for ViewM..
 #include "control/tools/EditSelection.h"                         // for Edit...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
@@ -1618,15 +1619,15 @@ void Control::setViewPairedPages(bool enabled) {
 
 void Control::setViewFullscreenMode(bool enabled) {
     if (enabled) {
-        this->loadViewMode(1);
+        this->loadViewMode(VIEW_MODE_FULLSCREEN);
     } else {
-        this->loadViewMode(0);
+        this->loadViewMode(VIEW_MODE_DEFAULT);
     }
 }
 
 void Control::setViewPresentationMode(bool enabled) {
     if (enabled) {
-        this->loadViewMode(2);
+        this->loadViewMode(VIEW_MODE_PRESENTATION);
 
         bool success = zoom->updateZoomPresentationValue();
         if (!success) {
@@ -1635,7 +1636,7 @@ void Control::setViewPresentationMode(bool enabled) {
             return;
         }
     } else {
-        this->loadViewMode(0);
+        this->loadViewMode(VIEW_MODE_DEFAULT);
 
         if (settings->isViewFixedRows()) {
             setViewRows(settings->getViewRows());

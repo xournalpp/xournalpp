@@ -21,7 +21,6 @@
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
 #include "util/PathUtil.h"                          // for getConfigFile
-#include "util/StringUtils.h"                       // for StringUtils...
 #include "util/Util.h"                              // for PRECISION_FORMAT_...
 #include "util/i18n.h"                              // for _
 
@@ -168,10 +167,20 @@ void Settings::loadDefault() {
     this->buttonConfig[BUTTON_STYLUS_TWO] =
             new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
-    // view modes
-    this->activeViewMode = ViewMode::VIEW_MODE_DEFAULT;
-    this->viewModes = std::vector<std::string>{"default","fullscreen","presentation"};
-    this->viewModeAttributes =std::vector<std::string>{"showMenubar,showToolbar,showSidebar","showToolbar,showSidebar,goFullscreen","showToolbar,goFullscreen"};
+    // default view modes
+    this->activeViewMode = VIEW_MODE_DEFAULT;
+    ViewMode viewModeDefault;
+    viewModeDefault.showMenubar = true;
+    viewModeDefault.showToolbar = true;
+    viewModeDefault.showSidebar = true;
+    ViewMode viewModeFullsceen;
+    viewModeFullsceen.goFullscreen = true;
+    viewModeFullsceen.showToolbar = true;
+    viewModeFullsceen.showSidebar = true;
+    ViewMode viewModePresentation;
+    viewModePresentation.goFullscreen = true;
+    viewModePresentation.showToolbar = true;
+    this->viewModes = std::vector<ViewMode>{viewModeDefault, viewModeFullsceen, viewModePresentation};
 
     this->touchZoomStartThreshold = 0.0;
 
@@ -232,39 +241,20 @@ void Settings::loadDefault() {
 }
 
 auto Settings::loadViewMode(size_t mode) -> bool {
-    if (mode < 0 || mode > viewModeAttributes.size()) {
+    if (mode < 0 || mode >= viewModes.size()) {
         return false;
     }
-    auto attributes = viewModeAttributes.at(mode);
-    menubarVisible = false;
-    showSidebar = false;
-    showToolbar = false;
-    fullscreenActive = false;
-    for (const string& attr: StringUtils::split(attributes, ',')) {
-        if (attr == "showMenubar") {
-            menubarVisible = true;
-        } else if (attr == "showSidebar") {
-            showSidebar = true;
-        } else if (attr == "showToolbar") {
-            showToolbar = true;
-        } else if (attr == "goFullscreen") {
-            fullscreenActive = true;
-        }
-    }
+    auto viewMode = viewModes.at(mode);
+    fullscreenActive = viewMode.goFullscreen;
+    menubarVisible = viewMode.showMenubar;
+    showToolbar = viewMode.showToolbar;
+    showSidebar = viewMode.showSidebar;
     this->activeViewMode = mode;
     return true;
 }
 
-auto Settings::getActiveViewMode() const -> bool {
-    return activeViewMode;
-}
-
-auto Settings::getViewModeStrings() const -> std::vector<std::string> {
-    return viewModes;
-}
-
-auto Settings::getViewModeAttributes() const -> std::vector<std::string> {
-    return viewModeAttributes;
+auto Settings::getViewModes() const -> const std::vector<ViewMode>& {
+    return this->viewModes;
 }
 
 /**
@@ -491,11 +481,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
         this->autosaveTimeout = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultViewModeAttributes")) == 0) {
-        this->viewModeAttributes.at(ViewMode::VIEW_MODE_DEFAULT) = reinterpret_cast<const char*>(value);
+        this->viewModes.at(VIEW_MODE_DEFAULT) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("fullscreenViewModeAttributes")) == 0) {
-        this->viewModeAttributes.at(ViewMode::VIEW_MODE_FULLSCREEN) = reinterpret_cast<const char*>(value);
+        this->viewModes.at(VIEW_MODE_FULLSCREEN) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationViewModeAttributes")) == 0) {
-        this->viewModeAttributes.at(ViewMode::VIEW_MODE_PRESENTATION) = reinterpret_cast<const char*>(value);
+        this->viewModes.at(VIEW_MODE_PRESENTATION) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchZoomStartThreshold")) == 0) {
         this->touchZoomStartThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageRerenderThreshold")) == 0) {
@@ -953,9 +943,9 @@ void Settings::save() {
     ATTACH_COMMENT("The icon theme, allowed values are \"disabled\", \"onDrawOfLastPage\", and \"onScrollOfLastPage\"");
     SAVE_BOOL_PROP(presentationMode);
 
-    auto defaultViewModeAttributes = viewModeAttributes.at(ViewMode::VIEW_MODE_DEFAULT);
-    auto fullscreenViewModeAttributes = viewModeAttributes.at(ViewMode::VIEW_MODE_FULLSCREEN);
-    auto presentationViewModeAttributes = viewModeAttributes.at(ViewMode::VIEW_MODE_PRESENTATION);
+    auto defaultViewModeAttributes = viewModeToSettingsString(viewModes.at(VIEW_MODE_DEFAULT));
+    auto fullscreenViewModeAttributes = viewModeToSettingsString(viewModes.at(VIEW_MODE_FULLSCREEN));
+    auto presentationViewModeAttributes = viewModeToSettingsString(viewModes.at(VIEW_MODE_PRESENTATION));
     SAVE_STRING_PROP(defaultViewModeAttributes);
     ATTACH_COMMENT("Which gui elements are shown in default view mode, separated by a colon (,)");
     SAVE_STRING_PROP(fullscreenViewModeAttributes);
@@ -1609,12 +1599,12 @@ void Settings::setPresentationMode(bool presentationMode) {
         return;
     }
 
-    this->activeViewMode = ViewMode::VIEW_MODE_PRESENTATION;
+    this->activeViewMode = VIEW_MODE_PRESENTATION;
     this->presentationMode = presentationMode;
     save();
 }
 
-auto Settings::isPresentationMode() const -> bool { return this->activeViewMode == ViewMode::VIEW_MODE_PRESENTATION; }
+auto Settings::isPresentationMode() const -> bool { return this->activeViewMode == VIEW_MODE_PRESENTATION; }
 
 void Settings::setPressureSensitivity(gboolean presureSensitivity) {
     if (this->pressureSensitivity == presureSensitivity) {
@@ -1883,8 +1873,8 @@ auto Settings::getButtonConfig(int id) -> ButtonConfig* {
     return this->buttonConfig[id];
 }
 
-void Settings::setViewModeAttributes(size_t mode, std::string attributes) {
-    viewModeAttributes.at(mode) = attributes;
+void Settings::setViewMode(size_t mode, ViewMode viewMode) {
+    viewModes.at(mode) = viewMode;
 }
 
 auto Settings::getTouchZoomStartThreshold() const -> double { return this->touchZoomStartThreshold; }

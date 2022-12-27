@@ -39,12 +39,6 @@ enum AttributeType {
     ATTRIBUTE_TYPE_BOOLEAN,
 };
 
-enum ViewMode {
-    VIEW_MODE_DEFAULT = 0,
-    VIEW_MODE_FULLSCREEN = 1,
-    VIEW_MODE_PRESENTATION = 2
-};
-
 // use this as a bit flag
 enum ScrollbarHideType {
     SCROLLBAR_HIDE_NONE = 0,

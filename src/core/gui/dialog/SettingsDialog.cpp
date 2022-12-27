@@ -528,37 +528,15 @@ void SettingsDialog::load() {
             break;
     }
 
-    bool showFullscreenMenubar = false;
-    bool showFullscreenToolbar = false;
-    bool showFullscreenSidebar = false;
-    bool showPresentationMenubar = false;
-    bool showPresentationToolbar = false;
-    bool showPresentationSidebar = false;
-    bool goPresentationFullscreen = false;
-
-    string hidden = settings->getViewModeAttributes().at(ViewMode::VIEW_MODE_FULLSCREEN);
-    for (const string& attr : StringUtils::split(hidden, ',')) {
-        if (attr == "showMenubar") {
-            showFullscreenMenubar = true;
-        } else if (attr == "showSidebar") {
-            showFullscreenSidebar = true;
-        } else if (attr == "showToolbar") {
-            showFullscreenToolbar = true;
-        }
-    }
-
-    hidden = settings->getViewModeAttributes().at(ViewMode::VIEW_MODE_PRESENTATION);
-    for (const string& attr : StringUtils::split(hidden, ',')) {
-        if (attr == "showMenubar") {
-            showPresentationMenubar = true;
-        } else if (attr == "showSidebar") {
-            showPresentationSidebar = true;
-        } else if (attr == "showToolbar") {
-            showPresentationToolbar = true;
-        } else if (attr == "fullscreen") {
-            goPresentationFullscreen = true;
-        }
-    }
+    auto activeViewMode = settings->getViewModes().at(VIEW_MODE_FULLSCREEN);
+    bool showFullscreenMenubar = activeViewMode.goFullscreen;
+    bool showFullscreenToolbar = activeViewMode.showToolbar;
+    bool showFullscreenSidebar = activeViewMode.showSidebar;
+    activeViewMode = settings->getViewModes().at(VIEW_MODE_PRESENTATION);
+    bool showPresentationMenubar = activeViewMode.showMenubar;
+    bool showPresentationToolbar = activeViewMode.showToolbar;
+    bool showPresentationSidebar = activeViewMode.showSidebar;
+    bool goPresentationFullscreen = activeViewMode.goFullscreen;
 
     loadCheckbox("cbShowFullscreenMenubar", showFullscreenMenubar);
     loadCheckbox("cbShowFullscreenToolbar", showFullscreenToolbar);
@@ -669,73 +647,6 @@ void SettingsDialog::load() {
     this->latexPanel.load(settings->latexSettings);
 }
 
-auto SettingsDialog::updateHideString(const string& hidden, bool showMenubar, bool showToolbar, bool showSidebar, bool goFullscreen) -> string {
-    string newHidden;
-
-    for (const string& element: StringUtils::split(hidden, ',')) {
-        if (element == "showMenubar") {
-            if (showMenubar) {
-                showMenubar = false;
-            } else {
-                continue;
-            }
-        } else if (element == "showToolbar") {
-            if (showToolbar) {
-                showToolbar = false;
-            } else {
-                continue;
-            }
-        } else if (element == "showSidebar") {
-            if (showSidebar) {
-                showSidebar = false;
-            } else {
-                continue;
-            }
-        } else if (element == "goFullscreen") {
-            if (goFullscreen) {
-                goFullscreen = false;
-            } else {
-                continue;
-            }
-        }
-
-        if (!newHidden.empty()) {
-            newHidden += ",";
-        }
-        newHidden += element;
-    }
-
-    if (showMenubar) {
-        if (!newHidden.empty()) {
-            newHidden += ",";
-        }
-        newHidden += "showMenubar";
-    }
-
-    if (showToolbar) {
-        if (!newHidden.empty()) {
-            newHidden += ",";
-        }
-        newHidden += "showToolbar";
-    }
-
-    if (showSidebar) {
-        if (!newHidden.empty()) {
-            newHidden += ",";
-        }
-        newHidden += "showSidebar";
-    }
-
-    if (goFullscreen) {
-        if (!newHidden.empty()) {
-            newHidden += ",";
-        }
-        newHidden += "goFullscreen";
-    }
-
-    return newHidden;
-}
-
 void SettingsDialog::save() {
     settings->transactionStart();
 
@@ -835,18 +746,19 @@ void SettingsDialog::save() {
             break;
     }
 
-    bool showFullscreenMenubar = getCheckbox("cbShowFullscreenMenubar");
-    bool showFullscreenToolbar = getCheckbox("cbShowFullscreenToolbar");
-    bool showFullscreenSidebar = getCheckbox("cbShowFullscreenSidebar");
-    settings->setViewModeAttributes(
-                    ViewMode::VIEW_MODE_FULLSCREEN, updateHideString(settings->getViewModeAttributes().at(ViewMode::VIEW_MODE_FULLSCREEN), showFullscreenMenubar, showFullscreenToolbar, showFullscreenSidebar, true));
+    ViewMode viewModeFullscreen;
+    viewModeFullscreen.goFullscreen = true;
+    viewModeFullscreen.showMenubar = getCheckbox("cbShowFullscreenMenubar");
+    viewModeFullscreen.showToolbar = getCheckbox("cbShowFullscreenToolbar");
+    viewModeFullscreen.showSidebar = getCheckbox("cbShowFullscreenSidebar");
+    settings->setViewMode(VIEW_MODE_FULLSCREEN, viewModeFullscreen);
     
-    bool showPresentationMenubar = getCheckbox("cbShowPresentationMenubar");
-    bool showPresentationToolbar = getCheckbox("cbShowPresentationToolbar");
-    bool showPresentationSidebar = getCheckbox("cbShowPresentationSidebar");
-    bool goPresentationFullscreen = getCheckbox("cbPresentationGoFullscreen");
-    settings->setViewModeAttributes(
-                    ViewMode::VIEW_MODE_PRESENTATION, updateHideString(settings->getViewModeAttributes().at(ViewMode::VIEW_MODE_PRESENTATION), showPresentationMenubar, showPresentationToolbar, showPresentationSidebar, goPresentationFullscreen));
+    ViewMode viewModePresentation;
+    viewModePresentation.showMenubar = getCheckbox("cbShowPresentationMenubar");
+    viewModePresentation.showToolbar = getCheckbox("cbShowPresentationToolbar");
+    viewModePresentation.showSidebar = getCheckbox("cbShowPresentationSidebar");
+    viewModePresentation.goFullscreen = getCheckbox("cbPresentationGoFullscreen");
+    settings->setViewMode(VIEW_MODE_PRESENTATION, viewModePresentation);
 
     settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
     settings->setFilepathInTitlebarShown(getCheckbox("cbShowFilepathInTitlebar"));

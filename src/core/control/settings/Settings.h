@@ -30,6 +30,7 @@
 #include "LatexSettings.h"  // for LatexSettings
 #include "SettingsEnums.h"  // for InputDeviceTypeOption
 #include "filesystem.h"     // for path
+#include "ViewModes.h"      // for ViewModes
 
 struct Palette;
 
@@ -122,9 +123,7 @@ public:
     bool loadViewMode(size_t mode);
 
     // Getter- / Setter
-    bool getActiveViewMode() const;
-    std::vector<std::string> getViewModeStrings() const;
-    std::vector<std::string> getViewModeAttributes() const;
+    const std::vector<ViewMode>& getViewModes() const;
 
     bool isPressureSensitivity() const;
     void setPressureSensitivity(gboolean presureSensitivity);
@@ -346,7 +345,7 @@ public:
 
     ButtonConfig* getButtonConfig(int id);
 
-    void setViewModeAttributes(size_t mode, std::string attributes);
+    void setViewMode(size_t mode, ViewMode ViewMode);
 
     Color getBorderColor() const;
     void setBorderColor(Color color);
@@ -877,17 +876,10 @@ private:
     ButtonConfig* buttonConfig[BUTTON_COUNT]{};
 
     /**
-     * View-modes, 0=default, 1=fullscreen, 2=presentation
+     * View-modes. Predefined: 0=default, 1=fullscreen, 2=presentation
      */
     size_t activeViewMode;
-    std::vector<std::string> viewModes;
-
-    /**
-     * View mode attributes, separated by a colon (,)
-     * - showMenubar,showToolbar,showSidebar = show widget
-     * - goFullscreen                        = fullscreen
-     */
-    std::vector<std::string> viewModeAttributes;
+    std::vector<ViewMode> viewModes;
 
     /**
      *  The count of pages which will be cached
