@@ -13,6 +13,7 @@
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHandler
 #include "gui/XournalppCursor.h"                   // for XournalppCursor
 #include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
+#include "model/Document.h"                        // for Document
 #include "model/Layer.h"                           // for Layer
 #include "model/Stroke.h"                          // for Stroke
 #include "model/XojPage.h"                         // for XojPage
@@ -146,7 +147,10 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
 
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
+    Document* doc = control->getDocument();
+    doc->lock();
     layer->addElement(stroke.get());
+    doc->unlock();
     page->fireElementChanged(stroke.get());
     stroke.release();
 
