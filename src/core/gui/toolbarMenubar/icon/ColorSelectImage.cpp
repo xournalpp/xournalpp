@@ -133,6 +133,8 @@ auto ColorSelectImage::newColorIconSurface(Color color, int size, bool circle) -
     config.size = size;
     config.state = COLOR_ICON_STATE_ENABLED;
     config.circle = circle;
+    config.width = size;
+    config.height = size;
 
     drawWidget(cr, config);
     cairo_destroy(cr);

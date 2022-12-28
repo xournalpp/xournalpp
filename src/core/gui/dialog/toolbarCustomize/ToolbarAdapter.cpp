@@ -228,8 +228,9 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
     }
 
     if (d->type == TOOL_ITEM_ITEM) {
-        gtk_toolbar_set_drop_highlight_item(toolbar, d->item->createTmpItem(orientation == GTK_ORIENTATION_HORIZONTAL),
-                                            ipos);
+        GtkWidget* iconWidget = d->item->getNewToolIcon();
+        GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
+        gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else if (d->type == TOOL_ITEM_SEPARATOR) {
         GtkToolItem* it = gtk_separator_tool_item_new();
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
