@@ -129,8 +129,6 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
                          for (MenuCallbackInfo& info: self->menuInfos) {
 
                              if (info.entry == togglebutton) {
-                                 // Disable "Apply to current page" if current format is "Copy."
-                                 gtk_widget_set_sensitive(self->menuEntryApply, info.info->page.format != PageTypeFormat::Copy);
                                  self->entrySelected(info.info);
                                  break;
                              }
@@ -152,6 +150,10 @@ void PageTypeMenu::entrySelected(PageTypeInfo* t) {
     if (listener != nullptr) {
         listener->changeCurrentPageBackground(t);
     }
+
+    // Disable "Apply to current page" if current format is "Copy."
+    if (this->menuEntryApply)
+        gtk_widget_set_sensitive(this->menuEntryApply, t->page.format != PageTypeFormat::Copy);
 }
 
 void PageTypeMenu::setSelected(const PageType& selected) {
