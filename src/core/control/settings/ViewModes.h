@@ -27,8 +27,6 @@ constexpr auto ATTR_SHOW_TOOLBAR  = "showToolbar";
 constexpr auto ATTR_SHOW_SIDEBAR  = "showSidebar";
 
 struct ViewMode {
-    std::string name{""};
-    // view mode attribues
     bool goFullscreen{false};
     bool showMenubar{false};
     bool showToolbar{false};
