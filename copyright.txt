@@ -10,16 +10,16 @@ Copyright: 2010-2021, Andreas Butti <andreas.butti@gmail.com>
            2017-2019, Peter Klausing <peetCreative@users.noreply.github.com>
            2018-2019, Moreno Razzoli <morrolinux@users.noreply.github.com>
            2018-2019, Luca Errani <luca.errani1@gmail.com>
-           2019-2021, Ulrich Huber <ulrich@huberulrich.de>
+           2019-2022, Ulrich Huber <ulrich@huberulrich.de>
            2019-2019, Justin Jones <bjustjones@netscape.net>
-           2019-2021, Bryan Tan <Technius@users.noreply.github.com>
+           2019-2023, Bryan Tan <Technius@users.noreply.github.com>
            2019-2019, Justus Rossmeier <veecue@users.noreply.github.com>
-           2019-2021, Fabian Keßler <Fabian_Kessler@gmx.de>
+           2019-2022, Fabian Keßler <Fabian_Kessler@gmx.de>
            2019-2020, Julius Lehmann <internet@devpi.de>
            2020-2021, Tobias Hermann <idotobi@users.noreply.github.com>
-           2020-2021, Roland Lötscher <roland_loetscher@hotmail.com>
-           2021-2021, Benjamin Hennion <benjamin.hennion@wanadoo.fr>
-           2021-2021, Henry Heino <personalizedrefrigerator@gmail.com>
+           2020-2023, Roland Lötscher <roland_loetscher@hotmail.com>
+           2021-2023, Benjamin Hennion <benjamin.hennion@wanadoo.fr>
+           2021-2022, Henry Heino <personalizedrefrigerator@gmail.com>
 License: GPL-2+
 Comment: Source of truth https://github.com/xournalpp/xournalpp/graphs/contributors
          For a full and detailed list of contributors refer to the git log.
