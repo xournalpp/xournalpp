@@ -1,6 +1,7 @@
 #include "SetsquareView.h"
 
 #include <algorithm>  // for max, min
+#include <cassert>    // for assert
 #include <cmath>      // for isnan, sqrt, cos, sin, atan2
 #include <iomanip>
 #include <sstream>
@@ -18,7 +19,7 @@
 
 using namespace xoj::view;
 
-
+// all lengths are in centimeter
 constexpr double FONT_SIZE = .2;
 constexpr double CIRCLE_RAD = .3;
 constexpr double TICK_SMALL = .1;
@@ -46,9 +47,7 @@ SetsquareView::~SetsquareView() noexcept { this->unregisterFromPool(); };
 void SetsquareView::on(FlagDirtyRegionRequest, const Range& rg) { this->parent->flagDirtyRegion(rg); }
 
 void SetsquareView::on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m) {
-    if (h <= 0.) {
-        g_warning("Non-positive setsquare height: %f", h);
-    }
+    assert(h > 0 && "Non-positive setsquare height");
     height = h;
     rotation = rot;
     matrix = m;
@@ -77,15 +76,15 @@ void SetsquareView::drawGeometryTool(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_scale(cr, CM, CM);
 
-    cairo_set_line_width(cr, LINE_WIDTH);
+    cairo_set_line_width(cr, LINE_WIDTH_IN_CM);
     cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
     cairo_select_font_face(cr, FONT_FAMILY, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
     cairo_set_font_size(cr, FONT_SIZE);
 
     // clip to slightly enlarged setsquare for performance reasons
-    const double enlargedHeight = this->height + LINE_WIDTH;
-    cairo_move_to(cr, enlargedHeight, -LINE_WIDTH);
-    cairo_line_to(cr, -enlargedHeight, -LINE_WIDTH);
+    const double enlargedHeight = this->height + LINE_WIDTH_IN_CM;
+    cairo_move_to(cr, enlargedHeight, -LINE_WIDTH_IN_CM);
+    cairo_line_to(cr, -enlargedHeight, -LINE_WIDTH_IN_CM);
     cairo_line_to(cr, .0, enlargedHeight);
     cairo_close_path(cr);
     cairo_clip(cr);
@@ -106,7 +105,7 @@ void SetsquareView::drawGeometryTool(cairo_t* cr) const {
 void SetsquareView::drawDisplays(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_transform(cr, &matrix);
-    cairo_set_line_width(cr, LINE_WIDTH);
+    cairo_set_line_width(cr, LINE_WIDTH_IN_CM);
     cairo_select_font_face(cr, FONT_FAMILY, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
     cairo_set_font_size(cr, FONT_SIZE);
 

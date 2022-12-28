@@ -108,6 +108,6 @@ private:
     void clipHorizontalStripes(cairo_t* cr) const;
 
 public:
-    static constexpr double LINE_WIDTH = .02;
+    static constexpr double LINE_WIDTH_IN_CM = .02;
 };
 };  // namespace xoj::view
