@@ -6,46 +6,56 @@ Developer Team:
 2017-2019, Peter Klausing <peetCreative@users.noreply.github.com>
 2018-2019, Moreno Razzoli <morrolinux@users.noreply.github.com>
 2018-2019, Luca Errani <luca.errani1@gmail.com>
-2019-2021, Ulrich Huber <ulrich@huberulrich.de>
+2019-2022, Ulrich Huber <ulrich@huberulrich.de>
 2019-2019, Justin Jones <bjustjones@netscape.net>
-2019-2021, Bryan Tan <Technius@users.noreply.github.com>
+2019-2023, Bryan Tan <Technius@users.noreply.github.com>
 2019-2019, Justus Rossmeier <veecue@users.noreply.github.com>
-2019-2021, Fabian Keßler <Fabian_Kessler@gmx.de>
+2019-2023, Fabian Keßler <Fabian_Kessler@gmx.de>
 2019-2020, Julius Lehmann <internet@devpi.de>
 2020-2021, Tobias Hermann <idotobi@users.noreply.github.com>
-2020-2021, Roland Lötscher <roland_loetscher@hotmail.com>
-2021-2021, Benjamin Hennion <benjamin.hennion@wanadoo.fr>
-2021-2021, Henry Heino <personalizedrefrigerator@gmail.com>
+2020-2023, Roland Lötscher <roland_loetscher@hotmail.com>
+2021-2023, Benjamin Hennion <benjamin.hennion@wanadoo.fr>
+2021-2022, Henry Heino <personalizedrefrigerator@gmail.com>
            
 
 Contributors from the community:
 
 Adolfo Jayme Barrientos <fitojb@ubuntu.com>
 Alex Veltman <alexveltman@protonmail.com>
+Alexander Lohnau <alexander.lohnau@gmx.de>
+Amelie Schween <ge59gof@mytum.de>
 Andreas Stallinger <astallinger@posteo.net>
 Aniruddha Deb <aniruddha.deb.2002@gmail.com>
 Antonin Décimo <antonin.decimo@gmail.com>
+Anthony Ryan <anthonyryan1@gmail.com>
 Archisman Panigrahi <apandada1@gmail.com>
 Ari Breitkreuz <ari.breitkreuz@pm.me>
 Atri Bhattacharya <badshah400@gmail.com>
+Avraham Hollander <82128012+anh0516@users.noreply.github.com>
 Awais Lodhi <awais.lodhi@gmail.com>
 Azure Pipelines <azuredevops@microsoft.com>
 Barak A. Pearlmutter <barak+git@pearlmutter.net>
 Baseng0815 <1shedex2@gmail.com>
-Ben Kallus <49924171+kenballus@users.noreply.github.com>
 Ben Kallus <bkallus@hamilton.edu>
+Casey Harkins <caseyharkins@gmail.com>
 Casey Jao <casey.jao@gmail.com>
 ChiDal <chinmay.dalal.22012001@gmail.com>
+Christian Nagel <54219305+Chrisimx@users.noreply.github.com>
 Clement Deschamps <46494175+clemdc@users.noreply.github.com>
 Colin B. Macdonald <cbm@m.fsf.org>
+CruzeBlade <37212628+CruzeBlade@users.noreply.github.com>
+DielN <92168571+DielN@users.noreply.github.com>
 DUOLabs <dvdugo333@gmail.com>
 David Leppla-Weber <5256992+David96@users.noreply.github.com>
 Dominik Gedon <dominik@gedon.org>
+Edwin Kofler <edwin@kofler.dev>
 Elias Riedel Gårding <eliasrg@kth.se>
 Enno Zickler <e.zickler@gmail.com>
 Fabian Thomas <fabian@fabianthomas.de>
+Fabio Pesari <fpesari@tuxfamily.org>
 Fatih <fnri39@protonmail.com>
 Felix Stupp <felix.stupp@outlook.com>
+Flleeppyy <18307183+flleeppyy@users.noreply.github.com>
 Florian Freund <florian88freund@gmail.com>
 Florian Klink <flokli@flokli.de>
 Florian Rücker <f.j.ruecker@gmx.net>
@@ -60,27 +70,37 @@ Heimen Stoffels <vistausss@outlook.com>
 Henrik Dick <hen-di@web.de>
 Holzfeind, Daniel Georg <git@holzfeind.net>
 Huan-Cheng Chang <hello@changhc.me>
+Jakob Hilmer <jakob@hilmer.dk>
 Jakub Jabůrek <jaburek.jakub@gmail.com>
 Jakub Kaczor <57760986+jakubkaczor@users.noreply.github.com>
 Jan Hensel <ja_he@uni-bremen.de>
 Jan Hrdina <jan.hrdka@gmail.com>
+Jared Fantaye <jared.fantaye@tum.de>
 Jason Vander Woude <jasonvwoude@gmail.com>
+Joheyy <joheyy@protonmail.com>
 John Doe <johndoe@0.0>
 Jonas Erbe <jonas.erbe@your-companion.org>
+Joël Felderhoff <joel.felderhoff@ens-lyon.fr>
+Julian Heuser <julianheuser@outlook.com>
 Julian Kuiyu CHANG <github@mosuma.com>
 Keith Miyake <keith.miyake@gmail.com>
 Kian Kasad <kian@kasad.com>
 Kyle Godbey <me@kylegodbey.com>
 Levi Ryffel <levi.ryffel@gmail.com>
 Lewin Bormann <lewin@lewin-bormann.info>
+Liao Junxuan <mikeljx@126.com>
 Luca <luca@acul.me>
 Luca Citi <lciti@ieee.org>
+Luca Leon Happel <lucahappel99@gmx.de>
+Luca Venturini <51458519+luca-venturini@users.noreply.github.com>
+Lukas <mail-login+gitlab@protonmail.com>
 Luya Tshimbalanga <luya@fedoraproject.org>
+Malex14 <39774812+Malex14@users.noreply.github.com>
 Malte Müller <malte@malte-mueller.eu>
 Malte Splietker <malte.splietker@gmail.com>
 Maniform <44653826+Maniform@users.noreply.github.com>
 Marco Aurélio Graciotto Silva <magsilva@utfpr.edu.br>
-Mark Miller <725mrm@gmail.com>
+Maria Keating <maria@mariakeating.com>
 Mark Mueller <mwm@berkeley.edu>
 Mark Roman Miller <725mrm@gmail.com>
 Mark W. Mueller <mwm@berkeley.edu>
@@ -89,6 +109,7 @@ Martin Lellep <martin.lellep@physik.uni-marburg.de>
 Martin Putzlocher <mputzi@users.noreply.github.com>
 Mateusz Szczupak <matszczu@gmail.com>
 Matthew J.P. Walker <walkerm930@gmail.com>
+Matthias Braun <mb720@users.noreply.github.com>
 Mazurel <mateusz.mazur@yahoo.com>
 Michael J Gruber <github@grubix.eu>
 Michael Schaufelberger <michael.schufi@gmail.com>
@@ -98,12 +119,16 @@ Nicolae Stroncea <stroncea.nicolae@gmail.com>
 Niels Mündler <n.muendler@web.de>
 Nikolaos Chatzikonstantinou <nchatz314@gmail.com>
 Nikolay Korotkiy <sikmir@gmail.com>
+Novica <novica.p.1990@gmail.com>
 Pablo Alvarado-Moya <palvaradomoya@gmail.com>
 Pablo Arnalte-Mur <pablo.arnalte@gmail.com>
 Paul Dettorer Hervot <dettorer@dettorer.net>
 PellelNitram <starwars31337@gmail.com>
+Petros Kanellopoulos <somnium38@hotmail.com>
+Pino Toscano <toscano.pino@tiscali.it>
 Plailect <plailect@gmail.com>
 Pēteris Birkants <peteris.birkants@gmail.com>
+QuantMint <quantmint@protonmail.com>
 Rasmus Thomsen <oss@cogitri.dev>
 Rio Liu <rio.liu@r26.me>
 Rob Frohne <rob.frohne@wallawalla.edu>
@@ -111,47 +136,56 @@ Romano Giannetti <romano@rgtti.com>
 Ronan Dalton <86718942+ronandalton@users.noreply.github.com>
 Ruo Li <rli@math.pku.edu.cn>
 Rémi Emonet <twitwi@users.noreply.github.com>
+Sabri Ünal <libreajans@gmail.com>
 Scott Tsai <scottt.tw@gmail.com>
 Shem Pasamba <shemgp@yahoo.com>
 Shuhao Wu <shuhao@shuhaowu.com>
 Simon Fischer <github@simon-fischer.info>
+Simons102 <ssievert56@gmail.com>
+SpecterShell <spectopo@outlook.com>
 StatErik <appel.erik@gmail.com>
 Stefan Wallentowitz <stefan@wallentowitz.de>
 Stephan Eicher <stephan.eicher@check24.de>
-The one with the braid | Der mit dem Zopf <the-one@with-the-braid.cf>
 TheAssassin <theassassin@assassinate-you.net>
+Theo <theo@seelye.net>
 TheOneWithTheBraid <the-one@with-the-braid.cf>
 ThierryM <thierry.munoz@free.fr>
-ThoFrank <t.frank@tum.de>
+Timon Ensel <timon.ensel@tum.de>
 Thomas Frank <thomas@franks-im-web.de>
+Thomas Senftl <65341804+forgedOctopus@users.noreply.github.com>
 Tilman Sinning <developer+git@tilman-sinning.de>
 Tim Clifford <tclifford@protonmail.com>
 Tobias Mueller <muelli@cryptobitch.de>
+TobySkarting <toby33022002@gmail.com>
+TrevorShelton <trevorleeshelton@gmail.com>
 Unknown <14054505+piegamesde@users.noreply.github.com>
 Varpie <Varpie@users.noreply.github.com>
-Vivek Thazhathattil <63693789+VivekThazhathattil@users.noreply.github.com>
 Vivek Thazhathattil <vivek.thazhathattil@gmail.com>
 Vu Ngoc San <san.vu-ngoc@laposte.net>
 Will Nilges <wdn5796@rit.edu>
 William Pettersson <william@ewpettersson.se>
 Yuri <yuri@rawbw.com>
 Zeyphros <robin@decker.cx>
-Zeyphros <robinp7720@users.noreply.github.com>
+aeghn <aeghn@outlook.com>
 alexruetz <alex.ruetz1@gmail.com>
 andrewrembrandt <andrew@rembrandt.me.uk>
+atticus-sullivan <mail-login+gitlab@protonmail.com>
+botsunny <71499037+botsunny@users.noreply.github.com>
 dadosch <dadosch@users.noreply.github.com>
+danemtsov <49734973+danemtsov@users.noreply.github.com>
 danfai <dev@danfai.de>
 demiurg337 <dmitro.gedz@gmail.com>
 doraeric <benson.doraemon@gmail.com>
+dreng <github@franzbonenkamp.de>
 duncan <duncan@thorny.io>
 edo0 <16632292+edo0@users.noreply.github.com>
-fabian.thomas <s8fathom@stud.uni-saarland.de>
 frohro <rob.frohne@wallawalla.edu>
-hard-zero1 <59370464+hard-zero1@users.noreply.github.com>
 hard-zero1 <hardzero01+github@gmail.com>
 hashworks <mail@hashworks.net>
+hrdl <31923882+hrdl-github@users.noreply.github.com>
 iczero <iczero4@gmail.com>
 jonasBoss <31804124+jonasBoss@users.noreply.github.com>
+lennonhill <31923882+lennonhill@users.noreply.github.com>
 lciti <knulp79@yahoo.com>
 matt_chan <matt_chan@9fe2bcd3-a095-4d8b-a836-9b85dc8d7627>
 maxirmx <maxim@samsonov.net>
@@ -159,17 +193,17 @@ mitzal <34011576+mitzal@users.noreply.github.com>
 muelli <muelli@cryptobitch.de>
 nicolae-stroncea <39338488+nicolae-stroncea@users.noreply.github.com>
 noureddin <noureddin95@gmail.com>
+ovari <17465872+ovari@users.noreply.github.com>
+p3tkovicn <novica.p.1990@gmail.com>
 pktiuk <kotiuk@wp.pl>
-pktiuk <kotiuk@zohomail.eu>
 redweasel <54547948+redweasel@users.noreply.github.com>
 sanette <sanette-linux@laposte.net>
-siliconninja <siliconninja@users.noreply.github.com>
 siliconninja <theninja@thesilicon.ninja>
+snoutie <71790678+SnoutBug@users.noreply.github.com>
 step <step-@users.noreply.github.com>
 suokunlong <suokunlong@126.com>
 taaem <taaem@mailbox.org>
 tattsan <tattsan@users.noreply.github.com>
-transifex-integration[bot] <43880903+transifex-integration[bot]@users.noreply.github.com>
 usrtrv <usrtrv@gmail.com>
 x2b <sivno.20.Toranaga-San@spamgourmet.com>
 xifi-kif <pippobaudo149@rocketmail.com>
