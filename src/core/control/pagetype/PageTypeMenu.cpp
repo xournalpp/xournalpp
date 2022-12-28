@@ -130,11 +130,7 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
 
                              if (info.entry == togglebutton) {
                                  // Disable "Apply to current page" if current format is "Copy."
-                                 if (info.info->page.format == PageTypeFormat::Copy) {
-                                     gtk_widget_set_sensitive(self->menuEntryApply, FALSE);
-                                 } else {
-                                     gtk_widget_set_sensitive(self->menuEntryApply, TRUE);
-                                 }
+                                 gtk_widget_set_sensitive(self->menuEntryApply, info.info->page.format != PageTypeFormat::Copy);
                                  self->entrySelected(info.info);
                                  break;
                              }
