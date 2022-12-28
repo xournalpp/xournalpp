@@ -198,7 +198,7 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
                          this);
         // Do not initially activate this option if the "Copy" format is selected
         if (getSelected().format == PageTypeFormat::Copy) {
-            gtk_widget_set_sensitive(menuEntryApply, FALSE);
+            gtk_widget_set_sensitive(menuEntryApply, false);
         }
     }
 
