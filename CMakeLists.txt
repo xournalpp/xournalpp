@@ -29,6 +29,17 @@ set_directory_properties(PROPERTIES EP_BASE "${PROJECT_BINARY_DIR}/external")
 add_definitions(-D_USE_MATH_DEFINES)
 add_definitions(-DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED)
 
+include(CheckCXXCompilerFlag)
+if (CMAKE_GENERATOR STREQUAL "Ninja")
+    CHECK_CXX_COMPILER_FLAG("-fcolor-diagnostics" CLANG_HAS_COLOR)
+    CHECK_CXX_COMPILER_FLAG("-fdiagnostics-color=always" GNU_HAS_COLOR)
+    if(CLANG_HAS_COLOR)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics")
+    elseif(GNU_HAS_COLOR)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fdiagnostics-color=always")
+    endif()
+endif()
+
 # package version
 include(Version)
 core_find_git_rev(RELEASE_IDENTIFIER)
