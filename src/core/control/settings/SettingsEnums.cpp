@@ -30,7 +30,7 @@ auto iconThemeFromString(const std::string& iconThemeStr) -> IconTheme {
     return ICON_THEME_COLOR;
 }
 
-auto emptyLastPageAppendFromString(std::string const& str) -> EmptyLastPageAppendType {
+auto emptyLastPageAppendFromString(const std::string& str) -> EmptyLastPageAppendType {
     if (str == "disabled") {
         return EmptyLastPageAppendType::Disabled;
     }

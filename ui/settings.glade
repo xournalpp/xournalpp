@@ -4450,18 +4450,18 @@ This setting can make it easier to draw with touch. </property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkFrame" id="sid198">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="label-xalign">0</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="sid199">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="left-padding">12</property>
                                     <child>
-                                      <!-- n-columns=3 n-rows=3 -->
-                                      <object class="GtkGrid">
+                                      <!-- n-columns=1 n-rows=3 -->
+                                      <object class="GtkGrid" id="grid7">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="orientation">vertical</property>
@@ -4489,8 +4489,6 @@ This setting can make it easier to draw with touch. </property>
                                             <property name="active">True</property>
                                             <property name="draw-indicator">True</property>
                                             <property name="group">rdLastPageAppendDisabled</property>
-                                            <signal name="group-changed" handler="seta" swapped="no"/>
-                                            <signal name="toggled" handler="setb" swapped="no"/>
                                           </object>
                                           <packing>
                                             <property name="left-attach">0</property>
@@ -4511,30 +4509,12 @@ This setting can make it easier to draw with touch. </property>
                                             <property name="top-attach">0</property>
                                           </packing>
                                         </child>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
-                                        <child>
-                                          <placeholder/>
-                                        </child>
                                       </object>
                                     </child>
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel">
+                                  <object class="GtkLabel" id="sid197">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">Automatically Add Empty Last Page (excluding PDFs)</property>

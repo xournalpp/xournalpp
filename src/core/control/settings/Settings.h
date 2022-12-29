@@ -761,7 +761,7 @@ private:
     int numPairsOffset{};
 
     /**
-     * Use to automatically add an empty last page when the current last page is drawn on
+     * Preference for appending an empty last page to the document
      */
     EmptyLastPageAppendType emptyLastPageAppend{};
 

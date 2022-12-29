@@ -1,7 +1,7 @@
 #include "Layout.h"
 
-#include <cmath>        // for abs
 #include <algorithm>    // for max, lower_bound, transform
+#include <cmath>        // for abs
 #include <iterator>     // for begin, end, distance
 #include <numeric>      // for accumulate
 #include <optional>     // for optional
@@ -60,16 +60,18 @@ void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
 }
 
 void Layout::maybeAddLastPage(Layout* layout) {
-    auto *control = this->view->getControl();
+    auto* control = this->view->getControl();
     auto* settings = control->getSettings();
     if (settings->getEmptyLastPageAppend() == EmptyLastPageAppendType::OnScrollToEndOfLastPage) {
-        std::cerr << layout->getMinimalHeight() << '\n' << layout->getVisibleRect().y << '\n' << layout->getVisibleRect().height << "\n\n";
-        // If the layout is 5px away from the end of the last page AND
+        // If the layout is 5px away from the end of the last page
         if (std::abs((layout->getMinimalHeight() - layout->getVisibleRect().y) - layout->getVisibleRect().height) < 5) {
             auto* doc = control->getDocument();
-            if (doc->getPdfPageCount() == 0) {
-                doc->lock();
+            doc->lock();
+            auto pdfPageCount = doc->getPdfPageCount();
+            doc->unlock();
+            if (pdfPageCount == 0) {
                 auto currentPage = control->getCurrentPageNo();
+                doc->lock();
                 auto lastPage = doc->getPageCount() - 1;
                 doc->unlock();
                 if (currentPage == lastPage) {

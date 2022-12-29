@@ -17,13 +17,12 @@
 #include "control/ToolEnums.h"                      // for ERASER_TYPE_NONE
 #include "control/settings/LatexSettings.h"         // for LatexSettings
 #include "control/settings/SettingsEnums.h"         // for InputDeviceTypeOp...
-#include "control/settings/SettingsEnums.cpp"       // for emptyLastPageAppendFromString
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"                          // for getConfigFile
-#include "util/Util.h"                              // for PRECISION_FORMAT_...
-#include "util/i18n.h"                              // for _
+#include "util/PathUtil.h"  // for getConfigFile
+#include "util/Util.h"      // for PRECISION_FORMAT_...
+#include "util/i18n.h"      // for _
 
 #include "ButtonConfig.h"  // for ButtonConfig
 #include "config-dev.h"    // for PALETTE_FILE
@@ -1017,9 +1016,6 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(inputSystemTPCButton);
     SAVE_BOOL_PROP(inputSystemDrawOutsideWindow);
-
-    xmlNode = saveProperty("iconTheme", iconThemeToString(this->iconTheme), root);
-    ATTACH_COMMENT("The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"");
 
     SAVE_STRING_PROP(preferredLocale);
 

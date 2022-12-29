@@ -136,7 +136,7 @@ void StrokeHandler::paintTo(const Point& point) {
                 stroke->setLastPressure(std::max(endPoint.z, point.z) * stroke->getWidth());
             } else {
                 if (const double widthDelta = (point.z - endPoint.z) * stroke->getWidth();
-                    - widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
+                    -widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
                     /**
                      * If the width variation is to big, decompose into shorter segments.
                      * Those segments can not be shorter than PIXEL_MOTION_THRESHOLD
@@ -272,9 +272,12 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
 
     if (settings->getEmptyLastPageAppend() == EmptyLastPageAppendType::OnDrawOfLastPage) {
         auto* doc = control->getDocument();
-        if (doc->getPdfPageCount() == 0) {
-            doc->lock();
+        doc->lock();
+        auto pdfPageCount = doc->getPdfPageCount();
+        doc->unlock();
+        if (pdfPageCount == 0) {
             auto currentPage = control->getCurrentPageNo();
+            doc->lock();
             auto lastPage = doc->getPageCount() - 1;
             doc->unlock();
             if (currentPage == lastPage) {
