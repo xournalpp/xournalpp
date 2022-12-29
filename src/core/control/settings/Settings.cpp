@@ -17,6 +17,7 @@
 #include "control/ToolEnums.h"                      // for ERASER_TYPE_NONE
 #include "control/settings/LatexSettings.h"         // for LatexSettings
 #include "control/settings/SettingsEnums.h"         // for InputDeviceTypeOp...
+#include "control/settings/SettingsEnums.cpp"       // for emptyLastPageAppendFromString
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
@@ -73,6 +74,8 @@ void Settings::loadDefault() {
     this->layoutBottomToTop = false;
 
     this->numPairsOffset = 1;
+
+    this->emptyLastPageAppend = EmptyLastPageAppendType::Disabled;
 
     this->edgePanSpeed = 20.0;
     this->edgePanMaxMult = 5.0;
@@ -528,6 +531,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->inputSystemTPCButton = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemDrawOutsideWindow")) == 0) {
         this->inputSystemDrawOutsideWindow = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("emptyLastPageAppend")) == 0) {
+        this->emptyLastPageAppend = emptyLastPageAppendFromString(reinterpret_cast<char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeFilterIgnoreTime")) == 0) {
         this->strokeFilterIgnoreTime = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("strokeFilterIgnoreLength")) == 0) {
@@ -902,6 +907,8 @@ void Settings::save() {
     SAVE_BOOL_PROP(layoutRightToLeft);
     SAVE_BOOL_PROP(layoutBottomToTop);
     SAVE_INT_PROP(numPairsOffset);
+    xmlNode = saveProperty("emptyLastPageAppend", emptyLastPageAppendToString(this->emptyLastPageAppend), root);
+    ATTACH_COMMENT("The icon theme, allowed values are \"disabled\", \"onDrawOfLastPage\", and \"onScrollOfLastPage\"");
     SAVE_BOOL_PROP(presentationMode);
 
     SAVE_STRING_PROP(fullscreenHideElements);
@@ -1010,6 +1017,9 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(inputSystemTPCButton);
     SAVE_BOOL_PROP(inputSystemDrawOutsideWindow);
+
+    xmlNode = saveProperty("iconTheme", iconThemeToString(this->iconTheme), root);
+    ATTACH_COMMENT("The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"");
 
     SAVE_STRING_PROP(preferredLocale);
 
@@ -1581,6 +1591,17 @@ void Settings::setPairsOffset(int numOffset) {
 }
 
 auto Settings::getPairsOffset() const -> int { return this->numPairsOffset; }
+
+void Settings::setEmptyLastPageAppend(EmptyLastPageAppendType emptyLastPageAppend) {
+    if (this->emptyLastPageAppend == emptyLastPageAppend) {
+        return;
+    }
+
+    this->emptyLastPageAppend = emptyLastPageAppend;
+    save();
+}
+
+auto Settings::getEmptyLastPageAppend() const -> EmptyLastPageAppendType { return this->emptyLastPageAppend; }
 
 void Settings::setViewColumns(int numColumns) {
     if (this->numColumns == numColumns) {

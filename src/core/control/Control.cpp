@@ -1437,7 +1437,9 @@ void Control::duplicatePage() {
     insertPage(pageCopy, getCurrentPageNo() + 1);
 }
 
-void Control::insertNewPage(size_t position) { pageBackgroundChangeController->insertNewPage(position); }
+void Control::insertNewPage(size_t position, bool shouldScrollToPage) {
+    pageBackgroundChangeController->insertNewPage(position, shouldScrollToPage);
+}
 
 void Control::appendNewPdfPages() {
     auto pageCount = this->doc->getPageCount();
@@ -1475,7 +1477,7 @@ void Control::appendNewPdfPages() {
     }
 }
 
-void Control::insertPage(const PageRef& page, size_t position) {
+void Control::insertPage(const PageRef& page, size_t position, bool shouldScrollToPage) {
     this->doc->lock();
     this->doc->insertPage(page, position);  // insert the new page to the document and update page numbers
     this->doc->unlock();
@@ -1488,8 +1490,11 @@ void Control::insertPage(const PageRef& page, size_t position) {
 
     // make the inserted page fully visible (or at least as much from the top which fits on the screen),
     // and make the page appear selected
-    scrollHandler->scrollToPage(position);
-    firePageSelected(position);
+    if (shouldScrollToPage) {
+        scrollHandler->scrollToPage(position);
+        firePageSelected(position);
+    }
+
 
     updateDeletePageButton();
     undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, position, true));

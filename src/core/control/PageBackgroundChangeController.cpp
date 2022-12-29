@@ -260,7 +260,7 @@ void PageBackgroundChangeController::copyBackgroundFromOtherPage(PageRef target,
     }
 }
 
-void PageBackgroundChangeController::insertNewPage(size_t position) {
+void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldScrollToPage) {
     control->clearSelectionEndText();
 
     Document* doc = control->getDocument();
@@ -293,7 +293,7 @@ void PageBackgroundChangeController::insertNewPage(size_t position) {
         }
     }
 
-    control->insertPage(page, position);
+    control->insertPage(page, position, shouldScrollToPage);
 }
 
 void PageBackgroundChangeController::documentChanged(DocumentChangeType type) {}
