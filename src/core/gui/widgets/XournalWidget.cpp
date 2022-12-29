@@ -277,11 +277,12 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
             startId = 0;
             endId = 0;
         } else {
+            // render both selected and neighbouring page (even pageId -> left page, otherwise right page)
             startId = ((xournal->view->getCurrentPage() - 1) & -2) + 1;
             endId = std::min(pages.size() - 1, startId + 1);
         }
     }
-    
+
     for (size_t pageId = startId; pageId <= endId; pageId++) {
         auto&& pv = pages.at(pageId);
         int px = pv->getX();
