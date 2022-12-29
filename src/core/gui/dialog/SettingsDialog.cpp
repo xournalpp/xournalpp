@@ -426,6 +426,19 @@ void SettingsDialog::load() {
     GtkWidget* spPairsOffset = get("spPairsOffset");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spPairsOffset), settings->getPairsOffset());
 
+    switch (settings->getEmptyLastPageAppend()) {
+    case EmptyLastPageAppendType::OnDrawOfLastPage:
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendOnDrawOfLastPage")), true);
+        break;
+    case EmptyLastPageAppendType::OnScrollToEndOfLastPage:
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendOnScrollToEndOfLastPage")), true);
+        break;
+    case EmptyLastPageAppendType::Disabled:
+    default:
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendDisabled")), true);
+        break;
+    }
+
     GtkWidget* spSnapRotationTolerance = get("spSnapRotationTolerance");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapRotationTolerance), settings->getSnapRotationTolerance());
 
@@ -840,6 +853,16 @@ void SettingsDialog::save() {
     GtkWidget* spPairsOffset = get("spPairsOffset");
     int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
     settings->setPairsOffset(numPairsOffset);
+
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendDisabled")))) {
+        settings->setEmptyLastPageAppend(EmptyLastPageAppendType::Disabled);
+    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendOnDrawOfLastPage")))) {
+        settings->setEmptyLastPageAppend(EmptyLastPageAppendType::OnDrawOfLastPage);
+    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendOnScrollToEndOfLastPage")))) {
+        settings->setEmptyLastPageAppend(EmptyLastPageAppendType::OnScrollToEndOfLastPage);
+    } else {
+        settings->setEmptyLastPageAppend(EmptyLastPageAppendType::Disabled);
+    }
 
     settings->setEdgePanSpeed(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanSpeed"))));
     settings->setEdgePanMaxMult(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanMaxMult"))));

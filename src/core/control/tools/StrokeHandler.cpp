@@ -15,6 +15,7 @@
 #include "control/ToolHandler.h"                      // for ToolHandler
 #include "control/layer/LayerController.h"            // for LayerController
 #include "control/settings/Settings.h"                // for Settings
+#include "control/settings/SettingsEnums.h"           // for EmptyLastPageAppendType
 #include "control/shaperecognizer/ShapeRecognizer.h"  // for ShapeRecognizer
 #include "control/tools/InputHandler.h"               // for InputHandler::P...
 #include "control/tools/SnapToGridInputHandler.h"     // for SnapToGridInput...
@@ -23,6 +24,7 @@
 #include "gui/PageView.h"                        // for XojPageView
 #include "gui/XournalView.h"                     // for XournalView
 #include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
+#include "model/Document.h"                      // for Document
 #include "model/Layer.h"                         // for Layer
 #include "model/LineStyle.h"                     // for LineStyle
 #include "model/Stroke.h"                        // for Stroke, STROKE_...
@@ -266,11 +268,22 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     Layer* layer = page->getSelectedLayer();
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
-
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
-    ToolHandler* h = control->getToolHandler();
+    if (settings->getEmptyLastPageAppend() == EmptyLastPageAppendType::OnDrawOfLastPage) {
+        auto* doc = control->getDocument();
+        if (doc->getPdfPageCount() == 0) {
+            doc->lock();
+            auto currentPage = control->getCurrentPageNo();
+            auto lastPage = doc->getPageCount() - 1;
+            doc->unlock();
+            if (currentPage == lastPage) {
+                control->insertNewPage(currentPage + 1, false);
+            }
+        }
+    }
 
+    ToolHandler* h = control->getToolHandler();
     if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
         ShapeRecognizer reco;
 

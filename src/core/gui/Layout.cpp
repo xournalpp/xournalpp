@@ -1,5 +1,6 @@
 #include "Layout.h"
 
+#include <cmath>        // for abs
 #include <algorithm>    // for max, lower_bound, transform
 #include <iterator>     // for begin, end, distance
 #include <numeric>      // for accumulate
@@ -13,6 +14,7 @@
 #include "gui/LayoutMapper.h"           // for LayoutMapper, GridPosition
 #include "gui/PageView.h"               // for XojPageView
 #include "gui/scroll/ScrollHandling.h"  // for ScrollHandling
+#include "model/Document.h"             // for Document
 #include "util/Rectangle.h"             // for Rectangle
 #include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
 
@@ -53,8 +55,30 @@ void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout) 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
     Layout::checkScroll(adjustment, layout->lastScrollVertical);
     layout->updateVisibility();
+
+    layout->maybeAddLastPage(layout);
 }
 
+void Layout::maybeAddLastPage(Layout* layout) {
+    auto *control = this->view->getControl();
+    auto* settings = control->getSettings();
+    if (settings->getEmptyLastPageAppend() == EmptyLastPageAppendType::OnScrollToEndOfLastPage) {
+        std::cerr << layout->getMinimalHeight() << '\n' << layout->getVisibleRect().y << '\n' << layout->getVisibleRect().height << "\n\n";
+        // If the layout is 5px away from the end of the last page AND
+        if (std::abs((layout->getMinimalHeight() - layout->getVisibleRect().y) - layout->getVisibleRect().height) < 5) {
+            auto* doc = control->getDocument();
+            if (doc->getPdfPageCount() == 0) {
+                doc->lock();
+                auto currentPage = control->getCurrentPageNo();
+                auto lastPage = doc->getPageCount() - 1;
+                doc->unlock();
+                if (currentPage == lastPage) {
+                    control->insertNewPage(currentPage + 1, false);
+                }
+            }
+        }
+    }
+}
 
 void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll) {
     lastScroll = gtk_adjustment_get_value(adjustment);

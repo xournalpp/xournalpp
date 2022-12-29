@@ -47,6 +47,12 @@ enum ScrollbarHideType {
     SCROLLBAR_HIDE_BOTH = SCROLLBAR_HIDE_HORIZONTAL | SCROLLBAR_HIDE_VERTICAL
 };
 
+enum class EmptyLastPageAppendType {
+    Disabled = 0,
+    OnDrawOfLastPage = 1,
+    OnScrollToEndOfLastPage = 2,
+};
+
 /**
  * The user-selectable device types
  */
@@ -113,6 +119,19 @@ constexpr auto iconThemeToString(IconTheme iconTheme) -> const char* {
             return "iconsColor";
         case ICON_THEME_LUCIDE:
             return "iconsLucide";
+        default:
+            return "unknown";
+    }
+}
+
+constexpr auto emptyLastPageAppendToString(EmptyLastPageAppendType appendType) -> const char* {
+    switch (appendType) {
+        case EmptyLastPageAppendType::Disabled:
+            return "disabled";
+        case EmptyLastPageAppendType::OnDrawOfLastPage:
+            return "onDrawOfLastPage";
+        case EmptyLastPageAppendType::OnScrollToEndOfLastPage:
+            return "onScrollOfLastPage";
         default:
             return "unknown";
     }

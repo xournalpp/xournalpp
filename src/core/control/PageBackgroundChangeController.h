@@ -38,7 +38,7 @@ public:
     virtual void changeCurrentPageBackground(PageType& pageType);
     void changeCurrentPageBackground(PageTypeInfo* info) override;
     void changeAllPagesBackground(const PageType& pt);
-    void insertNewPage(size_t position);
+    void insertNewPage(size_t position, bool shouldScrollToPage = true);
     GtkWidget* getMenu();
 
     // DocumentListener
