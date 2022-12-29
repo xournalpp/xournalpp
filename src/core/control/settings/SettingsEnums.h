@@ -139,3 +139,4 @@ constexpr auto emptyLastPageAppendToString(EmptyLastPageAppendType appendType) -
 
 StylusCursorType stylusCursorTypeFromString(const std::string& stylusCursorTypeStr);
 IconTheme iconThemeFromString(const std::string& iconThemeStr);
+EmptyLastPageAppendType emptyLastPageAppendFromString(const std::string& str);

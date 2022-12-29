@@ -426,18 +426,10 @@ void SettingsDialog::load() {
     GtkWidget* spPairsOffset = get("spPairsOffset");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spPairsOffset), settings->getPairsOffset());
 
-    switch (settings->getEmptyLastPageAppend()) {
-    case EmptyLastPageAppendType::OnDrawOfLastPage:
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendOnDrawOfLastPage")), true);
-        break;
-    case EmptyLastPageAppendType::OnScrollToEndOfLastPage:
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendOnScrollToEndOfLastPage")), true);
-        break;
-    case EmptyLastPageAppendType::Disabled:
-    default:
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendDisabled")), true);
-        break;
-    }
+    EmptyLastPageAppendType append = settings->getEmptyLastPageAppend();
+    loadCheckbox("rdLastPageAppendOnDrawOfLastPage", append == EmptyLastPageAppendType::OnDrawOfLastPage);
+    loadCheckbox("rdLastPageAppendOnScrollToEndOfLastPage", append == EmptyLastPageAppendType::OnScrollToEndOfLastPage);
+    loadCheckbox("rdLastPageAppendDisabled", append == EmptyLastPageAppendType::Disabled);
 
     GtkWidget* spSnapRotationTolerance = get("spSnapRotationTolerance");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapRotationTolerance), settings->getSnapRotationTolerance());
@@ -854,11 +846,11 @@ void SettingsDialog::save() {
     int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
     settings->setPairsOffset(numPairsOffset);
 
-    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendDisabled")))) {
+    if (getCheckbox("rdLastPageAppendDisabled")) {
         settings->setEmptyLastPageAppend(EmptyLastPageAppendType::Disabled);
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendOnDrawOfLastPage")))) {
+    } else if (getCheckbox("rdLastPageAppendOnDrawOfLastPage")) {
         settings->setEmptyLastPageAppend(EmptyLastPageAppendType::OnDrawOfLastPage);
-    } else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("rdLastPageAppendOnScrollToEndOfLastPage")))) {
+    } else if (getCheckbox("rdLastPageAppendOnScrollToEndOfLastPage")) {
         settings->setEmptyLastPageAppend(EmptyLastPageAppendType::OnScrollToEndOfLastPage);
     } else {
         settings->setEmptyLastPageAppend(EmptyLastPageAppendType::Disabled);
