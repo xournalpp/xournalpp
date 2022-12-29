@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 export PATH="$HOME/.new_local/bin:$PATH"
 
 ## Mac Setup script

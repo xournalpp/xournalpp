@@ -1,4 +1,5 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
+set -x
 export PATH="$HOME/.new_local/bin:$HOME/gtk/inst/bin:$PATH"
 # go to script directory
 cd "${0%/*}" || exit

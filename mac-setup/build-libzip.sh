@@ -1,4 +1,5 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
+set -x
 export PATH="$HOME/.new_local/bin:$PATH"
 
 curl -L https://libzip.org/download/libzip-1.8.0.tar.gz -o libzip.tar.gz

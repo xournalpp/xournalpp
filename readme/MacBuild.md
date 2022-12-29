@@ -102,7 +102,7 @@ jhbuild build gtksourceview3
 ### Automated step
 
 ```sh
-./complete-build.sh $HOME/gtk
+./complete-build.sh "$HOME/gtk"
 ```
 
 ### Manual steps
@@ -111,7 +111,7 @@ jhbuild build gtksourceview3
 ```sh
 export PATH="$HOME/.local/bin:$HOME/gtk/inst/bin:$PATH"
 
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME/gtk/inst ..
+cmake -DCMAKE_INSTALL_PREFIX:PATH="$HOME/gtk/inst" ..
 make -j 4
 make install
 ```

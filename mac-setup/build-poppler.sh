@@ -1,4 +1,5 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
+set -x
 export PATH="$HOME/.new_local/bin:$PATH"
 
 curl -L https://github.com/uclouvain/openjpeg/archive/v2.5.0.tar.gz -o openjpeg.tar.gz

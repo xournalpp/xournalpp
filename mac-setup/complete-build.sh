@@ -1,4 +1,5 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
+set -x
 export PATH="$HOME/.new_local/bin:$PATH"
 
 # Build for macOS, without GTK and without Poppler
@@ -12,7 +13,7 @@ export PATH="$HOME/.local/bin:$1/inst/bin:$PATH"
 
 mkdir -p ../build
 cd ../build/ || exit
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$1/inst ..
+cmake -DCMAKE_INSTALL_PREFIX:PATH="$1/inst" ..
 make -j 4
 make install
 

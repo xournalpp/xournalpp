@@ -1,4 +1,5 @@
-#!/bin/bash -x
+#!/usr/bin/env bash
+set -x
 export PATH="$HOME/.new_local/bin:$PATH"
 export LIBRARY_PATH="$HOME/gtk/inst/lib:$LIBRARY_PATH"
 # go to script directory
@@ -9,6 +10,6 @@ tar xzf pa_stable_*.tgz
 
 cd portaudio || exit
 
-./configure --enable-cxx --disable-mac-universal --prefix=$HOME/gtk/inst
+./configure --enable-cxx --disable-mac-universal --prefix="$HOME/gtk/inst"
 make -j2
 make install
