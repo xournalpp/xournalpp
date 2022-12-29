@@ -266,20 +266,20 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     auto& pages = xournal->view->getViewPages();
     size_t startId = 0;
     size_t endId = pages.size() - 1;
-    // only render visible pages
+    // only render visible pages in presentation mode
     if (settings->isPresentationMode()) {
         startId = xournal->view->getCurrentPage();
         endId = startId;
-    }
-    if (settings->isShowPairedPages()) {
-        size_t cp = xournal->view->getCurrentPage();
-        if (cp == 0) {
-            startId = 0;
-            endId = 0;
-        } else {
-            // render both selected and neighbouring page (even pageId -> left page, otherwise right page)
-            startId = ((xournal->view->getCurrentPage() - 1) & -2) + 1;
-            endId = std::min(pages.size() - 1, startId + 1);
+        if (settings->isShowPairedPages()) {
+            size_t cp = xournal->view->getCurrentPage();
+            if (cp == 0) {
+                startId = 0;
+                endId = 0;
+            } else {
+                // render both selected and neighbouring page (even pageId -> left page, otherwise right page)
+                startId = ((xournal->view->getCurrentPage() - 1) & -2) + 1;
+                endId = std::min(pages.size() - 1, startId + 1);
+            }
         }
     }
 
