@@ -264,7 +264,25 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
     auto& pages = xournal->view->getViewPages();
-    for (size_t pageId = 0; pageId < pages.size(); pageId++) {
+    size_t startId = 0;
+    size_t endId = pages.size() - 1;
+    // only render visible pages
+    if (settings->isPresentationMode()) {
+        startId = xournal->view->getCurrentPage();
+        endId = startId;
+    }
+    if (settings->isShowPairedPages()) {
+        size_t cp = xournal->view->getCurrentPage();
+        if (cp == 0) {
+            startId = 0;
+            endId = 0;
+        } else {
+            startId = ((xournal->view->getCurrentPage() - 1) & -2) + 1;
+            endId = std::min(pages.size() - 1, startId + 1);
+        }
+    }
+    
+    for (size_t pageId = startId; pageId <= endId; pageId++) {
         auto&& pv = pages.at(pageId);
         int px = pv->getX();
         int py = pv->getY();
@@ -272,11 +290,6 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
         int ph = pv->getDisplayHeight();
 
         if (!clippingRect.intersects(pv->getRect())) {
-            continue;
-        }
-
-        // stop rendering non-selected pages in presentation mode
-        if (settings->isPresentationMode() && pageId != xournal->view->getCurrentPage()) {
             continue;
         }
 
