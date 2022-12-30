@@ -919,10 +919,12 @@ static int applib_getStrokes(lua_State* L) {
             StrokeTool tool = s->getToolType();
             if (tool == StrokeTool::PEN) {
                 lua_pushstring(L, "pen");
+            } else if (tool == StrokeTool::ERASER) {
+                lua_pushstring(L, "eraser");
             } else if (tool == StrokeTool::HIGHLIGHTER) {
                 lua_pushstring(L, "highlighter");
             } else {
-                g_warning("Unknown STROKE_TOOL. ");
+                g_warning("Unknown StrokeTool::Value");
                 return 0;
             }
             lua_setfield(L, -2, "tool");  // add tool to stroke
