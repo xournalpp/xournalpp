@@ -594,7 +594,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                                   <object class="GtkImage" id="image1">
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
-                                                    <property name="stock">gtk-info</property>
+                                                    <property name="icon-name">dialog-information</property>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">False</property>
