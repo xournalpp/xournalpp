@@ -33,7 +33,7 @@ void MetadataManager::deleteMetadataFile(fs::path const& path) {
 
     try {
         fs::remove(path);
-    } catch (fs::filesystem_error const&) { g_warning("Could not delete metadata file %s", path.string().c_str()); }
+    } catch (const fs::filesystem_error&) { g_warning("Could not delete metadata file %s", path.string().c_str()); }
 }
 
 /**
@@ -72,7 +72,7 @@ auto MetadataManager::loadList() -> vector<MetadataEntry> {
                 data.push_back(entry);
             }
         }
-    } catch (fs::filesystem_error& e) {
+    } catch (const fs::filesystem_error& e) {
         XojMsgBox::showErrorToUser(nullptr, e.what());
         return data;
     }

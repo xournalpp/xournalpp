@@ -95,7 +95,7 @@ void initLocalisation() {
     // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
     try {
         std::locale::global(std::locale(""));  // "" - system default locale
-    } catch (std::runtime_error& e) {
+    } catch (const std::runtime_error& e) {
         g_warning("XournalMain: System default locale could not be set.\n - Caused by: %s\n - Note that it is not "
                   "supported to set the locale using mingw-w64 on windows.\n - This could be solved by compiling "
                   "xournalpp with msvc",
@@ -126,7 +126,7 @@ auto migrateSettings() -> MigrateResult {
                 constexpr auto msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
                                      "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
                 return {MigrateStatus::Success, FS(_F(msg) % oldPath.u8string() % newConfigPath.u8string())};
-            } catch (fs::filesystem_error const& except) {
+            } catch (const fs::filesystem_error& except) {
                 constexpr auto msg =
                         "Due to a recent update, Xournal++ has changed where its configuration files are "
                         "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
@@ -493,7 +493,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
             } else {
                 opened = app_data->control->newFile("", p);
             }
-        } catch (fs::filesystem_error const& e) {
+        } catch (const fs::filesystem_error& e) {
             std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
                                     "You have to copy the file to a local directory.") %
                                  p.u8string() % e.what());
@@ -542,7 +542,7 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
         try {
             printf("trying\n");
             return fun();
-        } catch (std::exception const& e) {
+        } catch (const std::exception& e) {
             std::cerr << "Error: " << e.what() << std::endl;
             std::cerr << "In: " << s << std::endl;
             print_version();

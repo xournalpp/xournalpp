@@ -40,7 +40,7 @@ auto ObjectInputStream::read(const char* data, int data_len) -> bool {
                       version.c_str(), XML_VERSION_STR);
             return false;
         }
-    } catch (InputStreamException& e) {
+    } catch (const InputStreamException& e) {
         g_warning("InputStreamException: %s", e.what());
         return false;
     }

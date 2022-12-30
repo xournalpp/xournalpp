@@ -267,7 +267,7 @@ TEST(UtilObjectIOStream, testReadComplexObject) {
 
             stream.endObject();
         }
-    } catch (InputStreamException& e) {
+    } catch (const InputStreamException& e) {
         std::cerr << "InputStreamException testing complex object: " << e.what() << std::endl;
         FAIL();
     }
@@ -342,7 +342,7 @@ TEST(UtilObjectIOStream, testReadStroke) {
             assertStrokeEquality(stroke, in_stroke);
             ++i;
         }
-    } catch (InputStreamException& e) {
+    } catch (const InputStreamException& e) {
         std::cerr << "InputStreamException testing stroke " << i << ": " << e.what() << std::endl;
         FAIL();
     }
