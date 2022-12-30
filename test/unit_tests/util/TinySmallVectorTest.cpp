@@ -75,17 +75,17 @@ TEST(UtilsVectors, testTinyVector) {
         //     try {
         //         vec.push_back(d1);
         //         FAIL() << "TinyVector should have thrown std::length_error";
-        //     } catch (std::length_error& e) {}
+        //     } catch (const std::length_error& e) {}
         //
         //     try {
         //         vec.push_back(std::move(d1));
         //         FAIL() << "TinyVector should have thrown std::length_error";
-        //     } catch (std::length_error& e) {}
+        //     } catch (const std::length_error& e) {}
         //
         //     try {
         //         vec.emplace_back(d1);
         //         FAIL() << "TinyVector should have thrown std::length_error";
-        //     } catch (std::length_error& e) {}
+        //     } catch (const std::length_error& e) {}
 
         vec.pop_back();
         EXPECT_EQ(vec.size(), 4);

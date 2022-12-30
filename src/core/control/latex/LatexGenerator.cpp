@@ -56,7 +56,7 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
     std::string texFilePathOSEncoding;
     try {
         texFilePathOSEncoding = (Util::getLongPath(texDir) / "tex.tex").string();
-    } catch (fs::filesystem_error const& e) {
+    } catch (const fs::filesystem_error& e) {
         GenError res{FS(_F("Failed to parse LaTeX generator path: {1}") % e.what())};
     }
 

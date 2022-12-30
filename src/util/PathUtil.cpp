@@ -64,7 +64,7 @@ auto Util::readString(fs::path const& path, bool showErrorToUser) -> std::option
         s.resize(fs::file_size(path));
         ifs.read(s.data(), s.size());
         return {std::move(s)};
-    } catch (fs::filesystem_error const& e) {
+    } catch (const fs::filesystem_error& e) {
         if (showErrorToUser) {
             XojMsgBox::showErrorToUser(nullptr, e.what());
         }
@@ -260,7 +260,7 @@ auto Util::getTmpDirSubfolder(const fs::path& subfolder) -> fs::path {
 auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
     try {
         fs::create_directories(p);
-    } catch (fs::filesystem_error const& fe) {
+    } catch (const fs::filesystem_error& fe) {
         Util::execInUiThread([=]() {
             std::string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
             g_warning("%s %s", msg.c_str(), fe.what());
@@ -274,7 +274,7 @@ auto Util::isChildOrEquivalent(fs::path const& path, fs::path const& base) -> bo
     auto safeCanonical = [](fs::path const& p) {
         try {
             return fs::weakly_canonical(p);
-        } catch (fs::filesystem_error const& fe) {
+        } catch (const fs::filesystem_error& fe) {
             g_warning("Util::isChildOrEquivalent: Error resolving paths, failed with %s.\nFalling back to "
                       "lexicographical path",
                       fe.what());
@@ -302,7 +302,7 @@ bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
     try {
         fs::remove(to);
         fs::rename(from, to);
-    } catch (fs::filesystem_error const& fe) {
+    } catch (const fs::filesystem_error& fe) {
         // Attempt copy and delete
         g_warning("Renaming file %s to %s failed with %s. This may happen when source and target are on different "
                   "filesystems. Attempt to copy the file.",

@@ -71,11 +71,11 @@ auto load_available_plugins_from(fs::path const& path, Control* control) -> std:
                 }
                 plugin->setEnabled(plugin->isDefaultEnabled());
                 returner.emplace_back(std::move(plugin));
-            } catch (std::exception const& e) {
+            } catch (const std::exception& e) {
                 g_warning("Error loading plugin \"%s\": %s", f.path().string().c_str(), e.what());
             }
         }
-    } catch (fs::filesystem_error const& e) {
+    } catch (const fs::filesystem_error& e) {
         g_warning("Could not open plugin dir: \"%s\": %s", path.string().c_str(), e.what());
     }
     return returner;

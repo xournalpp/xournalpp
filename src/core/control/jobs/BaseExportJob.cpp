@@ -47,7 +47,7 @@ auto BaseExportJob::checkOverwriteBackgroundPDF(fs::path const& file) const -> b
             XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
             return false;
         }
-    } catch (fs::filesystem_error const& fe) {
+    } catch (const fs::filesystem_error& fe) {
         g_warning("%s", fe.what());
         auto msg = std::string(_("The check for overwriting the background failed with:\n")) + fe.what() +
                    _("\n Do you want to continue?");
@@ -104,7 +104,7 @@ auto BaseExportJob::testAndSetFilepath(fs::path file) -> bool {
             this->filepath = std::move(file);
             return true;
         }
-    } catch (fs::filesystem_error const& e) {
+    } catch (const fs::filesystem_error& e) {
         string msg = FS(_F("Failed to resolve path with the following error:\n{1}") % e.what());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
     }

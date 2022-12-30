@@ -246,7 +246,7 @@ void Control::renameLastAutosaveFile() {
     std::vector<string> errors;
     try {
         Util::safeRenameFile(filename, renamed);
-    } catch (fs::filesystem_error const& e) {
+    } catch (const fs::filesystem_error& e) {
         auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
         errors.emplace_back(FS(fmtstr % filename.u8string() % renamed.u8string() % e.what()));
     }
@@ -3053,7 +3053,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         selection->mouseUp();
 
         win->getXournal()->setSelection(selection);
-    } catch (std::exception& e) {
+    } catch (const std::exception& e) {
         g_warning("could not paste, Exception occurred: %s", e.what());
         Stacktrace::printStracktrace();
         if (selection) {
