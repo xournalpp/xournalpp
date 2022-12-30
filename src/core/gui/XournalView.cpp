@@ -156,15 +156,6 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     }
 
-    // F5 starts presentation modus
-    if (event->keyval == GDK_KEY_F5) {
-        if (!control->isFullscreen()) {
-            control->setViewPresentationMode(true);
-            control->setFullscreen(true);
-            return true;
-        }
-    }
-
     guint state = event->state & gtk_accelerator_get_default_mod_mask();
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
