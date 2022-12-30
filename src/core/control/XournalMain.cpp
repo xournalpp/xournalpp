@@ -126,13 +126,12 @@ auto migrateSettings() -> MigrateResult {
                 constexpr auto msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
                                      "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
                 return {MigrateStatus::Success, FS(_F(msg) % oldPath.u8string() % newConfigPath.u8string())};
-            } catch (const fs::filesystem_error& except) {
+            } catch (const fs::filesystem_error& e) {
                 constexpr auto msg =
                         "Due to a recent update, Xournal++ has changed where its configuration files are "
                         "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
-                g_message("Migration failed: %s", except.what());
-                return {MigrateStatus::Failure,
-                        FS(_F(msg) % oldPath.u8string() % newConfigPath.u8string() % except.what())};
+                g_message("Migration failed: %s", e.what());
+                return {MigrateStatus::Failure, FS(_F(msg) % oldPath.u8string() % newConfigPath.u8string() % e.what())};
             }
         }
     }

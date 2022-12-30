@@ -58,7 +58,7 @@ auto PortAudioConsumer::startPlaying() -> bool {
     portaudio::Device* device = nullptr;
     try {
         device = &sys.deviceByIndex(getSelectedOutputDevice().getIndex());
-    } catch (const portaudio::PaException& e) {
+    } catch (const portaudio::PaException&) {
         g_warning("PortAudioConsumer: Unable to find selected output device");
         return false;
     }
@@ -146,7 +146,7 @@ void PortAudioConsumer::stopPlaying() {
             if (this->outputStream->isActive()) {
                 this->outputStream->stop();
             }
-        } catch (const portaudio::PaException& e) {
+        } catch (const portaudio::PaException&) {
             /*
              * We try closing the stream but this->outputStream might be an invalid object at this time if the stream
              * was previously closed by the backend. Just ignore this as the stream is closed either way.

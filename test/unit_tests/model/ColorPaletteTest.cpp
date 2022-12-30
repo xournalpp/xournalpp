@@ -110,9 +110,9 @@ TEST(ColorPalette, testWrongColor) {
         try {
             palette.load();
             FAIL();
-        } catch (const std::invalid_argument& err) {
+        } catch (const std::invalid_argument& e) {
             // check exception
-            EXPECT_STREQ(std::get<1>(pe).c_str(), err.what());
+            EXPECT_STREQ(std::get<1>(pe).c_str(), e.what());
         }
     }
 }
