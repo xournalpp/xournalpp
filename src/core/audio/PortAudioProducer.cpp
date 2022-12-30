@@ -51,7 +51,7 @@ auto PortAudioProducer::startRecording() -> bool {
     portaudio::Device* device = nullptr;
     try {
         device = &sys.deviceByIndex(getSelectedInputDevice().getIndex());
-    } catch (const portaudio::PaException& e) {
+    } catch (const portaudio::PaException&) {
         g_message("PortAudioProducer: Unable to find selected input device");
         return false;
     }
@@ -70,7 +70,7 @@ auto PortAudioProducer::startRecording() -> bool {
     try {
         this->inputStream = std::make_unique<portaudio::MemFunCallbackStream<PortAudioProducer>>(
                 params, *this, &PortAudioProducer::recordCallback);
-    } catch (const portaudio::PaException& e) {
+    } catch (const portaudio::PaException&) {
         g_message("PortAudioProducer: Unable to open stream");
         return false;
     }
@@ -78,7 +78,7 @@ auto PortAudioProducer::startRecording() -> bool {
     // Start the recording
     try {
         this->inputStream->start();
-    } catch (const portaudio::PaException& e) {
+    } catch (const portaudio::PaException&) {
         g_message("PortAudioProducer: Unable to start stream");
         this->inputStream.reset();
         return false;
@@ -108,7 +108,9 @@ void PortAudioProducer::stopRecording() {
             if (this->inputStream->isActive()) {
                 this->inputStream->stop();
             }
-        } catch (const portaudio::PaException& e) { g_message("PortAudioProducer: Closing stream failed"); }
+        } catch (const portaudio::PaException&) {
+            g_message("PortAudioProducer: Closing stream failed");
+        }
     }
 
     // Notify the consumer at the other side that there will be no more data

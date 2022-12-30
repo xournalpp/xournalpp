@@ -31,7 +31,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
                 ElementRange::parse(text_form, self->pageCount);
                 gtk_style_context_remove_class(context, "error");
                 gtk_widget_set_sensitive(btOk, TRUE);
-            } catch (const std::invalid_argument& e) {
+            } catch (const std::invalid_argument&) {
                 gtk_style_context_add_class(context, "error");
                 gtk_widget_set_sensitive(btOk, FALSE);
             }
