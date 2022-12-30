@@ -62,7 +62,6 @@ void GeometryToolController::markPoint(double x, double y) {
     const auto doc = control->getDocument();
     const auto page = view->getPage();
     doc->lock();
-    control->getLayerController()->ensureLayerExists(page);
     const auto layer = page->getSelectedLayer();
     layer->addElement(cross);
     doc->unlock();
@@ -81,7 +80,6 @@ void GeometryToolController::addStrokeToLayer() {
     const auto page = view->getPage();
 
     doc->lock();
-    control->getLayerController()->ensureLayerExists(page);
     const auto layer = page->getSelectedLayer();
     layer->addElement(stroke.get());
     doc->unlock();
