@@ -30,20 +30,20 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearch
 
     auto infoGrid = GTK_GRID(get("versionInfoGrid"));
 
-    insertPropertyKey(infoGrid, "Version", 0);
+    insertPropertyKey(infoGrid, _("Version"), 0);
     insertPropertyValue(infoGrid, PROJECT_VERSION, 0);
 
-    insertPropertyKey(infoGrid, "Built on", 1);
+    insertPropertyKey(infoGrid, _("Built on"), 1);
     insertPropertyValue(infoGrid, __DATE__ ", " __TIME__, 1);
 
-    insertPropertyKey(infoGrid, "GTK Version", 2);
+    insertPropertyKey(infoGrid, _("GTK Version"), 2);
     char gtkVersion[10];
     sprintf(gtkVersion, "%u.%u.%u", gtk_get_major_version(), gtk_get_minor_version(), gtk_get_micro_version());
     insertPropertyValue(infoGrid, gtkVersion, 2);
 
     auto const gitCommitId = std::string{GIT_COMMIT_ID};
     if (!gitCommitId.empty()) {
-        insertPropertyKey(infoGrid, "Git commit", 3);
+        insertPropertyKey(infoGrid, _("Git commit"), 3);
         insertPropertyValue(infoGrid, gitCommitId.c_str(), 3);
     }
 
