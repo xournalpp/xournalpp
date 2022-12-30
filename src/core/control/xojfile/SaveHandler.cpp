@@ -1,8 +1,8 @@
 #include "SaveHandler.h"
 
-#include <cinttypes>  // for PRIx32, uint32_t
-#include <cstdio>     // for sprintf, size_t
-#include <filesystem> // for exists
+#include <cinttypes>   // for PRIx32, uint32_t
+#include <cstdio>      // for sprintf, size_t
+#include <filesystem>  // for exists
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
@@ -107,7 +107,7 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
         stroke->setAttrib("tool", "highlighter");
         alpha = 0x7f;
     } else {
-        g_warning("Unknown stroke tool type: %i", t);
+        g_warning("Unknown StrokeTool::Value");
         stroke->setAttrib("tool", "pen");
     }
 
@@ -115,12 +115,16 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 
     int pointCount = s->getPointCount();
 
-    for (int i = 0; i < pointCount; i++) { stroke->addPoint(s->getPoint(i)); }
+    for (int i = 0; i < pointCount; i++) {
+        stroke->addPoint(s->getPoint(i));
+    }
 
     if (s->hasPressure()) {
         auto* values = new double[pointCount + 1];
         values[0] = s->getWidth();
-        for (int i = 0; i < pointCount; i++) { values[i + 1] = s->getPoint(i).z; }
+        for (int i = 0; i < pointCount; i++) {
+            values[i + 1] = s->getPoint(i).z;
+        }
 
         stroke->setAttrib("width", values, pointCount);
     } else {
@@ -289,7 +293,9 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
         page->addChild(layer);
     }
 
-    for (Layer* l: *p->getLayers()) { visitLayer(page, l); }
+    for (Layer* l: *p->getLayers()) {
+        visitLayer(page, l);
+    }
 }
 
 void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
