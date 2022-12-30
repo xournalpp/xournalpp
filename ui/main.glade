@@ -2256,7 +2256,7 @@
                                       <object class="GtkImage" id="image8">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="stock">gtk-close</property>
+                                        <property name="icon-name">window-close</property>
                                       </object>
                                     </child>
                                     <style>
@@ -2311,7 +2311,7 @@
                                       <object class="GtkImage" id="image1">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="stock">gtk-go-up</property>
+                                        <property name="icon-name">go-up</property>
                                       </object>
                                     </child>
                                   </object>
@@ -2331,7 +2331,7 @@
                                       <object class="GtkImage" id="image5">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="stock">gtk-go-down</property>
+                                        <property name="icon-name">go-down</property>
                                       </object>
                                     </child>
                                   </object>
@@ -2351,7 +2351,7 @@
                                       <object class="GtkImage" id="image6">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="stock">gtk-copy</property>
+                                        <property name="icon-name">edit-copy</property>
                                       </object>
                                     </child>
                                   </object>
@@ -2371,7 +2371,7 @@
                                       <object class="GtkImage" id="image7">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="stock">gtk-delete</property>
+                                        <property name="icon-name">edit-delete</property>
                                       </object>
                                     </child>
                                   </object>
@@ -2523,7 +2523,7 @@
                                   <object class="GtkImage" id="image3">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="stock">gtk-go-up</property>
+                                    <property name="icon-name">go-up</property>
                                   </object>
                                 </child>
                               </object>
@@ -2545,7 +2545,7 @@
                                   <object class="GtkImage" id="image4">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="stock">gtk-go-down</property>
+                                    <property name="icon-name">go-down</property>
                                   </object>
                                 </child>
                               </object>
@@ -2603,7 +2603,7 @@
                               <object class="GtkImage" id="image2">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="stock">gtk-close</property>
+                                <property name="icon-name">window-close</property>
                               </object>
                             </child>
                             <style>

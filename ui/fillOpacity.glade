@@ -100,7 +100,7 @@ Select opacity for fill color</property>
                     <property name="name">imgPreview</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="stock">gtk-missing-image</property>
+                    <property name="icon-name">image-missing</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
