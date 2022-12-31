@@ -267,6 +267,7 @@ Section "Xournal++" SecXournalpp
 	; Add uninstall entry. See https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "DisplayIcon" '"$INSTDIR\bin\xournalpp.exe"'
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "DisplayName" "Xournal++"
+	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "DisplayVersion" "${XOURNALPP_VERSION}"
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "Publisher" "The Xournal++ Team"
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "URLInfoAbout" "https://xournalpp.github.io"
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "InstallLocation" '"$INSTDIR"'
