@@ -13,14 +13,40 @@
 class GladeSearchpath;
 
 AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
-    gtk_label_set_markup(GTK_LABEL(get("lbBuildDate")), __DATE__ ", " __TIME__);
-    gtk_label_set_markup(GTK_LABEL(get("lbVersion")), PROJECT_VERSION);
-    gtk_label_set_markup(GTK_LABEL(get("lbRevId")), GIT_COMMIT_ID);
+    auto insertPropertyKey = [](GtkGrid* grid, std::string&& str, gint top) {
+        auto widget = gtk_label_new(NULL);
+        gtk_label_set_markup(GTK_LABEL(widget), str.insert(0, "<b>").append("</b>").c_str());
+        gtk_widget_set_halign(widget, GtkAlign::GTK_ALIGN_START);
+        gtk_widget_show(widget);
+        gtk_grid_attach(grid, widget, 0, top, 1, 1);
+    };
 
+    auto insertPropertyValue = [](GtkGrid* grid, std::string const& str, gint top) {
+        auto widget = gtk_label_new(str.c_str());
+        gtk_widget_set_halign(widget, GtkAlign::GTK_ALIGN_START);
+        gtk_widget_show(widget);
+        gtk_grid_attach(grid, widget, 1, top, 1, 1);
+    };
+
+    auto infoGrid = GTK_GRID(get("versionInfoGrid"));
+
+    insertPropertyKey(infoGrid, _("Version"), 0);
+    insertPropertyValue(infoGrid, PROJECT_VERSION, 0);
+
+    insertPropertyKey(infoGrid, _("Built on"), 1);
+    insertPropertyValue(infoGrid, __DATE__ ", " __TIME__, 1);
+
+    insertPropertyKey(infoGrid, _("GTK Version"), 2);
     char gtkVersion[10];
     sprintf(gtkVersion, "%u.%u.%u", gtk_get_major_version(), gtk_get_minor_version(), gtk_get_micro_version());
+    insertPropertyValue(infoGrid, gtkVersion, 2);
 
-    gtk_label_set_markup(GTK_LABEL(get("lbGtkVersion")), gtkVersion);
+    auto const gitCommitId = std::string{GIT_COMMIT_ID};
+    if (!gitCommitId.empty()) {
+        insertPropertyKey(infoGrid, _("Git commit"), 3);
+        insertPropertyValue(infoGrid, gitCommitId.c_str(), 3);
+    }
+
 
     auto w1 = get("vboxRepo");
     auto linkButton1 = gtk_link_button_new("https://github.com/xournalpp/xournalpp");
