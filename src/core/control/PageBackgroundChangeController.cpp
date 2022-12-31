@@ -111,6 +111,9 @@ void PageBackgroundChangeController::changeCurrentPageBackground(const PageType&
 void PageBackgroundChangeController::setPageTypeForNewPages(const std::optional<PageType>& pt) {
     this->pageTypeForNewPages = pt;
 }
+void PageBackgroundChangeController::setPaperSizeForNewPages(const std::optional<PaperSize>& ps) {
+    this->paperSizeForNewPages = ps;
+}
 
 auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, const PageType& pageType)
         -> std::unique_ptr<UndoAction> {
@@ -255,10 +258,7 @@ auto PageBackgroundChangeController::applyPageBackground(PageRef page, const Pag
 /**
  * Copy the background from source to target
  */
-void PageBackgroundChangeController::copyBackgroundFromOtherPage(PageRef target, PageRef source) {
-    // Copy page size
-    target->setSize(source->getWidth(), source->getHeight());
-
+void PageBackgroundChangeController::copyBackgroundTypeFromOtherPage(PageRef target, PageRef source) {
     // Copy page background type
     PageType bg = source->getBackgroundType();
     target->setBackgroundType(bg);
@@ -286,12 +286,21 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
     PageTemplateSettings model;
     model.parse(control->getSettings()->getPageTemplate());
 
-    auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
     PageRef current = control->getCurrentPage();
+    double width, height;
+    if (paperSizeForNewPages) {
+        width = paperSizeForNewPages->width;
+        height = paperSizeForNewPages->height;
+    } else {
+        xoj_assert(current);
+        width = current->getWidth();
+        height = current->getHeight();
+    }
+    auto page = std::make_shared<XojPage>(width, height);
 
     if (!pageTypeForNewPages) {
         xoj_assert(current);
-        copyBackgroundFromOtherPage(page, current);
+        copyBackgroundTypeFromOtherPage(page, current);
     } else {
         // Create a new page from template
         if (!applyPageBackground(page, pageTypeForNewPages.value())) {
@@ -301,11 +310,6 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
 
         // Set background Color
         page->setBackgroundColor(model.getBackgroundColor());
-
-        if (model.isCopyLastPageSize()) {
-            xoj_assert(current);
-            page->setSize(current->getWidth(), current->getHeight());
-        }
     }
 
     control->insertPage(page, position, shouldScrollToPage);
