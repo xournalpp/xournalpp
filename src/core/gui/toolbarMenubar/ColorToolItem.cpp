@@ -3,6 +3,7 @@
 #include <array>    // for array
 #include <cstdio>   // for snprintf, size_t
 #include <memory>   // for unique_ptr
+#include <sstream>  // for ostringstream
 #include <utility>  // for move
 
 #include <glib.h>  // for gchar
@@ -66,12 +67,9 @@ auto ColorToolItem::getId() const -> std::string {
         return "COLOR_SELECT";
     }
 
-    // Todo (modernize, cpp20): use std::format or fmtlibs fmt::format
-    std::array<char, 64> buffer{'\0'};
-    auto size = snprintf(buffer.data(), buffer.size(), "COLOR(%zu)", this->namedColor.getIndex());
-    std::string id = {buffer.data(), static_cast<size_t>(size)};
-
-    return id;
+    std::ostringstream os;
+    os << "COLOR(" << this->namedColor.getIndex() << ")";
+    return os.str();
 }
 
 /**
