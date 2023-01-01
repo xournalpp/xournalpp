@@ -20,17 +20,12 @@ bool ColorToolItem::inUpdate = false;
 ColorToolItem::~ColorToolItem() = default;
 
 ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, NamedColor namedColor,
-                             bool selektor):
-        AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
+                             bool selector):
+        AbstractToolItem("", handler, selector ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
         namedColor{std::move(namedColor)},
         toolHandler(toolHandler) {
     this->group = GROUP_COLOR;
 }
-
-/**
- * Free the allocated icons
- */
-void ColorToolItem::freeIcons() { this->icon.reset(); }
 
 auto ColorToolItem::isSelector() const -> bool { return this->action == ACTION_SELECT_COLOR_CUSTOM; }
 
