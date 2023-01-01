@@ -32,7 +32,7 @@ class ActionHandler;
 class ColorToolItem: public AbstractToolItem {
 public:
     ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, NamedColor namedColor,
-                  bool selektor = false);
+                  bool selector = false);
     ColorToolItem(ColorToolItem const&) = delete;
     ColorToolItem(ColorToolItem&&) noexcept = delete;
     auto operator=(ColorToolItem const&) -> ColorToolItem& = delete;
@@ -61,11 +61,6 @@ public:
 protected:
     GtkToolItem* newItem() override;
     bool isSelector() const;
-
-    /**
-     * Free the allocated icons
-     */
-    void freeIcons();
 
     /**
      * Show colochooser to select a custom color
