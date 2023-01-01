@@ -80,14 +80,14 @@ if (WIN32)
   endforeach()
   add_custom_command (
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
-                COMMAND convert ${ICON_DEPS} ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
+                COMMAND magick convert ${ICON_DEPS} ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
                 DEPENDS ${ICON_DEPS}
   )
   unset(ICON_SIZES)
   unset(ICON_DEPS)
   add_custom_target(xournalpp_icon DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico)
   add_dependencies(xournalpp xournalpp_icon)
-  
+
   # windows specific source files
   file (GLOB xournalpp-sources-win32 exe/win32/*.cpp exe/win32/*.h)
   target_sources(xournalpp PRIVATE ${xournalpp-sources-win32})

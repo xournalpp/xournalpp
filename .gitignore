@@ -44,6 +44,9 @@ nbproject/
 .idea
 cmake-build-*
 
+# Visual Studio
+.vs/
+
 # API Documentation
 doc/html
 doc/latex
@@ -60,7 +63,7 @@ flatpak-build/
 # Lua
 lua-*
 
-# Clangd 
+# Clangd
 compile_commands.json
 .clangd
 .cache
