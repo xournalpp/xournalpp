@@ -23,6 +23,7 @@ ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, G
                              bool selektor):
         AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
         namedColor{std::move(namedColor)},
+        parent(parent),
         toolHandler(toolHandler) {
     this->group = GROUP_COLOR;
 }
