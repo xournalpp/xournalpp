@@ -21,10 +21,10 @@
      inkscape:pagecheckerboard="0"
      showgrid="false"
      inkscape:zoom="27.084585"
-     inkscape:cx="20.989799"
-     inkscape:cy="9.9687701"
+     inkscape:cx="10.928726"
+     inkscape:cy="9.96877"
      inkscape:window-width="1920"
-     inkscape:window-height="1133"
+     inkscape:window-height="1142"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -98,28 +98,22 @@
          id="stop29" />
     </linearGradient>
   </defs>
-  <circle
-     style="fill:#b9cfe7;fill-opacity:1;stroke:#d10000;stroke-width:0.282126;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
-     id="path18896"
-     cx="2.9161026"
-     cy="2.9708972"
-     r="2.454335" />
   <path
-     style="fill:#3689e6;fill-opacity:1;stroke:#3689e6;stroke-width:0.419112;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#566d86;fill-opacity:1;stroke:#566d86;stroke-width:0.419112;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="M 1.7767983,1.0343886 2.3611429,2.0465031"
      id="path15205" />
   <path
-     style="fill:#3689e6;fill-opacity:1;stroke:#3689e6;stroke-width:0.419112;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#566d86;fill-opacity:1;stroke:#566d86;stroke-width:0.419112;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="M 2.3611429,3.9121953 1.7767983,4.9243099"
      id="path15205-2" />
   <path
-     style="fill:#3689e6;fill-opacity:1;stroke:#3689e6;stroke-width:0.518076;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#566d86;fill-opacity:1;stroke:#566d86;stroke-width:0.518076;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="M 2.8699475,2.9708972 H 5.1602497"
      id="path15205-1" />
   <circle
-     style="fill:none;fill-opacity:1;stroke:#c6262e;stroke-width:0.26459091;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+     style="fill:none;fill-opacity:1;stroke:#566d86;stroke-width:0.50510405;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
      id="path18896-6"
      cx="2.9161026"
      cy="2.9708972"
-     r="2.454335" />
+     r="2.4543347" />
 </svg>
