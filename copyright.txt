@@ -70,6 +70,15 @@ Copyright: 2022, Friedrich Schriewer <friedrich.schriewer@gmx.net>
 License: ISC
 Comment: See https://github.com/xournalpp/xournalpp/pull/4039
 
+Files: ui/iconsColor-dark/hicolor/scalable/actions/xopp-setsquare.svg
+       ui/iconsColor-dark/hicolor/scalable/actions/xopp-compass.svg
+       ui/iconsLucide-dark/hicolor/scalable/actions/xopp-setsquare.svg
+       ui/iconsLucide-dark/hicolor/scalable/actions/xopp-compass.svg
+       ui/iconsLucide-light/hicolor/scalable/actions/xopp-setsquare.svg
+       ui/iconsLucide-light/hicolor/scalable/actions/xopp-compass.svg
+Copyright: 2022, Mario Franzbonenkamp
+License: CC-BY-SA-4.0
+
 Files: ui/pixmaps/com.github.xournalpp.xournalpp.svg
        ui/pixmaps/com.github.xournalpp.xournalpp.png
        ui/pixmaps/application-x-xojpp.svg
