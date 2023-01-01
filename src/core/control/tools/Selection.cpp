@@ -1,7 +1,6 @@
 #include "Selection.h"
 
 #include <algorithm>  // for max, min
-#include <cfloat>     // for DBL_MAX
 #include <cmath>      // for abs, NAN
 #include <memory>     // for __shared_ptr_access
 

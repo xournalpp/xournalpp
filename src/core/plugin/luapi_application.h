@@ -245,7 +245,7 @@ static int applib_registerUi(lua_State* L) {
     const char* accelerator = luaL_optstring(L, -4, nullptr);
     const char* menu = luaL_optstring(L, -3, nullptr);
     const char* callback = luaL_optstring(L, -2, nullptr);
-    const long mode = luaL_optinteger(L, -1, LONG_MAX);
+    const long mode = luaL_optinteger(L, -1, std::numeric_limits<long>::max());
     if (callback == nullptr) {
         luaL_error(L, "Missing callback function!");
     }

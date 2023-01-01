@@ -967,7 +967,7 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
     double y = this->y;
 
 
-    if (std::abs(this->rotation) > __DBL_EPSILON__) {
+    if (std::abs(this->rotation) > std::numeric_limits<double>::epsilon()) {
         this->rotation = snappingHandler.snapAngle(this->rotation, false);
 
 

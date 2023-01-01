@@ -42,11 +42,11 @@ struct MenuEntry final {
             mode(mode),
             accelerator(std::move(accelerator)) {}
 
-    GtkWidget* widget = nullptr;  ///< Menu item
-    Plugin* plugin = nullptr;     ///< The Plugin
-    std::string menu{};           ///< Menu display name
-    std::string callback{};       ///< Callback function name
-    long mode{LONG_MAX};          ///< mode in which the callback function is run
+    GtkWidget* widget = nullptr;                  ///< Menu item
+    Plugin* plugin = nullptr;                     ///< The Plugin
+    std::string menu{};                           ///< Menu display name
+    std::string callback{};                       ///< Callback function name
+    long mode{std::numeric_limits<long>::max()};  ///< mode in which the callback function is run
     std::string accelerator{};
     ///< Accelerator key, see
     ///< https://developer.gnome.org/gtk3/stable/gtk3-Keyboard-Accelerators.html#gtk-accelerator-parse
@@ -115,7 +115,7 @@ private:
     void loadIni();
 
     /// Execute lua function
-    auto callFunction(const std::string& fnc, long mode = LONG_MAX) -> bool;
+    auto callFunction(const std::string& fnc, long mode = std::numeric_limits<long>::max()) -> bool;
 
     /// Load custom Lua Libraries
     static void registerXournalppLibs(lua_State* luaPtr);

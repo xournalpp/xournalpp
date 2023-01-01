@@ -362,7 +362,7 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
         fy = f;
     }
     bool scale = (bounds.width != this->originalBounds.width || bounds.height != this->originalBounds.height);
-    bool rotate = (std::abs(this->rotation) > __DBL_EPSILON__);
+    bool rotate = (std::abs(this->rotation) > std::numeric_limits<double>::epsilon());
 
     double mx = bounds.x - this->originalBounds.x;
     double my = bounds.y - this->originalBounds.y;
@@ -419,7 +419,7 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
         fy = f;
     }
 
-    bool rotate = (std::abs(this->rotation - this->lastRotation) > __DBL_EPSILON__);
+    bool rotate = (std::abs(this->rotation - this->lastRotation) > std::numeric_limits<double>::epsilon());
     bool scale = (snappedBounds.width != this->lastSnappedBounds.width ||
                   snappedBounds.height != this->lastSnappedBounds.height);
 
@@ -495,7 +495,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
         this->relativeY = y;
     }
 
-    if (std::abs(rotation) > __DBL_EPSILON__) {
+    if (std::abs(rotation) > std::numeric_limits<double>::epsilon()) {
         this->rotation = rotation;
     }
 
@@ -529,7 +529,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
     double sx = static_cast<double>(wTarget) / wImg;
     double sy = static_cast<double>(hTarget) / hImg;
 
-    if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > __DBL_EPSILON__) {
+    if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > std::numeric_limits<double>::epsilon()) {
         if (!this->rescaleId) {
             this->rescaleId = g_idle_add(reinterpret_cast<GSourceFunc>(repaintSelection), this);
         }

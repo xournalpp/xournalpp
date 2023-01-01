@@ -1,7 +1,6 @@
 #include "StrokeStabilizer.h"
 
 #include <algorithm>  // for min
-#include <cfloat>
 #include <iterator>  // for begin, end
 #include <list>      // for list, operator!=
 #include <numeric>   // for accumulate
@@ -113,10 +112,10 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     const double normBC = std::sqrt(squaredNormBC);
     const double normAB = vAB.norm();
 
-    if (normBC < DBL_EPSILON) {
+    if (normBC < std::numeric_limits<double>::epsilon()) {
         return;
     }
-    if (normAB < DBL_EPSILON) {
+    if (normAB < std::numeric_limits<double>::epsilon()) {
         g_warning("Last two points of stroke coincide. ");
         drawEvent(ev);
         return;

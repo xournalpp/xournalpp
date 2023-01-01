@@ -2,7 +2,6 @@
 
 #include <algorithm>  // for max, min
 #include <cassert>    // for assert
-#include <cfloat>     // for DBL_EPSILON
 #include <cmath>      // for ceil, pow, abs
 #include <memory>     // for unique_ptr, mak...
 #include <utility>    // for move
@@ -328,10 +327,10 @@ void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
         Point belowRight = Point(snappedBounds.x + snappedBounds.width, snappedBounds.y + snappedBounds.height);
         Point belowRightSnapped = snappingHandler.snapToGrid(belowRight, false);
 
-        double fx = (std::abs(snappedBounds.width) > DBL_EPSILON) ?
+        double fx = (std::abs(snappedBounds.width) > std::numeric_limits<double>::epsilon()) ?
                             (belowRightSnapped.x - topLeftSnapped.x) / snappedBounds.width :
                             1;
-        double fy = (std::abs(snappedBounds.height) > DBL_EPSILON) ?
+        double fy = (std::abs(snappedBounds.height) > std::numeric_limits<double>::epsilon()) ?
                             (belowRightSnapped.y - topLeftSnapped.y) / snappedBounds.height :
                             1;
         recognized->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
