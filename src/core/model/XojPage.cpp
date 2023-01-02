@@ -33,10 +33,6 @@ XojPage::XojPage(XojPage const& page):
     this->layer.reserve(page.layer.size());
     std::transform(begin(page.layer), end(page.layer), std::back_inserter(this->layer),
                    [](auto* layer) { return layer->clone(); });
-    // ensure at least one valid layer exists
-    if (this->layer.empty()) {
-        this->addLayer(new Layer());
-    }
 }
 
 auto XojPage::clone() -> XojPage* { return new XojPage(*this); }
