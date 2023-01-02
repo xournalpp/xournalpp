@@ -2,7 +2,6 @@
 
 #include <algorithm>  // for max
 #include <array>      // for array
-#include <limits>     // for numeric_limits
 #include <map>        // for map
 
 #include <gdk/gdk.h>      // for GdkModifierType

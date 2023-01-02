@@ -2,7 +2,6 @@
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs, NAN
-#include <limits>     // for numeric_limits
 #include <memory>     // for __shared_ptr_access
 
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
