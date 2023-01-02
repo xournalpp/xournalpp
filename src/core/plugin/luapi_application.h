@@ -12,6 +12,7 @@
 
 #include <climits>
 #include <cstring>
+#include <limits>  // for numeric_limits
 #include <map>
 
 #include <gtk/gtk.h>

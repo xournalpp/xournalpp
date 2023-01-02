@@ -1,10 +1,11 @@
 #include "StrokeStabilizer.h"
 
 #include <algorithm>  // for min
-#include <iterator>  // for begin, end
-#include <list>      // for list, operator!=
-#include <numeric>   // for accumulate
-#include <vector>    // for vector
+#include <iterator>   // for begin, end
+#include <limits>     // for numeric_limits
+#include <list>       // for list, operator!=
+#include <numeric>    // for accumulate
+#include <vector>     // for vector
 
 #include "control/settings/Settings.h"           // for Settings
 #include "control/tools/StrokeStabilizerEnum.h"  // for Preprocessor, Averag...

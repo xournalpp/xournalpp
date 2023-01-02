@@ -5,6 +5,7 @@
 #include <cinttypes>  // for uint64_t
 #include <cmath>      // for abs, hypot, sqrt
 #include <iterator>   // for back_insert_iterator
+#include <limits>     // for numeric_limits
 #include <numeric>    // for accumulate
 #include <optional>   // for optional, nullopt
 #include <string>     // for to_string, operator<<

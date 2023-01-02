@@ -3,6 +3,7 @@
 #include <algorithm>  // for min, max, transform
 #include <cmath>      // for abs, isnan
 #include <iterator>   // for back_insert_iterator
+#include <limits>     // for numeric_limits
 #include <memory>     // for make_unique, __shar...
 
 #include <glib.h>  // for g_idle_add, g_sourc...

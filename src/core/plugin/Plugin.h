@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <limits>   // for numeric_limits
 #include <memory>   // for unique_ptr
 
 #include "config-features.h"  // for ENABLE_PLUGINS

@@ -3,6 +3,7 @@
 #include <algorithm>  // for max, min
 #include <cassert>    // for assert
 #include <cmath>      // for ceil, pow, abs
+#include <limits>     // for numeric_limits
 #include <memory>     // for unique_ptr, mak...
 #include <utility>    // for move
 #include <vector>     // for vector
