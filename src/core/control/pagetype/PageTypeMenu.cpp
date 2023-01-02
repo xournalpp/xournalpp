@@ -11,6 +11,7 @@
 #include "control/settings/Settings.h"              // for Settings
 #include "util/Color.h"                             // for Color
 #include "util/i18n.h"                              // for _
+#include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
 #include "view/background/BackgroundView.h"         // for BackgroundView
 
 #include "PageTypeHandler.h"  // for PageTypeInfo, Pag...
@@ -77,8 +78,8 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
 
     GtkWidget* entry = nullptr;
     if (showImg) {
-        cairo_surface_t* img = createPreviewImage(t->page);
-        GtkWidget* preview = gtk_image_new_from_surface(img);
+        xoj::util::raii::CairoSurfaceSPtr img(createPreviewImage(t->page), xoj::util::adopt);
+        GtkWidget* preview = gtk_image_new_from_surface(img.get());
         entry = gtk_check_menu_item_new();
 
         GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);

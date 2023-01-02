@@ -16,6 +16,7 @@
 #include "model/PageRef.h"                        // for PageRef
 #include "model/XojPage.h"                        // for XojPage
 #include "util/i18n.h"                            // for _
+#include "util/raii/PangoSPtr.h"                  // for PangoAttrListSPtr
 
 class ActionHandler;
 
@@ -28,9 +29,9 @@ ToolPageLayer::ToolPageLayer(LayerController* lc, ActionHandler* handler, std::s
     this->layerLabel = gtk_label_new(_("Loading..."));
     this->layerButton = gtk_button_new_with_label("⌄");
 
-    PangoAttrList* attrs = pango_attr_list_new();
-    pango_attr_list_insert(attrs, pango_attr_weight_new(PANGO_WEIGHT_BOLD));
-    gtk_label_set_attributes(GTK_LABEL(this->layerLabel), attrs);
+    xoj::util::PangoAttrListSPtr attrs(pango_attr_list_new(), xoj::util::adopt);
+    pango_attr_list_insert(attrs.get(), pango_attr_weight_new(PANGO_WEIGHT_BOLD));
+    gtk_label_set_attributes(GTK_LABEL(this->layerLabel), attrs.get());
 
     popupMenuButton = new PopupMenuButton(this->layerButton, menu);
 
@@ -58,9 +59,9 @@ auto ToolPageLayer::createSpecialMenuEntry(const std::string& name) -> GtkWidget
     GtkWidget* lb = gtk_label_new(name.c_str());
     gtk_widget_set_halign(lb, GTK_ALIGN_START);
 
-    PangoAttrList* attrs = pango_attr_list_new();
-    pango_attr_list_insert(attrs, pango_attr_weight_new(PANGO_WEIGHT_BOLD));
-    gtk_label_set_attributes(GTK_LABEL(lb), attrs);
+    xoj::util::PangoAttrListSPtr attrs(pango_attr_list_new(), xoj::util::adopt);
+    pango_attr_list_insert(attrs.get(), pango_attr_weight_new(PANGO_WEIGHT_BOLD));
+    gtk_label_set_attributes(GTK_LABEL(lb), attrs.get());
 
     gtk_container_add(GTK_CONTAINER(it), lb);
     gtk_menu_attach(GTK_MENU(menu), it, 0, MENU_WIDTH, menuY, menuY + 1);
