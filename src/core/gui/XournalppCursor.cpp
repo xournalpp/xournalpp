@@ -302,7 +302,6 @@ void XournalppCursor::updateCursor() {
             if (this->mouseDown) {
                 setCursor(CRSR_SB_V_DOUBLE_ARROW);
             } else {
-                setCursor(CRSR_TCROSS);
                 GdkWindow* theWindow = gtk_widget_get_window(xournal->getWidget());
 
                 cursor = createHorizontalLineCursor(5, 120 / 255.0, theWindow);
