@@ -35,11 +35,7 @@ SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, Side
     this->contextMenu->setActionsSensitivity(actions);
 }
 
-SidebarPreviewLayers::~SidebarPreviewLayers() {
-    // clear old previews
-    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
-    this->previews.clear();
-}
+SidebarPreviewLayers::~SidebarPreviewLayers() = default;
 
 /**
  * Called when an action is performed
@@ -100,7 +96,7 @@ void SidebarPreviewLayers::pageChanged(size_t page) {
     }
 
     // Repaint all layer
-    for (SidebarPreviewBaseEntry* p: this->previews) { p->repaint(); }
+    for (auto& p: this->previews) { p->repaint(); }
 }
 
 void SidebarPreviewLayers::updatePreviews() {
@@ -109,7 +105,6 @@ void SidebarPreviewLayers::updatePreviews() {
     }
 
     // clear old previews
-    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
     this->previews.clear();
     this->selectedEntry = npos;
 
@@ -124,9 +119,9 @@ void SidebarPreviewLayers::updatePreviews() {
     for (auto i = layerCount + 1; i != 0;) {
         --i;
         std::string name = lc->getLayerNameById(i);
-        SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i, name, index++, this->stacked);
-        this->previews.push_back(p);
+        auto p = std::make_unique<SidebarPreviewLayerEntry>(this, page, i, name, index++, this->stacked);
         gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+        this->previews.emplace_back(std::move(p));
     }
 
     layout();
@@ -149,8 +144,8 @@ void SidebarPreviewLayers::layerVisibilityChanged() {
     }
 
     Layer::Index i = p->getLayerCount();
-    for (SidebarPreviewBaseEntry* e: this->previews) {
-        dynamic_cast<SidebarPreviewLayerEntry*>(e)->setVisibleCheckbox(p->isLayerVisible(i--));
+    for (auto& e: this->previews) {
+        dynamic_cast<SidebarPreviewLayerEntry*>(e.get())->setVisibleCheckbox(p->isLayerVisible(i--));
     }
     updateSelectedLayer();
 }
@@ -169,7 +164,7 @@ void SidebarPreviewLayers::updateSelectedLayer() {
 
     this->selectedEntry = entryIndex;
     if (this->selectedEntry != npos && this->selectedEntry < this->previews.size()) {
-        SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
+        auto& p = this->previews[this->selectedEntry];
         p->setSelected(true);
         scrollToPreview(this);
     }

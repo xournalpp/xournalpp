@@ -127,7 +127,7 @@ protected:
     /**
      * The previews
      */
-    std::vector<SidebarPreviewBaseEntry*> previews;
+    std::vector<std::unique_ptr<SidebarPreviewBaseEntry>> previews;
 
     /**
      * The sidebar is enabled

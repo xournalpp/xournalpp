@@ -59,7 +59,6 @@ SidebarPreviewBase::~SidebarPreviewBase() {
 
     this->scrollPreview = nullptr;
 
-    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
     this->previews.clear();
 }
 
@@ -120,7 +119,7 @@ auto SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar) -> bool {
     }
 
     if (sidebar->selectedEntry != npos && sidebar->selectedEntry < sidebar->previews.size()) {
-        SidebarPreviewBaseEntry* p = sidebar->previews[sidebar->selectedEntry];
+        auto& p = sidebar->previews[sidebar->selectedEntry];
 
         // scroll to preview
         GtkAdjustment* hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));
