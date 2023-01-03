@@ -75,7 +75,7 @@ cursorStruct cssCursors[CRSR_END_OF_CURSORS];
 
 XournalppCursor::XournalppCursor(Control* control): control(control) {
     // clang-format off
-	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor. 
+	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor.
 	cssCursors[CRSR_nullptr                ] = 	{"",""};
 	cssCursors[CRSR_BUSY                ] = 	{"wait", 		""					};
 	cssCursors[CRSR_MOVE                ] = 	{"all-scroll", 	""					};
@@ -303,8 +303,7 @@ void XournalppCursor::updateCursor() {
                 setCursor(CRSR_SB_V_DOUBLE_ARROW);
             } else {
                 GdkWindow* theWindow = gtk_widget_get_window(xournal->getWidget());
-
-                cursor = createHorizontalLineCursor(5, 120 / 255.0, theWindow);
+                cursor = createHorizontalLineCursor(theWindow);
             }
         } else if (type == TOOL_SELECT_OBJECT) {
             setCursor(CRSR_DEFAULT);
@@ -519,7 +518,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 }
 
 
-auto XournalppCursor::createHorizontalLineCursor(int size, double alpha, GdkWindow* theWindow) -> GdkCursor* {
+auto XournalppCursor::createHorizontalLineCursor(GdkWindow* theWindow) -> GdkCursor* {
     gint x, y;
     GdkDevice *mouse_device;
 
@@ -533,16 +532,17 @@ auto XournalppCursor::createHorizontalLineCursor(int size, double alpha, GdkWind
 
     gdk_window_get_device_position (theWindow, mouse_device, &x, &y, NULL);
 
-    int height = size;
+    // Five is the default cursor size used elsewhere in the app.
+    int height = 5;
     int width = gdk_window_get_width(theWindow);
 
-    int centerY = height / 2;
+//    int centerY = height / 2;
     cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
     cairo_t* cr = cairo_create(crCursor);
 
     cairo_set_line_width(cr, 1.2);
-    cairo_move_to(cr, 0, centerY);
-    cairo_line_to(cr, width, centerY);
+    cairo_move_to(cr, 0, 0);
+    cairo_line_to(cr, width, 0);
     cairo_close_path(cr);
     cairo_stroke(cr);
 
@@ -551,7 +551,7 @@ auto XournalppCursor::createHorizontalLineCursor(int size, double alpha, GdkWind
     cairo_surface_destroy(crCursor);
     x = std::clamp(x, 0, width);
     GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
-            gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, x, centerY);
+            gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, x, 0);
     g_object_unref(pixbuf);
     return gdkCursor;
 }
