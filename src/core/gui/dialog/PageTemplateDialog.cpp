@@ -67,6 +67,9 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
                                  self->saveToModel();
                                  self->settings->setPageTemplate(self->model.toString());
                                  self->toolMenuHandler->setDefaultNewPageType(self->model.getPageInsertType());
+                                 self->toolMenuHandler->setDefaultNewPaperSize(
+                                         self->model.isCopyLastPageSize() ? std::nullopt :
+                                                                            std::optional(PaperSize(self->model)));
                                  gtk_window_close(self->getWindow());
                              }),
                              this);

@@ -561,3 +561,6 @@ auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNam
 void ToolMenuHandler::setDefaultNewPageType(const std::optional<PageType>& pt) {
     this->pageTypeSelectionPopup->setSelected(pt);
 }
+void ToolMenuHandler::setDefaultNewPaperSize(const std::optional<PaperSize>& paperSize) {
+    this->pageTypeSelectionPopup->setSelectedPaperSize(paperSize);
+}
