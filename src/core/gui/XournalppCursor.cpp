@@ -58,6 +58,7 @@ enum AVAILABLECURSORS {
     CRSR_DRAWDIRCTRL,       // "
     CRSR_DRAWDIRSHIFTCTRL,  // "
     CRSR_RESIZE,
+    CRSR_HORIZONTALLINE,
 
     CRSR_END_OF_CURSORS
 };
@@ -103,7 +104,8 @@ XournalppCursor::XournalppCursor(Control* control): control(control) {
 	cssCursors[CRSR_DRAWDIRSHIFT        ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
-    cssCursors[CRSR_RESIZE              ] =     {"",""};            // "
+	cssCursors[CRSR_RESIZE              ] = 	{"",""};			// "
+	cssCursors[CRSR_HORIZONTALLINE      ] = 	{"",""};			// "
 };
 // clang-format on
 
@@ -302,8 +304,9 @@ void XournalppCursor::updateCursor() {
         } else if (type == TOOL_VERTICAL_SPACE) {
             if (this->mouseDown) {
                 setCursor(CRSR_SB_V_DOUBLE_ARROW);
-            } else {
+            } else if (this->insidePage) {
                 cursor = createHorizontalLineCursor(xournal);
+                setCursor(CRSR_HORIZONTALLINE);
             }
         } else if (type == TOOL_SELECT_OBJECT) {
             setCursor(CRSR_DEFAULT);
@@ -561,7 +564,7 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal) -> GdkCur
     cairo_destroy(cr);
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
     cairo_surface_destroy(crCursor);
-    x = std::clamp(x, 0, width);
+    //x = std::clamp(x, 0, width);
     GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
             gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, x, 0);
     g_object_unref(pixbuf);
