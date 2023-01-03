@@ -37,6 +37,13 @@ public:
 public:
     GtkWidget* createPopover() const override;
 
+    /**
+     * @brief Sets the selected paper size of the menu.
+     * @tparam changeComboBoxSelection Whether the combo box selection will be changed to a fitting option
+     */
+    template <bool changeComboBoxSelection = true>
+    void setSelectedPaperSize(const std::optional<PaperSize>& newPageSize);
+
 private:
     void entrySelected(const PageTypeInfo* info) override;
 
@@ -53,6 +60,13 @@ private:
 
     GtkOrientation selectedOrientation;
     xoj::util::GObjectSPtr<GSimpleAction> orientationAction;
+
+    // By activating the comboBoxChangeSelectionAction the option selected by the page size comboBox is changed to the
+    // specified index
+    xoj::util::GObjectSPtr<GSimpleAction> comboBoxChangeSelectionAction;
+
+    // The pageSizeChangedAction is activated when the pageSize changed
+    xoj::util::GObjectSPtr<GSimpleAction> pageSizeChangedAction;
 
     PaperFormatUtils::PaperFormatMenuOptionVector_t paperSizeMenuOptions;
 
