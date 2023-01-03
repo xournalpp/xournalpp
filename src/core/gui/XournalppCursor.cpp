@@ -527,6 +527,11 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal) -> GdkCur
     int pvWidth = pv->getDisplayWidth();
     int pageStart = pv->getX();
 
+    int px = pv->getX();
+    int py = pv->getY();
+    int pw = pv->getDisplayWidth();
+    int ph = pv->getDisplayHeight();
+
     gint x, y;
     GdkDevice *mouse_device;
 
@@ -548,8 +553,8 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal) -> GdkCur
     cairo_t* cr = cairo_create(crCursor);
 
     cairo_set_line_width(cr, 1.2);
-    cairo_move_to(cr, pageStart, 0);
-    cairo_line_to(cr, pageStart + pvWidth, 0);
+    cairo_move_to(cr, px, 0);
+    cairo_line_to(cr, px + pw, 0);
     cairo_close_path(cr);
     cairo_stroke(cr);
 
