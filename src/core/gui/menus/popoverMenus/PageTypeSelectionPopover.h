@@ -16,9 +16,10 @@
 
 #include <gtk/gtk.h>  // for GtkWidget
 
+#include "control/Control.h"
 #include "control/settings/PageTemplateSettings.h"
-#include "gui/menus/PageTypeSelectionMenuBase.h"
 #include "gui/PopoverFactory.h"
+#include "gui/menus/PageTypeSelectionMenuBase.h"
 #include "model/PaperSize.h"
 #include "util/PaperFormatUtils.h"
 #include "util/raii/GObjectSPtr.h"
@@ -30,8 +31,7 @@ class Settings;
 
 class PageTypeSelectionPopover final: public PageTypeSelectionMenuBase, public PopoverFactory {
 public:
-    PageTypeSelectionPopover(PageTypeHandler* typesHandler, PageBackgroundChangeController* controller,
-                             const Settings* settings, GtkApplicationWindow* win);
+    PageTypeSelectionPopover(Control* control, Settings* settings, GtkApplicationWindow* win);
     ~PageTypeSelectionPopover() override = default;
 
 public:
@@ -46,6 +46,7 @@ public:
 
 private:
     void entrySelected(const PageTypeInfo* info) override;
+    static void changedPaperFormatTemplateCb(GtkComboBox* widget, PageTypeSelectionPopover* dlg);
 
     unsigned int getComboBoxIndexForPaperSize(const std::optional<PaperSize>& paperSize) const;
 
@@ -53,8 +54,9 @@ private:
                                        std::string_view icon) const;
 
 private:
+    Control* control;
     PageBackgroundChangeController* controller;
-    const Settings* settings;
+    Settings* settings;
 
     std::optional<PaperSize> selectedPageSize;
 
@@ -69,6 +71,8 @@ private:
     xoj::util::GObjectSPtr<GSimpleAction> pageSizeChangedAction;
 
     PaperFormatUtils::PaperFormatMenuOptionVector_t paperSizeMenuOptions;
+
+    bool ignoreComboBoxSelectionChange = false;
 
     size_t customPaperSizeIndex;  // this - 1 is the last index of an actual PaperSize option
     size_t copyCurrentPaperSizeIndex;
