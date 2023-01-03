@@ -84,16 +84,16 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar) {
 
     SidebarRow row(alloc.width);
 
-    for (SidebarPreviewBaseEntry* p: sidebar->previews) {
-        if (row.isSpaceFor(p)) {
-            row.add(p);
+    for (auto &p: sidebar->previews) {
+        if (row.isSpaceFor(p.get())) {
+            row.add(p.get());
         } else {
             y += row.placeAt(y, GTK_LAYOUT(sidebar->iconViewPreview));
 
             width = std::max(width, row.getWidth());
 
             row.clear();
-            row.add(p);
+            row.add(p.get());
         }
     }
 

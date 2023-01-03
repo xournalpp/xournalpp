@@ -176,16 +176,15 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
 }
 
 void SidebarPreviewPages::updatePreviews() {
-    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
     this->previews.clear();
 
     Document* doc = this->getControl()->getDocument();
     doc->lock();
     size_t len = doc->getPageCount();
     for (size_t i = 0; i < len; i++) {
-        SidebarPreviewBaseEntry* p = new SidebarPreviewPageEntry(this, doc->getPage(i));
-        this->previews.push_back(p);
+        auto p = std::make_unique<SidebarPreviewPageEntry>(this, doc->getPage(i));
         gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+        this->previews.emplace_back(std::move(p));
     }
 
     layout();
@@ -196,7 +195,7 @@ void SidebarPreviewPages::pageSizeChanged(size_t page) {
     if (page == npos || page >= this->previews.size()) {
         return;
     }
-    SidebarPreviewBaseEntry* p = this->previews[page];
+    auto& p = this->previews[page];
     p->updateSize();
     p->repaint();
 
@@ -208,7 +207,7 @@ void SidebarPreviewPages::pageChanged(size_t page) {
         return;
     }
 
-    SidebarPreviewBaseEntry* p = this->previews[page];
+    auto& p = this->previews[page];
     p->repaint();
 }
 
@@ -217,7 +216,6 @@ void SidebarPreviewPages::pageDeleted(size_t page) {
         return;
     }
 
-    delete previews[page];
     previews.erase(previews.begin() + page);
 
     // Unselect page, to prevent double selection displaying
@@ -230,13 +228,12 @@ void SidebarPreviewPages::pageInserted(size_t page) {
     Document* doc = control->getDocument();
     doc->lock();
 
-    SidebarPreviewBaseEntry* p = new SidebarPreviewPageEntry(this, doc->getPage(page));
+    auto p = std::make_unique<SidebarPreviewPageEntry>(this, doc->getPage(page));
 
     doc->unlock();
 
-    this->previews.insert(this->previews.begin() + page, p);
-
     gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+    this->previews.insert(this->previews.begin() + page, std::move(p));
 
     // Unselect page, to prevent double selection displaying
     unselectPage();
@@ -248,7 +245,7 @@ void SidebarPreviewPages::pageInserted(size_t page) {
  * Unselect the last selected page, if any
  */
 void SidebarPreviewPages::unselectPage() {
-    for (SidebarPreviewBaseEntry* p: this->previews) { p->setSelected(false); }
+    for (auto& p: this->previews) { p->setSelected(false); }
 }
 
 void SidebarPreviewPages::pageSelected(size_t page) {
@@ -262,7 +259,7 @@ void SidebarPreviewPages::pageSelected(size_t page) {
     }
 
     if (this->selectedEntry != npos && this->selectedEntry < this->previews.size()) {
-        SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
+        auto& p = this->previews[this->selectedEntry];
         p->setSelected(true);
         scrollToPreview(this);
 
