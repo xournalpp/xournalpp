@@ -20,6 +20,7 @@
 #include "util/pixbuf-utils.h"               // for xoj_pixbuf_get_from_surface
 
 #include "XournalView.h"  // for XournalView
+#include "PageView.h"
 
 
 // NOTE:  Every cursor change must result in the setting of this->currentCursor to the new cursor type even for custom
@@ -302,8 +303,7 @@ void XournalppCursor::updateCursor() {
             if (this->mouseDown) {
                 setCursor(CRSR_SB_V_DOUBLE_ARROW);
             } else {
-                GdkWindow* theWindow = gtk_widget_get_window(xournal->getWidget());
-                cursor = createHorizontalLineCursor(theWindow);
+                cursor = createHorizontalLineCursor(xournal);
             }
         } else if (type == TOOL_SELECT_OBJECT) {
             setCursor(CRSR_DEFAULT);
@@ -518,7 +518,15 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 }
 
 
-auto XournalppCursor::createHorizontalLineCursor(GdkWindow* theWindow) -> GdkCursor* {
+auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal) -> GdkCursor* {
+
+    GdkWindow* theWindow = gtk_widget_get_window(xournal->getWidget());
+    size_t page = xournal->getCurrentPage();
+    //auto pvRect = xournal->getVisibleRect(page);
+    XojPageView* pv = xournal->getViewFor(page);
+    int pvWidth = pv->getDisplayWidth();
+    int pageStart = pv->getX();
+
     gint x, y;
     GdkDevice *mouse_device;
 
@@ -536,13 +544,12 @@ auto XournalppCursor::createHorizontalLineCursor(GdkWindow* theWindow) -> GdkCur
     int height = 5;
     int width = gdk_window_get_width(theWindow);
 
-//    int centerY = height / 2;
     cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
     cairo_t* cr = cairo_create(crCursor);
 
     cairo_set_line_width(cr, 1.2);
-    cairo_move_to(cr, 0, 0);
-    cairo_line_to(cr, width, 0);
+    cairo_move_to(cr, pageStart, 0);
+    cairo_line_to(cr, pageStart + pvWidth, 0);
     cairo_close_path(cr);
     cairo_stroke(cr);
 
