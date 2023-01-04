@@ -17,6 +17,7 @@
 #include "control/tools/CursorSelectionType.h"  // for CursorSelectionType
 #include "gui/inputdevices/InputEvents.h"       // for InputDeviceClass, INP...
 #include "XournalView.h"
+#include "MainWindow.h"
 
 class Control;
 
@@ -48,7 +49,7 @@ private:
     GdkCursor* getResizeCursor(double deltaAngle);
 
     GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
-    GdkCursor* createHorizontalLineCursor(XournalView* xournal);
+    GdkCursor* createHorizontalLineCursor(XournalView* xournal, MainWindow* win);
     GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
 
 private:

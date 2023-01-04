@@ -305,7 +305,7 @@ void XournalppCursor::updateCursor() {
             if (this->mouseDown) {
                 setCursor(CRSR_SB_V_DOUBLE_ARROW);
             } else if (this->insidePage) {
-                cursor = createHorizontalLineCursor(xournal);
+                cursor = createHorizontalLineCursor(xournal, win);
                 setCursor(CRSR_HORIZONTALLINE);
             }
         } else if (type == TOOL_SELECT_OBJECT) {
@@ -521,19 +521,16 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 }
 
 
-auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal) -> GdkCursor* {
+auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindow* win) -> GdkCursor* {
 
     GdkWindow* theWindow = gtk_widget_get_window(xournal->getWidget());
+    GdkWindow* mainWindow = gtk_widget_get_window(win->getWindow());
     size_t page = xournal->getCurrentPage();
     //auto pvRect = xournal->getVisibleRect(page);
     XojPageView* pv = xournal->getViewFor(page);
-    int pvWidth = pv->getDisplayWidth();
-    int pageStart = pv->getX();
 
     int px = pv->getX();
-    int py = pv->getY();
     int pw = pv->getDisplayWidth();
-    int ph = pv->getDisplayHeight();
 
     gint x, y;
     GdkDevice *mouse_device;
@@ -546,29 +543,48 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal) -> GdkCur
     mouse_device = gdk_device_manager_get_client_pointer (devman);
     #endif
 
-    gdk_window_get_device_position (theWindow, mouse_device, &x, &y, NULL);
+    gdk_window_get_device_position (theWindow, mouse_device, &x, &y, nullptr);
 
     // Five is the default cursor size used elsewhere in the app.
     int height = 5;
-    int width = gdk_window_get_width(theWindow);
+    //int width = gdk_window_get_width(theWindow);
+    int windowWidth = gdk_window_get_width(mainWindow);
 
-    cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+    cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, windowWidth, height);
     cairo_t* cr = cairo_create(crCursor);
 
-    cairo_set_line_width(cr, 1.2);
-    cairo_move_to(cr, px, 0);
-    cairo_line_to(cr, px + pw, 0);
-    cairo_close_path(cr);
-    cairo_stroke(cr);
-
-    cairo_destroy(cr);
-    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
-    cairo_surface_destroy(crCursor);
-    //x = std::clamp(x, 0, width);
-    GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
-            gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, x, 0);
-    g_object_unref(pixbuf);
-    return gdkCursor;
+    if (px + pw < windowWidth) {
+        cairo_set_line_width(cr, 1.2);
+        cairo_set_source_rgb(cr, 255, 0, 255);
+        cairo_move_to(cr, px, 0);
+        cairo_line_to(cr, px + pw, 0);
+        cairo_close_path(cr);
+        cairo_stroke(cr);
+        cairo_destroy(cr);
+        GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, windowWidth, height);
+        cairo_surface_destroy(crCursor);
+        x = std::clamp(x, 0, windowWidth);
+        GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
+                gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, x, 0);
+        g_object_unref(pixbuf);
+        return gdkCursor;
+    } else {
+        cairo_set_line_width(cr, 1.2);
+        cairo_set_source_rgb(cr, 0, 255, 0);
+        cairo_move_to(cr, px, 0);
+        cairo_line_to(cr, windowWidth, 0);
+        cairo_close_path(cr);
+        cairo_stroke(cr);
+        cairo_destroy(cr);
+        GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, windowWidth, height);
+        cairo_surface_destroy(crCursor);
+        x = std::clamp(x, 0, windowWidth);
+        GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
+                gtk_widget_get_display(control->getWindow()->getWindow()), pixbuf, x, 0);
+        g_object_unref(pixbuf);
+        return gdkCursor;
+    }
+    return nullptr;
 }
 
 
