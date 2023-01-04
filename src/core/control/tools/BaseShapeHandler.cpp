@@ -133,8 +133,6 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
         BaseShapeHandler::lastStrokeTime = pos.timestamp;
     }
 
-    control->getLayerController()->ensureLayerExists(page);
-
     Layer* layer = page->getSelectedLayer();
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
