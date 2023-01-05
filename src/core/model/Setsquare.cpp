@@ -30,7 +30,7 @@ auto Setsquare::getToolRange(bool transformed) const -> Range {
         rg.addPoint(-h, 0);
         rg.addPoint(0, h);
     }
-    rg.addPadding(.5 * xoj::view::SetsquareView::LINE_WIDTH_IN_CM * CM);  // account for line width
+    rg.addPadding(1 + .5 * xoj::view::SetsquareView::LINE_WIDTH_IN_CM * CM);  // account for line width
     return rg;
 }
 
