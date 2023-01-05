@@ -468,7 +468,15 @@ void ToolMenuHandler::initToolItems() {
      */
 
     initPenToolItem();
+    // Add individual line stylues as toolbar items
+    addCustomItemTgl("PLAIN", ACTION_TOOL_LINE_STYLE_PLAIN, GROUP_LINE_STYLE, true, "line-style-plain", _("standard"));
+    addCustomItemTgl("DASHED", ACTION_TOOL_LINE_STYLE_DASH, GROUP_LINE_STYLE, true, "line-style-dash", _("dashed"));
+    addCustomItemTgl("DASH-/ DOTTED", ACTION_TOOL_LINE_STYLE_DASH_DOT, GROUP_LINE_STYLE, true, "line-style-dash-dot",
+                     _("dash-/ dotted"));
+    addCustomItemTgl("DOTTED", ACTION_TOOL_LINE_STYLE_DOT, GROUP_LINE_STYLE, true, "line-style-dot", _("dotted"));
+
     initEraserToolItem();
+    // no icons for individual eraser modes available, therefore can't add them as toolbar items
 
     addCustomItemTgl("HIGHLIGHTER", ACTION_TOOL_HIGHLIGHTER, GROUP_TOOL, true, "tool-highlighter", _("Highlighter"));
 
@@ -611,7 +619,9 @@ auto ToolMenuHandler::isColorInUse(Color color) -> bool {
 
 auto ToolMenuHandler::getToolItems() -> std::vector<AbstractToolItem*>* { return &this->toolItems; }
 
-auto ToolMenuHandler::getColorToolItems() const -> const std::vector<ColorToolItem*>& { return this->toolbarColorItems; }
+auto ToolMenuHandler::getColorToolItems() const -> const std::vector<ColorToolItem*>& {
+    return this->toolbarColorItems;
+}
 
 void ToolMenuHandler::disableAudioPlaybackButtons() {
     setAudioPlaybackPaused(false);
