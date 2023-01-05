@@ -24,7 +24,7 @@ auto Compass::getToolRange(bool transformed) const -> Range {
         rg.addPoint(-h, -h);
         rg.addPoint(h, h);
     }
-    rg.addPadding(.5 * xoj::view::CompassView::LINE_WIDTH_IN_CM * CM);  // account for line width
+    rg.addPadding(2 + .5 * xoj::view::CompassView::LINE_WIDTH_IN_CM * CM);  // account for line width
     return rg;
 }
 
