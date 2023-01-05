@@ -98,5 +98,5 @@ private:
 
     // We need to be able to toggle the activation of the "Apply to Current Page"
     // entry when the page type changes, so this is a member variable.
-    GtkWidget* menuEntryApply;
+    GtkWidget* menuEntryApply = nullptr;
 };
