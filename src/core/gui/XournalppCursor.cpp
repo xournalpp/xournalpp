@@ -532,7 +532,7 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
     int px = pv->getX();
     int pw = pv->getDisplayWidth();
 
-    gint x, y;
+    gint x, y, winX, winY;
     GdkDevice *mouse_device;
 
     #if GTK_CHECK_VERSION (3,20,0)
@@ -544,10 +544,11 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
     #endif
 
     gdk_window_get_device_position (theWindow, mouse_device, &x, &y, nullptr);
+    gdk_window_get_device_position (mainWindow, mouse_device, &winX, &winY, nullptr);
 
     // Five is the default cursor size used elsewhere in the app.
     int height = 5;
-    //int width = gdk_window_get_width(theWindow);
+    int pageWidth = gdk_window_get_width(theWindow);
     int windowWidth = gdk_window_get_width(mainWindow);
 
     cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, windowWidth, height);
@@ -569,10 +570,13 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
         g_object_unref(pixbuf);
         return gdkCursor;
     } else {
+        // If we're zoomed in enough, just draw the cursor across the whole screen
+        // FIXME (willnilges): Don't draw the cursor over the sidebar, if visible.
+        // FIXME (willnilges): Does the XojView take the sidebar into account?
         cairo_set_line_width(cr, 1.2);
-        cairo_set_source_rgb(cr, 0, 255, 0);
-        cairo_move_to(cr, px, 0);
-        cairo_line_to(cr, windowWidth, 0);
+        cairo_set_source_rgb(cr, 0, 200, 0);
+        cairo_move_to(cr, -winX, 0);
+        cairo_line_to(cr, pw, 0);
         cairo_close_path(cr);
         cairo_stroke(cr);
         cairo_destroy(cr);
