@@ -127,7 +127,6 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
                          }
 
                          for (MenuCallbackInfo& info: self->menuInfos) {
-
                              if (info.entry == togglebutton) {
                                  self->entrySelected(info.info);
                                  break;
