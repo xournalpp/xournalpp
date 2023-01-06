@@ -151,8 +151,9 @@ void PageTypeMenu::entrySelected(PageTypeInfo* t) {
     }
 
     // Disable "Apply to current page" if current format is "Copy."
-    if (this->menuEntryApply)
+    if (this->menuEntryApply) {
         gtk_widget_set_sensitive(this->menuEntryApply, t->page.format != PageTypeFormat::Copy);
+    }
 }
 
 void PageTypeMenu::setSelected(const PageType& selected) {
