@@ -121,27 +121,11 @@ void XojPageView::addOverlayView(std::unique_ptr<xoj::view::OverlayView> overlay
     this->overlayViews.emplace_back(std::move(overlay));
 }
 
-void XojPageView::setIsVisible(bool visible) {
-    if (visible) {
-        this->lastVisibleTime = 0;
-    } else if (this->lastVisibleTime <= 0) {
-        GTimeVal val;
-        g_get_current_time(&val);
-        this->lastVisibleTime = val.tv_sec;
-    }
-}
-
-auto XojPageView::getLastVisibleTime() -> int {
-    if (!this->crBuffer) {
-        return -1;
-    }
-
-    return this->lastVisibleTime;
-}
+void XojPageView::setIsVisible(bool visible) { this->visible = visible; }
 
 void XojPageView::deleteViewBuffer() {
     std::lock_guard lock(this->drawingMutex);
-    this->crBuffer.reset();
+    this->buffer.reset();
 }
 
 auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
@@ -873,8 +857,7 @@ void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg)
     if (v->isViewOf(this->inputHandler) || v->isViewOf(this->verticalSpace.get())) {
         // Draw the inputHandler's view onto the page buffer.
         std::lock_guard lock(this->drawingMutex);
-        xoj::util::CairoSPtr cr(cairo_create(this->crBuffer.get()), xoj::util::adopt);
-        v->drawWithoutDrawingAids(cr.get());
+        v->drawWithoutDrawingAids(buffer.get());
     }
     this->deleteOverlayView(v, rg);
 }
@@ -1090,38 +1073,24 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
 auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
 
     double zoom = xournal->getZoom();
+    xoj::util::CairoSaveGuard saveGuard(cr);
+    cairo_scale(cr, zoom, zoom);
+
     {
         std::lock_guard lock(this->drawingMutex);  // Lock the mutex first
         xoj::util::CairoSaveGuard saveGuard(cr);   // see comment at the end of the scope
-        if (!this->crBuffer) {
+        if (!this->hasBuffer()) {
             drawLoadingPage(cr);
             return true;
         }
 
-        int dispWidth = getDisplayWidth();
-        cairo_scale(cr, zoom, zoom);
-
-        double width = cairo_image_surface_get_width(this->crBuffer.get());
-
-        if (width / xournal->getDpiScaleFactor() != dispWidth) {
+        if (this->buffer.getZoom() != zoom) {
             rerenderPage();
+            cairo_pattern_set_filter(cairo_get_source(cr), CAIRO_FILTER_FAST);
         }
-        cairo_set_source_surface(cr, this->crBuffer.get(), 0, 0);
-
-        if (rect) {
-            cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
-            cairo_fill(cr);
-            IF_DEBUG_REPAINT({
-                cairo_set_source_rgb(cr, 1.0, 0.5, 1.0);
-                cairo_set_line_width(cr, 1. / zoom);
-                cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
-                cairo_stroke(cr);
-            })
-        } else {
-            cairo_paint(cr);
-        }
+        this->buffer.paintTo(cr);
     }  // Restore the state of cr and then release the mutex
-       // restoring the state of cr ensures this->crBuffer is not longer referenced as the source in cr.
+       // restoring the state of cr ensures this->buffer.surface is not longer referenced as the source in cr.
 
     /**
      * All the tool painters below follow the assumption:
@@ -1129,9 +1098,6 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
      *
      * To anyone adding another painter here: please keep this assumption true
      */
-    xoj::util::CairoSaveGuard saveGuard(cr);
-    cairo_scale(cr, zoom, zoom);
-
     if (this->textEditor) {
         this->textEditor->paint(cr, zoom);
     }
@@ -1149,12 +1115,7 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
 
 auto XojPageView::isSelected() const -> bool { return selected; }
 
-auto XojPageView::getBufferPixels() -> int {
-    if (crBuffer) {
-        return cairo_image_surface_get_width(crBuffer.get()) * cairo_image_surface_get_height(crBuffer.get());
-    }
-    return 0;
-}
+auto XojPageView::hasBuffer() const -> bool { return this->buffer.isInitialized(); }
 
 auto XojPageView::getSelectionColor() -> GdkRGBA { return Util::rgb_to_GdkRGBA(settings->getSelectionColor()); }
 

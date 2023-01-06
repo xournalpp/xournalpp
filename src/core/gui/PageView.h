@@ -25,6 +25,7 @@
 #include "model/PageRef.h"            // for PageRef
 #include "util/Rectangle.h"           // for Rectangle
 #include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr
+#include "view/Mask.h"                // for Mask
 #include "view/Repaintable.h"         // for Repaintable
 
 #include "Layout.h"            // for Layout
@@ -92,6 +93,7 @@ public:
     void setIsVisible(bool visible);
 
     bool isSelected() const;
+    inline bool isVisible() const { return visible; }
 
     void endText();
 
@@ -127,14 +129,8 @@ public:
     int getMappedCol() const;
 
     GdkRGBA getSelectionColor() override;
-    int getBufferPixels();
+    bool hasBuffer() const;
 
-    /**
-     * 0 if currently visible
-     * -1 if no image is saved (never visible or cleanup)
-     * else the time in Seconds
-     */
-    int getLastVisibleTime();
     TextEditor* getTextEditor();
 
     /**
@@ -269,9 +265,10 @@ private:
      */
     Text* oldtext;
 
+    bool visible = true;
     bool selected = false;
 
-    xoj::util::CairoSurfaceSPtr crBuffer;
+    xoj::view::Mask buffer;
     std::mutex drawingMutex;
 
     bool inEraser = false;
@@ -285,11 +282,6 @@ private:
      * Search handling
      */
     std::unique_ptr<SearchControl> search;
-
-    /**
-     * Unixtimestam when the page was last time in the visible area
-     */
-    long int lastVisibleTime = -1;
 
     std::mutex repaintRectMutex;
     std::vector<xoj::util::Rectangle<double>> rerenderRects;

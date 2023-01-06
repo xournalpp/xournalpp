@@ -106,15 +106,6 @@ XournalView::~XournalView() {
     this->handRecognition = nullptr;
 }
 
-auto pageViewIncreasingClockTime(XojPageView* a, XojPageView* b) -> gint {
-    return a->getLastVisibleTime() - b->getLastVisibleTime();  // >0 will put a after b
-}
-
-void XournalView::staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data) {
-    auto* xv = static_cast<XournalView*>(data);
-    xv->layoutPages();
-}
-
 
 auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
     widget->cleanupBufferCache();
@@ -129,7 +120,7 @@ auto XournalView::cleanupBufferCache() -> void {
         auto&& page = this->viewPages[i];
         const size_t pageNum = i + 1;
         const bool isPreload = pagesLower <= pageNum && pageNum <= pagesUpper;
-        if (!isPreload && page->getLastVisibleTime() > 0 && page->getBufferPixels() > 0) {
+        if (!isPreload && !page->isVisible() && page->hasBuffer()) {
             page->deleteViewBuffer();
         }
     }
@@ -385,7 +376,7 @@ void XournalView::pageSelected(size_t page) {
     const auto& [pagesLower, pagesUpper] = preloadPageBounds(page, this->viewPages.size());
     g_assert(pagesLower <= pagesUpper);
     for (size_t i = pagesLower; i < pagesUpper; i++) {
-        if (this->viewPages[i]->getBufferPixels() == 0) {
+        if (!this->viewPages[i]->hasBuffer()) {
             this->viewPages[i]->rerenderPage();
         }
     }

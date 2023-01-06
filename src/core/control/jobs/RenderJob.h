@@ -43,7 +43,7 @@ private:
 
     void rerenderRectangle(xoj::util::Rectangle<double> const& rect);
 
-    void renderToBuffer(cairo_surface_t* buffer, double ratio, double x, double y) const;
+    void renderToBuffer(cairo_t* cr) const;
 
 private:
     XojPageView* view;

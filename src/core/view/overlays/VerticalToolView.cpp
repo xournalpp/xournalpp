@@ -109,7 +109,6 @@ Mask VerticalToolView::createMask(cairo_t* tgtcr) const {
      *                      (the entire page is not an option for infinite pages...)
      */
     const double zoom = this->parent->getZoom();
-    const int dpiScaling = this->parent->getDPIScaling();
     Range range = this->parent->getVisiblePart();
 
     if (side == VerticalToolHandler::Side::Above) {
@@ -118,7 +117,7 @@ Mask VerticalToolView::createMask(cairo_t* tgtcr) const {
         range.translate(0, startY - range.minY);
     }
 
-    return Mask(cairo_get_target(tgtcr), range, zoom, dpiScaling, CAIRO_CONTENT_COLOR_ALPHA);
+    return Mask(cairo_get_target(tgtcr), range, zoom, CAIRO_CONTENT_COLOR_ALPHA);
 }
 
 void VerticalToolView::zoomChanged() {

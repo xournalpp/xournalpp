@@ -75,7 +75,7 @@ void StrokeToolView::draw(cairo_t* cr) const {
         this->drawDot(this->mask.get(), pts.back());
     }
 
-    cairo_mask_surface(cr, cairo_get_target(this->mask.get()), 0, 0);
+    this->mask.blitTo(cr);
 }
 
 void StrokeToolView::on(StrokeToolView::AddPointRequest, const Point& p) {

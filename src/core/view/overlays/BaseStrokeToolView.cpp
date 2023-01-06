@@ -33,7 +33,6 @@ Color BaseStrokeToolView::strokeColorWithAlpha(const Stroke& s) {
 
 auto BaseStrokeToolView::createMask(cairo_t* tgtcr) const -> Mask {
     const double zoom = this->parent->getZoom();
-    const int dpiScaling = this->parent->getDPIScaling();
     Range visibleRange = this->parent->getVisiblePart();
 
     if (!visibleRange.isValid()) {
@@ -48,7 +47,7 @@ auto BaseStrokeToolView::createMask(cairo_t* tgtcr) const -> Mask {
     // area's border
     visibleRange.addPadding(0.5 * this->strokeWidth);
 
-    Mask mask(cairo_get_target(tgtcr), visibleRange, zoom, dpiScaling);
+    Mask mask(cairo_get_target(tgtcr), visibleRange, zoom);
     cairo_t* cr = mask.get();
 
     cairo_set_source_rgba(cr, 1, 1, 1, 1);
