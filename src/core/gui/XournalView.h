@@ -154,8 +154,6 @@ private:
 
     void cleanupBufferCache();
 
-    static void staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data);
-
 private:
     /**
      * Scrollbars

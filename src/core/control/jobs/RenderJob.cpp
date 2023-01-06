@@ -6,19 +6,21 @@
 #include <vector>   // for vector
 
 #include <cairo.h>  // for cairo_create, cairo_destroy, cairo_...
-#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_repaint_area
 
-#include "control/Control.h"          // for Control
-#include "control/ToolEnums.h"        // for TOOL_PLAY_OBJECT
-#include "control/ToolHandler.h"      // for ToolHandler
-#include "control/jobs/Job.h"         // for JOB_TYPE_RENDER, JobType
-#include "gui/PageView.h"             // for XojPageView
-#include "gui/XournalView.h"          // for XournalView
-#include "model/Document.h"           // for Document
-#include "util/Rectangle.h"           // for Rectangle
-#include "util/Util.h"                // for execInUiThread
-#include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr, CairoSPtr
-#include "view/DocumentView.h"        // for DocumentView
+#include "control/Control.h"            // for Control
+#include "control/ToolEnums.h"          // for TOOL_PLAY_OBJECT
+#include "control/ToolHandler.h"        // for ToolHandler
+#include "control/jobs/Job.h"           // for JOB_TYPE_RENDER, JobType
+#include "gui/PageView.h"               // for XojPageView
+#include "gui/XournalView.h"            // for XournalView
+#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_repaint_area
+#include "model/Document.h"             // for Document
+#include "model/XojPage.h"              // for Page
+#include "util/Rectangle.h"             // for Rectangle
+#include "util/Util.h"                  // for execInUiThread
+#include "util/raii/CairoWrappers.h"    // for CairoSurfaceSPtr, CairoSPtr
+#include "view/DocumentView.h"          // for DocumentView
+#include "view/Mask.h"                  // for Mask
 
 using xoj::util::Rectangle;
 
@@ -27,8 +29,6 @@ RenderJob::RenderJob(XojPageView* view): view(view) {}
 auto RenderJob::getSource() -> void* { return this->view; }
 
 void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
-    const double ratio = view->xournal->getZoom() * this->view->xournal->getDpiScaleFactor();
-
     /**
      * Padding seems to be necessary to prevent artefacts of most strokes.
      * These artefacts are most pronounced when using the stroke deletion
@@ -37,31 +37,17 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
      **/
     constexpr int RENDER_PADDING = 1;
 
-    const auto rx = rect.x - RENDER_PADDING;
-    const auto ry = rect.y - RENDER_PADDING;
-    const auto rwidth = rect.width + 2 * RENDER_PADDING;
-    const auto rheight = rect.height + 2 * RENDER_PADDING;
+    Range maskRange(rect);
+    maskRange.addPadding(RENDER_PADDING);
+    xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(), maskRange, view->xournal->getZoom(),
+                            CAIRO_CONTENT_COLOR_ALPHA);
 
-    const auto x = std::floor(rx * ratio);
-    const auto y = std::floor(ry * ratio);
-    const auto width = static_cast<int>(std::ceil((rx + rwidth) * ratio) - x);
-    const auto height = static_cast<int>(std::ceil((ry + rheight) * ratio) - y);
-
-    xoj::util::CairoSurfaceSPtr rectBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height),
-                                           xoj::util::adopt);
-
-    renderToBuffer(rectBuffer.get(), ratio, x, y);
-
-    cairo_surface_set_device_scale(rectBuffer.get(), ratio, ratio);
-    cairo_surface_set_device_offset(rectBuffer.get(), -x, -y);
+    renderToBuffer(newMask.get());
 
     std::lock_guard lock(this->view->drawingMutex);
-    xoj::util::CairoSPtr crPageBuffer(cairo_create(view->crBuffer.get()), xoj::util::adopt);
+    assert(view->buffer.isInitialized());
 
-    cairo_set_operator(crPageBuffer.get(), CAIRO_OPERATOR_SOURCE);
-    cairo_set_source_surface(crPageBuffer.get(), rectBuffer.get(), 0, 0);
-    cairo_rectangle(crPageBuffer.get(), rx, ry, rwidth, rheight);
-    cairo_fill(crPageBuffer.get());
+    newMask.paintTo(view->buffer.get());
 }
 
 void RenderJob::run() {
@@ -74,23 +60,15 @@ void RenderJob::run() {
 
     this->view->repaintRectMutex.unlock();
 
-    const int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
-
     if (rerenderComplete) {
-        const int dispWidth = this->view->getDisplayWidth() * dpiScaleFactor;
-        const int dispHeight = this->view->getDisplayHeight() * dpiScaleFactor;
-        const double ratio = this->view->xournal->getZoom() * dpiScaleFactor;
+        xoj::view::Mask newMask(view->xournal->getDpiScaleFactor(),
+                                Range(0, 0, view->page->getWidth(), view->page->getHeight()), view->xournal->getZoom(),
+                                CAIRO_CONTENT_COLOR_ALPHA);
 
-        xoj::util::CairoSurfaceSPtr newBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight),
-                                              xoj::util::adopt);
-
-        renderToBuffer(newBuffer.get(), ratio, 0, 0);
-
-        cairo_surface_set_device_scale(newBuffer.get(), ratio, ratio);
-
+        renderToBuffer(newMask.get());
         {
             std::lock_guard lock(this->view->drawingMutex);
-            std::swap(this->view->crBuffer, newBuffer);
+            std::swap(this->view->buffer, newMask);
         }
         repaintPage();
     } else {
@@ -116,19 +94,14 @@ void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) cons
     repaintWidgetArea(view->xournal->getWidget(), x + std::floor(zoom * x1), y + std::floor(zoom * y1), x + std::ceil(zoom * x2), y + std::ceil(zoom * y2));
 }
 
-void RenderJob::renderToBuffer(cairo_surface_t* buffer, double ratio, double x, double y) const {
-    xoj::util::CairoSPtr crRect(cairo_create(buffer), xoj::util::adopt);
-
-    cairo_translate(crRect.get(), -x, -y);
-    cairo_scale(crRect.get(), ratio, ratio);
-
+void RenderJob::renderToBuffer(cairo_t* cr) const {
     DocumentView localView;
     localView.setMarkAudioStroke(this->view->getXournal()->getControl()->getToolHandler()->getToolType() ==
                                  TOOL_PLAY_OBJECT);
     localView.setPdfCache(this->view->xournal->getCache());
 
     std::lock_guard<Document> lock(*this->view->xournal->getDocument());
-    localView.drawPage(this->view->page, crRect.get(), false);
+    localView.drawPage(this->view->page, cr, false);
 }
 
 auto RenderJob::getType() -> JobType { return JOB_TYPE_RENDER; }

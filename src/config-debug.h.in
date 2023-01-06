@@ -46,7 +46,7 @@
 /**
  * Draw the mask in StrokeView
  */
-#cmakedefine DEBUG_SHOW_MASK
+#cmakedefine DEBUG_MASKS
 
 /**
  * Show repainted areas when erasing an highlighter stroke
