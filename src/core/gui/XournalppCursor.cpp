@@ -555,7 +555,7 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
 
     if (px + pw < windowWidth) {
         cairo_set_line_width(cr, 1.2);
-        cairo_set_source_rgb(cr, 255, 0, 255);
+        cairo_set_source_rgb(cr, 100, 0, 0);
         cairo_move_to(cr, px, 0);
         cairo_line_to(cr, px + pw, 0);
         cairo_close_path(cr);
@@ -563,9 +563,9 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
         cairo_destroy(cr);
         GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, windowWidth, height);
         cairo_surface_destroy(crCursor);
-        x = std::clamp(x, 0, windowWidth);
+        //x = std::clamp(x, 0, windowWidth);
         GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
-                gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, x, 0);
+                gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, winX, 0);
         g_object_unref(pixbuf);
         return gdkCursor;
     } else {
@@ -573,8 +573,8 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
         // FIXME (willnilges): Don't draw the cursor over the sidebar, if visible.
         // FIXME (willnilges): Does the XojView take the sidebar into account?
         cairo_set_line_width(cr, 1.2);
-        cairo_set_source_rgb(cr, 0, 200, 0);
-        cairo_move_to(cr, px, 0);
+        cairo_set_source_rgb(cr, 0, 100, 0);
+        cairo_move_to(cr, 0, 0);
         cairo_line_to(cr, px + pw + winX, 0);
         cairo_close_path(cr);
         cairo_stroke(cr);
