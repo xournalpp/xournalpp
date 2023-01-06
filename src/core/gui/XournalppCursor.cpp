@@ -556,8 +556,8 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
     if (px + pw < windowWidth) {
         cairo_set_line_width(cr, 1.2);
         cairo_set_source_rgb(cr, 100, 0, 0);
-        cairo_move_to(cr, px, 0);
-        cairo_line_to(cr, px + pw, 0);
+        cairo_move_to(cr, px + (control->getSettings()->isSidebarVisible() ? control->getSettings()->getSidebarWidth() : 0), 0);
+        cairo_line_to(cr, px + pw + (control->getSettings()->isSidebarVisible() ? control->getSettings()->getSidebarWidth() : 0), 0);
         cairo_close_path(cr);
         cairo_stroke(cr);
         cairo_destroy(cr);
@@ -574,7 +574,7 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
         // FIXME (willnilges): Does the XojView take the sidebar into account?
         cairo_set_line_width(cr, 1.2);
         cairo_set_source_rgb(cr, 0, 100, 0);
-        cairo_move_to(cr, 0, 0);
+        cairo_move_to(cr, 0 + (control->getSettings()->isSidebarVisible() ? control->getSettings()->getSidebarWidth() : 0), 0);
         cairo_line_to(cr, px + pw + winX, 0);
         cairo_close_path(cr);
         cairo_stroke(cr);
