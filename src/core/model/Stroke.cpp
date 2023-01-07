@@ -2,10 +2,10 @@
 
 #include <algorithm>  // for min, max, copy
 #include <cassert>    // for assert
-#include <cfloat>     // for DBL_MAX, DBL_MIN
 #include <cinttypes>  // for uint64_t
 #include <cmath>      // for abs, hypot, sqrt
 #include <iterator>   // for back_insert_iterator
+#include <limits>     // for numeric_limits
 #include <numeric>    // for accumulate
 #include <optional>   // for optional, nullopt
 #include <string>     // for to_string, operator<<
@@ -818,10 +818,10 @@ void Stroke::calcSize() const {
         Element::snappedBounds = Rectangle<double>{};
     }
 
-    double minSnapX = DBL_MAX;
-    double maxSnapX = DBL_MIN;
-    double minSnapY = DBL_MAX;
-    double maxSnapY = DBL_MIN;
+    double minSnapX = std::numeric_limits<double>::max();
+    double maxSnapX = std::numeric_limits<double>::min();
+    double minSnapY = std::numeric_limits<double>::max();
+    double maxSnapY = std::numeric_limits<double>::min();
 
     auto halfThick = 0.0;
 

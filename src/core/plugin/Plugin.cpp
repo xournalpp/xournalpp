@@ -240,7 +240,7 @@ auto Plugin::callFunction(const std::string& fnc, long mode) -> bool {
 
     int numArgs = 0;
 
-    if (mode != LONG_MAX) {
+    if (mode != std::numeric_limits<long>::max()) {
         lua_pushinteger(lua.get(), mode);
         numArgs = 1;
     }

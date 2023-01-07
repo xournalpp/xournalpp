@@ -1,15 +1,14 @@
 #include "Selection.h"
 
 #include <algorithm>  // for max, min
-#include <cfloat>     // for DBL_MAX
 #include <cmath>      // for abs, NAN
 #include <memory>     // for __shared_ptr_access
 
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
 
 #include "gui/LegacyRedrawable.h"  // for Redrawable
-#include "model/Layer.h"     // for Layer
-#include "model/XojPage.h"   // for XojPage
+#include "model/Layer.h"           // for Layer
+#include "model/XojPage.h"         // for XojPage
 
 Selection::Selection(): viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SelectionView>>()) {}
 
