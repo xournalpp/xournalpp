@@ -86,8 +86,9 @@ void ToolbarAdapter::cleanToolItem(GtkToolItem* it) {
     }
     GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(it));
 
-    if (window)
+    if (window) {
         gdk_window_set_cursor(window, nullptr);
+    }
 
     gtk_tool_item_set_use_drag_window(it, false);
     gtk_drag_source_unset(GTK_WIDGET(it));
