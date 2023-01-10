@@ -224,7 +224,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
 
-    if (event->keyval == GDK_KEY_Up || event->keyval == GDK_KEY_k) {
+    if (event->keyval == GDK_KEY_Up || event->keyval == GDK_KEY_k || event->keyval == GDK_KEY_K) {
         if (control->getSettings()->isPresentationMode()) {
             control->getScrollHandler()->goToPreviousPage();
             return true;
@@ -239,7 +239,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Down || event->keyval == GDK_KEY_j) {
+    if (event->keyval == GDK_KEY_Down || event->keyval == GDK_KEY_j || event->keyval == GDK_KEY_J) {
         if (control->getSettings()->isPresentationMode()) {
             control->getScrollHandler()->goToNextPage();
             return true;
