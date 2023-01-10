@@ -24,6 +24,7 @@ using std::string;
 ToolbarAdapter::ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuHandler* toolHandler,
                                MainWindow* window) {
     this->w = toolbar;
+    g_object_ref(this->w);
     this->toolbarName = std::move(toolbarName);
     this->toolHandler = toolHandler;
     this->window = window;
@@ -53,6 +54,8 @@ ToolbarAdapter::~ToolbarAdapter() {
 
     GtkStyleContext* ctx = gtk_widget_get_style_context(w);
     gtk_style_context_remove_class(ctx, "editing");
+
+    g_object_unref(this->w);
 }
 
 void ToolbarAdapter::cleanupToolbars() {
@@ -81,8 +84,11 @@ void ToolbarAdapter::cleanToolItem(GtkToolItem* it) {
     if (data) {
         gtk_widget_set_sensitive(GTK_WIDGET(it), ToolitemDragDrop::isToolItemEnabled(data));
     }
+    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(it));
 
-    gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(it)), nullptr);
+    if (window) {
+        gdk_window_set_cursor(window, nullptr);
+    }
 
     gtk_tool_item_set_use_drag_window(it, false);
     gtk_drag_source_unset(GTK_WIDGET(it));
