@@ -79,9 +79,11 @@ void ColorToolItem::showColorchooser() {
     GtkWidget* dialog = gtk_color_chooser_dialog_new(_("Select color"), parent);
     gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), false);
 
+    GdkRGBA color = Util::argb_to_GdkRGBA(getColor(), 1.0);
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(dialog), &color);
+
     int response = gtk_dialog_run(GTK_DIALOG(dialog));
     if (response == GTK_RESPONSE_OK) {
-        GdkRGBA color;
         gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
         this->namedColor = NamedColor{Util::GdkRGBA_to_argb(color)};
     }
