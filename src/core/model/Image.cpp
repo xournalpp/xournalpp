@@ -137,8 +137,10 @@ auto Image::getImage() const -> cairo_surface_t* {
         bool success = gdk_pixbuf_loader_close(loader, nullptr);
         g_assert(success && "errors in loading image data!");
 
-        GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
-        g_assert(pixbuf != nullptr);
+        GdkPixbuf* tmp = gdk_pixbuf_loader_get_pixbuf(loader);
+        g_assert(tmp != nullptr);
+        GdkPixbuf* pixbuf = gdk_pixbuf_apply_embedded_orientation(tmp);
+
         this->imageSize = {gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf)};
 
         // TODO: pass in window once this code is refactored into ImageView
