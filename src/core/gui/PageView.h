@@ -202,8 +202,6 @@ public:  // listener
 private:
     void startText(double x, double y);
 
-    void addRerenderRect(double x, double y, double width, double height);
-
     void drawLoadingPage(cairo_t* cr);
 
     /**

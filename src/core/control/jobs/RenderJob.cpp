@@ -30,14 +30,22 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     const double ratio = view->xournal->getZoom() * this->view->xournal->getDpiScaleFactor();
 
     /**
-     * The +1 makes sure the mask is big enough
-     * For example, if rect.x = m + 0.9, rect.width = n + 0.2 and ratio = 1 and m and n are integers
-     * We need a mask of width n+2 pixels for that...
+     * Padding seems to be necessary to prevent artefacts of most strokes.
+     * These artefacts are most pronounced when using the stroke deletion
+     * tool on ellipses, but also occur occasionally when removing regular
+     * strokes.
      **/
-    const auto x = std::floor(rect.x * ratio);
-    const auto y = std::floor(rect.y * ratio);
-    const auto width = int(std::ceil(rect.width * ratio)) + 1;
-    const auto height = int(std::ceil(rect.height * ratio)) + 1;
+    constexpr int RENDER_PADDING = 1;
+
+    const auto rx = rect.x - RENDER_PADDING;
+    const auto ry = rect.y - RENDER_PADDING;
+    const auto rwidth = rect.width + 2 * RENDER_PADDING;
+    const auto rheight = rect.height + 2 * RENDER_PADDING;
+
+    const auto x = std::floor(rx * ratio);
+    const auto y = std::floor(ry * ratio);
+    const auto width = static_cast<int>(std::ceil((rx + rwidth) * ratio) - x);
+    const auto height = static_cast<int>(std::ceil((ry + rheight) * ratio) - y);
 
     xoj::util::CairoSurfaceSPtr rectBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height),
                                            xoj::util::adopt);
@@ -51,7 +59,7 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
 
     cairo_set_operator(crPageBuffer.get(), CAIRO_OPERATOR_SOURCE);
     cairo_set_source_surface(crPageBuffer.get(), rectBuffer.get(), 0, 0);
-    cairo_rectangle(crPageBuffer.get(), rect.x, rect.y, rect.width, rect.height);
+    cairo_rectangle(crPageBuffer.get(), rx, ry, rwidth, rheight);
     cairo_fill(crPageBuffer.get());
 }
 

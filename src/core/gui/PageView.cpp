@@ -798,8 +798,8 @@ void XojPageView::repaintPage() const { xournal->getRepaintHandler()->repaintPag
 
 void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const {
     double zoom = xournal->getZoom();
-    xournal->getRepaintHandler()->repaintPageArea(this, std::lround(x1 * zoom) - 10, std::lround(y1 * zoom) - 10,
-                                                  std::lround(x2 * zoom) + 20, std::lround(y2 * zoom) + 20);
+    xournal->getRepaintHandler()->repaintPageArea(this, std::floor(x1 * zoom), std::floor(y1 * zoom),
+                                                  std::ceil(x2 * zoom), std::ceil(y2 * zoom));
 }
 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
@@ -836,15 +836,6 @@ double XojPageView::getWidth() const { return page->getWidth(); }
 double XojPageView::getHeight() const { return page->getHeight(); }
 
 void XojPageView::rerenderRect(double x, double y, double width, double height) {
-    int rx = std::lround(std::max(x - 10, 0.0));
-    int ry = std::lround(std::max(y - 10, 0.0));
-    int rwidth = std::lround(width + 20);
-    int rheight = std::lround(height + 20);
-
-    addRerenderRect(rx, ry, rwidth, rheight);
-}
-
-void XojPageView::addRerenderRect(double x, double y, double width, double height) {
     if (this->rerenderComplete) {
         return;
     }
