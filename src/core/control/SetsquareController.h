@@ -37,7 +37,7 @@ enum Leg { HYPOTENUSE, LEFT_LEG, RIGHT_LEG };
 class SetsquareController: public GeometryToolController {
 public:
     SetsquareController(XojPageView* view, Setsquare* setsquare);
-    ~SetsquareController();
+    ~SetsquareController() override;
 
 public:
     GeometryToolType getType() const override;
