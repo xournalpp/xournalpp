@@ -85,9 +85,12 @@ void ImageOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* user
         GtkWidget* image = gtk_file_chooser_get_preview_widget(fileChooser);
 
         if (pixbuf) {
+            GdkPixbuf* tmp = gdk_pixbuf_apply_embedded_orientation(pixbuf);
+            g_set_object(&pixbuf, tmp);
             GdkPixbuf* scaled_pixbuf = pixbufScaleDownIfNecessary(pixbuf, 256);
             gtk_image_set_from_pixbuf(GTK_IMAGE(image), scaled_pixbuf);
             g_object_unref(scaled_pixbuf);
+            g_object_unref(tmp);
             g_object_unref(pixbuf);
         } else {
             gtk_image_set_from_icon_name(GTK_IMAGE(image), "dialog-question", GTK_ICON_SIZE_DIALOG);
