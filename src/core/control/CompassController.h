@@ -35,7 +35,7 @@ class Stroke;
 class CompassController: public GeometryToolController {
 public:
     CompassController(XojPageView* view, Compass* compass);
-    ~CompassController();
+    ~CompassController() override;
 
 public:
     GeometryToolType getType() const override;
