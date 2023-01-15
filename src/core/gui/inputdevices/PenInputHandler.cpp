@@ -117,11 +117,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
         this->scrollStartY = event.absoluteY;
     }
 
-    // Set the reference page for selections and other single-page elements so motion events are passed to the right
-    // page everytime
-    if (toolHandler->isSinglePageTool()) {
-        this->sequenceStartPage = currentPage;
-    }
+    this->sequenceStartPage = currentPage;
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
     if (toolHandler->getToolType() != TOOL_HAND && xournal->selection) {
@@ -266,7 +262,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
          * Only trigger once the new page was entered to ensure that an input device can leave the page temporarily.
          * For these events we need to fake an end point in the old page and a start point in the new page.
          */
-        if (this->deviceClassPressed && currentPage && !lastEventPage && lastHitEventPage) {
+        if (this->deviceClassPressed && currentPage && currentPage != sequenceStartPage && lastHitEventPage) {
 #ifdef DEBUG_INPUT
             g_message("PenInputHandler: Start new input on switching page...");
 #endif
@@ -300,10 +296,8 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         PositionInputData pos = getInputDataRelativeToCurrentPage(sequenceStartPage, event);
 
         // Enforce input to stay within page
-        pos.x = std::max(0.0, pos.x);
-        pos.y = std::max(0.0, pos.y);
-        pos.x = std::min(pos.x, static_cast<double>(sequenceStartPage->getDisplayWidth()));
-        pos.y = std::min(pos.y, static_cast<double>(sequenceStartPage->getDisplayHeight()));
+        pos.x = std::clamp(pos.x, 0.0, static_cast<double>(sequenceStartPage->getDisplayWidth()));
+        pos.y = std::clamp(pos.y, 0.0, static_cast<double>(sequenceStartPage->getDisplayHeight()));
 
         pos.pressure = this->filterPressure(pos, sequenceStartPage);
 
@@ -324,6 +318,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         return result;
     }
 
+    this->updateLastEvent(event);  // Update the last position of the input device
     return false;
 }
 
