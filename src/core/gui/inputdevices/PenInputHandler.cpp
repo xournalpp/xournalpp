@@ -388,7 +388,7 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
 
 void PenInputHandler::actionPerform(InputEvent const& event) {
 #ifdef DEBUG_INPUT
-    g_message("Discrete input action; modifier1=%s, modifier2=%2", this->modifier2 ? "true" : "false",
+    g_message("Discrete input action; modifier1=%s, modifier2=%s", this->modifier2 ? "true" : "false",
               this->modifier3 ? "true" : "false");
 #endif
 
