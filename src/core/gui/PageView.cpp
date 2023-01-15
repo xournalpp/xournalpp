@@ -589,8 +589,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     ToolHandler* h = xournal->getControl()->getToolHandler();
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
 
-    if (containsPoint(std::lround(x), std::lround(y), true) && this->inputHandler &&
-        this->inputHandler->onMotionNotifyEvent(pos, zoom)) {
+    if (this->inputHandler && this->inputHandler->onMotionNotifyEvent(pos, zoom)) {
         // input handler used this event
     } else if (this->selection) {
         this->selection->currentPos(x, y);
