@@ -137,12 +137,27 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
     }
     if (!pdfFilepath.empty()) {
         fs::path p = pdfFilepath.filename();
-        if (this->attachPdf) {
-            Util::clearExtensions(p, ".pdf");
-        } else {
-            Util::clearExtensions(p);
+        Util::clearExtensions(p, ".pdf");
+
+        // Building the pdf-filepath according to settings (replace wildcards)
+        std::string saveString = "%{name}_annotated"; // this->getPdfExportFilepath();
+        std::string startstr = "%{"; // TODO make const
+        std::string endstr = "}"; // TODO make const
+
+        size_t pos = saveString.find(startstr);
+        while (pos != std::string::npos) {
+            size_t endPos = saveString.find(endstr, pos + 2);
+            if (endPos == std::string::npos) {
+                break;
+            }
+            saveString.replace(pos, endPos + 1, p);
+            pos = saveString.find(startstr, pos);
         }
-        return p;
+
+        if (!this->attachPdf) {
+            saveString += ".pdf";
+        }
+        return saveString;
     }
 
 
@@ -153,7 +168,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
     // Remove the extension, file format is handled by the filter combo box
     fs::path p = stime;
     Util::clearExtensions(p);
-    return p;
+    return "savename 3";
 }
 
 
