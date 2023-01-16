@@ -545,6 +545,9 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         int width = static_cast<int>(std::round(range.getWidth() * zoom));
         int height = 5; // Five is the default cursor size used elsewhere in the app.
         gint dx = x - static_cast<int>(range.getX() * zoom) - page->getX();
+        if (this->currentCursorFlavour == dx) {
+            return nullptr;
+        }
 
         cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
         cairo_t* cr = cairo_create(crCursor);
@@ -562,6 +565,7 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
                 gtk_widget_get_display(theWidget), pixbuf, dx, 0);
         g_object_unref(pixbuf);
         this->currentCursor = CRSR_HORIZONTALLINE;
+        this->currentCursorFlavour = dx;
         return gdkCursor; 
     }
     
