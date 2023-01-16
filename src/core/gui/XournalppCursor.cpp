@@ -545,7 +545,7 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         int width = static_cast<int>(std::round(range.getWidth() * zoom));
         int height = 5; // Five is the default cursor size used elsewhere in the app.
         gint dx = x - static_cast<int>(range.getX() * zoom) - page->getX();
-        if (this->currentCursorFlavour == dx) {
+        if (this->currentCursorFlavour == (dx << (sizeof(gint) * 4) | width)) {
             return nullptr;
         }
 
@@ -565,7 +565,9 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
                 gtk_widget_get_display(theWidget), pixbuf, dx, 0);
         g_object_unref(pixbuf);
         this->currentCursor = CRSR_HORIZONTALLINE;
-        this->currentCursorFlavour = dx;
+        // Shift the 'dx' and 'width' variables together to check if we need
+        // to re-draw the cursor.
+        this->currentCursorFlavour = (gulong) (dx << (sizeof(gint) * 4) | width);
         return gdkCursor; 
     }
     
