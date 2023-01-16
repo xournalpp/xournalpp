@@ -537,15 +537,13 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
 
     gdk_window_get_device_position (theWindow, mouse_device, &x, &y, nullptr);
 
-    // Five is the default cursor size used elsewhere in the app.
-    int height = 5;
-
     Layout* const layout = this->control->getWindow()->getLayout();
     XojPageView* page = layout->getPageViewAt(x, y);
     if (page) {
         Range range = page->getVisiblePart();
         double zoom = control->getZoomControl()->getZoom();
         int width = static_cast<int>(std::round(range.getWidth() * zoom));
+        int height = 5; // Five is the default cursor size used elsewhere in the app.
         gint dx = x - static_cast<int>(range.getX() * zoom) - page->getX();
 
         cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
@@ -566,8 +564,14 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         this->currentCursor = CRSR_HORIZONTALLINE;
         return gdkCursor; 
     }
-    // Use default cursor
-    this->currentCursor = CRSR_nullptr;
+    
+    // If this somehow gets called when we're not hovering over a page
+    // set the cursor back to the default. If it already is the default,
+    // then just keep it that way to save processing power.
+    if (this->currentCursor != CRSR_DEFAULT) {
+        this->currentCursor = CRSR_DEFAULT;
+        return gdk_cursor_new_from_name(gdk_window_get_display(theWindow), cssCursors[this->currentCursor].cssName);
+    }
     return nullptr;
 }
 
