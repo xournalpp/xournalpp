@@ -554,7 +554,7 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         cairo_t* cr = cairo_create(crCursor);
 
         cairo_set_line_width(cr, 1.2);
-        cairo_set_source_rgb(cr, 100, 0, 0);
+        Util::cairo_set_source_rgbi(cr, this->control->getSettings()->getSelectionColor());
         cairo_move_to(cr, 0, 0);
         cairo_line_to(cr, width, 0);
         cairo_close_path(cr);
