@@ -33,6 +33,9 @@
 class DocumentHandler;
 class XojPdfBookmarkIterator;
 
+constexpr auto DEFAULT_PDF_WILDCARD_START = "%{";
+constexpr auto DEFAULT_PDF_WILDCARD_END = "}";
+
 class Document {
 public:
     Document(DocumentHandler* handler);

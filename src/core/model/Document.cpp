@@ -139,16 +139,17 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         fs::path p = pdfFilepath.filename();
         Util::clearExtensions(p, ".pdf");
 
-        // Building the pdf-filepath according to settings (replace wildcards)
+        // Build the pdf-filepath according to settings (replace wildcards)
         std::string saveString = (defaultPfdName == "" ? static_cast<std::string>(p) : defaultPfdName);
-        std::string startstr = "%{"; // TODO make const
-        std::string endstr = "}"; // TODO make const
-        size_t pos = saveString.find(startstr);
+
+        size_t pos = saveString.find(DEFAULT_PDF_WILDCARD_START);
         while (pos != std::string::npos) {
-            size_t endPos = saveString.find(endstr, pos + 2);
+            size_t endPos = saveString.find(DEFAULT_PDF_WILDCARD_END, pos + 2);
             if (endPos == std::string::npos) {
                 break;
             }
+
+            // parse the current wildcard
             std::string wildcard = saveString.substr(pos + 2, endPos - pos - 2);
             std::cout << wildcard << std::endl;
             if (wildcard == "name") { // additional wildcards can be implemented here
@@ -157,7 +158,8 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
                 wildcard = "";
             }
             saveString.replace(pos, endPos + 1, wildcard);
-            pos = saveString.find(startstr, pos);
+
+            pos = saveString.find(DEFAULT_PDF_WILDCARD_START);
         }
 
         if (!this->attachPdf) {

@@ -140,6 +140,8 @@ void Settings::loadDefault() {
 
     this->defaultSaveName = _("%F-Note-%H-%M");
 
+    this->defaultPdfExportName = _("%{name}_annotated");
+
     // Eraser
     this->buttonConfig[BUTTON_ERASER] =
             std::make_unique<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
@@ -1494,6 +1496,8 @@ void Settings::setAutoloadPdfXoj(bool load) {
 }
 
 auto Settings::getDefaultSaveName() const -> string const& { return this->defaultSaveName; }
+
+auto Settings::getDefaultPdfExportName() const -> string const& { return this->defaultPdfExportName; }
 
 void Settings::setDefaultSaveName(const string& name) {
     if (this->defaultSaveName == name) {
