@@ -128,7 +128,7 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
-auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName) -> fs::path {
+auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPfdName) -> fs::path {
     if (!filepath.empty()) {
         // This can be any extension
         fs::path p = filepath.filename();
@@ -140,17 +140,23 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         Util::clearExtensions(p, ".pdf");
 
         // Building the pdf-filepath according to settings (replace wildcards)
-        std::string saveString = "%{name}_annotated"; // this->getPdfExportFilepath();
+        std::string saveString = (defaultPfdName == "" ? static_cast<std::string>(p) : defaultPfdName);
         std::string startstr = "%{"; // TODO make const
         std::string endstr = "}"; // TODO make const
-
         size_t pos = saveString.find(startstr);
         while (pos != std::string::npos) {
             size_t endPos = saveString.find(endstr, pos + 2);
             if (endPos == std::string::npos) {
                 break;
             }
-            saveString.replace(pos, endPos + 1, p);
+            std::string wildcard = saveString.substr(pos + 2, endPos - pos - 2);
+            std::cout << wildcard << std::endl;
+            if (wildcard == "name") { // additional wildcards can be implemented here
+                wildcard = p;
+            } else {
+                wildcard = "";
+            }
+            saveString.replace(pos, endPos + 1, wildcard);
             pos = saveString.find(startstr, pos);
         }
 
@@ -168,7 +174,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
     // Remove the extension, file format is handled by the filter combo box
     fs::path p = stime;
     Util::clearExtensions(p);
-    return "savename 3";
+    return p;
 }
 
 
