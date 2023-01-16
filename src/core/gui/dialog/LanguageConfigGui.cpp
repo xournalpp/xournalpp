@@ -8,6 +8,7 @@
 #include <glib.h>         // for g_warning, gint
 
 #include "control/settings/Settings.h"  // for Settings
+#include "util/LangMapping.h"           // LangMapping
 #include "util/PathUtil.h"              // for getGettextFilepath, getLocale...
 #include "util/StringUtils.h"           // for StringUtils
 #include "util/XojMsgBox.h"             // for XojMsgBox
@@ -30,7 +31,8 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
         fs::path baseLocaleDir = Util::getGettextFilepath(Util::getLocalePath().u8string().c_str());
         for (auto const& d: fs::directory_iterator(baseLocaleDir)) {
             if (fs::exists(d.path() / "LC_MESSAGES" / (std::string(GETTEXT_PACKAGE) + ".mo"))) {
-                availableLocales.push_back(d.path().filename().u8string());
+                auto localeName = LangMapping::isoToLocalizedName(d.path().filename().u8string());
+                availableLocales.push_back(localeName);
             }
         }
     } catch (const fs::filesystem_error& e) {
