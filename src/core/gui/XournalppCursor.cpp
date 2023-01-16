@@ -306,7 +306,6 @@ void XournalppCursor::updateCursor() {
                 setCursor(CRSR_SB_V_DOUBLE_ARROW);
             } else if (this->insidePage) {
                 cursor = createHorizontalLineCursor();
-                setCursor(CRSR_HORIZONTALLINE);
             }
         } else if (type == TOOL_SELECT_OBJECT) {
             setCursor(CRSR_DEFAULT);
@@ -541,7 +540,6 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
     // Five is the default cursor size used elsewhere in the app.
     int height = 5;
 
-    // Courtesy of Roland
     Layout* const layout = this->control->getWindow()->getLayout();
     XojPageView* page = layout->getPageViewAt(x, y);
     if (page) {
@@ -562,12 +560,14 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         cairo_destroy(cr);
         GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
         cairo_surface_destroy(crCursor);
-        //x = std::clamp(x, 0, windowWidth);
         GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
                 gtk_widget_get_display(theWidget), pixbuf, dx, 0);
         g_object_unref(pixbuf);
+        this->currentCursor = CRSR_HORIZONTALLINE;
         return gdkCursor; 
     }
+    // Use default cursor
+    this->currentCursor = CRSR_nullptr;
     return nullptr;
 }
 
