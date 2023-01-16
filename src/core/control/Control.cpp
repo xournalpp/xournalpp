@@ -1823,7 +1823,7 @@ void Control::zoomCallback(ActionType type, bool enabled) {
     }
 }
 
-auto Control::getCurrentPageNo() -> size_t {
+auto Control::getCurrentPageNo() const -> size_t {
     if (this->win) {
         return this->win->getXournal()->getCurrentPage();
     }
@@ -3187,19 +3187,19 @@ void Control::runLatex() {
  * GETTER / SETTER
  */
 
-auto Control::getUndoRedoHandler() -> UndoRedoHandler* { return this->undoRedo; }
+auto Control::getUndoRedoHandler() const -> UndoRedoHandler* { return this->undoRedo; }
 
-auto Control::getZoomControl() -> ZoomControl* { return this->zoom; }
+auto Control::getZoomControl() const -> ZoomControl* { return this->zoom; }
 
-auto Control::getCursor() -> XournalppCursor* { return this->cursor; }
+auto Control::getCursor() const -> XournalppCursor* { return this->cursor; }
 
-auto Control::getDocument() -> Document* { return this->doc; }
+auto Control::getDocument() const -> Document* { return this->doc; }
 
-auto Control::getToolHandler() -> ToolHandler* { return this->toolHandler; }
+auto Control::getToolHandler() const -> ToolHandler* { return this->toolHandler; }
 
-auto Control::getScheduler() -> XournalScheduler* { return this->scheduler; }
+auto Control::getScheduler() const -> XournalScheduler* { return this->scheduler; }
 
-auto Control::getWindow() -> MainWindow* { return this->win; }
+auto Control::getWindow() const -> MainWindow* { return this->win; }
 
 auto Control::getGtkWindow() const -> GtkWindow* { return GTK_WINDOW(this->win->getWindow()); }
 
@@ -3228,28 +3228,28 @@ auto Control::getTextEditor() -> TextEditor* {
     return nullptr;
 }
 
-auto Control::getGladeSearchPath() -> GladeSearchpath* { return this->gladeSearchPath; }
+auto Control::getGladeSearchPath() const -> GladeSearchpath* { return this->gladeSearchPath; }
 
-auto Control::getRecentManager() -> RecentManager* { return recent; }
+auto Control::getRecentManager() const -> RecentManager* { return recent; }
 
-auto Control::getSettings() -> Settings* { return settings; }
+auto Control::getSettings() const -> Settings* { return settings; }
 
-auto Control::getScrollHandler() -> ScrollHandler* { return this->scrollHandler; }
+auto Control::getScrollHandler() const -> ScrollHandler* { return this->scrollHandler; }
 
-auto Control::getMetadataManager() -> MetadataManager* { return this->metadata; }
+auto Control::getMetadataManager() const -> MetadataManager* { return this->metadata; }
 
-auto Control::getSidebar() -> Sidebar* { return this->sidebar; }
+auto Control::getSidebar() const -> Sidebar* { return this->sidebar; }
 
-auto Control::getSearchBar() -> SearchBar* { return this->searchBar; }
+auto Control::getSearchBar() const -> SearchBar* { return this->searchBar; }
 
-auto Control::getAudioController() -> AudioController* { return this->audioController; }
+auto Control::getAudioController() const -> AudioController* { return this->audioController; }
 
-auto Control::getPageTypes() -> PageTypeHandler* { return this->pageTypes; }
+auto Control::getPageTypes() const -> PageTypeHandler* { return this->pageTypes; }
 
-auto Control::getNewPageType() -> PageTypeMenu* { return this->newPageType.get(); }
+auto Control::getNewPageType() const -> PageTypeMenu* { return this->newPageType.get(); }
 
-auto Control::getPageBackgroundChangeController() -> PageBackgroundChangeController* {
+auto Control::getPageBackgroundChangeController() const -> PageBackgroundChangeController* {
     return this->pageBackgroundChangeController;
 }
 
-auto Control::getLayerController() -> LayerController* { return this->layerController; }
+auto Control::getLayerController() const -> LayerController* { return this->layerController; }

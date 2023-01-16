@@ -239,11 +239,11 @@ public:
 
     TextEditor* getTextEditor();
 
-    GladeSearchpath* getGladeSearchPath();
+    GladeSearchpath* getGladeSearchPath() const;
 
     void disableSidebarTmp(bool disabled);
 
-    XournalScheduler* getScheduler();
+    XournalScheduler* getScheduler() const;
 
     void block(const std::string& name);
     void unblock();
@@ -253,26 +253,26 @@ public:
     void deleteLastAutosaveFile(fs::path newAutosaveFile);
     void setClipboardHandlerSelection(EditSelection* selection);
 
-    MetadataManager* getMetadataManager();
-    RecentManager* getRecentManager();
-    Settings* getSettings();
-    ToolHandler* getToolHandler();
-    ZoomControl* getZoomControl();
-    Document* getDocument();
-    UndoRedoHandler* getUndoRedoHandler();
-    MainWindow* getWindow();
+    MetadataManager* getMetadataManager() const;
+    RecentManager* getRecentManager() const;
+    Settings* getSettings() const;
+    ToolHandler* getToolHandler() const;
+    ZoomControl* getZoomControl() const;
+    Document* getDocument() const;
+    UndoRedoHandler* getUndoRedoHandler() const;
+    MainWindow* getWindow() const;
     GtkWindow* getGtkWindow() const;
-    ScrollHandler* getScrollHandler();
+    ScrollHandler* getScrollHandler() const;
     PageRef getCurrentPage();
-    size_t getCurrentPageNo();
-    XournalppCursor* getCursor();
-    Sidebar* getSidebar();
-    SearchBar* getSearchBar();
-    AudioController* getAudioController();
-    PageTypeHandler* getPageTypes();
-    PageTypeMenu* getNewPageType();
-    PageBackgroundChangeController* getPageBackgroundChangeController();
-    LayerController* getLayerController();
+    size_t getCurrentPageNo() const;
+    XournalppCursor* getCursor() const;
+    Sidebar* getSidebar() const;
+    SearchBar* getSearchBar() const;
+    AudioController* getAudioController() const;
+    PageTypeHandler* getPageTypes() const;
+    PageTypeMenu* getNewPageType() const;
+    PageBackgroundChangeController* getPageBackgroundChangeController() const;
+    LayerController* getLayerController() const;
 
 
     bool copy();
