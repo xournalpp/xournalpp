@@ -49,7 +49,7 @@ private:
     GdkCursor* getResizeCursor(double deltaAngle);
 
     GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
-    GdkCursor* createHorizontalLineCursor(XournalView* xournal, MainWindow* win);
+    GdkCursor* createHorizontalLineCursor();
     GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
 
 private:

@@ -305,7 +305,7 @@ void XournalppCursor::updateCursor() {
             if (this->mouseDown) {
                 setCursor(CRSR_SB_V_DOUBLE_ARROW);
             } else if (this->insidePage) {
-                cursor = createHorizontalLineCursor(xournal, win);
+                cursor = createHorizontalLineCursor();
                 setCursor(CRSR_HORIZONTALLINE);
             }
         } else if (type == TOOL_SELECT_OBJECT) {
@@ -521,11 +521,11 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 }
 
 
-auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindow* win) -> GdkCursor* {
-    GdkWindow* theWindow = gtk_widget_get_window(xournal->getWidget());
-    GdkWindow* mainWindow = gtk_widget_get_window(win->getWindow());
+auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
+    GtkWidget* theWidget = control->getWindow()->getXournal()->getWidget();
+    GdkWindow* theWindow = gtk_widget_get_window(theWidget);
 
-    gint x, y, winX, winY;
+    gint x, y;
     GdkDevice *mouse_device;
 
     #if GTK_CHECK_VERSION (3,20,0)
@@ -537,7 +537,6 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
     #endif
 
     gdk_window_get_device_position (theWindow, mouse_device, &x, &y, nullptr);
-    gdk_window_get_device_position (mainWindow, mouse_device, &winX, &winY, nullptr);
 
     // Five is the default cursor size used elsewhere in the app.
     int height = 5;
@@ -565,45 +564,10 @@ auto XournalppCursor::createHorizontalLineCursor(XournalView* xournal, MainWindo
         cairo_surface_destroy(crCursor);
         //x = std::clamp(x, 0, windowWidth);
         GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
-                gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, dx, 0);
+                gtk_widget_get_display(theWidget), pixbuf, dx, 0);
         g_object_unref(pixbuf);
         return gdkCursor; 
     }
-
-    /*if (px + pw < windowWidth) {
-        cairo_set_line_width(cr, 1.2);
-        cairo_set_source_rgb(cr, 100, 0, 0);
-        cairo_move_to(cr, px + (control->getSettings()->isSidebarVisible() ? control->getSettings()->getSidebarWidth() : 0), 0);
-        cairo_line_to(cr, px + pw + (control->getSettings()->isSidebarVisible() ? control->getSettings()->getSidebarWidth() : 0), 0);
-        cairo_close_path(cr);
-        cairo_stroke(cr);
-        cairo_destroy(cr);
-        GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, windowWidth, height);
-        cairo_surface_destroy(crCursor);
-        //x = std::clamp(x, 0, windowWidth);
-        GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
-                gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, winX, 0);
-        g_object_unref(pixbuf);
-        return gdkCursor;
-    } else {
-        // If we're zoomed in enough, just draw the cursor across the whole screen
-        // FIXME (willnilges): Don't draw the cursor over the sidebar, if visible.
-        // FIXME (willnilges): Does the XojView take the sidebar into account?
-        cairo_set_line_width(cr, 1.2);
-        cairo_set_source_rgb(cr, 0, 100, 0);
-        cairo_move_to(cr, 0 + (control->getSettings()->isSidebarVisible() ? control->getSettings()->getSidebarWidth() : 0), 0);
-        cairo_line_to(cr, px + pw + winX, 0);
-        cairo_close_path(cr);
-        cairo_stroke(cr);
-        cairo_destroy(cr);
-        GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, windowWidth, height);
-        cairo_surface_destroy(crCursor);
-        //x = std::clamp(x, 0, windowWidth);
-        GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
-                gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, winX, 0);
-        g_object_unref(pixbuf);
-        return gdkCursor;
-    }*/
     return nullptr;
 }
 
