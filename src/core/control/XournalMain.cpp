@@ -106,10 +106,10 @@ void initLocalisation() {
 }
 
 auto migrateSettings() -> MigrateResult {
-    fs::path newConfigPath = Util::getConfigFolder();
+    const fs::path newConfigPath = Util::getConfigFolder();
 
     if (!fs::exists(newConfigPath)) {
-        std::array oldPaths = {
+        const std::array oldPaths = {
                 Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp",
                 Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp.exe",
                 fs::u8path(g_get_home_dir()) /= ".xournalpp",
@@ -139,7 +139,7 @@ auto migrateSettings() -> MigrateResult {
 }
 
 void checkForErrorlog() {
-    fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
+    const fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
     if (!fs::exists(errorDir)) {
         return;
     }
@@ -175,7 +175,7 @@ void checkForErrorlog() {
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 4);
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 5);
 
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
+    const int res = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 
     auto const& errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR) / errorList[0];
@@ -209,7 +209,7 @@ void checkForEmergencySave(Control* control) {
         return;
     }
 
-    std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
+    const std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
     GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
                                                msg.c_str());
@@ -217,7 +217,7 @@ void checkForEmergencySave(Control* control) {
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete file"), 1);
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Restore file"), 2);
 
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
+    const int res = gtk_dialog_run(GTK_DIALOG(dialog));
 
     if (res == 1)  // Delete file
     {
@@ -327,7 +327,7 @@ using XMPtr = XournalMainPrivate*;
 void ensure_input_model_compatibility() {
     const char* imModule = g_getenv("GTK_IM_MODULE");
     if (imModule != nullptr) {
-        std::string imModuleString{imModule};
+        const std::string imModuleString{imModule};
         if (imModuleString == "xim") {
             g_warning("Unsupported input method: %s", imModule);
         }
@@ -417,7 +417,7 @@ void on_open_files(GApplication*, gpointer, gint, gchar*, XMPtr) {
 void on_startup(GApplication* application, XMPtr app_data) {
     initLocalisation();
     ensure_input_model_compatibility();
-    MigrateResult migrateResult = migrateSettings();
+    const MigrateResult migrateResult = migrateSettings();
 
     app_data->gladePath = std::make_unique<GladeSearchpath>();
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
@@ -478,12 +478,12 @@ void on_startup(GApplication* application, XMPtr app_data) {
     bool opened = false;
     if (app_data->optFilename) {
         if (g_strv_length(app_data->optFilename) != 1) {
-            std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
-                                "Others are ignored.");
+            const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+                                      "Others are ignored.");
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
         }
 
-        fs::path p = Util::fromGFilename(app_data->optFilename[0], false);
+        const fs::path p = Util::fromGFilename(app_data->optFilename[0], false);
 
         try {
             if (fs::exists(p)) {
@@ -493,9 +493,9 @@ void on_startup(GApplication* application, XMPtr app_data) {
                 opened = app_data->control->newFile("", p);
             }
         } catch (const fs::filesystem_error& e) {
-            std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
-                                    "You have to copy the file to a local directory.") %
-                                 p.u8string() % e.what());
+            const std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
+                                          "You have to copy the file to a local directory.") %
+                                       p.u8string() % e.what());
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
             opened = app_data->control->newFile("", p);
         }
