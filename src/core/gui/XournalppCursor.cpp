@@ -549,8 +549,10 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
             return nullptr;
         }
 
-        cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-        cairo_t* cr = cairo_create(crCursor);
+        xoj::util::CairoSurfaceSPtr crCursor(
+            cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height), xoj::util::adopt
+        );
+        cairo_t* cr = cairo_create(crCursor.get());
 
         cairo_set_line_width(cr, 1.2);
         Util::cairo_set_source_rgbi(cr, this->control->getSettings()->getSelectionColor());
@@ -559,8 +561,8 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         cairo_close_path(cr);
         cairo_stroke(cr);
         cairo_destroy(cr);
-        GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
-        cairo_surface_destroy(crCursor);
+        GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor.get(), 0, 0, width, height);
+        crCursor.release();
         GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
                 gtk_widget_get_display(theWidget), pixbuf, dx, 0);
         g_object_unref(pixbuf);
