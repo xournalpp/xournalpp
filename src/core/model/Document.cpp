@@ -132,6 +132,25 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
+std::string Document::parseFilenameWildcard(const std::string& wildcard) {
+    if (wildcard == "name") {
+        fs::path pdfPath = pdfFilepath.filename();
+        Util::clearExtensions(pdfPath, ".pdf");
+        return pdfPath;
+    }
+    if (wildcard == "date" || wildcard == "time") {
+        std::time_t time = std::chrono::system_clock::to_time_t(
+            std::chrono::system_clock::now()
+        );
+        std::stringstream timestring;
+        timestring << std::put_time(std::localtime(&time),
+                                wildcard == "date" ? "%Y-%m-%d" : "%X");
+        return timestring.str();
+    } 
+    // not a valid wildcard
+    return "";
+}
+
 auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPfdName) -> fs::path {
     if (!filepath.empty()) {
         // This can be any extension
@@ -140,9 +159,6 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         return p;
     }
     if (!pdfFilepath.empty()) {
-        fs::path pdfPath = pdfFilepath.filename();
-        Util::clearExtensions(pdfPath, ".pdf");
-
         // Build the pdf-filepath according to settings (replace wildcards)
         std::string saveString = defaultPfdName;
         size_t pos = saveString.find(DEFAULT_PDF_WILDCARD_START);
@@ -153,29 +169,8 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
                 break;
             }
 
-            // parse the current wildcard
             std::string wildcard = saveString.substr(pos + 2, endPos - pos - 2);
-            std::cout << wildcard << std::endl;
-            if (wildcard == "name") { // additional wildcards can be implemented here
-                wildcard = pdfPath;
-            } else if (wildcard == "date") {
-                std::time_t time = std::chrono::system_clock::to_time_t(
-                    std::chrono::system_clock::now()
-                );
-                std::stringstream timestring;
-                timestring << std::put_time(std::localtime(&time), "%Y-%m-%d");
-                wildcard = timestring.str();
-            } else if (wildcard == "time") {
-                std::time_t time = std::chrono::system_clock::to_time_t(
-                    std::chrono::system_clock::now()
-                );
-                std::stringstream timestring;
-                timestring << std::put_time(std::localtime(&time), "%X");
-                wildcard = timestring.str();
-            } else {
-                wildcard = "";
-            }
-            saveString.replace(pos, endPos + 1, wildcard);
+            saveString.replace(pos, endPos + 1, parseFilenameWildcard(wildcard));
 
             pos = saveString.find(DEFAULT_PDF_WILDCARD_START, pos);
         }
