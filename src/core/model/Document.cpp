@@ -134,9 +134,9 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
 
 std::string Document::parseFilenameWildcard(const std::string& wildcard) {
     if (wildcard == "name") {
-        fs::path pdfPath = pdfFilepath.filename();
+        fs::path pdfPath = this->pdfFilepath.filename();
         Util::clearExtensions(pdfPath, ".pdf");
-        return pdfPath;
+        return pdfPath.u8string();
     }
     if (wildcard == "date" || wildcard == "time") {
         std::time_t time = std::chrono::system_clock::to_time_t(
