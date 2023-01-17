@@ -1,5 +1,9 @@
 #include "Document.h"
 
+#include <sstream>  // for stringstream
+#include <string>   // for string
+#include <chrono>   // for time
+#include <iomanip>  // put_time
 #include <ctime>    // for size_t, localtime, strf...
 #include <utility>  // for move, pair
 
@@ -136,13 +140,13 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         return p;
     }
     if (!pdfFilepath.empty()) {
-        fs::path p = pdfFilepath.filename();
-        Util::clearExtensions(p, ".pdf");
+        fs::path pdfPath = pdfFilepath.filename();
+        Util::clearExtensions(pdfPath, ".pdf");
 
         // Build the pdf-filepath according to settings (replace wildcards)
-        std::string saveString = (defaultPfdName == "" ? static_cast<std::string>(p) : defaultPfdName);
-
+        std::string saveString = defaultPfdName;
         size_t pos = saveString.find(DEFAULT_PDF_WILDCARD_START);
+
         while (pos != std::string::npos) {
             size_t endPos = saveString.find(DEFAULT_PDF_WILDCARD_END, pos + 2);
             if (endPos == std::string::npos) {
@@ -153,13 +157,27 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
             std::string wildcard = saveString.substr(pos + 2, endPos - pos - 2);
             std::cout << wildcard << std::endl;
             if (wildcard == "name") { // additional wildcards can be implemented here
-                wildcard = p;
+                wildcard = pdfPath;
+            } else if (wildcard == "date") {
+                std::time_t time = std::chrono::system_clock::to_time_t(
+                    std::chrono::system_clock::now()
+                );
+                std::stringstream timestring;
+                timestring << std::put_time(std::localtime(&time), "%Y-%m-%d");
+                wildcard = timestring.str();
+            } else if (wildcard == "time") {
+                std::time_t time = std::chrono::system_clock::to_time_t(
+                    std::chrono::system_clock::now()
+                );
+                std::stringstream timestring;
+                timestring << std::put_time(std::localtime(&time), "%X");
+                wildcard = timestring.str();
             } else {
                 wildcard = "";
             }
             saveString.replace(pos, endPos + 1, wildcard);
 
-            pos = saveString.find(DEFAULT_PDF_WILDCARD_START);
+            pos = saveString.find(DEFAULT_PDF_WILDCARD_START, pos);
         }
 
         if (!this->attachPdf) {
