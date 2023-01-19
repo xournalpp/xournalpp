@@ -521,16 +521,6 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 
 
 auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
-    using HorizontalLineFlavour = union {
-      struct {
-        int dx : 32;
-        int width : 32;
-      } data;
-      gulong raw;
-    };
-    static_assert(sizeof(HorizontalLineFlavour{}.data) == sizeof(HorizontalLineFlavour{}.raw),
-                  "Size of packed representation of HorizontalLineFlavour does not match size of integer representation");
-
     GtkWidget* theWidget = control->getWindow()->getXournal()->getWidget();
     GdkWindow* theWindow = gtk_widget_get_window(theWidget);
 
@@ -555,7 +545,7 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         int width = static_cast<int>(std::round(range.getWidth() * zoom));
         int height = 5; // Five is the default cursor size used elsewhere in the app.
         gint dx = x - static_cast<int>(range.getX() * zoom) - page->getX();
-        if (this->currentCursorFlavour == HorizontalLineFlavour{{dx, width}}.raw) {
+        if (this->currentCursorFlavour == (dx << (sizeof(gint) * 4) | width)) {
             return nullptr;
         }
 
@@ -579,7 +569,7 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         this->currentCursor = CRSR_HORIZONTALLINE;
         // Shift the 'dx' and 'width' variables together to check if we need
         // to re-draw the cursor.
-        this->currentCursorFlavour = HorizontalLineFlavour{{dx, width}}.raw;
+        this->currentCursorFlavour = (gulong) (dx << (sizeof(gint) * 4) | width);
         return gdkCursor; 
     }
     
