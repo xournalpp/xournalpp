@@ -18,6 +18,7 @@
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "util/Color.h"                      // for argb_to_GdkRGBA, rgb_to_...
 #include "util/pixbuf-utils.h"               // for xoj_pixbuf_get_from_surface
+#include "util/raii/CairoWrappers.h"
 
 #include "XournalView.h"  // for XournalView
 #include "PageView.h"
@@ -555,20 +556,18 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         xoj::util::CairoSurfaceSPtr crCursor(
             cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height), xoj::util::adopt
         );
-        cairo_t* cr = cairo_create(crCursor.get());
 
-        cairo_set_line_width(cr, 1.2);
-        Util::cairo_set_source_rgbi(cr, this->control->getSettings()->getSelectionColor());
-        cairo_move_to(cr, 0, 0);
-        cairo_line_to(cr, width, 0);
-        cairo_close_path(cr);
-        cairo_stroke(cr);
-        cairo_destroy(cr);
-        GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor.get(), 0, 0, width, height);
-        crCursor.release();
+        xoj::util::CairoSPtr cr(cairo_create(crCursor.get()), xoj::util::adopt);
+
+        cairo_set_line_width(cr.get(), 1.2);
+        Util::cairo_set_source_rgbi(cr.get(), this->control->getSettings()->getSelectionColor());
+        cairo_move_to(cr.get(), 0, 0);
+        cairo_line_to(cr.get(), width, 0);
+        cairo_close_path(cr.get());
+        cairo_stroke(cr.get());
+        xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(xoj_pixbuf_get_from_surface(crCursor.get(), 0, 0, width, height), xoj::util::adopt);
         GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
-                gtk_widget_get_display(theWidget), pixbuf, dx, 0);
-        g_object_unref(pixbuf);
+                gtk_widget_get_display(theWidget), pixbuf.get(), dx, 0);
         this->currentCursor = CRSR_HORIZONTALLINE;
         // Shift the 'dx' and 'width' variables together to check if we need
         // to re-draw the cursor.

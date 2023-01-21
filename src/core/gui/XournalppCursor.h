@@ -16,8 +16,6 @@
 
 #include "control/tools/CursorSelectionType.h"  // for CursorSelectionType
 #include "gui/inputdevices/InputEvents.h"       // for InputDeviceClass, INP...
-#include "XournalView.h"
-#include "MainWindow.h"
 
 class Control;
 
