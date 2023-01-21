@@ -22,11 +22,12 @@ class LegacyRedrawable;
 class Stroke;
 class ToolHandler;
 class UndoRedoHandler;
+class Settings;
 
 class EraseHandler {
 public:
     EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
-                 LegacyRedrawable* view);
+                 LegacyRedrawable* view, Settings* settings);
     virtual ~EraseHandler();
 
 public:
@@ -40,6 +41,7 @@ private:
     PageRef page;
     ToolHandler* handler;
     LegacyRedrawable* view;
+    Settings* settings;
     Document* doc;
     UndoRedoHandler* undo;
 

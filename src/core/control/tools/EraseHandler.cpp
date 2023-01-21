@@ -9,6 +9,7 @@
 
 #include "control/ToolEnums.h"            // for ERASER_TYPE_DELETE_STROKE
 #include "control/ToolHandler.h"          // for ToolHandler
+#include "control/settings/Settings.h"    // for Settings
 #include "gui/LegacyRedrawable.h"         // for Redrawable
 #include "model/Document.h"               // for Document
 #include "model/Element.h"                // for Element, ELEMENT_STROKE
@@ -24,10 +25,11 @@
 #include "util/SmallVector.h"             // for SmallVector
 
 EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
-                           LegacyRedrawable* view):
+                           LegacyRedrawable* view, Settings* settings):
         page(page),
         handler(handler),
         view(view),
+        settings(settings),
         doc(doc),
         undo(undo),
         eraseDeleteUndoAction(nullptr),
@@ -98,7 +100,8 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
             }
 
             const double paddingCoeff = PADDING_COEFFICIENT_CAP[s->getStrokeCapStyle()];
-            const PaddedBox paddedEraserBox{{x, y}, halfEraserSize, halfEraserSize + paddingCoeff * s->getWidth()};
+            const double widthMultiplier = s->hasPressure() ? settings->getPressureMultiplier() : 1.;
+            const PaddedBox paddedEraserBox{{x, y}, halfEraserSize, widthMultiplier * s->getWidth(), paddingCoeff};
             auto intersectionParameters = s->intersectWithPaddedBox(paddedEraserBox);
 
             if (intersectionParameters.empty()) {
@@ -131,7 +134,8 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
             return;
         }
         const double paddingCoeff = PADDING_COEFFICIENT_CAP[s->getStrokeCapStyle()];
-        const PaddedBox paddedEraserBox{{x, y}, halfEraserSize, halfEraserSize + paddingCoeff * s->getWidth()};
+        const double widthMultiplier = s->hasPressure() ? settings->getPressureMultiplier() : 1.;
+        const PaddedBox paddedEraserBox{{x, y}, halfEraserSize, widthMultiplier * s->getWidth(), paddingCoeff};
         erasable->erase(paddedEraserBox, range);
     }
 }

@@ -193,32 +193,32 @@ TEST(ErasableStroke, testIntersectWithPaddedBox) {
     std::array<PaddedBox, 10> boxes;
     std::array<IntersectionParametersContainer, 10> expectedResult;
     // Start in padding. Pass by inner box. End in padding, not going toward inner box.
-    boxes[0] = {Point(1, 1), 0.5, 3};
+    boxes[0] = {Point(1, 1), 0.5, 2.5};
     expectedResult[0] = {{0, 0.0}, {1, 2.0 / 3.0}};
     // Start on inner box boundary. Pass inside. End in padding, not going toward inner box.
-    boxes[1] = {Point(1, 1), 1, 3};
+    boxes[1] = {Point(1, 1), 1, 2};
     expectedResult[1] = {{0, 0.0}, {1, 2.0 / 3.0}};
     // Start in padding. Pass by inner box. End in padding going toward inner box
-    boxes[2] = {Point(1, 1), 1.9, 3.5};
+    boxes[2] = {Point(1, 1), 1.9, 1.6};
     expectedResult[2] = {{0, 0.0}, {1, 5.0 / 6.0}, {9, 5.0 / 6.0}, {10, 1.0}};
     // Start on padding boundary, pass by inner box
-    boxes[3] = {Point(1, 1), 0.5, 1};
+    boxes[3] = {Point(1, 1), 0.5, 0.5};
     expectedResult[3] = {{0, 0.0}, {0, 1.0}};
     // Intersect padding, not inner box
-    boxes[4] = {Point(2, 11), 1, 2};
+    boxes[4] = {Point(2, 11), 1, 1};
     expectedResult[4] = {};
     // Intersect padding and inner box
-    boxes[5] = {Point(2, 8), 1, 4};
+    boxes[5] = {Point(2, 8), 1, 3};
     expectedResult[5] = {{3, 0.25}, {6, 0.5}};
     // Intersect inner box and end in padding boundary
-    boxes[6] = {Point(2.5, 3.5), 0.5, 2};
+    boxes[6] = {Point(2.5, 3.5), 0.5, 1.5};
     expectedResult[6] = {{9, 0.75}, {10, 1.0}};
 
-    boxes[7] = {Point(6, 6), 1.1, 2};
+    boxes[7] = {Point(6, 6), 1.1, 0.9};
     expectedResult[7] = {{2, 1.0}, {3, .75}, {7, 0.5}, {9, 1.0}};
-    boxes[8] = {Point(7, 7.5), 1, 1.5};
+    boxes[8] = {Point(7, 7.5), 1, 0.5};
     expectedResult[8] = {{7, .25}, {9, 0.25}};
-    boxes[9] = {Point(6, 8), 0.5, 1};
+    boxes[9] = {Point(6, 8), 0.5, 0.5};
     expectedResult[9] = {};
 
     for (unsigned int i = 0; i < boxes.size(); ++i) {

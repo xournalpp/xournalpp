@@ -46,7 +46,7 @@ enum StrokeCapStyle {
     // and in EraserHandler::PADDING_COEFFICIENT_CAP
 
 class ErasableStroke;
-struct PaddedBox;
+class PaddedBox;
 struct PathParameter;
 template <class T, size_t N>
 class SmallVector;

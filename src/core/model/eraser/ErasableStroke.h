@@ -28,7 +28,7 @@
 #include "config-debug.h"  // for DEBUG_ERASABLE_STROKE_BOXES
 
 class Range;
-struct PaddedBox;
+class PaddedBox;
 
 class ErasableStroke {
 public:
