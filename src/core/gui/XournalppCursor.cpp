@@ -542,8 +542,8 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
     if (page) {
         Range range = page->getVisiblePart();
         double zoom = control->getZoomControl()->getZoom();
-        int width = static_cast<int>(std::round(range.getWidth() * zoom));
-        int height = 5; // Five is the default cursor size used elsewhere in the app.
+        const int width = static_cast<int>(std::round(range.getWidth() * zoom));
+        const int height = 5; // Five is the default cursor size used elsewhere in the app.
         gint dx = x - static_cast<int>(range.getX() * zoom) - page->getX();
         // 64-bit field containing the current value of dx and width to check
         // if we need to re-draw the cursor
