@@ -525,6 +525,7 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
     GtkWidget* theWidget = control->getWindow()->getXournal()->getWidget();
     GdkWindow* theWindow = gtk_widget_get_window(theWidget);
 
+    // Get the position of the mouse cursor within the window
     gint x, y;
     GdkDevice *mouse_device;
 
@@ -543,22 +544,21 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
     if (page) {
         Range range = page->getVisiblePart();
         double zoom = control->getZoomControl()->getZoom();
-        const int width = static_cast<int>(std::round(range.getWidth() * zoom));
+        const auto width = static_cast<int32_t>(std::round(range.getWidth() * zoom));
         const int height = 5; // Five is the default cursor size used elsewhere in the app.
-        gint dx = x - static_cast<int>(range.getX() * zoom) - page->getX();
+        auto dx = (int32_t) (x - static_cast<int32_t>(range.getX() * zoom) - page->getX());
         // 64-bit field containing the current value of dx and width to check
         // if we need to re-draw the cursor
-        auto flavour = (gulong) (dx << (sizeof(gint) * 4) | width);
+        auto flavour = (int64_t) (dx << (sizeof(gint) * 4) | width);
         if (this->currentCursorFlavour == flavour) {
             return nullptr;
         }
 
+        // Re-draw the cursor if necessary 
         xoj::util::CairoSurfaceSPtr crCursor(
             cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height), xoj::util::adopt
         );
-
         xoj::util::CairoSPtr cr(cairo_create(crCursor.get()), xoj::util::adopt);
-
         cairo_set_line_width(cr.get(), 1.2);
         Util::cairo_set_source_rgbi(cr.get(), this->control->getSettings()->getSelectionColor());
         cairo_move_to(cr.get(), 0, 0);
@@ -570,7 +570,7 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
                 gtk_widget_get_display(theWidget), pixbuf.get(), dx, 0);
         this->currentCursor = CRSR_HORIZONTALLINE;
         // Shift the 'dx' and 'width' variables together to check if we need
-        // to re-draw the cursor.
+        // to re-draw the cursor next time this function is called.
         this->currentCursorFlavour = flavour;
         return gdkCursor; 
     }
