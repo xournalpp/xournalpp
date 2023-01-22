@@ -102,7 +102,7 @@
 #include "PageBackgroundChangeController.h"  // for Page...
 #include "PrintHandler.h"                    // for print
 #include "UndoRedoController.h"              // for Undo...
-#include "config-dev.h"                      // for SETT...
+#include "config-dev.h"                      // for TOOLBAR_CONFIG_FILE
 #include "config.h"                          // for PROJ...
 
 using std::string;
@@ -1235,7 +1235,7 @@ void Control::manageToolbars() {
 
     this->win->updateToolbarMenu();
 
-    auto filepath = Util::getConfigFile(TOOLBAR_CONFIG);
+    auto filepath = Util::getConfigFile(TOOLBAR_CONFIG_FILE);
     this->win->getToolbarModel()->save(filepath);
 }
 
