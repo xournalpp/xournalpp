@@ -210,6 +210,20 @@ auto Util::getAutosaveFilepath() -> fs::path {
     return p;
 }
 
+auto Util::getConfigSearchPath() -> std::vector<fs::path> {
+    auto paths = std::vector<fs::path>{};
+
+    if (auto user_dir = g_get_user_config_dir(); user_dir != nullptr) {
+        paths.emplace_back(fs::path(user_dir) / CONFIG_FOLDER_NAME);
+    }
+
+    for (auto* dir = g_get_system_config_dirs(); *dir != nullptr; ++dir) {
+        paths.emplace_back(fs::path(*dir) / CONFIG_FOLDER_NAME);
+    }
+
+    return paths;
+}
+
 auto Util::getConfigFolder() -> fs::path {
     auto p = fs::u8path(g_get_user_config_dir());
     return (p /= CONFIG_FOLDER_NAME);

@@ -21,6 +21,7 @@
 #include <glib.h>                   // for guint
 #include <gtk/gtk.h>                // for GtkLabel
 
+#include "control/SearchPath.h"             // for SearchPath
 #include "control/ToolEnums.h"              // for ToolSize, ToolType
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "enums/ActionGroup.enum.h"         // for ActionGroup
@@ -437,6 +438,7 @@ private:
     bool isBlocking;
 
     GladeSearchpath* gladeSearchPath;
+    std::unique_ptr<SearchPath> configSearchPath;
 
     MetadataManager* metadata;
 

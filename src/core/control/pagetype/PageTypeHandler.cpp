@@ -3,16 +3,19 @@
 #include <utility>
 
 #include "gui/GladeSearchpath.h"
+#include "util/PathUtil.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 
 using std::string;
 
-PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath) {
-    auto file = gladeSearchPath->findFile("", "pagetemplates.ini");
+PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath, SearchPath* configSearchPath) {
+    auto file = configSearchPath->findFile("pagetemplates.ini");
+    if (file.empty()) {
+        file = gladeSearchPath->findFile("", "pagetemplates.ini");
+    }
 
-    if (!parseIni(file) || this->types.size() < 5) {
-
+    if (!parseIni(file)) {
         string msg = FS(_F("Could not load pagetemplates.ini file"));
         XojMsgBox::showErrorToUser(nullptr, msg);
 
@@ -34,7 +37,9 @@ PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath) {
 }
 
 PageTypeHandler::~PageTypeHandler() {
-    for (PageTypeInfo* t: types) { delete t; }
+    for (PageTypeInfo* t: types) {
+        delete t;
+    }
     types.clear();
 }
 
@@ -49,7 +54,9 @@ auto PageTypeHandler::parseIni(fs::path const& filepath) -> bool {
     gsize length = 0;
     gchar** groups = g_key_file_get_groups(config, &length);
 
-    for (gsize i = 0; i < length; i++) { loadFormat(config, groups[i]); }
+    for (gsize i = 0; i < length; i++) {
+        loadFormat(config, groups[i]);
+    }
 
     g_strfreev(groups);
     g_key_file_free(config);

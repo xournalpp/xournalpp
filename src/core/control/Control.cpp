@@ -115,6 +115,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->isBlocking = false;
 
     this->gladeSearchPath = gladeSearchPath;
+    this->configSearchPath = std::make_unique<SearchPath>(Util::getConfigSearchPath());
 
     this->metadata = new MetadataManager();
     this->cursor = new XournalppCursor(this);
@@ -129,7 +130,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
 
     this->applyPreferredLanguage();
 
-    this->pageTypes = new PageTypeHandler(gladeSearchPath);
+    this->pageTypes = new PageTypeHandler(gladeSearchPath, configSearchPath.get());
     this->newPageType = std::make_unique<PageTypeMenu>(this->pageTypes, settings, true, true);
 
     this->audioController = new AudioController(this->settings, this);
