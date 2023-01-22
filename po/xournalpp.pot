@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-12 08:19+0000\n"
+"POT-Creation-Date: 2023-01-22 17:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -373,7 +373,7 @@ msgstr ""
 msgid "Delete layer"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Delete this layer"
 msgstr ""
 
@@ -802,7 +802,7 @@ msgstr ""
 msgid "Images"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Insert a copy of the current layer below"
 msgstr ""
 
@@ -867,7 +867,7 @@ msgstr ""
 msgid "Layer Combo"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:82
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Layer Preview"
 msgstr ""
 
@@ -875,7 +875,7 @@ msgstr ""
 msgid "Layer {1}"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:82
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Layerstack Preview"
 msgstr ""
 
@@ -1376,11 +1376,11 @@ msgstr ""
 msgid "Supported files"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:76
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:77
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
 msgid "Swap the current layer with the one below"
 msgstr ""
 
