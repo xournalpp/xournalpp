@@ -124,8 +124,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->lastGroup = GROUP_NOGROUP;
     this->lastEnabled = false;
 
-    auto name = Util::getConfigFile(SETTINGS_XML_FILE);
-    this->settings = new Settings(std::move(name));
+    this->settings = new Settings(this->configSearchPath.get());
     this->settings->load();
 
     this->applyPreferredLanguage();

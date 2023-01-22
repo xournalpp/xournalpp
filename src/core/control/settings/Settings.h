@@ -23,6 +23,7 @@
 #include <libxml/tree.h>                  // for xmlNodePtr, xmlDocPtr
 #include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
 
+#include "control/SearchPath.h"                  // for SearchPath
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
 #include "model/Font.h"                          // for XojFont
 #include "util/Color.h"                          // for Color
@@ -92,7 +93,7 @@ private:
 
 class Settings {
 public:
-    /*[[implicit]]*/ Settings(fs::path filepath);
+    /* explicit(false) */ Settings(SearchPath* configSearchPath);
     Settings(const Settings& settings) = delete;
     void operator=(const Settings& settings) = delete;
     virtual ~Settings();
@@ -563,6 +564,11 @@ private:
      *  The config filepath
      */
     fs::path filepath;
+
+    /**
+     * A SearchPath representing the filepaths to search for a config files
+     */
+    SearchPath* configSearchPath;
 
 private:
     /**
