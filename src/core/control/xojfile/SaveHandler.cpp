@@ -125,8 +125,8 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
         for (int i = 0; i < pointCount; i++) {
             values[i + 1] = s->getPoint(i).z;
         }
-
         stroke->setAttrib("width", values, pointCount);
+        delete [] values;
     } else {
         stroke->setAttrib("width", s->getWidth());
     }
