@@ -197,7 +197,7 @@ void Stroke::readSerialized(ObjectInputStream& in) {
     int count{};
     in.readData(reinterpret_cast<void**>(&p), &count);
     this->points = std::vector<Point>{p, p + count};
-    g_free(p);
+    delete [] p;
     this->lineStyle.readSerialized(in);
 
     in.endObject();
