@@ -4,7 +4,7 @@
 
 #include "util/Rectangle.h"  // for Rectangle
 
-Point::Point(double x, double y): x(x), y(y) {}
+Point::Point(double x, double y): Point(x, y, Point::NO_PRESSURE) {}
 
 Point::Point(double x, double y, double z): x(x), y(y), z(z) {}
 
