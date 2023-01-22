@@ -410,9 +410,9 @@ void LoadHandler::parseBgPixmap() {
         if (!readResult) {
             return;
         }
-        std::string& imgData = *readResult;
+        const std::string& imgData = *readResult;
 
-        GBytes* attachment = g_bytes_new_take(imgData.data(), imgData.size());
+        GBytes* attachment = g_bytes_new_with_free_func(imgData.data(), imgData.size(), nullptr, nullptr);
         GInputStream* inputStream = g_memory_input_stream_new_from_bytes(attachment);
 
         GError* error = nullptr;
@@ -420,6 +420,8 @@ void LoadHandler::parseBgPixmap() {
         img.loadFile(inputStream, filepath, &error);
 
         g_input_stream_close(inputStream, nullptr, nullptr);
+        g_object_unref(inputStream);
+        g_bytes_unref(attachment);
 
         if (error) {
             error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % filepath.string() % error->message));
