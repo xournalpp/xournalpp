@@ -23,6 +23,7 @@
 
 #include "control/ToolEnums.h"              // for ToolSize, ToolType
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
+#include "control/settings/ViewModes.h"     // for ViewModeId
 #include "enums/ActionGroup.enum.h"         // for ActionGroup
 #include "enums/ActionType.enum.h"          // for ActionType
 #include "model/DocumentHandler.h"          // for DocumentHandler
@@ -189,7 +190,7 @@ public:
     /**
      * Loads the view mode (hide/show menu-,tool-&sidebar)
      */
-    bool loadViewMode(size_t mode);
+    bool loadViewMode(ViewModeId mode);
 
     bool isFullscreen();
 

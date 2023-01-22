@@ -15,8 +15,10 @@
 #include <vector>           // for vector
 #include <unordered_map>    // for unordered_map
 
+using ViewModeId = size_t;
+
 // reserved default view mode ids
-enum ViewModeId {
+enum PresetViewModeIds {
     VIEW_MODE_DEFAULT = 0,
     VIEW_MODE_FULLSCREEN = 1,
     VIEW_MODE_PRESENTATION = 2

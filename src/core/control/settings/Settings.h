@@ -120,7 +120,7 @@ private:
 
 public:
     // View Mode
-    bool loadViewMode(size_t mode);
+    bool loadViewMode(ViewModeId mode);
 
     // Getter- / Setter
     const std::vector<ViewMode>& getViewModes() const;
@@ -345,7 +345,7 @@ public:
 
     ButtonConfig* getButtonConfig(int id);
 
-    void setViewMode(size_t mode, ViewMode ViewMode);
+    void setViewMode(ViewModeId mode, ViewMode ViewMode);
 
     Color getBorderColor() const;
     void setBorderColor(Color color);

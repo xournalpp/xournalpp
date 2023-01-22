@@ -168,7 +168,7 @@ void Settings::loadDefault() {
             new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
     // default view modes
-    this->activeViewMode = ViewModeId::VIEW_MODE_DEFAULT;
+    this->activeViewMode = PresetViewModeIds::VIEW_MODE_DEFAULT;
     this->viewModes = std::vector<ViewMode>{VIEW_MODE_STRUCT_DEFAULT, VIEW_MODE_STRUCT_FULLSCREEN, VIEW_MODE_STRUCT_PRESENTATION};
 
     this->touchZoomStartThreshold = 0.0;
@@ -229,7 +229,7 @@ void Settings::loadDefault() {
     /**/
 }
 
-auto Settings::loadViewMode(size_t mode) -> bool {
+auto Settings::loadViewMode(ViewModeId mode) -> bool {
     if (mode < 0 || mode >= viewModes.size()) {
         return false;
     }
@@ -470,11 +470,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
         this->autosaveTimeout = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultViewModeAttributes")) == 0) {
-        this->viewModes.at(ViewModeId::VIEW_MODE_DEFAULT) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("fullscreenViewModeAttributes")) == 0) {
-        this->viewModes.at(ViewModeId::VIEW_MODE_FULLSCREEN) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationViewModeAttributes")) == 0) {
-        this->viewModes.at(ViewModeId::VIEW_MODE_PRESENTATION) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchZoomStartThreshold")) == 0) {
         this->touchZoomStartThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageRerenderThreshold")) == 0) {
@@ -932,9 +932,9 @@ void Settings::save() {
     ATTACH_COMMENT("The icon theme, allowed values are \"disabled\", \"onDrawOfLastPage\", and \"onScrollOfLastPage\"");
     SAVE_BOOL_PROP(presentationMode);
 
-    auto defaultViewModeAttributes = viewModeToSettingsString(viewModes.at(ViewModeId::VIEW_MODE_DEFAULT));
-    auto fullscreenViewModeAttributes = viewModeToSettingsString(viewModes.at(ViewModeId::VIEW_MODE_FULLSCREEN));
-    auto presentationViewModeAttributes = viewModeToSettingsString(viewModes.at(ViewModeId::VIEW_MODE_PRESENTATION));
+    auto defaultViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT));
+    auto fullscreenViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN));
+    auto presentationViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION));
     SAVE_STRING_PROP(defaultViewModeAttributes);
     ATTACH_COMMENT("Which GUI elements are shown in default view mode, separated by a colon (,)");
     SAVE_STRING_PROP(fullscreenViewModeAttributes);
@@ -1588,13 +1588,13 @@ void Settings::setPresentationMode(bool presentationMode) {
         return;
     }
     if (presentationMode) {
-        this->activeViewMode = ViewModeId::VIEW_MODE_PRESENTATION;
+        this->activeViewMode = PresetViewModeIds::VIEW_MODE_PRESENTATION;
     }
     this->presentationMode = presentationMode;
     save();
 }
 
-auto Settings::isPresentationMode() const -> bool { return this->activeViewMode == ViewModeId::VIEW_MODE_PRESENTATION; }
+auto Settings::isPresentationMode() const -> bool { return this->activeViewMode == PresetViewModeIds::VIEW_MODE_PRESENTATION; }
 
 void Settings::setPressureSensitivity(gboolean presureSensitivity) {
     if (this->pressureSensitivity == presureSensitivity) {
@@ -1863,7 +1863,7 @@ auto Settings::getButtonConfig(int id) -> ButtonConfig* {
     return this->buttonConfig[id];
 }
 
-void Settings::setViewMode(size_t mode, ViewMode viewMode) {
+void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
     viewModes.at(mode) = viewMode;
 }
 

@@ -2895,7 +2895,7 @@ void Control::showAbout() {
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
 
-auto Control::loadViewMode(size_t mode) -> bool {
+auto Control::loadViewMode(ViewModeId mode) -> bool {
     if (!settings->loadViewMode(mode)) {
         return false;
     }
