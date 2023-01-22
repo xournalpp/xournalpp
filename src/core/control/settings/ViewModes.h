@@ -16,9 +16,11 @@
 #include <unordered_map>    // for unordered_map
 
 // reserved default view mode ids
-constexpr auto VIEW_MODE_DEFAULT = 0;
-constexpr auto VIEW_MODE_FULLSCREEN = 1;
-constexpr auto VIEW_MODE_PRESENTATION = 2;
+enum ViewModeId {
+    VIEW_MODE_DEFAULT = 0,
+    VIEW_MODE_FULLSCREEN = 1,
+    VIEW_MODE_PRESENTATION = 2
+};
 
 // view mode attributes
 constexpr auto ATTR_GO_FULLSCREEN = "goFullscren";
@@ -32,6 +34,11 @@ struct ViewMode {
     bool showToolbar{false};
     bool showSidebar{false};
 };
+
+// default ViewModes
+constexpr ViewMode VIEW_MODE_STRUCT_DEFAULT{false, true, true, true};
+constexpr ViewMode VIEW_MODE_STRUCT_FULLSCREEN{true, false, true, true};
+constexpr ViewMode VIEW_MODE_STRUCT_PRESENTATION{true, false, true, false};
 
 struct ViewMode settingsStringToViewMode(std::string viewModeString);
 const std::string viewModeToSettingsString(struct ViewMode viewMode);
