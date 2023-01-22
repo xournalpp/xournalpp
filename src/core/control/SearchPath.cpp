@@ -7,7 +7,7 @@
 
 SearchPath::SearchPath(std::vector<fs::path> searchPaths): m_paths{std::move(searchPaths)} {}
 
-auto SearchPath::findFile(const fs::path& relativePath) -> fs::path {
+auto SearchPath::findFile(const fs::path& relativePath) const -> fs::path {
     for (auto& path: m_paths) {
         auto p = path / relativePath;
         if (fs::exists(p)) {
@@ -17,3 +17,7 @@ auto SearchPath::findFile(const fs::path& relativePath) -> fs::path {
 
     return fs::path{};
 };
+
+auto SearchPath::getPaths() const -> std::vector<fs::path> {
+    return m_paths;
+}

@@ -7,9 +7,9 @@
 #include "gui/MainWindow.h"
 
 #ifdef ENABLE_PLUGINS
+#include <algorithm>
 #include <tuple>
 #include <utility>
-#include <algorithm>
 
 #include "control/settings/Settings.h"
 #include "gui/GladeSearchpath.h"
@@ -97,10 +97,16 @@ auto emplace_sorted_if_not_exists(std::vector<std::unique_ptr<Plugin>>& plugins,
 
 PluginController::PluginController(Control* control): control(control) {
 #ifdef ENABLE_PLUGINS
-    // Todo(fabian) move those search paths into PathUtils
-    auto searchPath = control->getGladeSearchPath()->getFirstSearchPath();
-    auto searchPaths = {fs::weakly_canonical(searchPath /= "../plugins"),  //
-                        Util::getConfigSubfolder("plugins")};
+    auto searchPaths = std::vector<fs::path>{};
+    searchPaths.push_back(fs::weakly_canonical(control->getGladeSearchPath()->getFirstSearchPath() /= "../plugins"));
+
+    auto configPaths = control->getConfigSearchPath()->getPaths();
+    for (auto& configPath: configPaths) {
+        auto p = configPath / "plugins";
+        if (fs::exists(p)) {
+            searchPaths.push_back(p);
+        }
+    }
 
     for (auto&& path: searchPaths) {
         auto loaded_plugins = load_available_plugins_from(path, control);
@@ -142,7 +148,9 @@ PluginController::PluginController(Control* control): control(control) {
 
 void PluginController::registerToolbar() {
 #ifdef ENABLE_PLUGINS
-    for (auto&& p: this->plugins) { p->registerToolbar(); }
+    for (auto&& p: this->plugins) {
+        p->registerToolbar();
+    }
 #endif
 }
 
@@ -157,7 +165,9 @@ void PluginController::showPluginManager() const {
 void PluginController::registerMenu() {
 #ifdef ENABLE_PLUGINS
     GtkWidget* menuPlugin = control->getWindow()->get("menuPlugin");
-    for (auto&& p: this->plugins) { p->registerMenu(control->getGtkWindow(), menuPlugin); }
+    for (auto&& p: this->plugins) {
+        p->registerMenu(control->getGtkWindow(), menuPlugin);
+    }
     gtk_widget_show_all(menuPlugin);
 #else
     // If plugins are disabled - disable menu also

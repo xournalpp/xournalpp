@@ -21,8 +21,8 @@ class SearchPath {
 public:
     SearchPath(std::vector<fs::path> searchPaths);
 
-    auto findFile(const fs::path& relativePath) -> fs::path;
-
+    auto findFile(const fs::path& relativePath) const -> fs::path;
+    auto getPaths() const -> std::vector<fs::path>;
 private:
     std::vector<fs::path> m_paths;
 };
