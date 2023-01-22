@@ -42,8 +42,8 @@
 
 using std::string;
 
-MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
-        GladeGui(gladeSearchPath, "main.glade", "mainWindow") {
+MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, SearchPath* configSearchPath, Control* control):
+        GladeGui(gladeSearchPath, "main.glade", "mainWindow"), configSearchPath{configSearchPath} {
     this->control = control;
     this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
     this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
@@ -84,26 +84,17 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
     this->toolbar = std::make_unique<ToolMenuHandler>(this->control, this, GTK_WINDOW(getWindow()));
 
-    auto file = gladeSearchPath->findFile("", TOOLBAR_CONFIG_FILE);
+    auto file = configSearchPath->findFile(TOOLBAR_CONFIG_FILE);
+    if (file.empty()) {
+        file = gladeSearchPath->findFile("", TOOLBAR_CONFIG_FILE);
+    }
 
     ToolbarModel* tbModel = this->toolbar->getModel();
-
     if (!tbModel->parse(file, true)) {
-
-        string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
+        string msg = FS(_F("Could not parse toolbar.ini file: {1}\n"
                            "No Toolbars will be available") %
                         file.u8string());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
-    }
-
-    file = Util::getConfigFile(TOOLBAR_CONFIG_FILE);
-    if (fs::exists(file)) {
-        if (!tbModel->parse(file, false)) {
-            string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
-                               "Toolbars will not be available") %
-                            file.u8string());
-            XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
-        }
     }
 
     createToolbarAndMenu();

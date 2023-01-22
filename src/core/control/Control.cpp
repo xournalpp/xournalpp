@@ -107,7 +107,7 @@
 
 using std::string;
 
-Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp(gtkApp) {
+Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, SearchPath* configSearchPath): gtkApp(gtkApp) {
     this->recent = new RecentManager();
     this->undoRedo = new UndoRedoHandler(this);
     this->recent->addListener(this);
@@ -115,7 +115,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->isBlocking = false;
 
     this->gladeSearchPath = gladeSearchPath;
-    this->configSearchPath = std::make_unique<SearchPath>(Util::getConfigSearchPath());
+    this->configSearchPath = configSearchPath;
 
     this->metadata = new MetadataManager();
     this->cursor = new XournalppCursor(this);
@@ -124,12 +124,12 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->lastGroup = GROUP_NOGROUP;
     this->lastEnabled = false;
 
-    this->settings = new Settings(this->configSearchPath.get());
+    this->settings = new Settings(this->configSearchPath);
     this->settings->load();
 
     this->applyPreferredLanguage();
 
-    this->pageTypes = new PageTypeHandler(gladeSearchPath, configSearchPath.get());
+    this->pageTypes = new PageTypeHandler(gladeSearchPath, configSearchPath);
     this->newPageType = std::make_unique<PageTypeMenu>(this->pageTypes, settings, true, true);
 
     this->audioController = new AudioController(this->settings, this);
@@ -1235,7 +1235,7 @@ void Control::manageToolbars() {
 
     this->win->updateToolbarMenu();
 
-    auto filepath = Util::getConfigFile(TOOLBAR_CONFIG_FILE);
+    auto filepath = configSearchPath->findFile(TOOLBAR_CONFIG_FILE);
     this->win->getToolbarModel()->save(filepath);
 }
 
@@ -3229,6 +3229,7 @@ auto Control::getTextEditor() -> TextEditor* {
 }
 
 auto Control::getGladeSearchPath() const -> GladeSearchpath* { return this->gladeSearchPath; }
+auto Control::getConfigSearchPath() const -> SearchPath* { return this->configSearchPath; }
 
 auto Control::getRecentManager() const -> RecentManager* { return recent; }
 

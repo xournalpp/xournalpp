@@ -21,6 +21,7 @@
 #include <glib.h>         // for gpointer, gboolean, gint
 #include <gtk/gtk.h>      // for GtkWidget, GtkCheckMenu...
 
+#include "control/SearchPath.h"               // for ConfigSearchPath
 #include "control/layer/LayerCtrlListener.h"  // for LayerCtrlListener
 #include "model/Font.h"                       // for XojFont
 #include "util/raii/GObjectSPtr.h"
@@ -42,7 +43,7 @@ class GladeSearchpath;
 
 class MainWindow: public GladeGui, public LayerCtrlListener {
 public:
-    MainWindow(GladeSearchpath* gladeSearchPath, Control* control);
+    MainWindow(GladeSearchpath* gladeSearchPath, SearchPath* configSearchPath, Control* control);
     ~MainWindow() override;
 
     // LayerCtrlListener
@@ -51,6 +52,7 @@ public:
     void layerVisibilityChanged() override;
 
     FloatingToolbox* floatingToolbox;
+
 public:
     void show(GtkWindow* parent) override;
 
@@ -175,6 +177,8 @@ private:
 
 private:
     Control* control;
+
+    SearchPath* configSearchPath;
 
     XournalView* xournal = nullptr;
     GtkWidget* winXournal = nullptr;

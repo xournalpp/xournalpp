@@ -74,7 +74,7 @@ class Control:
         public ClipboardListener,
         public ProgressListener {
 public:
-    Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath);
+    Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, SearchPath* configSearchPath);
     Control(Control const&) = delete;
     Control(Control&&) = delete;
     auto operator=(Control const&) -> Control& = delete;
@@ -241,6 +241,7 @@ public:
     TextEditor* getTextEditor();
 
     GladeSearchpath* getGladeSearchPath() const;
+    SearchPath* getConfigSearchPath() const;
 
     void disableSidebarTmp(bool disabled);
 
@@ -438,7 +439,7 @@ private:
     bool isBlocking;
 
     GladeSearchpath* gladeSearchPath;
-    std::unique_ptr<SearchPath> configSearchPath;
+    SearchPath* configSearchPath;
 
     MetadataManager* metadata;
 

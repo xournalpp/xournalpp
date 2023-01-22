@@ -54,7 +54,7 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
 
     this->clearToolbarsFromDragAndDrop();
 
-    auto file = Util::getConfigFile(TOOLBAR_CONFIG_FILE);
+    auto file = control->getConfigSearchPath()->findFile(TOOLBAR_CONFIG_FILE);
     win->getToolbarModel()->save(file);
     win->floatingToolbox->hide();
 }
