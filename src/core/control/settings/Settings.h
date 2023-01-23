@@ -878,7 +878,7 @@ private:
     /**
      * View-modes. Predefined: 0=default, 1=fullscreen, 2=presentation
      */
-    size_t activeViewMode;
+    ViewModeId activeViewMode;
     std::vector<ViewMode> viewModes;
 
     /**
