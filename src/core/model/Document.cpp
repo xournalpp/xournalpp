@@ -170,8 +170,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
             }
 
             std::string wildcard = saveString.substr(pos + 2, endPos - pos - 2);
-            saveString.replace(pos, endPos + 1, parseFilenameWildcard(wildcard));
-
+            saveString.replace(pos, endPos + 1 - pos, parseFilenameWildcard(wildcard));
             pos = saveString.find(DEFAULT_PDF_WILDCARD_START, pos);
         }
 
