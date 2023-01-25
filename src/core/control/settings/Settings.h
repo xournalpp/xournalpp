@@ -30,6 +30,7 @@
 #include "LatexSettings.h"  // for LatexSettings
 #include "SettingsEnums.h"  // for InputDeviceTypeOption
 #include "filesystem.h"     // for path
+#include "ViewModes.h"      // for ViewModes
 
 struct Palette;
 
@@ -118,7 +119,12 @@ private:
     void loadButtonConfig();
 
 public:
+    // View Mode
+    bool loadViewMode(ViewModeId mode);
+
     // Getter- / Setter
+    const std::vector<ViewMode>& getViewModes() const;
+
     bool isPressureSensitivity() const;
     void setPressureSensitivity(gboolean presureSensitivity);
 
@@ -202,6 +208,9 @@ public:
     int getMainWndWidth() const;
     int getMainWndHeight() const;
     bool isMainWndMaximized() const;
+
+    bool isFullscreen() const;
+    void setIsFullscreen(bool isFullscreen);
 
     bool isSidebarVisible() const;
     void setSidebarVisible(bool visible);
@@ -336,11 +345,7 @@ public:
 
     ButtonConfig* getButtonConfig(int id);
 
-    std::string const& getFullscreenHideElements() const;
-    void setFullscreenHideElements(std::string elements);
-
-    std::string const& getPresentationHideElements() const;
-    void setPresentationHideElements(std::string elements);
+    void setViewMode(ViewModeId mode, ViewMode ViewMode);
 
     Color getBorderColor() const;
     void setBorderColor(Color color);
@@ -585,6 +590,11 @@ private:
      * If the touch zoom gestures are enabled
      */
     bool zoomGesturesEnabled{};
+
+    /**
+     *  If fullscreen is active
+     */
+    bool fullscreenActive{};
 
     /**
      *  If the sidebar is visible
@@ -866,11 +876,10 @@ private:
     ButtonConfig* buttonConfig[BUTTON_COUNT]{};
 
     /**
-     * Which gui elements are hidden if you are in Fullscreen mode,
-     * separated by a colon (,)
+     * View-modes. Predefined: 0=default, 1=fullscreen, 2=presentation
      */
-    std::string fullscreenHideElements;
-    std::string presentationHideElements;
+    ViewModeId activeViewMode;
+    std::vector<ViewMode> viewModes;
 
     /**
      *  The count of pages which will be cached

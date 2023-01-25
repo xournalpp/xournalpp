@@ -33,6 +33,7 @@
 #include "control/settings/PageTemplateSettings.h"               // for Page...
 #include "control/settings/Settings.h"                           // for Sett...
 #include "control/settings/SettingsEnums.h"                      // for Button
+#include "control/settings/ViewModes.h"                          // for ViewM..
 #include "control/tools/EditSelection.h"                         // for Edit...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
@@ -886,7 +887,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             break;
 
         case ACTION_FULLSCREEN:
-            setFullscreen(enabled);
+            setViewFullscreenMode(enabled);
             break;
 
         case ACTION_TOGGLE_PAIRS_PARITY: {
@@ -1616,8 +1617,18 @@ void Control::setViewPairedPages(bool enabled) {
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
+void Control::setViewFullscreenMode(bool enabled) {
+    if (enabled) {
+        this->loadViewMode(VIEW_MODE_FULLSCREEN);
+    } else {
+        this->loadViewMode(VIEW_MODE_DEFAULT);
+    }
+}
+
 void Control::setViewPresentationMode(bool enabled) {
     if (enabled) {
+        this->loadViewMode(VIEW_MODE_PRESENTATION);
+
         bool success = zoom->updateZoomPresentationValue();
         if (!success) {
             g_warning("Error calculating zoom value");
@@ -1625,6 +1636,8 @@ void Control::setViewPresentationMode(bool enabled) {
             return;
         }
     } else {
+        this->loadViewMode(VIEW_MODE_DEFAULT);
+
         if (settings->isViewFixedRows()) {
             setViewRows(settings->getViewRows());
         } else {
@@ -2880,6 +2893,17 @@ auto Control::askToReplace(fs::path const& filepath) const -> bool {
 void Control::showAbout() {
     AboutDialog dlg(this->gladeSearchPath);
     dlg.show(GTK_WINDOW(this->win->getWindow()));
+}
+
+auto Control::loadViewMode(ViewModeId mode) -> bool {
+    if (!settings->loadViewMode(mode)) {
+        return false;
+    }
+    this->win->setMenubarVisible(settings->isMenubarVisible());
+    this->win->setToolbarVisible(settings->isToolbarVisible());
+    this->win->setSidebarVisible(settings->isSidebarVisible());
+    setFullscreen(settings->isFullscreen());
+    return false;
 }
 
 void Control::clipboardCutCopyEnabled(bool enabled) {

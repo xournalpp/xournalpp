@@ -3589,9 +3589,9 @@ This setting can make it easier to draw with touch. </property>
                                         <property name="can-focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbHideFullscreenMenubar">
-                                            <property name="label" translatable="yes">Hide Menubar</property>
-                                            <property name="name">cbHideFullscreenMenubar</property>
+                                          <object class="GtkCheckButton" id="cbShowFullscreenMenubar">
+                                            <property name="label" translatable="yes">Show Menubar</property>
+                                            <property name="name">cbShowFullscreenMenubar</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
@@ -3605,9 +3605,25 @@ This setting can make it easier to draw with touch. </property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbHideFullscreenSidebar">
-                                            <property name="label" translatable="yes">Hide Sidebar</property>
-                                            <property name="name">cbHideFullscreenSidebar</property>
+                                          <object class="GtkCheckButton" id="cbShowFullscreenToolbar">
+                                            <property name="label" translatable="yes">Show Toolbar</property>
+                                            <property name="name">cbShowFullscreenToolbar</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw-indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbShowFullscreenSidebar">
+                                            <property name="label" translatable="yes">Show Sidebar</property>
+                                            <property name="name">cbShowFullscreenSidebar</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
@@ -3656,9 +3672,9 @@ This setting can make it easier to draw with touch. </property>
                                         <property name="can-focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbHidePresentationMenubar">
-                                            <property name="label" translatable="yes">Hide Menubar</property>
-                                            <property name="name">cbHidePresentationMenubar</property>
+                                          <object class="GtkCheckButton" id="cbShowPresentationMenubar">
+                                            <property name="label" translatable="yes">Show Menubar</property>
+                                            <property name="name">cbShowPresentationMenubar</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
@@ -3672,9 +3688,41 @@ This setting can make it easier to draw with touch. </property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbHidePresentationSidebar">
-                                            <property name="label" translatable="yes">Hide Sidebar</property>
-                                            <property name="name">cbHidePresentationSidebar</property>
+                                          <object class="GtkCheckButton" id="cbShowPresentationToolbar">
+                                            <property name="label" translatable="yes">Show Toolbar</property>
+                                            <property name="name">cbShowPresentationToolbar</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw-indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbShowPresentationSidebar">
+                                            <property name="label" translatable="yes">Show Sidebar</property>
+                                            <property name="name">cbShowPresentationSidebar</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw-indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbPresentationGoFullscreen">
+                                            <property name="label" translatable="yes">Go Fullscreen</property>
+                                            <property name="name">cbPresentationGoFullscreen</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>

@@ -59,9 +59,6 @@ void FullscreenHandler::hideWidget(MainWindow* win, const std::string& widgetNam
 
 void FullscreenHandler::enableFullscreen(MainWindow* win) {
     gtk_window_fullscreen(static_cast<GtkWindow*>(*win));
-
-    string hideWidgets = settings->getFullscreenHideElements();
-    for (const string& s: StringUtils::split(hideWidgets, ',')) { hideWidget(win, s); }
 }
 
 void FullscreenHandler::disableFullscreen(MainWindow* win) {

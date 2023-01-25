@@ -78,6 +78,7 @@ public:
 
     XournalView* getXournal() const;
 
+    void setMenubarVisible(bool visible);
     void setSidebarVisible(bool visible);
     void setToolbarVisible(bool visible);
 

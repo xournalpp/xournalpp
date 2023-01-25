@@ -513,6 +513,15 @@ auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control
     return true;
 }
 
+void MainWindow::setMenubarVisible(bool visible) {
+    GtkWidget* menu = get("mainMenubar");
+    if (visible && !gtk_widget_is_visible(menu)) {
+        toggleMenuBar(this);
+    } else if (!visible && gtk_widget_is_visible(menu)) {
+        toggleMenuBar(this);
+    }
+}
+
 void MainWindow::setSidebarVisible(bool visible) {
     Settings* settings = control->getSettings();
 

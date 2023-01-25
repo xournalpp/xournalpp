@@ -20,9 +20,9 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"  // for getConfigFile
-#include "util/Util.h"      // for PRECISION_FORMAT_...
-#include "util/i18n.h"      // for _
+#include "util/PathUtil.h"                          // for getConfigFile
+#include "util/Util.h"                              // for PRECISION_FORMAT_...
+#include "util/i18n.h"                              // for _
 
 #include "ButtonConfig.h"  // for ButtonConfig
 #include "config-dev.h"    // for PALETTE_FILE
@@ -89,6 +89,8 @@ void Settings::loadDefault() {
 
     this->mainWndWidth = 800;
     this->mainWndHeight = 600;
+
+    this->fullscreenActive = false;
 
     this->showSidebar = true;
     this->sidebarWidth = 150;
@@ -165,8 +167,9 @@ void Settings::loadDefault() {
     this->buttonConfig[BUTTON_STYLUS_TWO] =
             new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
-    this->fullscreenHideElements = "mainMenubar";
-    this->presentationHideElements = "mainMenubar,sidebarContents";
+    // default view modes
+    this->activeViewMode = PresetViewModeIds::VIEW_MODE_DEFAULT;
+    this->viewModes = std::vector<ViewMode>{VIEW_MODE_STRUCT_DEFAULT, VIEW_MODE_STRUCT_FULLSCREEN, VIEW_MODE_STRUCT_PRESENTATION};
 
     this->touchZoomStartThreshold = 0.0;
 
@@ -224,6 +227,23 @@ void Settings::loadDefault() {
     this->stabilizerMass = 5.0;
     this->stabilizerFinalizeStroke = true;
     /**/
+}
+
+auto Settings::loadViewMode(ViewModeId mode) -> bool {
+    if (mode < 0 || mode >= viewModes.size()) {
+        return false;
+    }
+    auto viewMode = viewModes.at(mode);
+    fullscreenActive = viewMode.goFullscreen;
+    menubarVisible = viewMode.showMenubar;
+    showToolbar = viewMode.showToolbar;
+    showSidebar = viewMode.showSidebar;
+    this->activeViewMode = mode;
+    return true;
+}
+
+auto Settings::getViewModes() const -> const std::vector<ViewMode>& {
+    return this->viewModes;
 }
 
 /**
@@ -449,10 +469,12 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
         this->autosaveTimeout = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("fullscreenHideElements")) == 0) {
-        this->fullscreenHideElements = reinterpret_cast<const char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationHideElements")) == 0) {
-        this->presentationHideElements = reinterpret_cast<const char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultViewModeAttributes")) == 0) {
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("fullscreenViewModeAttributes")) == 0) {
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationViewModeAttributes")) == 0) {
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchZoomStartThreshold")) == 0) {
         this->touchZoomStartThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageRerenderThreshold")) == 0) {
@@ -910,11 +932,15 @@ void Settings::save() {
     ATTACH_COMMENT("The icon theme, allowed values are \"disabled\", \"onDrawOfLastPage\", and \"onScrollOfLastPage\"");
     SAVE_BOOL_PROP(presentationMode);
 
-    SAVE_STRING_PROP(fullscreenHideElements);
-    ATTACH_COMMENT("Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)");
-
-    SAVE_STRING_PROP(presentationHideElements);
-    ATTACH_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
+    auto defaultViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT));
+    auto fullscreenViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN));
+    auto presentationViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION));
+    SAVE_STRING_PROP(defaultViewModeAttributes);
+    ATTACH_COMMENT("Which GUI elements are shown in default view mode, separated by a colon (,)");
+    SAVE_STRING_PROP(fullscreenViewModeAttributes);
+    ATTACH_COMMENT("Which GUI elements are shown in fullscreen view mode, separated by a colon (,)");
+    SAVE_STRING_PROP(presentationViewModeAttributes);
+    ATTACH_COMMENT("Which GUI elements are shown in presentation view mode, separated by a colon (,)");
 
     xmlNode = saveProperty("stylusCursorType", stylusCursorTypeToString(this->stylusCursorType), root);
     ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"");
@@ -1561,12 +1587,14 @@ void Settings::setPresentationMode(bool presentationMode) {
     if (this->presentationMode == presentationMode) {
         return;
     }
-
+    if (presentationMode) {
+        this->activeViewMode = PresetViewModeIds::VIEW_MODE_PRESENTATION;
+    }
     this->presentationMode = presentationMode;
     save();
 }
 
-auto Settings::isPresentationMode() const -> bool { return this->presentationMode; }
+auto Settings::isPresentationMode() const -> bool { return this->activeViewMode == PresetViewModeIds::VIEW_MODE_PRESENTATION; }
 
 void Settings::setPressureSensitivity(gboolean presureSensitivity) {
     if (this->pressureSensitivity == presureSensitivity) {
@@ -1760,6 +1788,12 @@ void Settings::setAreStockIconsUsed(bool use) {
 
 auto Settings::areStockIconsUsed() const -> bool { return this->useStockIcons; }
 
+auto Settings::isFullscreen() const -> bool { return this->fullscreenActive; }
+
+void Settings::setIsFullscreen(bool isFullscreen) {
+    this->fullscreenActive = isFullscreen;
+}
+
 auto Settings::isSidebarVisible() const -> bool { return this->showSidebar; }
 
 void Settings::setSidebarVisible(bool visible) {
@@ -1829,18 +1863,8 @@ auto Settings::getButtonConfig(int id) -> ButtonConfig* {
     return this->buttonConfig[id];
 }
 
-auto Settings::getFullscreenHideElements() const -> string const& { return this->fullscreenHideElements; }
-
-void Settings::setFullscreenHideElements(string elements) {
-    this->fullscreenHideElements = std::move(elements);
-    save();
-}
-
-auto Settings::getPresentationHideElements() const -> string const& { return this->presentationHideElements; }
-
-void Settings::setPresentationHideElements(string elements) {
-    this->presentationHideElements = std::move(elements);
-    save();
+void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
+    viewModes.at(mode) = viewMode;
 }
 
 auto Settings::getTouchZoomStartThreshold() const -> double { return this->touchZoomStartThreshold; }
