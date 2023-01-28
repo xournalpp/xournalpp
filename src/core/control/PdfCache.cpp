@@ -11,7 +11,9 @@
 
 #include "control/settings/Settings.h"  // for Settings
 #include "pdf/base/XojPdfDocument.h"    // for XojPdfDocument
+#include "util/Range.h"                 // for Range
 #include "util/i18n.h"                  // for _
+#include "view/Mask.h"                  // for Mask
 
 class PdfCacheEntry {
 public:
@@ -23,40 +25,27 @@ public:
      * quality rendering).
      *
      * @param popplerPage
-     * @param img is the result of rendering popplerPage
-     * @param zoom is the zoom at which the page was rendered.
+     * @param buffer is the result of rendering popplerPage
      */
-    PdfCacheEntry(XojPdfPageSPtr popplerPage, cairo_surface_t* img, double zoom) {
-        this->popplerPage = std::move(popplerPage);
-        this->rendered = img;
-        this->zoom = zoom;
-    }
+    PdfCacheEntry(XojPdfPageSPtr popplerPage, xoj::view::Mask&& buffer):
+            popplerPage(std::move(popplerPage)), buffer(std::forward<xoj::view::Mask>(buffer)) {}
 
-    ~PdfCacheEntry() {
-        this->popplerPage = nullptr;
-        cairo_surface_destroy(this->rendered);
-        this->rendered = nullptr;
-    }
+    ~PdfCacheEntry() = default;
 
-    double zoom;
     XojPdfPageSPtr popplerPage;
-    cairo_surface_t* rendered;
+    xoj::view::Mask buffer;
 };
 
 PdfCache::PdfCache(const XojPdfDocument& doc, Settings* settings): pdfDocument(doc) { updateSettings(settings); }
 
-PdfCache::~PdfCache() {
-    clearCache();
-    this->size = 0;
-}
+PdfCache::~PdfCache() = default;
 
 void PdfCache::setRefreshThreshold(double threshold) { this->zoomRefreshThreshold = threshold; }
 
 void PdfCache::setMaxSize(size_t newSize) {
-    this->size = newSize;
-    while (this->data.size() > this->size) {
-        delete this->data.back();
-        this->data.pop_back();
+    this->maxSize = newSize;
+    if (this->data.size() > this->maxSize) {
+        this->data.resize(this->maxSize);
     }
 }
 
@@ -67,43 +56,39 @@ void PdfCache::updateSettings(Settings* settings) {
     }
 }
 
-void PdfCache::clearCache() {
-    for (PdfCacheEntry* e: this->data) { delete e; }
-    this->data.clear();
-}
+void PdfCache::clearCache() { this->data.clear(); }
 
-auto PdfCache::lookup(size_t pdfPageNo) const -> PdfCacheEntry* {
-    for (PdfCacheEntry* e: this->data) {
+auto PdfCache::lookup(size_t pdfPageNo) const -> const PdfCacheEntry* {
+    for (auto& e: this->data) {
         if (static_cast<size_t>(e->popplerPage->getPageId()) == pdfPageNo) {
-            return e;
+            return e.get();
         }
     }
 
     return nullptr;
 }
 
-PdfCacheEntry* PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img, double zoom) {
-    while (this->data.size() > this->size) {
-        delete this->data.back();
-        this->data.pop_back();
+auto PdfCache::cache(XojPdfPageSPtr popplerPage, xoj::view::Mask&& buffer) -> const PdfCacheEntry* {
+    if (this->data.size() > this->maxSize) {
+        this->data.resize(this->maxSize);
     }
 
-    auto* ne = new PdfCacheEntry(std::move(popplerPage), img, zoom);
-    this->data.push_front(ne);
+    this->data.emplace_front(
+            std::make_unique<PdfCacheEntry>(std::move(popplerPage), std::forward<xoj::view::Mask>(buffer)));
 
-    return ne;
+    return this->data.front().get();
 }
 
 void PdfCache::render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWidth, double pageHeight) {
     std::lock_guard<std::mutex> lock(this->renderMutex);
 
-    PdfCacheEntry* cacheResult = lookup(pdfPageNo);
+    const PdfCacheEntry* cacheResult = lookup(pdfPageNo);
 
     bool needsRefresh = cacheResult == nullptr;
 
     if (!needsRefresh) {
-        double averagedZoom = (zoom + cacheResult->zoom) / 2.0;
-        double percentZoomChange = std::abs(cacheResult->zoom - zoom) * 100.0 / averagedZoom;
+        double averagedZoom = (zoom + cacheResult->buffer.getZoom()) / 2.0;
+        double percentZoomChange = std::abs(cacheResult->buffer.getZoom() - zoom) * 100.0 / averagedZoom;
 
         // If we do have a cached result, is its rendering quality
         // acceptable for our current zoom?
@@ -121,27 +106,13 @@ void PdfCache::render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWid
             return;
         }
 
-        auto* img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-                                               static_cast<int>(std::ceil(popplerPage->getWidth() * renderZoom)),
-                                               static_cast<int>(std::ceil(popplerPage->getHeight() * renderZoom)));
-        /**
-         * We can not only rely on cairo_surface_set_device_scale here, as Poppler does not use this scale properly and
-         * renders as if 1 pixel = 1 page coordinate unit.
-         **/
-        cairo_t* cr2 = cairo_create(img);
-        cairo_scale(cr2, renderZoom, renderZoom);
-        popplerPage->render(cr2);
-        cairo_destroy(cr2);
-
-        // but we still use it here to set the scale properly for the upcoming blitting.
-        cairo_surface_set_device_scale(img, renderZoom, renderZoom);
-
-
-        cacheResult = cache(popplerPage, img, renderZoom);
+        xoj::view::Mask buffer(cairo_get_target(cr), Range(0, 0, popplerPage->getWidth(), popplerPage->getHeight()),
+                               renderZoom, CAIRO_CONTENT_COLOR_ALPHA);
+        popplerPage->render(buffer.get());
+        cacheResult = cache(popplerPage, std::move(buffer));
     }
 
-    cairo_set_source_surface(cr, cacheResult->rendered, 0, 0);
-    cairo_paint(cr);
+    cacheResult->buffer.paintTo(cr);
 }
 
 void PdfCache::renderMissingPdfPage(cairo_t* cr, double pageWidth, double pageHeight) {
