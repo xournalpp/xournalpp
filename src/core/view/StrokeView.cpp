@@ -9,11 +9,11 @@
 #include "model/Stroke.h"     // for Stroke, StrokeTool::HIGHLIGHTER
 #include "util/Color.h"       // for cairo_set_source_rgbi
 #include "util/Rectangle.h"   // for Rectangle
+#include "view/Mask.h"        // for Mask
 #include "view/View.h"        // for Context, OPACITY_NO_AUDIO, view
 
 #include "ErasableStrokeView.h"  // for ErasableStrokeView
 #include "StrokeViewHelper.h"
-#include "config-debug.h"        // for DEBUG_SHOW_MASK
 #include "filesystem.h"          // for path
 
 class ErasableStroke;
@@ -46,9 +46,9 @@ void StrokeView::draw(const Context& ctx) const {
     // The mask will be colorblind
     const bool noColor = ctx.noColor || useMask;
 
-    cairo_save(ctx.cr);
+    xoj::util::CairoSaveGuard saveGuard(ctx.cr);
 
-    cairo_surface_t* surfMask = nullptr;
+    Mask mask;
 
     // If not using a mask, draw directly onto the given cairo context
     cairo_t* cr = ctx.cr;
@@ -60,50 +60,20 @@ void StrokeView::draw(const Context& ctx) const {
          */
 
         /**
-         * The mask needs to have to right resolution: the number of pixels per page coordinate units.
-         *
-         * This value can be recovered from the given canvas: the mask must have the exact same resolution as the canvas
-         * This resolution combines both the surface scale and the transformation matrix zoom ratio.
+         * Infer the zoom level from context.
          */
-        double scaleX;
-        double scaleY;
-        cairo_surface_get_device_scale(cairo_get_target(ctx.cr), &scaleX, &scaleY);
+        cairo_matrix_t matrix;
+        cairo_get_matrix(ctx.cr, &matrix);
+        // We assume the matrix is diagonal (i.e. only scaling, no rotation)
+        assert(matrix.xy == 0 && matrix.yx == 0);
 
-        {  // Multiply the scale using the transformation matrix
-            cairo_matrix_t matrix;
-            cairo_get_matrix(ctx.cr, &matrix);
-            // We assume the matrix is diagonal (i.e. only scaling, no rotation)
-            assert(matrix.xy == 0 && matrix.yx == 0);
-
-            scaleX *= matrix.xx;
-            scaleY *= matrix.yy;
-        }
+        const double zoom = std::max(matrix.xx, matrix.yy);
 
         /**
-         * Create a surface tailored to the stroke's bounding box
+         * Create a mask tailored to the stroke's bounding box
          */
-        Rectangle<double> box = s->boundingRect();
-
-        // Use integral offsets to avoid unnecessary antialiasing upon blitting the mask
-        const double offsetX = -std::floor(box.x * scaleX);
-        const double offsetY = -std::floor(box.y * scaleY);
-
-        const int width = static_cast<int>(std::ceil((box.x + box.width) * scaleX) + offsetX);
-        const int height = static_cast<int>(std::ceil((box.y + box.height) * scaleY) + offsetY);
-
-        surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
-
-        // Apply offset and scaling
-        cairo_surface_set_device_offset(surfMask, offsetX, offsetY);
-        cairo_surface_set_device_scale(surfMask, scaleX, scaleY);
-
-        // Get a context to draw on our mask
-        cr = cairo_create(surfMask);
-
-#ifdef DEBUG_SHOW_MASK
-        cairo_set_source_rgba(cr, 1, 1, 1, 0.3);
-        cairo_paint(cr);
-#endif
+        mask = Mask(cairo_get_target(ctx.cr), Range(s->boundingRect()), zoom);
+        cr = mask.get();
     }
 
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
@@ -194,13 +164,6 @@ void StrokeView::draw(const Context& ctx) const {
 
         Util::cairo_set_source_rgbi(ctx.cr, s->getColor(), groupAlpha);
 
-        cairo_mask_surface(ctx.cr, surfMask, 0, 0);
-
-        cairo_destroy(cr);
-        cr = nullptr;
-        cairo_surface_destroy(surfMask);
-        surfMask = nullptr;
+        mask.blitTo(ctx.cr);
     }
-
-    cairo_restore(ctx.cr);
 }

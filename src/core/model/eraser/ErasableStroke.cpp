@@ -25,20 +25,7 @@ ErasableStroke::ErasableStroke(const Stroke& stroke): stroke(stroke) {
     closedStroke = pts.size() >= 3 && pts.front().lineLengthTo(pts.back()) < CLOSED_STROKE_DISTANCE;
 }
 
-#ifdef DEBUG_ERASABLE_STROKE_BOXES
-ErasableStroke::~ErasableStroke() {
-    if (this->surfDebug) {
-        cairo_surface_destroy(this->surfDebug);
-        this->surfDebug = nullptr;
-    }
-    if (this->crDebug) {
-        cairo_destroy(this->crDebug);
-        this->crDebug = nullptr;
-    }
-}
-#else
 ErasableStroke::~ErasableStroke() = default;
-#endif
 
 /**
  * Erasure works as follows:
@@ -355,7 +342,7 @@ void ErasableStroke::addOverlapsToRange(const std::vector<SubSection>& subsectio
                     overlapTrees[j].populate(*it2, this->stroke);
                 }
 #ifdef DEBUG_ERASABLE_STROKE_BOXES
-                overlapTrees[i].addOverlapsToRange(overlapTrees[j], halfWidth, range, crDebug);
+                overlapTrees[i].addOverlapsToRange(overlapTrees[j], halfWidth, range, debugMask.get());
 #else
                 overlapTrees[i].addOverlapsToRange(overlapTrees[j], halfWidth, range);
 #endif
