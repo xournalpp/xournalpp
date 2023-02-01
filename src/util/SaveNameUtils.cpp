@@ -1,7 +1,8 @@
 #include "util/SaveNameUtils.h"
 
+#include <sstream>            // for stringstream
 #include <chrono>             // for time
-#include <iomanip>            // put_time
+#include <iomanip>            // for put_time
 
 #include "util/PathUtil.h"    // for clearExtensions
 

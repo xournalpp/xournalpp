@@ -19,7 +19,7 @@
 constexpr auto DEFAULT_WILDCARD_START = "%{";
 constexpr auto DEFAULT_WILDCARD_END = "}";
 
-// wildcards
+// wildcard options
 constexpr auto WILDCARD_NAME = "name"; // default store name, e.g. original pdf name
 constexpr auto WILDCARD_DATE = "date"; // current date
 constexpr auto WILDCARD_TIME = "time"; // current time
