@@ -19,10 +19,15 @@
 constexpr auto DEFAULT_WILDCARD_START = "%{";
 constexpr auto DEFAULT_WILDCARD_END = "}";
 
+// wildcards
+constexpr auto WILDCARD_NAME = "name"; // default store name, e.g. original pdf name
+constexpr auto WILDCARD_DATE = "date"; // current date
+constexpr auto WILDCARD_TIME = "time"; // current time
+
 class SaveNameUtils {
 public:
     static std::string parseFilenameFromWildcardString(const std::string& wildcardString, fs::path defaultFilePath, bool attachPdf);
 
 private:
-    static std::string parseFilenameWildcard(const std::string& wildcard, fs::path defaultFilePath);
+    static std::string parseWildcard(const std::string& wildcard, fs::path defaultFilePath);
 };
