@@ -454,7 +454,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->defaultSaveName = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultPdfExportName")) == 0) {
         this->defaultPdfExportName = reinterpret_cast<const char*>(value);
-    }else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
         this->pluginEnabled = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginDisabled")) == 0) {
         this->pluginDisabled = reinterpret_cast<const char*>(value);

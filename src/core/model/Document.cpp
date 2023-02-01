@@ -17,6 +17,7 @@
 #include "pdf/base/XojPdfBookmarkIterator.h"  // for XojPdfBookmarkIterator
 #include "util/PathUtil.h"                    // for clearExtensions
 #include "util/PlaceholderString.h"           // for PlaceholderString
+#include "util/SaveNameUtils.h"               // for parseFilename
 #include "util/Util.h"                        // for npos
 #include "util/i18n.h"                        // for FS, _F
 
@@ -132,26 +133,7 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
-std::string Document::parseFilenameWildcard(const std::string& wildcard) {
-    if (wildcard == "name") {
-        fs::path pdfPath = this->pdfFilepath.filename();
-        Util::clearExtensions(pdfPath, ".pdf");
-        return pdfPath.u8string();
-    }
-    if (wildcard == "date" || wildcard == "time") {
-        std::time_t time = std::chrono::system_clock::to_time_t(
-            std::chrono::system_clock::now()
-        );
-        std::stringstream timestring;
-        timestring << std::put_time(std::localtime(&time),
-                                wildcard == "date" ? "%Y-%m-%d" : "%X");
-        return timestring.str();
-    } 
-    // not a valid wildcard
-    return "";
-}
-
-auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPfdName) -> fs::path {
+auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPdfName) -> fs::path {
     if (!filepath.empty()) {
         // This can be any extension
         fs::path p = filepath.filename();
@@ -159,25 +141,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         return p;
     }
     if (!pdfFilepath.empty()) {
-        // Build the pdf-filepath according to settings (replace wildcards)
-        std::string saveString = defaultPfdName;
-        size_t pos = saveString.find(DEFAULT_PDF_WILDCARD_START);
-
-        while (pos != std::string::npos) {
-            size_t endPos = saveString.find(DEFAULT_PDF_WILDCARD_END, pos + 2);
-            if (endPos == std::string::npos) {
-                break;
-            }
-
-            std::string wildcard = saveString.substr(pos + 2, endPos - pos - 2);
-            saveString.replace(pos, endPos + 1 - pos, parseFilenameWildcard(wildcard));
-            pos = saveString.find(DEFAULT_PDF_WILDCARD_START, pos);
-        }
-
-        if (!this->attachPdf) {
-            saveString += ".pdf";
-        }
-        return saveString;
+        return SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->pdfFilepath.filename(), this->attachPdf);
     }
 
 

@@ -33,9 +33,6 @@
 class DocumentHandler;
 class XojPdfBookmarkIterator;
 
-constexpr auto DEFAULT_PDF_WILDCARD_START = "%{";
-constexpr auto DEFAULT_PDF_WILDCARD_END = "}";
-
 class Document {
 public:
     Document(DocumentHandler* handler);
@@ -79,7 +76,6 @@ public:
     fs::path getPdfFilepath() const;
     fs::path createSaveFolder(fs::path lastSavePath);
     fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPfdName = "");
-    std::string parseFilenameWildcard(const std::string& wildcard);
 
     fs::path getEvMetadataFilename() const;
 

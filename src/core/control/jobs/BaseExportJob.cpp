@@ -69,7 +69,7 @@ auto BaseExportJob::showFilechooser() -> bool {
     Document* doc = control->getDocument();
     doc->lock();
     fs::path folder = doc->createSaveFolder(settings->getLastSavePath());
-    fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName(), /*defaultPfdName*/settings->getDefaultPdfExportName());
+    fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName(), settings->getDefaultPdfExportName());
     doc->unlock();
 
     gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
