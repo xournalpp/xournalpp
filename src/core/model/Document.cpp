@@ -141,7 +141,11 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         return p;
     }
     if (!pdfFilepath.empty()) {
-        return SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->pdfFilepath.filename(), this->attachPdf);
+        auto saveString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->pdfFilepath.filename());
+        if (!this->attachPdf) {
+            saveString += ".pdf";
+        }
+        return saveString;
     }
 
 

@@ -7,7 +7,7 @@
 #include "util/PathUtil.h"    // for clearExtensions
 
 
-auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardString, fs::path defaultFilePath, bool attachPdf) -> std::string {
+auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardString, fs::path defaultFilePath) -> std::string {
     std::string saveString = wildcardString;
     size_t pos = saveString.find(DEFAULT_WILDCARD_START);
 
@@ -23,9 +23,6 @@ auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardS
         pos = saveString.find(DEFAULT_WILDCARD_START, pos);
     }
 
-    if (!attachPdf) {
-        saveString += ".pdf";
-    }
     return saveString;
 }
 

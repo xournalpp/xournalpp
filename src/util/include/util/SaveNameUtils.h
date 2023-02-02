@@ -26,7 +26,7 @@ constexpr auto WILDCARD_TIME = "time"; // current time
 
 class SaveNameUtils {
 public:
-    static std::string parseFilenameFromWildcardString(const std::string& wildcardString, fs::path defaultFilePath, bool attachPdf);
+    static std::string parseFilenameFromWildcardString(const std::string& wildcardString, fs::path defaultFilePath);
 
 private:
     static std::string parseWildcard(const std::string& wildcard, fs::path defaultFilePath);
