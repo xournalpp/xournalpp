@@ -628,7 +628,6 @@ void XournalView::deleteSelection(EditSelection* sel) {
 
         clearSelection();
 
-        view->rerenderPage();
         repaintSelection(true);
     }
 }
