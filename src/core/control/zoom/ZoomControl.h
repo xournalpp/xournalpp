@@ -25,7 +25,6 @@ constexpr auto DEFAULT_ZOOM_MAX{7};
 constexpr auto DEFAULT_ZOOM_MIN{0.3};
 constexpr auto DEFAULT_ZOOM_STEP{0.1};
 constexpr auto DEFAULT_ZOOM_STEP_SCROLL{0.01};
-constexpr auto DEFAULT_PAGE_GAP{14.};
 
 enum ZoomDirection : bool { ZOOM_OUT = false, ZOOM_IN = true };
 
