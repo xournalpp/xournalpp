@@ -229,7 +229,6 @@ void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalV
     gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
     g_signal_connect(widget, "scroll-event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
     g_signal_connect(widget, "event", G_CALLBACK(onTouchpadPinchEvent), this);
-    g_signal_connect(window, "configure-event", G_CALLBACK(onWindowSizeChangedEvent), this);
     g_signal_connect(window, "size-allocate", G_CALLBACK(onWindowSizeChangedEvent), this);
     registerListener(this->control);
 }
@@ -282,8 +281,8 @@ auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
     }
 
     Rectangle widget_rect = getVisibleRect();
-    double zoom_fit_width = (widget_rect.width - DEFAULT_PAGE_GAP) / (page->getWidth() - DEFAULT_PAGE_GAP);
-    
+    double zoom_fit_width = (widget_rect.width - DEFAULT_PAGE_GAP) / (page->getWidth());
+
     if (zoom_fit_width < this->zoomMin || zoom_fit_width > this->zoomMax) {
         return false;
     }
