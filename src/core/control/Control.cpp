@@ -410,8 +410,6 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
 }
 
 void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled) {
-    // TODO set esc to leave fulscreen if nothing is selected! (or maybe ctrl esc)
-    
     if (layerController->actionPerformed(type)) {
         return;
     }
