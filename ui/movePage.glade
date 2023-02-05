@@ -2,7 +2,12 @@
 <!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
-  <object class="GtkAdjustment" id="adjustment1">
+  <object class="GtkAdjustment" id="adjustmentFrom">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentTo">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
@@ -87,7 +92,7 @@
                 <property name="text">0</property>
                 <property name="primary_icon_activatable">False</property>
                 <property name="secondary_icon_activatable">False</property>
-                <property name="adjustment">adjustment1</property>
+                <property name="adjustment">adjustmentFrom</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -95,7 +100,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label2">
+              <object class="GtkLabel" id="label-pageFrom">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">From page</property>
@@ -114,7 +119,7 @@
                 <property name="text">0</property>
                 <property name="primary_icon_activatable">False</property>
                 <property name="secondary_icon_activatable">False</property>
-                <property name="adjustment">adjustment1</property>
+                <property name="adjustment">adjustmentTo</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -122,7 +127,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label1">
+              <object class="GtkLabel" id="label-pageTo">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">To Page</property>

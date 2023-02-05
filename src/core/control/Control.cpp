@@ -46,6 +46,7 @@
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
 #include "gui/dialog/FillOpacityDialog.h"                        // for Fill...
+#include "gui/dialog/MovePageDialog.h"                           // for Move...
 #include "gui/dialog/FormatDialog.h"                             // for Form...
 #include "gui/dialog/GotoDialog.h"                               // for Goto...
 #include "gui/dialog/PageTemplateDialog.h"                       // for Page...
@@ -1152,7 +1153,15 @@ void Control::selectFillAlpha(bool pen) {
 }
 
 void Control::selectPageMoveTo() {
-    std::cout << "Page Move entry not implemented yet" << std::endl;
+    MovePageDialog dlg(gladeSearchPath, getCurrentPageNo(), int(this->doc->getPageCount()));
+
+    dlg.show(GTK_WINDOW(this->win->getWindow()));
+    auto oldPage = dlg.getSelectedPageFrom();
+    auto newPage = dlg.getSelectedPageTo();
+
+    if (oldPage > 0 && newPage > 0) {
+        this->movePage(size_t(oldPage - 1), size_t(newPage - 1));
+    }
 }
 
 void Control::clearSelectionEndText() {

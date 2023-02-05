@@ -10,6 +10,7 @@ MovePageDialog::MovePageDialog(GladeSearchpath* gladeSearchPath, int currentPage
     gtk_spin_button_set_range(GTK_SPIN_BUTTON(get("movePageFrom")), 1, maxPage);
     gtk_spin_button_set_range(GTK_SPIN_BUTTON(get("movePageTo")), 1, maxPage);
     // TODO set page from to current page
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("movePageFrom")), currentPage + 1);
 }
 
 MovePageDialog::~MovePageDialog() = default;
