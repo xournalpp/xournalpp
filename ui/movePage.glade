@@ -16,7 +16,7 @@
     <property name="name">movePageDialog</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Go to Page</property>
+    <property name="title" translatable="yes">Move Page</property>
     <property name="resizable">False</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>

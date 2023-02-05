@@ -400,6 +400,8 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     auto current = getCurrentPageNo();
     auto count = this->doc->getPageCount();
 
+    fireEnableAction(ACTION_MOVE_PAGE, count > 1);
+
     fireEnableAction(ACTION_GOTO_FIRST, current != 0);
     fireEnableAction(ACTION_GOTO_BACK, current != 0);
     fireEnableAction(ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE, current != 0);
