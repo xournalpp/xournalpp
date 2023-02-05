@@ -549,7 +549,7 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         auto dx = (int32_t) (x - static_cast<int32_t>(range.getX() * zoom) - page->getX());
         // 64-bit field containing the current value of dx and width to check
         // if we need to re-draw the cursor
-        auto flavour = (int64_t) (dx << (sizeof(gint) * 4) | width);
+        auto flavour = (static_cast<gulong>(dx) << (sizeof(decltype(width)) * 8)) | width;
         if (this->currentCursorFlavour == flavour) {
             return nullptr;
         }
