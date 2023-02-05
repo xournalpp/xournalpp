@@ -13,8 +13,9 @@
 
 #include <string>  // for string
 
+#include "control/Control.h"                    // for Control
 #include "model/PageRef.h"                      // for PageRef
-#include "undo/InsertDeletePageUndoAction.h"    // for ...s
+#include "undo/InsertDeletePageUndoAction.h"    // for InsertDeletePageUndoAction
 #include "UndoAction.h"                         // for UndoAction
 
 class Control;
