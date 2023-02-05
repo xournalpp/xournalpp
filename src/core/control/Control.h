@@ -217,6 +217,7 @@ public:
     void appendNewPdfPages();
     void insertPage(const PageRef& page, size_t position, bool shouldScrollToPage = true);
     void deletePage();
+    void movePage(size_t oldPos, size_t newPos);
 
     /**
      * Disable / enable delete page button

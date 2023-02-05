@@ -1442,6 +1442,28 @@ void Control::deletePage() {
     this->win->getXournal()->forceUpdatePagenumbers();
 }
 
+void Control::movePage(size_t oldPos, size_t newPos) {
+    Document* doc = getDocument();
+    if (oldPos == newPos || doc->getPageCount() <= 1 || oldPos > doc->getPageCount() || newPos > doc->getPageCount()) {
+        return;
+    }
+
+    doc->lock();
+    PageRef oldPage = doc->getPage(oldPos);
+    doc->deletePage(oldPos);
+    doc->insertPage(oldPage, newPos);
+    doc->unlock();
+
+    // TODO add UndoAction
+    //UndoRedoHandler* undo = getUndoRedoHandler();
+    //undo->addUndoAction(std::make_unique<SwapUndoAction>(oldPos - 1, true, oldPage, otherPage));
+
+    firePageDeleted(oldPos);
+    firePageInserted(newPos);
+    firePageSelected(newPos);
+    getScrollHandler()->scrollToPage(newPos);
+}
+
 void Control::duplicatePage() {
     auto page = getCurrentPage();
     if (!page) {
