@@ -1276,6 +1276,16 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkMenuItem" id="menuMovePage">
+                            <property name="name">menuMovePage</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">_Move Page to Page Number</property>
+                            <property name="use-underline">True</property>
+                            <signal name="activate" handler="ACTION_MOVE_PAGE" swapped="no"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem10">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>

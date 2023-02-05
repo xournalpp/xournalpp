@@ -535,6 +535,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         case ACTION_APPEND_NEW_PDF_PAGES:
             appendNewPdfPages();
             break;
+        case ACTION_MOVE_PAGE:
+            selectPageMoveTo();
+            break;
         case ACTION_NEW_PAGE_AT_END:
             insertNewPage(this->doc->getPageCount());
             break;
@@ -1146,6 +1149,10 @@ void Control::selectFillAlpha(bool pen) {
     } else {
         toolHandler->setHighlighterFill(alpha);
     }
+}
+
+void Control::selectPageMoveTo() {
+    std::cout << "Page Move entry not implemented yet" << std::endl;
 }
 
 void Control::clearSelectionEndText() {

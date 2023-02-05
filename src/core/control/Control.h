@@ -290,6 +290,7 @@ public:
     void help();
 
     void selectFillAlpha(bool pen);
+    void selectPageMoveTo();
 
     /**
      * @brief Initialize the all button tools based on the respective ButtonConfigs
