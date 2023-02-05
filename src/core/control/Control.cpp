@@ -82,6 +82,7 @@
 #include "undo/AddUndoAction.h"                                  // for AddU...
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
+#include "undo/MovePageUndoAction.h"                             // for Move...
 #include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
 #include "undo/UndoAction.h"                                     // for Undo...
 #include "util/Color.h"                                          // for oper...
@@ -1449,14 +1450,13 @@ void Control::movePage(size_t oldPos, size_t newPos) {
     }
 
     doc->lock();
-    PageRef oldPage = doc->getPage(oldPos);
+    PageRef page = doc->getPage(oldPos);
     doc->deletePage(oldPos);
-    doc->insertPage(oldPage, newPos);
+    doc->insertPage(page, newPos);
     doc->unlock();
 
-    // TODO add UndoAction
-    //UndoRedoHandler* undo = getUndoRedoHandler();
-    //undo->addUndoAction(std::make_unique<SwapUndoAction>(oldPos - 1, true, oldPage, otherPage));
+    UndoRedoHandler* undo = getUndoRedoHandler();
+    undo->addUndoAction(std::make_unique<MovePageUndoAction>(page, oldPos, newPos));
 
     firePageDeleted(oldPos);
     firePageInserted(newPos);
