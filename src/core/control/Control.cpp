@@ -64,6 +64,7 @@
 #include "model/Compass.h"                                       // for Comp...
 #include "model/Document.h"                                      // for Docu...
 #include "model/DocumentChangeType.h"                            // for DOCU...
+#include "model/DocumentListener.h"                              // for Docu...
 #include "model/Element.h"                                       // for Element
 #include "model/Font.h"                                          // for XojFont
 #include "model/Image.h"                                         // for Image
@@ -278,7 +279,9 @@ auto Control::checkChangedDocument(Control* control) -> bool {
     for (auto const& page: control->changedPages) {
         auto p = control->doc->indexOf(page);
         if (p != npos) {
-            control->firePageChanged(p);
+            for (DocumentListener* dl: control->changedDocumentListeners) {
+                dl->pageChanged(p);
+            }
         }
     }
     control->changedPages.clear();
@@ -3124,6 +3127,14 @@ void Control::setClipboardHandlerSelection(EditSelection* selection) {
     if (this->clipboardHandler) {
         this->clipboardHandler->setSelection(selection);
     }
+}
+
+void Control::addChangedDocumentListener(DocumentListener* dl) {
+    this->changedDocumentListeners.push_back(dl);
+}
+
+void Control::removeChangedDocumentListener(DocumentListener* dl) {
+    this->changedDocumentListeners.remove(dl);
 }
 
 void Control::setCopyCutEnabled(bool enabled) { this->clipboardHandler->setCopyCutEnabled(enabled); }

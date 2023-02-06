@@ -27,6 +27,7 @@
 #include "enums/ActionGroup.enum.h"         // for ActionGroup
 #include "enums/ActionType.enum.h"          // for ActionType
 #include "model/DocumentHandler.h"          // for DocumentHandler
+#include "model/DocumentListener.h"         // for DocumentListener
 #include "model/GeometryTool.h"             // for GeometryTool
 #include "model/PageRef.h"                  // for PageRef
 #include "undo/UndoRedoHandler.h"           // for UndoRedoHandler (ptr only)
@@ -260,6 +261,9 @@ public:
     void deleteLastAutosaveFile(fs::path newAutosaveFile);
     void setClipboardHandlerSelection(EditSelection* selection);
 
+    void addChangedDocumentListener(DocumentListener* dl);
+    void removeChangedDocumentListener(DocumentListener* dl);
+
     MetadataManager* getMetadataManager() const;
     RecentManager* getRecentManager() const;
     Settings* getSettings() const;
@@ -420,6 +424,11 @@ private:
      * The pages wihch has changed since the last update (for preview update)
      */
     std::vector<PageRef> changedPages;
+
+    /**
+     * DocumentListener instances that are to be updated by checkChangedDocument.
+     */
+    std::list<DocumentListener*> changedDocumentListeners;
 
     /**
      * Our clipboard abstraction

@@ -44,6 +44,7 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
     gtk_widget_show(this->iconViewPreview);
 
     registerListener(this->control);
+    this->control->addChangedDocumentListener(this);
 
     g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
 
@@ -58,6 +59,8 @@ SidebarPreviewBase::~SidebarPreviewBase() {
     this->layoutmanager = nullptr;
 
     this->scrollPreview = nullptr;
+
+    this->control->removeChangedDocumentListener(this);
 
     this->previews.clear();
 }
