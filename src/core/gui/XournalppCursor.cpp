@@ -566,6 +566,7 @@ auto XournalppCursor::createHorizontalLineCursor() -> GdkCursor* {
         cairo_close_path(cr.get());
         cairo_stroke(cr.get());
         xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(xoj_pixbuf_get_from_surface(crCursor.get(), 0, 0, width, height), xoj::util::adopt);
+        dx = std::clamp(dx, 0, width);
         GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
                 gtk_widget_get_display(theWidget), pixbuf.get(), dx, 0);
         this->currentCursor = CRSR_HORIZONTALLINE;
