@@ -13,6 +13,7 @@
 
 #include <array>
 #include <cassert>
+#include <memory>
 #include <stdexcept>
 
 #include "BasePointerIterator.h"
