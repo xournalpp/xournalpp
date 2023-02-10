@@ -328,11 +328,11 @@ void LayerController::switchToLay(Layer::Index layerId, bool hideShow, bool clea
 
     if (hideShow) {
         for (Layer::Index i = 1; i <= p->getLayerCount(); i++) { p->setLayerVisible(i, i <= layerId); }
-    }
 
-    // Repaint page
-    control->getWindow()->getXournal()->layerChanged(selectedPage);
-    fireLayerVisibilityChanged();
+        // Repaint page
+        control->getWindow()->getXournal()->layerChanged(selectedPage);
+        fireLayerVisibilityChanged();
+    }
 }
 
 /**

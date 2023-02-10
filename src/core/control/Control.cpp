@@ -1897,10 +1897,6 @@ void Control::selectTool(ToolType type) {
 
     toolHandler->selectTool(type);
     toolHandler->fireToolChanged();
-
-    if (win) {
-        (win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderPage();
-    }
 }
 
 void Control::selectDefaultTool() {

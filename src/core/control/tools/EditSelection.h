@@ -60,7 +60,7 @@ private:
     /**
      * Calculate the size from the element list
      */
-    void calcSizeFromElements(std::vector<Element*> elements);
+    auto calcSizeFromElements(std::vector<Element*> elements) -> Range;
 
 public:
     /**
