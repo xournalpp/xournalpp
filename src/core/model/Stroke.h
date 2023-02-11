@@ -108,9 +108,6 @@ public:
     void setFill(int fill);
 
     void addPoint(const Point& p);
-    void setLastPoint(double x, double y);
-    void setFirstPoint(double x, double y);
-    void setLastPoint(const Point& p);
     int getPointCount() const;
     void freeUnusedPointItems();
     std::vector<Point> const& getPointVector() const;

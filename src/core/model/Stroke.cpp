@@ -240,24 +240,6 @@ auto Stroke::isInSelection(ShapeContainer* container) const -> bool {
     return true;
 }
 
-void Stroke::setFirstPoint(double x, double y) {
-    if (!this->points.empty()) {
-        Point& p = this->points.front();
-        p.x = x;
-        p.y = y;
-        this->sizeCalculated = false;
-    }
-}
-
-void Stroke::setLastPoint(double x, double y) { setLastPoint({x, y}); }
-
-void Stroke::setLastPoint(const Point& p) {
-    if (!this->points.empty()) {
-        this->points.back() = p;
-        this->sizeCalculated = false;
-    }
-}
-
 void Stroke::addPoint(const Point& p) {
     this->points.emplace_back(p);
     updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
@@ -400,15 +382,15 @@ void Stroke::scalePressure(double factor) {
         return;
     }
     for (auto&& p: this->points) { p.z *= factor; }
-}
-
-void Stroke::clearPressure() {
-    for (auto&& p: points) { p.z = Point::NO_PRESSURE; }
+    this->sizeCalculated = false;
 }
 
 void Stroke::setLastPressure(double pressure) {
     if (!this->points.empty()) {
-        this->points.back().z = pressure;
+        assert(pressure != Point::NO_PRESSURE);
+        Point& back = this->points.back();
+        back.z = pressure;
+        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, back, 0.5 * pressure);
     }
 }
 
