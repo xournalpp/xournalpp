@@ -18,6 +18,8 @@
 
 #define GET_TESTFILE(relative) PROJECT_SOURCE_DIR "/test/files/" relative
 
+#define GET_UI_FOLDER PROJECT_SOURCE_DIR "/ui/"
+
 /**
  * Show speed benchmarks of tests
  */
