@@ -216,9 +216,11 @@ void Plugin::loadScript() {
 
     // Load but don't run the Lua script
     auto luafile = path / mainfile;
-    if (luaL_loadfile(lua.get(), luafile.string().c_str())) {
+    int status = luaL_loadfile(lua.get(), luafile.string().c_str());
+    if (status != LUA_OK) {
+        const char* errMsg = lua_tostring(lua.get(), -1);
         // Error out if file can't be read
-        g_warning("Could not run plugin Lua file: \"%s\"", luafile.string().c_str());
+        g_warning("Could not load plugin Lua file. Error: \"%s\", error code: %d (syntax error: %s)", errMsg, status, status == LUA_ERRSYNTAX ? "true" : "false");
         this->valid = false;
         return;
     }

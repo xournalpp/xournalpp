@@ -53,6 +53,17 @@ extern "C" {
 #include <lualib.h>   // for luaL_openlibs
 }
 
+/*
+ * Code conventions:
+ *     Error handling:
+ *         luapi functions should call `return luaL_error(L, fmt, ...)` if
+ *         something *unexpected happens* (e.g. wrong arguments). This throws a
+ *         real lua error.
+ *         They may also `return nil, errorMessage`. This behavior is reserved for
+ *         things that are *expected to happen* (e.g. ressource is not
+ *         available).
+*/
+
 /**
  * Renames file 'from' to file 'to' in the file system.
  * Overwrites 'to' if it already exists.
@@ -221,7 +232,7 @@ static int applib_msgbox(lua_State* L) {
 static int applib_registerUi(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     if (!plugin->isInInitUi()) {
-        luaL_error(L, "registerUi needs to be called within initUi()");
+        return luaL_error(L, "registerUi needs to be called within initUi()");
     }
 
     // discard any extra arguments passed in
@@ -248,7 +259,7 @@ static int applib_registerUi(lua_State* L) {
     const char* callback = luaL_optstring(L, -2, nullptr);
     const long mode = luaL_optinteger(L, -1, std::numeric_limits<long>::max());
     if (callback == nullptr) {
-        luaL_error(L, "Missing callback function!");
+        return luaL_error(L, "Missing callback function!");
     }
     if (menu == nullptr) {
         menu = "";
@@ -320,7 +331,7 @@ static int applib_uiAction(lua_State* L) {
 
     const char* actionStr = luaL_optstring(L, -1, nullptr);
     if (actionStr == nullptr) {
-        luaL_error(L, "Missing action!");
+        return luaL_error(L, "Missing action!");
     }
 
     ActionType action = ActionType_fromString(actionStr);
@@ -375,11 +386,11 @@ static int applib_sidebarAction(lua_State* L) {
     };
     const char* actionStr = luaL_checkstring(L, 1);
     if (actionStr == nullptr) {
-        luaL_error(L, "Missing action!");
+        return luaL_error(L, "Missing action!");
     }
     auto pos = actionMap.find(actionStr);
     if (pos == actionMap.end()) {
-        luaL_error(L, "Unkonwn action: %s", actionStr);
+        return luaL_error(L, "Unknown action: %s", actionStr);
     }
     Plugin* plugin = Plugin::getPluginFromLua(L);
     SidebarToolbar* toolbar = plugin->getControl()->getSidebar()->getToolbar();
@@ -557,7 +568,7 @@ static int applib_addSplines(lua_State* L) {
 
     lua_getfield(L, 1, "splines");
     if (!lua_istable(L, -1))
-        luaL_error(L, "Missing spline table!");
+        return luaL_error(L, "Missing spline table!");
 
     size_t numSplines = lua_rawlen(L, -1);
     for (size_t a = 1; a <= numSplines; a++) {
@@ -568,7 +579,7 @@ static int applib_addSplines(lua_State* L) {
         lua_gettable(L, -2);
         lua_getfield(L, -1, "coordinates");
         if (!lua_istable(L, -1))
-            luaL_error(L, "Missing coordinate table!");
+            return luaL_error(L, "Missing coordinate table!");
         size_t numCoords = lua_rawlen(L, -1);
         for (size_t b = 1; b <= numCoords; b++) {
             lua_pushnumber(L, b);
@@ -582,7 +593,7 @@ static int applib_addSplines(lua_State* L) {
         // Handle those points
         // Check if the list is divisible by 8.
         if (coordStream.size() % 8 != 0)
-            luaL_error(L, "Point table incomplete!");
+            return luaL_error(L, "Point table incomplete!");
 
         // Now take that gigantic list of splines and create SplineSegments out of them.
         long unsigned int i = 0;
@@ -603,8 +614,9 @@ static int applib_addSplines(lua_State* L) {
             // Finish building the Stroke and apply it to the layer.
             addStrokeHelper(L, stroke);
             strokes.push_back(stroke);
-        } else
+        } else {
             g_warning("Stroke shorter than two points. Discarding. (Has %d)", stroke->getPointCount());
+        }
         // Onto the next stroke
         lua_pop(L, 1);
     }
@@ -627,7 +639,7 @@ static int applib_addSplines(lua_State* L) {
     } else if (strcmp("none", allowUndoRedoAction) == 0)
         g_warning("Not allowing undo/redo action.");
     else
-        g_warning("Unrecognized undo/redo option: %s", allowUndoRedoAction);
+        return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
     lua_pop(L, 1);
     return 0;
 }
@@ -700,7 +712,7 @@ static int applib_addStrokes(lua_State* L) {
 
     lua_getfield(L, 1, "strokes");
     if (!lua_istable(L, -1))
-        luaL_error(L, "Missing stroke table!");
+        return luaL_error(L, "Missing stroke table!");
     size_t numStrokes = lua_rawlen(L, -1);
     for (size_t a = 1; a <= numStrokes; a++) {
         std::vector<double> xStream;
@@ -714,7 +726,7 @@ static int applib_addStrokes(lua_State* L) {
 
         lua_getfield(L, -1, "x");
         if (!lua_istable(L, -1))
-            luaL_error(L, "Missing X-Coordinate table!");
+            return luaL_error(L, "Missing X-Coordinate table!");
         size_t xPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= xPoints; b++) {
             lua_pushnumber(L, b);
@@ -728,7 +740,7 @@ static int applib_addStrokes(lua_State* L) {
         // Fetch table of Y values form the Lua stack
         lua_getfield(L, -1, "y");
         if (!lua_istable(L, -1))
-            luaL_error(L, "Missing Y-Coordinate table!");
+            return luaL_error(L, "Missing Y-Coordinate table!");
         size_t yPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= yPoints; b++) {
             lua_pushnumber(L, b);
@@ -750,18 +762,17 @@ static int applib_addStrokes(lua_State* L) {
                 pressureStream.push_back(value);
                 lua_pop(L, 1);
             }
-        } else
-            g_warning("Missing pressure table. Assuming NO_PRESSURE.");
+        }
 
         lua_pop(L, 1);
 
         // Handle those points
         // Make sure all vectors are the same length.
         if (xStream.size() != yStream.size()) {
-            luaL_error(L, "X and Y vectors are not equal length!");
+            return luaL_error(L, "X and Y vectors are not equal length!");
         }
         if (xStream.size() != pressureStream.size() && pressureStream.size() > 0)
-            luaL_error(L, "Pressure vector is not equal length!");
+            return luaL_error(L, "Pressure vector is not equal length!");
 
         // Check and make sure there's enough points (need at least 2)
         if (xStream.size() < 2) {
@@ -804,7 +815,7 @@ static int applib_addStrokes(lua_State* L) {
     } else if (strcmp("none", allowUndoRedoAction) == 0)
         g_warning("Not allowing undo/redo action.");
     else
-        g_warning("Unrecognized undo/redo option: %s", allowUndoRedoAction);
+        return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
 
     lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
 
@@ -870,12 +881,10 @@ static int applib_getStrokes(lua_State* L) {
         if (sel) {
             elements = sel->getElements();
         } else {
-            g_warning("There is no selection! ");
-            return 0;
+            return luaL_error(L, "There is no selection! ");
         }
     } else {
-        g_warning("Unknown argument: %s", type.c_str());
-        return 0;
+        return luaL_error(L, "Unknown argument: %s", type.c_str());
     }
 
     lua_newtable(L);  // create table of the elements
@@ -925,8 +934,7 @@ static int applib_getStrokes(lua_State* L) {
             } else if (tool == StrokeTool::HIGHLIGHTER) {
                 lua_pushstring(L, "highlighter");
             } else {
-                g_warning("Unknown StrokeTool::Value");
-                return 0;
+                return luaL_error(L, "Unknown StrokeTool::Value.");
             }
             lua_setfield(L, -2, "tool");  // add tool to stroke
 
@@ -961,7 +969,7 @@ static int applib_refreshPage(lua_State* L) {
     if (page)
         page->firePageChanged();
     else
-        g_warning("Called applib_refreshPage, but there is no current page.");
+        return luaL_error(L, "Called applib_refreshPage, but there is no current page.");
     return 0;
 }
 
@@ -1019,9 +1027,9 @@ static int applib_changeToolColor(lua_State* L) {
     if (lua_isboolean(L, -3)) {
         selection = lua_toboolean(L, -3);
     } else if (!lua_isnil(L, -3)) {
-        g_warning(""
-                  "selection"
-                  " key should be a boolean value (or nil)");
+        return luaL_error(L, ""
+                             "selection"
+                             " key should be a boolean value (or nil)");
     }
 
     ToolType toolType = toolHandler->getToolType();
@@ -1031,22 +1039,21 @@ static int applib_changeToolColor(lua_State* L) {
     }
 
     if (toolType == TOOL_NONE) {
-        g_warning("tool \"%s\" is not valid or no tool has been selected", toolTypeToString(toolType).c_str());
         lua_pop(L, 3);
-        return 0;
+        return luaL_error(L, "tool \"%s\" is not valid or no tool has been selected",
+                          toolTypeToString(toolType).c_str());
     }
 
     uint32_t color = 0x000000;
     if (lua_isinteger(L, -1)) {
         color = as_unsigned(lua_tointeger(L, -1));
         if (color > 0xffffff) {
-            g_warning("Color 0x%x is no valid RGB color. ", color);
-            return 0;
+            return luaL_error(L, "Color 0x%x is no valid RGB color. ", color);
         }
     } else if (!lua_isnil(L, -1)) {
-        g_warning(" "
-                  "color"
-                  " key should be an RGB hex code in the form 0xRRGGBB (or nil)");
+        return luaL_error(L, " "
+                             "color"
+                             " key should be an RGB hex code in the form 0xRRGGBB (or nil)");
     }
 
     Tool& tool = toolHandler->getTool(toolType);
@@ -1057,7 +1064,7 @@ static int applib_changeToolColor(lua_State* L) {
         if (selection)
             ctrl->changeColorOfSelection();
     } else {
-        g_warning("tool \"%s\" has no color capability", toolTypeToString(toolType).c_str());
+        return luaL_error(L, "tool \"%s\" has no color capability", toolTypeToString(toolType).c_str());
     }
 
     // Make sure to remove all vars which are put to the stack before!
@@ -1091,7 +1098,7 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
     PageRef const& page = control->getCurrentPage();
 
     if (!page) {
-        luaL_error(L, "No page!");
+        return luaL_error(L, "No page!");
     }
 
     size_t selected = nr - 1;
@@ -1100,7 +1107,7 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
         if (isPdf) {
             selected = page->getPdfPageNr() + nr;
         } else {
-            luaL_error(L, "Current page has no pdf background, cannot use relative mode!");
+            return luaL_error(L, "Current page has no pdf background, cannot use relative mode!");
         }
     }
     if (selected < doc->getPdfPageCount()) {
@@ -1110,7 +1117,7 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
         XojPdfPageSPtr p = doc->getPdfPage(selected);
         page->setSize(p->getWidth(), p->getHeight());
     } else {
-        luaL_error(L, "Pdf page number %d does not exist!", selected + 1);
+        return luaL_error(L, "Pdf page number %d does not exist!", selected + 1);
     }
 
     return 1;
@@ -1442,8 +1449,7 @@ static int applib_getToolInfo(lua_State* L) {
     } else if (strcmp(mode, "selection") == 0) {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (!sel) {
-            g_warning("There is no selection! ");
-            return 0;
+            return luaL_error(L, "There is no selection! ");
         }
         auto rect = sel->getRect();
 
@@ -1703,7 +1709,7 @@ static int applib_setPageSize(lua_State* L) {
     PageRef const& page = control->getCurrentPage();
 
     if (!page) {
-        luaL_error(L, "No page!");
+        return luaL_error(L, "No page!");
     }
 
     double width = luaL_checknumber(L, 1);
@@ -1750,14 +1756,14 @@ static int applib_setCurrentLayer(lua_State* L) {
     PageRef const& page = control->getCurrentPage();
 
     if (!page) {
-        luaL_error(L, "No page!");
+        return luaL_error(L, "No page!");
     }
 
     size_t layerCount = page->getLayerCount();
     size_t layerId = luaL_checkinteger(L, 1);
 
     if (layerId > layerCount) {
-        luaL_error(L, "No layer with layer ID %d", layerId);
+        return luaL_error(L, "No layer with layer ID %d", layerId);
     }
 
     bool update = false;
@@ -1820,7 +1826,7 @@ static int applib_setBackgroundName(lua_State* L) {
     PageRef const& page = control->getCurrentPage();
 
     if (!page) {
-        luaL_error(L, "No page!");
+        return luaL_error(L, "No page!");
     }
 
     if (lua_isstring(L, 1)) {
@@ -1924,7 +1930,7 @@ static int applib_export(lua_State* L) {
     }
 
     if (outputFile == nullptr) {
-        luaL_error(L, "Missing output file!");
+        return luaL_error(L, "Missing output file!");
     }
 
     fs::path file = fs::path(outputFile);
