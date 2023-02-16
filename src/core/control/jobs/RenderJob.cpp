@@ -49,10 +49,11 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
 
     xoj::util::CairoSurfaceSPtr rectBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height),
                                            xoj::util::adopt);
-    cairo_surface_set_device_offset(rectBuffer.get(), -x, -y);
-    cairo_surface_set_device_scale(rectBuffer.get(), ratio, ratio);
 
-    renderToBuffer(rectBuffer.get());
+    renderToBuffer(rectBuffer.get(), ratio, x, y);
+
+    cairo_surface_set_device_scale(rectBuffer.get(), ratio, ratio);
+    cairo_surface_set_device_offset(rectBuffer.get(), -x, -y);
 
     std::lock_guard lock(this->view->drawingMutex);
     xoj::util::CairoSPtr crPageBuffer(cairo_create(view->crBuffer.get()), xoj::util::adopt);
@@ -82,9 +83,10 @@ void RenderJob::run() {
 
         xoj::util::CairoSurfaceSPtr newBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight),
                                               xoj::util::adopt);
-        cairo_surface_set_device_scale(newBuffer.get(), ratio, ratio);
 
-        renderToBuffer(newBuffer.get());
+        renderToBuffer(newBuffer.get(), ratio, 0, 0);
+
+        cairo_surface_set_device_scale(newBuffer.get(), ratio, ratio);
 
         {
             std::lock_guard lock(this->view->drawingMutex);
@@ -114,8 +116,11 @@ void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) cons
     repaintWidgetArea(view->xournal->getWidget(), x + std::floor(zoom * x1), y + std::floor(zoom * y1), x + std::ceil(zoom * x2), y + std::ceil(zoom * y2));
 }
 
-void RenderJob::renderToBuffer(cairo_surface_t* buffer) const {
+void RenderJob::renderToBuffer(cairo_surface_t* buffer, double ratio, double x, double y) const {
     xoj::util::CairoSPtr crRect(cairo_create(buffer), xoj::util::adopt);
+
+    cairo_translate(crRect.get(), -x, -y);
+    cairo_scale(crRect.get(), ratio, ratio);
 
     DocumentView localView;
     localView.setMarkAudioStroke(this->view->getXournal()->getControl()->getToolHandler()->getToolType() ==
