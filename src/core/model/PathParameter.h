@@ -23,7 +23,7 @@ struct PathParameter {
     bool operator<=(const PathParameter& p) const { return index < p.index || (index == p.index && t <= p.t); };
     bool operator>=(const PathParameter& p) const { return index > p.index || (index == p.index && t >= p.t); };
 
-    bool isValid() const { return t <= 1.0 && (t > 0.0 || (t == 0.0 && index == 0U)); }
+    bool isValid() const { return t <= 1.0 && t >= 0.0; }
 
     size_t index;
     double t;

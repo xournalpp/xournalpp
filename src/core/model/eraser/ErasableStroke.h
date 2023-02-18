@@ -83,12 +83,16 @@ public:
      * @brief Get the bounding box of a subsection.
      * The bounding box is either pulled from cache or computed and added to cache
      * @return The bounding box.
-     * NB: The bounding boxes obtained here are imprecise: they do not take pressure into account but use the stroke's
-     * width instead.
      */
-    xoj::util::Rectangle<double> getSubSectionBoundingBox(const SubSection& section) const;
+    const Range& getSubSectionBoundingBox(const SubSection& section) const;
 
 protected:
+    /**
+     * @brief Compute the bounding box of a subsection.
+     * @return The bounding box.
+     */
+    Range computeSubSectionBoundingBox(const SubSection& section) const;
+
     /**
      * @brief Given a vector of subsections, compute (coarsely) where those subsections overlap.
      * @param subsections The input subsections
@@ -115,7 +119,7 @@ protected:
      * Usually pretty small (< 10): std::vector is faster than std::map
      * Protected by the associated mutex
      */
-    mutable std::vector<std::pair<SubSection, xoj::util::Rectangle<double>>> boundingBoxes;
+    mutable std::vector<std::pair<SubSection, Range>> boundingBoxes;
     mutable std::mutex boxesMutex;
 
     /**

@@ -256,8 +256,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
         /**
          * Create a mask tailored to the union of the sections' bounding boxes
          */
-        Rectangle<double> box = erasableStroke.getSubSectionBoundingBox(first);
-        box.unite(erasableStroke.getSubSectionBoundingBox(last));
+        Range box = erasableStroke.getSubSectionBoundingBox(first).unite(erasableStroke.getSubSectionBoundingBox(last));
 
         auto [crMask, surfMask] = createMask(box, matrix.xx);
         cairo_set_line_cap(crMask, linecap);
@@ -326,15 +325,14 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
     cairo_restore(cr);
 }
 
-std::pair<cairo_t*, cairo_surface_t*> ErasableStrokeView::createMask(const Rectangle<double>& box,
-                                                                     double scaling) const {
-    const int width = static_cast<int>(std::ceil(box.width * scaling));
-    const int height = static_cast<int>(std::ceil(box.height * scaling));
+std::pair<cairo_t*, cairo_surface_t*> ErasableStrokeView::createMask(const Range& box, double scaling) const {
+    const int width = static_cast<int>(std::ceil(box.getWidth() * scaling));
+    const int height = static_cast<int>(std::ceil(box.getHeight() * scaling));
 
     cairo_surface_t* surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
 
     // Apply offset and scaling
-    cairo_surface_set_device_offset(surfMask, -box.x * scaling, -box.y * scaling);
+    cairo_surface_set_device_offset(surfMask, -box.minX * scaling, -box.minY * scaling);
     cairo_surface_set_device_scale(surfMask, scaling, scaling);
 
     // Get a context to draw on our mask
