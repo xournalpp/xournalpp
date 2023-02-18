@@ -119,7 +119,6 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
             doc->unlock();
             this->eraseUndoAction->addOriginal(l, s, pos);
             erasable->beginErasure(intersectionParameters, range);
-            paddedEraserBox.addToRange(range);
         }
     } else {
         /**
