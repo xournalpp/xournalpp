@@ -23,13 +23,17 @@
 
 class Selection: public ShapeContainer, public OverlayBase {
 public:
-    Selection();
+    Selection(bool multiLayer);
     ~Selection() override;
 
     using BoundaryPoint = utl::Point<double>;
 
 public:
-    virtual bool finalize(PageRef page) = 0;
+    /**
+     * @return layerId of selected objects, 0 if there is nothing in RectSelection
+    */
+    size_t finalize(PageRef page);
+
     virtual void currentPos(double x, double y) = 0;
     virtual bool userTapped(double zoom) const = 0;
     virtual const std::vector<BoundaryPoint>& getBoundary() const = 0;
@@ -38,9 +42,13 @@ public:
         return viewPool;
     }
 
+    bool isMultiLayerSelection();
+
 private:
 protected:
     std::vector<BoundaryPoint> boundaryPoints;
+
+    bool multiLayer;
 
     std::vector<Element*> selectedElements;
     PageRef page;
@@ -54,11 +62,10 @@ protected:
 
 class RectSelection: public Selection {
 public:
-    RectSelection(double x, double y);
+    RectSelection(double x, double y, bool multiLayer = false);
     ~RectSelection() override;
 
 public:
-    bool finalize(PageRef page) override;
     void currentPos(double x, double y) override;
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
@@ -74,10 +81,9 @@ private:
 
 class RegionSelect: public Selection {
 public:
-    RegionSelect(double x, double y);
+    RegionSelect(double x, double y, bool multiLayer = false);
 
 public:
-    bool finalize(PageRef page) override;
     void currentPos(double x, double y) override;
     bool contains(double x, double y) const override;
     bool userTapped(double zoom) const override;
