@@ -57,28 +57,29 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
 
     assert(paddedIntersections.size() % 2 == 0);
 
-    UnionOfIntervals<PathParameter> erasedSections;
-    erasedSections.appendData(paddedIntersections);
+    UnionOfIntervals<PathParameter> sections;
+    // Contains the removed sections
+    sections.appendData(paddedIntersections);
 
-    // Now remaining sections
-    erasedSections.complement({0, 0.0}, {n - 2, 1.0});
+    // We will need to rerender everywhere a section was removed
+    for (auto& s: sections.cloneToIntervalVector()) {
+        range = range.unite(computeSubSectionBoundingBox(s));
+    }
+
+    // Now contains remaining sections
+    sections.complement({0, 0.0}, {n - 2, 1.0});
 
     const bool highlighter = this->stroke.getToolType() == StrokeTool::HIGHLIGHTER;
     const bool filled = this->stroke.getFill() != -1;
     if (highlighter || filled) {
-        auto subsections = erasedSections.cloneToIntervalVector();
+        auto subsections = sections.cloneToIntervalVector();
         if (filled) {
             if (subsections.size() == 1) {
-                // We erased the stroke from its ends
-                const auto& subsection = subsections.back();
+                // We erased the stroke from its ends. Simply add the end points to ensure the filling is rerendered
                 const Point& p1 = this->stroke.getPointVector().front();
                 range.addPoint(p1.x, p1.y);
                 const Point& p2 = this->stroke.getPointVector().back();
                 range.addPoint(p2.x, p2.y);
-                Point p = this->stroke.getPoint(subsection.min);
-                range.addPoint(p.x, p.y);
-                p = this->stroke.getPoint(subsection.max);
-                range.addPoint(p.x, p.y);
             } else {
                 // The stroke was split in two or more (and possibly shrank). Need to rerender its entire box.
                 range.addPoint(this->stroke.getX(), this->stroke.getY());
@@ -96,7 +97,7 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
 
     {  // lock_guard range
         std::lock_guard<std::mutex> lock(this->sectionsMutex);
-        this->remainingSections.swap(erasedSections);
+        this->remainingSections.swap(sections);
     }  // release the mutex
 }
 
@@ -164,6 +165,12 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
 
     changesAtLastIteration = !newErasedSections.empty();
     if (changesAtLastIteration) {
+
+        // We will need to rerender everywhere a section was removed
+        for (auto& s: newErasedSections.cloneToIntervalVector()) {
+            range = range.unite(computeSubSectionBoundingBox(s));
+        }
+
         const bool highlighter = this->stroke.getToolType() == StrokeTool::HIGHLIGHTER;
         const bool filled = this->stroke.getFill() != -1;
         if (highlighter || filled) {
@@ -232,7 +239,6 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
                 remainingSections.intersect(newErasedSections.getData());
             }  // Release the mutex
         }
-        box.addToRange(range);
     }
 }
 
@@ -300,9 +306,11 @@ auto ErasableStroke::computeSubSectionBoundingBox(const SubSection& section) con
 
     const bool hasPressure = this->stroke.hasPressure();
     const double halfWidth = 0.5 * this->stroke.getWidth();
+    double lastPressure = 0;
 
-    auto pointRange = [hasPressure, halfWidth](const Point& p) {
-        const double padding = hasPressure ? 0.5 * p.z : halfWidth;
+    auto pointRange = [&](const Point& p) {
+        const double padding = hasPressure ? 0.5 * std::max(lastPressure, p.z) : halfWidth;
+        lastPressure = p.z;
         return Range(p.x - padding, p.y - padding, p.x + padding, p.y + padding);
     };
 

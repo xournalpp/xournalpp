@@ -274,14 +274,9 @@ Point Stroke::getPoint(PathParameter parameter) const {
     assert(parameter.isValid() && parameter.index < this->points.size() - 1);
 
     const Point& p = this->points[parameter.index];
-    if (parameter.index == this->points.size() - 2) {
-        // Need to handle the pressure value separately, since the last pressure value of a stroke is not set.
-        Point q = this->points[parameter.index + 1];
-        q.z = p.z;
-        return p.relativeLineTo(q, parameter.t);
-    }
-    const Point& q = this->points[parameter.index + 1];
-    return p.relativeLineTo(q, parameter.t);
+    Point res = p.relativeLineTo(this->points[parameter.index + 1], parameter.t);
+    res.z = p.z;  // The point's width should be that of the segment's first point
+    return res;
 }
 
 auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
