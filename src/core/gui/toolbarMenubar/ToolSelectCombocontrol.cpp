@@ -21,6 +21,8 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler,
         popup(gtk_menu_new()) {
     addMenuitem(_("Select Rectangle"), toolMenuHandler->iconName("select-rect"), ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
     addMenuitem(_("Select Region"), toolMenuHandler->iconName("select-lasso"), ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
+    addMenuitem(_("Select Multi-Layer Rectangle"), toolMenuHandler->iconName("select-multilayer-rect"), ACTION_TOOL_SELECT_MULTILAYER_RECT, GROUP_TOOL);
+    addMenuitem(_("Select Multi-Layer Region"), toolMenuHandler->iconName("select-multilayer-lasso"), ACTION_TOOL_SELECT_MULTILAYER_REGION, GROUP_TOOL);
     addMenuitem(_("Select Object"), toolMenuHandler->iconName("object-select"), ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);
     addMenuitem(_("Play Object"), toolMenuHandler->iconName("object-play"), ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL);
 
@@ -66,6 +68,18 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action) {
                                          GTK_ICON_SIZE_SMALL_TOOLBAR);
 
             description = _("Select Region");
+        } else if (action == ACTION_TOOL_SELECT_MULTILAYER_RECT && this->action != ACTION_TOOL_SELECT_MULTILAYER_RECT) {
+            this->action = ACTION_TOOL_SELECT_MULTILAYER_RECT;
+            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), toolMenuHandler->iconName("select-multilayer-rect").c_str(),
+                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
+
+            description = _("Select Multi-Layer Rectangle");
+        } else if (action == ACTION_TOOL_SELECT_MULTILAYER_REGION && this->action != ACTION_TOOL_SELECT_MULTILAYER_REGION) {
+            this->action = ACTION_TOOL_SELECT_MULTILAYER_REGION;
+            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), toolMenuHandler->iconName("select-multilayer-lasso").c_str(),
+                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
+
+            description = _("Select Multi-Layer Region");
         } else if (action == ACTION_TOOL_SELECT_OBJECT && this->action != ACTION_TOOL_SELECT_OBJECT) {
             this->action = ACTION_TOOL_SELECT_OBJECT;
             gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), toolMenuHandler->iconName("object-select").c_str(),

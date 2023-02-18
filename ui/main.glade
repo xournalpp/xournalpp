@@ -1571,6 +1571,18 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkCheckMenuItem" id="menuToolsSelectRectangle">
+                            <property name="name">menuToolsSelectRectangle</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Select Rectangle</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
+                            <signal name="toggled" handler="ACTION_TOOL_SELECT_RECT" swapped="no"/>
+                            <accelerator key="r" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkCheckMenuItem" id="menuToolsSelectRegion">
                             <property name="name">menuToolsSelectRegion</property>
                             <property name="visible">True</property>
@@ -1583,15 +1595,25 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkCheckMenuItem" id="menuToolsSelectRectangle">
-                            <property name="name">menuToolsSelectRectangle</property>
+                          <object class="GtkCheckMenuItem" id="menuToolsSelectMultiLayerRectangle">
+                            <property name="name">menuToolsSelectMultiLayerRectangle</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Select Rectangle</property>
+                            <property name="label" translatable="yes">Select Multi-Layer Rectangle</property>
                             <property name="use-underline">True</property>
                             <property name="draw-as-radio">True</property>
-                            <signal name="toggled" handler="ACTION_TOOL_SELECT_RECT" swapped="no"/>
-                            <accelerator key="r" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                            <signal name="toggled" handler="ACTION_TOOL_SELECT_MULTILAYER_RECT" swapped="no"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckMenuItem" id="menuToolsSelectMultiLayerRegion">
+                            <property name="name">menuToolsSelectMultiLayerRegion</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Select Multi-Layer Region</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
+                            <signal name="toggled" handler="ACTION_TOOL_SELECT_MULTILAYER_REGION" swapped="no"/>
                           </object>
                         </child>
                         <child>
