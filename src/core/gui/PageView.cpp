@@ -401,8 +401,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
         this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->settings, y, pos.isControlDown());
         this->overlayViews.emplace_back(this->verticalSpace->createView(this, zoomControl, this->settings));
-    } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
-               h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
+    } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION || h->getToolType() == TOOL_SELECT_MULTILAYER_RECT ||
+               h->getToolType() == TOOL_SELECT_MULTILAYER_REGION || h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
         if (h->getToolType() == TOOL_SELECT_RECT) {
             if (!selection) {
@@ -417,6 +417,26 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         } else if (h->getToolType() == TOOL_SELECT_REGION) {
             if (!selection) {
                 this->selection = std::make_unique<RegionSelect>(x, y);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
+                        this->selection.get(), this, this->settings->getSelectionColor()));
+            } else {
+                assert(settings->getInputSystemTPCButtonEnabled() &&
+                       "the selection has already been created by a stylus button press while the stylus was "
+                       "hovering!");
+            }
+        } else if (h->getToolType() == TOOL_SELECT_MULTILAYER_RECT) {
+            if (!selection) {
+                this->selection = std::make_unique<RectSelection>(x, y, /*multiLayer*/ true);
+                this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
+                        this->selection.get(), this, this->settings->getSelectionColor()));
+            } else {
+                assert(settings->getInputSystemTPCButtonEnabled() &&
+                       "the selection has already been created by a stylus button press while the stylus was "
+                       "hovering!");
+            }
+        } else if (h->getToolType() == TOOL_SELECT_MULTILAYER_REGION) {
+            if (!selection) {
+                this->selection = std::make_unique<RegionSelect>(x, y, /*multiLayer*/ true);
                 this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
                         this->selection.get(), this, this->settings->getSelectionColor()));
             } else {

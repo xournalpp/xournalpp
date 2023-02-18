@@ -501,8 +501,9 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("DRAW_SPLINE", ACTION_TOOL_DRAW_SPLINE, GROUP_RULER, false, "draw-spline", _("Draw Spline"));
 
     addCustomItemTgl("SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, true, "select-lasso", _("Select Region"));
-    addCustomItemTgl("SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "select-rect",
-                     _("Select Rectangle"));
+    addCustomItemTgl("SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "select-rect", _("Select Rectangle"));
+    addCustomItemTgl("SELECT_MULTILAYER_REGION", ACTION_TOOL_SELECT_MULTILAYER_REGION, GROUP_TOOL, true, "select-multilayer-lasso", _("Select Multi-Layer Region"));
+    addCustomItemTgl("SELECT_MULTILAYER_RECTANGLE", ACTION_TOOL_SELECT_MULTILAYER_RECT, GROUP_TOOL, true, "select-multilayer-rect", _("Select Multi-Layer Rect"));
     addCustomItemTgl("SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true, "object-select", _("Select Object"));
     addCustomItemTgl("VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true, "spacer", _("Vertical Space"));
     addCustomItemTgl("PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true, "object-play", _("Play Object"));
