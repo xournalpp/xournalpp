@@ -30,15 +30,28 @@ public:
     virtual ~BaseSelectObject() = default;
 
 public:
-    virtual bool at(double x, double y) {
+    virtual bool at(double x, double y, bool multiLayer = false) {
         this->x = x;
         this->y = y;
 
         // clear old selection anyway
         view->xournal->getControl()->clearSelection();
 
-        Layer* layer = this->view->getPage()->getSelectedLayer();
-        return checkLayer(layer);
+        if (multiLayer) {
+            size_t initialLayer = this->view->getPage()->getSelectedLayerId();
+            for (int layerNo = this->view->getPage()->getLayers()->size() - 1; layerNo >= 0; layerNo--) {
+                Layer* layer = this->view->getPage()->getLayers()->at(layerNo);
+                this->view->getXournal()->getControl()->getLayerController()->switchToLay(layerNo + 1);
+                if (checkLayer(layer)) {
+                    return true;
+                }
+            }
+            this->view->getXournal()->getControl()->getLayerController()->switchToLay(initialLayer);
+            return false;
+        } else {
+            Layer* layer = this->view->getPage()->getSelectedLayer();
+            return checkLayer(layer);
+        }
     }
 
 protected:
@@ -80,8 +93,8 @@ public:
 
     ~SelectObject() override = default;
 
-    bool at(double x, double y) override {
-        BaseSelectObject::at(x, y);
+    bool at(double x, double y, bool multiLayer = false) override {
+        BaseSelectObject::at(x, y, multiLayer);
 
         if (strokeMatch) {
             elementMatch = strokeMatch;
@@ -137,7 +150,7 @@ public:
     std::optional<Status> playbackStatus;
 
 public:
-    bool at(double x, double y) override { return BaseSelectObject::at(x, y); }
+    bool at(double x, double y, bool multiLayer = false) override { return BaseSelectObject::at(x, y, multiLayer); }
 
 protected:
     bool checkElement(Element* e) override {

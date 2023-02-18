@@ -746,8 +746,9 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         } else {
             const double zoom = xournal->getZoom();
             if (this->selection->userTapped(zoom)) {
+                bool isMultiLayerSelection{this->selection->isMultiLayerSelection()};
                 SelectObject select(this);
-                select.at(pos.x / zoom, pos.y / zoom);
+                select.at(pos.x / zoom, pos.y / zoom, isMultiLayerSelection);
             }
         }
         this->selection.reset();
