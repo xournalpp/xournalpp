@@ -54,10 +54,9 @@ void SplineToolView::draw(cairo_t* cr) const {
     Util::cairo_set_source_argb(cr, FIRST_NODE_CIRCLE_COLOR);
     drawCircle(firstKnot);
     if (data->closedSpline) {  // current point lies within the circle around the first knot
-        cairo_fill(cr);
-    } else {
-        cairo_stroke(cr);
+        cairo_fill_preserve(cr);
     }
+    cairo_stroke(cr);
 
     // draw dynamically changing segment
     Util::cairo_set_source_argb(cr, DYNAMIC_OBJECTS_COLOR);
