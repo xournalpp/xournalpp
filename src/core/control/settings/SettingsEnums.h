@@ -72,6 +72,13 @@ enum StylusCursorType {
     STYLUS_CURSOR_ARROW = 3,
 };
 
+enum EraserVisibility {
+    ERASER_VISIBILITY_NEVER = 0,
+    ERASER_VISIBILITY_ALWAYS = 1,
+    ERASER_VISIBILITY_HOVER = 2,
+    ERASER_VISIBILITY_TOUCH = 3,
+};
+
 enum IconTheme {
     ICON_THEME_COLOR = 0,
     ICON_THEME_LUCIDE = 1,
@@ -113,6 +120,21 @@ constexpr auto stylusCursorTypeToString(StylusCursorType stylusCursorType) -> co
     }
 }
 
+constexpr auto eraserVisibilityToString(EraserVisibility eraserVisibility) -> const char* {
+    switch (eraserVisibility) {
+        case ERASER_VISIBILITY_NEVER:
+            return "never";
+        case ERASER_VISIBILITY_ALWAYS:
+            return "always";
+        case ERASER_VISIBILITY_HOVER:
+            return "hover";
+        case ERASER_VISIBILITY_TOUCH:
+            return "touch";
+        default:
+            return "unknown";
+    }
+}
+
 constexpr auto iconThemeToString(IconTheme iconTheme) -> const char* {
     switch (iconTheme) {
         case ICON_THEME_COLOR:
@@ -138,5 +160,6 @@ constexpr auto emptyLastPageAppendToString(EmptyLastPageAppendType appendType) -
 }
 
 StylusCursorType stylusCursorTypeFromString(const std::string& stylusCursorTypeStr);
+EraserVisibility eraserVisibilityFromString(const std::string& eraserVisibilityStr);
 IconTheme iconThemeFromString(const std::string& iconThemeStr);
 EmptyLastPageAppendType emptyLastPageAppendFromString(const std::string& str);

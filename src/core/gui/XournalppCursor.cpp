@@ -136,7 +136,7 @@ void XournalppCursor::setMouseDown(bool mouseDown) {
     ToolType type = handler->getToolType();
 
     // Not always an update is needed
-    if (type == TOOL_HAND || type == TOOL_VERTICAL_SPACE) {
+    if (type == TOOL_HAND || type == TOOL_VERTICAL_SPACE || type == TOOL_ERASER) {
         updateCursor();
     }
 }
@@ -285,7 +285,14 @@ void XournalppCursor::updateCursor() {
                 }
             }
         } else if (type == TOOL_ERASER) {
-            cursor = getEraserCursor();
+            EraserVisibility visibility = control->getSettings()->getEraserVisibility();
+            if ((this->inputDevice == INPUT_DEVICE_PEN || this->inputDevice == INPUT_DEVICE_ERASER) &&
+                (visibility == ERASER_VISIBILITY_NEVER || (visibility == ERASER_VISIBILITY_HOVER && this->mouseDown) ||
+                 (visibility == ERASER_VISIBILITY_TOUCH && !this->mouseDown))) {
+                setCursor(CRSR_BLANK_CURSOR);
+            } else {
+                cursor = getEraserCursor();
+            }
         }
 
         else if (type == TOOL_TEXT) {
