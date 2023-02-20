@@ -27,8 +27,8 @@
   <!-- For poppler-glib -->
   <cmake id="poppler" cmakeargs="-DENABLE_QT5=OFF -DENABLE_QT6=OFF -DENABLE_BOOST=OFF -DENABLE_CPP=OFF -DENABLE_LIBOPENJPEG=none -DENABLE_CMS=none -DCMAKE_INSTALL_NAME_DIR='&#36;&lt;INSTALL_PREFIX&gt;/lib'">
     <branch repo="poppler"
-            version="22.10.0"
-            module="poppler-22.10.0.tar.xz"/>
+            version="22.12.0"
+            module="poppler-22.12.0.tar.xz"/>
     <dependencies>
 
       <!-- openjpeg doesn't work with g-ir-scanner right now
