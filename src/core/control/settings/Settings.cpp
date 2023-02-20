@@ -102,6 +102,7 @@ void Settings::loadDefault() {
     this->autoloadPdfXoj = true;
 
     this->stylusCursorType = STYLUS_CURSOR_DOT;
+    this->eraserVisibility = ERASER_VISIBILITY_ALWAYS;
     this->iconTheme = ICON_THEME_COLOR;
     this->highlightPosition = false;
     this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
@@ -434,6 +435,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->autoloadPdfXoj = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stylusCursorType")) == 0) {
         this->stylusCursorType = stylusCursorTypeFromString(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("eraserVisibility")) == 0) {
+        this->eraserVisibility = eraserVisibilityFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("iconTheme")) == 0) {
         this->iconTheme = iconThemeFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("highlightPosition")) == 0) {
@@ -944,6 +947,9 @@ void Settings::save() {
     xmlNode = saveProperty("stylusCursorType", stylusCursorTypeToString(this->stylusCursorType), root);
     ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"");
 
+    xmlNode = saveProperty("eraserVisibility", eraserVisibilityToString(this->eraserVisibility), root);
+    ATTACH_COMMENT("The eraser cursor visibility used with a stylus, allowed values are \"never\", \"always\", \"hover\", \"touch\"");
+
     xmlNode = saveProperty("iconTheme", iconThemeToString(this->iconTheme), root);
     ATTACH_COMMENT("The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"");
 
@@ -1297,6 +1303,18 @@ void Settings::setStylusCursorType(StylusCursorType type) {
     }
 
     this->stylusCursorType = type;
+
+    save();
+}
+
+auto Settings::getEraserVisibility() const -> EraserVisibility { return this->eraserVisibility; }
+
+void Settings::setEraserVisibility(EraserVisibility eraserVisibility) {
+    if (this->eraserVisibility == eraserVisibility) {
+        return;
+    }
+
+    this->eraserVisibility = eraserVisibility;
 
     save();
 }

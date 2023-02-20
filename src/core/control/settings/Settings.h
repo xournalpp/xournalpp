@@ -317,6 +317,9 @@ public:
     StylusCursorType getStylusCursorType() const;
     void setStylusCursorType(StylusCursorType stylusCursorType);
 
+    EraserVisibility getEraserVisibility() const;
+    void setEraserVisibility(EraserVisibility eraserVisibility);
+
     IconTheme getIconTheme() const;
     void setIconTheme(IconTheme iconTheme);
 
@@ -626,6 +629,11 @@ private:
      *  Type of cursor icon to use with a stylus
      */
     StylusCursorType stylusCursorType;
+
+    /**
+     * Visibility of eraser cursor
+     */
+    EraserVisibility eraserVisibility;
 
     /**
      * Icon Theme

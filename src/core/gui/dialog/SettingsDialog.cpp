@@ -518,6 +518,22 @@ void SettingsDialog::load() {
             break;
     }
 
+    switch (settings->getEraserVisibility()) {
+        case ERASER_VISIBILITY_NEVER:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbEraserVisibility")), 0);
+            break;
+        case ERASER_VISIBILITY_HOVER:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbEraserVisibility")), 2);
+            break;
+        case ERASER_VISIBILITY_TOUCH:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbEraserVisibility")), 3);
+            break;
+        case ERASER_VISIBILITY_ALWAYS:
+        default:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbEraserVisibility")), 1);
+            break;
+    }
+
     switch (settings->getIconTheme()) {
         case ICON_THEME_LUCIDE:
             gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbIconTheme")), 1);
@@ -733,6 +749,22 @@ void SettingsDialog::save() {
         case 1:
         default:
             settings->setStylusCursorType(STYLUS_CURSOR_DOT);
+            break;
+    }
+
+    switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbEraserVisibility")))) {
+        case 0:
+            settings->setEraserVisibility(ERASER_VISIBILITY_NEVER);
+            break;
+        case 2:
+            settings->setEraserVisibility(ERASER_VISIBILITY_HOVER);
+            break;
+        case 3:
+            settings->setEraserVisibility(ERASER_VISIBILITY_TOUCH);
+            break;
+        case 1:
+        default:
+            settings->setEraserVisibility(ERASER_VISIBILITY_ALWAYS);
             break;
     }
 
