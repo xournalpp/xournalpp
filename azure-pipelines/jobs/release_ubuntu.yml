@@ -9,7 +9,7 @@ parameters:
     default: false
   - name: gcc_version
     type: string
-    default: '8'
+    default: '10'
 
 jobs:
   - job: '${{ parameters.job_name }}'
