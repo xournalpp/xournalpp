@@ -875,6 +875,8 @@ int XojPageView::getDPIScaling() const { return xournal->getDpiScaleFactor(); }
 
 double XojPageView::getZoom() const { return xournal->getZoom(); }
 
+ZoomControl* XojPageView::getZoomControl() const { return this->getXournal()->getControl()->getZoomControl(); }
+
 Range XojPageView::getVisiblePart() const {
     std::unique_ptr<xoj::util::Rectangle<double>> rect(xournal->getVisibleRect(this));
     if (rect) {

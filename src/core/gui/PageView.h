@@ -79,6 +79,7 @@ public:
 
     int getDPIScaling() const override;
     double getZoom() const override;
+    ZoomControl* getZoomControl() const override;
     Range getVisiblePart() const override;
 
     double getWidth() const override;

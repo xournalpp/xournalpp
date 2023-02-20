@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "control/tools/SplineHandler.h"
+#include "control/zoom/ZoomControl.h"
 #include "model/Point.h"
 #include "model/SplineSegment.h"
 #include "util/raii/CairoWrappers.h"
@@ -20,9 +21,13 @@ using namespace xoj::view;
 SplineToolView::SplineToolView(const SplineHandler* splineHandler, Repaintable* parent):
         BaseShapeOrSplineToolView(splineHandler, parent), splineHandler(splineHandler) {
     this->registerToPool(splineHandler->getViewPool());
+    this->parent->getZoomControl()->addZoomListener(this);
 }
 
-SplineToolView::~SplineToolView() noexcept { this->unregisterFromPool(); }
+SplineToolView::~SplineToolView() noexcept {
+    this->unregisterFromPool();
+    this->parent->getZoomControl()->removeZoomListener(this);
+}
 
 void SplineToolView::draw(cairo_t* cr) const {
     auto data = this->splineHandler->getData();
@@ -115,6 +120,8 @@ void SplineToolView::drawSpline(cairo_t* cr, const SplineHandlerData& data) cons
 }
 
 bool SplineToolView::isViewOf(const OverlayBase* overlay) const { return overlay == this->splineHandler; }
+
+void SplineToolView::zoomChanged() { this->mask.reset(); }
 
 void SplineToolView::on(FlagDirtyRegionRequest, Range rg) {
     maskWipeExtent = maskWipeExtent.unite(rg);
