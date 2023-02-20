@@ -16,15 +16,16 @@
 #include "control/settings/Settings.h"             // for Settings
 #include "control/tools/InputHandler.h"            // for InputHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
-#include "gui/XournalppCursor.h"                   // for XournalppCursor
-#include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
-#include "model/Document.h"                        // for Document
-#include "model/Layer.h"                           // for Layer
-#include "model/SplineSegment.h"                   // for SplineSegment
-#include "model/Stroke.h"                          // for Stroke
-#include "model/XojPage.h"                         // for XojPage
-#include "undo/InsertUndoAction.h"                 // for InsertUndoAction
-#include "undo/UndoRedoHandler.h"                  // for UndoRedoHandler
+#include "control/zoom/ZoomControl.h"
+#include "gui/XournalppCursor.h"                 // for XournalppCursor
+#include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
+#include "model/Document.h"                      // for Document
+#include "model/Layer.h"                         // for Layer
+#include "model/SplineSegment.h"                 // for SplineSegment
+#include "model/Stroke.h"                        // for Stroke
+#include "model/XojPage.h"                       // for XojPage
+#include "undo/InsertUndoAction.h"               // for InsertUndoAction
+#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
 #include "util/DispatchPool.h"
 #include "view/overlays/SplineToolView.h"
 
@@ -33,9 +34,12 @@ guint32 SplineHandler::lastStrokeTime;  // persist for next stroke
 SplineHandler::SplineHandler(Control* control, const PageRef& page):
         InputHandler(control, page),
         snappingHandler(control->getSettings()),
-        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SplineToolView>>()) {}
+        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SplineToolView>>()) {
+    this->control->getZoomControl()->addZoomListener(this);
+    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / this->control->getZoomControl()->getZoom();
+}
 
-SplineHandler::~SplineHandler() = default;
+SplineHandler::~SplineHandler() { this->control->getZoomControl()->removeZoomListener(this); }
 
 std::unique_ptr<xoj::view::OverlayView> SplineHandler::createView(xoj::view::Repaintable* parent) const {
     return std::make_unique<xoj::view::SplineToolView>(this, parent);
@@ -131,23 +135,35 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
 }
 
 auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
-    if (!stroke || this->inFirstKnotAttractionZone) {
+    if (!stroke) {
         return false;
     }
 
     assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
 
-    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / zoom;
-
     Range rg = this->computeLastSegmentRepaintRange();
     if (this->isButtonPressed) {
+        if (this->inFirstKnotAttractionZone) {
+            // The button was pressed within the attraction zone. Wait for unpress to confirm/deny spline finalization
+            return true;
+        }
         Point newTangent = Point(pos.x / zoom - this->currPoint.x, pos.y / zoom - this->currPoint.y);
         if (validMotion(newTangent, this->tangents.back())) {
             this->modifyLastTangent(newTangent);
         }
     } else {
         this->buttonDownPoint = Point(pos.x / zoom, pos.y / zoom);
-        this->currPoint = snappingHandler.snap(this->buttonDownPoint, knots.back(), pos.isAltDown());
+        bool nowInAttractionZone =
+                this->buttonDownPoint.lineLengthTo(this->knots.front()) < this->knotsAttractionRadius;
+        if (nowInAttractionZone) {
+            if (this->inFirstKnotAttractionZone) {
+                // No need to update anything while staying in the attraction zone
+                return true;
+            }
+        } else {
+            this->currPoint = snappingHandler.snap(this->buttonDownPoint, knots.back(), pos.isAltDown());
+        }
+        this->inFirstKnotAttractionZone = nowInAttractionZone;
     }
     rg = rg.unite(this->computeLastSegmentRepaintRange());
 
@@ -217,7 +233,6 @@ void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
         // Finalize the spline if we still are in this zone, cancel the sequence otherwise
         const Point p(pos.x / zoom, pos.y / zoom);
         double dist = p.lineLengthTo(this->knots.front());
-        this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / zoom;
         if (dist < this->knotsAttractionRadius) {
             finalizeSpline();
         } else {
@@ -229,8 +244,6 @@ void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
 
 void SplineHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
     this->isButtonPressed = true;
-
-    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / zoom;
 
     if (!stroke) {
         // This should only happen right after the SplineHandler's creation, before any views got attached
@@ -316,6 +329,10 @@ void SplineHandler::finalizeSpline() {
     control->getCursor()->updateCursor();
 }
 
+void SplineHandler::zoomChanged() {
+    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / this->control->getZoomControl()->getZoom();
+}
+
 void SplineHandler::addKnot(const Point& p) { addKnotWithTangent(p, Point(0, 0)); }
 
 void SplineHandler::addKnotWithTangent(const Point& p, const Point& t) {
@@ -378,11 +395,12 @@ Range SplineHandler::computeLastSegmentRepaintRange() const {
     // Ensure the range contains the spline (with its width) and the knots' circles
     rg.addPadding(std::max(this->knotsAttractionRadius, this->stroke->getWidth()));
 
-    if (const Point& q = this->knots.front(); this->currPoint.lineLengthTo(q) < this->knotsAttractionRadius) {
+    if (const Point& q = this->knots.front(); this->inFirstKnotAttractionZone) {
         // Make sure the range contains the last spline segment in case the spline is closed.
         // The last segment has a width fixed in pixels. The appropriate padding to account for this width will be added
         // on the View side.
-        rg.addPoint(q.x, q.y);
+        const double r = this->knotsAttractionRadius;
+        rg = rg.unite(Range(q.x - r, q.y - r, q.x + r, q.y + r));
         const Point& s = this->tangents.front();
         rg.addPoint(q.x - s.x, q.y - s.y);
     } else if (this->stroke->getFill() != -1) {
@@ -401,10 +419,8 @@ auto SplineHandler::getData() const -> std::optional<Data> {
     if (this->knots.empty()) {
         return std::nullopt;
     }
-    bool closedSpline = this->knots.size() > 1 &&
-                        this->buttonDownPoint.lineLengthTo(this->knots.front()) < this->knotsAttractionRadius;
-    Data data = {this->knots, this->tangents, this->currPoint, this->knotsAttractionRadius, closedSpline};
-    return data;
+    return Data{this->knots, this->tangents, this->currPoint, this->knotsAttractionRadius,
+                this->inFirstKnotAttractionZone};
 }
 
 auto SplineHandler::linearizeSpline(const SplineHandler::Data& data) -> std::vector<Point> {

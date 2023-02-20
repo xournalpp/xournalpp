@@ -11,6 +11,7 @@
 #pragma once
 
 class Range;
+class ZoomControl;
 
 namespace xoj::view {
 class OverlayView;
@@ -34,6 +35,7 @@ public:
 
     // Get the current zoom.
     virtual double getZoom() const = 0;
+    virtual ZoomControl* getZoomControl() const = 0;
 
     // Width and height, in local coordinates
     virtual double getWidth() const = 0;

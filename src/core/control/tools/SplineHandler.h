@@ -18,6 +18,7 @@
 #include <gdk/gdk.h>  // for GdkEventKey
 #include <glib.h>     // for guint32
 
+#include "control/zoom/ZoomListener.h"
 #include "model/PageRef.h"   // for PageRef
 #include "model/Point.h"     // for Point
 #include "util/Range.h"      // for Range
@@ -64,7 +65,7 @@ struct SplineHandlerData {
  * The last knot and tangent can be modified using the keyboard.
  */
 
-class SplineHandler: public InputHandler {
+class SplineHandler: public InputHandler, public ZoomListener {
 public:
     SplineHandler(Control* control, const PageRef& page);
     ~SplineHandler() override;
@@ -79,6 +80,9 @@ public:
     bool onKeyEvent(GdkEventKey* event) override;
 
     void finalizeSpline();
+
+    // ZoomListener interface
+    void zoomChanged() override;
 
 public:
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SplineToolView>>& getViewPool() const;

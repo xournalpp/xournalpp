@@ -12,6 +12,7 @@
 
 #include <cairo.h>
 
+#include "control/zoom/ZoomListener.h"
 #include "util/Color.h"
 #include "util/DispatchPool.h"
 
@@ -21,11 +22,15 @@ class SplineHandler;
 class SplineHandlerData;
 class OverlayBase;
 class Range;
+class ZoomControl;
 
 namespace xoj::view {
 class Repaintable;
 
-class SplineToolView: public BaseShapeOrSplineToolView, public xoj::util::Listener<SplineToolView> {
+class SplineToolView:
+        public BaseShapeOrSplineToolView,
+        public ZoomListener,
+        public xoj::util::Listener<SplineToolView> {
 
 public:
     SplineToolView(const SplineHandler* splineHandler, Repaintable* parent);
@@ -38,6 +43,11 @@ public:
     void drawWithoutDrawingAids(cairo_t* cr) const override;
 
     bool isViewOf(const OverlayBase* overlay) const override;
+
+    /**
+     * Zoom interface
+     */
+    void zoomChanged() override;
 
     /**
      * Listener interface
