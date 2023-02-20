@@ -52,11 +52,49 @@
             checkout_mode="clobber"/>
   </autotools>
 
-  <cmake id="libsndfile" cmakeargs="-DBUILD_PROGRAMS=off -DBUILD_EXAMPLES=off -DENABLE_EXTERNAL_LIBS=off">
+  <cmake id="libogg" cmakeargs="-DINSTALL_DOCS=off">
     <branch repo="github-tarball"
-            version="1.1.0"
-            module="erikd/libsndfile/archive/1.1.0.tar.gz"
-            checkoutdir="libsndfile-1.1.0"/>
+            version="1.3.5"
+            module="xiph/ogg/releases/download/v1.3.5/libogg-1.3.5.tar.gz"
+            checkoutdir="libogg-1.3.5"/>
+  </cmake>
+
+  <cmake id="libvorbis" cmakeargs="">
+    <branch repo="github-tarball"
+            version="1.3.7"
+            module="xiph/vorbis/releases/download/v1.3.7/libvorbis-1.3.7.tar.gz"
+            checkoutdir="libvorbis-1.3.7"/>
+    <dependencies>
+      <dep package="libogg"/>
+    </dependencies>
+  </cmake>
+  <cmake id="libflac" cmakeargs="-DBUILD_PROGRAMS=off -DBUILD_EXAMPLES=off -DBUILD_TESTING=off -DINSTALL_MANPAGES=off">
+    <branch repo="github-tarball"
+            version="1.4.2"
+            module="xiph/flac/releases/download/1.4.2/flac-1.4.2.tar.xz"
+            checkoutdir="libflac-1.4.2"/>
+    <dependencies>
+      <dep package="libogg"/>
+    </dependencies>
+  </cmake>
+  <cmake id="libopus" cmakeargs="">
+    <branch repo="github-tarball"
+            version="1.3.1"
+            module="xiph/opus/archive/refs/tags/v1.3.1.tar.gz"
+            checkoutdir="libopus-1.3.1"/>
+  </cmake>
+
+  <cmake id="libsndfile" cmakeargs="-DBUILD_PROGRAMS=off -DBUILD_EXAMPLES=off -DBUILD_SHARED_LIBS=ON -DENABLE_EXTERNAL_LIBS=ON">
+    <branch repo="github-tarball"
+            version="1.2.0"
+            module="libsndfile/libsndfile/archive/1.2.0.tar.gz"
+            checkoutdir="libsndfile-1.2.0"/>
+    <dependencies>
+      <dep package="libogg"/>
+      <dep package="libvorbis"/>
+      <dep package="libflac"/>
+      <dep package="libopus"/>
+    </dependencies>
   </cmake>
 
   <autotools id="lua"
