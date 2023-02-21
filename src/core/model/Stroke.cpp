@@ -241,10 +241,26 @@ auto Stroke::isInSelection(ShapeContainer* container) const -> bool {
 }
 
 void Stroke::addPoint(const Point& p) {
-    this->points.emplace_back(p);
-    if (sizeCalculated) {
+    if (!sizeCalculated) {
+        this->points.emplace_back(p);
+        return;
+    }
+
+    if (hasPressure()) {
+        double pressure = p.z;
+        if (!this->points.empty()) {
+            const Point& p2 = this->points.back();
+            pressure = p2.z;
+            updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p2,
+                         0.5 * pressure);
+        }
+        this->points.emplace_back(p);
         updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
-                     hasPressure() ? p.z / 2.0 : this->width / 2.0);
+                     0.5 * pressure);
+    } else {
+        this->points.emplace_back(p);
+        updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
+                     0.5 * this->width);
     }
 }
 
@@ -392,6 +408,10 @@ void Stroke::setLastPressure(double pressure) {
         assert(pressure != Point::NO_PRESSURE);
         Point& back = this->points.back();
         back.z = pressure;
+        auto const pointCount = this->getPointCount();
+        if (pointCount >= 2) {
+            pressure = this->points[pointCount - 2].z;
+        }
         updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, back, 0.5 * pressure);
     }
 }
@@ -399,7 +419,12 @@ void Stroke::setLastPressure(double pressure) {
 void Stroke::setSecondToLastPressure(double pressure) {
     auto const pointCount = this->getPointCount();
     if (pointCount >= 2) {
-        this->points[pointCount - 2].z = pressure;
+        Point& p = this->points[pointCount - 2];
+        p.z = pressure;
+        updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
+                     0.5 * pressure);
+        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds,
+                     this->points.back(), 0.5 * pressure);
     }
 }
 
