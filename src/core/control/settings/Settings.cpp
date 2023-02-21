@@ -14,6 +14,7 @@
 #include <libxml/xmlstring.h>  // for xmlStrcmp, xmlChar
 
 #include "control/DeviceListHelper.h"               // for InputDevice
+#include "control/SearchPath.h"                     // for SearchPath
 #include "control/ToolEnums.h"                      // for ERASER_TYPE_NONE
 #include "control/settings/LatexSettings.h"         // for LatexSettings
 #include "control/settings/SettingsEnums.h"         // for InputDeviceTypeOp...
@@ -44,7 +45,14 @@ constexpr auto DEFAULT_FONT_SIZE = 12;
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
+Settings::Settings(SearchPath* configSearchPath): configSearchPath{configSearchPath} {
+    auto file = configSearchPath->findFile(SETTINGS_XML_FILE);
+    if (file.empty())
+        file = Util::getConfigFile(SETTINGS_XML_FILE);
+
+    this->filepath = file;
+    loadDefault();
+}
 
 Settings::~Settings() {
     for (auto& i: this->buttonConfig) {
@@ -753,7 +761,7 @@ auto Settings::load() -> bool {
      *  - if error during parsing load default, but do not overwrite
      *    existing palette file (would be annoying for users)
      */
-    auto paletteFile = Util::getConfigFile(PALETTE_FILE);
+    auto paletteFile = this->configSearchPath->findFile(PALETTE_FILE);
     if (!fs::exists(paletteFile)) {
         Palette::create_default(paletteFile);
     }

@@ -14,7 +14,7 @@
 /**
  * Toolbar config file name
  */
-#define TOOLBAR_CONFIG "@DEV_TOOLBAR_CONFIG@"
+#define TOOLBAR_CONFIG_FILE "@DEV_TOOLBAR_CONFIG_FILE@"
 
 /**
  * Settings file name

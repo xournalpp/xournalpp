@@ -12,7 +12,7 @@
 
 #include "ToolbarAdapter.h"          // for ToolbarAdapter
 #include "ToolbarCustomizeDialog.h"  // for ToolbarCustomizeD...
-#include "config-dev.h"              // for TOOLBAR_CONFIG
+#include "config-dev.h"              // for TOOLBAR_CONFIG_FILE
 
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control): control(control) {}
 
@@ -38,7 +38,9 @@ void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop() {
         return;
     }
 
-    for (int i = 0; this->toolbars[i]; i++) { delete this->toolbars[i]; }
+    for (int i = 0; this->toolbars[i]; i++) {
+        delete this->toolbars[i];
+    }
     delete[] this->toolbars;
 
     this->toolbars = nullptr;
@@ -52,7 +54,10 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
 
     this->clearToolbarsFromDragAndDrop();
 
-    auto file = Util::getConfigFile(TOOLBAR_CONFIG);
+    auto file = control->getConfigSearchPath()->findFile(TOOLBAR_CONFIG_FILE);
+    if (file.empty())
+        file = Util::getConfigFile(TOOLBAR_CONFIG_FILE);
+
     win->getToolbarModel()->save(file);
     win->floatingToolbox->hide();
 }

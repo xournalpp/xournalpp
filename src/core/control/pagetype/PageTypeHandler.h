@@ -16,7 +16,8 @@
 
 #include <glib.h>  // for GKeyFile
 
-#include "model/PageType.h"  // for PageTypeFormat, PageType
+#include "control/SearchPath.h"  // for SearchPath
+#include "model/PageType.h"      // for PageTypeFormat, PageType
 
 #include "filesystem.h"  // for path
 
@@ -30,7 +31,7 @@ class GladeSearchpath;
 
 class PageTypeHandler {
 public:
-    PageTypeHandler(GladeSearchpath* gladeSearchPath);
+    PageTypeHandler(GladeSearchpath* gladeSearchPath, SearchPath* configSearchPath);
     virtual ~PageTypeHandler();
 
 public:

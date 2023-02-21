@@ -21,6 +21,7 @@
 #include <libintl.h>      // for bindtextdomain, textdomain
 
 #include "control/RecentManager.h"           // for RecentManager
+#include "control/SearchPath.h"              // for SearchPath
 #include "control/jobs/BaseExportJob.h"      // for ExportBackgroundType
 #include "control/jobs/XournalScheduler.h"   // for XournalScheduler
 #include "control/settings/LatexSettings.h"  // for LatexSettings
@@ -33,7 +34,7 @@
 #include "model/Document.h"                  // for Document
 #include "undo/EmergencySaveRestore.h"       // for EmergencySaveRestore
 #include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
-#include "util/PathUtil.h"                   // for getConfigFolder, openFil...
+#include "util/PathUtil.h"                   // for getConfigFolder, openFileWithDefaultApplication, getConfigSearchPath
 #include "util/PlaceholderString.h"          // for PlaceholderString
 #include "util/Stacktrace.h"                 // for Stacktrace
 #include "util/Util.h"                       // for execInUiThread
@@ -318,6 +319,7 @@ struct XournalMainPrivate {
     gboolean exportNoRuling = false;
     gboolean progressiveMode = false;
     std::unique_ptr<GladeSearchpath> gladePath;
+    std::unique_ptr<SearchPath> configSearchPath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
 };
@@ -423,7 +425,10 @@ void on_startup(GApplication* application, XMPtr app_data) {
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
 
-    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
+    app_data->configSearchPath = std::make_unique<SearchPath>(Util::getConfigSearchPath());
+
+    app_data->control =
+            std::make_unique<Control>(application, app_data->gladePath.get(), app_data->configSearchPath.get());
 
     // Set up icons
     {
@@ -465,7 +470,9 @@ void on_startup(GApplication* application, XMPtr app_data) {
         app_data->control->getSettings()->save();
     }
 
-    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get());
+    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->configSearchPath.get(),
+                                                 app_data->control.get());
+
     app_data->control->initWindow(app_data->win.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {

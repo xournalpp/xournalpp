@@ -103,12 +103,12 @@
 #include "PageBackgroundChangeController.h"  // for Page...
 #include "PrintHandler.h"                    // for print
 #include "UndoRedoController.h"              // for Undo...
-#include "config-dev.h"                      // for SETT...
+#include "config-dev.h"                      // for TOOLBAR_CONFIG_FILE
 #include "config.h"                          // for PROJ...
 
 using std::string;
 
-Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp(gtkApp) {
+Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, SearchPath* configSearchPath): gtkApp(gtkApp) {
     this->recent = new RecentManager();
     this->undoRedo = new UndoRedoHandler(this);
     this->recent->addListener(this);
@@ -116,6 +116,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->isBlocking = false;
 
     this->gladeSearchPath = gladeSearchPath;
+    this->configSearchPath = configSearchPath;
 
     this->metadata = new MetadataManager();
     this->cursor = new XournalppCursor(this);
@@ -124,13 +125,12 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->lastGroup = GROUP_NOGROUP;
     this->lastEnabled = false;
 
-    auto name = Util::getConfigFile(SETTINGS_XML_FILE);
-    this->settings = new Settings(std::move(name));
+    this->settings = new Settings(this->configSearchPath);
     this->settings->load();
 
     this->applyPreferredLanguage();
 
-    this->pageTypes = new PageTypeHandler(gladeSearchPath);
+    this->pageTypes = new PageTypeHandler(gladeSearchPath, configSearchPath);
     this->newPageType = std::make_unique<PageTypeMenu>(this->pageTypes, settings, true, true);
 
     this->audioController = new AudioController(this->settings, this);
@@ -1246,7 +1246,7 @@ void Control::manageToolbars() {
 
     this->win->updateToolbarMenu();
 
-    auto filepath = Util::getConfigFile(TOOLBAR_CONFIG);
+    auto filepath = configSearchPath->findFile(TOOLBAR_CONFIG_FILE);
     this->win->getToolbarModel()->save(filepath);
 }
 
@@ -3259,6 +3259,7 @@ auto Control::getTextEditor() -> TextEditor* {
 }
 
 auto Control::getGladeSearchPath() const -> GladeSearchpath* { return this->gladeSearchPath; }
+auto Control::getConfigSearchPath() const -> SearchPath* { return this->configSearchPath; }
 
 auto Control::getRecentManager() const -> RecentManager* { return recent; }
 

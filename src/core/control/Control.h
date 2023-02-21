@@ -21,6 +21,7 @@
 #include <glib.h>                   // for guint
 #include <gtk/gtk.h>                // for GtkLabel
 
+#include "control/SearchPath.h"             // for SearchPath
 #include "control/ToolEnums.h"              // for ToolSize, ToolType
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "control/settings/ViewModes.h"     // for ViewModeId
@@ -74,7 +75,7 @@ class Control:
         public ClipboardListener,
         public ProgressListener {
 public:
-    Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath);
+    Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, SearchPath* configSearchPath);
     Control(Control const&) = delete;
     Control(Control&&) = delete;
     auto operator=(Control const&) -> Control& = delete;
@@ -247,6 +248,7 @@ public:
     TextEditor* getTextEditor();
 
     GladeSearchpath* getGladeSearchPath() const;
+    SearchPath* getConfigSearchPath() const;
 
     void disableSidebarTmp(bool disabled);
 
@@ -444,6 +446,7 @@ private:
     bool isBlocking;
 
     GladeSearchpath* gladeSearchPath;
+    SearchPath* configSearchPath;
 
     MetadataManager* metadata;
 

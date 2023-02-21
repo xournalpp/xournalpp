@@ -14,6 +14,7 @@
 #include <cstring>   // for strlen, size_t
 #include <optional>  // for optional
 #include <string>    // for string, allocator, basic_string
+#include <vector>    // for vector
 
 #include <gio/gio.h>    // for GFile
 #include <glib.h>       // for g_free, GError, g_error_free, g_filename_fro...
@@ -122,6 +123,11 @@ fs::path getLongPath(const fs::path& path);
 
 [[deprecated("can produce invalid strings on windows, use fs::path::native()")]] [[nodiscard]]  //
 auto system_single_byte_filename(const fs::path& path) -> std::string;
+
+/**
+ * Returns a vector of directories to search for a particular path
+ */
+[[nodiscard]] std::vector<fs::path> getConfigSearchPath();
 
 /**
  * Return the configuration folder path (may not be guaranteed to exist).

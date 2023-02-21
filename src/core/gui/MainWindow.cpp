@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 
-#include <config-dev.h>             // for TOOLBAR_CONFIG
+#include <config-dev.h>             // for TOOLBAR_CONFIG_FILE
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_fr...
 #include <gdk/gdk.h>                // for gdk_screen_get_de...
 #include <gdk/gdkkeysyms.h>         // for GDK_KEY_Escape
@@ -42,8 +42,8 @@
 
 using std::string;
 
-MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
-        GladeGui(gladeSearchPath, "main.glade", "mainWindow") {
+MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, SearchPath* configSearchPath, Control* control):
+        GladeGui(gladeSearchPath, "main.glade", "mainWindow"), configSearchPath{configSearchPath} {
     this->control = control;
     this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
     this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
@@ -84,26 +84,17 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
     this->toolbar = std::make_unique<ToolMenuHandler>(this->control, this, GTK_WINDOW(getWindow()));
 
-    auto file = gladeSearchPath->findFile("", "toolbar.ini");
+    auto file = configSearchPath->findFile(TOOLBAR_CONFIG_FILE);
+    if (file.empty()) {
+        file = gladeSearchPath->findFile("", TOOLBAR_CONFIG_FILE);
+    }
 
     ToolbarModel* tbModel = this->toolbar->getModel();
-
     if (!tbModel->parse(file, true)) {
-
-        string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
+        string msg = FS(_F("Could not parse toolbar.ini file: {1}\n"
                            "No Toolbars will be available") %
                         file.u8string());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
-    }
-
-    file = Util::getConfigFile(TOOLBAR_CONFIG);
-    if (fs::exists(file)) {
-        if (!tbModel->parse(file, false)) {
-            string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
-                               "Toolbars will not be available") %
-                            file.u8string());
-            XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
-        }
     }
 
     createToolbarAndMenu();
@@ -190,7 +181,9 @@ void MainWindow::rebindMenubarAccelerators() {
 }
 
 MainWindow::~MainWindow() {
-    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) { g_object_unref(this->toolbarWidgets[i]); }
+    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+        g_object_unref(this->toolbarWidgets[i]);
+    }
 
     delete[] this->toolbarWidgets;
     this->toolbarWidgets = nullptr;
@@ -622,7 +615,9 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
 
 auto MainWindow::clearToolbar() -> ToolbarData* {
     if (this->selectedToolbar != nullptr) {
-        for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) { ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i]); }
+        for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+            ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i]);
+        }
 
         this->toolbar->freeDynamicToolbarItems();
     }
