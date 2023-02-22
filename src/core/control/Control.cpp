@@ -3014,6 +3014,10 @@ void Control::clipboardPaste(Element* e) {
     win->getXournal()->setSelection(selection);
 }
 
+void Control::registerPluginToolButtons(ToolMenuHandler* toolMenuHandler) {
+    pluginController->registerToolButtons(toolMenuHandler);
+}
+
 void Control::clipboardPasteXournal(ObjectInputStream& in) {
     auto pNr = getCurrentPageNo();
     if (pNr == npos && win != nullptr) {

@@ -35,6 +35,7 @@ extern "C" {
 
 class Plugin;
 class Control;
+class ToolMenuHandler;
 
 struct MenuEntry final {
     MenuEntry() = default;
@@ -56,6 +57,25 @@ struct MenuEntry final {
     std::string accelerator{};
     /// Action activated when using the menu entry
     xoj::util::GObjectSPtr<GSimpleAction> action;
+};
+
+struct ToolbarButtonEntry final {
+    ToolbarButtonEntry() = default;
+    ToolbarButtonEntry(Plugin* plugin, std::string description, std::string toolbarId, std::string iconName,
+                       std::string callback, long mode):
+            plugin(plugin),
+            description(std::move(description)),
+            toolbarId(std::move(toolbarId)),
+            iconName(std::move(iconName)),
+            callback(std::move(callback)),
+            mode(mode) {}
+
+    Plugin* plugin = nullptr;
+    std::string description{};                    ///< description displayed on hovering over the toolbar button
+    std::string toolbarId{};                      ///< toolbar ID to be used in toolbar.ini
+    std::string iconName{};                       ///< name of the icon which should be stored as iconName + ".svg"
+    std::string callback{};                       ///< Callback function name
+    long mode{std::numeric_limits<long>::max()};  ///< mode in which the callback function is run
 };
 
 struct LuaDeleter {
@@ -86,8 +106,16 @@ public:
     /// Get a model for the GMenu section for the plugin
     inline GMenuModel* getMenuSection() const { return G_MENU_MODEL(menuSection.get()); }
 
+    // Register toolbar button
+    void registerToolButton(std::string description, std::string toolbarId, std::string iconName, std::string callback,
+                            long mode);
+    // Register all toolbar buttons
+    void registerToolButton(ToolMenuHandler* toolMenuHandler);
+
     /// Execute menu entry
     void executeMenuEntry(MenuEntry* entry);
+    // Execute toolbar button
+    void executeToolbarButton(ToolbarButtonEntry* entry);
 
     /// @return the Plugin name
     auto getName() const -> std::string const&;
@@ -141,10 +169,12 @@ public:
     static auto getPluginFromLua(lua_State* lua) -> Plugin*;
 
 private:
-    Control* control;                              ///< The main controller
-    std::unique_ptr<lua_State, LuaDeleter> lua{};  ///< Lua engine
-    std::vector<MenuEntry> menuEntries;            ///< All registered menu entries
-    xoj::util::GObjectSPtr<GMenu> menuSection;     ///< Menu section containing the menu entries
+    Control* control;                                      ///< The main controller
+    std::unique_ptr<lua_State, LuaDeleter> lua{};          ///< Lua engine
+    std::vector<MenuEntry> menuEntries;                    ///< All registered menu entries
+    xoj::util::GObjectSPtr<GMenu> menuSection;             ///< Menu section containing the menu entries
+    std::vector<ToolbarButtonEntry> toolbarButtonEntries;  ///< All registered toolbar button entries
+
 
     std::string name;             ///< Plugin name
     std::string description;      ///< Description of the plugin

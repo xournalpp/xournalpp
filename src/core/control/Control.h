@@ -64,7 +64,7 @@ class Settings;
 class TextEditor;
 class XournalScheduler;
 class ZoomControl;
-
+class ToolMenuHandler;
 class Control:
         public ActionHandler,
         public ToolListener,
@@ -317,6 +317,9 @@ public:
     void deleteSelection() override;
 
     void clipboardPaste(Element* e);
+
+public:
+    void registerPluginToolButtons(ToolMenuHandler* toolMenuHandler);
 
 protected:
     /**

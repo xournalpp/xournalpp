@@ -21,6 +21,7 @@
 #include "filesystem.h"
 
 class Control;
+class ToolMenuHandler;
 
 class PluginController final {
 public:
@@ -37,6 +38,11 @@ public:
      * The data is owned by the Plugin's themselves - do not unref
      */
     std::vector<GMenuModel*> createMenuSections(GtkApplicationWindow* win);
+
+    /**
+     * Add toolbar buttons
+     */
+    void registerToolButtons(ToolMenuHandler* toolMenuHandler);
 
     /**
      * Show Plugin manager Dialog
