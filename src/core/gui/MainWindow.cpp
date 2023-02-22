@@ -86,6 +86,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     // "watch over" all events
     g_signal_connect(this->window, "key-press-event", G_CALLBACK(onKeyPressCallback), this);
 
+    // need to create tool buttons registered in plugins, so they can be added to toolbars
+    control->registerPluginToolButtons(this->toolbar.get());
+
     createToolbar();
 
     setToolbarVisible(control->getSettings()->isToolbarVisible());

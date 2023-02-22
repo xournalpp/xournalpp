@@ -14,7 +14,8 @@
 
 #include <utility>  // for move, pair
 
-#include "util/i18n.h"  // for _
+#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
+#include "util/i18n.h"                           // for _
 #include "util/raii/GObjectSPtr.h"
 
 #include "config.h"  // for PROJECT_VERSION
@@ -114,6 +115,30 @@ void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback, 
 auto Plugin::registerMenu(std::string menu, std::string callback, long mode, std::string accelerator) -> size_t {
     menuEntries.emplace_back(this, std::move(menu), std::move(callback), mode, std::move(accelerator));
     return menuEntries.size() - 1;
+}
+
+void Plugin::registerToolButton(ToolMenuHandler* toolMenuHandler) {
+    if (toolbarButtonEntries.empty() || !this->enabled) {
+        // No entries - nothing to do
+        return;
+    }
+
+    for (auto&& t: toolbarButtonEntries) {
+        g_message("Add toolbar button with id: %s and icon: %s", t.toolbarId.c_str(), t.iconName.c_str());
+        toolMenuHandler->addPluginItem(&t);
+    }
+}
+
+void Plugin::executeToolbarButton(ToolbarButtonEntry* entry) { callFunction(entry->callback, entry->mode); }
+
+void Plugin::registerToolButton(std::string description, std::string toolbarId, std::string iconName,
+                                std::string callback, long mode) {
+    if (toolbarId == "") {
+        return;
+    }
+    toolbarId = "Plugin::" + toolbarId;  // In order to avoid name collisions with built in toolbar id's.
+    toolbarButtonEntries.emplace_back(this, std::move(description), std::move(toolbarId), std::move(iconName),
+                                      std::move(callback), mode);
 }
 
 auto Plugin::getControl() const -> Control* { return control; }

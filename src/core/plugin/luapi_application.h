@@ -220,11 +220,16 @@ static int applib_msgbox(lua_State* L) {
 
 
 /**
- * Allow to register menupoints, this needs to be called from initUi
+ * Allow to register menupoints and toolbar buttons. This needs to be called from initUi
  *
- * Example: app.registerUi({["menu"] = "HelloWorld", callback="printMessage", mode=1, accelerator="<Control>a"})
+ * Example 1: app.registerUi({["menu"] = "HelloWorld", callback="printMessage", mode=1, accelerator="<Control>a"})
  * registers a menupoint with name "HelloWorld" executing a function named "printMessage", in mode 1,
  * which can be triggered via the "<Control>a" keyboard accelerator
+ *
+ * Example 2: app.registerUi({callback ="blueDashedPen", toolbarId="CUSTOM_PEN_1", iconName="bluePenIcon"})
+ * registers a toolbar icon named "bluePenIcon" executing a function named "blueDashedPen", which can be added
+ * to a toolbar via toolbar customization or by editing the toolbar.ini file using the name "Plugin::CUSTOM_PEN_1"
+ * Note that in toolbar.ini the string "Plugin::" must always be prepended to the toolbarId specified in the plugin
  *
  * The mode and accelerator are optional. When specifying the mode, the callback function should have one parameter
    that receives the mode. This is useful for callback functions that are shared among multiple menu entries.
@@ -247,33 +252,32 @@ static int applib_registerUi(lua_State* L) {
     lua_getfield(L, 1, "menu");
     lua_getfield(L, 1, "callback");
     lua_getfield(L, 1, "mode");
-    // stack now has following:
+    lua_getfield(L, 1, "toolbarId");
+    lua_getfield(L, 1, "iconName");
+    // In Example 1 stack now has following:
     //    1 = {"menu"="MenuName", callback="functionName", mode=1, accelerator="<Control>a"}
-    //   -4 = "<Control>a"
-    //   -3 = "MenuName"
-    //   -2 = "functionName"
-    //   -1 = mode
+    //   -6 = "<Control>a"
+    //   -5 = "MenuName"
+    //   -4 = "functionName"
+    //   -3 = mode
+    //   -2 = nil
+    //   -1 = nil
 
-    const char* accelerator = luaL_optstring(L, -4, nullptr);
-    const char* menu = luaL_optstring(L, -3, nullptr);
-    const char* callback = luaL_optstring(L, -2, nullptr);
-    const long mode = luaL_optinteger(L, -1, std::numeric_limits<long>::max());
+    const char* accelerator = luaL_optstring(L, -6, "");
+    const char* menu = luaL_optstring(L, -5, "");
+    const char* callback = luaL_optstring(L, -4, nullptr);
+    const long mode = luaL_optinteger(L, -3, std::numeric_limits<long>::max());
+    const char* toolbarId = luaL_optstring(L, -2, "");
+    const char* iconName = luaL_optstring(L, -1, "");
     if (callback == nullptr) {
         return luaL_error(L, "Missing callback function!");
     }
-    if (menu == nullptr) {
-        menu = "";
-    }
-    if (accelerator == nullptr) {
-        accelerator = "";
-    }
-
-    int toolbarId = -1;
 
     int menuId = plugin->registerMenu(menu, callback, mode, accelerator);
+    plugin->registerToolButton(menu, toolbarId, iconName, callback, mode);
 
     // Make sure to remove all vars which are put to the stack before!
-    lua_pop(L, 4);
+    lua_pop(L, 6);
 
     // Add return value to the Stack
     lua_createtable(L, 0, 2);
@@ -281,10 +285,6 @@ static int applib_registerUi(lua_State* L) {
     lua_pushstring(L, "menuId");
     lua_pushinteger(L, menuId);
     lua_settable(L, -3); /* 3rd element from the stack top */
-
-    lua_pushstring(L, "toolbarId");
-    lua_pushinteger(L, toolbarId);
-    lua_settable(L, -3);
 
     return 1;
 }

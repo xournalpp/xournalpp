@@ -44,6 +44,7 @@ class PageBackgroundChangeController;
 class ActionHandler;
 class ColorToolItem;
 class MenuItem;
+struct ToolbarButtonEntry;
 
 class ToolMenuHandler {
 public:
@@ -70,6 +71,7 @@ public:
     void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
 
     void initToolItems();
+    void addPluginItem(ToolbarButtonEntry* t);
 
     void setUndoDescription(const std::string& description);
     void setRedoDescription(const std::string& description);

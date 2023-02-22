@@ -143,7 +143,9 @@ PluginController::PluginController(Control* control): control(control) {
 
 void PluginController::registerToolbar() {
 #ifdef ENABLE_PLUGINS
-    for (auto&& p: this->plugins) { p->registerToolbar(); }
+    for (auto&& p: this->plugins) {
+        p->registerToolbar();
+    }
 #endif
 }
 
@@ -169,6 +171,14 @@ auto PluginController::createMenuSections(GtkApplicationWindow* win) -> std::vec
     return sections;
 #else
     return {};
+#endif
+}
+
+void PluginController::registerToolButtons(ToolMenuHandler* toolMenuHandler) {
+#ifdef ENABLE_PLUGINS
+    for (auto&& p: this->plugins) {
+        p->registerToolButton(toolMenuHandler);
+    }
 #endif
 }
 
