@@ -46,6 +46,7 @@ TEST(Image, testGetImageApplyOrientation) {
 
     // Test image now have the correct size - which is the image has been rotated.
     EXPECT_EQ(image.getImageSize(), rotatedImageSize);
+    EXPECT_EQ(image.getImageSize(), std::make_pair(130, 500));
     EXPECT_EQ(std::make_pair(cairo_image_surface_get_width(surface), cairo_image_surface_get_height(surface)),
               rotatedImageSize);
 }
