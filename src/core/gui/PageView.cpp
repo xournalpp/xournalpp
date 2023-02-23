@@ -69,10 +69,10 @@
 #include "util/Rectangle.h"                         // for Rectangle
 #include "util/Util.h"                              // for npos
 #include "util/XojMsgBox.h"                         // for XojMsgBox
+#include "util/gtk4_helper.h"                       // for gtk_box_append
 #include "util/i18n.h"                              // for _F, FC, FS, _
 #include "util/raii/CLibrariesSPtr.h"               // for adopt
 #include "util/serdesstream.h"                      // for serdes_stream
-#include "util/gtk4_helper.h"                       // for gtk_box_append
 #include "view/DebugShowRepaintBounds.h"            // for IF_DEBUG_REPAINT
 #include "view/overlays/OverlayView.h"              // for OverlayView, Tool...
 #include "view/overlays/PdfElementSelectionView.h"  // for PdfElementSelecti...
@@ -730,11 +730,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
             const double pageX = pos.x / zoom;
             const double pageY = pos.y / zoom;
 
-            // If there's nothing to select (e.g. the background layer)
-            // or we're holding alt...
-            if (isBackgroundLayer || !layer->isAnnotated() || pos.isAltDown()) {
-                displayLinkPopover(page, pageX, pageY);
-            }
+            displayLinkPopover(page, pageX, pageY);
         }
     }
 
