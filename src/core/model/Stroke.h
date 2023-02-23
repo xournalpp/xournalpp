@@ -164,6 +164,12 @@ public:
     void clearPressure();
     void scalePressure(double factor);
 
+    /**
+     * @brief Update the stroke's bounding box using the second-to-last point's pressure value and the last two points.
+     * @param fallbackPressure Pressure to use when the stroke contains exactly one point.
+     */
+    void updateBoundsLastTwoPressures(double fallbackPressure = 0.0);
+
     bool hasPressure() const;
     double getAvgPressure() const;
 
