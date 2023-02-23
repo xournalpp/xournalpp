@@ -15,3 +15,4 @@ pa_stable_*.tgz
 sox-code
 libsndfile
 libzip*
+*.dmg
