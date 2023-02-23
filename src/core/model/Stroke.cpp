@@ -388,7 +388,7 @@ auto Stroke::getAvgPressure() const -> double {
 
 void Stroke::updateBoundsLastTwoPressures(double fallbackPressure) {
     if (!sizeCalculated || this->points.empty()) {
-      return;
+        return;
     }
 
     Point& p = this->points.back();
@@ -397,13 +397,10 @@ void Stroke::updateBoundsLastTwoPressures(double fallbackPressure) {
         Point& p2 = this->points[pointCount - 2];
         double pressure = p2.z;
 
-        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p,
-                     0.5 * pressure);
-        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p2,
-                     0.5 * pressure);
+        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p, 0.5 * pressure);
+        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p2, 0.5 * pressure);
     } else if (pointCount == 1) {
-        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p,
-                     0.5 * fallbackPressure);
+        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p, 0.5 * fallbackPressure);
     }
 }
 
