@@ -59,7 +59,10 @@ auto ToolitemDragDrop::getIcon(ToolItemDragDropData* data) -> GtkWidget* {
         return data->item->getNewToolIcon();
     }
     if (data->type == TOOL_ITEM_SEPARATOR) {
-        return ToolbarSeparatorImage::newImage();
+        return ToolbarSeparatorImage::newImage(SeparatorType::SEPARATOR);
+    }
+    if (data->type == TOOL_ITEM_SPACER) {
+        return ToolbarSeparatorImage::newImage(SeparatorType::SPACER);
     }
 
     g_warning("ToolitemDragDrop::getIcon unhandled type: %i\n", data->type);
@@ -71,7 +74,10 @@ auto ToolitemDragDrop::getPixbuf(ToolItemDragDropData* data) -> GdkPixbuf* {
         return data->item->getNewToolPixbuf();
     }
     if (data->type == TOOL_ITEM_SEPARATOR) {
-        return ToolbarSeparatorImage::getNewToolPixbuf();
+        return ToolbarSeparatorImage::getNewToolPixbuf(SeparatorType::SEPARATOR);
+    }
+    if (data->type == TOOL_ITEM_SPACER) {
+        return ToolbarSeparatorImage::getNewToolPixbuf(SeparatorType::SPACER);
     }
     g_error("ToolitemDragDrop::getIcon unhandled type: %i\n", data->type);
 }

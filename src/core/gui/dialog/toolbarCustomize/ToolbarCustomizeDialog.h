@@ -25,6 +25,7 @@ class GladeSearchpath;
 
 typedef struct _ToolItemDragData ToolItemDragData;
 typedef struct _ColorToolItemDragData ColorToolItemDragData;
+typedef struct _SeparatorData SeparatorData;
 
 class ToolbarCustomizeDialog: public GladeGui {
 public:
