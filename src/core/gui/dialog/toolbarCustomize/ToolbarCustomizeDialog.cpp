@@ -46,6 +46,17 @@ struct _ColorToolItemDragData {
     GtkWidget* ebox;
 };
 
+// Separator and spacer
+struct _SeparatorData {
+    ToolItemType type;
+    int pos;
+    SeparatorType separator;
+    const char* label;
+};
+
+SeparatorData dataSeparator = {TOOL_ITEM_SEPARATOR, 0, SeparatorType::SEPARATOR, _("Separator")};
+SeparatorData dataSpacer = {TOOL_ITEM_SPACER, 1, SeparatorType::SPACER, _("Spacer")};
+
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
                                                ToolbarDragDropHandler* handler):
         GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar") {
@@ -63,35 +74,35 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 
     g_signal_connect(target, "drag-data-received", G_CALLBACK(dragDataReceived), this);
 
+    // init separator and spacer
+    GtkWidget* tbSeparators = get("tbSeparator");
 
-    GtkWidget* icon = ToolbarSeparatorImage::newImage();
-    g_return_if_fail(icon != nullptr);
-    GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
-    gtk_widget_show(box);
+    for (SeparatorData* data: {&dataSeparator, &dataSpacer}) {
+        GtkWidget* icon = ToolbarSeparatorImage::newImage(data->separator);
+        g_return_if_fail(icon != nullptr);
+        GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+        gtk_widget_show(box);
 
-    GtkWidget* label = gtk_label_new(_("Separator"));
-    gtk_widget_show(label);
-    gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
+        GtkWidget* label = gtk_label_new(data->label);
+        gtk_widget_show(label);
+        gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
 
-    GtkWidget* ebox = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(ebox), box);
-    gtk_widget_show(ebox);
+        gtk_widget_show(icon);
+        gtk_box_pack_end(GTK_BOX(box), icon, false, false, 0);
 
-    gtk_widget_show(icon);
-    gtk_box_pack_end(GTK_BOX(box), icon, false, false, 0);
+        GtkWidget* ebox = gtk_event_box_new();
+        gtk_container_add(GTK_CONTAINER(ebox), box);
+        gtk_widget_show(ebox);
 
-    // make ebox a drag source
-    gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
-    ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
+        // make ebox a drag source
+        gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
+        ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
 
-    g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBeginSeparator), nullptr);
-    g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEndSeparator), nullptr);
-
-    g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGetSeparator), nullptr);
-
-    // init separator
-    GtkWidget* tbSeparator = get("tbSeparator");
-    gtk_grid_attach(GTK_GRID(tbSeparator), ebox, 0, 0, 1, 1);
+        g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBeginSeparator), data);
+        g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEndSeparator), data);
+        g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGetSeparator), data);
+        gtk_grid_attach(GTK_GRID(tbSeparators), ebox, data->pos, 0, 1, 1);
+    }
 }
 
 ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
@@ -110,10 +121,10 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
     }
 }
 
-void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* unused) {
-    ToolItemDragCurrentData::setData(TOOL_ITEM_SEPARATOR, -1, nullptr);
-
-    GdkPixbuf* pixbuf = ToolbarSeparatorImage::getNewToolPixbuf();
+void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* data) {
+    SeparatorData* sepData = static_cast<SeparatorData*>(data);
+    ToolItemDragCurrentData::setData(sepData->type, -1, nullptr);
+    GdkPixbuf* pixbuf = ToolbarSeparatorImage::getNewToolPixbuf(sepData->separator);
     gtk_drag_set_icon_pixbuf(context, pixbuf, -2, -2);
     g_object_unref(pixbuf);
 }
@@ -124,10 +135,10 @@ void ToolbarCustomizeDialog::toolitemDragEndSeparator(GtkWidget* widget, GdkDrag
 
 void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget, GdkDragContext* context,
                                                           GtkSelectionData* selection_data, guint info, guint time,
-                                                          void* unused) {
-
+                                                          void* data) {
+    SeparatorData* sepData = static_cast<SeparatorData*>(data);
     ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
-    it->type = TOOL_ITEM_SEPARATOR;
+    it->type = sepData->type;
 
     gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, reinterpret_cast<const guchar*>(it),
                            sizeof(ToolItemDragDropData));
@@ -232,6 +243,12 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget* widget, GdkDragContext*
          * Hence dragging a separator into the dialog does not
          * require any action.
          */
+    } else if (d->type == TOOL_ITEM_SPACER) {
+        /*
+         * There is always a spacer shown in the dialog.
+         * Hence dragging a spacer into the dialog does not
+         * require any action.
+         */
     } else if (d->type == TOOL_ITEM_COLOR) {
         /*
          * The dialog always contains the full palette of colors.
@@ -252,7 +269,9 @@ void ToolbarCustomizeDialog::freeIconview() {
     GtkGrid* table = GTK_GRID(get("tbDefaultTools"));
 
     GList* children = gtk_container_get_children(GTK_CONTAINER(table));
-    for (auto& w: GListView<GtkWidget>(children)) { gtk_container_remove(GTK_CONTAINER(table), &w); }
+    for (auto& w: GListView<GtkWidget>(children)) {
+        gtk_container_remove(GTK_CONTAINER(table), &w);
+    }
     g_list_free(children);
 }
 
@@ -323,7 +342,9 @@ void ToolbarCustomizeDialog::freeColorIconview() {
     GtkGrid* table = GTK_GRID(get("tbColor"));
 
     GList* children = gtk_container_get_children(GTK_CONTAINER(table));
-    for (auto& w: GListView<GtkWidget>(children)) { gtk_container_remove(GTK_CONTAINER(table), &w); }
+    for (auto& w: GListView<GtkWidget>(children)) {
+        gtk_container_remove(GTK_CONTAINER(table), &w);
+    }
 
     g_list_free(children);
 }

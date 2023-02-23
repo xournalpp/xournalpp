@@ -14,6 +14,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gtk/gtk.h>                // for GtkWidget
 
+enum SeparatorType { SEPARATOR, SPACER };
+
 /**
  * Menuitem handler
  */
@@ -25,7 +27,7 @@ namespace ToolbarSeparatorImage {
  *
  * @return GtkWidget* Separator
  */
-GtkWidget* newImage();
+GtkWidget* newImage(SeparatorType separator);
 
 /**
  * @brief Create Separator Pixbuf
@@ -34,5 +36,5 @@ GtkWidget* newImage();
  *
  * @return GdkPixbuf* Seperator
  */
-GdkPixbuf* getNewToolPixbuf();
+GdkPixbuf* getNewToolPixbuf(SeparatorType separator);
 };  // namespace ToolbarSeparatorImage
