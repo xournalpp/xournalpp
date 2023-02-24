@@ -247,9 +247,8 @@ void Stroke::addPoint(const Point& p) {
     }
 
     if (hasPressure()) {
-        updateBoundsLastTwoPressures(p.z);
+        updateBoundsLastTwoPressures();
     } else {
-        this->points.emplace_back(p);
         updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
                      0.5 * this->width);
     }
@@ -386,22 +385,20 @@ auto Stroke::getAvgPressure() const -> double {
            this->points.size();
 }
 
-void Stroke::updateBoundsLastTwoPressures(double fallbackPressure) {
+void Stroke::updateBoundsLastTwoPressures() {
     if (!sizeCalculated || this->points.empty()) {
         return;
     }
 
-    Point& p = this->points.back();
     auto const pointCount = this->getPointCount();
-    if (pointCount >= 2) {
-        Point& p2 = this->points[pointCount - 2];
-        double pressure = p2.z;
+    assert(pointCount >= 2);
 
-        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p, 0.5 * pressure);
-        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p2, 0.5 * pressure);
-    } else if (pointCount == 1) {
-        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p, 0.5 * fallbackPressure);
-    }
+    Point& p = this->points.back();
+    Point& p2 = this->points[pointCount - 2];
+    double pressure = p2.z;
+
+    updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p, 0.5 * pressure);
+    updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p2, 0.5 * pressure);
 }
 
 void Stroke::scalePressure(double factor) {
@@ -417,7 +414,6 @@ void Stroke::setLastPressure(double pressure) {
         assert(pressure != Point::NO_PRESSURE);
         Point& back = this->points.back();
         back.z = pressure;
-        updateBoundsLastTwoPressures(pressure);
     }
 }
 
