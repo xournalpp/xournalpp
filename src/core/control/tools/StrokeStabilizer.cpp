@@ -104,8 +104,10 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
      * Draw a quadratic spline segment, with first tangent vector parallel to AB
      */
     Point B = stroke->getPoint(pointCount - 1);
-    Point A = stroke->getPoint(pointCount - 2);
-    Point C(ev.x / zoom, ev.y / zoom);
+    const Point A = stroke->getPoint(pointCount - 2);
+
+    const bool usePressure = ev.pressure != Point::NO_PRESSURE && stroke->getToolType().isPressureSensitive();
+    const Point C(ev.x / zoom, ev.y / zoom, usePressure ? ev.pressure * stroke->getWidth() : Point::NO_PRESSURE);
 
     MathVect vAB = {B.x - A.x, B.y - A.y};
     MathVect vBC = {C.x - B.x, C.y - B.y};
@@ -128,6 +130,15 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
      */
     double distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect::scalarProduct(vAB, vBC))), normBC);
 
+    /**
+     * Rebalance the pressure values.
+     */
+    if (usePressure) {
+        double coeff = normBC / 2 + distance;  // Very rough estimation of the spline's length
+        B.z = (coeff * A.z + normAB * C.z) / (normAB + coeff);
+        stroke->setLastPressure(B.z);
+    }
+
     // Quadratic control point
     Point Q = B.lineTo(A, -distance);
 
@@ -137,17 +148,6 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     Point fp = B.relativeLineTo(Q, 2.0 / 3.0);
     Point sp = C.relativeLineTo(Q, 2.0 / 3.0);
 
-    /**
-     * Set the pressure values. Only the usual pen strokes are pressure sensitive
-     */
-    bool usePressure = ev.pressure != Point::NO_PRESSURE && stroke->getToolType().isPressureSensitive();
-    if (usePressure) {
-        C.z = ev.pressure * stroke->getWidth();
-        double coeff = normBC / 2 + distance;  // Very rough estimation of the spline's length
-        B.z = (coeff * A.z + normAB * C.z) / (normAB + coeff);
-        stroke->setLastPressure(B.z);
-    }
-
     SplineSegment spline(B, fp, sp, C);
     /**
      * TODO Add support for spline segments in Stroke and replace this point sequence by a single spline segment
@@ -156,8 +156,9 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
 
     pointsToPaint.pop_front();  // Point B has already been painted
 
-    for (auto&& point: pointsToPaint) { strokeHandler->drawSegmentTo(point); }
-    C.z = ev.pressure;  // Normal state after having added a segment. Useful?
+    for (auto&& point: pointsToPaint) {
+        strokeHandler->drawSegmentTo(point);
+    }
     strokeHandler->drawSegmentTo(C);
 }
 
