@@ -59,7 +59,7 @@ public:
 
     std::string getLastError();
     bool isAttachedPdfMissing() const;
-    std::string getMissingPdfFilename();
+    std::string getMissingPdfFilename() const;
 
     void removePdfBackground();
     void setPdfReplacement(fs::path filepath, bool attachToDocument);
