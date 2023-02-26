@@ -254,8 +254,9 @@ void checkForEmergencySave(Control* control) {
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
-               int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
+auto exportImg(const char* input, const char* output, const char* range, const char* layerRange,
+               std::optional<unsigned int> pngDpi, std::optional<unsigned int> pngWidth,
+               std::optional<unsigned int> pngHeight, ExportBackgroundType exportBackground) -> int {
     LoadHandler loader;
 
     Document* doc = loader.loadDocument(input);
@@ -311,9 +312,9 @@ struct XournalMainPrivate {
     int openAtPageNumber = 0;  // when no --page is used, the document opens at the page specified in the metadata file
     gchar* exportRange{};
     gchar* exportLayerRange{};
-    int exportPngDpi = -1;
-    int exportPngWidth = -1;
-    int exportPngHeight = -1;
+    std::optional<unsigned int> exportPngDpi;
+    std::optional<unsigned int> exportPngWidth;
+    std::optional<unsigned int> exportPngHeight;
     gboolean exportNoBackground = false;
     gboolean exportNoRuling = false;
     gboolean progressiveMode = false;

@@ -14,6 +14,8 @@
 
 #include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
 
+#include <optional>
+
 class Document;
 
 namespace ExportHelper {
@@ -26,17 +28,18 @@ namespace ExportHelper {
  * @param layerRange Layer range to be parsed. Will only export those layers, for every exported page.
  *                  If a number is too high for the number of layers on a given page, it is just ignored.
  *                  If range=nullptr, exports all layers.
- * @param pngDpi Set dpi for Png files. Non positive values are ignored
- * @param pngWidth Set the width for Png files. Non positive values are ignored
- * @param pngHeight Set the height for Png files. Non positive values are ignored
+ * @param pngDpi Set dpi for Png files.
+ * @param pngWidth Set the width for Png files.
+ * @param pngHeight Set the height for Png files.
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported image file has transparent background
  *
  *  The priority is: pngDpi overwrites pngWidth overwrites pngHeight
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-int exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
-              int pngHeight, ExportBackgroundType exportBackground);
+int exportImg(Document* doc, const char* output, const char* range, const char* layerRange,
+              std::optional<unsigned int> pngDpi, std::optional<unsigned int> pngWidth,
+              std::optional<unsigned int> pngHeight, ExportBackgroundType exportBackground);
 
 /**
  * @brief Export the input file as pdf
