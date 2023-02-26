@@ -1,9 +1,6 @@
 #include "Document.h"
 
-#include <sstream>  // for stringstream
 #include <string>   // for string
-#include <chrono>   // for time
-#include <iomanip>  // put_time
 #include <ctime>    // for size_t, localtime, strf...
 #include <utility>  // for move, pair
 
