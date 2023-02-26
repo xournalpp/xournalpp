@@ -83,5 +83,5 @@ private:
 
     std::string chosenFilterName;
 
-    std::map<std::string, ExportType*> filters;
+    std::map<std::string, std::unique_ptr<ExportType>> filters;
 };

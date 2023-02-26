@@ -23,15 +23,13 @@
 
 CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Custom Export")) {
     // Supported filters
-    filters[_("PDF files")] = new ExportType(".pdf");
-    filters[_("PNG graphics")] = new ExportType(".png");
-    filters[_("SVG graphics")] = new ExportType(".svg");
-    filters[_("Xournal (Compatibility)")] = new ExportType(".xoj");
+    filters[_("PDF files")] = std::make_unique<ExportType>(".pdf");
+    filters[_("PNG graphics")] = std::make_unique<ExportType>(".png");
+    filters[_("SVG graphics")] = std::make_unique<ExportType>(".svg");
+    filters[_("Xournal (Compatibility)")] = std::make_unique<ExportType>(".xoj");
 }
 
-CustomExportJob::~CustomExportJob() {
-    for (auto& filter: filters) { delete filter.second; }
-}
+CustomExportJob::~CustomExportJob() = default;
 
 void CustomExportJob::addFilterToDialog() {
     // Runs on every filter inside the filters map
@@ -47,7 +45,7 @@ auto CustomExportJob::testAndSetFilepath(fs::path file) -> bool {
 
     // Extract the file filter selected
     this->chosenFilterName = BaseExportJob::getFilterName();
-    auto chosenFilter = filters.at(this->chosenFilterName);
+    const auto& chosenFilter = filters.at(this->chosenFilterName);
 
     // Remove any pre-existing extension and adds the chosen one
     Util::clearExtensions(filepath, chosenFilter->extension);
