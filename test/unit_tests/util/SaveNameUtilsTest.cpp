@@ -23,5 +23,5 @@ TEST(SaveNameUtils, testWildcardExpandsion) {
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{", "defaultpath"), "%{");
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name%{name}}x", ""), "}x");
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("\\%\\{name%{name}}x", ""), "\\%\\{name}x");
-    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}", "      %{name}"), "\\%\\{name}x");
+    EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}", "      %{name}"), "      %{name}");
 }
