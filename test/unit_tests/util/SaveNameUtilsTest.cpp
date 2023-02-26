@@ -23,12 +23,5 @@ TEST(SaveNameUtils, testWildcardExpandsion) {
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{", "defaultpath"), "%{");
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name%{name}}x", ""), "}x");
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("\\%\\{name%{name}}x", ""), "\\%\\{name}x");
-}
-
-/* Disabled for now - because it makes endless loop in current implementation
-*  suggest we not should allow recursive expandsion
-*/
-TEST(SaveNameUtils, DISABLED_testWildcardRecursiveExpandsion)
-{
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}", "      %{name}"), "\\%\\{name}x");
 }
