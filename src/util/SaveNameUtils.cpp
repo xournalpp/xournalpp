@@ -18,8 +18,9 @@ auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardS
         if (endPos == std::string::npos) {
             break;
         }
-        std::string wildcard = saveString.substr(pos + wildcardStartLength, endPos - pos - wildcardStartLength);
-        saveString.replace(pos, endPos + 1 - pos, parseWildcard(wildcard, defaultFilePath));
+        std::string parsedWildcard = parseWildcard(saveString.substr(pos + wildcardStartLength, endPos - pos - wildcardStartLength), defaultFilePath);
+        saveString.replace(pos, endPos + 1 - pos, parsedWildcard);
+        pos += parsedWildcard.size();
         pos = saveString.find(DEFAULT_WILDCARD_START, pos);
     }
 
