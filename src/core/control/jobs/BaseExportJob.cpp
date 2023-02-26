@@ -98,10 +98,10 @@ auto BaseExportJob::showFilechooser() -> bool {
     return true;
 }
 
-auto BaseExportJob::testAndSetFilepath(fs::path file) -> bool {
+auto BaseExportJob::testAndSetFilepath(const fs::path& file) -> bool {
     try {
         if (fs::is_directory(file.parent_path())) {
-            this->filepath = std::move(file);
+            this->filepath = file;
             return true;
         }
     } catch (const fs::filesystem_error& e) {

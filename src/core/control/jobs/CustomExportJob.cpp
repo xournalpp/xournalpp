@@ -23,10 +23,10 @@
 
 CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Custom Export")) {
     // Supported filters
-    filters[_("PDF files")] = std::make_unique<ExportType>(".pdf");
-    filters[_("PNG graphics")] = std::make_unique<ExportType>(".png");
-    filters[_("SVG graphics")] = std::make_unique<ExportType>(".svg");
-    filters[_("Xournal (Compatibility)")] = std::make_unique<ExportType>(".xoj");
+    filters.insert({_("PDF files"), ExportType(".pdf")});
+    filters.insert({_("PNG graphics"), ExportType(".png")});
+    filters.insert({_("SVG graphics"), ExportType(".svg")});
+    filters.insert({_("Xournal (Compatibility)"), ExportType(".xoj")});
 }
 
 CustomExportJob::~CustomExportJob() = default;
@@ -34,11 +34,11 @@ CustomExportJob::~CustomExportJob() = default;
 void CustomExportJob::addFilterToDialog() {
     // Runs on every filter inside the filters map
     for (auto& filter: filters) {
-        addFileFilterToDialog(filter.first, "*" + filter.second->extension);  // Adds * for the pattern
+        addFileFilterToDialog(filter.first, "*" + filter.second.extension);  // Adds * for the pattern
     }
 }
 
-auto CustomExportJob::testAndSetFilepath(fs::path file) -> bool {
+auto CustomExportJob::testAndSetFilepath(const fs::path& file) -> bool {
     if (!BaseExportJob::testAndSetFilepath(std::move(file))) {
         return false;
     }
@@ -48,8 +48,8 @@ auto CustomExportJob::testAndSetFilepath(fs::path file) -> bool {
     const auto& chosenFilter = filters.at(this->chosenFilterName);
 
     // Remove any pre-existing extension and adds the chosen one
-    Util::clearExtensions(filepath, chosenFilter->extension);
-    filepath += chosenFilter->extension;
+    Util::clearExtensions(filepath, chosenFilter.extension);
+    filepath += chosenFilter.extension;
 
     return checkOverwriteBackgroundPDF(filepath);
 }

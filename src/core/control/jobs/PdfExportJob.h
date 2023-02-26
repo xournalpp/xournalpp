@@ -28,7 +28,7 @@ public:
 
 protected:
     void addFilterToDialog() override;
-    bool testAndSetFilepath(fs::path file) override;
+    bool testAndSetFilepath(const fs::path& file) override;
 
 private:
 };
