@@ -9,6 +9,8 @@
  * @license GNU GPLv2 or later
  */
 
+#pragma once
+
 #include <string>       // for string
 
 #include "filesystem.h"       // for path
