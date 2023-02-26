@@ -43,6 +43,11 @@ using std::string;
         error = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \
     }
 
+namespace {
+    constexpr size_t MAX_VERSION_LENGTH = 50;
+    constexpr size_t MAX_MIMETYPE_LENGTH = 25;
+}
+
 LoadHandler::LoadHandler():
         attachedPdfMissing(false),
         removePdfBackgroundFlag(false),
@@ -134,9 +139,9 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
                     FS(_F("The file is no valid .xopp file (Mimetype missing): \"{1}\"") % filepath.u8string());
             return false;
         }
-        char mimetype[25];
+        char mimetype[MAX_MIMETYPE_LENGTH + 1] = {};
         // read the mimetype and a few more bytes to make sure we do not only read a subset
-        zip_fread(mimetypeFp, mimetype, 25);
+        zip_fread(mimetypeFp, mimetype, MAX_MIMETYPE_LENGTH);
         if (!strcmp(mimetype, "application/xournal++")) {
             zip_fclose(mimetypeFp);
             this->lastError = FS(_F("The file is no valid .xopp file (Mimetype wrong): \"{1}\"") % filepath.u8string());
@@ -151,8 +156,8 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
                     FS(_F("The file is no valid .xopp file (Version missing): \"{1}\"") % filepath.u8string());
             return false;
         }
-        char versionString[50];
-        zip_fread(versionFp, versionString, 50);
+        char versionString[MAX_VERSION_LENGTH + 1] = {};
+        zip_fread(versionFp, versionString, MAX_VERSION_LENGTH);
         std::string versions(versionString);
         std::regex versionRegex("current=(\\d+?)(?:\n|\r\n)min=(\\d+?)");
         std::smatch match;
