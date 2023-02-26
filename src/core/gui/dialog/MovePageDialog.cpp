@@ -5,7 +5,7 @@
 
 class GladeSearchpath;
 
-MovePageDialog::MovePageDialog(GladeSearchpath* gladeSearchPath, int currentPage, int maxPage):
+MovePageDialog::MovePageDialog(GladeSearchpath* gladeSearchPath, size_t currentPage, size_t maxPage):
         GladeGui(gladeSearchPath, "movePage.glade", "movePageDialog") {
     gtk_spin_button_set_range(GTK_SPIN_BUTTON(get("movePageFrom")), 1, maxPage);
     gtk_spin_button_set_range(GTK_SPIN_BUTTON(get("movePageTo")), 1, maxPage);
@@ -14,8 +14,8 @@ MovePageDialog::MovePageDialog(GladeSearchpath* gladeSearchPath, int currentPage
 
 MovePageDialog::~MovePageDialog() = default;
 
-auto MovePageDialog::getSelectedPageFrom() const -> int { return this->selectedPageFrom; }
-auto MovePageDialog::getSelectedPageTo() const -> int { return this->selectedPageTo; }
+auto MovePageDialog::getSelectedPageFrom() const -> size_t { return this->selectedPageFrom; }
+auto MovePageDialog::getSelectedPageTo() const -> size_t { return this->selectedPageTo; }
 
 void MovePageDialog::show(GtkWindow* parent) {
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);

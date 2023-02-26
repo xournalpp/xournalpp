@@ -1155,7 +1155,7 @@ void Control::selectFillAlpha(bool pen) {
 }
 
 void Control::selectPageMoveTo() {
-    MovePageDialog dlg(gladeSearchPath, getCurrentPageNo(), int(this->doc->getPageCount()));
+    MovePageDialog dlg(gladeSearchPath, getCurrentPageNo(), this->doc->getPageCount());
 
     dlg.show(GTK_WINDOW(this->win->getWindow()));
     auto oldPage = dlg.getSelectedPageFrom();

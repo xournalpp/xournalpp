@@ -19,17 +19,17 @@ class GladeSearchpath;
 
 class MovePageDialog: public GladeGui {
 public:
-    MovePageDialog(GladeSearchpath* gladeSearchPath, int currentPage, int maxPage);
+    MovePageDialog(GladeSearchpath* gladeSearchPath, size_t currentPage, size_t maxPage);
     ~MovePageDialog() override;
 
 public:
     void show(GtkWindow* parent) override;
 
     // returns the selected page or -1 if closed
-    int getSelectedPageFrom() const;
-    int getSelectedPageTo() const;
+    size_t getSelectedPageFrom() const;
+    size_t getSelectedPageTo() const;
 
 private:
-    int selectedPageFrom = -1;
-    int selectedPageTo = -1;
+    size_t selectedPageFrom = 0;
+    size_t selectedPageTo = 0;
 };
