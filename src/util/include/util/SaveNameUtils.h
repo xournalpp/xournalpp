@@ -9,9 +9,6 @@
  * @license GNU GPLv2 or later
  */
 
-#pragma once
-
-#include <cstring>      // for size_t
 #include <string>       // for string
 
 #include "filesystem.h"       // for path
@@ -26,8 +23,8 @@ constexpr auto WILDCARD_TIME = "time"; // current time
 
 class SaveNameUtils {
 public:
-    static std::string parseFilenameFromWildcardString(const std::string& wildcardString, fs::path defaultFilePath);
+    static std::string parseFilenameFromWildcardString(const std::string& wildcardString, const fs::path& defaultFilePath);
 
 private:
-    static std::string parseWildcard(const std::string& wildcard, fs::path defaultFilePath);
+    static std::string parseWildcard(const std::string& wildcard, const fs::path& defaultFilePath);
 };

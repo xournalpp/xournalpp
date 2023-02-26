@@ -7,7 +7,7 @@
 #include "util/PathUtil.h"    // for clearExtensions
 
 
-auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardString, fs::path defaultFilePath) -> std::string {
+auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardString, const fs::path& defaultFilePath) -> std::string {
     std::string saveString = wildcardString;
     size_t pos = saveString.find(DEFAULT_WILDCARD_START);
 
@@ -26,10 +26,11 @@ auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardS
     return saveString;
 }
 
-auto SaveNameUtils::parseWildcard(const std::string& wildcard, fs::path defaultFilePath) -> std::string {
+auto SaveNameUtils::parseWildcard(const std::string& wildcard, const fs::path& defaultFilePath) -> std::string {
     if (wildcard == WILDCARD_NAME) {
-        Util::clearExtensions(defaultFilePath, ".pdf");
-        return defaultFilePath.u8string();
+        fs::path path = defaultFilePath;
+        Util::clearExtensions(path, ".pdf");
+        return path.u8string();
     }
     if (wildcard == WILDCARD_DATE || wildcard == WILDCARD_TIME) {
         std::time_t time = std::chrono::system_clock::to_time_t(
