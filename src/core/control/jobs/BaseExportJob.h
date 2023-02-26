@@ -63,6 +63,6 @@ protected:
     public:
         std::string extension;
 
-        ExportType(std::string ext): extension(ext) {}
+        ExportType(std::string ext): extension(std::move(ext)) {}
     };
 };
