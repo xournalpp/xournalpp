@@ -47,8 +47,7 @@ using xoj::util::Rectangle;
 #endif
 
 template <typename Float>
-constexpr void updateBounds(Float& x, Float& y, Float& width, Float& height, Rectangle<Float>& snap, Point const& p,
-                            double half_width) {
+constexpr void updateBoundingBox(Float& x, Float& y, Float& width, Float& height, Point const& p, double half_width) {
     {
         Float x2 = x + width;
         Float y2 = y + height;
@@ -60,6 +59,11 @@ constexpr void updateBounds(Float& x, Float& y, Float& width, Float& height, Rec
         width = x2 - x;
         height = y2 - y;
     }
+
+}
+
+template <typename Float>
+constexpr void updateSnappedBounds(Rectangle<Float>& snap, Point const& p) {
     {
         Float snapx2 = snap.x + snap.width;
         Float snapy2 = snap.y + snap.height;
@@ -249,8 +253,8 @@ void Stroke::addPoint(const Point& p) {
     if (hasPressure()) {
         updateBoundsLastTwoPressures();
     } else {
-        updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
-                     0.5 * this->width);
+        updateBoundingBox(Element::x, Element::y, Element::width, Element::height, p, 0.5 * this->width);
+        updateSnappedBounds(Element::snappedBounds, p);
     }
 }
 
@@ -397,8 +401,9 @@ void Stroke::updateBoundsLastTwoPressures() {
     Point& p2 = this->points[pointCount - 2];
     double pressure = p2.z;
 
-    updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p, 0.5 * pressure);
-    updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, p2, 0.5 * pressure);
+    updateSnappedBounds(snappedBounds, p);
+    updateBoundingBox(Element::x, Element::y, Element::width, Element::height, p, 0.5 * pressure);
+    updateBoundingBox(Element::x, Element::y, Element::width, Element::height, p2, 0.5 * pressure);
 }
 
 void Stroke::scalePressure(double factor) {
