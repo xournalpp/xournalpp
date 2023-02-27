@@ -580,13 +580,9 @@ auto ToolHandler::isSinglePageTool() const -> bool {
 auto ToolHandler::supportsTapFilter() const -> bool {
     ToolType toolType = this->getToolType();
 
-    return toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER || toolType == TOOL_DRAW_RECT ||
-           toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
-           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE;
-    // Add toolType == TOOL_ERASER
-    // Add? || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT  ||
-    // toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType ==
-    // TOOL_SELECT_PDF_TEXT_RECT
+    return toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER || toolType == TOOL_HAND ||
+           toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM ||
+           toolType == TOOL_DRAW_ARROW || toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_DRAW_SPLINE;
 }
 
 auto ToolHandler::getSelectedTool(SelectedTool selectedTool) const -> Tool* {
