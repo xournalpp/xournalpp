@@ -1855,7 +1855,7 @@ auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* {
         g_error("Settings::getButtonConfig try to get id=%i out of range!", id);
         return nullptr;
     }
-    return this->buttonConfig.at(id).get();
+    return this->buttonConfig[id].get();
 }
 
 void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
