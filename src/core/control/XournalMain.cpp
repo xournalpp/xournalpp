@@ -237,6 +237,19 @@ void checkForEmergencySave(Control* control) {
     gtk_widget_destroy(dialog);
 }
 
+namespace {
+void exitOnMissingPdfFileName(const LoadHandler& loader) {
+    if (!loader.getMissingPdfFilename().empty()) {
+        auto msg =
+                FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.") %
+                   loader.getMissingPdfFilename());
+        std::cerr << msg << std::endl;
+        exit(-2);
+    }
+}
+}  // namespace
+
+
 /**
  * @brief Export the input file as a bunch of image files (one per page)
  * @param input Path to the input file
@@ -257,11 +270,12 @@ void checkForEmergencySave(Control* control) {
 auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
                int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
     LoadHandler loader;
-
     Document* doc = loader.loadDocument(input);
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
+
+    exitOnMissingPdfFileName(loader);
 
     return ExportHelper::exportImg(doc, output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
 }
@@ -283,11 +297,13 @@ auto exportImg(const char* input, const char* output, const char* range, const c
 auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode) -> int {
     LoadHandler loader;
-
     Document* doc = loader.loadDocument(input);
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
+
+    exitOnMissingPdfFileName(loader);
+
     return ExportHelper::exportPdf(doc, output, range, layerRange, exportBackground, progressiveMode);
 }
 
@@ -540,7 +556,6 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
 
     auto exec_guarded = [&](auto&& fun, auto&& s) {
         try {
-            printf("trying\n");
             return fun();
         } catch (const std::exception& e) {
             std::cerr << "Error: " << e.what() << std::endl;

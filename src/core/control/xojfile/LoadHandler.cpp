@@ -110,7 +110,7 @@ auto LoadHandler::getLastError() -> string { return this->lastError; }
 
 auto LoadHandler::isAttachedPdfMissing() const -> bool { return this->attachedPdfMissing; }
 
-auto LoadHandler::getMissingPdfFilename() -> string { return this->pdfMissing; }
+auto LoadHandler::getMissingPdfFilename() const -> string { return this->pdfMissing; }
 
 void LoadHandler::removePdfBackground() { this->removePdfBackgroundFlag = true; }
 
