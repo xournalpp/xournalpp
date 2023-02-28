@@ -17,6 +17,7 @@
 #include <string>   // for string, basic_string
 #include <utility>  // for pair
 #include <vector>   // for vector
+#include <array>    // for array
 
 #include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
 #include <glib.h>                         // for gchar, gboolean, gint
@@ -343,7 +344,7 @@ public:
     std::string const& getDefaultSaveName() const;
     void setDefaultSaveName(const std::string& name);
 
-    ButtonConfig* getButtonConfig(int id);
+    ButtonConfig* getButtonConfig(unsigned int id);
 
     void setViewMode(ViewModeId mode, ViewMode ViewMode);
 
@@ -873,7 +874,7 @@ private:
     /**
      * The button config
      */
-    ButtonConfig* buttonConfig[BUTTON_COUNT]{};
+    std::array<std::unique_ptr<ButtonConfig>, BUTTON_COUNT> buttonConfig;
 
     /**
      * View-modes. Predefined: 0=default, 1=fullscreen, 2=presentation

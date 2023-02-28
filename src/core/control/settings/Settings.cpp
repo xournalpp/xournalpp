@@ -46,12 +46,7 @@ constexpr auto DEFAULT_FONT_SIZE = 12;
 
 Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
 
-Settings::~Settings() {
-    for (auto& i: this->buttonConfig) {
-        delete i;
-        i = nullptr;
-    }
-}
+Settings::~Settings() = default;
 
 void Settings::loadDefault() {
     this->pressureSensitivity = true;
@@ -147,25 +142,25 @@ void Settings::loadDefault() {
 
     // Eraser
     this->buttonConfig[BUTTON_ERASER] =
-            new ButtonConfig(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            std::make_unique<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
     this->buttonConfig[BUTTON_MOUSE_MIDDLE] =
-            new ButtonConfig(TOOL_HAND, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            std::make_unique<ButtonConfig>(TOOL_HAND, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Right button
     this->buttonConfig[BUTTON_MOUSE_RIGHT] =
-            new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Touch
     this->buttonConfig[BUTTON_TOUCH] =
-            new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Default config
     this->buttonConfig[BUTTON_DEFAULT] =
-            new ButtonConfig(TOOL_PEN, Colors::black, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            std::make_unique<ButtonConfig>(TOOL_PEN, Colors::black, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 1
     this->buttonConfig[BUTTON_STYLUS_ONE] =
-            new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 2
     this->buttonConfig[BUTTON_STYLUS_TWO] =
-            new ButtonConfig(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
     // default view modes
     this->activeViewMode = PresetViewModeIds::VIEW_MODE_DEFAULT;
@@ -643,7 +638,7 @@ void Settings::loadButtonConfig() {
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
-        ButtonConfig* cfg = buttonConfig[i];
+        const auto& cfg = buttonConfig[i];
 
         string sType;
         if (e.getString("tool", sType)) {
@@ -819,7 +814,7 @@ void Settings::saveButtonConfig() {
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
-        ButtonConfig* cfg = buttonConfig[i];
+        const auto& cfg = buttonConfig[i];
 
         ToolType type = cfg->action;
         e.setString("tool", toolTypeToString(type));
@@ -1855,12 +1850,12 @@ auto Settings::getCustomElement(const string& name) -> SElement& { return this->
 
 void Settings::customSettingsChanged() { save(); }
 
-auto Settings::getButtonConfig(int id) -> ButtonConfig* {
-    if (id < 0 || id >= BUTTON_COUNT) {
+auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* {
+    if (id >= this->buttonConfig.size()) {
         g_error("Settings::getButtonConfig try to get id=%i out of range!", id);
         return nullptr;
     }
-    return this->buttonConfig[id];
+    return this->buttonConfig[id].get();
 }
 
 void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
