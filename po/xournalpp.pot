@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-28 04:53+0000\n"
+"POT-Creation-Date: 2023-02-28 04:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1004,7 +1004,7 @@ msgid "PDF file successfully created"
 msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:26
-#: ../src/core/control/jobs/PdfExportJob.cpp:19
+#: ../src/core/control/jobs/PdfExportJob.cpp:20
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
 msgid "PDF files"
 msgstr ""
@@ -1174,7 +1174,7 @@ msgstr ""
 msgid "Save File"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:127
+#: ../src/core/control/jobs/CustomExportJob.cpp:125
 #: ../src/core/control/jobs/SaveJob.cpp:127
 msgid "Save file error: {1}"
 msgstr ""
