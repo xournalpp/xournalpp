@@ -14,9 +14,7 @@
 
 #include "util/SaveNameUtils.h"
 
-using namespace std;
-
-TEST(SaveNameUtils, testWildcardExpandsion) {
+TEST(SaveNameUtils, testWildcardExpansion) {
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("", "defaultpath"), "");
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}}%{name}", "x"), "x}x");
     EXPECT_EQ(SaveNameUtils::parseFilenameFromWildcardString("%{name}", "defaultpath.pdf"), "defaultpath");
