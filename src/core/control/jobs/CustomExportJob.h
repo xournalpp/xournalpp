@@ -46,7 +46,7 @@ protected:
      */
     void exportGraphics();
 
-    bool testAndSetFilepath(fs::path file) override;
+    bool testAndSetFilepath(const fs::path& file) override;
 
 private:
     /**
@@ -83,5 +83,5 @@ private:
 
     std::string chosenFilterName;
 
-    std::map<std::string, ExportType*> filters;
+    std::map<std::string, ExportType> filters;
 };

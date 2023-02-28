@@ -46,7 +46,7 @@ protected:
     virtual void addFilterToDialog() = 0;
     void addFileFilterToDialog(const std::string& name, const std::string& pattern);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
-    virtual bool testAndSetFilepath(fs::path file);
+    virtual bool testAndSetFilepath(const fs::path& file);
 
 private:
 protected:
@@ -63,6 +63,6 @@ protected:
     public:
         std::string extension;
 
-        ExportType(std::string ext): extension(ext) {}
+        ExportType(std::string ext): extension(std::move(ext)) {}
     };
 };
