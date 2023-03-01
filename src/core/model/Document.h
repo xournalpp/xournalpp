@@ -75,7 +75,7 @@ public:
     fs::path getFilepath() const;
     fs::path getPdfFilepath() const;
     fs::path createSaveFolder(fs::path lastSavePath);
-    fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName);
+    fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPfdName = "");
 
     fs::path getEvMetadataFilename() const;
 

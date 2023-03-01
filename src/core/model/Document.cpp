@@ -1,5 +1,6 @@
 #include "Document.h"
 
+#include <string>   // for string
 #include <ctime>    // for size_t, localtime, strf...
 #include <utility>  // for move, pair
 
@@ -13,6 +14,7 @@
 #include "pdf/base/XojPdfBookmarkIterator.h"  // for XojPdfBookmarkIterator
 #include "util/PathUtil.h"                    // for clearExtensions
 #include "util/PlaceholderString.h"           // for PlaceholderString
+#include "util/SaveNameUtils.h"               // for parseFilename
 #include "util/Util.h"                        // for npos
 #include "util/i18n.h"                        // for FS, _F
 
@@ -128,7 +130,7 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
-auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName) -> fs::path {
+auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPdfName) -> fs::path {
     if (!filepath.empty()) {
         // This can be any extension
         fs::path p = filepath.filename();
@@ -136,13 +138,11 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         return p;
     }
     if (!pdfFilepath.empty()) {
-        fs::path p = pdfFilepath.filename();
-        if (this->attachPdf) {
-            Util::clearExtensions(p, ".pdf");
-        } else {
-            Util::clearExtensions(p);
+        auto saveString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->pdfFilepath.filename());
+        if (!this->attachPdf) {
+            saveString += ".pdf";
         }
-        return p;
+        return saveString;
     }
 
 
