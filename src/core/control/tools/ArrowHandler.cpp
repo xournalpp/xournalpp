@@ -28,16 +28,27 @@ auto ArrowHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlD
     // arrowDist is the distance between the line's and the arrow's tips
     // delta is the angle between each arrow leg and the line
 
-    // set up the size of the arrow head to be 7x the thickness of the line (regime 1)
-    const double THICK1 = 7, LENGTH2 = 0.4;
-    double arrowDist = thickness * THICK1;
-    // but not too large compared to the line length (regime 2)
-    if (slimness < THICK1 / LENGTH2) {
-        arrowDist = lineLength * LENGTH2;
-    }
-
     // an appropriate opening angle 2*delta is Pi/3 radians for an arrow shape
     const double delta = M_PI / 6.0;
+    // We use different slimness regimes for proper sizing:
+    const double THICK1 = 7, THICK3 = 1.6;
+    const double LENGTH2 = 0.4, LENGTH4 = (doubleEnded ? 0.5 : 0.8);
+    // set up the size of the arrow head to be THICK1 x the thickness of the line
+    double arrowDist = thickness * THICK1;
+    // but not too large compared to the line length
+    if (slimness >= THICK1 / LENGTH2) {
+        // arrow head is not too long compared to the line length (regime 1)
+    } else if (slimness >= THICK3 / LENGTH2) {
+        // arrow head is not too short compared to the thickness (regime 2)
+        arrowDist = lineLength * LENGTH2;
+    } else if (slimness >= THICK3 / LENGTH4) {
+        // arrow head is not too thick compared to the line length (regime 3)
+        arrowDist = thickness * THICK3;
+    } else {
+        // shrinking down gracefully (regime 4)
+        arrowDist = lineLength * LENGTH4;
+    }
+
     const double angle = atan2(c.y - this->startPoint.y, c.x - this->startPoint.x);
 
     std::pair<std::vector<Point>, Range> res; // members initialised below
