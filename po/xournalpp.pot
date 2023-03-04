@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-01 07:48+0000\n"
+"POT-Creation-Date: 2023-03-04 22:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -416,8 +416,8 @@ msgstr ""
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
-#: ../src/core/model/Document.cpp:298 ../src/core/model/Document.cpp:307
-#: ../src/core/model/Document.cpp:310
+#: ../src/core/model/Document.cpp:303 ../src/core/model/Document.cpp:312
+#: ../src/core/model/Document.cpp:315
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
