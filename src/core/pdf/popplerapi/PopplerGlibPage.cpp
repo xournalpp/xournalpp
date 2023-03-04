@@ -90,7 +90,7 @@ auto PopplerGlibPage::findText(const std::string& text) -> std::vector<XojPdfRec
     double height = getHeight();
     GList* matches = poppler_page_find_text(page, text.c_str());
     for (auto& rect: GListView<PopplerRectangle>(matches)) {
-        findings.emplace_back(rect.x1, height - rect.y1, rect.x2, height - rect.y2);
+        findings.emplace_back(rect.x1, height - rect.y2, rect.x2, height - rect.y1);
         poppler_rectangle_free(&rect);
     }
     g_list_free(matches);
