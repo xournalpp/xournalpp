@@ -7,12 +7,13 @@
 #include <glib-object.h>     // for G_CALLBACK, g_signal_connect
 #include <glib.h>            // for g_free, g_strdup_printf
 
-#include "control/Control.h"         // for Control
-#include "control/ScrollHandler.h"   // for ScrollHandler
-#include "gui/MainWindow.h"          // for MainWindow
-#include "model/Document.h"          // for Document
-#include "util/PlaceholderString.h"  // for PlaceholderString
-#include "util/i18n.h"               // for _, FC, _F
+#include "control/Control.h"           // for Control
+#include "control/ScrollHandler.h"     // for ScrollHandler
+#include "control/zoom/ZoomControl.h"  // for ZoomControl
+#include "gui/MainWindow.h"            // for MainWindow
+#include "model/Document.h"            // for Document
+#include "util/PlaceholderString.h"    // for PlaceholderString
+#include "util/i18n.h"                 // for _, FC, _F
 
 SearchBar::SearchBar(Control* control): control(control) {
     MainWindow* win = control->getWindow();
@@ -106,6 +107,7 @@ template <class Fun>
 void SearchBar::search(Fun next) const {
     size_t currentPage = control->getCurrentPageNo();
     size_t count = control->getDocument()->getPageCount();
+    double zoom = control->getZoomControl()->getZoom();
     if (count < 2) {
         // Nothing to do
         return;
@@ -127,7 +129,7 @@ void SearchBar::search(Fun next) const {
 
         bool found = control->searchTextOnPage(text, searchedPage, &occurrences, &yOfUpperMostMatch);
         if (found) {
-            control->getScrollHandler()->scrollToPage(searchedPage, yOfUpperMostMatch);
+            control->getScrollHandler()->scrollToPage(searchedPage, yOfUpperMostMatch * zoom);
             gtk_label_set_text(
                     GTK_LABEL(lbSearchState),
                     (occurrences == 1 ? FC(_F("Text found once on page {1}") % (searchedPage + 1)) :
