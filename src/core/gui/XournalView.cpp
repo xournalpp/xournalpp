@@ -345,13 +345,13 @@ void XournalView::onSettingsChanged() {
 void XournalView::requestFocus() { gtk_widget_grab_focus(this->widget); }
 
 auto XournalView::searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences,
-                                   double* yOfUpperMostMatch) -> bool {
+                                   XojPdfRectangle* upperMostMatch) -> bool {
     if (pageNumber == npos || pageNumber >= this->viewPages.size()) {
         return false;
     }
     auto& v = this->viewPages[pageNumber];
 
-    return v->searchTextOnPage(text, occurrences, yOfUpperMostMatch);
+    return v->searchTextOnPage(text, occurrences, upperMostMatch);
 }
 
 void XournalView::forceUpdatePagenumbers() {
@@ -419,7 +419,8 @@ void XournalView::pageSelected(size_t page) {
 
 auto XournalView::getControl() const -> Control* { return control; }
 
-void XournalView::scrollTo(size_t pageNo, double yDocument) {
+void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
+    double zoom = getZoom();
     if (pageNo >= this->viewPages.size()) {
         return;
     }
@@ -429,10 +430,17 @@ void XournalView::scrollTo(size_t pageNo, double yDocument) {
     // Make sure it is visible
     Layout* layout = gtk_xournal_get_layout(this->widget);
 
-    int x = v->getX();
-    int y = v->getY() + std::lround(yDocument);
-    int width = v->getDisplayWidth();
-    int height = v->getDisplayHeight();
+    int x = v->getX() + static_cast<int>(std::lround(rect.x1 * zoom));
+    int y = v->getY() + static_cast<int>(std::lround(rect.y1 * zoom));
+    int width;
+    int height;
+    if (rect.x2 == -1 || rect.y2 == -1) {
+        width = v->getDisplayWidth();
+        height = v->getDisplayHeight();
+    } else {
+        width = static_cast<int>(std::lround((rect.x2 - rect.x1) * zoom));
+        height = static_cast<int>(std::lround((rect.y2 - rect.y1) * zoom));
+    }
 
     layout->ensureRectIsVisible(x, y, width, height);
 
@@ -451,7 +459,7 @@ void XournalView::pageRelativeXY(int offCol, int offRow) {
     Layout* layout = gtk_xournal_get_layout(this->widget);
     auto optionalPageIndex = layout->getPageIndexAtGridMap(row + offRow, col + offCol);
     if (optionalPageIndex) {
-        this->scrollTo(*optionalPageIndex, 0);
+        this->scrollTo(*optionalPageIndex);
     }
 }
 
@@ -782,7 +790,7 @@ void XournalView::documentChanged(DocumentChangeType type) {
     doc->unlock();
 
     layoutPages();
-    scrollTo(0, 0);
+    scrollTo(0);
 
     scheduler->unlock();
 }

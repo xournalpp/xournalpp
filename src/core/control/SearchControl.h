@@ -16,6 +16,7 @@
 
 #include "model/OverlayBase.h"
 #include "model/PageRef.h"        // for PageRef
+#include "model/Point.h"          // for Point
 #include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr, XojPdfRectangle
 #include "util/DispatchPool.h"
 
@@ -30,7 +31,7 @@ public:
     SearchControl(const PageRef& page, XojPdfPageSPtr pdf);
     virtual ~SearchControl();
 
-    bool search(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
+    bool search(const std::string& text, size_t* occurrences, XojPdfRectangle* UpperMostMatch);
 
     const std::vector<XojPdfRectangle>& getResults() const { return results; }
 

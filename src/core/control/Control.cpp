@@ -1434,7 +1434,7 @@ void Control::deletePage() {
         pNr = this->doc->getPageCount() - 1;
     }
 
-    scrollHandler->scrollToPage(pNr, 0);
+    scrollHandler->scrollToPage(pNr);
     this->win->getXournal()->forceUpdatePagenumbers();
 }
 
@@ -1518,7 +1518,7 @@ void Control::gotoPage() {
     auto page = dlg.getSelectedPage();
 
     if (page > 0) {
-        this->scrollHandler->scrollToPage(size_t(page - 1), 0);
+        this->scrollHandler->scrollToPage(size_t(page - 1));
     }
 }
 
@@ -1836,8 +1836,8 @@ auto Control::getCurrentPageNo() const -> size_t {
 }
 
 auto Control::searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences,
-                               double* yOfUpperMostMatch) -> bool {
-    return getWindow()->getXournal()->searchTextOnPage(text, pageNumber, occurrences, yOfUpperMostMatch);
+                               XojPdfRectangle* upperMostMatch) -> bool {
+    return getWindow()->getXournal()->searchTextOnPage(text, pageNumber, occurrences, upperMostMatch);
 }
 
 auto Control::getCurrentPage() -> PageRef {

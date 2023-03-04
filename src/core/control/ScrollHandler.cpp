@@ -44,7 +44,7 @@ void ScrollHandler::goToFirstPage() {
     }
 }
 
-void ScrollHandler::scrollToPage(const PageRef& page, double top) {
+void ScrollHandler::scrollToPage(const PageRef& page, XojPdfRectangle rect) {
     Document* doc = this->control->getDocument();
 
     doc->lock();
@@ -52,18 +52,18 @@ void ScrollHandler::scrollToPage(const PageRef& page, double top) {
     doc->unlock();
 
     if (p != npos) {
-        scrollToPage(p, top);
+        scrollToPage(p, rect);
     }
 }
 
-void ScrollHandler::scrollToPage(size_t page, double top) {
+void ScrollHandler::scrollToPage(size_t page, XojPdfRectangle rect) {
     MainWindow* win = this->control->getWindow();
     if (win == nullptr) {
         g_error("Window is nullptr!");
         return;
     }
 
-    win->getXournal()->scrollTo(page, top);
+    win->getXournal()->scrollTo(page, rect);
 }
 
 void ScrollHandler::scrollToSpinPage() {
@@ -92,7 +92,7 @@ void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
             sidebar->askInsertPdfPage(pdfPage);
         } else {
             if (dest.shouldChangeTop()) {
-                control->getScrollHandler()->scrollToPage(page, dest.getTop() * control->getZoomControl()->getZoom());
+                control->getScrollHandler()->scrollToPage(page, {dest.getLeft(), dest.getTop(), -1, -1});
             } else {
                 if (control->getCurrentPageNo() != page) {
                     control->getScrollHandler()->scrollToPage(page);
