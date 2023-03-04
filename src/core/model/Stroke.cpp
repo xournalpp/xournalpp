@@ -47,8 +47,7 @@ using xoj::util::Rectangle;
 #endif
 
 template <typename Float>
-constexpr void updateBounds(Float& x, Float& y, Float& width, Float& height, Rectangle<Float>& snap, Point const& p,
-                            double half_width) {
+constexpr void updateBoundingBox(Float& x, Float& y, Float& width, Float& height, Point const& p, double half_width) {
     {
         Float x2 = x + width;
         Float y2 = y + height;
@@ -60,6 +59,11 @@ constexpr void updateBounds(Float& x, Float& y, Float& width, Float& height, Rec
         width = x2 - x;
         height = y2 - y;
     }
+
+}
+
+template <typename Float>
+constexpr void updateSnappedBounds(Rectangle<Float>& snap, Point const& p) {
     {
         Float snapx2 = snap.x + snap.width;
         Float snapy2 = snap.y + snap.height;
@@ -242,9 +246,15 @@ auto Stroke::isInSelection(ShapeContainer* container) const -> bool {
 
 void Stroke::addPoint(const Point& p) {
     this->points.emplace_back(p);
-    if (sizeCalculated) {
-        updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
-                     hasPressure() ? p.z / 2.0 : this->width / 2.0);
+    if (!sizeCalculated) {
+        return;
+    }
+
+    if (hasPressure()) {
+        updateBoundsLastTwoPressures();
+    } else {
+        updateBoundingBox(Element::x, Element::y, Element::width, Element::height, p, 0.5 * this->width);
+        updateSnappedBounds(Element::snappedBounds, p);
     }
 }
 
@@ -374,6 +384,23 @@ auto Stroke::getAvgPressure() const -> double {
            this->points.size();
 }
 
+void Stroke::updateBoundsLastTwoPressures() {
+    if (!sizeCalculated || this->points.empty()) {
+        return;
+    }
+
+    auto const pointCount = this->getPointCount();
+    assert(pointCount >= 2);
+
+    Point& p = this->points.back();
+    Point& p2 = this->points[pointCount - 2];
+    double pressure = p2.z;
+
+    updateSnappedBounds(snappedBounds, p);
+    updateBoundingBox(Element::x, Element::y, Element::width, Element::height, p, 0.5 * pressure);
+    updateBoundingBox(Element::x, Element::y, Element::width, Element::height, p2, 0.5 * pressure);
+}
+
 void Stroke::scalePressure(double factor) {
     if (!hasPressure()) {
         return;
@@ -387,14 +414,15 @@ void Stroke::setLastPressure(double pressure) {
         assert(pressure != Point::NO_PRESSURE);
         Point& back = this->points.back();
         back.z = pressure;
-        updateBounds(Element::x, Element::y, Element::width, Element::height, snappedBounds, back, 0.5 * pressure);
     }
 }
 
 void Stroke::setSecondToLastPressure(double pressure) {
     auto const pointCount = this->getPointCount();
     if (pointCount >= 2) {
-        this->points[pointCount - 2].z = pressure;
+        Point& p = this->points[pointCount - 2];
+        p.z = pressure;
+        updateBoundsLastTwoPressures();
     }
 }
 
