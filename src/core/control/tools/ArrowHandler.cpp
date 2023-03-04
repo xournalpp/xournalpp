@@ -29,7 +29,7 @@ auto ArrowHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlD
     // delta is the angle between each arrow leg and the line
 
     // an appropriate opening angle 2*delta is Pi/3 radians for an arrow shape
-    const double delta = M_PI / 6.0;
+    double delta = M_PI / 6.0;
     // We use different slimness regimes for proper sizing:
     const double THICK1 = 7, THICK3 = 1.6;
     const double LENGTH2 = 0.4, LENGTH4 = (doubleEnded ? 0.5 : 0.8);
@@ -44,9 +44,15 @@ auto ArrowHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlD
     } else if (slimness >= THICK3 / LENGTH4) {
         // arrow head is not too thick compared to the line length (regime 3)
         arrowDist = thickness * THICK3;
+        // help visibility by widening the angle
+        delta = (1 + (slimness - THICK3 / LENGTH2) / (THICK3 / LENGTH4 - THICK3 / LENGTH2)) *  M_PI / 6.0;
+        // which allows to shorten the tips and keep the horizonzal distance
+        arrowDist *= sin(M_PI / 6.0) / sin(delta);
     } else {
         // shrinking down gracefully (regime 4)
         arrowDist = lineLength * LENGTH4;
+        delta = M_PI / 3.0;
+        arrowDist *= sin(M_PI / 6.0) / sin(M_PI / 3.0);
     }
 
     const double angle = atan2(c.y - this->startPoint.y, c.x - this->startPoint.x);
