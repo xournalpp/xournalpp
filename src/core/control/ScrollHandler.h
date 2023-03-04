@@ -15,6 +15,7 @@
 
 #include "gui/widgets/SpinPageAdapter.h"  // for SpinPageListener
 #include "model/PageRef.h"                // for PageRef
+#include "pdf/base/XojPdfPage.h"          // for XojPdfRectangle
 
 class Control;
 class LinkDestination;
@@ -31,8 +32,8 @@ public:
     void goToLastPage();
     void goToFirstPage();
 
-    void scrollToPage(const PageRef& page, double top = 0);
-    void scrollToPage(size_t page, double top = 0);
+    void scrollToPage(const PageRef& page, XojPdfRectangle rect = {0, 0, -1, -1});
+    void scrollToPage(size_t page, XojPdfRectangle rect = {0, 0, -1, -1});
 
     void scrollToAnnotatedPage(bool next);
 

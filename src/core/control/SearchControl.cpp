@@ -1,6 +1,6 @@
 #include "SearchControl.h"
 
-#include <algorithm>  // for min
+#include <algorithm>  // for min_element
 #include <memory>     // for __shared_ptr_access
 #include <utility>    // for move
 
@@ -17,7 +17,7 @@ SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf):
 
 SearchControl::~SearchControl() = default;
 
-auto SearchControl::search(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch) -> bool {
+auto SearchControl::search(const std::string& text, size_t* occurrences, XojPdfRectangle* upperMostMatch) -> bool {
     if (text.empty()) {
         if (!this->results.empty()) {
             this->results.clear();
@@ -52,19 +52,13 @@ auto SearchControl::search(const std::string& text, size_t* occurrences, double*
         *occurrences = this->results.size();
     }
 
-    if (yOfUpperMostMatch) {
+    if (upperMostMatch) {
         if (this->results.empty()) {
-            *yOfUpperMostMatch = 0;
+            *upperMostMatch = XojPdfRectangle(0, 0, 0, 0);
         } else {
-
-            const XojPdfRectangle& first = this->results.front();
-
-            double min = first.y1;
-            for (const XojPdfRectangle& rect: this->results) {
-                min = std::min(min, rect.y1);
-            }
-
-            *yOfUpperMostMatch = min;
+            *upperMostMatch =
+                    *std::min_element(this->results.begin(), this->results.end(),
+                                      [](const XojPdfRectangle& a, const XojPdfRectangle& b) { return a.y1 < b.y1; });
         }
     }
 

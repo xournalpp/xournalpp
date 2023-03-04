@@ -15,6 +15,7 @@
 #include <gtk/gtkcssprovider.h>  // for GtkCssProvider
 
 class Control;
+class XojPdfRectangle;
 
 class SearchBar {
 public:
@@ -53,7 +54,7 @@ private:
     void searchPrevious() const;
 
     void search(const char* text);
-    bool searchTextonCurrentPage(const char* text, size_t* occurrences, double* yOfUpperMostMatch);
+    bool searchTextonCurrentPage(const char* text, size_t* occurrences, XojPdfRectangle* upperMostMatch);
 
 private:
     Control* control;
