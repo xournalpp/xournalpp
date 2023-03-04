@@ -66,6 +66,7 @@ class XournalScheduler;
 class ZoomControl;
 class ToolMenuHandler;
 class XojFont;
+class XojPdfRectangle;
 
 class Control:
         public ActionHandler,
@@ -195,11 +196,12 @@ public:
     /**
      * @brief Search text on the given page. The matches (if any) are stored in the XojPageView::SearchControl instance.
      * @param occurrences If not nullptr, the pointed variable will contain the number of matches on the page
-     * @param yOfUpperMostMatch If not nullptr, will contain the y coordinate of the first match on the page
+     * @param upperMostMatch If not nullptr, will contain the topleft point of the first match on the page
      *                          (Used for scrolling to the first match)
      * @return true if at least one match was found
      */
-    bool searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences, double* yOfUpperMostMatch);
+    bool searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences,
+                          XojPdfRectangle* upperMostMatch);
 
     /**
      * Fire page selected, but first check if the page Number is valid

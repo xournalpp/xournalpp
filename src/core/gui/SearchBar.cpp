@@ -58,10 +58,10 @@ SearchBar::SearchBar(Control* control): control(control) {
 
 SearchBar::~SearchBar() { this->control = nullptr; }
 
-auto SearchBar::searchTextonCurrentPage(const char* text, size_t* occurrences, double* yOfUpperMostMatch) -> bool {
+auto SearchBar::searchTextonCurrentPage(const char* text, size_t* occurrences, XojPdfRectangle* upperMostMatch) -> bool {
     size_t p = control->getCurrentPageNo();
 
-    return control->searchTextOnPage(text, p, occurrences, yOfUpperMostMatch);
+    return control->searchTextOnPage(text, p, occurrences, upperMostMatch);
 }
 
 void SearchBar::search(const char* text) {
@@ -121,15 +121,16 @@ void SearchBar::search(Fun next) const {
         return;
     }
 
-    double yOfUpperMostMatch = 0;
+    XojPdfRectangle upperMostMatch = XojPdfRectangle();
     size_t occurrences = 0;
 
     // Search backwards through the pages, wrapping around if needed.
     for (size_t searchedPage = next(currentPage); searchedPage != currentPage; searchedPage = next(searchedPage)) {
 
-        bool found = control->searchTextOnPage(text, searchedPage, &occurrences, &yOfUpperMostMatch);
+        bool found = control->searchTextOnPage(text, searchedPage, &occurrences, &upperMostMatch);
         if (found) {
-            control->getScrollHandler()->scrollToPage(searchedPage, yOfUpperMostMatch * zoom);
+            control->getScrollHandler()->scrollToPage(searchedPage, upperMostMatch);
+            control->getScrollHandler();
             gtk_label_set_text(
                     GTK_LABEL(lbSearchState),
                     (occurrences == 1 ? FC(_F("Text found once on page {1}") % (searchedPage + 1)) :
