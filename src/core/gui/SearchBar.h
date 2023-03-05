@@ -42,21 +42,24 @@ private:
      *              * If page is a valid page number, then so is next(page).
      */
     template <class Fun>
-    void search(Fun next) const;
+    void search(Fun next);
 
     /**
      * @brief Named specialization of search(), where next(page) = (page + 1) % pageCount
      */
-    void searchNext() const;
+    void searchNext();
     /**
      * @brief Named specialization of search(), where next(page) = (page + pageCount - 1) % pageCount
      */
-    void searchPrevious() const;
+    void searchPrevious();
 
     void search(const char* text);
-    bool searchTextonCurrentPage(const char* text, size_t* occurrences, XojPdfRectangle* upperMostMatch);
+    bool searchTextonCurrentPage(const char* text, size_t index, size_t* occurrences, XojPdfRectangle* upperMostMatch);
 
 private:
     Control* control;
     GtkCssProvider* cssTextFild;
+    size_t page = 0;
+    size_t indexInPage = 0;
+    size_t occurrences = 0;
 };

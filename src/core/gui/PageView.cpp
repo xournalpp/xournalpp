@@ -138,7 +138,8 @@ auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
     return x >= 0 && y >= 0 && x <= this->getWidth() && y <= this->getHeight();
 }
 
-auto XojPageView::searchTextOnPage(const std::string& text, size_t* occurrences, XojPdfRectangle* upperMostMatch) -> bool {
+auto XojPageView::searchTextOnPage(const std::string& text, size_t index, size_t* occurrences,
+                                   XojPdfRectangle* upperMostMatch) -> bool {
     if (!this->search) {
         if (text.empty()) {
             return true;
@@ -158,7 +159,7 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t* occurrences,
                 std::make_unique<xoj::view::SearchResultView>(this->search.get(), this, settings->getSelectionColor()));
     }
 
-    bool found = this->search->search(text, occurrences, upperMostMatch);
+    bool found = this->search->search(text, index, occurrences, upperMostMatch);
 
     repaintPage();
 
