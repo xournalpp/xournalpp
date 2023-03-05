@@ -8,6 +8,7 @@
 #include "model/Layer.h"    // for Layer
 #include "model/Text.h"     // for Text
 #include "model/XojPage.h"  // for XojPage
+#include "view/TextView.h"  // for TextView
 #include "view/overlays/SearchResultView.h"
 
 SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf):
@@ -17,51 +18,58 @@ SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf):
 
 SearchControl::~SearchControl() = default;
 
-auto SearchControl::search(const std::string& text, size_t* occurrences, XojPdfRectangle* upperMostMatch) -> bool {
+auto SearchControl::search(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* upperMostMatch)
+        -> bool {
+    this->highlightRect = nullptr;
     if (text.empty()) {
         if (!this->results.empty()) {
             this->results.clear();
+            this->currentText.clear();
             this->viewPool->dispatch(xoj::view::SearchResultView::SEARCH_CHANGED_NOTIFICATION);
         }
         return true;
     }
 
-    this->results.clear();
+    if (text != this->currentText) {
+        this->results.clear();
+        this->currentText = text;
 
-    if (this->pdf) {
-        this->results = this->pdf->findText(text);
-    }
-
-    for (Layer* l: *this->page->getLayers()) {
-        if (!l->isVisible()) {
-            continue;
+        if (this->pdf) {
+            this->results = this->pdf->findText(text);
         }
 
-        for (Element* e: l->getElements()) {
-            if (e->getType() == ELEMENT_TEXT) {
-                Text* t = dynamic_cast<Text*>(e);
+        for (Layer* l: *this->page->getLayers()) {
+            if (!l->isVisible()) {
+                continue;
+            }
 
-                std::vector<XojPdfRectangle> textResult = t->findText(text);
+            for (Element* e: l->getElements()) {
+                if (e->getType() == ELEMENT_TEXT) {
+                    Text* t = dynamic_cast<Text*>(e);
 
-                this->results.insert(this->results.end(), textResult.begin(), textResult.end());
+                    std::vector<XojPdfRectangle> textResult = t->findText(text);
+                    this->results.insert(this->results.end(), textResult.begin(), textResult.end());
+                }
             }
         }
     }
 
+    this->viewPool->dispatch(xoj::view::SearchResultView::SEARCH_CHANGED_NOTIFICATION);
     if (occurrences) {
         *occurrences = this->results.size();
     }
-
-    if (upperMostMatch) {
-        if (this->results.empty()) {
+    bool found;
+    if (index - 1 >= this->results.size()) {
+        if (upperMostMatch) {
             *upperMostMatch = XojPdfRectangle(0, 0, 0, 0);
-        } else {
-            *upperMostMatch =
-                    *std::min_element(this->results.begin(), this->results.end(),
-                                      [](const XojPdfRectangle& a, const XojPdfRectangle& b) { return a.y1 < b.y1; });
         }
+        found = false;
+    } else {
+        if (upperMostMatch) {
+            this->highlightRect = &this->results[index - 1];
+            *upperMostMatch = *this->highlightRect;
+        }
+        found = true;
     }
-
-    this->viewPool->dispatch(xoj::view::SearchResultView::SEARCH_CHANGED_NOTIFICATION);
-    return !this->results.empty();
+    return found;
 }

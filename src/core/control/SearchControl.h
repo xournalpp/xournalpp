@@ -31,7 +31,7 @@ public:
     SearchControl(const PageRef& page, XojPdfPageSPtr pdf);
     virtual ~SearchControl();
 
-    bool search(const std::string& text, size_t* occurrences, XojPdfRectangle* UpperMostMatch);
+    bool search(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* UpperMostMatch);
 
     const std::vector<XojPdfRectangle>& getResults() const { return results; }
 
@@ -42,6 +42,8 @@ public:
 private:
     PageRef page;
     XojPdfPageSPtr pdf;
+    std::string currentText;
+    XojPdfRectangle* highlightRect = nullptr;
 
     std::vector<XojPdfRectangle> results;
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::SearchResultView>> viewPool;
