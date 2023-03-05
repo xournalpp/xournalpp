@@ -25,7 +25,8 @@ class Repaintable;
 class SearchResultView final: public OverlayView, public xoj::util::Listener<SearchResultView> {
 
 public:
-    SearchResultView(const SearchControl* searchControl, Repaintable* parent, Color frameColor);
+    SearchResultView(const SearchControl* searchControl, Repaintable* parent, Color frameColor,
+                     Color frameHighlightColor);
     ~SearchResultView() noexcept override;
 
     /**
@@ -45,6 +46,7 @@ public:
 private:
     const SearchControl* searchControl;
     const Color frameColor;
+    const Color frameHighlightColor;
 
 public:
     // Width of the line delimiting moved elements
