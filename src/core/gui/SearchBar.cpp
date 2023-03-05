@@ -156,6 +156,7 @@ void SearchBar::searchNext() {
 void SearchBar::searchPrevious() {
     size_t pageCount = control->getDocument()->getPageCount();
     search([&](const char* text) {
+        indexInPage--;
         if (indexInPage == 0 || indexInPage >= occurrences) {
             page--;
             if (page > pageCount) {
