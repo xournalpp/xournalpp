@@ -54,8 +54,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     toolbar->populate(gladeSearchPath);
     menubar->populate(this);
 
-    this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
-
     panedContainerWidget.reset(get("panelMainContents"), xoj::util::ref);
     boxContainerWidget.reset(get("mainContentContainer"), xoj::util::ref);
     mainContentWidget.reset(get("boxContents"), xoj::util::ref);
@@ -71,9 +69,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     this->floatingToolbox = new FloatingToolbox(this, overlay);
 
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        GtkWidget* w = get(TOOLBAR_DEFINITIONS[i].guiName);
-        g_object_ref(w);
-        this->toolbarWidgets[i] = w;
+        this->toolbarWidgets[i].reset(get(TOOLBAR_DEFINITIONS[i].guiName), xoj::util::ref);
     }
 
     initXournalWidget();
@@ -174,11 +170,6 @@ void MainWindow::rebindMenubarAccelerators() {
 }
 
 MainWindow::~MainWindow() {
-    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) { g_object_unref(this->toolbarWidgets[i]); }
-
-    delete[] this->toolbarWidgets;
-    this->toolbarWidgets = nullptr;
-
     delete this->floatingToolbox;
     this->floatingToolbox = nullptr;
 
@@ -546,7 +537,7 @@ void MainWindow::setToolbarVisible(bool visible) {
 
     settings->setToolbarVisible(visible);
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        auto widget = this->toolbarWidgets[i];
+        auto* widget = this->toolbarWidgets[i].get();
         if (!visible || (GTK_IS_CONTAINER(widget))) {
             gtk_widget_set_visible(widget, visible);
         }
@@ -592,7 +583,7 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
 
 auto MainWindow::clearToolbar() -> ToolbarData* {
     if (this->selectedToolbar != nullptr) {
-        for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) { ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i]); }
+        for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) { ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i].get()); }
 
         this->toolbar->freeDynamicToolbarItems();
     }
@@ -608,7 +599,7 @@ void MainWindow::loadToolbar(ToolbarData* d) {
     this->selectedToolbar = d;
 
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        this->toolbar->load(d, this->toolbarWidgets[i], TOOLBAR_DEFINITIONS[i].propName,
+        this->toolbar->load(d, this->toolbarWidgets[i].get(), TOOLBAR_DEFINITIONS[i].propName,
                             TOOLBAR_DEFINITIONS[i].horizontal);
     }
 
@@ -617,14 +608,11 @@ void MainWindow::loadToolbar(ToolbarData* d) {
 
 auto MainWindow::getSelectedToolbar() const -> ToolbarData* { return this->selectedToolbar; }
 
-auto MainWindow::getToolbarWidgets(int& length) const -> GtkWidget** {
-    length = TOOLBAR_DEFINITIONS_LEN;
-    return this->toolbarWidgets;
-}
+auto MainWindow::getToolbarWidgets() const -> const ToolbarWidgetArray& { return toolbarWidgets; }
 
 auto MainWindow::getToolbarName(GtkToolbar* toolbar) const -> const char* {
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        if (static_cast<void*>(this->toolbarWidgets[i]) == static_cast<void*>(toolbar)) {
+        if (static_cast<void*>(this->toolbarWidgets[i].get()) == static_cast<void*>(toolbar)) {
             return TOOLBAR_DEFINITIONS[i].propName;
         }
     }
