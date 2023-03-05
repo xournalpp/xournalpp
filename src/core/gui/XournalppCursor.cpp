@@ -52,10 +52,14 @@ enum AVAILABLECURSORS {
     CRSR_TCROSS,
     CRSR_PENORHIGHLIGHTER,
     CRSR_ERASER,
-    CRSR_DRAWDIRNONE,       // drawdir* keep these consecutive and in order: none,shift,ctrl,shiftctrl
-    CRSR_DRAWDIRSHIFT,      // "
-    CRSR_DRAWDIRCTRL,       // "
-    CRSR_DRAWDIRSHIFTCTRL,  // "
+    CRSR_DRAWDIRNONE,        // drawdir* keep these consecutive and in order: none,shift,ctrl,shiftctrl
+    CRSR_DRAWDIRSHIFT,       // "
+    CRSR_DRAWDIRCTRL,        // "
+    CRSR_DRAWDIRSHIFTCTRL,   // "
+    CRSR_SELECTIONCUT,       // selection* keep these consecutive and in order: cut,copy,paste,copypaste
+    CRSR_SELECTIONCOPY,      // "
+    CRSR_SELECTIONPASTE,     // "
+    CRSR_SELECTIONDUPLICATE, // "
     CRSR_RESIZE,
 
     CRSR_END_OF_CURSORS
@@ -102,6 +106,10 @@ XournalppCursor::XournalppCursor(Control* control): control(control) {
 	cssCursors[CRSR_DRAWDIRSHIFT        ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
+	cssCursors[CRSR_SELECTIONCUT        ] = 	{"",""};			// "
+	cssCursors[CRSR_SELECTIONCOPY       ] = 	{"",""};			// "
+	cssCursors[CRSR_SELECTIONPASTE      ] = 	{"",""};			// "
+	cssCursors[CRSR_SELECTIONDUPLICATE  ] = 	{"",""};			// "
     cssCursors[CRSR_RESIZE              ] =     {"",""};            // "
 };
 // clang-format on
@@ -266,17 +274,17 @@ void XournalppCursor::updateCursor() {
                 case CURSOR_SELECTION_ROTATE:
                     setCursor(CRSR_EXCHANGE);
                     break;
-                case CURSOR_SELECTION_CUT:
-                    [[fallthrough]];
                 case CURSOR_SELECTION_DELETE:
                     setCursor(CRSR_PIRATE);
                     break;
+                case CURSOR_SELECTION_CUT:
+                    [[fallthrough]];
                 case CURSOR_SELECTION_COPY:
                     [[fallthrough]];
                 case CURSOR_SELECTION_PASTE:
                     [[fallthrough]];
                 case CURSOR_SELECTION_DUPLICATE:
-                    setCursor(CRSR_TCROSS);
+                    cursor = getSelectionCursor(this->selectionType);
                     break;
                 default:
                     break;
@@ -641,6 +649,56 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
         cairo_move_to(cr, x, y);
         cairo_show_text(cr, utf8);
     }
+
+    cairo_destroy(cr);
+    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
+    cairo_surface_destroy(crCursor);
+    GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
+            gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
+    g_object_unref(pixbuf);
+
+    return cursor;
+}
+
+auto XournalppCursor::getSelectionCursor(CursorSelectionType type) -> GdkCursor* {
+    bool big = control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_BIG;
+    bool bright = control->getSettings()->isHighlightPosition();
+
+    int newCursorID = CRSR_SELECTIONCUT + type - CURSOR_SELECTION_CUT;
+    gulong flavour =
+            (big ? 1 : 0) | (bright ? 2 : 0);  // hash of variables for comparison only
+
+    if (newCursorID == this->currentCursor && flavour == this->currentCursorFlavour) {
+        return nullptr;
+    }
+    this->currentCursor = newCursorID;
+    this->currentCursorFlavour = flavour;
+
+    int height = 48;
+    int width = 48;
+    int fontSize = 8;
+    if (big || bright) {
+        height = width = 60;
+        fontSize = 12;
+    }
+    int centerX = width / 2;
+    int centerY = height / 2;
+
+
+    cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+    cairo_t* cr = cairo_create(crCursor);
+    cairo_set_line_width(cr, 1.2);
+
+    cairo_text_extents_t extents;
+    const char* utf8[] = {"CUT", "COPY", "PASTE", "DUPLICATE"};
+    double x = NAN, y = NAN;
+    cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+    cairo_set_font_size(cr, fontSize);
+    cairo_text_extents(cr, utf8[type - CURSOR_SELECTION_CUT], &extents);
+    x = centerX - extents.width / 2;
+    y = centerY + extents.height;
+    cairo_move_to(cr, x, y);
+    cairo_show_text(cr, utf8[type - CURSOR_SELECTION_CUT]);
 
     cairo_destroy(cr);
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);

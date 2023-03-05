@@ -48,6 +48,7 @@ private:
 
     GdkCursor* createHighlighterOrPenCursor(int size, double alpha);
     GdkCursor* createCustomDrawDirCursor(int size, bool shift, bool ctrl);
+    GdkCursor* getSelectionCursor(CursorSelectionType type);
 
 private:
     InputDeviceClass inputDevice = INPUT_DEVICE_MOUSE;
