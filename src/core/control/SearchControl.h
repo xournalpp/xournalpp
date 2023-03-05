@@ -35,6 +35,8 @@ public:
 
     const std::vector<XojPdfRectangle>& getResults() const { return results; }
 
+    const XojPdfRectangle* getHighlightRect() const { return highlightRect; }
+
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SearchResultView>>& getViewPool() const {
         return viewPool;
     }
