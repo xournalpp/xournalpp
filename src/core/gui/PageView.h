@@ -100,7 +100,7 @@ public:
 
     void endSpline();
 
-    bool searchTextOnPage(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* upperMostMatch);
+    bool searchTextOnPage(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect);
 
     bool onKeyPressEvent(GdkEventKey* event);
     bool onKeyReleaseEvent(GdkEventKey* event);

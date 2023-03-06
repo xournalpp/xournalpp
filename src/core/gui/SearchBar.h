@@ -54,7 +54,7 @@ private:
     void searchPrevious();
 
     void search(const char* text);
-    bool searchTextonCurrentPage(const char* text, size_t index, size_t* occurrences, XojPdfRectangle* upperMostMatch);
+    bool searchTextonCurrentPage(const char* text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect);
 
 private:
     Control* control;

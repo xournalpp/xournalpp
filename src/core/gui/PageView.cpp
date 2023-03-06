@@ -139,7 +139,7 @@ auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
 }
 
 auto XojPageView::searchTextOnPage(const std::string& text, size_t index, size_t* occurrences,
-                                   XojPdfRectangle* upperMostMatch) -> bool {
+                                   XojPdfRectangle* matchRect) -> bool {
     if (!this->search) {
         if (text.empty()) {
             return true;
@@ -159,7 +159,7 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t index, size_t
                 this->search.get(), this, settings->getSelectionColor(), settings->getActiveSelectionColor()));
     }
 
-    bool found = this->search->search(text, index, occurrences, upperMostMatch);
+    bool found = this->search->search(text, index, occurrences, matchRect);
 
     repaintPage();
 
