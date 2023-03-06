@@ -3145,35 +3145,28 @@ This setting can make it easier to draw with touch. </property>
                                                       </packing>
                                                     </child>
                                                     <child>
-                                                      <object class="GtkCheckButton" id="cbDarkTheme">
-                                                        <property name="label" translatable="yes">Dark Theme (requires restart)</property>
-                                                        <property name="name">cbDarkTheme</property>
+                                                      <object class="GtkLabel">
                                                         <property name="visible">True</property>
-                                                        <property name="can-focus">True</property>
-                                                        <property name="receives-default">False</property>
+                                                        <property name="can-focus">False</property>
+                                                        <property name="label" translatable="yes">Active Selection Color (Search Results etc.)</property>
                                                         <property name="xalign">0</property>
-                                                        <property name="draw-indicator">True</property>
                                                       </object>
                                                       <packing>
                                                         <property name="left-attach">0</property>
-                                                        <property name="top-attach">4</property>
-                                                        <property name="width">2</property>
+                                                        <property name="top-attach">3</property>
                                                       </packing>
                                                     </child>
                                                     <child>
-                                                      <object class="GtkCheckButton" id="cbStockIcons">
-                                                        <property name="label" translatable="yes">Use available Stock Icons (requires restart)</property>
-                                                        <property name="name">cbStockIcons</property>
+                                                      <object class="GtkColorButton" id="colorSelectionActive">
+                                                        <property name="name">colorSelectionActive</property>
                                                         <property name="visible">True</property>
                                                         <property name="can-focus">True</property>
-                                                        <property name="receives-default">False</property>
-                                                        <property name="xalign">0</property>
-                                                        <property name="draw-indicator">True</property>
+                                                        <property name="receives-default">True</property>
+                                                        <property name="margin-top">5</property>
                                                       </object>
                                                       <packing>
-                                                        <property name="left-attach">0</property>
-                                                        <property name="top-attach">5</property>
-                                                        <property name="width">2</property>
+                                                        <property name="left-attach">1</property>
+                                                        <property name="top-attach">3</property>
                                                       </packing>
                                                     </child>
                                                     <child>
@@ -3225,7 +3218,39 @@ This setting can make it easier to draw with touch. </property>
                                                       </object>
                                                       <packing>
                                                         <property name="left-attach">0</property>
-                                                        <property name="top-attach">3</property>
+                                                        <property name="top-attach">4</property>
+                                                        <property name="width">2</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkCheckButton" id="cbDarkTheme">
+                                                        <property name="label" translatable="yes">Dark Theme (requires restart)</property>
+                                                        <property name="name">cbDarkTheme</property>
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">True</property>
+                                                        <property name="receives-default">False</property>
+                                                        <property name="xalign">0</property>
+                                                        <property name="draw-indicator">True</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">5</property>
+                                                        <property name="width">2</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkCheckButton" id="cbStockIcons">
+                                                        <property name="label" translatable="yes">Use available Stock Icons (requires restart)</property>
+                                                        <property name="name">cbStockIcons</property>
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">True</property>
+                                                        <property name="receives-default">False</property>
+                                                        <property name="xalign">0</property>
+                                                        <property name="draw-indicator">True</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">6</property>
                                                         <property name="width">2</property>
                                                       </packing>
                                                     </child>

@@ -365,6 +365,9 @@ public:
     Color getBackgroundColor() const;
     void setBackgroundColor(Color color);
 
+    Color getActiveSelectionColor() const;
+    void setActiveSelectionColor(Color color);
+
     // Re-render pages if document zoom differs from the last render zoom by the given threshold.
     double getPDFPageRerenderThreshold() const;
     void setPDFPageRerenderThreshold(double threshold);
@@ -932,6 +935,11 @@ private:
      * Color for Text selection, Stroke selection etc.
      */
     Color selectionMarkerColor{};
+
+    /**
+     * Color for active selection.
+     */
+    Color activeSelectionColor{};
 
     /**
      * The color for Xournal page background
