@@ -18,7 +18,7 @@ SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf):
 
 SearchControl::~SearchControl() = default;
 
-auto SearchControl::search(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* upperMostMatch)
+auto SearchControl::search(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect)
         -> bool {
     this->highlightRect = nullptr;
     if (text.empty()) {
@@ -60,14 +60,14 @@ auto SearchControl::search(const std::string& text, size_t index, size_t* occurr
     }
     bool found;
     if (index - 1 >= this->results.size()) {
-        if (upperMostMatch) {
-            *upperMostMatch = XojPdfRectangle(0, 0, 0, 0);
+        if (matchRect) {
+            *matchRect = XojPdfRectangle(0, 0, 0, 0);
         }
         found = false;
     } else {
-        if (upperMostMatch) {
+        if (matchRect) {
             this->highlightRect = &this->results[index - 1];
-            *upperMostMatch = *this->highlightRect;
+            *matchRect = *this->highlightRect;
         }
         found = true;
     }

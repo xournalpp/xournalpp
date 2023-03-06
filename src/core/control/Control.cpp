@@ -1839,8 +1839,8 @@ auto Control::getCurrentPageNo() const -> size_t {
 }
 
 auto Control::searchTextOnPage(const std::string& text, size_t pageNumber, size_t index, size_t* occurrences,
-                               XojPdfRectangle* upperMostMatch) -> bool {
-    return getWindow()->getXournal()->searchTextOnPage(text, pageNumber, index, occurrences, upperMostMatch);
+                               XojPdfRectangle* matchRect) -> bool {
+    return getWindow()->getXournal()->searchTextOnPage(text, pageNumber, index, occurrences, matchRect);
 }
 
 auto Control::getCurrentPage() -> PageRef {
