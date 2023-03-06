@@ -157,8 +157,7 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t index, size_t
         }
         this->search = std::make_unique<SearchControl>(page, pdf);
         this->overlayViews.emplace_back(std::make_unique<xoj::view::SearchResultView>(
-                this->search.get(), this, settings->getSelectionColor(),
-                Color(0, 255, 0)));  // TODO add a highlight color to settings
+                this->search.get(), this, settings->getSelectionColor(), settings->getActiveSelectionColor()));
     }
 
     bool found = this->search->search(text, index, occurrences, upperMostMatch);

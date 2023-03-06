@@ -486,6 +486,8 @@ void SettingsDialog::load() {
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBackground")), &color);
     color = Util::rgb_to_GdkRGBA(settings->getSelectionColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
+    color = Util::rgb_to_GdkRGBA(settings->getActiveSelectionColor());
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorSelectionActive")), &color);
 
     loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
     color = Util::argb_to_GdkRGBA(settings->getCursorHighlightColor());
@@ -724,6 +726,8 @@ void SettingsDialog::save() {
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
     settings->setSelectionColor(Util::GdkRGBA_to_argb(color));
 
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorSelectionActive")), &color);
+    settings->setActiveSelectionColor(Util::GdkRGBA_to_argb(color));
 
     settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);

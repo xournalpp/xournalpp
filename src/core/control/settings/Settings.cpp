@@ -181,6 +181,7 @@ void Settings::loadDefault() {
 
     this->selectionBorderColor = Colors::red;
     this->selectionMarkerColor = Colors::xopp_cornflowerblue;
+    this->activeSelectionColor = Colors::lawngreen;
 
     this->backgroundColor = Colors::xopp_gainsboro02;
 
@@ -505,6 +506,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->selectionBorderColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionMarkerColor")) == 0) {
         this->selectionMarkerColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("activeSelectionColor")) == 0) {
+        this->activeSelectionColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
         this->backgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
@@ -1023,6 +1026,7 @@ void Settings::save() {
     xmlNode = savePropertyUnsigned("selectionBorderColor", uint32_t(selectionBorderColor), root);
     xmlNode = savePropertyUnsigned("backgroundColor", uint32_t(backgroundColor), root);
     xmlNode = savePropertyUnsigned("selectionMarkerColor", uint32_t(selectionMarkerColor), root);
+    xmlNode = savePropertyUnsigned("activeSelectionColor", uint32_t(activeSelectionColor), root);
 
     SAVE_DOUBLE_PROP(touchZoomStartThreshold);
     SAVE_DOUBLE_PROP(pageRerenderThreshold);
@@ -2011,6 +2015,16 @@ void Settings::setSelectionColor(Color color) {
         return;
     }
     this->selectionMarkerColor = color;
+    save();
+}
+
+auto Settings::getActiveSelectionColor() const -> Color { return this->activeSelectionColor; }
+
+void Settings::setActiveSelectionColor(Color color) {
+    if (this->activeSelectionColor == color) {
+        return;
+    }
+    this->activeSelectionColor = color;
     save();
 }
 
