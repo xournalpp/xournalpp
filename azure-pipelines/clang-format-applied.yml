@@ -32,8 +32,8 @@ stages:
         git config --global clangFormat.extensions "c,h,cpp,hpp,hxx,cxx,cc,hh'"
 
         git switch $(System.PullRequest.TargetBranch)
-        git switch $(System.PullRequest.SourceBranch)
-        BASE_COMMIT=$(git merge-base $(System.PullRequest.SourceBranch) $(System.PullRequest.TargetBranch))
+        git switch origin/$(System.PullRequest.SourceBranch)
+        BASE_COMMIT=$(git merge-base origin/$(System.PullRequest.SourceBranch) $(System.PullRequest.TargetBranch))
         echo Computing diff to commit hash $BASE_COMMIT
 
         git clang-format --diff $BASE_COMMIT --
