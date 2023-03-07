@@ -41,13 +41,14 @@ stages:
         git fetch origin
         echo "git remote show origin"
         git remote show origin
+
+        echo "System.PullRequest.SourceRepositoryURI = $(System.PullRequest.SourceRepositoryURI)"
+
         echo "git switch origin/$(System.PullRequest.SourceBranch)"
-        echo "URL = $(System.PullRequest.SourceRepositoryURI)"
+        git switch $(System.PullRequest.SourceBranch)
 
-        git switch origin/$(System.PullRequest.SourceBranch)
-        echo "git merge base"
-
-        BASE_COMMIT=$(git merge-base origin/$(System.PullRequest.SourceBranch) $(System.PullRequest.TargetBranch))
+        echo "Calling git merge-base"
+        BASE_COMMIT=$(git merge-base $(System.PullRequest.SourceBranch) $(System.PullRequest.TargetBranch))
         echo Computing diff to commit hash $BASE_COMMIT
 
         git clang-format --diff $BASE_COMMIT --
