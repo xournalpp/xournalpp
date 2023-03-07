@@ -32,6 +32,7 @@ stages:
         git config --global clangFormat.extensions "c,h,cpp,hpp,hxx,cxx,cc,hh'"
 
         git switch $(System.PullRequest.TargetBranch)
+
         echo "git remote --verbose"
         git remote --verbose
         echo "git branch"
@@ -41,8 +42,11 @@ stages:
         echo "git remote show origin"
         git remote show origin
         echo "git switch origin/$(System.PullRequest.SourceBranch)"
+        echo "URL = $(System.PullRequest.SourceRepositoryURI)"
+
         git switch origin/$(System.PullRequest.SourceBranch)
         echo "git merge base"
+
         BASE_COMMIT=$(git merge-base origin/$(System.PullRequest.SourceBranch) $(System.PullRequest.TargetBranch))
         echo Computing diff to commit hash $BASE_COMMIT
 
