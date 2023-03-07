@@ -38,8 +38,8 @@ stages:
         git branch
         echo "git fetch origin/$(System.PullRequest.SourceBranch)"
         git fetch origin
-        echo "git branch"
-        git branch
+        echo "git remote show origin"
+        git remote show origin
         echo "git switch origin/$(System.PullRequest.SourceBranch)"
         git switch origin/$(System.PullRequest.SourceBranch)
         echo "git merge base"
