@@ -64,7 +64,8 @@ auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
         return name;                                                                                       \
     }
 
-auto StrokeStyle::formatStyle(const double* dashes, int count) -> std::string {
+namespace {
+auto formatStyle(const double* dashes, int count) -> std::string {
     FORMAT_STYLE("dash", dashLinePattern);
     FORMAT_STYLE("dashdot", dashDotLinePattern);
     FORMAT_STYLE("dot", dotLinePattern);
@@ -80,12 +81,13 @@ auto StrokeStyle::formatStyle(const double* dashes, int count) -> std::string {
 
     return custom;
 }
+}
 
 auto StrokeStyle::formatStyle(const LineStyle& style) -> std::string {
     const double* dashes = nullptr;
     int dashCount = 0;
     if (style.getDashes(dashes, dashCount)) {
-        return StrokeStyle::formatStyle(dashes, dashCount);
+        return ::formatStyle(dashes, dashCount);
     }
 
     // Should not be returned, in this case the attribute is not written
