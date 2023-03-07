@@ -24,10 +24,7 @@ public:
     ~LineStyle() override;
 
     void operator=(const LineStyle& other);
-#ifndef NDEBUG
-    // Only use in assert() for now
     bool operator==(const LineStyle& other) const;
-#endif
 
 public:
     // Serialize interface
