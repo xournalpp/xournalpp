@@ -25,13 +25,11 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop() {
 
     for (auto w: win->getToolbarWidgets()) {
         this->toolbars.emplace_back(std::make_unique<ToolbarAdapter>(w.get(), win->getToolbarName(GTK_TOOLBAR(w.get())),
-                                    control->getWindow()->getToolMenuHandler(), win));
+                                                                     control->getWindow()->getToolMenuHandler(), win));
     }
 }
 
-void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop() {
-    this->toolbars.clear();
-}
+void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop() { this->toolbars.clear(); }
 
 void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
     this->customizeDialog.reset();

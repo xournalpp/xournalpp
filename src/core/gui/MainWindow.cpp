@@ -583,7 +583,9 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
 
 auto MainWindow::clearToolbar() -> ToolbarData* {
     if (this->selectedToolbar != nullptr) {
-        for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) { ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i].get()); }
+        for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+            ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i].get());
+        }
 
         this->toolbar->freeDynamicToolbarItems();
     }

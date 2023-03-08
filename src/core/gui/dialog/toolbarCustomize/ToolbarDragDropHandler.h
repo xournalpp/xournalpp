@@ -37,6 +37,6 @@ public:
 private:
     Control* control;
 
-    std::vector<std::unique_ptr<ToolbarAdapter>> toolbars; 
+    std::vector<std::unique_ptr<ToolbarAdapter>> toolbars;
     std::unique_ptr<ToolbarCustomizeDialog> customizeDialog;
 };

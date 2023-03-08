@@ -24,10 +24,10 @@
 
 #include "control/layer/LayerCtrlListener.h"  // for LayerCtrlListener
 #include "model/Font.h"                       // for XojFont
-#include "ToolbarDefinitions.h"               // for TOOLBAR_DEFINITIONS_LEN
 #include "util/raii/GObjectSPtr.h"
 
-#include "GladeGui.h"  // for GladeGui
+#include "GladeGui.h"            // for GladeGui
+#include "ToolbarDefinitions.h"  // for TOOLBAR_DEFINITIONS_LEN
 
 class Control;
 class Layout;
