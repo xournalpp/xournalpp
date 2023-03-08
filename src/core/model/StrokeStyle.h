@@ -20,6 +20,6 @@ private:
     StrokeStyle();
     virtual ~StrokeStyle();
 public:
-    static LineStyle parseStyle(const char* style);
+    static LineStyle parseStyle(const std::string& style);
     static std::string formatStyle(const LineStyle& style);
 };

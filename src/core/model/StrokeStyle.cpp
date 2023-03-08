@@ -45,22 +45,19 @@ auto formatStyle(const double* dashes, int count) -> std::string {
 
 }
 
-auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
-
-    std::string styleStr(style);
-
-    auto it = predefinedPatterns.find(styleStr);
+auto StrokeStyle::parseStyle(const std::string &style) -> LineStyle {
+    auto it = predefinedPatterns.find(style);
     if (it != predefinedPatterns.end()) {
         LineStyle ls;
         ls.setDashes(it->second.data(), static_cast<int>(it->second.size()));
         return ls;
     }
 
-    if (styleStr.substr(0, strlen(CUST_KEY)) != CUST_KEY) {
+    if (style.substr(0, strlen(CUST_KEY)) != CUST_KEY) {
         return LineStyle();
     }
 
-    std::stringstream dashStream(styleStr);
+    std::stringstream dashStream(style);
     std::vector<double> dash;
 
     dashStream.seekg(strlen(CUST_KEY));
@@ -71,13 +68,8 @@ auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
         return LineStyle();
     }
 
-    auto* dashesArr = new double[dash.size()];
-    for (int i = 0; i < static_cast<int>(dash.size()); i++) { dashesArr[i] = dash[i]; }
-
     LineStyle ls;
-    ls.setDashes(dashesArr, static_cast<int>(dash.size()));
-    delete[] dashesArr;
-
+    ls.setDashes(dash.data(), static_cast<int>(dash.size()));
     return ls;
 }
 

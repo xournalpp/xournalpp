@@ -476,7 +476,7 @@ void ToolHandler::loadSettings() {
 
             std::string style;
             if (st.getString("style", style)) {
-                tool->setLineStyle(StrokeStyle::parseStyle(style.c_str()));
+                tool->setLineStyle(StrokeStyle::parseStyle(style));
             }
 
             std::string value;
