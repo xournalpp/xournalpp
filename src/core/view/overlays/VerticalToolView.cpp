@@ -77,7 +77,9 @@ void VerticalToolView::on(VerticalToolView::SwitchDirectionRequest) {
 }
 
 void VerticalToolView::deleteOn(VerticalToolView::FinalizationRequest) {
-    auto [minY, maxY] = std::minmax(toolHandler->getStartY(), toolHandler->getEndY());
+    double startY = toolHandler->getStartY();
+    double endY = toolHandler->getEndY();
+    auto [minY, maxY] = std::minmax(startY, endY);
 
     // Padding for taking into account the drawing aid line width
     const double padding = 0.5 * BORDER_WIDTH_IN_PIXELS / this->parent->getZoom();
