@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <limits>  // for numeric_limits
 #include <memory>
 #include <string>
 #include <vector>
@@ -47,6 +48,8 @@ public:
      * Return the plugin list
      */
     auto getPlugins() const -> std::vector<Plugin*>;
+
+    void broadcast(std::string signalName, long mode = std::numeric_limits<long>::max());
 
 private:
     /**

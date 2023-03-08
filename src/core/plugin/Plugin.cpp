@@ -281,4 +281,10 @@ auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
 auto Plugin::isInInitUi() const -> bool { return inInitUi; }
 auto Plugin::isValid() const -> bool { return valid; }
 
+void Plugin::connectToSignal(std::string signalName, std::string callback) { funcTable.insert({signalName, callback}); }
+void Plugin::disconnectFromSignal(std::string signalName) { funcTable.erase(signalName); }
+
+auto Plugin::getFunctionTable() const -> std::unordered_map<std::string, std::string> { return funcTable; }
+
+
 #endif

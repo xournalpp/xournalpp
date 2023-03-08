@@ -10,10 +10,10 @@
  */
 
 #pragma once
-
-#include <cstddef>  // for size_t
-#include <limits>   // for numeric_limits
-#include <memory>   // for unique_ptr
+#include <cstddef>        // for size_t
+#include <limits>         // for numeric_limits
+#include <memory>         // for unique_ptr
+#include <unordered_map>  // for unordered_map
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
@@ -123,12 +123,18 @@ public:
     ///@return The main controller
     auto getControl() const -> Control*;
 
-private:
-    /// Load ini file
-    void loadIni();
+    void connectToSignal(std::string signalName, std::string callback);
+
+    void disconnectFromSignal(std::string signalName);
+
+    auto getFunctionTable() const -> std::unordered_map<std::string, std::string>;
 
     /// Execute lua function
     auto callFunction(const std::string& fnc, long mode = std::numeric_limits<long>::max()) -> bool;
+
+private:
+    /// Load ini file
+    void loadIni();
 
     /// Load custom Lua Libraries
     static void registerXournalppLibs(lua_State* luaPtr);
@@ -156,6 +162,7 @@ private:
     bool defaultEnabled = false;  ///< The plugin is default enabled
     bool inInitUi = false;        ///< Flag to check if init ui is currently running
     bool valid = false;           ///< Flag if the plugin is valid / correct loaded
+    std::unordered_map<std::string, std::string> funcTable;
 
     static constexpr auto G_ACTION_NAME_PREFIX = "plugins.action-";
 };

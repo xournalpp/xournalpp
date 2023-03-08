@@ -143,7 +143,9 @@ PluginController::PluginController(Control* control): control(control) {
 
 void PluginController::registerToolbar() {
 #ifdef ENABLE_PLUGINS
-    for (auto&& p: this->plugins) { p->registerToolbar(); }
+    for (auto&& p: this->plugins) {
+        p->registerToolbar();
+    }
 #endif
 }
 
@@ -180,5 +182,16 @@ auto PluginController::getPlugins() const -> std::vector<Plugin*> {
     return pl;
 #else
     return {};
+#endif
+}
+
+void PluginController::broadcast(std::string signalName, long mode) {
+#ifdef ENABLE_PLUGINS
+    for (auto&& p: this->plugins) {
+        auto funcTable = p->getFunctionTable();
+        if (auto fnc = funcTable.find(signalName); fnc != funcTable.end()) {
+            p->callFunction(fnc->second, mode);
+        }
+    }
 #endif
 }
