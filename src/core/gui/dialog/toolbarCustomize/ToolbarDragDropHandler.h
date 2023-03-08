@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <memory>
+#include <vector>
+
 class Control;
 class ToolbarAdapter;
 class ToolbarCustomizeDialog;
@@ -34,6 +37,6 @@ public:
 private:
     Control* control;
 
-    ToolbarAdapter** toolbars = nullptr;
-    ToolbarCustomizeDialog* customizeDialog = nullptr;
+    std::vector<std::unique_ptr<ToolbarAdapter>> toolbars;
+    std::unique_ptr<ToolbarCustomizeDialog> customizeDialog;
 };

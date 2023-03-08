@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <array>    // for array
 #include <atomic>   // for atomic_bool
 #include <cstddef>  // for size_t
 #include <memory>   // for unique_ptr
@@ -25,7 +26,8 @@
 #include "model/Font.h"                       // for XojFont
 #include "util/raii/GObjectSPtr.h"
 
-#include "GladeGui.h"  // for GladeGui
+#include "GladeGui.h"            // for GladeGui
+#include "ToolbarDefinitions.h"  // for TOOLBAR_DEFINITIONS_LEN
 
 class Control;
 class Layout;
@@ -40,6 +42,8 @@ class FloatingToolbox;
 class GladeSearchpath;
 
 class Menubar;
+
+typedef std::array<xoj::util::WidgetSPtr, TOOLBAR_DEFINITIONS_LEN> ToolbarWidgetArray;
 
 class MainWindow: public GladeGui, public LayerCtrlListener {
 public:
@@ -104,7 +108,7 @@ public:
     void updateToolbarMenu();
     void updateColorscheme();
 
-    GtkWidget** getToolbarWidgets(int& length) const;
+    const ToolbarWidgetArray& getToolbarWidgets() const;
     const char* getToolbarName(GtkToolbar* toolbar) const;
 
     Layout* getLayout() const;
@@ -194,7 +198,7 @@ private:
 
     bool maximized = false;
 
-    GtkWidget** toolbarWidgets;
+    ToolbarWidgetArray toolbarWidgets;
 
     GtkAccelGroup* globalAccelGroup;
 
