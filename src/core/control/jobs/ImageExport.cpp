@@ -176,6 +176,8 @@ void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, Ex
         if (!popplerPage) {
             this->lastError = _("Error while exporting the pdf background: I cannot find the pdf page number ");
             this->lastError += std::to_string(pgNo);
+        } else if (format == EXPORT_GRAPHICS_PNG) {
+            popplerPage->render(cr);
         } else {
             popplerPage->renderForPrinting(cr);
         }
