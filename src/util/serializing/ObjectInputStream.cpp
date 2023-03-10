@@ -116,7 +116,7 @@ void ObjectInputStream::readData(void** data, int* length) {
     int len = readTypeFromSStream<int>(istream);
     int width = readTypeFromSStream<int>(istream);
 
-    if (istream.str().size() < (len * width)) {
+    if (istream.str().size() < static_cast<size_t>(len * width)) {
         throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
     }
 
@@ -146,7 +146,7 @@ void ObjectInputStream::readData(std::vector<T>& data) {
         throw InputStreamException("Data width mismatch requested type width", __FILE__, __LINE__);
     }
 
-    if (istream.str().size() < (len * width)) {
+    if (istream.str().size() < static_cast<size_t>(len * width)) {
         throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
     }
 
