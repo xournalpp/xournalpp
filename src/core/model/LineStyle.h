@@ -48,7 +48,7 @@ public:
      *
      * @param dashes Dash data, will be moved, and continous use from caller invalid
      */
-    void setDashes();
+    void setDashes(std::vector<double>&& dashes);
 
 private:
     std::vector<double> dashes;
