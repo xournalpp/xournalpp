@@ -22,12 +22,8 @@ class ObjectOutputStream;
 class LineStyle: public Serializable {
 public:
     LineStyle();
-    //LineStyle(const LineStyle& other);
     ~LineStyle() override;
 
-    /*
-    void operator=(const LineStyle& other);
-    */
     bool operator==(const LineStyle& other) const;
 
 public:
@@ -35,11 +31,10 @@ public:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
-public:
     /**
-     * Get dash array and count
+     * Get dash vector
      *
-     * @return true if dashed
+     * @return dashes
      */
     const std::vector<double>& getDashes() const;
 
@@ -49,12 +44,11 @@ public:
     bool hasDashes() const;
 
     /**
-     * Set the dash array and count
+     * Set the dash vector and count
      *
-     * @param dashes Dash data, will be copied
-     * @param dashCount Count of entries
+     * @param dashes Dash data, will be moved, and continous use from caller invalid
      */
-    void setDashes(std::vector<double>&& dashes);
+    void setDashes();
 
 private:
     std::vector<double> dashes;
