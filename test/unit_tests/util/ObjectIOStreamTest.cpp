@@ -22,6 +22,14 @@ std::string serializeData(const std::array<T, N>& data) {
     return {outStr->str, outStr->len};
 }
 
+template <typename T>
+std::string serializeDataVector(const std::vector<T>& data) {
+    ObjectOutputStream outStream(new BinObjectEncoding);
+    outStream.writeData(data);
+    auto outStr = outStream.getStr();
+    return {outStr->str, outStr->len};
+}
+
 std::string serializeImage(cairo_surface_t* surf) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     std::string data{reinterpret_cast<char*>(cairo_image_surface_get_data(surf))};
@@ -80,12 +88,26 @@ void testReadDataType(const std::array<T, N>& data) {
     for (size_t i = 0; i < (size_t)length / sizeof(T); ++i) { EXPECT_EQ(outputData[i], data.at(i)); }
 }
 
+template <typename T>
+void testReadDataType(const std::vector<T>& data) {
+    std::string str = serializeDataVector<T>(data);
+    ObjectInputStream stream;
+    EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+
+    std::vector<T> outputData;
+    stream.readData(outputData);
+
+    EXPECT_EQ(data, outputData);
+}
+
+
 TEST(UtilObjectIOStream, testReadData) {
     testReadDataType<char, 3>(std::array<char, 3>{0, 42, -42});
     testReadDataType<long, 3>(std::array<long, 3>{0, 42, -42});
     testReadDataType<long long, 3>(std::array<long long, 3>{0, 420000000000, -42000000000});
     testReadDataType<double, 3>(std::array<double, 3>{0, 42., -42.});
     testReadDataType<float, 3>(std::array<float, 3>{0, 42., -42.});
+    testReadDataType<double>(std::vector<double>{0, 42., -42.});
 }
 
 TEST(UtilObjectIOStream, testReadImage) {

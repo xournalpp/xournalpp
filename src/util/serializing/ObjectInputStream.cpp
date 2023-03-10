@@ -9,6 +9,8 @@
 #include "util/serializing/InputStreamException.h"  // for InputStreamException
 #include "util/serializing/Serializable.h"          // for XML_VERSION_STR
 
+template void ObjectInputStream::readData(std::vector<double>& data);
+
 // This function requires that T is read from its binary representation to work (e.g. integer type)
 template <typename T>
 T readTypeFromSStream(std::istringstream& istream) {
@@ -126,6 +128,31 @@ void ObjectInputStream::readData(void** data, int* length) {
         *length = len;
 
         istream.read((char*)*data, len * width);
+    }
+}
+
+template <typename T>
+void ObjectInputStream::readData(std::vector<T>& data) {
+    checkType('b');
+
+    if (istream.str().size() < 2 * sizeof(int)) {
+        throw InputStreamException("End reached, but try to read data len and width", __FILE__, __LINE__);
+    }
+
+    int len = readTypeFromSStream<int>(istream);
+    int width = readTypeFromSStream<int>(istream);
+
+    if (width != sizeof(T)) {
+        throw InputStreamException("Data width mismatch requested type width", __FILE__, __LINE__);
+    }
+
+    if (istream.str().size() < (len * width)) {
+        throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
+    }
+
+    if (len) {
+        data.resize(len);
+        istream.read((char *)data.data(), len * width);
     }
 }
 
