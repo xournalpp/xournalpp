@@ -20,10 +20,8 @@ void xoj::view::StrokeViewHelper::drawNoPressure(cairo_t* cr, const std::vector<
                                                  const LineStyle& lineStyle, double dashOffset) {
     cairo_set_line_width(cr, strokeWidth);
 
-    const double* dashes = nullptr;
-    int dashCount = 0;
-    lineStyle.getDashes(dashes, dashCount);
-    cairo_set_dash(cr, dashes, dashCount, dashOffset);
+    const auto& dashes = lineStyle.getDashes();
+    cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), dashOffset);
 
     pathToCairo(cr, pts);
     cairo_stroke(cr);
@@ -34,9 +32,7 @@ void xoj::view::StrokeViewHelper::drawNoPressure(cairo_t* cr, const std::vector<
  */
 double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vector<Point>& pts,
                                                      const LineStyle& lineStyle, double dashOffset) {
-    const double* dashes = nullptr;
-    int dashCount = 0;
-    lineStyle.getDashes(dashes, dashCount);
+    const auto& dashes = lineStyle.getDashes();
 
     /*
      * Because the width varies, we need to call cairo_stroke() once per segment
@@ -49,9 +45,9 @@ double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vec
         cairo_stroke(cr);
     };
 
-    if (dashes) {
+    if (!dashes.empty()) {
         for (const auto& [p, q]: PairView(pts)) {
-            cairo_set_dash(cr, dashes, dashCount, dashOffset);
+            cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), dashOffset);
             dashOffset += p.lineLengthTo(q);
             drawSegment(p, q);
         }

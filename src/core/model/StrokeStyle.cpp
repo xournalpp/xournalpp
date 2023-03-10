@@ -23,12 +23,11 @@ const std::map<std::string, std::vector<double>> predefinedPatterns = {
     { "dot", {0.5, 3}}
 };
 
-auto formatStyle(const double* dashes, int count) -> std::string {
+auto formatStyle(const std::vector<double>& dashes) -> std::string {
 
     // Check if dashes match named predefined dashes.
-    std::vector<double> input(dashes, dashes + count);
     for (auto &pair: predefinedPatterns ) {
-        if (pair.second == input) {
+        if (pair.second == dashes) {
             return pair.first;
         }
     }
@@ -37,7 +36,7 @@ auto formatStyle(const double* dashes, int count) -> std::string {
     std::ostringstream custom;
     custom << std::setprecision(2) << std::fixed;
     custom << CUST_KEY;
-    std::copy(input.begin(), input.end(),std::ostream_iterator<double>(custom," "));
+    std::copy(dashes.begin(), dashes.end(),std::ostream_iterator<double>(custom," "));
 
     // Return dashes string with traling space removed.
     return custom.str().substr(0, custom.str().length() - 1);
@@ -49,7 +48,8 @@ auto StrokeStyle::parseStyle(const std::string &style) -> LineStyle {
     auto it = predefinedPatterns.find(style);
     if (it != predefinedPatterns.end()) {
         LineStyle ls;
-        ls.setDashes(it->second.data(), static_cast<int>(it->second.size()));
+        std::vector<double> dashes = it->second;
+        ls.setDashes(std::move(dashes));
         return ls;
     }
 
@@ -58,26 +58,25 @@ auto StrokeStyle::parseStyle(const std::string &style) -> LineStyle {
     }
 
     std::stringstream dashStream(style);
-    std::vector<double> dash;
+    std::vector<double> dashes;
 
     dashStream.seekg(strlen(CUST_KEY));
     for (double value; dashStream >> value;)
-        dash.push_back(value);
+        dashes.push_back(value);
 
-    if (dash.empty()) {
+    if (dashes.empty()) {
         return LineStyle();
     }
 
     LineStyle ls;
-    ls.setDashes(dash.data(), static_cast<int>(dash.size()));
+    ls.setDashes(std::move(dashes));
     return ls;
 }
 
 auto StrokeStyle::formatStyle(const LineStyle& style) -> std::string {
-    const double* dashes = nullptr;
-    int dashCount = 0;
-    if (style.getDashes(dashes, dashCount)) {
-        return ::formatStyle(dashes, dashCount);
+    const auto& dashes = style.getDashes();
+    if (!dashes.empty()) {
+        return ::formatStyle(dashes);
     }
 
     // Should not be returned, in this case the attribute is not written

@@ -28,25 +28,25 @@ TEST(StrokeStyle, testParseStyle)
     
     LineStyle l1;
     double testData[] = {100, 200, 300};
-    l1.setDashes(testData, 3);
+    l1.setDashes(std::vector<double>(testData, testData + 3));
     EXPECT_EQ(StrokeStyle::parseStyle("cust: 100 200 300"), l1);
 }
 
 TEST(StrokeStyle, testFormatStyle)
 {
     LineStyle dashLine;
-    dashLine.setDashes(dashLinePattern, 2);
+    dashLine.setDashes(std::vector<double>(dashLinePattern, dashLinePattern + 2));
     EXPECT_EQ(StrokeStyle::formatStyle(dashLine), "dash");    
 
     LineStyle dashDot;
-    dashDot.setDashes(dashDotLinePattern, 4);
+    dashDot.setDashes(std::vector<double>(dashDotLinePattern, dashDotLinePattern + 4));
     EXPECT_EQ(StrokeStyle::formatStyle(dashDot), "dashdot");    
 
     LineStyle dotLine;
-    dotLine.setDashes(dotLinePattern, 2);
+    dotLine.setDashes(std::vector<double>(dotLinePattern, dotLinePattern + 2));
     EXPECT_EQ(StrokeStyle::formatStyle(dotLine), "dot");    
 
     LineStyle custLine;
-    custLine.setDashes(custPattern, 3);
+    custLine.setDashes(std::vector<double>(custPattern, custPattern + 3));
     EXPECT_EQ(StrokeStyle::formatStyle(custLine), "cust: 0.01 -1.00 0.01");
 }

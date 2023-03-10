@@ -33,10 +33,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
 
     const Stroke& stroke = this->erasableStroke.stroke;
 
-    const double* dashes = nullptr;
-    int dashCount = 0;
-    stroke.getLineStyle().getDashes(dashes, dashCount);
-    assert((dashCount == 0 && dashes == nullptr) || (dashCount != 0 && dashes != nullptr));
+    const auto& dashes = stroke.getLineStyle().getDashes();
 
     const std::vector<Point>& data = stroke.getPointVector();
 
@@ -53,8 +50,8 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
 
             auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)interval.max.index + 1);
             for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)interval.min.index + 1); it != endIt; ++it) {
-                if (dashes) {
-                    cairo_set_dash(cr, dashes, dashCount, dashOffset);
+                if (!dashes.empty()) {
+                    cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), dashOffset);
                     dashOffset += lastPoint->lineLengthTo(*it);
                     lastPoint = &(*it);
                 }
@@ -64,8 +61,8 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
                 cairo_move_to(cr, it->x, it->y);
             }
 
-            if (dashes) {
-                cairo_set_dash(cr, dashes, dashCount, dashOffset);
+            if (!dashes.empty()) {
+                cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), dashOffset);
             }
 
             Point q = stroke.getPoint(interval.max);
@@ -74,7 +71,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
         }
     } else {
         cairo_set_line_width(cr, stroke.getWidth());
-        cairo_set_dash(cr, dashes, dashCount, 0);
+        cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), 0);
 
         bool mergeFirstAndLast = this->erasableStroke.isClosedStroke() &&
                                  stroke.getToolType() == StrokeTool::HIGHLIGHTER && sections.size() >= 2 &&

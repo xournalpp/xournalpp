@@ -13,6 +13,8 @@
 
 #include "util/serializing/Serializable.h"  // for Serializable
 
+#include <vector>
+
 class ObjectInputStream;
 class ObjectOutputStream;
 
@@ -20,10 +22,12 @@ class ObjectOutputStream;
 class LineStyle: public Serializable {
 public:
     LineStyle();
-    LineStyle(const LineStyle& other);
+    //LineStyle(const LineStyle& other);
     ~LineStyle() override;
 
+    /*
     void operator=(const LineStyle& other);
+    */
     bool operator==(const LineStyle& other) const;
 
 public:
@@ -37,7 +41,7 @@ public:
      *
      * @return true if dashed
      */
-    bool getDashes(const double*& dashes, int& dashCount) const;
+    const std::vector<double>& getDashes() const;
 
     /**
      * @return true if dashed
@@ -50,16 +54,8 @@ public:
      * @param dashes Dash data, will be copied
      * @param dashCount Count of entries
      */
-    void setDashes(const double* dashes, int dashCount);
+    void setDashes(std::vector<double>&& dashes);
 
 private:
-    /**
-     * Dash definition (nullptr for no Dash)
-     */
-    double* dashes = nullptr;
-
-    /**
-     * Dash count (0 for no dash)
-     */
-    int dashCount = 0;
+    std::vector<double> dashes;
 };
