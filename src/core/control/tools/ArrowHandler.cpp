@@ -19,18 +19,45 @@ ArrowHandler::~ArrowHandler() = default;
 auto ArrowHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
         -> std::pair<std::vector<Point>, Range> {
     Point c = snappingHandler.snap(this->currPoint, this->startPoint, isAltDown);
+    const double lineLength = std::hypot(c.x - this->startPoint.x, c.y - this->startPoint.y);
+    const double thickness = control->getToolHandler()->getThickness();
+    const double slimness = lineLength / thickness;
 
     // We've now computed the line points for the arrow
-    // so we just have to build the head
+    // so we just have to build the head:
+    // arrowDist is the distance between the line's and the arrow's tips
+    // delta is the angle between each arrow leg and the line
 
-    // set up the size of the arrowhead to be 7x the thickness of the line
-    double arrowDist = control->getToolHandler()->getThickness() * 7.0;
-
-    // an appropriate delta is Pi/3 radians for an arrow shape
+    // an appropriate opening angle 2*delta is Pi/3 radians for an arrow shape
     double delta = M_PI / 6.0;
-    double angle = atan2(c.y - this->startPoint.y, c.x - this->startPoint.x);
+    // We use different slimness regimes for proper sizing:
+    const double THICK1 = 7, THICK3 = 1.6;
+    const double LENGTH2 = 0.4, LENGTH4 = (doubleEnded ? 0.5 : 0.8);
+    // set up the size of the arrow head to be THICK1 x the thickness of the line
+    double arrowDist = thickness * THICK1;
+    // but not too large compared to the line length
+    if (slimness >= THICK1 / LENGTH2) {
+        // arrow head is not too long compared to the line length (regime 1)
+    } else if (slimness >= THICK3 / LENGTH2) {
+        // arrow head is not too short compared to the thickness (regime 2)
+        arrowDist = lineLength * LENGTH2;
+    } else if (slimness >= THICK3 / LENGTH4) {
+        // arrow head is not too thick compared to the line length (regime 3)
+        arrowDist = thickness * THICK3;
+        // help visibility by widening the angle
+        delta = (1 + (slimness - THICK3 / LENGTH2) / (THICK3 / LENGTH4 - THICK3 / LENGTH2)) *  M_PI / 6.0;
+        // which allows to shorten the tips and keep the horizonzal distance
+        arrowDist *= sin(M_PI / 6.0) / sin(delta);
+    } else {
+        // shrinking down gracefully (regime 4)
+        arrowDist = lineLength * LENGTH4;
+        delta = M_PI / 3.0;
+        arrowDist *= sin(M_PI / 6.0) / sin(M_PI / 3.0);
+    }
 
-    std::pair<std::vector<Point>, Range> res;
+    const double angle = atan2(c.y - this->startPoint.y, c.x - this->startPoint.x);
+
+    std::pair<std::vector<Point>, Range> res; // members initialised below
     std::vector<Point>& shape = res.first;
 
     shape.reserve(doubleEnded ? 9 : 5);
