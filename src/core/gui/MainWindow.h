@@ -183,7 +183,7 @@ private:
 
     std::unique_ptr<XournalView> xournal;
     GtkWidget* winXournal = nullptr;
-    ScrollHandling* scrollHandling = nullptr;
+    std::unique_ptr<ScrollHandling> scrollHandling;
 
     std::atomic_bool gtkTouchscreenScrollingEnabled{true};
 

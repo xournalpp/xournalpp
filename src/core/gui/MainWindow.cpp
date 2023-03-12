@@ -169,10 +169,7 @@ void MainWindow::rebindMenubarAccelerators() {
     gtk_container_foreach(reinterpret_cast<GtkContainer*>(menuBar), rebindAcceleratorsSubMenu, this->globalAccelGroup);
 }
 
-MainWindow::~MainWindow() {
-    delete scrollHandling;
-    scrollHandling = nullptr;
-}
+MainWindow::~MainWindow() = default;
 
 /**
  * Topmost widgets, to check if there is a menu above
@@ -214,9 +211,9 @@ void MainWindow::initXournalWidget() {
 
     gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
 
-    scrollHandling = new ScrollHandling(GTK_SCROLLABLE(vpXournal));
+    scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLABLE(vpXournal));
 
-    this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling);
+    this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling.get());
 
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
