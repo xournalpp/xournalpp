@@ -86,7 +86,7 @@ private:
     std::vector<DeviceInfo> audioOutputDevices;
 
     std::unique_ptr<LanguageConfigGui> languageConfig;
-    std::vector<ButtonConfigGui*> buttonConfigs;
+    std::vector<std::unique_ptr<ButtonConfigGui>> buttonConfigs;
     std::vector<std::unique_ptr<DeviceClassConfigGui>> deviceClassConfigs;
 
     LatexSettingsPanel latexPanel;
