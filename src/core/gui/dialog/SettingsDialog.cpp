@@ -388,7 +388,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbStabilizerEnableFinalizeStroke", settings->getStabilizerFinalizeStroke());
 
     GtkWidget* sbStabilizerBuffersize = get("sbStabilizerBuffersize");
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerBuffersize), settings->getStabilizerBuffersize());
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerBuffersize), static_cast<double>(settings->getStabilizerBuffersize()));
     GtkWidget* sbStabilizerDeadzoneRadius = get("sbStabilizerDeadzoneRadius");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerDeadzoneRadius), settings->getStabilizerDeadzoneRadius());
     GtkWidget* sbStabilizerDrag = get("sbStabilizerDrag");
@@ -624,7 +624,7 @@ void SettingsDialog::load() {
     }
     for (size_t i = 0; i < this->audioInputDevices.size(); i++) {
         if (this->audioInputDevices[i].getSelected()) {
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), i + 1);
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), static_cast<gint>(i + 1));
         }
     }
 
@@ -637,7 +637,7 @@ void SettingsDialog::load() {
     }
     for (size_t i = 0; i < this->audioOutputDevices.size(); i++) {
         if (this->audioOutputDevices[i].getSelected()) {
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), i + 1);
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), static_cast<gint>(i + 1));
         }
     }
 
@@ -815,19 +815,19 @@ void SettingsDialog::save() {
     }
 
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
-    int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
+    int autosaveTimeout = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout)));
     settings->setAutosaveTimeout(autosaveTimeout);
 
     if (getCheckbox("cbIgnoreFirstStylusEvents")) {
         GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
-        int numIgnoredStylusEvents = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents));
+        int numIgnoredStylusEvents = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents)));
         settings->setIgnoredStylusEvents(numIgnoredStylusEvents);
     } else {
         settings->setIgnoredStylusEvents(0);  // This means nothing will be ignored
     }
 
     GtkWidget* spPairsOffset = get("spPairsOffset");
-    int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
+    int numPairsOffset = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset)));
     settings->setPairsOffset(numPairsOffset);
 
     if (getCheckbox("rdLastPageAppendDisabled")) {
@@ -853,23 +853,23 @@ void SettingsDialog::save() {
 
 
     GtkWidget* spAddHorizontalSpace = get("spAddHorizontalSpace");
-    int addHorizontalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddHorizontalSpace));
+    int addHorizontalSpaceAmount = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddHorizontalSpace)));
     settings->setAddHorizontalSpaceAmount(addHorizontalSpaceAmount);
 
     GtkWidget* spAddVerticalSpace = get("spAddVerticalSpace");
-    int addVerticalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddVerticalSpace));
+    int addVerticalSpaceAmount = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddVerticalSpace)));
     settings->setAddVerticalSpaceAmount(addVerticalSpaceAmount);
 
     GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
-    int drawDirModsRadius = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spDrawDirModsRadius));
+    int drawDirModsRadius = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spDrawDirModsRadius)));
     settings->setDrawDirModsRadius(drawDirModsRadius);
 
     GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
-    int strokeIgnoreTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime));
+    int strokeIgnoreTime = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime)));
     GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
     double strokeIgnoreLength = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength));
     GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
-    int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
+    int strokeSuccessiveTime = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime)));
     settings->setStrokeFilter(strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);
 
     GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
@@ -950,7 +950,7 @@ void SettingsDialog::save() {
 
     settings->setAudioGain(static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain")))));
     settings->setDefaultSeekTime(
-            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
+            static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
     for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui->saveSettings();
