@@ -9,7 +9,6 @@
 
 #include "model/Stroke.h"
 #include "util/serializing/BinObjectEncoding.h"
-#include "util/serializing/HexObjectEncoding.h"
 #include "util/serializing/ObjectInputStream.h"
 #include "util/serializing/ObjectOutputStream.h"
 #include "util/serializing/Serializable.h"
