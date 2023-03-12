@@ -9,24 +9,6 @@
 #include "util/serializing/InputStreamException.h"  // for InputStreamException
 #include "util/serializing/Serializable.h"          // for XML_VERSION_STR
 
-template void ObjectInputStream::readData(std::vector<double>& data);
-
-// This function requires that T is read from its binary representation to work (e.g. integer type)
-template <typename T>
-T readTypeFromSStream(std::istringstream& istream) {
-    if (istream.str().size() < sizeof(T)) {
-        std::ostringstream oss;
-        oss << "End reached: trying to read " << sizeof(T) << " bytes while only " << istream.str().size()
-            << " bytes available";
-        throw InputStreamException(oss.str(), __FILE__, __LINE__);
-    }
-    T output;
-
-    istream.read((char*)&output, sizeof(T));
-
-    return output;
-}
-
 size_t ObjectInputStream::pos() { return istream.tellg(); }
 
 auto ObjectInputStream::read(const char* data, int data_len) -> bool {
@@ -104,56 +86,6 @@ auto ObjectInputStream::readString() -> std::string {
     istream.read(&output[0], (long)lenString);
 
     return output;
-}
-
-void ObjectInputStream::readData(void** data, int* length) {
-    checkType('b');
-
-    if (istream.str().size() < 2 * sizeof(int)) {
-        throw InputStreamException("End reached, but try to read data len and width", __FILE__, __LINE__);
-    }
-
-    int len = readTypeFromSStream<int>(istream);
-    int width = readTypeFromSStream<int>(istream);
-
-    if (istream.str().size() < static_cast<size_t>(len * width)) {
-        throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
-    }
-
-    if (len == 0) {
-        *length = 0;
-        *data = nullptr;
-    } else {
-        *data = (void*)new char[(size_t)(len * width)];
-        *length = len;
-
-        istream.read((char*)*data, len * width);
-    }
-}
-
-template <typename T>
-void ObjectInputStream::readData(std::vector<T>& data) {
-    checkType('b');
-
-    if (istream.str().size() < 2 * sizeof(int)) {
-        throw InputStreamException("End reached, but try to read data len and width", __FILE__, __LINE__);
-    }
-
-    int len = readTypeFromSStream<int>(istream);
-    int width = readTypeFromSStream<int>(istream);
-
-    if (width != sizeof(T)) {
-        throw InputStreamException("Data width mismatch requested type width", __FILE__, __LINE__);
-    }
-
-    if (istream.str().size() < static_cast<size_t>(len * width)) {
-        throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
-    }
-
-    if (len) {
-        data.resize(len);
-        istream.read((char*)data.data(), len * width);
-    }
 }
 
 auto ObjectInputStream::readImage() -> std::string {

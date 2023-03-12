@@ -151,11 +151,9 @@ void TexImage::readSerialized(ObjectInputStream& in) {
 
     freeImageAndPdf();
 
-    char* data = nullptr;
-    int len = 0;
-    in.readData(reinterpret_cast<void**>(&data), &len);
-
-    this->loadData(std::string(data, len), nullptr);
+    std::vector<char> data;
+    in.readData(data);
+    this->loadData(std::string(data.data(), data.size()), nullptr);
 
     in.endObject();
     this->calcSize();

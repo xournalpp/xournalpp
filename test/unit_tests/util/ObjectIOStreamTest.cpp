@@ -73,23 +73,6 @@ std::string serializeStroke(Stroke& stroke) {
     return {outStr->str, outStr->len};
 }
 
-template <typename T, unsigned int N>
-void testReadDataType(const std::array<T, N>& data) {
-    std::string str = serializeData<T, N>(data);
-
-    ObjectInputStream stream;
-    EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
-
-    int length = 0;
-    T* outputData = nullptr;
-    stream.readData((void**)&outputData, &length);
-    EXPECT_EQ(length, (int)N);
-
-    for (size_t i = 0; i < (size_t)length / sizeof(T); ++i) {
-        EXPECT_EQ(outputData[i], data.at(i));
-    }
-}
-
 template <typename T>
 void testReadDataType(const std::vector<T>& data) {
     std::string str = serializeDataVector<T>(data);
@@ -102,13 +85,7 @@ void testReadDataType(const std::vector<T>& data) {
     EXPECT_EQ(data, outputData);
 }
 
-
 TEST(UtilObjectIOStream, testReadData) {
-    testReadDataType<char, 3>(std::array<char, 3>{0, 42, -42});
-    testReadDataType<long, 3>(std::array<long, 3>{0, 42, -42});
-    testReadDataType<long long, 3>(std::array<long long, 3>{0, 420000000000, -42000000000});
-    testReadDataType<double, 3>(std::array<double, 3>{0, 42., -42.});
-    testReadDataType<float, 3>(std::array<float, 3>{0, 42., -42.});
     testReadDataType<double>(std::vector<double>{0, 42., -42.});
 }
 
