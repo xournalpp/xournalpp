@@ -84,3 +84,57 @@ The script will:
 4. Proposal to merge the release back to the main development branch
 
 During the merge it is imperative that the instructions of the script are followed stringently to not confuse our versioning scheme.
+
+
+## Release checklist
+
+To summarize all of the above information, the following checklist should be
+followed when publishing a release:
+
+* [ ] Checkout the release branch.
+* [ ] Update `CHANGELOG.md` with the latest changes.
+  * You may want to open a PR so that other maintainers can review the
+    changelog.
+  * Run `git log --graph <last_version_tag>..HEAD` to get a quick
+    summary of the logs.
+  * To correlate commits with PRs, you can go to
+    `https://github.com/xournalpp/xournalpp/commit/<commit_hash>`. The PR number
+    will be displayed next to the author information.
+* [ ] Open a new pull request to allow all maintainers to review the release and
+      confirm that it has the correct contents. This should consist of two
+      commits in total:
+  * [ ] Summarize the changes in `debian/changelog`, and create a commit. Note
+        that this summary can and should be reused for the GitHub release
+        description later.
+  * [ ] Then run `scripts/release_helper.sh publish` to create the release
+        commit and tag the commit. This will also automatically create a commit
+        bumping to the next development version.
+  * [ ] Squash the `debian/changelog` commit and the release commit into a
+        single commit. Do _not_ squash the version bump commit. This is needed
+        so that Debian helpers and the unofficial PPAs can pick up releases
+        correctly.
+  * [ ] Retag the release commit with `git tag -f <version_number> <commit>`
+  * [ ] **Do not merge using GitHub's web interface.** To avoid accidental
+        merges, mark the PR as draft.
+* [ ] Push the release to GitHub:
+  * [ ] Directly push the HEAD commit of the PR to the release branch. **Do not
+        create a merge commit, the commit should be fast-forwarded.**
+  * [ ] Push the tag.
+* [ ] A tag push should trigger a run of the "Release" pipeline on Azure
+      Pipelines (not to be confused with the "Releases" tab); ensure that it
+      succeeds.
+  * [ ] Check that the "Release" pipeline succeeds.
+  * [ ] Go to "Releases" tab (not the pipeline) and trigger a manual deployment
+        with "Create Release".
+  * [ ] Check that the deployment successfully creates a GitHub release draft.
+* [ ] Last checks on the GitHub release draft
+  * [ ] Update the release description.
+  * [ ] Test the release draft artifacts for obvious issues.
+  * [ ] Publish the release.
+* [ ] Check that the [FlatHub release][flathub] is built successfully.
+* [ ] Update the version on [the website repository][website].
+* [ ] After the release is created, merge back the release branch into `master`.
+
+
+[flathub]: https://github.com/flathub/com.github.xournalpp.xournalpp
+[website]: https://github.com/xournalpp/xournalpp.github.io
