@@ -2,10 +2,7 @@
 
 #include <cairo.h>  // for CAIRO_STATUS_SUCCESS
 
-#include "util/serializing/ObjectEncoding.h"  // for ObjectEncoding
 #include "util/serializing/Serializable.h"    // for XML_VERSION_STR
-
-template void ObjectOutputStream::writeData(const std::vector<double>& data);
 
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder) {
     g_assert(encoder != nullptr);
@@ -49,27 +46,6 @@ void ObjectOutputStream::writeString(const std::string& s) {
     int len = static_cast<int>(s.length());
     this->encoder->addData(&len, sizeof(int));
     this->encoder->addData(s.c_str(), len);
-}
-
-void ObjectOutputStream::writeData(const void* data, int len, int width) {
-    this->encoder->addStr("_b");
-    this->encoder->addData(&len, sizeof(int));
-
-    // size of one element
-    this->encoder->addData(&width, sizeof(int));
-    if (data != nullptr) {
-        this->encoder->addData(data, len * width);
-    }
-}
-
-template <typename T>
-void ObjectOutputStream::writeData(const std::vector<T>& data) {
-    this->encoder->addStr("_b");
-    const int len = static_cast<int>(data.size());
-    const int width = sizeof(T);
-    this->encoder->addData(&len, sizeof(int));
-    this->encoder->addData(&width, sizeof(int));
-    this->encoder->addData(data.data(), static_cast<int>(data.size() * sizeof(T)));
 }
 
 void ObjectOutputStream::writeImage(const std::string_view& imgData) {

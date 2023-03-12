@@ -176,7 +176,7 @@ void Stroke::serialize(ObjectOutputStream& out) const {
 
     out.writeInt(this->capStyle);
 
-    out.writeData(this->points.data(), this->points.size(), sizeof(Point));
+    out.writeData(this->points);
 
     this->lineStyle.serialize(out);
 

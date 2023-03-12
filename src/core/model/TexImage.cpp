@@ -135,7 +135,8 @@ void TexImage::serialize(ObjectOutputStream& out) const {
     out.writeDouble(this->height);
     out.writeString(this->text);
 
-    out.writeData(this->binaryData.c_str(), this->binaryData.length(), 1);
+    std::vector<char> data(this->binaryData.begin(), this->binaryData.end());
+    out.writeData(data);
 
     out.endObject();
 }
