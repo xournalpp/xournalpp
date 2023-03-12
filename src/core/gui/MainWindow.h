@@ -55,8 +55,6 @@ public:
     void rebuildLayerMenu() override;
     void layerVisibilityChanged() override;
 
-    FloatingToolbox* floatingToolbox;
-public:
     void show(GtkWindow* parent) override;
 
     void toolbarSelected(const std::string& id);
@@ -89,6 +87,7 @@ public:
     Control* getControl() const;
 
     PdfFloatingToolbox* getPdfToolbox() const;
+    FloatingToolbox* getFloatingToolbox() const;
 
     void updateScrollbarSidebarPosition();
 
@@ -189,6 +188,7 @@ private:
     std::atomic_bool gtkTouchscreenScrollingEnabled{true};
 
     std::unique_ptr<PdfFloatingToolbox> pdfFloatingToolBox;
+    std::unique_ptr<FloatingToolbox> floatingToolbox;
 
     // Toolbars
     std::unique_ptr<ToolMenuHandler> toolbar;
