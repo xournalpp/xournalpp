@@ -170,9 +170,6 @@ void MainWindow::rebindMenubarAccelerators() {
 }
 
 MainWindow::~MainWindow() {
-    delete this->xournal;
-    this->xournal = nullptr;
-
     delete scrollHandling;
     scrollHandling = nullptr;
 }
@@ -219,9 +216,9 @@ void MainWindow::initXournalWidget() {
 
     scrollHandling = new ScrollHandling(GTK_SCROLLABLE(vpXournal));
 
-    this->xournal = new XournalView(vpXournal, control, scrollHandling);
+    this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling);
 
-    control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal, control);
+    control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
 
     Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
@@ -552,7 +549,7 @@ void MainWindow::setMaximized(bool maximized) { this->maximized = maximized; }
 
 auto MainWindow::isMaximized() const -> bool { return this->maximized; }
 
-auto MainWindow::getXournal() const -> XournalView* { return xournal; }
+auto MainWindow::getXournal() const -> XournalView* { return xournal.get(); }
 
 auto MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win) -> bool {
     win->setMaximized(gtk_window_is_maximized(GTK_WINDOW(window)));

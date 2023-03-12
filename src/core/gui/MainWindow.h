@@ -181,7 +181,7 @@ private:
 private:
     Control* control;
 
-    XournalView* xournal = nullptr;
+    std::unique_ptr<XournalView> xournal;
     GtkWidget* winXournal = nullptr;
     ScrollHandling* scrollHandling = nullptr;
 
