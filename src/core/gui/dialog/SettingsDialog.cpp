@@ -157,8 +157,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     GtkWidget* container = get("hboxInputDeviceClasses");
     for (const InputDevice& inputDevice: deviceList) {
         // Only add real devices (core pointers have vendor and product id nullptr)
-        this->deviceClassConfigs.push_back(
-                new DeviceClassConfigGui(getGladeSearchPath(), container, settings, inputDevice));
+        this->deviceClassConfigs.emplace_back(
+                std::make_unique<DeviceClassConfigGui>(getGladeSearchPath(), container, settings, inputDevice));
     }
     if (deviceList.empty()) {
         GtkWidget* label = gtk_label_new("");
@@ -176,11 +176,6 @@ SettingsDialog::~SettingsDialog() {
         delete bcg;
     }
     this->buttonConfigs.clear();
-
-    for (DeviceClassConfigGui* dev: this->deviceClassConfigs) {
-        delete dev;
-    }
-    this->deviceClassConfigs.clear();
 
     // DO NOT delete settings!
     this->settings = nullptr;
@@ -952,7 +947,7 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
-    for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) {
+    for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui->saveSettings();
     }
 

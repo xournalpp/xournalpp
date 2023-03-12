@@ -87,7 +87,7 @@ private:
 
     std::unique_ptr<LanguageConfigGui> languageConfig;
     std::vector<ButtonConfigGui*> buttonConfigs;
-    std::vector<DeviceClassConfigGui*> deviceClassConfigs;
+    std::vector<std::unique_ptr<DeviceClassConfigGui>> deviceClassConfigs;
 
     LatexSettingsPanel latexPanel;
 };
