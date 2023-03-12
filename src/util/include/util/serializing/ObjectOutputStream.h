@@ -16,8 +16,6 @@
 #include <string_view>  // for string_view
 #include <vector>       // for vector
 
-#include <glib.h>  // for GString
-
 #include "util/serializing/ObjectEncoding.h"  // for ObjectEncoding
 
 class ObjectOutputStream {
@@ -41,7 +39,7 @@ public:
     /// Writes the raw image data to the output stream.
     void writeImage(const std::string_view& imgData);
 
-    GString* getStr();
+    std::string getStr();
 
 private:
     ObjectEncoding* encoder = nullptr;

@@ -11,8 +11,7 @@
 
 #pragma once
 
-#include <glib.h>  // for GString
-
+#include <string>
 
 class ObjectEncoding {
 public:
@@ -20,11 +19,11 @@ public:
     virtual ~ObjectEncoding();
 
 public:
-    void addStr(const char* str) const;
+    void addStr(const char* str);
     virtual void addData(const void* data, int len) = 0;
 
-    GString* getData();
+    std::string getData();
 
 public:
-    GString* data;
+    std::string data;
 };

@@ -2,10 +2,12 @@
 
 #include <cairo.h>  // for CAIRO_STATUS_SUCCESS
 
+#include <cassert>
+
 #include "util/serializing/Serializable.h"    // for XML_VERSION_STR
 
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder) {
-    g_assert(encoder != nullptr);
+    assert(encoder != nullptr);
     this->encoder = encoder;
 
     writeString(XML_VERSION_STR);
@@ -55,4 +57,4 @@ void ObjectOutputStream::writeImage(const std::string_view& imgData) {
     this->encoder->addData(imgData.data(), static_cast<int>(len));
 }
 
-auto ObjectOutputStream::getStr() -> GString* { return this->encoder->getData(); }
+auto ObjectOutputStream::getStr() -> std::string { return this->encoder->getData(); }

@@ -1,23 +1,20 @@
 #include "util/serializing/HexObjectEncoding.h"
 
-#include <cinttypes>  // for uint8_t, PRIx8
-#include <cstdio>     // for sprintf
-
-#include <glib.h>  // for g_free, g_malloc, g_string_append_len
+#include <sstream>
+#include <string>
+#include <iomanip>
 
 HexObjectEncoding::HexObjectEncoding() = default;
 
 HexObjectEncoding::~HexObjectEncoding() = default;
 
 void HexObjectEncoding::addData(const void* data, int len) {
-    char* buffer = static_cast<char*>(g_malloc(len * 2));
+    std::ostringstream os;
+    os << std::hex;
 
-    for (int i = 0; i < len; i++) {
-        uint8_t x = static_cast<uint8_t const*>(data)[i];
-        sprintf(&buffer[i * 2], "%02" PRIx8, x);
+    for (int i = 0; i < len; ++i) {
+        os << std::setw(2) << std::setfill('0') << *((const char*)data + i); 
     }
 
-    g_string_append_len(this->data, buffer, len * 2);
-
-    g_free(buffer);
+    this->data.append(os.str());
 }

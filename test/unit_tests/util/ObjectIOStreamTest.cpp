@@ -18,59 +18,51 @@ template <typename T, unsigned N>
 std::string serializeData(const std::array<T, N>& data) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeData(&data[0], N, sizeof(T));
-    auto outStr = outStream.getStr();
-    return {outStr->str, outStr->len};
+    return outStream.getStr();
 }
 
 template <typename T>
 std::string serializeDataVector(const std::vector<T>& data) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeData(data);
-    auto outStr = outStream.getStr();
-    return {outStr->str, outStr->len};
+    return outStream.getStr();
 }
 
 std::string serializeImage(cairo_surface_t* surf) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     std::string data{reinterpret_cast<char*>(cairo_image_surface_get_data(surf))};
     outStream.writeImage(data);
-    auto outStr = outStream.getStr();
-    return {outStr->str, outStr->len};
+    return outStream.getStr();
 }
 
 std::string serializeString(const std::string& str) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeString(str);
-    auto outStr = outStream.getStr();
-    return {outStr->str, outStr->len};
+    return outStream.getStr();
 }
 
 std::string serializeSizeT(size_t x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeSizeT(x);
-    auto outStr = outStream.getStr();
-    return {outStr->str, outStr->len};
+    return outStream.getStr();
 }
 
 std::string serializeDouble(double x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeDouble(x);
-    auto outStr = outStream.getStr();
-    return {outStr->str, outStr->len};
+    return outStream.getStr();
 }
 
 std::string serializeInt(int x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeInt(x);
-    auto outStr = outStream.getStr();
-    return {outStr->str, outStr->len};
+    return outStream.getStr();
 }
 
 std::string serializeStroke(Stroke& stroke) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     stroke.serialize(outStream);
-    auto outStr = outStream.getStr();
-    return {outStr->str, outStr->len};
+    return outStream.getStr();
 }
 
 template <typename T>
@@ -247,8 +239,7 @@ TEST(UtilObjectIOStream, testReadComplexObject) {
             outStream.writeDouble(-d);
             outStream.endObject();
 
-            auto gstr = outStream.getStr();
-            std::string str(gstr->str, gstr->len);
+            auto str = outStream.getStr();
 
             ObjectInputStream stream;
             EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));

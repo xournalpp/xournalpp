@@ -87,16 +87,15 @@ static GdkAtom atomSvg2 = gdk_atom_intern_static_string("image/svg+xml");
 // The contents of the clipboard
 class ClipboardContents {
 public:
-    ClipboardContents(string text, GdkPixbuf* image, string svg, GString* str) {
+    ClipboardContents(string text, GdkPixbuf* image, string svg, string str) {
         this->text = std::move(text);
         this->image = image;
         this->svg = std::move(svg);
-        this->str = str;
+        this->str = std::move(str);
     }
 
     ~ClipboardContents() {
         g_object_unref(this->image);
-        g_string_free(this->str, true);
     }
 
 
@@ -114,8 +113,8 @@ public:
             gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar const*>(contents->svg.c_str()),
                                    static_cast<gint>(contents->svg.length()));
         } else if (atomXournal == target) {
-            gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar*>(contents->str->str),
-                                   static_cast<gint>(contents->str->len));
+            gtk_selection_data_set(selection, target, 8, reinterpret_cast<const guchar*>(contents->str.c_str()),
+                                   static_cast<gint>(contents->str.length()));
         }
     }
 
@@ -125,7 +124,7 @@ private:
     string text;
     GdkPixbuf* image;
     string svg;
-    GString* str;
+    string str;
 };
 
 static auto svgWriteFunction(GString* string, const unsigned char* data, unsigned int length) -> cairo_status_t {
