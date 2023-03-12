@@ -114,6 +114,10 @@ auto SaveJob::save() -> bool {
             Util::safeRenameFile(target, fs::path{target} += "~");
         } catch (const fs::filesystem_error& fe) {
             g_warning("Could not create backup! Failed with %s", fe.what());
+            this->lastError = FS(_F("Save file error, can't backup: {1}") % std::string(fe.what()));
+            if (!control->getWindow()) {
+                g_error("%s", this->lastError.c_str());
+            }
             return false;
         }
     }
