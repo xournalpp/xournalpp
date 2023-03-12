@@ -1270,5 +1270,5 @@ void XojPageView::showFloatingToolbox(const PositionInputData& pos) {
     wx += std::lround(pos.x) + this->getX();
     wy += std::lround(pos.y) + this->getY();
 
-    control->getWindow()->floatingToolbox->show(wx, wy);
+    control->getWindow()->getFloatingToolbox()->show(wx, wy);
 }

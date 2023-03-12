@@ -40,14 +40,14 @@ void ToolbarDragDropHandler::toolbarConfigDialogClosed() {
 
     auto file = Util::getConfigFile(TOOLBAR_CONFIG);
     win->getToolbarModel()->save(file);
-    win->floatingToolbox->hide();
+    win->getFloatingToolbox()->hide();
 }
 
 void ToolbarDragDropHandler::configure() {
     MainWindow* win = control->getWindow();
 
 
-    win->floatingToolbox->showForConfiguration();
+    win->getFloatingToolbox()->showForConfiguration();
 
     this->prepareToolbarsForDragAndDrop();
 

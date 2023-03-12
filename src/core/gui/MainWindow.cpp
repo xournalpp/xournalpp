@@ -66,7 +66,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     GtkOverlay* overlay = GTK_OVERLAY(get("mainOverlay"));
     this->pdfFloatingToolBox = std::make_unique<PdfFloatingToolbox>(this, overlay);
-    this->floatingToolbox = new FloatingToolbox(this, overlay);
+    this->floatingToolbox = std::make_unique<FloatingToolbox>(this, overlay);
 
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         this->toolbarWidgets[i].reset(get(TOOLBAR_DEFINITIONS[i].guiName), xoj::util::ref);
@@ -170,9 +170,6 @@ void MainWindow::rebindMenubarAccelerators() {
 }
 
 MainWindow::~MainWindow() {
-    delete this->floatingToolbox;
-    this->floatingToolbox = nullptr;
-
     delete this->xournal;
     this->xournal = nullptr;
 
@@ -720,3 +717,5 @@ void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssF
 }
 
 PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloatingToolBox.get(); }
+
+FloatingToolbox* MainWindow::getFloatingToolbox() const { return this->floatingToolbox.get(); }
