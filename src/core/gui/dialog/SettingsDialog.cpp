@@ -171,10 +171,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     gtk_container_add(GTK_CONTAINER(this->get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
 }
 
-SettingsDialog::~SettingsDialog() {
-    // DO NOT delete settings!
-    this->settings = nullptr;
-}
+SettingsDialog::~SettingsDialog() = default;
 
 void SettingsDialog::initLanguageSettings() {
     languageConfig = std::make_unique<LanguageConfigGui>(getGladeSearchPath(), get("hboxLanguageSelect"), settings);
