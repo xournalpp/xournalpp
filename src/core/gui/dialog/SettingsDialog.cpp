@@ -172,11 +172,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 }
 
 SettingsDialog::~SettingsDialog() {
-    for (ButtonConfigGui* bcg: this->buttonConfigs) {
-        delete bcg;
-    }
-    this->buttonConfigs.clear();
-
     // DO NOT delete settings!
     this->settings = nullptr;
 }
@@ -186,7 +181,7 @@ void SettingsDialog::initLanguageSettings() {
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice) {
-    this->buttonConfigs.push_back(new ButtonConfigGui(getGladeSearchPath(), get(hbox), settings, button, withDevice));
+    this->buttonConfigs.emplace_back(std::make_unique<ButtonConfigGui>(getGladeSearchPath(), get(hbox), settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents() {
@@ -878,7 +873,7 @@ void SettingsDialog::save() {
 
     settings->setDisplayDpi(dpi);
 
-    for (ButtonConfigGui* bcg: this->buttonConfigs) {
+    for (auto& bcg: this->buttonConfigs) {
         bcg->saveSettings();
     }
 
