@@ -15,7 +15,7 @@ StrokeStyle::~StrokeStyle() = default;
 
 namespace {
 
-constexpr auto CUST_KEY = "cust: ";
+constexpr auto CUSTOM_KEY = "cust: ";
 
 const std::map<std::string, std::vector<double>> predefinedPatterns = {
     { "dash", {6, 3} }, 
@@ -35,7 +35,7 @@ auto formatStyle(const std::vector<double>& dashes) -> std::string {
     // Else generate custom dashes string
     std::ostringstream custom;
     custom << std::setprecision(2) << std::fixed;
-    custom << CUST_KEY;
+    custom << CUSTOM_KEY;
     std::copy(dashes.begin(), dashes.end(),std::ostream_iterator<double>(custom," "));
 
     // Return dashes string with traling space removed.
@@ -53,16 +53,17 @@ auto StrokeStyle::parseStyle(const std::string &style) -> LineStyle {
         return ls;
     }
 
-    if (style.substr(0, strlen(CUST_KEY)) != CUST_KEY) {
+    if (style.substr(0, strlen(CUSTOM_KEY)) != CUSTOM_KEY) {
         return LineStyle();
     }
 
     std::stringstream dashStream(style);
     std::vector<double> dashes;
 
-    dashStream.seekg(strlen(CUST_KEY));
-    for (double value; dashStream >> value;)
+    dashStream.seekg(strlen(CUSTOM_KEY));
+    for (double value; dashStream >> value;)  {
         dashes.push_back(value);
+    }
 
     if (dashes.empty()) {
         return LineStyle();
