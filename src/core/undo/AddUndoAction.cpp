@@ -20,7 +20,7 @@ AddUndoAction::AddUndoAction(const PageRef& page, bool eraser): UndoAction("AddU
     this->eraser = eraser;
 }
 
-void AddUndoAction::addElement(Layer* layer, Element* e, int pos) { elements.emplace(layer, e, pos); }
+void AddUndoAction::addElement(Layer* layer, Element* e, Element::Index pos) { elements.emplace(layer, e, pos); }
 
 auto AddUndoAction::redo(Control*) -> bool {
     if (elements.empty()) {
