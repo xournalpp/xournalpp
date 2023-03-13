@@ -1,5 +1,9 @@
 #include <utility>  // for move
 
+#include "config-features.h"  // for ENABLE_PLUGINS
+
+#ifdef ENABLE_PLUGINS
+
 #include "PluginToolButton.h"
 
 PluginToolButton::PluginToolButton(ActionHandler* handler, ToolbarButtonEntry* t):
@@ -23,3 +27,5 @@ auto PluginToolButton::createItem(bool horizontal) -> GtkToolItem* {
 
     return this->item;
 }
+
+#endif /* ENABLE_PLUGINS */

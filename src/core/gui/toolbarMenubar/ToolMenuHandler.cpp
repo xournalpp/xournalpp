@@ -362,10 +362,12 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
     }
 }
 
+#ifdef ENABLE_PLUGINS
 void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) {
     PluginToolButton* button = new PluginToolButton(listener, t);
     addToolItem(button);
 }
+#endif /* ENABLE_PLUGINS */
 
 void ToolMenuHandler::initToolItems() {
 
