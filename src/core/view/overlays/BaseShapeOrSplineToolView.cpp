@@ -6,6 +6,7 @@
 #include "model/LineStyle.h"
 #include "model/Stroke.h"
 #include "util/Color.h"
+#include "util/Util.h"                    // for cairoSetDashFromVector
 
 using namespace xoj::view;
 
@@ -36,7 +37,7 @@ cairo_t* BaseShapeOrSplineToolView::prepareContext(cairo_t* cr) const {
         if (!mask.isInitialized()) {
             mask = createMask(cr);
             const auto& dashes = this->lineStyle.getDashes();
-            cairo_set_dash(mask.get(), dashes.data(), static_cast<int>(dashes.size()), 0.0);
+            Util::cairoSetDashFromVector(mask.get(), dashes, 0);
             cairo_set_line_width(mask.get(), this->strokeWidth);
             // operator is already set by createMask().
         } else {
@@ -51,7 +52,7 @@ cairo_t* BaseShapeOrSplineToolView::prepareContext(cairo_t* cr) const {
         cairo_set_line_width(cr, this->strokeWidth);
 
         const auto& dashes = this->lineStyle.getDashes();
-        cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), 0.0);
+        Util::cairoSetDashFromVector(cr, dashes, 0.0);
         return cr;
     }
 }

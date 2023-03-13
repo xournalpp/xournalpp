@@ -4,6 +4,7 @@
 #include <cstdlib>  // for system
 #include <string>   // for allocator, string
 #include <utility>  // for move
+#include <vector>   // for vector
 
 #include <gdk/gdk.h>  // for gdk_cairo_set_source_rgba, gdk_t...
 #include <unistd.h>   // for getpid, pid_t
@@ -62,6 +63,10 @@ auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboole
     cairo_rectangle(cr, 0, 0, alloc.width, alloc.height);
     cairo_fill(cr);
     return false;
+}
+
+void Util::cairoSetDashFromVector(cairo_t *cr, const std::vector<double>& dashes, double offset) {
+    cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), offset);
 }
 
 void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal) {

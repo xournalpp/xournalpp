@@ -6,6 +6,7 @@
 #include "model/Point.h"
 #include "util/LoopUtil.h"
 #include "util/PairView.h"
+#include "util/Util.h"           // for cairoSetDashFromVector
 
 void xoj::view::StrokeViewHelper::pathToCairo(cairo_t* cr, const std::vector<Point>& pts) {
     for_first_then_each(
@@ -21,7 +22,7 @@ void xoj::view::StrokeViewHelper::drawNoPressure(cairo_t* cr, const std::vector<
     cairo_set_line_width(cr, strokeWidth);
 
     const auto& dashes = lineStyle.getDashes();
-    cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), dashOffset);
+    Util::cairoSetDashFromVector(cr, dashes, dashOffset);
 
     pathToCairo(cr, pts);
     cairo_stroke(cr);
@@ -47,7 +48,7 @@ double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vec
 
     if (!dashes.empty()) {
         for (const auto& [p, q]: PairView(pts)) {
-            cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), dashOffset);
+            Util::cairoSetDashFromVector(cr, dashes, dashOffset);
             dashOffset += p.lineLengthTo(q);
             drawSegment(p, q);
         }
