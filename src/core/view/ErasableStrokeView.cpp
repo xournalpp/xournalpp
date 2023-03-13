@@ -15,7 +15,7 @@
 #include "util/Color.h"                   // for cairo_set_source_rgbi
 #include "util/Interval.h"                // for Interval
 #include "util/Rectangle.h"               // for Rectangle
-#include "util/Util.h"                    // for cairoSetDashFromVector
+#include "util/Util.h"                    // for cairo_set_dash_from_vector
 
 #include "StrokeView.h"    // for StrokeView, StrokeView::CAI...
 #include "config-debug.h"  // for DEBUG_ERASABLE_STROKE_BOXES
@@ -52,7 +52,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
             auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)interval.max.index + 1);
             for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)interval.min.index + 1); it != endIt; ++it) {
                 if (!dashes.empty()) {
-                    Util::cairoSetDashFromVector(cr, dashes, dashOffset);
+                    Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
                     dashOffset += lastPoint->lineLengthTo(*it);
                     lastPoint = &(*it);
                 }
@@ -63,7 +63,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
             }
 
             if (!dashes.empty()) {
-                Util::cairoSetDashFromVector(cr, dashes, dashOffset);
+                Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
             }
 
             Point q = stroke.getPoint(interval.max);
@@ -72,7 +72,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
         }
     } else {
         cairo_set_line_width(cr, stroke.getWidth());
-        Util::cairoSetDashFromVector(cr, dashes, 0);
+        Util::cairo_set_dash_from_vector(cr, dashes, 0);
 
         bool mergeFirstAndLast = this->erasableStroke.isClosedStroke() &&
                                  stroke.getToolType() == StrokeTool::HIGHLIGHTER && sections.size() >= 2 &&

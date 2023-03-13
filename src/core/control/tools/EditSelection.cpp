@@ -32,7 +32,7 @@
 #include "util/i18n.h"                             // for _
 #include "util/serializing/ObjectInputStream.h"    // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"   // for ObjectOutputStream
-#include "util/Util.h"                             // for cairoSetDashFromVector
+#include "util/Util.h"                             // for cairo_set_dash_from_vector
 
 #include "EditSelectionContents.h"  // for EditSelectionConte...
 #include "Selection.h"              // for Selection
@@ -996,7 +996,7 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
     cairo_set_line_width(cr, 1);
 
     const std::vector<double> dashes = {10.0, 10.0};
-    Util::cairoSetDashFromVector(cr, dashes, 0);
+    Util::cairo_set_dash_from_vector(cr, dashes, 0);
     gdk_cairo_set_source_rgba(cr, &selectionColor);
 
     cairo_rectangle(cr, std::min(x, x + width) * zoom, std::min(y, y + height) * zoom, std::abs(width) * zoom,

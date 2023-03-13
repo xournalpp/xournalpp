@@ -65,7 +65,7 @@ auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboole
     return false;
 }
 
-void Util::cairoSetDashFromVector(cairo_t *cr, const std::vector<double>& dashes, double offset) {
+void Util::cairo_set_dash_from_vector(cairo_t *cr, const std::vector<double>& dashes, double offset) {
     cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), offset);
 }
 
