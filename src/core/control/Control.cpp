@@ -454,9 +454,11 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             break;
             // Menu Edit
         case ACTION_UNDO:
+            clearSelectionEndText();
             UndoRedoController::undo(this);
             break;
         case ACTION_REDO:
+            clearSelectionEndText();
             UndoRedoController::redo(this);
             break;
         case ACTION_CUT:
