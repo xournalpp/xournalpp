@@ -21,6 +21,7 @@ stages:
       vmImage: 'ubuntu-20.04'
     displayName: 'Test for correct Clang formatting'
     steps:
+    - checkout: self
     - bash: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         sudo apt-add-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal main"
@@ -30,11 +31,12 @@ stages:
     - bash: |
         # Checkout the master branch as we require it to get the list of modified files
         git config --global clangFormat.extensions "c,h,cpp,hpp,hxx,cxx,cc,hh'"
-
-        git switch $(System.PullRequest.TargetBranch)
-        git switch $(System.PullRequest.SourceBranch)
+        #
+        git fetch origin $(System.PullRequest.TargetBranch)
+        git fetch origin $(System.PullRequest.SourceBranch) 
         BASE_COMMIT=$(git merge-base $(System.PullRequest.SourceBranch) $(System.PullRequest.TargetBranch))
+        git fetch origin $BASE_COMMIT
+        #
         echo Computing diff to commit hash $BASE_COMMIT
-
         git clang-format --diff $BASE_COMMIT --
       displayName: 'Run clang-format on modified files'
