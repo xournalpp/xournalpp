@@ -128,7 +128,7 @@ float as_grayscale_color(Color color);
 float get_color_contrast(Color color1, Color color2);
 
 /**
- * @param rgb Color to get a representation for.
+ * @param rgb Color to get a representation for, while ignoring the alpha channel.
  * @return a CSS-style representation of the color, in hex. For example,
  *          red might be #ff0000, green, #00ff00, and blue, #0000ff.
  */
@@ -204,12 +204,12 @@ constexpr auto Util::GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16 {
 }
 
 namespace Colors {
-    /*
-     * A palette of predefined colors. The names are the relevant CSS4 named
-     * color, if exists, else the name of the named color with the smallest
-     * distance from it as an (r, g, b) vector with the prefix "xopp_",
-     * see https://www.w3.org/TR/css-color-4/#named-colors
-     */
+/*
+ * A palette of predefined colors. The names are the relevant CSS4 named
+ * color, if exists, else the name of the named color with the smallest
+ * distance from it as an (r, g, b) vector with the prefix "xopp_",
+ * see https://www.w3.org/TR/css-color-4/#named-colors
+ */
 constexpr Color black{0xff000000U};
 constexpr Color gray{0xff808080U};
 constexpr Color green{0xff008000U};
@@ -244,5 +244,4 @@ constexpr Color xopp_pink{0xffffc0d4U};
 constexpr Color xopp_royalblue{0xff3333ccU};
 constexpr Color xopp_silver{0xffbdbdbdU};
 constexpr Color xopp_snow{0xfffafaf9U};
-} // namespace Colors
-
+}  // namespace Colors
