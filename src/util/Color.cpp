@@ -22,8 +22,8 @@ float Util::get_color_contrast(Color color1, Color color2) {
 auto Util::rgb_to_hex_string(Color rgb) -> std::string {
     char resultHex[7];
 
-    // 06: Pad with zeroes to a length of 6.
-    assert(std::snprintf(resultHex, 7, "%06x", uint32_t(rgb)) > 0);
+    // 06: Disregard alpha channel and pad with zeroes to a length of 6.
+    assert(std::snprintf(resultHex, 7, "%06x", uint32_t(rgb) & 0xffffff) > 0);
 
     std::stringstream result;
     result << "#" << resultHex;
