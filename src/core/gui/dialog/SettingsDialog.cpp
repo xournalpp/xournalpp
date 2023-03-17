@@ -358,6 +358,13 @@ void SettingsDialog::load() {
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
 
     /**
+     * Tab size related settings
+     */
+    loadCheckbox("cbUseSpacesAsTab", settings->getUseSpacesAsTab());
+    GtkSpinButton* sbNumberOfSpacesForTab = GTK_SPIN_BUTTON(get("sbNumberOfSpacesForTab"));
+    gtk_spin_button_set_value(sbNumberOfSpacesForTab, settings->getNumberOfSpacesForTab());
+
+    /**
      * Stabilizer related settings
      */
     loadCheckbox("cbStabilizerEnableCuspDetection", settings->getStabilizerCuspDetection());
@@ -693,6 +700,15 @@ void SettingsDialog::save() {
     settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));
     settings->setAudioDisabled(getCheckbox("cbDisableAudio"));
 
+    /**
+     * Tab size relate settings
+     */
+    settings->setUseSpacesAsTab(getCheckbox("cbUseSpacesAsTab"));
+    settings->setNumberOfSpacesForTab(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(get("sbNumberOfSpacesForTab"))));
+
+    /**
+     * Stabilizer related settings
+     */
     settings->setStabilizerAveragingMethod(static_cast<StrokeStabilizer::AveragingMethod>(
             gtk_combo_box_get_active(GTK_COMBO_BOX(builder.get("cbStabilizerAveragingMethods")))));
     settings->setStabilizerPreprocessor(static_cast<StrokeStabilizer::Preprocessor>(

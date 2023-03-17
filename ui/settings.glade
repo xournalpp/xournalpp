@@ -1418,10 +1418,10 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkSpinButton" id="sbStabilizerMass1">
+                                              <object class="GtkSpinButton" id="sbNumberOfSpacesForTab">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">True</property>
-                                                <property name="tooltip-text" translatable="yes">Mass: the higher the mass, the more inertia and the more stabilization</property>
+                                                <property name="tooltip-text" translatable="yes">Number of spaces inserted with tab.</property>
                                                 <property name="hexpand">True</property>
                                                 <property name="text" translatable="yes">4</property>
                                                 <property name="input-purpose">number</property>
