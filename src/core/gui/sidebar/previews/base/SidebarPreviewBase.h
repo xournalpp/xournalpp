@@ -19,6 +19,7 @@
 
 #include "gui/sidebar/AbstractSidebarPage.h"  // for AbstractSidebarPage
 #include "model/DocumentChangeType.h"         // for DocumentChangeType
+#include "util/Util.h"                        // for npos
 
 class PdfCache;
 class SidebarLayout;
@@ -71,6 +72,7 @@ public:
     void documentChanged(DocumentChangeType type) override;
     void pageInserted(size_t page) override;
     void pageDeleted(size_t page) override;
+    static bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, SidebarPreviewBase* zoom);
 
 protected:
     /**
@@ -112,7 +114,7 @@ protected:
      * The currently selected entry in the sidebar, starting from 0
      * -1 means no valid selection
      */
-    size_t selectedEntry = -1;
+    size_t selectedEntry = npos;
 
     /**
      * The widget within the scrollarea with the page icons

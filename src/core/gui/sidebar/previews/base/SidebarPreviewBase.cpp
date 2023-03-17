@@ -17,6 +17,9 @@
 
 class GladeGui;
 
+constexpr double ZOOM_STEP = 0.05;
+constexpr double ZOOM_MIN = 0.15;
+constexpr double ZOOM_MAX = 1.0;
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
         AbstractSidebarPage(control, toolbar) {
@@ -33,6 +36,8 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
     g_object_ref(this->iconViewPreview);
 
     this->scrollPreview = gtk_scrolled_window_new(nullptr, nullptr);
+    g_signal_connect(this->scrollPreview, "scroll-event",
+                     G_CALLBACK(SidebarPreviewBase::onScrolledwindowMainScrollEvent), this);
     g_object_ref(this->scrollPreview);
 
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_POLICY_AUTOMATIC,
@@ -50,6 +55,63 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
     g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
 
     gtk_widget_show_all(this->scrollPreview);
+}
+
+auto SidebarPreviewBase::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event,
+                                                         SidebarPreviewBase* sidebar) -> bool {
+    guint state = event->state & gtk_accelerator_get_default_mod_mask();
+
+    // do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
+    if (state != 0 && (state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK))) {
+        return false;
+    }
+
+    if (!(state & GDK_CONTROL_MASK)) {
+        // we can't use the zoom event (since ctrl modifier is not set)
+        return false;
+    }
+
+    // calculate new zoom
+    auto* settings = sidebar->control->getSettings();
+    double current_zoom = settings->getSidebarPreviewZoom();
+    double new_zoom = current_zoom;
+
+    switch (event->direction) {
+        case GDK_SCROLL_SMOOTH:
+            if (event->delta_y < 0) {
+                new_zoom += ZOOM_STEP;
+            } else if (event->delta_y > 0) {
+                new_zoom -= ZOOM_STEP;
+            } else {
+                // we can't use the zoom event (since it's a horizontal zoom), so handle further
+                // TODO: first scroll event always has delta_y == 0 and is therefore ignored
+                return false;
+            }
+            break;
+        case GDK_SCROLL_UP:
+            new_zoom += ZOOM_STEP;
+            break;
+        case GDK_SCROLL_DOWN:
+            new_zoom -= ZOOM_STEP;
+            break;
+        default:
+            // we can't use the zoom event (since it's a horizontal zoom), so handle further
+            return false;
+    }
+
+    new_zoom = std::clamp(new_zoom, ZOOM_MIN, ZOOM_MAX);
+
+    if (new_zoom != current_zoom) {
+        // set zoom and save to settings
+        settings->setSidebarPreviewZoom(new_zoom);
+        if (sidebar->cache) {
+            sidebar->cache->clearCache();
+        }
+        sidebar->updatePreviews();
+    }
+
+    // we have used the zoom event, so don't handle further
+    return true;
 }
 
 SidebarPreviewBase::~SidebarPreviewBase() {
