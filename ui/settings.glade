@@ -60,6 +60,13 @@
     <property name="step-increment">0.01</property>
     <property name="page-increment">0.5</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentNumberOfSpacesForTab">
+    <property name="lower">1</property>
+    <property name="upper">8</property>
+    <property name="value">4</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentPairsOffset">
     <property name="upper">100</property>
     <property name="step-increment">1</property>
@@ -1356,7 +1363,104 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">3</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="frameTabControlSettings">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0</property>
+                                <child>
+                                  <object class="GtkAlignment">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="left-padding">12</property>
+                                    <child>
+                                      <object class="GtkBox">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="margin-end">10</property>
+                                        <property name="margin-bottom">5</property>
+                                        <property name="orientation">vertical</property>
+                                        <property name="spacing">3</property>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbUseSpacesAsTab">
+                                            <property name="label" translatable="yes">Indent using spaces</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="draw-indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="spacing">14</property>
+                                            <child>
+                                              <object class="GtkLabel" id="lblNumberOfSpaces">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="margin-start">6</property>
+                                                <property name="margin-end">6</property>
+                                                <property name="label" translatable="yes">Number of Spaces : </property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkSpinButton" id="sbStabilizerMass1">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="tooltip-text" translatable="yes">Mass: the higher the mass, the more inertia and the more stabilization</property>
+                                                <property name="hexpand">True</property>
+                                                <property name="text" translatable="yes">4</property>
+                                                <property name="input-purpose">number</property>
+                                                <property name="adjustment">adjustmentNumberOfSpacesForTab</property>
+                                                <property name="climb-rate">2</property>
+                                                <property name="digits">0</property>
+                                                <property name="snap-to-ticks">True</property>
+                                                <property name="numeric">True</property>
+                                                <property name="value">5</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="lblTabControlSettings">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Tab</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                           </object>
