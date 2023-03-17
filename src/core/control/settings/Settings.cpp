@@ -235,6 +235,9 @@ void Settings::loadDefault() {
     this->stabilizerMass = 5.0;
     this->stabilizerFinalizeStroke = true;
     /**/
+
+    this->useSpacesForTab = false;
+    this->numberOfSpacesForTab = 4;
 }
 
 auto Settings::loadViewMode(ViewModeId mode) -> bool {
@@ -644,6 +647,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->restoreLineWidthEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preferredLocale")) == 0) {
         this->preferredLocale = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useSpacesForTab")) == 0) {
+        this->setUseSpacesAsTab(xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numberOfSpacesForTab")) == 0) {
+        this->setNumberOfSpacesForTab(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
         /**
          * Stabilizer related settings
          */
@@ -1117,6 +1124,9 @@ void Settings::save() {
     SAVE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
     SAVE_STRING_PROP(preferredLocale);
+
+    SAVE_BOOL_PROP(useSpacesForTab);
+    SAVE_UINT_PROP(numberOfSpacesForTab);
 
     /**
      * Stabilizer related settings
@@ -2570,3 +2580,19 @@ void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preproce
  * @return Palette&
  */
 auto Settings::getColorPalette() -> const Palette& { return *(this->palette); }
+
+
+void Settings::setUseSpacesAsTab(bool useSpaces) { this->useSpacesForTab = useSpaces; }
+bool Settings::getUseSpacesAsTab() { return this->useSpacesForTab; }
+
+void Settings::setNumberOfSpacesForTab(int numberOfSpaces) {
+    // For performance reasons the number of spaces for a tab should be limited
+    // if this limit is exceeded use a default value
+    if (numberOfSpaces < 0 || numberOfSpaces > MAX_SPACES_FOR_TAB) {
+        g_warning("Settings::Invalid number of spaces for tab. Reset to default!");
+        numberOfSpaces = 4;
+    }
+    this->numberOfSpacesForTab = numberOfSpaces;
+}
+
+int Settings::getNumberOfSpacesForTab() { return this->numberOfSpacesForTab; }

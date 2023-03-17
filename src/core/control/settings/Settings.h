@@ -36,6 +36,7 @@
 struct Palette;
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
+constexpr int MAX_SPACES_FOR_TAB = 8;
 
 class ButtonConfig;
 class InputDevice;
@@ -569,6 +570,12 @@ public:
     void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
 
     const Palette& getColorPalette();
+
+    void setNumberOfSpacesForTab(int numberSpaces);
+    int getNumberOfSpacesForTab();
+
+    void setUseSpacesAsTab(bool useSpaces);
+    bool getUseSpacesAsTab();
 
 public:
     // Custom settings
@@ -1149,4 +1156,11 @@ private:
      *
      */
     std::unique_ptr<Palette> palette;
+
+
+    /**
+     * Tab control settings
+     */
+    bool useSpacesForTab{};
+    unsigned int numberOfSpacesForTab{};
 };
