@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstring>  // for strcmp, size_t
 #include <memory>   // for allocator, make_unique, __shared_p...
+#include <string>   // for std::string()
 #include <utility>  // for move
 
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_B, GDK_KEY_ISO_Enter, GDK_...
@@ -349,7 +350,13 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
               event->keyval == GDK_KEY_ISO_Left_Tab) &&
              !(event->state & GDK_CONTROL_MASK)) {
         resetImContext();
-        iMCommitCallback(nullptr, "\t", this);
+        Settings* settings = control->getSettings();
+        if (!settings->getUseSpacesAsTab()) {
+            iMCommitCallback(nullptr, "\t", this);
+        } else {
+            std::string indent(static_cast<size_t>(settings->getNumberOfSpacesForTab()), ' ');
+            iMCommitCallback(nullptr, indent.c_str(), this);
+        }
         obscure = true;
         retval = true;
     } else {
