@@ -49,10 +49,12 @@ stages:
         # Exit on git merge-base failure
         [[ -z "$BASE_COMMIT" ]] && { echo "Error: BASE_COMMIT is empty" ; exit 1; }
         git fetch origin $BASE_COMMIT
-        
+
         for VERSION in $(CLANG_FORMAT_VERSIONS); do
-          echo "Testing clang-format-$VERSION"
-          git clang-format-$VERSION --diff $BASE_COMMIT -- && { echo "Success: changes are compatible with clang-format-$VERSION"; exit 0; }
+          echo "Testing $(clang-format-$VERSION --version)"
+          # A bug in llvm's .deb packages makes git-clang-format-$VERSION call clang-format instead of clang-format-$VERSION
+          # The --binary option gives a workaround
+          git clang-format-$VERSION --binary="clang-format-$VERSION" --diff $BASE_COMMIT -- && { echo "Success: changes are compatible with clang-format-$VERSION"; exit 0; }
         done
         # Failure: None of the allowed clang-format versions validated the changes
         echo "Error: changes are not compatible with any of the allowed clang-format versions: $CLANG_FORMAT_VERSIONS"
