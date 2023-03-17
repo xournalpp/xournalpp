@@ -92,6 +92,7 @@ void Settings::loadDefault() {
 
     this->showToolbar = true;
 
+    this->sidebarPreviewZoom = 0.15;
     this->sidebarOnRight = false;
 
     this->scrollbarOnLeft = false;
@@ -405,6 +406,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->showSidebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarWidth")) == 0) {
         this->sidebarWidth = std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 50);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarPreviewZoom")) == 0) {
+        this->sidebarPreviewZoom = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarOnRight")) == 0) {
         this->sidebarOnRight = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scrollbarOnLeft")) == 0) {
@@ -917,6 +920,7 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(showSidebar);
     SAVE_INT_PROP(sidebarWidth);
+    SAVE_DOUBLE_PROP(sidebarPreviewZoom);
 
     SAVE_BOOL_PROP(sidebarOnRight);
     SAVE_BOOL_PROP(scrollbarOnLeft);
@@ -1843,6 +1847,16 @@ void Settings::setSidebarWidth(int width) {
         return;
     }
     this->sidebarWidth = width;
+    save();
+}
+
+auto Settings::getSidebarPreviewZoom() const -> double { return this->sidebarPreviewZoom; }
+
+void Settings::setSidebarPreviewZoom(double zoom) {
+    if (this->sidebarPreviewZoom == zoom) {
+        return;
+    }
+    this->sidebarPreviewZoom = zoom;
     save();
 }
 

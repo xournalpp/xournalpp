@@ -96,11 +96,6 @@ private:
     GtkWidget* scrollPreview = nullptr;
 
     /**
-     * The Zoom of the previews
-     */
-    double zoom = 0.15;
-
-    /**
      * For preview rendering
      */
     std::unique_ptr<PdfCache> cache;

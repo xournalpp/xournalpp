@@ -5,11 +5,12 @@
 #include <glib-object.h>  // for g_object_ref, G_CALLBACK, g_sig...
 #include <glib.h>         // for g_idle_add, GSourceFunc
 
-#include "control/Control.h"   // for Control
-#include "control/PdfCache.h"  // for PdfCache
-#include "gui/MainWindow.h"    // for MainWindow
-#include "model/Document.h"    // for Document
-#include "util/Util.h"         // for npos
+#include "control/Control.h"            // for Control
+#include "control/PdfCache.h"           // for PdfCache
+#include "control/settings/Settings.h"  // for Settings
+#include "gui/MainWindow.h"             // for MainWindow
+#include "model/Document.h"             // for Document
+#include "util/Util.h"                  // for npos
 
 #include "SidebarLayout.h"            // for SidebarLayout
 #include "SidebarPreviewBaseEntry.h"  // for SidebarPreviewBaseEntry
@@ -82,7 +83,7 @@ void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocatio
     }
 }
 
-auto SidebarPreviewBase::getZoom() const -> double { return this->zoom; }
+auto SidebarPreviewBase::getZoom() const -> double { return this->control->getSettings()->getSidebarPreviewZoom(); }
 
 auto SidebarPreviewBase::getCache() -> PdfCache* { return this->cache.get(); }
 

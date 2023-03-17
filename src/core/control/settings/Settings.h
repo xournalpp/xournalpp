@@ -222,6 +222,9 @@ public:
     int getSidebarWidth() const;
     void setSidebarWidth(int width);
 
+    double getSidebarPreviewZoom() const;
+    void setSidebarPreviewZoom(double zoom);
+
     bool isSidebarOnRight() const;
     void setSidebarOnRight(bool right);
 
@@ -616,9 +619,14 @@ private:
     bool showToolbar{};
 
     /**
-     *  The Width of the Sidebar
+     *  The width of the sidebar
      */
     int sidebarWidth{};
+
+    /**
+     *  The zoom factor of the sidebar previews
+     */
+    double sidebarPreviewZoom{};
 
     /**
      *  If the sidebar is on the right
