@@ -20,6 +20,7 @@ class GladeGui;
 constexpr double ZOOM_STEP = 0.05;
 constexpr double ZOOM_MIN = 0.15;
 constexpr double ZOOM_MAX = 1.0;
+constexpr int MIN_WIDTH_DIFFERENCE = 10;
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
         AbstractSidebarPage(control, toolbar) {
@@ -104,10 +105,10 @@ auto SidebarPreviewBase::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkE
     if (new_zoom != current_zoom) {
         // set zoom and save to settings
         settings->setSidebarPreviewZoom(new_zoom);
-        if (sidebar->cache) {
-            sidebar->cache->clearCache();
+        for (auto& p: sidebar->previews) {
+            p->updateSize();
         }
-        sidebar->updatePreviews();
+        sidebar->layout();
     }
 
     // we have used the zoom event, so don't handle further
@@ -139,7 +140,7 @@ void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocatio
         lastWidth = allocation->width;
     }
 
-    if (std::abs(lastWidth - allocation->width) > 20) {
+    if (std::abs(lastWidth - allocation->width) > MIN_WIDTH_DIFFERENCE) {
         sidebar->layout();
         lastWidth = allocation->width;
     }

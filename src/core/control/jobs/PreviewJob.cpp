@@ -37,7 +37,13 @@ void PreviewJob::initGraphics() {
     GtkAllocation alloc;
     gtk_widget_get_allocation(this->sidebarPreview->widget, &alloc);
     crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
-    zoom = this->sidebarPreview->sidebar->getZoom();
+
+    // This fix is applied because the allocated size of the widget may differ from the requested size
+    double border = Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+    double zoomX = (alloc.width - border) / this->sidebarPreview->page->getWidth();
+    double zoomY = (alloc.height - border) / this->sidebarPreview->page->getHeight();
+    zoom = std::min(zoomX, zoomY);
+    // zoom = this->sidebarPreview->sidebar->getZoom();
     cr2 = cairo_create(crBuffer);
 }
 
