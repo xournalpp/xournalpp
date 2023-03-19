@@ -152,7 +152,7 @@ void ObjectInputStream::readData(std::vector<T>& data) {
 
     if (len) {
         data.resize(len);
-        istream.read((char *)data.data(), len * width);
+        istream.read((char*)data.data(), len * width);
     }
 }
 

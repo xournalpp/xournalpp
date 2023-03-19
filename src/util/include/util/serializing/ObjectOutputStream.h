@@ -37,7 +37,7 @@ public:
 
     void writeData(const void* data, int len, int width);
 
-    template <typename T> 
+    template <typename T>
     void writeData(const std::vector<T>& data);
 
     /// Writes the raw image data to the output stream.

@@ -1,11 +1,11 @@
 #include "StrokeStyle.h"
 
-#include <cstring>  // for memcmp, strcmp, strncmp
-#include <iomanip>  // for setprecision
-#include <iterator> // for ostream_iterator
-#include <map>      // for map
-#include <sstream>  // for istringstream
-#include <vector>   // for vector
+#include <cstring>   // for memcmp, strcmp, strncmp
+#include <iomanip>   // for setprecision
+#include <iterator>  // for ostream_iterator
+#include <map>       // for map
+#include <sstream>   // for istringstream
+#include <vector>    // for vector
 
 #include "model/LineStyle.h"  // for LineStyle
 
@@ -14,15 +14,12 @@ namespace {
 constexpr auto CUSTOM_KEY = "cust: ";
 
 const std::map<std::string, std::vector<double>> predefinedPatterns = {
-    { "dash", {6, 3} }, 
-    { "dashdot", {6, 3, 0.5, 3} },
-    { "dot", {0.5, 3}}
-};
+        {"dash", {6, 3}}, {"dashdot", {6, 3, 0.5, 3}}, {"dot", {0.5, 3}}};
 
 auto formatStyle(const std::vector<double>& dashes) -> std::string {
 
     // Check if dashes match named predefined dashes.
-    for (auto &pair: predefinedPatterns ) {
+    for (auto& pair: predefinedPatterns) {
         if (pair.second == dashes) {
             return pair.first;
         }
@@ -32,15 +29,15 @@ auto formatStyle(const std::vector<double>& dashes) -> std::string {
     std::ostringstream custom;
     custom << std::setprecision(2) << std::fixed;
     custom << CUSTOM_KEY;
-    std::copy(dashes.begin(), dashes.end(),std::ostream_iterator<double>(custom," "));
+    std::copy(dashes.begin(), dashes.end(), std::ostream_iterator<double>(custom, " "));
 
     // Return dashes string with traling space removed.
     return custom.str().substr(0, custom.str().length() - 1);
 }
 
-}
+}  // namespace
 
-auto StrokeStyle::parseStyle(const std::string &style) -> LineStyle {
+auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
     auto it = predefinedPatterns.find(style);
     if (it != predefinedPatterns.end()) {
         LineStyle ls;
@@ -57,7 +54,7 @@ auto StrokeStyle::parseStyle(const std::string &style) -> LineStyle {
     std::vector<double> dashes;
 
     dashStream.seekg(strlen(CUSTOM_KEY));
-    for (double value; dashStream >> value;)  {
+    for (double value; dashStream >> value;) {
         dashes.push_back(value);
     }
 

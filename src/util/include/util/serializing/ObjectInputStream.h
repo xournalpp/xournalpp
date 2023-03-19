@@ -35,7 +35,8 @@ public:
     std::string readString();
 
     void readData(void** data, int* len);
-    template <typename T> void readData(std::vector<T>& data);
+    template <typename T>
+    void readData(std::vector<T>& data);
 
     /// Reads raw image data from the stream.
     std::string readImage();

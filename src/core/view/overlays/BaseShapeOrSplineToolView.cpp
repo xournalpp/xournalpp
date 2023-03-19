@@ -6,7 +6,7 @@
 #include "model/LineStyle.h"
 #include "model/Stroke.h"
 #include "util/Color.h"
-#include "util/Util.h"                    // for cairo_set_dash_from_vector
+#include "util/Util.h"  // for cairo_set_dash_from_vector
 
 using namespace xoj::view;
 

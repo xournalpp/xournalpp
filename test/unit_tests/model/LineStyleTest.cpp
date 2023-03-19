@@ -15,8 +15,7 @@
 #include "model/LineStyle.h"
 
 
-TEST(LineStyle, testLineStyle)
-{
+TEST(LineStyle, testLineStyle) {
     LineStyle ls;
 
     EXPECT_EQ(ls.hasDashes(), false);

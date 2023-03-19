@@ -62,7 +62,7 @@ void ObjectOutputStream::writeData(const void* data, int len, int width) {
     }
 }
 
-template <typename T> 
+template <typename T>
 void ObjectOutputStream::writeData(const std::vector<T>& data) {
     this->encoder->addStr("_b");
     const int len = static_cast<int>(data.size());

@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "util/serializing/Serializable.h"  // for Serializable
-
 #include <vector>
+
+#include "util/serializing/Serializable.h"  // for Serializable
 
 class ObjectInputStream;
 class ObjectOutputStream;

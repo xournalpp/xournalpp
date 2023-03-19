@@ -29,10 +29,10 @@
 #include "undo/InsertUndoAction.h"                 // for InsertsUndoAction
 #include "undo/UndoRedoHandler.h"                  // for UndoRedoHandler
 #include "util/Range.h"                            // for Range
+#include "util/Util.h"                             // for cairo_set_dash_from_vector
 #include "util/i18n.h"                             // for _
 #include "util/serializing/ObjectInputStream.h"    // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"   // for ObjectOutputStream
-#include "util/Util.h"                             // for cairo_set_dash_from_vector
 
 #include "EditSelectionContents.h"  // for EditSelectionConte...
 #include "Selection.h"              // for Selection
