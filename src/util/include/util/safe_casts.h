@@ -33,6 +33,7 @@
 #include <cassert>
 #include <cmath>
 #include <type_traits>
+#include <utility>
 
 template <typename To, typename From>
 [[maybe_unused]] [[nodiscard]] constexpr auto is_safely_castable(From from) -> bool {

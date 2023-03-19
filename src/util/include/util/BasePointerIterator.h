@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <cstddef>
+#include <iterator>
+
 #include "TypeIfThenElse.h"
 
 template <typename T, bool is_const>

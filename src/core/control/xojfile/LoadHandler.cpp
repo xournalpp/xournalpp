@@ -1,6 +1,7 @@
 #include "LoadHandler.h"
 
 #include <algorithm>    // for copy
+#include <cassert>      // for assert
 #include <cmath>        // for isnan
 #include <cstdlib>      // for atoi, size_t
 #include <cstring>      // for strcmp, strlen

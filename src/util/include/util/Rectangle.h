@@ -12,7 +12,6 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
 #include <optional>
 
 #include "util/Range.h"
@@ -53,8 +52,6 @@ public:
      * Computes the union of this and the other rectangle
      */
     void unite(const Rectangle& other) {
-        // assert(other.width > 0 && other.height > 0 && "Rectangle not normalized"); (does not need to be valid for
-        // snappedBounds)
         this->width = std::max(this->x + this->width, other.x + other.width);
         this->height = std::max(this->y + this->height, other.y + other.height);
         this->x = std::min(this->x, other.x);

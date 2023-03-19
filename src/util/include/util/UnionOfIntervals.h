@@ -11,7 +11,9 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cassert>
+#include <iterator>
 #include <vector>
 
 #include "Interval.h"
