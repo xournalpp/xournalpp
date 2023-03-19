@@ -45,4 +45,7 @@ private:
     friend class PreviewJob;
 
     void drawEntryNumber(cairo_t* cr);
+
+private:
+    static constexpr double PADDING_BOTTOM = 6.0;
 };

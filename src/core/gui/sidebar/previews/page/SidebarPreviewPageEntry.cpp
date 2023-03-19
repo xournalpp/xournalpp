@@ -35,7 +35,7 @@ void SidebarPreviewPageEntry::drawEntryNumber(cairo_t* cr) {
 int SidebarPreviewPageEntry::getWidgetHeight() {
     if (sidebar->getControl()->getSettings()->getSidebarNumberingStyle() ==
         SidebarNumberingStyle::NUMBER_BELOW_PREVIEW) {
-        return SidebarPreviewBaseEntry::getWidgetHeight() + 4;
+        return SidebarPreviewBaseEntry::getWidgetHeight() + PADDING_BOTTOM;
     }
     return SidebarPreviewBaseEntry::getWidgetHeight();
 }
