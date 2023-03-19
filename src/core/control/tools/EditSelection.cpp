@@ -324,7 +324,7 @@ auto EditSelection::getYOnViewAbsolute() -> int {
  * (or nullptr if nothing is done)
  */
 auto EditSelection::setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                            const double* thicknessEraser) -> UndoAction* {
+                            const double* thicknessEraser) -> UndoActionPtr {
     return this->contents->setSize(size, thicknessPen, thicknessHighlighter, thicknessEraser);
 }
 
@@ -332,7 +332,7 @@ auto EditSelection::setSize(ToolSize size, const double* thicknessPen, const dou
  * Fills the stroke, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-auto EditSelection::setFill(int alphaPen, int alphaHighligther) -> UndoAction* {
+auto EditSelection::setFill(int alphaPen, int alphaHighligther) -> UndoActionPtr {
     return this->contents->setFill(alphaPen, alphaHighligther);
 }
 
@@ -346,13 +346,13 @@ auto EditSelection::setLineStyle(LineStyle style) -> UndoActionPtr { return this
  * Set the color of all elements, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-auto EditSelection::setColor(Color color) -> UndoAction* { return this->contents->setColor(color); }
+auto EditSelection::setColor(Color color) -> UndoActionPtr { return this->contents->setColor(color); }
 
 /**
  * Sets the font of all containing text elements, return an undo action
  * (or nullptr if there are no Text elements)
  */
-auto EditSelection::setFont(XojFont& font) -> UndoAction* { return this->contents->setFont(font); }
+auto EditSelection::setFont(XojFont& font) -> UndoActionPtr { return this->contents->setFont(font); }
 
 /**
  * Fills de undo item if the selection is deleted

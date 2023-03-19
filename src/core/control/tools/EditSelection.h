@@ -147,8 +147,8 @@ public:
      * Sets the tool size for pen or eraser, returns an undo action
      * (or nullptr if nothing is done)
      */
-    UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                        const double* thicknessEraser);
+    UndoActionPtr setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
+                          const double* thicknessEraser);
 
     /**
      * Set the line style of all strokes, return an undo action
@@ -160,13 +160,13 @@ public:
      * Set the color of all elements, return an undo action
      * (Or nullptr if nothing done, e.g. because there is only an image)
      */
-    UndoAction* setColor(Color color);
+    UndoActionPtr setColor(Color color);
 
     /**
      * Sets the font of all containing text elements, return an undo action
      * (or nullptr if there are no Text elements)
      */
-    UndoAction* setFont(XojFont& font);
+    UndoActionPtr setFont(XojFont& font);
 
     /**
      * Fills the undo item if the selection is deleted
@@ -178,7 +178,7 @@ public:
      * Fills the stroke, return an undo action
      * (Or nullptr if nothing done, e.g. because there is only an image)
      */
-    UndoAction* setFill(int alphaPen, int alphaHighligther);
+    UndoActionPtr setFill(int alphaPen, int alphaHighligther);
 
 public:
     /**
