@@ -9,10 +9,6 @@
 
 #include "model/LineStyle.h"  // for LineStyle
 
-StrokeStyle::StrokeStyle() = default;
-
-StrokeStyle::~StrokeStyle() = default;
-
 namespace {
 
 constexpr auto CUSTOM_KEY = "cust: ";
