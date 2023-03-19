@@ -33,20 +33,21 @@ private:
     static constexpr double LINE_WIDTH = 1.0;
 
     static constexpr double CIRCLE_INDENT_RIGHT = 33;
-    static constexpr double CIRCLE_INDENT_BOTTOM = 36;
+    static constexpr double CIRCLE_INDENT_BOTTOM = 32;
     static constexpr double CIRCLE_RADIUS = 11;
     static constexpr double CIRCLE_TEXT_X = 5;
     static constexpr double CIRCLE_TEXT_Y = 6;
 
     static constexpr double SQUARE_SIZE = 20;
     static constexpr double SQUARE_INDENT_RIGHT = 32;
-    static constexpr double SQUARE_INDENT_BOTTOM = 36;
+    static constexpr double SQUARE_INDENT_BOTTOM = 32;
     static constexpr double SQUARE_TEXT_X = 5;
     static constexpr double SQUARE_TEXT_Y = 16;
 
+    static constexpr double PREVIEW_BORDER_LINE_WIDTH = 2.0;
     static constexpr double PREVIEW_UPPER_LEFT = 8.5;
     static constexpr double PREVIEW_WIDTH_INDENT = 21;
-    static constexpr double PREVIEW_HEIGHT_INDENT = 25;
+    static constexpr double PREVIEW_HEIGHT_INDENT = 21;
 
     static constexpr char FONT_NAME[] = "Sans";
 };

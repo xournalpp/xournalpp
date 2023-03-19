@@ -27,7 +27,7 @@ void PagePreviewDecoration::drawPageNumberBelowPreview(cairo_t* cr, SidebarPrevi
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_text_extents_t extents;
     std::string pageNumber = std::to_string(pageEntry->getIndex() + 1);
-    Color color = control->getSettings()->getBackgroundColor();
+    Color color = control->getSettings()->isDarkTheme() ? Colors::white : Colors::xopp_darkslategray;
     if (pageEntry->isSelected()) {
         color = control->getSettings()->getBorderColor();
     }
@@ -88,7 +88,7 @@ void PagePreviewDecoration::drawPageNumberWithSquareBackground(cairo_t* cr, Side
 
         // In case the page is not selected draw a border around the preview to match the selected
         // See discussion: <https://github.com/xournalpp/xournalpp/issues/4624#issue-1557719574>
-        cairo_set_line_width(cr, LINE_WIDTH);
+        cairo_set_line_width(cr, PREVIEW_BORDER_LINE_WIDTH);
         cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT);
         cairo_set_line_join(cr, CAIRO_LINE_JOIN_BEVEL);
         cairo_rectangle(cr, PREVIEW_UPPER_LEFT, PREVIEW_UPPER_LEFT, pageEntry->getWidth() - PREVIEW_WIDTH_INDENT,
