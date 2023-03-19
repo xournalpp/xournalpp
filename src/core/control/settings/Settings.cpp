@@ -927,7 +927,7 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(showSidebar);
     SAVE_INT_PROP(sidebarWidth);
-    SAVE_INT_PROP(static_cast<int>(sidebarNumberingStyle));
+    xmlNode = saveProperty("sidebarNumberingStyle", static_cast<int>(sidebarNumberingStyle), root);
 
     SAVE_BOOL_PROP(sidebarOnRight);
     SAVE_BOOL_PROP(scrollbarOnLeft);
