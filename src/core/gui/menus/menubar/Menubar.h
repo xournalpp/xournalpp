@@ -13,6 +13,8 @@
 
 #include <memory>
 
+#include "config-features.h"
+
 class MainWindow;
 
 class RecentDocumentsSubmenu;
@@ -35,12 +37,16 @@ private:
     // Dynamically created submenus -- also add to forEachSubmenu() below
     std::unique_ptr<RecentDocumentsSubmenu> recentDocumentsSubmenu;
     std::unique_ptr<ToolbarSelectionSubmenu> toolbarSelectionSubmenu;
+#ifdef ENABLE_PLUGINS
     std::unique_ptr<PluginsSubmenu> pluginsSubmenu;
+#endif
 
     template <class Fun>
     void forEachSubmenu(Fun&& fun) {
         fun(*recentDocumentsSubmenu);
         fun(*toolbarSelectionSubmenu);
+#ifdef ENABLE_PLUGINS
         fun(*pluginsSubmenu);
+#endif
     }
 };

@@ -16,8 +16,13 @@ void Menubar::populate(MainWindow* win) {
     recentDocumentsSubmenu = std::make_unique<RecentDocumentsSubmenu>(ctrl, GTK_APPLICATION_WINDOW(win->getWindow()));
     toolbarSelectionSubmenu =
             std::make_unique<ToolbarSelectionSubmenu>(win, ctrl->getSettings(), win->getToolMenuHandler());
+#ifdef ENABLE_PLUGINS
     pluginsSubmenu =
             std::make_unique<PluginsSubmenu>(ctrl->getPluginController(), GTK_APPLICATION_WINDOW(win->getWindow()));
+#else
+    // If plugins are disabled - hide the entire menu
+    gtk_widget_hide(win->get("menuitemPlugin"));
+#endif
 
     forEachSubmenu([&](auto& subm) { subm.addToMenubar(win); });
 }
