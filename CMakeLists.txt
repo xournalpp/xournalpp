@@ -135,15 +135,18 @@ endif ()
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
+
+option(ENABLE_PLUGINS "Compile with plugin support" ON)
 find_package(Lua 5.3) # Lua 5.4 is only supported with cmake >=3.18
-if (Lua_FOUND)
+if (Lua_FOUND AND ENABLE_PLUGINS)
     # currently not fully supported by cmake
     message("Enable Xournal++ Plugins")
     add_library(lua INTERFACE)
     target_link_libraries(lua INTERFACE ${LUA_LIBRARIES})
     target_include_directories(lua INTERFACE ${LUA_INCLUDE_DIR})
-    target_compile_definitions(lua INTERFACE ENABLE_PLUGINS)
     add_library(Lua::lua ALIAS lua)
+else ()
+    set(ENABLE_PLUGINS OFF)
 endif ()
 
 if (GtkSourceView_FOUND)
