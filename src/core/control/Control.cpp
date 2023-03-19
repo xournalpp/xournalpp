@@ -2179,9 +2179,7 @@ void Control::changeColorOfSelection() {
     if (this->win && toolHandler->hasCapability(TOOL_CAP_COLOR)) {
         EditSelection* sel = this->win->getXournal()->getSelection();
         if (sel) {
-            UndoAction* undo = sel->setColor(toolHandler->getColor());
-            // move into selection
-            undoRedo->addUndoAction(UndoActionPtr(undo));
+            undoRedo->addUndoAction(sel->setColor(toolHandler->getColor()));
         }
 
         TextEditor* edit = getTextEditor();

@@ -98,8 +98,8 @@ auto EditSelectionContents::getInsertOrder() const -> std::deque<std::pair<Eleme
  * (or nullptr if nothing is done)
  */
 auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                                    const double* thicknessEraser) -> UndoAction* {
-    auto* undo = new SizeUndoAction(this->sourcePage, this->sourceLayer);
+                                    const double* thicknessEraser) -> UndoActionPtr {
+    auto undo = std::make_unique<SizeUndoAction>(this->sourcePage, this->sourceLayer);
 
     bool found = false;
 
@@ -140,8 +140,6 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
         return undo;
     }
 
-
-    delete undo;
     return nullptr;
 }
 
@@ -149,8 +147,8 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
  * Fills the stroke, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoAction* {
-    auto* undo = new FillUndoAction(this->sourcePage, this->sourceLayer);
+auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoActionPtr {
+    auto undo = std::make_unique<FillUndoAction>(this->sourcePage, this->sourceLayer);
 
     bool found = false;
 
@@ -187,8 +185,6 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
         return undo;
     }
 
-
-    delete undo;
     return nullptr;
 }
 
@@ -196,13 +192,13 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
  * Sets the font of all containing text elements, return an undo action
  * (or nullptr if there are no Text elements)
  */
-auto EditSelectionContents::setFont(XojFont& font) -> UndoAction* {
+auto EditSelectionContents::setFont(XojFont& font) -> UndoActionPtr {
     double x1 = 0.0 / 0.0;
     double x2 = 0.0 / 0.0;
     double y1 = 0.0 / 0.0;
     double y2 = 0.0 / 0.0;
 
-    auto* undo = new FontUndoAction(this->sourcePage, this->sourceLayer);
+    auto undo = std::make_unique<FontUndoAction>(this->sourcePage, this->sourceLayer);
 
     for (Element* e: this->selected) {
         if (e->getType() == ELEMENT_TEXT) {
@@ -239,7 +235,7 @@ auto EditSelectionContents::setFont(XojFont& font) -> UndoAction* {
         this->sourceView->getXournal()->repaintSelection();
         return undo;
     }
-    delete undo;
+
     return nullptr;
 }
 
@@ -270,16 +266,15 @@ auto EditSelectionContents::setLineStyle(LineStyle style) -> UndoActionPtr {
         return undo;
     }
 
-
-    return {};
+    return nullptr;
 }
 
 /**
  * Set the color of all elements, return an undo action
  * (Or nullptr if nothing done, e.g. because there is only an image)
  */
-auto EditSelectionContents::setColor(Color color) -> UndoAction* {
-    auto* undo = new ColorUndoAction(this->sourcePage, this->sourceLayer);
+auto EditSelectionContents::setColor(Color color) -> UndoActionPtr {
+    auto undo = std::make_unique<ColorUndoAction>(this->sourcePage, this->sourceLayer);
 
     bool found = false;
 
@@ -300,8 +295,6 @@ auto EditSelectionContents::setColor(Color color) -> UndoAction* {
         return undo;
     }
 
-
-    delete undo;
     return nullptr;
 }
 
