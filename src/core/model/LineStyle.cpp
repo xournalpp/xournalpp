@@ -33,27 +33,12 @@ void LineStyle::readSerialized(ObjectInputStream& in) {
     in.endObject();
 }
 
-/**
- * Get dash vector
- *
- * @return dashes
- */
 auto LineStyle::getDashes() const -> const std::vector<double>& {
     return dashes;
 }
 
-/**
- * Set the dash vector and count
- *
- * @param dashes Dash data, will be moved, and continous use from caller invalid
- */
 void LineStyle::setDashes(std::vector<double>&& dashes) {
     this->dashes = std::move(dashes);
 }
 
-/**
- * Has LineStyle any dashes
- *
- * @return true if dashed is not empty
- */
 auto LineStyle::hasDashes() const -> bool { return !dashes.empty(); }

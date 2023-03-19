@@ -46,7 +46,7 @@ public:
     /**
      * Set the dash vector and count
      *
-     * @param dashes Dash data, will be moved, and continous use from caller invalid
+     * @param dashes Dash data, will be moved, and continuous use from caller invalid
      */
     void setDashes(std::vector<double>&& dashes);
 
