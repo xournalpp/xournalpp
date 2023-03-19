@@ -89,6 +89,9 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
     auto undoAction = commitPageTypeChange(pageNr, pageType);
     if (undoAction) {
         control->getUndoRedoHandler()->addUndoAction(std::move(undoAction));
+    } else {
+        // Change of pageType failed. Set pageType to the current pageType to ensure radio button in menu is correct
+        pageType = page->getBackgroundType();
     }
 
     ignoreEvent = true;
@@ -100,7 +103,7 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
         -> std::unique_ptr<UndoAction> {
     PageRef page = control->getDocument()->getPage(pageNum);
     if (!page) {
-        return {};
+        return nullptr;
     }
 
     Document* doc = control->getDocument();
@@ -116,7 +119,9 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
 
     // Apply the new background
     if (pageType.format != PageTypeFormat::Copy) {
-        applyPageBackground(page, pageType);
+        if (!applyPageBackground(page, pageType)) {
+            return nullptr;
+        }
     } else {
         g_warning("Found 'Copy' page type. Doing nothing™.");
     }
