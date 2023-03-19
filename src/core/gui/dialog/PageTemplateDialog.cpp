@@ -149,12 +149,11 @@ void PageTemplateDialog::updatePageSize() {
 }
 
 void PageTemplateDialog::showPageSizeDialog() {
-    auto dlg =
-            std::make_unique<FormatDialog>(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
-    dlg->show(GTK_WINDOW(this->window));
+    auto dlg = FormatDialog(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
+    dlg.show(GTK_WINDOW(this->window));
 
-    const double width = dlg->getWidth();
-    const double height = dlg->getHeight();
+    const double width = dlg.getWidth();
+    const double height = dlg.getHeight();
 
     if (width > 0) {
         model.setPageWidth(width);
