@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>  // for std::unique_ptr
 #include <string>  // for string
 #include <vector>  // for vector
 
@@ -33,8 +34,7 @@ public:
     PageTypeHandler(GladeSearchpath* gladeSearchPath);
     virtual ~PageTypeHandler();
 
-public:
-    std::vector<PageTypeInfo*>& getPageTypes();
+    const std::vector<std::unique_ptr<PageTypeInfo>>& getPageTypes();
     static PageTypeFormat getPageTypeFormatForString(const std::string& format);
     static std::string getStringForPageTypeFormat(const PageTypeFormat& format);
 
@@ -43,6 +43,5 @@ private:
     bool parseIni(fs::path const& filepath);
     void loadFormat(GKeyFile* config, const char* group);
 
-private:
-    std::vector<PageTypeInfo*> types;
+    std::vector<std::unique_ptr<PageTypeInfo>> types;
 };

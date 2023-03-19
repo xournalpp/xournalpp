@@ -1,5 +1,6 @@
 #include "PageTypeHandler.h"
 
+#include <memory>
 #include <utility>
 
 #include "gui/GladeSearchpath.h"
@@ -33,10 +34,7 @@ PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath) {
     addPageTypeInfo(_("Image"), PageTypeFormat::Image, "");
 }
 
-PageTypeHandler::~PageTypeHandler() {
-    for (PageTypeInfo* t: types) { delete t; }
-    types.clear();
-}
+PageTypeHandler::~PageTypeHandler() = default;
 
 auto PageTypeHandler::parseIni(fs::path const& filepath) -> bool {
     GKeyFile* config = g_key_file_new();
@@ -82,15 +80,15 @@ void PageTypeHandler::loadFormat(GKeyFile* config, const char* group) {
 }
 
 void PageTypeHandler::addPageTypeInfo(string name, PageTypeFormat format, string config) {
-    auto pt = new PageTypeInfo();
+    auto pt = std::make_unique<PageTypeInfo>();
     pt->name = std::move(name);
     pt->page.format = format;
     pt->page.config = std::move(config);
 
-    this->types.push_back(pt);
+    this->types.emplace_back(std::move(pt));
 }
 
-auto PageTypeHandler::getPageTypes() -> std::vector<PageTypeInfo*>& { return this->types; }
+auto PageTypeHandler::getPageTypes() -> const std::vector<std::unique_ptr<PageTypeInfo>>& { return this->types; }
 
 auto PageTypeHandler::getPageTypeFormatForString(const string& format) -> PageTypeFormat {
     if (format == "plain") {

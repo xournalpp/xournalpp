@@ -228,7 +228,7 @@ auto PageTypeMenu::createApplyMenuItem(const char* text) -> GtkWidget* {
 
 void PageTypeMenu::initDefaultMenu() {
     bool special = false;
-    for (PageTypeInfo* t: this->types->getPageTypes()) {
+    for (auto& t: this->types->getPageTypes()) {
         if (!showSpecial && t->page.isSpecial()) {
             continue;
         }
@@ -250,7 +250,7 @@ void PageTypeMenu::initDefaultMenu() {
                 gtk_container_add(GTK_CONTAINER(menu), separator);
             }
         }
-        addMenuEntry(t);
+        addMenuEntry(t.get());
     }
 }
 
