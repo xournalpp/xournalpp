@@ -169,18 +169,6 @@ void UndoRedoHandler::addUndoAction(UndoActionPtr action) {
     printContents();
 }
 
-auto UndoRedoHandler::removeUndoAction(UndoAction* action) -> bool {
-    auto iter = std::find_if(begin(this->undoList), end(this->undoList),
-                             [action](UndoActionPtr const& smtr_ptr) { return smtr_ptr.get() == action; });
-    if (iter == end(this->undoList)) {
-        return false;
-    }
-    this->undoList.erase(iter);
-    clearRedo();
-    fireUpdateUndoRedoButtons(action->getPages());
-    return true;
-}
-
 auto UndoRedoHandler::undoDescription() -> string {
     if (!this->undoList.empty()) {
         UndoAction& a = *this->undoList.back();
