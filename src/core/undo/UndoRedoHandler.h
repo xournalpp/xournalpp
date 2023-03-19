@@ -41,7 +41,6 @@ public:
     bool canRedo();
 
     void addUndoAction(UndoActionPtr action);
-    bool removeUndoAction(UndoAction* action);
 
     std::string undoDescription();
     std::string redoDescription();
