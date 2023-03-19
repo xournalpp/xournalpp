@@ -1532,16 +1532,14 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
 }
 
 void Control::gotoPage() {
-    auto* dlg = new GotoDialog(this->gladeSearchPath, int(this->doc->getPageCount()));
+    auto dlg = GotoDialog(this->gladeSearchPath, int(this->doc->getPageCount()));
 
-    dlg->show(GTK_WINDOW(this->win->getWindow()));
-    auto page = dlg->getSelectedPage();
+    dlg.show(GTK_WINDOW(this->win->getWindow()));
+    auto page = dlg.getSelectedPage();
 
     if (page > 0) {
         this->scrollHandler->scrollToPage(size_t(page - 1), 0);
     }
-
-    delete dlg;
 }
 
 void Control::updateBackgroundSizeButton() {
@@ -1565,10 +1563,10 @@ void Control::updateBackgroundSizeButton() {
 }
 
 void Control::paperTemplate() {
-    auto dlg = std::make_unique<PageTemplateDialog>(this->gladeSearchPath, settings, pageTypes);
-    dlg->show(GTK_WINDOW(this->win->getWindow()));
+    auto dlg = PageTemplateDialog(this->gladeSearchPath, settings, pageTypes);
+    dlg.show(GTK_WINDOW(this->win->getWindow()));
 
-    if (dlg->isSaved()) {
+    if (dlg.isSaved()) {
         newPageType->loadDefaultPage();
     }
 }
@@ -1580,11 +1578,11 @@ void Control::paperFormat() {
     }
     clearSelectionEndText();
 
-    auto* dlg = new FormatDialog(this->gladeSearchPath, settings, page->getWidth(), page->getHeight());
-    dlg->show(GTK_WINDOW(this->win->getWindow()));
+    auto dlg = FormatDialog(this->gladeSearchPath, settings, page->getWidth(), page->getHeight());
+    dlg.show(GTK_WINDOW(this->win->getWindow()));
 
-    double width = dlg->getWidth();
-    double height = dlg->getHeight();
+    double width = dlg.getWidth();
+    double height = dlg.getHeight();
 
     if (width > 0) {
         this->doc->lock();
@@ -1596,8 +1594,6 @@ void Control::paperFormat() {
     if (pageNo != npos && pageNo < doc->getPageCount()) {
         this->firePageSizeChanged(pageNo);
     }
-
-    delete dlg;
 }
 
 void Control::changePageBackgroundColor() {
@@ -2207,8 +2203,8 @@ void Control::showSettings() {
     StylusCursorType stylusCursorType = settings->getStylusCursorType();
     bool highlightPosition = settings->isHighlightPosition();
 
-    auto* dlg = new SettingsDialog(this->gladeSearchPath, settings, this);
-    dlg->show(GTK_WINDOW(this->win->getWindow()));
+    auto dlg = SettingsDialog(this->gladeSearchPath, settings, this);
+    dlg.show(GTK_WINDOW(this->win->getWindow()));
 
     // note which settings have changed and act accordingly
     if (selectionColor != settings->getBorderColor()) {
@@ -2237,8 +2233,6 @@ void Control::showSettings() {
 
     getWindow()->getXournal()->getHandRecognition()->reload();
     getWindow()->updateColorscheme();
-
-    delete dlg;
 }
 
 auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {

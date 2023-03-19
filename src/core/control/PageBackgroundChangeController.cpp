@@ -205,13 +205,12 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool {
     }
 
     doc->lock();
-    auto* dlg = new PdfPagesDialog(control->getGladeSearchPath(), doc, control->getSettings());
+    auto dlg = PdfPagesDialog(control->getGladeSearchPath(), doc, control->getSettings());
     doc->unlock();
 
-    dlg->show(GTK_WINDOW(control->getGtkWindow()));
+    dlg.show(GTK_WINDOW(control->getGtkWindow()));
 
-    int selected = dlg->getSelectedPage();
-    delete dlg;
+    int selected = dlg.getSelectedPage();
 
     if (selected >= 0 && selected < static_cast<int>(doc->getPdfPageCount())) {
         // no need to set a type, if we set the page number the type is also set
