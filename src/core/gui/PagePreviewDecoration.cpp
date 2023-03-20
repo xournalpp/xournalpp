@@ -71,8 +71,8 @@ void PagePreviewDecoration::drawPageNumberWithCircleBackground(cairo_t* cr, Side
 
     // Draw an slightly transparent circle in the lower right corner of the preview
     cairo_set_line_width(cr, LINE_WIDTH);
-    cairo_arc(cr, x - addititionalWidth, y, CIRCLE_RADIUS, M_PI*0.5, M_PI*1.5);
-    cairo_arc(cr, x, y, CIRCLE_RADIUS, M_PI*1.5, M_PI*0.5);
+    cairo_arc(cr, x - addititionalWidth, y, CIRCLE_RADIUS, M_PI * 0.5, M_PI * 1.5);
+    cairo_arc(cr, x, y, CIRCLE_RADIUS, M_PI * 1.5, M_PI * 0.5);
     cairo_close_path(cr);
     cairo_stroke_preserve(cr);
     cairo_fill(cr);
