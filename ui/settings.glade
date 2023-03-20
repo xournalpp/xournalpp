@@ -3525,9 +3525,9 @@ This setting can make it easier to draw with touch. </property>
                                                 <property name="has-entry">True</property>
                                                 <items>
                                                   <item id="0" translatable="yes">None</item>
-                                                  <item id="1" translatable="yes">Style 1</item>
-                                                  <item id="2" translatable="yes">Style 2</item>
-                                                  <item id="3" translatable="yes">Style 3</item>
+                                                  <item id="1" translatable="yes">Below preview</item>
+                                                  <item id="2" translatable="yes">Circle background</item>
+                                                  <item id="3" translatable="yes">Square background</item>
                                                 </items>
                                                 <child internal-child="entry">
                                                   <object class="GtkEntry">
