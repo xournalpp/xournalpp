@@ -58,15 +58,27 @@ void PagePreviewDecoration::drawPageNumberWithCircleBackground(cairo_t* cr, Side
         Util::cairo_set_source_rgbi(cr, Colors::xopp_darkslategray, LABEL_OPACITY);
     }
 
+    // How many pixels to indent the circle center from the widget border
+    double indentRight = pageEntry->getWidth() * CIRCLE_INDENT_RIGHT;
+    double indentBottom = pageEntry->getHeight() * CIRCLE_INDENT_BOTTOM;
+
+    // Pixel position of circle center
+    double x = pageEntry->getWidth() - indentRight;
+    double y = pageEntry->getHeight() - indentBottom;
+
+    // Inner circle width depends on the actual text width
+    double addititionalWidth = std::max((extents.width - 2 * CIRCLE_RADIUS) + CIRCLE_TEXT_PADDING, 0.0);
+
     // Draw an slightly transparent circle in the lower right corner of the preview
-    double x = pageEntry->getWidth() - CIRCLE_INDENT_RIGHT, y = pageEntry->getHeight() - CIRCLE_INDENT_BOTTOM;
     cairo_set_line_width(cr, LINE_WIDTH);
-    cairo_arc(cr, x, y, CIRCLE_RADIUS, 0, 2 * M_PI);
+    cairo_arc(cr, x - addititionalWidth, y, CIRCLE_RADIUS, M_PI*0.5, M_PI*1.5);
+    cairo_arc(cr, x, y, CIRCLE_RADIUS, M_PI*1.5, M_PI*0.5);
+    cairo_close_path(cr);
     cairo_stroke_preserve(cr);
     cairo_fill(cr);
 
     // Draw the page number in the center of the previously drawn circle
-    cairo_move_to(cr, x - CIRCLE_TEXT_X, y + CIRCLE_TEXT_Y);
+    cairo_move_to(cr, x - addititionalWidth / 2 - (extents.width / 2 + extents.x_bearing), y + CIRCLE_TEXT_Y);
     Util::cairo_set_source_argb(cr, Colors::white);
     cairo_show_text(cr, pageNumber.c_str());
 }
@@ -104,7 +116,7 @@ void PagePreviewDecoration::drawPageNumberWithSquareBackground(cairo_t* cr, Side
     cairo_fill(cr);
 
     // Draw the page number in the center of the square
-    cairo_move_to(cr, x + SQUARE_TEXT_X, y + SQUARE_TEXT_Y);
+    cairo_move_to(cr, x + SQUARE_TEXT_X - (extents.width / 2 + extents.x_bearing), y + SQUARE_TEXT_Y);
     if (pageEntry->isSelected()) {
         Util::cairo_set_source_argb(cr, Colors::white);
     } else {

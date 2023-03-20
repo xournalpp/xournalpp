@@ -32,11 +32,16 @@ private:
     static constexpr double LABEL_OPACITY = 0.6;
     static constexpr double LINE_WIDTH = 1.0;
 
-    static constexpr double CIRCLE_INDENT_RIGHT = 33;
-    static constexpr double CIRCLE_INDENT_BOTTOM = 32;
+    /* Indention of the circle from the right border as percentage to the total widget width */
+    static constexpr double CIRCLE_INDENT_RIGHT = 0.28;
+    /* Indention of the circle from the bottom border as percentage to the total widget height */
+    static constexpr double CIRCLE_INDENT_BOTTOM = 0.2;
+    /* Circle radius in pixels */
     static constexpr double CIRCLE_RADIUS = 11;
-    static constexpr double CIRCLE_TEXT_X = 5;
+    /* Vertical alignment of page number to circle center */
     static constexpr double CIRCLE_TEXT_Y = 6;
+    /* Padding for the text in the circle */
+    static constexpr double CIRCLE_TEXT_PADDING = 8;
 
     static constexpr double SQUARE_SIZE = 20;
     static constexpr double SQUARE_INDENT_RIGHT = 32;
