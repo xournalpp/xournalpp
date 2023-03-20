@@ -26,9 +26,11 @@ private:
     static void drawPageNumberWithCircleBackground(cairo_t* cr, SidebarPreviewPageEntry* pageEntry, Control* control);
     static void drawPageNumberWithSquareBackground(cairo_t* cr, SidebarPreviewPageEntry* pageEntry, Control* control);
 
+public:
+    static constexpr double MARGIN_BOTTOM = 20.0;
+
 private:
     static constexpr double FONT_SIZE = 16.0;
-    static constexpr double MARGIN_BOTTOM = 5.0;
     static constexpr double LABEL_OPACITY = 0.6;
     static constexpr double LINE_WIDTH = 1.0;
 

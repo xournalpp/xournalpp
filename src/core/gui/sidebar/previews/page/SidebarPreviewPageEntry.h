@@ -38,6 +38,7 @@ protected:
     SidebarPreviewPages* sidebar;
     void mouseButtonPressCallback() override;
     void paint(cairo_t* cr) override;
+    int getWidgetHeight() override;
 
 private:
     size_t index;
