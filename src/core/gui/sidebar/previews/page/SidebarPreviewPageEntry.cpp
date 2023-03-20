@@ -32,14 +32,6 @@ void SidebarPreviewPageEntry::drawEntryNumber(cairo_t* cr) {
     this->drawingMutex.unlock();
 }
 
-int SidebarPreviewPageEntry::getWidgetHeight() {
-    if (sidebar->getControl()->getSettings()->getSidebarNumberingStyle() ==
-        SidebarNumberingStyle::NUMBER_BELOW_PREVIEW) {
-        return SidebarPreviewBaseEntry::getWidgetHeight() + PADDING_BOTTOM;
-    }
-    return SidebarPreviewBaseEntry::getWidgetHeight();
-}
-
 void SidebarPreviewPageEntry::setIndex(size_t index) { this->index = index; }
 
 size_t SidebarPreviewPageEntry::getIndex() const { return this->index; }
