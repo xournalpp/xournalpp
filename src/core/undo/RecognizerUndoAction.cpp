@@ -45,7 +45,7 @@ void RecognizerUndoAction::addSourceElement(Stroke* s) {
 }
 
 auto RecognizerUndoAction::undo(Control* control) -> bool {
-    int pos = this->layer->removeElement(this->recognized, false);
+    Element::Index pos = this->layer->removeElement(this->recognized, false);
     this->page->fireElementChanged(this->recognized);
 
     int i = 0;
@@ -60,7 +60,7 @@ auto RecognizerUndoAction::undo(Control* control) -> bool {
 }
 
 auto RecognizerUndoAction::redo(Control* control) -> bool {
-    int pos = 0;
+    Element::Index pos = 0;
     for (Stroke* s: this->original) {
         pos = this->layer->removeElement(s, false);
         this->page->fireElementChanged(s);

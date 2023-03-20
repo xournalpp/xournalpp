@@ -30,6 +30,7 @@
 #include "undo/ScaleUndoAction.h"                 // for ScaleUndoAction
 #include "undo/SizeUndoAction.h"                  // for SizeUndoAction
 #include "undo/UndoRedoHandler.h"                 // for UndoRedoHandler
+#include "util/safe_casts.h"                      // for as_signed
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 #include "view/ElementContainerView.h"            // for ElementContainerView
@@ -316,7 +317,7 @@ void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo) {
     // Because the elements are already removed
     // and owned by the selection, therefore the layer
     // doesn't know the index anymore
-    int index = layer->getElements().size();
+    Element::Index index = as_signed(layer->getElements().size());
     for (Element* e: this->selected) {
         undo->addElement(layer, e, index);
     }
