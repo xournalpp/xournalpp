@@ -42,7 +42,7 @@ int SidebarPreviewPageEntry::getWidgetHeight() {
 
 void SidebarPreviewPageEntry::setIndex(size_t index) { this->index = index; }
 
-size_t SidebarPreviewPageEntry::getIndex() { return this->index; }
+size_t SidebarPreviewPageEntry::getIndex() const { return this->index; }
 
 bool SidebarPreviewPageEntry::isSelected() const { return this->selected; }
 

@@ -29,7 +29,7 @@ public:
     PreviewRenderType getRenderType() override;
 
     void setIndex(size_t index);
-    size_t getIndex();
+    size_t getIndex() const;
 
     bool isSelected() const;
     double getZoom() const;
