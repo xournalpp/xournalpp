@@ -53,9 +53,9 @@ void PagePreviewDecoration::drawPageNumberWithCircleBackground(cairo_t* cr, Side
     // Set the color for drawing the circle. This circle is required to provide good contrast for the page number.
     if (pageEntry->isSelected()) {
         Color color = control->getSettings()->getBorderColor();
-        Util::cairo_set_source_rgbi(cr, color, LABEL_OPACITY);
+        Util::cairo_set_source_rgbi(cr, color, CIRCLE_LABEL_OPACITY);
     } else {
-        Util::cairo_set_source_rgbi(cr, Colors::xopp_darkslategray, LABEL_OPACITY);
+        Util::cairo_set_source_rgbi(cr, Colors::xopp_darkslategray, CIRCLE_LABEL_OPACITY);
     }
 
     // How many pixels to indent the circle center from the widget border
@@ -96,7 +96,7 @@ void PagePreviewDecoration::drawPageNumberWithSquareBackground(cairo_t* cr, Side
     if (pageEntry->isSelected()) {
         Util::cairo_set_source_rgbi(cr, control->getSettings()->getBorderColor());
     } else {
-        Util::cairo_set_source_rgbi(cr, control->getSettings()->getBackgroundColor());
+        Util::cairo_set_source_rgbi(cr, Colors::xopp_darkslategray);
 
         // In case the page is not selected draw a border around the preview to match the selected
         // See discussion: <https://github.com/xournalpp/xournalpp/issues/4624#issue-1557719574>
@@ -108,19 +108,21 @@ void PagePreviewDecoration::drawPageNumberWithSquareBackground(cairo_t* cr, Side
         cairo_stroke(cr);
     }
 
+    // Calculate the rectangle width depending on the page index number of digits
+    double recWidth = std::max(extents.width + 8, SQUARE_SIZE);
+
+    // Calculate the position of the upper left corner of the square
+    double x = pageEntry->getWidth() - SQUARE_INDENT_RIGHT - recWidth;
+    double y = pageEntry->getHeight() - SQUARE_INDENT_BOTTOM - SQUARE_SIZE;
+
     // Draw an square in the lower right corner
-    double x = pageEntry->getWidth() - SQUARE_INDENT_RIGHT, y = pageEntry->getHeight() - SQUARE_INDENT_BOTTOM;
     cairo_set_line_width(cr, LINE_WIDTH);
-    cairo_rectangle(cr, x, y, SQUARE_SIZE, SQUARE_SIZE);
+    cairo_rectangle(cr, x, y, recWidth, SQUARE_SIZE);
     cairo_stroke_preserve(cr);
     cairo_fill(cr);
 
     // Draw the page number in the center of the square
-    cairo_move_to(cr, x + SQUARE_TEXT_X - (extents.width / 2 + extents.x_bearing), y + SQUARE_TEXT_Y);
-    if (pageEntry->isSelected()) {
-        Util::cairo_set_source_argb(cr, Colors::white);
-    } else {
-        Util::cairo_set_source_argb(cr, Colors::black);
-    }
+    cairo_move_to(cr, x + recWidth / 2 - (extents.width / 2 + extents.x_bearing), y + SQUARE_TEXT_Y);
+    Util::cairo_set_source_argb(cr, Colors::white);
     cairo_show_text(cr, pageNumber.c_str());
 }
