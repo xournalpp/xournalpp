@@ -44,6 +44,8 @@ void execInUiThread(std::function<void()>&& callback, gint priority = G_PRIORITY
 
 gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
 
+void cairo_set_dash_from_vector(cairo_t* cr, const std::vector<double>& dashes, double offset);
+
 /**
  * Format coordinates to use 8 digits of precision https://m.xkcd.com/2170/
  * This function directly writes to the given OutputStream.

@@ -1,91 +1,76 @@
 #include "StrokeStyle.h"
 
-#include <cstring>  // for memcmp, strcmp, strncmp
-#include <vector>   // for vector
-
-#include <glib.h>  // for g_ascii_strtod, g_free, g_strdup_printf
+#include <cstring>   // for memcmp, strcmp, strncmp
+#include <iomanip>   // for setprecision
+#include <iterator>  // for ostream_iterator
+#include <map>       // for map
+#include <sstream>   // for istringstream
+#include <vector>    // for vector
 
 #include "model/LineStyle.h"  // for LineStyle
 
-StrokeStyle::StrokeStyle() = default;
+namespace {
 
-StrokeStyle::~StrokeStyle() = default;
+constexpr auto CUSTOM_KEY = "cust: ";
 
-const double dashLinePattern[] = {6, 3};
-const double dashDotLinePattern[] = {6, 3, 0.5, 3};
-const double dotLinePattern[] = {0.5, 3};
+const std::map<std::string, std::vector<double>> predefinedPatterns = {
+        {"dash", {6, 3}}, {"dashdot", {6, 3, 0.5, 3}}, {"dot", {0.5, 3}}};
 
-#define PARSE_STYLE(name, def)                                \
-    if (strcmp(style, name) == 0) {                           \
-        LineStyle style;                                      \
-        style.setDashes(def, sizeof(def) / sizeof((def)[0])); \
-        return style;                                         \
-    }
+auto formatStyle(const std::vector<double>& dashes) -> std::string {
 
-auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
-    PARSE_STYLE("dash", dashLinePattern);
-    PARSE_STYLE("dashdot", dashDotLinePattern);
-    PARSE_STYLE("dot", dotLinePattern);
-
-
-    if (strncmp("cust: ", style, 6) != 0) {
-        return LineStyle();
-    }
-
-    std::vector<double> dash;
-
-    const char* widths = style + 6;
-    while (*widths != 0) {
-        char* tmpptr = nullptr;
-        double val = g_ascii_strtod(widths, &tmpptr);
-        if (tmpptr == widths) {
-            break;
+    // Check if dashes match named predefined dashes.
+    for (auto& pair: predefinedPatterns) {
+        if (pair.second == dashes) {
+            return pair.first;
         }
-        widths = tmpptr;
-        dash.push_back(val);
     }
 
-    if (dash.empty()) {
+    // Else generate custom dashes string
+    std::ostringstream custom;
+    custom << std::setprecision(2) << std::fixed;
+    custom << CUSTOM_KEY;
+    std::copy(dashes.begin(), dashes.end(), std::ostream_iterator<double>(custom, " "));
+
+    // Return dashes string with traling space removed.
+    return custom.str().substr(0, custom.str().length() - 1);
+}
+
+}  // namespace
+
+auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
+    auto it = predefinedPatterns.find(style);
+    if (it != predefinedPatterns.end()) {
+        LineStyle ls;
+        std::vector<double> dashes = it->second;
+        ls.setDashes(std::move(dashes));
+        return ls;
+    }
+
+    if (style.substr(0, strlen(CUSTOM_KEY)) != CUSTOM_KEY) {
         return LineStyle();
     }
 
-    auto* dashesArr = new double[dash.size()];
-    for (int i = 0; i < static_cast<int>(dash.size()); i++) { dashesArr[i] = dash[i]; }
+    std::stringstream dashStream(style);
+    std::vector<double> dashes;
+
+    dashStream.seekg(strlen(CUSTOM_KEY));
+    for (double value; dashStream >> value;) {
+        dashes.push_back(value);
+    }
+
+    if (dashes.empty()) {
+        return LineStyle();
+    }
 
     LineStyle ls;
-    ls.setDashes(dashesArr, static_cast<int>(dash.size()));
-    delete[] dashesArr;
-
+    ls.setDashes(std::move(dashes));
     return ls;
 }
 
-#define FORMAT_STYLE(name, def)                                                                            \
-    if (count == (sizeof(def) / sizeof((def)[0])) && memcmp(dashes, def, count * sizeof((def)[0])) == 0) { \
-        return name;                                                                                       \
-    }
-
-auto StrokeStyle::formatStyle(const double* dashes, int count) -> std::string {
-    FORMAT_STYLE("dash", dashLinePattern);
-    FORMAT_STYLE("dashdot", dashDotLinePattern);
-    FORMAT_STYLE("dot", dotLinePattern);
-
-    std::string custom = "cust:";
-
-    for (int i = 0; i < count; i++) {
-        custom += " ";
-        char* str = g_strdup_printf("%0.2lf", dashes[i]);
-        custom += str;
-        g_free(str);
-    }
-
-    return custom;
-}
-
 auto StrokeStyle::formatStyle(const LineStyle& style) -> std::string {
-    const double* dashes = nullptr;
-    int dashCount = 0;
-    if (style.getDashes(dashes, dashCount)) {
-        return StrokeStyle::formatStyle(dashes, dashCount);
+    const auto& dashes = style.getDashes();
+    if (!dashes.empty()) {
+        return ::formatStyle(dashes);
     }
 
     // Should not be returned, in this case the attribute is not written

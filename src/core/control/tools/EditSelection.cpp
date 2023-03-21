@@ -29,6 +29,7 @@
 #include "undo/InsertUndoAction.h"                 // for InsertsUndoAction
 #include "undo/UndoRedoHandler.h"                  // for UndoRedoHandler
 #include "util/Range.h"                            // for Range
+#include "util/Util.h"                             // for cairo_set_dash_from_vector
 #include "util/i18n.h"                             // for _
 #include "util/serializing/ObjectInputStream.h"    // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"   // for ObjectOutputStream
@@ -994,8 +995,8 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
     // set the line always the same size on display
     cairo_set_line_width(cr, 1);
 
-    const double dashes[] = {10.0, 10.0};
-    cairo_set_dash(cr, dashes, sizeof(dashes) / sizeof(dashes[0]), 0);
+    const std::vector<double> dashes = {10.0, 10.0};
+    Util::cairo_set_dash_from_vector(cr, dashes, 0);
     gdk_cairo_set_source_rgba(cr, &selectionColor);
 
     cairo_rectangle(cr, std::min(x, x + width) * zoom, std::min(y, y + height) * zoom, std::abs(width) * zoom,

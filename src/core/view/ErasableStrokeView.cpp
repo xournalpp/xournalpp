@@ -15,6 +15,7 @@
 #include "util/Color.h"                   // for cairo_set_source_rgbi
 #include "util/Interval.h"                // for Interval
 #include "util/Rectangle.h"               // for Rectangle
+#include "util/Util.h"                    // for cairo_set_dash_from_vector
 
 #include "Mask.h"          // for Mask
 #include "StrokeView.h"    // for StrokeView, StrokeView::CAI...
@@ -34,10 +35,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
 
     const Stroke& stroke = this->erasableStroke.stroke;
 
-    const double* dashes = nullptr;
-    int dashCount = 0;
-    stroke.getLineStyle().getDashes(dashes, dashCount);
-    assert((dashCount == 0 && dashes == nullptr) || (dashCount != 0 && dashes != nullptr));
+    const auto& dashes = stroke.getLineStyle().getDashes();
 
     const std::vector<Point>& data = stroke.getPointVector();
 
@@ -54,8 +52,8 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
 
             auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)interval.max.index + 1);
             for (auto it = std::next(data.cbegin(), (std::ptrdiff_t)interval.min.index + 1); it != endIt; ++it) {
-                if (dashes) {
-                    cairo_set_dash(cr, dashes, dashCount, dashOffset);
+                if (!dashes.empty()) {
+                    Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
                     dashOffset += lastPoint->lineLengthTo(*it);
                     lastPoint = &(*it);
                 }
@@ -65,8 +63,8 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
                 cairo_move_to(cr, it->x, it->y);
             }
 
-            if (dashes) {
-                cairo_set_dash(cr, dashes, dashCount, dashOffset);
+            if (!dashes.empty()) {
+                Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
             }
 
             Point q = stroke.getPoint(interval.max);
@@ -75,7 +73,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
         }
     } else {
         cairo_set_line_width(cr, stroke.getWidth());
-        cairo_set_dash(cr, dashes, dashCount, 0);
+        Util::cairo_set_dash_from_vector(cr, dashes, 0);
 
         bool mergeFirstAndLast = this->erasableStroke.isClosedStroke() &&
                                  stroke.getToolType() == StrokeTool::HIGHLIGHTER && sections.size() >= 2 &&

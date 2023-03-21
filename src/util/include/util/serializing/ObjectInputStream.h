@@ -14,6 +14,7 @@
 #include <cstddef>  // for size_t
 #include <sstream>  // for istringstream
 #include <string>   // for string
+#include <vector>   // for vector
 
 class ObjectInputStream {
 public:
@@ -34,6 +35,8 @@ public:
     std::string readString();
 
     void readData(void** data, int* len);
+    template <typename T>
+    void readData(std::vector<T>& data);
 
     /// Reads raw image data from the stream.
     std::string readImage();
@@ -48,3 +51,5 @@ private:
     size_t pos();
     size_t len = 0;
 };
+
+extern template void ObjectInputStream::readData(std::vector<double>& data);

@@ -5,6 +5,8 @@
 #include "util/serializing/ObjectEncoding.h"  // for ObjectEncoding
 #include "util/serializing/Serializable.h"    // for XML_VERSION_STR
 
+template void ObjectOutputStream::writeData(const std::vector<double>& data);
+
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder) {
     g_assert(encoder != nullptr);
     this->encoder = encoder;
@@ -44,7 +46,7 @@ void ObjectOutputStream::writeString(const char* str) { writeString(std::string(
 
 void ObjectOutputStream::writeString(const std::string& s) {
     this->encoder->addStr("_s");
-    int len = s.length();
+    int len = static_cast<int>(s.length());
     this->encoder->addData(&len, sizeof(int));
     this->encoder->addData(s.c_str(), len);
 }
@@ -58,6 +60,16 @@ void ObjectOutputStream::writeData(const void* data, int len, int width) {
     if (data != nullptr) {
         this->encoder->addData(data, len * width);
     }
+}
+
+template <typename T>
+void ObjectOutputStream::writeData(const std::vector<T>& data) {
+    this->encoder->addStr("_b");
+    const int len = static_cast<int>(data.size());
+    const int width = sizeof(T);
+    this->encoder->addData(&len, sizeof(int));
+    this->encoder->addData(&width, sizeof(int));
+    this->encoder->addData(data.data(), static_cast<int>(data.size() * sizeof(T)));
 }
 
 void ObjectOutputStream::writeImage(const std::string_view& imgData) {

@@ -3181,7 +3181,7 @@ void Control::setFill(bool fill) {
 }
 
 void Control::setLineStyle(const string& style) {
-    LineStyle stl = StrokeStyle::parseStyle(style.c_str());
+    LineStyle stl = StrokeStyle::parseStyle(style);
 
     EditSelection* sel = nullptr;
     if (this->win) {
