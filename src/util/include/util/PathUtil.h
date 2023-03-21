@@ -15,11 +15,13 @@
 #include <optional>  // for optional
 #include <string>    // for string, allocator, basic_string
 
-#include <gio/gio.h>    // for GFile
-#include <glib.h>       // for g_free, GError, g_error_free, g_filename_fro...
-#include <sys/types.h>  // for ssize_t
+#include <gio/gio.h>  // for GFile
+#include <glib.h>     // for g_free, GError, g_error_free, g_filename_fro...
+
+#include "util/safe_casts.h"  // for as_signed
 
 #include "filesystem.h"  // for path, u8path
+
 
 namespace Util {
 /**
@@ -93,7 +95,7 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
     auto u8path = path.u8string();
     size_t pSize{0};
     GError* err{};
-    auto* local = g_filename_from_utf8(u8path.c_str(), ssize_t(u8path.size()), nullptr, &pSize, &err);
+    auto* local = g_filename_from_utf8(u8path.c_str(), as_signed(u8path.size()), nullptr, &pSize, &err);
     if (err) {
         g_message("Failed to convert g_filename from utf8 with error code: %d\n%s", err->code, err->message);
         g_error_free(err);

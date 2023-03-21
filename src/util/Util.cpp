@@ -7,13 +7,18 @@
 #include <vector>   // for vector
 
 #include <gdk/gdk.h>  // for gdk_cairo_set_source_rgba, gdk_t...
-#include <unistd.h>   // for getpid, pid_t
 
 #include "util/Color.h"              // for argb_to_GdkRGBA, rgb_to_GdkRGBA
 #include "util/OutputStream.h"       // for OutputStream
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/XojMsgBox.h"          // for XojMsgBox
 #include "util/i18n.h"               // for FS, _F
+
+#if defined(_MSC_VER)
+#include <windows.h>
+#else
+#include <unistd.h>  // for getpid, pid_t
+#endif
 
 struct CallbackUiData {
     explicit CallbackUiData(std::function<void()> callback): callback(std::move(callback)) {}
@@ -53,8 +58,13 @@ void Util::cairo_set_source_argb(cairo_t* cr, Color color) {
     gdk_cairo_set_source_rgba(cr, &rgba);
 }
 
-auto Util::getPid() -> pid_t { return ::getpid(); }
-
+auto Util::getPid() -> PID {
+#if defined(_MSC_VER)
+    return GetCurrentProcessId();
+#else
+    return ::getpid();
+#endif
+}
 
 auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboolean {
     GtkAllocation alloc;

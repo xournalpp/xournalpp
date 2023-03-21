@@ -11,19 +11,25 @@
 
 #pragma once
 
+#include <cstdlib>     // size_t
 #include <functional>  // for function
 #include <limits>      // for numeric_limits
 
-#include <cairo.h>      // for cairo_t
-#include <glib.h>       // for G_PRIORITY_DEFAULT_IDLE, gboolean, gchar, gint
-#include <gtk/gtk.h>    // for GtkWidget
-#include <sys/types.h>  // for pid_t, size_t
+#include <cairo.h>    // for cairo_t
+#include <glib.h>     // for G_PRIORITY_DEFAULT_IDLE, gboolean, gchar, gint
+#include <gtk/gtk.h>  // for GtkWidget
 
 class OutputStream;
 
 namespace Util {
 
-pid_t getPid();
+#if defined(_MSC_VER)
+using PID = uint32_t;  // DWORD
+#else
+using PID = int32_t;  // pid
+#endif
+
+auto getPid() -> PID;
 
 /**
  * Wrap the system call to redirect errors to a dialog

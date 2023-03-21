@@ -155,11 +155,11 @@ public:
      */
     xoj::util::Rectangle<double> getOriginalBounds() const;
 
-    const static struct {
+    constexpr static struct {
         bool operator()(std::pair<Element*, Element::Index> p1, std::pair<Element*, Element::Index> p2) {
             return p1.second < p2.second;
         }
-    } insertOrderCmp;
+    } insertOrderCmp{};
 
 public:
     // Serialize interface

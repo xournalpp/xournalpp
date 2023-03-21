@@ -4,6 +4,8 @@
 
 #ifdef ENABLE_PLUGINS
 
+#include "plugin/Plugin.h"  // for ToolbarButtonEntry
+
 #include "PluginToolButton.h"
 
 PluginToolButton::PluginToolButton(ActionHandler* handler, ToolbarButtonEntry* t):
