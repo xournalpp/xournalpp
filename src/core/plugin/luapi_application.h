@@ -2022,7 +2022,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
 /**
  * Open application Library
  */
-LUAMOD_API int luaopen_app(lua_State* L) {
+inline int luaopen_app(lua_State* L) {
     luaL_newlib(L, applib);
     //	lua_pushnumber(L, MSG_BT_OK);
     //	lua_setfield(L, -2, "MSG_BT_OK");

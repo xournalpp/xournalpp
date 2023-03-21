@@ -194,10 +194,10 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
  * (or nullptr if there are no Text elements)
  */
 auto EditSelectionContents::setFont(XojFont& font) -> UndoActionPtr {
-    double x1 = 0.0 / 0.0;
-    double x2 = 0.0 / 0.0;
-    double y1 = 0.0 / 0.0;
-    double y2 = 0.0 / 0.0;
+    double x1 = std::numeric_limits<double>::quiet_NaN();
+    double x2 = std::numeric_limits<double>::quiet_NaN();
+    double y1 = std::numeric_limits<double>::quiet_NaN();
+    double y2 = std::numeric_limits<double>::quiet_NaN();
 
     auto undo = std::make_unique<FontUndoAction>(this->sourcePage, this->sourceLayer);
 

@@ -28,7 +28,7 @@ stamp-h1
 ppa-build
 
 # CMake
-build/
+build*/
 desktop/desktop_install.sh
 
 # NetBeans
