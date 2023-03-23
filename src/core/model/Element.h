@@ -22,7 +22,7 @@
 class ObjectInputStream;
 class ObjectOutputStream;
 
-enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT };
+enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT, ELEMENT_LINK };
 
 class ShapeContainer {
 public:
