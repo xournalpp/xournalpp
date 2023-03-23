@@ -18,4 +18,13 @@ class Link;
 class xoj::view::LinkView: public xoj::view::ElementView {
 public:
     LinkView(const Link* link);
+    ~LinkView() = default;
+
+    /**
+     * Draws a Link model to a cairo surface
+     */
+    void draw(const Context& ctx) const override;
+
+private:
+    const Link* link;
 };

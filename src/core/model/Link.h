@@ -13,12 +13,17 @@
 
 #include <string>
 
-#include "AudioElement.h"  // for AudioElement
-#include "Font.h"          // for XojFont
+#include "Element.h"  // for Element
+#include "Font.h"     // for XojFont
 
-class Link: public AudioElement {
+class Element;
+class ObjectInputStream;
+class ObjectOutputStream;
+
+class Link: public Element {
 public:
     Link();
+    ~Link() override = default;
 
 public:
     void setText(std::string text);
@@ -35,10 +40,20 @@ public:
 
 public:
     /**
-     * @override
+     * @override (required)
+     */
+    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
+    void rotate(double x0, double y0, double th) override;
+    Link* clone() const override;
+
+    /**
+     * @override (optional)
      */
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
+
+protected:
+    void calcSize() const override;
 
 private:
     XojFont font;

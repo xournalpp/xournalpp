@@ -5,21 +5,29 @@
 #include <utility>    // for move
 
 #include "model/Layer.h"     // for Layer, Layer::Index
+#include "model/Link.h"      // TODO: Remove only for testing
 #include "model/PageType.h"  // for PageType, PageTypeFormat, PageTypeForma...
 #include "util/Assert.h"     // for xoj_assert
 #include "util/i18n.h"       // for _
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height, bool suppressLayerCreation): width(width), height(height), bgType(PageTypeFormat::Lined) {
+XojPage::XojPage(double width, double height, bool suppressLayerCreation):
+        width(width), height(height), bgType(PageTypeFormat::Lined) {
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
+
+        // TODO: Remove only for testing purpose
+
+        this->getLayers()->at(0)->addElement(new Link());
     }
 }
 
 XojPage::~XojPage() {
-    for (Layer* l: this->layer) { delete l; }
+    for (Layer* l: this->layer) {
+        delete l;
+    }
     this->layer.clear();
 }
 
