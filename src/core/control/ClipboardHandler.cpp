@@ -94,9 +94,7 @@ public:
         this->str = std::move(str);
     }
 
-    ~ClipboardContents() {
-        g_object_unref(this->image);
-    }
+    ~ClipboardContents() { g_object_unref(this->image); }
 
 
     static void getFunction(GtkClipboard* clipboard, GtkSelectionData* selection, guint info,

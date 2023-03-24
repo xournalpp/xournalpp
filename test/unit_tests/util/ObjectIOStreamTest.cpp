@@ -76,9 +76,7 @@ void testReadDataType(const std::vector<T>& data) {
     EXPECT_EQ(data, outputData);
 }
 
-TEST(UtilObjectIOStream, testReadData) {
-    testReadDataType<double>(std::vector<double>{0, 42., -42.});
-}
+TEST(UtilObjectIOStream, testReadData) { testReadDataType<double>(std::vector<double>{0, 42., -42.}); }
 
 TEST(UtilObjectIOStream, testReadImage) {
     // Generate a "random" image and serialize/deserialize it.

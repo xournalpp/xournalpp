@@ -1,10 +1,10 @@
 #include "util/serializing/ObjectOutputStream.h"
 
-#include <cairo.h>  // for CAIRO_STATUS_SUCCESS
-
 #include <cassert>
 
-#include "util/serializing/Serializable.h"    // for XML_VERSION_STR
+#include <cairo.h>  // for CAIRO_STATUS_SUCCESS
+
+#include "util/serializing/Serializable.h"  // for XML_VERSION_STR
 
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder) {
     assert(encoder != nullptr);
