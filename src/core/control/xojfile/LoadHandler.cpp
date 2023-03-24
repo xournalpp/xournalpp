@@ -18,6 +18,7 @@
 #include "model/Font.h"                        // for XojFont
 #include "model/Image.h"                       // for Image
 #include "model/Layer.h"                       // for Layer
+#include "model/Link.h"                        // for Link
 #include "model/PageType.h"                    // for PageType, PageTypeFormat
 #include "model/Point.h"                       // for Point
 #include "model/Stroke.h"                      // for Stroke, StrokeCapStyle
@@ -46,9 +47,9 @@ using std::string;
     }
 
 namespace {
-    constexpr size_t MAX_VERSION_LENGTH = 50;
-    constexpr size_t MAX_MIMETYPE_LENGTH = 25;
-}
+constexpr size_t MAX_VERSION_LENGTH = 50;
+constexpr size_t MAX_MIMETYPE_LENGTH = 25;
+}  // namespace
 
 LoadHandler::LoadHandler():
         attachedPdfMissing(false),
@@ -325,7 +326,7 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/true);
+        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/ true);
 
         pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {
@@ -722,6 +723,32 @@ void LoadHandler::parseTexImage() {
     this->teximage->setText(string(imText, imTextLen));
 }
 
+void LoadHandler::parseLink() {
+    this->link = new Link();
+    this->layer->addElement(this->link);
+
+    const char* sFont = LoadHandlerHelper::getAttrib("font", false, this);
+    double fontSize = LoadHandlerHelper::getAttribDouble("size", this);
+    double x = LoadHandlerHelper::getAttribDouble("x", this);
+    double y = LoadHandlerHelper::getAttribDouble("y", this);
+    const char* url = LoadHandlerHelper::getAttrib("url", false, this);
+    const char* text = LoadHandlerHelper::getAttrib("text", false, this);
+
+    this->link->setText(std::string(g_uri_unescape_string(text, NULL)));
+    this->link->setUrl(std::string(g_uri_unescape_string(url, NULL)));
+
+    this->link->setX(x);
+    this->link->setY(y);
+
+    XojFont& f = link->getFont();
+    f.setName(sFont);
+    f.setSize(fontSize);
+    const char* sColor = LoadHandlerHelper::getAttrib("color", false, this);
+    Color color{0U};
+    LoadHandlerHelper::parseColor(sColor, color, this);
+    link->setColor(color);
+}
+
 void LoadHandler::parseAttachment() {
     if (this->pos != PARSER_POS_IN_IMAGE && this->pos != PARSER_POS_IN_TEXIMAGE) {
         g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
@@ -775,6 +802,10 @@ void LoadHandler::parseLayer() {
     {
         this->pos = PARSER_POS_IN_TEXIMAGE;
         parseTexImage();
+    } else if (!strcmp(elementName, "link")) {  // start of a link item
+        std::cout << "Detected link xml node" << std::endl;
+        this->pos = PARSER_POS_IN_LINK;
+        parseLink();
     }
 }
 
@@ -909,6 +940,9 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
     } else if (handler->pos == PARSER_POS_IN_TEXT && strcmp(elementName, "text") == 0) {
         handler->pos = PARSER_POS_IN_LAYER;
         handler->text = nullptr;
+    } else if (handler->pos == PARSER_POS_IN_LINK && strcmp(elementName, "link") == 0) {
+        handler->pos = PARSER_POS_IN_LAYER;
+        handler->link = nullptr;
     } else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(elementName, "image") == 0) {
         xoj_assert_message(handler->image->getImage() != nullptr, "image can't be rendered");
         handler->pos = PARSER_POS_IN_LAYER;

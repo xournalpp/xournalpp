@@ -24,6 +24,7 @@
 #include "model/Image.h"                       // for Image
 #include "model/Layer.h"                       // for Layer
 #include "model/LineStyle.h"                   // for LineStyle
+#include "model/Link.h"                        // for Link
 #include "model/PageType.h"                    // for PageType
 #include "model/Point.h"                       // for Point
 #include "model/Stroke.h"                      // for Stroke, StrokeCapStyle
@@ -208,6 +209,20 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
             image->setAttrib("top", i->getY());
             image->setAttrib("right", i->getX() + i->getElementWidth());
             image->setAttrib("bottom", i->getY() + i->getElementHeight());
+        } else if (e->getType() == ELEMENT_LINK) {
+            auto* l = dynamic_cast<Link*>(e);
+            auto* link = new XmlNode("link");
+            layer->addChild(link);
+
+            XojFont& f = l->getFont();
+
+            link->setAttrib("font", f.getName().c_str());
+            link->setAttrib("size", f.getSize());
+            link->setAttrib("x", l->getX());
+            link->setAttrib("y", l->getY());
+            link->setAttrib("color", getColorStr(l->getColor()).c_str());
+            link->setAttrib("url", g_uri_escape_string(l->getUrl().c_str(), NULL, false));
+            link->setAttrib("text", g_uri_escape_string(l->getText().c_str(), NULL, false));
         }
     }
 }
