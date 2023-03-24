@@ -56,6 +56,7 @@ enum AVAILABLECURSORS {
     CRSR_DRAWDIRCTRL,       // "
     CRSR_DRAWDIRSHIFTCTRL,  // "
     CRSR_RESIZE,
+    CRSR_LINK,
 
     CRSR_END_OF_CURSORS
 };
@@ -102,6 +103,7 @@ XournalppCursor::XournalppCursor(Control* control): control(control) {
 	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
     cssCursors[CRSR_RESIZE              ] =     {"",""};            // "
+    cssCursors[CRSR_LINK                ] =     {"alias", "crosshair"};
 };
 // clang-format on
 
@@ -293,14 +295,14 @@ void XournalppCursor::updateCursor() {
             } else {
                 cursor = getEraserCursor();
             }
-        }
-
-        else if (type == TOOL_TEXT) {
+        } else if (type == TOOL_TEXT) {
             if (this->invisible) {
                 setCursor(CRSR_BLANK_CURSOR);
             } else {
                 setCursor(CRSR_XTERM);
             }
+        } else if (type == TOOL_LINK) {
+            setCursor(CRSR_LINK);
         } else if (type == TOOL_IMAGE) {
             setCursor(CRSR_TCROSS);
         } else if (type == TOOL_FLOATING_TOOLBOX) {
@@ -541,6 +543,8 @@ void XournalppCursor::setCursor(int cursorID) {
     }
 
     GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), cssCursors[cursorID].cssName);
+    std::cout << "Change cursor -> id: " << cursorID << "; name: " << cssCursors[cursorID].cssName
+              << "; isNull: " << (cursor == nullptr) << std::endl;
     if (cursor == nullptr)  // failed to get a cursor, try backup cursor.
     {
         if (cursorID != CRSR_nullptr) {
