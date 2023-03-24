@@ -393,6 +393,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         link->setUrl("http://google.com");
         link->setX(x), link->setY(y);
         this->getPage()->getSelectedLayer()->addElement(link);
+        this->rerenderPage();
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
