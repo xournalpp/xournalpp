@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Displays a text Element
+ * Displays a link element
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
