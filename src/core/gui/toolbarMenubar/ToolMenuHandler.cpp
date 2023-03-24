@@ -568,6 +568,7 @@ void ToolMenuHandler::initToolItems() {
                                 _("Highlighter"));
 
     emplaceCustomItemWithTarget("TEXT", Action::SELECT_TOOL, TOOL_TEXT, "tool-text", _("Text"));
+    emplaceCustomItemWithTarget("LINK", Action::SELECT_TOOL, GROUP_TOOL, "tool-text", _("Add/Edit Link"));
     emplaceCustomItem("MATH_TEX", Action::TEX, "tool-math-tex", _("Add/Edit TeX"));
     emplaceCustomItemWithTarget("IMAGE", Action::SELECT_TOOL, TOOL_IMAGE, "tool-image", _("Image"));
     emplaceCustomItem("DEFAULT_TOOL", Action::SELECT_DEFAULT_TOOL, "default", _("Default Tool"));

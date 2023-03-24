@@ -568,6 +568,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         case ACTION_TOOL_TEXT:
             actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_TEXT);
             break;
+        case ACTION_TOOL_LINK:
+            clearSelection();
+            if (enabled) {
+                selectTool(TOOL_LINK);
+            }
+            break;
         case ACTION_TOOL_IMAGE:
             actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_IMAGE);
             break;
