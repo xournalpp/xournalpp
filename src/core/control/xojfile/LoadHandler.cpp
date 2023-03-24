@@ -803,7 +803,6 @@ void LoadHandler::parseLayer() {
         this->pos = PARSER_POS_IN_TEXIMAGE;
         parseTexImage();
     } else if (!strcmp(elementName, "link")) {  // start of a link item
-        std::cout << "Detected link xml node" << std::endl;
         this->pos = PARSER_POS_IN_LINK;
         parseLink();
     }
