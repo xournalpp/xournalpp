@@ -190,7 +190,6 @@ void ToolHandler::selectTool(ToolType type) {
         return;
     }
     this->toolbarSelectedTool = &getTool(type);
-    std::cout << "Selected tool: " << this->toolbarSelectedTool->getName() << std::endl;
     // set activeTool is necessary for fireToolChanged()
     // if called after this method
     // to result in the correct Button shown as active

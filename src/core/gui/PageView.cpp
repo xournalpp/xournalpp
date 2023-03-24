@@ -52,6 +52,7 @@
 #include "model/Document.h"                         // for Document
 #include "model/Element.h"                          // for Element, ELEMENT_...
 #include "model/Layer.h"                            // for Layer, Layer::Index
+#include "model/Link.h"                             // for Link
 #include "model/LinkDestination.h"                  // for LinkDestination
 #include "model/PageRef.h"                          // for PageRef
 #include "model/Stroke.h"                           // for Stroke
@@ -386,6 +387,12 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
+    } else if (h->getToolType() == TOOL_LINK) {
+        Link* link = new Link();
+        link->setText("Hello World");
+        link->setUrl("http://google.com");
+        link->setX(x), link->setY(y);
+        this->getPage()->getSelectedLayer()->addElement(link);
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);

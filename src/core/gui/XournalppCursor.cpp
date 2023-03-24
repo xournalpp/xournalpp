@@ -543,8 +543,6 @@ void XournalppCursor::setCursor(int cursorID) {
     }
 
     GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), cssCursors[cursorID].cssName);
-    std::cout << "Change cursor -> id: " << cursorID << "; name: " << cssCursors[cursorID].cssName
-              << "; isNull: " << (cursor == nullptr) << std::endl;
     if (cursor == nullptr)  // failed to get a cursor, try backup cursor.
     {
         if (cursorID != CRSR_nullptr) {
