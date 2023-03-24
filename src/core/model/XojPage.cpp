@@ -5,7 +5,6 @@
 #include <utility>    // for move
 
 #include "model/Layer.h"     // for Layer, Layer::Index
-#include "model/Link.h"      // TODO: Remove only for testing
 #include "model/PageType.h"  // for PageType, PageTypeFormat, PageTypeForma...
 #include "util/Assert.h"     // for xoj_assert
 #include "util/i18n.h"       // for _
@@ -17,10 +16,6 @@ XojPage::XojPage(double width, double height, bool suppressLayerCreation):
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
-
-        // TODO: Remove only for testing purpose
-
-        this->getLayers()->at(0)->addElement(new Link());
     }
 }
 

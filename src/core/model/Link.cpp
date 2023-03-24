@@ -9,12 +9,7 @@
 Link::Link(): Element(ELEMENT_LINK) {
     this->font.setName("Sans");
     this->font.setSize(12);
-
-    // TODO: Remove, just for testing purpose
     this->setColor(Colors::magenta);
-    this->setX(20);
-    this->setY(20);
-    this->setText("Hello World");
 }
 
 void Link::setText(std::string text) { this->text = text; }

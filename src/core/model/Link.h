@@ -59,5 +59,5 @@ private:
     XojFont font;
     std::string text;
     std::string url;
-    bool inEditing;
+    bool inEditing = false;
 };
