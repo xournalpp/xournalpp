@@ -85,7 +85,9 @@ void testReadDataType(const std::array<T, N>& data) {
     stream.readData((void**)&outputData, &length);
     EXPECT_EQ(length, (int)N);
 
-    for (size_t i = 0; i < (size_t)length / sizeof(T); ++i) { EXPECT_EQ(outputData[i], data.at(i)); }
+    for (size_t i = 0; i < (size_t)length / sizeof(T); ++i) {
+        EXPECT_EQ(outputData[i], data.at(i));
+    }
 }
 
 template <typename T>
@@ -122,7 +124,9 @@ TEST(UtilObjectIOStream, testReadImage) {
     int width = cairo_image_surface_get_width(surface);
     int height = cairo_image_surface_get_height(surface);
 
-    for (int i = 0; i < width * height * 4; ++i) { surfaceData[i] = distrib(gen); }
+    for (int i = 0; i < width * height * 4; ++i) {
+        surfaceData[i] = distrib(gen);
+    }
 
     std::string strSurface = serializeImage(surface);
 
@@ -143,7 +147,9 @@ TEST(UtilObjectIOStream, testReadImage) {
     EXPECT_EQ(width, widthOutput);
     EXPECT_EQ(height, heightOutput);
 
-    for (int i = 0; i < width * height * 4; ++i) { EXPECT_EQ(surfaceData[i], outputData[i]); }
+    for (int i = 0; i < width * height * 4; ++i) {
+        EXPECT_EQ(surfaceData[i], outputData[i]);
+    }
 
     cairo_surface_destroy(surface);
     cairo_surface_destroy(outputSurface);
@@ -157,7 +163,9 @@ TEST(UtilObjectIOStream, testReadString) {
 
     std::vector<std::pair<std::string, std::string>> testData;
     testData.reserve(stringToTest.size());
-    for (auto&& str: stringToTest) { testData.emplace_back(serializeString(str), str); }
+    for (auto&& str: stringToTest) {
+        testData.emplace_back(serializeString(str), str);
+    }
 
     for (auto&& data: testData) {
         std::string& str = data.first;
@@ -176,7 +184,9 @@ TEST(UtilObjectIOStream, testReadSizeT) {
 
     std::vector<std::pair<std::string, size_t>> testData;
     testData.reserve(sizeTToTest.size());
-    for (size_t number: sizeTToTest) { testData.emplace_back(serializeSizeT(number), number); }
+    for (size_t number: sizeTToTest) {
+        testData.emplace_back(serializeSizeT(number), number);
+    }
 
     for (auto&& data: testData) {
         std::string& str = data.first;
@@ -195,7 +205,9 @@ TEST(UtilObjectIOStream, testReadInt) {
 
     std::vector<std::pair<std::string, int>> testData;
     testData.reserve(intToTest.size());
-    for (auto&& number: intToTest) { testData.emplace_back(serializeInt(number), number); }
+    for (auto&& number: intToTest) {
+        testData.emplace_back(serializeInt(number), number);
+    }
 
     for (auto&& data: testData) {
         std::string& str = data.first;
@@ -215,7 +227,9 @@ TEST(UtilObjectIOStream, testReadDouble) {
 
     std::vector<std::pair<std::string, double>> testData;
     testData.reserve(doubleToTest.size());
-    for (auto&& number: doubleToTest) { testData.emplace_back(serializeDouble(number), number); }
+    for (auto&& number: doubleToTest) {
+        testData.emplace_back(serializeDouble(number), number);
+    }
 
     for (auto&& data: testData) {
         std::string& str = data.first;
@@ -314,7 +328,9 @@ void assertStrokeEquality(const Stroke& stroke1, const Stroke& stroke2) {
     std::vector<Point> points2 = stroke2.getPointVector();
 
     EXPECT_EQ(points1.size(), points2.size());
-    for (size_t i = 0; i < points1.size(); ++i) { EXPECT_TRUE(points1[i].equalsPos(points2[i])); }
+    for (size_t i = 0; i < points1.size(); ++i) {
+        EXPECT_TRUE(points1[i].equalsPos(points2[i]));
+    }
 }
 
 TEST(UtilObjectIOStream, testReadStroke) {
