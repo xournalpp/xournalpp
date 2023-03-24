@@ -13,6 +13,11 @@
 
 #include <string>
 
+#include <pango/pango-layout.h>  // for Layout
+#include <pango/pango.h>         // for Pango
+
+#include "util/raii/GObjectSPtr.h"  // For GObjectSPtr
+
 #include "Element.h"  // for Element
 #include "Font.h"     // for XojFont
 
@@ -37,6 +42,8 @@ public:
 
     void setFont(const XojFont& font);
     XojFont& getFont();
+
+    xoj::util::GObjectSPtr<PangoLayout> createPangoLayout() const;
 
 public:
     /**

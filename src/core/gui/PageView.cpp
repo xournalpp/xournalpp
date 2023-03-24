@@ -388,16 +388,12 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
     } else if (h->getToolType() == TOOL_LINK) {
-        std::cout << "Create Link: " << std::endl;
-        std::cout << "  Layer:" << this->getPage()->getSelectedLayerId() << std::endl;
-        std::cout << "  Position: " << x << "/" << y << std::endl;
-
-        /*Link* link = new Link();
+        Link* link = new Link();
         link->setText("Hello World");
         link->setUrl("http://google.com");
         link->setX(x), link->setY(y);
         this->getPage()->getSelectedLayer()->addElement(link);
-        this->rerenderPage();*/
+        this->rerenderPage();
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);

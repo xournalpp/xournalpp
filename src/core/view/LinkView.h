@@ -11,6 +11,10 @@
 
 #pragma once
 
+#include <pango/pangocairo.h>  // for PangoLayout, cairo_t
+
+#include "util/raii/GObjectSPtr.h"
+
 #include "View.h"  // for ElementView
 
 class Link;
@@ -24,6 +28,11 @@ public:
      * Draws a Link model to a cairo surface
      */
     void draw(const Context& ctx) const override;
+
+    /**
+     * Initialize a Pango layout
+     */
+    static xoj::util::GObjectSPtr<PangoLayout> initPango(cairo_t* cr, const Link* l);
 
 private:
     const Link* link;

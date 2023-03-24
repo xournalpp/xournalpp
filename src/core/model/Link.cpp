@@ -10,6 +10,7 @@ Link::Link(): Element(ELEMENT_LINK) {
     this->font.setName("Sans");
     this->font.setSize(12);
     this->setColor(Colors::magenta);
+    this->text = "Hello World";
 }
 
 void Link::setText(std::string text) { this->text = text; }
@@ -77,6 +78,24 @@ Link* Link::clone() const {
 };
 
 void Link::calcSize() const {
-    this->width = 200;
-    this->height = 20;
+    auto layout = this->createPangoLayout();
+    pango_layout_set_text(layout.get(), this->text.c_str(), static_cast<int>(this->text.length()));
+    int w = 0, h = 0;
+    pango_layout_get_size(layout.get(), &w, &h);
+    this->width = (static_cast<double>(w)) / PANGO_SCALE;
+    this->height = (static_cast<double>(h)) / PANGO_SCALE;
+    std::cout << "Calculated size: " << this->width << "/" << this->height << std::endl;
 };
+
+auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
+    xoj::util::GObjectSPtr<PangoContext> context(pango_context_new(), xoj::util::adopt);
+    pango_context_set_font_map(context.get(), pango_cairo_font_map_get_default());
+    xoj::util::GObjectSPtr<PangoLayout> layout(pango_layout_new(context.get()), xoj::util::adopt);
+
+    PangoFontDescription* font = pango_font_description_from_string(this->font.getName().c_str());
+    pango_font_description_set_absolute_size(font, this->font.getSize() * PANGO_SCALE);
+    pango_layout_set_font_description(layout.get(), font);
+    pango_font_description_free(font);
+
+    return layout;
+}
