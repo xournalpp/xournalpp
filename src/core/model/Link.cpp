@@ -84,7 +84,6 @@ void Link::calcSize() const {
     pango_layout_get_size(layout.get(), &w, &h);
     this->width = (static_cast<double>(w)) / PANGO_SCALE;
     this->height = (static_cast<double>(h)) / PANGO_SCALE;
-    std::cout << "Calculated size: " << this->width << "/" << this->height << std::endl;
 };
 
 auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {

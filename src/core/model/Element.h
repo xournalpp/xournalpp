@@ -65,6 +65,7 @@ public:
 
     virtual bool intersectsArea(const GdkRectangle* src) const;
     virtual bool intersectsArea(double x, double y, double width, double height) const;
+    virtual bool containsPoint(double x, double y) const;
 
     virtual bool isInSelection(ShapeContainer* container) const;
 

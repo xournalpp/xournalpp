@@ -36,6 +36,7 @@
 #include "control/tools/ImageHandler.h"             // for ImageHandler
 #include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
+#include "control/tools/LinkEditor.h"               // for LinkEditor
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
 #include "control/tools/RulerHandler.h"             // for RulerHandler
@@ -388,12 +389,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
     } else if (h->getToolType() == TOOL_LINK) {
-        Link* link = new Link();
-        link->setText("Hello World");
-        link->setUrl("http://google.com");
-        link->setX(x), link->setY(y);
-        this->getPage()->getSelectedLayer()->addElement(link);
-        this->rerenderPage();
+        LinkEditor editor(xournal->getControl(), xournal->getWidget());
+        editor.startEditing(this->getPage(), x, y);
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);

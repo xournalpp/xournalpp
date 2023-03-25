@@ -105,6 +105,12 @@ auto Element::intersectsArea(double x, double y, double width, double height) co
     return (dest_w > 0 && dest_h > 0);
 }
 
+auto Element::containsPoint(double x, double y) const -> bool {
+    bool horizontal = x >= getX() && x <= getX() + getElementWidth();
+    bool vertical = y >= getY() && y <= getY() + getElementHeight();
+    return horizontal && vertical;
+}
+
 auto Element::isInSelection(ShapeContainer* container) const -> bool {
     if (!container->contains(getX(), getY())) {
         return false;
