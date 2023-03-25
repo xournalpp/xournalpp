@@ -18,9 +18,9 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const std::string& glade, c
     auto filepath = this->gladeSearchPath->findFile("", glade);
 
     GError* error = nullptr;
-    builder = gtk_builder_new();
+    builder.reset(gtk_builder_new(), xoj::util::adopt);
 
-    if (!gtk_builder_add_from_file(builder, filepath.u8string().c_str(), &error)) {
+    if (!gtk_builder_add_from_file(builder.get(), filepath.u8string().c_str(), &error)) {
         std::string msg =
                 FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filepath.u8string());
 
@@ -42,11 +42,10 @@ GladeGui::~GladeGui() {
     if (!gtk_widget_get_parent(window)) {
         gtk_widget_destroy(window);
     }
-    g_object_unref(builder);
 }
 
 auto GladeGui::get(const std::string& name) -> GtkWidget* {
-    GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder, name.c_str()));
+    GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder.get(), name.c_str()));
     if (w == nullptr) {
         g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name.c_str());
     }
@@ -57,8 +56,4 @@ auto GladeGui::getWindow() const -> GtkWidget* { return this->window; }
 
 auto GladeGui::getGladeSearchPath() const -> GladeSearchpath* { return this->gladeSearchPath; }
 
-auto GladeGui::getBuilder() const -> GtkBuilder* { return this->builder; }
-
-GladeGui::operator GdkWindow*() { return gtk_widget_get_window(GTK_WIDGET(getWindow())); }
-
-GladeGui::operator GtkWindow*() { return GTK_WINDOW(getWindow()); }
+auto GladeGui::getBuilder() const -> GtkBuilder* { return this->builder.get(); }

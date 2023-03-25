@@ -57,12 +57,10 @@ void FullscreenHandler::hideWidget(MainWindow* win, const std::string& widgetNam
     }
 }
 
-void FullscreenHandler::enableFullscreen(MainWindow* win) {
-    gtk_window_fullscreen(static_cast<GtkWindow*>(*win));
-}
+void FullscreenHandler::enableFullscreen(MainWindow* win) { gtk_window_fullscreen(GTK_WINDOW(win->getWindow())); }
 
 void FullscreenHandler::disableFullscreen(MainWindow* win) {
-    gtk_window_unfullscreen(static_cast<GtkWindow*>(*win));
+    gtk_window_unfullscreen(GTK_WINDOW(win->getWindow()));
 
     for (GtkWidget* w: hiddenFullscreenWidgets) { gtk_widget_show(w); }
     hiddenFullscreenWidgets.clear();

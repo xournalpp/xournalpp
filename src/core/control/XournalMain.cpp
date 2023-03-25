@@ -497,7 +497,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
         if (g_strv_length(app_data->optFilename) != 1) {
             const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
                                       "Others are ignored.");
-            XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
+            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
         }
 
         const fs::path p = Util::fromGFilename(app_data->optFilename[0], false);
@@ -513,7 +513,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
             const std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
                                           "You have to copy the file to a local directory.") %
                                        p.u8string() % e.what());
-            XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
+            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
             opened = app_data->control->newFile("", p);
         }
     } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
