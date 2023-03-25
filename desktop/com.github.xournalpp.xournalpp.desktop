@@ -21,3 +21,11 @@ StartupNotify=true
 MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;application/x-xopt;application/pdf;
 Icon=com.github.xournalpp.xournalpp
 Categories=Office;GNOME;GTK;
+Actions=new-instance;
+
+[Desktop Action new-instance]
+Name=New instance
+Name[de]=Neue Instanz
+Name[fr]=Nouvelle instance
+Name[ru]=Новый экземпляр
+Exec=xournalpp %f
