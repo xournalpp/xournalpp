@@ -35,7 +35,6 @@
 #include "control/settings/SettingsEnums.h"                      // for Button
 #include "control/settings/ViewModes.h"                          // for ViewM..
 #include "control/tools/EditSelection.h"                         // for Edit...
-#include "control/tools/LinkEditor.h"                            // for LinkEditor
 #include "control/tools/TextEditor.h"                            // for Text...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
@@ -167,8 +166,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
 
     this->pluginController = new PluginController(this);
     this->pluginController->registerToolbar();
-
-    // this->linkEditor = new LinkEditor(this, this->win->getXournal()->getWidget());
 }
 
 Control::~Control() {
@@ -2981,8 +2978,6 @@ auto Control::getTextEditor() -> TextEditor* {
     }
     return nullptr;
 }
-
-// auto Control::getLinkEditor() -> LinkEditor* { return this->linkEditor; }
 
 auto Control::getGladeSearchPath() const -> GladeSearchpath* { return this->gladeSearchPath; }
 

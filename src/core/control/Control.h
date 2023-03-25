@@ -253,8 +253,6 @@ public:
 
     TextEditor* getTextEditor();
 
-    // LinkEditor* getLinkEditor();
-
     GladeSearchpath* getGladeSearchPath() const;
 
     void disableSidebarTmp(bool disabled);
