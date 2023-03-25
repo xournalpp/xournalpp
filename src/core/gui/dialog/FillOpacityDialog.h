@@ -11,26 +11,29 @@
 
 #pragma once
 
-#include <gtk/gtk.h>  // for GtkWindow
+#include <functional>
 
-#include "gui/GladeGui.h"  // for GladeGui
+#include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
 
-class FillOpacityDialog: public GladeGui {
+namespace xoj::popup {
+class FillOpacityDialog {
 public:
-    FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen);
-    ~FillOpacityDialog() override;
+    FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen, std::function<void(int, bool)> callback);
+    ~FillOpacityDialog();
 
-public:
-    void show(GtkWindow* parent) override;
-
-    int getResultAlpha() const;
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
     void setPreviewImage(int alpha);
 
 private:
-    int resultAlpha = -1;
+    xoj::util::GtkWindowUPtr window;
+    GtkImage* previewImage;
+    GtkRange* alphaRange;
+
     bool pen;
+    std::function<void(int, bool)> callback;
 };
+};  // namespace xoj::popup

@@ -1144,20 +1144,15 @@ void Control::selectFillAlpha(bool pen) {
         alpha = toolHandler->getHighlighterFill();
     }
 
-    FillOpacityDialog dlg(gladeSearchPath, alpha, pen);
+    auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::FillOpacityDialog>(gladeSearchPath, alpha, pen,
+                                                                             [&th = *toolHandler](int alpha, bool pen) {
+                                                                                 if (pen) {
+                                                                                     th.setPenFill(alpha);
+                                                                                 } else {
+                                                                                     th.setHighlighterFill(alpha);
+                                                                                 }
+                                                                             });
     dlg.show(getGtkWindow());
-
-    if (dlg.getResultAlpha() == -1) {
-        return;
-    }
-
-    alpha = dlg.getResultAlpha();
-
-    if (pen) {
-        toolHandler->setPenFill(alpha);
-    } else {
-        toolHandler->setHighlighterFill(alpha);
-    }
 }
 
 void Control::clearSelectionEndText() {
