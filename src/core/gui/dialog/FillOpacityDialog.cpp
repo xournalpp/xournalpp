@@ -1,38 +1,67 @@
 #include "FillOpacityDialog.h"
 
-#include <memory>  // for allocator
+#include <cmath>
 
 #include <cairo.h>        // for cairo_set_operator, cairo_rectangle, cairo_...
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <glib.h>         // for gdouble
 
+#include "gui/Builder.h"
+#include "util/raii/CairoWrappers.h"
+#include "util/raii/GObjectSPtr.h"
+
 class GladeSearchpath;
 
-FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen):
-        GladeGui(gladeSearchPath, "fillOpacity.glade", "fillOpacityDialog"), pen(pen) {
-    GtkWidget* scaleAlpha = get("scaleAlpha");
+constexpr auto UI_FILE = "fillOpacity.glade";
+constexpr auto UI_DIALOG_NAME = "fillOpacityDialog";
 
-    gtk_range_set_value(GTK_RANGE(scaleAlpha), static_cast<int>(alpha / 255.0 * 100));
+static int percentToByte(double percent) { return static_cast<int>(std::round(percent * 2.55)); }
+static double byteToPercent(int byte) { return byte / 2.55; }
+
+xoj::popup::FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen,
+                                                 std::function<void(int, bool)> callback):
+        pen(pen), callback(callback) {
+    Builder builder(gladeSearchPath, UI_FILE);
+    this->window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
+
+    previewImage = GTK_IMAGE(builder.get("imgPreview"));
+    alphaRange = GTK_RANGE(builder.get("scaleAlpha"));
+
+    gtk_range_set_value(alphaRange, byteToPercent(alpha));
 
     setPreviewImage(alpha);
 
-    g_signal_connect(scaleAlpha, "change-value",
+    g_signal_connect(alphaRange, "change-value",
                      G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, FillOpacityDialog* self) {
-                         self->setPreviewImage((int)(value / 100 * 255));
+                         self->setPreviewImage(percentToByte(value));
                          gtk_range_set_value(range, value);
                      }),
                      this);
+
+    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
+    g_signal_connect(builder.get("btOk"), "clicked", G_CALLBACK(+[](GtkButton*, FillOpacityDialog* self) {
+                         self->callback(percentToByte(gtk_range_get_value(self->alphaRange)), self->pen);
+                         gtk_window_close(self->window.get());
+                     }),
+                     this);
+
+#if GTK_MAJOR_VERSION == 3
+    // Widgets are visible by default in gtk4
+    gtk_widget_show_all(builder.get("dialog-main-box"));
+#endif
 }
 
-FillOpacityDialog::~FillOpacityDialog() = default;
+xoj::popup::FillOpacityDialog::~FillOpacityDialog() = default;
 
 const int PREVIEW_WIDTH = 70;
 const int PREVIEW_HEIGTH = 50;
 const int PREVIEW_BORDER = 10;
 
-void FillOpacityDialog::setPreviewImage(int alpha) {
-    cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, PREVIEW_WIDTH, PREVIEW_HEIGTH);
-    cairo_t* cr = cairo_create(surface);
+void xoj::popup::FillOpacityDialog::setPreviewImage(int alpha) {
+    xoj::util::CairoSurfaceSPtr surface(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, PREVIEW_WIDTH, PREVIEW_HEIGTH),
+                                        xoj::util::adopt);
+    xoj::util::CairoSPtr cairo(cairo_create(surface.get()), xoj::util::adopt);
+    cairo_t* cr = cairo.get();
 
     cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
     cairo_set_source_rgb(cr, 255, 255, 255);
@@ -53,27 +82,7 @@ void FillOpacityDialog::setPreviewImage(int alpha) {
         cairo_stroke(cr);
     }
 
-    cairo_destroy(cr);
-
-    GtkWidget* preview = get("imgPreview");
-    gtk_image_set_from_surface(GTK_IMAGE(preview), surface);
-
-    cairo_surface_destroy(surface);
-}
-
-auto FillOpacityDialog::getResultAlpha() const -> int { return resultAlpha; }
-
-void FillOpacityDialog::show(GtkWindow* parent) {
-    gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    int result = gtk_dialog_run(GTK_DIALOG(this->window));
-    gtk_widget_hide(this->window);
-
-    // OK Button
-    if (result == 1) {
-
-        GtkWidget* scaleAlpha = get("scaleAlpha");
-        resultAlpha = static_cast<int>(gtk_range_get_value(GTK_RANGE(scaleAlpha)) * 255.0 / 100.0);
-    } else {
-        resultAlpha = -1;
-    }
+    xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(
+            gdk_pixbuf_get_from_surface(surface.get(), 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGTH), xoj::util::adopt);
+    gtk_image_set_from_pixbuf(previewImage, pixbuf.get());
 }
