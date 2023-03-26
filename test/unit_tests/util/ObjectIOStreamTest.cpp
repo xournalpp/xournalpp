@@ -29,8 +29,9 @@ std::string serializeDataVector(const std::vector<T>& data) {
 
 std::string serializeImage(cairo_surface_t* surf) {
     ObjectOutputStream outStream(new BinObjectEncoding);
-    std::string data{reinterpret_cast<char*>(cairo_image_surface_get_data(surf))};
-    outStream.writeImage(data);
+    auto length = cairo_image_surface_get_stride(surf) * cairo_image_surface_get_height(surf);
+    auto data = cairo_image_surface_get_data(surf);
+    outStream.writeImage(std::vector<std::byte>(reinterpret_cast<std::byte*>(data), reinterpret_cast<std::byte*>(data) + length));
     return outStream.getStr();
 }
 
@@ -68,7 +69,7 @@ template <typename T>
 void testReadDataType(const std::vector<T>& data) {
     std::string str = serializeDataVector<T>(data);
     ObjectInputStream stream;
-    EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+    EXPECT_TRUE(stream.read(&str[0], (int)str.size()));
 
     std::vector<T> outputData;
     stream.readData(outputData);
@@ -99,10 +100,10 @@ TEST(UtilObjectIOStream, testReadImage) {
     ObjectInputStream stream;
     EXPECT_TRUE(stream.read(&strSurface[0], (int)strSurface.size() + 1));
 
-    std::string outputStr = stream.readImage();
+    auto output = stream.readImage();
 
     cairo_surface_t* outputSurface =
-            cairo_image_surface_create_for_data(reinterpret_cast<unsigned char*>(outputStr.data()), format, width,
+            cairo_image_surface_create_for_data(reinterpret_cast<unsigned char*>(output.data()), format, width,
                                                 height, cairo_format_stride_for_width(format, width));
     EXPECT_NE(outputSurface, nullptr);
 
