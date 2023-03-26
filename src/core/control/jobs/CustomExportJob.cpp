@@ -9,6 +9,7 @@
 #include "control/jobs/BaseExportJob.h"        // for BaseExportJob::ExportType
 #include "control/xojfile/XojExportHandler.h"  // for XojExportHandler
 #include "gui/MainWindow.h"                    // for MainWindow
+#include "gui/PopupWindowWrapper.h"            // for PopupWindowWrapper
 #include "gui/dialog/ExportDialog.h"           // for ExportDialog
 #include "model/Document.h"                    // for Document
 #include "pdf/base/XojPdfExport.h"             // for XojPdfExport
@@ -19,6 +20,7 @@
 
 #include "ImageExport.h"  // for ImageExport, EXPORT_GR...
 #include "SaveJob.h"      // for SaveJob
+#include "XournalScheduler.h"
 
 
 CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Custom Export")) {
@@ -56,45 +58,49 @@ auto CustomExportJob::testAndSetFilepath(const fs::path& file) -> bool {
 
 auto CustomExportJob::showFilechooser() -> bool {
     if (!BaseExportJob::showFilechooser()) {
+        control->unblock();
         return false;
     }
 
     if (filepath.extension() == ".xoj") {
         exportTypeXoj = true;
+        control->getScheduler()->addJob(this, JOB_PRIORITY_NONE);
         return true;
     }
 
-    Document* doc = control->getDocument();
-    doc->lock();
-    ExportDialog dlg(control->getGladeSearchPath());
-    if (filepath.extension() == ".pdf") {
-        dlg.showProgressiveMode();
+    if (auto ext = filepath.extension(); ext == ".pdf") {
         format = EXPORT_GRAPHICS_PDF;
-    } else if (filepath.extension() == ".svg") {
-        dlg.removeQualitySetting();
+    } else if (ext == ".svg") {
         format = EXPORT_GRAPHICS_SVG;
-    } else if (filepath.extension() == ".png") {
+    } else if (ext == ".png") {
         format = EXPORT_GRAPHICS_PNG;
+    } else {
+        g_warning("Unknown extension");
     }
 
-    dlg.initPages(control->getCurrentPageNo() + 1, doc->getPageCount());
+    this->ref();
+    xoj::popup::PopupWindowWrapper<xoj::popup::ExportDialog> popup(
+            control->getGladeSearchPath(), format, control->getCurrentPageNo() + 1,
+            control->getDocument()->getPageCount(), [job = this](const xoj::popup::ExportDialog& dialog) {
+                if (dialog.isConfirmed()) {
+                    job->exportRange = dialog.getRange();
+                    job->progressiveMode = dialog.progressiveModeSelected();
+                    job->exportBackground = dialog.getBackgroundType();
 
-    dlg.show(GTK_WINDOW(control->getWindow()->getWindow()));
+                    if (job->format == EXPORT_GRAPHICS_PNG) {
+                        job->pngQualityParameter = dialog.getPngQualityParameter();
+                    }
 
-    if (!dlg.isConfirmed()) {
-        doc->unlock();
-        return false;
-    }
+                    job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
+                } else {
+                    // The job blocked, so we have to unblock, because the job
+                    // unblocks only after run
+                    job->control->unblock();
+                }
+                job->unref();
+            });
+    popup.show(GTK_WINDOW(control->getWindow()->getWindow()));
 
-    exportRange = dlg.getRange();
-    progressiveMode = dlg.progressiveMode();
-    exportBackground = dlg.getBackgroundType();
-
-    if (format == EXPORT_GRAPHICS_PNG) {
-        pngQualityParameter = dlg.getPngQualityParameter();
-    }
-
-    doc->unlock();
     return true;
 }
 

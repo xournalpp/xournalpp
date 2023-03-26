@@ -2739,7 +2739,9 @@ void Control::exportAsPdf() {
 
 void Control::exportAs() {
     this->clearSelectionEndText();
-    exportBase(new CustomExportJob(this));
+    CustomExportJob* job = new CustomExportJob(this);
+    job->showFilechooser();
+    job->unref();
 }
 
 void Control::exportBase(BaseExportJob* job) {
