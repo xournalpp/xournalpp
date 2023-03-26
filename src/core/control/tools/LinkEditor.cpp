@@ -2,7 +2,10 @@
 
 #include <iostream>
 
-#include "model/XojPage.h"  // for XojPage
+#include "control/Control.h"        // for Control
+#include "gui/GladeSearchpath.h"    // for GladeSearchPath
+#include "gui/dialog/LinkDialog.h"  // for LinkDialog
+#include "model/XojPage.h"          // for XojPage
 
 LinkEditor::LinkEditor(Control* control, GtkWidget* xournalWidget): control(control), documentWidget(xournalWidget) {
     std::cout << "LinkEditor created" << std::endl;
@@ -23,11 +26,30 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
 
     if (this->linkElement == nullptr) {
         std::cout << "New LinkElement to be created!" << std::endl;
+
+        LinkDialog dialog(this->control);
+        int response = dialog.show();
+        if (response == LinkDialog::CANCEL) {
+            return;
+        }
         Link* link = new Link();
-        link->setText("Hello World");
-        link->setUrl("http://google.com");
+        link->setText(dialog.getText());
+        link->setUrl(dialog.getURL());
         link->setX(x), link->setY(y);
         page->getSelectedLayer()->addElement(link);
         page->firePageChanged();
+
+    } else {
+        std::cout << "Existing LinkElement to be edited!" << std::endl;
+
+        LinkDialog dialog(this->control);
+        dialog.preset(this->linkElement->getText(), this->linkElement->getUrl());
+        int response = dialog.show();
+        if (response == LinkDialog::CANCEL) {
+            return;
+        }
+        this->linkElement->setText(dialog.getText());
+        this->linkElement->setUrl(dialog.getURL());
+        page->fireElementChanged(this->linkElement);
     }
 }
