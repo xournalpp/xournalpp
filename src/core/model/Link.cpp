@@ -90,6 +90,9 @@ auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
     xoj::util::GObjectSPtr<PangoContext> context(pango_context_new(), xoj::util::adopt);
     pango_context_set_font_map(context.get(), pango_cairo_font_map_get_default());
     xoj::util::GObjectSPtr<PangoLayout> layout(pango_layout_new(context.get()), xoj::util::adopt);
+    PangoAttrList* attrList = pango_attr_list_new();
+    pango_attr_list_insert(attrList, pango_attr_underline_new(PANGO_UNDERLINE_SINGLE));
+    pango_layout_set_attributes(layout.get(), attrList);
 
     PangoFontDescription* font = pango_font_description_from_string(this->font.getName().c_str());
     pango_font_description_set_absolute_size(font, this->font.getSize() * PANGO_SCALE);
