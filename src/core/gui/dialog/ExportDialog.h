@@ -12,54 +12,62 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <functional>
 
 #include <gtk/gtk.h>  // for GtkComboBox, GtkWindow
 
 #include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
 #include "control/jobs/ImageExport.h"    // for RasterImageQualityParameter
-#include "gui/GladeGui.h"                // for GladeGui
-#include "util/ElementRange.h"           // for PageRangeVector
+#include "gui/Builder.h"
+#include "util/ElementRange.h"  // for PageRangeVector
+#include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
 
-class ExportDialog: public GladeGui {
+namespace xoj::popup {
+class ExportDialog {
 public:
-    ExportDialog(GladeSearchpath* gladeSearchPath);
+    ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsFormat format, size_t currentPage, size_t pageCount,
+                 std::function<void(const ExportDialog&)> callbackFun);
+    ~ExportDialog();
 
 public:
-    void show(GtkWindow* parent) override;
-    void initPages(size_t current, size_t count);
     bool isConfirmed() const;
-    PageRangeVector getRange();
-    bool progressiveMode();
-    ExportBackgroundType getBackgroundType();
+    const PageRangeVector& getRange() const;
+    bool progressiveModeSelected() const;
+    ExportBackgroundType getBackgroundType() const;
 
     /**
      * @brief Reads the quality parameter from the dialog
      *
      * @return The selected quality parameter
      */
-    RasterImageQualityParameter getPngQualityParameter();
+    RasterImageQualityParameter getPngQualityParameter() const;
 
-    /**
-     * @brief Hides the quality settings
-     */
-    void removeQualitySetting();
+    inline GtkWindow* getWindow() const { return window.get(); }
 
-    /**
-     * @brief Show "progressive mode" checkbox and hide quality settings
-     * (both cannot be shown at the same time)
-     */
-    void showProgressiveMode();
-
+private:
     /**
      * @brief Handler for changes in combobox cbQuality
      */
     static void selectQualityCriterion(GtkComboBox* comboBox, ExportDialog* self);
 
+    static void onSuccessCallback(ExportDialog* self);
+
 private:
+    xoj::util::GtkWindowUPtr window;
+
     size_t currentPage = 0;
     size_t pageCount = 0;
 
     bool confirmed = false;
+    bool progressiveMode;
+    ExportBackgroundType backgroundType;
+    RasterImageQualityParameter qualityParameter;
+    PageRangeVector pageRanges;
+
+    Builder builder;
+
+    std::function<void(const ExportDialog&)> callbackFun;
 };
+};  // namespace xoj::popup
