@@ -57,15 +57,14 @@ private:
 // This function requires that T is read from its binary representation to work (e.g. integer type)
 template <typename T>
 T readTypeFromSStream(std::istringstream& istream) {
-    if (istream.str().size() < sizeof(T)) {
-        std::ostringstream oss;
-        oss << "End reached: trying to read " << sizeof(T) << " bytes while only " << istream.str().size()
-            << " bytes available";
-        throw InputStreamException(oss.str(), __FILE__, __LINE__);
-    }
     T output;
 
     istream.read((char*)&output, sizeof(T));
+    if (istream.fail()) {
+        std::ostringstream oss;
+        oss << "End reached: trying to read " << sizeof(T) << " bytes";
+        throw InputStreamException(oss.str(), __FILE__, __LINE__);
+    }
 
     return output;
 }
@@ -74,10 +73,6 @@ template <typename T>
 void ObjectInputStream::readData(std::vector<T>& data) {
     checkType('b');
 
-    if (istream.str().size() < 2 * sizeof(int)) {
-        throw InputStreamException("End reached, but try to read data len and width", __FILE__, __LINE__);
-    }
-
     int len = readTypeFromSStream<int>(istream);
     int width = readTypeFromSStream<int>(istream);
 
@@ -85,12 +80,12 @@ void ObjectInputStream::readData(std::vector<T>& data) {
         throw InputStreamException("Data width mismatch requested type width", __FILE__, __LINE__);
     }
 
-    if (istream.str().size() < static_cast<size_t>(len * width)) {
-        throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
-    }
-
     if (len) {
         data.resize(len);
         istream.read((char*)data.data(), len * width);
+    }
+
+    if (istream.fail()) {
+        throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
     }
 }

@@ -76,14 +76,14 @@ auto ObjectInputStream::readString() -> std::string {
 
     size_t lenString = (size_t)readTypeFromSStream<int>(istream);
 
-    if (istream.str().size() < len) {
-        throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
-    }
-
     std::string output;
     output.resize(lenString);
 
     istream.read(&output[0], (long)lenString);
+    if (istream.fail()) {
+        throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
+    }
+
 
     return output;
 }
@@ -91,29 +91,31 @@ auto ObjectInputStream::readString() -> std::string {
 auto ObjectInputStream::readImage() -> const std::vector<std::byte> {
     checkType('m');
 
-    if (istream.str().size() < sizeof(size_t)) {
+
+    const size_t len = readTypeFromSStream<size_t>(istream);
+    if (istream.fail()) {
         throw InputStreamException("End reached, but try to read an image's data's length", __FILE__, __LINE__);
     }
 
-    const size_t len = readTypeFromSStream<size_t>(istream);
-    if (istream.str().size() < len) {
-        throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
-    }
     std::vector<std::byte> data;
     data.resize(len);
     istream.read(reinterpret_cast<char*>(data.data()), static_cast<int>(len));
+    if (istream.fail()) {
+        throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
+    }
 
     return data;
 }
 
 void ObjectInputStream::checkType(char type) {
-    if (istream.str().size() < 2) {
+    char t = 0, underscore = 0;
+    istream >> underscore >> t;
+
+    if (istream.fail()) {
         throw InputStreamException(FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}") % getType(type) %
                                       (uint32_t)pos() % (uint32_t)len),
                                    __FILE__, __LINE__);
     }
-    char t = 0, underscore = 0;
-    istream >> underscore >> t;
 
     if (underscore != '_') {
         throw InputStreamException(FS(FORMAT_STR("Expected type signature of {1}, index {2} of {3}, but read '{4}'") %
