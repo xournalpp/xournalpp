@@ -57,4 +57,4 @@ void ObjectOutputStream::writeImage(const std::vector<std::byte>& imgData) {
     this->encoder->addData(imgData.data(), static_cast<int>(len));
 }
 
-auto ObjectOutputStream::getStr() -> std::string { return this->encoder->getData(); }
+auto ObjectOutputStream::getData() -> std::vector<std::byte> const& { return this->encoder->getData(); }

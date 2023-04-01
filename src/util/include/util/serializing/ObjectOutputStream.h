@@ -39,7 +39,7 @@ public:
     /// Writes the raw image data to the output stream.
     void writeImage(const std::vector<std::byte>& imgData);
 
-    std::string getStr();
+    std::vector<std::byte> const& getData();
 
 private:
     ObjectEncoding* encoder = nullptr;

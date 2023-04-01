@@ -14,62 +14,62 @@
 #include "util/serializing/Serializable.h"
 
 template <typename T, unsigned N>
-std::string serializeData(const std::array<T, N>& data) {
+std::vector<std::byte> serializeData(const std::array<T, N>& data) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeData(&data[0], N, sizeof(T));
-    return outStream.getStr();
+    return outStream.getData();
 }
 
 template <typename T>
-std::string serializeDataVector(const std::vector<T>& data) {
+std::vector<std::byte> serializeDataVector(const std::vector<T>& data) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeData(data);
-    return outStream.getStr();
+    return outStream.getData();
 }
 
-std::string serializeImage(cairo_surface_t* surf) {
+std::vector<std::byte> serializeImage(cairo_surface_t* surf) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     auto length = cairo_image_surface_get_stride(surf) * cairo_image_surface_get_height(surf);
     auto data = cairo_image_surface_get_data(surf);
     outStream.writeImage(std::vector<std::byte>(reinterpret_cast<std::byte*>(data), reinterpret_cast<std::byte*>(data) + length));
-    return outStream.getStr();
+    return outStream.getData();
 }
 
-std::string serializeString(const std::string& str) {
+std::vector<std::byte> serializeString(const std::string& str) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeString(str);
-    return outStream.getStr();
+    return outStream.getData();
 }
 
-std::string serializeSizeT(size_t x) {
+std::vector<std::byte> serializeSizeT(size_t x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeSizeT(x);
-    return outStream.getStr();
+    return outStream.getData();
 }
 
-std::string serializeDouble(double x) {
+std::vector<std::byte> serializeDouble(double x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeDouble(x);
-    return outStream.getStr();
+    return outStream.getData();
 }
 
-std::string serializeInt(int x) {
+std::vector<std::byte> serializeInt(int x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeInt(x);
-    return outStream.getStr();
+    return outStream.getData();
 }
 
-std::string serializeStroke(Stroke& stroke) {
+std::vector<std::byte> serializeStroke(Stroke& stroke) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     stroke.serialize(outStream);
-    return outStream.getStr();
+    return outStream.getData();
 }
 
 template <typename T>
 void testReadDataType(const std::vector<T>& data) {
-    std::string str = serializeDataVector<T>(data);
+    auto serializedData = serializeDataVector<T>(data);
     ObjectInputStream stream;
-    EXPECT_TRUE(stream.read(&str[0], (int)str.size()));
+    EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size()));
 
     std::vector<T> outputData;
     stream.readData(outputData);
@@ -95,10 +95,10 @@ TEST(UtilObjectIOStream, testReadImage) {
         surfaceData[i] = distrib(gen);
     }
 
-    std::string strSurface = serializeImage(surface);
+    auto surf = serializeImage(surface);
 
     ObjectInputStream stream;
-    EXPECT_TRUE(stream.read(&strSurface[0], (int)strSurface.size() + 1));
+    EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(&surf[0]), (int)surf.size() + 1));
 
     auto output = stream.readImage();
 
@@ -128,19 +128,19 @@ TEST(UtilObjectIOStream, testReadString) {
             "Laborum beatae sit at. Tempore ex odio et non et iste et. Deleniti magni beatae quod praesentium dicta quas ducimus hic. Nemo vel est saepe voluptatibus. Sunt eveniet aut saepe consequatur fuga ad molestias.\n \
                 Culpa nulla saepe alias magni nemo magni. Sed sit sint repellat doloremque. Quo ipsum debitis quos impedit. Omnis expedita veritatis nihil sint et itaque possimus. Nobis est fugit vel omnis. Dolores architecto laudantium nihil rerum."};
 
-    std::vector<std::pair<std::string, std::string>> testData;
+    std::vector<std::pair<std::vector<std::byte>, std::string>> testData;
     testData.reserve(stringToTest.size());
     for (auto&& str: stringToTest) {
         testData.emplace_back(serializeString(str), str);
     }
 
     for (auto&& data: testData) {
-        std::string& str = data.first;
+        auto& serializedData = data.first;
         std::string& x = data.second;
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size() + 1));
         std::string output = stream.readString();
         EXPECT_EQ(x, output);
     }
@@ -149,19 +149,19 @@ TEST(UtilObjectIOStream, testReadString) {
 TEST(UtilObjectIOStream, testReadSizeT) {
     std::vector<size_t> sizeTToTest{0, 1, 42, 1337, 10000000, 10000000000};
 
-    std::vector<std::pair<std::string, size_t>> testData;
+    std::vector<std::pair<std::vector<std::byte>, size_t>> testData;
     testData.reserve(sizeTToTest.size());
     for (size_t number: sizeTToTest) {
         testData.emplace_back(serializeSizeT(number), number);
     }
 
     for (auto&& data: testData) {
-        std::string& str = data.first;
+        auto& serializedData = data.first;
         size_t x = data.second;
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size() + 1));
         size_t output = stream.readSizeT();
         EXPECT_EQ(x, output);
     }
@@ -170,19 +170,19 @@ TEST(UtilObjectIOStream, testReadSizeT) {
 TEST(UtilObjectIOStream, testReadInt) {
     std::vector<int> intToTest{0, 1, -1, 42, -50000, -1337, 10000};
 
-    std::vector<std::pair<std::string, int>> testData;
+    std::vector<std::pair<std::vector<std::byte>, int>> testData;
     testData.reserve(intToTest.size());
     for (auto&& number: intToTest) {
         testData.emplace_back(serializeInt(number), number);
     }
 
     for (auto&& data: testData) {
-        std::string& str = data.first;
+        auto& serializedData = data.first;
         int x = data.second;
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size() + 1));
         int output = stream.readInt();
         EXPECT_EQ(x, output);
     }
@@ -192,19 +192,19 @@ TEST(UtilObjectIOStream, testReadInt) {
 TEST(UtilObjectIOStream, testReadDouble) {
     std::vector<double> doubleToTest{0., 0.5, 42., 46.5, -85.2, -1337, 1e50};
 
-    std::vector<std::pair<std::string, double>> testData;
+    std::vector<std::pair<std::vector<std::byte>, double>> testData;
     testData.reserve(doubleToTest.size());
     for (auto&& number: doubleToTest) {
         testData.emplace_back(serializeDouble(number), number);
     }
 
     for (auto&& data: testData) {
-        std::string& str = data.first;
+        auto& serializedData = data.first;
         double dbl = data.second;
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size() + 1));
         double output = stream.readDouble();
         EXPECT_DOUBLE_EQ(dbl, output);
     }
@@ -237,10 +237,10 @@ TEST(UtilObjectIOStream, testReadComplexObject) {
             outStream.writeDouble(-d);
             outStream.endObject();
 
-            auto str = outStream.getStr();
+            auto data = outStream.getData();
 
             ObjectInputStream stream;
-            EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+            EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(&data[0]), (int)data.size() + 1));
 
             std::string outputName = stream.readObject();
             EXPECT_EQ(outputName, objectName);
@@ -337,9 +337,9 @@ TEST(UtilObjectIOStream, testReadStroke) {
     size_t i = 0;
     try {
         for (auto&& stroke: strokes) {
-            std::string out_string = serializeStroke(stroke);
+            auto outData = serializeStroke(stroke);
             ObjectInputStream istream;
-            istream.read(out_string.c_str(), (int)out_string.size());
+            istream.read(reinterpret_cast<const char *>(outData.data()), (int)outData.size());
 
             Stroke in_stroke;
             in_stroke.readSerialized(istream);

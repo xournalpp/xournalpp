@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <string>
+#include <vector>
+#include <string_view>
 
 class ObjectEncoding {
 public:
@@ -19,11 +20,10 @@ public:
     virtual ~ObjectEncoding();
 
 public:
-    void addStr(const char* str);
-    virtual void addData(const void* data, int len) = 0;
+    void addStr(const std::string_view& str);
+    virtual void addData(const void* data, size_t len) = 0;
 
-    std::string getData();
-
+    std::vector<std::byte> const& getData();
 public:
-    std::string data;
+    std::vector<std::byte> data;
 };

@@ -6,10 +6,8 @@ ObjectEncoding::ObjectEncoding() = default;
 
 ObjectEncoding::~ObjectEncoding() = default;
 
-void ObjectEncoding::addStr(const char* str) { this->data.append(std::string(str)); }
+void ObjectEncoding::addStr(const std::string_view &str) { this->addData(str.data(), str.length()); }
 
-auto ObjectEncoding::getData() -> std::string {
-    std::string res = this->data;
-    this->data.resize(0);
-    return res;
+auto ObjectEncoding::getData() -> std::vector<std::byte> const& {
+    return std::move(this->data);
 }
