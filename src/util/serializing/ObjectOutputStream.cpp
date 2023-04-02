@@ -58,3 +58,5 @@ void ObjectOutputStream::writeImage(const std::vector<std::byte>& imgData) {
 }
 
 auto ObjectOutputStream::getData() -> std::vector<std::byte> const& { return this->encoder->getData(); }
+
+auto ObjectOutputStream::stealData() -> std::vector<std::byte> { return this->encoder->stealData(); }

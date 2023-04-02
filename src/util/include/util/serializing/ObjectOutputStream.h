@@ -41,6 +41,8 @@ public:
 
     std::vector<std::byte> const& getData();
 
+    std::vector<std::byte> stealData();
+
 private:
     ObjectEncoding* encoder = nullptr;
 };

@@ -24,6 +24,7 @@ public:
     virtual void addData(const void* data, size_t len) = 0;
 
     std::vector<std::byte> const& getData();
+    std::vector<std::byte> stealData();
 
 public:
     std::vector<std::byte> data;
