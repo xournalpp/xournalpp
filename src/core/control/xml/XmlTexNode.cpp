@@ -5,7 +5,7 @@
 #include "control/xml/XmlNode.h"  // for XmlNode
 #include "util/OutputStream.h"    // for OutputStream
 
-XmlTexNode::XmlTexNode(const char* tag, const std::vector<std::byte>&& binaryData):
+XmlTexNode::XmlTexNode(const char* tag, std::vector<std::byte> const& binaryData):
         XmlNode(tag), binaryData(binaryData) {}
 
 XmlTexNode::~XmlTexNode() = default;

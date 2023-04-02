@@ -19,7 +19,7 @@ class OutputStream;
 
 class XmlTexNode: public XmlNode {
 public:
-    XmlTexNode(const char* tag, const std::vector<std::byte>&& binaryData);
+    XmlTexNode(const char* tag, std::vector<std::byte> const& binaryData);
     virtual ~XmlTexNode();
 
 public:
@@ -29,5 +29,5 @@ private:
     /**
      * Binary .PNG or .PDF
      */
-    const std::vector<std::byte> binaryData;
+    std::vector<std::byte> const& binaryData;
 };
