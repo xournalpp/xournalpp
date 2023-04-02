@@ -221,7 +221,7 @@ auto ClipboardHandler::copy() -> bool {
 
     targets = gtk_target_table_new_from_list(list, &n_targets);
 
-    auto* contents = new ClipboardContents(text, image, svgString->str, out.getData());
+    auto* contents = new ClipboardContents(text, image, svgString->str, std::move(out.getData()));
 
     gtk_clipboard_set_with_data(this->clipboard, targets, static_cast<guint>(n_targets),
                                 reinterpret_cast<GtkClipboardGetFunc>(ClipboardContents::getFunction),
