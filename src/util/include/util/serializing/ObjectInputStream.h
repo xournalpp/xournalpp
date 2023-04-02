@@ -41,7 +41,7 @@ public:
     void readData(std::vector<T>& data);
 
     /// Reads raw image data from the stream.
-    const std::vector<std::byte> readImage();
+    std::vector<std::byte> readImage();
 
 private:
     void checkType(const std::byte type);

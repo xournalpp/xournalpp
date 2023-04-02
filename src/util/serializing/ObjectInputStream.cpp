@@ -89,7 +89,7 @@ auto ObjectInputStream::readString() -> std::string {
     return output;
 }
 
-auto ObjectInputStream::readImage() -> const std::vector<std::byte> {
+auto ObjectInputStream::readImage() -> std::vector<std::byte> {
     checkType(std::byte('m'));
 
 
