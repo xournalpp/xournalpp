@@ -21,3 +21,5 @@ inline void gtk_box_append(GtkBox* box, GtkWidget* child) {
 }
 
 inline void gtk_box_remove(GtkBox* box, GtkWidget* child) { gtk_container_remove(GTK_CONTAINER(box), child); }
+
+inline void gtk_window_destroy(GtkWindow* win) { gtk_widget_destroy(GTK_WIDGET(win)); }
