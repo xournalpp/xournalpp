@@ -9,6 +9,7 @@
  * @license GNU GPLv2 or later
  */
 
+#include <filesystem>
 #include <fstream>
 
 #include <config-test.h>
@@ -22,10 +23,9 @@ TEST(Image, testGetImageApplyOrientation) {
 
     // Image width is 500px and height 130px - but has exif data saying image should be
     // rotated 90 deg CW to have correct orientation.
-    std::ifstream imageFile{GET_TESTFILE("images/r90.jpg"), std::ios::binary};
-    imageFile.seekg(0, std::ios::end);
-    const std::streamsize size = imageFile.tellg();
-    imageFile.seekg(0, std::ios::beg);
+    auto filepath = std::filesystem::path(GET_TESTFILE("images/r90.jpg"));
+    std::ifstream imageFile{filepath, std::ios::binary};
+    auto size = std::filesystem::file_size(filepath);
 
     std::vector<std::byte> imageData(size);
     imageFile.read(reinterpret_cast<char*>(imageData.data()), size);
