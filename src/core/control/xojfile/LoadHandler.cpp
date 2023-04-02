@@ -1165,7 +1165,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::optional<s
         return {};
     }
 
-    std::vector<std::byte> data(length, std::byte(0));
+    std::vector<std::byte> data(length);
     zip_uint64_t readBytes = 0;
     while (readBytes < length) {
         const zip_int64_t read = zip_fread(attachmentFile, data.data() + readBytes, length - readBytes);
