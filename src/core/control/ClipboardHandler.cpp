@@ -87,12 +87,8 @@ static GdkAtom atomSvg2 = gdk_atom_intern_static_string("image/svg+xml");
 // The contents of the clipboard
 class ClipboardContents {
 public:
-    ClipboardContents(string text, GdkPixbuf* image, string svg, std::vector<std::byte> str) {
-        this->text = std::move(text);
-        this->image = image;
-        this->svg = std::move(svg);
-        this->str = std::move(str);
-    }
+    ClipboardContents(string text, GdkPixbuf* image, string svg, std::vector<std::byte> str):
+            text(std::move(text)), image(image), svg(std::move(svg)), str(std::move(str)) {}
 
     ~ClipboardContents() { g_object_unref(this->image); }
 
