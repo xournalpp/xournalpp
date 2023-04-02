@@ -17,14 +17,14 @@ template <typename T, unsigned N>
 std::vector<std::byte> serializeData(const std::array<T, N>& data) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeData(&data[0], N, sizeof(T));
-    return outStream.getData();
+    return outStream.stealData();
 }
 
 template <typename T>
 std::vector<std::byte> serializeDataVector(const std::vector<T>& data) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeData(data);
-    return outStream.getData();
+    return outStream.stealData();
 }
 
 std::vector<std::byte> serializeImage(cairo_surface_t* surf) {
@@ -33,37 +33,37 @@ std::vector<std::byte> serializeImage(cairo_surface_t* surf) {
     auto data = cairo_image_surface_get_data(surf);
     outStream.writeImage(
             std::vector<std::byte>(reinterpret_cast<std::byte*>(data), reinterpret_cast<std::byte*>(data) + length));
-    return outStream.getData();
+    return outStream.stealData();
 }
 
 std::vector<std::byte> serializeString(const std::string& str) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeString(str);
-    return outStream.getData();
+    return outStream.stealData();
 }
 
 std::vector<std::byte> serializeSizeT(size_t x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeSizeT(x);
-    return outStream.getData();
+    return outStream.stealData();
 }
 
 std::vector<std::byte> serializeDouble(double x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeDouble(x);
-    return outStream.getData();
+    return outStream.stealData();
 }
 
 std::vector<std::byte> serializeInt(int x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeInt(x);
-    return outStream.getData();
+    return outStream.stealData();
 }
 
 std::vector<std::byte> serializeStroke(Stroke& stroke) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     stroke.serialize(outStream);
-    return outStream.getData();
+    return outStream.stealData();
 }
 
 template <typename T>
@@ -238,7 +238,7 @@ TEST(UtilObjectIOStream, testReadComplexObject) {
             outStream.writeDouble(-d);
             outStream.endObject();
 
-            auto data = outStream.getData();
+            auto data = outStream.stealData();
 
             ObjectInputStream stream;
             EXPECT_TRUE(stream.read(reinterpret_cast<const char*>(&data[0]), (int)data.size() + 1));
