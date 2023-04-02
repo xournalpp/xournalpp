@@ -1,5 +1,6 @@
 #include "util/serializing/ObjectInputStream.h"
 
+#include <array>      // for array
 #include <cinttypes>  // for uint32_t
 
 #include <glib.h>  // for g_free, g_strdup_...
@@ -40,39 +41,39 @@ void ObjectInputStream::readObject(const char* name) {
 }
 
 auto ObjectInputStream::readObject() -> std::string {
-    checkType('{');
+    checkType(std::byte('{'));
     return readString();
 }
 
 auto ObjectInputStream::getNextObjectName() -> std::string {
     auto position = istream.tellg();
 
-    checkType('{');
+    checkType(std::byte('{'));
     std::string name = readString();
 
     istream.seekg(position);
     return name;
 }
 
-void ObjectInputStream::endObject() { checkType('}'); }
+void ObjectInputStream::endObject() { checkType(std::byte('}')); }
 
 auto ObjectInputStream::readInt() -> int {
-    checkType('i');
+    checkType(std::byte('i'));
     return readTypeFromSStream<int>(istream);
 }
 
 auto ObjectInputStream::readDouble() -> double {
-    checkType('d');
+    checkType(std::byte('d'));
     return readTypeFromSStream<double>(istream);
 }
 
 auto ObjectInputStream::readSizeT() -> size_t {
-    checkType('l');
+    checkType(std::byte('l'));
     return readTypeFromSStream<size_t>(istream);
 }
 
 auto ObjectInputStream::readString() -> std::string {
-    checkType('s');
+    checkType(std::byte('s'));
 
     size_t lenString = (size_t)readTypeFromSStream<int>(istream);
 
@@ -89,7 +90,7 @@ auto ObjectInputStream::readString() -> std::string {
 }
 
 auto ObjectInputStream::readImage() -> const std::vector<std::byte> {
-    checkType('m');
+    checkType(std::byte('m'));
 
 
     const size_t len = readTypeFromSStream<size_t>(istream);
@@ -107,9 +108,9 @@ auto ObjectInputStream::readImage() -> const std::vector<std::byte> {
     return data;
 }
 
-void ObjectInputStream::checkType(char type) {
-    char t = 0, underscore = 0;
-    istream >> underscore >> t;
+void ObjectInputStream::checkType(const std::byte type) {
+    std::array<std::byte, 2> typeField = {};
+    istream.read(reinterpret_cast<char*>(typeField.data()), typeField.size());
 
     if (istream.fail()) {
         throw InputStreamException(FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}") % getType(type) %
@@ -117,36 +118,38 @@ void ObjectInputStream::checkType(char type) {
                                    __FILE__, __LINE__);
     }
 
-    if (underscore != '_') {
-        throw InputStreamException(FS(FORMAT_STR("Expected type signature of {1}, index {2} of {3}, but read '{4}'") %
-                                      getType(type) % ((uint32_t)pos() + 1) % (uint32_t)len % underscore),
-                                   __FILE__, __LINE__);
+    if (typeField[0] != std::byte('_')) {
+        throw InputStreamException(
+                FS(FORMAT_STR("Expected type signature of {1}, index {2} of {3}, but read '{4}'") % getType(type) %
+                   ((uint32_t)pos() + 1) % (uint32_t)len % static_cast<unsigned char>(typeField[0])),
+                __FILE__, __LINE__);
     }
 
-    if (t != type) {
-        throw InputStreamException(FS(FORMAT_STR("Expected {1} but read {2}") % getType(type) % getType(t)), __FILE__,
-                                   __LINE__);
+    if (typeField[1] != std::byte(type)) {
+        throw InputStreamException(FS(FORMAT_STR("Expected {1} but read {2}") % getType(type) % getType(typeField[1])),
+                                   __FILE__, __LINE__);
     }
 }
 
-auto ObjectInputStream::getType(char type) -> std::string {
+auto ObjectInputStream::getType(const std::byte type) -> std::string {
     std::string ret;
-    if (type == '{') {
+    if (type == std::byte('{')) {
         ret = "Object begin";
-    } else if (type == '}') {
+    } else if (type == std::byte('}')) {
         ret = "Object end";
-    } else if (type == 'i') {
+    } else if (type == std::byte('i')) {
         ret = "Number";
-    } else if (type == 'd') {
+    } else if (type == std::byte('d')) {
         ret = "Floating point";
-    } else if (type == 's') {
+    } else if (type == std::byte('s')) {
         ret = "String";
-    } else if (type == 'b') {
+    } else if (type == std::byte('b')) {
         ret = "Binary";
-    } else if (type == 'm') {
+    } else if (type == std::byte('m')) {
         ret = "Image";
     } else {
-        char* str = g_strdup_printf("Unknown type: %02hhx (%c)", type, type);
+        char* str = g_strdup_printf("Unknown type: %02hhx (%c)", static_cast<unsigned char>(type),
+                                    static_cast<unsigned char>(type));
         ret = str;
         g_free(str);
     }

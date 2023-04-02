@@ -44,9 +44,9 @@ public:
     const std::vector<std::byte> readImage();
 
 private:
-    void checkType(char type);
+    void checkType(const std::byte type);
 
-    static std::string getType(char type);
+    static std::string getType(const std::byte type);
 
 private:
     std::istringstream istream;
@@ -71,7 +71,7 @@ T readTypeFromSStream(std::istringstream& istream) {
 
 template <typename T>
 void ObjectInputStream::readData(std::vector<T>& data) {
-    checkType('b');
+    checkType(std::byte('b'));
 
     int len = readTypeFromSStream<int>(istream);
     int width = readTypeFromSStream<int>(istream);
