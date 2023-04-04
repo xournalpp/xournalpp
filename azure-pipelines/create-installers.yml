@@ -12,7 +12,7 @@ stages:
     jobs:
       - job: 'Versioning'
         pool:
-          vmImage: 'ubuntu-18.04'
+          vmImage: 'ubuntu-20.04'
         displayName: 'Set Build Number'
         steps:
           - bash: |
@@ -54,7 +54,7 @@ stages:
           gcc_version: '10'
       - job: 'Debian'
         pool:
-          vmImage: 'ubuntu-18.04'
+          vmImage: 'ubuntu-20.04'
         container:
           image: xournalpp/debian-latest-sudo:latest
         displayName: 'Build for Debian'
