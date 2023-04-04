@@ -12,6 +12,7 @@
 #pragma once
 
 
+
 namespace xoj::util {
 template <class T>
 class Rectangle;
