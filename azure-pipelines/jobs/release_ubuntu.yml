@@ -16,11 +16,6 @@ jobs:
     pool:
       vmImage: 'ubuntu-${{ parameters.ubuntu_version }}'
     displayName: 'Build for Ubuntu ${{ parameters.ubuntu_version }}'
-    variables:
-      # gtest version on Ubuntu 18.04 does not have a pkgconfig file,
-      # so download it instead.
-      ${{ if eq(parameters['ubuntu_version'], '18.04') }}:
-        DOWNLOAD_GTEST_FLAG: '-DDOWNLOAD_GTEST=on'
     steps:
       - template: ../steps/install_deps_ubuntu.yml
         parameters:
@@ -30,7 +25,7 @@ jobs:
           build_type: 'RelWithDebInfo'
           cmake_flags: >-
             -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON
-            -DENABLE_GTEST=ON $(DOWNLOAD_GTEST_FLAG)
+            -DENABLE_GTEST=ON
             -DCMAKE_INSTALL_PREFIX=/usr -DCPACK_GENERATOR="TGZ;DEB"
           cmake_commands: '--target package'
           gcc_version: ${{ parameters.gcc_version }}
