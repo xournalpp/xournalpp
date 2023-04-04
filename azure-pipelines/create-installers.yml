@@ -83,7 +83,7 @@ stages:
           - template: steps/build_windows.yml
             parameters:
               build_type: 'RelWithDebInfo'
-              cmake_flags: '-GNinja -DCMAKE_CXX_FLAGS="-Os -s"'
+              cmake_flags: '-GNinja -DCMAKE_CXX_FLAGS="-Os -s" -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
           - script: |
               set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
               C:\msys64\usr\bin\bash -lc "./package.sh"
