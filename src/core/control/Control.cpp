@@ -1508,14 +1508,13 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
 }
 
 void Control::gotoPage() {
-    auto dlg = GotoDialog(this->gladeSearchPath, int(this->doc->getPageCount()));
-
-    dlg.show(GTK_WINDOW(this->win->getWindow()));
-    auto page = dlg.getSelectedPage();
-
-    if (page > 0) {
-        this->scrollHandler->scrollToPage(size_t(page - 1));
-    }
+    auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::GotoDialog>(
+            this->gladeSearchPath, this->getCurrentPageNo(), this->doc->getPageCount(),
+            [scroll = this->scrollHandler](size_t pageNumber) {
+                xoj_assert(pageNumber != 0);
+                scroll->scrollToPage(pageNumber - 1);
+            });
+    popup.show(GTK_WINDOW(this->win->getWindow()));
 }
 
 void Control::updateBackgroundSizeButton() {
