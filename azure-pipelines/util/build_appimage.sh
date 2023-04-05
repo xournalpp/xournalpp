@@ -44,9 +44,12 @@ ICON_FILE="$APPDIR"/usr/share/icons/hicolor/scalable/apps/com.github.xournalpp.x
 DESKTOP_FILE="$APPDIR"/usr/share/applications/com.github.xournalpp.xournalpp.desktop
 echo "Use the icon file $ICON_FILE and the desktop file $DESKTOP_FILE"
 
-appimage_name='appimage'
+filename_pattern = 'xournalpp-*x86_64.AppImage.zsync' 
+# See https://github.com/AppImage/AppImageSpec/blob/master/draft.md#update-information
 
-export UPD_INFO="gh-releases-zsync|xournalpp|xournalpp|latest|$appimage_name.zsync"
+export UPD_INFO="gh-releases-zsync|xournalpp|xournalpp|latest|$filename_pattern"
+
+appimage_name='appimage'
 
 # call through linuxdeploy
 ./"$LINUXDEPLOY" --appdir="$APPDIR" --plugin gtk --plugin gettext --output "$appimage_name" --icon-file="$ICON_FILE" --desktop-file="$DESKTOP_FILE"
