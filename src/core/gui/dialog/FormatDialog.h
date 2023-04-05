@@ -11,38 +11,39 @@
 
 #pragma once
 
+#include <functional>
 #include <memory>  // for unique_ptr
 #include <vector>  // for vector
 
 #include <gtk/gtk.h>  // for gtk_paper_size_free, GtkComboBox, GtkToggl...
 
-#include "gui/GladeGui.h"  // for GladeGui
+#include "gui/Builder.h"
+#include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
 class Settings;
 
-enum Orientation { ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT };
-
-class FormatDialog: public GladeGui {
+namespace xoj::popup {
+class FormatDialog {
 public:
-    FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height);
+    FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height,
+                 std::function<void(double w, double h)> callback);
 
-public:
-    void show(GtkWindow* parent) override;
-
-    double getWidth() const;
-    double getHeight() const;
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
+    enum Orientation { ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT };
+
     void loadPageFormats();
     void setOrientation(Orientation orientation);
     void setSpinValues(double width, double heigth);
 
-    static void portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg);
-    static void landscapeSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg);
+    static void portraitSelectedCb(GtkToggleButton* bt, FormatDialog* dlg);
+    static void landscapeSelectedCb(GtkToggleButton* bt, FormatDialog* dlg);
     static void cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg);
     static void cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg);
-    static void spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg);
+    static void spinValueChangedCb(FormatDialog* dlg);
+    static void reset(FormatDialog* self);
 
 private:
     Settings* settings = nullptr;
@@ -50,14 +51,22 @@ private:
     std::vector<std::unique_ptr<GtkPaperSize, decltype(&gtk_paper_size_free)>> paperSizes;
 
     Orientation orientation = ORIENTATION_NOT_DEFINED;
-    double scale = 0;
     int selectedScale = 0;
+    double scale = 0;
 
     double origWidth = 0;
     double origHeight = 0;
 
-    double width = -1;
-    double height = -1;
-
     bool ignoreSpinChange = false;
+
+
+    GtkComboBox* paperTemplatesCombo;
+    GtkSpinButton* widthSpin;
+    GtkSpinButton* heightSpin;
+    GtkToggleButton* landscapeButton;
+    GtkToggleButton* portraitButton;
+
+    xoj::util::GtkWindowUPtr window;
+    std::function<void(double w, double h)> callbackFun;
 };
+};  // namespace xoj::popup

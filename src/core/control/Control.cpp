@@ -1553,22 +1553,19 @@ void Control::paperFormat() {
     }
     clearSelectionEndText();
 
-    auto dlg = FormatDialog(this->gladeSearchPath, settings, page->getWidth(), page->getHeight());
-    dlg.show(GTK_WINDOW(this->win->getWindow()));
-
-    double width = dlg.getWidth();
-    double height = dlg.getHeight();
-
-    if (width > 0) {
-        this->doc->lock();
-        Document::setPageSize(page, width, height);
-        this->doc->unlock();
-    }
-
-    size_t pageNo = doc->indexOf(page);
-    if (pageNo != npos && pageNo < doc->getPageCount()) {
-        this->firePageSizeChanged(pageNo);
-    }
+    auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::FormatDialog>(
+            this->gladeSearchPath, settings, page->getWidth(), page->getHeight(),
+            [ctrl = this, page](double width, double height) {
+                ctrl->doc->lock();
+                Document::setPageSize(page, width, height);
+                size_t pageNo = ctrl->doc->indexOf(page);
+                size_t pageCount = ctrl->doc->getPageCount();
+                ctrl->doc->unlock();
+                if (pageNo != npos && pageNo < pageCount) {
+                    ctrl->firePageSizeChanged(pageNo);
+                }
+            });
+    popup.show(GTK_WINDOW(this->win->getWindow()));
 }
 
 void Control::changePageBackgroundColor() {
