@@ -13,6 +13,7 @@
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo, PageType...
 #include "control/settings/Settings.h"         // for Settings
 #include "control/stockdlg/XojOpenDlg.h"       // for XojOpenDlg
+#include "gui/PopupWindowWrapper.h"            // for PopupWindowWrapper
 #include "gui/widgets/PopupMenuButton.h"       // for PopupMenuButton
 #include "model/FormatDefinitions.h"           // for FormatUnits, XOJ_UNITS
 #include "util/Color.h"                        // for GdkRGBA_to_argb, rgb_t...
@@ -149,18 +150,15 @@ void PageTemplateDialog::updatePageSize() {
 }
 
 void PageTemplateDialog::showPageSizeDialog() {
-    auto dlg = FormatDialog(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
-    dlg.show(GTK_WINDOW(this->window));
+    auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::FormatDialog>(getGladeSearchPath(), settings,
+                                                                          model.getPageWidth(), model.getPageHeight(),
+                                                                          [dlg = this](double width, double height) {
+                                                                              dlg->model.setPageWidth(width);
+                                                                              dlg->model.setPageHeight(height);
 
-    const double width = dlg.getWidth();
-    const double height = dlg.getHeight();
-
-    if (width > 0) {
-        model.setPageWidth(width);
-        model.setPageHeight(height);
-
-        updatePageSize();
-    }
+                                                                              dlg->updatePageSize();
+                                                                          });
+    popup.show(GTK_WINDOW(this->window));
 }
 
 /**
