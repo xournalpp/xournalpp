@@ -464,6 +464,14 @@ auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
         // editing text - give that control
         return false;
     }
+    if (event->keyval == GDK_KEY_c && event->state & GDK_CONTROL_MASK) {
+        // Shortcut to get selected PDF text.
+        PdfFloatingToolbox* tool = win->getPdfToolbox();
+        if (tool->hasSelection()) {
+            tool->copyTextToClipboard();
+            return true;
+        }
+    }
     if (event->keyval == GDK_KEY_Escape) {
         win->getControl()->getSearchBar()->showSearchBar(false);
         return true;
