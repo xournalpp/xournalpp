@@ -115,16 +115,16 @@ void LatexController::findSelectedTexElement() {
         // this will get the position of the Latex properly
         EditSelection* theSelection = control->getWindow()->getXournal()->getSelection();
         xoj::util::Rectangle<double> rect = theSelection->getSnappedBounds();
-        this->posx = rect.x;
-        this->posy = rect.y;
+        this->posx = static_cast<int>(rect.x);
+        this->posy = static_cast<int>(rect.y);
 
         if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
             this->initialTex = img->getText();
         } else if (auto* txt = dynamic_cast<Text*>(this->selectedElem)) {
             this->initialTex = "\\text{" + txt->getText() + "}";
         }
-        this->imgwidth = this->selectedElem->getElementWidth();
-        this->imgheight = this->selectedElem->getElementHeight();
+        this->imgwidth = static_cast<int>(this->selectedElem->getElementWidth());
+        this->imgheight = static_cast<int>(this->selectedElem->getElementHeight());
     } else {
         // This is a new latex object, so here we pick a convenient initial location
         const double zoom = this->control->getWindow()->getXournal()->getZoom();
@@ -135,7 +135,7 @@ void LatexController::findSelectedTexElement() {
         const double centerX = visibleBounds.x + 0.5 * visibleBounds.width;
         const double centerY = visibleBounds.y + 0.5 * visibleBounds.height;
 
-        if (layout->getPageViewAt(centerX, centerY) == this->view) {
+        if (layout->getPageViewAt(static_cast<int>(centerX), static_cast<int>(centerY)) == this->view) {
             // Pick the center of the visible area (converting from screen to page coordinates)
             this->posx = static_cast<int>((centerX - this->view->getX()) / zoom);
             this->posy = static_cast<int>((centerY - this->view->getY()) / zoom);
