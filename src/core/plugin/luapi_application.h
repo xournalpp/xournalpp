@@ -105,35 +105,33 @@ static int applib_glib_rename(lua_State* L) {
  *   local filename = app.saveAs("foo") -- suggests "foo" as filename
  */
 static int applib_saveAs(lua_State* L) {
-    GtkFileChooserNative* native;
     gint res;
     int args_returned = 0;  // change to 1 if user chooses file
 
     const char* filename = luaL_checkstring(L, -1);
 
     // Create a 'Save As' native dialog
-    native = gtk_file_chooser_native_new(_("Save file"), nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, nullptr, nullptr);
+    xoj::util::GObjectSPtr<GtkFileChooserNative> native(
+            gtk_file_chooser_native_new(_("Save file"), nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, nullptr, nullptr),
+            xoj::util::adopt);
 
     // If user tries to overwrite a file, ask if it's OK
-    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native), TRUE);
+    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native.get()), TRUE);
     // Offer a suggestion for the filename if filename absent
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native),
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native.get()),
                                       filename ? filename : (std::string{_("Untitled")}).c_str());
 
     // Wait until user responds to dialog
-    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native));
+    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native.get()));
 
     // Return the filename chosen to lua
     if (res == GTK_RESPONSE_ACCEPT) {
-        char* filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native)));
+        char* filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())));
 
         lua_pushlstring(L, filename, strlen(filename));
         g_free(static_cast<gchar*>(filename));
         args_returned = 1;
     }
-
-    // Destroy the dialog and free memory
-    g_object_unref(native);
 
     return args_returned;
 }
@@ -147,8 +145,9 @@ static int applib_saveAs(lua_State* L) {
  *   path = app.getFilePath({'*.bmp', '*.png'})
  */
 static int applib_getFilePath(lua_State* L) {
-    GtkFileChooserNative* native =
-            gtk_file_chooser_native_new(_("Open file"), nullptr, GTK_FILE_CHOOSER_ACTION_OPEN, nullptr, nullptr);
+    xoj::util::GObjectSPtr<GtkFileChooserNative> native(
+            gtk_file_chooser_native_new(_("Open file"), nullptr, GTK_FILE_CHOOSER_ACTION_OPEN, nullptr, nullptr),
+            xoj::util::adopt);
     gint res;
     int args_returned = 0;  // change to 1 if user chooses file
     char* filename;
@@ -171,20 +170,19 @@ static int applib_getFilePath(lua_State* L) {
         GtkFileFilter* filterSupported = gtk_file_filter_new();
         gtk_file_filter_set_name(filterSupported, _("Supported files"));
         for (std::string format: formats) gtk_file_filter_add_pattern(filterSupported, format.c_str());
-        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(native), filterSupported);
+        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(native.get()), filterSupported);
     }
 
     // Wait until user responds to dialog
-    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native));
+    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native.get()));
     // Return the filename chosen to lua
     if (res == GTK_RESPONSE_ACCEPT) {
-        filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native)));
+        filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())));
         lua_pushlstring(L, filename, strlen(filename));
         g_free(static_cast<gchar*>(filename));
         args_returned = 1;
     }
     // Destroy the dialog and free memory
-    g_object_unref(native);
     return args_returned;
 }
 
