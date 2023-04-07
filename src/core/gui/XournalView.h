@@ -94,7 +94,7 @@ public:
     void repaintSelection(bool evenWithoutSelection = false);
 
     TextEditor* getTextEditor() const;
-    std::vector<XojPageView*> const& getViewPages() const;
+    std::vector<std::unique_ptr<XojPageView>> const& getViewPages() const;
 
     Control* getControl() const;
     double getZoom() const;
@@ -163,7 +163,7 @@ private:
     GtkWidget* widget = nullptr;
     double margin = 75;
 
-    std::vector<XojPageView*> viewPages;
+    std::vector<std::unique_ptr<XojPageView>> viewPages;
 
     Control* control = nullptr;
 
