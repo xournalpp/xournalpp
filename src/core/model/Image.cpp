@@ -6,7 +6,6 @@
 
 #include <cairo.h>        // for cairo_surface_destroy
 #include <gdk/gdk.h>      // for gdk_cairo_set_sourc...
-#include <glib-object.h>  // for g_object_unref
 #include <glib.h>         // for g_assert, guchar
 
 #include "model/Element.h"                        // for Element, ELEMENT_IMAGE
@@ -131,13 +130,13 @@ void Image::setImage(cairo_surface_t* image) {
 auto Image::getImage() const -> cairo_surface_t* {
     g_assert(data.length() > 0 && "image has no data, cannot render it!");
     if (this->image == nullptr) {
-        GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
-        gdk_pixbuf_loader_write(loader, reinterpret_cast<const guchar*>(this->data.c_str()), this->data.length(),
+        xoj::util::GObjectSPtr<GdkPixbufLoader> loader(gdk_pixbuf_loader_new(), xoj::util::adopt);
+        gdk_pixbuf_loader_write(loader.get(), reinterpret_cast<const guchar*>(this->data.c_str()), this->data.length(),
                                 nullptr);
-        bool success = gdk_pixbuf_loader_close(loader, nullptr);
+        bool success = gdk_pixbuf_loader_close(loader.get(), nullptr);
         g_assert(success && "errors in loading image data!");
 
-        GdkPixbuf* tmp = gdk_pixbuf_loader_get_pixbuf(loader);
+        GdkPixbuf* tmp = gdk_pixbuf_loader_get_pixbuf(loader.get());
         g_assert(tmp != nullptr);
         GdkPixbuf* pixbuf = gdk_pixbuf_apply_embedded_orientation(tmp);
 
@@ -155,8 +154,6 @@ auto Image::getImage() const -> cairo_surface_t* {
         gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
         cairo_paint(cr);
         cairo_destroy(cr);
-
-        g_object_unref(loader);
     }
 
     return this->image;
