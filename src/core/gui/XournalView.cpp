@@ -76,7 +76,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
     g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
     this->repaintHandler = std::make_unique<RepaintHandler>(this);
-    this->handRecognition = new HandRecognition(this->widget, inputContext, control->getSettings());
+    this->handRecognition = std::make_unique<HandRecognition>(this->widget, inputContext, control->getSettings());
 
     control->getZoomControl()->addZoomListener(this);
 
@@ -93,9 +93,6 @@ XournalView::~XournalView() {
 
     gtk_widget_destroy(this->widget);
     this->widget = nullptr;
-
-    delete this->handRecognition;
-    this->handRecognition = nullptr;
 }
 
 
@@ -469,7 +466,7 @@ auto XournalView::getVisibleRect(const XojPageView* redrawable) const -> Rectang
 /**
  * @return Helper class for Touch specific fixes
  */
-auto XournalView::getHandRecognition() const -> HandRecognition* { return handRecognition; }
+auto XournalView::getHandRecognition() const -> HandRecognition* { return handRecognition.get(); }
 
 /**
  * @return Scrollbars
