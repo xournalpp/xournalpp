@@ -331,14 +331,13 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
             GCancellable* cancel = g_cancellable_new();
             int cancelTimeout = g_timeout_add(3000, reinterpret_cast<GSourceFunc>(cancellable_cancel), cancel);
 
-            GFile* file = g_file_new_for_uri(uri);
+            xoj::util::GObjectSPtr<GFile> file(g_file_new_for_uri(uri), xoj::util::adopt);
             GError* err = nullptr;
-            GFileInputStream* in = g_file_read(file, cancel, &err);
+            GFileInputStream* in = g_file_read(file.get(), cancel, &err);
             if (g_cancellable_is_cancelled(cancel)) {
                 continue;
             }
 
-            g_object_unref(file);
             if (err == nullptr) {
                 GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, nullptr);
                 if (g_cancellable_is_cancelled(cancel)) {
