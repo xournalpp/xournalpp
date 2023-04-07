@@ -75,7 +75,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
     g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
-    this->repaintHandler = new RepaintHandler(this);
+    this->repaintHandler = std::make_unique<RepaintHandler>(this);
     this->handRecognition = new HandRecognition(this->widget, inputContext, control->getSettings());
 
     control->getZoomControl()->addZoomListener(this);
@@ -90,9 +90,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
 XournalView::~XournalView() {
     g_source_remove(this->cleanupTimeout);
-
-    delete this->repaintHandler;
-    this->repaintHandler = nullptr;
 
     gtk_widget_destroy(this->widget);
     this->widget = nullptr;
@@ -272,7 +269,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     return false;
 }
 
-auto XournalView::getRepaintHandler() const -> RepaintHandler* { return this->repaintHandler; }
+auto XournalView::getRepaintHandler() const -> RepaintHandler* { return this->repaintHandler.get(); }
 
 auto XournalView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
     size_t p = getCurrentPage();

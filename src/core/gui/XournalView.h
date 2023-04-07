@@ -175,7 +175,7 @@ private:
     /**
      * Handler for rerendering pages / repainting pages
      */
-    RepaintHandler* repaintHandler = nullptr;
+    std::unique_ptr<RepaintHandler> repaintHandler;
 
     /**
      * Memory cleanup timeout
