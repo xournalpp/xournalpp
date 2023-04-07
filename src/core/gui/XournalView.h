@@ -185,7 +185,7 @@ private:
     /**
      * Helper class for Touch specific fixes
      */
-    HandRecognition* handRecognition = nullptr;
+    std::unique_ptr<HandRecognition> handRecognition;
 
     friend class Layout;
 };
