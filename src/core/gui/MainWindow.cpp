@@ -703,11 +703,10 @@ void MainWindow::setAudioPlaybackPaused(bool paused) { this->getToolMenuHandler(
 
 void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
     auto filepath = gladeSearchPath->findFile("", cssFilename);
-    GtkCssProvider* provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, filepath.u8string().c_str(), nullptr);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider),
+    xoj::util::GObjectSPtr<GtkCssProvider> provider(gtk_css_provider_new(), xoj::util::adopt);
+    gtk_css_provider_load_from_path(provider.get(), filepath.u8string().c_str(), nullptr);
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider.get()),
                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    g_object_unref(provider);
 }
 
 PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloatingToolBox.get(); }
