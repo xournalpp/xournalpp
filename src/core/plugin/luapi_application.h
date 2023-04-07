@@ -78,12 +78,10 @@ extern "C" {
  */
 static int applib_glib_rename(lua_State* L) {
     GError* err = nullptr;
-    GFile* to = g_file_new_for_path(lua_tostring(L, -1));
-    GFile* from = g_file_new_for_path(lua_tostring(L, -2));
+    xoj::util::GObjectSPtr<GFile> to(g_file_new_for_path(lua_tostring(L, -1)), xoj::util::adopt);
+    xoj::util::GObjectSPtr<GFile> from(g_file_new_for_path(lua_tostring(L, -2)), xoj::util::adopt);
 
-    g_file_move(from, to, G_FILE_COPY_OVERWRITE, nullptr, nullptr, nullptr, &err);
-    g_object_unref(from);
-    g_object_unref(to);
+    g_file_move(from.get(), to.get(), G_FILE_COPY_OVERWRITE, nullptr, nullptr, nullptr, &err);
     if (err) {
         lua_pushnil(L);
         lua_pushfstring(L, "%s (error code: %d)", err->message, err->code);
