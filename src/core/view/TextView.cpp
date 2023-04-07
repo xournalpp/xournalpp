@@ -3,8 +3,6 @@
 #include <algorithm>  // for max
 #include <cstddef>    // for size_t
 
-#include <glib-object.h>  // for g_object_unref
-
 #include "model/Text.h"           // for Text
 #include "util/Color.h"           // for cairo_set_source_rgbi
 #include "util/StringUtils.h"     // for StringUtils
