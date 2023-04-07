@@ -644,10 +644,6 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         if (this->getPage()->getPdfPageNr() != npos) {
             auto page = pdfDoc.getPage(this->getPage()->getPdfPageNr());
 
-            Layer* layer = this->page->getSelectedLayer();
-            const Layer::Index layerId = this->page->getSelectedLayerId();
-            const bool isBackgroundLayer = (layerId == 0);
-
             const double pageX = pos.x / zoom;
             const double pageY = pos.y / zoom;
 
@@ -741,8 +737,9 @@ void XojPageView::repaintPage() const { xournal->getRepaintHandler()->repaintPag
 
 void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const {
     double zoom = xournal->getZoom();
-    xournal->getRepaintHandler()->repaintPageArea(this, std::floor(x1 * zoom), std::floor(y1 * zoom),
-                                                  std::ceil(x2 * zoom), std::ceil(y2 * zoom));
+    xournal->getRepaintHandler()->repaintPageArea(
+            this, static_cast<int>(std::floor(x1 * zoom)), static_cast<int>(std::floor(y1 * zoom)),
+            static_cast<int>(std::ceil(x2 * zoom)), static_cast<int>(std::ceil(y2 * zoom)));
 }
 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
@@ -1042,11 +1039,11 @@ auto XojPageView::getPage() const -> const PageRef { return page; }
 auto XojPageView::getXournal() const -> XournalView* { return this->xournal; }
 
 auto XojPageView::getDisplayWidth() const -> int {
-    return std::lround(this->page->getWidth() * this->xournal->getZoom());
+    return static_cast<int>(std::round(this->page->getWidth() * this->xournal->getZoom()));
 }
 
 auto XojPageView::getDisplayHeight() const -> int {
-    return std::lround(this->page->getHeight() * this->xournal->getZoom());
+    return static_cast<int>(std::round(this->page->getHeight() * this->xournal->getZoom()));
 }
 
 auto XojPageView::getDisplayWidthDouble() const -> double { return this->page->getWidth() * this->xournal->getZoom(); }
@@ -1124,8 +1121,8 @@ void XojPageView::showFloatingToolbox(const PositionInputData& pos) {
     GtkWidget* widget = xournal->getWidget();
     gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
-    wx += std::lround(pos.x) + this->getX();
-    wy += std::lround(pos.y) + this->getY();
+    wx += static_cast<int>(std::round(pos.x) + this->getX());
+    wy += static_cast<int>(std::round(pos.y) + this->getY());
 
     control->getWindow()->getFloatingToolbox()->show(wx, wy);
 }
