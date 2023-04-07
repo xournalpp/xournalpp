@@ -7,6 +7,7 @@
 
 #include "model/Element.h"                        // for Element, ELEMENT_TE...
 #include "util/Rectangle.h"                       // for Rectangle
+#include "util/raii/GObjectSPtr.h"                // for GObjectSPtr
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -96,9 +97,8 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
             return false;
         }
         if (!this->width && !this->height) {
-            PopplerPage* page = poppler_document_get_page(this->pdf, 0);
-            poppler_page_get_size(page, &this->width, &this->height);
-            g_object_unref(page);
+            xoj::util::GObjectSPtr<PopplerPage> page(poppler_document_get_page(this->pdf, 0), xoj::util::adopt);
+            poppler_page_get_size(page.get(), &this->width, &this->height);
         }
     } else if (type == "PNG") {
         this->image = cairo_image_surface_create_from_png_stream(
