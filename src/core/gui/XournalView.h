@@ -161,7 +161,6 @@ private:
     ScrollHandling* scrollHandling = nullptr;
 
     GtkWidget* widget = nullptr;
-    double margin = 75;
 
     std::vector<std::unique_ptr<XojPageView>> viewPages;
 
