@@ -23,9 +23,7 @@ void TexImage::freeImageAndPdf() {
         this->image = nullptr;
     }
 
-    if (this->pdf.get()) {
-        this->pdf.reset();
-    }
+    this->pdf.reset();
 }
 
 auto TexImage::clone() const -> Element* {

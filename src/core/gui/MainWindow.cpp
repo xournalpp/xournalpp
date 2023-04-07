@@ -315,7 +315,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
     }
 
     xoj::util::GObjectSPtr<GdkPixbuf> image(gtk_selection_data_get_pixbuf(data), xoj::util::adopt);
-    if (image.get()) {
+    if (image) {
         win->control->clipboardPasteImage(image.get());
 
         gtk_drag_finish(dragContext, true, false, time);
@@ -348,7 +348,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
                     continue;
                 }
 
-                if (pixbuf.get()) {
+                if (pixbuf) {
                     win->control->clipboardPasteImage(pixbuf.get());
                 }
             } else {

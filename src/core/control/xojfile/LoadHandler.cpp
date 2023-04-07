@@ -805,7 +805,7 @@ void LoadHandler::parseAudio() {
     GFileIOStream* fileStream = nullptr;
     xoj::util::GObjectSPtr<GFile> tmpFile(g_file_new_tmp("xournal_audio_XXXXXX.tmp", &fileStream, nullptr),
                                           xoj::util::adopt);
-    if (!tmpFile.get()) {
+    if (!tmpFile) {
         g_warning("Unable to create temporary file for audio attachment.");
         return;
     }

@@ -34,7 +34,7 @@ ImageHandler::~ImageHandler() = default;
 auto ImageHandler::insertImage(double x, double y) -> bool {
     xoj::util::GObjectSPtr<GFile> file(ImageOpenDlg::show(control->getGtkWindow(), control->getSettings()),
                                        xoj::util::adopt);
-    if (file.get() == nullptr) {
+    if (!file) {
         return false;
     }
     return insertImage(file.get(), x, y);

@@ -31,7 +31,7 @@ Document::~Document() {
 }
 
 void Document::freeTreeContentModel() {
-    if (this->contentsModel.get()) {
+    if (this->contentsModel) {
         gtk_tree_model_foreach(this->contentsModel.get(),
                                reinterpret_cast<GtkTreeModelForeachFunc>(freeTreeContentEntry), this);
 
@@ -288,7 +288,7 @@ auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTre
 }
 
 void Document::updateIndexPageNumbers() {
-    if (this->contentsModel.get() != nullptr) {
+    if (this->contentsModel) {
         gtk_tree_model_foreach(this->contentsModel.get(), reinterpret_cast<GtkTreeModelForeachFunc>(fillPageLabels),
                                this);
     }
