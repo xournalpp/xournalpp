@@ -248,7 +248,7 @@ private:
     XournalView* xournal = nullptr;
     Settings* settings = nullptr;
     std::unique_ptr<EraseHandler> eraser;
-    InputHandler* inputHandler = nullptr;
+    std::unique_ptr<InputHandler> inputHandler;
 
     std::vector<std::unique_ptr<xoj::view::OverlayView>> overlayViews;
 
