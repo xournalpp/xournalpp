@@ -96,8 +96,9 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
         page(page),
         xournal(xournal),
         settings(xournal->getControl()->getSettings()),
-        eraser(new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(),
-                                this->page, xournal->getControl()->getToolHandler(), this)),
+        eraser(std::make_unique<EraseHandler>(xournal->getControl()->getUndoRedoHandler(),
+                                              xournal->getControl()->getDocument(), this->page,
+                                              xournal->getControl()->getToolHandler(), this)),
         oldtext(nullptr) {
     this->registerToHandler(this->page);
 }
@@ -113,7 +114,6 @@ XojPageView::~XojPageView() {
      */
     this->overlayViews.clear();
     delete this->inputHandler;
-    delete this->eraser;
     endText();
     deleteViewBuffer();  // Ensures the mutex is locked during the buffer's destruction
 }
