@@ -91,11 +91,6 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 XournalView::~XournalView() {
     g_source_remove(this->cleanupTimeout);
 
-    for (auto&& page: viewPages) {
-        delete page;
-    }
-    viewPages.clear();
-
     delete this->repaintHandler;
     this->repaintHandler = nullptr;
 
@@ -133,7 +128,7 @@ const int scrollKeySize = 30;
 auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     size_t p = getCurrentPage();
     if (p != npos && p < this->viewPages.size()) {
-        XojPageView* v = this->viewPages[p];
+        auto& v = this->viewPages[p];
         if (v->onKeyPressEvent(event)) {
             return true;
         }
@@ -282,7 +277,7 @@ auto XournalView::getRepaintHandler() const -> RepaintHandler* { return this->re
 auto XournalView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
     size_t p = getCurrentPage();
     if (p != npos && p < this->viewPages.size()) {
-        XojPageView* v = this->viewPages[p];
+        auto& v = this->viewPages[p];
         if (v->onKeyReleaseEvent(event)) {
             return true;
         }
@@ -314,7 +309,7 @@ auto XournalView::searchTextOnPage(const std::string& text, size_t pageNumber, s
     if (pageNumber == npos || pageNumber >= this->viewPages.size()) {
         return false;
     }
-    XojPageView* v = this->viewPages[pageNumber];
+    auto& v = this->viewPages[pageNumber];
 
     return v->searchTextOnPage(text, occurrences, yOfUpperMostMatch);
 }
@@ -330,7 +325,7 @@ auto XournalView::getViewFor(size_t pageNr) const -> XojPageView* {
     if (pageNr == npos || pageNr >= this->viewPages.size()) {
         return nullptr;
     }
-    return this->viewPages[pageNr];
+    return this->viewPages[pageNr].get();
 }
 
 void XournalView::pageSelected(size_t page) {
@@ -358,7 +353,7 @@ void XournalView::pageSelected(size_t page) {
     size_t pdfPage = npos;
 
     if (page != npos && page < viewPages.size()) {
-        XojPageView* vp = viewPages[page];
+        auto& vp = viewPages[page];
         vp->setSelected(true);
         lastSelectedPage = page;
         pdfPage = vp->getPage()->getPdfPageNr();
@@ -389,7 +384,7 @@ void XournalView::scrollTo(size_t pageNo, double yDocument) {
         return;
     }
 
-    XojPageView* v = this->viewPages[pageNo];
+    auto& v = this->viewPages[pageNo];
 
     // Make sure it is visible
     Layout* layout = gtk_xournal_get_layout(this->widget);
@@ -422,15 +417,15 @@ void XournalView::pageRelativeXY(int offCol, int offRow) {
 
 
 void XournalView::endTextAllPages(XojPageView* except) const {
-    for (auto v: this->viewPages) {
-        if (except != v) {
+    for (auto& v: this->viewPages) {
+        if (except != v.get()) {
             v->endText();
         }
     }
 }
 
 void XournalView::endSplineAllPages() const {
-    for (auto v: this->viewPages) {
+    for (auto& v: this->viewPages) {
         v->endSpline();
     }
 }
@@ -465,7 +460,7 @@ auto XournalView::getVisibleRect(size_t page) const -> Rectangle<double>* {
     if (page == npos || page >= this->viewPages.size()) {
         return nullptr;
     }
-    XojPageView* p = this->viewPages[page];
+    XojPageView* p = this->viewPages[page].get();
 
     return getVisibleRect(p);
 }
@@ -547,7 +542,6 @@ void XournalView::pageChanged(size_t page) {
 void XournalView::pageDeleted(size_t page) {
     size_t currentPage = control->getCurrentPageNo();
 
-    delete this->viewPages[page];
     viewPages.erase(begin(viewPages) + page);
 
     layoutPages();
@@ -569,10 +563,10 @@ auto XournalView::getCache() const -> PdfCache* { return this->cache.get(); }
 void XournalView::pageInserted(size_t page) {
     Document* doc = control->getDocument();
     doc->lock();
-    auto* pageView = new XojPageView(this, doc->getPage(page));
+    auto pageView = std::make_unique<XojPageView>(this, doc->getPage(page));
     doc->unlock();
 
-    viewPages.insert(begin(viewPages) + page, pageView);
+    viewPages.insert(begin(viewPages) + page, std::move(pageView));
 
     layoutPages();
     // check which pages are visible and select the most visible page
@@ -724,9 +718,6 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     clearSelection();
 
-    for (auto&& page: viewPages) {
-        delete page;
-    }
     viewPages.clear();
 
     this->cache.reset();
@@ -740,7 +731,7 @@ void XournalView::documentChanged(DocumentChangeType type) {
     size_t pagecount = doc->getPageCount();
     viewPages.reserve(pagecount);
     for (size_t i = 0; i < pagecount; i++) {
-        viewPages.push_back(new XojPageView(this, doc->getPage(i)));
+        viewPages.emplace_back(std::make_unique<XojPageView>(this, doc->getPage(i)));
     }
 
     doc->unlock();
@@ -757,7 +748,7 @@ auto XournalView::cut() -> bool {
         return false;
     }
 
-    XojPageView* page = viewPages[p];
+    auto& page = viewPages[p];
     return page->cut();
 }
 
@@ -767,7 +758,7 @@ auto XournalView::copy() -> bool {
         return false;
     }
 
-    XojPageView* page = viewPages[p];
+    auto& page = viewPages[p];
     return page->copy();
 }
 
@@ -777,7 +768,7 @@ auto XournalView::paste() -> bool {
         return false;
     }
 
-    XojPageView* page = viewPages[p];
+    auto& page = viewPages[p];
     return page->paste();
 }
 
@@ -787,13 +778,13 @@ auto XournalView::actionDelete() -> bool {
         return false;
     }
 
-    XojPageView* page = viewPages[p];
+    auto& page = viewPages[p];
     return page->actionDelete();
 }
 
 auto XournalView::getDocument() const -> Document* { return control->getDocument(); }
 
-auto XournalView::getViewPages() const -> std::vector<XojPageView*> const& { return viewPages; }
+auto XournalView::getViewPages() const -> std::vector<std::unique_ptr<XojPageView>> const& { return viewPages; }
 
 auto XournalView::getCursor() const -> XournalppCursor* { return control->getCursor(); }
 

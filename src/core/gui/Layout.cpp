@@ -105,7 +105,7 @@ void Layout::updateVisibility() {
             auto optionalPage = this->mapper.at({col, row});
             if (optionalPage)  // a page exists at this grid location
             {
-                XojPageView* pageView = this->view->viewPages[*optionalPage];
+                XojPageView* pageView = this->view->viewPages[*optionalPage].get();
 
 
                 // check if grid location is visible as an aprox for page visiblity:
@@ -179,7 +179,7 @@ void Layout::recalculate_int() const {
         auto const& raster_p = mapper.at(pageIdx);  // auto [c, r] raster = mapper.at();
         auto const& c = raster_p.col;
         auto const& r = raster_p.row;
-        XojPageView* v = view->viewPages[pageIdx];
+        XojPageView* v = view->viewPages[pageIdx].get();
         pc.widthCols[c] = std::max(pc.widthCols[c], v->getDisplayWidthDouble());
         pc.heightRows[r] = std::max(pc.heightRows[r], v->getDisplayHeightDouble());
     }
@@ -249,7 +249,7 @@ void Layout::layoutPages(int width, int height) {
 
             if (optionalPage) {
 
-                XojPageView* v = this->view->viewPages[*optionalPage];
+                XojPageView* v = this->view->viewPages[*optionalPage].get();
                 v->setMappedRowCol(strict_cast<int>(r),
                                    strict_cast<int>(c));  // store row and column for e.g. proper arrow key navigation
                 auto vDisplayWidth = v->getDisplayWidthDouble();
@@ -386,7 +386,7 @@ auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
     auto optionalPage = this->mapper.at({foundCol, foundRow});
 
     if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false)) {
-        return this->view->viewPages[*optionalPage];
+        return this->view->viewPages[*optionalPage].get();
     }
 
     return nullptr;
