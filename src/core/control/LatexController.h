@@ -57,7 +57,7 @@ private:
      */
     class FindDependencyStatus {
     public:
-        FindDependencyStatus(bool success, std::string errorMsg): success(success), errorMsg(errorMsg){};
+        FindDependencyStatus(bool success, std::string errorMsg): success(success), errorMsg(std::move(errorMsg)){};
         bool success;
         std::string errorMsg;
     };
