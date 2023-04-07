@@ -803,8 +803,9 @@ void LoadHandler::parseAudio() {
     const char* filename = LoadHandlerHelper::getAttrib("fn", false, this);
 
     GFileIOStream* fileStream = nullptr;
-    GFile* tmpFile = g_file_new_tmp("xournal_audio_XXXXXX.tmp", &fileStream, nullptr);
-    if (!tmpFile) {
+    xoj::util::GObjectSPtr<GFile> tmpFile(g_file_new_tmp("xournal_audio_XXXXXX.tmp", &fileStream, nullptr),
+                                          xoj::util::adopt);
+    if (!tmpFile.get()) {
         g_warning("Unable to create temporary file for audio attachment.");
         return;
     }
@@ -840,7 +841,6 @@ void LoadHandler::parseAudio() {
     while (readBytes < length) {
         zip_int64_t read = zip_fread(attachmentFile, data, 1024);
         if (read == -1) {
-            g_object_unref(tmpFile);
             g_free(data);
             zip_fclose(attachmentFile);
             error("%s", FC(_F("Could not open attachment: {1}. Error message: Could not read file") % filename));
@@ -850,7 +850,6 @@ void LoadHandler::parseAudio() {
         gboolean writeSuccessful =
                 g_output_stream_write_all(outputStream, data, static_cast<gsize>(read), nullptr, nullptr, nullptr);
         if (!writeSuccessful) {
-            g_object_unref(tmpFile);
             g_free(data);
             zip_fclose(attachmentFile);
             error("%s", FC(_F("Could not open attachment: {1}. Error message: Could not write file") % filename));
@@ -862,7 +861,7 @@ void LoadHandler::parseAudio() {
     g_free(data);
     zip_fclose(attachmentFile);
 
-    g_hash_table_insert(this->audioFiles, g_strdup(filename), g_file_get_path(tmpFile));
+    g_hash_table_insert(this->audioFiles, g_strdup(filename), g_file_get_path(tmpFile.get()));
 }
 
 void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* elementName,
