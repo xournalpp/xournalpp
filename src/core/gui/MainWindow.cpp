@@ -339,7 +339,8 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
             }
 
             if (err == nullptr) {
-                GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, nullptr);
+                xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(
+                        gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, nullptr), xoj::util::adopt);
                 if (g_cancellable_is_cancelled(cancel)) {
                     continue;
                 }
@@ -348,10 +349,8 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
                     continue;
                 }
 
-                if (pixbuf) {
-                    win->control->clipboardPasteImage(pixbuf);
-
-                    g_object_unref(pixbuf);
+                if (pixbuf.get()) {
+                    win->control->clipboardPasteImage(pixbuf.get());
                 }
             } else {
                 g_error_free(err);
