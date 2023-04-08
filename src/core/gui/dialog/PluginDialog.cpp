@@ -1,23 +1,37 @@
 #include "PluginDialog.h"
 
+#ifdef ENABLE_PLUGINS
+
+#include <algorithm>
 #include <string>  // for string
 
 #include "control/settings/Settings.h"     // for Settings
+#include "gui/Builder.h"
 #include "gui/dialog/PluginDialogEntry.h"  // for PluginDialogEntry
 #include "plugin/PluginController.h"       // for PluginController
 
 class GladeSearchpath;
 class Plugin;
 
-PluginDialog::PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings):
-        GladeGui(gladeSearchPath, "plugin.glade", "pluginDialog"), settings(settings) {}
+constexpr auto UI_FILE = "plugin.glade";
+constexpr auto UI_DIALOG_NAME = "pluginDialog";
 
-void PluginDialog::loadPluginList(PluginController const* pc) {
-    GtkWidget* pluginBox = get("pluginBox");
+PluginDialog::PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
+                           const std::vector<std::unique_ptr<Plugin>>& pluginList):
+        settings(settings) {
+    Builder builder(gladeSearchPath, UI_FILE);
+    window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
 
-    for (Plugin* p: pc->getPlugins()) {
-        this->plugins.emplace_back(std::make_unique<PluginDialogEntry>(p, getGladeSearchPath(), pluginBox));
-    }
+    GtkBox* pluginBox = GTK_BOX(builder.get("pluginBox"));
+    std::transform(pluginList.begin(), pluginList.end(), std::back_inserter(this->plugins),
+                   [&](auto& p) { return std::make_unique<PluginDialogEntry>(p.get(), gladeSearchPath, pluginBox); });
+
+    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
+    g_signal_connect_swapped(builder.get("btOk"), "clicked", G_CALLBACK(+[](PluginDialog* self) {
+                                 self->saveSettings();
+                                 gtk_window_close(self->window.get());
+                             }),
+                             this);
 }
 
 void PluginDialog::saveSettings() {
@@ -31,12 +45,4 @@ void PluginDialog::saveSettings() {
     settings->setPluginDisabled(pluginDisabled);
 }
 
-void PluginDialog::show(GtkWindow* parent) {
-    gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    int returnCode = gtk_dialog_run(GTK_DIALOG(this->window));
-    gtk_widget_hide(this->window);
-
-    if (returnCode == 2) {
-        saveSettings();
-    }
-}
+#endif

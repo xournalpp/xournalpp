@@ -1,44 +1,36 @@
 #include "PluginDialogEntry.h"
 
-#include "plugin/Plugin.h"  // for Plugin
-#include "util/i18n.h"      // for _
+#ifdef ENABLE_PLUGINS
 
-#include "config-features.h"  // for ENABLE_PLUGINS
-#include "filesystem.h"       // for path
+#include "gui/Builder.h"
+#include "plugin/Plugin.h"
+#include "util/gtk4_helper.h"
+#include "util/i18n.h"
+
+#include "filesystem.h"  // for path
 
 class GladeSearchpath;
 
+constexpr auto UI_FILE = "pluginEntry.glade";
+constexpr auto UI_WIDGET_NAME = "pluginMainBox";
 
-PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkWidget* w):
-        GladeGui(gladeSearchPath, "pluginEntry.glade", "offscreenwindow"), plugin(plugin) {
-    GtkWidget* pluginMainBox = get("pluginMainBox");
-    gtk_container_remove(GTK_CONTAINER(getWindow()), pluginMainBox);
-    gtk_container_add(GTK_CONTAINER(w), pluginMainBox);
-    gtk_widget_show_all(pluginMainBox);
+PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkBox* box): plugin(plugin) {
+    Builder builder(gladeSearchPath, UI_FILE);
+    gtk_box_append(box, builder.get("pluginMainBox"));
+    stateButton = GTK_CHECK_BUTTON(builder.get("cbEnabled"));
 
-    loadSettings();
-}
-
-void PluginDialogEntry::loadSettings() {
-#ifdef ENABLE_PLUGINS
-    gtk_label_set_text(GTK_LABEL(get("pluginName")), plugin->getName().c_str());
-    gtk_label_set_text(GTK_LABEL(get("lbAuthor")), plugin->getAuthor().c_str());
-    gtk_label_set_text(GTK_LABEL(get("lbVersion")), plugin->getVersion().c_str());
-    gtk_label_set_text(GTK_LABEL(get("lbDescription")), plugin->getDescription().c_str());
-    gtk_label_set_text(GTK_LABEL(get("lbPath")), plugin->getPath().u8string().c_str());
-    gtk_label_set_text(GTK_LABEL(get("lbDefaultText")),
+    gtk_label_set_text(GTK_LABEL(builder.get("pluginName")), plugin->getName().c_str());
+    gtk_label_set_text(GTK_LABEL(builder.get("lbAuthor")), plugin->getAuthor().c_str());
+    gtk_label_set_text(GTK_LABEL(builder.get("lbVersion")), plugin->getVersion().c_str());
+    gtk_label_set_text(GTK_LABEL(builder.get("lbDescription")), plugin->getDescription().c_str());
+    gtk_label_set_text(GTK_LABEL(builder.get("lbPath")), plugin->getPath().u8string().c_str());
+    gtk_label_set_text(GTK_LABEL(builder.get("lbDefaultText")),
                        plugin->isDefaultEnabled() ? _("default enabled") : _("default disabled"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbEnabled")), plugin->isEnabled());
-#endif
-}
-
-void PluginDialogEntry::show(GtkWindow* parent) {
-    // Not implemented! This is not a dialog!
+    gtk_check_button_set_active(stateButton, plugin->isEnabled());
 }
 
 void PluginDialogEntry::saveSettings(std::string& pluginEnabled, std::string& pluginDisabled) {
-#ifdef ENABLE_PLUGINS
-    bool state = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbEnabled")));
+    bool state = gtk_check_button_get_active(stateButton);
 
     if (state == plugin->isDefaultEnabled()) {
         return;
@@ -55,5 +47,6 @@ void PluginDialogEntry::saveSettings(std::string& pluginEnabled, std::string& pl
         }
         pluginDisabled += plugin->getPath().u8string();
     }
-#endif
 }
+
+#endif
