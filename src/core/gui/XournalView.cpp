@@ -454,9 +454,9 @@ auto XournalView::getVisibleRect(size_t page) const -> Rectangle<double>* {
     if (page == npos || page >= this->viewPages.size()) {
         return nullptr;
     }
-    XojPageView* p = this->viewPages[page].get();
+    auto& p = this->viewPages[page];
 
-    return getVisibleRect(p);
+    return getVisibleRect(p.get());
 }
 
 auto XournalView::getVisibleRect(const XojPageView* redrawable) const -> Rectangle<double>* {
