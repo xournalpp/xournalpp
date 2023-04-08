@@ -11,6 +11,11 @@ if [ -z "$APPDIR" ]; then
     exit 1
 fi
 
+if [ -z "$VERSION" ]; then
+   echo "Error: VERSION must be a defined environment variable."
+   exit 1
+fi
+
 # linuxdeploy and linuxdeploy GTK plugin locations
 LINUXDEPLOY=${LINUXDEPLOY:-"linuxdeploy.AppImage"}
 LINUXDEPLOY_PLUGIN_GTK="linuxdeploy-plugin-gtk.sh"
@@ -47,7 +52,13 @@ echo "Use the icon file $ICON_FILE and the desktop file $DESKTOP_FILE"
 filename_pattern = 'xournalpp-*x86_64.AppImage.zsync' 
 # See https://github.com/AppImage/AppImageSpec/blob/master/draft.md#update-information
 
-export UPD_INFO="gh-releases-zsync|xournalpp|xournalpp|latest|$filename_pattern"
+if [[ $VERSION = *dev ]]; then
+  gh_tag='nightly'  # latest development version
+else
+  gh_tag='latest'   # latest stable version
+fi
+
+export UPD_INFO="gh-releases-zsync|xournalpp|xournalpp|$gh_tag|$filename_pattern"
 
 appimage_name='appimage'
 
