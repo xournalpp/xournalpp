@@ -33,10 +33,10 @@ jobs:
           # Build AppImage
           export VERSION=$(cat VERSION | sed '1q;d')
           export ARCH=$(cat VERSION | sed '4q;d')
+          export OUTPUT="xournalpp-$VERSION-$ARCH.AppImage"
           ../azure-pipelines/util/build_appimage.sh
-          # Move and rename the generated AppImage file (and zsync file for AppImageUpdate)
-          find . -name '*.AppImage' -not -name 'linuxdeploy.AppImage' -exec mv {} packages/xournalpp-$VERSION-$ARCH.AppImage \;
-          find . -name '*.AppImage.zsync' -not -name 'linuxdeploy.AppImage.zsync' -exec mv {} packages/xournalpp-$VERSION-$ARCH.AppImage.zsync \;
+
+          mv "$OUTPUT" "$OUTPUT".zsync packages/
         workingDirectory: ./build
         displayName: 'Create AppImage'
         condition: eq('${{ parameters.build_appimage }}', true)
