@@ -11,27 +11,29 @@
 
 #pragma once
 
+#include "config-features.h"
+
+#ifdef ENABLE_PLUGINS
+
 #include <memory>  // for unique_ptr
 #include <vector>  // for vector
 
-#include <gtk/gtk.h>  // for GtkWindow
-
-#include "gui/GladeGui.h"  // for GladeGui
+#include "util/raii/GtkWindowUPtr.h"
 
 #include "PluginDialogEntry.h"  // for PluginDialogEntry
 
+class Plugin;
 class PluginController;
 class Settings;
 class GladeSearchpath;
 
-class PluginDialog: public GladeGui {
+class PluginDialog {
 public:
-    PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings);
-    ~PluginDialog() override = default;
+    PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
+                 const std::vector<std::unique_ptr<Plugin>>& plugins);
 
 public:
-    void loadPluginList(PluginController const* pc);
-    void show(GtkWindow* parent) override;
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
     void saveSettings();
@@ -40,4 +42,7 @@ private:
     Settings* settings;
 
     std::vector<std::unique_ptr<PluginDialogEntry>> plugins;
+    xoj::util::GtkWindowUPtr window;
 };
+
+#endif

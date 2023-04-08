@@ -15,6 +15,7 @@
 
 #include "control/settings/Settings.h"
 #include "gui/GladeSearchpath.h"
+#include "gui/PopupWindowWrapper.h"
 #include "gui/dialog/PluginDialog.h"
 #include "util/PathUtil.h"
 #include "util/StringUtils.h"
@@ -151,8 +152,8 @@ void PluginController::registerToolbar() {
 
 void PluginController::showPluginManager() const {
 #ifdef ENABLE_PLUGINS
-    PluginDialog dlg(control->getGladeSearchPath(), control->getSettings());
-    dlg.loadPluginList(this);
+    xoj::popup::PopupWindowWrapper<PluginDialog> dlg(control->getGladeSearchPath(), control->getSettings(),
+                                                     this->plugins);
     dlg.show(control->getGtkWindow());
 #endif
 }
@@ -179,16 +180,5 @@ void PluginController::registerToolButtons(ToolMenuHandler* toolMenuHandler) {
     for (auto&& p: this->plugins) {
         p->registerToolButton(toolMenuHandler);
     }
-#endif
-}
-
-auto PluginController::getPlugins() const -> std::vector<Plugin*> {
-#ifdef ENABLE_PLUGINS
-    std::vector<Plugin*> pl;
-    pl.reserve(plugins.size());
-    std::transform(begin(plugins), end(plugins), std::back_inserter(pl), [](auto&& plugin) { return plugin.get(); });
-    return pl;
-#else
-    return {};
 #endif
 }
