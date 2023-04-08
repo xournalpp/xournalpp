@@ -165,11 +165,7 @@ auto XojPageView::searchTextOnPage(const std::string& text, size_t* occurrences,
     return found;
 }
 
-void XojPageView::endText() {
-    if (this->textEditor) {
-        this->textEditor.reset();
-    }
-}
+void XojPageView::endText() { this->textEditor.reset(); }
 
 void XojPageView::startText(double x, double y) {
     this->xournal->endTextAllPages(this);
