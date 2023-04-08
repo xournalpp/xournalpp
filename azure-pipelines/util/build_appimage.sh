@@ -59,8 +59,7 @@ else
 fi
 
 export UPD_INFO="gh-releases-zsync|xournalpp|xournalpp|$gh_tag|$filename_pattern"
-
-appimage_name='appimage'
+export VERBOSE=1
 
 # call through linuxdeploy
-./"$LINUXDEPLOY" --appdir="$APPDIR" --plugin gtk --plugin gettext --output "$appimage_name" --icon-file="$ICON_FILE" --desktop-file="$DESKTOP_FILE"
+./"$LINUXDEPLOY" --appdir="$APPDIR" --plugin gtk --plugin gettext --output appimage --icon-file="$ICON_FILE" --desktop-file="$DESKTOP_FILE"
