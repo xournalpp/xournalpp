@@ -4,8 +4,9 @@
 #include <utility>  // for move
 #include <vector>   // for vector
 
-#include "control/Control.h"                // for Control
-#include "gui/MainWindow.h"                 // for MainWindow
+#include "control/Control.h"  // for Control
+#include "gui/MainWindow.h"   // for MainWindow
+#include "gui/PopupWindowWrapper.h"
 #include "gui/XournalView.h"                // for XournalView
 #include "gui/dialog/RenameLayerDialog.h"   // for RenameLayerDialog
 #include "model/Document.h"                 // for Document
@@ -103,8 +104,9 @@ auto LayerController::actionPerformed(ActionType type) -> bool {
         }
             return true;
         case ACTION_RENAME_LAYER: {
-            RenameLayerDialog dialog(control->getGladeSearchPath(), control->getUndoRedoHandler(), this,
-                                     getCurrentPage()->getSelectedLayer());
+            xoj::popup::PopupWindowWrapper<RenameLayerDialog> dialog(control->getGladeSearchPath(),
+                                                                     control->getUndoRedoHandler(), this,
+                                                                     getCurrentPage()->getSelectedLayer());
             dialog.show(control->getGtkWindow());
         }
             return true;

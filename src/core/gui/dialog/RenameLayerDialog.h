@@ -11,29 +11,26 @@
 
 #pragma once
 
-#include <gtk/gtk.h>  // for GtkButton, GtkWindow
+#include <gtk/gtk.h>
 
-#include "gui/GladeGui.h"  // for GladeGui
+#include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
 class Layer;
 class LayerController;
 class UndoRedoHandler;
 
-class RenameLayerDialog: public GladeGui {
+class RenameLayerDialog {
 public:
     RenameLayerDialog(GladeSearchpath* gladeSearchPath, UndoRedoHandler* undo, LayerController* lc, Layer* l);
-    ~RenameLayerDialog() override;
 
-public:
-    void show(GtkWindow* parent) override;
-
-private:
-    static void exitDialog(GtkButton* bttn, RenameLayerDialog* rld);
-    static void renameSuccessful(GtkButton* bttn, RenameLayerDialog* rld);
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
     LayerController* lc;
     UndoRedoHandler* undo;
     Layer* l;
+
+    xoj::util::GtkWindowUPtr window;
+    GtkEntry* layerNameEntry;
 };
