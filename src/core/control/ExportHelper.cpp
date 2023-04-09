@@ -12,7 +12,6 @@
 #include "control/jobs/ProgressListener.h"  // for DummyProgressListener
 #include "model/Document.h"                 // for Document
 #include "pdf/base/XojPdfExport.h"          // for XojPdfExport
-#include "pdf/base/XojPdfExportFactory.h"   // for XojPdfExportFactory
 #include "util/ElementRange.h"              // for parse, PageRangeVector
 #include "util/i18n.h"                      // for _
 
@@ -45,16 +44,11 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
         format = EXPORT_GRAPHICS_SVG;
     }
 
-    PageRangeVector exportRange;
-    if (range) {
-        exportRange = ElementRange::parse(range, doc->getPageCount());
-    } else {
-        exportRange.emplace_back(0, doc->getPageCount() - 1);
-    }
-
-    DummyProgressListener progress;
-
-    ImageExport imgExport(doc, path, format, exportBackground, exportRange);
+    ImageExport imgExport(doc, path, format);
+    imgExport.setExportBackground(exportBackground);
+    const PageRangeVector exportRange = parseExportRange(doc, range);
+    imgExport.setExportRange(exportRange);
+    imgExport.setLayerRange(layerRange);
 
     if (format == EXPORT_GRAPHICS_PNG) {
         if (pngDpi > 0) {
@@ -66,16 +60,13 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
         }
     }
 
-    imgExport.setLayerRange(layerRange);
-
-    imgExport.exportGraphics(&progress);
-
-    std::string errorMsg = imgExport.getLastErrorMsg();
-    if (!errorMsg.empty()) {
+    imgExport.exportDocument();
+    if (imgExport.getLastErrorMsg()) {
+        std::string errorMsg = imgExport.getLastErrorMsg().value();
         g_message("Error exporting image: %s\n", errorMsg.c_str());
+    } else {
+        g_message("%s", _("Image file successfully created"));
     }
-
-    g_message("%s", _("Image file successfully created"));
 
     return 0;  // no error
 }
@@ -96,31 +87,34 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
 
     GFile* file = g_file_new_for_commandline_arg(output);
 
-    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr);
-    pdfe->setExportBackground(exportBackground);
     auto path = fs::u8path(g_file_peek_path(file));
     g_object_unref(file);
 
-    bool exportSuccess = 0;  // Return of the export job
+    XojPdfExport pdfe{doc, path};
+    pdfe.setLayerRange(layerRange);
+    pdfe.setExportBackground(exportBackground);
+    const PageRangeVector exportRange = parseExportRange(doc, range);
+    pdfe.setExportRange(exportRange);
+    pdfe.setProgressiveMode(progressiveMode);
 
-    pdfe->setLayerRange(layerRange);
-
-    if (range) {
-        // Parse the range
-        PageRangeVector exportRange = ElementRange::parse(range, doc->getPageCount());
-        // Do the export
-        exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
+    // Do the export
+    pdfe.exportDocument();
+    if (pdfe.getLastErrorMsg()) {
+        g_error("%s", pdfe.getLastErrorMsg().value().c_str());
     } else {
-        exportSuccess = pdfe->createPdf(path, progressiveMode);
+        g_message("%s", _("PDF file successfully created"));
     }
-
-    if (!exportSuccess) {
-        g_error("%s", pdfe->getLastError().c_str());
-    }
-
-    g_message("%s", _("PDF file successfully created"));
 
     return 0;  // no error
+}
+
+auto parseExportRange(Document* doc, const char* range) -> PageRangeVector {
+    if (range) {
+        return ElementRange::parse(range, doc->getPageCount());
+    }
+    ElementRangeVector fullRange;
+    fullRange.emplace_back(0, doc->getPageCount() - 1);
+    return fullRange;
 }
 
 }  // namespace ExportHelper

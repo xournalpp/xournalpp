@@ -13,6 +13,7 @@
 
 
 #include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
+#include "util/ElementRange.h"
 
 class Document;
 
@@ -55,5 +56,6 @@ int exportImg(Document* doc, const char* output, const char* range, const char* 
 int exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
               ExportBackgroundType exportBackground, bool progressiveMode);
 
+auto parseExportRange(Document* doc, const char* range) -> PageRangeVector;
 
 }  // namespace ExportHelper
