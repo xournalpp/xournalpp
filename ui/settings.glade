@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk+" version="3.18"/>
+  <requires lib="gtk+" version="3.20"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
     <property name="upper">10</property>
     <property name="value">1</property>
@@ -1536,7 +1536,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                                 <property name="left-padding">12</property>
                                                 <property name="right-padding">12</property>
                                                 <child>
-                                                  <object class="GtkBox" id="hboxMidleMouse">
+                                                  <object class="GtkBox" id="hboxMiddleMouse">
                                                     <property name="name">hboxMidleMouse</property>
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
