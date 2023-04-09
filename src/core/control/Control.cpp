@@ -1239,13 +1239,13 @@ auto Control::firePageSelected(const PageRef& page) -> size_t {
 void Control::firePageSelected(size_t page) { DocumentHandler::firePageSelected(page); }
 
 void Control::manageToolbars() {
-    ToolbarManageDialog dlg(this->gladeSearchPath, this->win->getToolbarModel());
+    xoj::popup::PopupWindowWrapper<ToolbarManageDialog> dlg(this->gladeSearchPath, this->win->getToolbarModel(),
+                                                            [win = this->win]() {
+                                                                win->updateToolbarMenu();
+                                                                auto filepath = Util::getConfigFile(TOOLBAR_CONFIG);
+                                                                win->getToolbarModel()->save(filepath);
+                                                            });
     dlg.show(GTK_WINDOW(this->win->getWindow()));
-
-    this->win->updateToolbarMenu();
-
-    auto filepath = Util::getConfigFile(TOOLBAR_CONFIG);
-    this->win->getToolbarModel()->save(filepath);
 }
 
 void Control::customizeToolbars() {
