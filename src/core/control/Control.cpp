@@ -1585,13 +1585,11 @@ void Control::changePageBackgroundColor() {
         return;
     }
 
-    SelectBackgroundColorDialog dlg(this);
+    xoj::popup::PopupWindowWrapper<SelectBackgroundColorDialog> dlg(this, [p, pNr, ctrl = this](Color color) {
+        p->setBackgroundColor(color);
+        ctrl->firePageChanged(pNr);
+    });
     dlg.show(GTK_WINDOW(this->win->getWindow()));
-
-    if (auto optColor = dlg.getSelectedColor(); optColor) {
-        p->setBackgroundColor(*optColor);
-        firePageChanged(pNr);
-    }
 }
 
 void Control::setViewPairedPages(bool enabled) {

@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * The about dialog
+ * Dialog for selecting a background color
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -12,12 +12,13 @@
 #pragma once
 
 #include <array>     // for array
-#include <optional>  // for optional
+#include <functional>
 
 #include <gdk/gdk.h>  // for GdkRGBA
 #include <gtk/gtk.h>  // for GtkWindow
 
-#include "util/Color.h"  // for Color
+#include "util/Color.h"
+#include "util/raii/GtkWindowUPtr.h"
 
 class Control;
 
@@ -29,18 +30,12 @@ const int LAST_BACKGROUND_COLOR_COUNT = 9;
 
 class SelectBackgroundColorDialog {
 public:
-    explicit SelectBackgroundColorDialog(Control* control);
+    SelectBackgroundColorDialog(Control* control, std::function<void(Color)> callback);
 
-public:
-    void show(GtkWindow* parent);
-
-    /**
-     * Return the selected color as RGB, nullopt if no color is selected
-     */
-    auto getSelectedColor() const -> std::optional<Color>;
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
-    void storeLastUsedValuesInSettings();
+    void storeLastUsedValuesInSettings(GdkRGBA color);
 
 private:
     Control* control{nullptr};
@@ -50,8 +45,6 @@ private:
      */
     std::array<GdkRGBA, LAST_BACKGROUND_COLOR_COUNT> lastBackgroundColors{};
 
-    /**
-     * Selected color
-     */
-    std::optional<Color> selected;
+    xoj::util::GtkWindowUPtr window;
+    std::function<void(Color)> callback;
 };
