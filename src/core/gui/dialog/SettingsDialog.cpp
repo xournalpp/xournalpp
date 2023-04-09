@@ -686,7 +686,8 @@ void SettingsDialog::save() {
             gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbStabilizerAveragingMethods")))));
     settings->setStabilizerPreprocessor(static_cast<StrokeStabilizer::Preprocessor>(
             gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbStabilizerPreprocessors")))));
-    settings->setStabilizerBuffersize(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(get("sbStabilizerBuffersize"))));
+    settings->setStabilizerBuffersize(
+            static_cast<size_t>(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(get("sbStabilizerBuffersize")))));
     settings->setStabilizerDeadzoneRadius(
             gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("sbStabilizerDeadzoneRadius"))));
     settings->setStabilizerDrag(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("sbStabilizerDrag"))));
@@ -913,16 +914,16 @@ void SettingsDialog::save() {
     settings->setStrokeRecognizerMinSize(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spStrokeRecognizerMinSize")))));
 
-    int selectedInputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))) - 1;
-    if (selectedInputDeviceIndex >= 0 && selectedInputDeviceIndex < static_cast<int>(this->audioInputDevices.size())) {
-        settings->setAudioInputDevice(static_cast<int>(this->audioInputDevices[selectedInputDeviceIndex].getIndex()));
+    size_t selectedInputDeviceIndex =
+            static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice")))) - 1;
+    if (selectedInputDeviceIndex < this->audioInputDevices.size()) {
+        settings->setAudioInputDevice(this->audioInputDevices[selectedInputDeviceIndex].getIndex());
     }
 
-    int selectedOutputDeviceIndex = gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice"))) - 1;
-    if (selectedOutputDeviceIndex >= 0 &&
-        selectedOutputDeviceIndex < static_cast<int>(this->audioOutputDevices.size())) {
-        settings->setAudioOutputDevice(
-                static_cast<int>(this->audioOutputDevices[selectedOutputDeviceIndex].getIndex()));
+    size_t selectedOutputDeviceIndex =
+            static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")))) - 1;
+    if (selectedOutputDeviceIndex < this->audioOutputDevices.size()) {
+        settings->setAudioOutputDevice(this->audioOutputDevices[selectedOutputDeviceIndex].getIndex());
     }
 
     switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioSampleRate")))) {
