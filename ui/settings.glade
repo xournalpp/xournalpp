@@ -225,6 +225,16 @@
     <property name="step-increment">0.5</property>
     <property name="page-increment">10</property>
   </object>
+  <object class="GtkImage" id="iconCancel">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">dialog-cancel</property>
+  </object>
+  <object class="GtkImage" id="iconOk">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">dialog-ok</property>
+  </object>
   <object class="GtkListStore" id="listStabilizerAveragingMethods">
     <columns>
       <!-- column-name Name -->
@@ -259,66 +269,22 @@
       </row>
     </data>
   </object>
-  <object class="GtkDialog" id="settingsDialog">
-    <property name="name">settingsDialog</property>
+  <object class="GtkWindow" id="settingsDialog">
+    <property name="width-request">1024</property>
+    <property name="height-request">740</property>
     <property name="can-focus">False</property>
-    <property name="border-width">5</property>
-    <property name="title" translatable="yes">Xournal++ Preferences</property>
-    <property name="window-position">center</property>
-    <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
-    <property name="type-hint">normal</property>
-    <property name="gravity">center</property>
-    <signal name="close" handler="gtk_widget_hide" swapped="no"/>
-    <child internal-child="vbox">
-      <object class="GtkBox" id="dialog-vbox3">
+    <property name="modal">True</property>
+    <property name="destroy-with-parent">True</property>
+    <property name="skip-taskbar-hint">True</property>
+    <child>
+      <object class="GtkBox" id="dialog-main-box">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="btSettingsButton">
-            <property name="name">btSettingsButton</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="layout-style">end</property>
-            <child>
-              <object class="GtkButton" id="btSettingsCancel">
-                <property name="label">gtk-cancel</property>
-                <property name="name">btSettingsCancel</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <property name="use-stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btSettingsOk">
-                <property name="label">gtk-ok</property>
-                <property name="name">btSettingsOk</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <property name="use-stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack-type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
         <child>
           <object class="GtkNotebook" id="notebook1">
             <property name="name">notebook1</property>
@@ -2703,7 +2669,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                           <object class="GtkGrid" id="gdStartZoomAtSetting">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="tooltip-text" translatable="yes">When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. 
+                                            <property name="tooltip-text" translatable="yes">When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.
 This setting can make it easier to draw with touch. </property>
                                             <child>
                                               <object class="GtkLabel" id="label2">
@@ -5685,7 +5651,7 @@ It must be short in time and length and we can't have ignored another stroke rec
                                           <object class="GtkLabel" id="lblReRenderMoreOftenWhileZooming">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">&lt;i&gt;Re-render PDF backgrounds more often while zooming for better render quality. 
+                                            <property name="label" translatable="yes">&lt;i&gt;Re-render PDF backgrounds more often while zooming for better render quality.
 &lt;b&gt;Note:&lt;/b&gt; This should not affect print quality.&lt;/i&gt;</property>
                                             <property name="use-markup">True</property>
                                             <property name="wrap">True</property>
@@ -6633,14 +6599,56 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="buttonBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">True</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="can-default">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">iconCancel</property>
+                <accelerator key="Escape" signal="clicked"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="label" translatable="yes">Ok</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="can-default">True</property>
+                <property name="has-default">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">iconOk</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="0">btSettingsCancel</action-widget>
-      <action-widget response="1">btSettingsOk</action-widget>
-    </action-widgets>
   </object>
 </interface>

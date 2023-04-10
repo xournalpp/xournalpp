@@ -22,6 +22,7 @@
 #include "util/PathUtil.h"                       // for fromGFile, toGFilename
 #include "util/StringUtils.h"                    // for StringUtils
 #include "util/Util.h"                           // for systemWithMessage
+#include "util/gtk4_helper.h"                    //
 #include "util/i18n.h"                           // for _
 #include "util/raii/CairoWrappers.h"             // for CairoSurfaceSPtr
 
@@ -39,15 +40,43 @@ using std::vector;
 constexpr auto UI_FILE = "settings.glade";
 constexpr auto UI_DIALOG_NAME = "settingsDialog";
 
-SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control):
+SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
+                               std::function<void()> callback):
         settings(settings),
         control(control),
         callib(zoomcallib_new()),
         builder(gladeSearchPath, UI_FILE),
         window(GTK_WINDOW(builder.get(UI_DIALOG_NAME))),
         languageConfig(gladeSearchPath, builder.get("hboxLanguageSelect"), settings),
-        latexPanel(gladeSearchPath) {
-    GtkWidget* vbox = builder.get("zoomVBox");
+        latexPanel(gladeSearchPath),
+        callback(callback) {
+
+    gtk_box_append(GTK_BOX(builder.get("zoomVBox")), callib);
+    gtk_widget_show(callib);
+
+    const xoj::util::raii::CairoSurfaceSPtr img(PageTypeMenu::createPreviewImage(PageType{PageTypeFormat::Lined}),
+                                                xoj::util::adopt);
+    GtkWidget* preview = gtk_image_new_from_surface(img.get());
+    gtk_box_append(GTK_BOX(builder.get("pagePreviewImage")), preview);
+    gtk_widget_show(preview);
+
+    initMouseButtonEvents(gladeSearchPath);
+
+    vector<InputDevice> deviceList = DeviceListHelper::getDeviceList(this->settings);
+    GtkWidget* container = builder.get("hboxInputDeviceClasses");
+    for (const InputDevice& inputDevice: deviceList) {
+        // Only add real devices (core pointers have vendor and product id nullptr)
+        this->deviceClassConfigs.emplace_back(gladeSearchPath, container, settings, inputDevice);
+    }
+    if (deviceList.empty()) {
+        GtkWidget* label = gtk_label_new("");
+        gtk_label_set_markup(GTK_LABEL(label),
+                             _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
+        gtk_box_append(GTK_BOX(container), label);
+        gtk_widget_show(label);
+    }
+
+    gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
 
     g_signal_connect(builder.get("zoomCallibSlider"), "change-value",
                      G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, SettingsDialog* self) {
@@ -149,34 +178,15 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect_swapped(builder.get("btOk"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
+                                 self->save();
+                                 self->callback();
+                                 gtk_window_close(self->window.get());
+                             }),
+                             this);
+    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), window.get());
 
-    const xoj::util::raii::CairoSurfaceSPtr img(PageTypeMenu::createPreviewImage(PageType{PageTypeFormat::Lined}),
-                                                xoj::util::adopt);
-    GtkWidget* preview = gtk_image_new_from_surface(img.get());
-
-    gtk_box_pack_start(GTK_BOX(builder.get("pagePreviewImage")), preview, false, true, 0);
-    gtk_widget_show(preview);
-
-    gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
-    gtk_widget_show(callib);
-
-    initMouseButtonEvents(gladeSearchPath);
-
-    vector<InputDevice> deviceList = DeviceListHelper::getDeviceList(this->settings);
-    GtkWidget* container = builder.get("hboxInputDeviceClasses");
-    for (const InputDevice& inputDevice: deviceList) {
-        // Only add real devices (core pointers have vendor and product id nullptr)
-        this->deviceClassConfigs.emplace_back(gladeSearchPath, container, settings, inputDevice);
-    }
-    if (deviceList.empty()) {
-        GtkWidget* label = gtk_label_new("");
-        gtk_label_set_markup(GTK_LABEL(label),
-                             _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
-        gtk_box_pack_end(GTK_BOX(container), label, true, true, 0);
-        gtk_widget_show(label);
-    }
-
-    gtk_container_add(GTK_CONTAINER(builder.get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
+    load();
 }
 
 void SettingsDialog::initMouseButtonEvents(GladeSearchpath* gladeSearchPath) {
@@ -203,54 +213,12 @@ void SettingsDialog::setDpi(int dpi) {
     zoomcallib_set_val(ZOOM_CALLIB(callib), dpi);
 }
 
-void SettingsDialog::show(GtkWindow* parent) {
-    load();
-
-    // detect display size. If large enough, we enlarge the Settings
-    // Window up to 1000x740.
-    GdkDisplay* disp = gdk_display_get_default();
-    if (disp != NULL) {
-        GdkWindow* win = gtk_widget_get_window(GTK_WIDGET(parent));
-        if (win != NULL) {
-            GdkMonitor* moni = gdk_display_get_monitor_at_window(disp, win);
-            GdkRectangle workarea;
-            gdk_monitor_get_workarea(moni, &workarea);
-            gint w = -1;
-            gint h = -1;
-            if (workarea.width > 1100) {
-                w = 1000;
-            } else if (workarea.width > 920) {
-                w = 900;
-            }
-            if (workarea.height > 800) {
-                h = 740;
-            } else if (workarea.height > 620) {
-                h = 600;
-            }
-            gtk_window_set_default_size(this->window.get(), w, h);
-        } else {
-            g_message("Parent window does not have a GDK Window. This is unexpected.");
-        }
-    }
-
-    gtk_window_set_transient_for(this->window.get(), parent);
-    int res = gtk_dialog_run(GTK_DIALOG(this->window.get()));
-
-    if (res == 1) {
-        this->save();
-    }
-
-    gtk_widget_hide(GTK_WIDGET(this->window.get()));
-}
-
 void SettingsDialog::loadCheckbox(const char* name, bool value) {
-    GtkToggleButton* b = GTK_TOGGLE_BUTTON(builder.get(name));
-    gtk_toggle_button_set_active(b, value);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get(name)), value);
 }
 
 auto SettingsDialog::getCheckbox(const char* name) -> bool {
-    GtkToggleButton* b = GTK_TOGGLE_BUTTON(builder.get(name));
-    return gtk_toggle_button_get_active(b);
+    return gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get(name)));
 }
 
 void SettingsDialog::loadSlider(const char* name, double value) {
@@ -267,14 +235,12 @@ auto SettingsDialog::getSlider(const char* name) -> double {
  * Checkbox was toggled, enable / disable it
  */
 void SettingsDialog::enableWithCheckbox(const string& checkboxId, const string& widgetId) {
-    GtkWidget* checkboxWidget = builder.get(checkboxId);
-    bool const enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
+    bool enabled = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get(checkboxId)));
     gtk_widget_set_sensitive(builder.get(widgetId), enabled);
 }
 
 void SettingsDialog::disableWithCheckbox(const string& checkboxId, const string& widgetId) {
-    GtkWidget* checkboxWidget = builder.get(checkboxId);
-    bool const enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
+    bool enabled = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get(checkboxId)));
     gtk_widget_set_sensitive(builder.get(widgetId), !enabled);
 }
 
@@ -283,14 +249,9 @@ void SettingsDialog::disableWithCheckbox(const string& checkboxId, const string&
  */
 void SettingsDialog::enableWithEnabledCheckbox(const string& checkboxId, const string& widgetId) {
     GtkWidget* checkboxWidget = builder.get(checkboxId);
-    GtkWidget* widget = builder.get(widgetId);
-    bool const disabled = !gtk_widget_get_sensitive(checkboxWidget);
-    if (disabled) {
-        gtk_widget_set_sensitive(widget, false);
-    } else {
-        bool const toggled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
-        gtk_widget_set_sensitive(widget, toggled);
-    }
+    bool const enabled =
+            gtk_widget_get_sensitive(checkboxWidget) && gtk_check_button_get_active(GTK_CHECK_BUTTON(checkboxWidget));
+    gtk_widget_set_sensitive(builder.get(widgetId), enabled);
 }
 
 void SettingsDialog::updatePressureSensitivityOptions() {
