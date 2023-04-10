@@ -19,23 +19,19 @@
 
 #include "control/DeviceListHelper.h"  // for InputDevice
 #include "control/ToolEnums.h"         // for ToolSize
-#include "gui/GladeGui.h"              // for GladeGui
 #include "gui/IconNameHelper.h"        // for IconNameHelper
 
 class Settings;
 class GladeSearchpath;
 
-class ButtonConfigGui: public GladeGui {
+class ButtonConfigGui {
 public:
-    ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button, bool withDevice);
-    ~ButtonConfigGui() override;
+    ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings, unsigned int button,
+                    bool withDevice);
 
 public:
     void loadSettings();
     void saveSettings();
-
-    // Not implemented! This is not a dialog!
-    void show(GtkWindow* parent) override;
 
 private:
     static void cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui);
@@ -57,7 +53,7 @@ private:
 
     std::vector<InputDevice> deviceList;
 
-    int button = 0;
+    unsigned int button = 0;
     bool withDevice = false;
 
     typedef std::map<int, ToolSize> ToolSizeIndexMap;
