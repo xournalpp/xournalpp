@@ -17,6 +17,8 @@
 #include <glib.h>     // for GError
 #include <poppler.h>  // for PopplerDocument
 
+#include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
+
 #include "Element.h"  // for Element
 
 class ObjectInputStream;
@@ -86,7 +88,7 @@ private:
     /**
      * Tex PDF Document, if rendered as PDF
      */
-    PopplerDocument* pdf = nullptr;
+    xoj::util::GObjectSPtr<PopplerDocument> pdf;
 
     /**
      * Tex image, if rendered as image. Note: this is deprecated and subject to removal in a later version.

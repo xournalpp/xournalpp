@@ -26,6 +26,7 @@
 
 #include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
 #include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
+#include "util/raii/GObjectSPtr.h"    // for GObjectSptr
 
 #include "PageRef.h"     // for PageRef
 #include "filesystem.h"  // for path
@@ -145,7 +146,7 @@ private:
     /**
      * The bookmark contents model
      */
-    GtkTreeModel* contentsModel = nullptr;
+    xoj::util::GObjectSPtr<GtkTreeModel> contentsModel;
 
     /**
      *  create a backup before save

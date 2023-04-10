@@ -6,11 +6,11 @@
 
 #include <cairo.h>        // for cairo_surface_destroy
 #include <gdk/gdk.h>      // for gdk_cairo_set_sourc...
-#include <glib-object.h>  // for g_object_unref
 #include <glib.h>         // for g_assert, guchar
 
 #include "model/Element.h"                        // for Element, ELEMENT_IMAGE
 #include "util/Rectangle.h"                       // for Rectangle
+#include "util/raii/GObjectSPtr.h"                // for GObjectSPtr
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -73,31 +73,30 @@ void Image::setImage(std::string&& data) {
 
     // FIXME: awful hack to try to parse the format
     std::array<char*, 4096> buffer{};
-    GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
+    xoj::util::GObjectSPtr<GdkPixbufLoader> loader(gdk_pixbuf_loader_new(), xoj::util::adopt);
     size_t remaining = this->data.size();
     while (remaining > 0) {
         size_t readLen = std::min(remaining, buffer.size());
-        if (!gdk_pixbuf_loader_write(loader, reinterpret_cast<const guchar*>(this->data.c_str()), readLen, nullptr))
+        if (!gdk_pixbuf_loader_write(loader.get(), reinterpret_cast<const guchar*>(this->data.c_str()), readLen,
+                                     nullptr))
             break;
         remaining -= readLen;
 
         // Try to determine the format early, if possible
-        this->format = gdk_pixbuf_loader_get_format(loader);
+        this->format = gdk_pixbuf_loader_get_format(loader.get());
         if (this->format) {
             break;
         }
     }
-    gdk_pixbuf_loader_close(loader, nullptr);
+    gdk_pixbuf_loader_close(loader.get(), nullptr);
     // if the format was not determined early, it can probably be determined now
     if (!this->format) {
-        this->format = gdk_pixbuf_loader_get_format(loader);
+        this->format = gdk_pixbuf_loader_get_format(loader.get());
     }
     g_assert(this->format != nullptr && "could not parse the image format!");
 
     // the format is owned by the pixbuf, so create a copy
     this->format = gdk_pixbuf_format_copy(this->format);
-
-    g_object_unref(loader);
 }
 
 void Image::setImage(GdkPixbuf* img) {
@@ -131,13 +130,13 @@ void Image::setImage(cairo_surface_t* image) {
 auto Image::getImage() const -> cairo_surface_t* {
     g_assert(data.length() > 0 && "image has no data, cannot render it!");
     if (this->image == nullptr) {
-        GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
-        gdk_pixbuf_loader_write(loader, reinterpret_cast<const guchar*>(this->data.c_str()), this->data.length(),
+        xoj::util::GObjectSPtr<GdkPixbufLoader> loader(gdk_pixbuf_loader_new(), xoj::util::adopt);
+        gdk_pixbuf_loader_write(loader.get(), reinterpret_cast<const guchar*>(this->data.c_str()), this->data.length(),
                                 nullptr);
-        bool success = gdk_pixbuf_loader_close(loader, nullptr);
+        bool success = gdk_pixbuf_loader_close(loader.get(), nullptr);
         g_assert(success && "errors in loading image data!");
 
-        GdkPixbuf* tmp = gdk_pixbuf_loader_get_pixbuf(loader);
+        GdkPixbuf* tmp = gdk_pixbuf_loader_get_pixbuf(loader.get());
         g_assert(tmp != nullptr);
         GdkPixbuf* pixbuf = gdk_pixbuf_apply_embedded_orientation(tmp);
 
@@ -155,8 +154,6 @@ auto Image::getImage() const -> cairo_surface_t* {
         gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
         cairo_paint(cr);
         cairo_destroy(cr);
-
-        g_object_unref(loader);
     }
 
     return this->image;

@@ -7,6 +7,7 @@
 
 #include "model/Element.h"                        // for Element, ELEMENT_TE...
 #include "util/Rectangle.h"                       // for Rectangle
+#include "util/raii/GObjectSPtr.h"                // for GObjectSPtr
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -22,10 +23,7 @@ void TexImage::freeImageAndPdf() {
         this->image = nullptr;
     }
 
-    if (this->pdf) {
-        g_object_unref(this->pdf);
-        this->pdf = nullptr;
-    }
+    this->pdf.reset();
 }
 
 auto TexImage::clone() const -> Element* {
@@ -41,7 +39,6 @@ auto TexImage::clone() const -> Element* {
 
     // Clone has a copy of our PDF.
     img->pdf = this->pdf;
-    g_object_ref(this->pdf);
 
     // Load a copy of our data (must be called after
     // giving the clone a copy of our PDF -- it may change
@@ -91,14 +88,14 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
     const std::string type = binaryData.substr(1, 3);
     if (type == "PDF") {
         // Note: binaryData must not be modified while pdf is live.
-        this->pdf = poppler_document_new_from_data(this->binaryData.data(), this->binaryData.size(), nullptr, err);
-        if (!pdf || poppler_document_get_n_pages(this->pdf) < 1) {
+        this->pdf.reset(poppler_document_new_from_data(this->binaryData.data(), this->binaryData.size(), nullptr, err),
+                        xoj::util::adopt);
+        if (!pdf.get() || poppler_document_get_n_pages(this->pdf.get()) < 1) {
             return false;
         }
         if (!this->width && !this->height) {
-            PopplerPage* page = poppler_document_get_page(this->pdf, 0);
-            poppler_page_get_size(page, &this->width, &this->height);
-            g_object_unref(page);
+            xoj::util::GObjectSPtr<PopplerPage> page(poppler_document_get_page(this->pdf.get(), 0), xoj::util::adopt);
+            poppler_page_get_size(page.get(), &this->width, &this->height);
         }
     } else if (type == "PNG") {
         this->image = cairo_image_surface_create_from_png_stream(
@@ -112,7 +109,7 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
 
 auto TexImage::getImage() const -> cairo_surface_t* { return this->image; }
 
-auto TexImage::getPdf() const -> PopplerDocument* { return this->pdf; }
+auto TexImage::getPdf() const -> PopplerDocument* { return this->pdf.get(); }
 
 void TexImage::scale(double x0, double y0, double fx, double fy, double rotation,
                      bool) {  // line width scaling option is not used

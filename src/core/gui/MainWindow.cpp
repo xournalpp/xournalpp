@@ -314,11 +314,10 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
         return;
     }
 
-    GdkPixbuf* image = gtk_selection_data_get_pixbuf(data);
+    xoj::util::GObjectSPtr<GdkPixbuf> image(gtk_selection_data_get_pixbuf(data), xoj::util::adopt);
     if (image) {
-        win->control->clipboardPasteImage(image);
+        win->control->clipboardPasteImage(image.get());
 
-        g_object_unref(image);
         gtk_drag_finish(dragContext, true, false, time);
         return;
     }
@@ -331,16 +330,16 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
             GCancellable* cancel = g_cancellable_new();
             int cancelTimeout = g_timeout_add(3000, reinterpret_cast<GSourceFunc>(cancellable_cancel), cancel);
 
-            GFile* file = g_file_new_for_uri(uri);
+            xoj::util::GObjectSPtr<GFile> file(g_file_new_for_uri(uri), xoj::util::adopt);
             GError* err = nullptr;
-            GFileInputStream* in = g_file_read(file, cancel, &err);
+            GFileInputStream* in = g_file_read(file.get(), cancel, &err);
             if (g_cancellable_is_cancelled(cancel)) {
                 continue;
             }
 
-            g_object_unref(file);
             if (err == nullptr) {
-                GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, nullptr);
+                xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(
+                        gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, nullptr), xoj::util::adopt);
                 if (g_cancellable_is_cancelled(cancel)) {
                     continue;
                 }
@@ -350,9 +349,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
                 }
 
                 if (pixbuf) {
-                    win->control->clipboardPasteImage(pixbuf);
-
-                    g_object_unref(pixbuf);
+                    win->control->clipboardPasteImage(pixbuf.get());
                 }
             } else {
                 g_error_free(err);
@@ -706,11 +703,10 @@ void MainWindow::setAudioPlaybackPaused(bool paused) { this->getToolMenuHandler(
 
 void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
     auto filepath = gladeSearchPath->findFile("", cssFilename);
-    GtkCssProvider* provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, filepath.u8string().c_str(), nullptr);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider),
+    xoj::util::GObjectSPtr<GtkCssProvider> provider(gtk_css_provider_new(), xoj::util::adopt);
+    gtk_css_provider_load_from_path(provider.get(), filepath.u8string().c_str(), nullptr);
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider.get()),
                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    g_object_unref(provider);
 }
 
 PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloatingToolBox.get(); }

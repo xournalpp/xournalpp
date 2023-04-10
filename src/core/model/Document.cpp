@@ -1,7 +1,7 @@
 #include "Document.h"
 
-#include <string>   // for string
 #include <ctime>    // for size_t, localtime, strf...
+#include <string>   // for string
 #include <utility>  // for move, pair
 
 #include <glib-object.h>  // for g_object_unref, G_TYPE_...
@@ -17,6 +17,7 @@
 #include "util/SaveNameUtils.h"               // for parseFilename
 #include "util/Util.h"                        // for npos
 #include "util/i18n.h"                        // for FS, _F
+#include "util/raii/GObjectSPtr.h"            // for GObjectSPtr
 
 #include "LinkDestination.h"  // for XojLinkDest, DOCUMENT_L...
 #include "XojPage.h"          // for XojPage
@@ -31,11 +32,10 @@ Document::~Document() {
 
 void Document::freeTreeContentModel() {
     if (this->contentsModel) {
-        gtk_tree_model_foreach(this->contentsModel, reinterpret_cast<GtkTreeModelForeachFunc>(freeTreeContentEntry),
-                               this);
+        gtk_tree_model_foreach(this->contentsModel.get(),
+                               reinterpret_cast<GtkTreeModelForeachFunc>(freeTreeContentEntry), this);
 
-        g_object_unref(this->contentsModel);
-        this->contentsModel = nullptr;
+        this->contentsModel.reset();
     }
 }
 
@@ -216,10 +216,10 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterato
 
         link->dest->setExpand(iter->isOpen());
 
-        gtk_tree_store_append(GTK_TREE_STORE(contentsModel), &treeIter, parent);
+        gtk_tree_store_append(GTK_TREE_STORE(contentsModel.get()), &treeIter, parent);
         char* titleMarkup = g_markup_escape_text(action->getTitle().c_str(), -1);
 
-        gtk_tree_store_set(GTK_TREE_STORE(contentsModel), &treeIter, DOCUMENT_LINKS_COLUMN_NAME, titleMarkup,
+        gtk_tree_store_set(GTK_TREE_STORE(contentsModel.get()), &treeIter, DOCUMENT_LINKS_COLUMN_NAME, titleMarkup,
                            DOCUMENT_LINKS_COLUMN_LINK, link, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, "", -1);
 
         g_free(titleMarkup);
@@ -257,13 +257,14 @@ void Document::buildContentsModel() {
         return;
     }
 
-    this->contentsModel = reinterpret_cast<GtkTreeModel*>(
-            gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT, G_TYPE_BOOLEAN, G_TYPE_STRING));
+    this->contentsModel.reset(reinterpret_cast<GtkTreeModel*>(gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_OBJECT,
+                                                                                 G_TYPE_BOOLEAN, G_TYPE_STRING)),
+                              xoj::util::adopt);
     buildTreeContentsModel(nullptr, iter);
     delete iter;
 }
 
-auto Document::getContentsModel() const -> GtkTreeModel* { return this->contentsModel; }
+auto Document::getContentsModel() const -> GtkTreeModel* { return this->contentsModel.get(); }
 
 auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc) -> bool {
     XojLinkDest* link = nullptr;
@@ -287,8 +288,9 @@ auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTre
 }
 
 void Document::updateIndexPageNumbers() {
-    if (this->contentsModel != nullptr) {
-        gtk_tree_model_foreach(this->contentsModel, reinterpret_cast<GtkTreeModelForeachFunc>(fillPageLabels), this);
+    if (this->contentsModel) {
+        gtk_tree_model_foreach(this->contentsModel.get(), reinterpret_cast<GtkTreeModelForeachFunc>(fillPageLabels),
+                               this);
     }
 }
 
