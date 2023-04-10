@@ -271,27 +271,9 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
 }
 
 auto Util::normalizeAssetPath(const fs::path& asset_path, const fs::path& base) -> std::string {
-    auto final_path = std::string{};
-
-#ifdef _WIN32
-    // On Windows, fs::relative may return an empty or malformed path if the
-    // the root_path()s are different
-    if (asset_path.root_path() == base.root_path()) {
-        final_path = fs::relative(asset_path, base).string();
-        std::replace(final_path.begin(), final_path.end(), '\\', '/');
-    }
-#else
-    // With other platforms, the root is always '/', so a relative path can
-    // always be correctly constructed
-    final_path = fs::relative(asset_path, base).string();
-#endif
-
-    // In some cases (if `asset_path` is a relative path), `final_path` may be
-    // empty, so ensure that a valid path is always returned from this function
-    if (final_path.empty())
-        final_path = fs::weakly_canonical(asset_path).string();
-
-    return final_path;
+    // fs::relative() may return an empty or malformed path if the root_path()s are different
+    return (asset_path.root_path() == base.root_path() ?
+            fs::relative(asset_path, base) : fs::weakly_canonical(asset_path)).generic_u8string();
 }
 
 auto Util::isChildOrEquivalent(fs::path const& path, fs::path const& base) -> bool {

@@ -255,7 +255,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id, con
                 }
             } else {
                 background->setAttrib("domain", "absolute");
-                auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath().string(), target.parent_path());
+                auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path());
                 background->setAttrib("filename", normalizedPath);
             }
         }
@@ -281,9 +281,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id, con
             p->getBackgroundImage().setCloneId(id);
         } else {
             background->setAttrib("domain", "absolute");
-            auto normalizedPath = Util::normalizeAssetPath(
-                    std::filesystem::current_path() / p->getBackgroundImage().getFilepath().string(),
-                    target.parent_path());
+            auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path());
             background->setAttrib("filename", normalizedPath);
             p->getBackgroundImage().setCloneId(id);
         }
