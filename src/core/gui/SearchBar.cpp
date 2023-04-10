@@ -34,12 +34,16 @@ SearchBar::SearchBar(Control* control): control(control) {
     g_signal_connect(searchTextField, "key-press-event",
                      G_CALLBACK(+[](GtkWidget* entry, GdkEventKey* event, SearchBar* self) {
                          if (event->keyval == GDK_KEY_Return) {
-                             if (event->state & GDK_SHIFT_MASK)
+                             if (event->state & GDK_SHIFT_MASK) {
                                  self->searchPrevious();
-                             else
+                             } else {
                                  self->searchNext();
+                             }
                              // Grab focus again since searching will take away focus
                              gtk_widget_grab_focus(entry);
+                             return true;
+                         } else if (event->keyval == GDK_KEY_Escape) {
+                             self->showSearchBar(false);
                              return true;
                          }
                          return false;

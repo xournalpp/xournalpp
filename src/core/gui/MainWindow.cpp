@@ -82,9 +82,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
 
-
-    // "watch over" all events
-    g_signal_connect(this->window, "key-press-event", G_CALLBACK(onKeyPressCallback), this);
+    // "watch over" all key events
+    g_signal_connect(this->window, "key-press-event", G_CALLBACK(gtk_window_propagate_key_event), nullptr);
+    g_signal_connect(this->window, "key-release-event", G_CALLBACK(gtk_window_propagate_key_event), nullptr);
 
     // need to create tool buttons registered in plugins, so they can be added to toolbars
     control->registerPluginToolButtons(this->toolbar.get());
@@ -450,33 +450,6 @@ void MainWindow::updateScrollbarSidebarPosition() {
 }
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) { win->setSidebarVisible(false); }
-
-auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win) -> bool {
-
-    if (win->getXournal()->getSelection()) {
-        // something is selected - give that control
-        return false;
-    }
-    if (win->getXournal()->getTextEditor()) {
-        // editing text - give that control
-        return false;
-    }
-    if (event->keyval == GDK_KEY_c && event->state & GDK_CONTROL_MASK) {
-        // Shortcut to get selected PDF text.
-        PdfFloatingToolbox* tool = win->getPdfToolbox();
-        if (tool->hasSelection()) {
-            tool->copyTextToClipboard();
-            return true;
-        }
-    }
-    if (event->keyval == GDK_KEY_Escape) {
-        win->getControl()->getSearchBar()->showSearchBar(false);
-        return true;
-    }
-
-
-    return false;
-}
 
 auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control) -> bool {
     control->quit();

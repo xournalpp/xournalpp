@@ -690,10 +690,6 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
             endText();
             return true;
         }
-        if (xournal->getSelection()) {
-            xournal->clearSelection();
-            return true;
-        }
 
         return false;
     }

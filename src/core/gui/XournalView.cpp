@@ -128,6 +128,45 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     }
 
+    if (auto* tool = getControl()->getWindow()->getPdfToolbox(); tool->hasSelection()) {
+        if (event->keyval == GDK_KEY_c && event->state & GDK_CONTROL_MASK) {
+            // Shortcut to get selected PDF text.
+            tool->copyTextToClipboard();
+            return true;
+        }
+    }
+
+    if (auto* selection = getSelection(); selection) {
+        if (event->keyval == GDK_KEY_Escape) {
+            clearSelection();
+            return true;
+        }
+
+        int d = 3;
+        if (event->state & GDK_MOD1_MASK) {
+            d = 1;
+        } else if (event->state & GDK_SHIFT_MASK) {
+            d = 20;
+        }
+
+        int xdir = 0;
+        int ydir = 0;
+        if (event->keyval == GDK_KEY_Left) {
+            xdir = -1;
+        } else if (event->keyval == GDK_KEY_Up) {
+            ydir = -1;
+        } else if (event->keyval == GDK_KEY_Right) {
+            xdir = 1;
+        } else if (event->keyval == GDK_KEY_Down) {
+            ydir = 1;
+        }
+        if (xdir != 0 || ydir != 0) {
+            selection->moveSelection(d * xdir, d * ydir);
+            selection->ensureWithinVisibleArea();
+            return true;
+        }
+    }
+
     guint state = event->state & gtk_accelerator_get_default_mod_mask();
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
