@@ -59,7 +59,6 @@ constexpr void updateBoundingBox(Float& x, Float& y, Float& width, Float& height
         width = x2 - x;
         height = y2 - y;
     }
-
 }
 
 template <typename Float>
@@ -267,11 +266,6 @@ void Stroke::deletePointsFrom(size_t index) {
     this->sizeCalculated = false;
 }
 
-void Stroke::deletePoint(int index) {
-    this->points.erase(std::next(begin(this->points), index));
-    this->sizeCalculated = false;
-}
-
 auto Stroke::getPoint(int index) const -> Point {
     if (index < 0 || index >= this->points.size()) {
         g_warning("Stroke::getPoint(%i) out of bounds!", index);
@@ -344,7 +338,9 @@ void Stroke::rotate(double x0, double y0, double th) {
     cairo_matrix_rotate(&rotMatrix, th);
     cairo_matrix_translate(&rotMatrix, -x0, -y0);
 
-    for (auto&& p: points) { cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y); }
+    for (auto&& p: points) {
+        cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
+    }
     this->sizeCalculated = false;
     // Width and Height will likely be changed after this operation
 }
@@ -405,7 +401,9 @@ void Stroke::scalePressure(double factor) {
     if (!hasPressure()) {
         return;
     }
-    for (auto&& p: this->points) { p.z *= factor; }
+    for (auto&& p: this->points) {
+        p.z *= factor;
+    }
     this->sizeCalculated = false;
 }
 
@@ -434,7 +432,9 @@ void Stroke::setPressure(const std::vector<double>& pressure) {
     }
 
     auto max_size = std::min(pressure.size(), this->points.size() - 1);
-    for (size_t i = 0U; i != max_size; ++i) { this->points[i].z = pressure[i]; }
+    for (size_t i = 0U; i != max_size; ++i) {
+        this->points[i].z = pressure[i];
+    }
 }
 
 /**
@@ -832,7 +832,7 @@ void Stroke::calcSize() const {
 
     auto halfThick = 0.0;
 
-    //#pragma omp parralel
+    // #pragma omp parralel
     for (auto&& p: points) {
         halfThick = std::max(halfThick, p.z);
         minSnapX = std::min(minSnapX, p.x);
@@ -866,7 +866,9 @@ void Stroke::setStrokeCapStyle(const StrokeCapStyle capStyle) { this->capStyle =
 void Stroke::debugPrint() const {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t)this % this->hasPressure()));
 
-    for (auto&& p: points) { g_message("%lf / %lf / %lf", p.x, p.y, p.z); }
+    for (auto&& p: points) {
+        g_message("%lf / %lf / %lf", p.x, p.y, p.z);
+    }
 
     g_message("\n");
 }
