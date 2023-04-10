@@ -156,11 +156,6 @@ private:
     static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control);
 
     /**
-     * Key is pressed
-     */
-    static bool onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win);
-
-    /**
      * Callback fro window states, we ned to know if the window is fullscreen
      */
     static bool windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win);
