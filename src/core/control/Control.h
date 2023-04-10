@@ -184,10 +184,6 @@ public:
     void changePageBackgroundColor();
     void updateBackgroundSizeButton();
 
-    void endDragDropToolbar();
-    void startDragDropToolbar();
-    bool isInDragAndDropToolbar();
-
     /**
      * Loads the view mode (hide/show menu-,tool-&sidebar)
      */

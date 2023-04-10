@@ -50,7 +50,7 @@ class XojPdfPage;
 namespace xoj::view {
 class OverlayView;
 class ToolView;
-}
+}  // namespace xoj::view
 
 class XojPageView: public LegacyRedrawable, public PageListener, public xoj::view::Repaintable {
 public:
@@ -78,7 +78,6 @@ public:
      */
     void deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) override;
 
-    int getDPIScaling() const override;
     double getZoom() const override;
     ZoomControl* getZoomControl() const override;
     Range getVisiblePart() const override;

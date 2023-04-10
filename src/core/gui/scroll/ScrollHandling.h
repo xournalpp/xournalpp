@@ -29,9 +29,6 @@ public:
 
     void setLayoutSize(int width, int height);
 
-    int getPreferredWidth();
-    int getPreferredHeight();
-
 private:
 protected:
     GtkAdjustment* adjHorizontal = nullptr;

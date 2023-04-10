@@ -55,5 +55,3 @@ void ToolbarDragDropHandler::configure() {
 
     this->customizeDialog->show(GTK_WINDOW(win->getWindow()));
 }
-
-auto ToolbarDragDropHandler::isInDragAndDrop() -> bool { return !this->toolbars.empty(); }

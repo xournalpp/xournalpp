@@ -47,7 +47,7 @@ public:
      * Set active regions
      */
     void enableWithCheckbox(const std::string& checkbox, const std::string& widget);
-    void disableWithCheckbox(const std::string& checkbox, const std::string& widget);
+    [[maybe_unused]] void disableWithCheckbox(const std::string& checkbox, const std::string& widget);
 
     /*
      * Listeners for changes to settings.

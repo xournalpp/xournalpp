@@ -1282,30 +1282,6 @@ void Control::customizeToolbars() {
     this->dragDropHandler->configure();
 }
 
-void Control::endDragDropToolbar() {
-    if (!this->dragDropHandler) {
-        return;
-    }
-
-    this->dragDropHandler->clearToolbarsFromDragAndDrop();
-}
-
-void Control::startDragDropToolbar() {
-    if (!this->dragDropHandler) {
-        return;
-    }
-
-    this->dragDropHandler->prepareToolbarsForDragAndDrop();
-}
-
-auto Control::isInDragAndDropToolbar() -> bool {
-    if (!this->dragDropHandler) {
-        return false;
-    }
-
-    return this->dragDropHandler->isInDragAndDrop();
-}
-
 void Control::setShapeTool(ActionType type, bool enabled) {
 
     if (this->toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE && (type != ACTION_TOOL_DRAW_SPLINE || !enabled)) {
@@ -3142,13 +3118,9 @@ void Control::setClipboardHandlerSelection(EditSelection* selection) {
     }
 }
 
-void Control::addChangedDocumentListener(DocumentListener* dl) {
-    this->changedDocumentListeners.push_back(dl);
-}
+void Control::addChangedDocumentListener(DocumentListener* dl) { this->changedDocumentListeners.push_back(dl); }
 
-void Control::removeChangedDocumentListener(DocumentListener* dl) {
-    this->changedDocumentListeners.remove(dl);
-}
+void Control::removeChangedDocumentListener(DocumentListener* dl) { this->changedDocumentListeners.remove(dl); }
 
 void Control::setCopyCutEnabled(bool enabled) { this->clipboardHandler->setCopyCutEnabled(enabled); }
 

@@ -56,8 +56,6 @@ void PdfCache::updateSettings(Settings* settings) {
     }
 }
 
-void PdfCache::clearCache() { this->data.clear(); }
-
 auto PdfCache::lookup(size_t pdfPageNo) const -> const PdfCacheEntry* {
     for (auto& e: this->data) {
         if (static_cast<size_t>(e->popplerPage->getPageId()) == pdfPageNo) {

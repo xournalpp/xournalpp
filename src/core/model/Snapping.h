@@ -74,12 +74,4 @@ namespace Snapping {
  */
 [[nodiscard]] double distanceLine(Point const& pos, Point const& first, Point const& second);
 
-/**
- * @brief Snaps a given point to the closest point on a line segment specified by its end points
- * @param pos the given point
- * @param first the first end point of the line segement
- * @param second the second end point of the line segment
- * @param tolerance the tolerance (in pt)
- */
-[[nodiscard]] Point snapToLine(Point const& pos, Point const& first, Point const& second, double tolerance);
 }  // namespace Snapping

@@ -112,9 +112,7 @@ public:
 
     Layout* getLayout() const;
 
-    bool isGestureActive() const;
-
-    Menubar* getMenubar() const;
+    [[maybe_unused]] Menubar* getMenubar() const;
 
     /**
      * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input
