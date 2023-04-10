@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <functional>
 #include <string>  // for string
 #include <vector>  // for vector
 
@@ -31,13 +32,12 @@ class Settings;
 
 class SettingsDialog {
 public:
-    SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control);
+    SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
+                   std::function<void()> callback);
 
-public:
     inline GtkWindow* getWindow() const { return window.get(); }
 
-    void show(GtkWindow* parent);
-
+private:
     void save();
 
     void setDpi(int dpi);
@@ -90,4 +90,6 @@ private:
     std::vector<DeviceClassConfigGui> deviceClassConfigs;
 
     LatexSettingsPanel latexPanel;
+
+    std::function<void()> callback;
 };

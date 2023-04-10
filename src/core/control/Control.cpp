@@ -2165,73 +2165,101 @@ void Control::setCustomColorSelected() { fireActionSelected(GROUP_COLOR, ACTION_
 
 void Control::showSettings() {
     // take note of some settings before to compare with after
-    auto selectionColor = settings->getBorderColor();
-    bool verticalSpace = settings->getAddVerticalSpace();
-    int verticalSpaceAmountAbove = settings->getAddVerticalSpaceAmountAbove();
-    int verticalSpaceAmountBelow = settings->getAddVerticalSpaceAmountBelow();
-    bool horizontalSpace = settings->getAddHorizontalSpace();
-    int horizontalSpaceAmountRight = settings->getAddHorizontalSpaceAmountRight();
-    int horizontalSpaceAmountLeft = settings->getAddHorizontalSpaceAmountLeft();
-    bool unlimitedScrolling = settings->getUnlimitedScrolling();
-    StylusCursorType stylusCursorType = settings->getStylusCursorType();
-    bool highlightPosition = settings->isHighlightPosition();
-    SidebarNumberingStyle sidebarStyle = settings->getSidebarNumberingStyle();
+    struct {
+        Color selectionColor;
+        bool verticalSpace;
+        int verticalSpaceAmountAbove;
+        int verticalSpaceAmountBelow;
+        bool horizontalSpace;
+        int horizontalSpaceAmountRight;
+        int horizontalSpaceAmountLeft;
+        bool unlimitedScrolling;
+        StylusCursorType stylusCursorType;
+        bool highlightPosition;
+        SidebarNumberingStyle sidebarStyle;
+    } callbackData = {settings->getBorderColor(),
+                      settings->getAddVerticalSpace(),
+                      settings->getAddVerticalSpaceAmountAbove(),
+                      settings->getAddVerticalSpaceAmountBelow(),
+                      settings->getAddHorizontalSpace(),
+                      settings->getAddHorizontalSpaceAmountRight(),
+                      settings->getAddHorizontalSpaceAmountLeft(),
+                      settings->getUnlimitedScrolling(),
+                      settings->getStylusCursorType(),
+                      settings->isHighlightPosition(),
+                      settings->getSidebarNumberingStyle()};
 
-    auto dlg = SettingsDialog(this->gladeSearchPath, settings, this);
+    auto dlg = xoj::popup::PopupWindowWrapper<SettingsDialog>(
+            this->gladeSearchPath, settings, this, [ctrl = this, callbackData]() {
+                Settings* settings = ctrl->getSettings();
+                MainWindow* win = ctrl->win;
+                XournalView* xournal = win->getXournal();
+                // note which settings have changed and act accordingly
+                if (callbackData.selectionColor != settings->getBorderColor()) {
+                    xournal->forceUpdatePagenumbers();
+                }
+
+                if (!settings->getUnlimitedScrolling() &&
+                    (callbackData.verticalSpace != settings->getAddVerticalSpace() ||
+                     callbackData.horizontalSpace != settings->getAddHorizontalSpace() ||
+                     callbackData.verticalSpaceAmountAbove != settings->getAddVerticalSpaceAmountAbove() ||
+                     callbackData.horizontalSpaceAmountRight != settings->getAddHorizontalSpaceAmountRight() ||
+                     callbackData.verticalSpaceAmountBelow != settings->getAddVerticalSpaceAmountBelow() ||
+                     callbackData.horizontalSpaceAmountLeft != settings->getAddHorizontalSpaceAmountLeft())) {
+                    xournal->layoutPages();
+                    double const xChange =
+                            (settings->getAddHorizontalSpace() ? settings->getAddHorizontalSpaceAmountLeft() : 0) -
+                            (callbackData.horizontalSpace ? callbackData.horizontalSpaceAmountLeft : 0);
+                    const double yChange =
+                            (settings->getAddVerticalSpace() ? settings->getAddVerticalSpaceAmountAbove() : 0) -
+                            (callbackData.verticalSpace ? callbackData.verticalSpaceAmountAbove : 0);
+
+                    win->getLayout()->scrollRelative(xChange, yChange);
+                }
+
+                if (callbackData.unlimitedScrolling != settings->getUnlimitedScrolling()) {
+                    const int xUnlimited = static_cast<int>(win->getLayout()->getVisibleRect().width);
+                    const int yUnlimited = static_cast<int>(win->getLayout()->getVisibleRect().height);
+                    const double xChange =
+                            callbackData.unlimitedScrolling ?
+                                    -xUnlimited + (callbackData.horizontalSpace ?
+                                                           callbackData.horizontalSpaceAmountLeft :
+                                                           0) :
+                                    xUnlimited -
+                                            (callbackData.horizontalSpace ? callbackData.horizontalSpaceAmountLeft : 0);
+                    const double yChange =
+                            callbackData.unlimitedScrolling ?
+                                    -yUnlimited +
+                                            (callbackData.verticalSpace ? callbackData.verticalSpaceAmountAbove : 0) :
+                                    yUnlimited -
+                                            (callbackData.verticalSpace ? callbackData.verticalSpaceAmountAbove : 0);
+
+                    xournal->layoutPages();
+                    win->getLayout()->scrollRelative(xChange, yChange);
+                }
+
+                if (callbackData.stylusCursorType != settings->getStylusCursorType() ||
+                    callbackData.highlightPosition != settings->isHighlightPosition()) {
+                    ctrl->getCursor()->updateCursor();
+                }
+
+                ctrl->win->updateScrollbarSidebarPosition();
+                ctrl->updateWindowTitle();
+
+                ctrl->enableAutosave(settings->isAutosaveEnabled());
+
+                ctrl->zoom->setZoomStep(settings->getZoomStep() / 100.0);
+                ctrl->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
+                ctrl->zoom->setZoom100Value(settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
+
+                if (callbackData.sidebarStyle != settings->getSidebarNumberingStyle()) {
+                    ctrl->getSidebar()->layout();
+                }
+
+                xournal->getHandRecognition()->reload();
+                ctrl->win->updateColorscheme();
+            });
     dlg.show(GTK_WINDOW(this->win->getWindow()));
-
-    // note which settings have changed and act accordingly
-    if (selectionColor != settings->getBorderColor()) {
-        win->getXournal()->forceUpdatePagenumbers();
-    }
-
-    if (!settings->getUnlimitedScrolling() &&
-        (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace() ||
-         verticalSpaceAmountAbove != settings->getAddVerticalSpaceAmountAbove() ||
-         horizontalSpaceAmountRight != settings->getAddHorizontalSpaceAmountRight() ||
-         verticalSpaceAmountBelow != settings->getAddVerticalSpaceAmountBelow() ||
-         horizontalSpaceAmountLeft != settings->getAddHorizontalSpaceAmountLeft())) {
-
-        double const xChange = (settings->getAddHorizontalSpace() ? settings->getAddHorizontalSpaceAmountLeft() : 0) -
-                               (horizontalSpace ? horizontalSpaceAmountLeft : 0);
-        const double yChange = (settings->getAddVerticalSpace() ? settings->getAddVerticalSpaceAmountAbove() : 0) -
-                               (verticalSpace ? verticalSpaceAmountAbove : 0);
-
-        win->getXournal()->layoutPages();
-        win->getLayout()->scrollRelative(xChange, yChange);
-    }
-
-    if (unlimitedScrolling != settings->getUnlimitedScrolling()) {
-        const int xUnlimited = static_cast<int>(win->getLayout()->getVisibleRect().width);
-        const int yUnlimited = static_cast<int>(win->getLayout()->getVisibleRect().height);
-        const double xChange = unlimitedScrolling ? -xUnlimited + (horizontalSpace ? horizontalSpaceAmountLeft : 0) :
-                                                    xUnlimited - (horizontalSpace ? horizontalSpaceAmountLeft : 0);
-        const double yChange = unlimitedScrolling ? -yUnlimited + (verticalSpace ? verticalSpaceAmountAbove : 0) :
-                                                    yUnlimited - (verticalSpace ? verticalSpaceAmountAbove : 0);
-
-        win->getXournal()->layoutPages();
-        win->getLayout()->scrollRelative(xChange, yChange);
-    }
-
-    if (stylusCursorType != settings->getStylusCursorType() || highlightPosition != settings->isHighlightPosition()) {
-        getCursor()->updateCursor();
-    }
-
-    win->updateScrollbarSidebarPosition();
-    this->updateWindowTitle();
-
-    enableAutosave(settings->isAutosaveEnabled());
-
-    this->zoom->setZoomStep(settings->getZoomStep() / 100.0);
-    this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
-    this->zoom->setZoom100Value(settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
-
-    if (sidebarStyle != settings->getSidebarNumberingStyle()) {
-        getSidebar()->layout();
-    }
-
-    getWindow()->getXournal()->getHandRecognition()->reload();
-    getWindow()->updateColorscheme();
 }
 
 auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {
