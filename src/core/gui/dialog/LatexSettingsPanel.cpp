@@ -15,63 +15,63 @@
 
 #include "control/latex/LatexGenerator.h"    // for LatexGenerator::GenError
 #include "control/settings/LatexSettings.h"  // for LatexSettings
-#include "model/Font.h"                      // for XojFont
-#include "util/Color.h"                      // for Color
-#include "util/PathUtil.h"                   // for fromGFilename, getTmpDir...
-#include "util/PlaceholderString.h"          // for PlaceholderString
-#include "util/i18n.h"                       // for FS, _F, _
+#include "gui/Builder.h"
+#include "model/Font.h"              // for XojFont
+#include "util/Color.h"              // for Color
+#include "util/PathUtil.h"           // for fromGFilename, getTmpDir...
+#include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/gtk4_helper.h"
+#include "util/i18n.h"  // for FS, _F, _
 
 #include "filesystem.h"  // for path, is_regular_file
 
 class GladeSearchpath;
 
+constexpr auto UI_FILE = "latexSettings.glade";
+constexpr auto UI_PANEL_NAME = "latexSettingsPanel";
+
 LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
-        GladeGui(gladeSearchPath, "latexSettings.glade", "latexSettingsPanel"),
-        cbAutoDepCheck(GTK_TOGGLE_BUTTON(this->get("latexSettingsRunCheck"))),
-        globalTemplateChooser(GTK_FILE_CHOOSER(this->get("latexSettingsTemplateFile"))),
-        cbUseSystemFont(GTK_TOGGLE_BUTTON(this->get("cbUseSystemFont"))) {
-    g_object_ref(this->cbAutoDepCheck);
-    g_object_ref(this->cbUseSystemFont);
-    g_object_ref(this->globalTemplateChooser);
+        builder(gladeSearchPath, UI_FILE),
+        panel(GTK_SCROLLED_WINDOW(builder.get(UI_PANEL_NAME))),
+        cbAutoDepCheck(GTK_CHECK_BUTTON(builder.get("latexSettingsRunCheck"))),
+        // Todo(gtk4): replace this GtkFileChooserButton (by what?)
+        globalTemplateChooser(GTK_FILE_CHOOSER(builder.get("latexSettingsTemplateFile"))),
+        cbUseSystemFont(GTK_CHECK_BUTTON(builder.get("cbUseSystemFont"))) {
 
-    g_signal_connect(this->get("latexSettingsTestBtn"), "clicked",
-                     G_CALLBACK(+[](GtkWidget*, LatexSettingsPanel* self) { self->checkDeps(); }), this);
-    g_signal_connect(GTK_WIDGET(this->cbUseSystemFont), "toggled",
-                     G_CALLBACK(+[](GtkWidget*, LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
+    g_signal_connect_swapped(builder.get("latexSettingsTestBtn"), "clicked",
+                             G_CALLBACK(+[](LatexSettingsPanel* self) { self->checkDeps(); }), this);
+    g_signal_connect_swapped(this->cbUseSystemFont, "toggled",
+                             G_CALLBACK(+[](LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
 
-    GtkContainer* themeSelectionBoxContainer = GTK_CONTAINER(this->get("bxThemeSelectionContainer"));
+    GtkBox* themeSelectionBox = GTK_BOX(builder.get("bxThemeSelectionContainer"));
 
 #ifdef USE_GTK_SOURCEVIEW
     this->sourceViewThemeSelector = gtk_source_style_scheme_chooser_button_new();
-    gtk_container_add(themeSelectionBoxContainer, sourceViewThemeSelector);
+    gtk_box_append(themeSelectionBox, sourceViewThemeSelector);
 
-    gtk_label_set_text(GTK_LABEL(this->get("lbSourceviewSettingsDescription")), _("LaTeX editor theme:"));
+    gtk_label_set_text(GTK_LABEL(builder.get("lbSourceviewSettingsDescription")), _("LaTeX editor theme:"));
+
+#if GTK_MAJOR_VERSION == 3
+    // Widgets are visible by default in gtk4
+    gtk_widget_show(sourceViewThemeSelector);
+#endif
 #else
     this->sourceViewThemeSelector = nullptr;
 
-    gtk_label_set_text(GTK_LABEL(this->get("lbSourceviewSettingsDescription")),
+    gtk_label_set_text(GTK_LABEL(builder.get("lbSourceviewSettingsDescription")),
                        _("GtkSourceView was disabled when building Xournal++! "
                          "Some options will not be available."));
 #endif
-
-    gtk_widget_show_all(GTK_WIDGET(themeSelectionBoxContainer));
-    gtk_widget_show(this->get("bxGtkSourceviewMainSettings"));
-}
-
-LatexSettingsPanel::~LatexSettingsPanel() {
-    g_object_unref(this->cbAutoDepCheck);
-    g_object_unref(this->cbUseSystemFont);
-    g_object_unref(this->globalTemplateChooser);
 }
 
 void LatexSettingsPanel::load(const LatexSettings& settings) {
-    gtk_toggle_button_set_active(this->cbAutoDepCheck, settings.autoCheckDependencies);
-    gtk_entry_set_text(GTK_ENTRY(this->get("latexDefaultEntry")), settings.defaultText.c_str());
+    gtk_check_button_set_active(this->cbAutoDepCheck, settings.autoCheckDependencies);
+    gtk_entry_set_text(GTK_ENTRY(builder.get("latexDefaultEntry")), settings.defaultText.c_str());
     if (!settings.globalTemplatePath.empty()) {
         gtk_file_chooser_set_filename(this->globalTemplateChooser,
                                       Util::toGFilename(settings.globalTemplatePath).c_str());
     }
-    gtk_entry_set_text(GTK_ENTRY(this->get("latexSettingsGenCmd")), settings.genCmd.c_str());
+    gtk_entry_set_text(GTK_ENTRY(builder.get("latexSettingsGenCmd")), settings.genCmd.c_str());
 
     std::string themeId = settings.sourceViewThemeId;
 
@@ -85,28 +85,28 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     }
 #endif
 
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbShowLineNumbers")), settings.sourceViewShowLineNumbers);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbAutoIndent")), settings.sourceViewAutoIndent);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbSyntaxHighlight")), settings.sourceViewSyntaxHighlight);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbShowLineNumbers")), settings.sourceViewShowLineNumbers);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbAutoIndent")), settings.sourceViewAutoIndent);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbSyntaxHighlight")), settings.sourceViewSyntaxHighlight);
 
     // Editor font
     std::string editorFontDescription{settings.editorFont.asString()};
-    gtk_font_chooser_set_font(GTK_FONT_CHOOSER(this->get("selBtnEditorFont")), editorFontDescription.c_str());
+    gtk_font_chooser_set_font(GTK_FONT_CHOOSER(builder.get("selBtnEditorFont")), editorFontDescription.c_str());
 
     // Should we use the custom editor font?
-    gtk_toggle_button_set_active(this->cbUseSystemFont, !settings.useCustomEditorFont);
+    gtk_check_button_set_active(this->cbUseSystemFont, !settings.useCustomEditorFont);
 
     // Editor word wrap.
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbWordWrap")), settings.editorWordWrap);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get("cbWordWrap")), settings.editorWordWrap);
 
     this->updateWidgetSensitivity();
 }
 
 void LatexSettingsPanel::save(LatexSettings& settings) {
-    settings.autoCheckDependencies = gtk_toggle_button_get_active(this->cbAutoDepCheck);
-    settings.defaultText = gtk_entry_get_text(GTK_ENTRY(this->get("latexDefaultEntry")));
+    settings.autoCheckDependencies = gtk_check_button_get_active(this->cbAutoDepCheck);
+    settings.defaultText = gtk_entry_get_text(GTK_ENTRY(builder.get("latexDefaultEntry")));
     settings.globalTemplatePath = Util::fromGFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
-    settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
+    settings.genCmd = gtk_entry_get_text(GTK_ENTRY(builder.get("latexSettingsGenCmd")));
 
 #ifdef USE_GTK_SOURCEVIEW
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_chooser_get_style_scheme(
@@ -115,20 +115,18 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
 #endif
 
     settings.sourceViewShowLineNumbers =
-            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbShowLineNumbers")));
-    settings.sourceViewAutoIndent = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbAutoIndent")));
+            gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbShowLineNumbers")));
+    settings.sourceViewAutoIndent = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbAutoIndent")));
     settings.sourceViewSyntaxHighlight =
-            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbSyntaxHighlight")));
+            gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbSyntaxHighlight")));
 
-    GtkFontChooser* fontSelector = GTK_FONT_CHOOSER(this->get("selBtnEditorFont"));
+    GtkFontChooser* fontSelector = GTK_FONT_CHOOSER(builder.get("selBtnEditorFont"));
     std::string fontDescription{gtk_font_chooser_get_font(fontSelector)};
     settings.editorFont = fontDescription;
-    settings.useCustomEditorFont = !gtk_toggle_button_get_active(this->cbUseSystemFont);
+    settings.useCustomEditorFont = !gtk_check_button_get_active(this->cbUseSystemFont);
 
-    settings.editorWordWrap = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbWordWrap")));
+    settings.editorWordWrap = gtk_check_button_get_active(GTK_CHECK_BUTTON(builder.get("cbWordWrap")));
 }
-
-void LatexSettingsPanel::show(GtkWindow* parent) {}
 
 void LatexSettingsPanel::checkDeps() {
     LatexSettings settings;
@@ -171,12 +169,12 @@ void LatexSettingsPanel::checkDeps() {
 }
 
 void LatexSettingsPanel::updateWidgetSensitivity() {
-    bool useSystemFont = gtk_toggle_button_get_active(this->cbUseSystemFont);
+    bool useSystemFont = gtk_check_button_get_active(this->cbUseSystemFont);
 
     // Only select a custom font if we're not using the system's.
-    gtk_widget_set_sensitive(this->get("boxCustomFontOptions"), !useSystemFont);
+    gtk_widget_set_sensitive(builder.get("boxCustomFontOptions"), !useSystemFont);
 
 #ifndef USE_GTK_SOURCEVIEW
-    gtk_widget_set_sensitive(this->get("bxGtkSourceviewSettings"), false);
+    gtk_widget_set_sensitive(builder.get("bxGtkSourceviewSettings"), false);
 #endif
 }

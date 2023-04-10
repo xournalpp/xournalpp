@@ -13,24 +13,23 @@
 
 #include <gtk/gtk.h>  // for GtkToggleButton, GtkFileChooser, GtkWidget
 
-#include "gui/GladeGui.h"  // for GladeGui
+#include "gui/Builder.h"
 
 class GladeSearchpath;
 class LatexSettings;
 
-class LatexSettingsPanel: public GladeGui {
+class LatexSettingsPanel {
 public:
-    LatexSettingsPanel(GladeSearchpath*);
+    explicit LatexSettingsPanel(GladeSearchpath*);
     LatexSettingsPanel(const LatexSettingsPanel&) = delete;
     LatexSettingsPanel& operator=(const LatexSettingsPanel&) = delete;
     LatexSettingsPanel(const LatexSettingsPanel&&) = delete;
     LatexSettingsPanel& operator=(const LatexSettingsPanel&&) = delete;
-    ~LatexSettingsPanel() override;
-
-    void show(GtkWindow* parent) override;
 
     void load(const LatexSettings& settings);
     void save(LatexSettings& settings);
+
+    inline GtkWidget* getPanel() const { return GTK_WIDGET(panel); }
 
 private:
     void checkDeps();
@@ -41,8 +40,11 @@ private:
      */
     void updateWidgetSensitivity();
 
-    GtkToggleButton* cbAutoDepCheck;
+    Builder builder;
+    GtkScrolledWindow* panel;
+
+    GtkCheckButton* cbAutoDepCheck;
     GtkFileChooser* globalTemplateChooser;
     GtkWidget* sourceViewThemeSelector;
-    GtkToggleButton* cbUseSystemFont;
+    GtkCheckButton* cbUseSystemFont;
 };
