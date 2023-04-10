@@ -28,8 +28,6 @@ public:
 
     void toolbarConfigDialogClosed();
 
-    bool isInDragAndDrop();
-
 public:
     void prepareToolbarsForDragAndDrop();
     void clearToolbarsFromDragAndDrop();

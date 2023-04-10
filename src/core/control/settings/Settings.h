@@ -11,13 +11,13 @@
 
 #pragma once
 
+#include <array>    // for array
 #include <cstddef>  // for size_t
 #include <map>      // for map
 #include <memory>   // for make_shared, shared_ptr
 #include <string>   // for string, basic_string
 #include <utility>  // for pair
 #include <vector>   // for vector
-#include <array>    // for array
 
 #include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
 #include <glib.h>                         // for gchar, gboolean, gint
@@ -30,8 +30,8 @@
 
 #include "LatexSettings.h"  // for LatexSettings
 #include "SettingsEnums.h"  // for InputDeviceTypeOption
-#include "filesystem.h"     // for path
 #include "ViewModes.h"      // for ViewModes
+#include "filesystem.h"     // for path
 
 struct Palette;
 
@@ -211,7 +211,6 @@ public:
     bool isMainWndMaximized() const;
 
     bool isFullscreen() const;
-    void setIsFullscreen(bool isFullscreen);
 
     bool isSidebarVisible() const;
     void setSidebarVisible(bool visible);

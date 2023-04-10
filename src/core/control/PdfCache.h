@@ -45,13 +45,8 @@ public:
      * @param pageWidth/pageHeight Xournal++ page dimensions
      */
     void render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWidth, double pageHeight);
-    /**
-     * @brief Empty the cache
-     */
-    void clearCache();
 
 public:
-
     /**
      * @brief Set the maximum tolerable zoom difference, as a percentage.
      *

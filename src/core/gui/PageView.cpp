@@ -304,8 +304,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
         this->verticalSpace = std::make_unique<VerticalToolHandler>(this->page, this->settings, y, pos.isControlDown());
         this->overlayViews.emplace_back(this->verticalSpace->createView(this, zoomControl, this->settings));
-    } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION || h->getToolType() == TOOL_SELECT_MULTILAYER_RECT ||
-               h->getToolType() == TOOL_SELECT_MULTILAYER_REGION || h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
+    } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
+               h->getToolType() == TOOL_SELECT_MULTILAYER_RECT || h->getToolType() == TOOL_SELECT_MULTILAYER_REGION ||
+               h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
         if (h->getToolType() == TOOL_SELECT_RECT) {
             if (!selection) {
@@ -777,8 +778,6 @@ void XojPageView::deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) 
         this->flagDirtyRegion(rg);
     }
 }
-
-int XojPageView::getDPIScaling() const { return xournal->getDpiScaleFactor(); }
 
 double XojPageView::getZoom() const { return xournal->getZoom(); }
 

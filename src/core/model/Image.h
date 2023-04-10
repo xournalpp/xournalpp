@@ -72,7 +72,7 @@ public:
     /// Return the size of the raw image, or (-1, -1) if the image has not been rendered yet.
     std::pair<int, int> getImageSize() const;
 
-    GdkPixbufFormat* getImageFormat() const;
+    [[maybe_unused]] GdkPixbufFormat* getImageFormat() const;
 
     static constexpr std::pair<int, int> NOSIZE = std::make_pair(-1, -1);
 

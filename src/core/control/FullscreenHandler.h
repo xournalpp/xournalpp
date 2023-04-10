@@ -31,7 +31,6 @@ public:
 
 private:
     void enableFullscreen(MainWindow* win);
-    void hideWidget(MainWindow* win, const std::string& widgetName);
     void disableFullscreen(MainWindow* win);
 
 private:

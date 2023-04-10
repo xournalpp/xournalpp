@@ -20,9 +20,9 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"                          // for getConfigFile
-#include "util/Util.h"                              // for PRECISION_FORMAT_...
-#include "util/i18n.h"                              // for _
+#include "util/PathUtil.h"  // for getConfigFile
+#include "util/Util.h"      // for PRECISION_FORMAT_...
+#include "util/i18n.h"      // for _
 
 #include "ButtonConfig.h"  // for ButtonConfig
 #include "config-dev.h"    // for PALETTE_FILE
@@ -144,30 +144,31 @@ void Settings::loadDefault() {
     this->defaultPdfExportName = _("%{name}_annotated");
 
     // Eraser
-    this->buttonConfig[BUTTON_ERASER] =
-            std::make_unique<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_ERASER] = std::make_unique<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE,
+                                                                       DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
-    this->buttonConfig[BUTTON_MOUSE_MIDDLE] =
-            std::make_unique<ButtonConfig>(TOOL_HAND, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_MOUSE_MIDDLE] = std::make_unique<ButtonConfig>(TOOL_HAND, Colors::black, TOOL_SIZE_NONE,
+                                                                             DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Right button
-    this->buttonConfig[BUTTON_MOUSE_RIGHT] =
-            std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_MOUSE_RIGHT] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                            DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Touch
-    this->buttonConfig[BUTTON_TOUCH] =
-            std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_TOUCH] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                      DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Default config
-    this->buttonConfig[BUTTON_DEFAULT] =
-            std::make_unique<ButtonConfig>(TOOL_PEN, Colors::black, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_DEFAULT] = std::make_unique<ButtonConfig>(TOOL_PEN, Colors::black, TOOL_SIZE_FINE,
+                                                                        DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 1
-    this->buttonConfig[BUTTON_STYLUS_ONE] =
-            std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_STYLUS_ONE] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                           DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 2
-    this->buttonConfig[BUTTON_STYLUS_TWO] =
-            std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+    this->buttonConfig[BUTTON_STYLUS_TWO] = std::make_unique<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE,
+                                                                           DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
     // default view modes
     this->activeViewMode = PresetViewModeIds::VIEW_MODE_DEFAULT;
-    this->viewModes = std::vector<ViewMode>{VIEW_MODE_STRUCT_DEFAULT, VIEW_MODE_STRUCT_FULLSCREEN, VIEW_MODE_STRUCT_PRESENTATION};
+    this->viewModes =
+            std::vector<ViewMode>{VIEW_MODE_STRUCT_DEFAULT, VIEW_MODE_STRUCT_FULLSCREEN, VIEW_MODE_STRUCT_PRESENTATION};
 
     this->touchZoomStartThreshold = 0.0;
 
@@ -240,9 +241,7 @@ auto Settings::loadViewMode(ViewModeId mode) -> bool {
     return true;
 }
 
-auto Settings::getViewModes() const -> const std::vector<ViewMode>& {
-    return this->viewModes;
-}
+auto Settings::getViewModes() const -> const std::vector<ViewMode>& { return this->viewModes; }
 
 /**
  * tempg_ascii_strtod
@@ -472,11 +471,14 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
         this->autosaveTimeout = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultViewModeAttributes")) == 0) {
-        this->viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT) =
+                settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("fullscreenViewModeAttributes")) == 0) {
-        this->viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN) =
+                settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationViewModeAttributes")) == 0) {
-        this->viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION) = settingsStringToViewMode(reinterpret_cast<const char*>(value));
+        this->viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION) =
+                settingsStringToViewMode(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchZoomStartThreshold")) == 0) {
         this->touchZoomStartThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageRerenderThreshold")) == 0) {
@@ -936,7 +938,8 @@ void Settings::save() {
 
     auto defaultViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_DEFAULT));
     auto fullscreenViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_FULLSCREEN));
-    auto presentationViewModeAttributes = viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION));
+    auto presentationViewModeAttributes =
+            viewModeToSettingsString(viewModes.at(PresetViewModeIds::VIEW_MODE_PRESENTATION));
     SAVE_STRING_PROP(defaultViewModeAttributes);
     ATTACH_COMMENT("Which GUI elements are shown in default view mode, separated by a colon (,)");
     SAVE_STRING_PROP(fullscreenViewModeAttributes);
@@ -948,7 +951,8 @@ void Settings::save() {
     ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"");
 
     xmlNode = saveProperty("eraserVisibility", eraserVisibilityToString(this->eraserVisibility), root);
-    ATTACH_COMMENT("The eraser cursor visibility used with a stylus, allowed values are \"never\", \"always\", \"hover\", \"touch\"");
+    ATTACH_COMMENT("The eraser cursor visibility used with a stylus, allowed values are \"never\", \"always\", "
+                   "\"hover\", \"touch\"");
 
     xmlNode = saveProperty("iconTheme", iconThemeToString(this->iconTheme), root);
     ATTACH_COMMENT("The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"");
@@ -1614,7 +1618,9 @@ void Settings::setPresentationMode(bool presentationMode) {
     save();
 }
 
-auto Settings::isPresentationMode() const -> bool { return this->activeViewMode == PresetViewModeIds::VIEW_MODE_PRESENTATION; }
+auto Settings::isPresentationMode() const -> bool {
+    return this->activeViewMode == PresetViewModeIds::VIEW_MODE_PRESENTATION;
+}
 
 void Settings::setPressureSensitivity(gboolean presureSensitivity) {
     if (this->pressureSensitivity == presureSensitivity) {
@@ -1810,10 +1816,6 @@ auto Settings::areStockIconsUsed() const -> bool { return this->useStockIcons; }
 
 auto Settings::isFullscreen() const -> bool { return this->fullscreenActive; }
 
-void Settings::setIsFullscreen(bool isFullscreen) {
-    this->fullscreenActive = isFullscreen;
-}
-
 auto Settings::isSidebarVisible() const -> bool { return this->showSidebar; }
 
 void Settings::setSidebarVisible(bool visible) {
@@ -1883,9 +1885,7 @@ auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* {
     return this->buttonConfig[id].get();
 }
 
-void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
-    viewModes.at(mode) = viewMode;
-}
+void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) { viewModes.at(mode) = viewMode; }
 
 auto Settings::getTouchZoomStartThreshold() const -> double { return this->touchZoomStartThreshold; }
 void Settings::setTouchZoomStartThreshold(double threshold) {

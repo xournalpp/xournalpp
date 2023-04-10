@@ -86,7 +86,7 @@ public:
 
     void setTmpDisabled(bool disabled);
 
-    void removeColorToolItem(AbstractToolItem* it);
+    [[maybe_unused]] void removeColorToolItem(AbstractToolItem* it);
     void addColorToolItem(AbstractToolItem* it);
 
     ToolbarModel* getModel();
@@ -96,7 +96,7 @@ public:
 
     Control* getControl();
 
-    bool isColorInUse(Color color);
+    [[maybe_unused]] bool isColorInUse(Color color);
 
     void disableAudioPlaybackButtons();
 

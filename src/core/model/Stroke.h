@@ -129,7 +129,7 @@ private:
     void setPointVectorInternal(const Range* const snappingBox);
 
 public:
-    void deletePoint(int index);
+    [[maybe_unused]] void deletePoint(int index);
     void deletePointsFrom(size_t index);
 
     void setToolType(StrokeTool type);

@@ -17,52 +17,14 @@ FullscreenHandler::~FullscreenHandler() = default;
 
 auto FullscreenHandler::isFullscreen() const -> bool { return this->fullscreen; }
 
-void FullscreenHandler::hideWidget(MainWindow* win, const std::string& widgetName) {
-    if ("sidebarContents" == widgetName && settings->isSidebarVisible()) {
-        this->sidebarHidden = true;
-        win->setSidebarVisible(false);
-
-        return;
-    }
-
-    if ("mainMenubar" == widgetName) {
-        // If the menu is hidden, shortcuts are not working anymore
-        // therefore the menu is not hidden, it's displayed, but invisible
-        // this costs 1px at the bottom, even if the preferred size is 0px,
-        // 1px is used by GTK
-
-        GtkWidget* mainMenubar = win->get("mainMenubar");
-        GtkWidget* mainBox = win->get("mainBox");
-
-        if (mainMenubar == nullptr || !gtk_widget_is_visible(mainMenubar)) {
-            // Menu not visible (global menu or something like this)
-            return;
-        }
-
-        // Remove menu from parent
-        gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(mainMenubar)), mainMenubar);
-
-        GtkWidget* fix = gtk_invisible_new();
-
-        gtk_widget_set_size_request(fix, 0, 0);
-        gtk_fixed_put(GTK_FIXED(fix), mainMenubar, 0, 0);
-
-        gtk_widget_show(fix);
-
-        gtk_box_pack_end(GTK_BOX(mainBox), fix, false, false, 0);
-
-        menubarHidden = true;
-
-        return;
-    }
-}
-
 void FullscreenHandler::enableFullscreen(MainWindow* win) { gtk_window_fullscreen(GTK_WINDOW(win->getWindow())); }
 
 void FullscreenHandler::disableFullscreen(MainWindow* win) {
     gtk_window_unfullscreen(GTK_WINDOW(win->getWindow()));
 
-    for (GtkWidget* w: hiddenFullscreenWidgets) { gtk_widget_show(w); }
+    for (GtkWidget* w: hiddenFullscreenWidgets) {
+        gtk_widget_show(w);
+    }
     hiddenFullscreenWidgets.clear();
 
     if (this->sidebarHidden) {
@@ -165,5 +127,3 @@ auto gtk_invisible_get_type() -> GType {
 
     return gtk_invisible_menu_type;
 }
-
-auto gtk_invisible_new() -> GtkWidget* { return GTK_WIDGET(g_object_new(gtk_invisible_get_type(), nullptr)); }

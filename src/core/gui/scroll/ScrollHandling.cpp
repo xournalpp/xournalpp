@@ -39,7 +39,3 @@ void ScrollHandling::setLayoutSize(int width, int height) {
     }
 #endif
 }
-
-auto ScrollHandling::getPreferredWidth() -> int { return layout->getMinimalWidth(); }
-
-auto ScrollHandling::getPreferredHeight() -> int { return layout->getMinimalHeight(); }

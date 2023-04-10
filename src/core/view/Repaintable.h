@@ -36,8 +36,6 @@ public:
      */
     virtual Range getVisiblePart() const = 0;
 
-    virtual int getDPIScaling() const = 0;
-
     // Get the current zoom.
     virtual double getZoom() const = 0;
     virtual ZoomControl* getZoomControl() const = 0;
