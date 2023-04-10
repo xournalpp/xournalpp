@@ -76,7 +76,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         gtk_widget_show(label);
     }
 
-    gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
+    gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.getPanel());
 
     g_signal_connect(builder.get("zoomCallibSlider"), "change-value",
                      G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, SettingsDialog* self) {
