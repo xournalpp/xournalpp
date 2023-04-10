@@ -14,22 +14,17 @@
 #include <gtk/gtk.h>  // for GtkWidget, GtkComboBox, GtkWindow
 
 #include "control/DeviceListHelper.h"  // for InputDevice
-#include "gui/GladeGui.h"              // for GladeGui
 
 class Settings;
 class GladeSearchpath;
 
-class DeviceClassConfigGui: public GladeGui {
+class DeviceClassConfigGui {
 public:
-    DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, const InputDevice& device);
-    ~DeviceClassConfigGui() override;
+    DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings, const InputDevice& device);
 
 public:
     void loadSettings();
     void saveSettings();
-
-    // Not implemented! This is not a dialog!
-    void show(GtkWindow* parent) override;
 
 private:
     static void cbSelectCallback(GtkComboBox* widget, DeviceClassConfigGui* gui);

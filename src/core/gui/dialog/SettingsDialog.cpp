@@ -63,7 +63,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     initMouseButtonEvents(gladeSearchPath);
 
     vector<InputDevice> deviceList = DeviceListHelper::getDeviceList(this->settings);
-    GtkWidget* container = builder.get("hboxInputDeviceClasses");
+    GtkBox* container = GTK_BOX(builder.get("hboxInputDeviceClasses"));
     for (const InputDevice& inputDevice: deviceList) {
         // Only add real devices (core pointers have vendor and product id nullptr)
         this->deviceClassConfigs.emplace_back(gladeSearchPath, container, settings, inputDevice);
