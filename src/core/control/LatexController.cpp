@@ -42,10 +42,8 @@
 
 using std::string;
 
-namespace {
 constexpr Color LIGHT_PREVIEW_BACKGROUND = Colors::white;
 constexpr Color DARK_PREVIEW_BACKGROUND = Colors::black;
-}  // namespace
 
 LatexController::LatexController(Control* control):
         control(control),
