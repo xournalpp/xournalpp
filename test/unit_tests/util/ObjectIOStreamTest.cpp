@@ -31,7 +31,8 @@ std::vector<std::byte> serializeImage(cairo_surface_t* surf) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     auto length = cairo_image_surface_get_stride(surf) * cairo_image_surface_get_height(surf);
     auto data = cairo_image_surface_get_data(surf);
-    outStream.writeImage(std::vector<std::byte>(reinterpret_cast<std::byte*>(data), reinterpret_cast<std::byte*>(data) + length));
+    outStream.writeImage(
+            std::vector<std::byte>(reinterpret_cast<std::byte*>(data), reinterpret_cast<std::byte*>(data) + length));
     return outStream.getData();
 }
 
@@ -69,7 +70,7 @@ template <typename T>
 void testReadDataType(const std::vector<T>& data) {
     auto serializedData = serializeDataVector<T>(data);
     ObjectInputStream stream;
-    EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size()));
+    EXPECT_TRUE(stream.read(reinterpret_cast<const char*>(serializedData.data()), (int)serializedData.size()));
 
     std::vector<T> outputData;
     stream.readData(outputData);
@@ -98,13 +99,13 @@ TEST(UtilObjectIOStream, testReadImage) {
     auto surf = serializeImage(surface);
 
     ObjectInputStream stream;
-    EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(&surf[0]), (int)surf.size() + 1));
+    EXPECT_TRUE(stream.read(reinterpret_cast<const char*>(&surf[0]), (int)surf.size() + 1));
 
     auto output = stream.readImage();
 
     cairo_surface_t* outputSurface =
-            cairo_image_surface_create_for_data(reinterpret_cast<unsigned char*>(output.data()), format, width,
-                                                height, cairo_format_stride_for_width(format, width));
+            cairo_image_surface_create_for_data(reinterpret_cast<unsigned char*>(output.data()), format, width, height,
+                                                cairo_format_stride_for_width(format, width));
     EXPECT_NE(outputSurface, nullptr);
 
     int widthOutput = cairo_image_surface_get_width(outputSurface);
@@ -140,7 +141,7 @@ TEST(UtilObjectIOStream, testReadString) {
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size() + 1));
+        EXPECT_TRUE(stream.read(reinterpret_cast<const char*>(serializedData.data()), (int)serializedData.size() + 1));
         std::string output = stream.readString();
         EXPECT_EQ(x, output);
     }
@@ -161,7 +162,7 @@ TEST(UtilObjectIOStream, testReadSizeT) {
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size() + 1));
+        EXPECT_TRUE(stream.read(reinterpret_cast<const char*>(serializedData.data()), (int)serializedData.size() + 1));
         size_t output = stream.readSizeT();
         EXPECT_EQ(x, output);
     }
@@ -182,7 +183,7 @@ TEST(UtilObjectIOStream, testReadInt) {
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size() + 1));
+        EXPECT_TRUE(stream.read(reinterpret_cast<const char*>(serializedData.data()), (int)serializedData.size() + 1));
         int output = stream.readInt();
         EXPECT_EQ(x, output);
     }
@@ -204,7 +205,7 @@ TEST(UtilObjectIOStream, testReadDouble) {
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(serializedData.data()), (int)serializedData.size() + 1));
+        EXPECT_TRUE(stream.read(reinterpret_cast<const char*>(serializedData.data()), (int)serializedData.size() + 1));
         double output = stream.readDouble();
         EXPECT_DOUBLE_EQ(dbl, output);
     }
@@ -240,7 +241,7 @@ TEST(UtilObjectIOStream, testReadComplexObject) {
             auto data = outStream.getData();
 
             ObjectInputStream stream;
-            EXPECT_TRUE(stream.read(reinterpret_cast<const char *>(&data[0]), (int)data.size() + 1));
+            EXPECT_TRUE(stream.read(reinterpret_cast<const char*>(&data[0]), (int)data.size() + 1));
 
             std::string outputName = stream.readObject();
             EXPECT_EQ(outputName, objectName);
@@ -339,7 +340,7 @@ TEST(UtilObjectIOStream, testReadStroke) {
         for (auto&& stroke: strokes) {
             auto outData = serializeStroke(stroke);
             ObjectInputStream istream;
-            istream.read(reinterpret_cast<const char *>(outData.data()), (int)outData.size());
+            istream.read(reinterpret_cast<const char*>(outData.data()), (int)outData.size());
 
             Stroke in_stroke;
             in_stroke.readSerialized(istream);

@@ -28,7 +28,7 @@ TEST(Image, testGetImageApplyOrientation) {
     imageFile.seekg(0, std::ios::beg);
 
     std::vector<std::byte> imageData(size);
-    imageFile.read(reinterpret_cast<char *>(imageData.data()), size);
+    imageFile.read(reinterpret_cast<char*>(imageData.data()), size);
 
     GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
     gdk_pixbuf_loader_write(loader, reinterpret_cast<const guchar*>(imageData.data()), imageData.size(), nullptr);
