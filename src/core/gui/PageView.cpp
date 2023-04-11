@@ -250,22 +250,22 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         Control* control = this->xournal->getControl();
         switch (h->getDrawingType()) {
             case DRAWING_TYPE_LINE:
-                this->inputHandler = (std::make_unique<RulerHandler>(control, getPage()));
+                this->inputHandler = std::make_unique<RulerHandler>(control, getPage());
                 break;
             case DRAWING_TYPE_RECTANGLE:
-                this->inputHandler = (std::make_unique<RectangleHandler>(control, getPage()));
+                this->inputHandler = std::make_unique<RectangleHandler>(control, getPage());
                 break;
             case DRAWING_TYPE_ELLIPSE:
-                this->inputHandler = (std::make_unique<EllipseHandler>(control, getPage()));
+                this->inputHandler = std::make_unique<EllipseHandler>(control, getPage());
                 break;
             case DRAWING_TYPE_ARROW:
-                this->inputHandler = (std::make_unique<ArrowHandler>(control, getPage(), false));
+                this->inputHandler = std::make_unique<ArrowHandler>(control, getPage(), false);
                 break;
             case DRAWING_TYPE_DOUBLE_ARROW:
-                this->inputHandler = (std::make_unique<ArrowHandler>(control, getPage(), true));
+                this->inputHandler = std::make_unique<ArrowHandler>(control, getPage(), true);
                 break;
             case DRAWING_TYPE_COORDINATE_SYSTEM:
-                this->inputHandler = (std::make_unique<CoordinateSystemHandler>(control, getPage()));
+                this->inputHandler = std::make_unique<CoordinateSystemHandler>(control, getPage());
                 break;
             default:
                 this->inputHandler = std::make_unique<StrokeHandler>(control, getPage());
