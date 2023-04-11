@@ -37,7 +37,7 @@ public:
     void writeData(const std::vector<T>& data);
 
     /// Writes the raw image data to the output stream.
-    void writeImage(const std::string_view& imgData);
+    void writeImage(const std::vector<std::byte>& imgData);
 
     std::string getStr();
 

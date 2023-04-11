@@ -88,7 +88,7 @@ auto ObjectInputStream::readString() -> std::string {
     return output;
 }
 
-auto ObjectInputStream::readImage() -> std::string {
+auto ObjectInputStream::readImage() -> const std::vector<std::byte> {
     checkType('m');
 
     if (istream.str().size() < sizeof(size_t)) {
@@ -99,9 +99,9 @@ auto ObjectInputStream::readImage() -> std::string {
     if (istream.str().size() < len) {
         throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
     }
-    std::string data;
+    std::vector<std::byte> data;
     data.resize(len);
-    istream.read(data.data(), static_cast<int>(len));
+    istream.read(reinterpret_cast<char*>(data.data()), static_cast<int>(len));
 
     return data;
 }

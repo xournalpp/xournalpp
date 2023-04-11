@@ -50,9 +50,9 @@ void ObjectOutputStream::writeString(const std::string& s) {
     this->encoder->addData(s.c_str(), len);
 }
 
-void ObjectOutputStream::writeImage(const std::string_view& imgData) {
+void ObjectOutputStream::writeImage(const std::vector<std::byte>& imgData) {
     this->encoder->addStr("_m");
-    size_t len = imgData.length();
+    size_t len = imgData.size();
     this->encoder->addData(&len, sizeof(size_t));
     this->encoder->addData(imgData.data(), static_cast<int>(len));
 }

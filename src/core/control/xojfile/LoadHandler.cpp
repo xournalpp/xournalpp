@@ -411,7 +411,7 @@ void LoadHandler::parseBgPixmap() {
         if (!readResult) {
             return;
         }
-        std::string& imgData = *readResult;
+        std::vector<std::byte>& imgData = *readResult;
 
         GBytes* attachment = g_bytes_new_take(imgData.data(), imgData.size());
         GInputStream* inputStream = g_memory_input_stream_new_from_bytes(attachment);
@@ -482,7 +482,7 @@ void LoadHandler::parseBgPdf() {
                     if (!readResult) {
                         return;
                     }
-                    std::string& pdfBytes = readResult.value();
+                    std::vector<std::byte>& pdfBytes = readResult.value();
                     doc.readPdf(pdfFilename, false, attachToDocument, pdfBytes.data(), pdfBytes.size());
 
                     if (!doc.getLastErrorMsg().empty()) {
@@ -750,7 +750,7 @@ void LoadHandler::parseAttachment() {
     if (!readResult) {
         return;
     }
-    std::string& imgData = *readResult;
+    auto& imgData = *readResult;
 
     switch (this->pos) {
         case PARSER_POS_IN_IMAGE: {
@@ -758,10 +758,7 @@ void LoadHandler::parseAttachment() {
             break;
         }
         case PARSER_POS_IN_TEXIMAGE: {
-            std::vector<std::byte> res;
-            res.reserve(imgData.size());
-            std::transform(imgData.begin(), imgData.end(), res.begin(), [](unsigned char c) { return std::byte(c); });
-            this->teximage->loadData(std::move(res), nullptr);
+            this->teximage->loadData(std::move(imgData));
             break;
         }
         default:
@@ -1075,7 +1072,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
     }
 }
 
-auto LoadHandler::parseBase64(const gchar* base64, gsize length) -> string {
+auto LoadHandler::parseBase64(const gchar* base64, gsize length) -> std::vector<std::byte> {
     // We have to copy the string in order to null terminate it, sigh.
     auto* base64data = static_cast<gchar*>(g_memdup(base64, length + 1));
     base64data[length] = '\0';
@@ -1084,16 +1081,11 @@ auto LoadHandler::parseBase64(const gchar* base64, gsize length) -> string {
     guchar* binaryBuffer = g_base64_decode(base64data, &binaryBufferLen);
     g_free(base64data);
 
-    string str = string(reinterpret_cast<char*>(binaryBuffer), binaryBufferLen);
+    auto res = std::vector<std::byte>(reinterpret_cast<const std::byte*>(binaryBuffer),
+                                      reinterpret_cast<const std::byte*>(binaryBuffer + binaryBufferLen));
     g_free(binaryBuffer);
 
-    return str;
-}
-
-auto LoadHandler::parseBase64VectorBytes(const gchar* base64, gsize length) -> std::vector<std::byte> {
-    auto str = parseBase64(base64, length);
-    return std::vector<std::byte>(reinterpret_cast<const std::byte*>(str.data()),
-                                  reinterpret_cast<const std::byte*>(str.data()) + length);
+    return res;
 }
 
 void LoadHandler::readImage(const gchar* base64string, gsize base64stringLen) {
@@ -1110,7 +1102,7 @@ void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
         return;
     }
 
-    this->teximage->loadData(parseBase64VectorBytes(const_cast<char*>(base64string), base64stringLen));
+    this->teximage->loadData(parseBase64(const_cast<char*>(base64string), base64stringLen));
 }
 
 /**
@@ -1150,7 +1142,7 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> Document* {
     return &this->doc;
 }
 
-auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::optional<std::string> {
+auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::optional<std::vector<std::byte>> {
     zip_stat_t attachmentFileStat;
     const int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
     if (statStatus != 0) {
@@ -1173,7 +1165,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::optional<s
         return {};
     }
 
-    std::string data(length, 0);
+    std::vector<std::byte> data(length, std::byte(0));
     zip_uint64_t readBytes = 0;
     while (readBytes < length) {
         const zip_int64_t read = zip_fread(attachmentFile, data.data() + readBytes, length - readBytes);
