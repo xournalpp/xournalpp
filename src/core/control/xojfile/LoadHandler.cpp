@@ -45,9 +45,9 @@ using std::string;
     }
 
 namespace {
-    constexpr size_t MAX_VERSION_LENGTH = 50;
-    constexpr size_t MAX_MIMETYPE_LENGTH = 25;
-}
+constexpr size_t MAX_VERSION_LENGTH = 50;
+constexpr size_t MAX_MIMETYPE_LENGTH = 25;
+}  // namespace
 
 LoadHandler::LoadHandler():
         attachedPdfMissing(false),
@@ -324,7 +324,7 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/true);
+        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/ true);
 
         pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {
