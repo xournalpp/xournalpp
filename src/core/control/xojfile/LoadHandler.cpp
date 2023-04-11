@@ -758,7 +758,10 @@ void LoadHandler::parseAttachment() {
             break;
         }
         case PARSER_POS_IN_TEXIMAGE: {
-            this->teximage->loadData(std::move(imgData), nullptr);
+            std::vector<std::byte> res;
+            res.reserve(imgData.size());
+            std::transform(imgData.begin(), imgData.end(), res.begin(), [](unsigned char c) { return std::byte(c); });
+            this->teximage->loadData(std::move(res), nullptr);
             break;
         }
         default:
@@ -1087,6 +1090,12 @@ auto LoadHandler::parseBase64(const gchar* base64, gsize length) -> string {
     return str;
 }
 
+auto LoadHandler::parseBase64VectorBytes(const gchar* base64, gsize length) -> std::vector<std::byte> {
+    auto str = parseBase64(base64, length);
+    return std::vector<std::byte>(reinterpret_cast<const std::byte*>(str.data()),
+                                  reinterpret_cast<const std::byte*>(str.data()) + length);
+}
+
 void LoadHandler::readImage(const gchar* base64string, gsize base64stringLen) {
     g_assert(this->image != nullptr);
     if (base64stringLen == 0 || (base64stringLen == 1 && base64string[0] == '\n') || this->image->hasData()) {
@@ -1101,7 +1110,7 @@ void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
         return;
     }
 
-    this->teximage->loadData(parseBase64(const_cast<char*>(base64string), base64stringLen));
+    this->teximage->loadData(parseBase64VectorBytes(const_cast<char*>(base64string), base64stringLen));
 }
 
 /**

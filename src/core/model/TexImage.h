@@ -11,7 +11,9 @@
 
 #pragma once
 
+#include <cstddef>
 #include <string>  // for string
+#include <vector>
 
 #include <cairo.h>    // for cairo_surface_t, cairo_status_t
 #include <glib.h>     // for GError
@@ -41,7 +43,7 @@ public:
     /**
      * Returns the binary data (PDF or PNG (deprecated)).
      */
-    const std::string& getBinaryData() const;
+    const std::vector<std::byte>& getBinaryData() const;
 
     /**
      * @return The image, if render source is PNG. Note: this is deprecated.
@@ -67,7 +69,7 @@ public:
     /**
      * @return true if the binary data (PNG or PDF) was loaded successfully.
      */
-    bool loadData(std::string&& bytes, GError** err = nullptr);
+    bool loadData(std::vector<std::byte>&& bytes, GError** err = nullptr);
 
 public:
     // Serialize interface
@@ -98,7 +100,7 @@ private:
     /**
      * PNG Image / PDF Document
      */
-    std::string binaryData;
+    std::vector<std::byte> binaryData;
 
     /**
      * Read position for PNG binaryData (deprecated).

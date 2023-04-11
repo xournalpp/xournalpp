@@ -321,7 +321,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     }
 
     fs::path pdfPath = texTmpDir / "tex.pdf";
-    auto contents = Util::readString(pdfPath, true);
+    auto contents = Util::readBinaryData(pdfPath, true);
     if (!contents) {
         return nullptr;
     }

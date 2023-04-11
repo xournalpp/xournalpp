@@ -6,6 +6,7 @@
 #include <string_view>  // for basic_string_view, operator""sv
 #include <type_traits>  // for remove_reference<>::type
 #include <utility>      // for move
+#include <vector>       // for vector
 
 #include <config-paths.h>  // for PACKAGE_DATA_DIR
 #include <glib.h>          // for gchar, g_free, g_filename_to_uri
@@ -63,6 +64,21 @@ auto Util::readString(fs::path const& path, bool showErrorToUser) -> std::option
         std::ifstream ifs{path};
         s.resize(fs::file_size(path));
         ifs.read(s.data(), s.size());
+        return {std::move(s)};
+    } catch (const fs::filesystem_error& e) {
+        if (showErrorToUser) {
+            XojMsgBox::showErrorToUser(nullptr, e.what());
+        }
+    }
+    return std::nullopt;
+}
+
+auto Util::readBinaryData(fs::path const& path, bool showErrorToUser) -> std::optional<std::vector<std::byte>> {
+    try {
+        std::vector<std::byte> s;
+        std::ifstream ifs{path};
+        s.resize(fs::file_size(path));
+        ifs.read(reinterpret_cast<char*>(s.data()), s.size());
         return {std::move(s)};
     } catch (const fs::filesystem_error& e) {
         if (showErrorToUser) {

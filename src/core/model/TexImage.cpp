@@ -43,7 +43,8 @@ auto TexImage::clone() const -> Element* {
     // Load a copy of our data (must be called after
     // giving the clone a copy of our PDF -- it may change
     // the PDF we've given it).
-    img->loadData(std::string(this->binaryData), nullptr);
+    std::vector<std::byte> data = this->binaryData;
+    img->loadData(std::move(data), nullptr);
 
     return img;
 }
@@ -60,10 +61,10 @@ void TexImage::setHeight(double height) {
 
 auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned int length) -> cairo_status_t {
     for (unsigned int i = 0; i < length; i++, image->read++) {
-        if (image->read >= image->binaryData.length()) {
+        if (image->read >= image->binaryData.size()) {
             return CAIRO_STATUS_READ_ERROR;
         }
-        data[i] = image->binaryData[image->read];
+        data[i] = static_cast<unsigned char>(image->binaryData[image->read]);
     }
 
     return CAIRO_STATUS_SUCCESS;
@@ -72,25 +73,27 @@ auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned 
 /**
  * Gets the binary data, a .PNG image or a .PDF
  */
-auto TexImage::getBinaryData() const -> std::string const& { return this->binaryData; }
+auto TexImage::getBinaryData() const -> std::vector<std::byte> const& { return this->binaryData; }
 
 void TexImage::setText(std::string text) { this->text = std::move(text); }
 
 auto TexImage::getText() const -> std::string { return this->text; }
 
-auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
+auto TexImage::loadData(std::vector<std::byte>&& bytes, GError** err) -> bool {
     this->freeImageAndPdf();
-    this->binaryData = bytes;
-    if (this->binaryData.length() < 4) {
+    this->binaryData = std::move(bytes);
+    if (this->binaryData.size() < 4) {
         return false;
     }
 
-    const std::string type = binaryData.substr(1, 3);
+    const std::string type = std::string(reinterpret_cast<unsigned char*>(this->binaryData.data()) + 1,
+                                         reinterpret_cast<unsigned char*>(this->binaryData.data()) + 4);
     if (type == "PDF") {
         // Note: binaryData must not be modified while pdf is live.
-        this->pdf.reset(poppler_document_new_from_data(this->binaryData.data(), this->binaryData.size(), nullptr, err),
+        this->pdf.reset(poppler_document_new_from_data(reinterpret_cast<char*>(this->binaryData.data()),
+                                                       this->binaryData.size(), nullptr, err),
                         xoj::util::adopt);
-        if (!pdf.get() || poppler_document_get_n_pages(this->pdf.get()) < 1) {
+        if (!pdf || poppler_document_get_n_pages(this->pdf.get()) < 1) {
             return false;
         }
         if (!this->width && !this->height) {
@@ -135,7 +138,7 @@ void TexImage::serialize(ObjectOutputStream& out) const {
     out.writeDouble(this->height);
     out.writeString(this->text);
 
-    out.writeString(this->binaryData);
+    out.writeData(this->binaryData);
 
     out.endObject();
 }
@@ -151,7 +154,9 @@ void TexImage::readSerialized(ObjectInputStream& in) {
 
     freeImageAndPdf();
 
-    this->loadData(in.readString(), nullptr);
+    std::vector<std::byte> data;
+    in.readData(data);
+    this->loadData(std::move(data), nullptr);
 
     in.endObject();
     this->calcSize();

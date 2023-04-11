@@ -110,6 +110,7 @@ private:
 
 private:
     static std::string parseBase64(const gchar* base64, gsize length);
+    static std::vector<std::byte> parseBase64VectorBytes(const gchar* base64, gsize length);
 
     /**
      * Returns the contents of the zip attachment with the given file name, or
