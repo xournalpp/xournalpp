@@ -70,7 +70,10 @@ auto SidebarPreviewBaseEntry::drawCallback(GtkWidget* widget, cairo_t* cr, Sideb
 
 auto SidebarPreviewBaseEntry::sizeChangedCallback(GtkWidget* widget, GtkAllocation* allocation,
                                                   SidebarPreviewBaseEntry* preview) -> gboolean {
-    preview->repaint();
+    if (preview->oldAllocation.width != allocation->width || preview->oldAllocation.height != allocation->height) {
+        preview->oldAllocation = *allocation;
+        preview->repaint();
+    }
     return true;
 }
 

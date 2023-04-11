@@ -142,6 +142,7 @@ void SidebarPreviewBase::sizeChanged(GtkWidget* widget, GtkAllocation* allocatio
 
     if (std::abs(lastWidth - allocation->width) > MIN_WIDTH_DIFFERENCE) {
         sidebar->layout();
+        g_message("Layout previews after size allocation changed");
         lastWidth = allocation->width;
     }
 }

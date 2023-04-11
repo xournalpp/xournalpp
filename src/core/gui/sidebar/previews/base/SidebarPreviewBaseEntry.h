@@ -105,4 +105,6 @@ protected:
     cairo_surface_t* crBuffer = nullptr;
 
     friend class PreviewJob;
+
+    GtkAllocation oldAllocation;
 };
