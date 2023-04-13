@@ -15,7 +15,8 @@
 #include "util/Assert.h"                               // for xoj_assert
 #include "util/NamedColor.h"                           // for NamedColor
 #include "util/PlaceholderString.h"                    // for PlaceholderString
-#include "util/i18n.h"                                 // for FS, _F
+#include "util/gtk4_helper.h"
+#include "util/i18n.h"
 
 #include "ToolItemDragCurrentData.h"  // for ToolItemDragCu...
 #include "ToolbarDragDropHelper.h"    // for dragDestAddToo...
@@ -41,8 +42,7 @@ ToolbarAdapter::ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuH
     showToolbar();
     prepareToolItems();
 
-    GtkStyleContext* ctx = gtk_widget_get_style_context(w);
-    gtk_style_context_add_class(ctx, "editing");
+    gtk_widget_add_css_class(w, "editing");
 }
 
 ToolbarAdapter::~ToolbarAdapter() {
@@ -53,8 +53,7 @@ ToolbarAdapter::~ToolbarAdapter() {
 
     cleanupToolbars();
 
-    GtkStyleContext* ctx = gtk_widget_get_style_context(w);
-    gtk_style_context_remove_class(ctx, "editing");
+    gtk_widget_remove_css_class(w, "editing");
 
     g_object_unref(this->w);
 }

@@ -11,32 +11,42 @@
 
 #pragma once
 
-#include <list>  // for list
+#include <array>
+#include <memory>
+#include <vector>
 
 #include <gdk/gdk.h>  // for GdkDragContext
 #include <glib.h>     // for guint, gint
 #include <gtk/gtk.h>  // for GtkWidget, GtkSelectionData, GtkToolbar
 
-#include "gui/GladeGui.h"  // for GladeGui
+#include "util/raii/GtkWindowUPtr.h"
 
+class Palette;
+class AbstractToolItem;
 class MainWindow;
 class ToolbarDragDropHandler;
 class GladeSearchpath;
 
-typedef struct _ToolItemDragData ToolItemDragData;
-typedef struct _ColorToolItemDragData ColorToolItemDragData;
-typedef struct _SeparatorData SeparatorData;
-
-class ToolbarCustomizeDialog: public GladeGui {
+class ToolbarCustomizeDialog {
 public:
     ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win, ToolbarDragDropHandler* handler);
-    ~ToolbarCustomizeDialog() override;
+    ~ToolbarCustomizeDialog();
 
 public:
-    void show(GtkWindow* parent) override;
+    inline GtkWindow* getWindow() const { return window.get(); }
+
+    void show(GtkWindow* parent);
+
+private:
+    struct ToolItemDragData;
+    struct ColorToolItemDragData;
+    struct SeparatorData;
+
+    std::vector<ToolItemDragData> buildToolDataVector(const std::vector<AbstractToolItem*>& tools);
+    std::vector<ColorToolItemDragData> buildColorDataVector(const Palette& palette);
 
     void rebuildIconview();
-    void rebuildColorIcons();
+
 
 private:
     static void dragDataReceived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data,
@@ -62,15 +72,21 @@ private:
                                              GtkSelectionData* selection_data, guint info, guint time, void* unused);
 
     void freeIconview();
-    void freeColorIconview();
 
 private:
-    static void windowResponseCb(GtkDialog* dialog, int response, ToolbarCustomizeDialog* dlg);
+    /**
+     * @brief Stores the widget and other data associated to each drag-able toolbar item
+     * Modifications are not allowed to avoid vector reallocation and pointer invalidation
+     * (pointers are feed to g_signal's callback data)
+     */
+    const std::vector<ToolItemDragData> itemData;
+    /**
+     * @brief Stores the widget and other data associated to each drag-able color item
+     */
+    const std::vector<ColorToolItemDragData> colorItemData;
+    static std::array<SeparatorData, 2> separators;
 
-private:
-    std::list<ToolItemDragData*> itemDatalist;
-
-    MainWindow* win;
-
-    ToolbarDragDropHandler* handler;
+    xoj::util::GtkWindowUPtr window;
+    GtkGrid* toolTable;
+    GtkGrid* colorTable;
 };

@@ -32,6 +32,8 @@ public:
     void prepareToolbarsForDragAndDrop();
     void clearToolbarsFromDragAndDrop();
 
+    inline Control* getControl() const { return control; }
+
 private:
     Control* control;
 
