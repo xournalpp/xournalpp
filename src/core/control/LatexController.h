@@ -57,7 +57,7 @@ private:
      */
     class FindDependencyStatus {
     public:
-        FindDependencyStatus(bool success, std::string errorMsg): success(success), errorMsg(errorMsg){};
+        FindDependencyStatus(bool success, std::string errorMsg): success(success), errorMsg(std::move(errorMsg)){};
         bool success;
         std::string errorMsg;
     };
@@ -167,22 +167,22 @@ private:
     /**
      * X-Position
      */
-    int posx = 0;
+    double posx = 0;
 
     /**
      * Y-Position
      */
-    int posy = 0;
+    double posy = 0;
 
     /**
      * Image width
      */
-    int imgwidth = 0;
+    double imgwidth = 0;
 
     /**
      * Image height
      */
-    int imgheight = 0;
+    double imgheight = 0;
 
     /**
      * Document

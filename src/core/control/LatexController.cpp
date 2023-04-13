@@ -42,8 +42,8 @@
 
 using std::string;
 
-const Color LIGHT_PREVIEW_BACKGROUND = Colors::white;
-const Color DARK_PREVIEW_BACKGROUND = Colors::black;
+constexpr Color LIGHT_PREVIEW_BACKGROUND = Colors::white;
+constexpr Color DARK_PREVIEW_BACKGROUND = Colors::black;
 
 LatexController::LatexController(Control* control):
         control(control),
@@ -135,14 +135,15 @@ void LatexController::findSelectedTexElement() {
         const double centerX = visibleBounds.x + 0.5 * visibleBounds.width;
         const double centerY = visibleBounds.y + 0.5 * visibleBounds.height;
 
-        if (layout->getPageViewAt(centerX, centerY) == this->view) {
+        if (layout->getPageViewAt(static_cast<int>(std::round(centerX)), static_cast<int>(std::round(centerY))) ==
+            this->view) {
             // Pick the center of the visible area (converting from screen to page coordinates)
-            this->posx = static_cast<int>((centerX - this->view->getX()) / zoom);
-            this->posy = static_cast<int>((centerY - this->view->getY()) / zoom);
+            this->posx = centerX - this->view->getX() / zoom;
+            this->posy = centerY - this->view->getY() / zoom;
         } else {
             // No better location, so just center it on the page (possibly out of viewport)
-            this->posx = static_cast<int>(this->page->getWidth() / 2);
-            this->posy = static_cast<int>(this->page->getHeight() / 2);
+            this->posx = this->page->getWidth() / 2;
+            this->posy = this->page->getHeight() / 2;
         }
     }
     this->doc->unlock();
