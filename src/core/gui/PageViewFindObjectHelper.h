@@ -39,7 +39,8 @@ public:
 
         if (multiLayer) {
             size_t initialLayer = this->view->getPage()->getSelectedLayerId();
-            for (int layerNo = this->view->getPage()->getLayers()->size() - 1; layerNo >= 0; layerNo--) {
+            for (int layerNo = static_cast<int>(this->view->getPage()->getLayers()->size() - 1); layerNo >= 0;
+                 layerNo--) {
                 Layer* layer = this->view->getPage()->getLayers()->at(layerNo);
                 this->view->getXournal()->getControl()->getLayerController()->switchToLay(layerNo + 1);
                 if (checkLayer(layer)) {

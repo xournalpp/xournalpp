@@ -246,8 +246,8 @@ private:
     PageRef page;
     XournalView* xournal = nullptr;
     Settings* settings = nullptr;
-    EraseHandler* eraser = nullptr;
-    InputHandler* inputHandler = nullptr;
+    std::unique_ptr<EraseHandler> eraser;
+    std::unique_ptr<InputHandler> inputHandler;
 
     std::vector<std::unique_ptr<xoj::view::OverlayView>> overlayViews;
 
