@@ -33,6 +33,8 @@ public:
     void enableSidebar() override;
     void disableSidebar() override;
 
+    void layout() override;
+
     /**
      * @overwrite
      */

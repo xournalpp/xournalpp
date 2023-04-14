@@ -43,6 +43,12 @@ public:
 
 public:
     /**
+     * Layout sidebar
+     */
+    void layout();
+
+
+    /**
      * A page was selected, so also select this page in the sidebar
      */
     void selectPageNr(size_t page, size_t pdfPage);

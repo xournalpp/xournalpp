@@ -127,7 +127,9 @@ void Sidebar::askInsertPdfPage(size_t pdfPage) {
 Sidebar::~Sidebar() {
     this->control = nullptr;
 
-    for (AbstractSidebarPage* p: this->pages) { delete p; }
+    for (AbstractSidebarPage* p: this->pages) {
+        delete p;
+    }
     this->pages.clear();
 
     this->sidebarContents = nullptr;
@@ -146,7 +148,9 @@ void Sidebar::actionPerformed(SidebarActions action) {
 }
 
 void Sidebar::selectPageNr(size_t page, size_t pdfPage) {
-    for (AbstractSidebarPage* p: this->pages) { p->selectPageNr(page, pdfPage); }
+    for (AbstractSidebarPage* p: this->pages) {
+        p->selectPageNr(page, pdfPage);
+    }
 }
 
 void Sidebar::setSelectedPage(size_t page) {
@@ -192,7 +196,9 @@ void Sidebar::setTmpDisabled(bool disabled) {
     gtk_widget_set_sensitive(this->buttonCloseSidebar, !disabled);
     gtk_widget_set_sensitive(GTK_WIDGET(this->tbSelectPage), !disabled);
 
-    for (AbstractSidebarPage* p: this->pages) { p->setTmpDisabled(disabled); }
+    for (AbstractSidebarPage* p: this->pages) {
+        p->setTmpDisabled(disabled);
+    }
 
     gdk_display_sync(gdk_display_get_default());
 }
@@ -218,4 +224,10 @@ SidebarPageButton::SidebarPageButton(Sidebar* sidebar, int index, AbstractSideba
     this->sidebar = sidebar;
     this->index = index;
     this->page = page;
+}
+
+void Sidebar::layout() {
+    for (auto page: this->pages) {
+        page->layout();
+    }
 }
