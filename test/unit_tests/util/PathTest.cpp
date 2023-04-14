@@ -10,6 +10,8 @@
  */
 
 
+#include <filesystem>
+
 #include <gtest/gtest.h>
 
 #include "util/PathUtil.h"
@@ -121,19 +123,40 @@ TEST(UtilPath, testClearExtensions) {
 TEST(UtilPath, normalizeAssetPath) {
     auto p = fs::path();
 
-#if _WIN32
+#ifdef _WIN32
+    // Test \\ to / conversion + not relative
+
+    // Test, if the implementation of std::filesystem::proximate and std::filesystem::relative resolves "/" and "\\" to
+    // the same path
+    EXPECT_EQ(std::filesystem::proximate("D:/home/freddy", "C:/home"),
+              std::filesystem::proximate("D:\\home\\freddy", "C:\\home"));
+    EXPECT_EQ(std::filesystem::relative("D:/home/freddy", "C:/home"),
+              std::filesystem::relative("D:\\home\\freddy", "C:\\home"));
+
     p = Util::normalizeAssetPath("C:\\dir\\file.txt", "D:");
-    EXPECT_EQ(string("C:\\dir\\file.txt"), p.string());
-
+    EXPECT_EQ(string("C:/dir/file.txt"), p.string());
     p = Util::normalizeAssetPath("C:\\dir\\file.txt", "D:\\base");
-    EXPECT_EQ(string("C:\\dir\\file.txt"), p.string());
+    EXPECT_EQ(string("C:/dir/file.txt"), p.string());
 
-    // do not return empty if asset_path is relative
-    p = Util::normalizeAssetPath("../dir/file.txt", "D:");
-    EXPECT_TRUE(!p.empty());
+    p = Util::normalizeAssetPath("C:/dir/file.txt", "D:");
+    EXPECT_EQ(string("C:/dir/file.txt"), p.string());
+    p = Util::normalizeAssetPath("C:/dir/file.txt", "D:/base");
+    EXPECT_EQ(string("C:/dir/file.txt"), p.string());
 
-    p = Util::normalizeAssetPath("../dir/file.txt", "D:\\base");
-    EXPECT_TRUE(!p.empty());
+    // Test \\ to / conversion + relative
+    p = Util::normalizeAssetPath("C:\\dir\\file.txt", "C:\\dir");
+    EXPECT_EQ(string("file.txt"), p.string());
+    p = Util::normalizeAssetPath("C:\\dir\\file.txt", "C:\\base");
+    EXPECT_EQ(string("../dir/file.txt"), p.string());
+
+    auto current = fs::current_path();
+    auto gen = fs::weakly_canonical((current / "..\\dir\\file.txt")).generic_string();
+    // relative asset path
+    p = Util::normalizeAssetPath("..\\dir\\file.txt", "D:");
+    EXPECT_EQ(gen, p.string());
+
+    p = Util::normalizeAssetPath(".\\file.txt", fs::current_path());
+    EXPECT_EQ(string("file.txt"), p.string());
 #else
     p = Util::normalizeAssetPath("/dir/file.txt", "/");
     EXPECT_EQ(string("dir/file.txt"), p.string());
