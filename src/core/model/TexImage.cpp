@@ -26,7 +26,7 @@ void TexImage::freeImageAndPdf() {
     this->pdf.reset();
 }
 
-auto TexImage::clone() const -> Element* {
+auto TexImage::clone() const -> TexImage* {
     auto* img = new TexImage();
     img->x = this->x;
     img->y = this->y;

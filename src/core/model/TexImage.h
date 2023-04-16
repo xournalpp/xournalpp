@@ -62,7 +62,7 @@ public:
     void setText(std::string text);
     std::string getText() const;
 
-    Element* clone() const override;
+    TexImage* clone() const override;
 
     /**
      * @return true if the binary data (PNG or PDF) was loaded successfully.

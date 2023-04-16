@@ -1,66 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
-  <object class="GtkDialog" id="texDialog">
+  <requires lib="gtk+" version="3.16"/>
+  <object class="GtkImage" id="iconCancel">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">dialog-cancel</property>
+  </object>
+  <object class="GtkImage" id="iconOk">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">dialog-ok</property>
+  </object>
+  <object class="GtkWindow" id="texDialog">
     <property name="name">texDialog</property>
-    <property name="width-request">320</property>
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Insert Latex</property>
-    <property name="window-position">center</property>
-    <property name="icon-name">dialog-information</property>
-    <property name="type-hint">normal</property>
-    <property name="has-resize-grip">True</property>
-    <child internal-child="vbox">
-      <object class="GtkBox" id="dialog-vbox">
+    <property name="modal">True</property>
+    <property name="destroy-with-parent">True</property>
+    <property name="skip-taskbar-hint">True</property>
+    <property name="skip-pager-hint">True</property>
+    <child>
+      <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
         <property name="orientation">vertical</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area">
-            <property name="name">dialog-action_area2</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="layout-style">end</property>
-            <child>
-              <object class="GtkButton" id="texcancelbutton">
-                <property name="label">gtk-cancel</property>
-                <property name="name">texcancelbutton</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="use-stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="texokbutton">
-                <property name="label">gtk-ok</property>
-                <property name="name">texokbutton</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="use-stock">True</property>
-                <accelerator key="Return" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack-type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
         <child>
           <object class="GtkLabel" id="labelTitle">
             <property name="name">labelTitle</property>
@@ -84,9 +52,14 @@
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkDrawingArea" id="texImage">
+                <property name="name">texImage</property>
                 <property name="height-request">48</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="margin-start">4</property>
+                <property name="margin-end">4</property>
+                <property name="margin-top">4</property>
+                <property name="margin-bottom">4</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
               </object>
@@ -179,13 +152,66 @@
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="texErrorLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="opacity">0</property>
+            <property name="margin-start">4</property>
+            <property name="margin-end">4</property>
+            <property name="margin-top">4</property>
+            <property name="margin-bottom">4</property>
+            <property name="label">The formula is empty when rendered or invalid.</property>
+            <attributes>
+              <attribute name="foreground" value="#e0e01b1b2424"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="halign">end</property>
+            <property name="margin-top">10</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">True</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">iconCancel</property>
+                <accelerator key="Escape" signal="clicked"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="label" translatable="yes">Ok</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">iconOk</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -195,9 +221,5 @@
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="-6">texcancelbutton</action-widget>
-      <action-widget response="-5">texokbutton</action-widget>
-    </action-widgets>
   </object>
 </interface>
