@@ -3247,9 +3247,15 @@ void Control::fontChanged() {
  * The core handler for inserting latex
  */
 void Control::runLatex() {
-    LatexController latex(this);
-    latex.run();
+    /*
+     * LatexController::run() will open a non-blocking dialog. This dialog uses the LatexController instance until its
+     * completion. The LatexController instance must thus outlive this scope. It'll get deleted when the dialog is
+     * closed (see LatexController::showTexEditDialog())
+     */
+    this->latexController = std::make_unique<LatexController>(this);
+    this->latexController->run();
 }
+void Control::deleteLatexController() { this->latexController.reset(); }
 
 /**
  * GETTER / SETTER

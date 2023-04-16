@@ -13,41 +13,34 @@
 
 #pragma once
 
+#include <functional>
 #include <string>  // for string
 
-#include <cairo.h>               // for cairo_surface_t, cairo_t
+#include <cairo.h>               // for cairo_t
 #include <gtk/gtk.h>             // for GtkWidget, GtkTextBuffer, GtkWindow
 #include <gtk/gtkcssprovider.h>  // for GtkCssProvider
 #include <poppler.h>             // for PopplerDocument, PopplerPage
 
-#include "gui/GladeGui.h"  // for GladeGui
-#include "util/Color.h"    // for Color
+#include "util/Color.h"
+#include "util/raii/GObjectSPtr.h"
+#include "util/raii/GtkWindowUPtr.h"
+#include "view/Mask.h"
 
+class LatexController;
 class LatexSettings;
 class GladeSearchpath;
 
-class LatexDialog: public GladeGui {
+class LatexDialog final {
 public:
     LatexDialog() = delete;
     LatexDialog(const LatexDialog& other) = delete;
     LatexDialog& operator=(const LatexDialog& other) = delete;
-    LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& settings);
-    virtual ~LatexDialog();
+    LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& settings, const std::string initialTex,
+                bool selectAll, std::function<void()> callback);
+    ~LatexDialog();
 
 public:
-    /**
-     * Show the dialog.
-     */
-    void show(GtkWindow* parent) override;
-
-    /**
-     * Show the dialog, optionally selecting the text field contents by default.
-     */
-    void show(GtkWindow* parent, bool selectTex);
-
-    // Set and retrieve text from text box
-    void setFinalTex(std::string texString);
-    std::string getFinalTex();
+    void setCompilationStatus(bool isTexValid, bool isCompilationDone, const std::string& compilationOutput);
 
     /**
      * Set temporary Tex render and queue a re-draw.
@@ -70,60 +63,33 @@ public:
      */
     std::string getBufferContents();
 
-private:
-    /**
-     * @brief Get the factor by which a preview should be scaled to fit in
-     *    the preview widget.
-     * @param srcWidth is the width of the unscaled preview.
-     * @param srcHeight is the height of the unscaled preview.
-     * @return An appropriate scale factor for a preview of the given dimension.
-     */
-    double getPreviewScale(double srcWidth, double srcHeight) const;
-
-    /**
-     * @return An appropriate scale factor for this' scaledRender.
-     *         Returns a scale factor of 1.0 if the cached render is null
-     *         or has zero size.
-     */
-    double getPreviewScale() const;
-
-    /**
-     * @brief Render a reasonably-scaled preview for the current preview
-     *  PDF to this' internal rendering surface.
-     * This does not queue a re-draw and may, therefore, be called by the draw
-     * preview callback itself.
-     */
-    void renderScaledPreview();
-
-    /**
-     * @brief Initialize or re-initialize CSS. Applies styling to the editor,
-     * preview, etc.
-     */
-    void setupCSS();
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
     /**
-     * @brief Called on 'draw' signal.
-     * @param widget is the target of the event; the GtkDrawingArea we're rendering to.
-     * @param cr is drawn to
-     * @param self The LatexDialog that is the source and target of the callback.
+     * @brief Preview DrawingArea draw function
      */
-    static void drawPreviewCallback(GtkWidget* widget, cairo_t* cr, LatexDialog* self);
+    static void previewDrawFunc(GtkDrawingArea* drawing_area, cairo_t* cr, int width, int height, LatexDialog* self);
 
 private:
-    // Temporary render
-    GtkWidget* texTempRender;
-    cairo_surface_t* scaledRender = nullptr;
-    GtkCssProvider* cssProvider;
+    xoj::util::GtkWindowUPtr window;
+
+    // Preview
+    GtkDrawingArea* previewDrawingArea;
+    xoj::view::Mask previewMask;
 
     // Text field
+    xoj::util::GObjectSPtr<GtkCssProvider> cssProvider;  ///< For tex code display font and size
     GtkWidget* texBox;
+    GtkButton* btOk;
+    GtkLabel* texErrorLabel;
+    GtkTextBuffer* compilationOutputTextBuffer;
     GtkTextBuffer* textBuffer;
 
     /**
      * Source page from which we render the preview.
      */
-    PopplerPage* tempRenderSource = nullptr;
+    xoj::util::GObjectSPtr<PopplerPage> previewPdfPage;
 
     /**
      * The final LaTeX string to save once the dialog is closed.
@@ -135,8 +101,5 @@ private:
      */
     Color previewBackgroundColor;
 
-    /**
-     * Constant CSS for the tex box.
-     */
-    std::string texBoxCss;
+    std::function<void()> callback;
 };

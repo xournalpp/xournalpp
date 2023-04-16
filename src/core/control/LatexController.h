@@ -22,7 +22,6 @@
 #include <poppler.h>  // for GObject
 
 #include "control/latex/LatexGenerator.h"  // for LatexGenerator
-#include "gui/dialog/LatexDialog.h"        // for LatexDialog
 #include "model/PageRef.h"                 // for PageRef
 
 #include "filesystem.h"  // for path
@@ -34,14 +33,15 @@ class XojPageView;
 class Layer;
 class Element;
 class LatexSettings;
+class LatexDialog;
 
-class LatexController {
+class LatexController final {
 public:
     LatexController() = delete;
     LatexController(const LatexController& other) = delete;
     LatexController& operator=(const LatexController& other) = delete;
     LatexController(Control* control);
-    virtual ~LatexController();
+    ~LatexController();
 
 public:
     /**
@@ -85,17 +85,15 @@ private:
     void triggerImageUpdate(const std::string& texString);
 
     /**
-     * Show the LaTex Editor dialog, returning the final formula input by the
-     * user. If the input was cancelled, the resulting string will be the same
-     * as the initial formula.
+     * Show the LaTex Editor dialog and process its output
      */
-    std::string showTexEditDialog();
+    void showTexEditDialog();
 
     /**
      * Signal handler, updates the rendered image when the text in the editor
      * changes.
      */
-    static void handleTexChanged(GtkTextBuffer* buffer, LatexController* self);
+    static void handleTexChanged(LatexController* self);
 
     /**
      * Updates the display once the PDF file is generated.
@@ -130,7 +128,7 @@ private:
     /**
      * LaTex editor dialog
      */
-    LatexDialog dlg;
+    LatexDialog* dlg = nullptr;
 
     /**
      * Tex binary full path

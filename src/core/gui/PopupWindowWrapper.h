@@ -15,6 +15,7 @@
 
 #include <gtk/gtk.h>
 
+#include "util/Assert.h"
 #include "util/gtk4_helper.h"
 
 namespace xoj::popup {
@@ -27,6 +28,10 @@ namespace xoj::popup {
 template <class PopupType>
 class PopupWindowWrapper {
 public:
+    PopupWindowWrapper() = delete;
+    PopupWindowWrapper(const PopupWindowWrapper&) = delete;
+    PopupWindowWrapper(PopupWindowWrapper&&) = delete;
+
     template <class... Args>
     PopupWindowWrapper(Args&&... args) {
         popup = new PopupType(std::forward<Args>(args)...);
@@ -51,6 +56,11 @@ public:
          * The popup will get destroy by the signal connected above.
          */
         popup = nullptr;
+    }
+
+    PopupType* getPopup() const {
+        xoj_assert_message(popup, "Do not call getPopup() after show()!");
+        return popup;
     }
 
 private:

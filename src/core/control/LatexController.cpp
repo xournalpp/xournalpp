@@ -20,6 +20,7 @@
 #include "gui/Layout.h"                      // for Layout
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "gui/PageView.h"                    // for XojPageView
+#include "gui/PopupWindowWrapper.h"          // for PopupWindowWrapper
 #include "gui/XournalView.h"                 // for XournalView
 #include "gui/dialog/LatexDialog.h"          // for LatexDialog
 #include "model/Document.h"                  // for Document
@@ -49,7 +50,6 @@ constexpr Color DARK_PREVIEW_BACKGROUND = Colors::black;
 LatexController::LatexController(Control* control):
         control(control),
         settings(control->getSettings()->latexSettings),
-        dlg(control->getGladeSearchPath(), settings),
         doc(control->getDocument()),
         texTmpDir(Util::getTmpDirSubfolder("tex")),
         generator(settings) {
@@ -121,6 +121,8 @@ void LatexController::findSelectedTexElement() {
 
         if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
             this->initialTex = img->getText();
+            this->temporaryRender = std::unique_ptr<TexImage>(img->clone());
+            this->isValidTex = true;
         } else if (auto* txt = dynamic_cast<Text*>(this->selectedElem)) {
             this->initialTex = "\\text{" + txt->getText() + "}";
         }
@@ -150,27 +152,38 @@ void LatexController::findSelectedTexElement() {
     this->doc->unlock();
 }
 
-auto LatexController::showTexEditDialog() -> string {
-    // Attach the signal handler before setting the buffer text so that the
-    // callback is triggered
-    gulong signalHandler = g_signal_connect(dlg.getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
-    bool isNewFormula = this->initialTex.empty();
-    this->dlg.setFinalTex(isNewFormula ? this->settings.defaultText : this->initialTex);
+void LatexController::showTexEditDialog() {
+    xoj::popup::PopupWindowWrapper<LatexDialog> popup(
+            control->getGladeSearchPath(), settings,
+            this->initialTex.empty() ? this->settings.defaultText : this->initialTex, !this->initialTex.empty(),
+            [texCtrl = this]() {
+                xoj_assert(texCtrl->isValidTex);
+                texCtrl->insertTexImage();
+            });
 
-    if (this->temporaryRender != nullptr) {
-        this->dlg.setTempRender(this->temporaryRender->getPdf());
+    this->dlg = popup.getPopup();
+
+    if (this->temporaryRender) {
+        // Use preexisting pdf
+        this->dlg->setTempRender(this->temporaryRender->getPdf());
+    } else {
+        // Trigger an asynchronous compilation
+        handleTexChanged(this);
     }
 
-    this->dlg.show(GTK_WINDOW(control->getWindow()->getWindow()), isNewFormula);
-    g_signal_handler_disconnect(dlg.getTextBuffer(), signalHandler);
+    /*
+     * Connect handleTexChanged() to the text buffer containing the latex code, to trigger rebuilds upon code changes.
+     * This also handles the deletion of `this` upon disconnection of the signal (when the dialog is closed)
+     */
+    g_signal_connect_data(dlg->getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this,
+                          GClosureNotify(+[](LatexController* self) { self->control->deleteLatexController(); }),
+                          G_CONNECT_SWAPPED);
 
-    string result = this->dlg.getFinalTex();
-    // If the user cancelled, there is no change in the latex string.
-    result = result.empty() ? initialTex : result;
-    return result;
+    popup.show(GTK_WINDOW(control->getWindow()->getWindow()));
 }
 
 void LatexController::triggerImageUpdate(const string& texString) {
+    xoj_assert(this->dlg);
     if (this->isUpdating()) {
         return;
     }
@@ -179,9 +192,9 @@ void LatexController::triggerImageUpdate(const string& texString) {
 
     // Determine a background color that has enough contrast with the text color:
     if (Util::get_color_contrast(textColor, LIGHT_PREVIEW_BACKGROUND) > 0.5) {
-        this->dlg.setPreviewBackgroundColor(LIGHT_PREVIEW_BACKGROUND);
+        this->dlg->setPreviewBackgroundColor(LIGHT_PREVIEW_BACKGROUND);
     } else {
-        this->dlg.setPreviewBackgroundColor(DARK_PREVIEW_BACKGROUND);
+        this->dlg->setPreviewBackgroundColor(DARK_PREVIEW_BACKGROUND);
     }
 
     this->lastPreviewedTex = texString;
@@ -209,8 +222,8 @@ void LatexController::triggerImageUpdate(const string& texString) {
  * method inside small methods in 'self'. To improve performance, we render the
  * text asynchronously.
  */
-void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* self) {
-    self->triggerImageUpdate(self->dlg.getBufferContents());
+void LatexController::handleTexChanged(LatexController* self) {
+    self->triggerImageUpdate(self->dlg->getBufferContents());
 }
 
 void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self) {
@@ -263,12 +276,12 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
         fs::remove(pdfPath);
     }
 
-    const string currentTex = self->dlg.getBufferContents();
+    const string currentTex = self->dlg->getBufferContents();
     bool shouldUpdate = self->lastPreviewedTex != currentTex;
     if (self->isValidTex) {
         self->temporaryRender = self->loadRendered(currentTex);
         if (self->temporaryRender != nullptr) {
-            self->dlg.setTempRender(self->temporaryRender->getPdf());
+            self->dlg->setTempRender(self->temporaryRender->getPdf());
         }
     }
 
@@ -283,31 +296,7 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
 
 bool LatexController::isUpdating() { return updating_cancellable; }
 
-void LatexController::updateStatus() {
-    GtkWidget* okButton = this->dlg.get("texokbutton");
-    bool buttonEnabled = true;
-    // Disable LatexDialog OK button while updating. This is a workaround
-    // for the fact that 1) the LatexController only lives while the dialog
-    // is open; 2) the preview is generated asynchronously; and 3) the `run`
-    // method that inserts the TexImage object is called synchronously after
-    // the dialog is closed with the OK button.
-    buttonEnabled = !this->isUpdating();
-
-    // Invalid LaTeX will generate an invalid PDF, so disable the OK button if
-    // needed.
-    buttonEnabled = buttonEnabled && this->isValidTex;
-
-    gtk_widget_set_sensitive(okButton, buttonEnabled);
-
-    // Show error warning only if LaTeX is invalid.
-    GtkLabel* errorLabel = GTK_LABEL(this->dlg.get("texErrorLabel"));
-    gtk_label_set_text(errorLabel, this->isValidTex ? "" : N_("The formula is empty when rendered or invalid."));
-
-    // Update the output pane.
-    GtkTextView* commandOutputDisplay = GTK_TEXT_VIEW(this->dlg.get("texCommandOutputText"));
-    GtkTextBuffer* commandOutputBuffer = gtk_text_view_get_buffer(commandOutputDisplay);
-    gtk_text_buffer_set_text(commandOutputBuffer, this->texProcessOutput.c_str(), -1);
-}
+void LatexController::updateStatus() { this->dlg->setCompilationStatus(isValidTex, !isUpdating(), texProcessOutput); }
 
 void LatexController::deleteOldImage() {
     if (this->selectedElem) {
@@ -385,10 +374,5 @@ void LatexController::run() {
     }
 
     this->findSelectedTexElement();
-    const string newTex = this->showTexEditDialog();
-
-    if (this->initialTex != newTex) {
-        xoj_assert(this->isValidTex);
-        this->insertTexImage();
-    }
+    this->showTexEditDialog();
 }
