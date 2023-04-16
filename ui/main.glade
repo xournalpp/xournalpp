@@ -189,6 +189,16 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkMenuItem" id="menuFileChangeBackground">
+                            <property name="name">menuFileChangeBackground</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">_Change _PDF _Background</property>
+                            <property name="use-underline">True</property>
+                            <signal name="activate" handler="ACTION_CHANGE_BACKGROUND" swapped="no"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkMenuItem" id="menuFileAnnotate">
                             <property name="name">menuFileAnnotate</property>
                             <property name="visible">True</property>
