@@ -47,6 +47,10 @@
 
 using xoj::util::Rectangle;
 
+constexpr int REGULAR_MOVE_AMOUNT = 3;
+constexpr int SMALL_MOVE_AMOUNT = 1;
+constexpr int LARGE_MOVE_AMOUNT = 10;
+
 std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t maxPage) {
     const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
     const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();
@@ -128,8 +132,12 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     }
 
+    // Todo(gtk4) there is no GdkEventKey. Use a GdkEventControllerKey and connect to its key-pressed signal
+    guint keyval = event->keyval;
+    GdkModifierType keystate = static_cast<GdkModifierType>(event->state);
+
     if (auto* tool = getControl()->getWindow()->getPdfToolbox(); tool->hasSelection()) {
-        if (event->keyval == GDK_KEY_c && event->state & GDK_CONTROL_MASK) {
+        if (keyval == GDK_KEY_c && keystate & GDK_CONTROL_MASK) {
             // Shortcut to get selected PDF text.
             tool->copyTextToClipboard();
             return true;
@@ -137,27 +145,27 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     if (auto* selection = getSelection(); selection) {
-        if (event->keyval == GDK_KEY_Escape) {
+        if (keyval == GDK_KEY_Escape) {
             clearSelection();
             return true;
         }
 
-        int d = 3;
-        if (event->state & GDK_MOD1_MASK) {
-            d = 1;
-        } else if (event->state & GDK_SHIFT_MASK) {
-            d = 20;
+        int d = REGULAR_MOVE_AMOUNT;
+        if (keystate & GDK_MOD1_MASK) {
+            d = SMALL_MOVE_AMOUNT;
+        } else if (keystate & GDK_SHIFT_MASK) {
+            d = LARGE_MOVE_AMOUNT;
         }
 
         int xdir = 0;
         int ydir = 0;
-        if (event->keyval == GDK_KEY_Left) {
+        if (keyval == GDK_KEY_Left) {
             xdir = -1;
-        } else if (event->keyval == GDK_KEY_Up) {
+        } else if (keyval == GDK_KEY_Up) {
             ydir = -1;
-        } else if (event->keyval == GDK_KEY_Right) {
+        } else if (keyval == GDK_KEY_Right) {
             xdir = 1;
-        } else if (event->keyval == GDK_KEY_Down) {
+        } else if (keyval == GDK_KEY_Down) {
             ydir = 1;
         }
         if (xdir != 0 || ydir != 0) {
@@ -167,7 +175,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     }
 
-    guint state = event->state & gtk_accelerator_get_default_mod_mask();
+    guint state = keystate & gtk_accelerator_get_default_mod_mask();
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
 
@@ -176,26 +184,26 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
         int windowHeight = alloc.height - scrollKeySize;
 
-        if (event->keyval == GDK_KEY_Page_Down) {
+        if (keyval == GDK_KEY_Page_Down) {
             layout->scrollRelative(0, windowHeight);
             return false;
         }
-        if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_space) {
+        if (keyval == GDK_KEY_Page_Up || keyval == GDK_KEY_space) {
             layout->scrollRelative(0, -windowHeight);
             return true;
         }
     } else {
-        if (event->keyval == GDK_KEY_Page_Down || event->keyval == GDK_KEY_KP_Page_Down) {
+        if (keyval == GDK_KEY_Page_Down || keyval == GDK_KEY_KP_Page_Down) {
             control->getScrollHandler()->goToNextPage();
             return true;
         }
-        if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_KP_Page_Up) {
+        if (keyval == GDK_KEY_Page_Up || keyval == GDK_KEY_KP_Page_Up) {
             control->getScrollHandler()->goToPreviousPage();
             return true;
         }
     }
 
-    if (event->keyval == GDK_KEY_space) {
+    if (keyval == GDK_KEY_space) {
         GtkAllocation alloc = {0};
         gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
         int windowHeight = alloc.height - scrollKeySize;
@@ -205,28 +213,28 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     // Numeric keypad always navigates by page
-    if (event->keyval == GDK_KEY_KP_Up) {
+    if (keyval == GDK_KEY_KP_Up) {
         this->pageRelativeXY(0, -1);
         return true;
     }
 
-    if (event->keyval == GDK_KEY_KP_Down) {
+    if (keyval == GDK_KEY_KP_Down) {
         this->pageRelativeXY(0, 1);
         return true;
     }
 
-    if (event->keyval == GDK_KEY_KP_Left) {
+    if (keyval == GDK_KEY_KP_Left) {
         this->pageRelativeXY(-1, 0);
         return true;
     }
 
-    if (event->keyval == GDK_KEY_KP_Right) {
+    if (keyval == GDK_KEY_KP_Right) {
         this->pageRelativeXY(1, 0);
         return true;
     }
 
 
-    if (event->keyval == GDK_KEY_Up || event->keyval == GDK_KEY_k || event->keyval == GDK_KEY_K) {
+    if (keyval == GDK_KEY_Up || keyval == GDK_KEY_k || keyval == GDK_KEY_K) {
         if (control->getSettings()->isPresentationMode()) {
             control->getScrollHandler()->goToPreviousPage();
             return true;
@@ -241,7 +249,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Down || event->keyval == GDK_KEY_j || event->keyval == GDK_KEY_J) {
+    if (keyval == GDK_KEY_Down || keyval == GDK_KEY_j || keyval == GDK_KEY_J) {
         if (control->getSettings()->isPresentationMode()) {
             control->getScrollHandler()->goToNextPage();
             return true;
@@ -256,7 +264,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Left || event->keyval == GDK_KEY_h) {
+    if (keyval == GDK_KEY_Left || keyval == GDK_KEY_h) {
         if (state & GDK_SHIFT_MASK) {
             this->pageRelativeXY(-1, 0);
         } else {
@@ -269,7 +277,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Right || event->keyval == GDK_KEY_l) {
+    if (keyval == GDK_KEY_Right || keyval == GDK_KEY_l) {
         if (state & GDK_SHIFT_MASK) {
             this->pageRelativeXY(1, 0);
         } else {
@@ -282,20 +290,20 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_End || event->keyval == GDK_KEY_KP_End) {
+    if (keyval == GDK_KEY_End || keyval == GDK_KEY_KP_End) {
         control->getScrollHandler()->goToLastPage();
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Home || event->keyval == GDK_KEY_KP_Home) {
+    if (keyval == GDK_KEY_Home || keyval == GDK_KEY_KP_Home) {
         control->getScrollHandler()->goToFirstPage();
         return true;
     }
 
     // Switch color on number key
     auto& colors = control->getWindow()->getToolMenuHandler()->getColorToolItems();
-    if ((event->keyval >= GDK_KEY_0) && (event->keyval < GDK_KEY_0 + std::min((std::size_t)10, colors.size()))) {
-        std::size_t index = std::min(colors.size() - 1, (std::size_t)(9 + (event->keyval - GDK_KEY_0)) % 10);
+    if ((keyval >= GDK_KEY_0) && (keyval < GDK_KEY_0 + std::min((std::size_t)10, colors.size()))) {
+        std::size_t index = std::min(colors.size() - 1, (std::size_t)(9 + (keyval - GDK_KEY_0)) % 10);
         auto colorToolItem = colors.at(index);
         if (colorToolItem->isEnabled()) {
             gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(colorToolItem->getItem()), true);
