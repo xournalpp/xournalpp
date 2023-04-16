@@ -430,6 +430,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         case ACTION_OPEN:
             openFile();
             break;
+        case ACTION_CHANGE_BACKGROUND:
+            this->changePdfBackground();
+            break;
         case ACTION_ANNOTATE_PDF:
             clearSelectionEndText();
             annotatePdf("", false, false);
@@ -2389,6 +2392,39 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     // not as file to load
     settings->setLastSavePath(filepath.parent_path());
 
+
+    fileLoaded(scrollToPage);
+    return true;
+}
+
+auto Control::changePdfBackground(fs::path filepath, int scrollToPage, bool forceOpen) -> bool {
+
+    LoadHandler loadHandler;
+
+    const fs::path current_filepath = ((*this).doc)->getFilepath();
+    if (current_filepath.empty()) {
+        string msg =
+                FS(_F("Error in changing the background: please open some file first.")) + loadHandler.getLastError();
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return true;
+    }
+
+    Document* loadedDocument = loadHandler.loadDocument(current_filepath);
+
+    bool attachToDocument = false;
+    XojOpenDlg dlg(getGtkWindow(), this->settings);
+    auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
+    if (!pdfFilename.empty()) {
+        loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
+        loadedDocument = loadHandler.loadDocument(current_filepath);
+    }
+
+    this->closeDocument();
+
+    this->doc->lock();
+    this->doc->clearDocument();
+    *this->doc = *loadedDocument;
+    this->doc->unlock();
 
     fileLoaded(scrollToPage);
     return true;
