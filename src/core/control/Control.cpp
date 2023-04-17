@@ -302,7 +302,7 @@ void Control::saveSettings() {
     this->sidebar->saveSize();
 }
 
-void Control::initWindow(MainWindow* win) {
+void Control::initWindow(MainWindow* win, gboolean fP) {
     selectTool(toolHandler->getToolType());
     this->win = win;
     this->sidebar = new Sidebar(win, this);
@@ -318,7 +318,7 @@ void Control::initWindow(MainWindow* win) {
     // Disable undo buttons
     undoRedoChanged();
 
-    if (settings->isPresentationMode()) {
+    if (settings->isPresentationMode() || fP) {
         setViewPresentationMode(true);
     } else if (settings->isViewFixedRows()) {
         setViewRows(settings->getViewRows());
