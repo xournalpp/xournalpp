@@ -166,9 +166,6 @@ void LatexController::showTexEditDialog() {
     if (this->temporaryRender) {
         // Use preexisting pdf
         this->dlg->setTempRender(this->temporaryRender->getPdf());
-    } else {
-        // Trigger an asynchronous compilation
-        handleTexChanged(this);
     }
 
     /*
@@ -180,6 +177,13 @@ void LatexController::showTexEditDialog() {
                           G_CONNECT_SWAPPED);
 
     popup.show(GTK_WINDOW(control->getWindow()->getWindow()));
+
+    if (!this->temporaryRender) {
+        // Trigger an asynchronous compilation if we are not using a preexisting TexImage
+        // Keep this after popup.show() so that if an error message is to be displayed (e.g. missing Tex executable),
+        // it'll appear on top of the LatexDialog.
+        handleTexChanged(this);
+    }
 }
 
 void LatexController::triggerImageUpdate(const string& texString) {
@@ -256,7 +260,6 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
             // The error was not caused by invalid LaTeX.
             string message =
                     FS(_F("Latex generation encountered an error: {1} (exit code: {2})") % err->message % err->code);
-            g_warning("latex: %s", message.c_str());
             XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
         }
 
@@ -323,7 +326,6 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
 
     if (err != nullptr) {
         string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
-        g_message("%s", message.c_str());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
         g_error_free(err);
         return nullptr;

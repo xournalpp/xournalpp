@@ -19,7 +19,6 @@ AutosaveJob::~AutosaveJob() = default;
 
 void AutosaveJob::afterRun() {
     std::string msg = FS(_F("Error while autosaving: {1}") % this->error);
-    g_warning("%s", msg.c_str());
     XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 }
 

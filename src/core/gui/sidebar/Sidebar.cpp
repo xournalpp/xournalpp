@@ -7,7 +7,7 @@
 #include <config-features.h>
 #include <gdk/gdk.h>      // for gdk_display_get...
 #include <glib-object.h>  // for G_CALLBACK, g_s...
-#include <gtk/gtk.h>      // for gtk_dialog_add_...
+#include <gtk/gtk.h>      // for gtk_toggle_tool_button_new...
 
 #include "control/Control.h"                          // for Control
 #include "control/settings/Settings.h"                // for Settings
@@ -21,7 +21,8 @@
 #include "previews/layer/SidebarPreviewLayers.h"      // for SidebarPreviewL...
 #include "previews/page/SidebarPreviewPages.h"        // for SidebarPreviewP...
 #include "util/Util.h"                                // for npos
-#include "util/i18n.h"                                // for _, FC, _F
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"  // for _, FC, _F
 
 Sidebar::Sidebar(GladeGui* gui, Control* control): control(control), gui(gui), toolbar(this, gui) {
     this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
@@ -80,45 +81,34 @@ void Sidebar::buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* button
 void Sidebar::addPage(std::unique_ptr<AbstractSidebarPage> page) { this->pages.push_back(std::move(page)); }
 
 void Sidebar::askInsertPdfPage(size_t pdfPage) {
-    GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
-                                               GTK_BUTTONS_NONE, "%s",
-                                               FC(_F("Your current document does not contain PDF Page no {1}\n"
-                                                     "Would you like to insert this page?\n\n"
-                                                     "Tip: You can select Journal → Paper Background → PDF Background "
-                                                     "to insert a PDF page.") %
-                                                  static_cast<int64_t>(pdfPage + 1)));
-
     using Responses = enum { CANCEL = 1, AFTER = 2, END = 3 };
+    std::vector<XojMsgBox::Button> buttons = {{_("Cancel"), Responses::CANCEL},
+                                              {_("Insert after current page"), Responses::AFTER},
+                                              {_("Insert at end"), Responses::END}};
 
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), Responses::CANCEL);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Insert after current page"), Responses::AFTER);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Insert at end"), Responses::END);
+    XojMsgBox::askQuestion(control->getGtkWindow(),
+                           FC(_F("Your current document does not contain PDF Page no {1}\n"
+                                 "Would you like to insert this page?\n\n"
+                                 "Tip: You can select Journal → Paper Background → PDF Background "
+                                 "to insert a PDF page.") %
+                              static_cast<int64_t>(pdfPage + 1)),
+                           "", buttons, [ctrl = this->control, pdfPage](int response) {
+                               if (response == Responses::AFTER || response == Responses::END) {
+                                   Document* doc = ctrl->getDocument();
 
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-    if (res != Responses::AFTER && res != Responses::END) {
-        return;
-    }
+                                   doc->lock();
+                                   size_t position = response == Responses::AFTER ? ctrl->getCurrentPageNo() + 1 :
+                                                                                    doc->getPageCount();
+                                   XojPdfPageSPtr pdf = doc->getPdfPage(pdfPage);
+                                   doc->unlock();
 
-
-    Document* doc = control->getDocument();
-
-    size_t position = 0;
-    doc->lock();
-    if (res == Responses::AFTER) {
-        position = control->getCurrentPageNo() + 1;
-    } else if (res == Responses::END) {
-        position = doc->getPageCount();
-    }
-    XojPdfPageSPtr pdf = doc->getPdfPage(pdfPage);
-    doc->unlock();
-
-    if (pdf) {
-        auto page = std::make_shared<XojPage>(pdf->getWidth(), pdf->getHeight());
-        page->setBackgroundPdfPageNr(pdfPage);
-        control->insertPage(page, position);
-    }
+                                   if (pdf) {
+                                       auto page = std::make_shared<XojPage>(pdf->getWidth(), pdf->getHeight());
+                                       page->setBackgroundPdfPageNr(pdfPage);
+                                       ctrl->insertPage(page, position);
+                                   }
+                               }
+                           });
 }
 
 Sidebar::~Sidebar() = default;

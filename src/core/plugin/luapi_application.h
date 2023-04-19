@@ -201,19 +201,19 @@ static int applib_msgbox(lua_State* L) {
 
     lua_pushnil(L);  // initial key for table traversal with `next`
 
-    std::map<int, std::string> button;
+    std::vector<XojMsgBox::Button> buttons;
 
     while (lua_next(L, 2) != 0) {
-        int index = lua_tointeger(L, -2);
+        int index = static_cast<int>(lua_tointeger(L, -2));
         const char* buttonText = luaL_checkstring(L, -1);
         lua_pop(L, 1);
 
-        button.insert(button.begin(), std::pair<int, std::string>(index, buttonText));
+        buttons.emplace_back(buttonText, index);
     }
 
     Plugin* plugin = Plugin::getPluginFromLua(L);
 
-    int result = XojMsgBox::showPluginMessage(plugin->getName(), msg, button);
+    int result = XojMsgBox::askPluginQuestion(plugin->getName(), msg, buttons);
     lua_pushinteger(L, result);
     return 1;
 }

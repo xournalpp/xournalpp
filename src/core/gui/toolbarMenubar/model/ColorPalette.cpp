@@ -5,10 +5,11 @@
 #include <stdexcept>  // for invalid_argument
 #include <utility>    // for move
 
-#include <glib.h>     // for g_warning, g_error
-#include <gtk/gtk.h>  // for gtk_dialog_add_button, gtk_dialog_run
+#include <glib.h>  // for g_warning, g_error
 
-#include "util/StringUtils.h"   // for StringUtils
+#include "util/StringUtils.h"  // for StringUtils
+#include "util/Util.h"
+#include "util/XojMsgBox.h"
 #include "util/i18n.h"          // for FORMAT_STR, FS, _
 #include "util/serdesstream.h"  // for serdes_stream
 
@@ -169,22 +170,14 @@ auto operator>>(std::istream& str, Header& header) -> std::istream& {
 }
 
 auto Palette::parseErrorDialog(const std::exception& e) const -> void {
-
     std::stringstream msg_stream{};
     msg_stream << "There has been a problem parsing the color palette file at " << filepath.c_str() << "\n\n";
     msg_stream << "What happened:\n" << e.what() << std::endl;
     msg_stream << "What to do:\n";
     msg_stream << "Please fix your palette file, or rename it so xournalpp creates a new default palette file "
                   "for you. This file can then be used as a template.\n";
-    msg_stream << "What will happen now:\nThe application will start with the default color palette.";
+    msg_stream << "Until this is fixed, the application will use the default color palette.";
 
-    GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-                                               msg_stream.str().c_str());
-
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("OK"), 1);
-
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-
-    g_warning("%s", msg_stream.str().c_str());
+    // Call later, to make sure the main window has been set up, so the popup is displayed in front of it (and modal)
+    Util::execInUiThread([msg = msg_stream.str()]() { XojMsgBox::showErrorToUser(nullptr, msg); });
 }

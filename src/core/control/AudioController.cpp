@@ -117,7 +117,6 @@ auto AudioController::getAudioFolder() const -> fs::path {
     if (!fs::is_directory(af)) {
         string msg = _("Audio folder not set or invalid! Recording won't work!\nPlease set the "
                        "recording folder under \"Preferences > Audio recording\"");
-        g_warning("%s", msg.c_str());
         XojMsgBox::showErrorToUser(this->control.getGtkWindow(), msg);
         return fs::path{};
     }
