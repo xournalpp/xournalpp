@@ -10,6 +10,7 @@
 #include <locale>     // for locale
 #include <memory>     // for unique_ptr, allocator
 #include <optional>   // for optional, nullopt
+#include <sstream>    // for stringstream
 #include <stdexcept>  // for runtime_error
 #include <string>     // for string, basic_string
 #include <vector>     // for vector
@@ -138,6 +139,17 @@ auto migrateSettings() -> MigrateResult {
     return {MigrateStatus::NotNeeded, ""};
 }
 
+static void deleteFile(const fs::path& file) {
+    std::error_code error;
+    if (!fs::remove(file, error)) {
+        std::stringstream msg;
+        msg << FS(_F("Failed to delete file: {1}") % file.u8string()) << std::endl;
+        msg << error << std::endl << error.message() << std::endl;
+        msg << FS(_F("Please delete the file manually"));
+        XojMsgBox::showErrorToUser(nullptr, msg.str());
+    }
+}
+
 void checkForErrorlog() {
     const fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
     if (!fs::exists(errorDir)) {
@@ -146,7 +158,7 @@ void checkForErrorlog() {
 
     std::vector<fs::path> errorList;
     for (auto const& f: fs::directory_iterator(errorDir)) {
-        if (f.is_regular_file() && f.path().stem() == "errorlog") {
+        if (f.is_regular_file() && f.path().filename().string().substr(0, 8) == "errorlog") {
             errorList.emplace_back(f);
         }
     }
@@ -158,47 +170,36 @@ void checkForErrorlog() {
     std::sort(errorList.begin(), errorList.end());
     std::string msg =
             errorList.size() == 1 ?
-                    _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed.") :
-                    _("There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed.");
+                    _("There is an errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed.") :
+                    _("There are errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed.");
     msg += "\n";
-    msg += FS(_F("You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker.") %
-              GIT_ORIGIN_OWNER % GIT_BRANCH);
+    msg += FS(_F("You're using \"{1}/{2}\" branch.") % GIT_ORIGIN_OWNER % GIT_BRANCH);
     msg += "\n";
     msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
 
     GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
                                                msg.c_str());
 
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), 1);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), 2);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile directory"), 3);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 4);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 5);
+    enum Responses { FILE_REPORT = 1, OPEN_FILE, OPEN_DIR, DELETE_FILE, CANCEL };
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), FILE_REPORT);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), OPEN_FILE);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile directory"), OPEN_DIR);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), DELETE_FILE);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), CANCEL);
 
-    const int res = gtk_dialog_run(GTK_DIALOG(dialog));
+    const int response = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 
-    auto const& errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR) / errorList[0];
-    if (res == 1)  // Send Bugreport
-    {
+    auto const& errorlogPath = fs::path(errorList.front());
+    if (response == FILE_REPORT) {
         Util::openFileWithDefaultApplication(PROJECT_BUGREPORT);
         Util::openFileWithDefaultApplication(errorlogPath);
-    } else if (res == 2)  // Open Logfile
-    {
+    } else if (response == OPEN_FILE) {
         Util::openFileWithDefaultApplication(errorlogPath);
-    } else if (res == 3)  // Open Logfile directory
-    {
+    } else if (response == OPEN_DIR) {
         Util::openFileWithFilebrowser(errorlogPath.parent_path());
-    } else if (res == 4)  // Delete Logfile
-    {
-        if (!fs::exists(errorlogPath)) {
-            msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}") %
-                     errorlogPath.u8string());
-            XojMsgBox::showErrorToUser(nullptr, msg);
-        }
-    } else if (res == 5)  // Cancel
-    {
-        // Nothing to do
+    } else if (response == DELETE_FILE) {
+        deleteFile(errorlogPath);
     }
 }
 
