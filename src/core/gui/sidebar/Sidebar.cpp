@@ -98,7 +98,7 @@ void Sidebar::askInsertPdfPage(size_t pdfPage) {
     gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
     int res = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
-    if (res == Responses::CANCEL) {
+    if (res != Responses::AFTER && res != Responses::END) {
         return;
     }
 
@@ -111,8 +111,6 @@ void Sidebar::askInsertPdfPage(size_t pdfPage) {
         position = control->getCurrentPageNo() + 1;
     } else if (res == Responses::END) {
         position = doc->getPageCount();
-    } else {
-        assert(false && "unhandled case");
     }
     XojPdfPageSPtr pdf = doc->getPdfPage(pdfPage);
     doc->unlock();
