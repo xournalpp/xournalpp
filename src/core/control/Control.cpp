@@ -1016,7 +1016,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
                 Util::execInUiThread([=]() {
                     gtk_toggle_tool_button_set_active(reinterpret_cast<GtkToggleToolButton*>(toolbutton), !enabled);
                     string msg = _("Recorder could not be started.");
-                    g_warning("%s", msg.c_str());
                     XojMsgBox::showErrorToUser(Control::getGtkWindow(), msg);
                 });
             }
@@ -1249,37 +1248,33 @@ void Control::manageToolbars() {
 }
 
 void Control::customizeToolbars() {
-    g_return_if_fail(this->win != nullptr);
+    xoj_assert(this->win != nullptr);
 
     if (this->win->getSelectedToolbar()->isPredefined()) {
-        GtkWidget* dialog =
-                gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s",
-                                       FC(_F("The Toolbarconfiguration \"{1}\" is predefined, "
-                                             "would you create a copy to edit?") %
-                                          this->win->getSelectedToolbar()->getName()));
+        enum { YES = 1, NO };
+        XojMsgBox::askQuestion(getGtkWindow(),
+                               FC(_F("The Toolbarconfiguration \"{1}\" is predefined, "
+                                     "would you create a copy to edit?") %
+                                  this->win->getSelectedToolbar()->getName()),
+                               std::string(), {{_("Yes"), YES}, {_("No"), NO}}, [ctrl = this](int response) {
+                                   if (response == YES) {
+                                       auto* data = new ToolbarData(*ctrl->win->getSelectedToolbar());
+                                       ToolbarModel* model = ctrl->win->getToolbarModel();
+                                       model->initCopyNameId(data);
+                                       model->add(data);
+                                       ctrl->win->toolbarSelected(data);
+                                       ctrl->win->updateToolbarMenu();
 
-        gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
-        int res = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
-
-        if (res == -8)  // Yes
-        {
-            auto* data = new ToolbarData(*this->win->getSelectedToolbar());
-
-            ToolbarModel* model = this->win->getToolbarModel();
-            model->initCopyNameId(data);
-            model->add(data);
-            this->win->toolbarSelected(data);
-            this->win->updateToolbarMenu();
-        } else {
-            return;
+                                       xoj_assert(!ctrl->win->getSelectedToolbar()->isPredefined());
+                                       ctrl->customizeToolbars();
+                                   }
+                               });
+    } else {
+        if (!this->dragDropHandler) {
+            this->dragDropHandler = new ToolbarDragDropHandler(this);
         }
+        this->dragDropHandler->configure();
     }
-
-    if (!this->dragDropHandler) {
-        this->dragDropHandler = new ToolbarDragDropHandler(this);
-    }
-    this->dragDropHandler->configure();
 }
 
 void Control::setShapeTool(ActionType type, bool enabled) {

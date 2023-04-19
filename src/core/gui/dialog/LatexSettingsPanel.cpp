@@ -20,6 +20,7 @@
 #include "util/Color.h"              // for Color
 #include "util/PathUtil.h"           // for fromGFilename, getTmpDir...
 #include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/XojMsgBox.h"
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for FS, _F, _
 
@@ -132,6 +133,7 @@ void LatexSettingsPanel::checkDeps() {
     LatexSettings settings;
     this->save(settings);
     std::string msg;
+    bool fail = false;
 
     if (fs::is_regular_file(settings.globalTemplatePath)) {
         // Assume the file is encoded as UTF-8 (open in binary mode to avoid surprises)
@@ -139,6 +141,7 @@ void LatexSettingsPanel::checkDeps() {
         if (!is.is_open()) {
             msg = FS(_F("Unable to open global template file at {1}. Does it exist?") %
                      settings.globalTemplatePath.u8string().c_str());
+            fail = true;
         } else {
             std::string templ(std::istreambuf_iterator<char>(is), {});
             std::string sample = LatexGenerator::templateSub(settings.defaultText, templ, Colors::black);
@@ -152,20 +155,22 @@ void LatexSettingsPanel::checkDeps() {
                     msg = FS(_F("Error: {1}. Please check the contents of {2}") % err->message %
                              tmpDir.u8string().c_str());
                     g_error_free(err);
+                    fail = true;
                 }
                 g_object_unref(*proc);
             } else if (auto* err = std::get_if<LatexGenerator::GenError>(&result)) {
                 msg = err->message;
+                fail = true;
             }
         }
     } else {
         msg = FS(_F("Error: {1} is not a regular file. Please check your LaTeX template file settings. ") %
                  settings.globalTemplatePath.u8string().c_str());
+        fail = true;
     }
-    GtkWidget* dialog =
-            gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", msg.c_str());
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+
+    GtkWindow* win = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(panel)));
+    XojMsgBox::showMessageToUser(win, msg, fail ? GTK_MESSAGE_ERROR : GTK_MESSAGE_INFO);
 }
 
 void LatexSettingsPanel::updateWidgetSensitivity() {

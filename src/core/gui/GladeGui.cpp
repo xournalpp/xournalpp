@@ -27,12 +27,9 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const std::string& glade, c
         if (error != nullptr) {
             msg += "\n";
             msg += error->message;
+            g_error_free(error);
         }
-        XojMsgBox::showErrorToUser(nullptr, msg);
-
-        g_error_free(error);
-
-        exit(-1);
+        XojMsgBox::showErrorAndQuit(msg, -1);
     }
 
     this->window = get(mainWnd);

@@ -2,7 +2,6 @@
 
 #include <algorithm>  // for max
 #include <array>      // for array
-#include <map>        // for map
 
 #include <gdk/gdk.h>      // for GdkModifierType
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
@@ -245,6 +244,8 @@ void Plugin::loadScript() {
     int status = luaL_loadfile(lua.get(), luafile.string().c_str());
     if (status != LUA_OK) {
         const char* errMsg = lua_tostring(lua.get(), -1);
+        XojMsgBox::showPluginMessage(name, errMsg, true);
+
         // Error out if file can't be read
         g_warning("Could not load plugin Lua file. Error: \"%s\", error code: %d (syntax error: %s)", errMsg, status, status == LUA_ERRSYNTAX ? "true" : "false");
         this->valid = false;
@@ -262,9 +263,7 @@ void Plugin::loadScript() {
     // Run the loaded Lua script
     if (lua_pcall(lua.get(), 0, 0, 0) != LUA_OK) {
         const char* errMsg = lua_tostring(lua.get(), -1);
-        std::map<int, std::string> button;
-        button.insert(std::pair<int, std::string>(0, _("OK")));
-        XojMsgBox::showPluginMessage(name, errMsg, button, true);
+        XojMsgBox::showPluginMessage(name, errMsg, true);
 
         g_warning("Could not run plugin Lua file: \"%s\", error: \"%s\"", luafile.string().c_str(), errMsg);
         this->valid = false;
@@ -285,9 +284,7 @@ auto Plugin::callFunction(const std::string& fnc, long mode) -> bool {
     // Run the function
     if (lua_pcall(lua.get(), numArgs, 0, 0)) {
         const char* errMsg = lua_tostring(lua.get(), -1);
-        std::map<int, std::string> button;
-        button.insert(std::pair<int, std::string>(0, _("OK")));
-        XojMsgBox::showPluginMessage(name, errMsg, button, true);
+        XojMsgBox::showPluginMessage(name, errMsg, true);
 
         g_warning("Error in Plugin: \"%s\", error: \"%s\"", name.c_str(), errMsg);
         return false;

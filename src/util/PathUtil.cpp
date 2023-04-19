@@ -263,7 +263,6 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
     } catch (const fs::filesystem_error& fe) {
         Util::execInUiThread([=]() {
             std::string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
-            g_warning("%s %s", msg.c_str(), fe.what());
             XojMsgBox::showErrorToUser(nullptr, msg);
         });
     }

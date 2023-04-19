@@ -14,6 +14,7 @@
 #include "model/PageType.h"       // for PageType
 #include "model/XojPage.h"        // for XojPage
 #include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr, XojPdfPage
+#include "util/Assert.h"          // for xoj_assert
 #include "util/PathUtil.h"        // for getConfigFile
 #include "util/XojMsgBox.h"       // for XojMsgBox
 #include "util/i18n.h"            // for _
@@ -109,12 +110,14 @@ void PrintHandler::print(Document* doc, size_t currentPage, GtkWindow* parent) {
     GtkPrintOperationResult res = gtk_print_operation_run(op, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG, parent, &error);
     g_object_unref(settings);
     if (GTK_PRINT_OPERATION_RESULT_APPLY == res) {
+        xoj_assert(!error);
         settings = gtk_print_operation_get_print_settings(op);
         gtk_print_settings_to_file(settings, filepath.u8string().c_str(), nullptr);
     } else if (GTK_PRINT_OPERATION_RESULT_ERROR == res) {
-        constexpr auto msg = "Running print operation failed with %s";
-        XojMsgBox::showErrorToUser(nullptr, _(msg));
-        handlePrintError(error, msg);
+        xoj_assert(error);
+        std::string msg = FS(_F("Running print operation failed with {1}") % error->message);
+        XojMsgBox::showErrorToUser(nullptr, msg);
+        g_error_free(error);
     }
 
     g_object_unref(op);

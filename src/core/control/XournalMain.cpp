@@ -18,7 +18,6 @@
 #include <gio/gio.h>      // for GApplication, G_APPLICATION
 #include <glib-object.h>  // for G_CALLBACK, g_signal_con...
 #include <glib.h>         // for GOptionEntry, gchar, G_O...
-#include <gtk/gtk.h>      // for gtk_dialog_add_button
 #include <libintl.h>      // for bindtextdomain, textdomain
 
 #include "control/RecentManager.h"           // for RecentManager
@@ -177,30 +176,25 @@ void checkForErrorlog() {
     msg += "\n";
     msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
 
-    GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-                                               msg.c_str());
-
     enum Responses { FILE_REPORT = 1, OPEN_FILE, OPEN_DIR, DELETE_FILE, CANCEL };
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Send Bugreport"), FILE_REPORT);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile"), OPEN_FILE);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Open Logfile directory"), OPEN_DIR);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), DELETE_FILE);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), CANCEL);
-
-    const int response = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-
-    auto const& errorlogPath = fs::path(errorList.front());
-    if (response == FILE_REPORT) {
-        Util::openFileWithDefaultApplication(PROJECT_BUGREPORT);
-        Util::openFileWithDefaultApplication(errorlogPath);
-    } else if (response == OPEN_FILE) {
-        Util::openFileWithDefaultApplication(errorlogPath);
-    } else if (response == OPEN_DIR) {
-        Util::openFileWithFilebrowser(errorlogPath.parent_path());
-    } else if (response == DELETE_FILE) {
-        deleteFile(errorlogPath);
-    }
+    std::vector<XojMsgBox::Button> buttons = {{_("File Bug Report"), FILE_REPORT},
+                                              {_("Open Logfile"), OPEN_FILE},
+                                              {_("Open Logfile directory"), OPEN_DIR},
+                                              {_("Delete Logfile"), DELETE_FILE},
+                                              {_("Cancel"), CANCEL}};
+    XojMsgBox::askQuestion(nullptr, _("Crash log"), msg, buttons,
+                           [errorlogPath = fs::path(errorList.front())](int response) {
+                               if (response == FILE_REPORT) {
+                                   Util::openFileWithDefaultApplication(PROJECT_BUGREPORT);
+                                   Util::openFileWithDefaultApplication(errorlogPath);
+                               } else if (response == OPEN_FILE) {
+                                   Util::openFileWithDefaultApplication(errorlogPath);
+                               } else if (response == OPEN_DIR) {
+                                   Util::openFileWithFilebrowser(errorlogPath.parent_path());
+                               } else if (response == DELETE_FILE) {
+                                   deleteFile(errorlogPath);
+                               }
+                           });
 }
 
 void checkForEmergencySave(Control* control) {
@@ -212,30 +206,21 @@ void checkForEmergencySave(Control* control) {
 
     const std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
-    GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-                                               msg.c_str());
+    enum { DELETE_FILE = 1, RESTORE_FILE };
+    XojMsgBox::askQuestion(nullptr, _("Recovery file detected"), msg,
+                           {{_("Delete file"), DELETE_FILE}, {_("Restore file"), RESTORE_FILE}},
+                           [file = std::move(file), ctrl = control](int response) {
+                               if (response == DELETE_FILE) {
+                                   deleteFile(file);
+                               } else if (response == RESTORE_FILE && ctrl->openFile(file, -1, true)) {
+                                   ctrl->getDocument()->setFilepath("");
 
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete file"), 1);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Restore file"), 2);
-
-    const int res = gtk_dialog_run(GTK_DIALOG(dialog));
-
-    if (res == 1)  // Delete file
-    {
-        fs::remove(file);
-    } else if (res == 2)  // Open File
-    {
-        if (control->openFile(file, -1, true)) {
-            control->getDocument()->setFilepath("");
-
-            // Make sure the document is changed, there is a question to ask for save
-            control->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
-            control->updateWindowTitle();
-            fs::remove(file);
-        }
-    }
-
-    gtk_widget_destroy(dialog);
+                                   // Make sure the document is changed, there is a question to ask for save
+                                   ctrl->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
+                                   ctrl->updateWindowTitle();
+                                   deleteFile(file);
+                               }
+                           });
 }
 
 namespace {
@@ -409,11 +394,9 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");
-    }
-    XojMsgBox::showErrorToUser(nullptr, msg);
-
-    if (failIfNotFound) {
-        exit(12);
+        XojMsgBox::showErrorToUser(nullptr, msg);
+    } else {
+        XojMsgBox::showErrorAndQuit(msg, 12);
     }
 }
 
