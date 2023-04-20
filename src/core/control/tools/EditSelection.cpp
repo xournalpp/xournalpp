@@ -281,7 +281,9 @@ auto EditSelection::getSnappedBounds() const -> Rectangle<double> { return Recta
 /**
  * get the original bounding rectangle in document coordinates
  */
-auto EditSelection::getOriginalBounds() const -> Rectangle<double> { return Rectangle<double>{this->contents->getOriginalBounds()}; }
+auto EditSelection::getOriginalBounds() const -> Rectangle<double> {
+    return Rectangle<double>{this->contents->getOriginalBounds()};
+}
 
 /**
  * Get the rotation angle of the selection
@@ -401,7 +403,9 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
     switch (change) {
         case OrderChange::BringToFront:
             // Set to largest positive signed integer
-            for (const auto& [e, _]: oldOrd) { newOrd.emplace_back(e, std::numeric_limits<Element::Index>::max()); }
+            for (const auto& [e, _]: oldOrd) {
+                newOrd.emplace_back(e, std::numeric_limits<Element::Index>::max());
+            }
             desc = _("Bring to front");
             break;
         case OrderChange::BringForward:
@@ -410,7 +414,9 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
             std::stable_sort(newOrd.begin(), newOrd.end(), EditSelectionContents::insertOrderCmp);
             if (!newOrd.empty()) {
                 Element::Index i = newOrd.back().second + 1;
-                for (auto& it: newOrd) { it.second = i++; }
+                for (auto& it: newOrd) {
+                    it.second = i++;
+                }
             }
             desc = _("Bring forward");
             break;
@@ -421,7 +427,9 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
             if (!newOrd.empty()) {
                 Element::Index i = newOrd.front().second;
                 i = i > 0 ? i - 1 : 0;
-                for (auto& it: newOrd) { it.second = i++; }
+                for (auto& it: newOrd) {
+                    it.second = i++;
+                }
             }
             desc = _("Send backward");
             break;
@@ -718,7 +726,9 @@ void EditSelection::translateToView(XojPageView* v) {
 void EditSelection::copySelection() {
     // clone elements in the insert order
     std::deque<std::pair<Element*, Element::Index>> clonedInsertOrder;
-    for (auto [e, index]: getInsertOrder()) { clonedInsertOrder.emplace_back(e->clone(), index); }
+    for (auto [e, index]: getInsertOrder()) {
+        clonedInsertOrder.emplace_back(e->clone(), index);
+    }
 
     // apply transformations and add to layer
     finalizeSelection();
@@ -792,8 +802,8 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     const double zoom = self->view->getXournal()->getZoom();
 
     // Helper function to compute scroll amount for a single dimension, based on visible region and selection bbox
-    const auto computeScrollAmt = [&](double visMin, double visLen, double bboxMin, double bboxLen,
-                                      double layoutSize, double mouseRel) -> double {
+    const auto computeScrollAmt = [&](double visMin, double visLen, double bboxMin, double bboxLen, double layoutSize,
+                                      double mouseRel) -> double {
         const bool belowMin = bboxMin < visMin;
         const bool aboveMax = bboxMin + bboxLen > visMin + visLen;
         const double visMax = visMin + visLen;
@@ -805,14 +815,14 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         const double maxMult = settings->getEdgePanMaxMult();
         int panDir = 0;
 
-        //For very large selections, uses the mouse position relative to the middle of the visual view
+        // For very large selections, uses the mouse position relative to the middle of the visual view
         if (bboxLen > visLen) {
             const double mouseRelVisMid = ((visMin - bboxMin) - mouseRel + visLen / 2);
 
             // Inverted
             if (mouseRelVisMid > 0) {
                 panDir = -1;
-            }else{
+            } else {
                 panDir = 1;
             }
 
@@ -822,12 +832,13 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
             const double mouseRelVisMidMag = std::abs(mouseRelVisMid);
 
             if (mouseRelVisMidMag > largeSelMoveBound) {
-                // Set the multiplier according to the mouse, subtracting largeSelMoveBound makes the acceleration more natural
+                // Set the multiplier according to the mouse, subtracting largeSelMoveBound makes the acceleration more
+                // natural
                 mult = maxMult * (mouseRelVisMidMag - largeSelMoveBound) / visLen;
             }
 
-        } else { // Calculate bonus scroll amount due to proportion of selection out of view.
-           if (aboveMax) {
+        } else {  // Calculate bonus scroll amount due to proportion of selection out of view.
+            if (aboveMax) {
                 panDir = 1;
                 mult = maxMult * std::min(bboxLen, bboxMax - visMax) / bboxLen;
             } else if (belowMin) {
@@ -1131,7 +1142,9 @@ void EditSelection::serialize(ObjectOutputStream& out) const {
     out.endObject();
 
     out.writeInt(static_cast<int>(this->getElements().size()));
-    for (Element* e: this->getElements()) { e->serialize(out); }
+    for (Element* e: this->getElements()) {
+        e->serialize(out);
+    }
 }
 
 void EditSelection::readSerialized(ObjectInputStream& in) {
