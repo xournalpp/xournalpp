@@ -300,6 +300,15 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
     bool obscure = false;
 
     GdkModifierType modifiers = gtk_accelerator_get_default_mod_mask();
+    auto keymap = gdk_keymap_get_for_display(gdk_display_get_default());
+    GdkModifierType consumed;
+    /*
+    According to https://docs.gtk.org/gdk3/method.Keymap.translate_keyboard_state.html
+    consumed modifiers should be masked out. For instance, on a US keyboard, the plus symbol is shifted, so when
+    comparing a key press to a <Control>plus accelerator <Shift> should be masked out.
+    */
+    gdk_keymap_translate_keyboard_state(keymap, event->hardware_keycode, static_cast<GdkModifierType>(event->state),
+                                        event->group, nullptr, nullptr, nullptr, &consumed);
 
     GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
     bool canInsert = gtk_text_iter_can_insert(&iter, true);
@@ -314,16 +323,16 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
         retval = true;
     } else if (gtk_bindings_activate_event(G_OBJECT(this->textWidget.get()), event)) {
         return true;
-    } else if ((event->state & modifiers) == GDK_CONTROL_MASK) {
+    } else if ((event->state & ~consumed & modifiers) == GDK_CONTROL_MASK) {
         if (event->keyval == GDK_KEY_b || event->keyval == GDK_KEY_B) {
             toggleBoldFace();
             return true;
         }
-        if (event->keyval == GDK_KEY_plus) {
+        if (event->keyval == GDK_KEY_plus || event->keyval == GDK_KEY_KP_Add) {
             increaseFontSize();
             return true;
         }
-        if (event->keyval == GDK_KEY_minus) {
+        if (event->keyval == GDK_KEY_minus || event->keyval == GDK_KEY_KP_Subtract) {
             decreaseFontSize();
             return true;
         }
