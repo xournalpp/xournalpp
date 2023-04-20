@@ -138,8 +138,8 @@ void LatexController::findSelectedTexElement() {
         if (layout->getPageViewAt(static_cast<int>(std::round(centerX)), static_cast<int>(std::round(centerY))) ==
             this->view) {
             // Pick the center of the visible area (converting from screen to page coordinates)
-            this->posx = centerX - this->view->getX() / zoom;
-            this->posy = centerY - this->view->getY() / zoom;
+            this->posx = (centerX - this->view->getX()) / zoom;
+            this->posy = (centerY - this->view->getY()) / zoom;
         } else {
             // No better location, so just center it on the page (possibly out of viewport)
             this->posx = this->page->getWidth() / 2;
