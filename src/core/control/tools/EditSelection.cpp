@@ -793,7 +793,7 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
 
     // Helper function to compute scroll amount for a single dimension, based on visible region and selection bbox
     const auto computeScrollAmt = [&](double visMin, double visLen, double bboxMin, double bboxLen,
-                                      double layoutSize) -> double {
+                                      double layoutSize, double mouseRel) -> double {
         const bool belowMin = bboxMin < visMin;
         const bool aboveMax = bboxMin + bboxLen > visMin + visLen;
         const double visMax = visMin + visLen;
@@ -802,15 +802,38 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         // Scroll amount multiplier
         double mult = 0.0;
 
-        // Calculate bonus scroll amount due to proportion of selection out of view.
         const double maxMult = settings->getEdgePanMaxMult();
         int panDir = 0;
-        if (aboveMax) {
-            panDir = 1;
-            mult = maxMult * std::min(bboxLen, bboxMax - visMax) / bboxLen;
-        } else if (belowMin) {
-            panDir = -1;
-            mult = maxMult * std::min(bboxLen, visMin - bboxMin) / bboxLen;
+
+        //For very large selections, uses the mouse position relative to the middle of the visual view
+        if (bboxLen > visLen) {
+            const double mouseRelVisMid = ((visMin - bboxMin) - mouseRel + visLen / 2);
+
+            // Inverted
+            if (mouseRelVisMid > 0) {
+                panDir = -1;
+            }else{
+                panDir = 1;
+            }
+
+            // Only Scroll if the mouse is outside a specified bound
+            // Currently set to 5% of the visual box length
+            const double largeSelMoveBound = 0.05 * visLen;
+            const double mouseRelVisMidMag = std::abs(mouseRelVisMid);
+
+            if (mouseRelVisMidMag > largeSelMoveBound) {
+                // Set the multiplier according to the mouse, subtracting largeSelMoveBound makes the acceleration more natural
+                mult = maxMult * (mouseRelVisMidMag - largeSelMoveBound) / visLen;
+            }
+
+        } else { // Calculate bonus scroll amount due to proportion of selection out of view.
+           if (aboveMax) {
+                panDir = 1;
+                mult = maxMult * std::min(bboxLen, bboxMax - visMax) / bboxLen;
+            } else if (belowMin) {
+                panDir = -1;
+                mult = maxMult * std::min(bboxLen, visMin - bboxMin) / bboxLen;
+            }
         }
 
         // Base amount to translate selection (in document coordinates) per timer tick
@@ -835,8 +858,10 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     const int layoutHeight = layout->getMinimalHeight();
     const auto visRect = layout->getVisibleRect();
     const auto bbox = self->getBoundingBoxInView();
-    const auto layoutScrollX = computeScrollAmt(visRect.x, visRect.width, bbox.x, bbox.width, layoutWidth);
-    const auto layoutScrollY = computeScrollAmt(visRect.y, visRect.height, bbox.y, bbox.height, layoutHeight);
+    const double mouseX = self->relMousePosX * zoom;
+    const double mouseY = self->relMousePosY * zoom;
+    const auto layoutScrollX = computeScrollAmt(visRect.x, visRect.width, bbox.x, bbox.width, layoutWidth, mouseX);
+    const auto layoutScrollY = computeScrollAmt(visRect.y, visRect.height, bbox.y, bbox.height, layoutHeight, mouseY);
     const auto translateX = layoutScrollX / zoom;
     const auto translateY = layoutScrollY / zoom;
 
