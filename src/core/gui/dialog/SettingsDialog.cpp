@@ -915,14 +915,18 @@ void SettingsDialog::save() {
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spStrokeRecognizerMinSize")))));
 
     size_t selectedInputDeviceIndex =
-            static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice")))) - 1;
-    if (selectedInputDeviceIndex < this->audioInputDevices.size()) {
-        settings->setAudioInputDevice(this->audioInputDevices[selectedInputDeviceIndex].getIndex());
+            static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioInputDevice"))));
+    if (selectedInputDeviceIndex == 0) {
+        settings->setAudioInputDevice(Settings::AUDIO_INPUT_SYSTEM_DEFAULT);
+    } else if (selectedInputDeviceIndex - 1 < this->audioInputDevices.size()) {
+        settings->setAudioInputDevice(this->audioInputDevices[selectedInputDeviceIndex - 1].getIndex());
     }
 
     size_t selectedOutputDeviceIndex =
-            static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")))) - 1;
-    if (selectedOutputDeviceIndex < this->audioOutputDevices.size()) {
+            static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice"))));
+    if (selectedOutputDeviceIndex == 0) {
+        settings->setAudioOutputDevice(Settings::AUDIO_OUTPUT_SYSTEM_DEFAULT);
+    } else if (selectedOutputDeviceIndex < this->audioOutputDevices.size()) {
         settings->setAudioOutputDevice(this->audioOutputDevices[selectedOutputDeviceIndex].getIndex());
     }
 

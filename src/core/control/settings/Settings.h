@@ -392,9 +392,11 @@ public:
     fs::path const& getAudioFolder() const;
     void setAudioFolder(fs::path audioFolder);
 
+    static constexpr PaDeviceIndex AUDIO_INPUT_SYSTEM_DEFAULT = -1;
     PaDeviceIndex getAudioInputDevice() const;
     void setAudioInputDevice(PaDeviceIndex deviceIndex);
 
+    static constexpr PaDeviceIndex AUDIO_OUTPUT_SYSTEM_DEFAULT = -1;
     PaDeviceIndex getAudioOutputDevice() const;
     void setAudioOutputDevice(PaDeviceIndex deviceIndex);
 
