@@ -188,8 +188,8 @@ void Settings::loadDefault() {
     // clang-format on
 
     this->audioSampleRate = 44100.0;
-    this->audioInputDevice = -1;
-    this->audioOutputDevice = -1;
+    this->audioInputDevice = AUDIO_INPUT_SYSTEM_DEFAULT;
+    this->audioOutputDevice = AUDIO_OUTPUT_SYSTEM_DEFAULT;
     this->audioGain = 1.0;
     this->defaultSeekTime = 5;
 
