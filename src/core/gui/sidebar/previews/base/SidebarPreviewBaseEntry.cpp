@@ -26,6 +26,7 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, co
     gtk_widget_set_events(widget, GDK_EXPOSURE_MASK);
 
     g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback), this);
+    g_signal_connect(this->widget, "size-allocate", G_CALLBACK(sizeChangedCallback), this);
 
     g_signal_connect(this->widget, "clicked", G_CALLBACK(+[](GtkWidget* widget, SidebarPreviewBaseEntry* self) {
                          self->mouseButtonPressCallback();
@@ -64,6 +65,15 @@ SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry() {
 auto SidebarPreviewBaseEntry::drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview)
         -> gboolean {
     preview->paint(cr);
+    return true;
+}
+
+auto SidebarPreviewBaseEntry::sizeChangedCallback(GtkWidget* widget, GtkAllocation* allocation,
+                                                  SidebarPreviewBaseEntry* preview) -> gboolean {
+    if (preview->oldAllocation.width != allocation->width || preview->oldAllocation.height != allocation->height) {
+        preview->oldAllocation = *allocation;
+        preview->repaint();
+    }
     return true;
 }
 
@@ -118,11 +128,26 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
         doRepaint = true;
     }
 
+    GtkAllocation alloc;
+    gtk_widget_get_allocation(widget, &alloc);
+    int bufferWidth = cairo_image_surface_get_width(crBuffer);
+    int bufferHeight = cairo_image_surface_get_height(crBuffer);
+    assert(bufferWidth > 0);
+    assert(bufferHeight > 0);
+
+    // the buffer may have different size than the widget
+    cairo_save(cr);
+    cairo_scale(cr, static_cast<double>(alloc.width) / bufferWidth, static_cast<double>(alloc.height) / bufferHeight);
     cairo_set_source_surface(cr, this->crBuffer, 0, 0);
     cairo_paint(cr);
+    cairo_restore(cr);
 
-    double height = page->getHeight() * sidebar->getZoom();
-    double width = page->getWidth() * sidebar->getZoom();
+    // the requested size for the widget may be different from the allocated size
+    int border = Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+    int width = alloc.width - border;
+    int height = alloc.height - border;
+    // double height = page->getHeight() * sidebar->getZoom();
+    // double width = page->getWidth() * sidebar->getZoom();
 
     if (this->selected) {
         // Draw border

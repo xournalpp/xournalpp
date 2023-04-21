@@ -80,6 +80,7 @@ void SidebarPreviewPages::enableSidebar() {
                                      _("Swap the current page with the one below"),
                                      _("Insert a copy of the current page below"), _("Delete this page"));
     pageSelected(this->selectedEntry);
+    this->updatePreviews();
 }
 
 auto SidebarPreviewPages::getName() -> std::string { return _("Page Preview"); }
@@ -187,13 +188,17 @@ void SidebarPreviewPages::updatePreviews() {
         this->previews.emplace_back(std::move(p));
     }
 
-    layout();
     doc->unlock();
+    layout();
+    if (this->selectedEntry != npos && this->selectedEntry < this->previews.size()) {
+        this->previews.at(this->selectedEntry)->setSelected(true);
+    }
 }
 
 void SidebarPreviewPages::pageSizeChanged(size_t page) {
     if (page == npos || page >= this->previews.size()) {
         return;
+        // TODO
     }
     auto& p = this->previews[page];
     p->updateSize();
@@ -214,6 +219,7 @@ void SidebarPreviewPages::pageChanged(size_t page) {
 void SidebarPreviewPages::pageDeleted(size_t page) {
     if (page >= previews.size()) {
         return;
+        // TODO
     }
 
     previews.erase(previews.begin() + page);
@@ -245,7 +251,9 @@ void SidebarPreviewPages::pageInserted(size_t page) {
  * Unselect the last selected page, if any
  */
 void SidebarPreviewPages::unselectPage() {
-    for (auto& p: this->previews) { p->setSelected(false); }
+    for (auto& p: this->previews) {
+        p->setSelected(false);
+    }
 }
 
 void SidebarPreviewPages::pageSelected(size_t page) {

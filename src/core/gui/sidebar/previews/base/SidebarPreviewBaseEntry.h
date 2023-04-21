@@ -61,6 +61,7 @@ public:
 
 private:
     static gboolean drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview);
+    static gboolean sizeChangedCallback(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviewBaseEntry* preview);
 
 protected:
     virtual void mouseButtonPressCallback() = 0;
@@ -104,4 +105,6 @@ protected:
     cairo_surface_t* crBuffer = nullptr;
 
     friend class PreviewJob;
+
+    GtkAllocation oldAllocation;
 };

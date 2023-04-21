@@ -59,7 +59,13 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar
 }
 
 SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry() {
-    gtk_widget_destroy(this->box);
+    if (GTK_IS_WIDGET(this->box)) {
+        gtk_widget_destroy(this->box);
+    } else {
+        // Dirty fix for avoiding a GTK_CRITICAL error
+        // This happens when quitting the app, when the layers preview has been used
+        g_message("Cannot destroy box with index %ld", this->index);
+    }
     this->box = nullptr;
 }
 
