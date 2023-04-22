@@ -4,6 +4,7 @@
 #include <cmath>        // for isnan
 #include <cstdlib>      // for atoi, size_t
 #include <cstring>      // for strcmp, strlen
+#include <iterator>     // for back_inserter
 #include <memory>       // for __shared_ptr_access
 #include <regex>        // for regex_search, smatch
 #include <type_traits>  // for remove_reference<>::type
@@ -343,24 +344,6 @@ void LoadHandler::parseBgSolid() {
     const char* style = LoadHandlerHelper::getAttrib("style", false, this);
     if (style != nullptr) {
         bg.format = PageTypeHandler::getPageTypeFormatForString(style);
-    }
-
-    if (bg.format == PageTypeFormat::Copy) {
-        /*
-         * PageTypeFormat::Copy is just a placeholder for the various background related menus, indicating that the
-         * background should be copied from another page.
-         * IT SHOULD NEVER APPEAR IN AN ACTUAL PAGE MODEL OR A FORTIORI IN A SAVED FILE
-         *
-         * Due to several bugs (see e.g. https://github.com/xournalpp/xournalpp/issues/4142),
-         * it is possible for some older files to (incorrectly) contain pages with background type PageTypeFormat::Copy.
-         * Such pages were displayed as PageTypeFormat::Plain.
-         *
-         * This snippet is legacy code to recover said corrupted files.
-         */
-        g_warning("The opened page has background type PageTypeFormat::Copy, which should not happen. Converting to "
-                  "PageTypeFormat::Plain.");
-
-        bg.format = PageTypeFormat::Plain;
     }
 
     const char* config = LoadHandlerHelper::getAttrib("config", true, this);

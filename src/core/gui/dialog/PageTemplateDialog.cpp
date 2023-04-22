@@ -63,7 +63,7 @@ void PageTemplateDialog::updateDataFromModel() {
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPageSize")), model.isCopyLastPageSize());
 }
 
-void PageTemplateDialog::changeCurrentPageBackground(PageTypeInfo* info) {
+void PageTemplateDialog::changeCurrentPageBackground(const PageTypeInfo* info) {
     model.setBackgroundType(info->page);
 
     gtk_label_set_text(GTK_LABEL(get("lbBackgroundType")), info->name.c_str());
