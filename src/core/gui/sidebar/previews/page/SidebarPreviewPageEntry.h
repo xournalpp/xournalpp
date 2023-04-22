@@ -18,7 +18,7 @@ class SidebarPreviewPages;
 
 class SidebarPreviewPageEntry: public SidebarPreviewBaseEntry {
 public:
-    SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page);
+    SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page, size_t index);
     ~SidebarPreviewPageEntry() override;
 
 public:
@@ -28,10 +28,21 @@ public:
      */
     PreviewRenderType getRenderType() override;
 
+    void setIndex(size_t index);
+    size_t getIndex() const;
+
+    bool isSelected() const;
+    double getZoom() const;
+
 protected:
     SidebarPreviewPages* sidebar;
     void mouseButtonPressCallback() override;
+    void paint(cairo_t* cr) override;
+    int getWidgetHeight() override;
 
 private:
+    size_t index;
     friend class PreviewJob;
+
+    void drawEntryNumber(cairo_t* cr);
 };

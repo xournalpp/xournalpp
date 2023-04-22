@@ -84,6 +84,25 @@ enum IconTheme {
     ICON_THEME_LUCIDE = 1,
 };
 
+/**
+ * The user-selectable Page Preview Decoration style
+ */
+enum class SidebarNumberingStyle {
+    /* No page numbers are displayed */
+    NONE = 0,
+    /* Page numbers are displayed below previews */
+    NUMBER_BELOW_PREVIEW = 1,
+    /* Page numbers are displayed in a circle in the lower right corner */
+    NUMBER_WITH_CIRCULAR_BACKGROUND = 2,
+    /* Page numbers are displayed in a square in the lower right corner */
+    NUMBER_WITH_SQUARE_BACKGROUND = 3,
+
+    /* MIN, MAX and Default values. Need to be updated when new style is added. */
+    MIN = SidebarNumberingStyle::NONE,
+    MAX = SidebarNumberingStyle::NUMBER_WITH_SQUARE_BACKGROUND,
+    DEFAULT = SidebarNumberingStyle::NUMBER_BELOW_PREVIEW
+};
+
 constexpr auto buttonToString(Button button) -> const char* {
     switch (button) {
         case BUTTON_ERASER:

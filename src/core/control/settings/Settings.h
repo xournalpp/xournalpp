@@ -322,6 +322,9 @@ public:
     IconTheme getIconTheme() const;
     void setIconTheme(IconTheme iconTheme);
 
+    SidebarNumberingStyle getSidebarNumberingStyle() const;
+    void setSidebarNumberingStyle(SidebarNumberingStyle numberingStyle);
+
     bool isHighlightPosition() const;
     void setHighlightPosition(bool highlight);
 
@@ -638,6 +641,11 @@ private:
      * Icon Theme
      */
     IconTheme iconTheme;
+
+    /**
+     * Sidebar page number style
+     */
+    SidebarNumberingStyle sidebarNumberingStyle;
 
     /**
      * Show a colored circle around the cursor

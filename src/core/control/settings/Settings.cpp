@@ -89,6 +89,7 @@ void Settings::loadDefault() {
 
     this->showSidebar = true;
     this->sidebarWidth = 150;
+    this->sidebarNumberingStyle = SidebarNumberingStyle::DEFAULT;
 
     this->showToolbar = true;
 
@@ -356,7 +357,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     xmlChar* value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("value"));
     if (value == nullptr) {
         xmlFree(name);
-        g_warning("No value property!\n");
+        g_warning("Settings::No value property!\n");
         return;
     }
 
@@ -402,6 +403,13 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->filepathShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showSidebar")) == 0) {
         this->showSidebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarNumberingStyle")) == 0) {
+        int num = std::stoi(reinterpret_cast<char*>(value));
+        if (num < static_cast<int>(SidebarNumberingStyle::MIN) || static_cast<int>(SidebarNumberingStyle::MAX) < num) {
+            num = static_cast<int>(SidebarNumberingStyle::DEFAULT);
+            g_warning("Settings::Invalid sidebarNumberingStyle value. Reset to default.");
+        }
+        this->sidebarNumberingStyle = static_cast<SidebarNumberingStyle>(num);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarWidth")) == 0) {
         this->sidebarWidth = std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 50);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarOnRight")) == 0) {
@@ -919,6 +927,7 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(showSidebar);
     SAVE_INT_PROP(sidebarWidth);
+    xmlNode = saveProperty("sidebarNumberingStyle", static_cast<int>(sidebarNumberingStyle), root);
 
     SAVE_BOOL_PROP(sidebarOnRight);
     SAVE_BOOL_PROP(scrollbarOnLeft);
@@ -1331,6 +1340,18 @@ void Settings::setIconTheme(IconTheme iconTheme) {
     }
 
     this->iconTheme = iconTheme;
+
+    save();
+}
+
+auto Settings::getSidebarNumberingStyle() const -> SidebarNumberingStyle { return this->sidebarNumberingStyle; };
+
+void Settings::setSidebarNumberingStyle(SidebarNumberingStyle numberingStyle) {
+    if (this->sidebarNumberingStyle == numberingStyle) {
+        return;
+    }
+
+    this->sidebarNumberingStyle = numberingStyle;
 
     save();
 }

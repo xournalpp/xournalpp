@@ -393,6 +393,9 @@ void SettingsDialog::load() {
     showStabilizerPreprocessorOptions(settings->getStabilizerPreprocessor());
     /***********/
 
+    GtkComboBox* cbSidebarNumberingStyle = GTK_COMBO_BOX(get("cbSidebarPageNumberStyle"));
+    gtk_combo_box_set_active(cbSidebarNumberingStyle, static_cast<int>(settings->getSidebarNumberingStyle()));
+
     GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
     string txt = settings->getDefaultSaveName();
     gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt.c_str());
@@ -692,6 +695,9 @@ void SettingsDialog::save() {
     settings->setStabilizerCuspDetection(getCheckbox("cbStabilizerEnableCuspDetection"));
     settings->setStabilizerFinalizeStroke(getCheckbox("cbStabilizerEnableFinalizeStroke"));
 
+    settings->setSidebarNumberingStyle(static_cast<SidebarNumberingStyle>(
+            gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbSidebarPageNumberStyle")))));
+
     auto scrollbarHideType =
             static_cast<std::make_unsigned<std::underlying_type<ScrollbarHideType>::type>::type>(SCROLLBAR_HIDE_NONE);
     if (getCheckbox("cbHideHorizontalScrollbar")) {
@@ -771,7 +777,7 @@ void SettingsDialog::save() {
     viewModeFullscreen.showToolbar = getCheckbox("cbShowFullscreenToolbar");
     viewModeFullscreen.showSidebar = getCheckbox("cbShowFullscreenSidebar");
     settings->setViewMode(PresetViewModeIds::VIEW_MODE_FULLSCREEN, viewModeFullscreen);
-    
+
     ViewMode viewModePresentation;
     viewModePresentation.showMenubar = getCheckbox("cbShowPresentationMenubar");
     viewModePresentation.showToolbar = getCheckbox("cbShowPresentationToolbar");

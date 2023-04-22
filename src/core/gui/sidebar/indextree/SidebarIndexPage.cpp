@@ -301,3 +301,5 @@ void SidebarIndexPage::documentChanged(DocumentChangeType type) {
         hasContents = (count != 0);
     }
 }
+
+void SidebarIndexPage::layout() {}

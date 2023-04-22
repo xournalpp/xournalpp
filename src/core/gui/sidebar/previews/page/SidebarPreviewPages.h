@@ -78,6 +78,11 @@ private:
     void unselectPage();
 
     /**
+     * Updates the indices of the pages
+     */
+    void updateIndices();
+
+    /**
      * The context menu to display when a page is right-clicked.
      */
     GtkWidget* const contextMenu = nullptr;

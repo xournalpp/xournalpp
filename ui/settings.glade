@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.18"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
@@ -1164,7 +1164,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
                                             <property name="tooltip-text" translatable="yes">Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip.</property>
-                                            <property name="label" translatable="no">σ</property>
+                                            <property name="label">σ</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">2</property>
@@ -3485,6 +3485,89 @@ This setting can make it easier to draw with touch. </property>
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkFrame" id="grpSidebarSettings">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0</property>
+                                <child>
+                                  <object class="GtkAlignment">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="top-padding">2</property>
+                                    <property name="bottom-padding">6</property>
+                                    <property name="left-padding">12</property>
+                                    <child>
+                                      <object class="GtkBox">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <child>
+                                              <object class="GtkLabel">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Page numbering  </property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkComboBoxText" id="cbSidebarPageNumberStyle">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="active">0</property>
+                                                <property name="has-entry">True</property>
+                                                <items>
+                                                  <item id="0" translatable="yes">None</item>
+                                                  <item id="1" translatable="yes">Below preview</item>
+                                                  <item id="2" translatable="yes">Circle background</item>
+                                                  <item id="3" translatable="yes">Square background</item>
+                                                </items>
+                                                <child internal-child="entry">
+                                                  <object class="GtkEntry">
+                                                    <property name="can-focus">False</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Sidebar</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="padding">3</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkFrame" id="sid111">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -3560,7 +3643,7 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">3</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                             <child>
@@ -3568,7 +3651,6 @@ This setting can make it easier to draw with touch. </property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="label-xalign">0</property>
-                                <property name="shadow-type">none</property>
                                 <child>
                                   <object class="GtkAlignment">
                                     <property name="visible">True</property>
@@ -3647,7 +3729,7 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">4</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                             <child>
@@ -3730,7 +3812,7 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">5</property>
+                                <property name="position">6</property>
                               </packing>
                             </child>
                             <child>
@@ -3863,7 +3945,7 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">6</property>
+                                <property name="position">7</property>
                               </packing>
                             </child>
                             <child>
@@ -3972,7 +4054,7 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">7</property>
+                                <property name="position">8</property>
                               </packing>
                             </child>
                           </object>

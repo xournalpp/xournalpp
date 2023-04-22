@@ -2178,6 +2178,7 @@ void Control::showSettings() {
     int horizontalSpaceAmount = settings->getAddHorizontalSpaceAmount();
     StylusCursorType stylusCursorType = settings->getStylusCursorType();
     bool highlightPosition = settings->isHighlightPosition();
+    SidebarNumberingStyle sidebarStyle = settings->getSidebarNumberingStyle();
 
     auto dlg = SettingsDialog(this->gladeSearchPath, settings, this);
     dlg.show(GTK_WINDOW(this->win->getWindow()));
@@ -2206,6 +2207,10 @@ void Control::showSettings() {
     this->zoom->setZoomStep(settings->getZoomStep() / 100.0);
     this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
     this->zoom->setZoom100Value(settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
+
+    if (sidebarStyle != settings->getSidebarNumberingStyle()) {
+        getSidebar()->layout();
+    }
 
     getWindow()->getXournal()->getHandRecognition()->reload();
     getWindow()->updateColorscheme();
