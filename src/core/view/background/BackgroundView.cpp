@@ -77,9 +77,6 @@ auto BackgroundView::createForPage(PageRef page, BackgroundFlags bgFlags, PdfCac
                     return std::make_unique<PdfBackgroundView>(width, height, page->getPdfPageNr(), pdfCache);
                 }
                 break;
-            case PageTypeFormat::Copy:
-                g_warning("BackgroundView::createForPage for 'Copy' page type");
-                return nullptr;
             default:
                 g_warning("BackgroundView::createForPage unknown type: %d\n", static_cast<int>(pt.format));
                 return nullptr;

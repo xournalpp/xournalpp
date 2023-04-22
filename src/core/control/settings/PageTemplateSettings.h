@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <optional>
 #include <string>  // for string
 
 #include "model/PageType.h"  // for PageType
@@ -51,7 +52,7 @@ public:
     void setBackgroundColor(Color backgroundColor);
 
     PageType getBackgroundType();
-    PageType getPageInsertType();
+    std::optional<PageType> getPageInsertType();
     void setBackgroundType(const PageType& backgroundType);
 
 private:

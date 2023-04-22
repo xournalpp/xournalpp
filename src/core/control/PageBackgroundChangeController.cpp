@@ -67,11 +67,11 @@ void PageBackgroundChangeController::changeAllPagesBackground(const PageType& pt
     ignoreEvent = false;
 }
 
-void PageBackgroundChangeController::changeCurrentPageBackground(PageTypeInfo* info) {
+void PageBackgroundChangeController::changeCurrentPageBackground(const PageTypeInfo* info) {
     changeCurrentPageBackground(info->page);
 }
 
-void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageType) {
+void PageBackgroundChangeController::changeCurrentPageBackground(const PageType& pageType) {
     if (ignoreEvent) {
         return;
     }
@@ -116,12 +116,7 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
     PageType origType = page->getBackgroundType();
 
     // Apply the new background
-    if (pageType.format != PageTypeFormat::Copy) {
-        applyPageBackground(page, pageType);
-    } else {
-        g_warning("Found 'Copy' page type. Doing nothing™.");
-    }
-
+    applyPageBackground(page, pageType);
 
     control->firePageChanged(pageNr);
     control->updateBackgroundSizeButton();
@@ -277,15 +272,15 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
     model.parse(control->getSettings()->getPageTemplate());
 
     auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
-    PageType pt = control->getNewPageType()->getSelected();
+    const std::optional<PageType>& pt = control->getNewPageType()->getSelected();
     PageRef current = control->getCurrentPage();
 
-    // current should always be valid, but if you open an invalid file or something like this...
-    if (pt.format == PageTypeFormat::Copy && current) {
+    if (!pt) {
+        xoj_assert(current);
         copyBackgroundFromOtherPage(page, current);
     } else {
         // Create a new page from template
-        if (!applyPageBackground(page, pt)) {
+        if (!applyPageBackground(page, pt.value())) {
             // User canceled PDF or Image Selection
             return;
         }
@@ -293,7 +288,8 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
         // Set background Color
         page->setBackgroundColor(model.getBackgroundColor());
 
-        if (model.isCopyLastPageSize() && current) {
+        if (model.isCopyLastPageSize()) {
+            xoj_assert(current);
             page->setSize(current->getWidth(), current->getHeight());
         }
     }
@@ -325,9 +321,12 @@ void PageBackgroundChangeController::pageSelected(size_t page) {
 void PageBackgroundChangeController::applySelectedPageBackground(bool allPages, ApplyPageTypeSource src) {
     PageType pt;
     switch (src) {
-        case ApplyPageTypeSource::SELECTED:
-            pt = control->getNewPageType()->getSelected();
+        case ApplyPageTypeSource::SELECTED: {
+            auto& optPt = control->getNewPageType()->getSelected();
+            xoj_assert(optPt);
+            pt = optPt.value();
             break;
+        }
         case ApplyPageTypeSource::CURRENT:
             pt = control->getCurrentPage()->getBackgroundType();
             break;

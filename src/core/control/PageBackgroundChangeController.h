@@ -35,8 +35,8 @@ public:
     ~PageBackgroundChangeController() override = default;
 
 public:
-    virtual void changeCurrentPageBackground(PageType& pageType);
-    void changeCurrentPageBackground(PageTypeInfo* info) override;
+    virtual void changeCurrentPageBackground(const PageType& pageType);
+    void changeCurrentPageBackground(const PageTypeInfo* info) override;
     void changeAllPagesBackground(const PageType& pt);
     void insertNewPage(size_t position, bool shouldScrollToPage = true);
     GtkWidget* getMenu();
