@@ -302,7 +302,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
 
     // Switch color on number key
     auto& colors = control->getWindow()->getToolMenuHandler()->getColorToolItems();
-    if ((keyval >= GDK_KEY_0) && (keyval < GDK_KEY_0 + std::min((std::size_t)10, colors.size()))) {
+    if (!state && (keyval >= GDK_KEY_0) && (keyval < GDK_KEY_0 + std::min((std::size_t)10, colors.size()))) {
         std::size_t index = std::min(colors.size() - 1, (std::size_t)(9 + (keyval - GDK_KEY_0)) % 10);
         auto colorToolItem = colors.at(index);
         if (colorToolItem->isEnabled()) {
