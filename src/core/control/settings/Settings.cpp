@@ -664,6 +664,12 @@ void Settings::loadButtonConfig() {
             ToolType type = toolTypeFromString(sType);
             cfg->action = type;
 
+            if (type == TOOL_PEN) {
+                string strokeType;
+                cfg->strokeType =
+                        e.getString("strokeType", strokeType) ? strokeTypeFromString(strokeType) : STROKE_TYPE_NONE;
+            }
+
             if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
                 string drawingType;
                 if (e.getString("drawingType", drawingType)) {
@@ -835,13 +841,17 @@ void Settings::saveButtonConfig() {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
         const auto& cfg = buttonConfig[i];
 
-        ToolType type = cfg->action;
+        ToolType const type = cfg->action;
         e.setString("tool", toolTypeToString(type));
+
+        if (type == TOOL_PEN) {
+            e.setString("strokeType", strokeTypeToString(cfg->strokeType));
+        }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
             e.setString("drawingType", drawingTypeToString(cfg->drawingType));
             e.setString("size", toolSizeToString(cfg->size));
-        }  // end if pen or highlighter
+        }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
             e.setIntHex("color", int32_t(uint32_t(cfg->color)));
