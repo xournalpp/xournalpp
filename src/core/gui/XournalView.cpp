@@ -134,10 +134,10 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
 
     // Todo(gtk4) there is no GdkEventKey. Use a GdkEventControllerKey and connect to its key-pressed signal
     guint keyval = event->keyval;
-    GdkModifierType keystate = static_cast<GdkModifierType>(event->state);
+    GdkModifierType state = static_cast<GdkModifierType>(event->state & gtk_accelerator_get_default_mod_mask());
 
     if (auto* tool = getControl()->getWindow()->getPdfToolbox(); tool->hasSelection()) {
-        if (keyval == GDK_KEY_c && keystate & GDK_CONTROL_MASK) {
+        if (keyval == GDK_KEY_c && state == GDK_CONTROL_MASK) {
             // Shortcut to get selected PDF text.
             tool->copyTextToClipboard();
             return true;
@@ -151,9 +151,9 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
 
         int d = REGULAR_MOVE_AMOUNT;
-        if (keystate & GDK_MOD1_MASK) {
+        if (state == GDK_MOD1_MASK) {
             d = SMALL_MOVE_AMOUNT;
-        } else if (keystate & GDK_SHIFT_MASK) {
+        } else if (state == GDK_SHIFT_MASK) {
             d = LARGE_MOVE_AMOUNT;
         }
 
@@ -175,24 +175,9 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     }
 
-    guint state = keystate & gtk_accelerator_get_default_mod_mask();
-
     Layout* layout = gtk_xournal_get_layout(this->widget);
 
-    if (state & GDK_SHIFT_MASK) {
-        GtkAllocation alloc = {0};
-        gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
-        int windowHeight = alloc.height - scrollKeySize;
-
-        if (keyval == GDK_KEY_Page_Down) {
-            layout->scrollRelative(0, windowHeight);
-            return false;
-        }
-        if (keyval == GDK_KEY_Page_Up || keyval == GDK_KEY_space) {
-            layout->scrollRelative(0, -windowHeight);
-            return true;
-        }
-    } else {
+    if (!state) {
         if (keyval == GDK_KEY_Page_Down || keyval == GDK_KEY_KP_Page_Down) {
             control->getScrollHandler()->goToNextPage();
             return true;
@@ -208,8 +193,14 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
         int windowHeight = alloc.height - scrollKeySize;
 
-        layout->scrollRelative(0, windowHeight);
-        return true;
+        if (!state) {
+            layout->scrollRelative(0, windowHeight);
+            return true;
+        }
+        if (state == GDK_SHIFT_MASK) {
+            layout->scrollRelative(0, -windowHeight);
+            return true;
+        }
     }
 
     // Numeric keypad always navigates by page
@@ -240,13 +231,14 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
             return true;
         }
 
-
-        if (state & GDK_SHIFT_MASK) {
+        if (state == GDK_SHIFT_MASK) {
             this->pageRelativeXY(0, -1);
-        } else {
-            layout->scrollRelative(0, -scrollKeySize);
+            return true;
         }
-        return true;
+        if (!state) {
+            layout->scrollRelative(0, -scrollKeySize);
+            return true;
+        }
     }
 
     if (keyval == GDK_KEY_Down || keyval == GDK_KEY_j || keyval == GDK_KEY_J) {
@@ -255,39 +247,45 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
             return true;
         }
 
-
-        if (state & GDK_SHIFT_MASK) {
+        if (state == GDK_SHIFT_MASK) {
             this->pageRelativeXY(0, 1);
-        } else {
-            layout->scrollRelative(0, scrollKeySize);
+            return true;
         }
-        return true;
+        if (!state) {
+            layout->scrollRelative(0, scrollKeySize);
+            return true;
+        }
     }
 
     if (keyval == GDK_KEY_Left || keyval == GDK_KEY_h) {
-        if (state & GDK_SHIFT_MASK) {
+        if (state == GDK_SHIFT_MASK) {
             this->pageRelativeXY(-1, 0);
-        } else {
+            return true;
+        }
+        if (!state) {
             if (control->getSettings()->isPresentationMode()) {
                 control->getScrollHandler()->goToPreviousPage();
             } else {
                 layout->scrollRelative(-scrollKeySize, 0);
             }
+            return true;
         }
-        return true;
     }
 
     if (keyval == GDK_KEY_Right || keyval == GDK_KEY_l) {
-        if (state & GDK_SHIFT_MASK) {
+        if (state == GDK_SHIFT_MASK) {
             this->pageRelativeXY(1, 0);
-        } else {
+            return true;
+        }
+
+        if (!state) {
             if (control->getSettings()->isPresentationMode()) {
                 control->getScrollHandler()->goToNextPage();
             } else {
                 layout->scrollRelative(scrollKeySize, 0);
             }
+            return true;
         }
-        return true;
     }
 
     if (keyval == GDK_KEY_End || keyval == GDK_KEY_KP_End) {
@@ -712,8 +710,8 @@ void XournalView::layoutPages() {
     Layout* layout = gtk_xournal_get_layout(this->widget);
     layout->recalculate();
 
-    // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be called
-    //                by an expose event, but removing it, will break "add page".
+    // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be
+    // called by an expose event, but removing it, will break "add page".
     auto rectangle = layout->getVisibleRect();
     layout->layoutPages(std::max<int>(layout->getMinimalWidth(), std::lround(rectangle.width)),
                         std::max<int>(layout->getMinimalHeight(), std::lround(rectangle.height)));
