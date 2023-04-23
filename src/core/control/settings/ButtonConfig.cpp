@@ -3,15 +3,15 @@
 #include "control/Tool.h"         // for Tool
 #include "control/ToolHandler.h"  // for ToolHandler
 
-ButtonConfig::ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType,
-                           EraserType eraserMode) {
-    this->action = action;
-    this->color = color;
-    this->size = size;
-    this->drawingType = drawingType;
-    this->eraserMode = eraserMode;
-    this->disableDrawing = false;
-}
+ButtonConfig::ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType, EraserType eraserMode,
+                           StrokeType strokeType):
+        action(action),
+        color(color),
+        size(size),
+        eraserMode(eraserMode),
+        drawingType(drawingType),
+        strokeType(strokeType),
+        disableDrawing(false) {}
 
 ButtonConfig::~ButtonConfig() = default;
 
@@ -32,6 +32,9 @@ void ButtonConfig::initButton(ToolHandler* toolHandler, Button button) {
         if (this->size != TOOL_SIZE_NONE) {
             toolHandler->setButtonSize(this->size, button);
         }
+        if (this->action == TOOL_PEN)
+            if (this->strokeType != STROKE_TYPE_NONE)
+                toolHandler->setButtonStrokeType(this->strokeType, button);
         if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER) {
             toolHandler->setButtonColor(this->color, button);
             if (this->drawingType != DRAWING_TYPE_DONT_CHANGE)
@@ -63,15 +66,18 @@ void ButtonConfig::applyConfigToToolbarTool(ToolHandler* toolHandler) {
             if (this->eraserMode != ERASER_TYPE_NONE)
                 toolHandler->setEraserType(this->eraserMode);
         }
+        if (this->action == TOOL_PEN && this->strokeType != STROKE_TYPE_NONE) {
+            toolHandler->setLineStyle(strokeTypeToLineStyle(this->strokeType));
+        }
     }
 }
 
-bool ButtonConfig::applyNoChangeSettings(ToolHandler* toolHandler, Button button) {
+auto ButtonConfig::applyNoChangeSettings(ToolHandler* toolHandler, Button button) -> bool {
     if (this->action == TOOL_NONE) {
         return false;
     }
     if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER || this->action == TOOL_ERASER) {
-        Tool& correspondingTool = toolHandler->getTool(this->action);
+        Tool const& correspondingTool = toolHandler->getTool(this->action);
 
         if (this->size == TOOL_SIZE_NONE) {
             toolHandler->setButtonSize(correspondingTool.getSize(), button);
@@ -84,6 +90,8 @@ bool ButtonConfig::applyNoChangeSettings(ToolHandler* toolHandler, Button button
             if (this->eraserMode == ERASER_TYPE_NONE)
                 toolHandler->setButtonEraserType(correspondingTool.getEraserType(), button);
         }
+        if (this->action == TOOL_PEN && this->strokeType == STROKE_TYPE_NONE)
+            toolHandler->setButtonStrokeType(correspondingTool.getLineStyle(), button);
     }
 
     return true;

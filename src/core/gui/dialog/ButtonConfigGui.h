@@ -53,6 +53,7 @@ private:
     GtkWidget* colorButton;
     GtkWidget* cbEraserType;
     GtkWidget* cbDrawingType;
+    GtkWidget* cbStrokeType;
 
     std::vector<InputDevice> deviceList;
 

@@ -148,6 +148,15 @@ public:
     void setButtonDrawingType(DrawingType drawingType, Button button);
 
     /**
+     * @brief Set the Stroke Type of a button tool
+     *
+     * @param strokeType The stroke type to apply
+     * @param button The button tool to change
+     */
+    void setButtonStrokeType(StrokeType strokeType, Button button);
+    void setButtonStrokeType(const LineStyle& lineStyle, Button button);
+
+    /**
      * @brief Get the Line Style of active tool
      *
      * @return const LineStyle&

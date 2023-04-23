@@ -13,6 +13,7 @@
 
 #include <string>  // for string
 
+#include "model/LineStyle.h"
 
 enum ToolSize {
     TOOL_SIZE_VERY_FINE = 0,
@@ -110,6 +111,15 @@ enum ToolCapabilities : unsigned int {
     TOOL_CAP_SPLINE = 1 << 11,
     TOOL_CAP_LINE_STYLE = 1 << 12
 };
+
+enum StrokeType {
+    STROKE_TYPE_NONE = 0,
+    STROKE_TYPE_STANDARD = 1,
+    STROKE_TYPE_DASHED = 2,
+    STROKE_TYPE_DASHDOTTED = 3,
+    STROKE_TYPE_DOTTED = 4
+};
+auto strokeTypeToLineStyle(StrokeType type) -> LineStyle;
 
 namespace xoj::tool {
 /// \return Whether the provided tool is used for selecting objects on a PDF.

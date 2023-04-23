@@ -1,5 +1,7 @@
 #include "ToolEnums.h"
 
+#include "model/StrokeStyle.h"
+
 auto toolSizeToString(ToolSize size) -> std::string {
     switch (size) {
         case TOOL_SIZE_NONE:
@@ -97,11 +99,8 @@ auto drawingTypeFromString(const std::string& type) -> DrawingType {
 }
 
 auto isSelectToolType(ToolType type) -> bool {
-    return type == TOOL_SELECT_RECT
-            || type == TOOL_SELECT_REGION
-            || type == TOOL_SELECT_MULTILAYER_RECT
-            || type == TOOL_SELECT_MULTILAYER_REGION
-            || type == TOOL_SELECT_OBJECT;
+    return type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_MULTILAYER_RECT ||
+           type == TOOL_SELECT_MULTILAYER_REGION || type == TOOL_SELECT_OBJECT;
 }
 
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool {
@@ -261,6 +260,20 @@ auto eraserTypeFromString(const std::string& type) -> EraserType {
     return ERASER_TYPE_NONE;
 }
 
+auto strokeTypeToLineStyle(StrokeType type) -> LineStyle {
+    switch (type) {
+        case STROKE_TYPE_STANDARD:
+            return {};
+        case STROKE_TYPE_DASHED:
+            return StrokeStyle::parseStyle("dash");
+        case STROKE_TYPE_DASHDOTTED:
+            return StrokeStyle::parseStyle("dashdot");
+        case STROKE_TYPE_DOTTED:
+            return StrokeStyle::parseStyle("dot");
+        default:
+            return {};
+    }
+}
 
 bool xoj::tool::isPdfSelectionTool(ToolType toolType) {
     return toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT;
