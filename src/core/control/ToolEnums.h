@@ -119,7 +119,9 @@ enum StrokeType {
     STROKE_TYPE_DASHDOTTED = 3,
     STROKE_TYPE_DOTTED = 4
 };
+auto strokeTypeFromString(const std::string& type) -> StrokeType;
 auto strokeTypeToLineStyle(StrokeType type) -> LineStyle;
+auto strokeTypeToString(StrokeType type) -> std::string;
 
 namespace xoj::tool {
 /// \return Whether the provided tool is used for selecting objects on a PDF.

@@ -275,6 +275,35 @@ auto strokeTypeToLineStyle(StrokeType type) -> LineStyle {
     }
 }
 
+auto strokeTypeToString(StrokeType type) -> std::string {
+    switch (type) {
+        case STROKE_TYPE_NONE:
+            return "none";
+        case STROKE_TYPE_STANDARD:
+            return "standard";
+        case STROKE_TYPE_DASHED:
+            return "dash";
+        case STROKE_TYPE_DASHDOTTED:
+            return "dashdot";
+        case STROKE_TYPE_DOTTED:
+            return "dot";
+        default:
+            return "";
+    }
+}
+auto strokeTypeFromString(const std::string& type) -> StrokeType {
+    if (type == "standard")
+        return STROKE_TYPE_STANDARD;
+    if (type == "dash")
+        return STROKE_TYPE_DASHED;
+    if (type == "dashdot")
+        return STROKE_TYPE_DASHDOTTED;
+    if (type == "dot")
+        return STROKE_TYPE_DOTTED;
+
+    return STROKE_TYPE_NONE;
+}
+
 bool xoj::tool::isPdfSelectionTool(ToolType toolType) {
     return toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT;
 }
