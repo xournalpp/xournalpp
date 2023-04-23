@@ -384,6 +384,15 @@ void ToolHandler::setButtonDrawingType(DrawingType drawingType, Button button) {
     tool->setDrawingType(drawingType);
 }
 
+void ToolHandler::setButtonStrokeType(StrokeType strokeType, Button button) {
+    this->setButtonStrokeType(strokeTypeToLineStyle(strokeType), button);
+}
+
+void ToolHandler::setButtonStrokeType(const LineStyle& lineStyle, Button button) {
+    Tool* tool = getButtonTool(button);
+    tool->setLineStyle(lineStyle);
+}
+
 auto ToolHandler::getTools() const -> std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& { return tools; }
 
 void ToolHandler::saveSettings() const {
