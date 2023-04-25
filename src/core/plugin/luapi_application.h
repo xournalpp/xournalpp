@@ -866,7 +866,7 @@ static int applib_getStrokes(lua_State* L) {
     std::vector<Element*> elements = {};
     Control* control = plugin->getControl();
 
-    if (type == "Layer") {
+    if (type == "layer") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
             control->clearSelection();  // otherwise strokes in the selection won't be recognized
