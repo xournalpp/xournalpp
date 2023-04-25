@@ -704,11 +704,8 @@ auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
 
     if (this->inputHandler && this->inputHandler->onKeyEvent(event)) {
         DrawingType drawingType = this->xournal->getControl()->getToolHandler()->getDrawingType();
-        if (drawingType == DRAWING_TYPE_SPLINE) {  // Spline drawing has been finalized
-            if (this->inputHandler) {
-                assert(hasNoViewOf(overlayViews, inputHandler.get()));
-                this->inputHandler.reset();
-            }
+        if (drawingType == DRAWING_TYPE_SPLINE) {
+            endSpline();
         }
 
         return true;

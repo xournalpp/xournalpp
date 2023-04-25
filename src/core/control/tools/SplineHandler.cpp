@@ -60,13 +60,11 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
 
     switch (event->keyval) {
         case GDK_KEY_Escape: {
-            this->finalizeSpline();
             return true;
         }
         case GDK_KEY_BackSpace: {
             if (this->knots.size() == 1) {
-                this->finalizeSpline();
-                return true;
+                return false;
             }
             this->deleteLastKnotWithTangent();
             assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
