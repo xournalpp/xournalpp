@@ -3141,11 +3141,9 @@ void Control::setFill(bool fill) {
     }
 
     if (toolHandler->getToolType() == TOOL_PEN) {
-        fireActionSelected(GROUP_PEN_FILL, fill ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
-        this->toolHandler->setPenFillEnabled(fill, false);
+        this->toolHandler->setPenFillEnabled(fill, true);
     } else if (toolHandler->getToolType() == TOOL_HIGHLIGHTER) {
-        fireActionSelected(GROUP_HIGHLIGHTER_FILL, fill ? ACTION_TOOL_HIGHLIGHTER_FILL : ACTION_NONE);
-        this->toolHandler->setHighlighterFillEnabled(fill, false);
+        this->toolHandler->setHighlighterFillEnabled(fill, true);
     }
 }
 
