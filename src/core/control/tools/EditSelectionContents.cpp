@@ -13,6 +13,7 @@
 #include "control/tools/CursorSelectionType.h"    // for CURSOR_SELECTION_TO...
 #include "gui/PageView.h"                         // for XojPageView
 #include "gui/XournalView.h"                      // for XournalView
+#include "model/Document.h"                       // for Document
 #include "model/Element.h"                        // for Element, Element::I...
 #include "model/Layer.h"                          // for Layer
 #include "model/LineStyle.h"                      // for LineStyle
@@ -347,7 +348,7 @@ void EditSelectionContents::deleteViewBuffer() {
  */
 void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,
                                               bool aspectRatio, Layer* layer, const PageRef& targetPage,
-                                              XojPageView* targetView, UndoRedoHandler* undo) {
+                                              Document* doc) {
     double fx = bounds.width / this->originalBounds.width;
     double fy = bounds.height / this->originalBounds.height;
 
@@ -376,12 +377,22 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
             e->rotate(snappedBounds.x + this->lastSnappedBounds.width / 2,
                       snappedBounds.y + this->lastSnappedBounds.height / 2, this->rotation);
         }
+    }
+
+    doc->lock();
+    for (auto&& [e, index]: this->insertOrder) {
         if (index == Element::InvalidIndex) {
             // if the element didn't have a source layer (e.g, clipboard)
             layer->addElement(e);
         } else {
             layer->insertElement(e, index);
         }
+    }
+    bool wasGhost = targetPage->unghost();
+    doc->unlock();
+
+    if (wasGhost) {
+        targetPage->firePageUnghosted();
     }
 }
 

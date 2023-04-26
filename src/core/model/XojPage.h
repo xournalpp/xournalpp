@@ -24,9 +24,11 @@
 #include "PageHandler.h"      // for PageHandler
 #include "PageType.h"         // for PageType
 
+class Document;
+
 class XojPage: public PageHandler {
 public:
-    XojPage(double width, double height, bool suppressLayerCreation = false);
+    XojPage(double width, double height, bool ghost = false, bool suppressLayerCreation = false);
     ~XojPage() override;
     XojPage(const XojPage& page);
     void operator=(const XojPage& p) = delete;
@@ -81,6 +83,22 @@ public:
      */
     XojPage* clone();
 
+    /**
+     * @brief Returns true if the page is a ghost page (i.e. will not be saved)
+     * A page with elements on it should never be a ghost page
+     */
+    inline bool isGhost() const { return ghostPage; }
+
+    /**
+     * @brief Unghosts the page and returns true if the page was indeed a ghost page before
+     */
+    bool unghost();
+    /**
+     * @brief Lock the document and add the element to the page's active layer. Also Unghosts the page and calls
+     * firePageUnghosted() if needed
+     */
+    void safeAddElementToActiveLayer(Document* doc, Element* e);
+
 private:
     /**
      * The Background image if any
@@ -122,6 +140,11 @@ private:
      * Background visible
      */
     bool backgroundVisible = true;
+
+    /**
+     * @brief If true, the page is greyed out and not saved, until an element is added to it
+     */
+    bool ghostPage = false;
 
     /**
      * Background name

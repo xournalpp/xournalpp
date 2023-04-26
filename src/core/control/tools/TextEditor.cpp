@@ -13,6 +13,7 @@
 #include "control/Control.h"  // for Control
 #include "control/settings/Settings.h"
 #include "gui/XournalppCursor.h"  // for XournalppCursor
+#include "model/Document.h"       // for Document
 #include "model/Font.h"           // for XojFont
 #include "model/Text.h"           // for Text
 #include "model/XojPage.h"        // for XojPage
@@ -1014,6 +1015,7 @@ void TextEditor::repaintCursorAfterChange() {
 void TextEditor::finalizeEdition() {
     Layer* layer = this->page->getSelectedLayer();
     UndoRedoHandler* undo = this->control->getUndoRedoHandler();
+    Document* doc = this->control->getDocument();
 
     this->control->setFontSelected(this->control->getSettings()->getFont());
 
@@ -1021,8 +1023,10 @@ void TextEditor::finalizeEdition() {
         // Delete the edited element from layer
         if (originalTextElement) {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
+            doc->lock();
             auto elementIndex = layer->indexOf(originalTextElement);
             layer->removeElement(originalTextElement, false);
+            doc->unlock();
             assert(elementIndex != Element::InvalidIndex);
             eraseDeleteUndoAction->addElement(layer, originalTextElement, elementIndex);
             undo->addUndoAction(std::move(eraseDeleteUndoAction));
@@ -1039,8 +1043,10 @@ void TextEditor::finalizeEdition() {
 
         this->originalTextElement->setInEditing(false);
 
+        doc->lock();
         layer->removeElement(this->originalTextElement, false);
         layer->addElement(this->textElement.get());
+        doc->unlock();
 
         this->page->fireElementChanged(this->textElement.get());
 
@@ -1049,9 +1055,8 @@ void TextEditor::finalizeEdition() {
         originalTextElement = nullptr;
     } else {
         // Creating a new element
-        layer->addElement(textElement.get());
+        page->safeAddElementToActiveLayer(doc, textElement.get());
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
-        this->page->fireElementChanged(textElement.get());
         undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, textElement.release()));
     }
 }

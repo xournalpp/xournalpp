@@ -769,7 +769,7 @@ void XournalView::documentChanged(DocumentChangeType type) {
         this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
     }
 
-    size_t pagecount = doc->getPageCount();
+    size_t pagecount = doc->getVirtualPageCount();
     viewPages.reserve(pagecount);
     for (size_t i = 0; i < pagecount; i++) {
         viewPages.emplace_back(std::make_unique<XojPageView>(this, doc->getPage(i)));

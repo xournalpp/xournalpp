@@ -105,10 +105,11 @@ void Document::clearDocument(bool destroy) {
     this->pdfFilepath = fs::path{};
 }
 
-/**
- * Returns the pageCount, this call don't need to be synchronized (if it's not critical, you may get wrong data)
- */
-auto Document::getPageCount() const -> size_t { return this->pages.size(); }
+auto Document::getPageCount() const -> size_t {
+    return this->hasGhostPage() ? this->pages.size() - 1 : this->pages.size();
+}
+
+auto Document::getVirtualPageCount() const -> size_t { return this->pages.size(); }
 
 auto Document::getPdfPageCount() const -> size_t { return pdfDocument.getPageCount(); }
 
@@ -397,15 +398,14 @@ auto Document::indexOf(const PageRef& page) -> size_t {
 }
 
 auto Document::getPage(size_t page) const -> PageRef {
-    if (getPageCount() <= page) {
-        return nullptr;
-    }
-    if (page == npos) {
+    if (page >= pages.size()) {
         return nullptr;
     }
 
     return this->pages[page];
 }
+
+auto Document::hasGhostPage() const -> bool { return !pages.empty() && pages.back()->isGhost(); }
 
 auto Document::getPdfPage(size_t page) const -> XojPdfPageSPtr { return this->pdfDocument.getPage(page); }
 

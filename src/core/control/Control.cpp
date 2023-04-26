@@ -1444,8 +1444,8 @@ void Control::duplicatePage() {
     insertPage(pageCopy, getCurrentPageNo() + 1);
 }
 
-void Control::insertNewPage(size_t position, bool shouldScrollToPage) {
-    pageBackgroundChangeController->insertNewPage(position, shouldScrollToPage);
+void Control::insertNewPage(size_t position, bool ghostPage) {
+    pageBackgroundChangeController->insertNewPage(position, ghostPage);
 }
 
 void Control::appendNewPdfPages() {
@@ -1562,8 +1562,13 @@ void Control::paperFormat() {
 
     if (width > 0) {
         this->doc->lock();
-        Document::setPageSize(page, width, height);
+        page->setSize(width, height);
+        bool wasGhost = page->unghost();
         this->doc->unlock();
+
+        if (wasGhost) {
+            page->firePageUnghosted();
+        }
     }
 
     size_t pageNo = doc->indexOf(page);
@@ -2179,6 +2184,7 @@ void Control::showSettings() {
     StylusCursorType stylusCursorType = settings->getStylusCursorType();
     bool highlightPosition = settings->isHighlightPosition();
     SidebarNumberingStyle sidebarStyle = settings->getSidebarNumberingStyle();
+    bool ghostPage = settings->getGhostPage();
 
     auto dlg = SettingsDialog(this->gladeSearchPath, settings, this);
     dlg.show(GTK_WINDOW(this->win->getWindow()));
@@ -2214,6 +2220,23 @@ void Control::showSettings() {
 
     getWindow()->getXournal()->getHandRecognition()->reload();
     getWindow()->updateColorscheme();
+
+    if (ghostPage && !settings->getGhostPage()) {
+        // Remove the ghost page if any
+        doc->lock();
+        auto lastPageIndex = doc->getPageCount() - 1;
+        bool isGhost = doc->getPage(lastPageIndex)->isGhost();
+        doc->unlock();
+
+        if (isGhost) {
+            // first send event, then delete page...
+            firePageDeleted(lastPageIndex);
+
+            this->doc->lock();
+            doc->deletePage(lastPageIndex);
+            this->doc->unlock();
+        }
+    }
 }
 
 auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {

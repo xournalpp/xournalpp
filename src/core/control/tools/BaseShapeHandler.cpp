@@ -98,8 +98,6 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
         return;
     }
 
-    Layer* layer = page->getSelectedLayer();
-
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
     stroke->setPointVector(this->shape, &lastSnappingRange);
@@ -108,13 +106,9 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
     repaintRange.addPadding(0.5 * this->stroke->getWidth());
     this->viewPool->dispatchAndClear(xoj::view::ShapeToolView::FINALIZATION_REQUEST, repaintRange);
 
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), stroke.get()));
 
-    Document* doc = control->getDocument();
-    doc->lock();
-    layer->addElement(stroke.get());
-    doc->unlock();
-    page->fireElementChanged(stroke.get());
+    page->safeAddElementToActiveLayer(control->getDocument(), stroke.get());
     stroke.release();
 
     control->getCursor()->updateCursor();

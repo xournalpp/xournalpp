@@ -416,10 +416,7 @@ void SettingsDialog::load() {
     GtkWidget* spPairsOffset = get("spPairsOffset");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spPairsOffset), settings->getPairsOffset());
 
-    EmptyLastPageAppendType append = settings->getEmptyLastPageAppend();
-    loadCheckbox("rdLastPageAppendOnDrawOfLastPage", append == EmptyLastPageAppendType::OnDrawOfLastPage);
-    loadCheckbox("rdLastPageAppendOnScrollToEndOfLastPage", append == EmptyLastPageAppendType::OnScrollToEndOfLastPage);
-    loadCheckbox("rdLastPageAppendDisabled", append == EmptyLastPageAppendType::Disabled);
+    loadCheckbox("cbGhostPage", settings->getGhostPage());
 
     GtkWidget* spSnapRotationTolerance = get("spSnapRotationTolerance");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapRotationTolerance), settings->getSnapRotationTolerance());
@@ -824,15 +821,7 @@ void SettingsDialog::save() {
     int numPairsOffset = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset)));
     settings->setPairsOffset(numPairsOffset);
 
-    if (getCheckbox("rdLastPageAppendDisabled")) {
-        settings->setEmptyLastPageAppend(EmptyLastPageAppendType::Disabled);
-    } else if (getCheckbox("rdLastPageAppendOnDrawOfLastPage")) {
-        settings->setEmptyLastPageAppend(EmptyLastPageAppendType::OnDrawOfLastPage);
-    } else if (getCheckbox("rdLastPageAppendOnScrollToEndOfLastPage")) {
-        settings->setEmptyLastPageAppend(EmptyLastPageAppendType::OnScrollToEndOfLastPage);
-    } else {
-        settings->setEmptyLastPageAppend(EmptyLastPageAppendType::Disabled);
-    }
+    settings->setGhostPage(getCheckbox("cbGhostPage"));
 
     settings->setEdgePanSpeed(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanSpeed"))));
     settings->setEdgePanMaxMult(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanMaxMult"))));

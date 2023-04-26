@@ -324,7 +324,7 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/true);
+        this->page = std::make_unique<XojPage>(width, height, /*ghostPage*/ false, /*suppressLayer*/ true);
 
         pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {

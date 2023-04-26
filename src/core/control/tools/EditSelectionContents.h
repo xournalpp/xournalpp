@@ -28,6 +28,7 @@
 
 #include "CursorSelectionType.h"  // for CursorSelectionType
 
+class Document;
 class UndoRedoHandler;
 class Layer;
 class XojPageView;
@@ -114,8 +115,7 @@ public:
      * Finish the editing
      */
     void finalizeSelection(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds,
-                           bool aspectRatio, Layer* layer, const PageRef& targetPage, XojPageView* targetView,
-                           UndoRedoHandler* undo);
+                           bool aspectRatio, Layer* layer, const PageRef& targetPage, Document* doc);
 
     void updateContent(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds, double rotation,
                        bool aspectRatio, Layer* layer, const PageRef& targetPage, XojPageView* targetView,

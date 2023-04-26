@@ -210,7 +210,7 @@ public:
 
     void addDefaultPage(std::string pageTemplate);
     void duplicatePage();
-    void insertNewPage(size_t position, bool shouldScrollToPage = true);
+    void insertNewPage(size_t position, bool ghostPage = false);
     void appendNewPdfPages();
     void insertPage(const PageRef& page, size_t position, bool shouldScrollToPage = true);
     void deletePage();

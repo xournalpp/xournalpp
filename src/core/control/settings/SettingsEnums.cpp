@@ -46,18 +46,3 @@ auto iconThemeFromString(const std::string& iconThemeStr) -> IconTheme {
     g_warning("Settings::Unknown icon theme: %s\n", iconThemeStr.c_str());
     return ICON_THEME_COLOR;
 }
-
-auto emptyLastPageAppendFromString(const std::string& str) -> EmptyLastPageAppendType {
-    if (str == "disabled") {
-        return EmptyLastPageAppendType::Disabled;
-    }
-    if (str == "onDrawOfLastPage") {
-        return EmptyLastPageAppendType::OnDrawOfLastPage;
-    }
-    if (str == "onScrollOfLastPage") {
-        return EmptyLastPageAppendType::OnScrollToEndOfLastPage;
-    }
-
-    g_warning("Settings::Unknown empty last page append type: %s\n", str.c_str());
-    return EmptyLastPageAppendType::Disabled;
-}
