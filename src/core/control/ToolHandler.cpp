@@ -319,7 +319,8 @@ void ToolHandler::setButtonSize(ToolSize size, Button button) {
 }
 
 void ToolHandler::setLineStyle(const LineStyle& style) {
-    this->tools[TOOL_PEN - TOOL_PEN]->setLineStyle(style);
+    Tool* tool = this->toolbarSelectedTool;
+    tool->setLineStyle(style);
     this->stateChangeListener->toolLineStyleChanged();
 }
 
