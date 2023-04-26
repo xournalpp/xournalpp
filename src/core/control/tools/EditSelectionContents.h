@@ -104,6 +104,8 @@ public:
      * */
     void replaceInsertOrder(std::deque<std::pair<Element*, Element::Index>> newInsertOrder);
 
+    void addMoveUndo(UndoRedoHandler* undo, double dx, double dy);
+
 public:
     /**
      * paints the selection

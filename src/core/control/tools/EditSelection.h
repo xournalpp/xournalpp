@@ -220,7 +220,7 @@ public:
     /**
      * Move the selection
      */
-    void moveSelection(double dx, double dy);
+    void moveSelection(double dx, double dy, bool addMoveUndo = false);
 
     /**
      * Get the cursor type for the current position (if 0 then the default cursor should be used)
