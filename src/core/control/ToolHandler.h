@@ -107,6 +107,14 @@ public:
     Color getColor() const;
 
     /**
+     * @brief Enable/disable fill for the tool selected in the toolbar
+     *
+     * @param fill whether fill should be enabled
+     * @param fireEvent whether a toolFillChanged event should be fired
+     */
+    void setFillEnabled(bool fill, bool fireEvent);
+
+    /**
      * @brief Get the Fill of the active tool
      *
      * @return -1 if fill is disabled

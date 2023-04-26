@@ -3139,12 +3139,7 @@ void Control::setFill(bool fill) {
         undoRedo->addUndoAction(UndoActionPtr(
                 sel->setFill(fill ? toolHandler->getPenFill() : -1, fill ? toolHandler->getHighlighterFill() : -1)));
     }
-
-    if (toolHandler->getToolType() == TOOL_PEN) {
-        this->toolHandler->setPenFillEnabled(fill, true);
-    } else if (toolHandler->getToolType() == TOOL_HIGHLIGHTER) {
-        this->toolHandler->setHighlighterFillEnabled(fill, true);
-    }
+    toolHandler->setFillEnabled(fill, true);
 }
 
 void Control::setLineStyle(const string& style) {
