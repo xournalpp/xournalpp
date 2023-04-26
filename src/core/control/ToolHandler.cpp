@@ -347,9 +347,14 @@ auto ToolHandler::getColor() const -> Color {
     return tool->getColor();
 }
 
-/**
- * @return -1 if fill is disabled, else the fill alpha value
- */
+void ToolHandler::setFillEnabled(bool fill, bool fireEvent) {
+    Tool* tool = this->toolbarSelectedTool;
+    tool->setFill(fill);
+    if (fireEvent) {
+        this->stateChangeListener->toolFillChanged();
+    }
+}
+
 auto ToolHandler::getFill() const -> int {
     Tool* tool = this->activeTool;
     if (!tool->getFill()) {
