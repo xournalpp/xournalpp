@@ -82,6 +82,15 @@ void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, El
     this->insertOrder = std::move(newInsertOrder);
 }
 
+void EditSelectionContents::addMoveUndo(UndoRedoHandler* undo, double dx, double dy) {
+    undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, dx, dy,
+                                                         this->sourceLayer, this->sourcePage));
+    this->lastBounds.x += dx;
+    this->lastBounds.y += dy;
+    this->lastSnappedBounds.x += dx;
+    this->lastSnappedBounds.y += dy;
+}
+
 /**
  * Returns all containing elements of this selection
  */
