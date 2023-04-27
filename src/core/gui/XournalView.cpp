@@ -169,7 +169,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
             ydir = 1;
         }
         if (xdir != 0 || ydir != 0) {
-            selection->moveSelection(d * xdir, d * ydir, true);
+            selection->moveSelection(d * xdir, d * ydir, /*addMoveUndo=*/true);
             selection->ensureWithinVisibleArea();
             return true;
         }
