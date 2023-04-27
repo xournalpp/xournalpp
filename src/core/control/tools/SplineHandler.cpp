@@ -49,9 +49,9 @@ constexpr double MAX_TANGENT_LENGTH = 2000.0;
 constexpr double MIN_TANGENT_LENGTH = 1.0;
 
 auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
-    if (!stroke ||
-        (event->type != GDK_KEY_PRESS && event->keyval != GDK_KEY_Escape)) {  // except for escape key only act on key
-                                                                              // press event, not on key release event
+    if (!stroke || ((event->type != GDK_KEY_PRESS) ==
+                    (event->keyval != GDK_KEY_Escape))) {  // except for escape key only act on key
+                                                           // press event, not on key release event
         return false;
     }
 
@@ -65,7 +65,6 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
         }
         case GDK_KEY_BackSpace: {
             if (this->knots.size() == 1) {
-                this->finalizeSpline();
                 return true;
             }
             this->deleteLastKnotWithTangent();
