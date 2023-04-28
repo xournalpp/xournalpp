@@ -1,5 +1,6 @@
 #include "CrashHandler.h"
 
+#include <sstream>
 #include <string>  // for string
 
 #include <glib.h>  // for g_warning, g_error
@@ -11,8 +12,10 @@
 #include "filesystem.h"  // for path
 
 static Document* document = nullptr;
+static std::stringstream logBuffer;
 
 void setEmergencyDocument(Document* doc) { document = doc; }
+static std::stringstream* getCrashHandlerLogBuffer() { return &logBuffer; }
 
 #ifdef _WIN32
 #include "CrashHandlerWindows.h"
