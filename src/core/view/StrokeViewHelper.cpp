@@ -1,9 +1,8 @@
 #include "StrokeViewHelper.h"
 
-#include <cassert>
-
 #include "model/LineStyle.h"
 #include "model/Point.h"
+#include "util/Assert.h"
 #include "util/LoopUtil.h"
 #include "util/PairView.h"
 #include "util/Util.h"  // for cairo_set_dash_from_vector
@@ -39,7 +38,7 @@ double xoj::view::StrokeViewHelper::drawWithPressure(cairo_t* cr, const std::vec
      * Because the width varies, we need to call cairo_stroke() once per segment
      */
     auto drawSegment = [cr](const Point& p, const Point& q) {
-        assert(p.z > 0.0);
+        xoj_assert(p.z > 0.0);
         cairo_set_line_width(cr, p.z);
         cairo_move_to(cr, p.x, p.y);
         cairo_line_to(cr, q.x, q.y);

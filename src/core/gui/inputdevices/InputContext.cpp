@@ -4,7 +4,6 @@
 
 #include "InputContext.h"
 
-#include <cassert>  // for assert
 #include <cstddef>  // for NULL
 #include <vector>   // for vector
 
@@ -21,6 +20,7 @@
 #include "gui/inputdevices/StylusInputHandler.h"        // for StylusInputHa...
 #include "gui/inputdevices/TouchDrawingInputHandler.h"  // for TouchDrawingI...
 #include "gui/inputdevices/TouchInputHandler.h"         // for TouchInputHan...
+#include "util/Assert.h"                                // for xoj_assert
 
 #include "InputEvents.h"   // for InputEvent
 #include "config-debug.h"  // for DEBUG_INPUT
@@ -64,7 +64,7 @@ InputContext::~InputContext() {
 }
 
 void InputContext::connect(GtkWidget* pWidget) {
-    assert(!this->widget);
+    xoj_assert(!this->widget);
     this->widget = pWidget;
     gtk_widget_set_support_multidevice(widget, true);
 

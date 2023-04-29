@@ -13,12 +13,13 @@
 
 #include <algorithm>
 #include <array>
-#include <cassert>
 #include <cstddef>
 #include <iterator>
 #include <memory>
 #include <type_traits>
 #include <utility>
+
+#include "util/Assert.h"
 
 #include "BasePointerIterator.h"
 
@@ -84,13 +85,13 @@ public:
 
     template <class... Args>
     void emplace_back(Args&&... args) {
-        assert(nb < N);
+        xoj_assert(nb < N);
         ::new (&UninitializedStorage<T, N>::dataArray[nb++]) T(std::forward<Args>(args)...);
     }
     void push_back(const T& value) { emplace_back(value); }
     void push_back(T&& value) { emplace_back(std::move(value)); }
     void pop_back() {
-        assert(nb != 0);
+        xoj_assert(nb != 0);
         std::destroy_at(&back());
         nb--;
     }

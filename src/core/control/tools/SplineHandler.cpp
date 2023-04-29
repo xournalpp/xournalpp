@@ -1,7 +1,6 @@
 #include "SplineHandler.h"
 
 #include <algorithm>  // for max, max_element
-#include <cassert>    // for assert
 #include <cmath>      // for pow, M_PI, cos, sin
 #include <cstddef>    // for size_t
 #include <list>       // for list, operator!=
@@ -25,6 +24,7 @@
 #include "model/XojPage.h"                       // for XojPage
 #include "undo/InsertUndoAction.h"               // for InsertUndoAction
 #include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
+#include "util/Assert.h"                         // for xoj_assert
 #include "util/DispatchPool.h"
 #include "view/overlays/SplineToolView.h"
 
@@ -55,7 +55,7 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
         return false;
     }
 
-    assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
+    xoj_assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
     Range rg = this->computeLastSegmentRepaintRange();
 
     switch (event->keyval) {
@@ -68,7 +68,7 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
                 return true;
             }
             this->deleteLastKnotWithTangent();
-            assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
+            xoj_assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
             const Point& p = this->knots.back();
             const Point& t = this->tangents.back();
             rg.addPoint(p.x - t.x, p.y - t.y);  // Ensure the tangent vector gets its color updated
@@ -135,7 +135,7 @@ auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoo
         return false;
     }
 
-    assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
+    xoj_assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
 
     Range rg = this->computeLastSegmentRepaintRange();
     if (this->isButtonPressed) {
@@ -204,15 +204,15 @@ void SplineHandler::onButtonPressEvent(const PositionInputData& pos, double zoom
 
     if (!stroke) {
         // This should only happen right after the SplineHandler's creation, before any views got attached
-        assert(this->viewPool->empty());
+        xoj_assert(this->viewPool->empty());
 
         stroke = createStroke(this->control);
-        assert(this->knots.empty() && this->tangents.empty());
+        xoj_assert(this->knots.empty() && this->tangents.empty());
         this->buttonDownPoint = Point(pos.x / zoom, pos.y / zoom);
         this->currPoint = snappingHandler.snapToGrid(this->buttonDownPoint, pos.isAltDown());
         this->addKnot(this->currPoint);
     } else {
-        assert(!this->knots.empty());
+        xoj_assert(!this->knots.empty());
         this->buttonDownPoint = Point(pos.x / zoom, pos.y / zoom);
         this->currPoint = snappingHandler.snap(this->buttonDownPoint, knots.back(), pos.isAltDown());
         double dist = this->buttonDownPoint.lineLengthTo(this->knots.front());
@@ -250,10 +250,10 @@ void SplineHandler::clearTinySpline() {
 }
 
 void SplineHandler::finalizeSpline() {
-    assert(this->stroke);
+    xoj_assert(this->stroke);
 
     auto optData = getData();
-    assert(optData);
+    xoj_assert(optData);
     auto& data = optData.value();
 
     if (data.knots.size() < 2) {  // This is not a valid spline
@@ -297,12 +297,12 @@ void SplineHandler::addKnotWithTangent(const Point& p, const Point& t) {
 }
 
 void SplineHandler::modifyLastTangent(const Point& t) {
-    assert(!this->tangents.empty());
+    xoj_assert(!this->tangents.empty());
     this->tangents.back() = t;
 }
 
 void SplineHandler::deleteLastKnotWithTangent() {
-    assert(this->knots.size() > 1 && this->knots.size() == this->tangents.size());
+    xoj_assert(this->knots.size() > 1 && this->knots.size() == this->tangents.size());
     this->knots.pop_back();
     this->tangents.pop_back();
 }
@@ -334,7 +334,7 @@ auto SplineHandler::computeTotalRepaintRange(const Data& data, double strokeWidt
 }
 
 Range SplineHandler::computeLastSegmentRepaintRange() const {
-    assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
+    xoj_assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
 
     Range rg(this->currPoint.x, this->currPoint.y);
     const Point& p = this->knots.back();
@@ -380,7 +380,7 @@ auto SplineHandler::getData() const -> std::optional<Data> {
 }
 
 auto SplineHandler::linearizeSpline(const SplineHandler::Data& data) -> std::vector<Point> {
-    assert(!data.knots.empty() && data.knots.size() == data.tangents.size());
+    xoj_assert(!data.knots.empty() && data.knots.size() == data.tangents.size());
 
     std::vector<Point> result;
 

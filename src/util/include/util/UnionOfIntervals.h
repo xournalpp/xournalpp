@@ -12,9 +12,10 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
 #include <iterator>
 #include <vector>
+
+#include "util/Assert.h"
 
 #include "Interval.h"
 
@@ -87,7 +88,7 @@ public:
             return changesMade;
         }
         std::copy(itOther, other.cend(), std::back_inserter(this->data));
-        assert(this->data.size() % 2 == 0);
+        xoj_assert(this->data.size() % 2 == 0);
         return true;
     }
 
@@ -137,7 +138,7 @@ public:
             }
         }
         data.erase(itThis, data.end());
-        assert(this->data.size() % 2 == 0);
+        xoj_assert(this->data.size() % 2 == 0);
         return changesMade;
     }
 
@@ -163,7 +164,7 @@ public:
         } else {
             data.push_back(upperBound);
         }
-        assert(this->data.size() % 2 == 0);
+        xoj_assert(this->data.size() % 2 == 0);
     }
 
     /**
@@ -172,7 +173,7 @@ public:
      */
     std::vector<Interval<T>> cloneToIntervalVector() const {
         std::vector<Interval<T>> result;
-        assert(this->data.size() % 2 == 0);
+        xoj_assert(this->data.size() % 2 == 0);
         result.reserve(data.size() / 2);
 
         auto itLowerBound = data.cbegin();
@@ -213,7 +214,7 @@ public:
      */
     template <typename container_type>
     void appendData(const container_type& container) {
-        assert(container.size() % 2 == 0);
+        xoj_assert(container.size() % 2 == 0);
         std::copy(container.begin(), container.end(), std::back_inserter(data));
     }
 

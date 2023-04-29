@@ -36,6 +36,7 @@
 #include "model/XojPage.h"                       // for XojPage
 #include "undo/DeleteUndoAction.h"               // for DeleteUndoAction
 #include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
+#include "util/Assert.h"                         // for xoj_assert
 #include "util/Point.h"                          // for Point
 #include "util/Rectangle.h"                      // for Rectangle
 #include "util/Util.h"                           // for npos
@@ -107,7 +108,7 @@ auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
 
 auto XournalView::cleanupBufferCache() -> void {
     const auto& [pagesLower, pagesUpper] = this->preloadPageBounds(this->currentPage, this->viewPages.size());
-    g_assert(pagesLower <= pagesUpper);
+    xoj_assert(pagesLower <= pagesUpper);
 
     for (size_t i = 0; i < this->viewPages.size(); i++) {
         auto&& page = this->viewPages[i];
@@ -408,7 +409,7 @@ void XournalView::pageSelected(size_t page) {
 
     // Load surrounding pages if they are not
     const auto& [pagesLower, pagesUpper] = preloadPageBounds(page, this->viewPages.size());
-    g_assert(pagesLower <= pagesUpper);
+    xoj_assert(pagesLower <= pagesUpper);
     for (size_t i = pagesLower; i < pagesUpper; i++) {
         if (!this->viewPages[i]->hasBuffer()) {
             this->viewPages[i]->rerenderPage();

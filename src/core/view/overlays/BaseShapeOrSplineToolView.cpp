@@ -1,10 +1,9 @@
 #include "BaseShapeOrSplineToolView.h"
 
-#include <cassert>
-
 #include "control/tools/InputHandler.h"
 #include "model/LineStyle.h"
 #include "model/Stroke.h"
+#include "util/Assert.h"
 #include "util/Color.h"
 #include "util/Util.h"  // for cairo_set_dash_from_vector
 
@@ -17,8 +16,8 @@ using namespace xoj::view;
 constexpr double MASK_CLEARANCE_PADDING = 1;
 
 static const Stroke& safeGetStroke(const InputHandler* h) {
-    assert(h);
-    assert(h->getStroke());
+    xoj_assert(h);
+    xoj_assert(h->getStroke());
     return *h->getStroke();
 }
 

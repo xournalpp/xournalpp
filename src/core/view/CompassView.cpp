@@ -10,6 +10,7 @@
 
 #include "model/Compass.h"            // for Compass
 #include "model/Stroke.h"             // for Stroke
+#include "util/Assert.h"              // for xoj_assert
 #include "util/raii/CairoWrappers.h"  // for CairoSaveGuard
 #include "view/Repaintable.h"         // for Repaintable
 #include "view/View.h"                // for Context
@@ -39,7 +40,7 @@ CompassView::~CompassView() noexcept { this->unregisterFromPool(); };
 void CompassView::on(FlagDirtyRegionRequest, const Range& rg) { this->parent->flagDirtyRegion(rg); }
 
 void CompassView::on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m) {
-    assert(h > 0 && "Non-positive compass height");
+    xoj_assert_message(h > 0, "Non-positive compass height");
     height = h;
     rotation = rot;
     matrix = m;
