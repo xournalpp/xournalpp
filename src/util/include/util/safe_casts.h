@@ -30,10 +30,11 @@
 
 #pragma once
 
-#include <cassert>
 #include <cmath>
 #include <type_traits>
 #include <utility>
+
+#include "util/Assert.h"
 
 template <typename To, typename From>
 [[maybe_unused]] [[nodiscard]] constexpr auto is_safely_castable(From from) -> bool {
@@ -44,7 +45,7 @@ template <typename To, typename From>
 
 template <typename To, typename From>
 [[maybe_unused]] [[nodiscard]] constexpr auto strict_cast(From from) -> To {
-    assert(is_safely_castable<To>(from));
+    xoj_assert(is_safely_castable<To>(from));
     return static_cast<To>(from);
 }
 
@@ -64,14 +65,14 @@ template <typename Integral>
 [[maybe_unused]] [[nodiscard]] constexpr auto as_signed_strict(Integral i)
         -> std::make_signed_t<std::remove_cv_t<std::remove_reference_t<Integral>>> {
     auto rv = static_cast<std::make_signed_t<std::remove_cv_t<std::remove_reference_t<Integral>>>>(i);
-    assert((i < 0 && rv < 0) || (i >= 0 && rv >= 0));
+    xoj_assert((i < 0 && rv < 0) || (i >= 0 && rv >= 0));
     return rv;
 }
 
 template <typename Integral>
 [[maybe_unused]] [[nodiscard]] constexpr auto as_unsigned_strict(Integral i)
         -> std::make_unsigned_t<std::remove_cv_t<std::remove_reference_t<Integral>>> {
-    assert(i > 0);
+    xoj_assert(i > 0);
     return static_cast<std::make_unsigned_t<std::remove_cv_t<std::remove_reference_t<Integral>>>>(i);
 }
 
@@ -79,7 +80,7 @@ template <typename Integral, typename Float>
 inline auto round_cast(Float f) -> Integral {
     auto rv0 = std::lround(f);
     auto rv1 = static_cast<Integral>(rv0);
-    assert(rv0 == rv1);
+    xoj_assert(rv0 == rv1);
     return rv1;
 }
 
@@ -87,7 +88,7 @@ template <typename Integral, typename Float>
 inline auto ceil_cast(Float f) -> Integral {
     auto rv0 = std::ceil(f);
     auto rv1 = Integral(rv0);
-    assert(rv0 == rv1);
+    xoj_assert(rv0 == rv1);
     return rv1;
 }
 
@@ -95,7 +96,7 @@ template <typename Integral, typename Float>
 inline auto floor_cast(Float f) -> Integral {
     auto rv0 = std::floor(f);
     auto rv1 = Integral(rv0);
-    assert(rv0 == rv1);
+    xoj_assert(rv0 == rv1);
     return rv1;
 }
 

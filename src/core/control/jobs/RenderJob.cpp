@@ -16,6 +16,7 @@
 #include "gui/widgets/XournalWidget.h"  // for gtk_xournal_repaint_area
 #include "model/Document.h"             // for Document
 #include "model/XojPage.h"              // for Page
+#include "util/Assert.h"                // for xoj_assert
 #include "util/Rectangle.h"             // for Rectangle
 #include "util/Util.h"                  // for execInUiThread
 #include "util/raii/CairoWrappers.h"    // for CairoSurfaceSPtr, CairoSPtr
@@ -45,7 +46,7 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     renderToBuffer(newMask.get());
 
     std::lock_guard lock(this->view->drawingMutex);
-    assert(view->buffer.isInitialized());
+    xoj_assert(view->buffer.isInitialized());
 
     newMask.paintTo(view->buffer.get());
 }

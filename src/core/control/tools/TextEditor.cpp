@@ -1,6 +1,5 @@
 #include "TextEditor.h"
 
-#include <cassert>
 #include <cmath>
 #include <cstring>  // for strcmp, size_t
 #include <memory>   // for allocator, make_unique, __shared_p...
@@ -20,6 +19,7 @@
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
 #include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
+#include "util/Assert.h"
 #include "util/DispatchPool.h"
 #include "util/Range.h"
 #include "util/raii/CStringWrapper.h"
@@ -62,7 +62,7 @@ static auto getByteOffsetOfCursor(GtkTextBuffer* buffer) -> int {
  * NB: This is much faster than relying on g_utf8_pointer_to_offset for long texts
  */
 static auto getIteratorAtByteOffset(GtkTextBuffer* buf, int byteIndex) {
-    assert(byteIndex >= 0);
+    xoj_assert(byteIndex >= 0);
     GtkTextIter it = {nullptr};
     gtk_text_buffer_get_start_iter(buf, &it);
 
@@ -136,7 +136,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         if (this->cursorBlink) {
             int tmp = 0;
             g_object_get(settings, "gtk-cursor-blink-time", &tmp, nullptr);
-            assert(tmp >= 0);
+            xoj_assert(tmp >= 0);
             auto cursorBlinkingPeriod = static_cast<unsigned int>(tmp);
             this->cursorBlinkingTimeOn = cursorBlinkingPeriod * CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER;
             this->cursorBlinkingTimeOff = cursorBlinkingPeriod - this->cursorBlinkingTimeOn;
@@ -1032,7 +1032,7 @@ void TextEditor::finalizeEdition() {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
             auto elementIndex = layer->indexOf(originalTextElement);
             layer->removeElement(originalTextElement, false);
-            assert(elementIndex != Element::InvalidIndex);
+            xoj_assert(elementIndex != Element::InvalidIndex);
             eraseDeleteUndoAction->addElement(layer, originalTextElement, elementIndex);
             undo->addUndoAction(std::move(eraseDeleteUndoAction));
             originalTextElement = nullptr;

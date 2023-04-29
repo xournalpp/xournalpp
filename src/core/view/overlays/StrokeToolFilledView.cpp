@@ -1,9 +1,9 @@
 #include "StrokeToolFilledView.h"
 
 #include <algorithm>
-#include <cassert>
 
 #include "model/Stroke.h"
+#include "util/Assert.h"
 #include "util/Color.h"
 #include "util/Range.h"
 #include "view/Repaintable.h"
@@ -13,7 +13,7 @@ using namespace xoj::view;
 
 static const Point& setupFirstPoint(const Stroke& s) {
     const auto& pts = s.getPointVector();
-    assert(!pts.empty());
+    xoj_assert(!pts.empty());
     return pts.front();
 }
 
@@ -36,7 +36,7 @@ void StrokeToolFilledView::drawFilling(cairo_t* cr, const std::vector<Point>& pt
 
 void StrokeToolFilledView::on(StrokeToolView::AddPointRequest, const Point& p) {
     this->singleDot = false;
-    assert(!this->pointBuffer.empty());
+    xoj_assert(!this->pointBuffer.empty());
     Point lastPoint = this->pointBuffer.back();
     this->pointBuffer.emplace_back(p);
     auto rg = this->getRepaintRange(lastPoint, p);
@@ -55,7 +55,7 @@ void StrokeToolFilledView::on(StrokeToolView::StrokeReplacementRequest, const St
 }
 
 void StrokeToolFilledView::FillingData::appendSegments(const std::vector<Point>& pts) {
-    assert(!pts.empty());
+    xoj_assert(!pts.empty());
     // Add new points to the contour
     // contour.back() == pts.front(), so we skip it.
     std::copy(std::next(pts.begin()), pts.end(), std::back_inserter(contour));

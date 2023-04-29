@@ -25,6 +25,7 @@
 #include "undo/InsertUndoAction.h"  // for InsertUndoAction
 #include "undo/UndoAction.h"        // for UndoAction
 #include "undo/UndoRedoHandler.h"   // for UndoRedoHandler
+#include "util/Assert.h"            // for xoj_assert
 
 #include "MainWindow.h"  // for MainWindow
 
@@ -60,7 +61,7 @@ auto PdfFloatingToolbox::newSelection(double x, double y) -> const PdfElemSelect
 }
 
 void PdfFloatingToolbox::show(int x, int y) {
-    g_assert_nonnull(this->getSelection());
+    xoj_assert(this->getSelection());
 
     // (x, y) are in the gtk window's coordinates.
     // However, we actually show the toolbox in the overlay's coordinate system.

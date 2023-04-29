@@ -1,13 +1,11 @@
 #include "VerticalToolHandler.h"
 
 #include <algorithm>  // for max, min, minmax
-#include <cassert>    // for assert
 #include <cmath>      // for abs
 #include <memory>     // for __shared_ptr_access
 
 #include <cairo.h>           // for cairo_fill, cairo_...
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Control_L
-#include <glib.h>            // for g_assert, g_assert...
 
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "gui/LegacyRedrawable.h"                  // for Redrawable

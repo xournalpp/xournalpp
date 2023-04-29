@@ -7,11 +7,12 @@
 #include <memory>     // for unique_ptr, allocator_traits<>::value_type
 #include <utility>    // for move
 
-#include <glib.h>  // for g_message, g_assert_true
+#include <glib.h>  // for g_message
 
 #include "control/Control.h"  // for Control
 #include "model/Document.h"   // for Document
 #include "undo/UndoAction.h"  // for UndoActionPtr, UndoAction
+#include "util/Assert.h"      // for xoj_assert
 #include "util/XojMsgBox.h"   // for XojMsgBox
 #include "util/i18n.h"        // for _, FS, _F
 
@@ -99,7 +100,7 @@ void UndoRedoHandler::undo() {
         return;
     }
 
-    g_assert_true(this->undoList.back());
+    xoj_assert(this->undoList.back());
 
     auto& undoAction = *this->undoList.back();
     this->redoList.emplace_back(std::move(this->undoList.back()));
@@ -127,7 +128,7 @@ void UndoRedoHandler::redo() {
         return;
     }
 
-    g_assert_true(this->redoList.back());
+    xoj_assert(this->redoList.back());
 
     UndoAction& redoAction = *this->redoList.back();
 

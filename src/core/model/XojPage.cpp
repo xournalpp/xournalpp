@@ -6,6 +6,7 @@
 
 #include "model/Layer.h"     // for Layer, Layer::Index
 #include "model/PageType.h"  // for PageType, PageTypeFormat, PageTypeForma...
+#include "util/Assert.h"     // for xoj_assert
 #include "util/i18n.h"       // for _
 
 #include "BackgroundImage.h"  // for BackgroundImage
@@ -155,7 +156,7 @@ auto XojPage::getBackgroundImage() -> BackgroundImage& { return this->background
 void XojPage::setBackgroundImage(BackgroundImage img) { this->backgroundImage = std::move(img); }
 
 auto XojPage::getSelectedLayer() -> Layer* {
-    g_assert(!layer.empty());
+    xoj_assert(!layer.empty());
     size_t layer = getSelectedLayerId();
 
     if (layer > 0) {

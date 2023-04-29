@@ -1,7 +1,7 @@
 #include "PageView.h"
 
 #include <algorithm>  // for max, find_if
-#include <cassert>    // for assert
+#include <cinttypes>  // for int64_t
 #include <cmath>      // for lround
 #include <cstdint>    // for int64_t
 #include <cstdlib>    // for size_t
@@ -65,6 +65,7 @@
 #include "undo/MoveUndoAction.h"                    // for MoveUndoAction
 #include "undo/TextBoxUndoAction.h"                 // for TextBoxUndoAction
 #include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler
+#include "util/Assert.h"                            // for xoj_assert
 #include "util/Color.h"                             // for rgb_to_GdkRGBA
 #include "util/Range.h"                             // for Range
 #include "util/Rectangle.h"                         // for Rectangle
@@ -188,7 +189,7 @@ void XojPageView::startText(double x, double y) {
 }
 
 #ifndef NDEBUG
-// used in assert()
+// used in xoj_assert()
 [[maybe_unused]] static bool hasNoViewOf(const std::vector<std::unique_ptr<xoj::view::OverlayView>>& views,
                                          const OverlayBase* o) {
     return std::find_if(views.begin(), views.end(), [o](auto& v) { return v->isViewOf(o); }) == views.end();
@@ -197,13 +198,13 @@ void XojPageView::startText(double x, double y) {
 
 static void eraseViewsOf(std::vector<std::unique_ptr<xoj::view::OverlayView>>& views, const OverlayBase* o) {
     views.erase(std::remove_if(views.begin(), views.end(), [o](auto& v) { return v->isViewOf(o); }), views.end());
-    assert(hasNoViewOf(views, o));
+    xoj_assert(hasNoViewOf(views, o));
 }
 
 void XojPageView::endSpline() {
     if (SplineHandler* h = dynamic_cast<SplineHandler*>(this->inputHandler.get()); h) {
         h->finalizeSpline();
-        assert(hasNoViewOf(overlayViews, inputHandler.get()));
+        xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
         this->inputHandler.reset();
     }
 }
@@ -303,9 +304,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                 this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
                         this->selection.get(), this, this->settings->getSelectionColor()));
             } else {
-                assert(settings->getInputSystemTPCButtonEnabled() &&
-                       "the selection has already been created by a stylus button press while the stylus was "
-                       "hovering!");
+                xoj_assert_message(
+                        settings->getInputSystemTPCButtonEnabled(),
+                        "the selection has already been created by a stylus button press while the stylus was "
+                        "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_REGION) {
             if (!selection) {
@@ -313,9 +315,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                 this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
                         this->selection.get(), this, this->settings->getSelectionColor()));
             } else {
-                assert(settings->getInputSystemTPCButtonEnabled() &&
-                       "the selection has already been created by a stylus button press while the stylus was "
-                       "hovering!");
+                xoj_assert_message(
+                        settings->getInputSystemTPCButtonEnabled(),
+                        "the selection has already been created by a stylus button press while the stylus was "
+                        "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_MULTILAYER_RECT) {
             if (!selection) {
@@ -323,9 +326,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                 this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
                         this->selection.get(), this, this->settings->getSelectionColor()));
             } else {
-                assert(settings->getInputSystemTPCButtonEnabled() &&
-                       "the selection has already been created by a stylus button press while the stylus was "
-                       "hovering!");
+                xoj_assert_message(
+                        settings->getInputSystemTPCButtonEnabled(),
+                        "the selection has already been created by a stylus button press while the stylus was "
+                        "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_MULTILAYER_REGION) {
             if (!selection) {
@@ -333,9 +337,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                 this->overlayViews.emplace_back(std::make_unique<xoj::view::SelectionView>(
                         this->selection.get(), this, this->settings->getSelectionColor()));
             } else {
-                assert(settings->getInputSystemTPCButtonEnabled() &&
-                       "the selection has already been created by a stylus button press while the stylus was "
-                       "hovering!");
+                xoj_assert_message(
+                        settings->getInputSystemTPCButtonEnabled(),
+                        "the selection has already been created by a stylus button press while the stylus was "
+                        "hovering!");
             }
         } else if (h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
             // so if we selected something && the pdf selection toolbox is hidden && we hit within the selection
@@ -464,7 +469,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
     } else if (drawingType == DRAWING_TYPE_SPLINE) {
         if (this->inputHandler) {
             this->inputHandler->onButtonDoublePressEvent(pos, zoom);
-            assert(hasNoViewOf(overlayViews, inputHandler.get()));
+            xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
     }
@@ -534,11 +539,11 @@ void XojPageView::onSequenceCancelEvent() {
         if (auto* h = dynamic_cast<SplineHandler*>(this->inputHandler.get()); h) {
             // SplineHandler can survive a sequence cancellation
             if (!h->getStroke()) {
-                assert(hasNoViewOf(overlayViews, inputHandler.get()));
+                xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
                 this->inputHandler.reset();
             }
         } else {
-            assert(hasNoViewOf(overlayViews, inputHandler.get()));
+            xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
     }
@@ -556,7 +561,7 @@ void XojPageView::onTapEvent(const PositionInputData& pos) {
         this->inputHandler->onButtonReleaseEvent(pos, zoom);
         if (!this->inputHandler->getStroke()) {
             // The InputHandler finalized its edition
-            assert(hasNoViewOf(overlayViews, inputHandler.get()));
+            xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
         return;
@@ -617,7 +622,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         ToolHandler* h = control->getToolHandler();
         bool isDrawingTypeSpline = h->getDrawingType() == DRAWING_TYPE_SPLINE;
         if (!isDrawingTypeSpline || !this->inputHandler->getStroke()) {  // The Spline Tool finalizes drawing manually
-            assert(hasNoViewOf(overlayViews, inputHandler.get()));
+            xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
     }
@@ -726,7 +731,7 @@ auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
         DrawingType drawingType = this->xournal->getControl()->getToolHandler()->getDrawingType();
         if (drawingType == DRAWING_TYPE_SPLINE) {  // Spline drawing has been finalized
             if (this->inputHandler) {
-                assert(hasNoViewOf(overlayViews, inputHandler.get()));
+                xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
                 this->inputHandler.reset();
             }
         }
@@ -770,7 +775,7 @@ void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg)
 void XojPageView::deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) {
     this->deleteView(v);
     if (!rg.empty()) {
-        assert(rg.isValid());
+        xoj_assert(rg.isValid());
         this->flagDirtyRegion(rg);
     }
 }

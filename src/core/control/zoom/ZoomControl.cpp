@@ -3,7 +3,7 @@
 #include <algorithm>  // for find, max
 
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
-#include <glib.h>         // for g_assert_true, g_warning, guint
+#include <glib.h>         // for g_warning, guint
 
 #include "control/Control.h"            // for Control
 #include "control/settings/Settings.h"  // for Settings
@@ -14,6 +14,7 @@
 #include "gui/PageView.h"               // for XojPageView
 #include "gui/XournalView.h"            // for XournalView
 #include "gui/widgets/XournalWidget.h"  // for gtk_xournal_get_layout
+#include "util/Assert.h"                // for xoj_assert
 #include "util/Util.h"                  // for execInUiThread
 
 using xoj::util::Rectangle;
@@ -73,7 +74,7 @@ auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomC
 //       the pages manually, but it only works with the top Widget (GtkWindow) for now this works "fine"
 //       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
 auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom) -> bool {
-    g_assert_true(widget != zoom->view->getWidget());
+    xoj_assert(widget != zoom->view->getWidget());
     auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
     // Todo (fabian): The following code is a hack.
     //    Problem size-allocate:

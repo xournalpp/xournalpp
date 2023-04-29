@@ -8,7 +8,6 @@
 
 #include <cairo.h>    // for cairo_line_to, cairo_region_destroy
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
-#include <glib.h>     // for g_assert, g_assert_nonnull
 
 #include "control/Control.h"      // for Control
 #include "control/ToolHandler.h"  // for ToolHandler
@@ -18,6 +17,7 @@
 #include "model/PageRef.h"        // for PageRef
 #include "model/XojPage.h"        // for XojPage
 #include "pdf/base/XojPdfPage.h"  // for XojPdfRectangle, XojPdfPageSelectio...
+#include "util/Assert.h"          // for xoj_assert
 #include "view/overlays/PdfElementSelectionView.h"
 
 PdfElemSelection::PdfElemSelection(double x, double y, Control* control):
@@ -105,9 +105,9 @@ void PdfElemSelection::currentPos(double x, double y, XojPdfPageSelectionStyle s
             this->selectedTextRegion.reset(cairo_region_create_rectangle(&rect), xoj::util::adopt);
         } break;
         default:
-            g_assert(false && "Unreachable");
+            xoj_assert_message(false, "Unreachable");
     }
-    g_assert(this->selectedTextRegion);
+    xoj_assert(this->selectedTextRegion);
 
     rg = rg.unite(getRegionBbox());
     this->viewPool->dispatch(xoj::view::PdfElementSelectionView::FLAG_DIRTY_REGION_REQUEST, rg);

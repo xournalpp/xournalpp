@@ -1,8 +1,7 @@
 #include "BaseShapeHandler.h"
 
-#include <cassert>  // for assert
-#include <cmath>    // for pow, NAN
-#include <memory>   // for make_unique, __share...
+#include <cmath>   // for pow, NAN
+#include <memory>  // for make_unique, __share...
 
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Alt_L, GDK_K...
 
@@ -19,6 +18,7 @@
 #include "model/XojPage.h"                         // for XojPage
 #include "undo/InsertUndoAction.h"                 // for InsertUndoAction
 #include "undo/UndoRedoHandler.h"                  // for UndoRedoHandler
+#include "util/Assert.h"                           // for xoj_assert
 #include "util/DispatchPool.h"                     // for DispatchPool
 #include "view/overlays/ShapeToolView.h"           // for ShapeToolView
 
@@ -121,7 +121,7 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
 }
 
 void BaseShapeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
-    assert(this->viewPool->empty());
+    xoj_assert(this->viewPool->empty());
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
 
@@ -148,7 +148,7 @@ void BaseShapeHandler::modifyModifiersByDrawDir(double width, double height, dou
         this->modControl = this->modControl == !gestureControl;
 
         double fixate_Dir_Mods_Dist = control->getSettings()->getDrawDirModsRadius() / zoom;
-        assert(fixate_Dir_Mods_Dist > 0.0);
+        xoj_assert(fixate_Dir_Mods_Dist > 0.0);
         if (std::abs(width) > fixate_Dir_Mods_Dist || std::abs(height) > fixate_Dir_Mods_Dist) {
             this->drawModifierFixed = static_cast<DIRSET_MODIFIERS>(SET | (gestureShift ? SHIFT : NONE) |
                                                                     (gestureControl ? CONTROL : NONE));

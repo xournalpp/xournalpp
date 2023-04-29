@@ -24,6 +24,7 @@
 #include "undo/PageBackgroundChangedUndoAction.h"        // for PageBackgrou...
 #include "undo/UndoAction.h"                             // for UndoAction
 #include "undo/UndoRedoHandler.h"                        // for UndoRedoHandler
+#include "util/Assert.h"                                 // for xoj_assert
 #include "util/PathUtil.h"                               // for fromGFile
 #include "util/Util.h"                                   // for npos
 #include "util/XojMsgBox.h"                              // for XojMsgBox
@@ -84,7 +85,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
 
     Document* doc = control->getDocument();
     const size_t pageNr = doc->indexOf(page);
-    g_assert(pageNr != npos);
+    xoj_assert(pageNr != npos);
 
     auto undoAction = commitPageTypeChange(pageNr, pageType);
     if (undoAction) {
@@ -105,7 +106,7 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
 
     Document* doc = control->getDocument();
     const size_t pageNr = doc->indexOf(page);
-    g_assert(pageNr != npos);
+    xoj_assert(pageNr != npos);
 
     // Get values for Undo / Redo
     const double origW = page->getWidth();

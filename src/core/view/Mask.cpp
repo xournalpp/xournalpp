@@ -1,11 +1,11 @@
 #include "Mask.h"
 
-#include <cassert>
 #include <cmath>
 #include <iostream>
 
 #include <cairo.h>
 
+#include "util/Assert.h"
 #include "util/Range.h"
 
 #include "config-debug.h"
@@ -57,12 +57,12 @@ public:
 
 template <typename DPIInfoType>
 void Mask::constructorImpl(DPIInfoType dpiInfo, const Range& extent, double zoom, cairo_content_t contentType) {
-    assert(dpiInfo);
-    assert(extent.isValid() ||
-           ((std::cout << "Invalid range in Mask(): X  " << extent.minX << " -- " << extent.maxX << std::endl
-                       << "                         Y  " << extent.minY << " -- " << extent.maxY << std::endl) &&
-            false));
-    assert(zoom > 0.0);
+    xoj_assert(dpiInfo);
+    xoj_assert_message(extent.isValid(), std::string("Invalid range in Mask(): X  ") + std::to_string(extent.minX) +
+                                                 " -- " + std::to_string(extent.maxX) +
+                                                 "\n                             Y  " + std::to_string(extent.minY) +
+                                                 " -- " + std::to_string(extent.maxY));
+    xoj_assert(zoom > 0.0);
 
     const int width = static_cast<int>(std::ceil(extent.maxX * zoom)) - xOffset;
     const int height = static_cast<int>(std::ceil(extent.maxY * zoom)) - yOffset;
@@ -104,14 +104,14 @@ auto Mask::get() -> cairo_t* { return cr.get(); }
 bool Mask::isInitialized() const { return cr; }
 
 void Mask::blitTo(cairo_t* targetCr) const {
-    assert(isInitialized());
+    xoj_assert(isInitialized());
     xoj::util::CairoSaveGuard guard(targetCr);
     cairo_scale(targetCr, 1. / zoom, 1. / zoom);
     cairo_mask_surface(targetCr, cairo_get_target(const_cast<cairo_t*>(cr.get())), xOffset, yOffset);
 }
 
 void Mask::paintTo(cairo_t* targetCr) const {
-    assert(isInitialized());
+    xoj_assert(isInitialized());
     xoj::util::CairoSaveGuard guard(targetCr);
     cairo_scale(targetCr, 1. / zoom, 1. / zoom);
     cairo_set_source_surface(targetCr, cairo_get_target(const_cast<cairo_t*>(cr.get())), xOffset, yOffset);
@@ -119,7 +119,7 @@ void Mask::paintTo(cairo_t* targetCr) const {
 }
 
 void Mask::wipe() {
-    assert(isInitialized());
+    xoj_assert(isInitialized());
     xoj::util::CairoSaveGuard saveGuard(cr.get());
     cairo_set_operator(cr.get(), CAIRO_OPERATOR_CLEAR);
     cairo_paint(cr.get());
@@ -131,7 +131,7 @@ void Mask::wipe() {
 }
 
 void Mask::wipeRange(const Range& rg) {
-    assert(isInitialized());
+    xoj_assert(isInitialized());
     xoj::util::CairoSaveGuard saveGuard(cr.get());
     cairo_rectangle(cr.get(), rg.minX, rg.minY, rg.getWidth(), rg.getHeight());
     cairo_clip(cr.get());

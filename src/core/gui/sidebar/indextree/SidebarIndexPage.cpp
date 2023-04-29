@@ -10,6 +10,7 @@
 #include "gui/sidebar/previews/base/SidebarToolbar.h"  // for SidebarToolbar
 #include "model/Document.h"                            // for Document
 #include "model/LinkDestination.h"                     // for XojLinkDest
+#include "util/Assert.h"                               // for xoj_assert
 #include "util/i18n.h"                                 // for _
 
 SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
@@ -52,7 +53,7 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
     g_object_set(G_OBJECT(renderer), "style", PANGO_STYLE_ITALIC, nullptr);
 
     this->selectHandler = g_signal_connect(treeViewBookmarks, "cursor-changed", G_CALLBACK(treeBookmarkSelected), this);
-    g_assert(this->selectHandler != 0);
+    xoj_assert(this->selectHandler != 0);
 
     gtk_widget_show(this->treeViewBookmarks);
 

@@ -18,6 +18,7 @@
 #include "undo/CopyUndoAction.h"                                // for CopyU...
 #include "undo/SwapUndoAction.h"                                // for SwapU...
 #include "undo/UndoRedoHandler.h"                               // for UndoR...
+#include "util/Assert.h"                                        // for xoj_assert
 #include "util/Util.h"                                          // for npos
 #include "util/i18n.h"                                          // for _
 
@@ -39,7 +40,7 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
 
     for (const auto& pair: ctxMenuActions) {
         GtkWidget* const entry = gui->get(pair.first);
-        g_assert(entry != nullptr);
+        xoj_assert(entry != nullptr);
 
         // Unfortunately, we need a fairly complicated mechanism to keep track
         // of which action we want to execute.
@@ -58,8 +59,8 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
             this->contextMenuMoveUp = entry;
         }
     }
-    g_assert(this->contextMenuMoveDown != nullptr);
-    g_assert(this->contextMenuMoveUp != nullptr);
+    xoj_assert(this->contextMenuMoveDown != nullptr);
+    xoj_assert(this->contextMenuMoveUp != nullptr);
 }
 
 SidebarPreviewPages::~SidebarPreviewPages() {

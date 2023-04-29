@@ -7,6 +7,7 @@
 #include "control/DeviceListHelper.h"        // for InputDevice
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
+#include "util/Assert.h"                     // for xoj_assert
 
 class GladeSearchpath;
 
@@ -44,7 +45,7 @@ void DeviceClassConfigGui::show(GtkWindow* parent) {
 
 void DeviceClassConfigGui::saveSettings() {
     const gchar* deviceClassId = gtk_combo_box_get_active_id(GTK_COMBO_BOX(this->cbDeviceClass));
-    g_assert(deviceClassId != nullptr);
+    xoj_assert(deviceClassId != nullptr);
     auto deviceClass = static_cast<InputDeviceTypeOption>(g_ascii_strtoll(deviceClassId, nullptr, 10));
     this->settings->setDeviceClassForDevice(this->device.getName(), this->device.getSource(), deviceClass);
 }

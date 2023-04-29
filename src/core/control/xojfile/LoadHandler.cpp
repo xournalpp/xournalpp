@@ -1,7 +1,6 @@
 #include "LoadHandler.h"
 
 #include <algorithm>    // for copy
-#include <cassert>      // for assert
 #include <cmath>        // for isnan
 #include <cstdlib>      // for atoi, size_t
 #include <cstring>      // for strcmp, strlen
@@ -25,6 +24,7 @@
 #include "model/TexImage.h"                    // for TexImage
 #include "model/Text.h"                        // for Text
 #include "model/XojPage.h"                     // for XojPage
+#include "util/Assert.h"                       // for xoj_assert
 #include "util/GzUtil.h"                       // for GzUtil
 #include "util/LoopUtil.h"
 #include "util/PlaceholderString.h"  // for PlaceholderString
@@ -195,7 +195,7 @@ auto LoadHandler::closeFile() -> bool {
         return static_cast<bool>(gzclose(this->gzFp));
     }
 
-    g_assert(this->zipContentFile != nullptr);
+    xoj_assert(this->zipContentFile != nullptr);
     zip_fclose(this->zipContentFile);
     int zipError = zip_close(this->zipFp);
     return zipError == 0;
@@ -209,7 +209,7 @@ auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
         return gzread(this->gzFp, buffer, static_cast<unsigned int>(len));
     }
 
-    g_assert(this->zipContentFile != nullptr);
+    xoj_assert(this->zipContentFile != nullptr);
     zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
     if (lengthRead > 0) {
         return lengthRead;
@@ -707,7 +707,7 @@ void LoadHandler::parseImage() {
     double right = LoadHandlerHelper::getAttribDouble("right", this);
     double bottom = LoadHandlerHelper::getAttribDouble("bottom", this);
 
-    g_assert(this->image == nullptr);
+    xoj_assert(this->image == nullptr);
     this->image = new Image();
     this->layer->addElement(this->image);
     this->image->setX(left);
@@ -927,7 +927,7 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
         handler->pos = PARSER_POS_IN_LAYER;
         handler->text = nullptr;
     } else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(elementName, "image") == 0) {
-        g_assert(handler->image->getImage() != nullptr && "image can't be rendered");
+        xoj_assert_message(handler->image->getImage() != nullptr, "image can't be rendered");
         handler->pos = PARSER_POS_IN_LAYER;
         handler->image = nullptr;
     } else if (handler->pos == PARSER_POS_IN_TEXIMAGE && strcmp(elementName, "teximage") == 0) {
@@ -952,7 +952,7 @@ void LoadHandler::fixNullPressureValues() {
     auto& pts = stroke->getPointVector();
     if (pressureBuffer.size() >= pts.size()) {
         // Too many pressure values. Drop the last ones
-        assert(pts.size() >= 2);  // An error has already been returned otherwise
+        xoj_assert(pts.size() >= 2);  // An error has already been returned otherwise
         pressureBuffer.resize(pts.size() - 1);
     }
 
@@ -975,7 +975,7 @@ void LoadHandler::fixNullPressureValues() {
         // nextNonPositive == pressureBuffer.end()
         ps.emplace_back(*std::next(pts.begin(), std::distance(pressureBuffer.begin(), nextNonPositive)));
 
-        assert(ps.size() == nValidPressureValues + 1);
+        xoj_assert(ps.size() == nValidPressureValues + 1);
         strokePortions.emplace_back(std::move(ps));
 
         if (nextNonPositive == pressureBuffer.end()) {
@@ -1088,7 +1088,7 @@ auto LoadHandler::parseBase64(const gchar* base64, gsize length) -> string {
 }
 
 void LoadHandler::readImage(const gchar* base64string, gsize base64stringLen) {
-    g_assert(this->image != nullptr);
+    xoj_assert(this->image != nullptr);
     if (base64stringLen == 0 || (base64stringLen == 1 && base64string[0] == '\n') || this->image->hasData()) {
         return;
     }

@@ -1,20 +1,20 @@
 #include "StrokeView.h"
 
 #include <algorithm>  // for max
-#include <cassert>    // for assert
 #include <cmath>      // for ceil
 
 #include <glib.h>  // for g_warning
 
-#include "model/Stroke.h"     // for Stroke, StrokeTool::HIGHLIGHTER
-#include "util/Color.h"       // for cairo_set_source_rgbi
-#include "util/Rectangle.h"   // for Rectangle
-#include "view/Mask.h"        // for Mask
-#include "view/View.h"        // for Context, OPACITY_NO_AUDIO, view
+#include "model/Stroke.h"    // for Stroke, StrokeTool::HIGHLIGHTER
+#include "util/Assert.h"     // for xoj_assert
+#include "util/Color.h"      // for cairo_set_source_rgbi
+#include "util/Rectangle.h"  // for Rectangle
+#include "view/Mask.h"       // for Mask
+#include "view/View.h"       // for Context, OPACITY_NO_AUDIO, view
 
 #include "ErasableStrokeView.h"  // for ErasableStrokeView
 #include "StrokeViewHelper.h"
-#include "filesystem.h"          // for path
+#include "filesystem.h"  // for path
 
 class ErasableStroke;
 
@@ -65,7 +65,7 @@ void StrokeView::draw(const Context& ctx) const {
         cairo_matrix_t matrix;
         cairo_get_matrix(ctx.cr, &matrix);
         // We assume the matrix is diagonal (i.e. only scaling, no rotation)
-        assert(matrix.xy == 0 && matrix.yx == 0);
+        xoj_assert(matrix.xy == 0 && matrix.yx == 0);
 
         const double zoom = std::max(matrix.xx, matrix.yy);
 
