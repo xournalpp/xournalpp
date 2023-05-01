@@ -22,6 +22,10 @@ struct InputEvent;
 
 class TouchInputHandler: public AbstractInputHandler {
 private:
+    int numTouches = 0;
+    bool valid = true;
+    bool zooming = false;
+
     GdkEventSequence* primarySequence{};
     GdkEventSequence* secondarySequence{};
 
@@ -48,5 +52,6 @@ public:
     ~TouchInputHandler() override = default;
 
     bool handleImpl(InputEvent const& event) override;
+    void onBlock() override;
     void onUnblock() override;
 };

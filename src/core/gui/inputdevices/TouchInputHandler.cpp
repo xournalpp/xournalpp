@@ -22,23 +22,18 @@ TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputH
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
 
-    // Don't handle more then 2 inputs
-    if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
-        this->secondarySequence != event.sequence) {
-        return false;
-    }
-
     if (event.type == BUTTON_PRESS_EVENT) {
+        this->numTouches++;
+
         // Start scrolling when a sequence starts and we currently have none other
-        if (this->primarySequence == nullptr && this->secondarySequence == nullptr) {
+        if (this->valid && this->numTouches == 1) {
             this->primarySequence = event.sequence;
 
             // Set sequence data
             sequenceStart(event);
         }
         // Start zooming as soon as we have two sequences.
-        else if (this->primarySequence && this->primarySequence != event.sequence &&
-                 this->secondarySequence == nullptr) {
+        else if (this->valid && this->numTouches == 2) {
             this->secondarySequence = event.sequence;
 
             // Set sequence data
@@ -51,9 +46,18 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
                 zoomStart();
             }
         }
+        // All touches are invalid now
+        else {
+            if (this->zooming) {
+                zoomEnd();
+            }
+            this->primarySequence = this->secondarySequence = nullptr;
+            this->valid = false;
+            return false;
+        }
     }
 
-    if (event.type == MOTION_EVENT && this->primarySequence) {
+    if (this->valid && event.type == MOTION_EVENT && this->primarySequence) {
         if (this->primarySequence && this->secondarySequence && zoomGesturesEnabled) {
             zoomMotion(event);
         } else if (event.sequence == this->primarySequence) {
@@ -64,8 +68,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     if (event.type == BUTTON_RELEASE_EVENT) {
-        // Only stop zooing if both sequences were active (we were scrolling)
-        if (this->primarySequence != nullptr && this->secondarySequence != nullptr && zoomGesturesEnabled) {
+        if (valid && zooming) {
             zoomEnd();
         }
 
@@ -79,6 +82,10 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             this->priLastRel = this->secLastRel;
         } else {
             this->secondarySequence = nullptr;
+        }
+
+        if(--this->numTouches == 0) {
+            this->valid = true;
         }
     }
 
@@ -116,6 +123,7 @@ void TouchInputHandler::scrollMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomStart() {
+    this->zooming = true;
     auto center = (this->priLastRel + this->secLastRel) / 2.0;
 
     this->startZoomDistance = this->priLastAbs.distance(this->secLastAbs);
@@ -175,11 +183,21 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomEnd() {
+    this->zooming = false;
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
     zoomControl->endZoomSequence();
 }
 
+void TouchInputHandler::onBlock() {
+    if (this->zooming) {
+        zoomEnd();
+    }
+}
+
 void TouchInputHandler::onUnblock() {
+    this->numTouches = 0;
+    this->valid = true;
+
     this->primarySequence = nullptr;
     this->secondarySequence = nullptr;
 
