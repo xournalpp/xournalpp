@@ -353,9 +353,6 @@ public:
 
     ButtonConfig* getButtonConfig(unsigned int id);
 
-    std::string const& getFullscreenHideElements() const;
-    void setFullscreenHideElements(std::string elements);
-
     void setViewMode(ViewModeId mode, ViewMode ViewMode);
 
     Color getBorderColor() const;
