@@ -287,6 +287,16 @@ public:
     int getAddHorizontalSpaceAmount() const;
     void setAddHorizontalSpaceAmount(int pixels);
 
+    bool getAddVerticalSpaceBelow() const;
+    void setAddVerticalSpaceBelow(bool space);
+    int getAddVerticalSpaceAmountBelow() const;
+    void setAddVerticalSpaceAmountBelow(int pixels);
+
+    bool getAddHorizontalSpaceLeft() const;
+    void setAddHorizontalSpaceLeft(bool space);
+    int getAddHorizontalSpaceAmountLeft() const;
+    void setAddHorizontalSpaceAmountLeft(int pixels);
+
     bool getDrawDirModsEnabled() const;
     void setDrawDirModsEnabled(bool enable);
     int getDrawDirModsRadius() const;
@@ -859,23 +869,42 @@ private:
     bool autosaveEnabled{};
 
     /**
-     * Allow scroll outside the page display area (horizontal)
+     * Allow scroll outside the page display area (horizontal, right)
      */
     bool addHorizontalSpace{};
 
     /**
-     * How much allowance to scroll outside the page display area (either side of )
+     * How much allowance to scroll outside the page display area on the right
      */
     int addHorizontalSpaceAmount{};
 
     /**
-     * Allow scroll outside the page display area (vertical)
+     * Allow scroll outside the page display area (vertical, above)
      */
     bool addVerticalSpace{};
 
-    /** How much allowance to scroll outside the page display area (above and below)
+    /** How much allowance to scroll outside the page display area above
      */
     int addVerticalSpaceAmount{};
+
+    /**
+     * Allow scroll outside the page display area (horizontal, left)
+     */
+    bool addHorizontalSpaceLeft{};
+
+    /**
+     * How much allowance to scroll outside the page display area on the left
+     */
+    int addHorizontalSpaceAmountLeft{};
+
+    /**
+     * Allow scroll outside the page display area (vertical, below)
+     */
+    bool addVerticalSpaceBelow{};
+
+    /** How much allowance to scroll outside the page display area below
+     */
+    int addVerticalSpaceAmountBelow{};
 
     /**
      * Emulate modifier keys based on initial direction of drawing tool ( for Rectangle, Ellipse etc. )
