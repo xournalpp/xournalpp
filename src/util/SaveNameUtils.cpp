@@ -1,9 +1,5 @@
 #include "util/SaveNameUtils.h"
 
-#include <sstream>            // for stringstream
-#include <chrono>             // for time
-#include <iomanip>            // for put_time
-
 #include "util/PathUtil.h"    // for clearExtensions
 
 
@@ -34,14 +30,9 @@ auto SaveNameUtils::parseWildcard(const std::string& wildcard, const fs::path& d
         return path.u8string();
     }
     if (wildcard == WILDCARD_DATE || wildcard == WILDCARD_TIME) {
-        std::time_t time = std::chrono::system_clock::to_time_t(
-            std::chrono::system_clock::now()
-        );
-        std::stringstream timestring;
-        timestring << std::put_time(std::localtime(&time),
-                                wildcard == WILDCARD_DATE ? "%Y-%m-%d" : "%X");
-        return timestring.str();
-    } 
+        // Backwards compatibility: redirect to std::chrono placeholders
+        return wildcard == WILDCARD_DATE ? "%F" : "%X";
+    }
     // not a valid wildcard
     return "";
 }
