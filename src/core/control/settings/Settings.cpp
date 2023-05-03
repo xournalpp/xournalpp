@@ -1543,14 +1543,24 @@ void Settings::setAutoloadPdfXoj(bool load) {
 
 auto Settings::getDefaultSaveName() const -> string const& { return this->defaultSaveName; }
 
-auto Settings::getDefaultPdfExportName() const -> string const& { return this->defaultPdfExportName; }
-
 void Settings::setDefaultSaveName(const string& name) {
     if (this->defaultSaveName == name) {
         return;
     }
 
     this->defaultSaveName = name;
+
+    save();
+}
+
+auto Settings::getDefaultPdfExportName() const -> string const& { return this->defaultPdfExportName; }
+
+void Settings::setDefaultPdfExportName(const string& name) {
+    if (this->defaultPdfExportName == name) {
+        return;
+    }
+
+    this->defaultPdfExportName = name;
 
     save();
 }

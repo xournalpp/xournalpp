@@ -506,6 +506,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                             <property name="name">txtDefaultSaveName</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
+                                            <property name="placeholder-text">%F-Note-%H-%M</property>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -535,7 +536,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                                 <property name="name">lbDefaultSavename</property>
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">%F-Note-%H-%M</property>
+                                                <property name="label">%F-Note-%H-%M</property>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -570,19 +571,19 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
 %H		Hour in 24h format (00-23)
 %I		Hour in 12h format (01-12)
 %j		Day of the year (001-366)
-%m		Month as a decimal number (01-12)
-%M		Minute (00-59)
+%m	Month as a decimal number (01-12)
+%M	Minute (00-59)
 %p		AM or PM designation (e.g. PM)
 %S		Second (00-61)
 %U		Week number with the first Sunday as the first day of week one (00-53)
 %w		Weekday as a decimal number with Sunday as 0 (0-6)
-%W		Week number with the first Monday as the first day of week one (00-53)
+%W	Week number with the first Monday as the first day of week one (00-53)
 %x		Date representation (e.g. 08/23/01)
 %X		Time representation (e.g. 14:55:02)
 %y		Year, last two digits (00-99)
 %Y		Year (e.g. 2001)
 %Z		Timezone name or abbreviation (e.g. CDT)
-%%		A % sign</property>
+%%	A % sign</property>
                                                 <property name="xalign">0</property>
                                               </object>
                                             </child>
@@ -641,6 +642,174 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="sid9">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.009999999776482582</property>
+                                <child>
+                                  <object class="GtkBox" id="vbox2">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkLabel" id="label5">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label" translatable="yes">&lt;i&gt;This name will be proposed if you export a document to PDF.&lt;/i&gt;</property>
+                                        <property name="use-markup">True</property>
+                                        <property name="wrap">True</property>
+                                        <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkEntry" id="txtDefaultPdfName">
+                                        <property name="name">txtDefaultSaveName</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="placeholder-text">%{name}_annotated</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkBox" id="box2">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <child>
+                                          <object class="GtkLabel" id="label6">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Default name: </property>
+                                            <property name="use-markup">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lbDefaultSavename1">
+                                            <property name="name">lbDefaultSavename</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label">%{name}_annotated</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">2</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkExpander" id="expander2">
+                                        <property name="name">expander1</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="label7">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">%{name}	The name of the exported document
+%a			Abbreviated weekday name (e.g. Thu)
+%A			Full weekday name (e.g. Thursday)
+%b			Abbreviated month name (e.g. Aug)
+%B			Full month name (e.g. August)
+%c			Date and time representation (e.g. Thu Aug 23 14:55:02 2001)
+%d			Day of the month (01-31)
+%F			Date representation (e.g. 2001-08-23)
+%H			Hour in 24h format (00-23)
+%I			Hour in 12h format (01-12)
+%j			Day of the year (001-366)
+%m		Month as a decimal number (01-12)
+%M		Minute (00-59)
+%p			AM or PM designation (e.g. PM)
+%S			Second (00-61)
+%U			Week number with the first Sunday as the first day of week one (00-53)
+%w			Weekday as a decimal number with Sunday as 0 (0-6)
+%W		Week number with the first Monday as the first day of week one (00-53)
+%x			Date representation (e.g. 08/23/01)
+%X			Time representation (e.g. 14:55:02 or 2:55:02 PM)
+%y			Year, last two digits (00-99)
+%Y			Year (e.g. 2001)
+%Z			Timezone name or abbreviation (e.g. CDT)
+%%		A % sign</property>
+                                            <property name="xalign">0</property>
+                                          </object>
+                                        </child>
+                                        <child type="label">
+                                          <object class="GtkBox" id="box3">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <child>
+                                              <object class="GtkImage" id="image3">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="icon-name">dialog-information</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="label11">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Available Placeholders</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="padding">10</property>
+                                        <property name="position">3</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="sid75">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Default Pdf export name</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                             <child>
@@ -709,7 +878,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">2</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                           </object>
@@ -3865,9 +4034,9 @@ This setting can make it easier to draw with touch. </property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbShowPresentationSidebar">
-                                            <property name="label" translatable="yes">Show Sidebar</property>
-                                            <property name="name">cbShowPresentationSidebar</property>
+                                          <object class="GtkCheckButton" id="cbPresentationGoFullscreen">
+                                            <property name="label" translatable="yes">Go Fullscreen</property>
+                                            <property name="name">cbPresentationGoFullscreen</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
@@ -3881,9 +4050,9 @@ This setting can make it easier to draw with touch. </property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbPresentationGoFullscreen">
-                                            <property name="label" translatable="yes">Go Fullscreen</property>
-                                            <property name="name">cbPresentationGoFullscreen</property>
+                                          <object class="GtkCheckButton" id="cbShowPresentationSidebar">
+                                            <property name="label" translatable="yes">Show Sidebar</property>
+                                            <property name="name">cbShowPresentationSidebar</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>

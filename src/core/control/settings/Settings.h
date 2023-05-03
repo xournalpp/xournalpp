@@ -350,6 +350,7 @@ public:
     void setDefaultSaveName(const std::string& name);
 
     std::string const& getDefaultPdfExportName() const;
+    void setDefaultPdfExportName(const std::string& name);
 
     ButtonConfig* getButtonConfig(unsigned int id);
 

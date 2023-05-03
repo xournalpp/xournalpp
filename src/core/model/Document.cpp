@@ -131,29 +131,30 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
 }
 
 auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPdfName) -> fs::path {
-    if (!filepath.empty()) {
-        // This can be any extension
-        fs::path p = filepath.filename();
-        Util::clearExtensions(p);
-        return p;
-    }
-    if (!pdfFilepath.empty()) {
-        if (type != Document::PDF) {
+    std::string wildcardString;
+    if (type != Document::PDF) {
+        if (!filepath.empty()) {
+            // This can be any extension
+            fs::path p = filepath.filename();
+            Util::clearExtensions(p);
+            return p;
+        }
+        if (!pdfFilepath.empty()) {
             fs::path p = pdfFilepath.filename();
             Util::clearExtensions(p, ".pdf");
             return p;
         }
-        auto saveString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->pdfFilepath.filename());
-        if (!this->attachPdf) {
-            saveString += ".pdf";
-        }
-        return saveString;
+    } else if (!pdfFilepath.empty()) {
+        wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->pdfFilepath.filename());
+    } else if (!filepath.empty()) {
+        wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->filepath.filename());
     }
 
+    const char* format = wildcardString.empty() ? defaultSaveName.c_str() : wildcardString.c_str();
 
     time_t curtime = time(nullptr);
     char stime[128];
-    strftime(stime, sizeof(stime), defaultSaveName.c_str(), localtime(&curtime));
+    strftime(stime, sizeof(stime), format, localtime(&curtime));
 
     // Remove the extension, file format is handled by the filter combo box
     fs::path p = stime;
