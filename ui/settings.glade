@@ -41,6 +41,12 @@
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentHorizontalSpaceLeft">
+    <property name="upper">1000</property>
+    <property name="value">150</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentIgnoreStylusEvents">
     <property name="lower">1</property>
     <property name="upper">1000</property>
@@ -183,6 +189,12 @@
     <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentVerticalSpace">
+    <property name="upper">1000</property>
+    <property name="value">150</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentVerticalSpaceBelow">
     <property name="upper">1000</property>
     <property name="value">150</property>
     <property name="step-increment">1</property>
@@ -4637,6 +4649,7 @@ This setting can make it easier to draw with touch. </property>
                                           <object class="GtkLabel" id="label37">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
+                                            <property name="ypad">2</property>
                                             <property name="label" translatable="yes">&lt;i&gt;If you add additional space beside the pages you can choose the area of the screen you would like to work on.&lt;/i&gt;</property>
                                             <property name="use-markup">True</property>
                                             <property name="wrap">True</property>
@@ -4650,7 +4663,7 @@ This setting can make it easier to draw with touch. </property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <!-- n-columns=3 n-rows=3 -->
+                                          <!-- n-columns=3 n-rows=4 -->
                                           <object class="GtkGrid" id="sid139">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
@@ -4729,7 +4742,7 @@ This setting can make it easier to draw with touch. </property>
                                               <object class="GtkLabel" id="sid140">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">pixels</property>
+                                                <property name="label" translatable="yes">pixels above all pages</property>
                                               </object>
                                               <packing>
                                                 <property name="left-attach">2</property>
@@ -4740,7 +4753,8 @@ This setting can make it easier to draw with touch. </property>
                                               <object class="GtkLabel" id="sid141">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">pixels</property>
+                                                <property name="label" translatable="yes">pixels to the right</property>
+                                                <property name="xalign">2.2351741291171123e-10</property>
                                               </object>
                                               <packing>
                                                 <property name="left-attach">2</property>
@@ -4748,13 +4762,95 @@ This setting can make it easier to draw with touch. </property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <placeholder/>
+                                              <object class="GtkCheckButton" id="cbAddVerticalSpaceBelow">
+                                                <property name="name">cbAddVerticalSpaceBelow</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="receives-default">False</property>
+                                                <property name="xalign">0</property>
+                                                <property name="draw-indicator">True</property>
+                                                <child>
+                                                  <object class="GtkLabel" id="label5">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">False</property>
+                                                    <property name="label" translatable="yes">Add additional vertical space of</property>
+                                                    <property name="use-markup">True</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">0</property>
+                                                <property name="top-attach">2</property>
+                                              </packing>
                                             </child>
                                             <child>
-                                              <placeholder/>
+                                              <object class="GtkSpinButton" id="spAddVerticalSpaceBelow">
+                                                <property name="name">spAddHorizontalSpace</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="adjustment">adjustmentVerticalSpaceBelow</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">1</property>
+                                                <property name="top-attach">2</property>
+                                              </packing>
                                             </child>
                                             <child>
-                                              <placeholder/>
+                                              <object class="GtkSpinButton" id="spAddHorizontalSpaceLeft">
+                                                <property name="name">spAddHorizontalSpace</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="adjustment">adjustmentHorizontalSpaceLeft</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">1</property>
+                                                <property name="top-attach">3</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkCheckButton" id="cbAddHorizontalSpaceLeft">
+                                                <property name="name">cbAddHorizontalSpaceRight</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="receives-default">False</property>
+                                                <property name="xalign">0</property>
+                                                <property name="draw-indicator">True</property>
+                                                <child>
+                                                  <object class="GtkLabel" id="label7">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">False</property>
+                                                    <property name="label" translatable="yes">Add additional horizontal space of</property>
+                                                    <property name="use-markup">True</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">0</property>
+                                                <property name="top-attach">3</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="sid9">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">pixels to the left</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">2</property>
+                                                <property name="top-attach">3</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="sid15">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">pixels below all pages</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">2</property>
+                                                <property name="top-attach">2</property>
+                                              </packing>
                                             </child>
                                           </object>
                                           <packing>

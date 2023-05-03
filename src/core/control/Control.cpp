@@ -2172,6 +2172,10 @@ void Control::showSettings() {
     int verticalSpaceAmount = settings->getAddVerticalSpaceAmount();
     bool horizontalSpace = settings->getAddHorizontalSpace();
     int horizontalSpaceAmount = settings->getAddHorizontalSpaceAmount();
+    bool verticalSpaceBelow = settings->getAddVerticalSpaceBelow();
+    int verticalSpaceAmountBelow = settings->getAddVerticalSpaceAmountBelow();
+    bool horizontalSpaceLeft = settings->getAddHorizontalSpaceLeft();
+    int horizontalSpaceAmountLeft = settings->getAddHorizontalSpaceAmountLeft();
     StylusCursorType stylusCursorType = settings->getStylusCursorType();
     bool highlightPosition = settings->isHighlightPosition();
     SidebarNumberingStyle sidebarStyle = settings->getSidebarNumberingStyle();
@@ -2185,8 +2189,12 @@ void Control::showSettings() {
     }
 
     if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace() ||
+        verticalSpaceBelow != settings->getAddVerticalSpaceBelow() ||
+        horizontalSpaceLeft != settings->getAddHorizontalSpaceLeft() ||
         verticalSpaceAmount != settings->getAddVerticalSpaceAmount() ||
-        horizontalSpaceAmount != settings->getAddHorizontalSpaceAmount()) {
+        horizontalSpaceAmount != settings->getAddHorizontalSpaceAmount() ||
+        verticalSpaceAmountBelow != settings->getAddVerticalSpaceAmountBelow() ||
+        horizontalSpaceAmountLeft != settings->getAddHorizontalSpaceAmountLeft()) {
         win->getXournal()->layoutPages();
         scrollHandler->scrollToPage(getCurrentPageNo());
     }

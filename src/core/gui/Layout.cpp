@@ -186,11 +186,15 @@ void Layout::recalculate_int() const {
     // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
     auto const vPadding =
             sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmount(), settings->getAddVerticalSpace());
+    auto const totalVPadding = sumIf(vPadding + XOURNAL_PADDING, settings->getAddVerticalSpaceAmountBelow(),
+                                     settings->getAddVerticalSpaceBelow());
     auto const hPadding =
             sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
+    auto const totalHPadding = sumIf(hPadding + XOURNAL_PADDING, settings->getAddHorizontalSpaceAmountLeft(),
+                                     settings->getAddHorizontalSpaceLeft());
 
-    pc.minWidth = as_unsigned(2 * hPadding + as_signed_strict((pc.widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN));
-    pc.minHeight = as_unsigned(2 * vPadding + as_signed_strict((pc.heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN));
+    pc.minWidth = as_unsigned(totalHPadding + as_signed_strict((pc.widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN));
+    pc.minHeight = as_unsigned(totalVPadding + as_signed_strict((pc.heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN));
 
     pc.minWidth = floor_cast<size_t>(std::accumulate(begin(pc.widthCols), end(pc.widthCols), double(pc.minWidth)));
     pc.minHeight = floor_cast<size_t>(std::accumulate(begin(pc.heightRows), end(pc.heightRows), double(pc.minHeight)));

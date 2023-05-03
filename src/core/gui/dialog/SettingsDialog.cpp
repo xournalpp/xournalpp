@@ -94,6 +94,18 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("cbAddVerticalSpaceBelow"), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbAddVerticalSpaceBelow", "spAddVerticalSpaceBelow");
+                     }),
+                     this);
+
+    g_signal_connect(get("cbAddHorizontalSpaceLeft"), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbAddHorizontalSpaceLeft", "spAddHorizontalSpaceLeft");
+                     }),
+                     this);
+
     g_signal_connect(get("cbDrawDirModsEnabled"), "toggled",
                      G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
                          self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
@@ -350,6 +362,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
     loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
     loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
+    loadCheckbox("cbAddVerticalSpaceBelow", settings->getAddVerticalSpaceBelow());
+    loadCheckbox("cbAddHorizontalSpaceLeft", settings->getAddHorizontalSpaceLeft());
     loadCheckbox("cbDrawDirModsEnabled", settings->getDrawDirModsEnabled());
     loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
     loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());
@@ -451,6 +465,12 @@ void SettingsDialog::load() {
 
     GtkWidget* spAddVerticalSpace = get("spAddVerticalSpace");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddVerticalSpace), settings->getAddVerticalSpaceAmount());
+
+    GtkWidget* spAddHorizontalSpaceLeft = get("spAddHorizontalSpaceLeft");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddHorizontalSpaceLeft), settings->getAddHorizontalSpaceAmountLeft());
+
+    GtkWidget* spAddVerticalSpaceBelow = get("spAddVerticalSpaceBelow");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAddVerticalSpaceBelow), settings->getAddVerticalSpaceAmountBelow());
 
     GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spDrawDirModsRadius), settings->getDrawDirModsRadius());
@@ -571,6 +591,8 @@ void SettingsDialog::load() {
     enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
     enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
     enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
+    enableWithCheckbox("cbAddVerticalSpaceBelow", "spAddVerticalSpaceBelow");
+    enableWithCheckbox("cbAddHorizontalSpaceLeft", "spAddHorizontalSpaceLeft");
     enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
     enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
     enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
@@ -674,6 +696,8 @@ void SettingsDialog::save() {
     settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
     settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
     settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
+    settings->setAddVerticalSpaceBelow(getCheckbox("cbAddVerticalSpaceBelow"));
+    settings->setAddHorizontalSpaceLeft(getCheckbox("cbAddHorizontalSpaceLeft"));
     settings->setDrawDirModsEnabled(getCheckbox("cbDrawDirModsEnabled"));
     settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
     settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
@@ -865,6 +889,17 @@ void SettingsDialog::save() {
     GtkWidget* spAddVerticalSpace = get("spAddVerticalSpace");
     int addVerticalSpaceAmount = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddVerticalSpace)));
     settings->setAddVerticalSpaceAmount(addVerticalSpaceAmount);
+
+    GtkWidget* spAddHorizontalSpaceLeft = get("spAddHorizontalSpaceLeft");
+    int addHorizontalSpaceAmountLeft =
+            static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddHorizontalSpaceLeft)));
+    settings->setAddHorizontalSpaceAmountLeft(addHorizontalSpaceAmountLeft);
+
+    GtkWidget* spAddVerticalSpaceBelow = get("spAddVerticalSpaceBelow");
+    int addVerticalSpaceAmountBelow =
+            static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddVerticalSpaceBelow)));
+    settings->setAddVerticalSpaceAmountBelow(addVerticalSpaceAmountBelow);
+
 
     GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
     int drawDirModsRadius = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spDrawDirModsRadius)));
