@@ -22,38 +22,39 @@ TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputH
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
 
-    // Don't handle more then 2 inputs
-    if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
-        this->secondarySequence != event.sequence) {
-        return false;
-    }
-
     if (event.type == BUTTON_PRESS_EVENT) {
-        // Start scrolling when a sequence starts and we currently have none other
-        if (this->primarySequence == nullptr && this->secondarySequence == nullptr) {
-            this->primarySequence = event.sequence;
-
-            // Set sequence data
-            sequenceStart(event);
+        if (invalidActive.empty() && event.sequence != primarySequence && event.sequence != secondarySequence) {
+            // All touches are previously valid and we did not miss an end/cancel event for the current touch
+            if (primarySequence && secondarySequence) {
+                // All touches become invalid
+                invalidActive.insert({primarySequence, secondarySequence, event.sequence});
+                primarySequence = secondarySequence = nullptr;
+            } else {
+                if (primarySequence) {
+                    secondarySequence = event.sequence;
+                } else {
+                    primarySequence = event.sequence;
+                }
+                sequenceStart(event);
+                if (secondarySequence) {
+                    startZoomReady = true;
+                }
+            }
+        } else {
+            invalidActive.insert(event.sequence);
         }
-        // Start zooming as soon as we have two sequences.
-        else if (this->primarySequence && this->primarySequence != event.sequence &&
-                 this->secondarySequence == nullptr) {
-            this->secondarySequence = event.sequence;
-
-            // Even if zoom gestures are disabled,
-            // this is still the start of a sequence.
-
-            // Set sequence data
-            sequenceStart(event);
-
-            this->startZoomReady = true;
-        }
+        return true;
     }
 
-    if (event.type == MOTION_EVENT && this->primarySequence) {
-        if (this->primarySequence && this->secondarySequence && zoomGesturesEnabled) {
-            if (this->startZoomReady) {
+    if (event.type == MOTION_EVENT) {
+        // NOTE: the first MOTION_EVENT from x11 touch input has sequence ID 0
+        if (primarySequence == event.sequence && !secondarySequence) {
+            scrollMotion(event);
+            return true;
+        } else if (event.sequence && zoomGesturesEnabled &&
+                   (primarySequence == event.sequence || secondarySequence == event.sequence)) {
+            xoj_assert(primarySequence);
+            if (startZoomReady) {
                 if (this->primarySequence == event.sequence) {
                     sequenceStart(event);
                     zoomStart();
@@ -61,30 +62,29 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             } else {
                 zoomMotion(event);
             }
-        } else if (event.sequence == this->primarySequence) {
-            scrollMotion(event);
-        } else if (this->primarySequence && this->secondarySequence) {
-            sequenceStart(event);
+            return true;
         }
     }
 
     if (event.type == BUTTON_RELEASE_EVENT) {
-        // Only stop zooing if both sequences were active (we were scrolling)
-        if (this->primarySequence != nullptr && this->secondarySequence != nullptr && zoomGesturesEnabled) {
+        if (zooming && primarySequence && secondarySequence &&
+            (event.sequence == primarySequence || event.sequence == secondarySequence)) {
             zoomEnd();
         }
 
-        if (event.sequence == this->primarySequence) {
+        if (event.sequence == primarySequence) {
             // If secondarySequence is nullptr, this sets primarySequence
             // to nullptr. If it isn't, then it is now the primary sequence!
-            this->primarySequence = this->secondarySequence;
-            this->secondarySequence = nullptr;
+            primarySequence = std::exchange(secondarySequence, nullptr);
 
             this->priLastAbs = this->secLastAbs;
             this->priLastRel = this->secLastRel;
+        } else if (event.sequence == secondarySequence) {
+            secondarySequence = nullptr;
         } else {
-            this->secondarySequence = nullptr;
+            invalidActive.erase(event.sequence);
         }
+        return true;
     }
 
     return false;
@@ -121,6 +121,7 @@ void TouchInputHandler::scrollMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomStart() {
+    this->zooming = true;
     this->startZoomDistance = this->priLastAbs.distance(this->secLastAbs);
 
     if (this->startZoomDistance == 0.0) {
@@ -183,11 +184,19 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomEnd() {
+    this->zooming = false;
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
     zoomControl->endZoomSequence();
 }
 
+void TouchInputHandler::onBlock() {
+    if (this->zooming) {
+        zoomEnd();
+    }
+}
+
 void TouchInputHandler::onUnblock() {
+    this->invalidActive.clear();
     this->primarySequence = nullptr;
     this->secondarySequence = nullptr;
 
