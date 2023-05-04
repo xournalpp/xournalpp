@@ -12,6 +12,7 @@
 #pragma once
 
 #include <set>
+
 #include <gdk/gdk.h>  // for GdkEventSequence
 
 #include "util/Point.h"  // for Point
