@@ -47,6 +47,8 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
         dialog.preset(this->linkElement->getText(), this->linkElement->getUrl());
         int response = dialog.show();
         if (response == LinkDialog::CANCEL) {
+            this->linkElement->setInEditing(false);
+            page->fireElementChanged(this->linkElement);
             return;
         }
         this->linkElement->setText(dialog.getText());

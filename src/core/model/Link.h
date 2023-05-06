@@ -59,6 +59,8 @@ public:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
+    static constexpr double PADDING = 2.0;
+
 protected:
     void calcSize() const override;
 

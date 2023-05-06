@@ -17,16 +17,20 @@ auto LinkView::initPango(cairo_t* cr, const Link* l) -> xoj::util::GObjectSPtr<P
 }
 
 void LinkView::draw(const Context& ctx) const {
+    xoj::util::CairoSaveGuard saveGuard(ctx.cr);
+
     if (link->isInEditing()) {
-        return;
+        Util::cairo_set_source_rgbi(ctx.cr, LINE_COLOR);
+        cairo_rectangle(ctx.cr, link->getX(), link->getY(), link->getElementWidth(), link->getElementHeight());
+        cairo_set_line_width(ctx.cr, LINE_WIDTH);
+        cairo_stroke(ctx.cr);
     }
 
-    xoj::util::CairoSaveGuard saveGuard(ctx.cr);
 
     cairo_set_operator(ctx.cr, CAIRO_OPERATOR_SOURCE);
     Util::cairo_set_source_rgbi(ctx.cr, link->getColor());
 
-    cairo_translate(ctx.cr, link->getX(), link->getY());
+    cairo_translate(ctx.cr, link->getX() + (Link::PADDING / 2), link->getY() + (Link::PADDING / 2));
 
     auto layout = initPango(ctx.cr, link);
     const std::string& content = link->getText();

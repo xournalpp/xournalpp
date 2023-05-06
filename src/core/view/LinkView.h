@@ -13,6 +13,7 @@
 
 #include <pango/pangocairo.h>  // for PangoLayout, cairo_t
 
+#include "util/Color.h"  // for Color
 #include "util/raii/GObjectSPtr.h"
 
 #include "View.h"  // for ElementView
@@ -36,4 +37,7 @@ public:
 
 private:
     const Link* link;
+
+    static constexpr double LINE_WIDTH = 1.0;
+    static constexpr Color LINE_COLOR{255, 0, 0};
 };
