@@ -55,6 +55,6 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
         this->linkElement->setUrl(dialog.getURL());
         this->linkElement->sizeChanged();
         this->linkElement->setInEditing(false);
-        page->fireElementChanged(this->linkElement);
+        page->firePageChanged();
     }
 }
