@@ -103,7 +103,7 @@ XournalppCursor::XournalppCursor(Control* control): control(control) {
 	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
     cssCursors[CRSR_RESIZE              ] =     {"",""};            // "
-    cssCursors[CRSR_LINK                ] =     {"alias", "crosshair"};
+    cssCursors[CRSR_LINK                ] =     {"alias", "hand2"};
 };
 // clang-format on
 
@@ -302,7 +302,7 @@ void XournalppCursor::updateCursor() {
                 setCursor(CRSR_XTERM);
             }
         } else if (type == TOOL_LINK) {
-            setCursor(CRSR_LINK);
+            setCursor(CRSR_HAND2);
         } else if (type == TOOL_IMAGE) {
             setCursor(CRSR_TCROSS);
         } else if (type == TOOL_FLOATING_TOOLBOX) {
