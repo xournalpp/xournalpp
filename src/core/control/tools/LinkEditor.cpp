@@ -41,7 +41,8 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
 
     } else {
         std::cout << "Existing LinkElement to be edited!" << std::endl;
-
+        this->linkElement->setInEditing(true);
+        page->firePageChanged();
         LinkDialog dialog(this->control);
         dialog.preset(this->linkElement->getText(), this->linkElement->getUrl());
         int response = dialog.show();
@@ -50,6 +51,8 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
         }
         this->linkElement->setText(dialog.getText());
         this->linkElement->setUrl(dialog.getURL());
+        this->linkElement->sizeChanged();
+        this->linkElement->setInEditing(false);
         page->fireElementChanged(this->linkElement);
     }
 }

@@ -150,3 +150,5 @@ void Element::readSerialized(ObjectInputStream& in) {
 
     in.endObject();
 }
+
+void Element::sizeChanged() { this->sizeCalculated = false; }

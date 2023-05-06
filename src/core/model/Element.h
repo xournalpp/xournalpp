@@ -80,6 +80,11 @@ public:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
+    /**
+     * Ignore cached element size and recalculate on next request
+     */
+    void sizeChanged();
+
 private:
 protected:
     virtual void calcSize() const = 0;
