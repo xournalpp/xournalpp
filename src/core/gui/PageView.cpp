@@ -538,6 +538,25 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
+    } else if (h->getActiveTool()->getToolType() == TOOL_LINK) {
+
+        for (Element* e: this->page->getSelectedLayer()->getElements()) {
+            if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
+                Link* linkElement = dynamic_cast<Link*>(e);
+                linkElement->setInEditing(true);
+                this->page->fireElementChanged(linkElement);
+                GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
+                GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "alias");
+                gdk_window_set_cursor(window, cursor);
+            } else if (e->getType() == ELEMENT_LINK) {
+                Link* linkElement = dynamic_cast<Link*>(e);
+                linkElement->setInEditing(false);
+                this->page->fireElementChanged(linkElement);
+                GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
+                GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "hand2");
+                gdk_window_set_cursor(window, cursor);
+            }
+        }
     }
 
     return false;
