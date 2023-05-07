@@ -22,7 +22,7 @@ public:
     LinkEditor(Control* control, GtkWidget* xournalWidget);
     ~LinkEditor();
 
-    void startEditing(const PageRef& page, const int x, const int y);
+    void startEditing(const PageRef& page, const int x, const int y, const bool controlDown);
 
 private:
     Control* control;
