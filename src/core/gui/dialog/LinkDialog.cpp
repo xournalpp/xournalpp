@@ -5,6 +5,7 @@
 
 void okButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->okButtonPressed(btn); }
 void cancelButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->cancelButtonPressed(btn); }
+void textChanged(GtkTextBuffer* buffer, LinkDialog* dialog) { std::cout << "Text was changed!" << std::endl; };
 
 LinkDialog::LinkDialog(Control* control) {
     auto filepath = control->getGladeSearchPath()->findFile("", "linkDialog.glade");
@@ -20,6 +21,7 @@ LinkDialog::LinkDialog(Control* control) {
 
     g_signal_connect(G_OBJECT(okButton), "clicked", G_CALLBACK(okButtonClicked), this);
     g_signal_connect(G_OBJECT(cancelButton), "clicked", G_CALLBACK(cancelButtonClicked), this);
+    g_signal_connect(G_OBJECT(gtk_text_view_get_buffer(this->textInput)), "changed", G_CALLBACK(textChanged), this);
 }
 
 LinkDialog::~LinkDialog() { gtk_widget_destroy(GTK_WIDGET(linkDialog)); }
