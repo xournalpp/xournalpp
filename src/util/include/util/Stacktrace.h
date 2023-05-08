@@ -13,15 +13,12 @@
 
 #include <iostream>
 
+#include <fbbe/stacktrace.h>
+
 #include "filesystem.h"
 
-class Stacktrace {
-private:
-    Stacktrace();
-    virtual ~Stacktrace();
-
-public:
-    static fs::path getExePath();
-    static void printStracktrace();
-    static void printStracktrace(std::ostream& stream);
-};
+namespace Stacktrace {
+fs::path getExePath();
+void printStracktrace(fbbe::stacktrace const& stacktrace = fbbe::stacktrace::current());
+void printStracktrace(std::ostream& stream, fbbe::stacktrace const& stacktrace = fbbe::stacktrace::current());
+};  // namespace Stacktrace

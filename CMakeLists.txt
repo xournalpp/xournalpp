@@ -75,20 +75,19 @@ include(GitRepo)
 find_package(CXX17 REQUIRED COMPONENTS optional)
 find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
-find_package(Backtrace)
-if (Backtrace_FOUND)
-    ##############################
-    # stacktrace library
-    # Todo use platform independent stacktrace library
-    # Currently this works only for linux systems
-    ##############################
-    add_library(backtrace INTERFACE)
-    target_include_directories(backtrace INTERFACE ${Backtrace_INCLUDE_DIRS})
-    target_link_libraries(backtrace INTERFACE ${Backtrace_LIBRARIES})
-    target_link_options(backtrace INTERFACE $<$<AND:$<NOT:$<PLATFORM_ID:Windows>>,$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>>:-rdynamic>)
-    add_library(Backtrace::backtrace ALIAS backtrace)
-endif (Backtrace_FOUND)
-
+##############################
+# stacktrace library
+# Todo use platform independent stacktrace library
+# Currently this works only for linux systems
+##############################
+include(FetchContent)
+message("Fetch")
+FetchContent_Declare (
+    fbbe_stacktrace
+    GIT_REPOSITORY https://github.com/Febbe/stacktrace.git
+    GIT_TAG        main
+)
+FetchContent_MakeAvailable(fbbe_stacktrace)
 
 ##############################
 # other externals
@@ -188,7 +187,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:PkgConfig::GtkSourceView>:PkgConfig::GtkSourceView>
         $<$<TARGET_EXISTS:X11::Xi>:X11::Xi>
         $<$<TARGET_EXISTS:X11::X11>:X11::X11>
-        $<$<TARGET_EXISTS:Backtrace::backtrace>:Backtrace::backtrace>
+        fbbe::stacktrace
         ZLIB::ZLIB
         Threads::Threads
         )

@@ -76,9 +76,9 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
     if (path == nullptr) {
         return {};
     }
-    size_t pSize{0};
+    gsize pSize{0};
     GError* err{};
-    auto* u8Path = g_filename_to_utf8(path, std::strlen(path), nullptr, &pSize, &err);
+    auto* u8Path = g_filename_to_utf8(path, gssize(as_signed(std::strlen(path))), nullptr, &pSize, &err);
     if (err) {
         g_message("Failed to convert g_filename to utf8 with error code: %d\n%s", err->code, err->message);
         g_error_free(err);
@@ -93,7 +93,7 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 
 [[maybe_unused]] [[nodiscard]] inline std::string toGFilename(fs::path const& path) {
     auto u8path = path.u8string();
-    size_t pSize{0};
+    gsize pSize{0};
     GError* err{};
     auto* local = g_filename_from_utf8(u8path.c_str(), as_signed(u8path.size()), nullptr, &pSize, &err);
     if (err) {
