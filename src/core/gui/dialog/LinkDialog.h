@@ -32,10 +32,12 @@ public:
 public:
     void okButtonPressed(GtkButton* btn);
     void cancelButtonPressed(GtkButton* btn);
+    void textChanged(GtkTextBuffer* buffer);
 
 private:
     bool isTextValid(std::string text);
     bool isUrlValid(std::string url);
+
 
 private:
     GtkDialog* linkDialog = nullptr;
@@ -52,4 +54,9 @@ private:
 public:
     static constexpr int SUCCESS = 200;
     static constexpr int CANCEL = 400;
+
+    static constexpr int DEFAULT_HEIGHT = 180;
+    static constexpr int MAX_HEIGHT = 800;
+    static constexpr int ADDITIONAL_HEIGHT_PER_LINE = 15;
+    static constexpr int INITIAL_NUMBER_OF_LINES = 2;
 };

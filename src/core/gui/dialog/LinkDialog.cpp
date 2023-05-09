@@ -5,7 +5,7 @@
 
 void okButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->okButtonPressed(btn); }
 void cancelButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->cancelButtonPressed(btn); }
-void textChanged(GtkTextBuffer* buffer, LinkDialog* dialog) { std::cout << "Text was changed!" << std::endl; };
+void textChangedClb(GtkTextBuffer* buffer, LinkDialog* dialog) { dialog->textChanged(buffer); }
 
 LinkDialog::LinkDialog(Control* control) {
     auto filepath = control->getGladeSearchPath()->findFile("", "linkDialog.glade");
@@ -21,7 +21,7 @@ LinkDialog::LinkDialog(Control* control) {
 
     g_signal_connect(G_OBJECT(okButton), "clicked", G_CALLBACK(okButtonClicked), this);
     g_signal_connect(G_OBJECT(cancelButton), "clicked", G_CALLBACK(cancelButtonClicked), this);
-    g_signal_connect(G_OBJECT(gtk_text_view_get_buffer(this->textInput)), "changed", G_CALLBACK(textChanged), this);
+    g_signal_connect(G_OBJECT(gtk_text_view_get_buffer(this->textInput)), "changed", G_CALLBACK(textChangedClb), this);
 }
 
 LinkDialog::~LinkDialog() { gtk_widget_destroy(GTK_WIDGET(linkDialog)); }
@@ -91,4 +91,14 @@ bool LinkDialog::isUrlValid(std::string url) {
         return false;
     }
     return true;
+}
+
+
+void LinkDialog::textChanged(GtkTextBuffer* buffer) {
+    gint lot = gtk_text_buffer_get_line_count(buffer);
+    int width, height;
+    gtk_window_get_size(GTK_WINDOW(this->linkDialog), &width, &height);
+    height = DEFAULT_HEIGHT + (std::max(0, (lot - INITIAL_NUMBER_OF_LINES)) * ADDITIONAL_HEIGHT_PER_LINE);
+    height = std::min(height, MAX_HEIGHT);
+    gtk_window_resize(GTK_WINDOW(this->linkDialog), width, height);
 }

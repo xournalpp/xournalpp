@@ -5,6 +5,7 @@
   <object class="GtkDialog" id="linkDialog">
     <property name="can-focus">False</property>
     <property name="default-width">600</property>
+    <property name="default-height">180</property>
     <property name="type-hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox">
@@ -85,6 +86,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="shadow-type">in</property>
+                    <property name="propagate-natural-height">True</property>
                     <child>
                       <object class="GtkTextView" id="inpLinkEditText">
                         <property name="visible">True</property>
@@ -104,7 +106,7 @@
                 </child>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">-1</property>
               </packing>
@@ -237,7 +239,7 @@
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
