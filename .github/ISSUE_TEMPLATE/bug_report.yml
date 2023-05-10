@@ -5,5 +5,5 @@ labels: bug
 assignees: ''
 body:
     - type: textarea
-        attributes:
-            label: Operating System \(Windows, Mac OS, Linux \(distribution\)\)
+      attributes:
+        label: Operating System (Windows, Mac OS, Linux (distribution))
