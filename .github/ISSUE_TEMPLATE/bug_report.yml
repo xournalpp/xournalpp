@@ -39,7 +39,14 @@ body:
     - type: input
       attributes:
         label: Xournal++ Version
-        description: What versoin of Xournal++ do you use? (This can be found by running `xournalpp --version`, or in the "About" window).
+        description: What version of Xournal++ do you use? (This can be obtained by running `xournalpp --version`, or in the "About" window).
+        placeholder: e.g. 1.0.16, specific commit, specific branch etc.
+      validations:
+        required: true
+    - type: input
+      attributes:
+        label: libgtk Version
+        description: What version of libgtk do you use? (This can be obtained by running `xournalpp --version`, or in the "About" window).
     - type: textarea
       attributes:
         label: Bug Description
