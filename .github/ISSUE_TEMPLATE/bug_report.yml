@@ -61,7 +61,9 @@ body:
       attributes:
         label: Steps to Reproduce
         description: Steps to reproduce the behaviour.
-        placeholder: 1. Step 1\n2. Step 2\n3. etc.
+        placeholder: "1. Step 1
+        2. Step 2
+        3. etc."
     - type: textarea
       attributes:
         label: Additional Context
