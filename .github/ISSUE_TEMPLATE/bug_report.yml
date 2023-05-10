@@ -59,6 +59,11 @@ body:
         description: A clear and concise descriptioni of what you excpected to have happen.
     - type: textarea
       attributes:
+        label: Steps to Reproduce
+        description: Steps to reproduce the behaviour.
+        placeholder: 1. Step 1\n2. Step 2\n3. etc.
+    - type: textarea
+      attributes:
         label: Additional Context
         description: Add any other information or context about the problem here.
         
