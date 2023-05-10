@@ -29,3 +29,27 @@ body:
         options:
             - X.Org
             - Wayland
+    - type: input
+      attributes:
+        label: Installation Method
+        description: How was Xournal++ installed?
+        placeholder: e.g. Official Release, Flatpak, PPA, etc.
+      validations:
+        required: true
+    - type: input
+      attributes:
+        label: Xournal++ Version
+        description: What versoin of Xournal++ do you use? (This can be found by running `xournalpp --version`, or in the "About" window).
+    - type: textarea
+      attributes:
+        label: Bug Description
+        description: A clear and concise description of what the bug is.
+    - type: textarea
+      attributes:
+        label: Expected Behaviour
+        description: A clear and concise descriptioni of what you excpected to have happen.
+    - type: textarea
+      attributes:
+      label: Additional Context
+      description: Add any other information or context about the problem here.
+        
