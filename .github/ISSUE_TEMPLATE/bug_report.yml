@@ -2,9 +2,13 @@ name: Bug Report
 description: Create a report to help us improve Xournal++.
 labels: bug
 body:
-    - type: input
+    - type: dropdown
       attributes:
         label: Operating System
-        placeholder: Windows, Mac OS, Linux (distribution)
+        description: Select the operating system that you use.
+        options:
+            - Windows
+            - Mac OS
+            - Linux
       validations:
         required: true
