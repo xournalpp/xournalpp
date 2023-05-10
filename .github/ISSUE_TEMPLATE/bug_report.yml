@@ -6,5 +6,5 @@ body:
       attributes:
         label: Operating System
         placeholder: Windows, Mac OS, Linux (distribution)
-        validations:
-            required: true
+      validations:
+        required: true
