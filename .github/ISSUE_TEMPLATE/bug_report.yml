@@ -2,7 +2,9 @@ name: Bug Report
 description: Create a report to help us improve Xournal++.
 labels: bug
 body:
-    - type: textarea
+    - type: input
       attributes:
         label: Operating System
         placeholder: Windows, Mac OS, Linux (distribution)
+        validations:
+            required: true
