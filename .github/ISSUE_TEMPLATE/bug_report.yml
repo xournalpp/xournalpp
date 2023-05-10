@@ -50,6 +50,6 @@ body:
         description: A clear and concise descriptioni of what you excpected to have happen.
     - type: textarea
       attributes:
-      label: Additional Context
-      description: Add any other information or context about the problem here.
+        label: Additional Context
+        description: Add any other information or context about the problem here.
         
