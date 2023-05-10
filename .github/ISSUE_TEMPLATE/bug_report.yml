@@ -1,0 +1,14 @@
+name: Bug Report
+about: Create a report to help us improve Xournal++
+title: ''
+labels: bug
+assignees: ''
+name: Bug Report
+about: Create a report to help us improve Xournal++.
+title: ''
+labels: bug
+assignees: ''
+body:
+    - type: textarea
+        attributes:
+            label: Operating System (Windows, Mac OS, Linux (distribution))
