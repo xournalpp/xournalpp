@@ -11,6 +11,8 @@ body:
     attributes:
       label: Feature Description
       description: A clear and concise description of the feature that you would propose.
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Additional Context
