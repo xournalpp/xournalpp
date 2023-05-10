@@ -4,4 +4,5 @@ labels: bug
 body:
     - type: textarea
       attributes:
-        label: Operating System (Windows, Mac OS, Linux (distribution))
+        label: Operating System
+        placeholder: Windows, Mac OS, Linux (distribution)
