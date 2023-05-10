@@ -6,4 +6,4 @@ assignees: ''
 body:
     - type: textarea
         attributes:
-            label: Operating System (Windows, Mac OS, Linux (distribution))
+            label: Operating System \(Windows, Mac OS, Linux \(distribution\)\)
