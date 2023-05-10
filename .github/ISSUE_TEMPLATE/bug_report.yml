@@ -12,3 +12,20 @@ body:
             - Linux
       validations:
         required: true
+    - type: input
+      attributes:
+        label: (Linux only) Distribution
+        description: What distribution of Linux do you use?
+        placeholder: e.g. Ubuntu, Arch Linux, etc.
+    - type: input
+      attributes:
+        label: (Linux only) Desktop Environment
+        description: What desktop environment do you use?
+        placeholder: e.g. GNOME, KDE Plasma, etc.
+    - type: dropdown
+      attributes:
+        label: (Linux Only) Display Server
+        description: What display server do you use?
+        options:
+            - X.Org
+            - Wayland
