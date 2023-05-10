@@ -47,6 +47,8 @@ body:
       attributes:
         label: libgtk Version
         description: What version of libgtk do you use? (This can be obtained by running `xournalpp --version`, or in the "About" window).
+      validations:
+        required: true
     - type: textarea
       attributes:
         label: Bug Description
