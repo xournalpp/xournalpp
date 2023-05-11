@@ -2169,12 +2169,10 @@ void Control::showSettings() {
     // take note of some settings before to compare with after
     auto selectionColor = settings->getBorderColor();
     bool verticalSpace = settings->getAddVerticalSpace();
-    int verticalSpaceAmount = settings->getAddVerticalSpaceAmount();
-    bool horizontalSpace = settings->getAddHorizontalSpace();
-    int horizontalSpaceAmount = settings->getAddHorizontalSpaceAmount();
-    bool verticalSpaceBelow = settings->getAddVerticalSpaceBelow();
+    int verticalSpaceAmountAbove = settings->getAddVerticalSpaceAmountAbove();
     int verticalSpaceAmountBelow = settings->getAddVerticalSpaceAmountBelow();
-    bool horizontalSpaceLeft = settings->getAddHorizontalSpaceLeft();
+    bool horizontalSpace = settings->getAddHorizontalSpace();
+    int horizontalSpaceAmountRight = settings->getAddHorizontalSpaceAmountRight();
     int horizontalSpaceAmountLeft = settings->getAddHorizontalSpaceAmountLeft();
     StylusCursorType stylusCursorType = settings->getStylusCursorType();
     bool highlightPosition = settings->isHighlightPosition();
@@ -2189,10 +2187,8 @@ void Control::showSettings() {
     }
 
     if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace() ||
-        verticalSpaceBelow != settings->getAddVerticalSpaceBelow() ||
-        horizontalSpaceLeft != settings->getAddHorizontalSpaceLeft() ||
-        verticalSpaceAmount != settings->getAddVerticalSpaceAmount() ||
-        horizontalSpaceAmount != settings->getAddHorizontalSpaceAmount() ||
+        verticalSpaceAmountAbove != settings->getAddVerticalSpaceAmountAbove() ||
+        horizontalSpaceAmountRight != settings->getAddHorizontalSpaceAmountRight() ||
         verticalSpaceAmountBelow != settings->getAddVerticalSpaceAmountBelow() ||
         horizontalSpaceAmountLeft != settings->getAddHorizontalSpaceAmountLeft()) {
         win->getXournal()->layoutPages();

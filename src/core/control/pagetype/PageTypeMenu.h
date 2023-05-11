@@ -66,13 +66,17 @@ public:
     void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu,
                                   ApplyPageTypeSource ptSource);
 
+    /**
+     * Create a small preview image of a specified page-type
+     */
+    static cairo_surface_t* createPreviewImage(const PageType& pt);
+
 private:
     static GtkWidget* createApplyMenuItem(const char* text);
     void initDefaultMenu();
     void addMenuEntry(const PageTypeInfo* t);
     /// @brief Select the corresponding entry. If t == nullptr, the "Copy current page background" entry is selected.
     void entrySelected(const PageTypeInfo* t);
-    cairo_surface_t* createPreviewImage(const PageType& pt);
 
 private:
     bool showSpecial;

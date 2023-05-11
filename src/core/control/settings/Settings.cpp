@@ -120,12 +120,10 @@ void Settings::loadDefault() {
     this->autosaveEnabled = true;
 
     this->addHorizontalSpace = false;
-    this->addHorizontalSpaceAmount = 150;
-    this->addVerticalSpace = false;
-    this->addVerticalSpaceAmount = 150;
-    this->addHorizontalSpaceLeft = false;
+    this->addHorizontalSpaceAmountRight = 150;
     this->addHorizontalSpaceAmountLeft = 150;
-    this->addVerticalSpaceBelow = false;
+    this->addVerticalSpace = false;
+    this->addVerticalSpaceAmountAbove = 150;
     this->addVerticalSpaceAmountBelow = 150;
 
     // Drawing direction emulates modifier keys
@@ -517,19 +515,29 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
         this->addHorizontalSpace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmount")) == 0) {
-        this->addHorizontalSpaceAmount = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        const int oldHorizontalAmount =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+        this->addHorizontalSpaceAmountLeft = oldHorizontalAmount;
+        this->addHorizontalSpaceAmountRight = oldHorizontalAmount;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmountRight")) == 0) {
+        this->addHorizontalSpaceAmountRight =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpace")) == 0) {
         this->addVerticalSpace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmount")) == 0) {
-        this->addVerticalSpaceAmount = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceLeft")) == 0) {
-        this->addHorizontalSpaceLeft = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+        const int oldVerticalAmount =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+        this->addHorizontalSpaceAmountLeft = oldVerticalAmount;
+        this->addHorizontalSpaceAmountRight = oldVerticalAmount;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmountAbove")) == 0) {
+        this->addVerticalSpaceAmountAbove =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmountLeft")) == 0) {
-        this->addHorizontalSpaceAmountLeft = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceBelow")) == 0) {
-        this->addVerticalSpaceBelow = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+        this->addHorizontalSpaceAmountLeft =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmountBelow")) == 0) {
-        this->addVerticalSpaceAmountBelow = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        this->addVerticalSpaceAmountBelow =
+                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("drawDirModsEnabled")) == 0) {
         this->drawDirModsEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("drawDirModsRadius")) == 0) {
@@ -1025,12 +1033,10 @@ void Settings::save() {
     SAVE_INT_PROP(autosaveTimeout);
 
     SAVE_BOOL_PROP(addHorizontalSpace);
-    SAVE_INT_PROP(addHorizontalSpaceAmount);
-    SAVE_BOOL_PROP(addVerticalSpace);
-    SAVE_INT_PROP(addVerticalSpaceAmount);
-    SAVE_BOOL_PROP(addHorizontalSpaceLeft);
+    SAVE_INT_PROP(addHorizontalSpaceAmountRight);
     SAVE_INT_PROP(addHorizontalSpaceAmountLeft);
-    SAVE_BOOL_PROP(addVerticalSpaceBelow);
+    SAVE_BOOL_PROP(addVerticalSpace);
+    SAVE_INT_PROP(addVerticalSpaceAmountAbove);
     SAVE_INT_PROP(addVerticalSpaceAmountBelow);
 
     SAVE_BOOL_PROP(drawDirModsEnabled);
@@ -1310,20 +1316,16 @@ auto Settings::getAddVerticalSpace() const -> bool { return this->addVerticalSpa
 
 void Settings::setAddVerticalSpace(bool space) { this->addVerticalSpace = space; }
 
-auto Settings::getAddVerticalSpaceAmount() const -> int { return this->addVerticalSpaceAmount; }
+auto Settings::getAddVerticalSpaceAmountAbove() const -> int { return this->addVerticalSpaceAmountAbove; }
 
-void Settings::setAddVerticalSpaceAmount(int pixels) {
-    if (this->addVerticalSpaceAmount == pixels) {
+void Settings::setAddVerticalSpaceAmountAbove(int pixels) {
+    if (this->addVerticalSpaceAmountAbove == pixels) {
         return;
     }
 
-    this->addVerticalSpaceAmount = pixels;
+    this->addVerticalSpaceAmountAbove = pixels;
     save();
 }
-
-auto Settings::getAddVerticalSpaceBelow() const -> bool { return this->addVerticalSpaceBelow; }
-
-void Settings::setAddVerticalSpaceBelow(bool space) { this->addVerticalSpaceBelow = space; }
 
 auto Settings::getAddVerticalSpaceAmountBelow() const -> int { return this->addVerticalSpaceAmountBelow; }
 
@@ -1341,20 +1343,16 @@ auto Settings::getAddHorizontalSpace() const -> bool { return this->addHorizonta
 
 void Settings::setAddHorizontalSpace(bool space) { this->addHorizontalSpace = space; }
 
-auto Settings::getAddHorizontalSpaceAmount() const -> int { return this->addHorizontalSpaceAmount; }
+auto Settings::getAddHorizontalSpaceAmountRight() const -> int { return this->addHorizontalSpaceAmountRight; }
 
-void Settings::setAddHorizontalSpaceAmount(int pixels) {
-    if (this->addHorizontalSpaceAmount == pixels) {
+void Settings::setAddHorizontalSpaceAmountRight(int pixels) {
+    if (this->addHorizontalSpaceAmountRight == pixels) {
         return;
     }
 
-    this->addHorizontalSpaceAmount = pixels;
+    this->addHorizontalSpaceAmountRight = pixels;
     save();
 }
-
-auto Settings::getAddHorizontalSpaceLeft() const -> bool { return this->addHorizontalSpaceLeft; }
-
-void Settings::setAddHorizontalSpaceLeft(bool space) { this->addHorizontalSpaceLeft = space; }
 
 auto Settings::getAddHorizontalSpaceAmountLeft() const -> int { return this->addHorizontalSpaceAmountLeft; }
 
