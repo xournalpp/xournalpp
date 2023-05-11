@@ -279,21 +279,15 @@ public:
 
     bool getAddVerticalSpace() const;
     void setAddVerticalSpace(bool space);
-    int getAddVerticalSpaceAmount() const;
-    void setAddVerticalSpaceAmount(int pixels);
-
-    bool getAddHorizontalSpace() const;
-    void setAddHorizontalSpace(bool space);
-    int getAddHorizontalSpaceAmount() const;
-    void setAddHorizontalSpaceAmount(int pixels);
-
-    bool getAddVerticalSpaceBelow() const;
-    void setAddVerticalSpaceBelow(bool space);
+    int getAddVerticalSpaceAmountAbove() const;
+    void setAddVerticalSpaceAmountAbove(int pixels);
     int getAddVerticalSpaceAmountBelow() const;
     void setAddVerticalSpaceAmountBelow(int pixels);
 
-    bool getAddHorizontalSpaceLeft() const;
-    void setAddHorizontalSpaceLeft(bool space);
+    bool getAddHorizontalSpace() const;
+    void setAddHorizontalSpace(bool space);
+    int getAddHorizontalSpaceAmountRight() const;
+    void setAddHorizontalSpaceAmountRight(int pixels);
     int getAddHorizontalSpaceAmountLeft() const;
     void setAddHorizontalSpaceAmountLeft(int pixels);
 
@@ -869,28 +863,14 @@ private:
     bool autosaveEnabled{};
 
     /**
-     * Allow scroll outside the page display area (horizontal, right)
+     * Allow scroll outside the page display area (horizontal)
      */
     bool addHorizontalSpace{};
 
     /**
      * How much allowance to scroll outside the page display area on the right
      */
-    int addHorizontalSpaceAmount{};
-
-    /**
-     * Allow scroll outside the page display area (vertical, above)
-     */
-    bool addVerticalSpace{};
-
-    /** How much allowance to scroll outside the page display area above
-     */
-    int addVerticalSpaceAmount{};
-
-    /**
-     * Allow scroll outside the page display area (horizontal, left)
-     */
-    bool addHorizontalSpaceLeft{};
+    int addHorizontalSpaceAmountRight{};
 
     /**
      * How much allowance to scroll outside the page display area on the left
@@ -898,11 +878,17 @@ private:
     int addHorizontalSpaceAmountLeft{};
 
     /**
-     * Allow scroll outside the page display area (vertical, below)
+     * Allow scroll outside the page display area (vertical)
      */
-    bool addVerticalSpaceBelow{};
+    bool addVerticalSpace{};
 
-    /** How much allowance to scroll outside the page display area below
+    /**
+     * How much allowance to scroll outside the page display area above
+     */
+    int addVerticalSpaceAmountAbove{};
+
+    /**
+     * How much allowance to scroll outside the page display area below
      */
     int addVerticalSpaceAmountBelow{};
 

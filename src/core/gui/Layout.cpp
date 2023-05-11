@@ -184,17 +184,16 @@ void Layout::recalculate_int() const {
     }
 
     // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
-    auto const vPadding =
-            sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmount(), settings->getAddVerticalSpace());
-    auto const totalVPadding = sumIf(vPadding + XOURNAL_PADDING, settings->getAddVerticalSpaceAmountBelow(),
-                                     settings->getAddVerticalSpaceBelow());
+    auto const vPadding = sumIf(2 * XOURNAL_PADDING,
+                                settings->getAddVerticalSpaceAmountAbove() + settings->getAddVerticalSpaceAmountBelow(),
+                                settings->getAddVerticalSpace());
     auto const hPadding =
-            sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
-    auto const totalHPadding = sumIf(hPadding + XOURNAL_PADDING, settings->getAddHorizontalSpaceAmountLeft(),
-                                     settings->getAddHorizontalSpaceLeft());
+            sumIf(2 * XOURNAL_PADDING,
+                  settings->getAddHorizontalSpaceAmountLeft() + settings->getAddHorizontalSpaceAmountRight(),
+                  settings->getAddHorizontalSpace());
 
-    pc.minWidth = as_unsigned(totalHPadding + as_signed_strict((pc.widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN));
-    pc.minHeight = as_unsigned(totalVPadding + as_signed_strict((pc.heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN));
+    pc.minWidth = as_unsigned(hPadding + as_signed_strict((pc.widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN));
+    pc.minHeight = as_unsigned(vPadding + as_signed_strict((pc.heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN));
 
     pc.minWidth = floor_cast<size_t>(std::accumulate(begin(pc.widthCols), end(pc.widthCols), double(pc.minWidth)));
     pc.minHeight = floor_cast<size_t>(std::accumulate(begin(pc.heightRows), end(pc.heightRows), double(pc.minHeight)));
@@ -227,9 +226,9 @@ void Layout::layoutPages(int width, int height) {
 
     // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
     auto const v_padding =
-            sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmount(), settings->getAddVerticalSpace());
+            sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmountAbove(), settings->getAddVerticalSpace());
     auto const h_padding =
-            sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
+            sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmountLeft(), settings->getAddHorizontalSpace());
 
     auto const centeringXBorder = (width - as_signed(pc.minWidth)) / 2;
     auto const centeringYBorder = (height - as_signed(pc.minHeight)) / 2;
@@ -316,7 +315,7 @@ auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
 
     // User-configured padding above all pages.
     auto const paddingAbove =
-            sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmount(), settings->getAddVerticalSpace());
+            sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmountAbove(), settings->getAddVerticalSpace());
 
     // (x, y) coordinate pair gives grid indicies. This handles paired pages
     // and different page layouts for us.
@@ -330,7 +329,7 @@ auto Layout::getPaddingLeftOfPage(size_t pageIndex) const -> int {
     const Settings* settings = this->view->getControl()->getSettings();
 
     auto paddingBefore =
-            sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
+            sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmountLeft(), settings->getAddHorizontalSpace());
 
     auto const pageXLocation = as_signed(this->mapper.at(pageIndex).col);
 
