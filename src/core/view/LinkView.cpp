@@ -19,7 +19,7 @@ auto LinkView::initPango(cairo_t* cr, const Link* l) -> xoj::util::GObjectSPtr<P
 void LinkView::draw(const Context& ctx) const {
     xoj::util::CairoSaveGuard saveGuard(ctx.cr);
 
-    if (link->isInEditing()) {
+    if (link->isHighlighted()) {
         Util::cairo_set_source_rgbi(ctx.cr, LINE_COLOR);
         cairo_rectangle(ctx.cr, link->getX(), link->getY(), link->getElementWidth(), link->getElementHeight());
         cairo_set_line_width(ctx.cr, LINE_WIDTH);

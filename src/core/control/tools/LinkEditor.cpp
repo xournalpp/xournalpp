@@ -54,14 +54,14 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
             }
         } else {
             std::cout << "Existing LinkElement to be edited!" << std::endl;
-            this->linkElement->setInEditing(true);
+            this->linkElement->setHighlighted(true);
             page->firePageChanged();
             LinkDialog dialog(this->control);
             dialog.preset(this->linkElement->getText(), this->linkElement->getUrl(),
                           static_cast<Layout>(this->linkElement->getAlignment()));
             int response = dialog.show();
             if (response == LinkDialog::CANCEL) {
-                this->linkElement->setInEditing(false);
+                this->linkElement->setHighlighted(false);
                 page->fireElementChanged(this->linkElement);
                 return;
             }
@@ -69,7 +69,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
             this->linkElement->setUrl(dialog.getURL());
             this->linkElement->setAlignment(static_cast<PangoAlignment>(dialog.getLayout()));
             this->linkElement->sizeChanged();
-            this->linkElement->setInEditing(false);
+            this->linkElement->setHighlighted(false);
             page->firePageChanged();
         }
     }

@@ -22,9 +22,9 @@ void Link::setUrl(std::string url) { this->url = url; }
 
 std::string Link::getUrl() const { return this->url; }
 
-void Link::setInEditing(bool inEditing) { this->inEditing = inEditing; }
+void Link::setHighlighted(bool highlighted) { this->highlighted = highlighted; }
 
-bool Link::isInEditing() const { return this->inEditing; }
+bool Link::isHighlighted() const { return this->highlighted; }
 
 void Link::setFont(const XojFont& font) { this->font = font; }
 
@@ -94,7 +94,7 @@ Link* Link::clone() const {
     link->height = this->height;
     link->snappedBounds = this->snappedBounds;
     link->sizeCalculated = this->sizeCalculated;
-    link->inEditing = this->inEditing;
+    link->highlighted = this->highlighted;
     return link;
 };
 

@@ -543,14 +543,14 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         for (Element* e: this->page->getSelectedLayer()->getElements()) {
             if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
                 Link* linkElement = dynamic_cast<Link*>(e);
-                linkElement->setInEditing(true);
+                linkElement->setHighlighted(true);
                 this->page->fireElementChanged(linkElement);
                 GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
                 GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "alias");
                 gdk_window_set_cursor(window, cursor);
             } else if (e->getType() == ELEMENT_LINK) {
                 Link* linkElement = dynamic_cast<Link*>(e);
-                linkElement->setInEditing(false);
+                linkElement->setHighlighted(false);
                 this->page->fireElementChanged(linkElement);
                 GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
                 GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "hand2");

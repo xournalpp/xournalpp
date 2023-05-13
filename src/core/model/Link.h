@@ -37,8 +37,8 @@ public:
     void setUrl(std::string url);
     std::string getUrl() const;
 
-    void setInEditing(bool inEditing);
-    bool isInEditing() const;
+    void setHighlighted(bool highlighted);
+    bool isHighlighted() const;
 
     void setFont(const XojFont& font);
     XojFont& getFont();
@@ -74,5 +74,5 @@ private:
     std::string text;
     std::string url;
     PangoAlignment alignment;
-    bool inEditing = false;
+    bool highlighted = false;
 };
