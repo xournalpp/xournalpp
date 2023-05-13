@@ -3,6 +3,7 @@
 #include "model/Element.h"                        // for ELEMENT_TEXT, Eleme...
 #include "model/Font.h"                           // for XojFont
 #include "util/Color.h"                           // for Colors
+#include "util/Stacktrace.h"                      // for Stacktrace
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -57,7 +58,27 @@ void Link::readSerialized(ObjectInputStream& in) {
     in.endObject();
 }
 
-void Link::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth){};
+void Link::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
+    // only proportional scale allowed...
+    if (fx != fy) {
+        g_warning("rescale font with fx != fy not supported: %lf / %lf", fx, fy);
+        Stacktrace::printStracktrace();
+    }
+
+    std::cout << x0 << ":" << y0 << ":" << fx << ":" << fy << std::endl;
+
+    this->x -= x0;
+    this->x *= fx;
+    this->x += x0;
+    this->y -= y0;
+    this->y *= fy;
+    this->y += y0;
+
+    double size = this->font.getSize() * fx;
+    this->font.setSize(size);
+
+    sizeCalculated = false;
+};
 
 void Link::rotate(double x0, double y0, double th){};
 
@@ -101,3 +122,7 @@ auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
 
     return layout;
 }
+
+auto Link::rescaleOnlyAspectRatio() -> bool { return true; }
+
+auto Link::rescaleWithMirror() -> bool { return false; }

@@ -58,6 +58,8 @@ public:
      */
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
+    bool rescaleOnlyAspectRatio() override;
+    bool rescaleWithMirror() override;
 
     static constexpr double PADDING = 2.0;
 
