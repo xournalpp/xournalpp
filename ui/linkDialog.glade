@@ -2,6 +2,21 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkImage" id="imgJustifyCenter">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">format-justify-center</property>
+  </object>
+  <object class="GtkImage" id="imgJustifyLeft">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">format-justify-left</property>
+  </object>
+  <object class="GtkImage" id="imgJustifyRight">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">format-justify-right</property>
+  </object>
   <object class="GtkDialog" id="linkDialog">
     <property name="can-focus">False</property>
     <property name="default-width">600</property>
@@ -137,28 +152,28 @@
                   <object class="GtkButtonBox" id="btnGroupLayout">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="layout-style">expand</property>
                     <child>
-                      <object class="GtkButton" id="btnLeftLayout">
-                        <property name="label">gtk-justify-left</property>
+                      <object class="GtkToggleButton" id="btnLeftLayout">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
-                        <property name="use-stock">True</property>
+                        <property name="image">imgJustifyLeft</property>
                         <property name="always-show-image">True</property>
+                        <property name="active">True</property>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btnCenterLayout">
-                        <property name="label">gtk-justify-center</property>
+                      <object class="GtkToggleButton" id="btnCenterLayout">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
-                        <property name="use-stock">True</property>
+                        <property name="image">imgJustifyCenter</property>
                         <property name="always-show-image">True</property>
                       </object>
                       <packing>
@@ -168,12 +183,11 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btnRightLayout">
-                        <property name="label">gtk-justify-right</property>
+                      <object class="GtkToggleButton" id="btnRightLayout">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
-                        <property name="use-stock">True</property>
+                        <property name="image">imgJustifyRight</property>
                         <property name="always-show-image">True</property>
                       </object>
                       <packing>
@@ -217,12 +231,47 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="inpLinkEditURL">
+                  <object class="GtkBox" id="boxLinkEditURL2">
                     <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="caps-lock-warning">False</property>
-                    <property name="progress-pulse-step">0</property>
-                    <property name="placeholder-text" translatable="yes">https://google.com</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkComboBoxText" id="cbLinkPrefix">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="double-buffered">False</property>
+                        <property name="active">1</property>
+                        <property name="popup-fixed-width">False</property>
+                        <items>
+                          <item id="1" translatable="yes">http://</item>
+                          <item id="2" translatable="yes">https://</item>
+                          <item id="3" translatable="yes">mailto:</item>
+                          <item id="4" translatable="yes">file:///</item>
+                        </items>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                        <property name="non-homogeneous">True</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="inpLinkEditURL">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="caps-lock-warning">False</property>
+                        <property name="progress-pulse-step">0</property>
+                        <property name="placeholder-text" translatable="yes">https://google.com</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <style>
+                      <class name="linked"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">True</property>
