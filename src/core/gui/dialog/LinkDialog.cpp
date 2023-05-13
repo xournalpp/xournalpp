@@ -9,6 +9,7 @@ void textChangedClb(GtkTextBuffer* buffer, LinkDialog* dialog) { dialog->textCha
 void layoutToogledLeft(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(Layout::LEFT); };
 void layoutToogledCenter(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(Layout::CENTER); };
 void layoutToogledRight(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(Layout::RIGHT); };
+void urlPrefixChangedClb(GtkComboBoxText* source, LinkDialog* dialog) { dialog->urlPrefixChanged(source); };
 
 LinkDialog::LinkDialog(Control* control) {
     auto filepath = control->getGladeSearchPath()->findFile("", "linkDialog.glade");
@@ -29,6 +30,7 @@ LinkDialog::LinkDialog(Control* control) {
     this->layoutRight = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnRightLayout"));
 
     this->linkTypeChooser = GTK_COMBO_BOX_TEXT(gtk_builder_get_object(builder, "cbLinkPrefix"));
+    this->urlPrefixChanged(this->linkTypeChooser);
 
     g_signal_connect(G_OBJECT(okButton), "clicked", G_CALLBACK(okButtonClicked), this);
     g_signal_connect(G_OBJECT(cancelButton), "clicked", G_CALLBACK(cancelButtonClicked), this);
@@ -37,6 +39,8 @@ LinkDialog::LinkDialog(Control* control) {
     g_signal_connect(G_OBJECT(layoutLeft), "released", G_CALLBACK(layoutToogledLeft), this);
     g_signal_connect(G_OBJECT(layoutCenter), "released", G_CALLBACK(layoutToogledCenter), this);
     g_signal_connect(G_OBJECT(layoutRight), "released", G_CALLBACK(layoutToogledRight), this);
+
+    g_signal_connect(G_OBJECT(linkTypeChooser), "changed", G_CALLBACK(urlPrefixChangedClb), this);
 }
 
 LinkDialog::~LinkDialog() { gtk_widget_destroy(GTK_WIDGET(linkDialog)); }
@@ -47,7 +51,9 @@ void LinkDialog::preset(XojFont font, std::string text, std::string url, Layout 
     gtk_text_buffer_get_bounds(textBuffer, &start, &end);
     gtk_text_buffer_insert(textBuffer, &start, text.c_str(), text.length());
     gtk_text_view_set_buffer(this->textInput, textBuffer);
+    URLPrefix prefix = this->identifyAndShortenURL(url);
     gtk_entry_set_text(this->urlInput, url.c_str());
+    gtk_combo_box_set_active_id(GTK_COMBO_BOX(this->linkTypeChooser), std::to_string(static_cast<int>(prefix)).c_str());
     std::string fontName = font.getName() + " " + std::to_string(font.getSize());
     gtk_font_chooser_set_font(this->fontChooser, fontName.c_str());
     this->layoutToggled(layout);
@@ -57,7 +63,14 @@ int LinkDialog::show() { return gtk_dialog_run(GTK_DIALOG(this->linkDialog)); }
 
 std::string LinkDialog::getText() { return this->linkText; }
 
-std::string LinkDialog::getURL() { return this->linkURL; }
+std::string LinkDialog::getURL() {
+    std::string res = gtk_combo_box_text_get_active_text(this->linkTypeChooser);
+    if (res == "<custom>") {
+        res = "";
+    }
+    res = res + this->linkURL;
+    return res;
+}
 
 void LinkDialog::okButtonPressed(GtkButton* btn) {
     std::cout << "OK Button pressed" << std::endl;
@@ -147,4 +160,43 @@ XojFont LinkDialog::getFont() {
     newfont.setName(fontName.substr(0, pos));
     newfont.setSize(std::stod(fontName.substr(pos + 1)));
     return newfont;
+}
+
+void LinkDialog::urlPrefixChanged(GtkComboBoxText* eventSource) {
+    URLPrefix prefix = static_cast<URLPrefix>(std::stoi(gtk_combo_box_get_active_id(GTK_COMBO_BOX(eventSource))));
+    switch (prefix) {
+        case URLPrefix::NONE:
+            gtk_entry_set_placeholder_text(this->urlInput, PLACEHOLDER_OTHER);
+            break;
+        case URLPrefix::HTTP:
+        case URLPrefix::HTTPS:
+            gtk_entry_set_placeholder_text(this->urlInput, PLACEHOLDER_HTTPS);
+            break;
+        case URLPrefix::MAILTO:
+            gtk_entry_set_placeholder_text(this->urlInput, PLACEHOLDER_MAIL);
+            break;
+        case URLPrefix::FILE:
+            gtk_entry_set_placeholder_text(this->urlInput, PLACEHOLDER_FILE);
+            break;
+        default:
+            break;
+    }
+}
+
+URLPrefix LinkDialog::identifyAndShortenURL(std::string& url) {
+    if (url.rfind("https://", 0) == 0) {
+        url = url.substr(8);
+        return URLPrefix::HTTPS;
+    } else if (url.rfind("http://", 0) == 0) {
+        url = url.substr(7);
+        return URLPrefix::HTTP;
+    } else if (url.rfind("mailto:", 0) == 0) {
+        url = url.substr(7);
+        return URLPrefix::MAILTO;
+    } else if (url.rfind("file://", 0) == 0) {
+        url = url.substr(7);
+        return URLPrefix::FILE;
+    } else {
+        return URLPrefix::NONE;
+    }
 }

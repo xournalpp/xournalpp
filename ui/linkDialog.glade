@@ -244,7 +244,7 @@
                           <item id="1" translatable="yes">http://</item>
                           <item id="2" translatable="yes">https://</item>
                           <item id="3" translatable="yes">mailto:</item>
-                          <item id="4" translatable="yes">file:///</item>
+                          <item id="4" translatable="yes">file://</item>
                           <item id="0" translatable="yes">&lt;custom&gt;</item>
                         </items>
                       </object>
@@ -260,7 +260,6 @@
                         <property name="can-focus">True</property>
                         <property name="caps-lock-warning">False</property>
                         <property name="progress-pulse-step">0</property>
-                        <property name="placeholder-text" translatable="yes">https://google.com</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>

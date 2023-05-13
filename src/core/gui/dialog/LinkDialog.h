@@ -21,6 +21,7 @@
 class Control;
 
 enum class Layout { LEFT = 0, CENTER = 1, RIGHT = 2 };
+enum class URLPrefix { NONE = 0, HTTP = 1, HTTPS = 2, MAILTO = 3, FILE = 4 };
 
 class LinkDialog {
 public:
@@ -40,10 +41,12 @@ public:
     void cancelButtonPressed(GtkButton* btn);
     void textChanged(GtkTextBuffer* buffer);
     void layoutToggled(Layout l);
+    void urlPrefixChanged(GtkComboBoxText* source);
 
 private:
     bool isTextValid(std::string text);
     bool isUrlValid(std::string url);
+    URLPrefix identifyAndShortenURL(std::string& url);
 
 
 private:
@@ -75,4 +78,9 @@ public:
     static constexpr int MAX_HEIGHT = 800;
     static constexpr int ADDITIONAL_HEIGHT_PER_LINE = 15;
     static constexpr int INITIAL_NUMBER_OF_LINES = 2;
+
+    static constexpr char PLACEHOLDER_HTTPS[] = "google.com";
+    static constexpr char PLACEHOLDER_MAIL[] = "email-address@provider.domain";
+    static constexpr char PLACEHOLDER_FILE[] = "/absolute/path/to/file";
+    static constexpr char PLACEHOLDER_OTHER[] = "https://www.google.com";
 };

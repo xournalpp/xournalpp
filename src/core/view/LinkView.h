@@ -39,5 +39,5 @@ private:
     const Link* link;
 
     static constexpr double LINE_WIDTH = 1.0;
-    static constexpr Color LINE_COLOR{255, 0, 0};
+    static constexpr Color LINE_COLOR{Colors::red};
 };

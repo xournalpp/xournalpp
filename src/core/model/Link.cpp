@@ -10,7 +10,7 @@
 Link::Link(): Element(ELEMENT_LINK) {
     this->font.setName("Sans");
     this->font.setSize(12);
-    this->setColor(Colors::xopp_deepskyblue);
+    this->setColor(Colors::magenta);
     this->text = "Hello World";
 }
 
