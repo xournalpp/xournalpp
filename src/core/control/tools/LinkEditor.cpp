@@ -35,6 +35,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
         Link* link = new Link();
         link->setText(dialog.getText());
         link->setUrl(dialog.getURL());
+        link->setAlignment(static_cast<PangoAlignment>(dialog.getLayout()));
         link->setX(x), link->setY(y);
         page->getSelectedLayer()->addElement(link);
         page->firePageChanged();
@@ -65,6 +66,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
             }
             this->linkElement->setText(dialog.getText());
             this->linkElement->setUrl(dialog.getURL());
+            this->linkElement->setAlignment(static_cast<PangoAlignment>(dialog.getLayout()));
             this->linkElement->sizeChanged();
             this->linkElement->setInEditing(false);
             page->firePageChanged();

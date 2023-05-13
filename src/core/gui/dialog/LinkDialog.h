@@ -18,7 +18,7 @@
 
 class Control;
 
-enum class Layout { LEFT, CENTER, RIGHT };
+enum class Layout { LEFT = 0, CENTER = 1, RIGHT = 2 };
 
 class LinkDialog {
 public:
@@ -30,6 +30,7 @@ public:
     int show();
     std::string getText();
     std::string getURL();
+    Layout getLayout();
 
 public:
     void okButtonPressed(GtkButton* btn);
@@ -61,6 +62,7 @@ private:
 
     std::string linkText;
     std::string linkURL;
+    Layout layout = Layout::LEFT;
 
 public:
     static constexpr int SUCCESS = 200;

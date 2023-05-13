@@ -120,9 +120,15 @@ auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
     pango_layout_set_font_description(layout.get(), font);
     pango_font_description_free(font);
 
+    pango_layout_set_alignment(layout.get(), this->alignment);
+
     return layout;
 }
 
 auto Link::rescaleOnlyAspectRatio() -> bool { return true; }
 
 auto Link::rescaleWithMirror() -> bool { return false; }
+
+void Link::setAlignment(PangoAlignment alignment) { this->alignment = alignment; }
+
+PangoAlignment Link::getAlignment() { return this->alignment; }

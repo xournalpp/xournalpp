@@ -43,6 +43,9 @@ public:
     void setFont(const XojFont& font);
     XojFont& getFont();
 
+    void setAlignment(PangoAlignment alignment);
+    PangoAlignment getAlignment();
+
     xoj::util::GObjectSPtr<PangoLayout> createPangoLayout() const;
 
 public:
@@ -70,5 +73,6 @@ private:
     XojFont font;
     std::string text;
     std::string url;
+    PangoAlignment alignment;
     bool inEditing = false;
 };

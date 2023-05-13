@@ -119,6 +119,7 @@ void LinkDialog::textChanged(GtkTextBuffer* buffer) {
 }
 
 void LinkDialog::layoutToggled(Layout layout) {
+    this->layout = layout;
     if (layout == Layout::LEFT) {
         // gtk_toggle_button_set_active(this->layoutLeft, true);
         gtk_toggle_button_set_active(this->layoutCenter, false);
@@ -133,3 +134,5 @@ void LinkDialog::layoutToggled(Layout layout) {
         // gtk_toggle_button_set_active(this->layoutRight, true);
     }
 }
+
+Layout LinkDialog::getLayout() { return this->layout; }
