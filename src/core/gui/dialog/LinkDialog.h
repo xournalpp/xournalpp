@@ -16,6 +16,8 @@
 #include <gdk/gdk.h>  // for GdkEventKey
 #include <gtk/gtk.h>  // for GtkIMContext, GtkTextIter, GtkWidget
 
+#include "model/Font.h"  // for XojFont
+
 class Control;
 
 enum class Layout { LEFT = 0, CENTER = 1, RIGHT = 2 };
@@ -26,11 +28,12 @@ public:
     ~LinkDialog();
 
 public:
-    void preset(std::string text, std::string url, Layout layout = Layout::LEFT);
+    void preset(XojFont font, std::string text, std::string url, Layout layout = Layout::LEFT);
     int show();
     std::string getText();
     std::string getURL();
     Layout getLayout();
+    XojFont getFont();
 
 public:
     void okButtonPressed(GtkButton* btn);

@@ -36,6 +36,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
         link->setText(dialog.getText());
         link->setUrl(dialog.getURL());
         link->setAlignment(static_cast<PangoAlignment>(dialog.getLayout()));
+        link->setFont(dialog.getFont());
         link->setX(x), link->setY(y);
         page->getSelectedLayer()->addElement(link);
         page->firePageChanged();
@@ -57,7 +58,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
             this->linkElement->setHighlighted(true);
             page->firePageChanged();
             LinkDialog dialog(this->control);
-            dialog.preset(this->linkElement->getText(), this->linkElement->getUrl(),
+            dialog.preset(this->linkElement->getFont(), this->linkElement->getText(), this->linkElement->getUrl(),
                           static_cast<Layout>(this->linkElement->getAlignment()));
             int response = dialog.show();
             if (response == LinkDialog::CANCEL) {
@@ -68,6 +69,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
             this->linkElement->setText(dialog.getText());
             this->linkElement->setUrl(dialog.getURL());
             this->linkElement->setAlignment(static_cast<PangoAlignment>(dialog.getLayout()));
+            this->linkElement->setFont(dialog.getFont());
             this->linkElement->sizeChanged();
             this->linkElement->setHighlighted(false);
             page->firePageChanged();

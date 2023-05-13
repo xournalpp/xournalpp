@@ -41,13 +41,15 @@ LinkDialog::LinkDialog(Control* control) {
 
 LinkDialog::~LinkDialog() { gtk_widget_destroy(GTK_WIDGET(linkDialog)); }
 
-void LinkDialog::preset(std::string text, std::string url, Layout layout) {
+void LinkDialog::preset(XojFont font, std::string text, std::string url, Layout layout) {
     GtkTextBuffer* textBuffer = gtk_text_view_get_buffer(this->textInput);
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds(textBuffer, &start, &end);
     gtk_text_buffer_insert(textBuffer, &start, text.c_str(), text.length());
     gtk_text_view_set_buffer(this->textInput, textBuffer);
     gtk_entry_set_text(this->urlInput, url.c_str());
+    std::string fontName = font.getName() + " " + std::to_string(font.getSize());
+    gtk_font_chooser_set_font(this->fontChooser, fontName.c_str());
     this->layoutToggled(layout);
 }
 
@@ -137,3 +139,12 @@ void LinkDialog::layoutToggled(Layout layout) {
 }
 
 Layout LinkDialog::getLayout() { return this->layout; }
+
+XojFont LinkDialog::getFont() {
+    XojFont newfont;
+    std::string fontName = gtk_font_chooser_get_font(this->fontChooser);
+    auto pos = fontName.find_last_of(" ");
+    newfont.setName(fontName.substr(0, pos));
+    newfont.setSize(std::stod(fontName.substr(pos + 1)));
+    return newfont;
+}
