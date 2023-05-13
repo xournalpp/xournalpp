@@ -105,6 +105,18 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
                                               xournal->getControl()->getToolHandler(), this)),
         oldtext(nullptr) {
     this->registerToHandler(this->page);
+
+    this->linkPopover = GTK_POPOVER(gtk_popover_new(xournal->getWidget()));
+    gtk_popover_set_modal(linkPopover, false);
+    gtk_popover_set_constrain_to(this->linkPopover, GTK_POPOVER_CONSTRAINT_WINDOW);
+    GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    this->linkPopoverLabel = gtk_label_new("Hello World");
+    gtk_widget_set_margin_top(linkPopoverLabel, POPOVER_PADDING);
+    gtk_widget_set_margin_left(linkPopoverLabel, POPOVER_PADDING);
+    gtk_widget_set_margin_right(linkPopoverLabel, POPOVER_PADDING);
+    gtk_widget_set_margin_bottom(linkPopoverLabel, POPOVER_PADDING);
+    gtk_box_append(GTK_BOX(vbox), this->linkPopoverLabel);
+    gtk_container_add(GTK_CONTAINER(this->linkPopover), vbox);
 }
 
 XojPageView::~XojPageView() {
@@ -115,6 +127,9 @@ XojPageView::~XojPageView() {
     this->overlayViews.clear();
     endText();
     deleteViewBuffer();  // Ensures the mutex is locked during the buffer's destruction
+
+    gtk_widget_destroy(GTK_WIDGET(linkPopover));
+    gtk_widget_destroy(linkPopoverLabel);
 }
 
 void XojPageView::addOverlayView(std::unique_ptr<xoj::view::OverlayView> overlay) {
@@ -548,6 +563,13 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
                 GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
                 GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "alias");
                 gdk_window_set_cursor(window, cursor);
+                GdkRectangle rect{this->getX() + (linkElement->getX() * zoom),
+                                  this->getY() + (linkElement->getY() * zoom), linkElement->getElementWidth() * zoom,
+                                  linkElement->getElementHeight() * zoom};
+                gtk_popover_set_pointing_to(this->linkPopover, &rect);
+                gtk_label_set_text(GTK_LABEL(this->linkPopoverLabel), linkElement->getUrl().c_str());
+                gtk_widget_show_all(GTK_WIDGET(this->linkPopover));
+                gtk_popover_popup(this->linkPopover);
             } else if (e->getType() == ELEMENT_LINK) {
                 Link* linkElement = dynamic_cast<Link*>(e);
                 linkElement->setHighlighted(false);
@@ -555,6 +577,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
                 GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
                 GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "hand2");
                 gdk_window_set_cursor(window, cursor);
+                gtk_popover_popdown(this->linkPopover);
             }
         }
     }

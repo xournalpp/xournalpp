@@ -310,4 +310,8 @@ private:
     friend class PdfFloatingToolbox;
     // only function allowed to setX(), setY(), setMappedRowCol():
     friend void Layout::layoutPages(int width, int height);
+
+    GtkPopover* linkPopover;
+    GtkWidget* linkPopoverLabel;
+    static constexpr int POPOVER_PADDING = 2;
 };
