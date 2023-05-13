@@ -18,6 +18,8 @@
 
 class Control;
 
+enum class Layout { LEFT, CENTER, RIGHT };
+
 class LinkDialog {
 public:
     LinkDialog(Control* control);
@@ -33,6 +35,7 @@ public:
     void okButtonPressed(GtkButton* btn);
     void cancelButtonPressed(GtkButton* btn);
     void textChanged(GtkTextBuffer* buffer);
+    void layoutToggled(Layout l);
 
 private:
     bool isTextValid(std::string text);
@@ -47,6 +50,14 @@ private:
 
     GtkButton* okButton = nullptr;
     GtkButton* cancelButton = nullptr;
+
+    GtkFontChooser* fontChooser = nullptr;
+
+    GtkToggleButton* layoutLeft = nullptr;
+    GtkToggleButton* layoutCenter = nullptr;
+    GtkToggleButton* layoutRight = nullptr;
+
+    GtkComboBoxText* linkTypeChooser = nullptr;
 
     std::string linkText;
     std::string linkURL;

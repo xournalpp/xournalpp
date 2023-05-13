@@ -238,7 +238,6 @@
                       <object class="GtkComboBoxText" id="cbLinkPrefix">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="double-buffered">False</property>
                         <property name="active">1</property>
                         <property name="popup-fixed-width">False</property>
                         <items>
@@ -246,13 +245,13 @@
                           <item id="2" translatable="yes">https://</item>
                           <item id="3" translatable="yes">mailto:</item>
                           <item id="4" translatable="yes">file:///</item>
+                          <item id="0" translatable="yes">&lt;custom&gt;</item>
                         </items>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
-                        <property name="non-homogeneous">True</property>
                       </packing>
                     </child>
                     <child>

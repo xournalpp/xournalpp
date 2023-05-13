@@ -6,6 +6,9 @@
 void okButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->okButtonPressed(btn); }
 void cancelButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->cancelButtonPressed(btn); }
 void textChangedClb(GtkTextBuffer* buffer, LinkDialog* dialog) { dialog->textChanged(buffer); }
+void layoutToogledLeft(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(Layout::LEFT); };
+void layoutToogledCenter(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(Layout::CENTER); };
+void layoutToogledRight(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(Layout::RIGHT); };
 
 LinkDialog::LinkDialog(Control* control) {
     auto filepath = control->getGladeSearchPath()->findFile("", "linkDialog.glade");
@@ -19,9 +22,21 @@ LinkDialog::LinkDialog(Control* control) {
     this->okButton = GTK_BUTTON(gtk_builder_get_object(builder, "btnLinkEditOk"));
     this->cancelButton = GTK_BUTTON(gtk_builder_get_object(builder, "btnLinkEditCancel"));
 
+    this->fontChooser = GTK_FONT_CHOOSER(gtk_builder_get_object(builder, "btnFontChooser"));
+
+    this->layoutLeft = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnLeftLayout"));
+    this->layoutCenter = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnCenterLayout"));
+    this->layoutRight = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnRightLayout"));
+
+    this->linkTypeChooser = GTK_COMBO_BOX_TEXT(gtk_builder_get_object(builder, "cbLinkPrefix"));
+
     g_signal_connect(G_OBJECT(okButton), "clicked", G_CALLBACK(okButtonClicked), this);
     g_signal_connect(G_OBJECT(cancelButton), "clicked", G_CALLBACK(cancelButtonClicked), this);
     g_signal_connect(G_OBJECT(gtk_text_view_get_buffer(this->textInput)), "changed", G_CALLBACK(textChangedClb), this);
+
+    g_signal_connect(G_OBJECT(layoutLeft), "released", G_CALLBACK(layoutToogledLeft), this);
+    g_signal_connect(G_OBJECT(layoutCenter), "released", G_CALLBACK(layoutToogledCenter), this);
+    g_signal_connect(G_OBJECT(layoutRight), "released", G_CALLBACK(layoutToogledRight), this);
 }
 
 LinkDialog::~LinkDialog() { gtk_widget_destroy(GTK_WIDGET(linkDialog)); }
@@ -101,4 +116,20 @@ void LinkDialog::textChanged(GtkTextBuffer* buffer) {
     height = DEFAULT_HEIGHT + (std::max(0, (lot - INITIAL_NUMBER_OF_LINES)) * ADDITIONAL_HEIGHT_PER_LINE);
     height = std::min(height, MAX_HEIGHT);
     gtk_window_resize(GTK_WINDOW(this->linkDialog), width, height);
+}
+
+void LinkDialog::layoutToggled(Layout layout) {
+    if (layout == Layout::LEFT) {
+        // gtk_toggle_button_set_active(this->layoutLeft, true);
+        gtk_toggle_button_set_active(this->layoutCenter, false);
+        gtk_toggle_button_set_active(this->layoutRight, false);
+    } else if (layout == Layout::CENTER) {
+        gtk_toggle_button_set_active(this->layoutLeft, false);
+        // gtk_toggle_button_set_active(this->layoutCenter, true);
+        gtk_toggle_button_set_active(this->layoutRight, false);
+    } else if (layout == Layout::RIGHT) {
+        gtk_toggle_button_set_active(this->layoutLeft, false);
+        gtk_toggle_button_set_active(this->layoutCenter, false);
+        // gtk_toggle_button_set_active(this->layoutRight, true);
+    }
 }
