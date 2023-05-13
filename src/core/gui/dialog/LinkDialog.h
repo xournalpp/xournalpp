@@ -26,7 +26,7 @@ public:
     ~LinkDialog();
 
 public:
-    void preset(std::string text, std::string url);
+    void preset(std::string text, std::string url, Layout layout = Layout::LEFT);
     int show();
     std::string getText();
     std::string getURL();

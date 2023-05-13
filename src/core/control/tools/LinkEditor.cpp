@@ -57,7 +57,8 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
             this->linkElement->setInEditing(true);
             page->firePageChanged();
             LinkDialog dialog(this->control);
-            dialog.preset(this->linkElement->getText(), this->linkElement->getUrl());
+            dialog.preset(this->linkElement->getText(), this->linkElement->getUrl(),
+                          static_cast<Layout>(this->linkElement->getAlignment()));
             int response = dialog.show();
             if (response == LinkDialog::CANCEL) {
                 this->linkElement->setInEditing(false);

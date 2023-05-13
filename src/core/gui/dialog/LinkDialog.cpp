@@ -41,13 +41,14 @@ LinkDialog::LinkDialog(Control* control) {
 
 LinkDialog::~LinkDialog() { gtk_widget_destroy(GTK_WIDGET(linkDialog)); }
 
-void LinkDialog::preset(std::string text, std::string url) {
+void LinkDialog::preset(std::string text, std::string url, Layout layout) {
     GtkTextBuffer* textBuffer = gtk_text_view_get_buffer(this->textInput);
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds(textBuffer, &start, &end);
     gtk_text_buffer_insert(textBuffer, &start, text.c_str(), text.length());
     gtk_text_view_set_buffer(this->textInput, textBuffer);
     gtk_entry_set_text(this->urlInput, url.c_str());
+    this->layoutToggled(layout);
 }
 
 int LinkDialog::show() { return gtk_dialog_run(GTK_DIALOG(this->linkDialog)); }
@@ -121,17 +122,17 @@ void LinkDialog::textChanged(GtkTextBuffer* buffer) {
 void LinkDialog::layoutToggled(Layout layout) {
     this->layout = layout;
     if (layout == Layout::LEFT) {
-        // gtk_toggle_button_set_active(this->layoutLeft, true);
+        gtk_toggle_button_set_active(this->layoutLeft, true);
         gtk_toggle_button_set_active(this->layoutCenter, false);
         gtk_toggle_button_set_active(this->layoutRight, false);
     } else if (layout == Layout::CENTER) {
         gtk_toggle_button_set_active(this->layoutLeft, false);
-        // gtk_toggle_button_set_active(this->layoutCenter, true);
+        gtk_toggle_button_set_active(this->layoutCenter, true);
         gtk_toggle_button_set_active(this->layoutRight, false);
     } else if (layout == Layout::RIGHT) {
         gtk_toggle_button_set_active(this->layoutLeft, false);
         gtk_toggle_button_set_active(this->layoutCenter, false);
-        // gtk_toggle_button_set_active(this->layoutRight, true);
+        gtk_toggle_button_set_active(this->layoutRight, true);
     }
 }
 
