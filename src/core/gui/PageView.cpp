@@ -112,8 +112,8 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
     GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     this->linkPopoverLabel = gtk_label_new("Hello World");
     gtk_widget_set_margin_top(linkPopoverLabel, POPOVER_PADDING);
-    gtk_widget_set_margin_left(linkPopoverLabel, POPOVER_PADDING);
-    gtk_widget_set_margin_right(linkPopoverLabel, POPOVER_PADDING);
+    gtk_widget_set_margin_start(linkPopoverLabel, POPOVER_PADDING);
+    gtk_widget_set_margin_end(linkPopoverLabel, POPOVER_PADDING);
     gtk_widget_set_margin_bottom(linkPopoverLabel, POPOVER_PADDING);
     gtk_box_append(GTK_BOX(vbox), this->linkPopoverLabel);
     gtk_container_add(GTK_CONTAINER(this->linkPopover), vbox);
@@ -405,7 +405,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         startText(x, y);
     } else if (h->getToolType() == TOOL_LINK) {
         LinkEditor editor(xournal->getControl(), xournal->getWidget());
-        editor.startEditing(this->getPage(), x, y, pos.isControlDown());
+        editor.startEditing(this->getPage(), int(x), int(y), pos.isControlDown());
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -570,7 +570,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
                 gtk_label_set_text(GTK_LABEL(this->linkPopoverLabel), linkElement->getUrl().c_str());
                 gtk_widget_show_all(GTK_WIDGET(this->linkPopover));
                 gtk_popover_popup(this->linkPopover);
-            } else if (e->getType() == ELEMENT_LINK) {
+                this->highlightedLink = linkElement;
+            } else if (e->getType() == ELEMENT_LINK && this->highlightedLink == e) {
                 Link* linkElement = dynamic_cast<Link*>(e);
                 linkElement->setHighlighted(false);
                 this->page->fireElementChanged(linkElement);
@@ -578,6 +579,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
                 GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "hand2");
                 gdk_window_set_cursor(window, cursor);
                 gtk_popover_popdown(this->linkPopover);
+                this->highlightedLink == nullptr;
             }
         }
     }

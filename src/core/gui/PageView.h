@@ -38,6 +38,7 @@ class SearchControl;
 class Selection;
 class Settings;
 class Text;
+class Link;
 class TextEditor;
 class VerticalToolHandler;
 class XournalView;
@@ -311,7 +312,8 @@ private:
     // only function allowed to setX(), setY(), setMappedRowCol():
     friend void Layout::layoutPages(int width, int height);
 
-    GtkPopover* linkPopover;
-    GtkWidget* linkPopoverLabel;
+    GtkPopover* linkPopover = nullptr;
+    Link* highlightedLink = nullptr;
+    GtkWidget* linkPopoverLabel = nullptr;
     static constexpr int POPOVER_PADDING = 2;
 };
