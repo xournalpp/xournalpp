@@ -563,9 +563,9 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
                 GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
                 GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "alias");
                 gdk_window_set_cursor(window, cursor);
-                GdkRectangle rect{this->getX() + (linkElement->getX() * zoom),
-                                  this->getY() + (linkElement->getY() * zoom), linkElement->getElementWidth() * zoom,
-                                  linkElement->getElementHeight() * zoom};
+                GdkRectangle rect{
+                        this->getX() + int(linkElement->getX() * zoom), this->getY() + int(linkElement->getY() * zoom),
+                        int(linkElement->getElementWidth() * zoom), int(linkElement->getElementHeight() * zoom)};
                 gtk_popover_set_pointing_to(this->linkPopover, &rect);
                 gtk_label_set_text(GTK_LABEL(this->linkPopoverLabel), linkElement->getUrl().c_str());
                 gtk_widget_show_all(GTK_WIDGET(this->linkPopover));
