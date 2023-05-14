@@ -725,14 +725,16 @@ void LoadHandler::parseTexImage() {
 
 void LoadHandler::parseLink() {
     this->link = new Link();
-    this->layer->addElement(this->link);
 
+    PangoAlignment align = static_cast<PangoAlignment>(LoadHandlerHelper::getAttribInt("align", this));
     const char* sFont = LoadHandlerHelper::getAttrib("font", false, this);
     double fontSize = LoadHandlerHelper::getAttribDouble("size", this);
     double x = LoadHandlerHelper::getAttribDouble("x", this);
     double y = LoadHandlerHelper::getAttribDouble("y", this);
     const char* url = LoadHandlerHelper::getAttrib("url", false, this);
     const char* text = LoadHandlerHelper::getAttrib("text", false, this);
+
+    this->link->setAlignment(align);
 
     this->link->setText(std::string(g_uri_unescape_string(text, NULL)));
     this->link->setUrl(std::string(g_uri_unescape_string(url, NULL)));
@@ -747,6 +749,8 @@ void LoadHandler::parseLink() {
     Color color{0U};
     LoadHandlerHelper::parseColor(sColor, color, this);
     link->setColor(color);
+
+    this->layer->addElement(this->link);
 }
 
 void LoadHandler::parseAttachment() {

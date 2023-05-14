@@ -216,6 +216,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
 
             XojFont& f = l->getFont();
 
+            link->setAttrib("align", l->getAlignment());
             link->setAttrib("font", f.getName().c_str());
             link->setAttrib("size", f.getSize());
             link->setAttrib("x", l->getX());
