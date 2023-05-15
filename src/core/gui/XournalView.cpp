@@ -579,12 +579,17 @@ void XournalView::pageChanged(size_t page) {
 }
 
 void XournalView::pageDeleted(size_t page) {
-    size_t currentPage = control->getCurrentPageNo();
+    const size_t currentPageNo = control->getCurrentPageNo();
 
-    viewPages.erase(begin(viewPages) + page);
+    viewPages.erase(begin(viewPages) + static_cast<long>(page));
 
     layoutPages();
-    control->getScrollHandler()->scrollToPage(currentPage);
+
+    if (currentPageNo > page) {
+        control->getScrollHandler()->scrollToPage(currentPageNo - 1);
+    } else {
+        control->getScrollHandler()->scrollToPage(currentPageNo);
+    }
 }
 
 auto XournalView::getTextEditor() const -> TextEditor* {
