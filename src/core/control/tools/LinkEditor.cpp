@@ -61,7 +61,8 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
             dialog.preset(this->linkElement->getFont(), this->linkElement->getText(), this->linkElement->getUrl(),
                           static_cast<Layout>(this->linkElement->getAlignment()));
             int response = dialog.show();
-            if (response == LinkDialog::CANCEL) {
+            std::cout << "Dialog closed: " << response << std::endl;
+            if (response == LinkDialog::CANCEL || response == GTK_RESPONSE_DELETE_EVENT) {
                 this->linkElement->setHighlighted(false);
                 page->fireElementChanged(this->linkElement);
                 return;
