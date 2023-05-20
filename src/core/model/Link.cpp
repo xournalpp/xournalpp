@@ -3,6 +3,7 @@
 #include "model/Element.h"                        // for ELEMENT_TEXT, Eleme...
 #include "model/Font.h"                           // for XojFont
 #include "util/Color.h"                           // for Colors
+#include "util/Rectangle.h"                       // for Rectangle
 #include "util/Stacktrace.h"                      // for Stacktrace
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
@@ -105,6 +106,7 @@ void Link::calcSize() const {
     pango_layout_get_size(layout.get(), &w, &h);
     this->width = (static_cast<double>(w)) / PANGO_SCALE + PADDING;
     this->height = (static_cast<double>(h)) / PANGO_SCALE + PADDING;
+    this->updateSnapping();
 };
 
 auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
@@ -127,8 +129,12 @@ auto Link::createPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout> {
 
 auto Link::rescaleOnlyAspectRatio() -> bool { return true; }
 
-auto Link::rescaleWithMirror() -> bool { return false; }
+auto Link::rescaleWithMirror() -> bool { return true; }
 
 void Link::setAlignment(PangoAlignment alignment) { this->alignment = alignment; }
 
 PangoAlignment Link::getAlignment() { return this->alignment; }
+
+void Link::updateSnapping() const {
+    this->snappedBounds = xoj::util::Rectangle<double>(this->x, this->y, this->width, this->height);
+}

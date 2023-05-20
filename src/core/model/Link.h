@@ -68,6 +68,7 @@ public:
 
 protected:
     void calcSize() const override;
+    void updateSnapping() const;
 
 private:
     XojFont font;
