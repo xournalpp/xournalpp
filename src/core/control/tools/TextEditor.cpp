@@ -7,6 +7,7 @@
 
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_B, GDK_KEY_ISO_Enter, GDK_...
 #include <glib-object.h>     // for g_object_get, g_object_unref, G_CA...
+#include <gtk/gtk.h>         // for GtkPopover
 
 #include "control/AudioController.h"
 #include "control/Control.h"  // for Control
@@ -1105,6 +1106,24 @@ void TextEditor::initializeEditionAt(double x, double y) {
         }
         this->originalTextElement = nullptr;
     } else {
+
+        GtkPopover* linkPopover = GTK_POPOVER(gtk_popover_new(xournalWidget));
+        gtk_popover_set_modal(linkPopover, false);
+        gtk_popover_set_constrain_to(linkPopover, GTK_POPOVER_CONSTRAINT_WINDOW);
+        GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget* linkPopoverLabel = gtk_label_new("Hello World");
+        gtk_widget_set_margin_top(linkPopoverLabel, 4);
+        gtk_widget_set_margin_left(linkPopoverLabel, 4);
+        gtk_widget_set_margin_right(linkPopoverLabel, 4);
+        gtk_widget_set_margin_bottom(linkPopoverLabel, 4);
+        gtk_box_pack_end(GTK_BOX(vbox), linkPopoverLabel, false, false, 4);
+        gtk_container_add(GTK_CONTAINER(linkPopover), vbox);
+
+        GdkRectangle rect{text->getX(), text->getY(), text->getElementWidth(), text->getElementHeight()};
+        gtk_popover_set_pointing_to(linkPopover, &rect);
+        gtk_widget_show_all(GTK_WIDGET(linkPopover));
+        gtk_popover_popup(linkPopover);
+
         this->control->setFontSelected(text->getFont());
         this->originalTextElement = text;
 
