@@ -615,6 +615,7 @@ auto XournalMain::run(int argc, char** argv) -> int {
 
     XournalMainPrivate app_data;
     GtkApplication* app = gtk_application_new("com.github.xournalpp.xournalpp", APP_FLAGS);
+    g_set_prgname("com.github.xournalpp.xournalpp");
     g_signal_connect(app, "activate", G_CALLBACK(&on_activate), &app_data);
     g_signal_connect(app, "command-line", G_CALLBACK(&on_command_line), &app_data);
     g_signal_connect(app, "open", G_CALLBACK(&on_open_files), &app_data);
