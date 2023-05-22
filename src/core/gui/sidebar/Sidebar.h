@@ -12,7 +12,8 @@
 #pragma once
 
 #include <cstddef>  // for size_t
-#include <list>     // for list
+#include <memory>   // for unique_ptr
+#include <vector>   // for vector
 
 #include <gtk/gtk.h>  // for GtkWidget, Gtk...
 
@@ -32,7 +33,7 @@ public:
 
 private:
     void initPages(GtkWidget* sidebarContents, GladeGui* gui);
-    void addPage(AbstractSidebarPage* page);
+    void addPage(std::unique_ptr<AbstractSidebarPage> page);
 
     // SidebarToolbarActionListener
 public:
@@ -104,7 +105,7 @@ private:
     /**
      * The sidebar pages
      */
-    std::list<AbstractSidebarPage*> pages;
+    std::vector<std::unique_ptr<AbstractSidebarPage>> pages;
 
     /**
      * The Toolbar with the pages
@@ -124,7 +125,7 @@ private:
     /**
      * Current active page
      */
-    AbstractSidebarPage* currentPage = nullptr;
+    size_t currentPageIdx{0};
 
     /**
      * The sidebarContents widget
