@@ -613,9 +613,11 @@ void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos) const {
 void TextEditor::updateTextElementContent() { this->textElement->setText(cloneToStdString(this->buffer.get())); }
 
 void TextEditor::contentsChanged(bool forceCreateUndoAction) {
+    std::cout << "TextEditor::contentsChanged()" << std::endl;
     // Todo: Reinstate text edition undo stack
     this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
     this->computeVirtualCursorPosition();
+    this->positionContextMenu(true);
 }
 
 void TextEditor::markPos(double x, double y, bool extendSelection) {
@@ -1129,7 +1131,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
     this->previousBoundingBox = Range(this->textElement->boundingRect());
     this->replaceBufferContent(this->textElement->getText());
 
-    this->positionContextMenu();
+    this->positionContextMenu(false);
     gtk_widget_show_all(GTK_WIDGET(this->contextMenu));
     gtk_popover_popup(this->contextMenu);
     std::cout << "Popup menu should be shown" << std::endl;
@@ -1155,7 +1157,7 @@ void TextEditor::createContextMenu() {
     // g_object_unref(G_OBJECT(builder));
 }
 
-void TextEditor::positionContextMenu() {
+void TextEditor::positionContextMenu(bool showing) {
     std::cout << "TextEditor::positionContextMenu() -> ";
 
     // When no text element is selected no context menu should be displayed
@@ -1164,9 +1166,15 @@ void TextEditor::positionContextMenu() {
         return;
     }
 
+    if (showing) {
+        gtk_widget_hide(GTK_WIDGET(this->contextMenu));
+    }
     GdkRectangle rect{this->pageView->getX() + int(this->textElement->getX() * this->pageView->getZoom()),
                       this->pageView->getY() + int(this->textElement->getY() * this->pageView->getZoom()),
-                      int(this->textElement->getElementWidth()) + 5, int(this->textElement->getElementHeight())};
+                      int(this->textElement->getElementWidth()) + 12, int(this->textElement->getElementHeight())};
     std::cout << "(" << rect.x << ":" << rect.y << ";" << rect.width << ":" << rect.height << ")" << std::endl;
     gtk_popover_set_pointing_to(this->contextMenu, &rect);
+    if (showing) {
+        gtk_widget_show(GTK_WIDGET(this->contextMenu));
+    }
 }

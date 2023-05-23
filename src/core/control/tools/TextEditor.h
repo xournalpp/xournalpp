@@ -144,7 +144,7 @@ private:
     void updateTextElementContent();
 
     void createContextMenu();
-    void positionContextMenu();
+    void positionContextMenu(bool showing);
 
 private:
     Control* control;
