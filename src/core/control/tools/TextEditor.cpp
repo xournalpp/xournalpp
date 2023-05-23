@@ -1036,6 +1036,7 @@ void TextEditor::repaintCursorAfterChange() {
 }
 
 void TextEditor::finalizeEdition() {
+    std::cout << "TextEditor::finalizeEdition()" << std::endl;
     Layer* layer = this->page->getSelectedLayer();
     UndoRedoHandler* undo = this->control->getUndoRedoHandler();
 
@@ -1125,7 +1126,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
     this->previousBoundingBox = Range(this->textElement->boundingRect());
     this->replaceBufferContent(this->textElement->getText());
 
-    this->positionContextMenu(x, y);
+    this->positionContextMenu();
     gtk_widget_show_all(GTK_WIDGET(this->contextMenu));
     gtk_popover_popup(this->contextMenu);
     std::cout << "Popup menu should be shown" << std::endl;
@@ -1136,14 +1137,23 @@ void TextEditor::createContextMenu() {
 
     GtkBuilder* builder = gtk_builder_new_from_file(filepath.u8string().c_str());
 
-    this->contextMenu = GTK_POPOVER(gtk_builder_get_object(builder, "textEditorContextMenu"));
-
+    this->contextMenu = GTK_POPOVER(gtk_popover_new(xournalWidget));
+    gtk_popover_set_modal(this->contextMenu, false);
+    gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
+    GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget* linkPopoverLabel = gtk_label_new("Hello World");
+    gtk_widget_set_margin_top(linkPopoverLabel, 4);
+    gtk_widget_set_margin_left(linkPopoverLabel, 4);
+    gtk_widget_set_margin_right(linkPopoverLabel, 4);
+    gtk_widget_set_margin_bottom(linkPopoverLabel, 4);
+    gtk_box_pack_end(GTK_BOX(vbox), linkPopoverLabel, false, false, 4);
+    gtk_container_add(GTK_CONTAINER(this->contextMenu), vbox);
 
     // g_object_unref(G_OBJECT(builder));
 }
 
-void TextEditor::positionContextMenu(int x, int y) {
-    std::cout << "TextEditor::positionContextMenu() ->" << std::endl;
+void TextEditor::positionContextMenu() {
+    std::cout << "TextEditor::positionContextMenu() -> ";
 
     // When no text element is selected no context menu should be displayed
     if (this->textElement == nullptr) {
@@ -1151,12 +1161,9 @@ void TextEditor::positionContextMenu(int x, int y) {
         return;
     }
 
-    /*GdkRectangle rect{this->pageView->getX() + int(this->textElement->getX() * this->pageView->getZoom()),
-                      this->pageView->getY() + int(this->textElement->getY() * this->pageView->getZoom()),
-                      int(this->textElement->getElementWidth()), int(this->textElement->getElementHeight())};*/
     GdkRectangle rect{this->pageView->getX() + int(this->textElement->getX() * this->pageView->getZoom()),
                       this->pageView->getY() + int(this->textElement->getY() * this->pageView->getZoom()),
-                      int(this->textElement->getElementWidth()), int(this->textElement->getElementHeight())};
-    std::cout << "(" << rect.x << ":" << rect.y << ")" << std::endl;
+                      int(this->textElement->getElementWidth()) + 5, int(this->textElement->getElementHeight())};
+    std::cout << "(" << rect.x << ":" << rect.y << ";" << rect.width << ":" << rect.height << ")" << std::endl;
     gtk_popover_set_pointing_to(this->contextMenu, &rect);
 }
