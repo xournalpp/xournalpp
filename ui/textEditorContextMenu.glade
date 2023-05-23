@@ -47,11 +47,40 @@
           </packing>
         </child>
         <child>
-          <object class="GtkColorButton" id="btnFontColor">
+          <object class="GtkBox" id="colorLayout">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="title" translatable="yes">Font Color</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkColorButton" id="btnFontColor">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="tooltip-text" translatable="yes">Font Color</property>
+                <property name="title" translatable="yes">Font Color</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkColorButton" id="btnBgColor">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="tooltip-text" translatable="yes">Background Color</property>
+                <property name="title" translatable="yes">Background Color</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <style>
+              <class name="linked"/>
+            </style>
           </object>
           <packing>
             <property name="expand">False</property>

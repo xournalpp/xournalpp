@@ -28,8 +28,8 @@
 #include "util/glib_casts.h"  // for wrap_for_once_v
 #include "util/gtk4_helper.h"
 #include "util/raii/CStringWrapper.h"
-#include "util/safe_casts.h"  // for round_cast, as_unsigned
-#include "view/overlays/TextEditionView.h"
+#include "util/safe_casts.h"                // for round_cast, as_unsigned
+#include "view/overlays/TextEditionView.h"  // for TextEditionView
 
 #include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
 
@@ -1147,35 +1147,24 @@ void TextEditor::createContextMenu() {
         std::cout << err->message << std::endl;
     }
 
-    std::cout << "1: Is Popover? "
-              << G_TYPE_CHECK_INSTANCE_TYPE(gtk_builder_get_object(builder, "textEditorContextMenu"), GTK_TYPE_POPOVER)
-              << std::endl;
-
     this->contextMenu = GTK_POPOVER(gtk_builder_get_object(builder, "textEditorContextMenu"));
-    if (this->contextMenu == NULL) {
-        std::cout << "Could not find popover!" << std::endl;
-    }
-
-    std::cout << "2: Is Popover? " << G_TYPE_CHECK_INSTANCE_TYPE(this->contextMenu, GTK_TYPE_POPOVER) << std::endl;
-
+    gtk_popover_set_relative_to(this->contextMenu, this->xournalWidget);
     gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
 
     // g_object_unref(G_OBJECT(builder));
 }
 
 void TextEditor::positionContextMenu(bool showing) {
-    std::cout << "TextEditor::positionContextMenu() -> ";
-
     // When no text element is selected no context menu should be displayed
     if (this->textElement == nullptr) {
         gtk_popover_popdown(this->contextMenu);
         return;
     }
 
+    int padding = xoj::view::TextEditionView::PADDING_IN_PIXELS;
     Range r = this->getContentBoundingBox();
     GdkRectangle rect{this->pageView->getX() + int(r.getX() * this->pageView->getZoom()),
-                      this->pageView->getY() + int(r.getY() * this->pageView->getZoom()),
+                      this->pageView->getY() + int(r.getY() * this->pageView->getZoom()) - padding,
                       int(r.getWidth() * this->pageView->getZoom()), int(r.getHeight() * this->pageView->getZoom())};
-    std::cout << "(" << rect.x << ":" << rect.y << ";" << rect.width << ":" << rect.height << ")" << std::endl;
     gtk_popover_set_pointing_to(this->contextMenu, &rect);
 }
