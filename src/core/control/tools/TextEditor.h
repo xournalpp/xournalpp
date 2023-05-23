@@ -30,6 +30,7 @@ class Text;
 class XojFont;
 class Control;
 class TextEditorCallbacks;
+class XojPageView;
 
 namespace xoj::util {
 template <class T>
@@ -42,7 +43,7 @@ class TextEditionView;
 
 class TextEditor: public OverlayBase {
 public:
-    TextEditor(Control* control, const PageRef& page, GtkWidget* xournalWidget, double x, double y);
+    TextEditor(Control* control, XojPageView* pageView, GtkWidget* xournalWidget, double x, double y);
     virtual ~TextEditor();
 
     /** Represents the different kinds of text selection */
@@ -142,14 +143,23 @@ private:
 
     void updateTextElementContent();
 
+    void createContextMenu();
+    void positionContextMenu();
+
 private:
     Control* control;
     PageRef page;
+    XojPageView* pageView;
 
     /**
      * @brief Pointer to the main window's widget. Used for fetching settings and clipboards, and ringing the bell.
      */
     GtkWidget* xournalWidget;
+
+    /**
+     * @brief Pointer to the popover displayed above the text editor
+     */
+    GtkPopover* contextMenu;
 
     /**
      * @brief Text element under edition, clone of the original Text element (if any)

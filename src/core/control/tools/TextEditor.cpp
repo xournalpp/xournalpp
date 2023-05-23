@@ -12,6 +12,8 @@
 #include "control/AudioController.h"
 #include "control/Control.h"  // for Control
 #include "control/settings/Settings.h"
+#include "gui/GladeSearchpath.h"  // for GladeSearchPath
+#include "gui/PageView.h"
 #include "gui/XournalppCursor.h"  // for XournalppCursor
 #include "model/Font.h"           // for XojFont
 #include "model/Text.h"           // for Text
@@ -22,7 +24,7 @@
 #include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
 #include "util/Assert.h"
 #include "util/DispatchPool.h"
-#include "util/Range.h"
+#include "util/Range.h"       // for XojPageView
 #include "util/glib_casts.h"  // for wrap_for_once_v
 #include "util/gtk4_helper.h"
 #include "util/raii/CStringWrapper.h"
@@ -121,9 +123,10 @@ static auto cloneWithInsertToStdString(GtkTextBuffer* buf, std::string_view inse
     return res;
 }
 
-TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournalWidget, double x, double y):
+TextEditor::TextEditor(Control* control, XojPageView* pageView, GtkWidget* xournalWidget, double x, double y):
         control(control),
-        page(page),
+        page(pageView->getPage()),
+        pageView(pageView),
         xournalWidget(xournalWidget),
         textWidget(gtk_xoj_int_txt_new(this), xoj::util::adopt),
         imContext(gtk_im_multicontext_new(), xoj::util::adopt),
@@ -1107,22 +1110,8 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->originalTextElement = nullptr;
     } else {
 
-        GtkPopover* linkPopover = GTK_POPOVER(gtk_popover_new(xournalWidget));
-        gtk_popover_set_modal(linkPopover, false);
-        gtk_popover_set_constrain_to(linkPopover, GTK_POPOVER_CONSTRAINT_WINDOW);
-        GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        GtkWidget* linkPopoverLabel = gtk_label_new("Hello World");
-        gtk_widget_set_margin_top(linkPopoverLabel, 4);
-        gtk_widget_set_margin_left(linkPopoverLabel, 4);
-        gtk_widget_set_margin_right(linkPopoverLabel, 4);
-        gtk_widget_set_margin_bottom(linkPopoverLabel, 4);
-        gtk_box_pack_end(GTK_BOX(vbox), linkPopoverLabel, false, false, 4);
-        gtk_container_add(GTK_CONTAINER(linkPopover), vbox);
-
-        GdkRectangle rect{text->getX(), text->getY(), text->getElementWidth(), text->getElementHeight()};
-        gtk_popover_set_pointing_to(linkPopover, &rect);
-        gtk_widget_show_all(GTK_WIDGET(linkPopover));
-        gtk_popover_popup(linkPopover);
+        /*gtk_widget_show_all(GTK_WIDGET(linkPopover));
+        gtk_popover_popup(linkPopover);*/
 
         this->control->setFontSelected(text->getFont());
         this->originalTextElement = text;
@@ -1135,4 +1124,27 @@ void TextEditor::initializeEditionAt(double x, double y) {
     this->layout = this->textElement->createPangoLayout();
     this->previousBoundingBox = Range(this->textElement->boundingRect());
     this->replaceBufferContent(this->textElement->getText());
+}
+
+void TextEditor::createContextMenu() {
+    auto filepath = this->control->getGladeSearchPath()->findFile("", "textEditorContextMenu.glade");
+
+    GtkBuilder* builder = gtk_builder_new();
+    gtk_builder_add_from_file(builder, filepath.u8string().c_str(), NULL);
+
+    this->contextMenu = GTK_POPOVER(gtk_builder_get_object(builder, "textEditorContextMenu"));
+
+    g_free(builder);
+}
+
+void TextEditor::positionContextMenu() {
+    // When no text element is selected no context menu should be displayed
+    if (this->textElement == nullptr) {
+        gtk_popover_popdown(this->contextMenu);
+        return;
+    }
+
+    GdkRectangle rect{this->textElement->getX(), this->textElement->getY(), this->textElement->getElementWidth(),
+                      this->textElement->getElementHeight()};
+    gtk_popover_set_pointing_to(this->contextMenu, &rect);
 }
