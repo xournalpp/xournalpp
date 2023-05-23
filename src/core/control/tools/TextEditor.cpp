@@ -1043,6 +1043,8 @@ void TextEditor::finalizeEdition() {
     this->control->setFontSelected(this->control->getSettings()->getFont());
 
     if (this->bufferEmpty()) {
+        std::cout << "  empty buffer popdown" << std::endl;
+        gtk_popover_popdown(this->contextMenu);
         // Delete the edited element from layer
         if (originalTextElement) {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
@@ -1079,6 +1081,7 @@ void TextEditor::finalizeEdition() {
         undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
     }
 
+    std::cout << "  anyway popdown" << std::endl;
     gtk_popover_popdown(this->contextMenu);
 }
 
