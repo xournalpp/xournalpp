@@ -1169,9 +1169,10 @@ void TextEditor::positionContextMenu(bool showing) {
     if (showing) {
         gtk_widget_hide(GTK_WIDGET(this->contextMenu));
     }
-    GdkRectangle rect{this->pageView->getX() + int(this->textElement->getX() * this->pageView->getZoom()),
-                      this->pageView->getY() + int(this->textElement->getY() * this->pageView->getZoom()),
-                      int(this->textElement->getElementWidth()) + 12, int(this->textElement->getElementHeight())};
+    Range r = this->getContentBoundingBox();
+    GdkRectangle rect{this->pageView->getX() + int(r.getX() * this->pageView->getZoom()),
+                      this->pageView->getY() + int(r.getY() * this->pageView->getZoom()), int(r.getWidth()),
+                      int(r.getHeight())};
     std::cout << "(" << rect.x << ":" << rect.y << ";" << rect.width << ":" << rect.height << ")" << std::endl;
     gtk_popover_set_pointing_to(this->contextMenu, &rect);
     if (showing) {
