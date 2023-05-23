@@ -1140,19 +1140,25 @@ void TextEditor::initializeEditionAt(double x, double y) {
 void TextEditor::createContextMenu() {
     auto filepath = this->control->getGladeSearchPath()->findFile("", "textEditorContextMenu.glade");
 
-    GtkBuilder* builder = gtk_builder_new_from_file(filepath.u8string().c_str());
+    GtkBuilder* builder = gtk_builder_new();
 
-    this->contextMenu = GTK_POPOVER(gtk_popover_new(xournalWidget));
-    gtk_popover_set_modal(this->contextMenu, false);
+    GError* err = NULL;
+    if (gtk_builder_add_from_file(builder, filepath.u8string().c_str(), &err) == 0) {
+        std::cout << err->message << std::endl;
+    }
+
+    std::cout << "1: Is Popover? "
+              << G_TYPE_CHECK_INSTANCE_TYPE(gtk_builder_get_object(builder, "textEditorContextMenu"), GTK_TYPE_POPOVER)
+              << std::endl;
+
+    this->contextMenu = GTK_POPOVER(gtk_builder_get_object(builder, "textEditorContextMenu"));
+    if (this->contextMenu == NULL) {
+        std::cout << "Could not find popover!" << std::endl;
+    }
+
+    std::cout << "2: Is Popover? " << G_TYPE_CHECK_INSTANCE_TYPE(this->contextMenu, GTK_TYPE_POPOVER) << std::endl;
+
     gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
-    GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    GtkWidget* linkPopoverLabel = gtk_label_new("Hello World");
-    gtk_widget_set_margin_top(linkPopoverLabel, 4);
-    gtk_widget_set_margin_left(linkPopoverLabel, 4);
-    gtk_widget_set_margin_right(linkPopoverLabel, 4);
-    gtk_widget_set_margin_bottom(linkPopoverLabel, 4);
-    gtk_box_pack_end(GTK_BOX(vbox), linkPopoverLabel, false, false, 4);
-    gtk_container_add(GTK_CONTAINER(this->contextMenu), vbox);
 
     // g_object_unref(G_OBJECT(builder));
 }
