@@ -144,4 +144,9 @@
       </object>
     </child>
   </object>
+  <object class="GtkImage" id="imgFontColor">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">applications-science</property>
+  </object>
 </interface>

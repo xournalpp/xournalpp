@@ -1139,6 +1139,8 @@ void TextEditor::initializeEditionAt(double x, double y) {
     std::cout << "Popup menu should be shown" << std::endl;
 }
 
+void colorCallback(GtkButton* src, TextEditor* s) { std::cout << "Color changed" << std::endl; }
+
 void TextEditor::createContextMenu() {
     auto filepath = this->control->getGladeSearchPath()->findFile("", "textEditorContextMenu.glade");
 
@@ -1152,6 +1154,13 @@ void TextEditor::createContextMenu() {
     this->contextMenu = GTK_POPOVER(gtk_builder_get_object(builder, "textEditorContextMenu"));
     gtk_popover_set_relative_to(this->contextMenu, this->xournalWidget);
     gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
+
+    GtkImage* img = GTK_IMAGE(gtk_builder_get_object(builder, "imgFontColor"));
+    GtkButton* btn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
+
+    // gtk_button_set_image(btn, GTK_WIDGET(img));
+    // gtk_button_set_always_show_image(btn, TRUE);
+    g_signal_connect(btn, "color-set", G_CALLBACK(colorCallback), this);
 
     this->pageView->getZoomControl()->addZoomListener(this);
 
