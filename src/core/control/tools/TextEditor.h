@@ -18,6 +18,7 @@
 #include <gtk/gtk.h>      // for GtkIMContext, GtkTextIter, GtkWidget
 #include <pango/pango.h>  // for PangoAttrList, PangoLayout
 
+#include "control/zoom/ZoomListener.h"  // for ZoomListener
 #include "model/OverlayBase.h"
 #include "model/PageRef.h"  // for PageRef
 #include "util/Color.h"     // for Color
@@ -41,7 +42,7 @@ namespace xoj::view {
 class TextEditionView;
 };
 
-class TextEditor: public OverlayBase {
+class TextEditor: public OverlayBase, public ZoomListener {
 public:
     TextEditor(Control* control, XojPageView* pageView, GtkWidget* xournalWidget, double x, double y);
     virtual ~TextEditor();
@@ -54,6 +55,8 @@ public:
     void mousePressed(double x, double y);
     void mouseMoved(double x, double y);
     void mouseReleased();
+
+    void zoomChanged();
 
     /**
      * @brief Returns a pointer to the edited Text element.
@@ -144,7 +147,7 @@ private:
     void updateTextElementContent();
 
     void createContextMenu();
-    void positionContextMenu(bool showing);
+    void positionContextMenu();
 
 private:
     Control* control;

@@ -12,7 +12,8 @@
 #include "control/AudioController.h"
 #include "control/Control.h"  // for Control
 #include "control/settings/Settings.h"
-#include "gui/GladeSearchpath.h"  // for GladeSearchPath
+#include "control/zoom/ZoomControl.h"  // for ZoomControl
+#include "gui/GladeSearchpath.h"       // for GladeSearchPath
 #include "gui/PageView.h"
 #include "gui/XournalppCursor.h"  // for XournalppCursor
 #include "model/Font.h"           // for XojFont
@@ -617,7 +618,7 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction) {
     // Todo: Reinstate text edition undo stack
     this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
     this->computeVirtualCursorPosition();
-    this->positionContextMenu(true);
+    this->positionContextMenu();
 }
 
 void TextEditor::markPos(double x, double y, bool extendSelection) {
@@ -1027,6 +1028,7 @@ void TextEditor::repaintEditor(bool sizeChanged) {
     }
     this->updateCursorBox();
     this->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
+    std::cout << "TextEditor::repaintEditor()" << std::endl;
 }
 
 void TextEditor::repaintCursorAfterChange() {
@@ -1131,7 +1133,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
     this->previousBoundingBox = Range(this->textElement->boundingRect());
     this->replaceBufferContent(this->textElement->getText());
 
-    this->positionContextMenu(false);
+    this->positionContextMenu();
     gtk_widget_show_all(GTK_WIDGET(this->contextMenu));
     gtk_popover_popup(this->contextMenu);
     std::cout << "Popup menu should be shown" << std::endl;
@@ -1151,10 +1153,12 @@ void TextEditor::createContextMenu() {
     gtk_popover_set_relative_to(this->contextMenu, this->xournalWidget);
     gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
 
-    // g_object_unref(G_OBJECT(builder));
+    this->pageView->getZoomControl()->addZoomListener(this);
+
+    g_object_unref(G_OBJECT(builder));
 }
 
-void TextEditor::positionContextMenu(bool showing) {
+void TextEditor::positionContextMenu() {
     // When no text element is selected no context menu should be displayed
     if (this->textElement == nullptr) {
         gtk_popover_popdown(this->contextMenu);
@@ -1168,3 +1172,5 @@ void TextEditor::positionContextMenu(bool showing) {
                       int(r.getWidth() * this->pageView->getZoom()), int(r.getHeight() * this->pageView->getZoom())};
     gtk_popover_set_pointing_to(this->contextMenu, &rect);
 }
+
+void TextEditor::zoomChanged() { this->positionContextMenu(); }
