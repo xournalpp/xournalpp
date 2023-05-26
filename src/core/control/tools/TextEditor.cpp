@@ -1158,7 +1158,14 @@ void TextEditor::createContextMenu() {
     GtkImage* img = GTK_IMAGE(gtk_builder_get_object(builder, "imgFontColor"));
     GtkButton* btn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
 
-    // gtk_button_set_image(btn, GTK_WIDGET(img));
+    gtk_button_set_image(btn, GTK_WIDGET(img));
+    GdkRGBA red;
+    red.alpha = 0.0;
+    red.red = 1.0;
+    red.blue = 0.0;
+    red.green = 0.0;
+    gtk_widget_override_background_color(GTK_WIDGET(btn), GTK_STATE_FLAG_NORMAL, &red);
+
     // gtk_button_set_always_show_image(btn, TRUE);
     g_signal_connect(btn, "color-set", G_CALLBACK(colorCallback), this);
 
