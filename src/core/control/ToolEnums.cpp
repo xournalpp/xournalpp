@@ -105,9 +105,7 @@ auto isSelectToolType(ToolType type) -> bool {
 }
 
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool {
-    return type == TOOL_SELECT_RECT
-            || type == TOOL_SELECT_REGION
-            || type == TOOL_SELECT_OBJECT;
+    return type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_OBJECT;
 }
 
 auto toolTypeToString(ToolType type) -> std::string {

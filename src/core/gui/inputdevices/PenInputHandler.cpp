@@ -256,7 +256,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
             xournal->view->getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
         }
     }
-    
+
     if (handleSelectionMove) {
         EditSelection* selection = xournal->selection;
         XojPageView* view = selection->getView();

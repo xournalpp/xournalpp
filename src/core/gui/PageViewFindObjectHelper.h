@@ -113,6 +113,35 @@ public:
         return false;
     }
 
+    bool atAggregate(double x, double y, bool multiLayer = false) {
+        // If no previous elements, redirect to simple select
+        if (view->xournal->getSelection() == nullptr) {
+            return at(x, y, multiLayer);
+        }
+
+        // Store previous elements to aggregate them
+        std::vector<Element*> allElements(view->xournal->getSelection()->getElements());
+
+        BaseSelectObject::at(x, y, multiLayer);
+        if (strokeMatch) {
+            elementMatch = strokeMatch;
+        }
+
+        if (elementMatch) {
+            if (std::find(allElements.begin(), allElements.end(), elementMatch) == allElements.end()) {
+                allElements.push_back(elementMatch);
+            }
+            view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(),
+                                                          allElements, view, view->page));
+
+            view->repaintPage();
+
+            return true;
+        }
+
+        return false;
+    }
+
 protected:
     bool checkElement(Element* e) override {
         if (e->getType() == ELEMENT_STROKE) {
