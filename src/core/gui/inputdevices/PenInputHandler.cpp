@@ -123,7 +123,12 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->sequenceStartPage = currentPage;
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
-    if (toolHandler->getToolType() != TOOL_HAND && xournal->selection) {
+    bool changeSelection = xournal->selection && toolHandler->getToolType() != TOOL_HAND;
+    // Selection tools does not change selection with Shift pressed
+    if ((event.state & GDK_SHIFT_MASK) && isSelectToolTypeSingleLayer(toolType)) {
+        changeSelection = false;
+    }
+    if (changeSelection) {
         EditSelection* selection = xournal->selection;
 
         XojPageView* view = selection->getView();
@@ -239,7 +244,20 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         }
         return false;
     }
-    if (xournal->selection) {
+    
+    bool isShiftDown = (event.state & GDK_SHIFT_MASK);
+    bool processSelectionEvents = xournal->selection != nullptr;
+
+    // Ignore if selecting with shift pressed (unless moving)
+    if (processSelectionEvents && isSelectToolTypeSingleLayer(toolHandler->getToolType()) && isShiftDown &&
+        !xournal->selection->isMoving()) {
+        // Cursor mode to match the multiple-selection mode
+        xournal->view->getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
+        if (this->deviceClassPressed) {
+            processSelectionEvents = false;
+        }
+    }
+    if (processSelectionEvents) {
         EditSelection* selection = xournal->selection;
         XojPageView* view = selection->getView();
 
@@ -247,7 +265,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
 
         if (xournal->selection->isMoving()) {
             selection->mouseMove(pos.x, pos.y, pos.isAltDown());
-        } else {
+        } else if (!isShiftDown){
             CursorSelectionType selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
             xournal->view->getCursor()->setMouseSelectionType(selType);
         }

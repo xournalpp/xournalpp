@@ -81,7 +81,7 @@ enum ToolType {
     TOOL_END_ENTRY
 };
 auto isSelectToolType(ToolType type) -> bool;
-
+auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
 // The count of tools
 #define TOOL_COUNT (TOOL_END_ENTRY - 1)
 
