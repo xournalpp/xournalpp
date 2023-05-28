@@ -43,6 +43,7 @@ public:
     }
 
     bool isMultiLayerSelection();
+    void addSelection(const std::vector<Element*>& elements);
 
 private:
 protected:
