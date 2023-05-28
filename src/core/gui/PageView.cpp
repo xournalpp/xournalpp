@@ -361,7 +361,11 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
             }
         } else if (h->getToolType() == TOOL_SELECT_OBJECT) {
             SelectObject select(this);
-            select.at(x, y);
+            if (pos.isShiftDown() && xournal->getSelection()) {
+                select.atAggregate(x, y);
+            } else {
+                select.at(x, y);
+            }
         } else if (h->getToolType() == TOOL_PLAY_OBJECT) {
             PlayObject play(this);
             play.at(x, y);

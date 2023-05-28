@@ -56,7 +56,7 @@ auto Selection::isMultiLayerSelection() -> bool {
     return this->multiLayer;
 }
 
-void Selection::addSelection(const std::vector<Element*>& elements){
+void Selection::addSelection(const std::vector<Element*>& elements) {
     std::copy(elements.begin(), elements.end(), std::back_inserter(selectedElements));
 }
 
