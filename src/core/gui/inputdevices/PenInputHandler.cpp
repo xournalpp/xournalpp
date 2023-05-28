@@ -244,20 +244,20 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         }
         return false;
     }
-    
-    bool isShiftDown = (event.state & GDK_SHIFT_MASK);
-    bool processSelectionEvents = xournal->selection != nullptr;
 
-    // Ignore if selecting with shift pressed (unless moving)
-    if (processSelectionEvents && isSelectToolTypeSingleLayer(toolHandler->getToolType()) && isShiftDown &&
+    bool isShiftDown = (event.state & GDK_SHIFT_MASK);
+    bool handleSelectionMove = xournal->selection != nullptr;
+
+    if (xournal->selection && isSelectToolTypeSingleLayer(toolHandler->getToolType()) &&
         !xournal->selection->isMoving()) {
-        // Cursor mode to match the multiple-selection mode
-        xournal->view->getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
-        if (this->deviceClassPressed) {
-            processSelectionEvents = false;
+        if (isShiftDown || this->deviceClassPressed) {
+            handleSelectionMove = false;
+            // Cursor mode to match the multiple-selection mode
+            xournal->view->getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
         }
     }
-    if (processSelectionEvents) {
+    
+    if (handleSelectionMove) {
         EditSelection* selection = xournal->selection;
         XojPageView* view = selection->getView();
 
@@ -265,7 +265,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
 
         if (xournal->selection->isMoving()) {
             selection->mouseMove(pos.x, pos.y, pos.isAltDown());
-        } else if (!isShiftDown){
+        } else if (!isShiftDown) {
             CursorSelectionType selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
             xournal->view->getCursor()->setMouseSelectionType(selType);
         }
