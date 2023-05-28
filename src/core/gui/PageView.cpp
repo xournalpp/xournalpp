@@ -650,6 +650,12 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 
     if (this->selection) {
         size_t layerOfFinalizedSel = this->selection->finalize(this->page);
+
+        // Aggregate selection
+        if (pos.isShiftDown() && xournal->getSelection()) {
+            this->selection->addSelection(xournal->getSelection()->getElements());
+        }
+
         if (layerOfFinalizedSel) {
             xournal->getControl()->getLayerController()->switchToLay(layerOfFinalizedSel);
             xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection.get(), this));
