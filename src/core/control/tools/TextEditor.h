@@ -87,6 +87,8 @@ public:
     void pasteFromClipboard();
     void selectAtCursor(TextEditor::SelectType ty);
 
+    void changeFontColorTemp(GtkButton* src);
+
 private:
     void toggleOverwrite();
     void toggleBoldFace();
@@ -162,7 +164,8 @@ private:
     /**
      * @brief Pointer to the popover displayed above the text editor
      */
-    GtkPopover* contextMenu;
+    GtkPopover* contextMenu = nullptr;
+    GdkRGBA fontColorTemp;
 
     /**
      * @brief Text element under edition, clone of the original Text element (if any)

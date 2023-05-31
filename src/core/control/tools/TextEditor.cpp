@@ -943,6 +943,13 @@ void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
 
 Color TextEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
 
+guint16 toGuint16(gdouble val) {
+    std::cout << val << std::endl;
+    std::cout << val * double(G_MAXUINT16) << std::endl;
+    std::cout << guint16(val * double(G_MAXUINT16)) << std::endl;
+    return guint16(val * double(G_MAXUINT16));
+}
+
 void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
     xoj::util::PangoAttrListSPtr attrlist(pango_attr_list_new(), xoj::util::adopt);
 
@@ -958,6 +965,19 @@ void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
         attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
 
         pango_attr_list_insert(attrlist.get(), attrib);  // attrlist takes ownership of attrib
+    }
+
+    if(this->fontColorTemp.red != 0.0 && this->fontColorTemp.green != 0.0 && this->fontColorTemp.blue != 0.0) {
+        std::cout << "Got here 2" << std::endl;
+        PangoAttribute* attrib = pango_attr_foreground_new(
+            toGuint16(this->fontColorTemp.red), 
+            toGuint16(this->fontColorTemp.green), 
+            toGuint16(this->fontColorTemp.blue));
+        attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
+        attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
+        pango_attr_list_insert(attrlist.get(), attrib);
+        std::cout << "Got here 3" << std::endl;
+        //std::cout << attrib->start_index << ":" << attrib->end_index << "(" << toGuint16(this->fontColorTemp.red) << ";" << toGuint16(this->fontColorTemp.green) << ";" << toGuint16(this->fontColorTemp.blue) << ")" << std::endl;
     }
 
     pango_layout_set_attributes(pl, attrlist.get());
@@ -1139,7 +1159,14 @@ void TextEditor::initializeEditionAt(double x, double y) {
     std::cout << "Popup menu should be shown" << std::endl;
 }
 
-void colorCallback(GtkButton* src, TextEditor* s) { std::cout << "Color changed" << std::endl; }
+void colorCallback(GtkButton* src, TextEditor* s) { s->changeFontColorTemp(src); }
+
+void TextEditor::changeFontColorTemp(GtkButton* src) {
+    std::cout << "Change font color! Is src null? -> " << (src != nullptr) << std::endl;
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(src), &fontColorTemp);
+    std::cout << "(" << fontColorTemp.red << ";" << fontColorTemp.green << ";" << fontColorTemp.blue << ")" << std::endl;
+}
+
 
 void TextEditor::createContextMenu() {
     auto filepath = this->control->getGladeSearchPath()->findFile("", "textEditorContextMenu.glade");
@@ -1155,18 +1182,8 @@ void TextEditor::createContextMenu() {
     gtk_popover_set_relative_to(this->contextMenu, this->xournalWidget);
     gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
 
-    GtkImage* img = GTK_IMAGE(gtk_builder_get_object(builder, "imgFontColor"));
     GtkButton* btn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
 
-    gtk_button_set_image(btn, GTK_WIDGET(img));
-    GdkRGBA red;
-    red.alpha = 0.0;
-    red.red = 1.0;
-    red.blue = 0.0;
-    red.green = 0.0;
-    gtk_widget_override_background_color(GTK_WIDGET(btn), GTK_STATE_FLAG_NORMAL, &red);
-
-    // gtk_button_set_always_show_image(btn, TRUE);
     g_signal_connect(btn, "color-set", G_CALLBACK(colorCallback), this);
 
     this->pageView->getZoomControl()->addZoomListener(this);
