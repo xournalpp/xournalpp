@@ -137,9 +137,14 @@ public:
             view->repaintPage();
 
             return true;
-        }
+        } else {
+            // No match, but we are aggregating, so it should not clear selection
+            view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(),
+                                                          allElements, view, view->page));
+            view->repaintPage();
 
-        return false;
+            return false;
+        }
     }
 
 protected:
