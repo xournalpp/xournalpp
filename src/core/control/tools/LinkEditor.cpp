@@ -77,3 +77,15 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
         }
     }
 }
+
+void LinkEditor::highlight(const PageRef& page, const int x, const int y, const bool controlDown) {
+    std::cout << "LinkEditor highlight" << std::endl;
+
+    // Find Link element
+    for (Element* e: page->getSelectedLayer()->getElements()) {
+        if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
+            this->linkElement = dynamic_cast<Link*>(e);
+            std::cout << "LinkElement already exist at position: " << x << "/" << y << std::endl;
+        }
+    }
+}

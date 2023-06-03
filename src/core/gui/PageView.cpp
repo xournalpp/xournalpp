@@ -405,7 +405,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         startText(x, y);
     } else if (h->getToolType() == TOOL_LINK) {
         LinkEditor editor(xournal->getControl(), xournal->getWidget());
-        editor.startEditing(this->getPage(), int(x), int(y), pos.isControlDown());
+        editor.highlight(this->getPage(), int(x), int(y), pos.isControlDown());
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -496,6 +496,9 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
             xoj_assert(hasNoViewOf(overlayViews, inputHandler.get()));
             this->inputHandler.reset();
         }
+    } else if (toolType == TOOL_LINK) {
+        LinkEditor editor(xournal->getControl(), xournal->getWidget());
+        editor.startEditing(this->getPage(), int(x), int(y), pos.isControlDown());
     }
 
     return true;

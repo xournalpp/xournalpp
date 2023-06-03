@@ -23,6 +23,7 @@ public:
     ~LinkEditor();
 
     void startEditing(const PageRef& page, const int x, const int y, const bool controlDown);
+    void highlight(const PageRef& page, const int x, const int y, const bool controlDown);
 
 private:
     Control* control;
