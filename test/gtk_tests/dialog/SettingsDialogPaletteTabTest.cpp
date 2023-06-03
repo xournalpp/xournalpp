@@ -29,11 +29,11 @@
 
 class GtkTest: public ::testing::Test {
 protected:
-    GtkApplication* app;
+    GtkApplication* app{};
     int argn = 1;
-    char** argv;
+    char** argv{};
 
-    virtual void SetUp() {
+    void SetUp() override {
         argn = 1;
         argv = new char*[2];
         argv[0] = "xournalpp_test";

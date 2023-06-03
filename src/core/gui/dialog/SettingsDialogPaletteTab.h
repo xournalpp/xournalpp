@@ -13,20 +13,20 @@ public:
     SettingsDialogPaletteTab(GtkLabel* colorPaletteExplainLabel, GtkListBox* paletteListBox,
                              const std::vector<fs::path>& paletteDirectories);
     void renderPaletteTab(const fs::path& currentlySetPalettePath);
-    fs::path getSelectedPalette();
+    auto getSelectedPalette() -> fs::path;
 
 private:
     std::vector<fs::path> allPaletteFilePaths;
-    const fs::path& currentlySetPalettePath;
     GtkLabel* colorPaletteExplainLabel;
     GtkListBox* paletteListBox;
 
-    static GtkWidget* newErrorListBoxRow(const fs::path& palettePath, const std::string& error);
-    static GtkWidget* newPaletteTextBox(const std::string& mainContent, const std::string& additionalInfo);
-    static GtkWidget* newPaletteColorIconsBox(const Palette& palette);
-    static GtkWidget* newPaletteListBoxRow(Palette& palette);
-    void renderNoPaletteFoundDisclaimer(GtkListBox* lb) const;
-    void renderColorPaletteExplainLabel() const;
-    GtkWidget* renderPaletteListBoxRow(GtkListBox* lb, const fs::path& p) const;
     void setAllPaletteFilePaths(const std::vector<fs::path>& paletteDirectories);
+    void renderColorPaletteExplainLabel() const;
+
+    static auto newErrorListBoxRow(const fs::path& palettePath, const std::string& error) -> GtkWidget*;
+    static auto newPaletteTextBox(const std::string& mainContent, const fs::path& path) -> GtkWidget*;
+    static auto newPaletteColorIconsBox(const Palette& palette) -> GtkWidget*;
+    static auto newPaletteListBoxRow(Palette& palette) -> GtkWidget*;
+    static void renderNoPaletteFoundDisclaimer(GtkListBox* lb) ;
+    static auto renderPaletteListBoxRow(GtkListBox* lb, const fs::path& p) -> GtkWidget* ;
 };
