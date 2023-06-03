@@ -27,6 +27,6 @@ private:
     static auto newPaletteTextBox(const std::string& mainContent, const fs::path& path) -> GtkWidget*;
     static auto newPaletteColorIconsBox(const Palette& palette) -> GtkWidget*;
     static auto newPaletteListBoxRow(Palette& palette) -> GtkWidget*;
-    static void renderNoPaletteFoundDisclaimer(GtkListBox* lb) ;
-    static auto renderPaletteListBoxRow(GtkListBox* lb, const fs::path& p) -> GtkWidget* ;
+    static void renderNoPaletteFoundDisclaimer(GtkListBox* lb);
+    static auto renderPaletteListBoxRow(GtkListBox* lb, const fs::path& p) -> GtkWidget*;
 };

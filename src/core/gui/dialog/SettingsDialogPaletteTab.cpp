@@ -16,7 +16,9 @@ auto colorize(const std::string& text, const std::string& color) -> std::string 
     return std::string{"<span foreground=\""} + color + std::string{"\">"} + text + std::string{"</span>"};
 }
 
-auto pathLink(const fs::path& path) -> std::string { return FS(_F("<a href=\"file://{1}\">{1}</a>") % path.u8string()); }
+auto pathLink(const fs::path& path) -> std::string {
+    return FS(_F("<a href=\"file://{1}\">{1}</a>") % path.u8string());
+}
 
 void setGObjectPalettePath(GObject* gObject, const fs::path& path) {
     g_object_set_data(gObject, G_OBJECT_PALETTE_PATH, (gpointer)&path);
@@ -34,8 +36,7 @@ auto getGObjectPalettePath(GObject* gObject) -> fs::path {
 
 SettingsDialogPaletteTab::SettingsDialogPaletteTab(GtkLabel* colorPaletteExplainLabel, GtkListBox* paletteListBox,
                                                    const std::vector<fs::path>& paletteDirectories):
-        colorPaletteExplainLabel{colorPaletteExplainLabel},
-        paletteListBox{paletteListBox} {
+        colorPaletteExplainLabel{colorPaletteExplainLabel}, paletteListBox{paletteListBox} {
     renderColorPaletteExplainLabel();
     setAllPaletteFilePaths(paletteDirectories);
 }
@@ -154,8 +155,7 @@ auto SettingsDialogPaletteTab::newPaletteListBoxRow(Palette& palette) -> GtkWidg
     return listBoxRow;
 }
 
-auto SettingsDialogPaletteTab::newPaletteTextBox(const std::string& mainContent, const fs::path& path)
-        -> GtkWidget* {
+auto SettingsDialogPaletteTab::newPaletteTextBox(const std::string& mainContent, const fs::path& path) -> GtkWidget* {
     GtkWidget* textBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
     gtk_widget_show(textBox);
 

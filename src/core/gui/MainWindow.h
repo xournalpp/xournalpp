@@ -123,6 +123,13 @@ public:
 
     void rebindMenubarAccelerators();
 
+    /**
+     * reloadToolbars reloads the currently selected toolbar
+     *
+     * This is especially useful when a change in the SettingsDialog should be reflected right away
+     */
+    void reloadToolbars();
+
 private:
     void initXournalWidget();
 

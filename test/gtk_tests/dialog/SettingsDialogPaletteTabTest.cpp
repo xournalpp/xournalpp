@@ -53,7 +53,8 @@ protected:
     }
 
     // Helper method to create and setup widgets
-    static void createAndSetupWidgets(GtkApplication* app, GtkGrid** grid, GtkLabel** mainLabel, GtkListBox** optionsList) {
+    static void createAndSetupWidgets(GtkApplication* app, GtkGrid** grid, GtkLabel** mainLabel,
+                                      GtkListBox** optionsList) {
         GtkWidget* window = gtk_application_window_new(app);
 
         *grid = GTK_GRID(gtk_grid_new());

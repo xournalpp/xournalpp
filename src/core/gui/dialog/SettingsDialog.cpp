@@ -974,7 +974,7 @@ void SettingsDialog::save() {
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
     this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(settings->getColorPalette());
-    this->control->getWindow()->loadToolbar(this->control->getWindow()->getSelectedToolbar());
+    this->control->getWindow()->reloadToolbars();
 
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();

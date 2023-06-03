@@ -534,6 +534,12 @@ auto MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState
     return false;
 }
 
+void MainWindow::reloadToolbars() {
+    ToolbarData* d = getSelectedToolbar();
+    this->clearToolbar();
+    this->toolbarSelected(d);
+}
+
 void MainWindow::toolbarSelected(const std::string& id) {
     const auto& toolbars = *toolbar->getModel()->getToolbars();
     auto it = std::find_if(toolbars.begin(), toolbars.end(), [&](const ToolbarData* d) { return d->getId() == id; });
