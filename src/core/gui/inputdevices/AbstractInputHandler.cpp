@@ -51,7 +51,7 @@ auto AbstractInputHandler::handle(InputEvent const& event) -> bool {
  *
  * @return page or nullptr if none
  */
-auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) -> XojPageView* {
+auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) const -> XojPageView* {
     if (!event) {
         return nullptr;
     }
@@ -67,7 +67,7 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) -> 
 /**
  * Get input data relative to current input page
  */
-auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event)
+auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event) const
         -> PositionInputData {
     g_assert(page != nullptr);
 

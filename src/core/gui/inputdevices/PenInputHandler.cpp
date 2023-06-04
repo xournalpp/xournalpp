@@ -207,6 +207,31 @@ double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView
     return filteredPressure;
 }
 
+bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
+    ToolHandler* toolHandler = inputContext->getToolHandler();
+    if (toolHandler->supportsTapFilter()) {
+        auto* settings = inputContext->getSettings();
+        if (settings->getStrokeFilterEnabled()) {
+            int tapMaxDuration = 0, filterRepetitionTime = 0;
+            double tapMaxDistance = NAN;  // in mm
+
+            settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
+
+            const double dpmm = settings->getDisplayDpi() / 25.4;
+            const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
+                                           this->sequenceStartPosition.y - event.absoluteY);
+
+            const bool noMovement = dist < tapMaxDistance * dpmm;
+            const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
+            const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
+            if (noMovement && fastEnoughTap && notAnAftershock) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     /*
      * Workaround for misbehaving devices where Enter events are not published every time
@@ -350,37 +375,18 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
 
     cursor->setMouseDown(false);
 
-    if (toolHandler->supportsTapFilter()) {
-        auto* settings = inputContext->getSettings();
-        if (settings->getStrokeFilterEnabled()) {
-            int tapMaxDuration = 0, filterRepetitionTime = 0;
-            double tapMaxDistance = NAN;  // in mm
-
-            settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
-
-            const double dpmm = settings->getDisplayDpi() / 25.4;
-            const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
-                                           this->sequenceStartPosition.y - event.absoluteY);
-
-            const bool noMovement = dist < tapMaxDistance * dpmm;
-            const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
-            const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
-
-            if (noMovement && fastEnoughTap && notAnAftershock) {
-                // Cancel the sequence and trigger the necessary action
-                XojPageView* pageUnderTap =
-                        this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
-                if (pageUnderTap) {
-                    pageUnderTap->onSequenceCancelEvent();
-                    PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
-                    pageUnderTap->onTapEvent(pos);
-                }
-                this->sequenceStartPage = nullptr;
-                this->inputRunning = false;
-                this->lastActionEndTimeStamp = event.timestamp;
-                return false;
-            }
+    if (isCurrentTapSelection(event)) {
+        // Cancel the sequence and trigger the necessary action
+        XojPageView* pageUnderTap = this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
+        if (pageUnderTap) {
+            pageUnderTap->onSequenceCancelEvent();
+            PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
+            pageUnderTap->onTapEvent(pos);
         }
+        this->sequenceStartPage = nullptr;
+        this->inputRunning = false;
+        this->lastActionEndTimeStamp = event.timestamp;
+        return false;
     }
     this->lastActionEndTimeStamp = event.timestamp;
 
