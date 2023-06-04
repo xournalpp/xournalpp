@@ -129,7 +129,11 @@ void LinkEditor::select(const PageRef& page, const int x, const int y, const boo
 
     if (noSelection) {
         gtk_popover_popdown(this->linkPopoverSelect);
+        bool noPreselection = (this->selectedLink == nullptr);
         this->selectedLink = nullptr;
+        if (noPreselection) {
+            startEditing(page, x, y, controlDown);
+        }
     }
 }
 
