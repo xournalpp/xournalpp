@@ -6,9 +6,9 @@
 void okButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->okButtonPressed(btn); }
 void cancelButtonClicked(GtkButton* btn, LinkDialog* dialog) { dialog->cancelButtonPressed(btn); }
 void textChangedClb(GtkTextBuffer* buffer, LinkDialog* dialog) { dialog->textChanged(buffer); }
-void layoutToogledLeft(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(Layout::LEFT); };
-void layoutToogledCenter(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(Layout::CENTER); };
-void layoutToogledRight(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(Layout::RIGHT); };
+void layoutToogledLeft(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::LEFT); };
+void layoutToogledCenter(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::CENTER); };
+void layoutToogledRight(GtkToggleButton* source, LinkDialog* dialog) { dialog->layoutToggled(LinkAlignment::RIGHT); };
 void urlPrefixChangedClb(GtkComboBoxText* source, LinkDialog* dialog) { dialog->urlPrefixChanged(source); };
 
 LinkDialog::LinkDialog(Control* control) {
@@ -45,7 +45,7 @@ LinkDialog::LinkDialog(Control* control) {
 
 LinkDialog::~LinkDialog() { gtk_widget_destroy(GTK_WIDGET(linkDialog)); }
 
-void LinkDialog::preset(XojFont font, std::string text, std::string url, Layout layout) {
+void LinkDialog::preset(XojFont font, std::string text, std::string url, LinkAlignment layout) {
     GtkTextBuffer* textBuffer = gtk_text_view_get_buffer(this->textInput);
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds(textBuffer, &start, &end);
@@ -134,24 +134,24 @@ void LinkDialog::textChanged(GtkTextBuffer* buffer) {
     gtk_window_resize(GTK_WINDOW(this->linkDialog), width, height);
 }
 
-void LinkDialog::layoutToggled(Layout layout) {
+void LinkDialog::layoutToggled(LinkAlignment layout) {
     this->layout = layout;
-    if (layout == Layout::LEFT) {
+    if (layout == LinkAlignment::LEFT) {
         gtk_toggle_button_set_active(this->layoutLeft, true);
         gtk_toggle_button_set_active(this->layoutCenter, false);
         gtk_toggle_button_set_active(this->layoutRight, false);
-    } else if (layout == Layout::CENTER) {
+    } else if (layout == LinkAlignment::CENTER) {
         gtk_toggle_button_set_active(this->layoutLeft, false);
         gtk_toggle_button_set_active(this->layoutCenter, true);
         gtk_toggle_button_set_active(this->layoutRight, false);
-    } else if (layout == Layout::RIGHT) {
+    } else if (layout == LinkAlignment::RIGHT) {
         gtk_toggle_button_set_active(this->layoutLeft, false);
         gtk_toggle_button_set_active(this->layoutCenter, false);
         gtk_toggle_button_set_active(this->layoutRight, true);
     }
 }
 
-Layout LinkDialog::getLayout() { return this->layout; }
+LinkAlignment LinkDialog::getLayout() { return this->layout; }
 
 XojFont LinkDialog::getFont() {
     XojFont newfont;

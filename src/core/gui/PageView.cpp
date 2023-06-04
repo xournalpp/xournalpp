@@ -103,20 +103,9 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
         eraser(std::make_unique<EraseHandler>(xournal->getControl()->getUndoRedoHandler(),
                                               xournal->getControl()->getDocument(), this->page,
                                               xournal->getControl()->getToolHandler(), this)),
+        linkEditor(std::make_unique<LinkEditor>(xournal)),
         oldtext(nullptr) {
     this->registerToHandler(this->page);
-
-    this->linkPopover = GTK_POPOVER(gtk_popover_new(xournal->getWidget()));
-    gtk_popover_set_modal(linkPopover, false);
-    gtk_popover_set_constrain_to(this->linkPopover, GTK_POPOVER_CONSTRAINT_WINDOW);
-    GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    this->linkPopoverLabel = gtk_label_new("Hello World");
-    gtk_widget_set_margin_top(linkPopoverLabel, POPOVER_PADDING);
-    gtk_widget_set_margin_start(linkPopoverLabel, POPOVER_PADDING);
-    gtk_widget_set_margin_end(linkPopoverLabel, POPOVER_PADDING);
-    gtk_widget_set_margin_bottom(linkPopoverLabel, POPOVER_PADDING);
-    gtk_box_append(GTK_BOX(vbox), this->linkPopoverLabel);
-    gtk_container_add(GTK_CONTAINER(this->linkPopover), vbox);
 }
 
 XojPageView::~XojPageView() {
@@ -127,9 +116,6 @@ XojPageView::~XojPageView() {
     this->overlayViews.clear();
     endText();
     deleteViewBuffer();  // Ensures the mutex is locked during the buffer's destruction
-
-    gtk_widget_destroy(GTK_WIDGET(linkPopover));
-    gtk_widget_destroy(linkPopoverLabel);
 }
 
 void XojPageView::addOverlayView(std::unique_ptr<xoj::view::OverlayView> overlay) {
@@ -404,8 +390,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
     } else if (h->getToolType() == TOOL_LINK) {
-        LinkEditor editor(xournal->getControl(), xournal->getWidget());
-        editor.highlight(this->getPage(), int(x), int(y), pos.isControlDown());
+        this->linkEditor->select(this->getPage(), int(x), int(y), pos.isControlDown(), this);
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
@@ -497,8 +482,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
             this->inputHandler.reset();
         }
     } else if (toolType == TOOL_LINK) {
-        LinkEditor editor(xournal->getControl(), xournal->getWidget());
-        editor.startEditing(this->getPage(), int(x), int(y), pos.isControlDown());
+        this->linkEditor->startEditing(this->getPage(), int(x), int(y), pos.isControlDown());
     }
 
     return true;
@@ -557,34 +541,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
     } else if (h->getActiveTool()->getToolType() == TOOL_LINK) {
-
-        for (Element* e: this->page->getSelectedLayer()->getElements()) {
-            if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
-                Link* linkElement = dynamic_cast<Link*>(e);
-                linkElement->setHighlighted(true);
-                this->page->fireElementChanged(linkElement);
-                GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
-                GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "alias");
-                gdk_window_set_cursor(window, cursor);
-                GdkRectangle rect{
-                        this->getX() + int(linkElement->getX() * zoom), this->getY() + int(linkElement->getY() * zoom),
-                        int(linkElement->getElementWidth() * zoom), int(linkElement->getElementHeight() * zoom)};
-                gtk_popover_set_pointing_to(this->linkPopover, &rect);
-                gtk_label_set_text(GTK_LABEL(this->linkPopoverLabel), linkElement->getUrl().c_str());
-                gtk_widget_show_all(GTK_WIDGET(this->linkPopover));
-                gtk_popover_popup(this->linkPopover);
-                this->highlightedLink = linkElement;
-            } else if (e->getType() == ELEMENT_LINK && this->highlightedLink == e) {
-                Link* linkElement = dynamic_cast<Link*>(e);
-                linkElement->setHighlighted(false);
-                this->page->fireElementChanged(linkElement);
-                GdkWindow* window = gtk_widget_get_window(xournal->getWidget());
-                GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "hand2");
-                gdk_window_set_cursor(window, cursor);
-                gtk_popover_popdown(this->linkPopover);
-                this->highlightedLink == nullptr;
-            }
-        }
+        this->linkEditor->highlight(this->getPage(), int(x), int(y), this);
     }
 
     return false;

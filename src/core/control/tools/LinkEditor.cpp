@@ -2,19 +2,27 @@
 
 #include <iostream>
 
+#include <gdk/gdk.h>  // for GdkRectangle, Gdk...
+#include <gtk/gtk.h>  // for GtkWidget, gtk_co...
+
 #include "control/Control.h"        // for Control
 #include "gui/GladeSearchpath.h"    // for GladeSearchPath
+#include "gui/PageView.h"           // for PageView
+#include "gui/XournalView.h"        // for XournalView
 #include "gui/dialog/LinkDialog.h"  // for LinkDialog
 #include "model/XojPage.h"          // for XojPage
 
-LinkEditor::LinkEditor(Control* control, GtkWidget* xournalWidget): control(control), documentWidget(xournalWidget) {
+
+LinkEditor::LinkEditor(XournalView* view): view(view), control(view->getControl()), documentWidget(view->getWidget()) {
     std::cout << "LinkEditor created" << std::endl;
+    this->createPopover();
 }
 
 LinkEditor::~LinkEditor() { std::cout << "LinkEditor destroyed" << std::endl; }
 
 void LinkEditor::startEditing(const PageRef& page, const int x, const int y, const bool controlDown) {
     std::cout << "LinkEditor starts editing" << std::endl;
+    this->linkElement = nullptr;
 
     // Find Link element
     for (Element* e: page->getSelectedLayer()->getElements()) {
@@ -59,7 +67,7 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
             page->firePageChanged();
             LinkDialog dialog(this->control);
             dialog.preset(this->linkElement->getFont(), this->linkElement->getText(), this->linkElement->getUrl(),
-                          static_cast<Layout>(this->linkElement->getAlignment()));
+                          static_cast<LinkAlignment>(this->linkElement->getAlignment()));
             int response = dialog.show();
             std::cout << "Dialog closed: " << response << std::endl;
             if (response == LinkDialog::CANCEL || response == GTK_RESPONSE_DELETE_EVENT) {
@@ -78,14 +86,112 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
     }
 }
 
-void LinkEditor::highlight(const PageRef& page, const int x, const int y, const bool controlDown) {
-    std::cout << "LinkEditor highlight" << std::endl;
+void LinkEditor::select(const PageRef& page, const int x, const int y, const bool controlDown, XojPageView* pageView) {
+    std::cout << "LinkEditor select" << std::endl;
 
-    // Find Link element
     for (Element* e: page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
-            this->linkElement = dynamic_cast<Link*>(e);
-            std::cout << "LinkElement already exist at position: " << x << "/" << y << std::endl;
+            Link* localLinkElement = dynamic_cast<Link*>(e);
+            std::cout << "Got here! localLinkElement==Null? ->" << (localLinkElement == nullptr) << std::endl;
+            if (!localLinkElement->isSelected()) {
+                std::cout << "Got here 1!" << std::endl;
+                localLinkElement->setSelected(true);
+                std::cout << "Got here 2!" << std::endl;
+                GdkRectangle rect{pageView->getX() + int(localLinkElement->getX() * pageView->getZoom()),
+                                  pageView->getY() + int(localLinkElement->getY() * pageView->getZoom()),
+                                  int(localLinkElement->getElementWidth() * pageView->getZoom()),
+                                  int(localLinkElement->getElementHeight() * pageView->getZoom())};
+                std::cout << "Got here 3!" << std::endl;
+                gtk_popover_set_pointing_to(this->linkPopoverSelect, &rect);
+                std::cout << "Got here 4!" << std::endl;
+                gtk_label_set_markup(GTK_LABEL(this->linkPopoverLabelSelect),
+                                     this->toLinkMarkup(localLinkElement->getUrl()).c_str());
+                std::cout << "Got here 5!" << std::endl;
+                gtk_widget_show_all(GTK_WIDGET(this->linkPopoverSelect));
+                std::cout << "Got here 6!" << std::endl;
+                if (localLinkElement->isHighlighted()) {
+                    gtk_widget_hide(GTK_WIDGET(this->linkPopoverHighlight));
+                }
+                std::cout << "Got here 7!" << std::endl;
+                gtk_popover_popup(this->linkPopoverSelect);
+                std::cout << "Got here 8!" << std::endl;
+                this->selectedLink = localLinkElement;
+                std::cout << "Got here 9!" << std::endl;
+            } else {
+                localLinkElement->setSelected(false);
+                if (localLinkElement->isHighlighted()) {
+                    gtk_widget_hide(GTK_WIDGET(this->linkPopoverSelect));
+                    gtk_widget_show(GTK_WIDGET(this->linkPopoverHighlight));
+                } else {
+                    gtk_popover_popdown(this->linkPopoverSelect);
+                }
+                this->selectedLink = nullptr;
+            }
+            page->fireElementChanged(localLinkElement);
+        } else if (e->getType() == ELEMENT_LINK && this->selectedLink == e) {
+            Link* localLinkElement = dynamic_cast<Link*>(e);
+            localLinkElement->setSelected(false);
+            page->firePageChanged();
+            gtk_popover_popdown(this->linkPopoverSelect);
+            this->selectedLink = nullptr;
+        } else if (e->getType() == ELEMENT_LINK) {
+            Link* localLinkElement = dynamic_cast<Link*>(e);
+            localLinkElement->setSelected(false);
+            page->firePageChanged();
         }
     }
 }
+
+void LinkEditor::highlight(const PageRef& page, const int x, const int y, XojPageView* pageView) {
+    std::cout << "LinkEditor highlight" << std::endl;
+
+    for (Element* e: page->getSelectedLayer()->getElements()) {
+        if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
+            this->highlightedLink = dynamic_cast<Link*>(e);
+            this->highlightedLink->setHighlighted(true);
+            page->fireElementChanged(this->highlightedLink);
+            GdkWindow* window = gtk_widget_get_window(this->documentWidget);
+            GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "alias");
+            gdk_window_set_cursor(window, cursor);
+            GdkRectangle rect{pageView->getX() + int(highlightedLink->getX() * pageView->getZoom()),
+                              pageView->getY() + int(highlightedLink->getY() * pageView->getZoom()),
+                              int(highlightedLink->getElementWidth() * pageView->getZoom()),
+                              int(highlightedLink->getElementHeight() * pageView->getZoom())};
+            gtk_popover_set_pointing_to(this->linkPopoverHighlight, &rect);
+            gtk_label_set_text(GTK_LABEL(this->linkPopoverLabelHightlight), highlightedLink->getUrl().c_str());
+            gtk_widget_show_all(GTK_WIDGET(this->linkPopoverHighlight));
+            if (!this->highlightedLink->isSelected()) {
+                gtk_popover_popup(this->linkPopoverHighlight);
+            }
+        } else if (e->getType() == ELEMENT_LINK && this->highlightedLink == e) {
+            Link* localLinkElement = dynamic_cast<Link*>(e);
+            localLinkElement->setHighlighted(false);
+            page->fireElementChanged(localLinkElement);
+            GdkWindow* window = gtk_widget_get_window(view->getWidget());
+            GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "hand2");
+            gdk_window_set_cursor(window, cursor);
+            gtk_popover_popdown(this->linkPopoverHighlight);
+            this->highlightedLink = nullptr;
+        }
+    }
+}
+
+void LinkEditor::createPopover() {
+    this->linkPopoverHighlight = GTK_POPOVER(gtk_popover_new(view->getWidget()));
+    gtk_popover_set_modal(linkPopoverHighlight, false);
+    gtk_popover_set_constrain_to(this->linkPopoverHighlight, GTK_POPOVER_CONSTRAINT_WINDOW);
+    GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    this->linkPopoverLabelHightlight = gtk_label_new("");
+    gtk_box_pack_start(GTK_BOX(vbox), this->linkPopoverLabelHightlight, true, true, POPOVER_PADDING);
+    gtk_container_add(GTK_CONTAINER(this->linkPopoverHighlight), vbox);
+
+    this->linkPopoverSelect = GTK_POPOVER(gtk_popover_new(view->getWidget()));
+    gtk_popover_set_modal(linkPopoverSelect, false);
+    gtk_popover_set_constrain_to(this->linkPopoverSelect, GTK_POPOVER_CONSTRAINT_WINDOW);
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    this->linkPopoverLabelSelect = gtk_label_new("");
+    gtk_box_pack_start(GTK_BOX(vbox), this->linkPopoverLabelSelect, true, true, POPOVER_PADDING);
+    gtk_container_add(GTK_CONTAINER(this->linkPopoverSelect), vbox);
+}
+
+std::string LinkEditor::toLinkMarkup(std::string url) { return "<a href=\"" + url + "\"> " + url + " </a>"; }

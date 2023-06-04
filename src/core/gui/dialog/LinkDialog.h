@@ -20,7 +20,7 @@
 
 class Control;
 
-enum class Layout { LEFT = 0, CENTER = 1, RIGHT = 2 };
+enum class LinkAlignment { LEFT = 0, CENTER = 1, RIGHT = 2 };
 enum class URLPrefix { NONE = 0, HTTP = 1, HTTPS = 2, MAILTO = 3, FILE = 4 };
 
 class LinkDialog {
@@ -29,18 +29,18 @@ public:
     ~LinkDialog();
 
 public:
-    void preset(XojFont font, std::string text, std::string url, Layout layout = Layout::LEFT);
+    void preset(XojFont font, std::string text, std::string url, LinkAlignment layout = LinkAlignment::LEFT);
     int show();
     std::string getText();
     std::string getURL();
-    Layout getLayout();
+    LinkAlignment getLayout();
     XojFont getFont();
 
 public:
     void okButtonPressed(GtkButton* btn);
     void cancelButtonPressed(GtkButton* btn);
     void textChanged(GtkTextBuffer* buffer);
-    void layoutToggled(Layout l);
+    void layoutToggled(LinkAlignment l);
     void urlPrefixChanged(GtkComboBoxText* source);
 
 private:
@@ -68,7 +68,7 @@ private:
 
     std::string linkText;
     std::string linkURL;
-    Layout layout = Layout::LEFT;
+    LinkAlignment layout = LinkAlignment::LEFT;
 
 public:
     static constexpr int SUCCESS = 200;

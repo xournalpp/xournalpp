@@ -37,8 +37,13 @@ public:
     void setUrl(std::string url);
     std::string getUrl() const;
 
+    /* A link gets highlighted by hovering with the mouse over it */
     void setHighlighted(bool highlighted);
     bool isHighlighted() const;
+
+    /* A link gets selected / deselected by a single click on it */
+    void setSelected(bool selected);
+    bool isSelected() const;
 
     void setFont(const XojFont& font);
     XojFont& getFont();
@@ -76,4 +81,5 @@ private:
     std::string url;
     PangoAlignment alignment;
     bool highlighted = false;
+    bool selected = false;
 };

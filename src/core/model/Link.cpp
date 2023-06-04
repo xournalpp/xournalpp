@@ -27,6 +27,10 @@ void Link::setHighlighted(bool highlighted) { this->highlighted = highlighted; }
 
 bool Link::isHighlighted() const { return this->highlighted; }
 
+void Link::setSelected(bool selected) { this->selected = selected; }
+
+bool Link::isSelected() const { return this->selected; }
+
 void Link::setFont(const XojFont& font) { this->font = font; }
 
 XojFont& Link::getFont() { return this->font; }

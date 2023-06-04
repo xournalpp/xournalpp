@@ -40,6 +40,7 @@ class Settings;
 class Text;
 class Link;
 class TextEditor;
+class LinkEditor;
 class VerticalToolHandler;
 class XournalView;
 class Element;
@@ -312,8 +313,8 @@ private:
     // only function allowed to setX(), setY(), setMappedRowCol():
     friend void Layout::layoutPages(int width, int height);
 
-    GtkPopover* linkPopover = nullptr;
-    Link* highlightedLink = nullptr;
-    GtkWidget* linkPopoverLabel = nullptr;
-    static constexpr int POPOVER_PADDING = 2;
+    /**
+     * The Link Editor
+     */
+    std::unique_ptr<LinkEditor> linkEditor;
 };
