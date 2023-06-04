@@ -26,10 +26,9 @@ public:
     LinkEditor(XournalView* view);
     ~LinkEditor();
 
-    // TODO: Remove CTRL + Double click = open
     /* Called on mouse double click event
      * -> Opens the link editor dialog, or tries to open the link when controlDown = CTRL */
-    void startEditing(const PageRef& page, const int x, const int y, const bool controlDown);
+    void startEditing(const PageRef& page, const int x, const int y);
 
     /* Called on mouse single click event
      * -> Make link permanently selected (red border + popover), or tries to open the link when contrlDown = CTRL */

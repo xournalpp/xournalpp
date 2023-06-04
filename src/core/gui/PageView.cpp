@@ -482,7 +482,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
             this->inputHandler.reset();
         }
     } else if (toolType == TOOL_LINK) {
-        this->linkEditor->startEditing(this->getPage(), int(x), int(y), pos.isControlDown());
+        this->linkEditor->startEditing(this->getPage(), int(x), int(y));
     }
 
     return true;

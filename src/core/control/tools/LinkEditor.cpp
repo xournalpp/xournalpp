@@ -20,7 +20,7 @@ LinkEditor::LinkEditor(XournalView* view): view(view), control(view->getControl(
 
 LinkEditor::~LinkEditor() { std::cout << "LinkEditor destroyed" << std::endl; }
 
-void LinkEditor::startEditing(const PageRef& page, const int x, const int y, const bool controlDown) {
+void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
     std::cout << "LinkEditor starts editing" << std::endl;
     this->linkElement = nullptr;
 
@@ -49,40 +49,26 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y, con
         page->getSelectedLayer()->addElement(link);
         page->firePageChanged();
     } else {
-        if (controlDown) {
-            GError* error = NULL;
-            gtk_show_uri_on_window(NULL, this->linkElement->getUrl().c_str(), GDK_CURRENT_TIME, &error);
-            if (error != NULL) {
-                GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
-                GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), flags, GTK_MESSAGE_ERROR,
-                                                           GTK_BUTTONS_CLOSE, "Error opening “%s”: %s",
-                                                           this->linkElement->getUrl().c_str(), error->message);
-                gtk_dialog_run(GTK_DIALOG(dialog));
-                gtk_widget_destroy(dialog);
-                g_error_free(error);
-            }
-        } else {
-            std::cout << "Existing LinkElement to be edited!" << std::endl;
-            this->linkElement->setHighlighted(true);
-            page->firePageChanged();
-            LinkDialog dialog(this->control);
-            dialog.preset(this->linkElement->getFont(), this->linkElement->getText(), this->linkElement->getUrl(),
-                          static_cast<LinkAlignment>(this->linkElement->getAlignment()));
-            int response = dialog.show();
-            std::cout << "Dialog closed: " << response << std::endl;
-            if (response == LinkDialog::CANCEL || response == GTK_RESPONSE_DELETE_EVENT) {
-                this->linkElement->setHighlighted(false);
-                page->fireElementChanged(this->linkElement);
-                return;
-            }
-            this->linkElement->setText(dialog.getText());
-            this->linkElement->setUrl(dialog.getURL());
-            this->linkElement->setAlignment(static_cast<PangoAlignment>(dialog.getLayout()));
-            this->linkElement->setFont(dialog.getFont());
-            this->linkElement->sizeChanged();
+        std::cout << "Existing LinkElement to be edited!" << std::endl;
+        this->linkElement->setHighlighted(true);
+        page->firePageChanged();
+        LinkDialog dialog(this->control);
+        dialog.preset(this->linkElement->getFont(), this->linkElement->getText(), this->linkElement->getUrl(),
+                      static_cast<LinkAlignment>(this->linkElement->getAlignment()));
+        int response = dialog.show();
+        std::cout << "Dialog closed: " << response << std::endl;
+        if (response == LinkDialog::CANCEL || response == GTK_RESPONSE_DELETE_EVENT) {
             this->linkElement->setHighlighted(false);
-            page->firePageChanged();
+            page->fireElementChanged(this->linkElement);
+            return;
         }
+        this->linkElement->setText(dialog.getText());
+        this->linkElement->setUrl(dialog.getURL());
+        this->linkElement->setAlignment(static_cast<PangoAlignment>(dialog.getLayout()));
+        this->linkElement->setFont(dialog.getFont());
+        this->linkElement->sizeChanged();
+        this->linkElement->setHighlighted(false);
+        page->firePageChanged();
     }
 }
 
@@ -93,6 +79,22 @@ void LinkEditor::select(const PageRef& page, const int x, const int y, const boo
     for (Element* e: page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
             Link* localLinkElement = dynamic_cast<Link*>(e);
+
+            if (controlDown) {
+                GError* error = NULL;
+                gtk_show_uri_on_window(NULL, localLinkElement->getUrl().c_str(), GDK_CURRENT_TIME, &error);
+                if (error != NULL) {
+                    GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
+                    GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), flags, GTK_MESSAGE_ERROR,
+                                                               GTK_BUTTONS_CLOSE, "Error opening “%s”: %s",
+                                                               localLinkElement->getUrl().c_str(), error->message);
+                    gtk_dialog_run(GTK_DIALOG(dialog));
+                    gtk_widget_destroy(dialog);
+                    g_error_free(error);
+                }
+                return;
+            }
+
             if (!localLinkElement->isSelected()) {
                 localLinkElement->setSelected(true);
                 GdkRectangle rect{pageView->getX() + int(localLinkElement->getX() * pageView->getZoom()),
@@ -132,7 +134,7 @@ void LinkEditor::select(const PageRef& page, const int x, const int y, const boo
         bool noPreselection = (this->selectedLink == nullptr);
         this->selectedLink = nullptr;
         if (noPreselection) {
-            startEditing(page, x, y, controlDown);
+            startEditing(page, x, y);
         }
     }
 }
