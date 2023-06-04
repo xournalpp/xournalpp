@@ -567,8 +567,14 @@ void XojPageView::onTapEvent(const PositionInputData& pos) {
     if (settings->getTrySelectOnStrokeFiltered()) {
         double zoom = xournal->getZoom();
         SelectObject select(this);
-        if (select.at(pos.x / zoom, pos.y / zoom)) {
-            doAction = false;  // selection made.. no action.
+        if (pos.isShiftDown()) {
+            if (select.atAggregate(pos.x / zoom, pos.y / zoom)) {
+                doAction = false;  // selection made.. no action.
+            }
+        } else {
+            if (select.at(pos.x / zoom, pos.y / zoom)) {
+                doAction = false;  // selection made.. no action.
+            }
         }
     }
 
