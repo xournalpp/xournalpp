@@ -30,6 +30,8 @@ void LinkView::draw(const Context& ctx) const {
     cairo_set_operator(ctx.cr, CAIRO_OPERATOR_SOURCE);
     Util::cairo_set_source_rgbi(ctx.cr, link->getColor());
 
+    cairo_tag_begin(ctx.cr, CAIRO_TAG_LINK, ("uri='" + link->getUrl() + "'").c_str());
+
     cairo_translate(ctx.cr, link->getX() + (Link::PADDING / 2), link->getY() + (Link::PADDING / 2));
 
     auto layout = initPango(ctx.cr, link);
@@ -37,4 +39,6 @@ void LinkView::draw(const Context& ctx) const {
     pango_layout_set_text(layout.get(), content.c_str(), static_cast<int>(content.length()));
 
     pango_cairo_show_layout(ctx.cr, layout.get());
+
+    cairo_tag_end(ctx.cr, CAIRO_TAG_LINK);
 }
