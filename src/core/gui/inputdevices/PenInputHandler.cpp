@@ -124,9 +124,15 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
     bool changeSelection = xournal->selection && toolHandler->getToolType() != TOOL_HAND;
-    // Selection tools does not change selection with Shift pressed
-    if ((event.state & GDK_SHIFT_MASK) && isSelectToolTypeSingleLayer(toolType)) {
-        changeSelection = false;
+    if ((event.state & GDK_SHIFT_MASK)) {
+        // When tap single selection is enabled, selections can happen with the Pen tool
+        if (toolHandler->getToolType() == TOOL_PEN && isCurrentTapSelection(event)) {
+            changeSelection = false;
+        }
+        // Selection tools does not change selection with Shift pressed
+        if (isSelectToolTypeSingleLayer(toolType)) {
+            changeSelection = false;
+        }
     }
     if (changeSelection) {
         EditSelection* selection = xournal->selection;
@@ -208,26 +214,31 @@ double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView
 }
 
 bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
+
     ToolHandler* toolHandler = inputContext->getToolHandler();
-    if (toolHandler->supportsTapFilter()) {
-        auto* settings = inputContext->getSettings();
-        if (settings->getStrokeFilterEnabled()) {
-            int tapMaxDuration = 0, filterRepetitionTime = 0;
-            double tapMaxDistance = NAN;  // in mm
+    if (!toolHandler->supportsTapFilter()) {
+        return false;
+    }
 
-            settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
+    auto* settings = inputContext->getSettings();
+    if (!settings->getStrokeFilterEnabled()) {
+        return false;
+    }
 
-            const double dpmm = settings->getDisplayDpi() / 25.4;
-            const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
-                                           this->sequenceStartPosition.y - event.absoluteY);
+    int tapMaxDuration = 0, filterRepetitionTime = 0;
+    double tapMaxDistance = NAN;  // in mm
 
-            const bool noMovement = dist < tapMaxDistance * dpmm;
-            const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
-            const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
-            if (noMovement && fastEnoughTap && notAnAftershock) {
-                return true;
-            }
-        }
+    settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
+
+    const double dpmm = settings->getDisplayDpi() / 25.4;
+    const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
+                                   this->sequenceStartPosition.y - event.absoluteY);
+
+    const bool noMovement = dist < tapMaxDistance * dpmm;
+    const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
+    const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
+    if (noMovement && fastEnoughTap && notAnAftershock) {
+        return true;
     }
     return false;
 }
@@ -375,7 +386,17 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
 
     cursor->setMouseDown(false);
 
-    if (isCurrentTapSelection(event)) {
+    bool cancelAction = isCurrentTapSelection(event);
+
+    // Holding shift (with selections) also does not imply drawing
+    if (toolHandler->supportsTapFilter()) {
+        auto* settings = inputContext->getSettings();
+        if (settings->getStrokeFilterEnabled()) {
+            cancelAction |= (event.state & GDK_SHIFT_MASK) && xournal->selection != nullptr;
+        }
+    }
+
+    if (cancelAction) {
         // Cancel the sequence and trigger the necessary action
         XojPageView* pageUnderTap = this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
         if (pageUnderTap) {
