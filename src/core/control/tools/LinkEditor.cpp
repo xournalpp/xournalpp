@@ -185,4 +185,7 @@ void LinkEditor::createPopover() {
     gtk_container_add(GTK_CONTAINER(this->linkPopoverSelect), vbox);
 }
 
-std::string LinkEditor::toLinkMarkup(std::string url) { return "<a href=\"" + url + "\"> " + url + " </a>"; }
+std::string LinkEditor::toLinkMarkup(std::string url) {
+    return "<a href=\"" + url + "\"> " + url + "</a> \n" +
+           "<span size=\"smaller\"><i> Double click to edit. CTRL + click to open. </i></span>";
+}
