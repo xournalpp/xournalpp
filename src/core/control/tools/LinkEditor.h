@@ -13,15 +13,16 @@
 #include <gdk/gdk.h>  // for GdkEventKey
 #include <gtk/gtk.h>  // for GtkIMContext, GtkTextIter, GtkWidget
 
-#include "model/Link.h"     // for Link
-#include "model/PageRef.h"  // for PageRef
+#include "control/zoom/ZoomListener.h"  // for ZoomListener
+#include "model/Link.h"                 // for Link
+#include "model/PageRef.h"              // for PageRef
 
 
 class Control;
 class XournalView;
 class XojPageView;
 
-class LinkEditor {
+class LinkEditor: public ZoomListener {
 public:
     LinkEditor(XournalView* view);
     ~LinkEditor();
@@ -38,9 +39,12 @@ public:
      * -> Make link temporary highlighted (red border + popover) as long mouse above element */
     void highlight(const PageRef& page, const int x, const int y, XojPageView* pageView);
 
+    void zoomChanged() override;
+
 private:
     void createPopover();
     std::string toLinkMarkup(std::string url);
+    void positionPopover(XojPageView* pageView, Link* element, GtkPopover* popover);
 
 private:
     XournalView* view;

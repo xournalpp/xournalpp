@@ -5,17 +5,19 @@
 #include <gdk/gdk.h>  // for GdkRectangle, Gdk...
 #include <gtk/gtk.h>  // for GtkWidget, gtk_co...
 
-#include "control/Control.h"        // for Control
-#include "gui/GladeSearchpath.h"    // for GladeSearchPath
-#include "gui/PageView.h"           // for PageView
-#include "gui/XournalView.h"        // for XournalView
-#include "gui/dialog/LinkDialog.h"  // for LinkDialog
-#include "model/XojPage.h"          // for XojPage
+#include "control/Control.h"           // for Control
+#include "control/zoom/ZoomControl.h"  // for ZoomControl
+#include "gui/GladeSearchpath.h"       // for GladeSearchPath
+#include "gui/PageView.h"              // for PageView
+#include "gui/XournalView.h"           // for XournalView
+#include "gui/dialog/LinkDialog.h"     // for LinkDialog
+#include "model/XojPage.h"             // for XojPage
 
 
 LinkEditor::LinkEditor(XournalView* view): view(view), control(view->getControl()), documentWidget(view->getWidget()) {
     std::cout << "LinkEditor created" << std::endl;
     this->createPopover();
+    this->control->getZoomControl()->addZoomListener(this);
 }
 
 LinkEditor::~LinkEditor() { std::cout << "LinkEditor destroyed" << std::endl; }
@@ -97,11 +99,7 @@ void LinkEditor::select(const PageRef& page, const int x, const int y, const boo
 
             if (!localLinkElement->isSelected()) {
                 localLinkElement->setSelected(true);
-                GdkRectangle rect{pageView->getX() + int(localLinkElement->getX() * pageView->getZoom()),
-                                  pageView->getY() + int(localLinkElement->getY() * pageView->getZoom()),
-                                  int(localLinkElement->getElementWidth() * pageView->getZoom()),
-                                  int(localLinkElement->getElementHeight() * pageView->getZoom())};
-                gtk_popover_set_pointing_to(this->linkPopoverSelect, &rect);
+                this->positionPopover(pageView, localLinkElement, linkPopoverSelect);
                 gtk_label_set_markup(GTK_LABEL(this->linkPopoverLabelSelect),
                                      this->toLinkMarkup(localLinkElement->getUrl()).c_str());
                 gtk_widget_show_all(GTK_WIDGET(this->linkPopoverSelect));
@@ -148,11 +146,7 @@ void LinkEditor::highlight(const PageRef& page, const int x, const int y, XojPag
             GdkWindow* window = gtk_widget_get_window(this->documentWidget);
             GdkCursor* cursor = gdk_cursor_new_from_name(gdk_window_get_display(window), "alias");
             gdk_window_set_cursor(window, cursor);
-            GdkRectangle rect{pageView->getX() + int(highlightedLink->getX() * pageView->getZoom()),
-                              pageView->getY() + int(highlightedLink->getY() * pageView->getZoom()),
-                              int(highlightedLink->getElementWidth() * pageView->getZoom()),
-                              int(highlightedLink->getElementHeight() * pageView->getZoom())};
-            gtk_popover_set_pointing_to(this->linkPopoverHighlight, &rect);
+            positionPopover(pageView, this->highlightedLink, this->linkPopoverHighlight);
             gtk_label_set_text(GTK_LABEL(this->linkPopoverLabelHightlight), highlightedLink->getUrl().c_str());
             if (!this->highlightedLink->isSelected()) {
                 gtk_widget_show_all(GTK_WIDGET(this->linkPopoverHighlight));
@@ -194,4 +188,23 @@ void LinkEditor::createPopover() {
 std::string LinkEditor::toLinkMarkup(std::string url) {
     return "<a href=\"" + url + "\"> " + url + "</a> \n" +
            "<span size=\"smaller\"><i> Double click to edit. CTRL + click to open. </i></span>";
+}
+
+void LinkEditor::positionPopover(XojPageView* pageView, Link* element, GtkPopover* popover) {
+    GdkRectangle rect{pageView->getX() + int(element->getX() * pageView->getZoom()),
+                      pageView->getY() + int(element->getY() * pageView->getZoom()),
+                      int(element->getElementWidth() * pageView->getZoom()),
+                      int(element->getElementHeight() * pageView->getZoom())};
+    gtk_popover_set_pointing_to(popover, &rect);
+}
+
+void LinkEditor::zoomChanged() {
+    if (this->selectedLink != nullptr) {
+        this->positionPopover(view->getViewFor(view->getCurrentPage()), this->selectedLink, this->linkPopoverSelect);
+    }
+
+    if (this->highlightedLink != nullptr) {
+        this->positionPopover(view->getViewFor(view->getCurrentPage()), this->highlightedLink,
+                              this->linkPopoverHighlight);
+    }
 }
