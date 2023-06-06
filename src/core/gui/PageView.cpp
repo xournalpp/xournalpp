@@ -2,8 +2,8 @@
 
 #include <algorithm>  // for max, find_if
 #include <cassert>    // for assert
-#include <cinttypes>  // for int64_t
 #include <cmath>      // for lround
+#include <cstdint>    // for int64_t
 #include <cstdlib>    // for size_t
 #include <iomanip>    // for operator<<, quoted
 #include <memory>     // for unique_ptr, make_...

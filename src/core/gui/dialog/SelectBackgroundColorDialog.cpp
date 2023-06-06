@@ -1,6 +1,6 @@
 #include "SelectBackgroundColorDialog.h"
 
-#include <cinttypes>  // for uint32_t
+#include <cstdint>    // for uint32_t
 #include <string>     // for allocator
 
 #include <glib.h>  // for g_free, g_strdup_printf

@@ -1,6 +1,6 @@
 #include "OneColorBackgroundView.h"
 
-#include <cinttypes>  // for uint32_t
+#include <cstdint>  // for uint32_t
 
 #include "model/BackgroundConfig.h"               // for BackgroundConfig
 #include "view/background/BackgroundView.h"       // for view

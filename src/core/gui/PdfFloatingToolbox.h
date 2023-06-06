@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cinttypes>  // for uint8_t
+#include <cstdint>    // for uint8_t
 #include <memory>     // for unique_ptr
 
 #include <gdk/gdk.h>  // for GdkRectangle
