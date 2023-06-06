@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <cinttypes>  // for uint32_t
+#include <cstdint>    // for uint32_t
 #include <map>        // for map
 #include <string>     // for string
 

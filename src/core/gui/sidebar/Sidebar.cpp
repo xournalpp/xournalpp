@@ -1,7 +1,7 @@
 #include "Sidebar.h"
 
 #include <cassert>    // for assert
-#include <cinttypes>  // for int64_t
+#include <cstdint>    // for int64_t
 #include <memory>     // for make_shared
 #include <string>     // for string
 
