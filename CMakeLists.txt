@@ -56,7 +56,7 @@ configure_file(
         @ONLY
 )
 
-include(FindPkgConfig)
+find_package(PkgConfig REQUIRED)
 
 set(PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 

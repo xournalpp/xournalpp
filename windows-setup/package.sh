@@ -20,6 +20,7 @@ mkdir "$setup_dir"/lib
 
 echo "copy installed files"
 (cd ../build && cmake .. -DCMAKE_INSTALL_PREFIX= && DESTDIR=../windows-setup/"$setup_dir" cmake --build . --target install)
+copy xournalpp.pbd "$setup_dir"/bin/xournalpp.pbd
 
 echo "copy libraries"
 ldd ../build/xournalpp.exe | grep '\/mingw.*\.dll' -o | sort -u | xargs -I{} cp "{}" "$setup_dir"/bin/
