@@ -413,6 +413,34 @@ static int applib_layerAction(lua_State* L) {
 }
 
 /**
+ * Helper function to handle a allowUndoRedoAction string parameter. allowUndoRedoAction can take the following values:
+ * - "grouped": the elements get a single undo-redo-action
+ * - "individual" each of the elements get an own undo-redo-action
+ * - "none": no undo-redo-action will be inserted
+ * if an invalid value is being passed as allowUndoRedoAction this function errors
+ */
+static int handleUndoRedoActionHelper(lua_State* L, Control* control, const char* allowUndoRedoAction,
+                                      const std::vector<Element*>& elements) {
+    if (strcmp("grouped", allowUndoRedoAction) == 0) {
+        PageRef const& page = control->getCurrentPage();
+        Layer* layer = page->getSelectedLayer();
+        UndoRedoHandler* undo = control->getUndoRedoHandler();
+        undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, elements));
+    } else if (strcmp("individual", allowUndoRedoAction) == 0) {
+        PageRef const& page = control->getCurrentPage();
+        Layer* layer = page->getSelectedLayer();
+        UndoRedoHandler* undo = control->getUndoRedoHandler();
+        for (Element* element: elements) undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
+    } else if (strcmp("none", allowUndoRedoAction) == 0)
+        g_warning("Not allowing undo/redo action.");
+    else {
+        return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
+    }
+    return 0;
+}
+
+
+/**
  * Helper function for addStroke API. Parses pen settings from API call, taking
  * in a Stroke and a chosen Layer, sets the pen settings, and applies the stroke.
  */
@@ -622,21 +650,8 @@ static int applib_addSplines(lua_State* L) {
     // Check how the user wants to handle undoing
     lua_getfield(L, 1, "allowUndoRedoAction");
     allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
-    if (strcmp("grouped", allowUndoRedoAction) == 0) {
-        PageRef const& page = ctrl->getCurrentPage();
-        Layer* layer = page->getSelectedLayer();
-        UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
-        undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, strokes));
-    } else if (strcmp("individual", allowUndoRedoAction) == 0) {
-        PageRef const& page = ctrl->getCurrentPage();
-        Layer* layer = page->getSelectedLayer();
-        UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
-        for (Element* element: strokes) undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
-    } else if (strcmp("none", allowUndoRedoAction) == 0)
-        g_warning("Not allowing undo/redo action.");
-    else
-        return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
     lua_pop(L, 1);
+    handleUndoRedoActionHelper(L, ctrl, allowUndoRedoAction, strokes);
     return 0;
 }
 
