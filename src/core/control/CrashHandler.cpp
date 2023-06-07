@@ -25,9 +25,28 @@
 #include "filesystem.h"  // for path
 
 
+// todo: use std::atomic_shared_ptr when available (c++20)
 static std::atomic<Document*> document = nullptr;
 static std::atomic<bool> alreadyCrashed = false;
 static std::stringstream logBuffer;
+static std::atomic<bool> sigint = false;
+
+static void forceClose(int sig) {
+    g_warning("Force close requested with signal %i", sig);
+    emergencySave();
+    exit(1);
+}
+
+static void gracefullyClose(int sig) {
+    std::signal(SIGINT, gracefullyClose);
+    g_warning("Gracefully close requested with signal %i", sig);
+    if (sigint.exchange(true)) {
+        g_warning("Ignored second gracefully close request with signal %i", sig);
+        forceClose(sig);
+    }
+}
+
+auto interrupted() -> bool { return sigint.exchange(false); }
 
 void setEmergencyDocument(Document* doc) { document = doc; }
 static std::stringstream* getCrashHandlerLogBuffer() { return &logBuffer; }
@@ -37,11 +56,9 @@ static std::stringstream* getCrashHandlerLogBuffer() { return &logBuffer; }
  * Print crash log to config directory
  */
 static void crashHandler(int sig) {
-    if (alreadyCrashed) {  // crasehd again on emergency save
+    if (alreadyCrashed.exchange(true)) {  // crashed again on emergency save
         exit(2);
     }
-    alreadyCrashed = true;
-
     g_warning("[Crash Handler] Crashed with signal %i", sig);
 
     auto curtime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -56,35 +73,35 @@ static void crashHandler(int sig) {
         std::memcpy(stime.data() + size + 9, ".log", 4);
     }
     auto const& errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR) / std::string_view(stime.data(), size + 9 + 4);
-    std::ofstream fp(errorlogPath);
-    if (fp) {}
 
-    fp << FORMAT_STR("Date: {1}") % ctime(&curtime);
-    fp << FORMAT_STR("Error: signal {1}") % sig;
-    fp << "\n";
-    fp << "Xournal++ version " << PROJECT_VERSION << "\n";
+    auto trace = fbbe::stacktrace::current();
+    Stacktrace::printStracktrace(std::cerr, trace);
+    {
+        std::ofstream fp(errorlogPath);
+        fp << FORMAT_STR("Date: {1}") % ctime(&curtime);
+        fp << FORMAT_STR("Error: signal {1}") % sig;
+        fp << "\n";
+        fp << "Xournal++ version " << PROJECT_VERSION << "\n";
 
-    if (auto const gitCommitId = std::string_view{GIT_COMMIT_ID}; !gitCommitId.empty()) {
-        fp << "Git commit: " << gitCommitId << "\n";
-    }
+        if (auto const gitCommitId = std::string_view{GIT_COMMIT_ID}; !gitCommitId.empty()) {
+            fp << "Git commit: " << gitCommitId << "\n";
+        }
 
-    fp << "Gtk version " << gtk_get_major_version() << "." << gtk_get_minor_version() << "." << gtk_get_micro_version()
-       << "\n"
-       << std::endl;
+        fp << "Gtk version " << gtk_get_major_version() << "." << gtk_get_minor_version() << "."
+           << gtk_get_micro_version() << "\n"
+           << std::endl;
 
-    Stacktrace::printStracktrace(std::cerr);
-    Stacktrace::printStracktrace(fp);
+        Stacktrace::printStracktrace(fp, trace);
 
-    fp << "\n\nExecution log:\n\n";
-    fp << getCrashHandlerLogBuffer()->str();
+        fp << "\n\nExecution log:\n\n";
+        fp << getCrashHandlerLogBuffer()->str();
 
-    if (fp) {
-        g_warning("[Crash Handler] Wrote crash log to: %s", errorlogPath.c_str());
-        fp.close();
-    }
+        if (fp) {  // write successful (no failbit, badbit or eofbit)
+            g_warning("[Crash Handler] Wrote crash log to: %s", errorlogPath.string().c_str());
+        }
+    }  // fp is closed here
 
     emergencySave();
-
     exit(1);
 }
 
@@ -128,8 +145,8 @@ static void log_handler(const gchar* log_domain, GLogLevelFlags log_level, const
 }
 
 void installCrashHandlers() {
-    std::signal(SIGTERM, crashHandler);
-    std::signal(SIGINT, crashHandler);
+    std::signal(SIGTERM, forceClose);
+    std::signal(SIGINT, gracefullyClose);
     std::signal(SIGSEGV, crashHandler);
     std::signal(SIGFPE, crashHandler);
     std::signal(SIGILL, crashHandler);

@@ -5,13 +5,13 @@
 #include <cstdio>     // for fgets, pclose, popen, snprintf, FILE
 #include <iostream>   // for operator<<, basic_ostream, basic_ostream::...
 
-#include <fbbe/stacktrace.h>
+#include <fbbe/stacktrace.h>  // for stacktrace (https://github.com/Febbe/stacktrace), just a workaround until c++23 is out
 
 #ifdef _WIN32
 #include <Windows.h>
 #else
 
-#include <unistd.h>    // for readlink, ssize_t
+#include <unistd.h>  // for readlink, ssize_t
 
 #ifdef __APPLE__
 #include <glib.h>

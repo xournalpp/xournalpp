@@ -86,6 +86,7 @@ FetchContent_Declare (
     fbbe_stacktrace
     GIT_REPOSITORY https://github.com/Febbe/stacktrace.git
     GIT_TAG        main
+    UPDATE_DISCONNECTED ON
 )
 FetchContent_MakeAvailable(fbbe_stacktrace)
 
