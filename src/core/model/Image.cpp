@@ -57,9 +57,7 @@ void Image::setHeight(double height) {
     this->calcSize();
 }
 
-void Image::setImage(std::string_view data) { setImage(std::string(data)); }
-
-void Image::setImage(std::string&& data) {
+void Image::setImage(std::vector<std::byte>&& data) {
     if (this->image) {
         cairo_surface_destroy(this->image);
         this->image = nullptr;
@@ -77,7 +75,7 @@ void Image::setImage(std::string&& data) {
     size_t remaining = this->data.size();
     while (remaining > 0) {
         size_t readLen = std::min(remaining, buffer.size());
-        if (!gdk_pixbuf_loader_write(loader.get(), reinterpret_cast<const guchar*>(this->data.c_str()), readLen,
+        if (!gdk_pixbuf_loader_write(loader.get(), reinterpret_cast<const guchar*>(this->data.data()), readLen,
                                      nullptr))
             break;
         remaining -= readLen;
@@ -113,13 +111,14 @@ void Image::setImage(cairo_surface_t* image) {
     }
 
     struct {
-        std::string buffer;
+        std::vector<std::byte> buffer;
         std::string readbuf;
     } closure_;
     const cairo_write_func_t writeFunc = [](void* closurePtr, const unsigned char* data,
                                             unsigned int length) -> cairo_status_t {
         auto& closure = *reinterpret_cast<decltype(&closure_)>(closurePtr);
-        closure.buffer.append(reinterpret_cast<const char*>(data), length);
+        std::transform(reinterpret_cast<const char*>(data), reinterpret_cast<const char*>(data) + length,
+                       std::back_inserter(closure.buffer), [](const char c) { return static_cast<std::byte>(c); });
         return CAIRO_STATUS_SUCCESS;
     };
     cairo_surface_write_to_png_stream(image, writeFunc, &closure_);
@@ -128,10 +127,10 @@ void Image::setImage(cairo_surface_t* image) {
 }
 
 auto Image::getImage() const -> cairo_surface_t* {
-    g_assert(data.length() > 0 && "image has no data, cannot render it!");
+    g_assert(data.size() > 0 && "image has no data, cannot render it!");
     if (this->image == nullptr) {
         xoj::util::GObjectSPtr<GdkPixbufLoader> loader(gdk_pixbuf_loader_new(), xoj::util::adopt);
-        gdk_pixbuf_loader_write(loader.get(), reinterpret_cast<const guchar*>(this->data.c_str()), this->data.length(),
+        gdk_pixbuf_loader_write(loader.get(), reinterpret_cast<const guchar*>(this->data.data()), this->data.size(),
                                 nullptr);
         bool success = gdk_pixbuf_loader_close(loader.get(), nullptr);
         g_assert(success && "errors in loading image data!");

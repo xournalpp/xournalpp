@@ -55,7 +55,8 @@ auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
         img = new Image();
         img->setX(x);
         img->setY(y);
-        img->setImage(std::string(contents, length));
+        img->setImage(std::vector<std::byte>(reinterpret_cast<std::byte*>(contents),
+                                             reinterpret_cast<std::byte*>(contents + length)));
         g_free(contents);
     }
 

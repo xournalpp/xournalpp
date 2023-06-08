@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <glib.h>  // for GString
-
+#include <string_view>
+#include <vector>
 
 class ObjectEncoding {
 public:
@@ -20,11 +20,11 @@ public:
     virtual ~ObjectEncoding();
 
 public:
-    void addStr(const char* str) const;
-    virtual void addData(const void* data, int len) = 0;
+    void addStr(std::string_view str);
+    virtual void addData(const void* data, size_t len) = 0;
 
-    GString* getData();
+    std::vector<std::byte> stealData();
 
 public:
-    GString* data;
+    std::vector<std::byte> data;
 };

@@ -9,6 +9,7 @@
  * @license GNU GPLv2 or later
  */
 
+#include <filesystem>
 #include <fstream>
 
 #include <config-test.h>
@@ -22,11 +23,15 @@ TEST(Image, testGetImageApplyOrientation) {
 
     // Image width is 500px and height 130px - but has exif data saying image should be
     // rotated 90 deg CW to have correct orientation.
-    std::ifstream imageFile{GET_TESTFILE("images/r90.jpg"), std::ios::binary};
-    auto imageData = std::string(std::istreambuf_iterator<char>(imageFile), {});
+    auto filepath = std::filesystem::path(GET_TESTFILE("images/r90.jpg"));
+    std::ifstream imageFile{filepath, std::ios::binary};
+    auto size = std::filesystem::file_size(filepath);
+
+    std::vector<std::byte> imageData(size);
+    imageFile.read(reinterpret_cast<char*>(imageData.data()), size);
 
     GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
-    gdk_pixbuf_loader_write(loader, reinterpret_cast<const guchar*>(imageData.c_str()), imageData.length(), nullptr);
+    gdk_pixbuf_loader_write(loader, reinterpret_cast<const guchar*>(imageData.data()), imageData.size(), nullptr);
     gdk_pixbuf_loader_close(loader, nullptr);
 
     GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
@@ -36,7 +41,7 @@ TEST(Image, testGetImageApplyOrientation) {
     auto rotatedImageSize = std::make_pair(origImageSize.second, origImageSize.first);
     g_object_unref(loader);
 
-    image.setImage(imageData);
+    image.setImage(std::move(imageData));
 
     // Test Image object has no size before the image has be rendered
     EXPECT_EQ(image.getImageSize(), Image::NOSIZE);

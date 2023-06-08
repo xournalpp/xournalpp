@@ -16,6 +16,8 @@
 #include <string>   // for string
 #include <vector>   // for vector
 
+#include "InputStreamException.h"
+
 class ObjectInputStream {
 public:
     ObjectInputStream() = default;
@@ -39,12 +41,12 @@ public:
     void readData(std::vector<T>& data);
 
     /// Reads raw image data from the stream.
-    std::string readImage();
+    std::vector<std::byte> readImage();
 
 private:
-    void checkType(char type);
+    void checkType(const std::byte type);
 
-    static std::string getType(char type);
+    static std::string getType(const std::byte type);
 
 private:
     std::istringstream istream;
@@ -52,4 +54,38 @@ private:
     size_t len = 0;
 };
 
-extern template void ObjectInputStream::readData(std::vector<double>& data);
+// This function requires that T is read from its binary representation to work (e.g. integer type)
+template <typename T>
+T readTypeFromSStream(std::istringstream& istream) {
+    T output;
+
+    istream.read((char*)&output, sizeof(T));
+    if (istream.fail()) {
+        std::ostringstream oss;
+        oss << "End reached: trying to read " << sizeof(T) << " bytes";
+        throw InputStreamException(oss.str(), __FILE__, __LINE__);
+    }
+
+    return output;
+}
+
+template <typename T>
+void ObjectInputStream::readData(std::vector<T>& data) {
+    checkType(std::byte('b'));
+
+    int len = readTypeFromSStream<int>(istream);
+    int width = readTypeFromSStream<int>(istream);
+
+    if (width != sizeof(T)) {
+        throw InputStreamException("Data width mismatch requested type width", __FILE__, __LINE__);
+    }
+
+    if (len) {
+        data.resize(len);
+        istream.read((char*)data.data(), len * width);
+    }
+
+    if (istream.fail()) {
+        throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
+    }
+}

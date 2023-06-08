@@ -1,13 +1,11 @@
 #include "util/serializing/ObjectEncoding.h"
 
-ObjectEncoding::ObjectEncoding() { this->data = g_string_new(""); }
+#include <string>
+
+ObjectEncoding::ObjectEncoding() = default;
 
 ObjectEncoding::~ObjectEncoding() = default;
 
-void ObjectEncoding::addStr(const char* str) const { g_string_append(this->data, str); }
+void ObjectEncoding::addStr(const std::string_view str) { this->addData(str.data(), str.length()); }
 
-auto ObjectEncoding::getData() -> GString* {
-    GString* str = this->data;
-    this->data = nullptr;
-    return str;
-}
+auto ObjectEncoding::stealData() -> std::vector<std::byte> { return std::move(this->data); }

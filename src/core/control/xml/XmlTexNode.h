@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <string>  // for string
+#include <vector>  // for vector
 
 #include "XmlNode.h"  // for XmlNode
 
@@ -19,7 +19,7 @@ class OutputStream;
 
 class XmlTexNode: public XmlNode {
 public:
-    XmlTexNode(const char* tag, std::string&& binaryData);
+    XmlTexNode(const char* tag, std::vector<std::byte> const& binaryData);
     virtual ~XmlTexNode();
 
 public:
@@ -29,5 +29,5 @@ private:
     /**
      * Binary .PNG or .PDF
      */
-    std::string binaryData;
+    std::vector<std::byte> const& binaryData;
 };

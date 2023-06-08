@@ -18,8 +18,5 @@ public:
     BinObjectEncoding();
     ~BinObjectEncoding() override;
 
-public:
-    void addData(const void* data, int len) override;
-
-private:
+    void addData(const void* data, size_t len) override;
 };

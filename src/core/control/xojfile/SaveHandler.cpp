@@ -199,7 +199,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
             image->setAttrib("bottom", i->getY() + i->getElementHeight());
         } else if (e->getType() == ELEMENT_TEXIMAGE) {
             auto* i = dynamic_cast<TexImage*>(e);
-            auto* image = new XmlTexNode("teximage", std::string(i->getBinaryData()));
+            auto* image = new XmlTexNode("teximage", i->getBinaryData());
             layer->addChild(image);
 
             image->setAttrib("text", i->getText().c_str());

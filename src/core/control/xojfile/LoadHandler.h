@@ -109,13 +109,13 @@ private:
     void readTexImage(const gchar* base64string, gsize base64stringLen);
 
 private:
-    static std::string parseBase64(const gchar* base64, gsize length);
+    static std::vector<std::byte> parseBase64(const gchar* base64, gsize length);
 
     /**
      * Returns the contents of the zip attachment with the given file name, or
      * nullopt if there is no such file.
      */
-    std::optional<std::string> readZipAttachment(fs::path const& filename);
+    std::optional<std::vector<std::byte>> readZipAttachment(fs::path const& filename);
 
     fs::path getTempFileForPath(fs::path const& filename);
 

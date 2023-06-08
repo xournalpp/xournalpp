@@ -16,9 +16,7 @@
 #include <string_view>  // for string_view
 #include <vector>       // for vector
 
-#include <glib.h>  // for GString
-
-class ObjectEncoding;
+#include "util/serializing/ObjectEncoding.h"  // for ObjectEncoding
 
 class ObjectOutputStream {
 public:
@@ -35,18 +33,26 @@ public:
     void writeString(const char* str);
     void writeString(const std::string& s);
 
-    void writeData(const void* data, int len, int width);
-
     template <typename T>
     void writeData(const std::vector<T>& data);
 
     /// Writes the raw image data to the output stream.
-    void writeImage(const std::string_view& imgData);
+    void writeImage(const std::vector<std::byte>& imgData);
 
-    GString* getStr();
+    std::vector<std::byte> const& getData();
+
+    std::vector<std::byte> stealData();
 
 private:
     ObjectEncoding* encoder = nullptr;
 };
 
-extern template void ObjectOutputStream::writeData(const std::vector<double>& data);
+template <typename T>
+void ObjectOutputStream::writeData(const std::vector<T>& data) {
+    this->encoder->addStr("_b");
+    const int len = static_cast<int>(data.size());
+    const int width = sizeof(T);
+    this->encoder->addData(&len, sizeof(int));
+    this->encoder->addData(&width, sizeof(int));
+    this->encoder->addData(data.data(), static_cast<int>(data.size() * sizeof(T)));
+}
