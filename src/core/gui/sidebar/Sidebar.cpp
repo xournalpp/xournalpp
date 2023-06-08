@@ -51,7 +51,9 @@ void Sidebar::initPages(GtkWidget* sidebarContents, GladeGui* gui) {
 
         gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(it), gtk_image_new_from_icon_name(p->getIconName().c_str(),
                                                                                           GTK_ICON_SIZE_SMALL_TOOLBAR));
-        g_signal_connect(it, "clicked", G_CALLBACK(&buttonClicked), new SidebarPageButton(this, i, p));
+        g_signal_connect_data(
+                it, "clicked", G_CALLBACK(&buttonClicked), new SidebarPageButton(this, i, p),
+                +[](gpointer data, GClosure*) { delete static_cast<SidebarPageButton*>(data); }, (GConnectFlags)0);
         gtk_tool_item_set_tooltip_text(it, p->getName().c_str());
         gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), p->getName().c_str());
 
@@ -218,11 +220,8 @@ void Sidebar::documentChanged(DocumentChangeType type) {
     }
 }
 
-SidebarPageButton::SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page) {
-    this->sidebar = sidebar;
-    this->index = index;
-    this->page = page;
-}
+SidebarPageButton::SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page):
+        sidebar(sidebar), index(index), page(page) {}
 
 void Sidebar::layout() {
     for (auto page: this->pages) {
