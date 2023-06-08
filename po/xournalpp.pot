@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 07:47+0000\n"
+"POT-Creation-Date: 2023-06-08 17:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -288,7 +288,7 @@ msgstr ""
 msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
-#: ../src/core/undo/UndoRedoHandler.cpp:142
+#: ../src/core/undo/UndoRedoHandler.cpp:143
 msgid ""
 "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
@@ -314,17 +314,17 @@ msgstr ""
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr ""
 
-#: ../src/core/undo/UndoRedoHandler.cpp:113
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid ""
 "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:252
+#: ../src/core/control/xojfile/SaveHandler.cpp:253
 msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:368
+#: ../src/core/control/xojfile/SaveHandler.cpp:369
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
@@ -1043,7 +1043,7 @@ msgstr ""
 msgid "Page number"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:317
+#: ../src/core/control/xojfile/SaveHandler.cpp:318
 msgid ""
 "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::"
 "Plain to avoid corrupted file"
@@ -1106,11 +1106,11 @@ msgid "Recorder could not be started."
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
-#: ../src/core/undo/UndoRedoHandler.cpp:193
+#: ../src/core/undo/UndoRedoHandler.cpp:194
 msgid "Redo"
 msgstr ""
 
-#: ../src/core/undo/UndoRedoHandler.cpp:188
+#: ../src/core/undo/UndoRedoHandler.cpp:189
 msgid "Redo: "
 msgstr ""
 
@@ -1579,11 +1579,11 @@ msgid "Unable to retrieve pdf page."
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
-#: ../src/core/undo/UndoRedoHandler.cpp:181
+#: ../src/core/undo/UndoRedoHandler.cpp:182
 msgid "Undo"
 msgstr ""
 
-#: ../src/core/undo/UndoRedoHandler.cpp:176
+#: ../src/core/undo/UndoRedoHandler.cpp:177
 msgid "Undo: "
 msgstr ""
 
