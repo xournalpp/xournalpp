@@ -19,6 +19,6 @@
 
 namespace Stacktrace {
 fs::path getExePath();
-void printStracktrace(fbbe::stacktrace const& stacktrace = fbbe::stacktrace::current());
-void printStracktrace(std::ostream& stream, fbbe::stacktrace const& stacktrace = fbbe::stacktrace::current());
+void printStacktrace(fbbe::stacktrace const& stacktrace = fbbe::stacktrace::current());
+void printStacktrace(std::ostream& stream, fbbe::stacktrace const& stacktrace = fbbe::stacktrace::current());
 };  // namespace Stacktrace

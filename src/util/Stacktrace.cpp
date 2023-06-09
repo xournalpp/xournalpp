@@ -81,7 +81,7 @@ auto Stacktrace::getExePath() -> fs::path {
 
 #endif
 
-void Stacktrace::printStracktrace(std::ostream& stream, fbbe::stacktrace const& stacktrace) {
+void Stacktrace::printStacktrace(std::ostream& stream, fbbe::stacktrace const& stacktrace) {
     stream << stacktrace << endl;
 }
-void Stacktrace::printStracktrace(fbbe::stacktrace const& stacktrace) { printStracktrace(std::cerr, stacktrace); }
+void Stacktrace::printStacktrace(fbbe::stacktrace const& stacktrace) { printStacktrace(std::cerr, stacktrace); }
