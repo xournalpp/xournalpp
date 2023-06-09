@@ -107,7 +107,7 @@ void Text::scale(double x0, double y0, double fx, double fy, double rotation,
     // only proportional scale allowed...
     if (fx != fy) {
         g_warning("rescale font with fx != fy not supported: %lf / %lf", fx, fy);
-        Stacktrace::printStracktrace();
+        Stacktrace::printStacktrace();
     }
 
     this->x -= x0;

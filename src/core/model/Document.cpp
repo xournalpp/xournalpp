@@ -60,7 +60,7 @@ void Document::lock() {
 
     //	if(tryLock()) {
     //		fprintf(stderr, "Locked by\n");
-    //		Stacktrace::printStracktrace();
+    //		Stacktrace::printStacktrace();
     //		fprintf(stderr, "\n\n\n\n");
     //	} else {
     //		g_mutex_lock(&this->documentLock);
@@ -71,7 +71,7 @@ void Document::unlock() {
     this->documentLock.unlock();
 
     //	fprintf(stderr, "Unlocked by\n");
-    //	Stacktrace::printStracktrace();
+    //	Stacktrace::printStacktrace();
     //	fprintf(stderr, "\n\n\n\n");
 }
 

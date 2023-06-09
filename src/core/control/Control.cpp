@@ -1074,7 +1074,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         default:
             g_warning("Unhandled action event: %s / %s (%i / %i)", ActionType_toString(type).c_str(),
                       ActionGroup_toString(group).c_str(), type, group);
-            Stacktrace::printStracktrace();
+            Stacktrace::printStacktrace();
     }
 
     if (type >= ACTION_TOOL_PEN && type <= ACTION_TOOL_HAND) {
@@ -3072,7 +3072,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         win->getXournal()->setSelection(selection);
     } catch (const std::exception& e) {
         g_warning("could not paste, Exception occurred: %s", e.what());
-        Stacktrace::printStracktrace();
+        Stacktrace::printStacktrace();
         if (selection) {
             for (Element* el: selection->getElements()) {
                 delete el;

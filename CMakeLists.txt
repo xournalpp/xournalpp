@@ -77,8 +77,7 @@ find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
 ##############################
 # stacktrace library
-# Todo use platform independent stacktrace library
-# Currently this works only for linux systems
+# To use platform independent stacktrace library
 ##############################
 include(FetchContent)
 message("Fetch")

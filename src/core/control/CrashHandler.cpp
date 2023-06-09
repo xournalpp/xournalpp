@@ -16,7 +16,7 @@
 #include "control/xojfile/SaveHandler.h"  // for SaveHandler
 #include "util/PathUtil.h"
 #include "util/PathUtil.h"    // for getConfigFile
-#include "util/Stacktrace.h"  // for Stacktrace::printStracktrace
+#include "util/Stacktrace.h"  // for Stacktrace::printStacktrace
 #include "util/i18n.h"        // for FC, _F, _
 
 #include "config-dev.h"
@@ -38,12 +38,18 @@ static void forceClose(int sig) {
 }
 
 static void gracefullyClose(int sig) {
+    // Do not add more code here, because this function is called from a signal handler
+    // Therefore only async-signal-safe functions are allowed here
+    // To prevent corruption of the document, we only set a flag here and do the actual work in the main (eventloop)
+    // thread
+
+    // The signal handlers are defaulted after a signal is caught, so we have to set them again
     std::signal(SIGINT, gracefullyClose);
-    g_warning("Gracefully close requested with signal %i", sig);
     if (sigint.exchange(true)) {
-        g_warning("Ignored second gracefully close request with signal %i", sig);
+        g_warning("Ignored second gracefully close request with signal, force closing... %i", sig);
         forceClose(sig);
     }
+    g_warning("Gracefully close requested with signal %i", sig);
 }
 
 auto interrupted() -> bool { return sigint.exchange(false); }
@@ -63,7 +69,7 @@ static void crashHandler(int sig) {
 
     auto curtime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
-    std::array<char, 128> stime;
+    std::array<char, 34> stime;
     size_t size = 0;
     {
         static constexpr std::array<char, 10> error_log_name{"errorlog."};
@@ -75,7 +81,7 @@ static void crashHandler(int sig) {
     auto const& errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR) / std::string_view(stime.data(), size + 9 + 4);
 
     auto trace = fbbe::stacktrace::current();
-    Stacktrace::printStracktrace(std::cerr, trace);
+    Stacktrace::printStacktrace(std::cerr, trace);
     {
         std::ofstream fp(errorlogPath);
         fp << FORMAT_STR("Date: {1}") % ctime(&curtime);
@@ -91,7 +97,7 @@ static void crashHandler(int sig) {
            << gtk_get_micro_version() << "\n"
            << std::endl;
 
-        Stacktrace::printStracktrace(fp, trace);
+        Stacktrace::printStacktrace(fp, trace);
 
         fp << "\n\nExecution log:\n\n";
         fp << getCrashHandlerLogBuffer()->str();
@@ -159,7 +165,7 @@ void emergencySave() {
         return;
     }
 
-    g_warning(_("Trying to emergency save the current open document…"));
+    g_warning("%s", _("Trying to emergency save the current open document…"));
 
     auto const& filepath = Util::getConfigFile("emergencysave.xopp");
 
