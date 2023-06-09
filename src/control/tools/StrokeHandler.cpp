@@ -403,6 +403,7 @@ void StrokeHandler::resetShapeRecognizer() {
 }
 
 void StrokeHandler::paintDot(const double x, const double y, const double width) const {
+    cairo_set_antialias(crMask, CAIRO_ANTIALIAS_NONE);
     cairo_set_line_cap(crMask, CAIRO_LINE_CAP_ROUND);
     cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
     cairo_set_source_rgba(crMask, 1, 1, 1, 1);
