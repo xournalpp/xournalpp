@@ -75,18 +75,15 @@ std::string LinkDialog::getURL() {
 }
 
 void LinkDialog::okButtonPressed(GtkButton* btn) {
-    std::cout << "OK Button pressed" << std::endl;
     GtkTextBuffer* text = gtk_text_view_get_buffer(this->textInput);
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds(text, &start, &end);
     this->linkText = std::string(gtk_text_buffer_get_text(text, &start, &end, TRUE));
-    std::cout << "  Link Text: " << this->linkText << std::endl;
     if (!this->isTextValid(this->linkText)) {
         this->linkText = "Link";
     }
 
     this->linkURL = std::string(gtk_entry_get_text(this->urlInput));
-    std::cout << "  Link URL: " << this->linkURL << std::endl;
     if (!this->isUrlValid(this->linkURL)) {
         this->linkURL = "xournalpp.github.io";
     }
@@ -94,10 +91,7 @@ void LinkDialog::okButtonPressed(GtkButton* btn) {
     gtk_dialog_response(linkDialog, LinkDialog::SUCCESS);
 }
 
-void LinkDialog::cancelButtonPressed(GtkButton* btn) {
-    std::cout << "Cancel Button pressed" << std::endl;
-    gtk_dialog_response(linkDialog, LinkDialog::CANCEL);
-}
+void LinkDialog::cancelButtonPressed(GtkButton* btn) { gtk_dialog_response(linkDialog, LinkDialog::CANCEL); }
 
 
 bool LinkDialog::isTextValid(std::string text) {
@@ -209,7 +203,6 @@ void LinkDialog::setMaxDialogHeight(GtkWindow* window) {
     GdkRectangle monitor;
     gdk_screen_get_monitor_geometry(screen, monitorID, &monitor);
     this->maxDialogHeight = int(monitor.height * MAX_HEIGHT_RATIO);
-    std::cout << "Max Dialog Height: " << this->maxDialogHeight << std::endl;
 }
 
 int LinkDialog::getLineHeight() {

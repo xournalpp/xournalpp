@@ -15,28 +15,28 @@
 
 
 LinkEditor::LinkEditor(XournalView* view): view(view), control(view->getControl()), documentWidget(view->getWidget()) {
-    std::cout << "LinkEditor created" << std::endl;
     this->createPopover();
     this->control->getZoomControl()->addZoomListener(this);
 }
 
-LinkEditor::~LinkEditor() { std::cout << "LinkEditor destroyed" << std::endl; }
+LinkEditor::~LinkEditor() {
+    gtk_widget_destroy(GTK_WIDGET(this->linkPopoverLabelHightlight));
+    gtk_widget_destroy(GTK_WIDGET(this->linkPopoverHighlight));
+    gtk_widget_destroy(GTK_WIDGET(this->linkPopoverLabelSelect));
+    gtk_widget_destroy(GTK_WIDGET(this->linkPopoverSelect));
+}
 
 void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
-    std::cout << "LinkEditor starts editing" << std::endl;
     this->linkElement = nullptr;
 
     // Find Link element
     for (Element* e: page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
             this->linkElement = dynamic_cast<Link*>(e);
-            std::cout << "LinkElement already exist at position: " << x << "/" << y << std::endl;
         }
     }
 
     if (this->linkElement == nullptr) {
-        std::cout << "New LinkElement to be created!" << std::endl;
-
         LinkDialog dialog(this->control);
         int response = dialog.show();
         if (response == LinkDialog::CANCEL) {
@@ -51,14 +51,12 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
         page->getSelectedLayer()->addElement(link);
         page->firePageChanged();
     } else {
-        std::cout << "Existing LinkElement to be edited!" << std::endl;
         this->linkElement->setHighlighted(true);
         page->firePageChanged();
         LinkDialog dialog(this->control);
         dialog.preset(this->linkElement->getFont(), this->linkElement->getText(), this->linkElement->getUrl(),
                       static_cast<LinkAlignment>(this->linkElement->getAlignment()));
         int response = dialog.show();
-        std::cout << "Dialog closed: " << response << std::endl;
         if (response == LinkDialog::CANCEL || response == GTK_RESPONSE_DELETE_EVENT) {
             this->linkElement->setHighlighted(false);
             page->fireElementChanged(this->linkElement);
@@ -75,8 +73,6 @@ void LinkEditor::startEditing(const PageRef& page, const int x, const int y) {
 }
 
 void LinkEditor::select(const PageRef& page, const int x, const int y, const bool controlDown, XojPageView* pageView) {
-    std::cout << "LinkEditor select" << std::endl;
-
     bool noSelection = true;
     for (Element* e: page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_LINK && e->containsPoint(x, y)) {
