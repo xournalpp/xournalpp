@@ -131,7 +131,7 @@ void LinkDialog::textChanged(GtkTextBuffer* buffer) {
     gint lot = gtk_text_buffer_get_line_count(buffer);
     int width, height;
     gtk_window_get_size(GTK_WINDOW(this->linkDialog), &width, &height);
-    height = DEFAULT_HEIGHT + (std::max(0, (lot - INITIAL_NUMBER_OF_LINES)) * ADDITIONAL_HEIGHT_PER_LINE);
+    height = DEFAULT_HEIGHT + (std::max(0, (lot - INITIAL_NUMBER_OF_LINES + 1)) * getLineHeight());
     height = std::min(height, this->maxDialogHeight);
     gtk_window_resize(GTK_WINDOW(this->linkDialog), width, height);
 }
@@ -210,4 +210,12 @@ void LinkDialog::setMaxDialogHeight(GtkWindow* window) {
     gdk_screen_get_monitor_geometry(screen, monitorID, &monitor);
     this->maxDialogHeight = int(monitor.height * MAX_HEIGHT_RATIO);
     std::cout << "Max Dialog Height: " << this->maxDialogHeight << std::endl;
+}
+
+int LinkDialog::getLineHeight() {
+    gint y, height;
+    GtkTextIter iter;
+    gtk_text_view_get_iter_at_location(this->textInput, &iter, 0, 0);
+    gtk_text_view_get_line_yrange(this->textInput, &iter, &y, &height);
+    return height;
 }

@@ -49,7 +49,7 @@ private:
     URLPrefix identifyAndShortenURL(std::string& url);
 
     void setMaxDialogHeight(GtkWindow* window);
-
+    int getLineHeight();
 
 private:
     GtkDialog* linkDialog = nullptr;
@@ -73,6 +73,8 @@ private:
     LinkAlignment layout = LinkAlignment::LEFT;
 
     int maxDialogHeight = 0;
+
+    int additionalHeightPerLine = 20;
 
 public:
     static constexpr int SUCCESS = 200;
