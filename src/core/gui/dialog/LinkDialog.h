@@ -48,6 +48,8 @@ private:
     bool isUrlValid(std::string url);
     URLPrefix identifyAndShortenURL(std::string& url);
 
+    void setMaxDialogHeight(GtkWindow* window);
+
 
 private:
     GtkDialog* linkDialog = nullptr;
@@ -70,12 +72,14 @@ private:
     std::string linkURL;
     LinkAlignment layout = LinkAlignment::LEFT;
 
+    int maxDialogHeight = 0;
+
 public:
     static constexpr int SUCCESS = 200;
     static constexpr int CANCEL = 400;
 
     static constexpr int DEFAULT_HEIGHT = 180;
-    static constexpr int MAX_HEIGHT = 800;
+    static constexpr float MAX_HEIGHT_RATIO = 0.75;
     static constexpr int ADDITIONAL_HEIGHT_PER_LINE = 15;
     static constexpr int INITIAL_NUMBER_OF_LINES = 2;
 

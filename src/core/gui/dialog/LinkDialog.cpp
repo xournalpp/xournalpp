@@ -41,6 +41,8 @@ LinkDialog::LinkDialog(Control* control) {
     g_signal_connect(G_OBJECT(layoutRight), "released", G_CALLBACK(layoutToogledRight), this);
 
     g_signal_connect(G_OBJECT(linkTypeChooser), "changed", G_CALLBACK(urlPrefixChangedClb), this);
+
+    this->setMaxDialogHeight(control->getGtkWindow());
 }
 
 LinkDialog::~LinkDialog() { gtk_widget_destroy(GTK_WIDGET(linkDialog)); }
@@ -130,7 +132,7 @@ void LinkDialog::textChanged(GtkTextBuffer* buffer) {
     int width, height;
     gtk_window_get_size(GTK_WINDOW(this->linkDialog), &width, &height);
     height = DEFAULT_HEIGHT + (std::max(0, (lot - INITIAL_NUMBER_OF_LINES)) * ADDITIONAL_HEIGHT_PER_LINE);
-    height = std::min(height, MAX_HEIGHT);
+    height = std::min(height, this->maxDialogHeight);
     gtk_window_resize(GTK_WINDOW(this->linkDialog), width, height);
 }
 
@@ -199,4 +201,13 @@ URLPrefix LinkDialog::identifyAndShortenURL(std::string& url) {
     } else {
         return URLPrefix::NONE;
     }
+}
+
+void LinkDialog::setMaxDialogHeight(GtkWindow* window) {
+    GdkScreen* screen = gtk_window_get_screen(window);
+    gint monitorID = gdk_screen_get_primary_monitor(screen);
+    GdkRectangle monitor;
+    gdk_screen_get_monitor_geometry(screen, monitorID, &monitor);
+    this->maxDialogHeight = int(monitor.height * MAX_HEIGHT_RATIO);
+    std::cout << "Max Dialog Height: " << this->maxDialogHeight << std::endl;
 }
