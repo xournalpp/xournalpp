@@ -11,20 +11,20 @@
 
 #pragma once
 
-#include <memory>  // for unique_ptr
-#include <string>  // for string
-#include <vector>  // for vector
+#include <memory>                                // for unique_ptr
+#include <string>                                // for string
+#include <vector>                                // for vector
 
-#include <glib.h>     // for gboolean
-#include <gtk/gtk.h>  // for GtkWidget, GtkWindow
+#include <glib.h>                                // for gboolean
+#include <gtk/gtk.h>                             // for GtkWidget, GtkWindow
 
 #include "audio/DeviceInfo.h"                    // for DeviceInfo
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
 #include "gui/GladeGui.h"                        // for GladeGui
 
-#include "LatexSettingsPanel.h"  // for LatexSettingsPanel
+#include "LatexSettingsPanel.h"                  // for LatexSettingsPanel
 #include "SettingsDialogPaletteTab.h"
-#include "filesystem.h"  // for path
+#include "filesystem.h"                          // for path
 
 class ButtonConfigGui;
 class Control;
@@ -37,7 +37,8 @@ struct Palette;
 
 class SettingsDialog: public GladeGui {
 public:
-    SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control);
+    SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
+                   const std::vector<fs::path>& paletteDirectories);
     ~SettingsDialog() override;
 
 public:
@@ -65,8 +66,9 @@ public:
      */
     void updatePressureSensitivityOptions();
 
-private:
     void load();
+
+private:
     void loadCheckbox(const char* name, gboolean value);
     bool getCheckbox(const char* name);
 

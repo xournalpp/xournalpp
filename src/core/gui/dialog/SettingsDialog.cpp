@@ -1,20 +1,20 @@
 #include "SettingsDialog.h"
 
 #include <algorithm>
-#include <algorithm>    // for max
-#include <cstddef>      // for NULL, size_t
-#include <type_traits>  // for __underlying_type_im...
+#include <algorithm>                                   // for max
+#include <cstddef>                                     // for NULL, size_t
+#include <type_traits>                                 // for __underlying_type_im...
 
-#include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
-#include <glib-object.h>  // for G_CALLBACK, g_signal...
+#include <gdk/gdk.h>                                   // for GdkRGBA, GdkRectangle
+#include <glib-object.h>                               // for G_CALLBACK, g_signal...
 
-#include "control/AudioController.h"             // for AudioController
-#include "control/Control.h"                     // for Control
-#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
-#include "control/settings/Settings.h"           // for Settings, SElement
-#include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
-#include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
-#include "gui/MainWindow.h"                      // for MainWindow
+#include "control/AudioController.h"                   // for AudioController
+#include "control/Control.h"                           // for Control
+#include "control/DeviceListHelper.h"                  // for getDeviceList, Input...
+#include "control/settings/Settings.h"                 // for Settings, SElement
+#include "control/settings/SettingsEnums.h"            // for STYLUS_CURSOR_ARROW
+#include "control/tools/StrokeStabilizerEnum.h"        // for AveragingMethod, Pre...
+#include "gui/MainWindow.h"                            // for MainWindow
 #include "gui/XournalView.h"
 #include "gui/dialog/DeviceClassConfigGui.h"           // for DeviceClassConfigGui
 #include "gui/dialog/LanguageConfigGui.h"              // for LanguageConfigGui
@@ -29,22 +29,23 @@
 #include "util/Util.h"                                 // for systemWithMessage
 #include "util/i18n.h"                                 // for _
 
-#include "ButtonConfigGui.h"  // for ButtonConfigGui
-#include "filesystem.h"       // for is_directory
+#include "ButtonConfigGui.h"                           // for ButtonConfigGui
+#include "filesystem.h"                                // for is_directory
 
 class GladeSearchpath;
 
 using std::string;
 using std::vector;
 
-SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control):
+SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
+                               const std::vector<fs::path>& paletteDirectories):
         GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
         settings(settings),
         control(control),
         callib(zoomcallib_new()),
         latexPanel(gladeSearchPath),
         paletteTab(GTK_LABEL(get("colorPaletteExplainLabel")), GTK_LIST_BOX(get("paletteListBox")),
-                   std::vector<fs::path>{Util::getPalettePath(), Util::getConfigFile("palettes")}) {
+                   paletteDirectories) {
     GtkWidget* vbox = get("zoomVBox");
     g_return_if_fail(vbox != nullptr);
 
@@ -184,7 +185,8 @@ void SettingsDialog::initLanguageSettings() {
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice) {
-    this->buttonConfigs.emplace_back(std::make_unique<ButtonConfigGui>(getGladeSearchPath(), get(hbox), settings, button, withDevice));
+    this->buttonConfigs.emplace_back(
+            std::make_unique<ButtonConfigGui>(getGladeSearchPath(), get(hbox), settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents() {
@@ -381,7 +383,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbStabilizerEnableFinalizeStroke", settings->getStabilizerFinalizeStroke());
 
     GtkWidget* sbStabilizerBuffersize = get("sbStabilizerBuffersize");
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerBuffersize), static_cast<double>(settings->getStabilizerBuffersize()));
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerBuffersize),
+                              static_cast<double>(settings->getStabilizerBuffersize()));
     GtkWidget* sbStabilizerDeadzoneRadius = get("sbStabilizerDeadzoneRadius");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerDeadzoneRadius), settings->getStabilizerDeadzoneRadius());
     GtkWidget* sbStabilizerDrag = get("sbStabilizerDrag");
@@ -825,7 +828,8 @@ void SettingsDialog::save() {
 
     if (getCheckbox("cbIgnoreFirstStylusEvents")) {
         GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
-        int numIgnoredStylusEvents = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents)));
+        int numIgnoredStylusEvents =
+                static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents)));
         settings->setIgnoredStylusEvents(numIgnoredStylusEvents);
     } else {
         settings->setIgnoredStylusEvents(0);  // This means nothing will be ignored
