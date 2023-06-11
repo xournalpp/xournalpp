@@ -1,17 +1,17 @@
 #include "Settings.h"
 
-#include <algorithm>                                // for max
-#include <cstdint>                                  // for uint32_t, int32_t
-#include <cstdio>                                   // for sscanf, size_t
-#include <cstdlib>                                  // for atoi
-#include <cstring>                                  // for strcmp
-#include <exception>                                // for exception
-#include <type_traits>                              // for add_const<>::type
-#include <utility>                                  // for pair, move, make_...
+#include <algorithm>    // for max
+#include <cstdint>      // for uint32_t, int32_t
+#include <cstdio>       // for sscanf, size_t
+#include <cstdlib>      // for atoi
+#include <cstring>      // for strcmp
+#include <exception>    // for exception
+#include <type_traits>  // for add_const<>::type
+#include <utility>      // for pair, move, make_...
 
-#include <libxml/globals.h>                         // for xmlFree, xmlInden...
-#include <libxml/parser.h>                          // for xmlKeepBlanksDefault
-#include <libxml/xmlstring.h>                       // for xmlStrcmp, xmlChar
+#include <libxml/globals.h>    // for xmlFree, xmlInden...
+#include <libxml/parser.h>     // for xmlKeepBlanksDefault
+#include <libxml/xmlstring.h>  // for xmlStrcmp, xmlChar
 
 #include "control/DeviceListHelper.h"               // for InputDevice
 #include "control/ToolEnums.h"                      // for ERASER_TYPE_NONE
@@ -20,14 +20,14 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"                          // for getConfigFile
-#include "util/Util.h"                              // for PRECISION_FORMAT_...
-#include "util/i18n.h"                              // for _
+#include "util/PathUtil.h"  // for getConfigFile
+#include "util/Util.h"      // for PRECISION_FORMAT_...
+#include "util/i18n.h"      // for _
 
-#include "ButtonConfig.h"                           // for ButtonConfig
-#include "config-dev.h"                             // for PALETTE_FILE
+#include "ButtonConfig.h"  // for ButtonConfig
+#include "config-dev.h"    // for PALETTE_FILE
 #include "config-dev.h"
-#include "filesystem.h"                             // for path, u8path, exists
+#include "filesystem.h"  // for path, u8path, exists
 
 
 using std::string;
@@ -107,7 +107,7 @@ void Settings::loadDefault() {
     this->eraserVisibility = ERASER_VISIBILITY_ALWAYS;
     this->iconTheme = ICON_THEME_COLOR;
     this->highlightPosition = false;
-    this->cursorHighlightColor = 0x80FFFF00;        // Yellow with 50% opacity
+    this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
     this->cursorHighlightRadius = 30.0;
     this->cursorHighlightBorderColor = 0x800000FF;  // Blue with 50% opacity
     this->cursorHighlightBorderWidth = 0.0;

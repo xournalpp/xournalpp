@@ -1,20 +1,20 @@
 #include "SettingsDialog.h"
 
 #include <algorithm>
-#include <algorithm>                                   // for max
-#include <cstddef>                                     // for NULL, size_t
-#include <type_traits>                                 // for __underlying_type_im...
+#include <algorithm>    // for max
+#include <cstddef>      // for NULL, size_t
+#include <type_traits>  // for __underlying_type_im...
 
-#include <gdk/gdk.h>                                   // for GdkRGBA, GdkRectangle
-#include <glib-object.h>                               // for G_CALLBACK, g_signal...
+#include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
+#include <glib-object.h>  // for G_CALLBACK, g_signal...
 
-#include "control/AudioController.h"                   // for AudioController
-#include "control/Control.h"                           // for Control
-#include "control/DeviceListHelper.h"                  // for getDeviceList, Input...
-#include "control/settings/Settings.h"                 // for Settings, SElement
-#include "control/settings/SettingsEnums.h"            // for STYLUS_CURSOR_ARROW
-#include "control/tools/StrokeStabilizerEnum.h"        // for AveragingMethod, Pre...
-#include "gui/MainWindow.h"                            // for MainWindow
+#include "control/AudioController.h"             // for AudioController
+#include "control/Control.h"                     // for Control
+#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
+#include "control/settings/Settings.h"           // for Settings, SElement
+#include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
+#include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
+#include "gui/MainWindow.h"                      // for MainWindow
 #include "gui/XournalView.h"
 #include "gui/dialog/DeviceClassConfigGui.h"           // for DeviceClassConfigGui
 #include "gui/dialog/LanguageConfigGui.h"              // for LanguageConfigGui
@@ -29,8 +29,8 @@
 #include "util/Util.h"                                 // for systemWithMessage
 #include "util/i18n.h"                                 // for _
 
-#include "ButtonConfigGui.h"                           // for ButtonConfigGui
-#include "filesystem.h"                                // for is_directory
+#include "ButtonConfigGui.h"  // for ButtonConfigGui
+#include "filesystem.h"       // for is_directory
 
 class GladeSearchpath;
 

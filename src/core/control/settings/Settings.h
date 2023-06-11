@@ -11,28 +11,28 @@
 
 #pragma once
 
-#include <array>                                 // for array
-#include <cstddef>                               // for size_t
-#include <map>                                   // for map
-#include <memory>                                // for make_shared, shared_ptr
-#include <optional>                              // for optional
-#include <string>                                // for string, basic_string
-#include <utility>                               // for pair
-#include <vector>                                // for vector
+#include <array>     // for array
+#include <cstddef>   // for size_t
+#include <map>       // for map
+#include <memory>    // for make_shared, shared_ptr
+#include <optional>  // for optional
+#include <string>    // for string, basic_string
+#include <utility>   // for pair
+#include <vector>    // for vector
 
-#include <gdk/gdk.h>                             // for GdkInputSource, GdkD...
-#include <glib.h>                                // for gchar, gboolean, gint
-#include <libxml/tree.h>                         // for xmlNodePtr, xmlDocPtr
-#include <portaudiocpp/PortAudioCpp.hxx>         // for PaDeviceIndex
+#include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
+#include <glib.h>                         // for gchar, gboolean, gint
+#include <libxml/tree.h>                  // for xmlNodePtr, xmlDocPtr
+#include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
 
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
 #include "model/Font.h"                          // for XojFont
 #include "util/Color.h"                          // for Color
 
-#include "LatexSettings.h"                       // for LatexSettings
-#include "SettingsEnums.h"                       // for InputDeviceTypeOption
-#include "ViewModes.h"                           // for ViewModes
-#include "filesystem.h"                          // for path
+#include "LatexSettings.h"  // for LatexSettings
+#include "SettingsEnums.h"  // for InputDeviceTypeOption
+#include "ViewModes.h"      // for ViewModes
+#include "filesystem.h"     // for path
 
 struct Palette;
 

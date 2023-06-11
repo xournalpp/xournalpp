@@ -1,24 +1,24 @@
 #include "XournalMain.h"
 
-#include <algorithm>                         // for copy, sort, max
-#include <array>                             // for array
-#include <clocale>                           // for setlocale, LC_NUMERIC
-#include <cstdio>                            // for printf
-#include <cstdlib>                           // for exit, size_t
-#include <exception>                         // for exception
-#include <iostream>                          // for operator<<, endl, basic_...
-#include <locale>                            // for locale
-#include <memory>                            // for unique_ptr, allocator
-#include <optional>                          // for optional, nullopt
-#include <sstream>                           // for stringstream
-#include <stdexcept>                         // for runtime_error
-#include <string>                            // for string, basic_string
-#include <vector>                            // for vector
+#include <algorithm>  // for copy, sort, max
+#include <array>      // for array
+#include <clocale>    // for setlocale, LC_NUMERIC
+#include <cstdio>     // for printf
+#include <cstdlib>    // for exit, size_t
+#include <exception>  // for exception
+#include <iostream>   // for operator<<, endl, basic_...
+#include <locale>     // for locale
+#include <memory>     // for unique_ptr, allocator
+#include <optional>   // for optional, nullopt
+#include <sstream>    // for stringstream
+#include <stdexcept>  // for runtime_error
+#include <string>     // for string, basic_string
+#include <vector>     // for vector
 
-#include <gio/gio.h>                         // for GApplication, G_APPLICATION
-#include <glib-object.h>                     // for G_CALLBACK, g_signal_con...
-#include <gtk/gtk.h>                         // for gtk_dialog_add_button
-#include <libintl.h>                         // for bindtextdomain, textdomain
+#include <gio/gio.h>      // for GApplication, G_APPLICATION
+#include <glib-object.h>  // for G_CALLBACK, g_signal_con...
+#include <gtk/gtk.h>      // for gtk_dialog_add_button
+#include <libintl.h>      // for bindtextdomain, textdomain
 
 #include "control/RecentManager.h"           // for RecentManager
 #include "control/jobs/BaseExportJob.h"      // for ExportBackgroundType
@@ -39,12 +39,12 @@
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for _, FS, _F
 
-#include "Control.h"                         // for Control
-#include "ExportHelper.h"                    // for exportImg, exportPdf
-#include "config-dev.h"                      // for ERRORLOG_DIR
-#include "config-git.h"                      // for GIT_BRANCH, GIT_ORIGIN_O...
-#include "config.h"                          // for GETTEXT_PACKAGE, ENABLE_NLS
-#include "filesystem.h"                      // for path, operator/, exists
+#include "Control.h"       // for Control
+#include "ExportHelper.h"  // for exportImg, exportPdf
+#include "config-dev.h"    // for ERRORLOG_DIR
+#include "config-git.h"    // for GIT_BRANCH, GIT_ORIGIN_O...
+#include "config.h"        // for GETTEXT_PACKAGE, ENABLE_NLS
+#include "filesystem.h"    // for path, operator/, exists
 
 namespace {
 
