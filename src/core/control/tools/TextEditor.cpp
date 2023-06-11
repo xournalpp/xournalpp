@@ -615,7 +615,6 @@ void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos) const {
 void TextEditor::updateTextElementContent() { this->textElement->setText(cloneToStdString(this->buffer.get())); }
 
 void TextEditor::contentsChanged(bool forceCreateUndoAction) {
-    std::cout << "TextEditor::contentsChanged()" << std::endl;
     // Todo: Reinstate text edition undo stack
     this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
     this->computeVirtualCursorPosition();
@@ -942,15 +941,6 @@ void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
     }
 }
 
-Color TextEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
-
-guint16 toGuint16(gdouble val) {
-    std::cout << val << std::endl;
-    std::cout << val * double(G_MAXUINT16) << std::endl;
-    std::cout << guint16(val * double(G_MAXUINT16)) << std::endl;
-    return guint16(val * double(G_MAXUINT16));
-}
-
 void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
     xoj::util::PangoAttrListSPtr attrlist(pango_attr_list_new(), xoj::util::adopt);
 
@@ -1036,7 +1026,6 @@ void TextEditor::repaintEditor(bool sizeChanged) {
     }
     this->updateCursorBox();
     this->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
-    std::cout << "TextEditor::repaintEditor()" << std::endl;
 }
 
 void TextEditor::repaintCursorAfterChange() {
@@ -1048,14 +1037,12 @@ void TextEditor::repaintCursorAfterChange() {
 }
 
 void TextEditor::finalizeEdition() {
-    std::cout << "TextEditor::finalizeEdition()" << std::endl;
     Layer* layer = this->page->getSelectedLayer();
     UndoRedoHandler* undo = this->control->getUndoRedoHandler();
 
     this->control->setFontSelected(this->control->getSettings()->getFont());
 
     if (this->bufferEmpty()) {
-        std::cout << "  empty buffer popdown" << std::endl;
         this->contextMenu->hide();
         // Delete the edited element from layer
         if (originalTextElement) {
