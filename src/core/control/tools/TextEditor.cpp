@@ -32,7 +32,8 @@
 #include "util/safe_casts.h"                // for round_cast, as_unsigned
 #include "view/overlays/TextEditionView.h"  // for TextEditionView
 
-#include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
+#include "TextEditorContextMenu.h"  // for TextEditorContextMenu
+#include "TextEditorWidget.h"       // for gtk_xoj_int_txt_new
 
 class UndoAction;
 
@@ -967,17 +968,18 @@ void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
         pango_attr_list_insert(attrlist.get(), attrib);  // attrlist takes ownership of attrib
     }
 
-    if(this->fontColorTemp.red != 0.0 && this->fontColorTemp.green != 0.0 && this->fontColorTemp.blue != 0.0) {
+    if (this->fontColorTemp.red != 0.0 && this->fontColorTemp.green != 0.0 && this->fontColorTemp.blue != 0.0) {
         std::cout << "Got here 2" << std::endl;
-        PangoAttribute* attrib = pango_attr_foreground_new(
-            toGuint16(this->fontColorTemp.red), 
-            toGuint16(this->fontColorTemp.green), 
-            toGuint16(this->fontColorTemp.blue));
+        PangoAttribute* attrib =
+                pango_attr_foreground_new(toGuint16(this->fontColorTemp.red), toGuint16(this->fontColorTemp.green),
+                                          toGuint16(this->fontColorTemp.blue));
         attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
         attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
         pango_attr_list_insert(attrlist.get(), attrib);
         std::cout << "Got here 3" << std::endl;
-        //std::cout << attrib->start_index << ":" << attrib->end_index << "(" << toGuint16(this->fontColorTemp.red) << ";" << toGuint16(this->fontColorTemp.green) << ";" << toGuint16(this->fontColorTemp.blue) << ")" << std::endl;
+        // std::cout << attrib->start_index << ":" << attrib->end_index << "(" << toGuint16(this->fontColorTemp.red) <<
+        // ";" << toGuint16(this->fontColorTemp.green) << ";" << toGuint16(this->fontColorTemp.blue) << ")" <<
+        // std::endl;
     }
 
     pango_layout_set_attributes(pl, attrlist.get());
@@ -1164,11 +1166,15 @@ void colorCallback(GtkButton* src, TextEditor* s) { s->changeFontColorTemp(src);
 void TextEditor::changeFontColorTemp(GtkButton* src) {
     std::cout << "Change font color! Is src null? -> " << (src != nullptr) << std::endl;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(src), &fontColorTemp);
-    std::cout << "(" << fontColorTemp.red << ";" << fontColorTemp.green << ";" << fontColorTemp.blue << ")" << std::endl;
+    std::cout << "(" << fontColorTemp.red << ";" << fontColorTemp.green << ";" << fontColorTemp.blue << ")"
+              << std::endl;
 }
 
 
 void TextEditor::createContextMenu() {
+
+    TextEditorContextMenu contextMenu;
+
     auto filepath = this->control->getGladeSearchPath()->findFile("", "textEditorContextMenu.glade");
 
     GtkBuilder* builder = gtk_builder_new();
