@@ -51,3 +51,33 @@ class ShowAndSaveDoesNotThrow: public GtkTest {
     }
 };
 TEST_F(ShowAndSaveDoesNotThrow, showAndSafeDoesNotThrow) {}
+
+class ShowAndSaveDoesNotThrowForNoPalettes: public GtkTest {
+    void runTest(GtkApplication* app) override {
+        GladeSearchpath gladeSearchpath{};
+        XournalMain::initResourcePath(&gladeSearchpath, "ui/about.glade", true);
+        XournalMain::initResourcePath(&gladeSearchpath, "ui/xournalpp.css", true);
+
+        GApplication* gApp = G_APPLICATION(app);
+
+        Control control{gApp, &gladeSearchpath};
+
+        // If initializing differently, i.e.:
+        // MainWindow mainWindow{MainWindow(&gladeSearchpath, &control, app)};
+        // the test fails at the end of the block with a segfault
+        MainWindow* mainWindow = new MainWindow(&gladeSearchpath, &control, app);
+        control.initWindow(mainWindow);
+
+        Settings settings{Util::getConfigFile(SETTINGS_XML_FILE)};
+        settings.load();
+
+        const fs::path emptyFile{GET_TESTFILE("no_palettes/empty.txt")};
+        const std::vector<fs::path> paletteDirectories{emptyFile.parent_path()};
+
+        SettingsDialog settingsDialog{&gladeSearchpath, &settings, &control, paletteDirectories};
+
+        settingsDialog.load();
+        EXPECT_NO_THROW(settingsDialog.save());
+    }
+};
+TEST_F(ShowAndSaveDoesNotThrowForNoPalettes, ShowAndSaveDoesNotThrowForNoPalettes) {}

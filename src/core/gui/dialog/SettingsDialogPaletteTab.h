@@ -2,6 +2,7 @@
 
 
 #include <filesystem>
+#include <optional>
 #include <vector>
 
 #include <gtk/gtk.h>
@@ -13,7 +14,7 @@ public:
     SettingsDialogPaletteTab(GtkLabel* colorPaletteExplainLabel, GtkListBox* paletteListBox,
                              const std::vector<fs::path>& paletteDirectories);
     void renderPaletteTab(const fs::path& currentlySetPalettePath);
-    auto getSelectedPalette() -> fs::path;
+    auto getSelectedPalette() -> std::optional<fs::path>;
 
 private:
     std::vector<fs::path> allPaletteFilePaths;

@@ -109,13 +109,16 @@ void SettingsDialogPaletteTab::setAllPaletteFilePaths(const std::vector<fs::path
     }
 }
 
-auto SettingsDialogPaletteTab::getSelectedPalette() -> fs::path {
+auto SettingsDialogPaletteTab::getSelectedPalette() -> std::optional<fs::path> {
     GtkListBoxRow* selected_listbox_row = gtk_list_box_get_selected_row(paletteListBox);
-    if (G_IS_OBJECT(selected_listbox_row)) {
-        return getGObjectPalettePath(G_OBJECT(selected_listbox_row));
-    } else {
-        throw std::runtime_error("The SettingsDialog must be rendered before trying to obtain the selected palette.");
+    if (allPaletteFilePaths.empty()) {
+        return std::nullopt;
     }
+    if (!G_IS_OBJECT(selected_listbox_row)) {
+        return std::nullopt;
+    }
+
+    return getGObjectPalettePath(G_OBJECT(selected_listbox_row));
 }
 
 auto SettingsDialogPaletteTab::newErrorListBoxRow(const fs::path& palettePath, const std::string& error) -> GtkWidget* {

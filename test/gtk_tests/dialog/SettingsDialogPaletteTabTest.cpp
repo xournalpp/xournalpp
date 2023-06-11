@@ -37,7 +37,7 @@ class UnrenderedPaletteTabTest: public GtkTest {
 
         const std::vector<fs::path> paletteDirectories{palettePath.parent_path()};
         SettingsDialogPaletteTab paletteTab{mainLabel, optionsList, paletteDirectories};
-        EXPECT_THROW(paletteTab.getSelectedPalette(), std::runtime_error);
+        EXPECT_EQ(paletteTab.getSelectedPalette(), std::nullopt);
     }
 };
 TEST_F(UnrenderedPaletteTabTest, unrenderedPaletteTabShouldYieldNoSelectedPalette) {}
@@ -54,7 +54,7 @@ class RenderedPaletteTabTest: public GtkTest {
         const std::vector<fs::path> paletteDirectories{palettePath.parent_path()};
         SettingsDialogPaletteTab paletteTab{mainLabel, optionsList, paletteDirectories};
         paletteTab.renderPaletteTab(palettePath);
-        EXPECT_EQ(palettePath.u8string(), paletteTab.getSelectedPalette().u8string());
+        EXPECT_EQ(palettePath.u8string(), paletteTab.getSelectedPalette().value().u8string());
     }
 };
 TEST_F(RenderedPaletteTabTest, renderedPaletteTabShouldNotChangeSelectedColorPalette) {}
