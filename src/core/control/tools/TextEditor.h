@@ -32,6 +32,7 @@ class XojFont;
 class Control;
 class TextEditorCallbacks;
 class XojPageView;
+class TextEditorContextMenu;
 
 namespace xoj::util {
 template <class T>
@@ -148,7 +149,6 @@ private:
 
     void updateTextElementContent();
 
-    void createContextMenu();
     void positionContextMenu();
 
 private:
@@ -162,10 +162,9 @@ private:
     GtkWidget* xournalWidget;
 
     /**
-     * @brief Pointer to the popover displayed above the text editor
+     * @brief Pointer to the context menu displayed above the text editor
      */
-    GtkPopover* contextMenu = nullptr;
-    GdkRGBA fontColorTemp;
+    std::unique_ptr<TextEditorContextMenu> contextMenu;
 
     /**
      * @brief Text element under edition, clone of the original Text element (if any)

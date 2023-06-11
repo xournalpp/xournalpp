@@ -135,7 +135,7 @@ TextEditor::TextEditor(Control* control, XojPageView* pageView, GtkWidget* xourn
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::TextEditionView>>()) {
 
-    this->createContextMenu();
+    this->contextMenu = std::make_unique<TextEditorContextMenu>(control, this, pageView, xournalWidget);
 
     this->initializeEditionAt(x, y);
 
@@ -968,20 +968,6 @@ void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
         pango_attr_list_insert(attrlist.get(), attrib);  // attrlist takes ownership of attrib
     }
 
-    if (this->fontColorTemp.red != 0.0 && this->fontColorTemp.green != 0.0 && this->fontColorTemp.blue != 0.0) {
-        std::cout << "Got here 2" << std::endl;
-        PangoAttribute* attrib =
-                pango_attr_foreground_new(toGuint16(this->fontColorTemp.red), toGuint16(this->fontColorTemp.green),
-                                          toGuint16(this->fontColorTemp.blue));
-        attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
-        attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
-        pango_attr_list_insert(attrlist.get(), attrib);
-        std::cout << "Got here 3" << std::endl;
-        // std::cout << attrib->start_index << ":" << attrib->end_index << "(" << toGuint16(this->fontColorTemp.red) <<
-        // ";" << toGuint16(this->fontColorTemp.green) << ";" << toGuint16(this->fontColorTemp.blue) << ")" <<
-        // std::endl;
-    }
-
     pango_layout_set_attributes(pl, attrlist.get());
 }
 
@@ -1070,7 +1056,7 @@ void TextEditor::finalizeEdition() {
 
     if (this->bufferEmpty()) {
         std::cout << "  empty buffer popdown" << std::endl;
-        gtk_popover_popdown(this->contextMenu);
+        this->contextMenu->hide();
         // Delete the edited element from layer
         if (originalTextElement) {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
@@ -1106,9 +1092,7 @@ void TextEditor::finalizeEdition() {
         this->page->fireElementChanged(ptr);
         undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
     }
-
-    std::cout << "  anyway popdown" << std::endl;
-    gtk_popover_popdown(this->contextMenu);
+    this->contextMenu->hide();
 }
 
 void TextEditor::initializeEditionAt(double x, double y) {
@@ -1155,61 +1139,9 @@ void TextEditor::initializeEditionAt(double x, double y) {
     this->previousBoundingBox = Range(this->textElement->boundingRect());
     this->replaceBufferContent(this->textElement->getText());
 
-    this->positionContextMenu();
-    gtk_widget_show_all(GTK_WIDGET(this->contextMenu));
-    gtk_popover_popup(this->contextMenu);
-    std::cout << "Popup menu should be shown" << std::endl;
+    this->contextMenu->show();
 }
 
-void colorCallback(GtkButton* src, TextEditor* s) { s->changeFontColorTemp(src); }
-
-void TextEditor::changeFontColorTemp(GtkButton* src) {
-    std::cout << "Change font color! Is src null? -> " << (src != nullptr) << std::endl;
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(src), &fontColorTemp);
-    std::cout << "(" << fontColorTemp.red << ";" << fontColorTemp.green << ";" << fontColorTemp.blue << ")"
-              << std::endl;
-}
-
-
-void TextEditor::createContextMenu() {
-
-    TextEditorContextMenu contextMenu;
-
-    auto filepath = this->control->getGladeSearchPath()->findFile("", "textEditorContextMenu.glade");
-
-    GtkBuilder* builder = gtk_builder_new();
-
-    GError* err = NULL;
-    if (gtk_builder_add_from_file(builder, filepath.u8string().c_str(), &err) == 0) {
-        std::cout << err->message << std::endl;
-    }
-
-    this->contextMenu = GTK_POPOVER(gtk_builder_get_object(builder, "textEditorContextMenu"));
-    gtk_popover_set_relative_to(this->contextMenu, this->xournalWidget);
-    gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
-
-    GtkButton* btn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
-
-    g_signal_connect(btn, "color-set", G_CALLBACK(colorCallback), this);
-
-    this->pageView->getZoomControl()->addZoomListener(this);
-
-    g_object_unref(G_OBJECT(builder));
-}
-
-void TextEditor::positionContextMenu() {
-    // When no text element is selected no context menu should be displayed
-    if (this->textElement == nullptr) {
-        gtk_popover_popdown(this->contextMenu);
-        return;
-    }
-
-    int padding = xoj::view::TextEditionView::PADDING_IN_PIXELS;
-    Range r = this->getContentBoundingBox();
-    GdkRectangle rect{this->pageView->getX() + int(r.getX() * this->pageView->getZoom()),
-                      this->pageView->getY() + int(r.getY() * this->pageView->getZoom()) - padding,
-                      int(r.getWidth() * this->pageView->getZoom()), int(r.getHeight() * this->pageView->getZoom())};
-    gtk_popover_set_pointing_to(this->contextMenu, &rect);
-}
+void TextEditor::positionContextMenu() { this->contextMenu->reposition(); }
 
 void TextEditor::zoomChanged() { this->positionContextMenu(); }

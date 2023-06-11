@@ -11,9 +11,43 @@
 
 #pragma once
 
+#include <gdk/gdk.h>  // for g_signal_connect
+#include <gtk/gtk.h>  // for GtkPopover, etc.
+
+class Control;
+class TextEditor;
+class XojPageView;
 
 class TextEditorContextMenu {
 public:
-    TextEditorContextMenu();
+    TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView, GtkWidget* xournalWidget);
     ~TextEditorContextMenu();
+
+    void show();
+    void hide();
+
+    void reposition();
+
+private:
+    void create();
+
+private:
+    Control* control;
+    TextEditor* editor;
+    XojPageView* pageView;
+    GtkWidget* xournalWidget;
+
+    /**
+     * UI Elements
+     */
+    GtkPopover* contextMenu;
+
+    GtkFontButton* fontBtn;
+
+    GtkColorButton* ftColorBtn;
+    GtkColorButton* bgColorBtn;
+
+    GtkButton* alignLeftTgl;
+    GtkButton* alignCenterTgl;
+    GtkButton* alignRightTgl;
 };
