@@ -148,4 +148,14 @@
       </object>
     </child>
   </object>
+  <object class="GtkImage" id="imgBgColor">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">fill-color</property>
+  </object>
+  <object class="GtkImage" id="imgFtColor">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">font</property>
+  </object>
 </interface>

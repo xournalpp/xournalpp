@@ -17,6 +17,13 @@ void changeBgColorInternal(GtkColorButton* src, TextEditorContextMenu* tecm) { t
 void toggleAlignLeft(GtkButton* src, TextEditorContextMenu* tecm) { tecm->changeAlignment(TextAlignment::LEFT); }
 void toggleAlignCenter(GtkButton* src, TextEditorContextMenu* tecm) { tecm->changeAlignment(TextAlignment::CENTER); }
 void toggleAlignRight(GtkButton* src, TextEditorContextMenu* tecm) { tecm->changeAlignment(TextAlignment::RIGHT); }
+gboolean drawFtColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextMenu* tecm) {
+    return tecm->drawFtColorIcon(src, cr);
+};
+gboolean drawBgColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextMenu* tecm) {
+    return tecm->drawBgColorIcon(src, cr);
+};
+
 
 TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView,
                                              GtkWidget* xournalWidget):
@@ -71,6 +78,7 @@ void TextEditorContextMenu::create() {
     this->contextMenu = GTK_POPOVER(gtk_builder_get_object(builder, "textEditorContextMenu"));
     gtk_popover_set_relative_to(this->contextMenu, this->xournalWidget);
     gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
+    gtk_popover_set_modal(this->contextMenu, false);
 
     this->fontBtn = GTK_FONT_BUTTON(gtk_builder_get_object(builder, "btnFontChooser"));
     g_signal_connect(this->fontBtn, "font-set", G_CALLBACK(changeFontInternal), this);
@@ -79,6 +87,14 @@ void TextEditorContextMenu::create() {
     this->bgColorBtn = GTK_COLOR_BUTTON(gtk_builder_get_object(builder, "btnBgColor"));
     g_signal_connect(this->ftColorBtn, "color-set", G_CALLBACK(changeFtColorInternal), this);
     g_signal_connect(this->bgColorBtn, "color-set", G_CALLBACK(changeBgColorInternal), this);
+
+    this->ftColorIcon = GTK_WIDGET(gtk_builder_get_object(builder, "imgFtColor"));
+    g_signal_connect(this->ftColorIcon, "draw", G_CALLBACK(drawFtColorIconInternal), this);
+    gtk_button_set_image(GTK_BUTTON(this->ftColorBtn), this->ftColorIcon);
+
+    this->bgColorIcon = GTK_WIDGET(gtk_builder_get_object(builder, "imgBgColor"));
+    g_signal_connect(this->bgColorIcon, "draw", G_CALLBACK(drawBgColorIconInternal), this);
+    gtk_button_set_image(GTK_BUTTON(this->bgColorBtn), this->bgColorIcon);
 
     this->alignLeftTgl = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnAlignLeft"));
     this->alignCenterTgl = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnAlignCenter"));
@@ -105,7 +121,8 @@ void TextEditorContextMenu::changeFont() {
 void TextEditorContextMenu::changeFtColor() {
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->ftColorBtn), &color);
-    this->editor->setColor(Color(color.red * 255, color.green * 255, color.blue * 255, color.alpha * 255));
+    this->editor->setColor(Color(uint8_t(color.red * 255.0), uint8_t(color.green * 255.0), uint8_t(color.blue * 255.0),
+                                 uint8_t(color.alpha * 255.0)));
     std::cout << "New font color: (" << color.red << ";" << color.green << ";" << color.blue << ")" << std::endl;
 }
 
@@ -139,4 +156,46 @@ void TextEditorContextMenu::changeAlignment(TextAlignment align) {
             break;
     }
     this->editor->setTextAlignment(align);
+}
+
+gboolean TextEditorContextMenu::drawFtColorIcon(GtkWidget* src, cairo_t* cr) {
+    guint width, height;
+    GdkRGBA color;
+    GtkStyleContext* context;
+    context = gtk_widget_get_style_context(src);
+    width = gtk_widget_get_allocated_width(src);
+    height = gtk_widget_get_allocated_height(src);
+    gtk_render_background(context, cr, 0, 0, width, height);
+
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->ftColorBtn), &color);
+
+    // Draw font icon here
+    cairo_set_line_width(cr, 1.0);
+    cairo_rectangle(cr, 0, height - COLOR_BAR_HEIGHT, width, COLOR_BAR_HEIGHT);
+
+    gdk_cairo_set_source_rgba(cr, &color);
+
+    cairo_fill(cr);
+    return FALSE;
+}
+
+gboolean TextEditorContextMenu::drawBgColorIcon(GtkWidget* src, cairo_t* cr) {
+    guint width, height;
+    GdkRGBA color;
+    GtkStyleContext* context;
+    context = gtk_widget_get_style_context(src);
+    width = gtk_widget_get_allocated_width(src);
+    height = gtk_widget_get_allocated_height(src);
+    gtk_render_background(context, cr, 0, 0, width, height);
+
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->bgColorBtn), &color);
+
+    // Draw font icon here
+    cairo_set_line_width(cr, 1.0);
+    cairo_rectangle(cr, 0, height - COLOR_BAR_HEIGHT, width, COLOR_BAR_HEIGHT);
+
+    gdk_cairo_set_source_rgba(cr, &color);
+
+    cairo_fill(cr);
+    return FALSE;
 }

@@ -92,6 +92,7 @@ public:
     void changeFontColorTemp(GtkButton* src);
 
     void setTextAlignment(TextAlignment align);
+    void setInlineFtColor();
 
 private:
     void toggleOverwrite();

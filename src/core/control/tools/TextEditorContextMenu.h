@@ -34,6 +34,9 @@ public:
     void changeBgColor();
     void changeAlignment(TextAlignment align);
 
+    gboolean drawFtColorIcon(GtkWidget* src, cairo_t* cr);
+    gboolean drawBgColorIcon(GtkWidget* src, cairo_t* cr);
+
 private:
     void create();
 
@@ -51,9 +54,14 @@ private:
     GtkFontButton* fontBtn;
 
     GtkColorButton* ftColorBtn;
+    GtkWidget* ftColorIcon;
     GtkColorButton* bgColorBtn;
+    GtkWidget* bgColorIcon;
 
     GtkToggleButton* alignLeftTgl;
     GtkToggleButton* alignCenterTgl;
     GtkToggleButton* alignRightTgl;
+
+public:
+    static constexpr int COLOR_BAR_HEIGHT = 4;
 };

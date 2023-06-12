@@ -39,6 +39,7 @@ auto Text::cloneText() const -> std::unique_ptr<Text> {
     text->snappedBounds = this->snappedBounds;
     text->sizeCalculated = this->sizeCalculated;
     text->inEditing = this->inEditing;
+    text->alignment = this->alignment;
 
     return text;
 }
