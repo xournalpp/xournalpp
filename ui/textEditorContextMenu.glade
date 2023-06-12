@@ -17,11 +17,6 @@
     <property name="can-focus">False</property>
     <property name="icon-name">format-justify-right</property>
   </object>
-  <object class="GtkImage" id="imgRotate">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">view-refresh</property>
-  </object>
   <object class="GtkPopover" id="textEditorContextMenu">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -102,7 +97,7 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkButton" id="btnAlignLeft">
+              <object class="GtkToggleButton" id="btnAlignLeft">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -115,7 +110,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btnAlignCenter">
+              <object class="GtkToggleButton" id="btnAlignCenter">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -128,7 +123,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btnAlignRight">
+              <object class="GtkToggleButton" id="btnAlignRight">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -148,20 +143,6 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="btnRotate">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="image">imgRotate</property>
-            <property name="always-show-image">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
           </packing>
         </child>
       </object>

@@ -205,3 +205,7 @@ auto Text::findText(const std::string& search) const -> std::vector<XojPdfRectan
 
     return list;
 }
+
+void Text::setAlignment(TextAlignment align) { this->alignment = align; }
+
+TextAlignment Text::getAlignment() { return this->alignment; }

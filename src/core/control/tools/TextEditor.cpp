@@ -941,6 +941,8 @@ void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
     }
 }
 
+Color TextEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
+
 void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
     xoj::util::PangoAttrListSPtr attrlist(pango_attr_list_new(), xoj::util::adopt);
 
@@ -959,6 +961,10 @@ void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
     }
 
     pango_layout_set_attributes(pl, attrlist.get());
+
+    PangoAlignment align = static_cast<PangoAlignment>(this->textElement->getAlignment());
+    std::cout << "PangoAlignment: " << align << std::endl;
+    pango_layout_set_alignment(pl, align);
 }
 
 auto TextEditor::computeBoundingBox() const -> Range {
@@ -1132,3 +1138,9 @@ void TextEditor::initializeEditionAt(double x, double y) {
 void TextEditor::positionContextMenu() { this->contextMenu->reposition(); }
 
 void TextEditor::zoomChanged() { this->positionContextMenu(); }
+
+void TextEditor::setTextAlignment(TextAlignment align) {
+    this->textElement->setAlignment(align);
+    this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
+    this->repaintEditor();
+}

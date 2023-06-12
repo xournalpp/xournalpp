@@ -33,6 +33,7 @@ class Control;
 class TextEditorCallbacks;
 class XojPageView;
 class TextEditorContextMenu;
+enum class TextAlignment;
 
 namespace xoj::util {
 template <class T>
@@ -89,6 +90,8 @@ public:
     void selectAtCursor(TextEditor::SelectType ty);
 
     void changeFontColorTemp(GtkButton* src);
+
+    void setTextAlignment(TextAlignment align);
 
 private:
     void toggleOverwrite();

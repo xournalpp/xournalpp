@@ -17,6 +17,7 @@
 class Control;
 class TextEditor;
 class XojPageView;
+enum class TextAlignment;
 
 class TextEditorContextMenu {
 public:
@@ -27,6 +28,11 @@ public:
     void hide();
 
     void reposition();
+
+    void changeFont();
+    void changeFtColor();
+    void changeBgColor();
+    void changeAlignment(TextAlignment align);
 
 private:
     void create();
@@ -47,7 +53,7 @@ private:
     GtkColorButton* ftColorBtn;
     GtkColorButton* bgColorBtn;
 
-    GtkButton* alignLeftTgl;
-    GtkButton* alignCenterTgl;
-    GtkButton* alignRightTgl;
+    GtkToggleButton* alignLeftTgl;
+    GtkToggleButton* alignCenterTgl;
+    GtkToggleButton* alignRightTgl;
 };

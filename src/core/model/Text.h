@@ -27,6 +27,8 @@ class ObjectInputStream;
 class ObjectOutputStream;
 class XojPdfRectangle;
 
+enum class TextAlignment { LEFT = 0, CENTER = 1, RIGHT = 2 };
+
 class Text: public AudioElement {
 public:
     Text();
@@ -55,6 +57,9 @@ public:
 
     bool rescaleOnlyAspectRatio() override;
 
+    void setAlignment(TextAlignment align);
+    TextAlignment getAlignment();
+
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;
 
@@ -77,6 +82,8 @@ private:
     XojFont font;
 
     std::string text;
+
+    TextAlignment alignment = TextAlignment::LEFT;
 
     bool inEditing = false;
 };
