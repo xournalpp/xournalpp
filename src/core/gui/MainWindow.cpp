@@ -249,13 +249,13 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 
     g_message("Util::execInUiThread");
 
-    Util::execInUiThread(
-            [=]() {
-                const bool touchScrollEnabled = gtkTouchscreenScrollingEnabled.load();
-
-                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), touchScrollEnabled);
-            },
-            G_PRIORITY_HIGH);
+    //    Util::execInUiThread(
+    //            [=]() {
+    //                const bool touchScrollEnabled = gtkTouchscreenScrollingEnabled.load();
+    //
+    //                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), touchScrollEnabled);
+    //            },
+    //            G_PRIORITY_HIGH);
 }
 
 /**
