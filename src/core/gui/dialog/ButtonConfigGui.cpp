@@ -1,17 +1,17 @@
 #include "ButtonConfigGui.h"
 
-#include <memory>   // for allocator, allocator_trai...
+#include <memory>  // for allocator, allocator_trai...
 #include <utility>  // for pair
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GDK_TYPE_PIXBUF, GdkPixbuf
-#include <gdk/gdk.h>                // for GdkRGBA
-#include <glib-object.h>            // for g_value_get_int, GValue
+#include <gdk/gdk.h>  // for GdkRGBA
+#include <glib-object.h>  // for g_value_get_int, GValue
 
-#include "control/DeviceListHelper.h"       // for InputDevice, getDeviceList
+#include "control/DeviceListHelper.h"  // for InputDevice, getDeviceList
 #include "control/settings/ButtonConfig.h"  // for ButtonConfig
-#include "control/settings/Settings.h"      // for Settings
-#include "util/Color.h"                     // for GdkRGBA_to_argb, rgb_to_G...
-#include "util/i18n.h"                      // for _
+#include "control/settings/Settings.h"  // for Settings
+#include "util/Color.h"  // for GdkRGBA_to_argb, rgb_to_G...
+#include "util/i18n.h"  // for _
 
 class GladeSearchpath;
 
@@ -84,6 +84,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
         addToolToList(typeModel, iconNameHelper.iconName(icon).c_str(), name, action);
     };
 
+    g_message("addTypeCB");
+
     addTypeCB("transparent", _("Tool - don't change"), TOOL_NONE);
     addTypeCB("tool-pencil", _("Pen"), TOOL_PEN);
     addTypeCB("tool-eraser", _("Eraser"), TOOL_ERASER);
@@ -120,6 +122,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 
     this->colorButton = get("colorButton");
+
+    g_message("addDrawingTypeCB");
 
     this->cbDrawingType = get("cbDrawingType");
     // DRAWING_TYPE_DONT_CHANGE

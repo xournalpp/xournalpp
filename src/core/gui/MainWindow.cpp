@@ -75,6 +75,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     setSidebarVisible(control->getSettings()->isSidebarVisible());
 
+    g_message("MainWindow created");
     // Window handler
     g_signal_connect(this->window, "delete-event", G_CALLBACK(deleteEventCallback), this->control);
     g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
@@ -87,6 +88,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     // need to create tool buttons registered in plugins, so they can be added to toolbars
     control->registerPluginToolButtons(this->toolbar.get());
+
+    g_message("creating toolbar");
 
     createToolbar();
 
@@ -111,6 +114,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     getSpinPageNo()->addListener(this->control->getScrollHandler());
 
+    g_message("executing UI thread");
 
     Util::execInUiThread([=]() {
         // Execute after the window is visible, else the check won't work
@@ -207,6 +211,8 @@ void MainWindow::initXournalWidget() {
 
     setGtkTouchscreenScrollingForDeviceMapping();
 
+    g_message("winXournal");
+
     gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
     GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
@@ -217,11 +223,15 @@ void MainWindow::initXournalWidget() {
 
     this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling.get());
 
+    g_message("xournal");
+
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
 
     Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
     scrollHandling->init(this->xournal->getWidget(), layout);
+
+    g_message("scrollHandling");
 
     updateColorscheme();
 }
@@ -249,13 +259,13 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 
     g_message("Util::execInUiThread");
 
-    //    Util::execInUiThread(
-    //            [=]() {
-    //                const bool touchScrollEnabled = gtkTouchscreenScrollingEnabled.load();
-    //
-    //                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), touchScrollEnabled);
-    //            },
-    //            G_PRIORITY_HIGH);
+    Util::execInUiThread(
+            [=]() {
+                const bool touchScrollEnabled = gtkTouchscreenScrollingEnabled.load();
+
+                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), touchScrollEnabled);
+            },
+            G_PRIORITY_HIGH);
 }
 
 /**
