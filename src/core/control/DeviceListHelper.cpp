@@ -61,7 +61,7 @@ auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices
                   "Probably this is the reason for not finding devices!\n");
     }
 
-    return deviceList;
+    return std::vector<InputDevice>{};
 }
 
 InputDeviceClass DeviceListHelper::getSourceMapping(GdkInputSource source, Settings* settings) {

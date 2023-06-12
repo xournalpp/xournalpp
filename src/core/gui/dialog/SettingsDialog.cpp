@@ -743,6 +743,8 @@ void SettingsDialog::save() {
     GtkWidget* spCursorHighlightBorderWidth = get("cursorHighlightBorderWidth");
     settings->setCursorHighlightBorderWidth(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightBorderWidth)));
 
+    g_message("Setting Stylus Cursor Type\n");
+
     switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbStylusCursorType")))) {
         case 0:
             settings->setStylusCursorType(STYLUS_CURSOR_NONE);
@@ -848,6 +850,8 @@ void SettingsDialog::save() {
     } else {
         settings->setEmptyLastPageAppend(EmptyLastPageAppendType::Disabled);
     }
+
+    g_message("setEdgePanSpeed\n");
 
     settings->setEdgePanSpeed(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanSpeed"))));
     settings->setEdgePanMaxMult(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanMaxMult"))));
@@ -965,8 +969,11 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
+    g_message("Setting Color Palette\n");
 
     settings->setColorPalette(paletteTab.getSelectedPalette());
+
+    g_message("ColorPalette Set\n");
 
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui->saveSettings();
