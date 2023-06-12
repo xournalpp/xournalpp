@@ -128,7 +128,8 @@ void TextEditorContextMenu::changeFtColor() {
 
 void TextEditorContextMenu::changeBgColor() {
     GdkRGBA color;
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->ftColorBtn), &color);
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->bgColorBtn), &color);
+    this->editor->setBackgroundColor(color);
     std::cout << "New background color: (" << color.red << ";" << color.green << ";" << color.blue << ")" << std::endl;
 }
 

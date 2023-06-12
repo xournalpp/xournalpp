@@ -92,7 +92,7 @@ public:
     void changeFontColorTemp(GtkButton* src);
 
     void setTextAlignment(TextAlignment align);
-    void setInlineFtColor();
+    void setBackgroundColor(GdkRGBA color);
 
 private:
     void toggleOverwrite();
@@ -116,7 +116,13 @@ private:
      */
     void setTextToPangoLayout(PangoLayout* pl) const;
 
-    void setSelectionAttributesToPangoLayout(PangoLayout* pl) const;
+    /**
+     * @brief Add the pango attributes to the provided pango layout
+     * The full attribute list is stored in the text element (this->textElement)
+     *
+     * Special case: This function additionally sets a pango background attribute for the current selection
+     */
+    void setAttributesToPangoLayout(PangoLayout* pl) const;
 
     Range computeBoundingBox() const;
     void repaintEditor(bool sizeChanged = true);

@@ -210,3 +210,5 @@ auto Text::findText(const std::string& search) const -> std::vector<XojPdfRectan
 void Text::setAlignment(TextAlignment align) { this->alignment = align; }
 
 TextAlignment Text::getAlignment() { return this->alignment; }
+
+std::list<PangoAttribute*>* Text::getAttributeList() { return &this->textAttributes; };

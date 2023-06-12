@@ -11,8 +11,9 @@
 
 #pragma once
 
+#include <list>    // for list
 #include <string>  // for string
-#include <vector>
+#include <vector>  // for vector
 
 #include <pango/pango.h>
 
@@ -60,6 +61,8 @@ public:
     void setAlignment(TextAlignment align);
     TextAlignment getAlignment();
 
+    std::list<PangoAttribute*>* getAttributeList();
+
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;
 
@@ -84,6 +87,7 @@ private:
     std::string text;
 
     TextAlignment alignment = TextAlignment::LEFT;
+    std::list<PangoAttribute*> textAttributes = {};
 
     bool inEditing = false;
 };

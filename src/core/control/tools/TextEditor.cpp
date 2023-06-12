@@ -936,14 +936,14 @@ void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
 
         pango_layout_set_text(pl, txt.c_str(), static_cast<int>(txt.length()));
     } else {
-        setSelectionAttributesToPangoLayout(pl);
+        setAttributesToPangoLayout(pl);
         pango_layout_set_text(pl, cloneToCString(this->buffer.get()).get(), -1);
     }
 }
 
 Color TextEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
 
-void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
+void TextEditor::setAttributesToPangoLayout(PangoLayout* pl) const {
     xoj::util::PangoAttrListSPtr attrlist(pango_attr_list_new(), xoj::util::adopt);
 
     GtkTextIter start;
@@ -958,6 +958,10 @@ void TextEditor::setSelectionAttributesToPangoLayout(PangoLayout* pl) const {
         attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
 
         pango_attr_list_insert(attrlist.get(), attrib);  // attrlist takes ownership of attrib
+    }
+
+    for (auto attrib: *this->textElement->getAttributeList()) {
+        pango_attr_list_insert(attrlist.get(), attrib);
     }
 
     pango_layout_set_attributes(pl, attrlist.get());
@@ -992,7 +996,7 @@ auto TextEditor::getUpToDateLayout() const -> PangoLayout* {
             setTextToPangoLayout(this->layout.get());
             break;
         case LayoutStatus::NEEDS_ATTRIBUTES_UPDATE:
-            setSelectionAttributesToPangoLayout(this->layout.get());
+            setAttributesToPangoLayout(this->layout.get());
             break;
         case LayoutStatus::UP_TO_DATE:
             break;
@@ -1143,4 +1147,17 @@ void TextEditor::setTextAlignment(TextAlignment align) {
     this->textElement->setAlignment(align);
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
+}
+
+void TextEditor::setBackgroundColor(GdkRGBA color) {
+    auto attribList = this->textElement->getAttributeList();
+    GtkTextIter start;
+    GtkTextIter end;
+    bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
+    PangoAttribute* attrib =
+            pango_attr_background_new(int(double(UINT16_MAX) * color.red), int(double(UINT16_MAX) * color.green),
+                                      int(double(UINT16_MAX) * color.blue));
+    attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
+    attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
+    attribList->push_back(attrib);
 }
