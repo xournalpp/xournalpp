@@ -291,6 +291,9 @@ public:
     int getAddHorizontalSpaceAmountLeft() const;
     void setAddHorizontalSpaceAmountLeft(int pixels);
 
+    bool getUnlimitedScrolling() const;
+    void setUnlimitedScrolling(bool enable);
+
     bool getDrawDirModsEnabled() const;
     void setDrawDirModsEnabled(bool enable);
     int getDrawDirModsRadius() const;
@@ -891,6 +894,11 @@ private:
      * How much allowance to scroll outside the page display area below
      */
     int addVerticalSpaceAmountBelow{};
+
+    /**
+     * Enables unlimited scrolling, which automatically adds maximum space to scroll outside the page
+     */
+    bool unlimitedScrolling{};
 
     /**
      * Emulate modifier keys based on initial direction of drawing tool ( for Rectangle, Ellipse etc. )

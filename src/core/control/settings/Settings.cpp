@@ -126,6 +126,8 @@ void Settings::loadDefault() {
     this->addVerticalSpaceAmountAbove = 150;
     this->addVerticalSpaceAmountBelow = 150;
 
+    this->unlimitedScrolling = false;
+
     // Drawing direction emulates modifier keys
     this->drawDirModsRadius = 50;
     this->drawDirModsEnabled = false;
@@ -538,6 +540,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addVerticalSpaceAmountBelow")) == 0) {
         this->addVerticalSpaceAmountBelow =
                 static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("unlimitedScrolling")) == 0) {
+        this->unlimitedScrolling = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("drawDirModsEnabled")) == 0) {
         this->drawDirModsEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("drawDirModsRadius")) == 0) {
@@ -1039,6 +1043,8 @@ void Settings::save() {
     SAVE_INT_PROP(addVerticalSpaceAmountAbove);
     SAVE_INT_PROP(addVerticalSpaceAmountBelow);
 
+    SAVE_BOOL_PROP(unlimitedScrolling);
+
     SAVE_BOOL_PROP(drawDirModsEnabled);
     SAVE_INT_PROP(drawDirModsRadius);
 
@@ -1324,7 +1330,6 @@ void Settings::setAddVerticalSpaceAmountAbove(int pixels) {
     }
 
     this->addVerticalSpaceAmountAbove = pixels;
-    save();
 }
 
 auto Settings::getAddVerticalSpaceAmountBelow() const -> int { return this->addVerticalSpaceAmountBelow; }
@@ -1335,7 +1340,6 @@ void Settings::setAddVerticalSpaceAmountBelow(int pixels) {
     }
 
     this->addVerticalSpaceAmountBelow = pixels;
-    save();
 }
 
 
@@ -1351,7 +1355,6 @@ void Settings::setAddHorizontalSpaceAmountRight(int pixels) {
     }
 
     this->addHorizontalSpaceAmountRight = pixels;
-    save();
 }
 
 auto Settings::getAddHorizontalSpaceAmountLeft() const -> int { return this->addHorizontalSpaceAmountLeft; }
@@ -1362,9 +1365,17 @@ void Settings::setAddHorizontalSpaceAmountLeft(int pixels) {
     }
 
     this->addHorizontalSpaceAmountLeft = pixels;
-    save();
 }
 
+auto Settings::getUnlimitedScrolling() const -> bool { return this->unlimitedScrolling; }
+
+void Settings::setUnlimitedScrolling(bool enable) {
+    if (enable == this->unlimitedScrolling) {
+        return;
+    }
+
+    this->unlimitedScrolling = enable;
+}
 
 auto Settings::getDrawDirModsEnabled() const -> bool { return this->drawDirModsEnabled; }
 
