@@ -2174,6 +2174,7 @@ void Control::showSettings() {
     bool horizontalSpace = settings->getAddHorizontalSpace();
     int horizontalSpaceAmountRight = settings->getAddHorizontalSpaceAmountRight();
     int horizontalSpaceAmountLeft = settings->getAddHorizontalSpaceAmountLeft();
+    bool unlimitedScrolling = settings->getUnlimitedScrolling();
     StylusCursorType stylusCursorType = settings->getStylusCursorType();
     bool highlightPosition = settings->isHighlightPosition();
     SidebarNumberingStyle sidebarStyle = settings->getSidebarNumberingStyle();
@@ -2186,13 +2187,32 @@ void Control::showSettings() {
         win->getXournal()->forceUpdatePagenumbers();
     }
 
-    if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace() ||
-        verticalSpaceAmountAbove != settings->getAddVerticalSpaceAmountAbove() ||
-        horizontalSpaceAmountRight != settings->getAddHorizontalSpaceAmountRight() ||
-        verticalSpaceAmountBelow != settings->getAddVerticalSpaceAmountBelow() ||
-        horizontalSpaceAmountLeft != settings->getAddHorizontalSpaceAmountLeft()) {
+    if (!settings->getUnlimitedScrolling() &&
+        (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace() ||
+         verticalSpaceAmountAbove != settings->getAddVerticalSpaceAmountAbove() ||
+         horizontalSpaceAmountRight != settings->getAddHorizontalSpaceAmountRight() ||
+         verticalSpaceAmountBelow != settings->getAddVerticalSpaceAmountBelow() ||
+         horizontalSpaceAmountLeft != settings->getAddHorizontalSpaceAmountLeft())) {
+
+        double const xChange = (settings->getAddHorizontalSpace() ? settings->getAddHorizontalSpaceAmountLeft() : 0) -
+                               (horizontalSpace ? horizontalSpaceAmountLeft : 0);
+        const double yChange = (settings->getAddVerticalSpace() ? settings->getAddVerticalSpaceAmountAbove() : 0) -
+                               (verticalSpace ? verticalSpaceAmountAbove : 0);
+
         win->getXournal()->layoutPages();
-        scrollHandler->scrollToPage(getCurrentPageNo());
+        win->getLayout()->scrollRelative(xChange, yChange);
+    }
+
+    if (unlimitedScrolling != settings->getUnlimitedScrolling()) {
+        const int xUnlimited = static_cast<int>(win->getLayout()->getVisibleRect().width);
+        const int yUnlimited = static_cast<int>(win->getLayout()->getVisibleRect().height);
+        const double xChange = unlimitedScrolling ? -xUnlimited + (horizontalSpace ? horizontalSpaceAmountLeft : 0) :
+                                                    xUnlimited - (horizontalSpace ? horizontalSpaceAmountLeft : 0);
+        const double yChange = unlimitedScrolling ? -yUnlimited + (verticalSpace ? verticalSpaceAmountAbove : 0) :
+                                                    yUnlimited - (verticalSpace ? verticalSpaceAmountAbove : 0);
+
+        win->getXournal()->layoutPages();
+        win->getLayout()->scrollRelative(xChange, yChange);
     }
 
     if (stylusCursorType != settings->getStylusCursorType() || highlightPosition != settings->isHighlightPosition()) {

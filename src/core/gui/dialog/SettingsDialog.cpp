@@ -99,6 +99,17 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("cbUnlimitedScrolling"), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+                         self->disableWithCheckbox("cbUnlimitedScrolling", "cbAddHorizontalSpace");
+                         self->disableWithCheckbox("cbUnlimitedScrolling", "cbAddVerticalSpace");
+                         self->enableWithEnabledCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpaceLeft");
+                         self->enableWithEnabledCheckbox("cbAddVerticalSpace", "spAddVerticalSpaceAbove");
+                         self->enableWithEnabledCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpaceRight");
+                         self->enableWithEnabledCheckbox("cbAddVerticalSpace", "spAddVerticalSpaceBelow");
+                     }),
+                     this);
+
     g_signal_connect(get("cbDrawDirModsEnabled"), "toggled",
                      G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
                          self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
@@ -279,14 +290,29 @@ auto SettingsDialog::getSlider(const char* name) -> double {
  */
 void SettingsDialog::enableWithCheckbox(const string& checkboxId, const string& widgetId) {
     GtkWidget* checkboxWidget = get(checkboxId);
-    bool enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
+    bool const enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
     gtk_widget_set_sensitive(get(widgetId), enabled);
 }
 
 void SettingsDialog::disableWithCheckbox(const string& checkboxId, const string& widgetId) {
     GtkWidget* checkboxWidget = get(checkboxId);
-    bool enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
+    bool const enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
     gtk_widget_set_sensitive(get(widgetId), !enabled);
+}
+
+/**
+ * similar to enableWithCheckbox, but also disables widget if the checkbox is disabled
+ */
+void SettingsDialog::enableWithEnabledCheckbox(const string& checkboxId, const string& widgetId) {
+    GtkWidget* checkboxWidget = get(checkboxId);
+    GtkWidget* widget = get(widgetId);
+    bool const disabled = !gtk_widget_get_sensitive(checkboxWidget);
+    if (disabled) {
+        gtk_widget_set_sensitive(widget, false);
+    } else {
+        bool const toggled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
+        gtk_widget_set_sensitive(widget, toggled);
+    }
 }
 
 void SettingsDialog::updatePressureSensitivityOptions() {
@@ -362,6 +388,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
     loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
     loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
+    loadCheckbox("cbUnlimitedScrolling", settings->getUnlimitedScrolling());
     loadCheckbox("cbDrawDirModsEnabled", settings->getDrawDirModsEnabled());
     loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
     loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());
@@ -585,12 +612,15 @@ void SettingsDialog::load() {
                               static_cast<double>(settings->getPreloadPagesAfter()));
     loadCheckbox("cbEagerPageCleanup", settings->isEagerPageCleanup());
 
+    disableWithCheckbox("cbUnlimitedScrolling", "cbAddVerticalSpace");
+    disableWithCheckbox("cbUnlimitedScrolling", "cbAddHorizontalSpace");
+
     enableWithCheckbox("cbAutosave", "boxAutosave");
     enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
-    enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpaceAbove");
-    enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpaceRight");
-    enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpaceBelow");
-    enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpaceLeft");
+    enableWithEnabledCheckbox("cbAddVerticalSpace", "spAddVerticalSpaceAbove");
+    enableWithEnabledCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpaceRight");
+    enableWithEnabledCheckbox("cbAddVerticalSpace", "spAddVerticalSpaceBelow");
+    enableWithEnabledCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpaceLeft");
     enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
     enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
     enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
@@ -694,6 +724,7 @@ void SettingsDialog::save() {
     settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
     settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
     settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
+    settings->setUnlimitedScrolling(getCheckbox("cbUnlimitedScrolling"));
     settings->setDrawDirModsEnabled(getCheckbox("cbDrawDirModsEnabled"));
     settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
     settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
