@@ -78,6 +78,7 @@ class ShowAndSaveDoesNotThrowForNoPalettes: public GtkTest {
         SettingsDialog settingsDialog{&gladeSearchpath, &settings, &control, paletteDirectories};
 
         settingsDialog.load();
+        g_message("Loaded settings\n");
         EXPECT_NO_THROW(settingsDialog.save());
     }
 };

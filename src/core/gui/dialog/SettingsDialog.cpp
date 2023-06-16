@@ -674,6 +674,7 @@ void SettingsDialog::load() {
 }
 
 void SettingsDialog::save() {
+    g_message("SettingsDialog::save()");
     settings->transactionStart();
 
     settings->setPressureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
@@ -719,6 +720,8 @@ void SettingsDialog::save() {
     settings->setSidebarNumberingStyle(static_cast<SidebarNumberingStyle>(
             gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbSidebarPageNumberStyle")))));
 
+    g_message("scrollbarHideType");
+
     auto scrollbarHideType =
             static_cast<std::make_unsigned<std::underlying_type<ScrollbarHideType>::type>::type>(SCROLLBAR_HIDE_NONE);
     if (getCheckbox("cbHideHorizontalScrollbar")) {
@@ -728,6 +731,8 @@ void SettingsDialog::save() {
         scrollbarHideType |= SCROLLBAR_HIDE_VERTICAL;
     }
     settings->setScrollbarHideType(static_cast<ScrollbarHideType>(scrollbarHideType));
+
+    g_message("gtk_color_chooser_get_rgba");
 
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
