@@ -145,9 +145,12 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     // DRAWING_TYPE_SPLINE
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Spline"));
 
+    g_message("get cbEraserType");
 
     // Values in glade GUI!
     this->cbEraserType = get("cbEraserType");
+
+    g_message("loadSettings()");
 
     loadSettings();
 }
@@ -168,6 +171,8 @@ void ButtonConfigGui::loadSettings() {
     int i = 0;
 
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbTool), 0);
+
+    g_message("setup tree model");
 
     do {
         gtk_tree_model_get_value(model, &iter, 2, &value);
@@ -191,6 +196,8 @@ void ButtonConfigGui::loadSettings() {
         }
     }
 
+    g_message("Setup color chooser");
+
     GdkRGBA color = Util::rgb_to_GdkRGBA(cfg->color);
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
 
@@ -206,7 +213,11 @@ void ButtonConfigGui::loadSettings() {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbEraserType), 0);
     }
 
+    g_message("maybe to device stuff");
+
     if (withDevice) {
+        g_message("do device stuff");
+
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
 
         int i = 1;

@@ -182,7 +182,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     g_message("LatexTabBox %s", this->get("latexTabBox"));
     g_message("Latexpanel %s", &this->latexPanel);
 
-    // gtk_container_add(GTK_CONTAINER(this->get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
+    gtk_container_add(GTK_CONTAINER(this->get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
 }
 
 SettingsDialog::~SettingsDialog() = default;
