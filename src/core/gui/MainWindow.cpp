@@ -184,6 +184,7 @@ const char* TOP_WIDGETS[] = {"tbTop1", "tbTop2", "mainContainerBox", nullptr};
 
 
 void MainWindow::toggleMenuBar(MainWindow* win) {
+    g_message("MainWindow::toggleMenuBar(MainWindow* win)");
     GtkWidget* menu = win->get("mainMenubar");
     if (gtk_widget_is_visible(menu)) {
         gtk_widget_hide(menu);
@@ -273,6 +274,7 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
  * Allow to hide menubar, but only if global menu is not enabled
  */
 void MainWindow::initHideMenu() {
+    g_message("initHideMenu");
     int top = -1;
     for (int i = 0; TOP_WIDGETS[i]; i++) {
         GtkWidget* w = get(TOP_WIDGETS[i]);
@@ -284,16 +286,21 @@ void MainWindow::initHideMenu() {
         }
     }
 
+    g_message("get(\"menuHideMenu\")");
+
     GtkWidget* menuItem = get("menuHideMenu");
     if (top < 5) {
+        g_message("no menu to hide");
         // There is no menu to hide, the menu is in the globalmenu!
         gtk_widget_hide(menuItem);
     } else {
+        g_message("hide menu");
         // Menu found, allow to hide it
         g_signal_connect(menuItem, "activate",
                          G_CALLBACK(+[](GtkMenuItem* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
     }
 
+    g_message("toogle Menubar");
     // Hide menubar at startup if specified in settings
     Settings* settings = control->getSettings();
     if (settings && !settings->isMenubarVisible()) {
