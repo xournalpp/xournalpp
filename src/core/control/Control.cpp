@@ -356,6 +356,8 @@ void Control::initWindow(MainWindow* win) {
     fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
     fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
     fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
+
+    g_message("fire done");
 }
 
 auto Control::autosaveCallback(Control* control) -> bool {
