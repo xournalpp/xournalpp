@@ -644,8 +644,14 @@ void SettingsDialog::load() {
     }
 
     g_message("paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath());");
-
+    g_message("paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath());");
+    g_message("settings %s", settings);
+    g_message("settings->getColorPalette() %s", &settings->getColorPalette());
+    g_message("settings->getColorPalette().getFilePath() %s",
+              settings->getColorPalette().getFilePath().u8string().c_str());
     paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath());
+
+    g_message("paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath()); DONE");
 
     this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
     gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", "System default");
