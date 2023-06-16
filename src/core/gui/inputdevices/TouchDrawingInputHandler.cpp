@@ -158,6 +158,7 @@ auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
 }
 
 void TouchDrawingInputHandler::updateKineticScrollingEnabled() {
+    g_message("updateKineticScrollingEnabled");
     auto* control = inputContext->getView()->getControl();
     auto* mainWindow = control->getWindow();
     auto* toolHandler = this->inputContext->getToolHandler();
@@ -165,6 +166,7 @@ void TouchDrawingInputHandler::updateKineticScrollingEnabled() {
     //  Kinetic scrolling is nice; however, we need to disable it so we can draw (it steals
     // single-finger input).
     if (mainWindow != nullptr && control->getSettings()->getTouchDrawingEnabled()) {
+        g_message("setGtkTouchscreenScrollingEnabled");
         mainWindow->setGtkTouchscreenScrollingEnabled(toolHandler->getToolType() == TOOL_HAND);
     }
 }

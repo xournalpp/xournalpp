@@ -355,6 +355,7 @@ void SettingsDialog::showStabilizerPreprocessorOptions(StrokeStabilizer::Preproc
 }
 
 void SettingsDialog::load() {
+    g_message("SettingsDialog::load()");
     loadCheckbox("cbSettingPresureSensitivity", settings->isPressureSensitivity());
     loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
     loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
@@ -386,6 +387,8 @@ void SettingsDialog::load() {
     /**
      * Stabilizer related settings
      */
+    g_message("Stabilizer related settings");
+
     loadCheckbox("cbStabilizerEnableCuspDetection", settings->getStabilizerCuspDetection());
     loadCheckbox("cbStabilizerEnableFinalizeStroke", settings->getStabilizerFinalizeStroke());
 
@@ -475,6 +478,8 @@ void SettingsDialog::load() {
     GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spTouchZoomStartThreshold), settings->getTouchZoomStartThreshold());
 
+
+    g_message("settings->getStrokeFilter");
     {
         int time = 0;
         double length = 0;
@@ -488,6 +493,8 @@ void SettingsDialog::load() {
         GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime), successive);
     }
+
+    g_message("this->setDpi(settings->getDisplayDpi());");
 
     this->setDpi(settings->getDisplayDpi());
     loadSlider("zoomCallibSlider", dpi);
@@ -636,6 +643,8 @@ void SettingsDialog::load() {
         }
     }
 
+    g_message("paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath());");
+
     paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath());
 
     this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
@@ -669,6 +678,8 @@ void SettingsDialog::load() {
 
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
+
+    g_message("this->latexPanel.load(settings->latexSettings);");
 
     this->latexPanel.load(settings->latexSettings);
 }
