@@ -168,7 +168,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                 std::make_unique<DeviceClassConfigGui>(getGladeSearchPath(), container, settings, inputDevice));
     }
 
-    g_message("Found %d devices", deviceList.size());
+    g_message("Found %d devices in SettingsDialog Constructor", deviceList.size());
 
     if (deviceList.empty()) {
         GtkWidget* label = gtk_label_new("");
@@ -177,6 +177,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         gtk_box_pack_end(GTK_BOX(container), label, true, true, 0);
         gtk_widget_show(label);
     }
+
+    g_message("Adding LatexContainer");
 
     gtk_container_add(GTK_CONTAINER(this->get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
 }

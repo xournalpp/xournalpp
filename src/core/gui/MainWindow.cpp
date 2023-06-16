@@ -240,6 +240,7 @@ void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
     InputDeviceClass touchscreenClass =
             DeviceListHelper::getSourceMapping(GDK_SOURCE_TOUCHSCREEN, this->getControl()->getSettings());
 
+    g_message("setGtkTouchscreenScrollingForDeviceMapping");
     setGtkTouchscreenScrollingEnabled(touchscreenClass == INPUT_DEVICE_TOUCHSCREEN &&
                                       !control->getSettings()->getTouchDrawingEnabled());
 }
