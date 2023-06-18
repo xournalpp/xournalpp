@@ -17,6 +17,36 @@
     <property name="can-focus">False</property>
     <property name="icon-name">format-justify-right</property>
   </object>
+  <object class="GtkImage" id="imgBgColor">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">fill-color</property>
+  </object>
+  <object class="GtkImage" id="imgBold">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">format-text-bold</property>
+  </object>
+  <object class="GtkImage" id="imgExpand">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">expand</property>
+  </object>
+  <object class="GtkImage" id="imgFtColor">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">font</property>
+  </object>
+  <object class="GtkImage" id="imgItalic">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">format-text-italic</property>
+  </object>
+  <object class="GtkImage" id="imgUnderline">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">format-text-underline</property>
+  </object>
   <object class="GtkPopover" id="textEditorContextMenu">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -44,6 +74,70 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButtonBox" id="textDecoLayout">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="layout-style">expand</property>
+            <child>
+              <object class="GtkButton" id="btnDecoBold">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">imgBold</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnDecoItalic">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">imgItalic</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnDecoUnderline">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">imgUnderline</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnDecoExpand">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="image">imgExpand</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -89,7 +183,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -142,20 +236,10 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkImage" id="imgBgColor">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">fill-color</property>
-  </object>
-  <object class="GtkImage" id="imgFtColor">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">font</property>
   </object>
 </interface>

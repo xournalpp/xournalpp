@@ -950,6 +950,10 @@ void TextEditor::setAttributesToPangoLayout(PangoLayout* pl) const {
     GtkTextIter end;
     bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
 
+    for (auto attrib: *this->textElement->getAttributeList()) {
+        pango_attr_list_insert(attrlist.get(), pango_attribute_copy(attrib));
+    }
+
     if (hasSelection) {
         auto selectionColorU16 = Util::argb_to_ColorU16(this->getSelectionColor());
 
@@ -966,9 +970,6 @@ void TextEditor::setAttributesToPangoLayout(PangoLayout* pl) const {
         pango_attr_list_insert(attrlist.get(), attrib);  // attrlist takes ownership of attrib
     }
 
-    for (auto attrib: *this->textElement->getAttributeList()) {
-        pango_attr_list_insert(attrlist.get(), pango_attribute_copy(attrib));
-    }
 
     pango_layout_set_attributes(pl, attrlist.get());
 
