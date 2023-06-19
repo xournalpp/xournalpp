@@ -95,6 +95,7 @@ public:
     void setBackgroundColor(GdkRGBA color);
 
     std::tuple<int, int> getCurrentSelection() const;
+    bool hasSelection() const;
 
 private:
     void toggleOverwrite();

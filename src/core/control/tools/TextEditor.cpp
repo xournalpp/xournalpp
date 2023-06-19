@@ -946,7 +946,7 @@ Color TextEditor::getSelectionColor() const { return this->control->getSettings(
 void TextEditor::setAttributesToPangoLayout(PangoLayout* pl) const {
     xoj::util::PangoAttrListSPtr attrlist(this->textElement->getAttributeListCopy(), xoj::util::adopt);
 
-    GtkTextIter start;
+    /*GtkTextIter start;
     GtkTextIter end;
     bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
 
@@ -967,7 +967,7 @@ void TextEditor::setAttributesToPangoLayout(PangoLayout* pl) const {
 
 
         pango_attr_list_insert_before(attrlist.get(), attrib);  // attrlist takes ownership of attrib
-    }
+    }*/
 
 
     pango_layout_set_attributes(pl, attrlist.get());
@@ -1173,3 +1173,5 @@ std::tuple<int, int> TextEditor::getCurrentSelection() const {
     bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
     return std::make_tuple(gtk_text_iter_get_offset(&start), gtk_text_iter_get_offset(&end));
 }
+
+bool TextEditor::hasSelection() const { return gtk_text_buffer_get_has_selection(this->buffer.get()); }
