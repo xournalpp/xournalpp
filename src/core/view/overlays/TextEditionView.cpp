@@ -54,7 +54,6 @@ void TextEditionView::drawWithoutDrawingAids(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
 
     const Text* textElement = this->textEditor->getTextElement();
-    Util::cairo_set_source_rgbi(cr, textElement->getColor());
 
     // From now on, coordinates are in textElement coordinates
     cairo_translate(cr, textElement->getX(), textElement->getY());
@@ -67,10 +66,21 @@ void TextEditionView::drawWithoutDrawingAids(cairo_t* cr) const {
 
     pango_context_set_matrix(pango_layout_get_context(layout), nullptr);
 
+    Util::cairo_set_source_rgbi(cr, textElement->getColor());
     pango_cairo_show_layout(cr, layout);
 
-    cairo_set_source_rgba(cr, 1.0, 0.0, 0.0, 0.5);
-    cairo_rectangle(cr, 0, 0, 20, 20);
+
+    PangoRectangle first;
+    pango_layout_index_to_pos(layout, 0, &first);
+
+    cairo_set_source_rgba(cr, 1.0, 0.0, 0.0, 1.0);
+    cairo_set_line_width(cr, 1.0);
+    cairo_rectangle(cr, double(first.x / 1000), double(first.y / 1000), double(first.width / 1000),
+                    double(first.height / 1000));
+    cairo_stroke(cr);
+    cairo_set_source_rgba(cr, 1.0, 0.0, 0.0, 0.1);
+    cairo_rectangle(cr, double(first.x / 1000), double(first.y / 1000), double(first.width / 1000),
+                    double(first.height / 1000));
     cairo_fill(cr);
 }
 
