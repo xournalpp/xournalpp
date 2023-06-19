@@ -69,17 +69,19 @@ void TextEditionView::drawWithoutDrawingAids(cairo_t* cr) const {
     Util::cairo_set_source_rgbi(cr, textElement->getColor());
     pango_cairo_show_layout(cr, layout);
 
-    if (this->textEditor->hasSelection()) {
-        PangoRectangle rect;
-        auto color = this->textEditor->getSelectionColor();
-        auto selection = this->textEditor->getCurrentSelection();
-        for (int i = std::get<0>(selection); i < std::get<1>(selection); i++) {
-            pango_layout_index_to_pos(layout, i, &rect);
-            Util::cairo_set_source_rgbi(cr, color, 0.6);
-            cairo_rectangle(cr, double(rect.x / 1000), double(rect.y / 1000), double(rect.width / 1000),
-                            double(rect.height / 1000));
-            cairo_fill(cr);
-        }
+    PangoRectangle rect;
+    auto selection = this->textEditor->getCurrentSelection();
+    for (int i = std::get<0>(selection); i < std::get<1>(selection); i++) {
+        pango_layout_index_to_pos(layout, i, &rect);
+        cairo_set_source_rgba(cr, 1.0, 0.0, 0.0, 1.0);
+        cairo_set_line_width(cr, 1.0);
+        cairo_rectangle(cr, double(rect.x / 1000), double(rect.y / 1000), double(rect.width / 1000),
+                        double(rect.height / 1000));
+        cairo_stroke(cr);
+        cairo_set_source_rgba(cr, 1.0, 0.0, 0.0, 0.1);
+        cairo_rectangle(cr, double(rect.x / 1000), double(rect.y / 1000), double(rect.width / 1000),
+                        double(rect.height / 1000));
+        cairo_fill(cr);
     }
 }
 
