@@ -79,6 +79,7 @@ void TextEditorContextMenu::create() {
     gtk_popover_set_relative_to(this->contextMenu, this->xournalWidget);
     gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
     gtk_popover_set_modal(this->contextMenu, false);
+    gtk_widget_set_can_focus(GTK_WIDGET(this->contextMenu), false);
 
     this->fontBtn = GTK_FONT_BUTTON(gtk_builder_get_object(builder, "btnFontChooser"));
     g_signal_connect(this->fontBtn, "font-set", G_CALLBACK(changeFontInternal), this);
@@ -116,6 +117,7 @@ void TextEditorContextMenu::changeFont() {
     font = fontDesc;
     this->editor->setFont(font);
     pango_font_description_free(desc);
+    gtk_widget_grab_focus(this->xournalWidget);
 }
 
 void TextEditorContextMenu::changeFtColor() {
@@ -123,6 +125,7 @@ void TextEditorContextMenu::changeFtColor() {
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->ftColorBtn), &color);
     this->editor->setColor(Color(uint8_t(color.red * 255.0), uint8_t(color.green * 255.0), uint8_t(color.blue * 255.0),
                                  uint8_t(color.alpha * 255.0)));
+    gtk_widget_grab_focus(this->xournalWidget);
     std::cout << "New font color: (" << color.red << ";" << color.green << ";" << color.blue << ")" << std::endl;
 }
 
@@ -130,6 +133,7 @@ void TextEditorContextMenu::changeBgColor() {
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->bgColorBtn), &color);
     this->editor->setBackgroundColor(color);
+    gtk_widget_grab_focus(this->xournalWidget);
     std::cout << "New background color: (" << color.red << ";" << color.green << ";" << color.blue << ")" << std::endl;
 }
 
@@ -157,6 +161,7 @@ void TextEditorContextMenu::changeAlignment(TextAlignment align) {
             break;
     }
     this->editor->setTextAlignment(align);
+    gtk_widget_grab_focus(this->xournalWidget);
 }
 
 gboolean TextEditorContextMenu::drawFtColorIcon(GtkWidget* src, cairo_t* cr) {
