@@ -53,6 +53,11 @@ private:
 
     GtkFontButton* fontBtn;
 
+    GtkButton* tglBoldBtn;
+    GtkButton* tglItalicBtn;
+    GtkButton* tglUnderlineBtn;
+    GtkButton* expandTextDecoration;
+
     GtkColorButton* ftColorBtn;
     GtkWidget* ftColorIcon;
     GtkColorButton* bgColorBtn;

@@ -84,6 +84,11 @@ void TextEditorContextMenu::create() {
     this->fontBtn = GTK_FONT_BUTTON(gtk_builder_get_object(builder, "btnFontChooser"));
     g_signal_connect(this->fontBtn, "font-set", G_CALLBACK(changeFontInternal), this);
 
+    this->tglBoldBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoBold"));
+    this->tglItalicBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoItalic"));
+    this->tglUnderlineBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoUnderline"));
+    this->expandTextDecoration = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoExpand"));
+
     this->ftColorBtn = GTK_COLOR_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
     this->bgColorBtn = GTK_COLOR_BUTTON(gtk_builder_get_object(builder, "btnBgColor"));
     g_signal_connect(this->ftColorBtn, "color-set", G_CALLBACK(changeFtColorInternal), this);
