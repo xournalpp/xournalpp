@@ -22,6 +22,7 @@ using xoj::util::Rectangle;
 Text::Text(): AudioElement(ELEMENT_TEXT) {
     this->font.setName("Sans");
     this->font.setSize(12);
+    this->attributes = pango_attr_list_new();
 }
 
 Text::~Text() = default;
@@ -40,6 +41,7 @@ auto Text::cloneText() const -> std::unique_ptr<Text> {
     text->sizeCalculated = this->sizeCalculated;
     text->inEditing = this->inEditing;
     text->alignment = this->alignment;
+    text->attributes = pango_attr_list_copy(this->attributes);
 
     return text;
 }
@@ -211,4 +213,8 @@ void Text::setAlignment(TextAlignment align) { this->alignment = align; }
 
 TextAlignment Text::getAlignment() { return this->alignment; }
 
-std::list<PangoAttribute*>* Text::getAttributeList() { return &this->textAttributes; };
+PangoAttrList* Text::getAttributeListCopy() { return pango_attr_list_copy(this->attributes); };
+
+void Text::addAttribute(PangoAttribute* attrib) { pango_attr_list_change(this->attributes, attrib); }
+
+void Text::clearAttributes() { this->attributes = pango_attr_list_new(); }

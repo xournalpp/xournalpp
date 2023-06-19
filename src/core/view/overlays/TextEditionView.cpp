@@ -1,5 +1,7 @@
 #include "TextEditionView.h"
 
+#include <tuple>
+
 #include "control/tools/TextEditor.h"
 #include "model/Text.h"
 #include "util/Color.h"
@@ -66,6 +68,17 @@ void TextEditionView::drawWithoutDrawingAids(cairo_t* cr) const {
     pango_context_set_matrix(pango_layout_get_context(layout), nullptr);
 
     pango_cairo_show_layout(cr, layout);
+
+    auto selection = this->textEditor->getCurrentSelection();
+    PangoRectangle first, last;
+    pango_layout_index_to_pos(layout, std::get<0>(selection), &first);
+    pango_layout_index_to_pos(layout, std::get<1>(selection), &last);
+
+    cairo_set_source_rgba(cr, 1.0, 0.0, 0.0, 0.5);
+    cairo_rectangle(cr, first.x, first.y, first.width, first.height);
+    cairo_fill(cr);
+    cairo_rectangle(cr, last.x, last.y, last.width, last.height);
+    cairo_fill(cr);
 }
 
 bool TextEditionView::isViewOf(const OverlayBase* overlay) const { return overlay == this->textEditor; }

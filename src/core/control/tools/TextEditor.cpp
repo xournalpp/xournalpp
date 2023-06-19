@@ -944,30 +944,29 @@ void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
 Color TextEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
 
 void TextEditor::setAttributesToPangoLayout(PangoLayout* pl) const {
-    xoj::util::PangoAttrListSPtr attrlist(pango_attr_list_new(), xoj::util::adopt);
+    xoj::util::PangoAttrListSPtr attrlist(this->textElement->getAttributeListCopy(), xoj::util::adopt);
 
     GtkTextIter start;
     GtkTextIter end;
     bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
 
-    for (auto attrib: *this->textElement->getAttributeList()) {
-        pango_attr_list_insert(attrlist.get(), pango_attribute_copy(attrib));
-    }
-
     if (hasSelection) {
         auto selectionColorU16 = Util::argb_to_ColorU16(this->getSelectionColor());
 
-        PangoAttribute* attrib2 = pango_attr_background_alpha_new(int(double(UINT16_MAX) * 0.5));
-        attrib2->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
-        attrib2->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
-        pango_attr_list_insert(attrlist.get(), attrib2);
+        gtk_text_iter_order(&start, &end);
 
         PangoAttribute* attrib =
                 pango_attr_background_new(selectionColorU16.red, selectionColorU16.green, selectionColorU16.blue);
         attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
         attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
 
-        pango_attr_list_insert(attrlist.get(), attrib);  // attrlist takes ownership of attrib
+        PangoAttribute* attrib2 = pango_attr_background_alpha_new(int(double(UINT16_MAX) * 0.5));
+        attrib2->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
+        attrib2->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
+        pango_attr_list_insert_before(attrlist.get(), attrib2);
+
+
+        pango_attr_list_insert_before(attrlist.get(), attrib);  // attrlist takes ownership of attrib
     }
 
 
@@ -1156,7 +1155,6 @@ void TextEditor::setTextAlignment(TextAlignment align) {
 }
 
 void TextEditor::setBackgroundColor(GdkRGBA color) {
-    auto attribList = this->textElement->getAttributeList();
     GtkTextIter start;
     GtkTextIter end;
     bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
@@ -1165,7 +1163,13 @@ void TextEditor::setBackgroundColor(GdkRGBA color) {
                                       int(double(UINT16_MAX) * color.blue));
     attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
     attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
-    attribList->push_back(attrib);
+    this->textElement->addAttribute(attrib);
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
+}
+
+std::tuple<int, int> TextEditor::getCurrentSelection() const {
+    GtkTextIter start, end;
+    bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
+    return std::make_tuple(gtk_text_iter_get_offset(&start), gtk_text_iter_get_offset(&end));
 }

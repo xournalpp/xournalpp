@@ -94,6 +94,8 @@ public:
     void setTextAlignment(TextAlignment align);
     void setBackgroundColor(GdkRGBA color);
 
+    std::tuple<int, int> getCurrentSelection() const;
+
 private:
     void toggleOverwrite();
     void toggleBoldFace();

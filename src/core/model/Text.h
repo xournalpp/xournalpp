@@ -61,7 +61,9 @@ public:
     void setAlignment(TextAlignment align);
     TextAlignment getAlignment();
 
-    std::list<PangoAttribute*>* getAttributeList();
+    PangoAttrList* getAttributeListCopy();
+    void addAttribute(PangoAttribute* attrib);
+    void clearAttributes();
 
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;
@@ -87,7 +89,7 @@ private:
     std::string text;
 
     TextAlignment alignment = TextAlignment::LEFT;
-    std::list<PangoAttribute*> textAttributes = {};
+    PangoAttrList* attributes = nullptr;
 
     bool inEditing = false;
 };
