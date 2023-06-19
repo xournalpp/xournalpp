@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <string>  // for string
+#include <optional>  // for optional
+#include <string>    // for string
 
 #include <gdk/gdk.h>      // for GdkEventKey
 #include <glib.h>         // for gint, gboolean, gchar
@@ -94,7 +95,7 @@ public:
     void setTextAlignment(TextAlignment align);
     void setBackgroundColor(GdkRGBA color);
 
-    std::tuple<int, int> getCurrentSelection() const;
+    std::optional<std::tuple<int, int>> getCurrentSelection() const;
     bool hasSelection() const;
 
 private:
@@ -161,8 +162,6 @@ private:
     void updateCursorBox();
 
     void updateTextElementContent();
-
-    void positionContextMenu();
 
 private:
     Control* control;

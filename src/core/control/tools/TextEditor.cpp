@@ -618,7 +618,7 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction) {
     // Todo: Reinstate text edition undo stack
     this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
     this->computeVirtualCursorPosition();
-    this->positionContextMenu();
+    this->contextMenu->reposition();
 }
 
 void TextEditor::markPos(double x, double y, bool extendSelection) {
@@ -1144,9 +1144,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
     this->contextMenu->show();
 }
 
-void TextEditor::positionContextMenu() { this->contextMenu->reposition(); }
-
-void TextEditor::zoomChanged() { this->positionContextMenu(); }
+void TextEditor::zoomChanged() { this->contextMenu->reposition(); }
 
 void TextEditor::setTextAlignment(TextAlignment align) {
     this->textElement->setAlignment(align);
@@ -1168,10 +1166,12 @@ void TextEditor::setBackgroundColor(GdkRGBA color) {
     this->repaintEditor();
 }
 
-std::tuple<int, int> TextEditor::getCurrentSelection() const {
+std::optional<std::tuple<int, int>> TextEditor::getCurrentSelection() const {
     GtkTextIter start, end;
     bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
-    return std::make_tuple(gtk_text_iter_get_offset(&start), gtk_text_iter_get_offset(&end));
+    return hasSelection ? std::make_optional(
+                                  std::make_tuple(gtk_text_iter_get_offset(&start), gtk_text_iter_get_offset(&end))) :
+                          std::nullopt;
 }
 
 bool TextEditor::hasSelection() const { return gtk_text_buffer_get_has_selection(this->buffer.get()); }

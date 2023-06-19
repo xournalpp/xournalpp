@@ -139,7 +139,7 @@ void TextEditorContextMenu::changeBgColor() {
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->bgColorBtn), &color);
     this->editor->setBackgroundColor(color);
     gtk_widget_grab_focus(this->xournalWidget);
-    auto selection = this->editor->getCurrentSelection();
+    auto selection = this->editor->getCurrentSelection().value_or(std::make_tuple(0, 0));
     std::cout << "New background color: (" << color.red << ";" << color.green << ";" << color.blue << ") from "
               << std::get<0>(selection) << ":" << std::get<1>(selection) << ";" << std::endl;
 }
