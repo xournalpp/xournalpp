@@ -34,13 +34,14 @@ TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* edito
 }
 
 TextEditorContextMenu::~TextEditorContextMenu() {
-    gtk_widget_destroy(GTK_WIDGET(this->contextMenu));
+    std::cout << "Got here !" << std::endl;
     /*gtk_widget_destroy(GTK_WIDGET(this->fontBtn));
     gtk_widget_destroy(GTK_WIDGET(this->ftColorBtn));
     gtk_widget_destroy(GTK_WIDGET(this->bgColorBtn));
     gtk_widget_destroy(GTK_WIDGET(this->alignLeftTgl));
     gtk_widget_destroy(GTK_WIDGET(this->alignCenterTgl));
-    gtk_widget_destroy(GTK_WIDGET(this->alignRightTgl));*/
+    gtk_widget_destroy(GTK_WIDGET(this->alignRightTgl));
+    gtk_widget_destroy(GTK_WIDGET(this->contextMenu));*/
     std::cout << "TextEditorContextMenu destroyed!" << std::endl;
 }
 
@@ -94,11 +95,18 @@ void TextEditorContextMenu::create() {
     g_signal_connect(this->ftColorBtn, "color-set", G_CALLBACK(changeFtColorInternal), this);
     g_signal_connect(this->bgColorBtn, "color-set", G_CALLBACK(changeBgColorInternal), this);
 
+    GdkRGBA color;
+
+    GValue val = G_VALUE_INIT;
+    g_value_init(&val, G_TYPE_POINTER);
+    g_value_set_pointer(&val, &color);
     this->ftColorIcon = GTK_WIDGET(gtk_builder_get_object(builder, "imgFtColor"));
+    g_object_set_property(G_OBJECT(this->ftColorBtn), "rgba", &val);
     g_signal_connect(this->ftColorIcon, "draw", G_CALLBACK(drawFtColorIconInternal), this);
     gtk_button_set_image(GTK_BUTTON(this->ftColorBtn), this->ftColorIcon);
 
     this->bgColorIcon = GTK_WIDGET(gtk_builder_get_object(builder, "imgBgColor"));
+    g_object_set_property(G_OBJECT(this->ftColorBtn), "rgba", &val);
     g_signal_connect(this->bgColorIcon, "draw", G_CALLBACK(drawBgColorIconInternal), this);
     gtk_button_set_image(GTK_BUTTON(this->bgColorBtn), this->bgColorIcon);
 
@@ -136,9 +144,13 @@ void TextEditorContextMenu::changeFtColor() {
 
 void TextEditorContextMenu::changeBgColor() {
     GdkRGBA color;
+    std::cout << "Got here a1!" << std::endl;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->bgColorBtn), &color);
+    std::cout << "Got here a2!" << std::endl;
     this->editor->setBackgroundColor(color);
+    std::cout << "Got here a3!" << std::endl;
     gtk_widget_grab_focus(this->xournalWidget);
+    std::cout << "Got here a4!" << std::endl;
     auto selection = this->editor->getCurrentSelection().value_or(std::make_tuple(0, 0));
     std::cout << "New background color: (" << color.red << ";" << color.green << ";" << color.blue << ") from "
               << std::get<0>(selection) << ":" << std::get<1>(selection) << ";" << std::endl;

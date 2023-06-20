@@ -135,6 +135,8 @@ TextEditor::TextEditor(Control* control, XojPageView* pageView, GtkWidget* xourn
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::TextEditionView>>()) {
 
+    std::cout << "Created TextEditor" << std::endl;
+
     this->contextMenu = std::make_unique<TextEditorContextMenu>(control, this, pageView, xournalWidget);
 
     this->initializeEditionAt(x, y);
@@ -181,6 +183,8 @@ TextEditor::~TextEditor() {
     this->contentsChanged(true);
 
     finalizeEdition();
+
+    std::cout << "Destroyed TextEditor" << std::endl;
 }
 
 auto TextEditor::getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::TextEditionView>>& {
