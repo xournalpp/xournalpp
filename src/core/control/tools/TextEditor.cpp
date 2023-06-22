@@ -137,6 +137,8 @@ TextEditor::TextEditor(Control* control, XojPageView* pageView, GtkWidget* xourn
 
     this->contextMenu = std::make_unique<TextEditorContextMenu>(control, this, pageView, xournalWidget);
 
+    this->pageView->getZoomControl()->addZoomListener(this);
+
     this->initializeEditionAt(x, y);
 
     g_signal_connect(this->buffer.get(), "paste-done", G_CALLBACK(bufferPasteDoneCallback), this);
@@ -181,6 +183,8 @@ TextEditor::~TextEditor() {
     this->contentsChanged(true);
 
     finalizeEdition();
+
+    this->pageView->getZoomControl()->removeZoomListener(this);
 }
 
 auto TextEditor::getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::TextEditionView>>& {
