@@ -46,8 +46,11 @@ private:
     XojPageView* pageView;
     GtkWidget* xournalWidget;
 
-    GdkRGBA ftColor{0.0, 0.0, 0.0, 1.0};
-    GdkRGBA bgColor{1.0, 1.0, 1.0, 1.0};
+    /**
+     * Default foreground & background colors
+    */
+    GdkRGBA ftColor{0.0, 0.0, 0.0, 1.0}; // black
+    GdkRGBA bgColor{1.0, 0.0, 0.0, 1.0}; // red
 
     /**
      * UI Elements
