@@ -145,13 +145,11 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkColorButton" id="btnFontColor">
+              <object class="GtkButton" id="btnFontColor">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
-                <property name="tooltip-text" translatable="yes">Font Color</property>
-                <property name="title" translatable="yes">Font Color</property>
-                <property name="rgba">rgb(0,0,0)</property>
+                <property name="tooltip-text" translatable="yes">Font Color</property>>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -160,15 +158,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkColorButton" id="btnBgColor">
+              <object class="GtkButton" id="btnBgColor">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="tooltip-text" translatable="yes">Background Color</property>
-                <property name="use-alpha">True</property>
-                <property name="title" translatable="yes">Background Color</property>
-                <property name="alpha">65535</property>
-                <property name="rgba">rgb(245,194,17)</property>
               </object>
               <packing>
                 <property name="expand">False</property>

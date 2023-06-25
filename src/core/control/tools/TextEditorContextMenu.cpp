@@ -91,18 +91,18 @@ void TextEditorContextMenu::create() {
     this->tglUnderlineBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoUnderline"));
     this->expandTextDecoration = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoExpand"));
 
-    this->ftColorBtn = GTK_COLOR_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
-    this->bgColorBtn = GTK_COLOR_BUTTON(gtk_builder_get_object(builder, "btnBgColor"));
-    g_signal_connect(this->ftColorBtn, "color-set", G_CALLBACK(changeFtColorInternal), this);
-    g_signal_connect(this->bgColorBtn, "color-set", G_CALLBACK(changeBgColorInternal), this);
+    this->ftColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
+    this->bgColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnBgColor"));
+    g_signal_connect(this->ftColorBtn, "clicked", G_CALLBACK(changeFtColorInternal), this);
+    g_signal_connect(this->bgColorBtn, "clicked", G_CALLBACK(changeBgColorInternal), this);
 
     this->ftColorIcon = GTK_WIDGET(gtk_builder_get_object(builder, "imgFtColor"));
     g_signal_connect(this->ftColorIcon, "draw", G_CALLBACK(drawFtColorIconInternal), this);
-    // gtk_button_set_image(GTK_BUTTON(this->ftColorBtn), this->ftColorIcon);
+    gtk_button_set_image(GTK_BUTTON(this->ftColorBtn), this->ftColorIcon);
 
     this->bgColorIcon = GTK_WIDGET(gtk_builder_get_object(builder, "imgBgColor"));
     g_signal_connect(this->bgColorIcon, "draw", G_CALLBACK(drawBgColorIconInternal), this);
-    // gtk_button_set_image(GTK_BUTTON(this->bgColorBtn), this->bgColorIcon);
+    gtk_button_set_image(GTK_BUTTON(this->bgColorBtn), this->bgColorIcon);
 
     this->alignLeftTgl = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnAlignLeft"));
     this->alignCenterTgl = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnAlignCenter"));
@@ -128,22 +128,34 @@ void TextEditorContextMenu::changeFont() {
 }
 
 void TextEditorContextMenu::changeFtColor() {
-    GdkRGBA color;
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->ftColorBtn), &color);
-    this->editor->setColor(Color(uint8_t(color.red * 255.0), uint8_t(color.green * 255.0), uint8_t(color.blue * 255.0),
-                                 uint8_t(color.alpha * 255.0)));
+    GtkWidget* dialog = gtk_color_chooser_dialog_new("Foreground Color", control->getGtkWindow());
+    gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), FALSE);
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(dialog), &ftColor);
+    gint res = gtk_dialog_run(GTK_DIALOG(dialog));
+    if (res == GTK_RESPONSE_OK) {
+        gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &ftColor);
+        this->editor->setColor(Color(uint8_t(ftColor.red * 255.0), uint8_t(ftColor.green * 255.0),
+                                     uint8_t(ftColor.blue * 255.0), uint8_t(ftColor.alpha * 255.0)));
+        std::cout << "New font color: (" << ftColor.red << ";" << ftColor.green << ";" << ftColor.blue << ")"
+                  << std::endl;
+    }
     gtk_widget_grab_focus(this->xournalWidget);
-    std::cout << "New font color: (" << color.red << ";" << color.green << ";" << color.blue << ")" << std::endl;
+    gtk_widget_destroy(dialog);
 }
 
 void TextEditorContextMenu::changeBgColor() {
-    GdkRGBA color;
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->bgColorBtn), &color);
-    this->editor->setBackgroundColor(color);
+    GtkWidget* dialog = gtk_color_chooser_dialog_new("Foreground Color", control->getGtkWindow());
+    gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), TRUE);
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(dialog), &bgColor);
+    gint res = gtk_dialog_run(GTK_DIALOG(dialog));
+    if (res == GTK_RESPONSE_OK) {
+        gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &bgColor);
+        this->editor->setBackgroundColor(bgColor);
+        std::cout << "New bg color: (" << bgColor.red << ";" << bgColor.green << ";" << bgColor.blue << ")"
+                  << std::endl;
+    }
     gtk_widget_grab_focus(this->xournalWidget);
-    auto selection = this->editor->getCurrentSelection().value_or(std::make_tuple(0, 0));
-    std::cout << "New background color: (" << color.red << ";" << color.green << ";" << color.blue << ") from "
-              << std::get<0>(selection) << ":" << std::get<1>(selection) << ";" << std::endl;
+    gtk_widget_destroy(dialog);
 }
 
 void TextEditorContextMenu::changeAlignment(TextAlignment align) {
@@ -175,20 +187,17 @@ void TextEditorContextMenu::changeAlignment(TextAlignment align) {
 
 gboolean TextEditorContextMenu::drawFtColorIcon(GtkWidget* src, cairo_t* cr) {
     guint width, height;
-    GdkRGBA color;
     GtkStyleContext* context;
     context = gtk_widget_get_style_context(src);
     width = gtk_widget_get_allocated_width(src);
     height = gtk_widget_get_allocated_height(src);
     gtk_render_background(context, cr, 0, 0, width, height);
 
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->ftColorBtn), &color);
-
     // Draw font icon here
     cairo_set_line_width(cr, 1.0);
     cairo_rectangle(cr, 0, height - COLOR_BAR_HEIGHT, width, COLOR_BAR_HEIGHT);
 
-    gdk_cairo_set_source_rgba(cr, &color);
+    gdk_cairo_set_source_rgba(cr, &ftColor);
 
     cairo_fill(cr);
     return FALSE;
@@ -196,20 +205,17 @@ gboolean TextEditorContextMenu::drawFtColorIcon(GtkWidget* src, cairo_t* cr) {
 
 gboolean TextEditorContextMenu::drawBgColorIcon(GtkWidget* src, cairo_t* cr) {
     guint width, height;
-    GdkRGBA color;
     GtkStyleContext* context;
     context = gtk_widget_get_style_context(src);
     width = gtk_widget_get_allocated_width(src);
     height = gtk_widget_get_allocated_height(src);
     gtk_render_background(context, cr, 0, 0, width, height);
 
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(this->bgColorBtn), &color);
-
     // Draw font icon here
     cairo_set_line_width(cr, 1.0);
     cairo_rectangle(cr, 0, height - COLOR_BAR_HEIGHT, width, COLOR_BAR_HEIGHT);
 
-    gdk_cairo_set_source_rgba(cr, &color);
+    gdk_cairo_set_source_rgba(cr, &bgColor);
 
     cairo_fill(cr);
     return FALSE;

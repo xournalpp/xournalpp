@@ -46,6 +46,9 @@ private:
     XojPageView* pageView;
     GtkWidget* xournalWidget;
 
+    GdkRGBA ftColor{0.0, 0.0, 0.0, 1.0};
+    GdkRGBA bgColor{1.0, 1.0, 1.0, 1.0};
+
     /**
      * UI Elements
      */
@@ -58,9 +61,9 @@ private:
     GtkButton* tglUnderlineBtn;
     GtkButton* expandTextDecoration;
 
-    GtkColorButton* ftColorBtn;
+    GtkButton* ftColorBtn;
     GtkWidget* ftColorIcon;
-    GtkColorButton* bgColorBtn;
+    GtkButton* bgColorBtn;
     GtkWidget* bgColorIcon;
 
     GtkToggleButton* alignLeftTgl;
