@@ -61,7 +61,7 @@ public:
     void setAlignment(TextAlignment align);
     TextAlignment getAlignment();
 
-    PangoAttrList* getAttributeListCopy();
+    PangoAttrList* getAttributeListCopy() const;
     void addAttribute(PangoAttribute* attrib);
     void clearAttributes();
 

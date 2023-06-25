@@ -213,7 +213,7 @@ void Text::setAlignment(TextAlignment align) { this->alignment = align; }
 
 TextAlignment Text::getAlignment() { return this->alignment; }
 
-PangoAttrList* Text::getAttributeListCopy() { return pango_attr_list_copy(this->attributes); };
+PangoAttrList* Text::getAttributeListCopy() const { return pango_attr_list_copy(this->attributes); };
 
 void Text::addAttribute(PangoAttribute* attrib) { pango_attr_list_change(this->attributes, attrib); }
 

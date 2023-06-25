@@ -34,13 +34,23 @@ TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* edito
 }
 
 TextEditorContextMenu::~TextEditorContextMenu() {
-    gtk_widget_destroy(GTK_WIDGET(this->contextMenu));
-    /*gtk_widget_destroy(GTK_WIDGET(this->fontBtn));
+    std::cout << "TextEditorContextMenu to be destroyed! 1" << std::endl;
+    gtk_widget_destroy(GTK_WIDGET(this->fontBtn));
+    std::cout << "TextEditorContextMenu to be destroyed! 2" << std::endl;
+    // gtk_widget_destroy(GTK_WIDGET(this->ftColorIcon));
+    std::cout << "TextEditorContextMenu to be destroyed! 3" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->ftColorBtn));
+    std::cout << "TextEditorContextMenu to be destroyed! 4" << std::endl;
+    // gtk_widget_destroy(GTK_WIDGET(this->bgColorIcon));
+    std::cout << "TextEditorContextMenu to be destroyed! 5" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->bgColorBtn));
+    std::cout << "TextEditorContextMenu to be destroyed! 6" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->alignLeftTgl));
+    std::cout << "TextEditorContextMenu to be destroyed! 7" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->alignCenterTgl));
-    gtk_widget_destroy(GTK_WIDGET(this->alignRightTgl));*/
+    std::cout << "TextEditorContextMenu to be destroyed! 8" << std::endl;
+    gtk_widget_destroy(GTK_WIDGET(this->alignRightTgl));
+    // gtk_widget_destroy(GTK_WIDGET(this->contextMenu));
     std::cout << "TextEditorContextMenu destroyed!" << std::endl;
 }
 
@@ -96,11 +106,11 @@ void TextEditorContextMenu::create() {
 
     this->ftColorIcon = GTK_WIDGET(gtk_builder_get_object(builder, "imgFtColor"));
     g_signal_connect(this->ftColorIcon, "draw", G_CALLBACK(drawFtColorIconInternal), this);
-    gtk_button_set_image(GTK_BUTTON(this->ftColorBtn), this->ftColorIcon);
+    // gtk_button_set_image(GTK_BUTTON(this->ftColorBtn), this->ftColorIcon);
 
     this->bgColorIcon = GTK_WIDGET(gtk_builder_get_object(builder, "imgBgColor"));
     g_signal_connect(this->bgColorIcon, "draw", G_CALLBACK(drawBgColorIconInternal), this);
-    gtk_button_set_image(GTK_BUTTON(this->bgColorBtn), this->bgColorIcon);
+    // gtk_button_set_image(GTK_BUTTON(this->bgColorBtn), this->bgColorIcon);
 
     this->alignLeftTgl = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnAlignLeft"));
     this->alignCenterTgl = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnAlignCenter"));
