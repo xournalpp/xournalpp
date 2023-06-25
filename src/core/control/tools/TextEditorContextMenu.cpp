@@ -34,23 +34,15 @@ TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* edito
 }
 
 TextEditorContextMenu::~TextEditorContextMenu() {
-    std::cout << "TextEditorContextMenu to be destroyed! 1" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->fontBtn));
-    std::cout << "TextEditorContextMenu to be destroyed! 2" << std::endl;
     // gtk_widget_destroy(GTK_WIDGET(this->ftColorIcon));
-    std::cout << "TextEditorContextMenu to be destroyed! 3" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->ftColorBtn));
-    std::cout << "TextEditorContextMenu to be destroyed! 4" << std::endl;
     // gtk_widget_destroy(GTK_WIDGET(this->bgColorIcon));
-    std::cout << "TextEditorContextMenu to be destroyed! 5" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->bgColorBtn));
-    std::cout << "TextEditorContextMenu to be destroyed! 6" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->alignLeftTgl));
-    std::cout << "TextEditorContextMenu to be destroyed! 7" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->alignCenterTgl));
-    std::cout << "TextEditorContextMenu to be destroyed! 8" << std::endl;
     gtk_widget_destroy(GTK_WIDGET(this->alignRightTgl));
-    // gtk_widget_destroy(GTK_WIDGET(this->contextMenu));
+    gtk_popover_set_relative_to(this->contextMenu, NULL);  // Destroys popover and frees memory
     std::cout << "TextEditorContextMenu destroyed!" << std::endl;
 }
 
