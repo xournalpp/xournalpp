@@ -218,3 +218,7 @@ PangoAttrList* Text::getAttributeListCopy() const { return pango_attr_list_copy(
 void Text::addAttribute(PangoAttribute* attrib) { pango_attr_list_change(this->attributes, attrib); }
 
 void Text::clearAttributes() { this->attributes = pango_attr_list_new(); }
+
+void Text::updateTextAttributesPosition(int pos, int del, int add) {
+    pango_attr_list_update(this->attributes, pos, del, add);
+}

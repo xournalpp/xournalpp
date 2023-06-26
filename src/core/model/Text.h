@@ -64,6 +64,7 @@ public:
     PangoAttrList* getAttributeListCopy() const;
     void addAttribute(PangoAttribute* attrib);
     void clearAttributes();
+    void updateTextAttributesPosition(int pos, int del, int add);
 
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;

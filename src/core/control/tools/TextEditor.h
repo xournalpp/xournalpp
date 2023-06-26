@@ -105,12 +105,15 @@ private:
     void decreaseFontSize();
     void moveCursor(GtkMovementStep step, int count, bool extendSelection);
     void backspace();
+    bool deleteSelection();
 
     void afterFontChange();
     void replaceBufferContent(const std::string& text);
 
     void finalizeEdition();
     void initializeEditionAt(double x, double y);
+
+    void updateTextAttributesPos(int pos, int del, int add);
 
 private:
     /**
