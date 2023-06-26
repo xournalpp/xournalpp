@@ -77,10 +77,9 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButtonBox" id="textDecoLayout">
+          <object class="GtkBox" id="textDecoLayout">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="layout-style">expand</property>
             <child>
               <object class="GtkButton" id="btnDecoBold">
                 <property name="visible">True</property>
@@ -133,6 +132,9 @@
                 <property name="position">3</property>
               </packing>
             </child>
+            <style>
+              <class name="linked"/>
+            </style>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -149,7 +151,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
-                <property name="tooltip-text" translatable="yes">Font Color</property>>
+                <property name="tooltip-text" translatable="yes">Font Color</property>
               </object>
               <packing>
                 <property name="expand">False</property>
