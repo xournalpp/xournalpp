@@ -5,9 +5,10 @@
 #include <cstdio>      // for sprintf, size_t
 #include <filesystem>  // for exists
 
-#include <cairo.h>                  // for cairo_surface_t
-#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
-#include <glib.h>                   // for g_free, g_strdup_printf
+#include <cairo.h>                   // for cairo_surface_t
+#include <gdk-pixbuf/gdk-pixbuf.h>   // for gdk_pixbuf_save
+#include <glib.h>                    // for g_free, g_strdup_printf
+#include <pango/pango-attributes.h>  // for pango_attr_list_to_string
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "control/xml/XmlAudioNode.h"          // for XmlAudioNode

@@ -10,8 +10,9 @@
 #include <type_traits>  // for remove_reference<>::type
 #include <utility>      // for move
 
-#include <gio/gio.h>      // for g_file_get_path, g_fil...
-#include <glib-object.h>  // for g_object_unref
+#include <gio/gio.h>                 // for g_file_get_path, g_fil...
+#include <glib-object.h>             // for g_object_unref
+#include <pango/pango-attributes.h>  // for pango_attr_list_from_string
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "model/BackgroundImage.h"             // for BackgroundImage
