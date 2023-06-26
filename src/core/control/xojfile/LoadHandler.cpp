@@ -648,11 +648,15 @@ void LoadHandler::parseText() {
     double fontSize = LoadHandlerHelper::getAttribDouble("size", this);
     double x = LoadHandlerHelper::getAttribDouble("x", this);
     double y = LoadHandlerHelper::getAttribDouble("y", this);
-    const std::string attributes = LoadHandlerHelper::getAttrib("attributes", true, this);
+    const char* attributes = LoadHandlerHelper::getAttrib("attributes", true, this);
 
-    PangoAttrList* attrlist = pango_attr_list_from_string(attributes.c_str());
-    this->text->replaceAttributes(attrlist);
-    pango_attr_list_unref(attrlist);
+
+    if (attributes != nullptr) {
+        PangoAttrList* attrlist = pango_attr_list_from_string(attributes);
+        this->text->replaceAttributes(attrlist);
+        pango_attr_list_unref(attrlist);
+    }
+
 
     this->text->setX(x);
     this->text->setY(y);
