@@ -178,11 +178,16 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
 
             XojFont& f = t->getFont();
 
+            PangoAttrList* attrlist = t->getAttributeListCopy();
+            std::string attributes = pango_attr_list_to_string(attrlist);
+            pango_attr_list_unref(attrlist);
+
             text->setAttrib("font", f.getName().c_str());
             text->setAttrib("size", f.getSize());
             text->setAttrib("x", t->getX());
             text->setAttrib("y", t->getY());
             text->setAttrib("color", getColorStr(t->getColor()).c_str());
+            text->setAttrib("attributes", attributes);
 
             writeTimestamp(t, text);
         } else if (e->getType() == ELEMENT_IMAGE) {

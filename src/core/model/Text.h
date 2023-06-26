@@ -66,6 +66,13 @@ public:
     void clearAttributes();
     void updateTextAttributesPosition(int pos, int del, int add);
 
+    /**
+     * Replaces the current attribute list with a copy of the given one
+     * Important: Does not take ownership of the new attribute list,
+     * Object has to be freed by the calling function
+     */
+    void replaceAttributes(PangoAttrList* attributes);
+
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;
 

@@ -222,3 +222,8 @@ void Text::clearAttributes() { this->attributes = pango_attr_list_new(); }
 void Text::updateTextAttributesPosition(int pos, int del, int add) {
     pango_attr_list_update(this->attributes, pos, del, add);
 }
+
+void Text::replaceAttributes(PangoAttrList* attributes) {
+    pango_attr_list_unref(this->attributes);
+    this->attributes = pango_attr_list_copy(attributes);
+}
