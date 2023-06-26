@@ -11,7 +11,7 @@ steps:
       mkdir build
     displayName: 'Create build directory'
   - bash: |
-      cat /usr/include/pango-1.0/pango/pango-attributes.h | grep to_string
+      cat /usr/include/pango-1.0/pango/pango-attributes.h
       export CXX=g++-${{ parameters.gcc_version }}
       export CC=gcc-${{ parameters.gcc_version }}
       cmake -GNinja .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type }} ${{ parameters.cmake_flags }}
