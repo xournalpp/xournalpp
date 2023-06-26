@@ -227,12 +227,17 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextE
     gtk_text_buffer_begin_user_action(te->buffer.get());
 
     bool hadSelection = gtk_text_buffer_get_has_selection(te->buffer.get());
-    gtk_text_buffer_delete_selection(te->buffer.get(), true, true);
+    te->deleteSelection();
+
+    GtkTextIter curser = getIteratorAtCursor(te->buffer.get());
+    int spos = gtk_text_iter_get_offset(&curser);
+    int delta = std::string(str).length();
 
     if (!strcmp(str, "\n")) {
         if (!gtk_text_buffer_insert_interactive_at_cursor(te->buffer.get(), "\n", 1, true)) {
             gtk_widget_error_bell(te->xournalWidget);
         } else {
+            te->updateTextAttributesPos(spos, 0, delta);
             te->contentsChanged(true);
         }
     } else {
@@ -240,11 +245,15 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextE
             auto insert = getIteratorAtCursor(te->buffer.get());
             if (!gtk_text_iter_ends_line(&insert)) {
                 te->deleteFromCursor(GTK_DELETE_CHARS, 1);
+            } else {
+                te->updateTextAttributesPos(spos, 0, delta);
             }
         }
 
         if (!gtk_text_buffer_insert_interactive_at_cursor(te->buffer.get(), str, -1, true)) {
             gtk_widget_error_bell(te->xournalWidget);
+        } else {
+            te->updateTextAttributesPos(spos, 0, delta);
         }
     }
 
