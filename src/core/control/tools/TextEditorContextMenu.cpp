@@ -150,7 +150,7 @@ void TextEditorContextMenu::changeBgColor() {
     gint res = gtk_dialog_run(GTK_DIALOG(dialog));
     if (res == GTK_RESPONSE_OK) {
         gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &bgColor);
-        this->editor->setBackgroundColor(bgColor);
+        this->editor->setBackgroundColorInline(bgColor);
         std::cout << "New bg color: (" << bgColor.red << ";" << bgColor.green << ";" << bgColor.blue << ")"
                   << std::endl;
     }

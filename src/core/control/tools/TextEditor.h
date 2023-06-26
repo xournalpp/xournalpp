@@ -93,7 +93,7 @@ public:
     void changeFontColorTemp(GtkButton* src);
 
     void setTextAlignment(TextAlignment align);
-    void setBackgroundColor(GdkRGBA color);
+    void setBackgroundColorInline(GdkRGBA color);
 
     std::optional<std::tuple<int, int>> getCurrentSelection() const;
     bool hasSelection() const;

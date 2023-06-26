@@ -1197,15 +1197,18 @@ void TextEditor::setTextAlignment(TextAlignment align) {
     this->repaintEditor();
 }
 
-void TextEditor::setBackgroundColor(GdkRGBA color) {
-    GtkTextIter start;
-    GtkTextIter end;
-    bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
+void TextEditor::setBackgroundColorInline(GdkRGBA color) {
+    GtkTextIter start, end;
     PangoAttribute* attrib =
             pango_attr_background_new(int(double(UINT16_MAX) * color.red), int(double(UINT16_MAX) * color.green),
                                       int(double(UINT16_MAX) * color.blue));
-    attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
-    attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
+    if (gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end)) {
+        attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
+        attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
+    } else {
+        attrib->start_index = PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING;
+        attrib->end_index = PANGO_ATTR_INDEX_TO_TEXT_END;
+    }
     this->textElement->addAttribute(attrib);
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
