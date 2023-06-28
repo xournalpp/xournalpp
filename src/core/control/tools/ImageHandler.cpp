@@ -23,21 +23,65 @@
 #include "util/i18n.h"                      // for _
 #include "util/raii/GObjectSPtr.h"          // for GObjectSPtr.h
 
-ImageHandler::ImageHandler(Control* control, XojPageView* view) {
-    this->control = control;
-    this->view = view;
-}
+using xoj::util::Rectangle;
+
+ImageHandler::ImageHandler(Control* control, XojPageView* view): control(control), view(view) {}
 
 ImageHandler::~ImageHandler() = default;
 
-auto ImageHandler::insertImage(double x, double y) -> bool {
-    xoj::util::GObjectSPtr<GFile> file(ImageOpenDlg::show(control->getGtkWindow(), control->getSettings()),
+/*auto ImageHandler::insertImage(double x, double y) -> bool {
+    const xoj::util::GObjectSPtr<GFile> file(ImageOpenDlg::show(control->getGtkWindow(), control->getSettings()),
                                        xoj::util::adopt);
     if (!file) {
         return false;
     }
     return insertImage(file.get(), x, y);
+}*/
+
+auto ImageHandler::createImage(double x, double y) -> std::tuple<Image*, int, int> {
+    const xoj::util::GObjectSPtr<GFile> fileObj(ImageOpenDlg::show(control->getGtkWindow(), control->getSettings()),
+                                                xoj::util::adopt);
+    if (!fileObj) {
+        return std::make_tuple(nullptr, 0, 0);
+    }
+
+    GFile* file = fileObj.get();
+
+
+    Image* img = nullptr;
+    {
+        // Load the image data from disk
+        GError* err = nullptr;
+        gchar* contents{};
+        gsize length{};
+        if (!g_file_load_contents(file, nullptr, &contents, &length, nullptr, &err)) {
+            g_error_free(err);
+            return std::make_tuple(nullptr, 0, 0);
+        }
+
+        img = new Image();
+        img->setX(x);
+        img->setY(y);
+        img->setImage(std::string(contents, length));
+        g_free(contents);
+    }
+
+    // Render the image.
+    // FIXME: this is horrible. We need an ImageView class...
+    (void)img->getImage();
+
+    const auto imgSize = img->getImageSize();
+    auto [width, height] = imgSize;
+    if (imgSize == Image::NOSIZE) {
+        delete img;
+        XojMsgBox::showErrorToUser(this->control->getGtkWindow(),
+                                   _("Failed to load image, could not determine image size!"));
+        return std::make_tuple(nullptr, 0, 0);
+    }
+
+    return std::make_tuple(img, width, height);
 }
+
 
 auto ImageHandler::createImage(GFile* file, double x, double y) -> std::tuple<Image*, int, int> {
     Image* img = nullptr;
@@ -94,11 +138,11 @@ auto ImageHandler::addImageToDocument(Image* img, bool addUndoAction) -> bool {
 void ImageHandler::automaticScaling(Image* img, double x, double y, int width, int height) {
     double zoom = 1;
 
-    PageRef page = view->getPage();
+    PageRef const page = view->getPage();
 
     if (x + width > page->getWidth() || y + height > page->getHeight()) {
-        double maxZoomX = (page->getWidth() - x) / width;
-        double maxZoomY = (page->getHeight() - y) / height;
+        double const maxZoomX = (page->getWidth() - x) / width;
+        double const maxZoomY = (page->getHeight() - y) / height;
         zoom = std::min(maxZoomX, maxZoomY);
     }
 
@@ -106,11 +150,33 @@ void ImageHandler::automaticScaling(Image* img, double x, double y, int width, i
     img->setHeight(height * zoom);
 }
 
-auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
-    auto [img, width, height] = ImageHandler::createImage(file, x, y);
+auto ImageHandler::insertImage(double x, double y) -> bool {
+    auto [img, width, height] = ImageHandler::createImage(x, y);
     if (!img) {
         return false;
     }
     automaticScaling(img, x, y, width, height);
     return addImageToDocument(img, true);
+}
+
+auto ImageHandler::insertImageWithSize(Rectangle<double> space) -> bool {
+    auto [img, width, height] = ImageHandler::createImage(space.x, space.y);
+    if (!img) {
+        return false;
+    }
+
+    img->setHeight(height);
+    img->setWidth(width);
+
+    // todo p0mm different options!
+    scaleImageDown(img, space);
+    return addImageToDocument(img, true);
+}
+
+void ImageHandler::scaleImageDown(Image* img, xoj::util::Rectangle<double> space) {
+    const double height = img->getElementHeight();
+    const double width = img->getElementWidth();
+    const double scaling = std::min(space.height / height, space.width / width);
+    img->setWidth(scaling * width);
+    img->setHeight(scaling * height);
 }

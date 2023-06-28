@@ -34,6 +34,7 @@
 #include "control/tools/EllipseHandler.h"           // for EllipseHandler
 #include "control/tools/EraseHandler.h"             // for EraseHandler
 #include "control/tools/ImageHandler.h"             // for ImageHandler
+#include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
@@ -376,8 +377,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
     } else if (h->getToolType() == TOOL_IMAGE) {
-        ImageHandler imgHandler(control, this);
-        imgHandler.insertImage(x, y);
+        // start selecting the size for the image
+        this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
     }
 
     this->onButtonClickEvent(pos);
@@ -504,6 +505,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 
     if (this->inputHandler && this->inputHandler->onMotionNotifyEvent(pos, zoom)) {
         // input handler used this event
+    } else if (this->imageSizeSelection) {
+        this->imageSizeSelection->updatePosition(x, y);
     } else if (this->selection) {
         this->selection->currentPos(x, y);
     } else if (auto* selection = pdfToolbox->getSelection(); selection && !selection->isFinalized()) {
@@ -664,6 +667,15 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         this->selection.reset();
     } else if (this->textEditor) {
         this->textEditor->mouseReleased();
+    }
+
+    if (this->imageSizeSelection) {
+        // size for image has been selected, now the image can be added
+        auto spaceForImage = this->imageSizeSelection->getSelectedSpace();
+        ImageHandler imgHandler(control, this);
+        imgHandler.insertImageWithSize(spaceForImage);
+
+        this->imageSizeSelection.reset();
     }
 
     return false;

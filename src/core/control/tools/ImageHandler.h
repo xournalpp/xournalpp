@@ -26,15 +26,28 @@ public:
     virtual ~ImageHandler();
 
 public:
-    bool insertImage(double x, double y);
+    // todo p0mm documentation!
     // does the complete insertion based on create and add
-    bool insertImage(GFile* file, double x, double y);
+    bool insertImage(double x, double y);
     // creates the image and does automatic scaling of the image
+    std::tuple<Image*, int, int> createImage(double x, double y);
     std::tuple<Image*, int, int> createImage(GFile* file, double x, double y);
     bool addImageToDocument(Image* img, bool addUndoAction);
     // scale down (only if necessary) the image so that the it fits on the page
     // applies (potentially adjusted) width/height to the image
     void automaticScaling(Image* img, double x, double y, int width, int height);
+
+    /**
+     * inserts an image with predetermined size
+     */
+    bool insertImageWithSize(xoj::util::Rectangle<double> space);
+
+    /**
+     * scales image down to fit given space, without stretching the image
+     */
+    void scaleImageDown(Image* img, xoj::util::Rectangle<double> space);
+
+    void scaleImageUp(Image* img, xoj::util::Rectangle<double> space);
 
 private:
     Control* control;

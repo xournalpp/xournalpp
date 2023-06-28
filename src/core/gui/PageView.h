@@ -32,6 +32,7 @@
 #include "LegacyRedrawable.h"  // for LegacyRedrawable
 
 class EraseHandler;
+class ImageSizeSelection;
 class InputHandler;
 class SearchControl;
 class Selection;
@@ -260,6 +261,11 @@ private:
      * The text editor
      */
     std::unique_ptr<TextEditor> textEditor;
+
+    /**
+     * For image insertion with size (selects the size)
+     */
+    std::unique_ptr<ImageSizeSelection> imageSizeSelection;
 
     /**
      * For keeping old text changes to undo!
