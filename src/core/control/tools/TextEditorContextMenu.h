@@ -18,6 +18,12 @@ class Control;
 class TextEditor;
 class XojPageView;
 enum class TextAlignment;
+class TextEditorContextMenu;
+
+struct CallbackData {
+    PangoAttrType attrType;
+    TextEditorContextMenu* cm;
+};
 
 class TextEditorContextMenu {
 public:
