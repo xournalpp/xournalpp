@@ -1225,8 +1225,8 @@ void TextEditor::setBackgroundColorInline(GdkRGBA color) {
     alpha->start_index = std::get<0>(selection);
     alpha->end_index = std::get<1>(selection);
 
-    this->textElement->addAttribute(alpha);
     this->textElement->addAttribute(attrib);
+    this->textElement->addAttribute(alpha);
 
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
@@ -1240,5 +1240,21 @@ void TextEditor::setFontInline(PangoFontDescription* font) {
     attrib->end_index = std::get<1>(selection);
     this->textElement->addAttribute(attrib);
     this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
+    this->repaintEditor();
+}
+
+void TextEditor::setFontColorInline(GdkRGBA color) {
+    std::tuple<int, int> selection = getCurrentSelection().value_or(
+            std::make_tuple(PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING, PANGO_ATTR_INDEX_TO_TEXT_END));
+
+    PangoAttribute* attrib = pango_attr_foreground_new(guint16(double(UINT16_MAX) * color.red),
+                                                       guint16(double(UINT16_MAX) * color.green),
+                                                       guint16(double(UINT16_MAX) * color.blue));
+    attrib->start_index = std::get<0>(selection);
+    attrib->end_index = std::get<1>(selection);
+
+    this->textElement->addAttribute(attrib);
+
+    this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
 }
