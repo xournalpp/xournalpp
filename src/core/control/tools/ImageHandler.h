@@ -43,11 +43,20 @@ public:
     bool insertImageWithSize(xoj::util::Rectangle<double> space);
 
     /**
-     * scales image down to fit given space, without stretching the image
+     * scales image down to fit given space
+     *
+     * this will not stretch the image
+     * if the available space is 0, no scaling occurs
      */
-    void scaleImageDown(Image* img, xoj::util::Rectangle<double> space);
+    static void scaleImageDown(Image* img, xoj::util::Rectangle<double> space);
 
-    void scaleImageUp(Image* img, xoj::util::Rectangle<double> space);
+    /**
+     * scales image up to fill given space
+     *
+     * this will not stretch the image
+     * if the available space is 0, no scaling occurs
+     */
+    static void scaleImageUp(Image* img, xoj::util::Rectangle<double> space);
 
 private:
     Control* control;
