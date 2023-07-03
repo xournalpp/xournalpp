@@ -96,6 +96,7 @@ public:
     void setFontInline(PangoFontDescription* font);
     void setFontColorInline(GdkRGBA color);
     void setBackgroundColorInline(GdkRGBA color);
+    void addTextAttributeInline(PangoAttribute* attrib);
 
     std::optional<std::tuple<int, int>> getCurrentSelection() const;
     bool hasSelection() const;

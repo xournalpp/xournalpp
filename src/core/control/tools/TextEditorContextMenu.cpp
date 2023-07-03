@@ -24,10 +24,9 @@ gboolean drawBgColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextM
     return tecm->drawBgColorIcon(src, cr);
 };
 
-void tglTextStyle(GtkButton* src, CallbackData* data) {
-    std::cout << "Got here !" << std::endl;
-    data->cm->toggleTextStyle(data->attrType);
-}
+void tglBoldStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleBoldStyle(); }
+void tglItalicStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleItalicStyle(); }
+void tglUnderlineStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleUnderlineStyle(); }
 
 
 TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView,
@@ -96,12 +95,9 @@ void TextEditorContextMenu::create() {
     this->tglItalicBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoItalic"));
     this->tglUnderlineBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoUnderline"));
     this->expandTextDecoration = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoExpand"));
-    CallbackData data1{PANGO_ATTR_WEIGHT, this};
-    g_signal_connect(tglBoldBtn, "clicked", G_CALLBACK(tglTextStyle), &data1);
-    CallbackData data2{PANGO_ATTR_STYLE, this};
-    g_signal_connect(tglItalicBtn, "clicked", G_CALLBACK(tglTextStyle), &data2);
-    CallbackData data3{PANGO_ATTR_UNDERLINE, this};
-    g_signal_connect(tglUnderlineBtn, "clicked", G_CALLBACK(tglTextStyle), &data3);
+    g_signal_connect(tglBoldBtn, "clicked", G_CALLBACK(tglBoldStyle), this);
+    g_signal_connect(tglItalicBtn, "clicked", G_CALLBACK(tglItalicStyle), this);
+    g_signal_connect(tglUnderlineBtn, "clicked", G_CALLBACK(tglUnderlineStyle), this);
 
     this->ftColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
     this->bgColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnBgColor"));
@@ -228,4 +224,17 @@ gboolean TextEditorContextMenu::drawBgColorIcon(GtkWidget* src, cairo_t* cr) {
     return FALSE;
 }
 
-void TextEditorContextMenu::toggleTextStyle(PangoAttrType attr) { std::cout << attr << std::endl; }
+void TextEditorContextMenu::toggleBoldStyle() {
+    std::cout << "Bold" << std::endl;
+    this->editor->addTextAttributeInline(pango_attr_weight_new(PANGO_WEIGHT_BOLD));
+}
+
+void TextEditorContextMenu::toggleItalicStyle() {
+    std::cout << "Italic" << std::endl;
+    this->editor->addTextAttributeInline(pango_attr_style_new(PANGO_STYLE_ITALIC));
+}
+
+void TextEditorContextMenu::toggleUnderlineStyle() {
+    std::cout << "Underline" << std::endl;
+    this->editor->addTextAttributeInline(pango_attr_underline_new(PANGO_UNDERLINE_SINGLE));
+}

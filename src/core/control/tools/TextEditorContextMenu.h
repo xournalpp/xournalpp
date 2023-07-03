@@ -18,12 +18,6 @@ class Control;
 class TextEditor;
 class XojPageView;
 enum class TextAlignment;
-class TextEditorContextMenu;
-
-struct CallbackData {
-    PangoAttrType attrType;
-    TextEditorContextMenu* cm;
-};
 
 class TextEditorContextMenu {
 public:
@@ -39,7 +33,9 @@ public:
     void changeFtColor();
     void changeBgColor();
     void changeAlignment(TextAlignment align);
-    void toggleTextStyle(PangoAttrType attr);
+    void toggleBoldStyle();
+    void toggleItalicStyle();
+    void toggleUnderlineStyle();
 
     gboolean drawFtColorIcon(GtkWidget* src, cairo_t* cr);
     gboolean drawBgColorIcon(GtkWidget* src, cairo_t* cr);
