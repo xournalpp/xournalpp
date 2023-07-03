@@ -93,6 +93,7 @@ public:
     void changeFontColorTemp(GtkButton* src);
 
     void setTextAlignment(TextAlignment align);
+    void setFontInline(PangoFontDescription* font);
     void setBackgroundColorInline(GdkRGBA color);
 
     std::optional<std::tuple<int, int>> getCurrentSelection() const;

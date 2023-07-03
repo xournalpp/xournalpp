@@ -1197,6 +1197,20 @@ void TextEditor::setTextAlignment(TextAlignment align) {
     this->repaintEditor();
 }
 
+std::optional<std::tuple<int, int>> TextEditor::getCurrentSelection() const {
+    GtkTextIter start, end;
+    bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
+    return hasSelection ? std::make_optional(
+                                  std::make_tuple(gtk_text_iter_get_offset(&start), gtk_text_iter_get_offset(&end))) :
+                          std::nullopt;
+}
+
+bool TextEditor::hasSelection() const { return gtk_text_buffer_get_has_selection(this->buffer.get()); }
+
+void TextEditor::updateTextAttributesPos(int pos, int del, int add) {
+    this->textElement->updateTextAttributesPosition(pos, del, add);
+}
+
 void TextEditor::setBackgroundColorInline(GdkRGBA color) {
     GtkTextIter start, end;
     PangoAttribute* attrib =
@@ -1214,16 +1228,13 @@ void TextEditor::setBackgroundColorInline(GdkRGBA color) {
     this->repaintEditor();
 }
 
-std::optional<std::tuple<int, int>> TextEditor::getCurrentSelection() const {
-    GtkTextIter start, end;
-    bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end);
-    return hasSelection ? std::make_optional(
-                                  std::make_tuple(gtk_text_iter_get_offset(&start), gtk_text_iter_get_offset(&end))) :
-                          std::nullopt;
-}
-
-bool TextEditor::hasSelection() const { return gtk_text_buffer_get_has_selection(this->buffer.get()); }
-
-void TextEditor::updateTextAttributesPos(int pos, int del, int add) {
-    this->textElement->updateTextAttributesPosition(pos, del, add);
+void TextEditor::setFontInline(PangoFontDescription* font) {
+    std::tuple<int, int> selection = getCurrentSelection().value_or(
+            std::make_tuple(PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING, PANGO_ATTR_INDEX_TO_TEXT_END));
+    PangoAttribute* attrib = pango_attr_font_desc_new(font);
+    attrib->start_index = std::get<0>(selection);
+    attrib->end_index = std::get<1>(selection);
+    this->textElement->addAttribute(attrib);
+    this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
+    this->repaintEditor();
 }

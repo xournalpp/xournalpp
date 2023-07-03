@@ -106,6 +106,11 @@ void Text::updatePangoFont(PangoLayout* layout) const {
 
     pango_layout_set_font_description(layout, desc);
     pango_font_description_free(desc);
+
+    pango_layout_set_attributes(layout, pango_attr_list_copy(this->attributes));
+
+    PangoAlignment alignment = static_cast<PangoAlignment>(this->alignment);
+    pango_layout_set_alignment(layout, alignment);
 }
 
 void Text::scale(double x0, double y0, double fx, double fy, double rotation,
@@ -211,19 +216,27 @@ auto Text::findText(const std::string& search) const -> std::vector<XojPdfRectan
 
 void Text::setAlignment(TextAlignment align) { this->alignment = align; }
 
-TextAlignment Text::getAlignment() { return this->alignment; }
+TextAlignment Text::getAlignment() const { return this->alignment; }
 
 PangoAttrList* Text::getAttributeListCopy() const { return pango_attr_list_copy(this->attributes); };
 
-void Text::addAttribute(PangoAttribute* attrib) { pango_attr_list_change(this->attributes, attrib); }
+void Text::addAttribute(PangoAttribute* attrib) {
+    pango_attr_list_change(this->attributes, attrib);
+    this->calcSize();
+}
 
-void Text::clearAttributes() { this->attributes = pango_attr_list_new(); }
+void Text::clearAttributes() {
+    this->attributes = pango_attr_list_new();
+    this->calcSize();
+}
 
 void Text::updateTextAttributesPosition(int pos, int del, int add) {
     pango_attr_list_update(this->attributes, pos, del, add);
+    this->calcSize();
 }
 
 void Text::replaceAttributes(PangoAttrList* attributes) {
     pango_attr_list_unref(this->attributes);
     this->attributes = pango_attr_list_copy(attributes);
+    this->calcSize();
 }

@@ -118,11 +118,7 @@ void TextEditorContextMenu::changeFont() {
     PangoFontDescription* desc = gtk_font_chooser_get_font_desc(GTK_FONT_CHOOSER(this->fontBtn));
     std::string fontDesc(pango_font_description_to_string(desc));
     std::string fontName(pango_font_description_get_family(desc));
-    std::string fontSize(std::to_string(pango_font_description_get_size(desc)));
-    std::cout << fontDesc << ":" << fontName << ":" << fontSize << std::endl;
-    XojFont font;
-    font = fontDesc;
-    this->editor->setFont(font);
+    this->editor->setFontInline(desc);
     pango_font_description_free(desc);
     gtk_widget_grab_focus(this->xournalWidget);
 }

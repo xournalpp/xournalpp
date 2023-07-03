@@ -51,5 +51,8 @@ void TextView::draw(const Context& ctx) const {
 
     pango_layout_set_attributes(layout.get(), text->getAttributeListCopy());
 
+    PangoAlignment alignment = static_cast<PangoAlignment>(text->getAlignment());
+    pango_layout_set_alignment(layout.get(), alignment);
+
     pango_cairo_show_layout(ctx.cr, layout.get());
 }

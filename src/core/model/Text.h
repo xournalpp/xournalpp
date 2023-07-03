@@ -59,7 +59,7 @@ public:
     bool rescaleOnlyAspectRatio() override;
 
     void setAlignment(TextAlignment align);
-    TextAlignment getAlignment();
+    TextAlignment getAlignment() const;
 
     PangoAttrList* getAttributeListCopy() const;
     void addAttribute(PangoAttribute* attrib);
