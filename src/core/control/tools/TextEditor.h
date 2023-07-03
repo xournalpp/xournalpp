@@ -94,6 +94,7 @@ public:
 
     void setTextAlignment(TextAlignment align);
     void setFontInline(PangoFontDescription* font);
+    void setFontColorInline(GdkRGBA color);
     void setBackgroundColorInline(GdkRGBA color);
 
     std::optional<std::tuple<int, int>> getCurrentSelection() const;

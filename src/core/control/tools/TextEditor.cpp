@@ -1212,18 +1212,22 @@ void TextEditor::updateTextAttributesPos(int pos, int del, int add) {
 }
 
 void TextEditor::setBackgroundColorInline(GdkRGBA color) {
-    GtkTextIter start, end;
-    PangoAttribute* attrib =
-            pango_attr_background_new(int(double(UINT16_MAX) * color.red), int(double(UINT16_MAX) * color.green),
-                                      int(double(UINT16_MAX) * color.blue));
-    if (gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end)) {
-        attrib->start_index = static_cast<unsigned int>(getByteOffsetOfIterator(start));
-        attrib->end_index = static_cast<unsigned int>(getByteOffsetOfIterator(end));
-    } else {
-        attrib->start_index = PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING;
-        attrib->end_index = PANGO_ATTR_INDEX_TO_TEXT_END;
-    }
+    std::tuple<int, int> selection = getCurrentSelection().value_or(
+            std::make_tuple(PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING, PANGO_ATTR_INDEX_TO_TEXT_END));
+
+    PangoAttribute* attrib = pango_attr_background_new(guint16(double(UINT16_MAX) * color.red),
+                                                       guint16(double(UINT16_MAX) * color.green),
+                                                       guint16(double(UINT16_MAX) * color.blue));
+    attrib->start_index = std::get<0>(selection);
+    attrib->end_index = std::get<1>(selection);
+
+    PangoAttribute* alpha = pango_attr_background_alpha_new(guint16(double(UINT16_MAX) * color.alpha) + 1);
+    alpha->start_index = std::get<0>(selection);
+    alpha->end_index = std::get<1>(selection);
+
+    this->textElement->addAttribute(alpha);
     this->textElement->addAttribute(attrib);
+
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
 }
