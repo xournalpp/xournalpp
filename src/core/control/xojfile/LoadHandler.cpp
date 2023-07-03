@@ -650,9 +650,9 @@ void LoadHandler::parseText() {
     double y = LoadHandlerHelper::getAttribDouble("y", this);
     const char* attributes = LoadHandlerHelper::getAttrib("attributes", true, this);
 
-
     if (attributes != nullptr) {
-        PangoAttrList* attrlist = pango_attr_list_from_string(attributes);
+        std::string attrs = g_uri_unescape_string(attributes, NULL);
+        PangoAttrList* attrlist = pango_attr_list_from_string(attrs.c_str());
         this->text->replaceAttributes(attrlist);
         pango_attr_list_unref(attrlist);
     }

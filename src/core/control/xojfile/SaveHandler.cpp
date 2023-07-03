@@ -188,7 +188,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
             text->setAttrib("x", t->getX());
             text->setAttrib("y", t->getY());
             text->setAttrib("color", getColorStr(t->getColor()).c_str());
-            text->setAttrib("attributes", attributes);
+            text->setAttrib("attributes", g_uri_escape_string(attributes.c_str(), NULL, false));
 
             writeTimestamp(t, text);
         } else if (e->getType() == ELEMENT_IMAGE) {
