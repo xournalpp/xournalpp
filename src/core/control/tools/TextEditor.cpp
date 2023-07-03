@@ -668,7 +668,14 @@ void TextEditor::mouseMoved(double x, double y) {
     }
 }
 
-void TextEditor::mouseReleased() { this->mouseDown = false; }
+void TextEditor::mouseReleased() {
+    this->mouseDown = false;
+    if (this->hasSelection()) {
+        this->contextMenu->show();
+    } else {
+        this->contextMenu->hide();
+    }
+}
 
 void TextEditor::jumpALine(GtkTextIter* textIter, int count) {
     int cursorLine = gtk_text_iter_get_line(textIter);
@@ -708,6 +715,7 @@ void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelec
             // Nothing changed
             return;
         }
+        // this sets the text selection
         gtk_text_buffer_move_mark_by_name(this->buffer.get(), "insert", newLocation);
         control->setCopyCutEnabled(true);
     } else {
@@ -1185,8 +1193,6 @@ void TextEditor::initializeEditionAt(double x, double y) {
     this->layout = this->textElement->createPangoLayout();
     this->previousBoundingBox = Range(this->textElement->boundingRect());
     this->replaceBufferContent(this->textElement->getText());
-
-    this->contextMenu->show();
 }
 
 void TextEditor::zoomChanged() { this->contextMenu->reposition(); }

@@ -51,15 +51,21 @@ TextEditorContextMenu::~TextEditorContextMenu() {
 }
 
 void TextEditorContextMenu::show() {
-    this->reposition();
-    gtk_widget_show_all(GTK_WIDGET(this->contextMenu));
-    gtk_popover_popup(this->contextMenu);
-    std::cout << "Popup menu should be shown" << std::endl;
+    if (!isVisible) {
+        this->reposition();
+        gtk_widget_show_all(GTK_WIDGET(this->contextMenu));
+        gtk_popover_popup(this->contextMenu);
+        isVisible = true;
+        std::cout << "Popup menu should be shown" << std::endl;
+    }
 }
 
 void TextEditorContextMenu::hide() {
-    gtk_popover_popdown(this->contextMenu);
-    std::cout << "Popup menu should be hidden" << std::endl;
+    if (isVisible) {
+        gtk_popover_popdown(this->contextMenu);
+        isVisible = false;
+        std::cout << "Popup menu should be hidden" << std::endl;
+    }
 }
 
 void TextEditorContextMenu::reposition() {
@@ -86,6 +92,7 @@ void TextEditorContextMenu::create() {
     gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
     gtk_popover_set_modal(this->contextMenu, false);
     gtk_widget_set_can_focus(GTK_WIDGET(this->contextMenu), false);
+    gtk_widget_hide(GTK_WIDGET(this->contextMenu));
 
     this->fontBtn = GTK_FONT_BUTTON(gtk_builder_get_object(builder, "btnFontChooser"));
     g_signal_connect(this->fontBtn, "font-set", G_CALLBACK(changeFontInternal), this);

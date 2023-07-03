@@ -49,6 +49,8 @@ private:
     XojPageView* pageView;
     GtkWidget* xournalWidget;
 
+    bool isVisible = false;
+
     /**
      * Default foreground & background colors
      */
