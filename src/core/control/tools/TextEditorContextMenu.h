@@ -33,6 +33,7 @@ public:
     void changeFtColor();
     void changeBgColor();
     void changeAlignment(TextAlignment align);
+    void toggleTextStyle(PangoAttrType attr);
 
     gboolean drawFtColorIcon(GtkWidget* src, cairo_t* cr);
     gboolean drawBgColorIcon(GtkWidget* src, cairo_t* cr);

@@ -24,6 +24,11 @@ gboolean drawBgColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextM
     return tecm->drawBgColorIcon(src, cr);
 };
 
+void tglTextStyle(GtkButton* src, std::tuple<PangoAttrType, TextEditorContextMenu*> data) {
+    std::cout << "Got here !" << std::endl;
+    std::get<1>(data)->toggleTextStyle(std::get<0>(data));
+}
+
 
 TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView,
                                              GtkWidget* xournalWidget):
@@ -90,6 +95,9 @@ void TextEditorContextMenu::create() {
     this->tglItalicBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoItalic"));
     this->tglUnderlineBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoUnderline"));
     this->expandTextDecoration = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoExpand"));
+    g_signal_connect(tglBoldBtn, "clicked", G_CALLBACK(tglTextStyle), std::make_tuple(PANGO_ATTR_WEIGHT, this));
+    g_signal_connect(tglItalicBtn, "clicked", G_CALLBACK(tglTextStyle), std::make_tuple(PANGO_ATTR_STYLE, this));
+    g_signal_connect(tglUnderlineBtn, "clicked", G_CALLBACK(tglTextStyle), std::make_tuple(PANGO_ATTR_UNDERLINE, this));
 
     this->ftColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
     this->bgColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnBgColor"));
@@ -215,3 +223,5 @@ gboolean TextEditorContextMenu::drawBgColorIcon(GtkWidget* src, cairo_t* cr) {
     cairo_fill(cr);
     return FALSE;
 }
+
+void TextEditorContextMenu::toggleTextStyle(PangoAttrType attr) { std::cout << attr << std::endl; }
