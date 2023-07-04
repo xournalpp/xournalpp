@@ -132,8 +132,7 @@ void ImageHandler::scaleImageDown(Image* img, xoj::util::Rectangle<double> space
     if (space.area() == 0) {
         return;
     }
-    const double height = img->getElementHeight();
-    const double width = img->getElementWidth();
+    auto [width, height] = img->getImageSize();
     const double scaling = std::min(space.height / height, space.width / width);
     img->setWidth(scaling * width);
     img->setHeight(scaling * height);
@@ -143,8 +142,7 @@ void ImageHandler::scaleImageUp(Image* img, xoj::util::Rectangle<double> space) 
     if (space.area() == 0) {
         return;
     }
-    const double height = img->getElementHeight();
-    const double width = img->getElementWidth();
+    auto [width, height] = img->getImageSize();
     const double scaling = std::max(space.height / height, space.width / width);
     img->setHeight(scaling * height);
     img->setWidth(scaling * width);
