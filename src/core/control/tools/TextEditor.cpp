@@ -671,6 +671,7 @@ void TextEditor::mouseMoved(double x, double y) {
 void TextEditor::mouseReleased() {
     this->mouseDown = false;
     if (this->hasSelection()) {
+        auto selection = this->getCurrentSelection();
         this->contextMenu->show();
     } else {
         this->contextMenu->hide();
