@@ -2111,7 +2111,7 @@ static int applib_addImagesFromFilepath(lua_State* L) {
 
         XojPageView* pv = control->getWindow()->getXournal()->getViewFor(control->getCurrentPageNo());
         ImageHandler imgHandler(control, pv);
-        auto [img, width, height] = imgHandler.createImage(file.get(), x, y);
+        auto [img, width, height] = imgHandler.createImageFromFile(file.get(), x, y);
         if (!img) {
             lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
             lua_pushfstring(L, "Error: creating the image (%s) failed.", path);  // soft error

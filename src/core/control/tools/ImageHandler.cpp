@@ -29,16 +29,8 @@ ImageHandler::ImageHandler(Control* control, XojPageView* view): control(control
 
 ImageHandler::~ImageHandler() = default;
 
-/*auto ImageHandler::insertImage(double x, double y) -> bool {
-    const xoj::util::GObjectSPtr<GFile> file(ImageOpenDlg::show(control->getGtkWindow(), control->getSettings()),
-                                       xoj::util::adopt);
-    if (!file) {
-        return false;
-    }
-    return insertImage(file.get(), x, y);
-}*/
 
-auto ImageHandler::createImage(double x, double y) -> std::tuple<Image*, int, int> {
+auto ImageHandler::chooseAndCreateImage(double x, double y) -> std::tuple<Image*, int, int> {
     const xoj::util::GObjectSPtr<GFile> fileObj(ImageOpenDlg::show(control->getGtkWindow(), control->getSettings()),
                                                 xoj::util::adopt);
     if (!fileObj) {
@@ -47,43 +39,11 @@ auto ImageHandler::createImage(double x, double y) -> std::tuple<Image*, int, in
 
     GFile* file = fileObj.get();
 
-
-    Image* img = nullptr;
-    {
-        // Load the image data from disk
-        GError* err = nullptr;
-        gchar* contents{};
-        gsize length{};
-        if (!g_file_load_contents(file, nullptr, &contents, &length, nullptr, &err)) {
-            g_error_free(err);
-            return std::make_tuple(nullptr, 0, 0);
-        }
-
-        img = new Image();
-        img->setX(x);
-        img->setY(y);
-        img->setImage(std::string(contents, length));
-        g_free(contents);
-    }
-
-    // Render the image.
-    // FIXME: this is horrible. We need an ImageView class...
-    (void)img->getImage();
-
-    const auto imgSize = img->getImageSize();
-    auto [width, height] = imgSize;
-    if (imgSize == Image::NOSIZE) {
-        delete img;
-        XojMsgBox::showErrorToUser(this->control->getGtkWindow(),
-                                   _("Failed to load image, could not determine image size!"));
-        return std::make_tuple(nullptr, 0, 0);
-    }
-
-    return std::make_tuple(img, width, height);
+    return createImageFromFile(file, x, y);
 }
 
 
-auto ImageHandler::createImage(GFile* file, double x, double y) -> std::tuple<Image*, int, int> {
+auto ImageHandler::createImageFromFile(GFile* file, double x, double y) -> std::tuple<Image*, int, int> {
     Image* img = nullptr;
     {
         // Load the image data from disk
@@ -119,7 +79,7 @@ auto ImageHandler::createImage(GFile* file, double x, double y) -> std::tuple<Im
 }
 
 auto ImageHandler::addImageToDocument(Image* img, bool addUndoAction) -> bool {
-    PageRef page = view->getPage();
+    PageRef const page = view->getPage();
 
     page->getSelectedLayer()->addElement(img);
 
@@ -150,27 +110,21 @@ void ImageHandler::automaticScaling(Image* img, double x, double y, int width, i
     img->setHeight(height * zoom);
 }
 
-auto ImageHandler::insertImage(double x, double y) -> bool {
-    auto [img, width, height] = ImageHandler::createImage(x, y);
-    if (!img) {
-        return false;
-    }
-    automaticScaling(img, x, y, width, height);
-    return addImageToDocument(img, true);
-}
-
 auto ImageHandler::insertImageWithSize(Rectangle<double> space) -> bool {
-    auto [img, width, height] = ImageHandler::createImage(space.x, space.y);
+    auto [img, width, height] = ImageHandler::chooseAndCreateImage(space.x, space.y);
     if (!img) {
         return false;
     }
 
-    img->setHeight(height);
-    img->setWidth(width);
-
-    // todo p0mm different options!
-    // scaleImageDown(img, space);
+    // todo p0mm choose between different options!
+    // none option needs to set images own height and width!
     scaleImageUp(img, space);
+
+    // make autoscaling toggleable by the user?
+    automaticScaling(img, space.x, space.y,
+                     img->getElementWidth() == 0.0 ? width : static_cast<int>(img->getElementWidth()),
+                     img->getElementHeight() == 0.0 ? height : static_cast<int>(img->getElementHeight()));
+
     return addImageToDocument(img, true);
 }
 
