@@ -65,6 +65,11 @@ public:
      */
     static void scaleImageUp(Image* img, xoj::util::Rectangle<double> space);
 
+    /**
+     * adjust coordinates to center image in given space (after scaling)
+     */
+    static void centerImage(Image* img, xoj::util::Rectangle<double> space);
+
 private:
     Control* control;
     XojPageView* view;

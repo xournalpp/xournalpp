@@ -125,6 +125,8 @@ auto ImageHandler::insertImageWithSize(Rectangle<double> space) -> bool {
                      img->getElementWidth() == 0.0 ? width : static_cast<int>(img->getElementWidth()),
                      img->getElementHeight() == 0.0 ? height : static_cast<int>(img->getElementHeight()));
 
+    centerImage(img, space);
+
     return addImageToDocument(img, true);
 }
 
@@ -146,4 +148,30 @@ void ImageHandler::scaleImageUp(Image* img, xoj::util::Rectangle<double> space) 
     const double scaling = std::max(space.height / height, space.width / width);
     img->setHeight(scaling * height);
     img->setWidth(scaling * width);
+}
+
+void ImageHandler::centerImage(Image* img, xoj::util::Rectangle<double> space) {
+    if (space.area() == 0) {
+        return;
+    }
+
+    if (img->getElementHeight() > space.height) {
+        img->setY(img->getY() - ((img->getElementHeight() - space.height) * 0.5));
+    } else if (img->getElementHeight() < space.height) {
+        img->setY(img->getY() + ((space.height - img->getElementHeight()) * 0.5));
+    }
+
+    if (img->getElementWidth() > space.width) {
+        img->setX(img->getX() - ((img->getElementWidth() - space.width) * 0.5));
+    } else if (img->getElementWidth() < space.width) {
+        img->setX(img->getX() + ((space.width - img->getElementWidth()) * 0.5));
+    }
+
+    // if x or y out of page move back
+    if (img->getX() < 0) {
+        img->setX(0);
+    }
+    if (img->getY() < 0) {
+        img->setY(0);
+    }
 }
