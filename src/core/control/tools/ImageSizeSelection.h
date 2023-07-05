@@ -11,10 +11,13 @@
 
 #pragma once
 
+#include "model/Element.h"                         // todo p0mm
+#include "model/OverlayBase.h"                     // for OverlayBase
+#include "util/DispatchPool.h"                     // for Listener
+#include "util/Rectangle.h"                        // for Rectangle
+#include "view/overlays/ImageSizeSelectionView.h"  // for ImageSizeSelectionView
 
-#include "model/Element.h"      // todo p0mm
-#include "model/OverlayBase.h"  // todo p0mm
-#include "util/Rectangle.h"     // for Rectangle
+using namespace xoj::view;
 
 class ImageSizeSelection: public OverlayBase {
 public:
@@ -22,11 +25,21 @@ public:
 
     void updatePosition(double x, double y);
 
-    auto getSelectedSpace() -> xoj::util::Rectangle<double>;
+    void finalize();
+
+    auto getSelectedSpace() const -> xoj::util::Rectangle<double>;
+
+    inline auto getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<ImageSizeSelectionView>>& {
+        return viewPool;
+    }
 
 private:
     double startX;
     double startY;
     double endX;
     double endY;
+
+    Range box;
+
+    std::shared_ptr<xoj::util::DispatchPool<ImageSizeSelectionView>> viewPool;
 };

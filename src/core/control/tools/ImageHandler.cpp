@@ -118,7 +118,7 @@ auto ImageHandler::insertImageWithSize(Rectangle<double> space) -> bool {
 
     // todo p0mm choose between different options!
     // none option needs to set images own height and width!
-    scaleImageUp(img, space);
+    scaleImageDown(img, space);
 
     // make autoscaling toggleable by the user?
     automaticScaling(img, space.x, space.y,
