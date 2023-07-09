@@ -27,6 +27,7 @@ gboolean drawBgColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextM
 void tglBoldStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleBoldStyle(); }
 void tglItalicStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleItalicStyle(); }
 void tglUnderlineStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleUnderlineStyle(); }
+void tglSecToolbar(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleSecondaryToolbar(); }
 
 
 TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView,
@@ -53,7 +54,7 @@ TextEditorContextMenu::~TextEditorContextMenu() {
 void TextEditorContextMenu::show() {
     if (!isVisible) {
         this->reposition();
-        gtk_widget_show_all(GTK_WIDGET(this->contextMenu));
+        this->showReducedMenu();
         gtk_popover_popup(this->contextMenu);
         isVisible = true;
         std::cout << "Popup menu should be shown" << std::endl;
@@ -68,6 +69,22 @@ void TextEditorContextMenu::hide() {
     }
 }
 
+void TextEditorContextMenu::showReducedMenu() {
+    gtk_widget_set_visible(GTK_WIDGET(this->fontBtn), false);
+    gtk_widget_set_visible(this->textDecoLayout, false);
+    gtk_widget_set_visible(this->colorLayout, false);
+    gtk_widget_set_visible(this->alignmentLayout, true);
+    gtk_widget_set_visible(this->secondaryToolbar, false);
+}
+
+void TextEditorContextMenu::showFullMenu() {
+    gtk_widget_set_visible(GTK_WIDGET(this->fontBtn), true);
+    gtk_widget_set_visible(this->textDecoLayout, true);
+    gtk_widget_set_visible(this->colorLayout, true);
+    gtk_widget_set_visible(this->alignmentLayout, true);
+    gtk_widget_set_visible(this->secondaryToolbar, false);
+}
+
 void TextEditorContextMenu::reposition() {
     int padding = xoj::view::TextEditionView::PADDING_IN_PIXELS;
     Range r = this->editor->getContentBoundingBox();
@@ -75,6 +92,16 @@ void TextEditorContextMenu::reposition() {
                       this->pageView->getY() + int(r.getY() * this->pageView->getZoom()) - padding,
                       int(r.getWidth() * this->pageView->getZoom()), int(r.getHeight() * this->pageView->getZoom())};
     gtk_popover_set_pointing_to(this->contextMenu, &rect);
+}
+
+void TextEditorContextMenu::toggleSecondaryToolbar() {
+    if (gtk_widget_is_visible(this->secondaryToolbar)) {
+        std::cout << "Show secondary toolbar!" << std::endl;
+        gtk_widget_set_visible(this->secondaryToolbar, false);
+    } else {
+        std::cout << "Hide secondary toolbar!" << std::endl;
+        gtk_widget_set_visible(this->secondaryToolbar, true);
+    }
 }
 
 void TextEditorContextMenu::create() {
@@ -105,6 +132,7 @@ void TextEditorContextMenu::create() {
     g_signal_connect(tglBoldBtn, "clicked", G_CALLBACK(tglBoldStyle), this);
     g_signal_connect(tglItalicBtn, "clicked", G_CALLBACK(tglItalicStyle), this);
     g_signal_connect(tglUnderlineBtn, "clicked", G_CALLBACK(tglUnderlineStyle), this);
+    g_signal_connect(expandTextDecoration, "clicked", G_CALLBACK(tglSecToolbar), this);
 
     this->ftColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
     this->bgColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnBgColor"));
@@ -125,6 +153,11 @@ void TextEditorContextMenu::create() {
     g_signal_connect(this->alignLeftTgl, "released", G_CALLBACK(toggleAlignLeft), this);
     g_signal_connect(this->alignCenterTgl, "released", G_CALLBACK(toggleAlignCenter), this);
     g_signal_connect(this->alignRightTgl, "released", G_CALLBACK(toggleAlignRight), this);
+
+    this->textDecoLayout = GTK_WIDGET(gtk_builder_get_object(builder, "textDecoLayout"));
+    this->colorLayout = GTK_WIDGET(gtk_builder_get_object(builder, "colorLayout"));
+    this->alignmentLayout = GTK_WIDGET(gtk_builder_get_object(builder, "alignmentLayout"));
+    this->secondaryToolbar = GTK_WIDGET(gtk_builder_get_object(builder, "secondaryToolbar"));
 
     g_object_unref(G_OBJECT(builder));
 }

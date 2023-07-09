@@ -659,10 +659,9 @@ void TextEditor::mouseMoved(double x, double y) {
 void TextEditor::mouseReleased() {
     this->mouseDown = false;
     if (this->hasSelection()) {
-        auto selection = this->getCurrentSelection();
-        this->contextMenu->show();
+        this->contextMenu->showFullMenu();
     } else {
-        this->contextMenu->hide();
+        this->contextMenu->showReducedMenu();
     }
 }
 
@@ -1179,6 +1178,8 @@ void TextEditor::initializeEditionAt(double x, double y) {
     this->layout = this->textElement->createPangoLayout();
     this->previousBoundingBox = Range(this->textElement->boundingRect());
     this->replaceBufferContent(this->textElement->getText());
+
+    this->contextMenu->show();
 }
 
 void TextEditor::zoomChanged() { this->contextMenu->reposition(); }

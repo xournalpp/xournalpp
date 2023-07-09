@@ -27,7 +27,11 @@ public:
     void show();
     void hide();
 
+    void showReducedMenu();
+    void showFullMenu();
+
     void reposition();
+    void toggleSecondaryToolbar();
 
     void changeFont();
     void changeFtColor();
@@ -42,6 +46,7 @@ public:
 
 private:
     void create();
+
 
 private:
     Control* control;
@@ -77,6 +82,11 @@ private:
     GtkToggleButton* alignLeftTgl;
     GtkToggleButton* alignCenterTgl;
     GtkToggleButton* alignRightTgl;
+
+    GtkWidget* textDecoLayout;
+    GtkWidget* colorLayout;
+    GtkWidget* alignmentLayout;
+    GtkWidget* secondaryToolbar;
 
 public:
     static constexpr int COLOR_BAR_HEIGHT = 4;
