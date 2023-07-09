@@ -222,8 +222,6 @@ void TextEditor::afterFontChange() {
 }
 
 void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextEditor* te) {
-    std::cout << "Changing text content: " << str << std::endl;
-
     gtk_text_buffer_begin_user_action(te->buffer.get());
 
     bool hadSelection = gtk_text_buffer_get_has_selection(te->buffer.get());
@@ -307,7 +305,6 @@ auto TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor
 }
 
 auto TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset, gint n_chars, TextEditor* te) -> bool {
-    std::cout << "Got here 123!!" << std::endl;
     GtkTextIter start = getIteratorAtCursor(te->buffer.get());
     GtkTextIter end = start;
 
@@ -340,12 +337,8 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
     GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
     bool canInsert = gtk_text_iter_can_insert(&iter, true);
 
-    std::cout << "Key Pressed Event: @ " << gtk_text_iter_get_offset(&iter) << " : canInsert=" << canInsert
-              << std::endl;
-
     // IME needs to handle the input first so the candidate window works correctly
     if (gtk_im_context_filter_keypress(this->imContext.get(), event)) {
-        std::cout << "Got here 1" << std::endl;
         this->needImReset = true;
         if (!canInsert) {
             this->resetImContext();
@@ -353,10 +346,8 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
         obscure = canInsert;
         retval = true;
     } else if (gtk_bindings_activate_event(G_OBJECT(this->textWidget.get()), event)) {
-        std::cout << "Got here 2" << std::endl;
         return true;
     } else if ((event->state & ~consumed & modifiers) == GDK_CONTROL_MASK) {
-        std::cout << "Got here 3" << std::endl;
         if (event->keyval == GDK_KEY_b || event->keyval == GDK_KEY_B) {
             toggleBoldFace();
             return true;
@@ -371,7 +362,6 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     } else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter ||
                event->keyval == GDK_KEY_KP_Enter) {
-        std::cout << "Got here 4" << std::endl;
         this->resetImContext();
         iMCommitCallback(nullptr, "\n", this);
 
@@ -382,7 +372,6 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
     else if ((event->keyval == GDK_KEY_Tab || event->keyval == GDK_KEY_KP_Tab ||
               event->keyval == GDK_KEY_ISO_Left_Tab) &&
              !(event->state & GDK_CONTROL_MASK)) {
-        std::cout << "Got here 5" << std::endl;
         resetImContext();
         Settings* settings = control->getSettings();
         if (!settings->getUseSpacesAsTab()) {
@@ -394,7 +383,6 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
         obscure = true;
         retval = true;
     } else {
-        std::cout << "Got here 6" << std::endl;
         retval = false;
     }
 
@@ -778,7 +766,6 @@ static auto find_whitepace_region(const GtkTextIter* center, GtkTextIter* start,
 }
 
 void TextEditor::deleteFromCursor(GtkDeleteType type, int count) {
-    std::cout << "Deleting / Removing from text" << type << ":" << count << std::endl;
 
     this->resetImContext();
 
@@ -917,8 +904,6 @@ bool TextEditor::deleteSelection() {
     if (gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end)) {
         int spos = gtk_text_iter_get_offset(&start);
         int delta = gtk_text_iter_get_offset(&end) - spos;
-        std::cout << "Delete selection: " << gtk_text_iter_get_offset(&end) << " - " << gtk_text_iter_get_offset(&start)
-                  << " = " << delta << std::endl;
         if (gtk_text_buffer_delete_selection(this->buffer.get(), true, true)) {
             this->updateTextAttributesPos(spos, delta, 0);
             this->contentsChanged();
