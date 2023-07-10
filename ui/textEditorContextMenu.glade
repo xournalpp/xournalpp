@@ -30,7 +30,7 @@
   <object class="GtkImage" id="imgClear">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="resource">xopp-edit-paste</property>
+    <property name="icon-name">xopp-edit-undo</property>
   </object>
   <object class="GtkImage" id="imgCollapse">
     <property name="visible">True</property>
@@ -62,6 +62,16 @@
     <property name="can-focus">False</property>
     <property name="icon-name">format-text-strikethrough</property>
   </object>
+  <object class="GtkImage" id="imgStyleItalic">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-snapping-grid</property>
+  </object>
+  <object class="GtkImage" id="imgStyleOblique">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-snapping-grid</property>
+  </object>
   <object class="GtkImage" id="imgSubscript">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -91,6 +101,21 @@
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="icon-name">format-text-underline</property>
+  </object>
+  <object class="GtkImage" id="imgWeightBold">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-snapping-grid</property>
+  </object>
+  <object class="GtkImage" id="imgWeightBook">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-snapping-grid</property>
+  </object>
+  <object class="GtkImage" id="imgWeightThin">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-snapping-grid</property>
   </object>
   <object class="GtkPopover" id="textEditorContextMenu">
     <property name="visible">True</property>
@@ -308,6 +333,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="image">imgWeightThin</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -320,6 +346,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="image">imgWeightBook</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -332,6 +359,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="image">imgWeightBold</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -358,6 +386,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="image">imgStyleItalic</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -370,6 +399,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="image">imgStyleOblique</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
