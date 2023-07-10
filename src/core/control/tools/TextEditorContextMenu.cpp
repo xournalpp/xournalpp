@@ -36,7 +36,6 @@ TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* edito
     // Only for debugging
     std::cout << "TextEditorContextMenu created!" << std::endl;
     this->create();
-    editor->getTextElement()->getAlignment();
 }
 
 TextEditorContextMenu::~TextEditorContextMenu() {
@@ -54,7 +53,7 @@ TextEditorContextMenu::~TextEditorContextMenu() {
 
 void TextEditorContextMenu::show() {
     if (!isVisible) {
-        this->switchAlignmentButtons(this->editor->getTextAlignment());
+        this->switchAlignmentButtons(this->editor->getTextElement()->getAlignment());
         this->reposition();
         this->showReducedMenu();
         gtk_popover_popup(this->contextMenu);
