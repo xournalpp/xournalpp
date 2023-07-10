@@ -36,6 +36,7 @@ TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* edito
     // Only for debugging
     std::cout << "TextEditorContextMenu created!" << std::endl;
     this->create();
+    editor->getTextElement()->getAlignment();
 }
 
 TextEditorContextMenu::~TextEditorContextMenu() {
@@ -53,6 +54,7 @@ TextEditorContextMenu::~TextEditorContextMenu() {
 
 void TextEditorContextMenu::show() {
     if (!isVisible) {
+        this->switchAlignmentButtons(this->editor->getTextAlignment());
         this->reposition();
         this->showReducedMenu();
         gtk_popover_popup(this->contextMenu);
@@ -97,11 +99,11 @@ void TextEditorContextMenu::reposition() {
 void TextEditorContextMenu::toggleSecondaryToolbar() {
     if (gtk_widget_is_visible(this->secondaryToolbar)) {
         std::cout << "Show secondary toolbar!" << std::endl;
-        gtk_button_set_image(this->expandTextDecoration, GTK_WIDGET(this->arrowDown));
+        gtk_button_set_image(this->expandTextDecoration, gtk_image_new_from_icon_name("go-down", GTK_ICON_SIZE_BUTTON));
         gtk_widget_set_visible(this->secondaryToolbar, false);
     } else {
         std::cout << "Hide secondary toolbar!" << std::endl;
-        gtk_button_set_image(this->expandTextDecoration, GTK_WIDGET(this->arrowUP));
+        gtk_button_set_image(this->expandTextDecoration, gtk_image_new_from_icon_name("go-up", GTK_ICON_SIZE_BUTTON));
         gtk_widget_set_visible(this->secondaryToolbar, true);
     }
 }
@@ -135,8 +137,7 @@ void TextEditorContextMenu::create() {
     g_signal_connect(tglUnderlineBtn, "released", G_CALLBACK(tglUnderlineStyle), this);
 
     this->expandTextDecoration = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoExpand"));
-    this->arrowDown = GTK_IMAGE(gtk_builder_get_object(builder, "imgExpand"));
-    this->arrowUP = GTK_IMAGE(gtk_builder_get_object(builder, "imgCollapse"));
+    gtk_button_set_image(this->expandTextDecoration, gtk_image_new_from_icon_name("go-down", GTK_ICON_SIZE_BUTTON));
     g_signal_connect(expandTextDecoration, "clicked", G_CALLBACK(tglSecToolbar), this);
 
 
@@ -207,28 +208,7 @@ void TextEditorContextMenu::changeBgColor() {
 }
 
 void TextEditorContextMenu::changeAlignment(TextAlignment align) {
-    switch (align) {
-        case TextAlignment::LEFT:
-            gtk_toggle_button_set_active(this->alignLeftTgl, true);
-            gtk_toggle_button_set_active(this->alignCenterTgl, false);
-            gtk_toggle_button_set_active(this->alignRightTgl, false);
-            break;
-        case TextAlignment::CENTER:
-            gtk_toggle_button_set_active(this->alignLeftTgl, false);
-            gtk_toggle_button_set_active(this->alignCenterTgl, true);
-            gtk_toggle_button_set_active(this->alignRightTgl, false);
-            break;
-        case TextAlignment::RIGHT:
-            gtk_toggle_button_set_active(this->alignLeftTgl, false);
-            gtk_toggle_button_set_active(this->alignCenterTgl, false);
-            gtk_toggle_button_set_active(this->alignRightTgl, true);
-            break;
-        default:
-            gtk_toggle_button_set_active(this->alignLeftTgl, false);
-            gtk_toggle_button_set_active(this->alignCenterTgl, false);
-            gtk_toggle_button_set_active(this->alignRightTgl, false);
-            break;
-    }
+    this->switchAlignmentButtons(align);
     this->editor->setTextAlignment(align);
     gtk_widget_grab_focus(this->xournalWidget);
 }
@@ -446,7 +426,34 @@ void TextEditorContextMenu::switchOverlineButtons(PangoOverline overlineValue) {
 }
 
 void TextEditorContextMenu::resetAllButtons() {
+    ftColor = {0.0, 0.0, 0.0, 1.0};
+    bgColor = {1.0, 0.0, 0.0, 1.0};
     gtk_toggle_button_set_active(this->tglBoldBtn, false);
     gtk_toggle_button_set_active(this->tglItalicBtn, false);
     gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
+}
+
+void TextEditorContextMenu::switchAlignmentButtons(TextAlignment alignment) {
+    switch (alignment) {
+        case TextAlignment::LEFT:
+            gtk_toggle_button_set_active(this->alignLeftTgl, true);
+            gtk_toggle_button_set_active(this->alignCenterTgl, false);
+            gtk_toggle_button_set_active(this->alignRightTgl, false);
+            break;
+        case TextAlignment::CENTER:
+            gtk_toggle_button_set_active(this->alignLeftTgl, false);
+            gtk_toggle_button_set_active(this->alignCenterTgl, true);
+            gtk_toggle_button_set_active(this->alignRightTgl, false);
+            break;
+        case TextAlignment::RIGHT:
+            gtk_toggle_button_set_active(this->alignLeftTgl, false);
+            gtk_toggle_button_set_active(this->alignCenterTgl, false);
+            gtk_toggle_button_set_active(this->alignRightTgl, true);
+            break;
+        default:
+            gtk_toggle_button_set_active(this->alignLeftTgl, false);
+            gtk_toggle_button_set_active(this->alignCenterTgl, false);
+            gtk_toggle_button_set_active(this->alignRightTgl, false);
+            break;
+    }
 }

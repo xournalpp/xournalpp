@@ -61,6 +61,8 @@ private:
 
     void resetAllButtons();
 
+    void switchAlignmentButtons(TextAlignment alignment);
+
     void switchStyleButtons(PangoStyle styleValue);
     void switchWeightButtons(PangoWeight weightValue);
     void switchUnderlineButtons(PangoUnderline underlineValue);

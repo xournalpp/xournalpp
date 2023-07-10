@@ -1305,3 +1305,11 @@ void TextEditor::addTextAttributeInline(PangoAttribute* attrib) {
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
 }
+
+TextAlignment TextEditor::getTextAlignment() {
+    if (this->textElement != nullptr) {
+        return this->textElement->getAlignment();
+    } else {
+        return this->originalTextElement->getAlignment();
+    }
+}

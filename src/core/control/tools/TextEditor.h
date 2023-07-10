@@ -92,6 +92,7 @@ public:
 
     void changeFontColorTemp(GtkButton* src);
 
+    TextAlignment getTextAlignment();
     void setTextAlignment(TextAlignment align);
     void setFontInline(PangoFontDescription* font);
     void setFontColorInline(GdkRGBA color);
