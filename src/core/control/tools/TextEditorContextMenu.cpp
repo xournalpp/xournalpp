@@ -318,6 +318,7 @@ void TextEditorContextMenu::applyAttributes() {
                 PangoAttrColor* bgColor = pango_attribute_as_color(p);
                 this->bgColor.red = double(bgColor->color.red) / double(UINT16_MAX);
                 this->bgColor.green = double(bgColor->color.green) / double(UINT16_MAX);
+                this->bgColor.blue = double(bgColor->color.blue) / double(UINT16_MAX);
                 this->bgColor.alpha = 1.0;
                 break;
             }
@@ -426,7 +427,7 @@ void TextEditorContextMenu::switchOverlineButtons(PangoOverline overlineValue) {
 
 void TextEditorContextMenu::resetAllButtons() {
     ftColor = {0.0, 0.0, 0.0, 1.0};
-    bgColor = {1.0, 0.0, 0.0, 1.0};
+    bgColor = {1.0, 1.0, 1.0, 0.0};
     gtk_toggle_button_set_active(this->tglBoldBtn, false);
     gtk_toggle_button_set_active(this->tglItalicBtn, false);
     gtk_toggle_button_set_active(this->tglUnderlineBtn, false);

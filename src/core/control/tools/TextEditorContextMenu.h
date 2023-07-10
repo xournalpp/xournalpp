@@ -89,7 +89,7 @@ private:
      * Default foreground & background colors
      */
     GdkRGBA ftColor{0.0, 0.0, 0.0, 1.0};  // black
-    GdkRGBA bgColor{1.0, 0.0, 0.0, 1.0};  // red
+    GdkRGBA bgColor{1.0, 1.0, 1.0, 0.0};  // red
 
     /**
      * UI Elements
