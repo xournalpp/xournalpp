@@ -1213,13 +1213,14 @@ void TextEditor::setBackgroundColorInline(GdkRGBA color) {
                                                        guint16(double(UINT16_MAX) * color.blue));
     attrib->start_index = std::get<0>(selection);
     attrib->end_index = std::get<1>(selection);
-
-    PangoAttribute* alpha = pango_attr_background_alpha_new(guint16(double(UINT16_MAX) * color.alpha) + 1);
-    alpha->start_index = std::get<0>(selection);
-    alpha->end_index = std::get<1>(selection);
-
     this->textElement->addAttribute(attrib);
-    this->textElement->addAttribute(alpha);
+
+    if (color.alpha != 1.0) {
+        PangoAttribute* alpha = pango_attr_background_alpha_new(guint16(double(UINT16_MAX) * color.alpha) + 1);
+        alpha->start_index = std::get<0>(selection);
+        alpha->end_index = std::get<1>(selection);
+        this->textElement->addAttribute(alpha);
+    }
 
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
