@@ -99,7 +99,9 @@ private:
     GtkToggleButton* tglBoldBtn;
     GtkToggleButton* tglItalicBtn;
     GtkToggleButton* tglUnderlineBtn;
+
     GtkButton* expandTextDecoration;
+    GtkImage *arrowDown, *arrowUP;
 
     GtkButton* ftColorBtn;
     GtkWidget* ftColorIcon;

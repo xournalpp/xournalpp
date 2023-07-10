@@ -97,9 +97,11 @@ void TextEditorContextMenu::reposition() {
 void TextEditorContextMenu::toggleSecondaryToolbar() {
     if (gtk_widget_is_visible(this->secondaryToolbar)) {
         std::cout << "Show secondary toolbar!" << std::endl;
+        gtk_button_set_image(this->expandTextDecoration, GTK_WIDGET(this->arrowDown));
         gtk_widget_set_visible(this->secondaryToolbar, false);
     } else {
         std::cout << "Hide secondary toolbar!" << std::endl;
+        gtk_button_set_image(this->expandTextDecoration, GTK_WIDGET(this->arrowUP));
         gtk_widget_set_visible(this->secondaryToolbar, true);
     }
 }
@@ -128,11 +130,15 @@ void TextEditorContextMenu::create() {
     this->tglBoldBtn = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnDecoBold"));
     this->tglItalicBtn = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnDecoItalic"));
     this->tglUnderlineBtn = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnDecoUnderline"));
-    this->expandTextDecoration = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoExpand"));
     g_signal_connect(tglBoldBtn, "released", G_CALLBACK(tglBoldStyle), this);
     g_signal_connect(tglItalicBtn, "released", G_CALLBACK(tglItalicStyle), this);
     g_signal_connect(tglUnderlineBtn, "released", G_CALLBACK(tglUnderlineStyle), this);
+
+    this->expandTextDecoration = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoExpand"));
+    this->arrowDown = GTK_IMAGE(gtk_builder_get_object(builder, "imgExpand"));
+    this->arrowUP = GTK_IMAGE(gtk_builder_get_object(builder, "imgCollapse"));
     g_signal_connect(expandTextDecoration, "clicked", G_CALLBACK(tglSecToolbar), this);
+
 
     this->ftColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
     this->bgColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnBgColor"));
