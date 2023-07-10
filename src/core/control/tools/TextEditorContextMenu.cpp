@@ -23,11 +23,11 @@ gboolean drawFtColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextM
 gboolean drawBgColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextMenu* tecm) {
     return tecm->drawBgColorIcon(src, cr);
 };
-
-void tglBoldStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleBoldStyle(); }
-void tglItalicStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleItalicStyle(); }
-void tglUnderlineStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleUnderlineStyle(); }
 void tglSecToolbar(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleSecondaryToolbar(); }
+
+void tglBoldStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleWeight(PANGO_WEIGHT_BOLD); }
+void tglItalicStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleStyle(PANGO_STYLE_ITALIC); }
+void tglUnderlineStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleUnderline(PANGO_UNDERLINE_SINGLE); }
 
 
 TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView,
@@ -129,9 +129,9 @@ void TextEditorContextMenu::create() {
     this->tglItalicBtn = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnDecoItalic"));
     this->tglUnderlineBtn = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnDecoUnderline"));
     this->expandTextDecoration = GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoExpand"));
-    g_signal_connect(tglBoldBtn, "clicked", G_CALLBACK(tglBoldStyle), this);
-    g_signal_connect(tglItalicBtn, "clicked", G_CALLBACK(tglItalicStyle), this);
-    g_signal_connect(tglUnderlineBtn, "clicked", G_CALLBACK(tglUnderlineStyle), this);
+    g_signal_connect(tglBoldBtn, "released", G_CALLBACK(tglBoldStyle), this);
+    g_signal_connect(tglItalicBtn, "released", G_CALLBACK(tglItalicStyle), this);
+    g_signal_connect(tglUnderlineBtn, "released", G_CALLBACK(tglUnderlineStyle), this);
     g_signal_connect(expandTextDecoration, "clicked", G_CALLBACK(tglSecToolbar), this);
 
     this->ftColorBtn = GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor"));
@@ -263,19 +263,37 @@ gboolean TextEditorContextMenu::drawBgColorIcon(GtkWidget* src, cairo_t* cr) {
     return FALSE;
 }
 
-void TextEditorContextMenu::toggleBoldStyle() {
+void TextEditorContextMenu::toggleWeight(PangoWeight weight) {
     std::cout << "Bold" << std::endl;
-    this->editor->addTextAttributeInline(pango_attr_weight_new(PANGO_WEIGHT_BOLD));
+    if (this->weight = weight) {
+        this->editor->addTextAttributeInline(pango_attr_weight_new(PANGO_WEIGHT_NORMAL));
+        this->switchWeightButtons(PANGO_WEIGHT_NORMAL);
+    } else {
+        this->editor->addTextAttributeInline(pango_attr_weight_new(weight));
+        this->switchWeightButtons(weight);
+    }
 }
 
-void TextEditorContextMenu::toggleItalicStyle() {
+void TextEditorContextMenu::toggleStyle(PangoStyle style) {
     std::cout << "Italic" << std::endl;
-    this->editor->addTextAttributeInline(pango_attr_style_new(PANGO_STYLE_ITALIC));
+    if (this->style = style) {
+        this->editor->addTextAttributeInline(pango_attr_style_new(PANGO_STYLE_NORMAL));
+        this->switchStyleButtons(PANGO_STYLE_NORMAL);
+    } else {
+        this->editor->addTextAttributeInline(pango_attr_style_new(style));
+        this->switchStyleButtons(style);
+    }
 }
 
-void TextEditorContextMenu::toggleUnderlineStyle() {
+void TextEditorContextMenu::toggleUnderline(PangoUnderline underline) {
     std::cout << "Underline" << std::endl;
-    this->editor->addTextAttributeInline(pango_attr_underline_new(PANGO_UNDERLINE_SINGLE));
+    if (this->underline == underline) {
+        this->editor->addTextAttributeInline(pango_attr_underline_new(PANGO_UNDERLINE_NONE));
+        this->switchUnderlineButtons(PANGO_UNDERLINE_NONE);
+    } else {
+        this->editor->addTextAttributeInline(pango_attr_underline_new(underline));
+        this->switchUnderlineButtons(underline);
+    }
 }
 
 void TextEditorContextMenu::setAttributes(std::list<PangoAttribute*> attributes) {
@@ -318,17 +336,17 @@ void TextEditorContextMenu::applyAttributes() {
             }
             case PANGO_ATTR_STYLE: {
                 PangoAttrInt* style = pango_attribute_as_int(p);
-                switchStyleButtons(style->value);
+                switchStyleButtons(static_cast<PangoStyle>(style->value));
                 break;
             }
             case PANGO_ATTR_WEIGHT: {
                 PangoAttrInt* weight = pango_attribute_as_int(p);
-                switchWeightButtons(weight->value);
+                switchWeightButtons(static_cast<PangoWeight>(weight->value));
                 break;
             }
             case PANGO_ATTR_UNDERLINE: {
                 PangoAttrInt* underline = pango_attribute_as_int(p);
-                switchUnderlineButtons(underline->value);
+                switchUnderlineButtons(static_cast<PangoUnderline>(underline->value));
                 break;
             }
             case PANGO_ATTR_STRIKETHROUGH: {
@@ -338,7 +356,7 @@ void TextEditorContextMenu::applyAttributes() {
             }
             case PANGO_ATTR_OVERLINE: {
                 PangoAttrInt* overline = pango_attribute_as_int(p);
-                switchOverlineButtons(overline->value);
+                switchOverlineButtons(static_cast<PangoOverline>(overline->value));
                 break;
             }
             default:
@@ -347,51 +365,52 @@ void TextEditorContextMenu::applyAttributes() {
     }
 }
 
-void TextEditorContextMenu::switchStyleButtons(int styleValue) {
+void TextEditorContextMenu::switchStyleButtons(PangoStyle styleValue) {
+    this->style = styleValue;
+    gtk_toggle_button_set_active(this->tglItalicBtn, false);
     switch (styleValue) {
         case PANGO_STYLE_NORMAL:
-            gtk_toggle_button_set_active(this->tglItalicBtn, false);
             break;
         case PANGO_STYLE_ITALIC:
             gtk_toggle_button_set_active(this->tglItalicBtn, true);
             break;
         case PANGO_STYLE_OBLIQUE:
-            gtk_toggle_button_set_active(this->tglItalicBtn, false);
+            break;
         default:
-            gtk_toggle_button_set_active(this->tglItalicBtn, false);
             break;
     }
 }
 
-void TextEditorContextMenu::switchWeightButtons(int weightValue) {
+void TextEditorContextMenu::switchWeightButtons(PangoWeight weightValue) {
+    this->weight = weightValue;
+    gtk_toggle_button_set_active(this->tglBoldBtn, false);
     switch (weightValue) {
         case PANGO_WEIGHT_NORMAL:
-            gtk_toggle_button_set_active(this->tglBoldBtn, false);
             break;
         case PANGO_WEIGHT_BOLD:
             gtk_toggle_button_set_active(this->tglBoldBtn, true);
             break;
         default:
-            gtk_toggle_button_set_active(this->tglBoldBtn, false);
             break;
     }
 }
 
-void TextEditorContextMenu::switchUnderlineButtons(int underlineValue) {
+void TextEditorContextMenu::switchUnderlineButtons(PangoUnderline underlineValue) {
+    this->underline = underlineValue;
+    gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
     switch (underlineValue) {
         case PANGO_UNDERLINE_NONE:
-            gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
             break;
         case PANGO_UNDERLINE_SINGLE:
             gtk_toggle_button_set_active(this->tglUnderlineBtn, true);
             break;
         default:
-            gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
             break;
     }
 }
 
 void TextEditorContextMenu::switchStrikethroughButtons(int stValue) {
+    this->strikethrough = stValue;
     switch (stValue) {
         case TRUE:
             break;
@@ -402,7 +421,8 @@ void TextEditorContextMenu::switchStrikethroughButtons(int stValue) {
     }
 }
 
-void TextEditorContextMenu::switchOverlineButtons(int overlineValue) {
+void TextEditorContextMenu::switchOverlineButtons(PangoOverline overlineValue) {
+    this->overline = overlineValue;
     switch (overlineValue) {
         case PANGO_OVERLINE_NONE:
             break;

@@ -44,9 +44,12 @@ public:
     void changeFtColor();
     void changeBgColor();
     void changeAlignment(TextAlignment align);
-    void toggleBoldStyle();
-    void toggleItalicStyle();
-    void toggleUnderlineStyle();
+
+    void toggleStyle(PangoStyle style);
+    void toggleWeight(PangoWeight weight);
+    void toggleUnderline(PangoUnderline underline);
+    void toggleStrikethrough(int strikethrough);
+    void toggleOverline(PangoOverline overline);
 
     gboolean drawFtColorIcon(GtkWidget* src, cairo_t* cr);
     gboolean drawBgColorIcon(GtkWidget* src, cairo_t* cr);
@@ -56,11 +59,11 @@ private:
     void applyAttributes();
     void clearAttributes();
 
-    void switchStyleButtons(int styleValue);
-    void switchWeightButtons(int weightValue);
-    void switchUnderlineButtons(int underlineValue);
+    void switchStyleButtons(PangoStyle styleValue);
+    void switchWeightButtons(PangoWeight weightValue);
+    void switchUnderlineButtons(PangoUnderline underlineValue);
     void switchStrikethroughButtons(int stValue);
-    void switchOverlineButtons(int overlineValue);
+    void switchOverlineButtons(PangoOverline overlineValue);
 
 
 private:
@@ -71,6 +74,12 @@ private:
 
     bool isVisible = false;
     std::list<PangoAttribute*> attributes = {};
+
+    PangoStyle style = PANGO_STYLE_NORMAL;
+    PangoWeight weight = PANGO_WEIGHT_NORMAL;
+    PangoUnderline underline = PANGO_UNDERLINE_NONE;
+    int strikethrough = FALSE;
+    PangoOverline overline = PANGO_OVERLINE_NONE;
 
     /**
      * Default foreground & background colors
