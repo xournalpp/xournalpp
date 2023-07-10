@@ -59,6 +59,8 @@ private:
     void applyAttributes();
     void clearAttributes();
 
+    void resetAllButtons();
+
     void switchStyleButtons(PangoStyle styleValue);
     void switchWeightButtons(PangoWeight weightValue);
     void switchUnderlineButtons(PangoUnderline underlineValue);

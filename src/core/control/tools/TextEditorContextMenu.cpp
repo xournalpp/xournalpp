@@ -265,7 +265,7 @@ gboolean TextEditorContextMenu::drawBgColorIcon(GtkWidget* src, cairo_t* cr) {
 
 void TextEditorContextMenu::toggleWeight(PangoWeight weight) {
     std::cout << "Bold" << std::endl;
-    if (this->weight = weight) {
+    if (this->weight == weight) {
         this->editor->addTextAttributeInline(pango_attr_weight_new(PANGO_WEIGHT_NORMAL));
         this->switchWeightButtons(PANGO_WEIGHT_NORMAL);
     } else {
@@ -276,7 +276,7 @@ void TextEditorContextMenu::toggleWeight(PangoWeight weight) {
 
 void TextEditorContextMenu::toggleStyle(PangoStyle style) {
     std::cout << "Italic" << std::endl;
-    if (this->style = style) {
+    if (this->style == style) {
         this->editor->addTextAttributeInline(pango_attr_style_new(PANGO_STYLE_NORMAL));
         this->switchStyleButtons(PANGO_STYLE_NORMAL);
     } else {
@@ -297,7 +297,9 @@ void TextEditorContextMenu::toggleUnderline(PangoUnderline underline) {
 }
 
 void TextEditorContextMenu::setAttributes(std::list<PangoAttribute*> attributes) {
+    std::cout << "ContectMenu.setAttributes: " << attributes.size() << std::endl;
     this->clearAttributes();
+    this->resetAllButtons();
     for (PangoAttribute* a: attributes) {
         this->attributes.push_back(a);
     }
@@ -340,6 +342,7 @@ void TextEditorContextMenu::applyAttributes() {
                 break;
             }
             case PANGO_ATTR_WEIGHT: {
+                std::cout << "Got here 1" << std::endl;
                 PangoAttrInt* weight = pango_attribute_as_int(p);
                 switchWeightButtons(static_cast<PangoWeight>(weight->value));
                 break;
@@ -382,12 +385,15 @@ void TextEditorContextMenu::switchStyleButtons(PangoStyle styleValue) {
 }
 
 void TextEditorContextMenu::switchWeightButtons(PangoWeight weightValue) {
+    std::cout << "Got here 2!" << std::endl;
     this->weight = weightValue;
     gtk_toggle_button_set_active(this->tglBoldBtn, false);
     switch (weightValue) {
         case PANGO_WEIGHT_NORMAL:
+            std::cout << "Got here 3.1!" << std::endl;
             break;
         case PANGO_WEIGHT_BOLD:
+            std::cout << "Got here 3.2!" << std::endl;
             gtk_toggle_button_set_active(this->tglBoldBtn, true);
             break;
         default:
@@ -431,4 +437,10 @@ void TextEditorContextMenu::switchOverlineButtons(PangoOverline overlineValue) {
         default:
             break;
     }
+}
+
+void TextEditorContextMenu::resetAllButtons() {
+    gtk_toggle_button_set_active(this->tglBoldBtn, false);
+    gtk_toggle_button_set_active(this->tglItalicBtn, false);
+    gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
 }

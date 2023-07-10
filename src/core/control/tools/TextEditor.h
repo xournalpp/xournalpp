@@ -183,6 +183,7 @@ private:
      * @brief Pointer to the context menu displayed above the text editor
      */
     std::unique_ptr<TextEditorContextMenu> contextMenu;
+    std::tuple<int, int> previousSelection = std::make_tuple(0, 0);
 
     /**
      * @brief Text element under edition, clone of the original Text element (if any)

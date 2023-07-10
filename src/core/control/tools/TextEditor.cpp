@@ -653,14 +653,42 @@ void TextEditor::mousePressed(double x, double y) {
 void TextEditor::mouseMoved(double x, double y) {
     if (this->mouseDown) {
         markPos(x, y, true);
+
+        if (this->hasSelection()) {
+            auto selection = this->getCurrentSelection().value();
+            if (std::get<0>(selection) == std::get<0>(this->previousSelection) &&
+                std::get<1>(selection) == std::get<1>(this->previousSelection)) {
+                return;
+            }
+            GSList* attribs = pango_attr_list_get_attributes(pango_layout_get_attributes(this->getUpToDateLayout()));
+            std::list<PangoAttribute*> filteredList = {};
+            for (int i = 0; i < g_slist_length(attribs); i++) {
+                PangoAttribute* attrib = (PangoAttribute*)g_slist_nth_data(attribs, i);
+                if (attrib->start_index <= std::get<0>(selection) && attrib->end_index >= std::get<1>(selection)) {
+                    filteredList.push_back(attrib);
+                } else {
+                    pango_attribute_destroy(attrib);
+                }
+            }
+            g_slist_free(attribs);
+            this->contextMenu->setAttributes(filteredList);
+            this->contextMenu->showFullMenu();
+            this->previousSelection = selection;
+        } else {
+            this->contextMenu->showReducedMenu();
+        }
     }
 }
 
 void TextEditor::mouseReleased() {
-    std::cout << "\n Mouse released" << std::endl;
     this->mouseDown = false;
+
     if (this->hasSelection()) {
         auto selection = this->getCurrentSelection().value();
+        if (std::get<0>(selection) == std::get<0>(this->previousSelection) &&
+            std::get<1>(selection) == std::get<1>(this->previousSelection)) {
+            return;
+        }
         GSList* attribs = pango_attr_list_get_attributes(pango_layout_get_attributes(this->getUpToDateLayout()));
         std::list<PangoAttribute*> filteredList = {};
         for (int i = 0; i < g_slist_length(attribs); i++) {
@@ -674,6 +702,7 @@ void TextEditor::mouseReleased() {
         g_slist_free(attribs);
         this->contextMenu->setAttributes(filteredList);
         this->contextMenu->showFullMenu();
+        this->previousSelection = selection;
     } else {
         this->contextMenu->showReducedMenu();
     }
