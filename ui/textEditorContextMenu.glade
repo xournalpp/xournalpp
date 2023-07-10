@@ -121,7 +121,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <child>
-                  <object class="GtkButton" id="btnDecoBold">
+                  <object class="GtkToggleButton" id="btnDecoBold">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -134,7 +134,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btnDecoItalic">
+                  <object class="GtkToggleButton" id="btnDecoItalic">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -147,7 +147,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btnDecoUnderline">
+                  <object class="GtkToggleButton" id="btnDecoUnderline">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -296,7 +296,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <child>
-                  <object class="GtkButton" id="btnUnderlineSingle">
+                  <object class="GtkToggleButton" id="btnUnderlineSingle">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -309,7 +309,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btnUnderlineError">
+                  <object class="GtkToggleButton" id="btnUnderlineError">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -322,7 +322,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btnUnderlineDouble">
+                  <object class="GtkToggleButton" id="btnUnderlineDouble">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -335,7 +335,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btnStrikethrough">
+                  <object class="GtkToggleButton" id="btnStrikethrough">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -348,7 +348,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btnOverlineSingle">
+                  <object class="GtkToggleButton" id="btnOverlineSingle">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -375,7 +375,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <child>
-                  <object class="GtkButton" id="btnSuperscript">
+                  <object class="GtkToggleButton" id="btnSuperscript">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -388,7 +388,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="btnSubscript">
+                  <object class="GtkToggleButton" id="btnSubscript">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>

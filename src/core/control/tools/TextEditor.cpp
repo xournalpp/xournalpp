@@ -657,8 +657,22 @@ void TextEditor::mouseMoved(double x, double y) {
 }
 
 void TextEditor::mouseReleased() {
+    std::cout << "\n Mouse released" << std::endl;
     this->mouseDown = false;
     if (this->hasSelection()) {
+        auto selection = this->getCurrentSelection().value();
+        GSList* attribs = pango_attr_list_get_attributes(pango_layout_get_attributes(this->getUpToDateLayout()));
+        std::list<PangoAttribute*> filteredList = {};
+        for (int i = 0; i < g_slist_length(attribs); i++) {
+            PangoAttribute* attrib = (PangoAttribute*)g_slist_nth_data(attribs, i);
+            if (attrib->start_index <= std::get<0>(selection) && attrib->end_index >= std::get<1>(selection)) {
+                filteredList.push_back(attrib);
+            } else {
+                pango_attribute_destroy(attrib);
+            }
+        }
+        g_slist_free(attribs);
+        this->contextMenu->setAttributes(filteredList);
         this->contextMenu->showFullMenu();
     } else {
         this->contextMenu->showReducedMenu();

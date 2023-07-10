@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <list>  // for std::list
+
 #include <gdk/gdk.h>  // for g_signal_connect
 #include <gtk/gtk.h>  // for GtkPopover, etc.
 
@@ -26,6 +28,11 @@ public:
 
     void show();
     void hide();
+
+    /**
+     * Instance takes ownership of attributes and is responsible for freeing them
+     */
+    void setAttributes(std::list<PangoAttribute*> attributes);
 
     void showReducedMenu();
     void showFullMenu();
@@ -46,6 +53,14 @@ public:
 
 private:
     void create();
+    void applyAttributes();
+    void clearAttributes();
+
+    void switchStyleButtons(int styleValue);
+    void switchWeightButtons(int weightValue);
+    void switchUnderlineButtons(int underlineValue);
+    void switchStrikethroughButtons(int stValue);
+    void switchOverlineButtons(int overlineValue);
 
 
 private:
@@ -55,6 +70,7 @@ private:
     GtkWidget* xournalWidget;
 
     bool isVisible = false;
+    std::list<PangoAttribute*> attributes = {};
 
     /**
      * Default foreground & background colors
@@ -69,9 +85,9 @@ private:
 
     GtkFontButton* fontBtn;
 
-    GtkButton* tglBoldBtn;
-    GtkButton* tglItalicBtn;
-    GtkButton* tglUnderlineBtn;
+    GtkToggleButton* tglBoldBtn;
+    GtkToggleButton* tglItalicBtn;
+    GtkToggleButton* tglUnderlineBtn;
     GtkButton* expandTextDecoration;
 
     GtkButton* ftColorBtn;
