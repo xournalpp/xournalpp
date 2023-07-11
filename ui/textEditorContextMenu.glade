@@ -25,7 +25,7 @@
   <object class="GtkImage" id="imgBold">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-bold</property>
+    <property name="icon-name">xopp-bold</property>
   </object>
   <object class="GtkImage" id="imgClear">
     <property name="visible">True</property>
@@ -50,72 +50,72 @@
   <object class="GtkImage" id="imgItalic">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-italic</property>
+    <property name="icon-name">xopp-italic</property>
   </object>
   <object class="GtkImage" id="imgOverlineSingle">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-underline</property>
+    <property name="icon-name">xopp-overline</property>
   </object>
   <object class="GtkImage" id="imgStrikethrough">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-strikethrough</property>
+    <property name="icon-name">xopp-strikethrough</property>
   </object>
   <object class="GtkImage" id="imgStyleItalic">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">xopp-snapping-grid</property>
+    <property name="icon-name">xopp-italic</property>
   </object>
   <object class="GtkImage" id="imgStyleOblique">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">xopp-snapping-grid</property>
+    <property name="icon-name">xopp-oblique</property>
   </object>
   <object class="GtkImage" id="imgSubscript">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-subscript</property>
+    <property name="icon-name">xopp-subscript</property>
   </object>
   <object class="GtkImage" id="imgSuperscript">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-superscript</property>
+    <property name="icon-name">xopp-superscript</property>
   </object>
   <object class="GtkImage" id="imgUnderline">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-underline</property>
+    <property name="icon-name">xopp-underline</property>
   </object>
   <object class="GtkImage" id="imgUnderlineDouble">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-underline-symbolic</property>
+    <property name="icon-name">xopp-underline-double</property>
   </object>
   <object class="GtkImage" id="imgUnderlineError">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-underline-squiggle</property>
+    <property name="icon-name">xopp-underline-error</property>
   </object>
   <object class="GtkImage" id="imgUnderlineSingle">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">format-text-underline</property>
+    <property name="icon-name">xopp-underline</property>
   </object>
   <object class="GtkImage" id="imgWeightBold">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">xopp-snapping-grid</property>
+    <property name="icon-name">xopp-bold</property>
   </object>
   <object class="GtkImage" id="imgWeightBook">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">xopp-snapping-grid</property>
+    <property name="icon-name">xopp-normal</property>
   </object>
   <object class="GtkImage" id="imgWeightThin">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">xopp-snapping-grid</property>
+    <property name="icon-name">xopp-thin</property>
   </object>
   <object class="GtkPopover" id="textEditorContextMenu">
     <property name="visible">True</property>
