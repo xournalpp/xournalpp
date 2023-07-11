@@ -424,7 +424,7 @@ void TextEditorContextMenu::switchOverlineButtons(PangoOverline overlineValue) {
 
 void TextEditorContextMenu::resetContextMenuState() {
     PangoFontDescription* desc = pango_font_description_from_string(editor->getTextElement()->getFontName().c_str());
-    pango_font_description_set_absolute_size(desc, editor->getTextElement()->getFontSize() * PANGO_SCALE);
+    pango_font_description_set_size(desc, editor->getTextElement()->getFontSize() * PANGO_SCALE);
     gtk_font_chooser_set_font_desc(GTK_FONT_CHOOSER(this->fontBtn), desc);
     ftColor = {0.0, 0.0, 0.0, 1.0};
     bgColor = {1.0, 1.0, 1.0, 0.0};
