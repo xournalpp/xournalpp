@@ -6,6 +6,7 @@
 #include "control/Control.h"                // for Control
 #include "gui/GladeSearchpath.h"            // for GladeSearchPath
 #include "gui/PageView.h"                   // for PageView
+#include "model/Font.h"                     // for XojFont
 #include "model/Text.h"                     // for Text
 #include "view/overlays/TextEditionView.h"  // for TextEditionView
 
@@ -284,7 +285,7 @@ void TextEditorContextMenu::toggleUnderline(PangoUnderline underline) {
 void TextEditorContextMenu::setAttributes(std::list<PangoAttribute*> attributes) {
     std::cout << "ContectMenu.setAttributes: " << attributes.size() << std::endl;
     this->clearAttributes();
-    this->resetAllButtons();
+    this->resetContextMenuState();
     for (PangoAttribute* a: attributes) {
         this->attributes.push_back(a);
     }
@@ -328,7 +329,6 @@ void TextEditorContextMenu::applyAttributes() {
                 break;
             }
             case PANGO_ATTR_WEIGHT: {
-                std::cout << "Got here 1" << std::endl;
                 PangoAttrInt* weight = pango_attribute_as_int(p);
                 switchWeightButtons(static_cast<PangoWeight>(weight->value));
                 break;
@@ -371,15 +371,12 @@ void TextEditorContextMenu::switchStyleButtons(PangoStyle styleValue) {
 }
 
 void TextEditorContextMenu::switchWeightButtons(PangoWeight weightValue) {
-    std::cout << "Got here 2!" << std::endl;
     this->weight = weightValue;
     gtk_toggle_button_set_active(this->tglBoldBtn, false);
     switch (weightValue) {
         case PANGO_WEIGHT_NORMAL:
-            std::cout << "Got here 3.1!" << std::endl;
             break;
         case PANGO_WEIGHT_BOLD:
-            std::cout << "Got here 3.2!" << std::endl;
             gtk_toggle_button_set_active(this->tglBoldBtn, true);
             break;
         default:
@@ -425,12 +422,19 @@ void TextEditorContextMenu::switchOverlineButtons(PangoOverline overlineValue) {
     }
 }
 
-void TextEditorContextMenu::resetAllButtons() {
+void TextEditorContextMenu::resetContextMenuState() {
+    PangoFontDescription* desc = pango_font_description_from_string(editor->getTextElement()->getFontName().c_str());
+    pango_font_description_set_absolute_size(desc, editor->getTextElement()->getFontSize() * PANGO_SCALE);
+    gtk_font_chooser_set_font_desc(GTK_FONT_CHOOSER(this->fontBtn), desc);
     ftColor = {0.0, 0.0, 0.0, 1.0};
     bgColor = {1.0, 1.0, 1.0, 0.0};
-    gtk_toggle_button_set_active(this->tglBoldBtn, false);
-    gtk_toggle_button_set_active(this->tglItalicBtn, false);
-    gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
+    gtk_widget_queue_draw(GTK_WIDGET(this->ftColorBtn));
+    gtk_widget_queue_draw(GTK_WIDGET(this->bgColorBtn));
+    this->switchWeightButtons(PANGO_WEIGHT_NORMAL);
+    this->switchStyleButtons(PANGO_STYLE_NORMAL);
+    this->switchUnderlineButtons(PANGO_UNDERLINE_NONE);
+    this->switchStrikethroughButtons(FALSE);
+    this->switchOverlineButtons(PANGO_OVERLINE_NONE);
 }
 
 void TextEditorContextMenu::switchAlignmentButtons(TextAlignment alignment) {

@@ -59,7 +59,7 @@ private:
     void applyAttributes();
     void clearAttributes();
 
-    void resetAllButtons();
+    void resetContextMenuState();
 
     void switchAlignmentButtons(TextAlignment alignment);
 
@@ -89,7 +89,7 @@ private:
      * Default foreground & background colors
      */
     GdkRGBA ftColor{0.0, 0.0, 0.0, 1.0};  // black
-    GdkRGBA bgColor{1.0, 1.0, 1.0, 0.0};  // red
+    GdkRGBA bgColor{1.0, 1.0, 1.0, 0.0};  // transparent white
 
     /**
      * UI Elements
@@ -103,7 +103,6 @@ private:
     GtkToggleButton* tglUnderlineBtn;
 
     GtkButton* expandTextDecoration;
-    GtkImage *arrowDown, *arrowUP;
 
     GtkButton* ftColorBtn;
     GtkWidget* ftColorIcon;
