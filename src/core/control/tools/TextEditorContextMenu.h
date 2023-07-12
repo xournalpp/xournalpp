@@ -118,6 +118,25 @@ private:
     GtkWidget* alignmentLayout;
     GtkWidget* secondaryToolbar;
 
+    GtkToggleButton* tglWeightThin;
+    GtkToggleButton* tglWeightBook;
+    GtkToggleButton* tglWeightBold;
+
+    GtkToggleButton* tglStyleItalic;
+    GtkToggleButton* tglStyleOblique;
+
+    GtkToggleButton* tglUnderlineSingle;
+    GtkToggleButton* tglUnderlineSquiggle;
+    GtkToggleButton* tglUnderlineDouble;
+    GtkToggleButton* tglStrikethrough;
+    GtkToggleButton* tglOverlineSingle;
+
+    GtkToggleButton* tglSuperScript;
+    GtkToggleButton* tglSubScript;
+
+    GtkButton* removeStyles;
+
+
 public:
     static constexpr int COLOR_BAR_HEIGHT = 4;
 };

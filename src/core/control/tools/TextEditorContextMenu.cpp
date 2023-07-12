@@ -31,6 +31,32 @@ void tglItalicStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleS
 void tglUnderlineStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleUnderline(PANGO_UNDERLINE_SINGLE); }
 
 
+void toggleWeightThinClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleWeight(PANGO_WEIGHT_THIN); }
+void toggleWeightBookClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleWeight(PANGO_WEIGHT_BOOK); }
+void toggleWeightBoldClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleWeight(PANGO_WEIGHT_BOLD); }
+
+void toggleStyleItalicClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleStyle(PANGO_STYLE_ITALIC); }
+void toggleStyleObliqueClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleStyle(PANGO_STYLE_OBLIQUE);
+}
+void toggleUnderlineSingleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleUnderline(PANGO_UNDERLINE_SINGLE);
+}
+void toggleUnderlineSquiggleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleUnderline(PANGO_UNDERLINE_ERROR);
+}
+void toggleUnderlineDoubleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleUnderline(PANGO_UNDERLINE_DOUBLE);
+}
+void toggleStrikethroughClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleStrikethrough(TRUE); }
+void toggleOverlineSingleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleOverline(PANGO_OVERLINE_SINGLE);
+}
+
+void toggleSuperScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {}
+void toggleSubScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {}
+
+
 TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView,
                                              GtkWidget* xournalWidget):
         control(control), editor(editor), pageView(pageView), xournalWidget(xournalWidget) {
@@ -166,6 +192,33 @@ void TextEditorContextMenu::create() {
     this->alignmentLayout = GTK_WIDGET(gtk_builder_get_object(builder, "alignmentLayout"));
     this->secondaryToolbar = GTK_WIDGET(gtk_builder_get_object(builder, "secondaryToolbar"));
 
+
+    tglWeightThin = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnWeightThin"));
+    tglWeightBook = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnWeightBook"));
+    tglWeightBold = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnWeightBold"));
+    g_signal_connect(this->tglWeightThin, "released", G_CALLBACK(toggleWeightThinClb), this);
+    g_signal_connect(this->tglWeightBook, "released", G_CALLBACK(toggleWeightBookClb), this);
+    g_signal_connect(this->tglWeightBold, "released", G_CALLBACK(toggleWeightBoldClb), this);
+
+    tglStyleItalic = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnStyleItalic"));
+    tglStyleOblique = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnStyleOblique"));
+    g_signal_connect(this->tglStyleItalic, "released", G_CALLBACK(toggleStyleItalicClb), this);
+    g_signal_connect(this->tglStyleOblique, "released", G_CALLBACK(toggleStyleObliqueClb), this);
+
+    tglUnderlineSingle = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnUnderlineSingle"));
+    tglUnderlineSquiggle = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnUnderlineError"));
+    tglUnderlineDouble = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnUnderlineDouble"));
+    tglStrikethrough = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnStrikethrough"));
+    tglOverlineSingle = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnOverlineSingle"));
+    g_signal_connect(this->tglUnderlineSingle, "released", G_CALLBACK(toggleUnderlineSingleClb), this);
+    g_signal_connect(this->tglUnderlineSquiggle, "released", G_CALLBACK(toggleUnderlineSquiggleClb), this);
+    g_signal_connect(this->tglUnderlineDouble, "released", G_CALLBACK(toggleUnderlineDoubleClb), this);
+    g_signal_connect(this->tglStrikethrough, "released", G_CALLBACK(toggleStrikethroughClb), this);
+    g_signal_connect(this->tglOverlineSingle, "released", G_CALLBACK(toggleOverlineSingleClb), this);
+
+    tglSuperScript = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnSuperscript"));
+    tglSubScript = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnSubscript"));
+
     g_object_unref(G_OBJECT(builder));
 }
 
@@ -250,7 +303,7 @@ gboolean TextEditorContextMenu::drawBgColorIcon(GtkWidget* src, cairo_t* cr) {
 }
 
 void TextEditorContextMenu::toggleWeight(PangoWeight weight) {
-    std::cout << "Bold" << std::endl;
+    std::cout << "Weight" << std::endl;
     if (this->weight == weight) {
         this->editor->addTextAttributeInline(pango_attr_weight_new(PANGO_WEIGHT_NORMAL));
         this->switchWeightButtons(PANGO_WEIGHT_NORMAL);
@@ -261,7 +314,7 @@ void TextEditorContextMenu::toggleWeight(PangoWeight weight) {
 }
 
 void TextEditorContextMenu::toggleStyle(PangoStyle style) {
-    std::cout << "Italic" << std::endl;
+    std::cout << "Style" << std::endl;
     if (this->style == style) {
         this->editor->addTextAttributeInline(pango_attr_style_new(PANGO_STYLE_NORMAL));
         this->switchStyleButtons(PANGO_STYLE_NORMAL);
@@ -279,6 +332,31 @@ void TextEditorContextMenu::toggleUnderline(PangoUnderline underline) {
     } else {
         this->editor->addTextAttributeInline(pango_attr_underline_new(underline));
         this->switchUnderlineButtons(underline);
+    }
+}
+
+void TextEditorContextMenu::toggleStrikethrough(int strikethrough) {
+    std::cout << "Stikethrough" << std::endl;
+    if (this->strikethrough == TRUE) {
+        this->editor->addTextAttributeInline(pango_attr_strikethrough_new(FALSE));
+        this->switchStrikethroughButtons(FALSE);
+    } else {
+        this->editor->addTextAttributeInline(pango_attr_strikethrough_new(TRUE));
+        this->switchStrikethroughButtons(TRUE);
+    }
+}
+
+void TextEditorContextMenu::toggleOverline(PangoOverline overline) {
+    std::cout << "Overline" << std::endl;
+    if (this->overline == overline) {
+        this->editor->addTextAttributeInline(pango_attr_overline_new(PANGO_OVERLINE_NONE));
+        this->switchOverlineButtons(PANGO_OVERLINE_NONE);
+    } else {
+        std::cout << "Got here 1!" << std::endl;
+        this->editor->addTextAttributeInline(pango_attr_overline_new(overline));
+        std::cout << "Got here 2!" << std::endl;
+        this->switchOverlineButtons(overline);
+        std::cout << "Got here 3!" << std::endl;
     }
 }
 
@@ -356,44 +434,84 @@ void TextEditorContextMenu::applyAttributes() {
 
 void TextEditorContextMenu::switchStyleButtons(PangoStyle styleValue) {
     this->style = styleValue;
-    gtk_toggle_button_set_active(this->tglItalicBtn, false);
     switch (styleValue) {
-        case PANGO_STYLE_NORMAL:
-            break;
         case PANGO_STYLE_ITALIC:
             gtk_toggle_button_set_active(this->tglItalicBtn, true);
+            gtk_toggle_button_set_active(this->tglStyleItalic, true);
+            gtk_toggle_button_set_active(this->tglStyleOblique, false);
             break;
         case PANGO_STYLE_OBLIQUE:
+            gtk_toggle_button_set_active(this->tglItalicBtn, false);
+            gtk_toggle_button_set_active(this->tglStyleItalic, false);
+            gtk_toggle_button_set_active(this->tglStyleOblique, true);
             break;
+        case PANGO_STYLE_NORMAL:
         default:
+            gtk_toggle_button_set_active(this->tglItalicBtn, false);
+            gtk_toggle_button_set_active(this->tglStyleItalic, false);
+            gtk_toggle_button_set_active(this->tglStyleOblique, false);
             break;
     }
 }
 
 void TextEditorContextMenu::switchWeightButtons(PangoWeight weightValue) {
     this->weight = weightValue;
-    gtk_toggle_button_set_active(this->tglBoldBtn, false);
     switch (weightValue) {
-        case PANGO_WEIGHT_NORMAL:
+        case PANGO_WEIGHT_THIN:
+            gtk_toggle_button_set_active(this->tglBoldBtn, false);
+            gtk_toggle_button_set_active(this->tglWeightThin, true);
+            gtk_toggle_button_set_active(this->tglWeightBook, false);
+            gtk_toggle_button_set_active(this->tglWeightBold, false);
+            break;
+        case PANGO_WEIGHT_BOOK:
+            gtk_toggle_button_set_active(this->tglBoldBtn, false);
+            gtk_toggle_button_set_active(this->tglWeightThin, false);
+            gtk_toggle_button_set_active(this->tglWeightBook, true);
+            gtk_toggle_button_set_active(this->tglWeightBold, false);
             break;
         case PANGO_WEIGHT_BOLD:
             gtk_toggle_button_set_active(this->tglBoldBtn, true);
+            gtk_toggle_button_set_active(this->tglWeightThin, false);
+            gtk_toggle_button_set_active(this->tglWeightBook, false);
+            gtk_toggle_button_set_active(this->tglWeightBold, true);
             break;
+        case PANGO_WEIGHT_NORMAL:
         default:
+            gtk_toggle_button_set_active(this->tglBoldBtn, false);
+            gtk_toggle_button_set_active(this->tglWeightThin, false);
+            gtk_toggle_button_set_active(this->tglWeightBook, false);
+            gtk_toggle_button_set_active(this->tglWeightBold, false);
             break;
     }
 }
 
 void TextEditorContextMenu::switchUnderlineButtons(PangoUnderline underlineValue) {
     this->underline = underlineValue;
-    gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
     switch (underlineValue) {
-        case PANGO_UNDERLINE_NONE:
-            break;
         case PANGO_UNDERLINE_SINGLE:
             gtk_toggle_button_set_active(this->tglUnderlineBtn, true);
+            gtk_toggle_button_set_active(this->tglUnderlineSingle, true);
+            gtk_toggle_button_set_active(this->tglUnderlineSquiggle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineDouble, false);
             break;
+        case PANGO_UNDERLINE_ERROR:
+            gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSingle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSquiggle, true);
+            gtk_toggle_button_set_active(this->tglUnderlineDouble, false);
+            break;
+        case PANGO_UNDERLINE_DOUBLE:
+            gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSingle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSquiggle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineDouble, true);
+            break;
+        case PANGO_UNDERLINE_NONE:
         default:
+            gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSingle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSquiggle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineDouble, false);
             break;
     }
 }
@@ -402,10 +520,13 @@ void TextEditorContextMenu::switchStrikethroughButtons(int stValue) {
     this->strikethrough = stValue;
     switch (stValue) {
         case TRUE:
+            gtk_toggle_button_set_active(this->tglStrikethrough, true);
             break;
         case FALSE:
+            gtk_toggle_button_set_active(this->tglStrikethrough, false);
             break;
         default:
+            gtk_toggle_button_set_active(this->tglStrikethrough, false);
             break;
     }
 }
@@ -413,11 +534,12 @@ void TextEditorContextMenu::switchStrikethroughButtons(int stValue) {
 void TextEditorContextMenu::switchOverlineButtons(PangoOverline overlineValue) {
     this->overline = overlineValue;
     switch (overlineValue) {
-        case PANGO_OVERLINE_NONE:
-            break;
         case PANGO_OVERLINE_SINGLE:
+            gtk_toggle_button_set_active(this->tglOverlineSingle, true);
             break;
+        case PANGO_OVERLINE_NONE:
         default:
+            gtk_toggle_button_set_active(this->tglOverlineSingle, false);
             break;
     }
 }

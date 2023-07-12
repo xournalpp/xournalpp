@@ -10,6 +10,7 @@
   <object class="GtkImage" id="imgAlignLeft">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
+    <property name="tooltip-text" translatable="yes">Align Left</property>
     <property name="icon-name">format-justify-left</property>
   </object>
   <object class="GtkImage" id="imgAlignRight">
@@ -141,6 +142,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="tooltip-text" translatable="yes">Font Family</property>
                 <property name="font">Sans 12</property>
                 <property name="language">c</property>
                 <property name="preview-text"/>
@@ -160,6 +162,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Bold</property>
                     <property name="image">imgBold</property>
                   </object>
                   <packing>
@@ -173,6 +176,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Italic</property>
                     <property name="image">imgItalic</property>
                   </object>
                   <packing>
@@ -186,6 +190,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Underline</property>
                     <property name="image">imgUnderline</property>
                   </object>
                   <packing>
@@ -199,6 +204,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Expand / Collapse</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -265,6 +271,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Align Left</property>
                     <property name="image">imgAlignLeft</property>
                   </object>
                   <packing>
@@ -278,6 +285,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Align Center</property>
                     <property name="image">imgAlignCenter</property>
                   </object>
                   <packing>
@@ -291,6 +299,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Align Right</property>
                     <property name="image">imgAlignRight</property>
                   </object>
                   <packing>
@@ -333,6 +342,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font weight: Thin</property>
                     <property name="image">imgWeightThin</property>
                   </object>
                   <packing>
@@ -346,6 +356,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font weight: Book</property>
                     <property name="image">imgWeightBook</property>
                   </object>
                   <packing>
@@ -359,6 +370,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font weight: Bold</property>
                     <property name="image">imgWeightBold</property>
                   </object>
                   <packing>
@@ -386,6 +398,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font style: Italic</property>
                     <property name="image">imgStyleItalic</property>
                   </object>
                   <packing>
@@ -399,6 +412,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font style: Oblique</property>
                     <property name="image">imgStyleOblique</property>
                   </object>
                   <packing>
@@ -426,6 +440,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Underline Single</property>
                     <property name="image">imgUnderlineSingle</property>
                   </object>
                   <packing>
@@ -439,6 +454,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Underline Squiggle</property>
                     <property name="image">imgUnderlineError</property>
                   </object>
                   <packing>
@@ -452,6 +468,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Underline Double</property>
                     <property name="image">imgUnderlineDouble</property>
                   </object>
                   <packing>
@@ -465,6 +482,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Strikethrough</property>
                     <property name="image">imgStrikethrough</property>
                   </object>
                   <packing>
@@ -478,6 +496,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Overline</property>
                     <property name="image">imgOverlineSingle</property>
                   </object>
                   <packing>
@@ -505,6 +524,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Superscript</property>
                     <property name="image">imgSuperscript</property>
                   </object>
                   <packing>
@@ -518,6 +538,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Subscript</property>
                     <property name="image">imgSubscript</property>
                   </object>
                   <packing>
@@ -541,6 +562,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="tooltip-text" translatable="yes">Remove all styling</property>
                 <property name="image">imgClear</property>
               </object>
               <packing>
