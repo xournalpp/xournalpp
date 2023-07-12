@@ -1297,14 +1297,11 @@ void TextEditor::setFontColorInline(GdkRGBA color) {
 }
 
 void TextEditor::addTextAttributeInline(PangoAttribute* attrib) {
-    std::cout << "Got here 123!!" << std::endl;
     std::tuple<int, int> selection = getCurrentSelection().value_or(
             std::make_tuple(PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING, PANGO_ATTR_INDEX_TO_TEXT_END));
     attrib->start_index = std::get<0>(selection);
     attrib->end_index = std::get<1>(selection);
     this->textElement->addAttribute(attrib);
-    std::cout << "Got here 1234567!!" << std::endl;
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
-    std::cout << "Got here 12345678!!" << std::endl;
 }

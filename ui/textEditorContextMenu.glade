@@ -494,9 +494,11 @@
                 <child>
                   <object class="GtkToggleButton" id="btnOverlineSingle">
                     <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <property name="tooltip-text" translatable="yes">Overline</property>
+                    <property name="tooltip-text" translatable="yes">Overline
+Disabled due to Pango Bug</property>
                     <property name="image">imgOverlineSingle</property>
                   </object>
                   <packing>
