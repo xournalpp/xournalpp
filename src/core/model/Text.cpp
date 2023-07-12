@@ -221,8 +221,11 @@ TextAlignment Text::getAlignment() const { return this->alignment; }
 PangoAttrList* Text::getAttributeListCopy() const { return pango_attr_list_copy(this->attributes); };
 
 void Text::addAttribute(PangoAttribute* attrib) {
+    std::cout << "Got here 1234!!" << std::endl;
     pango_attr_list_change(this->attributes, attrib);
+    std::cout << "Got here 12345!!" << std::endl;
     this->calcSize();
+    std::cout << "Got here 123456!!" << std::endl;
 }
 
 void Text::clearAttributes() {

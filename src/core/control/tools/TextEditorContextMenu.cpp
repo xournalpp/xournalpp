@@ -51,6 +51,7 @@ void toggleUnderlineDoubleClb(GtkToggleButton* src, TextEditorContextMenu* tecm)
 void toggleStrikethroughClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleStrikethrough(TRUE); }
 void toggleOverlineSingleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
     tecm->toggleOverline(PANGO_OVERLINE_SINGLE);
+    std::cout << "Got here 4!" << std::endl;
 }
 
 void toggleSuperScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {}
@@ -349,14 +350,17 @@ void TextEditorContextMenu::toggleStrikethrough(int strikethrough) {
 void TextEditorContextMenu::toggleOverline(PangoOverline overline) {
     std::cout << "Overline" << std::endl;
     if (this->overline == overline) {
+        std::cout << "Got here 1.2!" << std::endl;
         this->editor->addTextAttributeInline(pango_attr_overline_new(PANGO_OVERLINE_NONE));
+        std::cout << "Got here 2.2!" << std::endl;
         this->switchOverlineButtons(PANGO_OVERLINE_NONE);
+        std::cout << "Got here 3.2!" << std::endl;
     } else {
-        std::cout << "Got here 1!" << std::endl;
+        std::cout << "Got here 1.1!" << std::endl;
         this->editor->addTextAttributeInline(pango_attr_overline_new(overline));
-        std::cout << "Got here 2!" << std::endl;
+        std::cout << "Got here 2.1!" << std::endl;
         this->switchOverlineButtons(overline);
-        std::cout << "Got here 3!" << std::endl;
+        std::cout << "Got here 3.1!" << std::endl;
     }
 }
 
