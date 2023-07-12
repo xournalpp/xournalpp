@@ -675,7 +675,11 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         // size for image has been selected, now the image can be added
         auto spaceForImage = this->imageSizeSelection->getSelectedSpace();
         ImageHandler imgHandler(control, this);
-        imgHandler.insertImageWithSize(spaceForImage);
+        if (spaceForImage.width != 0 && spaceForImage.height != 0) {
+            imgHandler.insertImageFrame(spaceForImage);
+        } else {
+            imgHandler.insertImage(spaceForImage);
+        }
 
         imageSizeSelection->finalize();
         this->imageSizeSelection.reset();

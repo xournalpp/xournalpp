@@ -14,6 +14,7 @@
 #include "gui/MainWindow.h"                 // for MainWindow
 #include "gui/PageView.h"                   // for XojPageView
 #include "gui/XournalView.h"                // for XournalView
+#include "model/ImageFrame.h"               // for ImageFrame
 #include "model/Layer.h"                    // for Layer
 #include "model/PageRef.h"                  // for PageRef
 #include "model/XojPage.h"                  // for XojPage
@@ -110,68 +111,64 @@ void ImageHandler::automaticScaling(Image* img, double x, double y, int width, i
     img->setHeight(height * zoom);
 }
 
-auto ImageHandler::insertImageWithSize(Rectangle<double> space) -> bool {
+auto ImageHandler::insertImageFrame(Rectangle<double> space) -> bool {
     auto [img, width, height] = ImageHandler::chooseAndCreateImage(space.x, space.y);
     if (!img) {
         return false;
     }
 
-    // todo p0mm choose between different options!
-    // none option needs to set images own height and width!
-    scaleImageDown(img, space);
+    img->setHeight(height);
+    img->setWidth(width);
 
+
+    // todo p0mm choose between frame or image?
+    // todo p0mm check validity of size etc
+    // todo p0mm choose between different options!
+
+    // scaling happens automatically in the image frame
+    // none option needs to set images own height and width!
+
+    /*
     // make autoscaling toggleable by the user?
     automaticScaling(img, space.x, space.y,
                      img->getElementWidth() == 0.0 ? width : static_cast<int>(img->getElementWidth()),
                      img->getElementHeight() == 0.0 ? height : static_cast<int>(img->getElementHeight()));
+    */
 
-    centerImage(img, space);
+    return addImageFrameToDocument(img, space, true);
+}
+
+
+auto ImageHandler::addImageFrameToDocument(Image* img, xoj::util::Rectangle<double> space, bool addUndoAction) -> bool {
+
+    PageRef const page = view->getPage();
+
+    auto* imageFrame = new ImageFrame(space);
+    imageFrame->setImage(img);
+
+    page->getSelectedLayer()->addElement(imageFrame);
+
+    if (addUndoAction) {
+        control->getUndoRedoHandler()->addUndoAction(
+                std::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), imageFrame));
+    }
+
+    view->rerenderElement(imageFrame);
+    // imageFrame is not selected after adding, as it should have its own editing abilities (todo p0mm)
+
+    return true;
+}
+
+auto ImageHandler::insertImage(Rectangle<double> space) -> bool {
+    auto [img, width, height] = ImageHandler::chooseAndCreateImage(space.x, space.y);
+    if (!img) {
+        return false;
+    }
+
+    img->setHeight(height);
+    img->setWidth(width);
+
+    automaticScaling(img, space.x, space.y, width, height);
 
     return addImageToDocument(img, true);
-}
-
-void ImageHandler::scaleImageDown(Image* img, xoj::util::Rectangle<double> space) {
-    if (space.area() == 0) {
-        return;
-    }
-    auto [width, height] = img->getImageSize();
-    const double scaling = std::min(space.height / height, space.width / width);
-    img->setWidth(scaling * width);
-    img->setHeight(scaling * height);
-}
-
-void ImageHandler::scaleImageUp(Image* img, xoj::util::Rectangle<double> space) {
-    if (space.area() == 0) {
-        return;
-    }
-    auto [width, height] = img->getImageSize();
-    const double scaling = std::max(space.height / height, space.width / width);
-    img->setHeight(scaling * height);
-    img->setWidth(scaling * width);
-}
-
-void ImageHandler::centerImage(Image* img, xoj::util::Rectangle<double> space) {
-    if (space.area() == 0) {
-        return;
-    }
-
-    if (img->getElementHeight() > space.height) {
-        img->setY(img->getY() - ((img->getElementHeight() - space.height) * 0.5));
-    } else if (img->getElementHeight() < space.height) {
-        img->setY(img->getY() + ((space.height - img->getElementHeight()) * 0.5));
-    }
-
-    if (img->getElementWidth() > space.width) {
-        img->setX(img->getX() - ((img->getElementWidth() - space.width) * 0.5));
-    } else if (img->getElementWidth() < space.width) {
-        img->setX(img->getX() + ((space.width - img->getElementWidth()) * 0.5));
-    }
-
-    // if x or y out of page move back
-    if (img->getX() < 0) {
-        img->setX(0);
-    }
-    if (img->getY() < 0) {
-        img->setY(0);
-    }
 }
