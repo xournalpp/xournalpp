@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-09 07:26+0000\n"
+"POT-Creation-Date: 2023-07-13 18:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -569,7 +569,7 @@ msgstr ""
 msgid "Error {1} executing system command: {2}"
 msgstr ""
 
-#: ../src/core/control/CrashHandler.cpp:37
+#: ../src/core/control/CrashHandler.cpp:40
 msgid "Error: {1}"
 msgstr ""
 
@@ -1400,7 +1400,7 @@ msgstr ""
 msgid "Stroke recognizer"
 msgstr ""
 
-#: ../src/core/control/CrashHandler.cpp:39
+#: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
 msgstr ""
 
@@ -1562,7 +1562,7 @@ msgstr ""
 msgid "Toolbars"
 msgstr ""
 
-#: ../src/core/control/CrashHandler.cpp:28
+#: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document…"
 msgstr ""
 
