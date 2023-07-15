@@ -222,6 +222,7 @@ add_subdirectory(po)
 
 # Development options
 option(DEV_CALL_LOG "Call log" OFF)
+add_compile_definitions(G_LOG_DOMAIN="xopp")
 
 # Debug options
 option(DEBUG_INPUT "Input debugging, e.g. eraser events etc" OFF)

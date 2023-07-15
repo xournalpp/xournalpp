@@ -1,8 +1,8 @@
 #include "Element.h"
 
 #include <algorithm>  // for max, min
-#include <cinttypes>  // for uint32_t
 #include <cmath>      // for ceil, floor, NAN
+#include <cstdint>    // for uint32_t
 
 #include <glib.h>  // for gint
 

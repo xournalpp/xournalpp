@@ -1,6 +1,7 @@
 #include "PageTemplateSettings.h"
 
-#include <cinttypes>  // for PRIx32, uint32_t
+#include <cinttypes>  // for PRIx32
+#include <cstdint>    // for uint32_t
 #include <cstdio>     // for snprintf, size_t
 #include <sstream>    // for basic_istream, strings...
 

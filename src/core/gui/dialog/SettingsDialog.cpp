@@ -397,8 +397,10 @@ void SettingsDialog::load() {
     gtk_combo_box_set_active(cbSidebarNumberingStyle, static_cast<int>(settings->getSidebarNumberingStyle()));
 
     GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
-    string txt = settings->getDefaultSaveName();
-    gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt.c_str());
+    gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), settings->getDefaultSaveName().c_str());
+
+    GtkWidget* txtDefaultPdfName = get("txtDefaultPdfName");
+    gtk_entry_set_text(GTK_ENTRY(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
 
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(get("fcAudioPath")),
                                         Util::toGFilename(settings->getAudioFolder()).c_str());
@@ -800,6 +802,7 @@ void SettingsDialog::save() {
     settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
     settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
+    settings->setDefaultPdfExportName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultPdfName"))));
     // Todo(fabian): use Util::fromGFilename!
     auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(get("fcAudioPath")));
     auto path = Util::fromGFile(file);

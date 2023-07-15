@@ -350,11 +350,9 @@ public:
     void setDefaultSaveName(const std::string& name);
 
     std::string const& getDefaultPdfExportName() const;
+    void setDefaultPdfExportName(const std::string& name);
 
     ButtonConfig* getButtonConfig(unsigned int id);
-
-    std::string const& getFullscreenHideElements() const;
-    void setFullscreenHideElements(std::string elements);
 
     void setViewMode(ViewModeId mode, ViewMode ViewMode);
 

@@ -1,7 +1,8 @@
 #include "UndoRedoHandler.h"
 
 #include <algorithm>  // for find_if
-#include <cinttypes>  // for PRIu64, uint64_t
+#include <cinttypes>  // for PRIu64
+#include <cstdint>    // for uint64_t
 #include <iterator>   // for end, begin
 #include <memory>     // for unique_ptr, allocator_traits<>::value_type
 #include <utility>    // for move

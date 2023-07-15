@@ -1,6 +1,7 @@
 #include "SaveHandler.h"
 
-#include <cinttypes>   // for PRIx32, uint32_t
+#include <cinttypes>   // for PRIx32
+#include <cstdint>     // for uint32_t
 #include <cstdio>      // for sprintf, size_t
 #include <filesystem>  // for exists
 
