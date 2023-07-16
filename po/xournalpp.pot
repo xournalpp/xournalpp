@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-13 18:35+0000\n"
+"POT-Creation-Date: 2023-07-16 08:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgstr ""
 msgid "Add/Edit TeX"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:685
+#: ../src/core/control/XournalMain.cpp:686
 msgid "Advanced export options"
 msgstr ""
 
@@ -389,7 +389,7 @@ msgstr ""
 msgid "Discard"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:687
 msgid "Display advanced export options"
 msgstr ""
 
@@ -583,11 +583,11 @@ msgstr ""
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:639
+#: ../src/core/control/XournalMain.cpp:640
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:641
+#: ../src/core/control/XournalMain.cpp:642
 msgid ""
 "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension "
@@ -603,7 +603,7 @@ msgstr ""
 msgid "Export as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:655
+#: ../src/core/control/XournalMain.cpp:656
 msgid ""
 "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively "
@@ -615,7 +615,7 @@ msgid ""
 "presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:647
 msgid ""
 "Export without background\n"
 "                                 The exported file has transparent or white "
@@ -623,7 +623,7 @@ msgid ""
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:651
+#: ../src/core/control/XournalMain.cpp:652
 msgid ""
 "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
@@ -722,7 +722,7 @@ msgstr ""
 msgid "GTK Version"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:630
+#: ../src/core/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
 msgstr ""
 
@@ -849,7 +849,7 @@ msgstr ""
 msgid "Isometric Graph"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:626
+#: ../src/core/control/XournalMain.cpp:627
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
@@ -958,14 +958,14 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:667
 msgid ""
 "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--"
 "create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:663
 msgid ""
 "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--"
@@ -1329,13 +1329,13 @@ msgstr ""
 msgid "Separator"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:671
 msgid ""
 "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:680
+#: ../src/core/control/XournalMain.cpp:681
 msgid ""
 "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
@@ -1343,7 +1343,7 @@ msgid ""
 "width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:674
+#: ../src/core/control/XournalMain.cpp:675
 msgid ""
 "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
