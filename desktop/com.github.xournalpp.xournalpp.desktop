@@ -16,7 +16,7 @@ Keywords[hu]=táblagép;Wacom;tollas bevitel;PDF-megjegyzés;korrektúra
 
 Exec=xournalpp %f
 SingleMainWindow=false
-StartupWMClass=xournalpp
+StartupWMClass=com.github.xournalpp.xournalpp
 Terminal=false
 StartupNotify=true
 MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;application/x-xopt;application/pdf;
