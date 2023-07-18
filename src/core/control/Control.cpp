@@ -390,6 +390,7 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->sidebar->selectPageNr(page, pdfPage);
 
     this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), int(page), getZoomControl()->getZoomReal());
+    this->updateWindowTitle();
 
     auto current = getCurrentPageNo();
     auto count = this->doc->getPageCount();
@@ -2695,12 +2696,17 @@ void Control::updateWindowTitle() {
         if (doc->getPdfFilepath().empty()) {
             title = _("Unsaved Document");
         } else {
+            title += ("[" + 
+                std::to_string(getCurrentPageNo() + 1) + 
+                "/" + 
+                std::to_string(doc->getPageCount()) + 
+                "]  ");
             if (undoRedo->isChanged()) {
                 title += "*";
             }
 
             if (settings->isFilepathInTitlebarShown()) {
-                title += ("[" + doc->getPdfFilepath().parent_path().u8string() + "] - " +
+                title += ( + "[" + doc->getPdfFilepath().parent_path().u8string() + "] - " +
                           doc->getPdfFilepath().filename().u8string());
             } else {
                 title += doc->getPdfFilepath().filename().u8string();
