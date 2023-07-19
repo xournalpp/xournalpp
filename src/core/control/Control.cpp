@@ -390,7 +390,9 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->sidebar->selectPageNr(page, pdfPage);
 
     this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), int(page), getZoomControl()->getZoomReal());
-    this->updateWindowTitle();
+    if (settings->isPageNumberInTitlebarShown()) {
+        this->updateWindowTitle();
+    }
 
     auto current = getCurrentPageNo();
     auto count = this->doc->getPageCount();
