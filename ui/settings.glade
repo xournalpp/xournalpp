@@ -3042,6 +3042,22 @@ This setting can make it easier to draw with touch. </property>
                                                 <property name="position">2</property>
                                               </packing>
                                             </child>
+                                            <child>
+                                              <object class="GtkCheckButton" id="cbShowPageNumberInTitlebar">
+                                                <property name="label" translatable="yes">Show page number in title bar</property>
+                                                <property name="name">cbShowPageNumberInTitlebar</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="receives-default">False</property>
+                                                <property name="xalign">0</property>
+                                                <property name="draw-indicator">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">2</property>
+                                              </packing>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>

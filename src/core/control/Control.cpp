@@ -2696,11 +2696,10 @@ void Control::updateWindowTitle() {
         if (doc->getPdfFilepath().empty()) {
             title = _("Unsaved Document");
         } else {
-            title += ("[" + 
-                std::to_string(getCurrentPageNo() + 1) + 
-                "/" + 
-                std::to_string(doc->getPageCount()) + 
-                "]  ");
+            if (settings->isPageNumberInTitlebarShown()){
+              title += ("[" + std::to_string(getCurrentPageNo() + 1) + "/" + 
+                        std::to_string(doc->getPageCount()) +  "]  ");
+            }
             if (undoRedo->isChanged()) {
                 title += "*";
             }
@@ -2713,6 +2712,10 @@ void Control::updateWindowTitle() {
             }
         }
     } else {
+        if (settings->isPageNumberInTitlebarShown()){
+            title += ("[" + std::to_string(getCurrentPageNo() + 1) + "/" + 
+                      std::to_string(doc->getPageCount()) +  "]  ");
+        }
         if (undoRedo->isChanged()) {
             title += "*";
         }
