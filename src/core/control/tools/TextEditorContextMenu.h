@@ -50,6 +50,7 @@ public:
     void toggleUnderline(PangoUnderline underline);
     void toggleStrikethrough(int strikethrough);
     void toggleOverline(PangoOverline overline);
+    void toggleScriptRise(int rise);
 
     gboolean drawFtColorIcon(GtkWidget* src, cairo_t* cr);
     gboolean drawBgColorIcon(GtkWidget* src, cairo_t* cr);
@@ -68,6 +69,7 @@ private:
     void switchUnderlineButtons(PangoUnderline underlineValue);
     void switchStrikethroughButtons(int stValue);
     void switchOverlineButtons(PangoOverline overlineValue);
+    void switchRiseButtons(int riseValue);
 
 
 private:
@@ -84,6 +86,7 @@ private:
     PangoUnderline underline = PANGO_UNDERLINE_NONE;
     int strikethrough = FALSE;
     PangoOverline overline = PANGO_OVERLINE_NONE;
+    int rise = 0;
 
     /**
      * Default foreground & background colors

@@ -51,11 +51,14 @@ void toggleUnderlineDoubleClb(GtkToggleButton* src, TextEditorContextMenu* tecm)
 void toggleStrikethroughClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleStrikethrough(TRUE); }
 void toggleOverlineSingleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
     tecm->toggleOverline(PANGO_OVERLINE_SINGLE);
-    std::cout << "Got here 4!" << std::endl;
 }
 
-void toggleSuperScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {}
-void toggleSubScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {}
+void toggleSuperScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleScriptRise(5 * PANGO_SCALE);
+}
+void toggleSubScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleScriptRise(-(5 * PANGO_SCALE));
+}
 
 
 TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView,
@@ -219,6 +222,8 @@ void TextEditorContextMenu::create() {
 
     tglSuperScript = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnSuperscript"));
     tglSubScript = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnSubscript"));
+    g_signal_connect(this->tglSuperScript, "released", G_CALLBACK(toggleSuperScriptClb), this);
+    g_signal_connect(this->tglSubScript, "released", G_CALLBACK(toggleSubScriptClb), this);
 
     g_object_unref(G_OBJECT(builder));
 }
@@ -358,6 +363,19 @@ void TextEditorContextMenu::toggleOverline(PangoOverline overline) {
     }
 }
 
+void TextEditorContextMenu::toggleScriptRise(int rise) {
+    std::cout << "Script rise: " << rise << std::endl;
+    if (this->rise == rise) {
+        std::cout << "Got here 1!" << std::endl;
+        this->editor->addTextAttributeInline(pango_attr_rise_new(0));
+        this->switchRiseButtons(0);
+    } else {
+        std::cout << "Got here 2!" << std::endl;
+        this->editor->addTextAttributeInline(pango_attr_rise_new(rise));
+        this->switchRiseButtons(rise);
+    }
+}
+
 void TextEditorContextMenu::setAttributes(std::list<PangoAttribute*> attributes) {
     std::cout << "ContectMenu.setAttributes: " << attributes.size() << std::endl;
     this->clearAttributes();
@@ -423,6 +441,10 @@ void TextEditorContextMenu::applyAttributes() {
                 PangoAttrInt* overline = pango_attribute_as_int(p);
                 switchOverlineButtons(static_cast<PangoOverline>(overline->value));
                 break;
+            }
+            case PANGO_ATTR_RISE: {
+                PangoAttrInt* rise = pango_attribute_as_int(p);
+                switchRiseButtons(rise->value);
             }
             default:
                 break;
@@ -579,5 +601,19 @@ void TextEditorContextMenu::switchAlignmentButtons(TextAlignment alignment) {
             gtk_toggle_button_set_active(this->alignCenterTgl, false);
             gtk_toggle_button_set_active(this->alignRightTgl, false);
             break;
+    }
+}
+
+void TextEditorContextMenu::switchRiseButtons(int riseValue) {
+    this->rise = riseValue;
+    if (riseValue > 0) {
+        gtk_toggle_button_set_active(this->tglSuperScript, true);
+        gtk_toggle_button_set_active(this->tglSubScript, false);
+    } else if (riseValue < 0) {
+        gtk_toggle_button_set_active(this->tglSuperScript, false);
+        gtk_toggle_button_set_active(this->tglSubScript, true);
+    } else {
+        gtk_toggle_button_set_active(this->tglSuperScript, false);
+        gtk_toggle_button_set_active(this->tglSubScript, false);
     }
 }
