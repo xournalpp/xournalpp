@@ -59,7 +59,7 @@ void toggleSuperScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
 void toggleSubScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
     tecm->toggleScriptRise(-(5 * PANGO_SCALE));
 }
-
+void toggleRemoveStyles(GtkButton* btn, TextEditorContextMenu* tecm) { tecm->removeAllAttributes(); }
 
 TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView,
                                              GtkWidget* xournalWidget):
@@ -224,6 +224,9 @@ void TextEditorContextMenu::create() {
     tglSubScript = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnSubscript"));
     g_signal_connect(this->tglSuperScript, "released", G_CALLBACK(toggleSuperScriptClb), this);
     g_signal_connect(this->tglSubScript, "released", G_CALLBACK(toggleSubScriptClb), this);
+
+    removeStyles = GTK_BUTTON(gtk_builder_get_object(builder, "btnRemoveStyle"));
+    g_signal_connect(this->removeStyles, "clicked", G_CALLBACK(toggleRemoveStyles), this);
 
     g_object_unref(G_OBJECT(builder));
 }
@@ -616,4 +619,11 @@ void TextEditorContextMenu::switchRiseButtons(int riseValue) {
         gtk_toggle_button_set_active(this->tglSuperScript, false);
         gtk_toggle_button_set_active(this->tglSubScript, false);
     }
+}
+
+void TextEditorContextMenu::removeAllAttributes() {
+    std::cout << "Remove all attributes" << std::endl;
+    this->editor->clearAttributes();
+    this->clearAttributes();
+    this->resetContextMenuState();
 }

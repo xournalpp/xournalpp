@@ -1305,3 +1305,9 @@ void TextEditor::addTextAttributeInline(PangoAttribute* attrib) {
     this->layoutStatus = LayoutStatus::NEEDS_ATTRIBUTES_UPDATE;
     this->repaintEditor();
 }
+
+void TextEditor::clearAttributes() {
+    this->textElement->clearAttributes();
+    this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
+    this->repaintEditor();
+}

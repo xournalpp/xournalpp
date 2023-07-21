@@ -226,6 +226,7 @@ void Text::addAttribute(PangoAttribute* attrib) {
 }
 
 void Text::clearAttributes() {
+    pango_attr_list_unref(this->attributes);
     this->attributes = pango_attr_list_new();
     this->calcSize();
 }

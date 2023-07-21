@@ -52,6 +52,8 @@ public:
     void toggleOverline(PangoOverline overline);
     void toggleScriptRise(int rise);
 
+    void removeAllAttributes();
+
     gboolean drawFtColorIcon(GtkWidget* src, cairo_t* cr);
     gboolean drawBgColorIcon(GtkWidget* src, cairo_t* cr);
 
