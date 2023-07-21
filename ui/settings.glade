@@ -75,6 +75,13 @@
     <property name="step-increment">0.05</property>
     <property name="page-increment">0.5</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentPressureCurve">
+    <property name="lower">-2</property>
+    <property name="upper">2</property>
+    <property name="value">0</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.5</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentReRenderThreshold">
     <property name="upper">900</property>
     <property name="value">10</property>
@@ -1739,7 +1746,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                                       </packing>
                                                     </child>
                                                     <child>
-                                                      <!-- n-columns=3 n-rows=3 -->
+                                                      <!-- n-columns=3 n-rows=4 -->
                                                       <object class="GtkGrid" id="gridPressureSensitivityOptions">
                                                         <property name="visible">True</property>
                                                         <property name="can-focus">False</property>
@@ -1765,6 +1772,17 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                                           <packing>
                                                             <property name="left-attach">0</property>
                                                             <property name="top-attach">1</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkLabel">
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="label" translatable="yes">Softness: </property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="left-attach">0</property>
+                                                            <property name="top-attach">2</property>
                                                           </packing>
                                                         </child>
                                                         <child>
@@ -1794,6 +1812,21 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                                           <packing>
                                                             <property name="left-attach">1</property>
                                                             <property name="top-attach">1</property>
+                                                            <property name="width">2</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkScale" id="scalePressureCurve">
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">True</property>
+                                                            <property name="adjustment">adjustmentPressureCurve</property>
+                                                            <property name="round-digits">1</property>
+                                                            <property name="digits">2</property>
+                                                            <property name="value-pos">right</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="left-attach">1</property>
+                                                            <property name="top-attach">2</property>
                                                             <property name="width">2</property>
                                                           </packing>
                                                         </child>

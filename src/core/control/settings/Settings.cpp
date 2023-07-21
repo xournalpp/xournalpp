@@ -52,6 +52,7 @@ void Settings::loadDefault() {
     this->pressureSensitivity = true;
     this->minimumPressure = 0.05;
     this->pressureMultiplier = 1.0;
+    this->pressureCurve = 0.0;
     this->pressureGuessing = false;
     this->zoomGesturesEnabled = true;
 
@@ -371,6 +372,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->minimumPressure = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureMultiplier")) == 0) {
         this->pressureMultiplier = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureCurve")) == 0) {
+        this->pressureCurve = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomGesturesEnabled")) == 0) {
         this->zoomGesturesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
@@ -902,6 +905,7 @@ void Settings::save() {
     SAVE_BOOL_PROP(pressureSensitivity);
     SAVE_DOUBLE_PROP(minimumPressure);
     SAVE_DOUBLE_PROP(pressureMultiplier);
+    SAVE_DOUBLE_PROP(pressureCurve);
 
     SAVE_BOOL_PROP(zoomGesturesEnabled);
 
@@ -1506,6 +1510,16 @@ void Settings::setPressureMultiplier(double multiplier) {
     }
 
     this->pressureMultiplier = multiplier;
+    save();
+}
+
+double Settings::getPressureCurve() const { return this->pressureCurve; }
+void Settings::setPressureCurve(double pressureCurve) {
+    if (this->pressureCurve == pressureCurve) {
+        return;
+    }
+
+    this->pressureCurve = pressureCurve;
     save();
 }
 
