@@ -379,8 +379,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image
         this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
-        this->overlayViews.emplace_back(
-                std::make_unique<xoj::view::ImageSizeSelectionView>(this->imageSizeSelection.get(), this));
+        this->overlayViews.emplace_back(std::make_unique<xoj::view::ImageSizeSelectionView>(
+                this->imageSizeSelection.get(), this, settings->getSelectionColor()));
     }
 
     this->onButtonClickEvent(pos);

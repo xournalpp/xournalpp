@@ -10,6 +10,7 @@
  */
 #pragma once
 
+#include "util/Color.h"         // for Color
 #include "util/DispatchPool.h"  // for Listener
 
 #include "OverlayView.h"  // for OverlayView
@@ -22,7 +23,7 @@ class Repaintable;
 
 class ImageSizeSelectionView: public OverlayView, public xoj::util::Listener<ImageSizeSelectionView> {
 public:
-    ImageSizeSelectionView(const ImageSizeSelection* imageSizeSelection, Repaintable* parent);
+    ImageSizeSelectionView(const ImageSizeSelection* imageSizeSelection, Repaintable* parent, Color selectionColor);
     virtual ~ImageSizeSelectionView() noexcept;
 
     /**
@@ -43,6 +44,7 @@ public:
 
 private:
     const ImageSizeSelection* imageSizeSelection;
+    Color selectionColor;
 };
 
 };  // namespace xoj::view

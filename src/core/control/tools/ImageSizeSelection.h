@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "model/Element.h"                         // todo p0mm
 #include "model/OverlayBase.h"                     // for OverlayBase
 #include "util/DispatchPool.h"                     // for Listener
 #include "util/Rectangle.h"                        // for Rectangle

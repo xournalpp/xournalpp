@@ -116,11 +116,7 @@ auto ImageHandler::insertImageWithSize(Rectangle<double> space) -> bool {
         return false;
     }
 
-    // todo p0mm choose between different options!
-    // none option needs to set images own height and width!
     scaleImageDown(img, space);
-
-    // make autoscaling toggleable by the user?
     automaticScaling(img, space.x, space.y,
                      img->getElementWidth() == 0.0 ? width : static_cast<int>(img->getElementWidth()),
                      img->getElementHeight() == 0.0 ? height : static_cast<int>(img->getElementHeight()));
@@ -131,23 +127,13 @@ auto ImageHandler::insertImageWithSize(Rectangle<double> space) -> bool {
 }
 
 void ImageHandler::scaleImageDown(Image* img, xoj::util::Rectangle<double> space) {
-    if (space.area() == 0) {
+    if (static_cast<int>(space.width) == 0 || static_cast<int>(space.height) == 0) {
         return;
     }
     auto [width, height] = img->getImageSize();
     const double scaling = std::min(space.height / height, space.width / width);
     img->setWidth(scaling * width);
     img->setHeight(scaling * height);
-}
-
-void ImageHandler::scaleImageUp(Image* img, xoj::util::Rectangle<double> space) {
-    if (space.area() == 0) {
-        return;
-    }
-    auto [width, height] = img->getImageSize();
-    const double scaling = std::max(space.height / height, space.width / width);
-    img->setHeight(scaling * height);
-    img->setWidth(scaling * width);
 }
 
 void ImageHandler::centerImage(Image* img, xoj::util::Rectangle<double> space) {

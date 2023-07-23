@@ -58,14 +58,6 @@ public:
     static void scaleImageDown(Image* img, xoj::util::Rectangle<double> space);
 
     /**
-     * scales image up to fill given space
-     *
-     * this will not stretch the image
-     * if the available space is 0, no scaling occurs
-     */
-    static void scaleImageUp(Image* img, xoj::util::Rectangle<double> space);
-
-    /**
      * adjust coordinates to center image in given space (after scaling)
      */
     static void centerImage(Image* img, xoj::util::Rectangle<double> space);
