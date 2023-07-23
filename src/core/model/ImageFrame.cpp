@@ -46,6 +46,14 @@ void ImageFrame::scale(double x0, double y0, double fx, double fy, double, bool)
 
     this->width *= fx;
     this->height *= fy;
+
+    if (this->width <= 0) {
+        this->width = 1;
+    }
+    if (this->height <= 0) {
+        this->height = 1;
+    }
+
     this->calcSize();
 
     if (this->containsImage) {

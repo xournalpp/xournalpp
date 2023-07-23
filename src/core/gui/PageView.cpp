@@ -33,6 +33,7 @@
 #include "control/tools/EditSelection.h"            // for EditSelection
 #include "control/tools/EllipseHandler.h"           // for EllipseHandler
 #include "control/tools/EraseHandler.h"             // for EraseHandler
+#include "control/tools/ImageFrameEditor.h"         // for ImageFrameEditor
 #include "control/tools/ImageHandler.h"             // for ImageHandler
 #include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
@@ -377,10 +378,14 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
     } else if (h->getToolType() == TOOL_IMAGE) {
-        // start selecting the size for the image
-        this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
-        this->overlayViews.emplace_back(
-                std::make_unique<xoj::view::ImageSizeSelectionView>(this->imageSizeSelection.get(), this));
+        // start selecting the size for the image or start scaling!
+        if (!this->imageFrameEditor || !this->imageFrameEditor->currentlyScaling()) {
+            this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
+            this->overlayViews.emplace_back(
+                    std::make_unique<xoj::view::ImageSizeSelectionView>(this->imageSizeSelection.get(), this));
+        } else if (this->imageFrameEditor) {
+            this->imageFrameEditor->mouseDown(x, y);
+        }
     }
 
     this->onButtonClickEvent(pos);
@@ -523,6 +528,21 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
+    }
+    if (h->getToolType() == TOOL_IMAGE) {
+        if (this->imageFrameEditor) {
+            this->xournal->getCursor()->setMouseSelectionType(imageFrameEditor->getSelectionTypeForPos(x, y));
+            this->imageFrameEditor->mouseMove(x, y);
+            // todo p0mm do this differently - seems overkill
+            rerenderPage();
+            repaintPage();
+        } else {
+            this->imageFrameEditor = std::make_unique<ImageFrameEditor>(page, x, y);
+        }
+
+    } else if (this->imageFrameEditor) {
+        this->imageFrameEditor.reset();
+        this->xournal->getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
     }
 
     return false;
@@ -683,6 +703,11 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 
         imageSizeSelection->finalize();
         this->imageSizeSelection.reset();
+    }
+    if (this->xournal->getControl()->getToolHandler()->getToolType() == TOOL_IMAGE) {
+        if (this->imageFrameEditor) {
+            this->imageFrameEditor->mouseUp(pos.x / getZoom(), pos.y / getZoom());
+        }
     }
 
     return false;
