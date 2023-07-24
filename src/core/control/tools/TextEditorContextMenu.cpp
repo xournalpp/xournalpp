@@ -148,15 +148,15 @@ void TextEditorContextMenu::toggleSecondaryToolbar() {
 void TextEditorContextMenu::create() {
     auto filepath = this->control->getGladeSearchPath()->findFile("", "textEditorContextMenu.glade");
 
-    GtkBuilder* builder = gtk_builder_new();
+    xoj::util::GObjectSPtr<GtkBuilder> builder(gtk_builder_new(), xoj::util::adopt);
 
     GError* err = NULL;
-    if (gtk_builder_add_from_file(builder, filepath.u8string().c_str(), &err) == 0) {
+    if (gtk_builder_add_from_file(builder.get(), filepath.u8string().c_str(), &err) == 0) {
         std::cout << err->message << std::endl;
     }
 
     this->contextMenu = xoj::util::GObjectSPtr<GtkPopover>(
-            GTK_POPOVER(gtk_builder_get_object(builder, "textEditorContextMenu")), xoj::util::adopt);
+            GTK_POPOVER(gtk_builder_get_object(builder.get(), "textEditorContextMenu")), xoj::util::adopt);
     gtk_popover_set_relative_to(this->contextMenu.get(), this->xournalWidget);
     gtk_popover_set_constrain_to(this->contextMenu.get(), GTK_POPOVER_CONSTRAINT_WINDOW);
     gtk_popover_set_modal(this->contextMenu.get(), false);
@@ -164,91 +164,91 @@ void TextEditorContextMenu::create() {
     gtk_widget_hide(GTK_WIDGET(this->contextMenu.get()));
 
     this->fontBtn = xoj::util::GObjectSPtr<GtkFontButton>(
-            GTK_FONT_BUTTON(gtk_builder_get_object(builder, "btnFontChooser")), xoj::util::adopt);
+            GTK_FONT_BUTTON(gtk_builder_get_object(builder.get(), "btnFontChooser")), xoj::util::adopt);
     g_signal_connect(this->fontBtn.get(), "font-set", G_CALLBACK(changeFontInternal), this);
 
 
     this->tglBoldBtn = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnDecoBold")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnDecoBold")), xoj::util::adopt);
     this->tglItalicBtn = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnDecoItalic")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnDecoItalic")), xoj::util::adopt);
     this->tglUnderlineBtn = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnDecoUnderline")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnDecoUnderline")), xoj::util::adopt);
     g_signal_connect(tglBoldBtn.get(), "released", G_CALLBACK(tglBoldStyle), this);
     g_signal_connect(tglItalicBtn.get(), "released", G_CALLBACK(tglItalicStyle), this);
     g_signal_connect(tglUnderlineBtn.get(), "released", G_CALLBACK(tglUnderlineStyle), this);
 
     this->expandTextDecoration = xoj::util::GObjectSPtr<GtkButton>(
-            GTK_BUTTON(gtk_builder_get_object(builder, "btnDecoExpand")), xoj::util::adopt);
+            GTK_BUTTON(gtk_builder_get_object(builder.get(), "btnDecoExpand")), xoj::util::adopt);
     gtk_button_set_image(this->expandTextDecoration.get(),
                          gtk_image_new_from_icon_name("go-down", GTK_ICON_SIZE_BUTTON));
     g_signal_connect(expandTextDecoration.get(), "clicked", G_CALLBACK(tglSecToolbar), this);
 
 
-    this->ftColorBtn = xoj::util::GObjectSPtr<GtkButton>(GTK_BUTTON(gtk_builder_get_object(builder, "btnFontColor")),
-                                                         xoj::util::adopt);
-    this->bgColorBtn = xoj::util::GObjectSPtr<GtkButton>(GTK_BUTTON(gtk_builder_get_object(builder, "btnBgColor")),
-                                                         xoj::util::adopt);
+    this->ftColorBtn = xoj::util::GObjectSPtr<GtkButton>(
+            GTK_BUTTON(gtk_builder_get_object(builder.get(), "btnFontColor")), xoj::util::adopt);
+    this->bgColorBtn = xoj::util::GObjectSPtr<GtkButton>(
+            GTK_BUTTON(gtk_builder_get_object(builder.get(), "btnBgColor")), xoj::util::adopt);
     g_signal_connect(this->ftColorBtn.get(), "clicked", G_CALLBACK(changeFtColorInternal), this);
     g_signal_connect(this->bgColorBtn.get(), "clicked", G_CALLBACK(changeBgColorInternal), this);
 
-    this->ftColorIcon = xoj::util::GObjectSPtr<GtkWidget>(GTK_WIDGET(gtk_builder_get_object(builder, "imgFtColor")),
-                                                          xoj::util::adopt);
+    this->ftColorIcon = xoj::util::GObjectSPtr<GtkWidget>(
+            GTK_WIDGET(gtk_builder_get_object(builder.get(), "imgFtColor")), xoj::util::adopt);
     g_signal_connect(this->ftColorIcon.get(), "draw", G_CALLBACK(drawFtColorIconInternal), this);
     gtk_button_set_image(GTK_BUTTON(this->ftColorBtn.get()), this->ftColorIcon.get());
 
-    this->bgColorIcon = xoj::util::GObjectSPtr<GtkWidget>(GTK_WIDGET(gtk_builder_get_object(builder, "imgBgColor")),
-                                                          xoj::util::adopt);
+    this->bgColorIcon = xoj::util::GObjectSPtr<GtkWidget>(
+            GTK_WIDGET(gtk_builder_get_object(builder.get(), "imgBgColor")), xoj::util::adopt);
     g_signal_connect(this->bgColorIcon.get(), "draw", G_CALLBACK(drawBgColorIconInternal), this);
     gtk_button_set_image(GTK_BUTTON(this->bgColorBtn.get()), this->bgColorIcon.get());
 
     this->alignLeftTgl = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnAlignLeft")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnAlignLeft")), xoj::util::adopt);
     this->alignCenterTgl = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnAlignCenter")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnAlignCenter")), xoj::util::adopt);
     this->alignRightTgl = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnAlignRight")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnAlignRight")), xoj::util::adopt);
     g_signal_connect(this->alignLeftTgl.get(), "released", G_CALLBACK(toggleAlignLeft), this);
     g_signal_connect(this->alignCenterTgl.get(), "released", G_CALLBACK(toggleAlignCenter), this);
     g_signal_connect(this->alignRightTgl.get(), "released", G_CALLBACK(toggleAlignRight), this);
 
     this->textDecoLayout = xoj::util::GObjectSPtr<GtkWidget>(
-            GTK_WIDGET(gtk_builder_get_object(builder, "textDecoLayout")), xoj::util::adopt);
-    this->colorLayout = xoj::util::GObjectSPtr<GtkWidget>(GTK_WIDGET(gtk_builder_get_object(builder, "colorLayout")),
-                                                          xoj::util::adopt);
+            GTK_WIDGET(gtk_builder_get_object(builder.get(), "textDecoLayout")), xoj::util::adopt);
+    this->colorLayout = xoj::util::GObjectSPtr<GtkWidget>(
+            GTK_WIDGET(gtk_builder_get_object(builder.get(), "colorLayout")), xoj::util::adopt);
     this->alignmentLayout = xoj::util::GObjectSPtr<GtkWidget>(
-            GTK_WIDGET(gtk_builder_get_object(builder, "alignmentLayout")), xoj::util::adopt);
+            GTK_WIDGET(gtk_builder_get_object(builder.get(), "alignmentLayout")), xoj::util::adopt);
     this->secondaryToolbar = xoj::util::GObjectSPtr<GtkWidget>(
-            GTK_WIDGET(gtk_builder_get_object(builder, "secondaryToolbar")), xoj::util::adopt);
+            GTK_WIDGET(gtk_builder_get_object(builder.get(), "secondaryToolbar")), xoj::util::adopt);
 
 
     tglWeightThin = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnWeightThin")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnWeightThin")), xoj::util::adopt);
     tglWeightBook = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnWeightBook")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnWeightBook")), xoj::util::adopt);
     tglWeightBold = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnWeightBold")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnWeightBold")), xoj::util::adopt);
     g_signal_connect(this->tglWeightThin.get(), "released", G_CALLBACK(toggleWeightThinClb), this);
     g_signal_connect(this->tglWeightBook.get(), "released", G_CALLBACK(toggleWeightBookClb), this);
     g_signal_connect(this->tglWeightBold.get(), "released", G_CALLBACK(toggleWeightBoldClb), this);
 
     tglStyleItalic = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnStyleItalic")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnStyleItalic")), xoj::util::adopt);
     tglStyleOblique = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnStyleOblique")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnStyleOblique")), xoj::util::adopt);
     g_signal_connect(this->tglStyleItalic.get(), "released", G_CALLBACK(toggleStyleItalicClb), this);
     g_signal_connect(this->tglStyleOblique.get(), "released", G_CALLBACK(toggleStyleObliqueClb), this);
 
     tglUnderlineSingle = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnUnderlineSingle")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnUnderlineSingle")), xoj::util::adopt);
     tglUnderlineSquiggle = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnUnderlineError")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnUnderlineError")), xoj::util::adopt);
     tglUnderlineDouble = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnUnderlineDouble")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnUnderlineDouble")), xoj::util::adopt);
     tglStrikethrough = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnStrikethrough")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnStrikethrough")), xoj::util::adopt);
     tglOverlineSingle = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnOverlineSingle")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnOverlineSingle")), xoj::util::adopt);
     g_signal_connect(this->tglUnderlineSingle.get(), "released", G_CALLBACK(toggleUnderlineSingleClb), this);
     g_signal_connect(this->tglUnderlineSquiggle.get(), "released", G_CALLBACK(toggleUnderlineSquiggleClb), this);
     g_signal_connect(this->tglUnderlineDouble.get(), "released", G_CALLBACK(toggleUnderlineDoubleClb), this);
@@ -256,17 +256,15 @@ void TextEditorContextMenu::create() {
     g_signal_connect(this->tglOverlineSingle.get(), "released", G_CALLBACK(toggleOverlineSingleClb), this);
 
     tglSuperScript = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnSuperscript")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnSuperscript")), xoj::util::adopt);
     tglSubScript = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "btnSubscript")), xoj::util::adopt);
+            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnSubscript")), xoj::util::adopt);
     g_signal_connect(this->tglSuperScript.get(), "released", G_CALLBACK(toggleSuperScriptClb), this);
     g_signal_connect(this->tglSubScript.get(), "released", G_CALLBACK(toggleSubScriptClb), this);
 
-    removeStyles = xoj::util::GObjectSPtr<GtkButton>(GTK_BUTTON(gtk_builder_get_object(builder, "btnRemoveStyle")),
-                                                     xoj::util::adopt);
+    removeStyles = xoj::util::GObjectSPtr<GtkButton>(
+            GTK_BUTTON(gtk_builder_get_object(builder.get(), "btnRemoveStyle")), xoj::util::adopt);
     g_signal_connect(this->removeStyles.get(), "clicked", G_CALLBACK(toggleRemoveStyles), this);
-
-    g_object_unref(G_OBJECT(builder));
 }
 
 void TextEditorContextMenu::changeFont() {
