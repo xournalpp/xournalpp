@@ -12,54 +12,70 @@
 
 #include "TextEditor.h"  // for TextEditor
 
-void changeFontInternal(GtkFontButton* src, TextEditorContextMenu* tecm) { tecm->changeFont(); }
-void changeFtColorInternal(GtkColorButton* src, TextEditorContextMenu* tecm) { tecm->changeFtColor(); }
-void changeBgColorInternal(GtkColorButton* src, TextEditorContextMenu* tecm) { tecm->changeBgColor(); }
-void toggleAlignLeft(GtkButton* src, TextEditorContextMenu* tecm) { tecm->changeAlignment(TextAlignment::LEFT); }
-void toggleAlignCenter(GtkButton* src, TextEditorContextMenu* tecm) { tecm->changeAlignment(TextAlignment::CENTER); }
-void toggleAlignRight(GtkButton* src, TextEditorContextMenu* tecm) { tecm->changeAlignment(TextAlignment::RIGHT); }
-gboolean drawFtColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextMenu* tecm) {
+static void changeFontInternal(GtkFontButton* src, TextEditorContextMenu* tecm) { tecm->changeFont(); }
+static void changeBgColorInternal(GtkColorButton* src, TextEditorContextMenu* tecm) { tecm->changeBgColor(); }
+static void toggleAlignLeft(GtkButton* src, TextEditorContextMenu* tecm) { tecm->changeAlignment(TextAlignment::LEFT); }
+static void changeFtColorInternal(GtkColorButton* src, TextEditorContextMenu* tecm) { tecm->changeFtColor(); }
+static void toggleAlignCenter(GtkButton* src, TextEditorContextMenu* tecm) {
+    tecm->changeAlignment(TextAlignment::CENTER);
+}
+static void toggleAlignRight(GtkButton* src, TextEditorContextMenu* tecm) {
+    tecm->changeAlignment(TextAlignment::RIGHT);
+}
+static gboolean drawFtColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextMenu* tecm) {
     return tecm->drawFtColorIcon(src, cr);
 };
-gboolean drawBgColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextMenu* tecm) {
+static gboolean drawBgColorIconInternal(GtkWidget* src, cairo_t* cr, TextEditorContextMenu* tecm) {
     return tecm->drawBgColorIcon(src, cr);
 };
-void tglSecToolbar(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleSecondaryToolbar(); }
+static void tglSecToolbar(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleSecondaryToolbar(); }
 
-void tglBoldStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleWeight(PANGO_WEIGHT_BOLD); }
-void tglItalicStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleStyle(PANGO_STYLE_ITALIC); }
-void tglUnderlineStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleUnderline(PANGO_UNDERLINE_SINGLE); }
-
-
-void toggleWeightThinClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleWeight(PANGO_WEIGHT_THIN); }
-void toggleWeightBookClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleWeight(PANGO_WEIGHT_BOOK); }
-void toggleWeightBoldClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleWeight(PANGO_WEIGHT_BOLD); }
-
-void toggleStyleItalicClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleStyle(PANGO_STYLE_ITALIC); }
-void toggleStyleObliqueClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
-    tecm->toggleStyle(PANGO_STYLE_OBLIQUE);
-}
-void toggleUnderlineSingleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+static void tglBoldStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleWeight(PANGO_WEIGHT_BOLD); }
+static void tglItalicStyle(GtkButton* src, TextEditorContextMenu* tecm) { tecm->toggleStyle(PANGO_STYLE_ITALIC); }
+static void tglUnderlineStyle(GtkButton* src, TextEditorContextMenu* tecm) {
     tecm->toggleUnderline(PANGO_UNDERLINE_SINGLE);
 }
-void toggleUnderlineSquiggleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+
+
+static void toggleWeightThinClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleWeight(PANGO_WEIGHT_THIN);
+}
+static void toggleWeightBookClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleWeight(PANGO_WEIGHT_BOOK);
+}
+static void toggleWeightBoldClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleWeight(PANGO_WEIGHT_BOLD);
+}
+
+static void toggleStyleItalicClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleStyle(PANGO_STYLE_ITALIC);
+}
+static void toggleStyleObliqueClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleStyle(PANGO_STYLE_OBLIQUE);
+}
+static void toggleUnderlineSingleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleUnderline(PANGO_UNDERLINE_SINGLE);
+}
+static void toggleUnderlineSquiggleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
     tecm->toggleUnderline(PANGO_UNDERLINE_ERROR);
 }
-void toggleUnderlineDoubleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+static void toggleUnderlineDoubleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
     tecm->toggleUnderline(PANGO_UNDERLINE_DOUBLE);
 }
-void toggleStrikethroughClb(GtkToggleButton* src, TextEditorContextMenu* tecm) { tecm->toggleStrikethrough(TRUE); }
-void toggleOverlineSingleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+static void toggleStrikethroughClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+    tecm->toggleStrikethrough(TRUE);
+}
+static void toggleOverlineSingleClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
     tecm->toggleOverline(PANGO_OVERLINE_SINGLE);
 }
 
-void toggleSuperScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+static void toggleSuperScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
     tecm->toggleScriptRise(5 * PANGO_SCALE);
 }
-void toggleSubScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
+static void toggleSubScriptClb(GtkToggleButton* src, TextEditorContextMenu* tecm) {
     tecm->toggleScriptRise(-(5 * PANGO_SCALE));
 }
-void toggleRemoveStyles(GtkButton* btn, TextEditorContextMenu* tecm) { tecm->removeAllAttributes(); }
+static void toggleRemoveStyles(GtkButton* btn, TextEditorContextMenu* tecm) { tecm->removeAllAttributes(); }
 
 TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* editor, XojPageView* pageView,
                                              GtkWidget* xournalWidget):
