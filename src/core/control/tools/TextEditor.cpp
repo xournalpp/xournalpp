@@ -25,7 +25,7 @@
 #include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
 #include "util/Assert.h"
 #include "util/DispatchPool.h"
-#include "util/Range.h"       // for XojPageView
+#include "util/Range.h"
 #include "util/glib_casts.h"  // for wrap_for_once_v
 #include "util/gtk4_helper.h"
 #include "util/raii/CStringWrapper.h"
