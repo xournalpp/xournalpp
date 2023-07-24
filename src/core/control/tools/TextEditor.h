@@ -59,7 +59,7 @@ public:
     void mouseMoved(double x, double y);
     void mouseReleased();
 
-    void zoomChanged();
+    void zoomChanged() override;
 
     /**
      * @brief Returns a pointer to the edited Text element.
