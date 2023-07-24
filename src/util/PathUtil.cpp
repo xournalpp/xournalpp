@@ -344,3 +344,19 @@ auto Util::getLocalePath() -> fs::path {
     return getDataPath() / ".." / "locale";
 #endif
 }
+
+auto Util::getPalettePath() -> fs::path { return getDataPath() / "palettes"; }
+
+auto Util::listFilesSorted(fs::path directory) -> std::vector<fs::path> {
+    std::vector<fs::path> filePaths{};
+    if (!exists(directory)) {
+        g_warning("Directory %s does not exist.", directory.u8string().c_str());
+        return filePaths;
+    }
+
+    for (const fs::directory_entry& p: fs::directory_iterator(directory)) {
+        filePaths.push_back(p.path());
+    }
+    std::sort(filePaths.begin(), filePaths.end());
+    return filePaths;
+}

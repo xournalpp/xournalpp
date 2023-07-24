@@ -20,8 +20,9 @@
 
 #include "enums/ActionGroup.enum.h"  // for ActionGroup
 #include "enums/ActionType.enum.h"   // for ActionType
-#include "util/Color.h"              // for Color
-#include "util/NamedColor.h"         // for NamedColor
+#include "gui/toolbarMenubar/model/ColorPalette.h"
+#include "util/Color.h"       // for Color
+#include "util/NamedColor.h"  // for NamedColor
 
 #include "AbstractToolItem.h"  // for AbstractToolItem
 
@@ -52,6 +53,13 @@ public:
     std::string getId() const final;
 
     Color getColor() const;
+
+    /**
+     * @brief Update Color based on (new) palette
+     *
+     * @param palette
+     */
+    void updateColor(const Palette& palette);
 
     /**
      * Enable / Disable the tool item

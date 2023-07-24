@@ -156,3 +156,5 @@ auto ColorToolItem::getNewToolIcon() const -> GtkWidget* {
 auto ColorToolItem::getNewToolPixbuf() const -> GdkPixbuf* {
     return ColorSelectImage::newColorIconPixbuf(this->namedColor.getColor(), 16, !isSelector());
 }
+
+void ColorToolItem::updateColor(const Palette& palette) { namedColor = palette.getColorAt(namedColor.getIndex()); }

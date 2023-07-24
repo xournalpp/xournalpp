@@ -1,44 +1,51 @@
 #include "SettingsDialog.h"
 
-#include <algorithm>    // for max
-#include <cstddef>      // for NULL, size_t
+#include <algorithm>
+#include <algorithm>  // for max
+#include <cstddef>  // for NULL, size_t
 #include <type_traits>  // for __underlying_type_im...
 
-#include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
+#include <gdk/gdk.h>  // for GdkRGBA, GdkRectangle
 #include <glib-object.h>  // for G_CALLBACK, g_signal...
 
-#include "control/AudioController.h"             // for AudioController
-#include "control/Control.h"                     // for Control
-#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
-#include "control/settings/Settings.h"           // for Settings, SElement
-#include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
+#include "control/AudioController.h"  // for AudioController
+#include "control/Control.h"  // for Control
+#include "control/DeviceListHelper.h"  // for getDeviceList, Input...
+#include "control/settings/Settings.h"  // for Settings, SElement
+#include "control/settings/SettingsEnums.h"  // for STYLUS_CURSOR_ARROW
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
-#include "gui/MainWindow.h"                      // for MainWindow
-#include "gui/XournalView.h"                     // for XournalView
-#include "gui/dialog/DeviceClassConfigGui.h"     // for DeviceClassConfigGui
-#include "gui/dialog/LanguageConfigGui.h"        // for LanguageConfigGui
-#include "gui/dialog/LatexSettingsPanel.h"       // for LatexSettingsPanel
-#include "gui/widgets/ZoomCallib.h"              // for zoomcallib_new, zoom...
-#include "util/Color.h"                          // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"                       // for fromGFile, toGFilename
-#include "util/StringUtils.h"                    // for StringUtils
-#include "util/Util.h"                           // for systemWithMessage
-#include "util/i18n.h"                           // for _
+#include "gui/MainWindow.h"  // for MainWindow
+#include "gui/XournalView.h"
+#include "gui/dialog/DeviceClassConfigGui.h"  // for DeviceClassConfigGui
+#include "gui/dialog/LanguageConfigGui.h"  // for LanguageConfigGui
+#include "gui/dialog/LatexSettingsPanel.h"  // for LatexSettingsPanel
+#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler methods
+#include "gui/toolbarMenubar/icon/ColorSelectImage.h"  // for XournalView
+#include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette methods
+#include "gui/widgets/ZoomCallib.h"  // for zoomcallib_new, zoom...
+#include "util/Color.h"  // for GdkRGBA_to_argb, rgb...
+#include "util/PathUtil.h"  // for fromGFile, toGFilename
+#include "util/StringUtils.h"  // for StringUtils
+#include "util/Util.h"  // for systemWithMessage
+#include "util/i18n.h"  // for _
 
 #include "ButtonConfigGui.h"  // for ButtonConfigGui
-#include "filesystem.h"       // for is_directory
+#include "filesystem.h"  // for is_directory
 
 class GladeSearchpath;
 
 using std::string;
 using std::vector;
 
-SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control):
+SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
+                               const std::vector<fs::path>& paletteDirectories):
         GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
         settings(settings),
         control(control),
         callib(zoomcallib_new()),
-        latexPanel(gladeSearchPath) {
+        latexPanel(gladeSearchPath),
+        paletteTab(GTK_LABEL(get("colorPaletteExplainLabel")), GTK_LIST_BOX(get("paletteListBox")),
+                   paletteDirectories) {
     GtkWidget* vbox = get("zoomVBox");
     g_return_if_fail(vbox != nullptr);
 
@@ -160,6 +167,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         this->deviceClassConfigs.emplace_back(
                 std::make_unique<DeviceClassConfigGui>(getGladeSearchPath(), container, settings, inputDevice));
     }
+
+    g_message("Found %d devices in SettingsDialog Constructor", deviceList.size());
+
     if (deviceList.empty()) {
         GtkWidget* label = gtk_label_new("");
         gtk_label_set_markup(GTK_LABEL(label),
@@ -167,6 +177,10 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         gtk_box_pack_end(GTK_BOX(container), label, true, true, 0);
         gtk_widget_show(label);
     }
+
+    g_message("Adding LatexContainer");
+    g_message("LatexTabBox %s", this->get("latexTabBox"));
+    g_message("Latexpanel %s", &this->latexPanel);
 
     gtk_container_add(GTK_CONTAINER(this->get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
 }
@@ -178,7 +192,8 @@ void SettingsDialog::initLanguageSettings() {
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice) {
-    this->buttonConfigs.emplace_back(std::make_unique<ButtonConfigGui>(getGladeSearchPath(), get(hbox), settings, button, withDevice));
+    this->buttonConfigs.emplace_back(
+            std::make_unique<ButtonConfigGui>(getGladeSearchPath(), get(hbox), settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents() {
@@ -340,6 +355,7 @@ void SettingsDialog::showStabilizerPreprocessorOptions(StrokeStabilizer::Preproc
 }
 
 void SettingsDialog::load() {
+    g_message("SettingsDialog::load()");
     loadCheckbox("cbSettingPresureSensitivity", settings->isPressureSensitivity());
     loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
     loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
@@ -371,11 +387,14 @@ void SettingsDialog::load() {
     /**
      * Stabilizer related settings
      */
+    g_message("Stabilizer related settings");
+
     loadCheckbox("cbStabilizerEnableCuspDetection", settings->getStabilizerCuspDetection());
     loadCheckbox("cbStabilizerEnableFinalizeStroke", settings->getStabilizerFinalizeStroke());
 
     GtkWidget* sbStabilizerBuffersize = get("sbStabilizerBuffersize");
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerBuffersize), static_cast<double>(settings->getStabilizerBuffersize()));
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerBuffersize),
+                              static_cast<double>(settings->getStabilizerBuffersize()));
     GtkWidget* sbStabilizerDeadzoneRadius = get("sbStabilizerDeadzoneRadius");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerDeadzoneRadius), settings->getStabilizerDeadzoneRadius());
     GtkWidget* sbStabilizerDrag = get("sbStabilizerDrag");
@@ -459,6 +478,8 @@ void SettingsDialog::load() {
     GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spTouchZoomStartThreshold), settings->getTouchZoomStartThreshold());
 
+
+    g_message("settings->getStrokeFilter");
     {
         int time = 0;
         double length = 0;
@@ -472,6 +493,8 @@ void SettingsDialog::load() {
         GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime), successive);
     }
+
+    g_message("this->setDpi(settings->getDisplayDpi());");
 
     this->setDpi(settings->getDisplayDpi());
     loadSlider("zoomCallibSlider", dpi);
@@ -620,6 +643,16 @@ void SettingsDialog::load() {
         }
     }
 
+    g_message("paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath());");
+    g_message("paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath());");
+    g_message("settings %s", settings);
+    g_message("settings->getColorPalette() %s", &settings->getColorPalette());
+    g_message("settings->getColorPalette().getFilePath() %s",
+              settings->getColorPalette().getFilePath().u8string().c_str());
+    paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath());
+
+    g_message("paletteTab.renderPaletteTab(settings->getColorPalette().getFilePath()); DONE");
+
     this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
     gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", "System default");
     gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), 0);
@@ -652,10 +685,13 @@ void SettingsDialog::load() {
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
 
+    g_message("this->latexPanel.load(settings->latexSettings);");
+
     this->latexPanel.load(settings->latexSettings);
 }
 
 void SettingsDialog::save() {
+    g_message("SettingsDialog::save()");
     settings->transactionStart();
 
     settings->setPressureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
@@ -701,6 +737,8 @@ void SettingsDialog::save() {
     settings->setSidebarNumberingStyle(static_cast<SidebarNumberingStyle>(
             gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbSidebarPageNumberStyle")))));
 
+    g_message("scrollbarHideType");
+
     auto scrollbarHideType =
             static_cast<std::make_unsigned<std::underlying_type<ScrollbarHideType>::type>::type>(SCROLLBAR_HIDE_NONE);
     if (getCheckbox("cbHideHorizontalScrollbar")) {
@@ -710,6 +748,8 @@ void SettingsDialog::save() {
         scrollbarHideType |= SCROLLBAR_HIDE_VERTICAL;
     }
     settings->setScrollbarHideType(static_cast<ScrollbarHideType>(scrollbarHideType));
+
+    g_message("gtk_color_chooser_get_rgba");
 
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
@@ -731,6 +771,8 @@ void SettingsDialog::save() {
     settings->setCursorHighlightRadius(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightRadius)));
     GtkWidget* spCursorHighlightBorderWidth = get("cursorHighlightBorderWidth");
     settings->setCursorHighlightBorderWidth(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightBorderWidth)));
+
+    g_message("Setting Stylus Cursor Type\n");
 
     switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbStylusCursorType")))) {
         case 0:
@@ -817,7 +859,8 @@ void SettingsDialog::save() {
 
     if (getCheckbox("cbIgnoreFirstStylusEvents")) {
         GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
-        int numIgnoredStylusEvents = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents)));
+        int numIgnoredStylusEvents =
+                static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents)));
         settings->setIgnoredStylusEvents(numIgnoredStylusEvents);
     } else {
         settings->setIgnoredStylusEvents(0);  // This means nothing will be ignored
@@ -836,6 +879,8 @@ void SettingsDialog::save() {
     } else {
         settings->setEmptyLastPageAppend(EmptyLastPageAppendType::Disabled);
     }
+
+    g_message("setEdgePanSpeed\n");
 
     settings->setEdgePanSpeed(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanSpeed"))));
     settings->setEdgePanMaxMult(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanMaxMult"))));
@@ -953,6 +998,12 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
+    g_message("Setting Color Palette\n");
+
+    settings->setColorPalette(paletteTab.getSelectedPalette());
+
+    g_message("ColorPalette Set\n");
+
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui->saveSettings();
     }
@@ -962,6 +1013,9 @@ void SettingsDialog::save() {
     settings->transactionEnd();
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
+    this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(settings->getColorPalette());
+    this->control->getWindow()->reloadToolbars();
+
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
 }

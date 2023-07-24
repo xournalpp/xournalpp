@@ -23,7 +23,8 @@
 #include "enums/ActionGroup.enum.h"  // for GROUP_NOGROUP, ActionGroup
 #include "enums/ActionType.enum.h"   // for ActionType
 #include "gui/IconNameHelper.h"      // for IconNameHelper
-#include "util/Color.h"              // for Color
+#include "gui/toolbarMenubar/model/ColorPalette.h"
+#include "util/Color.h"  // for Color
 
 class AbstractToolItem;
 class FontButton;
@@ -67,6 +68,13 @@ public:
      * @param horizontal whether the toolbar is horizontal
      */
     void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
+
+    /**
+     * @brief Update all ColorToolItems based on palette
+     *
+     * @param palette
+     */
+    void updateColorToolItems(const Palette& palette);
 
     void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
 

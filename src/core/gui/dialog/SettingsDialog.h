@@ -23,6 +23,8 @@
 #include "gui/GladeGui.h"                        // for GladeGui
 
 #include "LatexSettingsPanel.h"  // for LatexSettingsPanel
+#include "SettingsDialogPaletteTab.h"
+#include "filesystem.h"  // for path
 
 class ButtonConfigGui;
 class Control;
@@ -31,9 +33,12 @@ class GladeSearchpath;
 class LanguageConfigGui;
 class Settings;
 
+struct Palette;
+
 class SettingsDialog: public GladeGui {
 public:
-    SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control);
+    SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
+                   const std::vector<fs::path>& paletteDirectories);
     ~SettingsDialog() override;
 
 public:
@@ -61,8 +66,9 @@ public:
      */
     void updatePressureSensitivityOptions();
 
-private:
     void load();
+
+private:
     void loadCheckbox(const char* name, gboolean value);
     bool getCheckbox(const char* name);
 
@@ -90,4 +96,5 @@ private:
     std::vector<std::unique_ptr<DeviceClassConfigGui>> deviceClassConfigs;
 
     LatexSettingsPanel latexPanel;
+    SettingsDialogPaletteTab paletteTab;
 };

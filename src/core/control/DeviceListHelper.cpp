@@ -1,14 +1,14 @@
 #include "control/DeviceListHelper.h"
 
 #include <algorithm>  // for find, remove_if
-#include <utility>    // for move
-#include <vector>     // for vector
+#include <utility>  // for move
+#include <vector>  // for vector
 
 #include <glib.h>  // for g_list_free, g_warning
 
 #include "control/settings/Settings.h"  // for Settings
-#include "util/GListView.h"             // for GListView, GListView<>::GList...
-#include "util/i18n.h"                  // for _
+#include "util/GListView.h"  // for GListView, GListView<>::GList...
+#include "util/i18n.h"  // for _
 
 
 void storeNewUnlistedDevice(std::vector<InputDevice>& deviceList, GdkDevice* device) {
@@ -61,20 +61,24 @@ auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices
                   "Probably this is the reason for not finding devices!\n");
     }
 
-    return deviceList;
+    return std::vector<InputDevice>{};
 }
 
 InputDeviceClass DeviceListHelper::getSourceMapping(GdkInputSource source, Settings* settings) {
     auto deviceList = DeviceListHelper::getDeviceList(settings);
 
+    g_message("Found %d devices", deviceList.size());
     for (InputDevice const& inputDevice: deviceList) {
         InputDeviceClass deviceClass =
                 InputEvents::translateDeviceType(inputDevice.getName(), inputDevice.getSource(), settings);
 
         if (inputDevice.getSource() == source) {
+            g_message("Found device %s for source %d", inputDevice.getName().c_str(), source);
             return deviceClass;
         }
     }
+
+    g_message("No device found for source %d", source);
 
     return InputDeviceClass::INPUT_DEVICE_IGNORE;
 }

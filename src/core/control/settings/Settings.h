@@ -11,13 +11,14 @@
 
 #pragma once
 
-#include <array>    // for array
-#include <cstddef>  // for size_t
-#include <map>      // for map
-#include <memory>   // for make_shared, shared_ptr
-#include <string>   // for string, basic_string
-#include <utility>  // for pair
-#include <vector>   // for vector
+#include <array>     // for array
+#include <cstddef>   // for size_t
+#include <map>       // for map
+#include <memory>    // for make_shared, shared_ptr
+#include <optional>  // for optional
+#include <string>    // for string, basic_string
+#include <utility>   // for pair
+#include <vector>    // for vector
 
 #include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
 #include <glib.h>                         // for gchar, gboolean, gint
@@ -552,6 +553,7 @@ public:
     void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
 
     const Palette& getColorPalette();
+    void setColorPalette(std::optional<fs::path> palettePath);
 
 public:
     // Custom settings
@@ -1101,4 +1103,6 @@ private:
      *
      */
     std::unique_ptr<Palette> palette;
+
+    fs::path colorPaletteSetting;
 };

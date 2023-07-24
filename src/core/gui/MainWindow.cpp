@@ -1,44 +1,44 @@
 #include "MainWindow.h"
 
-#include <config-dev.h>             // for TOOLBAR_CONFIG
+#include <config-dev.h>  // for TOOLBAR_CONFIG
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_fr...
-#include <gdk/gdk.h>                // for gdk_screen_get_de...
-#include <gio/gio.h>                // for g_cancellable_is_...
-#include <gtk/gtkcssprovider.h>     // for gtk_css_provider_...
+#include <gdk/gdk.h>  // for gdk_screen_get_de...
+#include <gio/gio.h>  // for g_cancellable_is_...
+#include <gtk/gtkcssprovider.h>  // for gtk_css_provider_...
 
-#include "control/AudioController.h"                    // for AudioController
-#include "control/Control.h"                            // for Control
-#include "control/DeviceListHelper.h"                   // for getSourceMapping
-#include "control/ScrollHandler.h"                      // for ScrollHandler
-#include "control/jobs/XournalScheduler.h"              // for XournalScheduler
-#include "control/layer/LayerController.h"              // for LayerController
-#include "control/settings/Settings.h"                  // for Settings
-#include "control/settings/SettingsEnums.h"             // for SCROLLBAR_HIDE_HO...
-#include "control/zoom/ZoomControl.h"                   // for ZoomControl
-#include "enums/ActionType.enum.h"                      // for ACTION_DELETE_LAYER
-#include "gui/FloatingToolbox.h"                        // for FloatingToolbox
-#include "gui/GladeGui.h"                               // for GladeGui
-#include "gui/PdfFloatingToolbox.h"                     // for PdfFloatingToolbox
-#include "gui/SearchBar.h"                              // for SearchBar
-#include "gui/inputdevices/InputEvents.h"               // for INPUT_DEVICE_TOUC...
-#include "gui/menus/menubar/Menubar.h"                  // for Menubar
+#include "control/AudioController.h"  // for AudioController
+#include "control/Control.h"  // for Control
+#include "control/DeviceListHelper.h"  // for getSourceMapping
+#include "control/ScrollHandler.h"  // for ScrollHandler
+#include "control/jobs/XournalScheduler.h"  // for XournalScheduler
+#include "control/layer/LayerController.h"  // for LayerController
+#include "control/settings/Settings.h"  // for Settings
+#include "control/settings/SettingsEnums.h"  // for SCROLLBAR_HIDE_HO...
+#include "control/zoom/ZoomControl.h"  // for ZoomControl
+#include "enums/ActionType.enum.h"  // for ACTION_DELETE_LAYER
+#include "gui/FloatingToolbox.h"  // for FloatingToolbox
+#include "gui/GladeGui.h"  // for GladeGui
+#include "gui/PdfFloatingToolbox.h"  // for PdfFloatingToolbox
+#include "gui/SearchBar.h"  // for SearchBar
+#include "gui/inputdevices/InputEvents.h"  // for INPUT_DEVICE_TOUC...
+#include "gui/menus/menubar/Menubar.h"  // for Menubar
 #include "gui/menus/menubar/ToolbarSelectionSubmenu.h"  // for ToolbarSelectionSubmenu
-#include "gui/scroll/ScrollHandling.h"                  // for ScrollHandling
-#include "gui/toolbarMenubar/ToolMenuHandler.h"         // for ToolMenuHandler
-#include "gui/toolbarMenubar/model/ToolbarData.h"       // for ToolbarData
-#include "gui/toolbarMenubar/model/ToolbarModel.h"      // for ToolbarModel
-#include "gui/widgets/SpinPageAdapter.h"                // for SpinPageAdapter
-#include "gui/widgets/XournalWidget.h"                  // for gtk_xournal_get_l...
-#include "util/GListView.h"                             // for GListView, GListV...
-#include "util/PathUtil.h"                              // for getConfigFile
-#include "util/Util.h"                                  // for execInUiThread, npos
-#include "util/XojMsgBox.h"                             // for XojMsgBox
-#include "util/i18n.h"                                  // for FS, _F
+#include "gui/scroll/ScrollHandling.h"  // for ScrollHandling
+#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
+#include "gui/toolbarMenubar/model/ToolbarData.h"  // for ToolbarData
+#include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
+#include "gui/widgets/SpinPageAdapter.h"  // for SpinPageAdapter
+#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_get_l...
+#include "util/GListView.h"  // for GListView, GListV...
+#include "util/PathUtil.h"  // for getConfigFile
+#include "util/Util.h"  // for execInUiThread, npos
+#include "util/XojMsgBox.h"  // for XojMsgBox
+#include "util/i18n.h"  // for FS, _F
 
-#include "GladeSearchpath.h"     // for GladeSearchpath
+#include "GladeSearchpath.h"  // for GladeSearchpath
 #include "ToolbarDefinitions.h"  // for TOOLBAR_DEFINITIO...
-#include "XournalView.h"         // for XournalView
-#include "filesystem.h"          // for path, exists
+#include "XournalView.h"  // for XournalView
+#include "filesystem.h"  // for path, exists
 
 using std::string;
 
@@ -75,6 +75,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     setSidebarVisible(control->getSettings()->isSidebarVisible());
 
+    g_message("MainWindow created");
     // Window handler
     g_signal_connect(this->window, "delete-event", G_CALLBACK(deleteEventCallback), this->control);
     g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
@@ -87,6 +88,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     // need to create tool buttons registered in plugins, so they can be added to toolbars
     control->registerPluginToolButtons(this->toolbar.get());
+
+    g_message("creating toolbar");
 
     createToolbar();
 
@@ -111,6 +114,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     getSpinPageNo()->addListener(this->control->getScrollHandler());
 
+    g_message("executing UI thread");
 
     Util::execInUiThread([=]() {
         // Execute after the window is visible, else the check won't work
@@ -180,6 +184,7 @@ const char* TOP_WIDGETS[] = {"tbTop1", "tbTop2", "mainContainerBox", nullptr};
 
 
 void MainWindow::toggleMenuBar(MainWindow* win) {
+    g_message("MainWindow::toggleMenuBar(MainWindow* win)");
     GtkWidget* menu = win->get("mainMenubar");
     if (gtk_widget_is_visible(menu)) {
         gtk_widget_hide(menu);
@@ -207,6 +212,8 @@ void MainWindow::initXournalWidget() {
 
     setGtkTouchscreenScrollingForDeviceMapping();
 
+    g_message("winXournal");
+
     gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
     GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
@@ -217,11 +224,15 @@ void MainWindow::initXournalWidget() {
 
     this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling.get());
 
+    g_message("xournal");
+
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
     gtk_widget_show_all(winXournal);
 
     Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
     scrollHandling->init(this->xournal->getWidget(), layout);
+
+    g_message("scrollHandling");
 
     updateColorscheme();
 }
@@ -230,6 +241,7 @@ void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
     InputDeviceClass touchscreenClass =
             DeviceListHelper::getSourceMapping(GDK_SOURCE_TOUCHSCREEN, this->getControl()->getSettings());
 
+    g_message("setGtkTouchscreenScrollingForDeviceMapping");
     setGtkTouchscreenScrollingEnabled(touchscreenClass == INPUT_DEVICE_TOUCHSCREEN &&
                                       !control->getSettings()->getTouchDrawingEnabled());
 }
@@ -243,7 +255,11 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
         return;
     }
 
+    g_message("gtkTouchscreenScrollingEnabled");
+
     gtkTouchscreenScrollingEnabled.store(enabled);
+
+    g_message("Util::execInUiThread");
 
     Util::execInUiThread(
             [=]() {
@@ -258,6 +274,7 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
  * Allow to hide menubar, but only if global menu is not enabled
  */
 void MainWindow::initHideMenu() {
+    g_message("initHideMenu");
     int top = -1;
     for (int i = 0; TOP_WIDGETS[i]; i++) {
         GtkWidget* w = get(TOP_WIDGETS[i]);
@@ -269,16 +286,21 @@ void MainWindow::initHideMenu() {
         }
     }
 
+    g_message("get(\"menuHideMenu\")");
+
     GtkWidget* menuItem = get("menuHideMenu");
     if (top < 5) {
+        g_message("no menu to hide");
         // There is no menu to hide, the menu is in the globalmenu!
         gtk_widget_hide(menuItem);
     } else {
+        g_message("hide menu");
         // Menu found, allow to hide it
         g_signal_connect(menuItem, "activate",
                          G_CALLBACK(+[](GtkMenuItem* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
     }
 
+    g_message("toogle Menubar");
     // Hide menubar at startup if specified in settings
     Settings* settings = control->getSettings();
     if (settings && !settings->isMenubarVisible()) {
@@ -532,6 +554,12 @@ auto MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState
     win->setMaximized(gtk_window_is_maximized(GTK_WINDOW(window)));
 
     return false;
+}
+
+void MainWindow::reloadToolbars() {
+    ToolbarData* d = getSelectedToolbar();
+    this->clearToolbar();
+    this->toolbarSelected(d);
 }
 
 void MainWindow::toolbarSelected(const std::string& id) {

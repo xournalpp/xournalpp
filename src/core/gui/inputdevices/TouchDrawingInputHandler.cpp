@@ -6,26 +6,27 @@
 
 #include <string>  // for operator==, basic_string
 
-#include "control/Control.h"                   // for Control
-#include "control/DeviceListHelper.h"          // for getSourceMapping
-#include "control/ToolEnums.h"                 // for TOOL_HAND, ToolType
-#include "control/ToolHandler.h"               // for ToolHandler
-#include "control/settings/ButtonConfig.h"     // for ButtonConfig
-#include "control/settings/Settings.h"         // for Settings
-#include "control/settings/SettingsEnums.h"    // for BUTTON_TOUCH, Button
-#include "gui/MainWindow.h"                    // for MainWindow
-#include "gui/PageView.h"                      // for XojPageView
-#include "gui/XournalView.h"                   // for XournalView
-#include "gui/XournalppCursor.h"               // for XournalppCursor
-#include "gui/inputdevices/InputEvents.h"      // for InputEvent, BUTTON_PRE...
+#include "control/Control.h"  // for Control
+#include "control/DeviceListHelper.h"  // for getSourceMapping
+#include "control/ToolEnums.h"  // for TOOL_HAND, ToolType
+#include "control/ToolHandler.h"  // for ToolHandler
+#include "control/settings/ButtonConfig.h"  // for ButtonConfig
+#include "control/settings/Settings.h"  // for Settings
+#include "control/settings/SettingsEnums.h"  // for BUTTON_TOUCH, Button
+#include "gui/MainWindow.h"  // for MainWindow
+#include "gui/PageView.h"  // for XojPageView
+#include "gui/XournalView.h"  // for XournalView
+#include "gui/XournalppCursor.h"  // for XournalppCursor
+#include "gui/inputdevices/InputEvents.h"  // for InputEvent, BUTTON_PRE...
 #include "gui/inputdevices/PenInputHandler.h"  // for PenInputHandler
-#include "gui/widgets/XournalWidget.h"         // for GtkXournal
+#include "gui/widgets/XournalWidget.h"  // for GtkXournal
 
 #include "InputContext.h"  // for InputContext
-#include "InputUtils.h"    // for InputUtils
+#include "InputUtils.h"  // for InputUtils
 
 TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext): PenInputHandler(inputContext) {
     inputContext->getToolHandler()->addToolChangedListener([&](ToolType newToolType) {
+        g_message("TouchDrawingInputHandler::TouchDrawingInputHandler: newToolType");
         InputDeviceClass touchscreenClass =
                 DeviceListHelper::getSourceMapping(GDK_SOURCE_TOUCHSCREEN, this->inputContext->getSettings());
 
@@ -157,6 +158,7 @@ auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
 }
 
 void TouchDrawingInputHandler::updateKineticScrollingEnabled() {
+    g_message("updateKineticScrollingEnabled");
     auto* control = inputContext->getView()->getControl();
     auto* mainWindow = control->getWindow();
     auto* toolHandler = this->inputContext->getToolHandler();
@@ -164,6 +166,7 @@ void TouchDrawingInputHandler::updateKineticScrollingEnabled() {
     //  Kinetic scrolling is nice; however, we need to disable it so we can draw (it steals
     // single-finger input).
     if (mainWindow != nullptr && control->getSettings()->getTouchDrawingEnabled()) {
+        g_message("setGtkTouchscreenScrollingEnabled");
         mainWindow->setGtkTouchscreenScrollingEnabled(toolHandler->getToolType() == TOOL_HAND);
     }
 }
