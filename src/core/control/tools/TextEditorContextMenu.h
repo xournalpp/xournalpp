@@ -16,6 +16,8 @@
 #include <gdk/gdk.h>  // for g_signal_connect
 #include <gtk/gtk.h>  // for GtkPopover, etc.
 
+#include "util/raii/GObjectSPtr.h"  // for xoj::util::GObjectSPtr
+
 class Control;
 class TextEditor;
 class XojPageView;
@@ -99,47 +101,47 @@ private:
     /**
      * UI Elements
      */
-    GtkPopover* contextMenu;
+    xoj::util::GObjectSPtr<GtkPopover> contextMenu;
 
-    GtkFontButton* fontBtn;
+    xoj::util::GObjectSPtr<GtkFontButton> fontBtn;
 
-    GtkToggleButton* tglBoldBtn;
-    GtkToggleButton* tglItalicBtn;
-    GtkToggleButton* tglUnderlineBtn;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglBoldBtn;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglItalicBtn;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglUnderlineBtn;
 
-    GtkButton* expandTextDecoration;
+    xoj::util::GObjectSPtr<GtkButton> expandTextDecoration;
 
-    GtkButton* ftColorBtn;
-    GtkWidget* ftColorIcon;
-    GtkButton* bgColorBtn;
-    GtkWidget* bgColorIcon;
+    xoj::util::GObjectSPtr<GtkButton> ftColorBtn;
+    xoj::util::GObjectSPtr<GtkWidget> ftColorIcon;
+    xoj::util::GObjectSPtr<GtkButton> bgColorBtn;
+    xoj::util::GObjectSPtr<GtkWidget> bgColorIcon;
 
-    GtkToggleButton* alignLeftTgl;
-    GtkToggleButton* alignCenterTgl;
-    GtkToggleButton* alignRightTgl;
+    xoj::util::GObjectSPtr<GtkToggleButton> alignLeftTgl;
+    xoj::util::GObjectSPtr<GtkToggleButton> alignCenterTgl;
+    xoj::util::GObjectSPtr<GtkToggleButton> alignRightTgl;
 
-    GtkWidget* textDecoLayout;
-    GtkWidget* colorLayout;
-    GtkWidget* alignmentLayout;
-    GtkWidget* secondaryToolbar;
+    xoj::util::GObjectSPtr<GtkWidget> textDecoLayout;
+    xoj::util::GObjectSPtr<GtkWidget> colorLayout;
+    xoj::util::GObjectSPtr<GtkWidget> alignmentLayout;
+    xoj::util::GObjectSPtr<GtkWidget> secondaryToolbar;
 
-    GtkToggleButton* tglWeightThin;
-    GtkToggleButton* tglWeightBook;
-    GtkToggleButton* tglWeightBold;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglWeightThin;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglWeightBook;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglWeightBold;
 
-    GtkToggleButton* tglStyleItalic;
-    GtkToggleButton* tglStyleOblique;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglStyleItalic;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglStyleOblique;
 
-    GtkToggleButton* tglUnderlineSingle;
-    GtkToggleButton* tglUnderlineSquiggle;
-    GtkToggleButton* tglUnderlineDouble;
-    GtkToggleButton* tglStrikethrough;
-    GtkToggleButton* tglOverlineSingle;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglUnderlineSingle;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglUnderlineSquiggle;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglUnderlineDouble;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglStrikethrough;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglOverlineSingle;
 
-    GtkToggleButton* tglSuperScript;
-    GtkToggleButton* tglSubScript;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglSuperScript;
+    xoj::util::GObjectSPtr<GtkToggleButton> tglSubScript;
 
-    GtkButton* removeStyles;
+    xoj::util::GObjectSPtr<GtkButton> removeStyles;
 
 
 public:
