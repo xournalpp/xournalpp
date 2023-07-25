@@ -24,6 +24,14 @@
 class ObjectInputStream;
 class ObjectOutputStream;
 
+struct partialImage {
+    cairo_surface_t* mod_img = nullptr;
+    double xIgnoreP = 0;
+    double yIgnoreP = 0;
+    double xDrawP = 0;
+    double yDrawP = 0;
+    double alphaForIgnore = 0;
+};
 
 class Image: public Element {
 public:
@@ -54,7 +62,12 @@ public:
     /// Returns the internal surface that contains the rendered image data.
     ///
     /// Note that the image is rendered lazily by default; call this method to render it.
-    cairo_surface_t* getImage() const;
+    auto getImage() const -> cairo_surface_t*;
+
+
+    /// Returns a surface, with only the specified part unaffected by (lower) opacity
+    auto getPartialImage(double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP, double alphaForIgnore) const
+            -> cairo_surface_t*;
 
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
     void rotate(double x0, double y0, double th) override;
@@ -96,6 +109,9 @@ private:
 
     /// Temporary surface used as a render buffer.
     mutable cairo_surface_t* image = nullptr;
+
+    /// Temporary surface, render buffer for partially displaying the image
+    mutable struct partialImage partialImage;
 
     /// Image format information.
     mutable GdkPixbufFormat* format = nullptr;

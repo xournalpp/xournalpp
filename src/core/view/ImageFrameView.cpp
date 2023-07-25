@@ -12,6 +12,12 @@ ImageFrameView::~ImageFrameView() = default;
 void ImageFrameView::draw(const xoj::view::Context& ctx) const {
     xoj::util::CairoSaveGuard const saveGuard(ctx.cr);  // cairo_save
 
+    // todo p0mm draw image first if it is just inside the frame
+    if (imageFrame->hasImage()) {
+        // todo p0mm test call to check out partial view
+        imageFrame->drawPartialImage(ctx, 0.3, 0.5, 0.6, 0.75, 0.02);
+    }
+
     cairo_set_line_width(ctx.cr, 1);
     Util::cairo_set_source_rgbi(ctx.cr, ColorU8{114, 159, 207, 255});
 
@@ -31,7 +37,10 @@ void ImageFrameView::draw(const xoj::view::Context& ctx) const {
     Util::cairo_set_source_rgbi(ctx.cr, ColorU8{114, 159, 207}, 0.2);
     cairo_fill(ctx.cr);
 
+    // todo p0mm draw image last if it is beeing moved / resized
+    /*
     if (imageFrame->hasImage()) {
         imageFrame->drawImage(ctx);
     }
+    */
 }

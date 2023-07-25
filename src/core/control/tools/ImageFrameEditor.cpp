@@ -1,8 +1,14 @@
 #include "ImageFrameEditor.h"
 
+#include "control/Control.h"  // for Control
+#include "control/settings/Settings.h"
 #include "model/XojPage.h"  // for XojPage
 
-ImageFrameEditor::ImageFrameEditor(const PageRef& page, double x, double y): page(page) { searchForImageFrame(x, y); }
+ImageFrameEditor::ImageFrameEditor(Control* control, const PageRef& page, double x, double y):
+        control(control), page(page) {
+
+    searchForImageFrame(x, y);
+}
 
 ImageFrameEditor::~ImageFrameEditor() {}
 
@@ -78,6 +84,8 @@ bool ImageFrameEditor::searchForImageFrame(double x, double y) {
 
     return false;
 }
+
+Color ImageFrameEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
 
 void ImageFrameEditor::updateImageFrame(double x, double y) {
     const std::vector<Element*> elems = this->page->getSelectedLayer()->getElements();

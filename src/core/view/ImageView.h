@@ -25,6 +25,18 @@ public:
      */
     void draw(const Context& ctx) const override;
 
+    /**
+     * Draws only a part of the Image element, rest is affected by alpha
+     * @param ctx   the Context
+     * @param xIgnoreP  ignore until this Percentage of Image is reached in x direction
+     * @param yIgnoreP  ignore until this Percentage of Image is reached in y direction
+     * @param xDrawP    draw until this Percentage of Image is reached in x direction, then ignore again
+     * @param yDrawP    draw until this Percentage of Image is reached in y direction, then ignore again
+     * @param alphaForIgnore    what opacity the ignored parts of the image should be
+     */
+    void drawPartial(const Context& ctx, double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP,
+                     double alphaForIgnore);
+
 private:
     const Image* image;
 };

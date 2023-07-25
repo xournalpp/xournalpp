@@ -13,15 +13,18 @@
 
 #include "model/ImageFrame.h"  // for ImageFrame
 #include "model/PageRef.h"     // for PageRef
+#include "util/Color.h"        // for Color
 
 #include "CursorSelectionType.h"  // for CursorSelectionTypes
+
+class Control;
 
 enum SCALING { TOP, TOP_RIGHT, TOP_LEFT, BOTTOM, BOTTOM_RIGHT, BOTTOM_LEFT, LEFT, RIGHT, NO_SCALING };
 
 
 class ImageFrameEditor {
 public:
-    ImageFrameEditor(const PageRef& page, double x, double y);
+    ImageFrameEditor(Control* control, const PageRef& page, double x, double y);
     virtual ~ImageFrameEditor();
 
     // user interactions
@@ -30,6 +33,8 @@ public:
     void mouseUp(double x, double y);
 
     auto currentlyScaling() -> bool;
+
+    Color getSelectionColor() const;
 
     void updateImageFrame(double x, double y);
     auto getSelectionTypeForPos(double x, double y) -> CursorSelectionType;
@@ -43,6 +48,7 @@ private:
     bool scaling = false;
     SCALING current = NO_SCALING;
 
+    Control* control;
     PageRef page;
     ImageFrame* imageFrame = nullptr;
 };

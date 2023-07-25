@@ -1,5 +1,8 @@
 #include "ImageFrame.h"
 
+#include "control/Control.h"  // for Control
+#include "control/settings/Settings.h"
+#include "view/ImageView.h"
 #include "view/View.h"
 
 
@@ -29,10 +32,14 @@ void ImageFrame::readSerialized(ObjectInputStream& in) {
 
 auto ImageFrame::hasImage() const -> bool { return containsImage; }
 
-void ImageFrame::drawImage(const xoj::view::Context& ctx) const {
+void ImageFrame::drawPartialImage(const xoj::view::Context& ctx, double xIgnoreP, double yIgnoreP, double xDrawP,
+                                  double yDrawP, double alphaForIgnore) const {
     if (this->containsImage) {
         auto elementView = xoj::view::ElementView::createFromElement(image);
-        elementView->draw(ctx);
+
+        // using static_cast instead of dynamic, as this will 100% be an imageView
+        auto* imageView = static_cast<xoj::view::ImageView*>(elementView.get());
+        imageView->drawPartial(ctx, xIgnoreP, yIgnoreP, xDrawP, yDrawP, alphaForIgnore);
     }
 }
 

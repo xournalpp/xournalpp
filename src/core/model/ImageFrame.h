@@ -63,7 +63,8 @@ public:
     /**
      * helper method for ImageFrameView
      */
-    void drawImage(const xoj::view::Context& ctx) const;
+    void drawPartialImage(const xoj::view::Context& ctx, double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP,
+                          double alphaForIgnore) const;
 
 private:
     /**

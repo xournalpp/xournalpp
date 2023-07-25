@@ -537,7 +537,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
             rerenderPage();
             repaintPage();
         } else {
-            this->imageFrameEditor = std::make_unique<ImageFrameEditor>(page, x, y);
+            this->imageFrameEditor = std::make_unique<ImageFrameEditor>(this->xournal->getControl(), page, x, y);
         }
 
     } else if (this->imageFrameEditor) {
