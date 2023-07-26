@@ -32,37 +32,28 @@ void ImageFrameEditor::mouseMove(double x, double y) {
 
         switch (this->current) {
             case TOP:
-                this->imageFrame->scale(frameX, frameY, 1, (frameHeight - frameYDif) / frameHeight, 0.0, false);
-                this->imageFrame->move(0, frameHeight - this->imageFrame->getElementHeight());
+                this->imageFrame->moveOnlyFrame(0, frameYDif, 0, -frameYDif);
                 break;
             case TOP_RIGHT:
-                this->imageFrame->scale(frameX, frameY, frameXDif / frameWidth, (frameHeight - frameYDif) / frameHeight,
-                                        0.0, false);
-                this->imageFrame->move(0, frameHeight - this->imageFrame->getElementHeight());
+                this->imageFrame->moveOnlyFrame(0, frameYDif, frameXDif - frameWidth, -frameYDif);
                 break;
             case TOP_LEFT:
-                this->imageFrame->scale(frameX, frameY, (frameWidth - frameXDif) / frameWidth,
-                                        (frameHeight - frameYDif) / frameHeight, 0.0, false);
-                this->imageFrame->move(frameWidth - this->imageFrame->getElementWidth(),
-                                       frameHeight - this->imageFrame->getElementHeight());
+                this->imageFrame->moveOnlyFrame(frameXDif, frameYDif, -frameXDif, -frameYDif);
                 break;
             case BOTTOM:
-                this->imageFrame->scale(frameX, frameY, 1, frameYDif / frameHeight, 0.0, false);
+                this->imageFrame->moveOnlyFrame(0, 0, 0, frameYDif - frameHeight);
                 break;
             case BOTTOM_RIGHT:
-                this->imageFrame->scale(frameX, frameY, frameXDif / frameWidth, frameYDif / frameHeight, 0.0, false);
+                this->imageFrame->moveOnlyFrame(0, 0, frameXDif - frameWidth, frameYDif - frameHeight);
                 break;
             case BOTTOM_LEFT:
-                this->imageFrame->scale(frameX, frameY, (frameWidth - frameXDif) / frameWidth, frameYDif / frameHeight,
-                                        0.0, false);
-                this->imageFrame->move(frameWidth - this->imageFrame->getElementWidth(), 0);
+                this->imageFrame->moveOnlyFrame(frameXDif, 0, -frameXDif, frameYDif - frameHeight);
                 break;
             case LEFT:
-                this->imageFrame->scale(frameX, frameY, (frameWidth - frameXDif) / frameWidth, 1, 0.0, false);
-                this->imageFrame->move(frameWidth - this->imageFrame->getElementWidth(), 0);
+                this->imageFrame->moveOnlyFrame(frameXDif, 0, -frameXDif, 0);
                 break;
             case RIGHT:
-                this->imageFrame->scale(frameX, frameY, frameXDif / frameWidth, 1, 0.0, false);
+                this->imageFrame->moveOnlyFrame(0, 0, frameXDif - frameWidth, 0);
                 break;
             case NO_SCALING:
                 return;

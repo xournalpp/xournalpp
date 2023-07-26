@@ -183,3 +183,61 @@ auto ImageFrame::getImagePosition() const -> Rectangle<double> {
     }
     return {this->image->getX(), this->image->getY(), this->image->getElementWidth(), this->image->getElementHeight()};
 }
+
+auto ImageFrame::getVisiblePartOfImage() const -> xoj::util::Rectangle<double> {
+    if (!containsImage || image == nullptr) {
+        return {0.0, 0.0, 0.0, 0.0};
+    }
+
+    const double vImgX = std::max(x, image->getX());
+    const double vImgY = std::max(y, image->getY());
+
+    double vImgH = image->getElementHeight();
+    double vImgW = image->getElementWidth();
+
+    const double difTopH = y - image->getY();
+    if (difTopH > 0.0) {
+        vImgH -= difTopH;
+    }
+
+    const double difBottomH = image->getElementHeight() + image->getY() - y - height;
+    if (difBottomH > 0.0) {
+        vImgH -= difBottomH;
+    }
+
+    const double difLeftW = x - image->getX();
+    if (difLeftW > 0.0) {
+        vImgW -= difLeftW;
+    }
+
+    const double difRightW = image->getElementWidth() + image->getX() - x - width;
+    if (difRightW > 0.0) {
+        vImgW -= difRightW;
+    }
+
+    if (vImgH < 0 || vImgW < 0) {
+        return {0.0, 0.0, 0.0, 0.0};
+    }
+
+    return {vImgX, vImgY, vImgW, vImgH};
+}
+
+void ImageFrame::moveOnlyFrame(double x, double y, double width, double height) {
+    this->x += x;
+    this->width += width;
+    this->y += y;
+    this->height += height;
+
+    // make sure there is still some image visible
+    auto visPost = getVisiblePartOfImage();
+    if (visPost.height == 0.0 && visPost.width == 0.0 && visPost.x == 0.0 && visPost.y == 0.0) {
+        this->x -= x;
+        this->width -= width;
+        this->y -= y;
+        this->height -= height;
+    }
+}
+
+void ImageFrame::moveOnlyImage(double x, double y, double width, double height) {
+    // todo p0mm
+}

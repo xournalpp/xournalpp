@@ -66,8 +66,18 @@ public:
     /**
      * helper method for ImageFrameView
      */
-    xoj::util::Rectangle<double> getImagePosition() const;
+    auto getImagePosition() const -> xoj::util::Rectangle<double>;
 
+
+    void moveOnlyFrame(double x, double y, double width, double height);
+
+    void moveOnlyImage(double x, double y, double width, double height);
+
+    // todo p0mm move to private
+    /**
+     * calculates which part of the image is visible & returns coords etc of this part
+     */
+    xoj::util::Rectangle<double> getVisiblePartOfImage() const;
 
 private:
     /**
