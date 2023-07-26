@@ -44,6 +44,7 @@ public:
 
 class TexImageView;
 class ImageView;
+class ImageFrameView;
 class StrokeView;
 class TextView;
 

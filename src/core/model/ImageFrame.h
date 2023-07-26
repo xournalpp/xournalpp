@@ -53,12 +53,9 @@ protected:
 public:
     void setImage(Image* img);
 
-    /**
-     * recalculates size and location of the image, based on selected mode
-     */
-    void adjustImageToFrame();
 
     auto hasImage() const -> bool;
+    auto couldBeEdited() const -> bool;
 
     /**
      * helper method for ImageFrameView
@@ -66,7 +63,18 @@ public:
     void drawPartialImage(const xoj::view::Context& ctx, double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP,
                           double alphaForIgnore) const;
 
+    /**
+     * helper method for ImageFrameView
+     */
+    xoj::util::Rectangle<double> getImagePosition() const;
+
+
 private:
+    /**
+     * recalculates size and location of the image, based on selected mode
+     */
+    void adjustImageToFrame();
+
     /**
      * scales image down to fit given space
      *
@@ -88,8 +96,12 @@ private:
     void centerImage();
 
 private:
+    bool editable = true;
     bool containsImage = false;
     Image* image = nullptr;
-    // todo p0mm have a preference setting for this default value
-    ImageFrameMode mode = ImageFrameMode::SCALE_DOWN;
+    double imageXOffset = 0.0;
+    double imageYOffset = 0.0;
+
+    // todo p0mm have a preference setting for this default value,or only use scale_up???
+    ImageFrameMode mode = ImageFrameMode::SCALE_UP;
 };

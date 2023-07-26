@@ -68,12 +68,16 @@ void ImageFrame::scale(double x0, double y0, double fx, double fy, double, bool)
     }
 }
 
-// not available until image rotation is (or image cutting?)
+// not available until image rotation is (or free form image cutting?)
 void ImageFrame::rotate(double x0, double y0, double th) {}
 
 void ImageFrame::calcSize() const {
-    // todo p0mm what if the image is bigger then the frame?
-    this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
+    if (!this->editable && this->containsImage) {
+        // todo p0mm snappedBound should only be the visible image part!!
+        this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
+    } else {
+        this->snappedBounds = Rectangle<double>(this->x - 1, this->y - 1, this->width + 2, this->height + 2);
+    }
     this->sizeCalculated = true;
 }
 
@@ -87,19 +91,20 @@ auto ImageFrame::intersectsArea(double x, double y, double width, double height)
 
 void ImageFrame::setImage(Image* img) {
     this->image = img;
-    this->containsImage = true;
     this->image->setX(this->x);
     this->image->setY(this->y);
 
     adjustImageToFrame();
+    this->containsImage = true;
 }
+
 void ImageFrame::move(double dx, double dy) {
     Element::move(dx, dy);
     this->image->move(dx, dy);
 }
 
 void ImageFrame::centerImage() {
-    if (!containsImage) {
+    if (image == nullptr) {
         return;
     }
 
@@ -120,7 +125,7 @@ void ImageFrame::centerImage() {
 }
 
 void ImageFrame::scaleImageDown() {
-    if (!containsImage) {
+    if (image == nullptr) {
         return;
     }
     auto [img_width, img_height] = this->image->getImageSize();
@@ -132,7 +137,7 @@ void ImageFrame::scaleImageDown() {
 }
 
 void ImageFrame::scaleImageUp() {
-    if (!containsImage) {
+    if (image == nullptr) {
         return;
     }
     auto [img_width, img_height] = this->image->getImageSize();
@@ -144,9 +149,10 @@ void ImageFrame::scaleImageUp() {
 }
 
 void ImageFrame::adjustImageToFrame() {
-    if (!containsImage) {
+    if (image == nullptr) {
         return;
     }
+
     switch (this->mode) {
         case FILL:
             this->image->setWidth(this->width);
@@ -159,5 +165,21 @@ void ImageFrame::adjustImageToFrame() {
             scaleImageUp();
             break;
     }
-    centerImage();
+    if (this->containsImage) {
+        this->image->setX(x + (imageXOffset * image->getElementWidth()));
+        this->image->setY(y + (imageYOffset * image->getElementHeight()));
+    } else {
+        centerImage();
+        imageXOffset = (image->getX() - x) / image->getElementWidth();
+        imageYOffset = (image->getY() - y) / image->getElementHeight();
+    }
+}
+
+auto ImageFrame::couldBeEdited() const -> bool { return editable; }
+
+auto ImageFrame::getImagePosition() const -> Rectangle<double> {
+    if (!this->containsImage) {
+        return {0.0, 0.0, 0.0, 0.0};
+    }
+    return {this->image->getX(), this->image->getY(), this->image->getElementWidth(), this->image->getElementHeight()};
 }
