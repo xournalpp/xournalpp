@@ -24,17 +24,17 @@ License: GPL-2+
 Comment: Source of truth https://github.com/xournalpp/xournalpp/graphs/contributors
          For a full and detailed list of contributors refer to the git log.
 
-Files: src/control/xojfile/LoadHandlerHelper.cpp
-       src/control/xojfile/LoadHandlerHelper.h
-       src/gui/widgets/ZoomCallib.cpp
-       src/gui/widgets/ZoomCallib.h
+Files: src/core/control/xojfile/LoadHandlerHelper.cpp
+       src/core/control/xojfile/LoadHandlerHelper.h
+       src/core/gui/widgets/ZoomCallib.cpp
+       src/core/gui/widgets/ZoomCallib.h
 Copyright: 2015, Xournal Team
 License: GPL-2+
 Comment: The files were committed by Andreas Butti initially who was active for both
          Xournal and Xournal++
 
-Files: src/gui/widgets/gtkmenutooltogglebutton.cpp
-       src/gui/widgets/gtkmenutooltogglebutton.h
+Files: src/core/gui/widgets/gtkmenutooltogglebutton.cpp
+       src/core/gui/widgets/gtkmenutooltogglebutton.h
 Copyright: 2004, Paolo Borelli
            2003, Ricardo Fernandez Pascual
 License: LGPL-2+
@@ -135,9 +135,17 @@ Files: plugins/MigrateFontSizes/plugin.ini
 Copyright: 2021, Roland Lötscher
 License: GPL-2+
 
+Files: plugins/Export/plugin.ini
+Copyright: 2021, Roland Lötscher
+License: GPL-2+
+
 Files: plugins/ColorCycle/plugin.ini
        plugins/LayerActions/plugin.ini
 Copyright: 2020, Roland Lötscher
+License: GPL-2+
+
+Files: plugins/HighlightPosition/plugin.ini
+Copyright: 2021, Michael J. Gruber
 License: GPL-2+
 
 Files: plugins/Example/plugin.ini
@@ -149,13 +157,13 @@ Files: plugins/QuickScreenshot/plugin.ini
 Copyright: 2020, Debbie Reynolds
 License: GPL-2+
 
-Files: src/gui/GladeSearchpath.h
-       src/gui/GladeSearchpath.cpp
+Files: src/core/gui/GladeSearchpath.h
+       src/core/gui/GladeSearchpath.cpp
 Copyright: 2011, Andreas Butti
 License: GPL-2+
 
-Files: src/gui/dialog/LatexDialog.h
-       src/gui/dialog/LatexDialog.cpp
+Files: src/core/gui/dialog/LatexDialog.h
+       src/core/gui/dialog/LatexDialog.cpp
 Copyright: 2013, Wilson Brenna
 License: GPL-2+
 
@@ -168,7 +176,7 @@ Comment: Original Author Paolo Bacchilega <paolo.bacch@tin.it>
           seemingly for the FSF but this is unclear from the code
 License: GPL-3+
 
-Files: src/util/safe_casts.h
+Files: src/util/include/util/safe_casts.h
 Copyright: 2020, Fabian Keßler <fabian_kessler@gmx.de>
 License: BSL-1
 

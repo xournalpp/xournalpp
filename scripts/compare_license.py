@@ -105,7 +105,9 @@ def get_whitelist_not_listed():
     white_list.add("rpm/fedora/xournalpp.spec") # false positive
     white_list.add("windows-setup/xournalpp.nsi") # false positive
     white_list.add("ui/about.glade") # false positive
-    white_list.add("src/win32/xpp.rc.in") # false positive
+    white_list.add("src/exe/win32/xpp.rc.in") # false positive
+    white_list.add("mac-setup/Info.plist") # false positive
+    white_list.add("src/core/gui/dialog/AboutDialog.cpp") # false positive
     return white_list
 
 # II: Add an entry to the whitelist if you added a file which has special
@@ -135,11 +137,26 @@ def get_whitelist_not_found():
     white_list.add("ui/pixmaps/xopt.svg")
     white_list.add("ui/iconsColor-dark/*")
     white_list.add("ui/iconsColor-light/*")
+    white_list.add("ui/iconsLucide-dark/*")
+    white_list.add("ui/iconsLucide-light/*")
+    white_list.add("ui/iconsColor-dark/hicolor/scalable/actions/xopp-compass.svg")
+    white_list.add("ui/iconsColor-dark/hicolor/scalable/actions/xopp-setsquare.svg")
+    white_list.add("ui/iconsColor-light/hicolor/scalable/actions/xopp-Tselect-pdf-text-area.svg")
+    white_list.add("ui/iconsColor-light/hicolor/scalable/actions/xopp-Tselect-pdf-text-hd.svg")
+    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-compass.svg")
+    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-draw-spline.svg")
+    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-floating-toolbox.svg")
+    white_list.add("ui/iconsLucide-dark/hicolor/scalable/actions/xopp-setsquare.svg")
+    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-compass.svg")
+    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-draw-spline.svg")
+    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-floating-toolbox.svg")
+    white_list.add("ui/iconsLucide-light/hicolor/scalable/actions/xopp-setsquare.svg")
+
     return white_list
 
 # III: Update git commit hash to current commit once you checked
 # that the changes do not affect the licensing information in copyright.txt
-last_checked_git_commit_hash = "89eee20c3dab1d1bfc18d125f32d510b6862168d"
+last_checked_git_commit_hash = "44499921e90d2d3620f9f23395be3b44a226f617"
 
 changed_files = get_changed_files_since(last_checked_git_commit_hash)
 
