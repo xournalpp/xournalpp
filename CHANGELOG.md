@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.2.1~dev (Unreleased)
+
 ## 1.2.0
 
 This is a new major version of Xournal++ with many new features, improvements,
