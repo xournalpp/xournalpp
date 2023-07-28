@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.3+dev (Unreleased)
+## 1.2.0~dev (Unreleased)
 
 ## 1.1.3
 
