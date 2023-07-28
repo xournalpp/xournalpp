@@ -22,6 +22,21 @@
 
 #include "LayoutMapper.h"  // for LayoutMapper
 
+/**
+ * Padding outside the pages, including shadow
+ */
+constexpr auto const XOURNAL_PADDING = 10;
+
+/**
+ * Allowance for shadow between page pairs in paired page mode
+ */
+constexpr auto const XOURNAL_ROOM_FOR_SHADOW = 3;
+
+/**
+ * Padding between the pages
+ */
+constexpr auto const XOURNAL_PADDING_BETWEEN = 15;
+
 class XojPageView;
 class XournalView;
 class ScrollHandling;

@@ -229,7 +229,7 @@ void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalV
     gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
     g_signal_connect(widget, "scroll-event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
     g_signal_connect(widget, "event", G_CALLBACK(onTouchpadPinchEvent), this);
-    g_signal_connect(window, "configure-event", G_CALLBACK(onWindowSizeChangedEvent), this);
+    g_signal_connect(window, "size-allocate", G_CALLBACK(onWindowSizeChangedEvent), this);
     registerListener(this->control);
 }
 
@@ -281,7 +281,8 @@ auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
     }
 
     Rectangle widget_rect = getVisibleRect();
-    double zoom_fit_width = widget_rect.width / (page->getWidth() + 20.0);
+    double zoom_fit_width = (widget_rect.width - XOURNAL_PADDING_BETWEEN) / (page->getWidth());
+
     if (zoom_fit_width < this->zoomMin || zoom_fit_width > this->zoomMax) {
         return false;
     }
@@ -304,8 +305,8 @@ auto ZoomControl::updateZoomPresentationValue(size_t pageNo) -> bool {
     }
 
     Rectangle widget_rect = getVisibleRect();
-    double zoom_fit_width = widget_rect.width / (page->getWidth() + 14.0);
-    double zoom_fit_height = widget_rect.height / (page->getHeight() + 14.0);
+    double zoom_fit_width = (widget_rect.width - XOURNAL_PADDING_BETWEEN) / page->getWidth();
+    double zoom_fit_height = (widget_rect.height - XOURNAL_PADDING_BETWEEN) / page->getHeight();
     double zoom_presentation = zoom_fit_width < zoom_fit_height ? zoom_fit_width : zoom_fit_height;
     if (zoom_presentation < this->zoomMin) {
         return false;
