@@ -136,7 +136,7 @@ and bug fixes thanks to contributions from the community.
   * Improved performance (#3334, #4306).
 * TeX Tool
   * Reimplemented the LaTeX editor using the gtksourceview library (#2809),
-    enabling multiline input, syntax highlighting, undo/recode, word wrap, and a
+    enabling multiline input, syntax highlighting, undo/redo, word wrap, and a
     resizable code editor.
   * Added a tab for viewing the output of the TeX command (#2809).
   * Added Preferences settings for changing the syntax highlighting theme, word
