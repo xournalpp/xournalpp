@@ -12,7 +12,7 @@ project(xournalpp
         LANGUAGES CXX C)
 # according to https://cmake.org/cmake/help/latest/command/project.html we must fix the suffix:
 # And https://gitlab.kitware.com/cmake/cmake/-/issues/16716 is still open:
-set(VERSION_SUFFIX "")
+set(VERSION_SUFFIX "+dev")
 set(PROJECT_VERSION "${PROJECT_VERSION}${VERSION_SUFFIX}")
 set(xournalpp_VERSION ${PROJECT_VERSION})
 set(CMAKE_PROJECT_VERSION ${PROJECT_VERSION})
