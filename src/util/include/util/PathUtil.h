@@ -108,7 +108,6 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 
 
 void openFileWithDefaultApplication(const fs::path& filename);
-void openFileWithFilebrowser(const fs::path& filename);
 
 [[maybe_unused]] [[nodiscard]] bool isChildOrEquivalent(fs::path const& path, fs::path const& base);
 

@@ -197,7 +197,7 @@ void checkForErrorlog() {
     } else if (response == OPEN_FILE) {
         Util::openFileWithDefaultApplication(errorlogPath);
     } else if (response == OPEN_DIR) {
-        Util::openFileWithFilebrowser(errorlogPath.parent_path());
+        Util::openFileWithDefaultApplication(errorlogPath.parent_path());
     } else if (response == DELETE_FILE) {
         deleteFile(errorlogPath);
     }
