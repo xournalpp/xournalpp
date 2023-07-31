@@ -82,7 +82,7 @@ auto BackgroundImage::isAttached() const -> bool { return this->img ? this->img-
 void BackgroundImage::setAttach(bool attach) {
     if (!this->img) {
         g_warning("BackgroundImage::setAttach: please load first an image before call setAttach!");
-        Stacktrace::printStacktrace();
+        xoj::util::printStacktrace();
         return;
     }
     this->img->attach = attach;

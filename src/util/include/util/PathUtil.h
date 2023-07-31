@@ -140,4 +140,6 @@ auto system_single_byte_filename(const fs::path& path) -> std::string;
 [[maybe_unused]] [[nodiscard]] fs::path getDataPath();
 [[maybe_unused]] [[nodiscard]] fs::path getLocalePath();
 
+[[maybe_unused]] [[nodiscard]] auto getExePath() -> fs::path;
+
 }  // namespace Util

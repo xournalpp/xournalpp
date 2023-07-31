@@ -15,7 +15,7 @@ void setupEnvironment() {
      * see https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/blob/master/examples/gtk3-launcher.sh
      * and https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/issues/12
      */
-    auto base = Stacktrace::getExePath().parent_path();  // Xournal++.app/Contents or $HOME/gtk/inst
+    auto base = Util::getExePath().parent_path();  // Xournal++.app/Contents or $HOME/gtk/inst
 
     if (fs::exists(base / "Resources")) {  // app-bundle
         base = base / "Resources";

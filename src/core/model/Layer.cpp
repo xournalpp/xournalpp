@@ -5,6 +5,8 @@
 #include "model/Element.h"    // for Element, Element::Index, Element::Inval...
 #include "util/Stacktrace.h"  // for Stacktrace
 
+using xoj::util::printStacktrace;
+
 Layer::Layer() = default;
 
 Layer::~Layer() {
@@ -27,7 +29,7 @@ auto Layer::clone() const -> Layer* {
 void Layer::addElement(Element* e) {
     if (e == nullptr) {
         g_warning("addElement(nullptr)!");
-        Stacktrace::printStacktrace();
+        printStacktrace();
         return;
     }
 
@@ -44,14 +46,14 @@ void Layer::addElement(Element* e) {
 void Layer::insertElement(Element* e, Element::Index pos) {
     if (e == nullptr) {
         g_warning("insertElement(nullptr)!");
-        Stacktrace::printStacktrace();
+        printStacktrace();
         return;
     }
 
     for (Element* elem2: this->elements) {
         if (e == elem2) {
             g_warning("Layer::insertElement() try to add an element twice!");
-            Stacktrace::printStacktrace();
+            printStacktrace();
             return;
         }
     }
@@ -93,7 +95,7 @@ auto Layer::removeElement(Element* e, bool free) -> Element::Index {
     }
 
     g_warning("Could not remove element from layer, it's not on the layer!");
-    Stacktrace::printStacktrace();
+    printStacktrace();
     return Element::InvalidIndex;
 }
 

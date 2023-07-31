@@ -16,7 +16,7 @@
 #include "control/xojfile/SaveHandler.h"  // for SaveHandler
 #include "util/PathUtil.h"
 #include "util/PathUtil.h"    // for getConfigFile
-#include "util/Stacktrace.h"  // for Stacktrace::printStacktrace
+#include "util/Stacktrace.h"  // for printStacktrace
 #include "util/i18n.h"        // for FC, _F, _
 
 #include "config-dev.h"
@@ -24,6 +24,7 @@
 #include "config.h"
 #include "filesystem.h"  // for path
 
+using xoj::util::printStacktrace;
 
 // todo: use std::atomic_shared_ptr when available (c++20)
 static std::atomic<Document*> document = nullptr;
@@ -81,7 +82,7 @@ static void crashHandler(int sig) {
     auto const& errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR) / std::string_view(stime.data(), size + 9 + 4);
 
     auto trace = fbbe::stacktrace::current();
-    Stacktrace::printStacktrace(std::cerr, trace);
+    printStacktrace(std::cerr, trace);
     {
         std::ofstream fp(errorlogPath);
         fp << FORMAT_STR("Date: {1}") % ctime(&curtime);
@@ -97,7 +98,7 @@ static void crashHandler(int sig) {
            << gtk_get_micro_version() << "\n"
            << std::endl;
 
-        Stacktrace::printStacktrace(fp, trace);
+        printStacktrace(fp, trace);
 
         fp << "\n\nExecution log:\n\n";
         fp << getCrashHandlerLogBuffer()->str();

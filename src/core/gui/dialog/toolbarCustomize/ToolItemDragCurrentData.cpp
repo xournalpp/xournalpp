@@ -20,7 +20,7 @@ void ToolItemDragCurrentData::setData(GtkWidget* widget) {
     ToolItemDragDropData* d = ToolitemDragDrop::metadataGetMetadata(widget);
     if (d == nullptr) {
         g_warning("ToolItemDragCurrentData::setData(GtkWidget * widget) could not get data!");
-        Stacktrace::printStacktrace();
+        xoj::util::printStacktrace();
         return;
     }
 

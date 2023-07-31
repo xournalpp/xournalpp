@@ -18,9 +18,6 @@
 
 #include "Element.h"  // for Element, Element::Index
 
-template <class T>
-using optional = std::optional<T>;
-
 class Layer {
 public:
     Layer();
@@ -103,5 +100,5 @@ private:
 
     bool visible = true;
 
-    optional<std::string> name;
+    std::optional<std::string> name;
 };
