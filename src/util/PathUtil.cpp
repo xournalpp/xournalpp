@@ -156,7 +156,11 @@ void Util::openFileWithDefaultApplication(const fs::path& filename) {
 #ifdef __APPLE__
     constexpr auto const OPEN_PATTERN = "open \"{1}\"";
 #elif _WIN32  // note the underscore: without it, it's not msdn official!
-    constexpr auto const OPEN_PATTERN = "start \"{1}\"";
+    constexpr auto const OPEN_PATTERN = "start \"\" \"{1}\"";
+    /**
+     * start command requires a (possibly empty) title when there are quotes around the command
+     * https://stackoverflow.com/questions/27261692/how-do-i-use-quotes-in-cmd-start
+     */
 #else         // linux, unix, ...
     constexpr auto const OPEN_PATTERN = "xdg-open \"{1}\"";
 #endif
