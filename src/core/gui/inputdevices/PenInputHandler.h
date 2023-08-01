@@ -153,7 +153,7 @@ protected:
     double filterPressure(PositionInputData const& pos, XojPageView* page);
 
     /**
-     * @brief Detexts whether the current input event is to be used as a selection
+     * @brief Detects whether the current input event is to be used as a selection
      * rather than drawing
      */
     bool isCurrentTapSelection(InputEvent const& event) const;
