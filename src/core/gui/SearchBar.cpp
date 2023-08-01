@@ -176,8 +176,8 @@ void SearchBar::showSearchBar(bool show) {
 
     if (show) {
         GtkWidget* searchTextField = win->get("searchTextField");
-        gtk_widget_grab_focus(searchTextField);
         gtk_widget_show_all(searchBar);
+        gtk_widget_grab_focus(searchTextField);
         this->indexInPage = 0;
     } else {
         gtk_widget_hide(searchBar);
