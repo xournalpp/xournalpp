@@ -44,7 +44,7 @@ public:
 
 private:
     const ImageSizeSelection* imageSizeSelection;
-    Color selectionColor;
+    const Color selectionColor;
 };
 
 };  // namespace xoj::view
