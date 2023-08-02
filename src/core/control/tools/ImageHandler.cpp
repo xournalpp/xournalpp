@@ -108,50 +108,29 @@ void ImageHandler::automaticScaling(Image* img, double x, double y, int width, i
     img->setHeight(height * zoom);
 }
 
-
-// helper functions for insertImageWithSize
-/// scales image down to fit given space
-/// (this will not stretch the image & if the available space is 0, no scaling occurs)
-void scaleImageDown(Image* img, const xoj::util::Rectangle<double>& space);
-/// adjust coordinates to center image in given space (after scaling down)
-void centerImage(Image* img, const xoj::util::Rectangle<double>& space);
-
 auto ImageHandler::insertImageWithSize(const xoj::util::Rectangle<double>& space) -> bool {
     auto [img, width, height] = ImageHandler::chooseAndCreateImage(space.x, space.y);
     if (!img) {
         return false;
     }
 
-    scaleImageDown(img, space);
-    automaticScaling(img, space.x, space.y,
-                     img->getElementWidth() == 0.0 ? width : static_cast<int>(img->getElementWidth()),
-                     img->getElementHeight() == 0.0 ? height : static_cast<int>(img->getElementHeight()));
+    if (static_cast<int>(space.width) != 0 && static_cast<int>(space.height) != 0) {
+        // scale down
+        const double scaling = std::min(space.height / height, space.width / width);
+        img->setWidth(scaling * width);
+        img->setHeight(scaling * height);
 
-    centerImage(img, space);
+        // center
+        if (img->getElementHeight() < space.height) {
+            img->setY(img->getY() + ((space.height - img->getElementHeight()) * 0.5));
+        }
+        if (img->getElementWidth() < space.width) {
+            img->setX(img->getX() + ((space.width - img->getElementWidth()) * 0.5));
+        }
+    } else {
+        // zero space is selected, scale original image size down to fit on the page
+        automaticScaling(img, space.x, space.y, width, height);
+    }
 
     return addImageToDocument(img, true);
-}
-
-void scaleImageDown(Image* img, const xoj::util::Rectangle<double>& space) {
-    if (static_cast<int>(space.width) == 0 || static_cast<int>(space.height) == 0) {
-        return;
-    }
-    auto [width, height] = img->getImageSize();
-    const double scaling = std::min(space.height / height, space.width / width);
-    img->setWidth(scaling * width);
-    img->setHeight(scaling * height);
-}
-
-void centerImage(Image* img, const xoj::util::Rectangle<double>& space) {
-    if (static_cast<int>(space.width) == 0 || static_cast<int>(space.height) == 0) {
-        return;
-    }
-
-    if (img->getElementHeight() < space.height) {
-        img->setY(img->getY() + ((space.height - img->getElementHeight()) * 0.5));
-    }
-
-    if (img->getElementWidth() < space.width) {
-        img->setX(img->getX() + ((space.width - img->getElementWidth()) * 0.5));
-    }
 }
