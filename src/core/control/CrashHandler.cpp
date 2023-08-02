@@ -5,6 +5,7 @@
 #include <bitset>
 #include <csignal>  // for std::signal
 #include <fstream>  // for std::ofstream
+#include <iomanip>  // for std::setw
 #include <sstream>
 #include <string>       // for std::string
 #include <string_view>  // for std::string_view
