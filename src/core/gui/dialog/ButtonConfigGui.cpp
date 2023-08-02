@@ -134,6 +134,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Ellipse"));
     // DRAWING_TYPE_ARROW
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Arrow"));
+    // DRAWING_TYPE_DOUBLE_ARROW
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Double Arrow"));
     // DRAWING_TYPE_COORDINATE_SYSTEM
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw coordinate system"));
     // DRAWING_TYPE_STROKE_RECOGNIZER
