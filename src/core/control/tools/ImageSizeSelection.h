@@ -38,7 +38,5 @@ private:
     double endX;
     double endY;
 
-    Range box;
-
     std::shared_ptr<xoj::util::DispatchPool<ImageSizeSelectionView>> viewPool;
 };

@@ -12,19 +12,14 @@ ImageSizeSelection::ImageSizeSelection(double x, double y):
         startY(y),
         endX(x),
         endY(y),
-        viewPool(std::make_shared<xoj::util::DispatchPool<ImageSizeSelectionView>>()) {
-    box.addPoint(x, y);
-}
+        viewPool(std::make_shared<xoj::util::DispatchPool<ImageSizeSelectionView>>()) {}
 
 void ImageSizeSelection::updatePosition(double x, double y) {
     Range old(startX, startY);
     old.addPoint(endX, endY);
     old.addPoint(x, y);
-
-    box = Range(startX, startY);
     this->endX = x;
     this->endY = y;
-    box.addPoint(x, y);
 
     this->viewPool->dispatch(xoj::view::ImageSizeSelectionView::FLAG_DIRTY_REGION, old);
 }
@@ -38,5 +33,7 @@ auto ImageSizeSelection::getSelectedSpace() const -> Rectangle<double> {
 }
 
 void ImageSizeSelection::finalize() {
-    this->viewPool->dispatchAndClear(xoj::view::ImageSizeSelectionView::FINALIZATION_REQUEST, this->box);
+    Range box(startX, startY);
+    box.addPoint(endX, endY);
+    this->viewPool->dispatchAndClear(xoj::view::ImageSizeSelectionView::FINALIZATION_REQUEST, box);
 }
