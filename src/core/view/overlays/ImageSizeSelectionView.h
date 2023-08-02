@@ -10,6 +10,8 @@
  */
 #pragma once
 
+#include <array>  // for std::array
+
 #include "util/Color.h"         // for Color
 #include "util/DispatchPool.h"  // for Listener
 
@@ -45,6 +47,10 @@ public:
 private:
     const ImageSizeSelection* imageSizeSelection;
     const Color selectionColor;
+
+    static constexpr int BORDER_WIDTH_IN_PIXELS = 1;
+    static constexpr double OPACITY_FOR_FILL = 0.1;
+    static constexpr std::array<const double, 2> DASH_PATTERN = {6.0, 4.0};
 };
 
 };  // namespace xoj::view

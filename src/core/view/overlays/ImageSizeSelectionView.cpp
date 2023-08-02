@@ -1,7 +1,5 @@
 #include "ImageSizeSelectionView.h"
 
-#include <array>  // for std::array
-
 #include "control/tools/ImageSizeSelection.h"  // for ImageSizeSelection
 #include "util/Rectangle.h"                    // for Rectangle
 #include "util/raii/CairoWrappers.h"           // for cairo_save
@@ -26,9 +24,8 @@ void ImageSizeSelectionView::draw(cairo_t* cr) const {
 
     xoj::util::CairoSaveGuard const saveGuard(cr);  // cairo_save
 
-    cairo_set_line_width(cr, 1 / this->parent->getZoom());
-    std::array<const double, 2> dashes = {6.0, 4.0};
-    cairo_set_dash(cr, dashes.data(), dashes.size(), 0);
+    cairo_set_line_width(cr, BORDER_WIDTH_IN_PIXELS / this->parent->getZoom());
+    cairo_set_dash(cr, DASH_PATTERN.data(), DASH_PATTERN.size(), 0);
     Util::cairo_set_source_rgbi(cr, selectionColor);
 
     cairo_new_path(cr);
@@ -43,7 +40,7 @@ void ImageSizeSelectionView::draw(cairo_t* cr) const {
     cairo_close_path(cr);
 
     cairo_stroke_preserve(cr);
-    Util::cairo_set_source_rgbi(cr, selectionColor, 0.1);
+    Util::cairo_set_source_rgbi(cr, selectionColor, OPACITY_FOR_FILL);
     cairo_fill(cr);
 }
 
@@ -52,11 +49,11 @@ auto ImageSizeSelectionView::isViewOf(const OverlayBase* overlay) const -> bool 
 }
 
 void ImageSizeSelectionView::on(ImageSizeSelectionView::FlagDirtyRegionRequest, Range rg) {
-    rg.addPadding(1 / this->parent->getZoom());
+    rg.addPadding(BORDER_WIDTH_IN_PIXELS / this->parent->getZoom());
     this->parent->flagDirtyRegion(rg);
 }
 
 void ImageSizeSelectionView::deleteOn(ImageSizeSelectionView::FinalizationRequest, Range rg) {
-    rg.addPadding(1 / this->parent->getZoom());
+    rg.addPadding(BORDER_WIDTH_IN_PIXELS / this->parent->getZoom());
     this->parent->deleteOverlayView(this, rg);
 }
