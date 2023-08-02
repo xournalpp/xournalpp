@@ -108,6 +108,14 @@ void ImageHandler::automaticScaling(Image* img, double x, double y, int width, i
     img->setHeight(height * zoom);
 }
 
+
+// helper functions for insertImageWithSize
+/// scales image down to fit given space
+/// (this will not stretch the image & if the available space is 0, no scaling occurs)
+void scaleImageDown(Image* img, const xoj::util::Rectangle<double>& space);
+/// adjust coordinates to center image in given space (after scaling down)
+void centerImage(Image* img, const xoj::util::Rectangle<double>& space);
+
 auto ImageHandler::insertImageWithSize(const xoj::util::Rectangle<double>& space) -> bool {
     auto [img, width, height] = ImageHandler::chooseAndCreateImage(space.x, space.y);
     if (!img) {
@@ -124,7 +132,7 @@ auto ImageHandler::insertImageWithSize(const xoj::util::Rectangle<double>& space
     return addImageToDocument(img, true);
 }
 
-void ImageHandler::scaleImageDown(Image* img, const xoj::util::Rectangle<double>& space) {
+void scaleImageDown(Image* img, const xoj::util::Rectangle<double>& space) {
     if (static_cast<int>(space.width) == 0 || static_cast<int>(space.height) == 0) {
         return;
     }
@@ -134,7 +142,7 @@ void ImageHandler::scaleImageDown(Image* img, const xoj::util::Rectangle<double>
     img->setHeight(scaling * height);
 }
 
-void ImageHandler::centerImage(Image* img, const xoj::util::Rectangle<double>& space) {
+void centerImage(Image* img, const xoj::util::Rectangle<double>& space) {
     if (static_cast<int>(space.width) == 0 || static_cast<int>(space.height) == 0) {
         return;
     }

@@ -50,19 +50,6 @@ private:
      */
     auto chooseAndCreateImage(double x, double y) -> std::tuple<Image*, int, int>;
 
-    /**
-     * scales image down to fit given space
-     *
-     * this will not stretch the image
-     * if the available space is 0, no scaling occurs
-     */
-    static void scaleImageDown(Image* img, const xoj::util::Rectangle<double>& space);
-
-    /**
-     * adjust coordinates to center image in given space (after scaling)
-     */
-    static void centerImage(Image* img, const xoj::util::Rectangle<double>& space);
-
 private:
     Control* control;
     XojPageView* view;
