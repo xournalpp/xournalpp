@@ -24,22 +24,22 @@ inline namespace raii {
 namespace specialization {
 class CairoHandler {
 public:
-    constexpr static auto ref = cairo_reference;
-    constexpr static auto unref = cairo_destroy;
+    constexpr static auto ref = [](cairo_t* cr) { return cairo_reference(cr); };
+    constexpr static auto unref = [](cairo_t* cr) { cairo_destroy(cr); };
     constexpr static auto adopt = identity<cairo_t>;
 };
 
 class CairoSurfaceHandler {
 public:
-    constexpr static auto ref = cairo_surface_reference;
-    constexpr static auto unref = cairo_surface_destroy;
+    constexpr static auto ref = [](cairo_surface_t* cs) { return cairo_surface_reference(cs); };
+    constexpr static auto unref = [](cairo_surface_t* cs) { cairo_surface_destroy(cs); };
     constexpr static auto adopt = identity<cairo_surface_t>;
 };
 
 class CairoRegionHandler {
 public:
-    constexpr static auto ref = cairo_region_reference;
-    constexpr static auto unref = cairo_region_destroy;
+    constexpr static auto ref = [](cairo_region_t* cr) { return cairo_region_reference(cr); };
+    constexpr static auto unref = [](cairo_region_t* cr) { cairo_region_destroy(cr); };
     constexpr static auto adopt = identity<cairo_region_t>;
 };
 };  // namespace specialization
