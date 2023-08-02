@@ -2,9 +2,6 @@
 
 #include "util/Rectangle.h"  // for Rectangle
 
-
-using xoj::util::Rectangle;
-
 using namespace xoj::view;
 
 ImageSizeSelection::ImageSizeSelection(double x, double y):
@@ -24,7 +21,7 @@ void ImageSizeSelection::updatePosition(double x, double y) {
     this->viewPool->dispatch(xoj::view::ImageSizeSelectionView::FLAG_DIRTY_REGION, old);
 }
 
-auto ImageSizeSelection::getSelectedSpace() const -> Rectangle<double> {
+auto ImageSizeSelection::getSelectedSpace() const -> xoj::util::Rectangle<double> {
     const double width = this->startX < this->endX ? this->endX - this->startX : this->startX - this->endX;
     const double height = this->startY < this->endY ? this->endY - this->startY : this->startY - this->endY;
     const double x = this->startX < this->endX ? this->startX : this->endX;

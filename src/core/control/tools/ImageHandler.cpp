@@ -23,8 +23,6 @@
 #include "util/i18n.h"                      // for _
 #include "util/raii/GObjectSPtr.h"          // for GObjectSPtr.h
 
-using xoj::util::Rectangle;
-
 ImageHandler::ImageHandler(Control* control, XojPageView* view): control(control), view(view) {}
 
 ImageHandler::~ImageHandler() = default;
@@ -110,7 +108,7 @@ void ImageHandler::automaticScaling(Image* img, double x, double y, int width, i
     img->setHeight(height * zoom);
 }
 
-auto ImageHandler::insertImageWithSize(const Rectangle<double>& space) -> bool {
+auto ImageHandler::insertImageWithSize(const xoj::util::Rectangle<double>& space) -> bool {
     auto [img, width, height] = ImageHandler::chooseAndCreateImage(space.x, space.y);
     if (!img) {
         return false;

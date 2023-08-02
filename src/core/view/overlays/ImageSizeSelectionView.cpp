@@ -5,8 +5,6 @@
 #include "util/raii/CairoWrappers.h"           // for cairo_save
 #include "view/Repaintable.h"                  // for Repaintable
 
-using xoj::util::Rectangle;
-
 using namespace xoj::view;
 
 
@@ -20,7 +18,7 @@ ImageSizeSelectionView::~ImageSizeSelectionView() noexcept = default;
 
 
 void ImageSizeSelectionView::draw(cairo_t* cr) const {
-    const Rectangle space = this->imageSizeSelection->getSelectedSpace();
+    const xoj::util::Rectangle space = this->imageSizeSelection->getSelectedSpace();
 
     xoj::util::CairoSaveGuard const saveGuard(cr);  // cairo_save
 
