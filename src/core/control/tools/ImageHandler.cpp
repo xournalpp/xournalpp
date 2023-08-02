@@ -135,27 +135,15 @@ void ImageHandler::scaleImageDown(Image* img, const xoj::util::Rectangle<double>
 }
 
 void ImageHandler::centerImage(Image* img, const xoj::util::Rectangle<double>& space) {
-    if (space.area() == 0) {
+    if (static_cast<int>(space.width) == 0 || static_cast<int>(space.height) == 0) {
         return;
     }
 
-    if (img->getElementHeight() > space.height) {
-        img->setY(img->getY() - ((img->getElementHeight() - space.height) * 0.5));
-    } else if (img->getElementHeight() < space.height) {
+    if (img->getElementHeight() < space.height) {
         img->setY(img->getY() + ((space.height - img->getElementHeight()) * 0.5));
     }
 
-    if (img->getElementWidth() > space.width) {
-        img->setX(img->getX() - ((img->getElementWidth() - space.width) * 0.5));
-    } else if (img->getElementWidth() < space.width) {
+    if (img->getElementWidth() < space.width) {
         img->setX(img->getX() + ((space.width - img->getElementWidth()) * 0.5));
-    }
-
-    // if x or y out of page move back
-    if (img->getX() < 0) {
-        img->setX(0);
-    }
-    if (img->getY() < 0) {
-        img->setY(0);
     }
 }
