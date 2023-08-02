@@ -85,11 +85,13 @@ static int applib_glib_rename(lua_State* L) {
 
     g_file_move(from.get(), to.get(), G_FILE_COPY_OVERWRITE, nullptr, nullptr, nullptr, &err);
     if (err) {
+        // return nil, error message
         lua_pushnil(L);
         lua_pushfstring(L, "%s (error code: %d)", err->message, err->code);
         g_error_free(err);
         return 2;
     } else {
+        // return 1
         lua_pushinteger(L, 1);
         return 1;
     }
@@ -197,7 +199,7 @@ static int applib_msgbox(lua_State* L) {
     lua_settop(L, 2);
     luaL_checktype(L, 2, LUA_TTABLE);
 
-    lua_pushnil(L);
+    lua_pushnil(L);  // initial key for table traversal with `next`
 
     std::map<int, std::string> button;
 
@@ -338,10 +340,7 @@ static int applib_uiAction(lua_State* L) {
     Control* ctrl = plugin->getControl();
     ctrl->actionPerformed(action, group, toolbutton, enabled);
 
-    // Make sure to remove all vars which are put to the stack before!
-    lua_pop(L, 3);
-
-    return 1;
+    return 0;
 }
 
 /**
@@ -363,7 +362,7 @@ static int applib_uiActionSelected(lua_State* L) {
     Control* ctrl = plugin->getControl();
     ctrl->fireActionSelected(group, action);
 
-    return 1;
+    return 0;
 }
 
 /**
@@ -394,7 +393,7 @@ static int applib_sidebarAction(lua_State* L) {
     SidebarToolbar* toolbar = plugin->getControl()->getSidebar()->getToolbar();
     toolbar->runAction(pos->second);
 
-    return 1;
+    return 0;
 }
 
 /**
@@ -411,7 +410,7 @@ static int applib_layerAction(lua_State* L) {
     Control* ctrl = plugin->getControl();
     ctrl->getLayerController()->actionPerformed(action);
 
-    return 1;
+    return 0;
 }
 
 /**
@@ -468,6 +467,13 @@ static void addStrokeHelper(lua_State* L, Stroke* stroke) {
     lua_getfield(L, -3, "color");
     lua_getfield(L, -4, "fill");
     lua_getfield(L, -5, "lineStyle");
+    // stack now has following:
+    //   -6 = table
+    //   -5 = tool
+    //   -4 = width
+    //   -3 = color
+    //   -2 = fill
+    //   -1 = lineStyle
 
     tool = luaL_optstring(L, -5, "");  // We're gonna need the tool type.
 
@@ -531,6 +537,7 @@ static void addStrokeHelper(lua_State* L, Stroke* stroke) {
     else
         stroke->setLineStyle(StrokeStyle::parseStyle(lineStyle.data()));
 
+    // stack cleanup is needed as this is a helper function
     lua_pop(L, 5);  // Finally done with all that Lua data.
 
     // Add the stroke
@@ -596,26 +603,30 @@ static int applib_addSplines(lua_State* L) {
     if (!lua_istable(L, -1))
         return luaL_error(L, "Missing spline table!");
 
+    // stack now has following:
+    //  1 = table arg
+    // -1 = splines
+
     size_t numSplines = lua_rawlen(L, -1);
     for (size_t a = 1; a <= numSplines; a++) {
         std::vector<double> coordStream;
         Stroke* stroke = new Stroke();
         // Get coordinates
         lua_pushnumber(L, a);
-        lua_gettable(L, -2);
-        lua_getfield(L, -1, "coordinates");
+        lua_gettable(L, -2);                 // get current spline from splines table
+        lua_getfield(L, -1, "coordinates");  // get coordinates of the current spline
         if (!lua_istable(L, -1))
             return luaL_error(L, "Missing coordinate table!");
         size_t numCoords = lua_rawlen(L, -1);
         for (size_t b = 1; b <= numCoords; b++) {
             lua_pushnumber(L, b);
-            lua_gettable(L, -2);
+            lua_gettable(L, -2);  // get current coordinate from coordinates
             double point = lua_tonumber(L, -1);
             coordStream.push_back(point);  // Each segment is going to have multiples of 8 points.
-            lua_pop(L, 1);
+            lua_pop(L, 1);                 // cleanup fetched coordinate
         }
         // pop value + copy of key, leaving original key
-        lua_pop(L, 1);
+        lua_pop(L, 1);  // cleanup coordinates table
         // Handle those points
         // Check if the list is divisible by 8.
         if (coordStream.size() % 8 != 0)
@@ -644,10 +655,14 @@ static int applib_addSplines(lua_State* L) {
             g_warning("Stroke shorter than two points. Discarding. (Has %d)", stroke->getPointCount());
         }
         // Onto the next stroke
-        lua_pop(L, 1);
+        lua_pop(L, 1);  // cleanup current spline
     }
 
-    lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
+    // Stack is now the same as it was on entry to this function
+    lua_pop(L, 1);  // cleanup splines table
+
+    // stack now has following:
+    //  1 = table arg
 
     // Check how the user wants to handle undoing
     lua_getfield(L, 1, "allowUndoRedoAction");
@@ -726,6 +741,11 @@ static int applib_addStrokes(lua_State* L) {
     lua_getfield(L, 1, "strokes");
     if (!lua_istable(L, -1))
         return luaL_error(L, "Missing stroke table!");
+
+    // stack now has following:
+    //  1 = table arg
+    // -1 = strokes
+
     size_t numStrokes = lua_rawlen(L, -1);
     for (size_t a = 1; a <= numStrokes; a++) {
         std::vector<double> xStream;
@@ -735,34 +755,34 @@ static int applib_addStrokes(lua_State* L) {
 
         // Fetch table of X values from the Lua stack
         lua_pushnumber(L, a);
-        lua_gettable(L, -2);
+        lua_gettable(L, -2);  // get current stroke
 
-        lua_getfield(L, -1, "x");
+        lua_getfield(L, -1, "x");  // get x array of current stroke
         if (!lua_istable(L, -1))
             return luaL_error(L, "Missing X-Coordinate table!");
         size_t xPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= xPoints; b++) {
             lua_pushnumber(L, b);
-            lua_gettable(L, -2);
+            lua_gettable(L, -2);  // get current x-Coordinate
             double value = lua_tonumber(L, -1);
             xStream.push_back(value);
-            lua_pop(L, 1);
+            lua_pop(L, 1);  // cleanup x-Coordinate
         }
-        lua_pop(L, 1);
+        lua_pop(L, 1);  // cleanup x array
 
         // Fetch table of Y values form the Lua stack
-        lua_getfield(L, -1, "y");
+        lua_getfield(L, -1, "y");  // get y array of current stroke
         if (!lua_istable(L, -1))
             return luaL_error(L, "Missing Y-Coordinate table!");
         size_t yPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= yPoints; b++) {
             lua_pushnumber(L, b);
-            lua_gettable(L, -2);
+            lua_gettable(L, -2);  // get current y-Coordinate
             double value = lua_tonumber(L, -1);
             yStream.push_back(value);
-            lua_pop(L, 1);
+            lua_pop(L, 1);  // cleanup y-Coordinate
         }
-        lua_pop(L, 1);
+        lua_pop(L, 1);  // cleanup y array
 
         // Fetch table of pressure values from the Lua stack
         lua_getfield(L, -1, "pressure");
@@ -770,14 +790,14 @@ static int applib_addStrokes(lua_State* L) {
             size_t pressurePoints = lua_rawlen(L, -1);
             for (size_t b = 1; b <= pressurePoints; b++) {
                 lua_pushnumber(L, b);
-                lua_gettable(L, -2);
+                lua_gettable(L, -2);  // get current pressure
                 double value = lua_tonumber(L, -1);
                 pressureStream.push_back(value);
-                lua_pop(L, 1);
+                lua_pop(L, 1);  // cleanup pressure
             }
         }
 
-        lua_pop(L, 1);
+        lua_pop(L, 1);  // cleanup pressure array
 
         // Handle those points
         // Make sure all vectors are the same length.
@@ -809,8 +829,12 @@ static int applib_addStrokes(lua_State* L) {
         addStrokeHelper(L, stroke);
         strokes.push_back(stroke);
         // Onto the next stroke
-        lua_pop(L, 1);
+        lua_pop(L, 1);  // cleanup stroke table
     }
+
+    // stack now has following:
+    //  1 = table arg
+    // -1 = strokes
 
     // Check how the user wants to handle undoing
     lua_getfield(L, 1, "allowUndoRedoAction");
@@ -829,8 +853,6 @@ static int applib_addStrokes(lua_State* L) {
         g_warning("Not allowing undo/redo action.");
     else
         return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
-
-    lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
 
     return 0;
 }
@@ -883,7 +905,11 @@ static int applib_getStrokes(lua_State* L) {
     std::vector<Element*> elements = {};
     Control* control = plugin->getControl();
 
-    if (type == "layer") {
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TSTRING);
+
+    if (type == "Layer") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
             control->clearSelection();  // otherwise strokes in the selection won't be recognized
@@ -904,26 +930,36 @@ static int applib_getStrokes(lua_State* L) {
     int currStrokeNo = 0;
     int currPointNo = 0;
 
+    // stack now has following:
+    //  1 = type (string)
+    // -1 = table of strokes (to be returned)
+
     for (Element* e: elements) {
         if (e->getType() == ELEMENT_STROKE) {
             auto* s = static_cast<Stroke*>(e);
             lua_pushnumber(L, ++currStrokeNo);  // index for later (settable)
             lua_newtable(L);                    // create stroke table
 
+            // stack now has following:
+            //  1 = type (string)
+            // -3 = table of strokes (to be returned)
+            // -2 = index of the current stroke
+            // -1 = current stroke
+
             lua_newtable(L);  // create table of x-coordinates
             for (auto p: s->getPointVector()) {
-                lua_pushnumber(L, ++currPointNo);
-                lua_pushnumber(L, p.x);
-                lua_settable(L, -3);  // pops key and value from stack
+                lua_pushnumber(L, ++currPointNo);  // key
+                lua_pushnumber(L, p.x);            // value
+                lua_settable(L, -3);               // insert
             }
             lua_setfield(L, -2, "x");  // add x-coordinates to stroke
             currPointNo = 0;
 
             lua_newtable(L);  // create table for y-coordinates
             for (auto p: s->getPointVector()) {
-                lua_pushnumber(L, ++currPointNo);
-                lua_pushnumber(L, p.y);
-                lua_settable(L, -3);
+                lua_pushnumber(L, ++currPointNo);  // key
+                lua_pushnumber(L, p.y);            // value
+                lua_settable(L, -3);               // insert
             }
             lua_setfield(L, -2, "y");  // add y-coordinates to stroke
             currPointNo = 0;
@@ -931,13 +967,19 @@ static int applib_getStrokes(lua_State* L) {
             if (s->hasPressure()) {
                 lua_newtable(L);  // create table for pressures
                 for (auto p: s->getPointVector()) {
-                    lua_pushnumber(L, ++currPointNo);
-                    lua_pushnumber(L, p.z);
-                    lua_settable(L, -3);
+                    lua_pushnumber(L, ++currPointNo);  // key
+                    lua_pushnumber(L, p.z);            // value
+                    lua_settable(L, -3);               // insert
                 }
                 lua_setfield(L, -2, "pressure");  // add pressures to stroke
                 currPointNo = 0;
             }
+
+            // stack now has following:
+            //  1 = type (string)
+            // -3 = table of strokes (to be returned)
+            // -2 = index of the current stroke
+            // -1 = current stroke
 
             StrokeTool tool = s->getToolType();
             if (tool == StrokeTool::PEN) {
@@ -963,7 +1005,7 @@ static int applib_getStrokes(lua_State* L) {
             lua_pushstring(L, StrokeStyle::formatStyle(s->getLineStyle()).c_str());
             lua_setfield(L, -2, "lineStyle");  // add linestyle to stroke
 
-            lua_settable(L, -3);  // add stroke to elements
+            lua_settable(L, -3);  // add stroke to returned table
         }
     }
     return 1;
@@ -1002,7 +1044,7 @@ static int applib_changeCurrentPageBackground(lua_State* L) {
     PageBackgroundChangeController* pageBgCtrl = ctrl->getPageBackgroundChangeController();
     pageBgCtrl->changeCurrentPageBackground(pt);
 
-    return 1;
+    return 0;
 }
 
 /**
@@ -1080,10 +1122,7 @@ static int applib_changeToolColor(lua_State* L) {
         return luaL_error(L, "tool \"%s\" has no color capability", toolTypeToString(toolType).c_str());
     }
 
-    // Make sure to remove all vars which are put to the stack before!
-    lua_pop(L, 3);
-
-    return 1;
+    return 0;
 }
 
 /*
@@ -1133,7 +1172,7 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
         return luaL_error(L, "Pdf page number %d does not exist!", selected + 1);
     }
 
-    return 1;
+    return 0;
 }
 
 /*
@@ -1250,7 +1289,7 @@ static void pushRectangleHelper(lua_State* L, xoj::util::Rectangle<double> rect)
  *            local fontname = font["name"]
  *            local fontsize = font["size"]
  *
- * Example 3: local color = app.getToollInfo("text")["color"]
+ * Example 3: local color = app.getToolInfo("text")["color"]
  *            local red = color >> 16 & 0xff
  *            local green = color >> 8 & 0xff
  *            local blue = color & 0xff
@@ -1280,8 +1319,16 @@ static int applib_getToolInfo(lua_State* L) {
     Control* control = plugin->getControl();
     ToolHandler* toolHandler = control->getToolHandler();
 
+    // discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TSTRING);
+
     const char* mode = luaL_checkstring(L, -1);
-    lua_newtable(L);
+    lua_newtable(L);  // return table
+
+    // stack now has following:
+    //    1 = mode
+    //   -1 = table to be returned
 
     if (strcmp(mode, "active") == 0) {
         std::string toolType = toolTypeToString(toolHandler->getToolType());
@@ -1295,38 +1342,30 @@ static int applib_getToolInfo(lua_State* L) {
         std::string lineStyle = StrokeStyle::formatStyle(toolHandler->getLineStyle());
 
 
-        lua_pushliteral(L, "type");
-        lua_pushstring(L, toolType.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, toolType.c_str());  // value
+        lua_setfield(L, -2, "type");          // insert
 
-        lua_pushliteral(L, "size");
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushliteral(L, "name");
-        lua_pushstring(L, toolSize.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, toolSize.c_str());  // value
+        lua_setfield(L, -2, "name");          // insert
 
-        lua_pushliteral(L, "value");
-        lua_pushnumber(L, thickness);
-        lua_settable(L, -3);
+        lua_pushnumber(L, thickness);  // value
+        lua_setfield(L, -2, "value");  // insert
 
-        lua_settable(L, -3);  // end of "size" table
+        lua_setfield(L, -2, "size");  // end of "size" table
 
-        lua_pushliteral(L, "color");
-        lua_pushinteger(L, int(uint32_t(color)));
-        lua_settable(L, -3);
+        lua_pushinteger(L, int(uint32_t(color)));  // value
+        lua_setfield(L, -2, "color");              // insert
 
-        lua_pushliteral(L, "fillOpacity");
-        lua_pushinteger(L, fillOpacity);
-        lua_settable(L, -3);
+        lua_pushinteger(L, fillOpacity);     // value
+        lua_setfield(L, -2, "fillOpacity");  // insert
 
-        lua_pushliteral(L, "drawingType");
-        lua_pushstring(L, drawingType.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, drawingType.c_str());  // value
+        lua_setfield(L, -2, "drawingType");      // insert
 
-        lua_pushliteral(L, "lineStyle");
-        lua_pushstring(L, lineStyle.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, lineStyle.c_str());  // value
+        lua_setfield(L, -2, "lineStyle");      // insert
     } else if (strcmp(mode, "pen") == 0) {
         std::string size = toolSizeToString(toolHandler->getPenSize());
         double thickness = toolHandler->getToolThickness(TOOL_PEN)[toolSizeFromString(size)];
@@ -1339,38 +1378,30 @@ static int applib_getToolInfo(lua_State* L) {
         std::string drawingType = drawingTypeToString(tool.getDrawingType());
         std::string lineStyle = StrokeStyle::formatStyle(tool.getLineStyle());
 
-        lua_pushliteral(L, "size");
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushliteral(L, "name");
-        lua_pushstring(L, size.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, size.c_str());  // value
+        lua_setfield(L, -2, "name");      // insert
 
-        lua_pushliteral(L, "value");
-        lua_pushnumber(L, thickness);
-        lua_settable(L, -3);
+        lua_pushnumber(L, thickness);  // value
+        lua_setfield(L, -2, "value");  // insert
 
-        lua_settable(L, -3);  // end of "size" table
+        lua_setfield(L, -2, "size");  // end of "size" table
 
-        lua_pushliteral(L, "color");
-        lua_pushinteger(L, int(uint32_t(color)));
-        lua_settable(L, -3);
+        lua_pushinteger(L, int(uint32_t(color)));  // value
+        lua_setfield(L, -2, "color");              // insert
 
-        lua_pushliteral(L, "drawingType");
-        lua_pushstring(L, drawingType.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, drawingType.c_str());  // value
+        lua_setfield(L, -2, "drawingType");      // insert
 
-        lua_pushliteral(L, "lineStyle");
-        lua_pushstring(L, lineStyle.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, lineStyle.c_str());  // value
+        lua_setfield(L, -2, "lineStyle");      // insert
 
-        lua_pushliteral(L, "filled");
-        lua_pushboolean(L, filled);
-        lua_settable(L, -3);
+        lua_pushboolean(L, filled);     // value
+        lua_setfield(L, -2, "filled");  // insert
 
-        lua_pushliteral(L, "fillOpacity");
-        lua_pushinteger(L, fillOpacity);
-        lua_settable(L, -3);
+        lua_pushinteger(L, fillOpacity);     // value
+        lua_setfield(L, -2, "fillOpacity");  // insert
     } else if (strcmp(mode, "highlighter") == 0) {
         std::string size = toolSizeToString(toolHandler->getHighlighterSize());
         double thickness = toolHandler->getToolThickness(TOOL_HIGHLIGHTER)[toolSizeFromString(size)];
@@ -1382,56 +1413,45 @@ static int applib_getToolInfo(lua_State* L) {
         Color color = tool.getColor();
         std::string drawingType = drawingTypeToString(tool.getDrawingType());
 
-        lua_pushliteral(L, "size");
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushliteral(L, "name");
-        lua_pushstring(L, size.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, size.c_str());  // value
+        lua_setfield(L, -2, "name");      // insert
 
-        lua_pushliteral(L, "value");
-        lua_pushnumber(L, thickness);
-        lua_settable(L, -3);
+        lua_pushnumber(L, thickness);  // value
+        lua_setfield(L, -2, "value");  // insert
 
-        lua_settable(L, -3);  // end of "size" table
+        lua_setfield(L, -2, "size");  // end of "size" table
 
-        lua_pushliteral(L, "color");
-        lua_pushinteger(L, int(uint32_t(color)));
-        lua_settable(L, -3);
+        lua_pushinteger(L, int(uint32_t(color)));  // value
+        lua_setfield(L, -2, "color");              // insert
 
-        lua_pushliteral(L, "drawingType");
-        lua_pushstring(L, drawingType.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, drawingType.c_str());  // value
+        lua_setfield(L, -2, "drawingType");      // insert
 
-        lua_pushliteral(L, "filled");
-        lua_pushboolean(L, filled);
-        lua_settable(L, -3);
+        lua_pushboolean(L, filled);     // value
+        lua_setfield(L, -2, "filled");  // insert
 
-        lua_pushliteral(L, "fillOpacity");
-        lua_pushinteger(L, fillOpacity);
-        lua_settable(L, -3);
+        lua_pushinteger(L, fillOpacity);     // value
+        lua_setfield(L, -2, "fillOpacity");  // insert
     } else if (strcmp(mode, "eraser") == 0) {
         std::string type = eraserTypeToString(toolHandler->getEraserType());
 
         std::string size = toolSizeToString(toolHandler->getEraserSize());
         double thickness = toolHandler->getToolThickness(ToolType::TOOL_ERASER)[toolSizeFromString(size)];
 
-        lua_pushliteral(L, "type");
-        lua_pushstring(L, type.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, type.c_str());  // value
+        lua_setfield(L, -2, "type");      // insert
 
-        lua_pushliteral(L, "size");
         lua_newtable(L);  // beginning of "size" table
 
-        lua_pushliteral(L, "name");
-        lua_pushstring(L, size.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, size.c_str());  // value
+        lua_setfield(L, -2, "name");      // insert
 
-        lua_pushliteral(L, "value");
-        lua_pushnumber(L, thickness);
-        lua_settable(L, -3);
+        lua_pushnumber(L, thickness);  // value
+        lua_setfield(L, -2, "value");  // insert
 
-        lua_settable(L, -3);  // end of "size" table
+        lua_setfield(L, -2, "size");  // end of "size" table
     } else if (strcmp(mode, "text") == 0) {
         Settings* settings = control->getSettings();
         XojFont& font = settings->getFont();
@@ -1441,24 +1461,19 @@ static int applib_getToolInfo(lua_State* L) {
         Tool& tool = toolHandler->getTool(TOOL_TEXT);
         Color color = tool.getColor();
 
-        lua_newtable(L);
+        lua_newtable(L);  // font table
 
-        lua_pushliteral(L, "font");
-        lua_newtable(L);
+        lua_pushstring(L, fontname.c_str());  // value
+        lua_setfield(L, -2, "name");          // insert
 
-        lua_pushliteral(L, "name");
-        lua_pushstring(L, fontname.c_str());
-        lua_settable(L, -3);
+        lua_pushnumber(L, size);      // value
+        lua_setfield(L, -2, "size");  // insert
 
-        lua_pushliteral(L, "size");
-        lua_pushnumber(L, size);
-        lua_settable(L, -3);
+        lua_setfield(L, -2, "font");  // insert font table
 
-        lua_settable(L, -3);
-
-        lua_pushliteral(L, "color");
-        lua_pushinteger(L, int(uint32_t(color)));
-        lua_settable(L, -3);
+        lua_pushinteger(L, int(uint32_t(color)));  // value
+        lua_setfield(L, -2, "color");              // insert
+        // results in {font={name="fontname", size=0}, color=0x0}
     } else if (strcmp(mode, "selection") == 0) {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (!sel) {
@@ -1466,10 +1481,9 @@ static int applib_getToolInfo(lua_State* L) {
         }
         auto rect = sel->getRect();
 
-        lua_newtable(L);  // create return table
-                          //
         lua_pushnumber(L, sel->getRotation());
         lua_setfield(L, -2, "rotation");
+
         lua_pushboolean(L, sel->isRotationSupported());
         lua_setfield(L, -2, "isRotationSupported");
 
@@ -1531,56 +1545,50 @@ static int applib_getDocumentStructure(lua_State* L) {
     lua_pushliteral(L, "pages");
     lua_newtable(L);  // beginning of pages table
 
+    // stack now has following:
+    //   -2 = table to be returned
+    //   -1 = pages table/array
+
     // add pages
     for (size_t p = 1; p <= doc->getPageCount(); ++p) {
         auto page = doc->getPage(p - 1);
-        lua_pushinteger(L, p);
+        lua_pushinteger(L, p);  // key of the page
         lua_newtable(L);  // beginning of table for page p
 
-        lua_pushliteral(L, "pageWidth");
-        lua_pushnumber(L, page->getWidth());
-        lua_settable(L, -3);
+        lua_pushnumber(L, page->getWidth());  // value
+        lua_setfield(L, -2, "pageWidth");     // insert
 
-        lua_pushliteral(L, "pageHeight");
-        lua_pushnumber(L, page->getHeight());
-        lua_settable(L, -3);
+        lua_pushnumber(L, page->getHeight());  // value
+        lua_setfield(L, -2, "pageHeight");     // insert
 
-        lua_pushliteral(L, "isAnnotated");
-        lua_pushboolean(L, page->isAnnotated());
-        lua_settable(L, -3);
+        lua_pushboolean(L, page->isAnnotated());  // value
+        lua_setfield(L, -2, "isAnnoated");        // insert
 
-        lua_pushliteral(L, "pageTypeFormat");
         PageType pt = page->getBackgroundType();
         std::string pageTypeFormat = PageTypeHandler::getStringForPageTypeFormat(pt.format);
-        lua_pushstring(L, pageTypeFormat.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, pageTypeFormat.c_str());  // value
+        lua_setfield(L, -2, "pageTypeFormat");      // insert
 
-        lua_pushliteral(L, "pageTypeConfig");
-        lua_pushstring(L, pt.config.c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, pt.config.c_str());   // value
+        lua_setfield(L, -2, "pageTypeConfig");  // insert
 
-        lua_pushliteral(L, "backgroundColor");
-        lua_pushinteger(L, int(uint32_t(page->getBackgroundColor())));
-        lua_settable(L, -3);
+        lua_pushinteger(L, int(uint32_t(page->getBackgroundColor())));  // value
+        lua_setfield(L, -2, "backgroundColor");                         // insert
 
-        lua_pushliteral(L, "pdfBackgroundPageNo");
-        lua_pushinteger(L, page->getPdfPageNr() + 1);
-        lua_settable(L, -3);
+        lua_pushinteger(L, page->getPdfPageNr() + 1);  // value
+        lua_setfield(L, -2, "pdfBackgroundPageNo");    // insert
 
-        lua_pushstring(L, "layers");
         lua_newtable(L);  // beginning of layers table
 
         // add background layer
-        lua_pushinteger(L, 0);
+        lua_pushinteger(L, 0);  // key of the layer
         lua_newtable(L);  // beginning of table for background layer
 
-        lua_pushliteral(L, "isVisible");
-        lua_pushboolean(L, page->isLayerVisible(0U));
-        lua_settable(L, -3);
+        lua_pushboolean(L, page->isLayerVisible(0U));  // value
+        lua_setfield(L, -2, "isVisible");              // insert
 
-        lua_pushliteral(L, "name");
-        lua_pushstring(L, page->getBackgroundName().c_str());
-        lua_settable(L, -3);
+        lua_pushstring(L, page->getBackgroundName().c_str());  // value
+        lua_setfield(L, -2, "name");                           // insert
 
         lua_settable(L, -3);  // end of table for background layer
 
@@ -1588,44 +1596,37 @@ static int applib_getDocumentStructure(lua_State* L) {
         int currLayer = 0;
 
         for (auto l: *page->getLayers()) {
-            lua_pushinteger(L, ++currLayer);
+            lua_pushinteger(L, ++currLayer);  // key of the layer
             lua_newtable(L);  // beginning of table for layer l
 
-            lua_pushliteral(L, "name");
-            lua_pushstring(L, l->getName().c_str());
-            lua_settable(L, -3);
+            lua_pushstring(L, l->getName().c_str());  // value
+            lua_setfield(L, -2, "name");              // insert
 
-            lua_pushliteral(L, "isVisible");
-            lua_pushboolean(L, l->isVisible());
-            lua_settable(L, -3);
+            lua_pushboolean(L, l->isVisible());  // value
+            lua_setfield(L, -2, "isVisible");    // insert
 
-            lua_pushliteral(L, "isAnnotated");
-            lua_pushboolean(L, l->isAnnotated());
-            lua_settable(L, -3);
+            lua_pushboolean(L, l->isAnnotated());  // value
+            lua_setfield(L, -2, "isAnnoated");     // insert
 
             lua_settable(L, -3);  // end of table for layer l
         }
-        lua_settable(L, -3);  // end of layers table
+        lua_setfield(L, -2, "layers");  // end of layers table
 
-        lua_pushliteral(L, "currentLayer");
-        lua_pushinteger(L, page->getSelectedLayerId());
-        lua_settable(L, -3);
+        lua_pushinteger(L, page->getSelectedLayerId());  // value
+        lua_setfield(L, -2, "currentLayer");             // insert
 
         lua_settable(L, -3);  // end of table for page p
     }
     lua_settable(L, -3);  // end of pages table
 
-    lua_pushliteral(L, "currentPage");
-    lua_pushinteger(L, control->getCurrentPageNo() + 1);
-    lua_settable(L, -3);
+    lua_pushinteger(L, control->getCurrentPageNo() + 1);  // value
+    lua_setfield(L, -2, "currentPage");                   // insert
 
-    lua_pushliteral(L, "pdfBackgroundFilename");
-    lua_pushstring(L, doc->getPdfFilepath().string().c_str());
-    lua_settable(L, -3);
+    lua_pushstring(L, doc->getPdfFilepath().string().c_str());  // value
+    lua_setfield(L, -2, "pdfBackgroundFilename");               // insert
 
-    lua_pushliteral(L, "xoppFilename");
-    lua_pushstring(L, doc->getFilepath().string().c_str());
-    lua_settable(L, -3);
+    lua_pushstring(L, doc->getFilepath().string().c_str());  // value
+    lua_setfield(L, -2, "xoppFilename");                     // insert
 
     return 1;
 }
@@ -1655,7 +1656,7 @@ static int applib_scrollToPage(lua_State* L) {
     const int last = static_cast<int>(control->getDocument()->getPageCount()) - 1;
     control->getScrollHandler()->scrollToPage(std::clamp(page, first, last));
 
-    return 1;
+    return 0;
 }
 
 /**
@@ -1685,7 +1686,7 @@ static int applib_scrollToPos(lua_State* L) {
         layout->scrollAbs(dx, dy);
     }
 
-    return 1;
+    return 0;
 }
 
 /**
@@ -1703,7 +1704,7 @@ static int applib_setCurrentPage(lua_State* L) {
     const size_t last = control->getDocument()->getPageCount();
     control->firePageSelected(std::clamp(pageId, first, last) - 1);
 
-    return 1;
+    return 0;
 }
 
 /**
@@ -1749,7 +1750,7 @@ static int applib_setPageSize(lua_State* L) {
         control->firePageSizeChanged(pageNo);
     }
 
-    return 1;
+    return 0;
 }
 
 /**
@@ -1786,7 +1787,7 @@ static int applib_setCurrentLayer(lua_State* L) {
 
     control->getLayerController()->switchToLay(layerId, update);
 
-    return 1;
+    return 0;
 }
 
 /*
@@ -1806,7 +1807,7 @@ static int applib_setLayerVisibility(lua_State* L) {
 
     auto layerId = control->getCurrentPage()->getSelectedLayerId();
     control->getLayerController()->setLayerVisible(layerId, enabled);
-    return 1;
+    return 0;
 }
 
 /**
@@ -1824,7 +1825,7 @@ static int applib_setCurrentLayerName(lua_State* L) {
         control->getLayerController()->setCurrentLayerName(name);
     }
 
-    return 1;
+    return 0;
 }
 
 /**
@@ -1847,7 +1848,7 @@ static int applib_setBackgroundName(lua_State* L) {
         page->setBackgroundName(name);
     }
 
-    return 1;
+    return 0;
 }
 
 
@@ -1876,7 +1877,7 @@ static int applib_scaleTextElements(lua_State* L) {
         }
     }
 
-    return 1;
+    return 0;
 }
 
 
@@ -1926,6 +1927,17 @@ static int applib_export(lua_State* L) {
     lua_getfield(L, 1, "pngWidth");
     lua_getfield(L, 1, "dpiHeight");
 
+    // stack now has following:
+    //    1 = param table
+    //   -8 = outputFile
+    //   -7 = range
+    //   -6 = layerRange
+    //   -5 = background
+    //   -4 = progressiveMode
+    //   -3 = pngDpi
+    //   -2 = pngWidth
+    //   -1 = dpiHeight
+
     const char* outputFile = luaL_optstring(L, -8, nullptr);
     const char* range = luaL_optstring(L, -7, nullptr);
     const char* layerRange = luaL_optstring(L, -6, nullptr);
@@ -1955,10 +1967,7 @@ static int applib_export(lua_State* L) {
         ExportHelper::exportImg(doc, outputFile, range, layerRange, pngDpi, pngWidth, pngHeight, bgType);
     }
 
-    // Make sure to remove all vars which are put to the stack before!
-    lua_pop(L, 8);
-
-    return 1;
+    return 0;
 }
 
 /**
