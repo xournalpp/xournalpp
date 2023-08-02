@@ -56,11 +56,15 @@ public:
 
     auto hasImage() const -> bool;
     auto couldBeEdited() const -> bool;
+    void setCouldBeEdited(bool could);
+
+    auto inEditing() const -> bool;
+    void setInEditing(bool edit);
 
     /**
      * helper method for ImageFrameView
      */
-    void drawPartialImage(const xoj::view::Context& ctx, double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP,
+    void drawPartialImage(cairo_t* cr, double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP,
                           double alphaForIgnore) const;
 
     /**
@@ -71,9 +75,8 @@ public:
 
     void moveOnlyFrame(double x, double y, double width, double height);
 
-    void moveOnlyImage(double x, double y, double width, double height);
+    void moveOnlyImage(double x, double y);
 
-    // todo p0mm move to private
     /**
      * calculates which part of the image is visible & returns coords etc of this part
      */
@@ -107,6 +110,7 @@ private:
 
 private:
     bool editable = true;
+    bool editing = false;
     bool containsImage = false;
     Image* image = nullptr;
     double imageXOffset = 0.0;

@@ -379,11 +379,13 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         startText(x, y);
     } else if (h->getToolType() == TOOL_IMAGE) {
         // start selecting the size for the image or start scaling!
+        // todo p0mm both these cases need to bel handled in image frame editor
         if (!this->imageFrameEditor || !this->imageFrameEditor->currentlyScaling()) {
             this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
             this->overlayViews.emplace_back(
                     std::make_unique<xoj::view::ImageSizeSelectionView>(this->imageSizeSelection.get(), this));
-        } else if (this->imageFrameEditor) {
+        }
+        if (this->imageFrameEditor) {
             this->imageFrameEditor->mouseDown(x, y);
         }
     }
@@ -533,14 +535,15 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         if (this->imageFrameEditor) {
             this->xournal->getCursor()->setMouseSelectionType(imageFrameEditor->getSelectionTypeForPos(x, y));
             this->imageFrameEditor->mouseMove(x, y);
-            // todo p0mm do this differently - seems overkill
-            rerenderPage();
-            repaintPage();
+
         } else {
             this->imageFrameEditor = std::make_unique<ImageFrameEditor>(this->xournal->getControl(), page, x, y);
+            this->overlayViews.emplace_back(
+                    std::make_unique<xoj::view::ImageFrameEditorView>(imageFrameEditor.get(), this));
         }
 
     } else if (this->imageFrameEditor) {
+        this->imageFrameEditor->resetView();
         this->imageFrameEditor.reset();
         this->xournal->getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
     }

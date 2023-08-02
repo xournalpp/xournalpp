@@ -2,6 +2,8 @@
  * Xournal++
  *
  * Displays a Rectangle to see while selecting space for an image
+ * // todo p0mm this should no longer exist in this branch -> choosing space for the image frame should be handled by
+ * the editor of image frames!
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

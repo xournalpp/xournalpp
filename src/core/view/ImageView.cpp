@@ -38,10 +38,8 @@ void ImageView::draw(const Context& ctx) const {
     cairo_restore(cr);
 }
 
-void ImageView::drawPartial(const Context& ctx, double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP,
+void ImageView::drawPartial(cairo_t* cr, double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP,
                             double alphaForIgnore) {
-    cairo_t* cr = ctx.cr;
-
     cairo_save(cr);
 
     cairo_surface_t* mod_img = this->image->getPartialImage(xIgnoreP, yIgnoreP, xDrawP, yDrawP, alphaForIgnore);
@@ -57,14 +55,7 @@ void ImageView::drawPartial(const Context& ctx, double xIgnoreP, double yIgnoreP
     cairo_scale(cr, xFactor, yFactor);
 
     cairo_set_source_surface(cr, mod_img, image->getX() / xFactor, image->getY() / yFactor);
-
-    // todo p0mm does this work??
-    // make images translucent when highlighting elements with audio, as they can not have audio
-    if (ctx.fadeOutNonAudio) {
-        cairo_paint_with_alpha(cr, OPACITY_NO_AUDIO);
-    } else {
-        cairo_paint(cr);
-    }
+    cairo_paint(cr);
 
     cairo_restore(cr);
 }

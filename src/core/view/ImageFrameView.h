@@ -29,9 +29,9 @@ public:
      */
     void draw(const Context& ctx) const override;
 
-    void drawFrame(const Context& ctx, Color color) const;
-    void drawImage(const Context& ctx, double alphaForIgnore) const;
-    void drawFrameHandles(const Context& ctx, Color color) const;
+    void drawFrame(cairo_t* cr, Color color) const;
+    void drawImage(cairo_t* cr, double alphaForIgnore) const;
+    void drawFrameHandles(cairo_t* cr, Color color) const;
 
     void setZoomForDrawing(double zoom) const;
 

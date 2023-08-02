@@ -32,14 +32,13 @@ void ImageFrame::readSerialized(ObjectInputStream& in) {
 
 auto ImageFrame::hasImage() const -> bool { return containsImage; }
 
-void ImageFrame::drawPartialImage(const xoj::view::Context& ctx, double xIgnoreP, double yIgnoreP, double xDrawP,
-                                  double yDrawP, double alphaForIgnore) const {
+void ImageFrame::drawPartialImage(cairo_t* cr, double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP,
+                                  double alphaForIgnore) const {
     if (this->containsImage) {
         auto elementView = xoj::view::ElementView::createFromElement(image);
 
-        // using static_cast instead of dynamic, as this will 100% be an imageView
-        auto* imageView = static_cast<xoj::view::ImageView*>(elementView.get());
-        imageView->drawPartial(ctx, xIgnoreP, yIgnoreP, xDrawP, yDrawP, alphaForIgnore);
+        auto* imageView = dynamic_cast<xoj::view::ImageView*>(elementView.get());
+        imageView->drawPartial(cr, xIgnoreP, yIgnoreP, xDrawP, yDrawP, alphaForIgnore);
     }
 }
 
@@ -73,10 +72,11 @@ void ImageFrame::rotate(double x0, double y0, double th) {}
 
 void ImageFrame::calcSize() const {
     if (!this->editable && this->containsImage) {
-        // todo p0mm snappedBound should only be the visible image part!!
-        this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
+        // todo p0mm have selection tool only see the partial image
+        this->snappedBounds = this->getVisiblePartOfImage();
+        // Rectangle<double>(this->x - 2, this->y -2 , this->width +2, this->height + 2);
     } else {
-        this->snappedBounds = Rectangle<double>(this->x - 1, this->y - 1, this->width + 2, this->height + 2);
+        this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
     }
     this->sizeCalculated = true;
 }
@@ -238,6 +238,25 @@ void ImageFrame::moveOnlyFrame(double x, double y, double width, double height) 
     }
 }
 
-void ImageFrame::moveOnlyImage(double x, double y, double width, double height) {
-    // todo p0mm
+void ImageFrame::moveOnlyImage(double x, double y) {
+    this->image->setX(image->getX() + x);
+    this->image->setY(image->getY() + y);
+
+    // make sure there is still some image visible
+    auto visPost = getVisiblePartOfImage();
+    if (visPost.height == 0.0 && visPost.width == 0.0 && visPost.x == 0.0 && visPost.y == 0.0) {
+        this->image->setX(image->getX() - x);
+        this->image->setY(image->getY() - y);
+    }
+}
+void ImageFrame::setCouldBeEdited(bool could) {
+    this->sizeCalculated = false;
+    this->editable = could;
+}
+
+auto ImageFrame::inEditing() const -> bool { return editing; }
+
+void ImageFrame::setInEditing(bool edit) {
+    this->sizeCalculated = false;
+    this->editing = edit;
 }

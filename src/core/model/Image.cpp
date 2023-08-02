@@ -4,9 +4,9 @@
 #include <array>      // for array
 #include <utility>    // for move, pair
 
-#include <cairo.h>        // for cairo_surface_destroy
-#include <gdk/gdk.h>      // for gdk_cairo_set_sourc...
-#include <glib.h>         // for g_assert, guchar
+#include <cairo.h>    // for cairo_surface_destroy
+#include <gdk/gdk.h>  // for gdk_cairo_set_sourc...
+#include <glib.h>     // for g_assert, guchar
 
 #include "model/Element.h"                        // for Element, ELEMENT_IMAGE
 #include "util/Rectangle.h"                       // for Rectangle

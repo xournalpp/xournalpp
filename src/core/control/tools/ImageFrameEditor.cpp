@@ -2,20 +2,31 @@
 
 #include "control/Control.h"  // for Control
 #include "control/settings/Settings.h"
-#include "model/XojPage.h"  // for XojPage
+#include "model/XojPage.h"        // for XojPage
+#include "view/ImageFrameView.h"  // for ImageFrameView
 
 ImageFrameEditor::ImageFrameEditor(Control* control, const PageRef& page, double x, double y):
-        control(control), page(page) {
-
+        control(control), page(page), viewPool(std::make_shared<xoj::util::DispatchPool<ImageFrameEditorView>>()) {
     searchForImageFrame(x, y);
+    Range new_box;
+    new_box.addPoint(x, y);
+    new_box.addPoint(x + 1, y + 1);
+    box = new_box;
 }
 
 ImageFrameEditor::~ImageFrameEditor() {}
 
 void ImageFrameEditor::mouseDown(double x, double y) {
     calculateScalingPosition(x, y);
-    if (this->current != NO_SCALING) {
+    if (this->current != NO_SCALING && this->current != MOVE_IMAGE && this->current != PRE_MOVE_IMAGE) {
         this->scaling = true;
+    } else {
+        if (this->imageFrame != nullptr && this->current == PRE_MOVE_IMAGE) {
+            this->current = MOVE_IMAGE;
+            this->pos_buf.first = x;
+            this->pos_buf.second = y;
+            this->scaling = true;
+        }
     }
 }
 
@@ -55,19 +66,42 @@ void ImageFrameEditor::mouseMove(double x, double y) {
             case RIGHT:
                 this->imageFrame->moveOnlyFrame(0, 0, frameXDif - frameWidth, 0);
                 break;
+            case MOVE_IMAGE:
+                this->imageFrame->moveOnlyImage(x - this->pos_buf.first, y - this->pos_buf.second);
+                this->pos_buf.first = x;
+                this->pos_buf.second = y;
+                break;
             case NO_SCALING:
                 return;
         }
     }
+
+    this->viewPool->dispatch(xoj::view::ImageFrameEditorView::FLAG_DIRTY_REGION, box);
+    calculateRangeOfImageFrame();  // todo p0mm this seems overkill
+    this->viewPool->dispatch(xoj::view::ImageFrameEditorView::FLAG_DIRTY_REGION, box);
 }
 
-void ImageFrameEditor::mouseUp(double x, double y) { this->scaling = false; }
+void ImageFrameEditor::mouseUp(double x, double y) {
+    this->scaling = false;
+    if (this->current == MOVE_IMAGE) {
+        this->current = NO_SCALING;
+        this->scaling = false;
+    }
+}
 
-bool ImageFrameEditor::searchForImageFrame(double x, double y) {
+auto ImageFrameEditor::searchForImageFrame(double x, double y) -> bool {
     for (Element* e: this->page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_IMAGEFRAME) {
-            if (e->intersectsArea(x, y, 1, 1)) {
-                this->imageFrame = dynamic_cast<ImageFrame*>(e);
+            auto* imgF = dynamic_cast<ImageFrame*>(e);
+            imgF->setCouldBeEdited(true);
+            if (imgF->intersectsArea(x, y, 1, 1)) {
+                if (this->imageFrame != nullptr) {
+                    imageFrame->setInEditing(false);
+                    this->page->fireElementChanged(imageFrame);
+                }
+                this->imageFrame = imgF;
+                imgF->setInEditing(true);
+                this->page->fireElementChanged(imgF);
                 return true;
             }
         }
@@ -118,11 +152,17 @@ auto ImageFrameEditor::getSelectionTypeForPos(double x, double y) -> CursorSelec
         case NO_SCALING:
             return CURSOR_SELECTION_NONE;
             break;
+        case MOVE_IMAGE:
+            return CURSOR_SELECTION_NONE;
+            break;
+        case PRE_MOVE_IMAGE:
+            return CURSOR_SELECTION_NONE;
+            break;
     }
 }
 
 void ImageFrameEditor::calculateScalingPosition(double x, double y) {
-    if (this->scaling) {
+    if (this->scaling || this->current == MOVE_IMAGE) {
         return;
     }
     updateImageFrame(x, y);
@@ -202,7 +242,66 @@ void ImageFrameEditor::calculateScalingPosition(double x, double y) {
         this->current = BOTTOM;
         return;
     }
+
+    if (this->imageFrame->getImagePosition().intersects({x, y, 1, 1})) {
+        this->current = PRE_MOVE_IMAGE;
+        return;
+    }
+
     this->current = NO_SCALING;
 }
 
 auto ImageFrameEditor::currentlyScaling() -> bool { return this->current != NO_SCALING; }
+
+void ImageFrameEditor::drawImageFrame(cairo_t* cr, double zoom) const {
+    if (this->imageFrame == nullptr) {
+        return;
+    }
+    auto elementView = xoj::view::ElementView::createFromElement(this->imageFrame);
+
+    auto* imageFrameView = dynamic_cast<xoj::view::ImageFrameView*>(elementView.get());
+    imageFrameView->setZoomForDrawing(zoom);
+    imageFrameView->drawImage(cr, 0.3);
+    imageFrameView->drawFrame(cr, getSelectionColor());
+    imageFrameView->drawFrameHandles(cr, getSelectionColor());
+}
+
+void ImageFrameEditor::calculateRangeOfImageFrame() {
+    Range new_box;
+    if (this->imageFrame == nullptr) {
+        return;
+    } else if (imageFrame->hasImage()) {
+        xoj::util::Rectangle<double> const imgPos = this->imageFrame->getImagePosition();
+        new_box.addPoint(std::min(imgPos.x, this->imageFrame->getX() - 2),
+                         std::min(imgPos.y, this->imageFrame->getY() - 2));
+        new_box.addPoint(
+                std::max(imgPos.x + imgPos.width, this->imageFrame->getX() + 2 + this->imageFrame->getElementWidth()),
+                std::max(imgPos.y + imgPos.height,
+                         this->imageFrame->getY() + 2 + this->imageFrame->getElementHeight()));
+        box = new_box;
+    } else {
+        new_box.addPoint(this->imageFrame->getX() - 2, this->imageFrame->getY() - 2);
+        new_box.addPoint(this->imageFrame->getX() + 2 + this->imageFrame->getElementWidth(),
+                         this->imageFrame->getY() + 2 + this->imageFrame->getElementHeight());
+        box = new_box;
+    }
+}
+
+void ImageFrameEditor::resetView() {
+    for (Element* e: this->page->getSelectedLayer()->getElements()) {
+        if (e->getType() == ELEMENT_IMAGEFRAME) {
+            auto* imgF = dynamic_cast<ImageFrame*>(e);
+            imgF->setCouldBeEdited(false);
+            if (imgF->inEditing()) {
+                imgF->setInEditing(false);
+            }
+            this->page->fireElementChanged(imgF);
+            box.addPoint(imgF->getX() - 2, imgF->getY() - 2);
+            box.addPoint(imgF->getX() + imgF->getElementWidth() + 2, imgF->getY() + imgF->getElementHeight() + 2);
+        }
+    }
+    Range bbox;
+    bbox.addPoint(box.minX, box.minY);
+    bbox.addPoint(box.maxX, box.maxY);
+    this->viewPool->dispatchAndClear(xoj::view::ImageFrameEditorView::FINALIZATION_REQUEST, bbox);
+}
