@@ -32,11 +32,6 @@ public:
     auto insertImageWithSize(const xoj::util::Rectangle<double>& space) -> bool;
 
     /**
-     * lets the user choose an image file and then creates the image
-     */
-    auto chooseAndCreateImage(double x, double y) -> std::tuple<Image*, int, int>;
-
-    /**
      * creates the image from the given file
      */
     auto createImageFromFile(GFile* file, double x, double y) -> std::tuple<Image*, int, int>;
@@ -48,6 +43,12 @@ public:
      * applies (potentially adjusted) width/height to the image
      */
     void automaticScaling(Image* img, double x, double y, int width, int height);
+
+private:
+    /**
+     * lets the user choose an image file and then creates the image
+     */
+    auto chooseAndCreateImage(double x, double y) -> std::tuple<Image*, int, int>;
 
     /**
      * scales image down to fit given space
