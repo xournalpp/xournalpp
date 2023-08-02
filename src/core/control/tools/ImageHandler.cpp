@@ -110,7 +110,7 @@ void ImageHandler::automaticScaling(Image* img, double x, double y, int width, i
     img->setHeight(height * zoom);
 }
 
-auto ImageHandler::insertImageWithSize(Rectangle<double> space) -> bool {
+auto ImageHandler::insertImageWithSize(const Rectangle<double>& space) -> bool {
     auto [img, width, height] = ImageHandler::chooseAndCreateImage(space.x, space.y);
     if (!img) {
         return false;
@@ -126,7 +126,7 @@ auto ImageHandler::insertImageWithSize(Rectangle<double> space) -> bool {
     return addImageToDocument(img, true);
 }
 
-void ImageHandler::scaleImageDown(Image* img, xoj::util::Rectangle<double> space) {
+void ImageHandler::scaleImageDown(Image* img, const xoj::util::Rectangle<double>& space) {
     if (static_cast<int>(space.width) == 0 || static_cast<int>(space.height) == 0) {
         return;
     }
@@ -136,7 +136,7 @@ void ImageHandler::scaleImageDown(Image* img, xoj::util::Rectangle<double> space
     img->setHeight(scaling * height);
 }
 
-void ImageHandler::centerImage(Image* img, xoj::util::Rectangle<double> space) {
+void ImageHandler::centerImage(Image* img, const xoj::util::Rectangle<double>& space) {
     if (space.area() == 0) {
         return;
     }

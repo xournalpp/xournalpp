@@ -29,7 +29,7 @@ public:
     /**
      * inserts an image scaled to the given size
      */
-    auto insertImageWithSize(xoj::util::Rectangle<double> space) -> bool;
+    auto insertImageWithSize(const xoj::util::Rectangle<double>& space) -> bool;
 
     /**
      * lets the user choose an image file and then creates the image
@@ -55,12 +55,12 @@ public:
      * this will not stretch the image
      * if the available space is 0, no scaling occurs
      */
-    static void scaleImageDown(Image* img, xoj::util::Rectangle<double> space);
+    static void scaleImageDown(Image* img, const xoj::util::Rectangle<double>& space);
 
     /**
      * adjust coordinates to center image in given space (after scaling)
      */
-    static void centerImage(Image* img, xoj::util::Rectangle<double> space);
+    static void centerImage(Image* img, const xoj::util::Rectangle<double>& space);
 
 private:
     Control* control;
