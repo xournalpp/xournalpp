@@ -31,8 +31,6 @@ struct CallbackUiData {
  */
 static auto execInUiThreadCallback(CallbackUiData* cb) -> bool {
     cb->callback();
-
-    delete cb;
     // Do not call again
     return false;
 }
@@ -45,7 +43,8 @@ static auto execInUiThreadCallback(CallbackUiData* cb) -> bool {
 void Util::execInUiThread(std::function<void()>&& callback, gint priority) {
     // Note: nullptr = GDestroyNotify notify.
     gdk_threads_add_idle_full(priority, reinterpret_cast<GSourceFunc>(execInUiThreadCallback),
-                              new CallbackUiData(std::move(callback)), nullptr);
+                              new CallbackUiData(std::move(callback)),
+                              [](void* data) { delete static_cast<CallbackUiData*>(data); });
 }
 
 void Util::cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha) {
