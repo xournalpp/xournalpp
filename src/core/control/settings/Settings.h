@@ -233,6 +233,9 @@ public:
     const bool isFilepathInTitlebarShown() const;
     void setFilepathInTitlebarShown(const bool shown);
 
+    const bool isPageNumberInTitlebarShown() const;
+    void setPageNumberInTitlebarShown(const bool shown);
+
     void setShowPairedPages(bool showPairedPages);
     bool isShowPairedPages() const;
 
@@ -693,6 +696,11 @@ private:
      * If the filepath is shown in titlebar
      */
     bool filepathShownInTitlebar{};
+
+    /**
+     * If the page number is shown in titlebar
+     */
+    bool pageNumberShownInTitlebar{};
 
     /**
      *  Hide the scrollbar
