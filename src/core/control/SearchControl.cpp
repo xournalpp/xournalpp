@@ -1,15 +1,13 @@
 #include "SearchControl.h"
 
-#include <algorithm>  // for min_element
-#include <memory>     // for __shared_ptr_access
-#include <utility>    // for move
+#include <memory>   // for __shared_ptr_access
+#include <utility>  // for move
 
-#include "model/Element.h"  // for Element, ELEMENT_TEXT
-#include "model/Layer.h"    // for Layer
-#include "model/Text.h"     // for Text
-#include "model/XojPage.h"  // for XojPage
-#include "view/TextView.h"  // for TextView
-#include "view/overlays/SearchResultView.h"
+#include "model/Element.h"                   // for Element, ELEMENT_TEXT
+#include "model/Layer.h"                     // for Layer
+#include "model/Text.h"                      // for Text
+#include "model/XojPage.h"                   // for XojPage
+#include "view/overlays/SearchResultView.h"  // for SEARCH_CHANGED_NOTIFICATION
 
 SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf):
         page(page),
