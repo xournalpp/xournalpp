@@ -10,7 +10,7 @@
  */
 #pragma once
 
-#include <cinttypes>  // for uint64_t
+#include <cstdint>    // for uint64_t
 #include <string>     // for string
 #include <vector>     // for vector
 

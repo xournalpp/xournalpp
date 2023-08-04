@@ -15,7 +15,8 @@ Keywords=tablet;Wacom;pen input;PDF Annotation;markup
 Keywords[hu]=táblagép;Wacom;tollas bevitel;PDF-megjegyzés;korrektúra
 
 Exec=xournalpp %f
-StartupWMClass=xournalpp
+SingleMainWindow=false
+StartupWMClass=com.github.xournalpp.xournalpp
 Terminal=false
 StartupNotify=true
 MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;application/x-xopt;application/pdf;

@@ -14,7 +14,6 @@
 #include "gui/MainWindow.h"                 // for MainWindow
 #include "gui/PageView.h"                   // for XojPageView
 #include "gui/XournalView.h"                // for XournalView
-#include "model/Image.h"                    // for Image, Image::NOSIZE
 #include "model/Layer.h"                    // for Layer
 #include "model/PageRef.h"                  // for PageRef
 #include "model/XojPage.h"                  // for XojPage
@@ -40,7 +39,7 @@ auto ImageHandler::insertImage(double x, double y) -> bool {
     return insertImage(file.get(), x, y);
 }
 
-auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
+auto ImageHandler::createImage(GFile* file, double x, double y) -> std::tuple<Image*, int, int> {
     Image* img = nullptr;
     {
         // Load the image data from disk
@@ -49,7 +48,7 @@ auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
         gsize length{};
         if (!g_file_load_contents(file, nullptr, &contents, &length, nullptr, &err)) {
             g_error_free(err);
-            return false;
+            return std::make_tuple(nullptr, 0, 0);
         }
 
         img = new Image();
@@ -69,9 +68,30 @@ auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
         delete img;
         XojMsgBox::showErrorToUser(this->control->getGtkWindow(),
                                    _("Failed to load image, could not determine image size!"));
-        return false;
+        return std::make_tuple(nullptr, 0, 0);
     }
 
+    return std::make_tuple(img, width, height);
+}
+
+auto ImageHandler::addImageToDocument(Image* img, bool addUndoAction) -> bool {
+    PageRef page = view->getPage();
+
+    page->getSelectedLayer()->addElement(img);
+
+    if (addUndoAction) {
+        control->getUndoRedoHandler()->addUndoAction(
+                std::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), img));
+    }
+
+    view->rerenderElement(img);
+    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
+    control->getWindow()->getXournal()->setSelection(selection);
+
+    return true;
+}
+
+void ImageHandler::automaticScaling(Image* img, double x, double y, int width, int height) {
     double zoom = 1;
 
     PageRef page = view->getPage();
@@ -84,15 +104,13 @@ auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
 
     img->setWidth(width * zoom);
     img->setHeight(height * zoom);
+}
 
-    page->getSelectedLayer()->addElement(img);
-
-    control->getUndoRedoHandler()->addUndoAction(
-            std::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), img));
-
-    view->rerenderElement(img);
-    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
-    control->getWindow()->getXournal()->setSelection(selection);
-
-    return true;
+auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
+    auto [img, width, height] = ImageHandler::createImage(file, x, y);
+    if (!img) {
+        return false;
+    }
+    automaticScaling(img, x, y, width, height);
+    return addImageToDocument(img, true);
 }

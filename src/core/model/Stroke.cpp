@@ -2,8 +2,8 @@
 
 #include <algorithm>  // for min, max, copy
 #include <cassert>    // for assert
-#include <cinttypes>  // for uint64_t
 #include <cmath>      // for abs, hypot, sqrt
+#include <cstdint>    // for uint64_t
 #include <iterator>   // for back_insert_iterator
 #include <limits>     // for numeric_limits
 #include <numeric>    // for accumulate

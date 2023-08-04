@@ -233,6 +233,9 @@ public:
     const bool isFilepathInTitlebarShown() const;
     void setFilepathInTitlebarShown(const bool shown);
 
+    const bool isPageNumberInTitlebarShown() const;
+    void setPageNumberInTitlebarShown(const bool shown);
+
     void setShowPairedPages(bool showPairedPages);
     bool isShowPairedPages() const;
 
@@ -350,11 +353,9 @@ public:
     void setDefaultSaveName(const std::string& name);
 
     std::string const& getDefaultPdfExportName() const;
+    void setDefaultPdfExportName(const std::string& name);
 
     ButtonConfig* getButtonConfig(unsigned int id);
-
-    std::string const& getFullscreenHideElements() const;
-    void setFullscreenHideElements(std::string elements);
 
     void setViewMode(ViewModeId mode, ViewMode ViewMode);
 
@@ -695,6 +696,11 @@ private:
      * If the filepath is shown in titlebar
      */
     bool filepathShownInTitlebar{};
+
+    /**
+     * If the page number is shown in titlebar
+     */
+    bool pageNumberShownInTitlebar{};
 
     /**
      *  Hide the scrollbar

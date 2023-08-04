@@ -401,6 +401,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->showToolbar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("filepathShownInTitlebar")) == 0) {
         this->filepathShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageNumberShownInTitlebar")) == 0) {
+        this->pageNumberShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showSidebar")) == 0) {
         this->showSidebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarNumberingStyle")) == 0) {
@@ -933,6 +935,7 @@ void Settings::save() {
     SAVE_BOOL_PROP(scrollbarOnLeft);
     SAVE_BOOL_PROP(menubarVisible);
     SAVE_BOOL_PROP(filepathShownInTitlebar);
+    SAVE_BOOL_PROP(pageNumberShownInTitlebar);
     SAVE_INT_PROP(numColumns);
     SAVE_INT_PROP(numRows);
     SAVE_BOOL_PROP(viewFixedRows);
@@ -1233,6 +1236,18 @@ void Settings::setFilepathInTitlebarShown(const bool shown) {
     }
 
     this->filepathShownInTitlebar = shown;
+
+    save();
+}
+
+const bool Settings::isPageNumberInTitlebarShown() const { return this->pageNumberShownInTitlebar; }
+
+void Settings::setPageNumberInTitlebarShown(const bool shown) {
+    if (this->pageNumberShownInTitlebar == shown) {
+        return;
+    }
+
+    this->pageNumberShownInTitlebar = shown;
 
     save();
 }
@@ -1543,14 +1558,24 @@ void Settings::setAutoloadPdfXoj(bool load) {
 
 auto Settings::getDefaultSaveName() const -> string const& { return this->defaultSaveName; }
 
-auto Settings::getDefaultPdfExportName() const -> string const& { return this->defaultPdfExportName; }
-
 void Settings::setDefaultSaveName(const string& name) {
     if (this->defaultSaveName == name) {
         return;
     }
 
     this->defaultSaveName = name;
+
+    save();
+}
+
+auto Settings::getDefaultPdfExportName() const -> string const& { return this->defaultPdfExportName; }
+
+void Settings::setDefaultPdfExportName(const string& name) {
+    if (this->defaultPdfExportName == name) {
+        return;
+    }
+
+    this->defaultPdfExportName = name;
 
     save();
 }

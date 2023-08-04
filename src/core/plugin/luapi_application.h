@@ -11,6 +11,7 @@
 #pragma once
 
 #include <climits>
+#include <cmath>  // for rounding
 #include <cstring>
 #include <limits>  // for numeric_limits
 #include <map>
@@ -27,6 +28,7 @@
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
+#include "control/tools/ImageHandler.h"
 #include "gui/Layout.h"
 #include "gui/MainWindow.h"
 #include "gui/XournalView.h"
@@ -413,6 +415,34 @@ static int applib_layerAction(lua_State* L) {
 }
 
 /**
+ * Helper function to handle a allowUndoRedoAction string parameter. allowUndoRedoAction can take the following values:
+ * - "grouped": the elements get a single undo-redo-action
+ * - "individual" each of the elements get an own undo-redo-action
+ * - "none": no undo-redo-action will be inserted
+ * if an invalid value is being passed as allowUndoRedoAction this function errors
+ */
+static int handleUndoRedoActionHelper(lua_State* L, Control* control, const char* allowUndoRedoAction,
+                                      const std::vector<Element*>& elements) {
+    if (strcmp("grouped", allowUndoRedoAction) == 0) {
+        PageRef const& page = control->getCurrentPage();
+        Layer* layer = page->getSelectedLayer();
+        UndoRedoHandler* undo = control->getUndoRedoHandler();
+        undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, elements));
+    } else if (strcmp("individual", allowUndoRedoAction) == 0) {
+        PageRef const& page = control->getCurrentPage();
+        Layer* layer = page->getSelectedLayer();
+        UndoRedoHandler* undo = control->getUndoRedoHandler();
+        for (Element* element: elements) undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
+    } else if (strcmp("none", allowUndoRedoAction) == 0)
+        g_warning("Not allowing undo/redo action.");
+    else {
+        return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
+    }
+    return 0;
+}
+
+
+/**
  * Helper function for addStroke API. Parses pen settings from API call, taking
  * in a Stroke and a chosen Layer, sets the pen settings, and applies the stroke.
  */
@@ -622,21 +652,8 @@ static int applib_addSplines(lua_State* L) {
     // Check how the user wants to handle undoing
     lua_getfield(L, 1, "allowUndoRedoAction");
     allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
-    if (strcmp("grouped", allowUndoRedoAction) == 0) {
-        PageRef const& page = ctrl->getCurrentPage();
-        Layer* layer = page->getSelectedLayer();
-        UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
-        undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, strokes));
-    } else if (strcmp("individual", allowUndoRedoAction) == 0) {
-        PageRef const& page = ctrl->getCurrentPage();
-        Layer* layer = page->getSelectedLayer();
-        UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
-        for (Element* element: strokes) undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
-    } else if (strcmp("none", allowUndoRedoAction) == 0)
-        g_warning("Not allowing undo/redo action.");
-    else
-        return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
     lua_pop(L, 1);
+    handleUndoRedoActionHelper(L, ctrl, allowUndoRedoAction, strokes);
     return 0;
 }
 
@@ -1977,6 +1994,192 @@ static int applib_openFile(lua_State* L) {
 }
 
 /*
+ * Adds images from the provided paths on the current page on the current layer.
+ *
+ * Global parameters:
+ *  - images table: array of image-parameter-tables
+ *  - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
+ *    "grouped" or "none"
+ *
+ * Parameters per image:
+ *  - path string: filepath to the image (required)
+ *  - x number: x-Coordinate where to place the left upper corner of the image (default: 0)
+ *  - y number: y-Coordinate where to place the left upper corner of the image (default: 0)
+ *  scaling options:
+ *  - maxWidth integer: sets the width of the image in pixels. If that is too large for the page the image gets scaled
+ *    down keeping the aspect-ratio provided by maxWidth/maxHeight (default: -1)
+ *  - maxHeight integer: sets the height of the image in pixels. If that is too large for the page the image gets scaled
+ *    down keeping the aspect-ratio provided by maxWidth/maxHeight (default: -1)
+ *  - aspectRatio boolean: should the image be scaled in the other dimension to preserve the aspect ratio? Is only set
+ *    to false if the parameter is false, nil leads to the default value of true (default: true)
+ *  - scale number: factor to apply to the both dimensions in the end after setting width/height (with/without
+ *    keeping aspect ratio) (default: 1)
+ *
+ * Note about scaling:
+ * If the maxHeight-, the maxWidth- as well as the aspectRatio-parameter are given, the image will fit into the
+ * rectangle specified with maxHeight/maxWidth. To preserve the aspect ratio, one dimension will be smaller than
+ * specified. Still, the scale parameter is applied after this width/height scaling and if after that the dimensions are
+ * too large for the page, the image still gets scaled down afterwards.
+ *
+ * Returns as many values as images were passed. A nil value represents success, while
+ * on error the value corresponding to the image will be a string with the error message.
+ * If the parameters don't fit at all, a real lua error might be thrown immediately.
+ *
+ * Example: app.addImagesFromFilepath{images={{path="/media/data/myImg.png", x=10, y=20, scale=2},
+ *                                            {path="/media/data/myImg2.png", maxHeight=300, aspectRatio=true}},
+ *                                    allowUndoRedoAction="grouped",
+ *                                            }
+ */
+static int applib_addImagesFromFilepath(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+
+    luaL_checktype(L, 1, LUA_TTABLE);
+
+    lua_getfield(L, 1, "images");
+    if (!lua_istable(L, 2)) {
+        return luaL_error(L, "Missing image table!");
+    }
+
+    size_t cntParams = lua_rawlen(L, 2);
+
+    std::vector<Element*> images{};
+    for (int imgParam{1}; imgParam <= cntParams; imgParam++) {
+
+        lua_pushnumber(L, imgParam);
+        lua_gettable(L, 2);
+        luaL_checktype(L, -1, LUA_TTABLE);
+
+        lua_getfield(L, -1, "path");
+        lua_getfield(L, -2, "x");
+        lua_getfield(L, -3, "y");
+        lua_getfield(L, -4, "maxWidth");
+        lua_getfield(L, -5, "maxHeight");
+        lua_getfield(L, -6, "scale");
+        lua_getfield(L, -7, "aspectRatio");
+
+        // stack now has the following:
+        //    1 = global params table
+        //   -8 = current img-params table
+        //   -7 = filepath
+        //   -6 = x coordinate
+        //   -5 = y coordinate
+        //   -4 = maxWidth (in pixel)
+        //   -3 = maxHeight (in pixel)
+        //   -2 = scale
+        //   -1 = aspectRatio
+
+        // fetch the parameters and check for validity. If parameter is invalid -> hard error
+        double x = luaL_optnumber(L, -6, 0);
+        double y = luaL_optnumber(L, -5, 0);
+
+        int maxHeightParam = luaL_optinteger(L, -3, -1);
+        if (maxHeightParam <= 0 && maxHeightParam != -1) {
+            return luaL_error(L, "Invalid height given, must be positive integer or -1 to deactivate manual setting.");
+        }
+
+        int maxWidthParam = luaL_optinteger(L, -4, -1);
+        if (maxWidthParam <= 0 && maxWidthParam != -1) {
+            return luaL_error(L, "Invalid width given, must be positive integer or -1 to deactivate manual setting.");
+        }
+
+        double scale = luaL_optnumber(L, -2, 1);
+        if (scale <= 0) {
+            return luaL_error(L, "Invalid scale given, must be a positive number.");
+        }
+
+        bool aspectRatio{true};
+        if (!lua_isnil(L, -1)) {
+            // use the typical lua version of booleans (everything different than false (any set value) is true)
+            aspectRatio = lua_toboolean(L, -1);
+        }
+
+        const char* path = luaL_checkstring(L, -7);
+        if (!path) {
+            return luaL_error(L, "no 'path' parameter was provided.");
+        }
+
+        xoj::util::GObjectSPtr<GFile> file(g_file_new_for_path(path), xoj::util::adopt);
+        if (!g_file_query_exists(file.get(), NULL)) {
+            lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
+            lua_pushfstring(L, "Error: file '%s' does not exist.", path);  // soft error
+            continue;
+        }
+
+        XojPageView* pv = control->getWindow()->getXournal()->getViewFor(control->getCurrentPageNo());
+        ImageHandler imgHandler(control, pv);
+        auto [img, width, height] = imgHandler.createImage(file.get(), x, y);
+        if (!img) {
+            lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
+            lua_pushfstring(L, "Error: creating the image (%s) failed.", path);  // soft error
+            continue;
+        }
+
+        // apply width/height parameter
+        if (maxWidthParam != -1 && maxHeightParam != -1) {
+            // both width and height are set
+            if (aspectRatio) {
+                double scale_y{static_cast<double>(maxHeightParam) / static_cast<double>(height)};
+                double scale_x{static_cast<double>(maxWidthParam) / static_cast<double>(width)};
+                double scale{std::min(scale_y, scale_x)};
+
+                height = static_cast<int>(std::round(height * scale));
+                width = static_cast<int>(std::round(width * scale));
+            } else {
+                width = maxWidthParam;
+                height = maxHeightParam;
+            }
+        } else if (maxWidthParam != -1 && maxHeightParam == -1) {
+            // maxHeight is set
+            if (aspectRatio) {
+                height = static_cast<int>(
+                        std::round(static_cast<double>(height) / static_cast<double>(width) * maxWidthParam));
+            }
+            width = maxWidthParam;
+        } else if (maxHeightParam != -1 && maxWidthParam == -1) {
+            // maxWidth is set
+            if (aspectRatio) {
+                width = static_cast<int>(
+                        std::round(static_cast<double>(width) / static_cast<double>(height) * maxHeightParam));
+            }
+            height = maxHeightParam;
+        }
+
+        // apply scale option
+        width = static_cast<int>(std::round(width * scale));
+        height = static_cast<int>(std::round(height * scale));
+
+        // scale down keeping the current aspect ratio after the manual scaling to fit the image on the page
+        // if the image already fits on the screen, no other scaling is applied here
+        // already sets width/height in the image
+        imgHandler.automaticScaling(img, x, y, width, height);
+
+        // store the image to later build the undo/redo action chain
+        images.push_back(img);
+
+        lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
+
+        bool succ = imgHandler.addImageToDocument(img, false);
+        if (!succ) {
+            lua_pushfstring(L, "Error: Inserting the image (%s) failed.", path);  // soft error
+        }
+
+        lua_pushnil(L);
+    }
+
+    // Check how the user wants to handle undoing
+    lua_getfield(L, 1, "allowUndoRedoAction");
+    const char* allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
+    lua_pop(L, 1);
+    handleUndoRedoActionHelper(L, control, allowUndoRedoAction, images);
+
+    return static_cast<int>(cntParams);
+}
+
+/*
  * The full Lua Plugin API.
  * See above for example usage of each function.
  */
@@ -2006,6 +2209,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"export", applib_export},
                                   {"addStrokes", applib_addStrokes},
                                   {"addSplines", applib_addSplines},
+                                  {"addImagesFromFilepath", applib_addImagesFromFilepath},
                                   {"getFilePath", applib_getFilePath},
                                   {"refreshPage", applib_refreshPage},
                                   {"getStrokes", applib_getStrokes},

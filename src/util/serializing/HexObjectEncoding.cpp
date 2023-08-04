@@ -1,6 +1,7 @@
 #include "util/serializing/HexObjectEncoding.h"
 
-#include <cinttypes>  // for uint8_t, PRIx8
+#include <cinttypes>  // for PRIx8
+#include <cstdint>    // for uint8_t
 #include <cstdio>     // for sprintf
 
 #include <glib.h>  // for g_free, g_malloc, g_string_append_len

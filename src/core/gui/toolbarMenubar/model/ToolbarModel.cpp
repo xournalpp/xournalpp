@@ -136,7 +136,7 @@ const char* TOOLBAR_INI_HEADER =
         "\n"
         " Tool configuration: VERY_FINE,FINE,MEDIUM,THICK,VERY_THICK\n"
         "\n"
-        " Item seperation: SEPARATOR,SPACER\n"
+        " Item separation: SEPARATOR,SPACER\n"
         "\n";
 
 void ToolbarModel::save(fs::path const& filepath) {

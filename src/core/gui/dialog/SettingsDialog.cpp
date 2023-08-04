@@ -178,7 +178,8 @@ void SettingsDialog::initLanguageSettings() {
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice) {
-    this->buttonConfigs.emplace_back(std::make_unique<ButtonConfigGui>(getGladeSearchPath(), get(hbox), settings, button, withDevice));
+    this->buttonConfigs.emplace_back(
+            std::make_unique<ButtonConfigGui>(getGladeSearchPath(), get(hbox), settings, button, withDevice));
 }
 
 void SettingsDialog::initMouseButtonEvents() {
@@ -375,7 +376,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbStabilizerEnableFinalizeStroke", settings->getStabilizerFinalizeStroke());
 
     GtkWidget* sbStabilizerBuffersize = get("sbStabilizerBuffersize");
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerBuffersize), static_cast<double>(settings->getStabilizerBuffersize()));
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerBuffersize),
+                              static_cast<double>(settings->getStabilizerBuffersize()));
     GtkWidget* sbStabilizerDeadzoneRadius = get("sbStabilizerDeadzoneRadius");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerDeadzoneRadius), settings->getStabilizerDeadzoneRadius());
     GtkWidget* sbStabilizerDrag = get("sbStabilizerDrag");
@@ -397,8 +399,10 @@ void SettingsDialog::load() {
     gtk_combo_box_set_active(cbSidebarNumberingStyle, static_cast<int>(settings->getSidebarNumberingStyle()));
 
     GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
-    string txt = settings->getDefaultSaveName();
-    gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt.c_str());
+    gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), settings->getDefaultSaveName().c_str());
+
+    GtkWidget* txtDefaultPdfName = get("txtDefaultPdfName");
+    gtk_entry_set_text(GTK_ENTRY(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
 
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(get("fcAudioPath")),
                                         Util::toGFilename(settings->getAudioFolder()).c_str());
@@ -553,6 +557,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbPresentationGoFullscreen", goPresentationFullscreen);
     loadCheckbox("cbHideMenubarStartup", settings->isMenubarVisible());
     loadCheckbox("cbShowFilepathInTitlebar", settings->isFilepathInTitlebarShown());
+    loadCheckbox("cbShowPageNumberInTitlebar", settings->isPageNumberInTitlebarShown());
 
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("preloadPagesBefore")),
                               static_cast<double>(settings->getPreloadPagesBefore()));
@@ -788,6 +793,7 @@ void SettingsDialog::save() {
 
     settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
     settings->setFilepathInTitlebarShown(getCheckbox("cbShowFilepathInTitlebar"));
+    settings->setPageNumberInTitlebarShown(getCheckbox("cbShowPageNumberInTitlebar"));
 
     constexpr auto spinAsUint = [&](GtkSpinButton* btn) {
         int v = gtk_spin_button_get_value_as_int(btn);
@@ -800,6 +806,7 @@ void SettingsDialog::save() {
     settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
     settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
+    settings->setDefaultPdfExportName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultPdfName"))));
     // Todo(fabian): use Util::fromGFilename!
     auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(get("fcAudioPath")));
     auto path = Util::fromGFile(file);
@@ -814,7 +821,8 @@ void SettingsDialog::save() {
 
     if (getCheckbox("cbIgnoreFirstStylusEvents")) {
         GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
-        int numIgnoredStylusEvents = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents)));
+        int numIgnoredStylusEvents =
+                static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents)));
         settings->setIgnoredStylusEvents(numIgnoredStylusEvents);
     } else {
         settings->setIgnoredStylusEvents(0);  // This means nothing will be ignored

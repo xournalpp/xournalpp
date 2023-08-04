@@ -1,7 +1,7 @@
 #include "ToolHandler.h"
 
 #include <algorithm>  // for clamp
-#include <cinttypes>  // for uint32_t
+#include <cstdint>    // for uint32_t
 #include <cstdio>     // for size_t
 #include <optional>   // for nullopt, optional
 #include <string>     // for operator==, string, basic_string

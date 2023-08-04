@@ -157,8 +157,8 @@ void SearchBar::showSearchBar(bool show) {
 
     if (show) {
         GtkWidget* searchTextField = win->get("searchTextField");
-        gtk_widget_grab_focus(searchTextField);
         gtk_widget_show_all(searchBar);
+        gtk_widget_grab_focus(searchTextField);
     } else {
         gtk_widget_hide(searchBar);
         for (int i = control->getDocument()->getPageCount() - 1; i >= 0; i--) {

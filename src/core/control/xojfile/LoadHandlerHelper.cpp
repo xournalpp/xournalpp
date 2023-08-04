@@ -10,7 +10,7 @@
  */
 #include "LoadHandlerHelper.h"
 
-#include <cinttypes>  // for uint32_t
+#include <cstdint>    // for uint32_t
 #include <cstdlib>    // for strtol, strtoull
 #include <cstring>    // for strcmp, size_t, strlen
 #include <string>     // for allocator, string

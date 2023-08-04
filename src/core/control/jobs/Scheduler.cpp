@@ -1,7 +1,8 @@
 #include "Scheduler.h"
 
 #include <cassert>    // for assert
-#include <cinttypes>  // for PRId64, uint64_t
+#include <cinttypes>  // for PRId64
+#include <cstdint>    // for uint64_t
 
 #include "control/jobs/Job.h"  // for Job, JOB_TYPE_RENDER
 
