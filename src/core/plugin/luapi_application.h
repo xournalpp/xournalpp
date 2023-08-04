@@ -2371,7 +2371,7 @@ static int applib_openFile(lua_State* L) {
 }
 
 /*
- * Adds images from the provided paths on the current page on the current layer.
+ * Adds images from the provided paths or the provided image data on the current page on the current layer.
  *
  * Global parameters:
  *  - images table: array of image-parameter-tables
@@ -2379,7 +2379,9 @@ static int applib_openFile(lua_State* L) {
  *    "grouped" or "none"
  *
  * Parameters per image:
- *  - path string: filepath to the image (required)
+ *  - path string: filepath to the image
+ *    or
+ * - data string: (file) content of the image (exactly one of path and data should be specified)
  *  - x number: x-Coordinate where to place the left upper corner of the image (default: 0)
  *  - y number: y-Coordinate where to place the left upper corner of the image (default: 0)
  *  scaling options:
@@ -2402,12 +2404,13 @@ static int applib_openFile(lua_State* L) {
  * on error the value corresponding to the image will be a string with the error message.
  * If the parameters don't fit at all, a real lua error might be thrown immediately.
  *
- * Example: app.addImagesFromFilepath{images={{path="/media/data/myImg.png", x=10, y=20, scale=2},
+ * Example 1: app.addImages{images={{path="/media/data/myImg.png", x=10, y=20, scale=2},
  *                                            {path="/media/data/myImg2.png", maxHeight=300, aspectRatio=true}},
  *                                    allowUndoRedoAction="grouped",
  *                                            }
+ * Example 2: app.addImages{images={{data="<binary image data>", x=100, y=200, maxHeight=300, maxWidth=400}}}
  */
-static int applib_addImagesFromFilepath(lua_State* L) {
+static int applib_addImages(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
 
@@ -2431,17 +2434,19 @@ static int applib_addImagesFromFilepath(lua_State* L) {
         luaL_checktype(L, -1, LUA_TTABLE);
 
         lua_getfield(L, -1, "path");
-        lua_getfield(L, -2, "x");
-        lua_getfield(L, -3, "y");
-        lua_getfield(L, -4, "maxWidth");
-        lua_getfield(L, -5, "maxHeight");
-        lua_getfield(L, -6, "scale");
-        lua_getfield(L, -7, "aspectRatio");
+        lua_getfield(L, -2, "data");
+        lua_getfield(L, -3, "x");
+        lua_getfield(L, -4, "y");
+        lua_getfield(L, -5, "maxWidth");
+        lua_getfield(L, -6, "maxHeight");
+        lua_getfield(L, -7, "scale");
+        lua_getfield(L, -8, "aspectRatio");
 
         // stack now has the following:
         //    1 = global params table
-        //   -8 = current img-params table
-        //   -7 = filepath
+        //   -9 = current img-params table
+        //   -8 = filepath
+        //   -7 = image data
         //   -6 = x coordinate
         //   -5 = y coordinate
         //   -4 = maxWidth (in pixel)
@@ -2474,25 +2479,43 @@ static int applib_addImagesFromFilepath(lua_State* L) {
             aspectRatio = lua_toboolean(L, -1);
         }
 
-        const char* path = luaL_checkstring(L, -7);
-        if (!path) {
-            return luaL_error(L, "no 'path' parameter was provided.");
+        const char* path = luaL_optstring(L, -8, nullptr);
+        size_t dataLen = 0;
+        const char* data = luaL_optlstring(L, -7, nullptr, &dataLen);
+        if (!path && !data) {
+            return luaL_error(L, "no 'path' parameter and no image 'data' was provided.");
+        }
+        if (path && data) {
+            return luaL_error(L,
+                              "both 'path' parameter and image 'data' were provided. Only one should be specified. ");
         }
 
-        xoj::util::GObjectSPtr<GFile> file(g_file_new_for_path(path), xoj::util::adopt);
-        if (!g_file_query_exists(file.get(), NULL)) {
-            lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
-            lua_pushfstring(L, "Error: file '%s' does not exist.", path);  // soft error
-            continue;
-        }
-
+        Image* img;
+        int width;
+        int height;
         XojPageView* pv = control->getWindow()->getXournal()->getViewFor(control->getCurrentPageNo());
         ImageHandler imgHandler(control, pv);
-        auto [img, width, height] = imgHandler.createImageFromFile(file.get(), x, y);
-        if (!img) {
-            lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
-            lua_pushfstring(L, "Error: creating the image (%s) failed.", path);  // soft error
-            continue;
+        if (path) {
+            xoj::util::GObjectSPtr<GFile> file(g_file_new_for_path(path), xoj::util::adopt);
+            if (!g_file_query_exists(file.get(), NULL)) {
+                lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
+                lua_pushfstring(L, "Error: file '%s' does not exist.", path);  // soft error
+                continue;
+            }
+
+            std::tie(img, width, height) = imgHandler.createImageFromFile(file.get(), x, y);
+            if (!img) {
+                lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
+                lua_pushfstring(L, "Error: creating the image (%s) failed.", path);  // soft error
+                continue;
+            }
+        } else {  // data was provided instead
+            img = new Image();
+            img->setImage(std::string(data, dataLen));
+            img->getImage();  // render image first to get the proper width and height
+            std::tie(width, height) = img->getImageSize();
+            img->setX(x);
+            img->setY(y);
         }
 
         // apply width/height parameter
@@ -2556,6 +2579,33 @@ static int applib_addImagesFromFilepath(lua_State* L) {
     return static_cast<int>(cntParams);
 }
 
+/**
+ * Puts a Lua Table of the Images (from the selection tool / selected layer) onto the stack.
+ * Is inverse to app.addImages
+ *
+ * Required argument: type ("selection" or "layer")
+ *
+ * Example: local images = app.getImages("selection")
+ *
+ * return value:
+ * {
+ *     {
+ *         ["x"] = number,
+ *         ["y"] = number,
+ *         ["width"] = number,    (width when inserted into Xournal++)
+ *         ["height"] = number,   (height when inserted into Xournal++)
+ *         ["data"] = string,
+ *         ["format"] = string,
+ *         ["imageWidth"] = integer,
+ *         ["imageHeight"] = integer,
+ *     },
+ *     {
+ *         ...
+ *     },
+ *     ...
+ * }
+ */
+
 static int applib_getImages(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     std::string type = luaL_checkstring(L, 1);
@@ -2564,7 +2614,6 @@ static int applib_getImages(lua_State* L) {
 
     // Discard any extra arguments passed in
     lua_settop(L, 1);
-    luaL_checktype(L, 1, LUA_TSTRING);
 
     if (type == "layer") {
         auto sel = control->getWindow()->getXournal()->getSelection();
@@ -2664,7 +2713,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"export", applib_export},
                                   {"addStrokes", applib_addStrokes},
                                   {"addSplines", applib_addSplines},
-                                  {"addImagesFromFilepath", applib_addImagesFromFilepath},
+                                  {"addImages", applib_addImages},
                                   {"addTexts", applib_addTexts},
                                   {"getFilePath", applib_getFilePath},
                                   {"refreshPage", applib_refreshPage},
