@@ -15,5 +15,9 @@ body:
       required: true
   - type: textarea
     attributes:
+      label: Alternatives That You've Considered
+      description: Add any alternative solutions that you may have considered here.
+  - type: textarea
+    attributes:
       label: Additional Context
-      description: Put any other alternative considered solutions, or context here.
+      description: Put any extra contextextual information here.
