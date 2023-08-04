@@ -4,9 +4,9 @@
 #include <array>      // for array
 #include <utility>    // for move, pair
 
-#include <cairo.h>        // for cairo_surface_destroy
-#include <gdk/gdk.h>      // for gdk_cairo_set_sourc...
-#include <glib.h>         // for g_assert, guchar
+#include <cairo.h>    // for cairo_surface_destroy
+#include <gdk/gdk.h>  // for gdk_cairo_set_sourc...
+#include <glib.h>     // for g_assert, guchar
 
 #include "model/Element.h"                        // for Element, ELEMENT_IMAGE
 #include "util/Rectangle.h"                       // for Rectangle
@@ -22,6 +22,11 @@ Image::~Image() {
     if (this->image) {
         cairo_surface_destroy(this->image);
         this->image = nullptr;
+    }
+
+    if (this->partialImage.mod_img) {
+        cairo_surface_destroy(this->partialImage.mod_img);
+        this->partialImage.mod_img = nullptr;
     }
 
     if (this->format) {
@@ -41,6 +46,14 @@ auto Image::clone() const -> Element* {
     img->data = this->data;
 
     img->image = cairo_surface_reference(this->image);
+
+    img->partialImage.mod_img = cairo_surface_reference(this->partialImage.mod_img);
+    img->partialImage.alphaForIgnore = this->partialImage.alphaForIgnore;
+    img->partialImage.xIgnoreP = this->partialImage.xIgnoreP;
+    img->partialImage.xDrawP = this->partialImage.xDrawP;
+    img->partialImage.yIgnoreP = this->partialImage.yIgnoreP;
+    img->partialImage.yDrawP = this->partialImage.yDrawP;
+
     img->snappedBounds = this->snappedBounds;
     img->sizeCalculated = this->sizeCalculated;
 
@@ -159,6 +172,79 @@ auto Image::getImage() const -> cairo_surface_t* {
     return this->image;
 }
 
+auto Image::getPartialImage(double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP, double alphaForIgnore) const
+        -> cairo_surface_t* {
+    if (this->partialImage.mod_img != nullptr && partialImage.alphaForIgnore == alphaForIgnore &&
+        partialImage.xIgnoreP == xIgnoreP && partialImage.xDrawP == xDrawP && partialImage.yIgnoreP == yIgnoreP &&
+        partialImage.yDrawP == yDrawP) {
+        return partialImage.mod_img;
+    }
+    // only create the partial view surface if necessary
+
+    if (this->partialImage.mod_img) {
+        cairo_surface_destroy(this->partialImage.mod_img);
+        this->partialImage.mod_img = nullptr;
+    }
+
+    this->partialImage.alphaForIgnore = alphaForIgnore;
+    this->partialImage.xIgnoreP = xIgnoreP;
+    this->partialImage.yIgnoreP = yIgnoreP;
+    this->partialImage.xDrawP = xDrawP;
+    this->partialImage.yDrawP = yDrawP;
+
+
+    cairo_surface_t* img = getImage();
+    int const img_width = cairo_image_surface_get_width(img);
+    int const img_height = cairo_image_surface_get_height(img);
+
+    unsigned char* raw_img_data = cairo_image_surface_get_data(img);
+
+    this->partialImage.mod_img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, img_width, img_height);
+    cairo_t* del_cr = cairo_create(this->partialImage.mod_img);
+
+    unsigned char* mod_img_data = cairo_image_surface_get_data(partialImage.mod_img);
+
+    cairo_paint(del_cr);
+    cairo_destroy(del_cr);
+
+    int const cutoff_ignore_x = static_cast<int>(xIgnoreP * img_width);
+    int const cutoff_draw_x = static_cast<int>(xDrawP * img_width);
+    int const cutoff_ignore_y = static_cast<int>(yIgnoreP * img_height);
+    int const cutoff_draw_y = static_cast<int>(yDrawP * img_height);
+
+    for (int row = 0; row < img_height; row++) {
+        for (int col = 0; col < img_width; col++) {
+            const int chars_in_previous_rows = row * img_width * 4;
+            const int cur_pos = chars_in_previous_rows + (col * 4);  // col * 4 is the chars in this row
+
+            const bool apply_alpha =
+                    (row < cutoff_ignore_y || row > cutoff_draw_y) || (col < cutoff_ignore_x || col > cutoff_draw_x);
+
+            if (apply_alpha) {
+
+                // alpha
+                mod_img_data[cur_pos] = static_cast<unsigned char>(alphaForIgnore);
+
+                // red green blue : premultiplied!
+                mod_img_data[cur_pos + 1] = static_cast<unsigned char>(raw_img_data[cur_pos + 1] * alphaForIgnore);
+                mod_img_data[cur_pos + 2] = static_cast<unsigned char>(raw_img_data[cur_pos + 2] * alphaForIgnore);
+                mod_img_data[cur_pos + 3] = static_cast<unsigned char>(raw_img_data[cur_pos + 3] * alphaForIgnore);
+            } else {
+
+                // alpha
+                mod_img_data[cur_pos] = raw_img_data[cur_pos];
+
+                // red green blue
+                mod_img_data[cur_pos + 1] = raw_img_data[cur_pos + 1];
+                mod_img_data[cur_pos + 2] = raw_img_data[cur_pos + 2];
+                mod_img_data[cur_pos + 3] = raw_img_data[cur_pos + 3];
+            }
+        }
+    }
+
+    return this->partialImage.mod_img;
+}
+
 void Image::scale(double x0, double y0, double fx, double fy, double rotation,
                   bool) {  // line width scaling option is not used
     this->x -= x0;
@@ -199,6 +285,11 @@ void Image::readSerialized(ObjectInputStream& in) {
     if (this->image) {
         cairo_surface_destroy(this->image);
         this->image = nullptr;
+    }
+
+    if (this->partialImage.mod_img) {
+        cairo_surface_destroy(this->partialImage.mod_img);
+        this->partialImage.mod_img = nullptr;
     }
 
     this->data = in.readImage();

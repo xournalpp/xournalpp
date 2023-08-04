@@ -33,7 +33,9 @@
 #include "control/tools/EditSelection.h"            // for EditSelection
 #include "control/tools/EllipseHandler.h"           // for EllipseHandler
 #include "control/tools/EraseHandler.h"             // for EraseHandler
+#include "control/tools/ImageFrameEditor.h"         // for ImageFrameEditor
 #include "control/tools/ImageHandler.h"             // for ImageHandler
+#include "control/tools/ImageSizeSelection.h"       // for ImageSizeSelection
 #include "control/tools/InputHandler.h"             // for InputHandler
 #include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
 #include "control/tools/RectangleHandler.h"         // for RectangleHandler
@@ -380,8 +382,16 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_TEXT) {
         startText(x, y);
     } else if (h->getToolType() == TOOL_IMAGE) {
-        ImageHandler imgHandler(control, this);
-        imgHandler.insertImage(x, y);
+        // start selecting the size for the image or start scaling!
+        // todo p0mm both these cases need to bel handled in image frame editor
+        if (!this->imageFrameEditor || !this->imageFrameEditor->currentlyScaling()) {
+            this->imageSizeSelection = std::make_unique<ImageSizeSelection>(x, y);
+            this->overlayViews.emplace_back(
+                    std::make_unique<xoj::view::ImageSizeSelectionView>(this->imageSizeSelection.get(), this));
+        }
+        if (this->imageFrameEditor) {
+            this->imageFrameEditor->mouseDown(x, y);
+        }
     }
 
     this->onButtonClickEvent(pos);
@@ -508,6 +518,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 
     if (this->inputHandler && this->inputHandler->onMotionNotifyEvent(pos, zoom)) {
         // input handler used this event
+    } else if (this->imageSizeSelection) {
+        this->imageSizeSelection->updatePosition(x, y);
     } else if (this->selection) {
         this->selection->currentPos(x, y);
     } else if (auto* selection = pdfToolbox->getSelection(); selection && !selection->isFinalized()) {
@@ -522,6 +534,22 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
     } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
         this->eraser->erase(x, y);
+    }
+    if (h->getToolType() == TOOL_IMAGE) {
+        if (this->imageFrameEditor) {
+            this->xournal->getCursor()->setMouseSelectionType(imageFrameEditor->getSelectionTypeForPos(x, y));
+            this->imageFrameEditor->mouseMove(x, y);
+
+        } else {
+            this->imageFrameEditor = std::make_unique<ImageFrameEditor>(this->xournal->getControl(), page, x, y);
+            this->overlayViews.emplace_back(
+                    std::make_unique<xoj::view::ImageFrameEditorView>(imageFrameEditor.get(), this));
+        }
+
+    } else if (this->imageFrameEditor) {
+        this->imageFrameEditor->resetView();
+        this->imageFrameEditor.reset();
+        this->xournal->getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
     }
 
     return false;
@@ -684,6 +712,25 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         this->selection.reset();
     } else if (this->textEditor) {
         this->textEditor->mouseReleased();
+    }
+
+    if (this->imageSizeSelection) {
+        // size for image has been selected, now the image can be added
+        auto spaceForImage = this->imageSizeSelection->getSelectedSpace();
+        ImageHandler imgHandler(control, this);
+        if (spaceForImage.width != 0 && spaceForImage.height != 0) {
+            imgHandler.insertImageFrame(spaceForImage);
+        } else {
+            imgHandler.insertImage(spaceForImage);
+        }
+
+        imageSizeSelection->finalize();
+        this->imageSizeSelection.reset();
+    }
+    if (this->xournal->getControl()->getToolHandler()->getToolType() == TOOL_IMAGE) {
+        if (this->imageFrameEditor) {
+            this->imageFrameEditor->mouseUp(pos.x / getZoom(), pos.y / getZoom());
+        }
     }
 
     return false;

@@ -37,3 +37,25 @@ void ImageView::draw(const Context& ctx) const {
 
     cairo_restore(cr);
 }
+
+void ImageView::drawPartial(cairo_t* cr, double xIgnoreP, double yIgnoreP, double xDrawP, double yDrawP,
+                            double alphaForIgnore) {
+    cairo_save(cr);
+
+    cairo_surface_t* mod_img = this->image->getPartialImage(xIgnoreP, yIgnoreP, xDrawP, yDrawP, alphaForIgnore);
+
+    int const width = cairo_image_surface_get_width(mod_img);
+    int const height = cairo_image_surface_get_height(mod_img);
+
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+    double const xFactor = image->getElementWidth() / width;
+    double const yFactor = image->getElementHeight() / height;
+
+    cairo_scale(cr, xFactor, yFactor);
+
+    cairo_set_source_surface(cr, mod_img, image->getX() / xFactor, image->getY() / yFactor);
+    cairo_paint(cr);
+
+    cairo_restore(cr);
+}

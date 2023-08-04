@@ -3,10 +3,12 @@
 
 #include "model/Element.h"   // for Element, ELEMENT_IMAGE, ELEMENT_STROKE
 #include "model/Image.h"     // for Image
+#include "model/ImageFrame.h"  // for ImageFrame
 #include "model/Stroke.h"    // for Stroke
 #include "model/TexImage.h"  // for TexImage
 #include "model/Text.h"      // for Text
 
+#include "ImageFrameView.h"  // for ImageFrameView
 #include "ImageView.h"     // for ImageView
 #include "StrokeView.h"    // for StrokeView
 #include "TexImageView.h"  // for TexImageView
@@ -25,6 +27,8 @@ auto ElementView::createFromElement(const Element* e) -> std::unique_ptr<Element
             return std::make_unique<ImageView>(dynamic_cast<const Image*>(e));
         case ELEMENT_TEXIMAGE:
             return std::make_unique<TexImageView>(dynamic_cast<const TexImage*>(e));
+        case ELEMENT_IMAGEFRAME:
+            return std::make_unique<ImageFrameView>(dynamic_cast<const ImageFrame*>(e));
         default:
             assert(false && "ElementView::getFromElement: Unknown element type!");
             return nullptr;
