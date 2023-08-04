@@ -10,8 +10,8 @@ body:
         - Windows
         - Mac OS
         - Linux
-      validations:
-        required: true
+    validations:
+      required: true
   - type: input
     attributes:
       label: (Linux only) Distribution
