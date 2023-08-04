@@ -2556,6 +2556,81 @@ static int applib_addImagesFromFilepath(lua_State* L) {
     return static_cast<int>(cntParams);
 }
 
+static int applib_getImages(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    std::string type = luaL_checkstring(L, 1);
+    std::vector<Element*> elements = {};
+    Control* control = plugin->getControl();
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TSTRING);
+
+    if (type == "layer") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            control->clearSelection();  // otherwise strokes in the selection won't be recognized
+        }
+        elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+    } else if (type == "selection") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            elements = sel->getElements();
+        } else {
+            return luaL_error(L, "There is no selection! ");
+        }
+    } else {
+        return luaL_error(L, "Unknown argument: %s", type.c_str());
+    }
+
+    lua_newtable(L);  // create table of all images
+    int currImageNo = 0;
+
+    for (Element* e: elements) {
+        if (e->getType() == ELEMENT_IMAGE) {
+            auto* im = static_cast<Image*>(e);
+            lua_pushnumber(L, ++currImageNo);  // index for later (settable)
+            lua_newtable(L);                   // create table for current image
+
+            // "x": number
+            lua_pushnumber(L, im->getX());
+            lua_setfield(L, -2, "x");
+
+            // "y": number
+            lua_pushnumber(L, im->getY());
+            lua_setfield(L, -2, "y");
+
+            // "width": number
+            lua_pushnumber(L, im->getElementWidth());
+            lua_setfield(L, -2, "width");
+
+            // "height": number
+            lua_pushnumber(L, im->getElementHeight());
+            lua_setfield(L, -2, "height");
+
+            // data: string (can be optimized via lual_Buffer)
+            lua_pushlstring(L, reinterpret_cast<const char*>(im->getRawData()), im->getRawDataLength());
+            lua_setfield(L, -2, "data");
+
+            // format: string
+            lua_pushstring(L, gdk_pixbuf_format_get_name(im->getImageFormat()));
+            lua_setfield(L, -2, "format");
+
+            std::pair<int, int> imageSize = im->getImageSize();
+            // image width: integer
+            lua_pushinteger(L, imageSize.first);
+            lua_setfield(L, -2, "imageWidth");
+            // image height: integer
+            lua_pushinteger(L, imageSize.second);
+            lua_setfield(L, -2, "imageHeight");
+
+            lua_settable(L, -3);  // add image to table
+        }
+    }
+    return 1;
+}
+
+
 /*
  * The full Lua Plugin API.
  * See above for example usage of each function.
@@ -2594,6 +2669,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"getFilePath", applib_getFilePath},
                                   {"refreshPage", applib_refreshPage},
                                   {"getStrokes", applib_getStrokes},
+                                  {"getImages", applib_getImages},
                                   {"getTexts", applib_getTexts},
                                   {"openFile", applib_openFile},
                                   // Placeholder
