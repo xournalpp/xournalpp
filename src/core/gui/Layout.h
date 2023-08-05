@@ -150,7 +150,7 @@ protected:
 private:
     void recalculate_int() const;
 
-    void maybeAddLastPage(Layout* layout);
+    void maybeAddLastPage();
 
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
     static void checkScroll(GtkAdjustment* adjustment, double& lastScroll);

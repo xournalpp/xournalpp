@@ -75,6 +75,7 @@
 #include "util/raii/CLibrariesSPtr.h"               // for adopt
 #include "util/serdesstream.h"                      // for serdes_stream
 #include "view/DebugShowRepaintBounds.h"            // for IF_DEBUG_REPAINT
+#include "view/background/BackgroundView.h"
 #include "view/overlays/OverlayView.h"              // for OverlayView, Tool...
 #include "view/overlays/PdfElementSelectionView.h"  // for PdfElementSelecti...
 #include "view/overlays/SearchResultView.h"         // for SearchResultView
@@ -868,15 +869,9 @@ auto XojPageView::actionDelete() -> bool {
 void XojPageView::drawLoadingPage(cairo_t* cr) {
     static const string txtLoading = _("Loading...");
 
-    double zoom = xournal->getZoom();
-    int dispWidth = getDisplayWidth();
-    int dispHeight = getDisplayHeight();
-
     cairo_set_source_rgb(cr, 1, 1, 1);
-    cairo_rectangle(cr, 0, 0, dispWidth, dispHeight);
+    cairo_rectangle(cr, 0, 0, page->getHeight(), page->getWidth());
     cairo_fill(cr);
-
-    cairo_scale(cr, zoom, zoom);
 
     cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
     cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
@@ -978,6 +973,27 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
     return popover;
 }
 
+static void drawGhostPage(const PageRef& page, cairo_t* cr) {
+    xoj::util::CairoSaveGuard saveguard(cr);
+    cairo_rectangle(cr, 0, 0, page->getWidth(), page->getHeight());
+    cairo_clip(cr);
+
+    static const string txtGhostPage = _("Write here to add a new page");
+    constexpr double TEXT_PERIOD = 300;
+
+    cairo_set_source_rgba(cr, 0.7, 0.7, 0.7, 0.5);
+    cairo_paint(cr);
+    cairo_set_source_rgb(cr, 0.3, 0.3, 0.3);
+    cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+    cairo_set_font_size(cr, 24.0);
+    cairo_text_extents_t ex;
+    cairo_text_extents(cr, txtGhostPage.c_str(), &ex);
+    for (double y = 0.5 * TEXT_PERIOD, maxY = page->getHeight() - y; y < maxY; y += TEXT_PERIOD) {
+        cairo_move_to(cr, (page->getWidth() - ex.width) / 2 - ex.x_bearing, y);
+        cairo_show_text(cr, txtGhostPage.c_str());
+    }
+}
+
 auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
 
     double zoom = xournal->getZoom();
@@ -987,6 +1003,7 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
     {
         std::lock_guard lock(this->drawingMutex);  // Lock the mutex first
         xoj::util::CairoSaveGuard saveGuard(cr);   // see comment at the end of the scope
+
         if (!this->hasBuffer()) {
             drawLoadingPage(cr);
             return true;
@@ -999,6 +1016,11 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
         this->buffer.paintTo(cr);
     }  // Restore the state of cr and then release the mutex
        // restoring the state of cr ensures this->buffer.surface is not longer referenced as the source in cr.
+
+    if (this->page->isGhost()) {
+        assert(!this->page->isAnnotated() && "Ghost page should be empty");
+        drawGhostPage(page, cr);
+    }
 
     /**
      * All the overlay painters below follow the assumption:
@@ -1100,6 +1122,8 @@ void XojPageView::rectChanged(Rectangle<double>& rect) { rerenderRect(rect.x, re
 void XojPageView::rangeChanged(Range& range) { rerenderRange(range); }
 
 void XojPageView::pageChanged() { rerenderPage(); }
+
+void XojPageView::pageUnghosted() { repaintPage(); }
 
 void XojPageView::elementChanged(Element* elem) {
     /*

@@ -45,7 +45,11 @@ public:
     bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
                  gsize length = 0);
 
+    /// @brief Get the number of pages (possible ghost page excluded)
     size_t getPageCount() const;
+    /// @brief Get the number of pages including a possible ghost page
+    size_t getVirtualPageCount() const;
+
     size_t getPdfPageCount() const;
     XojPdfPageSPtr getPdfPage(size_t page) const;
     const XojPdfDocument& getPdfDocument() const;
@@ -56,6 +60,8 @@ public:
     void addPages(InputIter first, InputIter last);
     PageRef getPage(size_t page) const;
     void deletePage(size_t pNr);
+
+    bool hasGhostPage() const;
 
     static void setPageSize(PageRef p, double width, double height);
     static double getPageWidth(PageRef p);

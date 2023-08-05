@@ -223,8 +223,8 @@ void EditSelection::finalizeSelection() {
 
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
-    this->contents->finalizeSelection(this->getRect(), this->snappedBounds, this->aspectRatio, layer, page, this->view,
-                                      this->undo);
+    this->contents->finalizeSelection(this->getRect(), this->snappedBounds, this->aspectRatio, layer, page,
+                                      this->view->getXournal()->getDocument());
 
 
     // Calculate new clip region delta due to rotation:

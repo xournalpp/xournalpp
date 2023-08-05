@@ -38,3 +38,9 @@ void PageHandler::fireElementsChanged(const std::vector<Element*>& elements, Ran
 void PageHandler::firePageChanged() {
     for (PageListener* pl: this->listeners) { pl->pageChanged(); }
 }
+
+void PageHandler::firePageUnghosted() const {
+    for (PageListener* pl: this->listeners) {
+        pl->pageUnghosted();
+    }
+}

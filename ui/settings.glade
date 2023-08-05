@@ -4847,71 +4847,25 @@ This setting can make it easier to draw with touch. </property>
                               <object class="GtkFrame" id="sid198">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label-xalign">0</property>
+                                <property name="label-xalign">0.009999999776482582</property>
                                 <child>
-                                  <object class="GtkAlignment" id="sid199">
+                                  <object class="GtkCheckButton" id="cbGhostPage">
+                                    <property name="label" translatable="yes">Show ghost page for easy page appending (excluding PDFs)</property>
                                     <property name="visible">True</property>
-                                    <property name="can-focus">False</property>
-                                    <property name="left-padding">12</property>
-                                    <child>
-                                      <!-- n-columns=1 n-rows=3 -->
-                                      <object class="GtkGrid" id="grid7">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="orientation">vertical</property>
-                                        <child>
-                                          <object class="GtkRadioButton" id="rdLastPageAppendOnScrollToEndOfLastPage">
-                                            <property name="label" translatable="yes">when scrolling to end of last page</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="receives-default">False</property>
-                                            <property name="active">True</property>
-                                            <property name="draw-indicator">True</property>
-                                            <property name="group">rdLastPageAppendDisabled</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">0</property>
-                                            <property name="top-attach">2</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkRadioButton" id="rdLastPageAppendOnDrawOfLastPage">
-                                            <property name="label" translatable="yes">when drawing on last page</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="receives-default">False</property>
-                                            <property name="active">True</property>
-                                            <property name="draw-indicator">True</property>
-                                            <property name="group">rdLastPageAppendDisabled</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">0</property>
-                                            <property name="top-attach">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkRadioButton" id="rdLastPageAppendDisabled">
-                                            <property name="label" translatable="yes">disabled</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="receives-default">False</property>
-                                            <property name="active">True</property>
-                                            <property name="draw-indicator">True</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">0</property>
-                                            <property name="top-attach">0</property>
-                                          </packing>
-                                        </child>
-                                      </object>
-                                    </child>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">False</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="margin-bottom">4</property>
+                                    <property name="active">True</property>
+                                    <property name="draw-indicator">True</property>
                                   </object>
                                 </child>
                                 <child type="label">
                                   <object class="GtkLabel" id="sid197">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">Automatically Add Empty Last Page (excluding PDFs)</property>
+                                    <property name="label" translatable="yes">Ghost page</property>
                                   </object>
                                 </child>
                               </object>

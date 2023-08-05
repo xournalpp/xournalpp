@@ -245,8 +245,8 @@ public:
     void setPairsOffset(int numOffset);
     int getPairsOffset() const;
 
-    void setEmptyLastPageAppend(EmptyLastPageAppendType emptyLastPageAppend);
-    EmptyLastPageAppendType getEmptyLastPageAppend() const;
+    void setGhostPage(bool ghostPage);
+    bool getGhostPage() const;
 
     void setViewColumns(int numColumns);
     int getViewColumns() const;
@@ -802,7 +802,7 @@ private:
     /**
      * Preference for appending an empty last page to the document
      */
-    EmptyLastPageAppendType emptyLastPageAppend{};
+    bool ghostPage{};
 
     /**
      *  Use when fixed number of columns

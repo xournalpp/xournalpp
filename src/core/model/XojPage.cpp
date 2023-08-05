@@ -4,13 +4,15 @@
 #include <iterator>   // for back_insert_iterator, back_inserter, begin
 #include <utility>    // for move
 
+#include "model/Document.h"
 #include "model/Layer.h"     // for Layer, Layer::Index
 #include "model/PageType.h"  // for PageType, PageTypeFormat, PageTypeForma...
 #include "util/i18n.h"       // for _
 
 #include "BackgroundImage.h"  // for BackgroundImage
 
-XojPage::XojPage(double width, double height, bool suppressLayerCreation): width(width), height(height), bgType(PageTypeFormat::Lined) {
+XojPage::XojPage(double width, double height, bool ghostPage, bool suppressLayerCreation):
+        width(width), height(height), bgType(PageTypeFormat::Lined), ghostPage(ghostPage) {
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
@@ -36,6 +38,20 @@ XojPage::XojPage(XojPage const& page):
 }
 
 auto XojPage::clone() -> XojPage* { return new XojPage(*this); }
+
+bool XojPage::unghost() { return std::exchange(this->ghostPage, false); }
+
+void XojPage::safeAddElementToActiveLayer(Document* doc, Element* e) {
+    doc->lock();
+    this->getSelectedLayer()->addElement(e);
+    bool wasGhost = this->unghost();
+    doc->unlock();
+
+    this->fireElementChanged(e);
+    if (wasGhost) {
+        this->firePageUnghosted();
+    }
+}
 
 void XojPage::addLayer(Layer* layer) {
     this->layer.push_back(layer);

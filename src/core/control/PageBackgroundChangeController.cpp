@@ -52,7 +52,7 @@ void PageBackgroundChangeController::changeAllPagesBackground(const PageType& pt
 
     auto groupUndoAction = std::make_unique<GroupUndoAction>();
 
-    for (size_t p = 0; p < doc->getPageCount(); p++) {
+    for (size_t p = 0; p < doc->getVirtualPageCount(); p++) {
         auto undoAction = commitPageTypeChange(p, pt);
         if (undoAction) {
             groupUndoAction->addAction(std::move(undoAction));
@@ -103,10 +103,6 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
         return {};
     }
 
-    Document* doc = control->getDocument();
-    const size_t pageNr = doc->indexOf(page);
-    g_assert(pageNr != npos);
-
     // Get values for Undo / Redo
     const double origW = page->getWidth();
     const double origH = page->getHeight();
@@ -122,7 +118,7 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
     }
 
 
-    control->firePageChanged(pageNr);
+    control->firePageChanged(pageNum);
     control->updateBackgroundSizeButton();
     return std::make_unique<PageBackgroundChangedUndoAction>(page, origType, origPdfPage, origBackgroundImage, origW,
                                                              origH);
@@ -264,7 +260,7 @@ void PageBackgroundChangeController::copyBackgroundFromOtherPage(PageRef target,
     }
 }
 
-void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldScrollToPage) {
+void PageBackgroundChangeController::insertNewPage(size_t position, bool ghostPage) {
     control->clearSelectionEndText();
 
     Document* doc = control->getDocument();
@@ -275,7 +271,7 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
     PageTemplateSettings model;
     model.parse(control->getSettings()->getPageTemplate());
 
-    auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
+    auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight(), ghostPage);
     PageType pt = control->getNewPageType()->getSelected();
     PageRef current = control->getCurrentPage();
 
@@ -296,8 +292,8 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
             page->setSize(current->getWidth(), current->getHeight());
         }
     }
-
-    control->insertPage(page, position, shouldScrollToPage);
+    const bool scrollToNewPage = !ghostPage;
+    control->insertPage(page, position, scrollToNewPage);
 }
 
 void PageBackgroundChangeController::documentChanged(DocumentChangeType type) {}

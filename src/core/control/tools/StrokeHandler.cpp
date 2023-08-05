@@ -160,23 +160,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     UndoRedoHandler* undo = control->getUndoRedoHandler();
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
-    Settings* settings = control->getSettings();
-    if (settings->getEmptyLastPageAppend() == EmptyLastPageAppendType::OnDrawOfLastPage) {
-        auto* doc = control->getDocument();
-        doc->lock();
-        auto pdfPageCount = doc->getPdfPageCount();
-        doc->unlock();
-        if (pdfPageCount == 0) {
-            auto currentPage = control->getCurrentPageNo();
-            doc->lock();
-            auto lastPage = doc->getPageCount() - 1;
-            doc->unlock();
-            if (currentPage == lastPage) {
-                control->insertNewPage(currentPage + 1, false);
-            }
-        }
-    }
-
     ToolHandler* h = control->getToolHandler();
     if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
         ShapeRecognizer reco;
@@ -193,6 +176,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     Document* doc = control->getDocument();
     doc->lock();
     layer->addElement(stroke.get());
+    bool wasGhostPage = page->unghost();
     doc->unlock();
 
     // Blitt the stroke to the page's buffer and delete all views.
@@ -200,6 +184,9 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::FINALIZATION_REQUEST, Range());
 
     page->fireElementChanged(stroke.get());
+    if (wasGhostPage) {
+        page->firePageUnghosted();
+    }
     stroke.release();
 }
 
@@ -229,11 +216,6 @@ void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
     UndoRedoHandler* undo = control->getUndoRedoHandler();
     undo->addUndoAction(std::make_unique<RecognizerUndoAction>(page, layer, stroke.get(), recognized));
 
-    Document* doc = control->getDocument();
-    doc->lock();
-    layer->addElement(recognized);
-    doc->unlock();
-
     Range range(recognized->getX(), recognized->getY());
     range.addPoint(recognized->getX() + recognized->getElementWidth(),
                    recognized->getY() + recognized->getElementHeight());
@@ -250,7 +232,7 @@ void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
     this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::FINALIZATION_REQUEST, range);
 
     stroke.reset(recognized);  // To ensure PageView::elementChanged knows the recognized stroke is handler by *this
-    page->fireElementChanged(recognized);
+    page->safeAddElementToActiveLayer(control->getDocument(), recognized);
     stroke.release();  // The recognized stroke is owned by the layer
 }
 

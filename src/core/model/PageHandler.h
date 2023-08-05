@@ -41,6 +41,8 @@ public:
     void fireElementsChanged(const std::vector<Element*>& elements, Range range = Range());
     void firePageChanged();
 
+    void firePageUnghosted() const;
+
 private:
     void addListener(PageListener* l);
     void removeListener(PageListener* l);

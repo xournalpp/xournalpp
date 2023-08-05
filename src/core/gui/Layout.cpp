@@ -15,6 +15,7 @@
 #include "gui/PageView.h"               // for XojPageView
 #include "gui/scroll/ScrollHandling.h"  // for ScrollHandling
 #include "model/Document.h"             // for Document
+#include "model/XojPage.h"              // for XojPage
 #include "util/Rectangle.h"             // for Rectangle
 #include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
 
@@ -56,27 +57,24 @@ void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
     Layout::checkScroll(adjustment, layout->lastScrollVertical);
     layout->updateVisibility();
 
-    layout->maybeAddLastPage(layout);
+    layout->maybeAddLastPage();
 }
 
-void Layout::maybeAddLastPage(Layout* layout) {
+void Layout::maybeAddLastPage() {
+    constexpr double TRIGGER_NEW_MAGE_MARGIN = 5;
     auto* control = this->view->getControl();
     auto* settings = control->getSettings();
-    if (settings->getEmptyLastPageAppend() == EmptyLastPageAppendType::OnScrollToEndOfLastPage) {
-        // If the layout is 5px away from the end of the last page
-        if (std::abs((layout->getMinimalHeight() - layout->getVisibleRect().y) - layout->getVisibleRect().height) < 5) {
+    if (settings->getGhostPage()) {
+        auto visibleRect = this->getVisibleRect();
+        if (std::abs((this->getMinimalHeight() - visibleRect.y) - visibleRect.height) < TRIGGER_NEW_MAGE_MARGIN) {
             auto* doc = control->getDocument();
             doc->lock();
-            auto pdfPageCount = doc->getPdfPageCount();
+            size_t pageCount = doc->getPageCount();
+            bool ghostExists = doc->hasGhostPage();
+            bool noPdf = doc->getPdfPageCount() == 0;
             doc->unlock();
-            if (pdfPageCount == 0) {
-                auto currentPage = control->getCurrentPageNo();
-                doc->lock();
-                auto lastPage = doc->getPageCount() - 1;
-                doc->unlock();
-                if (currentPage == lastPage) {
-                    control->insertNewPage(currentPage + 1, false);
-                }
+            if (!ghostExists && noPdf) {
+                control->insertNewPage(pageCount, /*ghostPage*/ true);
             }
         }
     }

@@ -36,6 +36,7 @@ public:
     virtual void elementChanged(Element* elem) {}
     virtual void elementsChanged(const std::vector<Element*>& elements, const Range& range) {}
     virtual void pageChanged() {}
+    virtual void pageUnghosted() {}
 
 private:
     std::weak_ptr<PageHandler> handler;

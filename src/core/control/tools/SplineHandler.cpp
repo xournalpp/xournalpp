@@ -264,22 +264,16 @@ void SplineHandler::finalizeSpline() {
     stroke->setPointVector(linearizeSpline(data));
     stroke->freeUnusedPointItems();
 
-    Layer* layer = page->getSelectedLayer();
-
     UndoRedoHandler* undo = control->getUndoRedoHandler();
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), stroke.get()));
 
-    Document* doc = control->getDocument();
-    doc->lock();
-    layer->addElement(stroke.get());
-    doc->unlock();
+    page->safeAddElementToActiveLayer(control->getDocument(), stroke.get());
 
     auto rg = this->computeTotalRepaintRange(data, stroke->getWidth());
     this->viewPool->dispatchAndClear(xoj::view::SplineToolView::FINALIZATION_REQUEST, rg);
 
     // Wait until this finishes before releasing `stroke`, so that PageView::elementChanged does not needlessly rerender
     // the stroke
-    this->page->fireElementChanged(stroke.get());
     stroke.release();
 
     control->getCursor()->updateCursor();
