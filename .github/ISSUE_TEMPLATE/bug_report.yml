@@ -71,5 +71,5 @@ body:
   - type: textarea
     attributes:
       label: Additional Context
-      description: Add any other information or context about the problem here.
+      description: Add any other information or context about the problem here. If your bug is an input related problem, please provide [input logs](https://github.com/xournalpp/xournalpp/wiki/How-to-provide-debug-info-for-input-related-bugs).
         
