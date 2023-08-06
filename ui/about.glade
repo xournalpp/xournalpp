@@ -1,56 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.18"/>
-  <object class="GtkDialog" id="aboutDialog">
-    <property name="name">aboutDialog</property>
-    <property name="width-request">320</property>
+  <object class="GtkImage" id="iconClose">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">window-close</property>
+  </object>
+  <object class="GtkWindow" id="aboutDialog">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">About Xournal++</property>
     <property name="resizable">False</property>
-    <property name="window-position">center</property>
+    <property name="modal">True</property>
     <property name="destroy-with-parent">True</property>
     <property name="icon-name">dialog-information</property>
-    <property name="type-hint">dialog</property>
-    <child internal-child="vbox">
-      <object class="GtkBox" id="dialog-vbox2">
+    <property name="skip-taskbar-hint">True</property>
+    <property name="skip-pager-hint">True</property>
+    <child>
+      <object class="GtkBox" id="dialog-main-box">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="valign">end</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
         <property name="orientation">vertical</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area2">
-            <property name="name">dialog-action_area2</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="halign">center</property>
-            <property name="hexpand">True</property>
-            <property name="layout-style">end</property>
-            <child>
-              <object class="GtkButton" id="closebutton1">
-                <property name="label">gtk-close</property>
-                <property name="use-action-appearance">False</property>
-                <property name="name">closebutton1</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="can-default">True</property>
-                <property name="receives-default">False</property>
-                <property name="use-stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack-type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
+        <property name="spacing">4</property>
         <child>
           <!-- n-columns=2 n-rows=5 -->
           <object class="GtkGrid">
@@ -373,7 +349,7 @@ by Denis Auroux</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="lbAuthors">
+                  <object class="GtkLabel" id="lbAuthors1">
                     <property name="name">lbAuthors</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -413,13 +389,30 @@ Henry Heino</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="closebutton">
+            <property name="label" translatable="yes">Close</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="has-focus">True</property>
+            <property name="can-default">True</property>
+            <property name="has-default">True</property>
+            <property name="receives-default">True</property>
+            <property name="halign">center</property>
+            <property name="margin-top">5</property>
+            <property name="image">iconClose</property>
+            <accelerator key="Escape" signal="clicked"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
             <property name="position">2</property>
           </packing>
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="-7">closebutton1</action-widget>
-    </action-widgets>
   </object>
 </interface>
