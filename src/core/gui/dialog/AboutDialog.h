@@ -11,17 +11,19 @@
 
 #pragma once
 
-#include <gtk/gtk.h>  // for GtkWindow
-
-#include "gui/GladeGui.h"  // for GladeGui
+#include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
 
-class AboutDialog: public GladeGui {
+namespace xoj::popup {
+class AboutDialog {
 public:
     AboutDialog(GladeSearchpath* gladeSearchPath);
-    ~AboutDialog() override;
+    ~AboutDialog();
 
-public:
-    void show(GtkWindow* parent) override;
+    inline GtkWindow* getWindow() const { return window.get(); }
+
+private:
+    xoj::util::GtkWindowUPtr window;
 };
+};  // namespace xoj::popup
