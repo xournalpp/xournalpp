@@ -14,7 +14,7 @@
 
 #ifdef NDEBUG
 #define xoj_assert(expr) static_cast<void>(0)
-#define xoj_assert(expr, msg) static_cast<void>(0)
+#define xoj_assert_message(expr, msg) static_cast<void>(0)
 #else
 namespace xoj::util {
 [[noreturn]] void assertFailure(const char* expr, const std::string& msg, const char* fileName, int line,
