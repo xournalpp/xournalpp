@@ -19,29 +19,25 @@ void Palette::load() {
     if (!fs::exists(this->filepath))
         throw std::invalid_argument(
                 FS(FORMAT_STR("The palette file {1} does not exist.") % this->filepath.filename().u8string()));
-    int lineNumber{};
     header.clear();
     namedColors.clear();
 
 
     auto gplFile = serdes_stream<std::ifstream>(filepath);
-    std::string line;
+    gplFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-    if (gplFile.is_open()) {
-        getline(gplFile, line);
+    std::string line;
+    getline(gplFile, line);
+    int lineNumber{1};
+    // parse standard header line
+    parseFirstGimpPaletteLine(line);
+    // attempt parsing line by line as either header, color, or fallback
+    while (gplFile.peek() != EOF && getline(gplFile, line)) {
         lineNumber++;
-        // parse standard header line
-        parseFirstGimpPaletteLine(line);
-        /*
-         * attempt parsing line by line as
-         * either header, color, or fallback
-         */
-        while (getline(gplFile, line)) {
-            lineNumber++;
-            parseCommentLine(line) || parseHeaderLine(line) || parseColorLine(line) || parseLineFallback(lineNumber);
-        }
-        if (namedColors.size() < 1)
-            throw std::invalid_argument("Your Palettefile has no parsable color. It needs at least one!");
+        parseCommentLine(line) || parseHeaderLine(line) || parseColorLine(line) || parseLineFallback(lineNumber);
+    }
+    if (namedColors.size() < 1) {
+        throw std::invalid_argument("Your Palettefile has no parsable color. It needs at least one!");
     }
 }
 
@@ -52,7 +48,9 @@ auto Palette::load_default() -> void {
     getline(defaultFile, line);
     if (!parseFirstGimpPaletteLine(line))
         g_error("The default file was mallformed. This should never happen!");
-    while (getline(defaultFile, line)) { parseHeaderLine(line) || parseColorLine(line); }
+    while (getline(defaultFile, line)) {
+        parseHeaderLine(line) || parseColorLine(line);
+    }
 }
 
 auto Palette::parseFirstGimpPaletteLine(const std::string& line) const -> bool {
