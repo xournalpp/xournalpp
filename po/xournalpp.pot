@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-06 11:11+0000\n"
+"POT-Creation-Date: 2023-08-06 17:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,11 +80,11 @@ msgstr ""
 msgid "All files"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:213
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:212
 msgid "Apply to all pages"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:200
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:199
 msgid "Apply to current page"
 msgstr ""
 
@@ -215,7 +215,7 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:93
 msgid "Copy current"
 msgstr ""
 
@@ -237,33 +237,33 @@ msgstr ""
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:16
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Could not load pagetemplates.ini file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:846
+#: ../src/core/control/xojfile/LoadHandler.cpp:829
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:855
+#: ../src/core/control/xojfile/LoadHandler.cpp:838
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:827
-#: ../src/core/control/xojfile/LoadHandler.cpp:1155
-#: ../src/core/control/xojfile/LoadHandler.cpp:1173
+#: ../src/core/control/xojfile/LoadHandler.cpp:810
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1156
 msgid ""
 "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:818
-#: ../src/core/control/xojfile/LoadHandler.cpp:834
-#: ../src/core/control/xojfile/LoadHandler.cpp:1148
-#: ../src/core/control/xojfile/LoadHandler.cpp:1162
+#: ../src/core/control/xojfile/LoadHandler.cpp:801
+#: ../src/core/control/xojfile/LoadHandler.cpp:817
+#: ../src/core/control/xojfile/LoadHandler.cpp:1131
+#: ../src/core/control/xojfile/LoadHandler.cpp:1145
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:187
+#: ../src/core/control/xojfile/LoadHandler.cpp:188
 msgid "Could not open file: \"{1}\""
 msgstr ""
 
@@ -279,12 +279,12 @@ msgid ""
 "No Toolbars will be available"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:403
-#: ../src/core/control/xojfile/LoadHandler.cpp:426
+#: ../src/core/control/xojfile/LoadHandler.cpp:386
+#: ../src/core/control/xojfile/LoadHandler.cpp:409
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:436
+#: ../src/core/control/xojfile/LoadHandler.cpp:419
 msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
@@ -324,7 +324,7 @@ msgstr ""
 msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:369
+#: ../src/core/control/xojfile/SaveHandler.cpp:350
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
@@ -408,11 +408,11 @@ msgstr ""
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:271
+#: ../src/core/control/xojfile/LoadHandler.cpp:272
 msgid "Document is corrupted (no pages found in file)"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:267
+#: ../src/core/control/xojfile/LoadHandler.cpp:268
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:25
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Dotted"
 msgstr ""
 
@@ -539,12 +539,12 @@ msgstr ""
 msgid "Error opening file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:489
-#: ../src/core/control/xojfile/LoadHandler.cpp:509
+#: ../src/core/control/xojfile/LoadHandler.cpp:472
+#: ../src/core/control/xojfile/LoadHandler.cpp:492
 msgid "Error reading PDF: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:564
+#: ../src/core/control/xojfile/LoadHandler.cpp:547
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
@@ -656,7 +656,7 @@ msgstr ""
 msgid "Failed to load image, could not determine image size!"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:179
+#: ../src/core/control/xojfile/LoadHandler.cpp:180
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr ""
 
@@ -763,7 +763,7 @@ msgstr ""
 msgid "Go to top layer"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:24
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Graph"
 msgstr ""
 
@@ -791,7 +791,7 @@ msgstr ""
 msgid "Highlighter"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:33
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:514
 msgid "Image"
 msgstr ""
@@ -841,11 +841,11 @@ msgstr ""
 msgid "Insert page"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:26
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Isometric Dotted"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:27
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:36
 msgid "Isometric Graph"
 msgstr ""
 
@@ -1043,12 +1043,6 @@ msgstr ""
 msgid "Page number"
 msgstr ""
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:318
-msgid ""
-"Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::"
-"Plain to avoid corrupted file"
-msgstr ""
-
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Paired pages"
 msgstr ""
@@ -1067,7 +1061,7 @@ msgstr ""
 msgid "Pen"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:20
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:29
 msgid "Plain"
 msgstr ""
 
@@ -1134,7 +1128,7 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1192
+#: ../src/core/control/xojfile/LoadHandler.cpp:1175
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -1150,11 +1144,11 @@ msgstr ""
 msgid "Rotation Snapping"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:21
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:30
 msgid "Ruled"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:22
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Ruled with vertical line"
 msgstr ""
 
@@ -1386,7 +1380,7 @@ msgstr ""
 msgid "Spacer"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:23
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Staves"
 msgstr ""
 
@@ -1494,19 +1488,19 @@ msgid ""
 "anyways?"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:140
+#: ../src/core/control/xojfile/LoadHandler.cpp:141
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:148
+#: ../src/core/control/xojfile/LoadHandler.cpp:149
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:157
+#: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:170
+#: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
@@ -1542,7 +1536,7 @@ msgstr ""
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:167
+#: ../src/core/control/PageBackgroundChangeController.cpp:162
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
@@ -1587,15 +1581,15 @@ msgstr ""
 msgid "Undo: "
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:316
+#: ../src/core/control/xojfile/LoadHandler.cpp:317
 msgid "Unexpected root tag: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:337
+#: ../src/core/control/xojfile/LoadHandler.cpp:338
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:540
+#: ../src/core/control/xojfile/LoadHandler.cpp:523
 msgid "Unknown background type: {1}"
 msgstr ""
 
@@ -1603,23 +1597,23 @@ msgstr ""
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:496
+#: ../src/core/control/xojfile/LoadHandler.cpp:479
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:256
+#: ../src/core/control/xojfile/LoadHandler.cpp:257
 msgid "Unknown parser error"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:444
+#: ../src/core/control/xojfile/LoadHandler.cpp:427
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:632
+#: ../src/core/control/xojfile/LoadHandler.cpp:615
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:650
+#: ../src/core/control/xojfile/LoadHandler.cpp:633
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
@@ -1655,7 +1649,7 @@ msgstr ""
 msgid "Very Thick"
 msgstr ""
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:40
 msgid "With PDF background"
 msgstr ""
 
@@ -1663,15 +1657,15 @@ msgstr ""
 msgid "Write text"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1042
+#: ../src/core/control/xojfile/LoadHandler.cpp:1025
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1059
+#: ../src/core/control/xojfile/LoadHandler.cpp:1042
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:253
+#: ../src/core/control/xojfile/LoadHandler.cpp:254
 msgid "XML Parser error: {1}"
 msgstr ""
 
@@ -1698,7 +1692,7 @@ msgstr ""
 msgid "Xournal++ template"
 msgstr ""
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:202
+#: ../src/core/control/PageBackgroundChangeController.cpp:197
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page "
@@ -1863,7 +1857,7 @@ msgstr ""
 msgid "whiteout"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1058
+#: ../src/core/control/xojfile/LoadHandler.cpp:1041
 msgid "xoj-File: {1}"
 msgstr ""
 
