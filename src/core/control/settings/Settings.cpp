@@ -33,6 +33,7 @@ using std::string;
 
 constexpr auto const* DEFAULT_FONT = "Sans";
 constexpr auto DEFAULT_FONT_SIZE = 12;
+constexpr auto DEFAULT_TOOLBAR = "Portrait";
 
 #define SAVE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
 #define SAVE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
@@ -92,6 +93,7 @@ void Settings::loadDefault() {
     this->sidebarNumberingStyle = SidebarNumberingStyle::DEFAULT;
 
     this->showToolbar = true;
+    this->selectedToolbar = DEFAULT_TOOLBAR;
 
     this->sidebarOnRight = false;
 
@@ -719,8 +721,8 @@ auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
     if (!fs::exists(filepath)) {
-        g_warning("configfile does not exist %s\n", filepath.string().c_str());
-        return false;
+        g_warning("Settings file %s does not exist. Regenerating. ", filepath.string().c_str());
+        save();
     }
 
     xmlDocPtr doc = xmlParseFile(filepath.u8string().c_str());
