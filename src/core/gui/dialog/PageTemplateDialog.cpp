@@ -13,40 +13,63 @@
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo, PageType...
 #include "control/settings/Settings.h"         // for Settings
 #include "control/stockdlg/XojOpenDlg.h"       // for XojOpenDlg
+#include "gui/Builder.h"                       // for Builder
 #include "gui/PopupWindowWrapper.h"            // for PopupWindowWrapper
 #include "gui/menus/popoverMenus/PageTypeSelectionPopoverGridOnly.h"
-#include "gui/widgets/PopupMenuButton.h"  // for PopupMenuButton
-#include "model/FormatDefinitions.h"      // for FormatUnits, XOJ_UNITS
-#include "model/PageType.h"               // for PageType
-#include "util/Color.h"                   // for GdkRGBA_to_argb, rgb_t...
-#include "util/PathUtil.h"                // for fromGFilename, readString
-#include "util/i18n.h"                    // for _
+#include "gui/toolbarMenubar/ToolMenuHandler.h"
+#include "model/FormatDefinitions.h"  // for FormatUnits, XOJ_UNITS
+#include "model/PageType.h"           // for PageType
+#include "util/Color.h"               // for GdkRGBA_to_argb, rgb_t...
+#include "util/PathUtil.h"            // for fromGFilename, readString
+#include "util/i18n.h"                // for _
 
 #include "FormatDialog.h"  // for FormatDialog
 #include "filesystem.h"    // for path
 
 class GladeSearchpath;
 
-PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types):
-        GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
-        settings(settings),
-        types(types),
-        pageTypeSelectionMenu(std::make_unique<PageTypeSelectionPopoverGridOnly>(types, settings, this)),
-        popupMenuButton(new PopupMenuButton(get("btBackgroundDropdown"), pageTypeSelectionMenu->getPopover())) {
+constexpr auto UI_FILE = "pageTemplate.glade";
+constexpr auto UI_DIALOG_NAME = "templateDialog";
+
+using namespace xoj::popup;
+
+PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, ToolMenuHandler* toolmenu,
+                                       PageTypeHandler* types):
+        gladeSearchPath(gladeSearchPath), settings(settings), toolMenuHandler(toolmenu), types(types) {
     model.parse(settings->getPageTemplate());
 
-    g_signal_connect(
-            get("btChangePaperSize"), "clicked",
-            G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->showPageSizeDialog(); }),
-            this);
+    Builder builder(gladeSearchPath, UI_FILE);
+    window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
 
-    g_signal_connect(get("btLoad"), "clicked",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->loadFromFile(); }),
-                     this);
+    // Needs to be initialized after this->window
+    pageTypeSelectionMenu = std::make_unique<PageTypeSelectionPopoverGridOnly>(types, settings, this);
+    gtk_menu_button_set_popup(GTK_MENU_BUTTON(builder.get("btBackgroundDropdown")),
+                              pageTypeSelectionMenu->getPopover());
 
-    g_signal_connect(get("btSave"), "clicked",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->saveToFile(); }),
-                     this);
+    pageSizeLabel = GTK_LABEL(builder.get("lbPageSize"));
+    backgroundTypeLabel = GTK_LABEL(builder.get("lbBackgroundType"));
+    backgroundColorChooser = GTK_COLOR_CHOOSER(builder.get("cbBackgroundButton"));
+    copyLastPageButton = GTK_TOGGLE_BUTTON(builder.get("cbCopyLastPage"));
+    copyLastPageSizeButton = GTK_TOGGLE_BUTTON(builder.get("cbCopyLastPageSize"));
+
+
+    g_signal_connect_swapped(builder.get("btChangePaperSize"), "clicked",
+                             G_CALLBACK(+[](PageTemplateDialog* self) { self->showPageSizeDialog(); }), this);
+
+    g_signal_connect_swapped(builder.get("btLoad"), "clicked",
+                             G_CALLBACK(+[](PageTemplateDialog* self) { self->loadFromFile(); }), this);
+
+    g_signal_connect_swapped(builder.get("btSave"), "clicked",
+                             G_CALLBACK(+[](PageTemplateDialog* self) { self->saveToFile(); }), this);
+
+    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
+    g_signal_connect_swapped(builder.get("btOk"), "clicked", G_CALLBACK(+[](PageTemplateDialog* self) {
+                                 self->saveToModel();
+                                 self->settings->setPageTemplate(self->model.toString());
+                                 self->toolMenuHandler->setDefaultNewPageType(self->model.getPageInsertType());
+                                 gtk_window_close(self->window.get());
+                             }),
+                             this);
 
     updateDataFromModel();
 }
@@ -55,29 +78,29 @@ PageTemplateDialog::~PageTemplateDialog() = default;
 
 void PageTemplateDialog::updateDataFromModel() {
     GdkRGBA color = Util::rgb_to_GdkRGBA(model.getBackgroundColor());
-    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
+    gtk_color_chooser_set_rgba(backgroundColorChooser, &color);
 
     updatePageSize();
 
     pageTypeSelectionMenu->setSelected(model.getBackgroundType());
     changeCurrentPageBackground(types->getInfoOn(model.getBackgroundType()));
 
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage")), model.isCopyLastPageSettings());
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPageSize")), model.isCopyLastPageSize());
+    gtk_toggle_button_set_active(copyLastPageButton, model.isCopyLastPageSettings());
+    gtk_toggle_button_set_active(copyLastPageSizeButton, model.isCopyLastPageSize());
 }
 
 void PageTemplateDialog::changeCurrentPageBackground(const PageTypeInfo* info) {
     model.setBackgroundType(info->page);
 
-    gtk_label_set_text(GTK_LABEL(get("lbBackgroundType")), info->name.c_str());
+    gtk_label_set_text(backgroundTypeLabel, info->name.c_str());
 }
 
 void PageTemplateDialog::saveToModel() {
-    model.setCopyLastPageSettings(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPage"))));
-    model.setCopyLastPageSize(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbCopyLastPageSize"))));
+    model.setCopyLastPageSettings(gtk_toggle_button_get_active(copyLastPageButton));
+    model.setCopyLastPageSize(gtk_toggle_button_get_active(copyLastPageSizeButton));
 
     GdkRGBA color;
-    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
+    gtk_color_chooser_get_rgba(backgroundColorChooser, &color);
     model.setBackgroundColor(Util::GdkRGBA_to_argb(color));
 }
 
@@ -148,11 +171,11 @@ void PageTemplateDialog::updatePageSize() {
     pageSize += buffer;
     pageSize += formatUnit->name;
 
-    gtk_label_set_text(GTK_LABEL(get("lbPageSize")), pageSize.c_str());
+    gtk_label_set_text(pageSizeLabel, pageSize.c_str());
 }
 
 void PageTemplateDialog::showPageSizeDialog() {
-    auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::FormatDialog>(getGladeSearchPath(), settings,
+    auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::FormatDialog>(gladeSearchPath, settings,
                                                                           model.getPageWidth(), model.getPageHeight(),
                                                                           [dlg = this](double width, double height) {
                                                                               dlg->model.setPageWidth(width);
@@ -160,25 +183,10 @@ void PageTemplateDialog::showPageSizeDialog() {
 
                                                                               dlg->updatePageSize();
                                                                           });
-    popup.show(GTK_WINDOW(this->window));
+    popup.show(this->window.get());
 }
 
 /**
  * The dialog was confirmed / saved
  */
 auto PageTemplateDialog::isSaved() const -> bool { return saved; }
-
-void PageTemplateDialog::show(GtkWindow* parent) {
-    gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    int ret = gtk_dialog_run(GTK_DIALOG(this->window));
-
-    if (ret == 1)  // OK
-    {
-        saveToModel();
-        settings->setPageTemplate(model.toString());
-
-        this->saved = true;
-    }
-
-    gtk_widget_hide(this->window);
-}
