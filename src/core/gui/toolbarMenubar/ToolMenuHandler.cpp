@@ -35,7 +35,9 @@
 #include "ToolPdfCombocontrol.h"     // for ToolPdfCombocontrol
 #include "ToolSelectCombocontrol.h"  // for ToolSelectComboc...
 #include "ToolZoomSlider.h"          // for ToolZoomSlider
-#include "config-dev.h"
+#include "config-dev.h"              // for TOOLBAR_CONFIG
+#include "config-features.h"         // for ENABLE_PLUGINS
+#include "filesystem.h"              // for exists
 
 using std::string;
 
