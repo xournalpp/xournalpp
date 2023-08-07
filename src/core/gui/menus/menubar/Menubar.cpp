@@ -6,6 +6,7 @@
 #include "PluginsSubmenu.h"
 #include "RecentDocumentsSubmenu.h"
 #include "ToolbarSelectionSubmenu.h"
+#include "config-features.h"  // for ENABLE_PLUGINS
 
 Menubar::Menubar() = default;
 Menubar::~Menubar() noexcept = default;

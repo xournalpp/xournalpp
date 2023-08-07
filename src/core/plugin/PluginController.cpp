@@ -6,9 +6,10 @@
 #include "control/Control.h"
 #include "gui/MainWindow.h"
 
-#include "config-features.h"
+#include "config-features.h"  // for ENABLE_PLUGINS
 
 #ifdef ENABLE_PLUGINS
+
 #include <algorithm>
 #include <tuple>
 #include <utility>
