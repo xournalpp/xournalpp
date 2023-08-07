@@ -58,7 +58,7 @@ body:
   - type: textarea
     attributes:
       label: Expected Behaviour
-      description: A clear and concise descriptioni of what you excpected to have happen.
+      description: A clear and concise description of what you expected to happen.
     validations:
       required: true
   - type: textarea
