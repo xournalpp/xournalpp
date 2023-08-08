@@ -15,7 +15,7 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: Alternatives That You've Considered
+      label: Alternative Solutions
       description: Add any alternative solutions that you may have considered here.
   - type: textarea
     attributes:
