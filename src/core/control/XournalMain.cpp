@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for copy, sort, max
 #include <array>      // for array
+#include <chrono>     // for time_point, duration, hours...
 #include <clocale>    // for setlocale, LC_NUMERIC
 #include <cstdio>     // for printf
 #include <cstdlib>    // for exit, size_t
@@ -151,16 +152,29 @@ static void deleteFile(const fs::path& file) {
 }
 
 void checkForErrorlog() {
-    const fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
-    if (!fs::exists(errorDir)) {
-        return;
-    }
-
     std::vector<fs::path> errorList;
-    for (auto const& f: fs::directory_iterator(errorDir)) {
-        if (f.is_regular_file() && f.path().filename().string().substr(0, 8) == "errorlog") {
-            errorList.emplace_back(f);
+
+    try {
+        const fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
+        if (!fs::exists(errorDir)) {
+            return;
         }
+
+        // Todo(cpp20): replace std::chrono::hours(168) with std::chrono::weeks(1)
+        const auto oldestModificationDate = fs::file_time_type::clock::now() - std::chrono::hours(168);
+        for (auto const& f: fs::directory_iterator(errorDir)) {
+            if (f.is_regular_file() && f.path().filename().string().substr(0, 8) == "errorlog") {
+                if (f.last_write_time() > oldestModificationDate) {
+                    errorList.emplace_back(f);
+                }
+            }
+        }
+    } catch (fs::filesystem_error& e) {
+        g_warning("Filesystem error while looking for crash logs:\n"
+                  "   %s\n"
+                  "   %s\n",
+                  e.path1().c_str(), e.what());
+        return;
     }
 
     if (errorList.empty()) {
@@ -168,12 +182,10 @@ void checkForErrorlog() {
     }
 
     std::sort(errorList.begin(), errorList.end());
-    std::string msg =
-            errorList.size() == 1 ?
-                    _("There is an errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed.") :
-                    _("There are errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed.");
-    msg += "\n";
-    msg += FS(_F("You're using \"{1}/{2}\" branch.") % GIT_ORIGIN_OWNER % GIT_BRANCH);
+    std::string msg = errorList.size() == 1 ? _("There is a recent errorlogfile from Xournal++. Please file a "
+                                                "Bugreport, so the bug may be fixed.") :
+                                              _("There are recent errorlogfiles from Xournal++. Please file a "
+                                                "Bugreport, so the bug may be fixed.");
     msg += "\n";
     msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
 
