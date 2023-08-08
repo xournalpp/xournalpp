@@ -33,7 +33,7 @@ body:
     attributes:
       label: Installation Method
       description: How was Xournal++ installed?
-      placeholder: e.g. Official Release, Flatpak, PPA, etc.
+      placeholder: e.g. Official Release, Flatpak, Snap, PPA, etc.
     validations:
       required: true
   - type: input
