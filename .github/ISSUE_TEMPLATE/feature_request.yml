@@ -20,4 +20,4 @@ body:
   - type: textarea
     attributes:
       label: Additional Context
-      description: Put any extra contextextual information here.
+      description: Add any other contextual information for the problem here.
