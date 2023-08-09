@@ -396,6 +396,53 @@ static int applib_sidebarAction(lua_State* L) {
     return 0;
 }
 
+/*
+ * Get the index of the currently active sidebar-page.
+ *
+ * Example: app.getSidebarPageNo() -- returns e.g. 1
+ */
+
+static int applib_getSidebarPageNo(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Sidebar* sidebar = plugin->getControl()->getSidebar();
+    lua_pushinteger(L, sidebar->getSelectedPage() + 1);
+    return 1;
+}
+
+/*
+ * Set the currently active sidebar-page by its index.
+ *
+ * Look at src/core/gui/sidebar/Sidebar.cpp to find out which index corresponds to which page (e.g. currently 1 is the
+ * page with the TOC/index if available). Note that indexing the sidebar-pages starts at 1 (as usual in lua).
+ *
+ * Example: app.setSidebarPageNo(3) -- sets the sidebar-page to preview Layer
+ */
+static int applib_setSidebarPageNo(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Sidebar* sidebar = plugin->getControl()->getSidebar();
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    if (!lua_isinteger(L, 1)) {
+        return luaL_error(L, "Missing pageNo for setSidebarPageNo!");
+    }
+
+    int page = lua_tointeger(L, 1);
+    if (page <= 0) {
+        lua_pushnil(L);
+        lua_pushfstring(L, "Invalid pageNo (%d) provided!", page);
+        return 2;
+    }
+    if (page > sidebar->getNumberOfPages()) {
+        lua_pushnil(L);
+        lua_pushfstring(L, "Invalid pageNo (%d >= %d) provided!", page, sidebar->getNumberOfPages());
+        return 2;
+    }
+
+    sidebar->setSelectedPage(page - 1);
+    return 0;
+}
+
 /**
  * Execute action from layer controller
  *
@@ -2476,6 +2523,8 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
                                   {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
                                   {"getToolInfo", applib_getToolInfo},
+                                  {"getSidebarPageNo", applib_getSidebarPageNo},
+                                  {"setSidebarPageNo", applib_setSidebarPageNo},
                                   {"getDocumentStructure", applib_getDocumentStructure},
                                   {"scrollToPage", applib_scrollToPage},
                                   {"scrollToPos", applib_scrollToPos},
