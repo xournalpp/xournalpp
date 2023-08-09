@@ -64,7 +64,7 @@ extern "C" {
  *         They may also `return nil, errorMessage`. This behavior is reserved for
  *         things that are *expected to happen* (e.g. ressource is not
  *         available).
-*/
+ */
 
 /**
  * Renames file 'from' to file 'to' in the file system.
@@ -393,6 +393,53 @@ static int applib_sidebarAction(lua_State* L) {
     SidebarToolbar* toolbar = plugin->getControl()->getSidebar()->getToolbar();
     toolbar->runAction(pos->second);
 
+    return 0;
+}
+
+/*
+ * Get the index of the currently active sidebar-page.
+ *
+ * Example: app.getSidebarPageNo() -- returns e.g. 1
+ */
+
+static int applib_getSidebarPageNo(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Sidebar* sidebar = plugin->getControl()->getSidebar();
+    lua_pushinteger(L, sidebar->getSelectedPage() + 1);
+    return 1;
+}
+
+/*
+ * Set the currently active sidebar-page by its index.
+ *
+ * Look at src/core/gui/sidebar/Sidebar.cpp to find out which index corresponds to which page (e.g. currently 1 is the
+ * page with the TOC/index if available). Note that indexing the sidebar-pages starts at 1 (as usual in lua).
+ *
+ * Example: app.setSidebarPageNo(3) -- sets the sidebar-page to preview Layer
+ */
+static int applib_setSidebarPageNo(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Sidebar* sidebar = plugin->getControl()->getSidebar();
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    if (!lua_isinteger(L, 1)) {
+        return luaL_error(L, "Missing pageNo for setSidebarPageNo!");
+    }
+
+    int page = lua_tointeger(L, 1);
+    if (page <= 0) {
+        lua_pushnil(L);
+        lua_pushfstring(L, "Invalid pageNo (%d) provided!", page);
+        return 2;
+    }
+    if (page > sidebar->getNumberOfPages()) {
+        lua_pushnil(L);
+        lua_pushfstring(L, "Invalid pageNo (%d >= %d) provided!", page, sidebar->getNumberOfPages());
+        return 2;
+    }
+
+    sidebar->setSelectedPage(page - 1);
     return 0;
 }
 
@@ -1553,7 +1600,7 @@ static int applib_getDocumentStructure(lua_State* L) {
     for (size_t p = 1; p <= doc->getPageCount(); ++p) {
         auto page = doc->getPage(p - 1);
         lua_pushinteger(L, p);  // key of the page
-        lua_newtable(L);  // beginning of table for page p
+        lua_newtable(L);        // beginning of table for page p
 
         lua_pushnumber(L, page->getWidth());  // value
         lua_setfield(L, -2, "pageWidth");     // insert
@@ -1582,7 +1629,7 @@ static int applib_getDocumentStructure(lua_State* L) {
 
         // add background layer
         lua_pushinteger(L, 0);  // key of the layer
-        lua_newtable(L);  // beginning of table for background layer
+        lua_newtable(L);        // beginning of table for background layer
 
         lua_pushboolean(L, page->isLayerVisible(0U));  // value
         lua_setfield(L, -2, "isVisible");              // insert
@@ -1597,7 +1644,7 @@ static int applib_getDocumentStructure(lua_State* L) {
 
         for (auto l: *page->getLayers()) {
             lua_pushinteger(L, ++currLayer);  // key of the layer
-            lua_newtable(L);  // beginning of table for layer l
+            lua_newtable(L);                  // beginning of table for layer l
 
             lua_pushstring(L, l->getName().c_str());  // value
             lua_setfield(L, -2, "name");              // insert
@@ -2204,6 +2251,8 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
                                   {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
                                   {"getToolInfo", applib_getToolInfo},
+                                  {"getSidebarPageNo", applib_getSidebarPageNo},
+                                  {"setSidebarPageNo", applib_setSidebarPageNo},
                                   {"getDocumentStructure", applib_getDocumentStructure},
                                   {"scrollToPage", applib_scrollToPage},
                                   {"scrollToPos", applib_scrollToPos},
