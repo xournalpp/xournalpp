@@ -2406,11 +2406,24 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     return true;
 }
 
-auto Control::changePdfBackground(fs::path filepath, int scrollToPage, bool forceOpen) -> bool {
+auto Control::changePdfBackground() -> bool {
 
     LoadHandler loadHandler;
 
     const fs::path current_filepath = ((*this).doc)->getFilepath();
+
+    auto pageNr = getCurrentPageNo();
+    PageRef page = this->doc->getPage(pageNr);
+    Layer* layer = page->getSelectedLayer();
+
+    auto ptd_1 = PageTemplateDialog(this->gladeSearchPath, settings, pageTypes);
+    if (layer->isAnnotated() && current_filepath.empty()) {
+        string msg =
+                FS(_F("Error in changing the background: please save annotated pdf first.")) + loadHandler.getLastError();
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return true;
+    }
+
     if (current_filepath.empty()) {
         string msg =
                 FS(_F("Error in changing the background: please open some file first.")) + loadHandler.getLastError();
@@ -2435,7 +2448,7 @@ auto Control::changePdfBackground(fs::path filepath, int scrollToPage, bool forc
     *this->doc = *loadedDocument;
     this->doc->unlock();
 
-    fileLoaded(scrollToPage);
+    fileLoaded(-1);
     return true;
 }
 
