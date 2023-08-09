@@ -2418,15 +2418,14 @@ auto Control::changePdfBackground() -> bool {
     Layer* layer = page->getSelectedLayer();
 
     if (current_PDFfilepath.empty()) {
-        string msg =
-                FS(_F("Error in changing the background: please open a pdf first.")) + loadHandler.getLastError();
+        string msg = FS(_F("Error in changing the background: please open a pdf first.")) + loadHandler.getLastError();
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return true;
     }
 
     if (this->undoRedo->isChanged()) {
-        string msg =
-                FS(_F("Error in changing the background: please save the recent changes first.")) + loadHandler.getLastError();
+        string msg = FS(_F("Error in changing the background: please save the recent changes first.")) +
+                     loadHandler.getLastError();
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return true;
     }
@@ -2437,7 +2436,6 @@ auto Control::changePdfBackground() -> bool {
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return true;
     }
-
 
     Document* loadedDocument = loadHandler.loadDocument(current_filepath);
 
