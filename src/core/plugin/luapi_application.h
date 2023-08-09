@@ -64,7 +64,7 @@ extern "C" {
  *         They may also `return nil, errorMessage`. This behavior is reserved for
  *         things that are *expected to happen* (e.g. ressource is not
  *         available).
-*/
+ */
 
 /**
  * Renames file 'from' to file 'to' in the file system.
@@ -858,6 +858,278 @@ static int applib_addStrokes(lua_State* L) {
 }
 
 /**
+ * Adds textboxes as specified to the current layer.
+ *
+ * Global parameters:
+ *   - texts table: array of text-parameter-tables
+ *   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
+ * "grouped" or "none"
+ *
+ * Parameters per textbox:
+ *   - text string: content of the textbox (required)
+ *   - font table {name string, size number} (default: currently configured font/size from the settings)
+ *   - color integer: RGB hex code for the text-color (default: color of text tool)
+ *   - x number: x-position of the box (upper left corner) (required)
+ *   - y number: y-position of the box (upper left corner) (required)
+ *
+ * Example:
+ *
+ * app.addTexts{texts={
+ *   {
+ *     text="Hello World",
+ *     font={name="Noto Sans Mono Medium", size=8.0},
+ *     color=0x1259b9,
+ *     x = 50.0,
+ *     y = 50.0,
+ *   },
+ *   {
+ *     text="Testing",
+ *     font={name="Noto Sans Mono Medium", size=8.0},
+ *     color=0x0,
+ *     x = 150.0,
+ *     y = 50.0,
+ *   },
+ * }
+ */
+
+static int applib_addTexts(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    PageRef const& page = control->getCurrentPage();
+    Layer* layer = page->getSelectedLayer();
+    Settings* settings = control->getSettings();
+
+    std::vector<Element*> texts;
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TTABLE);
+
+    lua_getfield(L, 1, "texts");
+    if (!lua_istable(L, -1)) {
+        return luaL_error(L, "Missing text table!");
+    }
+
+    // stack now has following:
+    //  1 = table arg
+    // -1 = texts array
+
+    // get default color
+    ToolHandler* toolHandler = control->getToolHandler();
+    Tool& tool = toolHandler->getTool(TOOL_TEXT);
+    Color default_color = tool.getColor();
+    // default font
+    XojFont& default_font = settings->getFont();
+
+    size_t numTexts = lua_rawlen(L, -1);
+    for (size_t a = 1; a <= numTexts; a++) {
+        Text* t = new Text();
+
+        // Fetch table of X values from the Lua stack
+        lua_pushnumber(L, a);
+        lua_gettable(L, -2);  // get current text
+        luaL_checktype(L, -1, LUA_TTABLE);
+
+        lua_getfield(L, -1, "text");
+
+        // handle font table
+        lua_getfield(L, -2, "font");  // {name="", size=0}
+        if (lua_istable(L, -1)) {
+            lua_getfield(L, -1, "name");
+            lua_getfield(L, -2, "size");
+        } else if (lua_isnil(L, -1)) {
+            // push two dummy values if font is unset/no table
+            lua_pushnil(L);
+            lua_pushnil(L);
+        } else {
+            return luaL_error(L, "'font' value must be a table!");
+        }
+
+        lua_getfield(L, -5, "color");
+        lua_getfield(L, -6, "x");
+        lua_getfield(L, -7, "y");
+
+        // stack now has following:
+        //    1 = global params table
+        //   -9 = texts array
+        //   -8 = current text-params table
+        //   -7 = text
+        //   -6 = font-table
+        //   -5 = fontname
+        //   -4 = fontsize
+        //   -3 = color
+        //   -2 = x
+        //   -1 = y
+
+        if (!lua_isstring(L, -7)) {
+            return luaL_error(L, "Missing text!/'text' must be a string");
+        }
+        t->setText(lua_tostring(L, -7));
+
+        XojFont font{};
+        font.setName(luaL_optstring(L, -5, default_font.getName().c_str()));
+        font.setSize(luaL_optnumber(L, -4, default_font.getSize()));
+        t->setFont(font);
+
+        if (lua_isinteger(L, -3)) {  // Check if the color was provided
+            uint32_t color = lua_tointeger(L, -3);
+            if (color > 0xffffff) {
+                return luaL_error(L, "Color 0x%x is no valid RGB color. ", color);
+            }
+            t->setColor(Color(color));
+        } else if (lua_isnil(L, -3)) {
+            t->setColor(default_color);
+        } else {
+            return luaL_error(L, "'color' must be an integer/hex-code or unset");
+        }
+
+        if (!lua_isnumber(L, -2)) {  // Check if x was provided
+            return luaL_error(L, "Missing X-Coordinate!/must be a number");
+        }
+        t->setX(lua_tonumber(L, -2));
+
+        if (!lua_isnumber(L, -1)) {  // Check if y was provided
+            return luaL_error(L, "Missing Y-Coordinate!/must be a number");
+        }
+        t->setY(lua_tonumber(L, -1));
+
+        lua_pop(L, 8);  // remove values read out from the text table + text-table itself
+
+        // Finish building the Text and apply it to the layer.
+        layer->addElement(t);
+        texts.push_back(t);
+        // Onto the next text
+    }
+
+    // stack now has following:
+    //  1 = table arg
+    // -1 = texts array
+
+
+    lua_getfield(L, 1, "allowUndoRedoAction");
+    const char* allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
+    lua_pop(L, 1);
+    handleUndoRedoActionHelper(L, control, allowUndoRedoAction, texts);
+
+    return 0;
+}
+
+/*
+ * Returns a list of lua table of the texts (from current selection / current layer).
+ * Is mostly inverse to app.addTexts (except getTexts will also retrieve the width/height of the textbox)
+ *
+ * Required argument: type ("selection" or "layer")
+ *
+ * Example: local texts = app.getTexts("layer")
+ *
+ * possible return value:
+ * {
+ *   {
+ *     text = "Hello World",
+ *     font = {
+ *             name = "Noto Sans Mono Medium",
+ *             size = 8.0,
+ *            },
+ *     color = 0x1259b9,
+ *     x = 127.0,
+ *     y = 70.0,
+ *     width = 55.0,
+ *     height = 23.0,
+ *   },
+ *   {
+ *     text = "Testing",
+ *     font = {
+ *             name = "Noto Sans Mono Medium",
+ *             size = 8.0,
+ *            },
+ *     color = 0x0,
+ *     x = 150.0,,
+ *     y = 70.0,
+ *     width = 55.0,
+ *     height = 23.0,
+ *   },
+ * }
+ *
+ */
+
+static int applib_getTexts(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    std::string type = luaL_checkstring(L, 1);
+    std::vector<Element*> elements = {};
+    Control* control = plugin->getControl();
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TSTRING);
+
+    if (type == "layer") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            control->clearSelection();  // otherwise texts in the selection won't be recognized
+        }
+        elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+    } else if (type == "selection") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            elements = sel->getElements();
+        } else {
+            return luaL_error(L, "There is no selection! ");
+        }
+    } else {
+        return luaL_error(L, "Unknown argument: %s", type.c_str());
+    }
+
+    lua_newtable(L);  // create table of the elements
+    int currTextNo = 0;
+
+    // stack now has following:
+    //  1 = type (string)
+    // -1 = table of texts (to be returned)
+
+    for (Element* e: elements) {
+        if (e->getType() == ELEMENT_TEXT) {
+            auto* t = static_cast<Text*>(e);
+            lua_pushnumber(L, ++currTextNo);  // index for later (settable)
+            lua_newtable(L);                  // create text table
+
+            // stack now has following:
+            //  1 = type (string)
+            // -3 = table of texts (to be returned)
+            // -2 = index of the current text
+            // -1 = current text table
+
+            lua_pushstring(L, t->getText().c_str());
+            lua_setfield(L, -2, "text");  // add text to text element
+
+            lua_newtable(L);  // font table to stack
+            lua_pushstring(L, t->getFontName().c_str());
+            lua_setfield(L, -2, "name");  // add font to text
+            lua_pushnumber(L, t->getFontSize());
+            lua_setfield(L, -2, "size");  // add size to text
+            lua_setfield(L, -2, "font");  // insert font-table to text element
+
+            lua_pushinteger(L, int(uint32_t(t->getColor())));
+            lua_setfield(L, -2, "color");  // add color to text
+
+            lua_pushnumber(L, t->getX());
+            lua_setfield(L, -2, "x");  // add x coordindate to text
+
+            lua_pushnumber(L, t->getY());
+            lua_setfield(L, -2, "y");  // add y coordinate to text
+
+            lua_pushnumber(L, t->getElementWidth());
+            lua_setfield(L, -2, "width");  // add width to text
+
+            lua_pushnumber(L, t->getElementHeight());
+            lua_setfield(L, -2, "height");  // add height to text
+
+            lua_settable(L, -3);  // add text to elements
+        }
+    }
+    return 1;
+}
+
+/**
  * Puts a Lua Table of the Strokes (from the selection tool / selected layer) onto the stack.
  * Is inverse to app.addStrokes
  *
@@ -1553,7 +1825,7 @@ static int applib_getDocumentStructure(lua_State* L) {
     for (size_t p = 1; p <= doc->getPageCount(); ++p) {
         auto page = doc->getPage(p - 1);
         lua_pushinteger(L, p);  // key of the page
-        lua_newtable(L);  // beginning of table for page p
+        lua_newtable(L);        // beginning of table for page p
 
         lua_pushnumber(L, page->getWidth());  // value
         lua_setfield(L, -2, "pageWidth");     // insert
@@ -1582,7 +1854,7 @@ static int applib_getDocumentStructure(lua_State* L) {
 
         // add background layer
         lua_pushinteger(L, 0);  // key of the layer
-        lua_newtable(L);  // beginning of table for background layer
+        lua_newtable(L);        // beginning of table for background layer
 
         lua_pushboolean(L, page->isLayerVisible(0U));  // value
         lua_setfield(L, -2, "isVisible");              // insert
@@ -1597,7 +1869,7 @@ static int applib_getDocumentStructure(lua_State* L) {
 
         for (auto l: *page->getLayers()) {
             lua_pushinteger(L, ++currLayer);  // key of the layer
-            lua_newtable(L);  // beginning of table for layer l
+            lua_newtable(L);                  // beginning of table for layer l
 
             lua_pushstring(L, l->getName().c_str());  // value
             lua_setfield(L, -2, "name");              // insert
@@ -2219,9 +2491,11 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"addStrokes", applib_addStrokes},
                                   {"addSplines", applib_addSplines},
                                   {"addImagesFromFilepath", applib_addImagesFromFilepath},
+                                  {"addTexts", applib_addTexts},
                                   {"getFilePath", applib_getFilePath},
                                   {"refreshPage", applib_refreshPage},
                                   {"getStrokes", applib_getStrokes},
+                                  {"getTexts", applib_getTexts},
                                   {"openFile", applib_openFile},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
