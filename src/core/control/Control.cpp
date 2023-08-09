@@ -2411,15 +2411,22 @@ auto Control::changePdfBackground() -> bool {
     LoadHandler loadHandler;
 
     const fs::path current_filepath = ((*this).doc)->getFilepath();
+    const fs::path current_PDFfilepath = ((*this).doc)->getPdfFilepath();
 
     auto pageNr = getCurrentPageNo();
     PageRef page = this->doc->getPage(pageNr);
     Layer* layer = page->getSelectedLayer();
 
-    auto ptd_1 = PageTemplateDialog(this->gladeSearchPath, settings, pageTypes);
-    if (layer->isAnnotated() && current_filepath.empty()) {
+    if (current_PDFfilepath.empty()) {
         string msg =
-                FS(_F("Error in changing the background: please save annotated pdf first.")) + loadHandler.getLastError();
+                FS(_F("Error in changing the background: please open a pdf first.")) + loadHandler.getLastError();
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return true;
+    }
+
+    if (this->undoRedo->isChanged()) {
+        string msg =
+                FS(_F("Error in changing the background: please save the recent changes first.")) + loadHandler.getLastError();
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return true;
     }
@@ -2430,6 +2437,7 @@ auto Control::changePdfBackground() -> bool {
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return true;
     }
+
 
     Document* loadedDocument = loadHandler.loadDocument(current_filepath);
 
