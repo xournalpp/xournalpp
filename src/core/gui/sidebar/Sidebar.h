@@ -48,7 +48,6 @@ public:
      */
     void layout();
 
-
     /**
      * A page was selected, so also select this page in the sidebar
      */
@@ -86,6 +85,16 @@ public:
      * should be added to the document.
      */
     void askInsertPdfPage(size_t pdfPage);
+
+    /**
+     * Get how many pages are contained in this sidebar
+     */
+    size_t getNumberOfPages();
+
+    /**
+     * Get index of the currently selected page
+     */
+    size_t getSelectedPage();
 
 public:
     // DocumentListener interface

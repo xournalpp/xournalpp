@@ -140,6 +140,10 @@ void Sidebar::selectPageNr(size_t page, size_t pdfPage) {
     }
 }
 
+size_t Sidebar::getNumberOfPages() { return this->pages.size(); }
+
+size_t Sidebar::getSelectedPage() { return this->currentPageIdx; }
+
 void Sidebar::setSelectedPage(size_t page) {
     this->visiblePage = nullptr;
 
