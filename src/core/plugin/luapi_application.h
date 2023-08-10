@@ -909,7 +909,7 @@ static int applib_getStrokes(lua_State* L) {
     lua_settop(L, 1);
     luaL_checktype(L, 1, LUA_TSTRING);
 
-    if (type == "Layer") {
+    if (type == "layer") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
             control->clearSelection();  // otherwise strokes in the selection won't be recognized
