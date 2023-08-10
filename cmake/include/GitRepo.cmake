@@ -46,10 +46,10 @@ if (EXISTS "${PROJECT_SOURCE_DIR}/.git" AND PATH_GIT)
     set (GIT_ORIGIN_REPO "xournalpp")
   endif ()
 
-  set (PROJECT_BUGREPORT "https://github.com/${GIT_ORIGIN_OWNER}/${GIT_ORIGIN_REPO}/issues/new")
+  set (PROJECT_BUGREPORT "https://github.com/${GIT_ORIGIN_OWNER}/${GIT_ORIGIN_REPO}/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml")
 
 else ()
 
-  set (PROJECT_BUGREPORT "https://github.com/xournalpp/xournalpp/issues/new")
+  set (PROJECT_BUGREPORT "https://github.com/xournalpp/xournalpp/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml")
 
 endif ()
