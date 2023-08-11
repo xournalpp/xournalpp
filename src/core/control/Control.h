@@ -89,6 +89,7 @@ public:
     // Menu File
     bool newFile(std::string pageTemplate = "", fs::path filepath = {});
     bool openFile(fs::path filepath = "", int scrollToPage = -1, bool forceOpen = false);
+    bool changePdfBackground();
     bool annotatePdf(fs::path filepath, bool attachPdf, bool attachToDocument);
     void print();
     void exportAsPdf();

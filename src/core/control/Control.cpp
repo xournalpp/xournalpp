@@ -434,6 +434,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         case ACTION_OPEN:
             openFile();
             break;
+        case ACTION_CHANGE_BACKGROUND:
+            this->changePdfBackground();
+            break;
         case ACTION_ANNOTATE_PDF:
             clearSelectionEndText();
             annotatePdf("", false, false);
@@ -2400,6 +2403,58 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 
 
     fileLoaded(scrollToPage);
+    return true;
+}
+
+auto Control::changePdfBackground() -> bool {
+
+    LoadHandler loadHandler;
+
+    const fs::path current_filepath = ((*this).doc)->getFilepath();
+    const fs::path current_PDFfilepath = ((*this).doc)->getPdfFilepath();
+
+    auto pageNr = getCurrentPageNo();
+    PageRef page = this->doc->getPage(pageNr);
+    Layer* layer = page->getSelectedLayer();
+
+    if (current_PDFfilepath.empty()) {
+        string msg = FS(_F("Error in changing the background: please open a pdf first.")) + loadHandler.getLastError();
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return true;
+    }
+
+    if (this->undoRedo->isChanged()) {
+        string msg = FS(_F("Error in changing the background: please save the recent changes first.")) +
+                     loadHandler.getLastError();
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return true;
+    }
+
+    if (current_filepath.empty()) {
+        string msg =
+                FS(_F("Error in changing the background: please open and save some file first.")) + loadHandler.getLastError();
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return true;
+    }
+
+    Document* loadedDocument = loadHandler.loadDocument(current_filepath);
+
+    bool attachToDocument = false;
+    XojOpenDlg dlg(getGtkWindow(), this->settings);
+    auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
+    if (!pdfFilename.empty()) {
+        loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
+        loadedDocument = loadHandler.loadDocument(current_filepath);
+    }
+
+    this->closeDocument();
+
+    this->doc->lock();
+    this->doc->clearDocument();
+    *this->doc = *loadedDocument;
+    this->doc->unlock();
+
+    fileLoaded(-1);
     return true;
 }
 
