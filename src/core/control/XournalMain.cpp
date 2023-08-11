@@ -372,13 +372,9 @@ auto findResourcePath(const fs::path& searchFile) -> fs::path {
         }
         return std::nullopt;
     };
-    /*    /// relative execution path
-        if (auto path = search_for(fs::path{}); path) {
-            return *path;
-        }*/
     /// real execution path
-    if (auto path = search_for(Stacktrace::getExePath().parent_path()); path) {
-        return *path;
+    if (auto path = search_for(Util::getExePath().parent_path()); path) {
+        return std::move(*path);
     }
     // Not found
     return {};

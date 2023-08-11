@@ -8,6 +8,7 @@
 
 #include "control/AudioController.h"                    // for AudioController
 #include "control/Control.h"                            // for Control
+#include "control/CrashHandler.h"
 #include "control/DeviceListHelper.h"                   // for getSourceMapping
 #include "control/ScrollHandler.h"                      // for ScrollHandler
 #include "control/jobs/XournalScheduler.h"              // for XournalScheduler
@@ -76,6 +77,14 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     setSidebarVisible(control->getSettings()->isSidebarVisible());
 
     // Window handler
+    static constexpr auto interruptCallback = +[](gpointer data) -> gboolean {
+        if (interrupted()) {
+            auto control = static_cast<Control*>(data);
+            control->quit();
+        }
+        return true;
+    };
+    g_idle_add(static_cast<GSourceFunc>(interruptCallback), static_cast<gpointer>(this->control));
     g_signal_connect(this->window, "delete-event", G_CALLBACK(deleteEventCallback), this->control);
     g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 

@@ -323,7 +323,7 @@ auto Util::getDataPath() -> fs::path {
     p = p / ".." / "share" / PROJECT_NAME;
     return p;
 #elif defined(__APPLE__)
-    fs::path p = Stacktrace::getExePath().parent_path();
+    fs::path p = getExePath().parent_path();
     if (fs::exists(p / "Resources")) {
         p = p / "Resources";
     }

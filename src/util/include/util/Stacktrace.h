@@ -11,17 +11,15 @@
 
 #pragma once
 
-#include <iostream>
+#include <ostream>
+
+#include <fbbe/stacktrace.h>
 
 #include "filesystem.h"
 
-class Stacktrace {
-private:
-    Stacktrace();
-    virtual ~Stacktrace();
+namespace xoj::util {
 
-public:
-    static fs::path getExePath();
-    static void printStracktrace();
-    static void printStracktrace(std::ostream& stream);
-};
+void printStacktrace(fbbe::stacktrace const& stacktrace = fbbe::stacktrace::current());
+void printStacktrace(std::ostream& stream, fbbe::stacktrace const& stacktrace = fbbe::stacktrace::current());
+
+};  // namespace xoj::util
