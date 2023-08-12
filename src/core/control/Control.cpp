@@ -2418,7 +2418,7 @@ auto Control::changePdfBackground() -> bool {
     Layer* layer = page->getSelectedLayer();
 
     if (current_PDFfilepath.empty()) {
-        string msg = FS(_F("Error in changing the background: please open a pdf first.")) + loadHandler.getLastError();
+        string msg = FS(_F("Error in changing the background: please open a pdf first."));
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return true;
     }
