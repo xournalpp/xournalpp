@@ -2415,9 +2415,9 @@ auto Control::changePdfBackground() -> bool {
 
     auto pageNr = getCurrentPageNo();
     PageRef page = this->doc->getPage(pageNr);
-    Layer* layer = page->getSelectedLayer();
+    //Layer* layer = page->getSelectedLayer();
 
-    if (current_PDFfilepath.empty()) {
+    if (currentPdfFilepath.empty()) {
         string msg = FS(_F("Error in changing the background: please open a pdf first."));
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return false;
@@ -2429,24 +2429,26 @@ auto Control::changePdfBackground() -> bool {
         return false;
     }
 
-    if (current_filepath.empty()) {
+    if (currentFilepath.empty()) {
         string msg = FS(_F("Error in changing the background: please save the document first."));
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return false;
     }
 
-    Document* loadedDocument = loadHandler.loadDocument(current_filepath);
+    Document* loadedDocument = loadHandler.loadDocument(currentFilepath);
 
     bool attachToDocument = false;
     XojOpenDlg dlg(getGtkWindow(), this->settings);
     auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
     if (!pdfFilename.empty()) {
         loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
-        loadedDocument = loadHandler.loadDocument(current_filepath);
+        loadedDocument = loadHandler.loadDocument(currentFilepath);
         if (!loadedDocument) {
-            string msg = FS(_F("Error opening file \"{1}\"") % currentFilepath.u8string()) + "\n" + loadHandler.getLastError();
+            string msg = FS(_F("Error opening file \"{1}\"") % currentFilepath.u8string()) + "\n" +
+                         loadHandler.getLastError();
             XojMsgBox::showErrorToUser(getGtkWindow(), msg);
             return false;
+        }
     }
 
     this->closeDocument();
