@@ -2424,8 +2424,7 @@ auto Control::changePdfBackground() -> bool {
     }
 
     if (this->undoRedo->isChanged()) {
-        string msg = FS(_F("Error in changing the background: please save the recent changes first.")) +
-                     loadHandler.getLastError();
+        string msg = FS(_F("Error in changing the background: please save the recent changes first."));
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return true;
     }
