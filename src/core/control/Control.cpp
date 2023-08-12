@@ -2430,8 +2430,7 @@ auto Control::changePdfBackground() -> bool {
     }
 
     if (current_filepath.empty()) {
-        string msg = FS(_F("Error in changing the background: please save the document first.")) +
-                     loadHandler.getLastError();
+        string msg = FS(_F("Error in changing the background: please save the document first."));
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
         return true;
     }
