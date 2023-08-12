@@ -434,7 +434,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         case ACTION_OPEN:
             openFile();
             break;
-        case ACTION_CHANGE_BACKGROUND:
+        case ACTION_CHANGE_PDF_BACKGROUND:
             this->changePdfBackground();
             break;
         case ACTION_ANNOTATE_PDF:

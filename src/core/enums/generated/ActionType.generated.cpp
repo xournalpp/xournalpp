@@ -28,8 +28,8 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_OPEN;
     }
 
-    if (value == "ACTION_CHANGE_BACKGROUND") {
-        return ACTION_CHANGE_BACKGROUND;
+    if (value == "ACTION_CHANGE_PDF_BACKGROUND") {
+        return ACTION_CHANGE_PDF_BACKGROUND;
     }
 
     if (value == "ACTION_ANNOTATE_PDF") {
@@ -686,8 +686,8 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_OPEN";
     }
 
-    if (value == ACTION_CHANGE_BACKGROUND) {
-        return "ACTION_CHANGE_BACKGROUND";
+    if (value == ACTION_CHANGE_PDF_BACKGROUND) {
+        return "ACTION_CHANGE_PDF_BACKGROUND";
     }
 
     if (value == ACTION_ANNOTATE_PDF) {
