@@ -370,7 +370,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureSensitivity")) == 0) {
         this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("minimumPressure")) == 0) {
-        this->minimumPressure = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+        // std::max is for backwards compatibility for users who might have set this value too small
+        this->minimumPressure = std::max(0.01, g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureMultiplier")) == 0) {
         this->pressureMultiplier = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomGesturesEnabled")) == 0) {

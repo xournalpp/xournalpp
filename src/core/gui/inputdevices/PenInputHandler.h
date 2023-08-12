@@ -20,6 +20,8 @@ class InputContext;
 class PositionInputData;
 class XojPageView;
 
+enum class PressureMode { NO_PRESSURE, DEVICE_PRESSURE, INFERRED_PRESSURE };
+
 class PenInputHandler: public AbstractInputHandler {
 protected:
     /**
@@ -37,8 +39,10 @@ protected:
      */
     InputEvent lastEvent{};
 
+    PressureMode pressureMode{PressureMode::NO_PRESSURE};
+
     /**
-     * Last pressure inferred.
+     * Last pressure measured or inferred.
      */
     double lastPressure{0.0};
 
@@ -140,7 +144,7 @@ protected:
      * @param page The page the event is relative to.
      * @return The filtered pressure.
      */
-    double inferPressureIfEnabled(PositionInputData const& pos, XojPageView* page);
+    double inferPressureValue(PositionInputData const& pos, XojPageView* page);
 
     /**
      * @brief Apply filters (e.g. minimum pressure, pressure inference, etc.) to
