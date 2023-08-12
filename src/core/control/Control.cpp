@@ -85,6 +85,7 @@
 #include "undo/InsertUndoAction.h"                               // for Inse...
 #include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
 #include "undo/UndoAction.h"                                     // for Undo...
+#include "util/Assert.h"                                         // for xoj_assert
 #include "util/Color.h"                                          // for oper...
 #include "util/PathUtil.h"                                       // for clea...
 #include "util/PlaceholderString.h"                              // for Plac...
@@ -390,6 +391,9 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->sidebar->selectPageNr(page, pdfPage);
 
     this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), int(page), getZoomControl()->getZoomReal());
+    if (settings->isPageNumberInTitlebarShown()) {
+        this->updateWindowTitle();
+    }
 
     auto current = getCurrentPageNo();
     auto count = this->doc->getPageCount();
@@ -1430,7 +1434,7 @@ void Control::deletePage() {
         pNr = this->doc->getPageCount() - 1;
     }
 
-    scrollHandler->scrollToPage(pNr, 0);
+    scrollHandler->scrollToPage(pNr);
     this->win->getXournal()->forceUpdatePagenumbers();
 }
 
@@ -1514,7 +1518,7 @@ void Control::gotoPage() {
     auto page = dlg.getSelectedPage();
 
     if (page > 0) {
-        this->scrollHandler->scrollToPage(size_t(page - 1), 0);
+        this->scrollHandler->scrollToPage(size_t(page - 1));
     }
 }
 
@@ -1831,9 +1835,9 @@ auto Control::getCurrentPageNo() const -> size_t {
     return 0;
 }
 
-auto Control::searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences,
-                               double* yOfUpperMostMatch) -> bool {
-    return getWindow()->getXournal()->searchTextOnPage(text, pageNumber, occurrences, yOfUpperMostMatch);
+auto Control::searchTextOnPage(const std::string& text, size_t pageNumber, size_t index, size_t* occurrences,
+                               XojPdfRectangle* matchRect) -> bool {
+    return getWindow()->getXournal()->searchTextOnPage(text, pageNumber, index, occurrences, matchRect);
 }
 
 auto Control::getCurrentPage() -> PageRef {
@@ -1871,7 +1875,7 @@ void Control::selectTool(ToolType type) {
 
         auto pageNr = getCurrentPageNo();
         XojPageView* view = xournal->getViewFor(pageNr);
-        g_assert(view != nullptr);
+        xoj_assert(view != nullptr);
         this->doc->lock();
         PageRef page = this->doc->getPage(pageNr);
         auto selection = new EditSelection(this->undoRedo, textobj, view, page);
@@ -2178,6 +2182,7 @@ void Control::showSettings() {
     int horizontalSpaceAmount = settings->getAddHorizontalSpaceAmount();
     StylusCursorType stylusCursorType = settings->getStylusCursorType();
     bool highlightPosition = settings->isHighlightPosition();
+    SidebarNumberingStyle sidebarStyle = settings->getSidebarNumberingStyle();
 
     auto dlg = SettingsDialog(this->gladeSearchPath, settings, this);
     dlg.show(GTK_WINDOW(this->win->getWindow()));
@@ -2206,6 +2211,10 @@ void Control::showSettings() {
     this->zoom->setZoomStep(settings->getZoomStep() / 100.0);
     this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
     this->zoom->setZoom100Value(settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
+
+    if (sidebarStyle != settings->getSidebarNumberingStyle()) {
+        getSidebar()->layout();
+    }
 
     getWindow()->getXournal()->getHandRecognition()->reload();
     getWindow()->updateColorscheme();
@@ -2690,6 +2699,10 @@ void Control::updateWindowTitle() {
         if (doc->getPdfFilepath().empty()) {
             title = _("Unsaved Document");
         } else {
+            if (settings->isPageNumberInTitlebarShown()) {
+                title += ("[" + std::to_string(getCurrentPageNo() + 1) + "/" + std::to_string(doc->getPageCount()) +
+                          "]  ");
+            }
             if (undoRedo->isChanged()) {
                 title += "*";
             }
@@ -2702,6 +2715,9 @@ void Control::updateWindowTitle() {
             }
         }
     } else {
+        if (settings->isPageNumberInTitlebarShown()) {
+            title += ("[" + std::to_string(getCurrentPageNo() + 1) + "/" + std::to_string(doc->getPageCount()) + "]  ");
+        }
         if (undoRedo->isChanged()) {
             title += "*";
         }
@@ -3134,14 +3150,7 @@ void Control::setFill(bool fill) {
         undoRedo->addUndoAction(UndoActionPtr(
                 sel->setFill(fill ? toolHandler->getPenFill() : -1, fill ? toolHandler->getHighlighterFill() : -1)));
     }
-
-    if (toolHandler->getToolType() == TOOL_PEN) {
-        fireActionSelected(GROUP_PEN_FILL, fill ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
-        this->toolHandler->setPenFillEnabled(fill, false);
-    } else if (toolHandler->getToolType() == TOOL_HIGHLIGHTER) {
-        fireActionSelected(GROUP_HIGHLIGHTER_FILL, fill ? ACTION_TOOL_HIGHLIGHTER_FILL : ACTION_NONE);
-        this->toolHandler->setHighlighterFillEnabled(fill, false);
-    }
+    toolHandler->setFillEnabled(fill, true);
 }
 
 void Control::setLineStyle(const string& style) {
@@ -3154,9 +3163,8 @@ void Control::setLineStyle(const string& style) {
 
     if (sel) {
         undoRedo->addUndoAction(sel->setLineStyle(stl));
-    } else {
-        this->toolHandler->setLineStyle(stl);
     }
+    this->toolHandler->setLineStyle(stl);
 }
 
 void Control::setToolSize(ToolSize size) {

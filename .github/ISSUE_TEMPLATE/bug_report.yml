@@ -1,0 +1,76 @@
+name: Bug Report
+description: Create a report to help us improve Xournal++.
+labels: bug
+body:
+  - type: dropdown
+    attributes:
+      label: Operating System
+      description: Select the operating system that you use.
+      options:
+        - Windows
+        - Mac OS
+        - Linux
+        - BSD
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: (Linux only) Distribution
+      description: What distribution of Linux do you use?
+      placeholder: e.g. Ubuntu, Arch Linux, etc.
+  - type: input
+    attributes:
+      label: (Linux only) Desktop Environment
+      description: What desktop environment do you use?
+      placeholder: e.g. GNOME, KDE Plasma, etc.
+  - type: dropdown
+    attributes:
+      label: (Linux Only) Display Server
+      description: What display server do you use?
+      options:
+        - X.Org
+        - Wayland
+  - type: input
+    attributes:
+      label: Installation Method
+      description: How was Xournal++ installed?
+      placeholder: e.g. Official Release, Flatpak, Snap, PPA, etc.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Xournal++ Version
+      description: What version of Xournal++ do you use? (This can be obtained by running `xournalpp --version`, or in the "About" window).
+      placeholder: e.g. 1.0.16, specific commit, specific branch etc.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: libgtk Version
+      description: What version of libgtk do you use? (This can be obtained by running `xournalpp --version`, or in the "About" window).
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behaviour
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behaviour.
+      placeholder: "1. Step 1\n2. Step 2\n3. etc."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Add any other information or context about the problem here. If your bug is an input related problem, please provide [input logs](https://github.com/xournalpp/xournalpp/wiki/How-to-provide-debug-info-for-input-related-bugs).
+        

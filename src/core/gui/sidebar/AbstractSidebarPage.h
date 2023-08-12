@@ -30,6 +30,8 @@ public:
     virtual void enableSidebar() = 0;
     virtual void disableSidebar() = 0;
 
+    virtual void layout() = 0;
+
     /**
      * The name of this sidebar page
      */

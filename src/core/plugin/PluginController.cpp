@@ -1,10 +1,10 @@
 #include "PluginController.h"
 
-#include <cassert>
 #include <memory>
 
 #include "control/Control.h"
 #include "gui/MainWindow.h"
+#include "util/Assert.h"
 
 #include "config-features.h"
 
@@ -84,13 +84,13 @@ auto load_available_plugins_from(fs::path const& path, Control* control) -> std:
 
 auto emplace_sorted_if_not_exists(std::vector<std::unique_ptr<Plugin>>& plugins, std::unique_ptr<Plugin> plugin)
         -> void {
-    assert(std::is_sorted(begin(plugins), end(plugins), PluginComparator{}));
+    xoj_assert(std::is_sorted(begin(plugins), end(plugins), PluginComparator{}));
     auto iter = std::equal_range(begin(plugins), std::end(plugins), plugin, PluginComparator{});
     if (iter.first != iter.second) {
         return;
     }
     plugins.emplace(iter.first, std::move(plugin));
-    assert(std::is_sorted(begin(plugins), end(plugins), PluginComparator{}));
+    xoj_assert(std::is_sorted(begin(plugins), end(plugins), PluginComparator{}));
 }
 }  // namespace
 #endif

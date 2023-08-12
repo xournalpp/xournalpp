@@ -6,6 +6,7 @@ poppler-*
 poppler.tar.xz
 openjpeg*
 gtk-mac-bundler
+gtk-mac-bundler-venv
 .xournalpp*
 *.zip
 gtk-mac-integration
@@ -14,3 +15,4 @@ pa_stable_*.tgz
 sox-code
 libsndfile
 libzip*
+*.dmg

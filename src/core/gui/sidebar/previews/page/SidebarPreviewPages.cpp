@@ -18,6 +18,7 @@
 #include "undo/CopyUndoAction.h"                                // for CopyU...
 #include "undo/SwapUndoAction.h"                                // for SwapU...
 #include "undo/UndoRedoHandler.h"                               // for UndoR...
+#include "util/Assert.h"                                        // for xoj_assert
 #include "util/Util.h"                                          // for npos
 #include "util/i18n.h"                                          // for _
 
@@ -39,7 +40,7 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
 
     for (const auto& pair: ctxMenuActions) {
         GtkWidget* const entry = gui->get(pair.first);
-        g_assert(entry != nullptr);
+        xoj_assert(entry != nullptr);
 
         // Unfortunately, we need a fairly complicated mechanism to keep track
         // of which action we want to execute.
@@ -58,8 +59,8 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
             this->contextMenuMoveUp = entry;
         }
     }
-    g_assert(this->contextMenuMoveDown != nullptr);
-    g_assert(this->contextMenuMoveUp != nullptr);
+    xoj_assert(this->contextMenuMoveDown != nullptr);
+    xoj_assert(this->contextMenuMoveUp != nullptr);
 }
 
 SidebarPreviewPages::~SidebarPreviewPages() {
@@ -182,7 +183,7 @@ void SidebarPreviewPages::updatePreviews() {
     doc->lock();
     size_t len = doc->getPageCount();
     for (size_t i = 0; i < len; i++) {
-        auto p = std::make_unique<SidebarPreviewPageEntry>(this, doc->getPage(i));
+        auto p = std::make_unique<SidebarPreviewPageEntry>(this, doc->getPage(i), i);
         gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
         this->previews.emplace_back(std::move(p));
     }
@@ -221,6 +222,8 @@ void SidebarPreviewPages::pageDeleted(size_t page) {
     // Unselect page, to prevent double selection displaying
     unselectPage();
 
+    updateIndices();
+
     layout();
 }
 
@@ -228,7 +231,7 @@ void SidebarPreviewPages::pageInserted(size_t page) {
     Document* doc = control->getDocument();
     doc->lock();
 
-    auto p = std::make_unique<SidebarPreviewPageEntry>(this, doc->getPage(page));
+    auto p = std::make_unique<SidebarPreviewPageEntry>(this, doc->getPage(page), page);
 
     doc->unlock();
 
@@ -238,6 +241,8 @@ void SidebarPreviewPages::pageInserted(size_t page) {
     // Unselect page, to prevent double selection displaying
     unselectPage();
 
+    updateIndices();
+
     layout();
 }
 
@@ -245,7 +250,9 @@ void SidebarPreviewPages::pageInserted(size_t page) {
  * Unselect the last selected page, if any
  */
 void SidebarPreviewPages::unselectPage() {
-    for (auto& p: this->previews) { p->setSelected(false); }
+    for (auto& p: this->previews) {
+        p->setSelected(false);
+    }
 }
 
 void SidebarPreviewPages::pageSelected(size_t page) {
@@ -290,4 +297,11 @@ void SidebarPreviewPages::pageSelected(size_t page) {
 
 void SidebarPreviewPages::openPreviewContextMenu() {
     gtk_menu_popup(GTK_MENU(this->contextMenu), nullptr, nullptr, nullptr, nullptr, 3, gtk_get_current_event_time());
+}
+
+void SidebarPreviewPages::updateIndices() {
+    size_t index = 0;
+    for (auto& preview: this->previews) {
+        dynamic_cast<SidebarPreviewPageEntry*>(preview.get())->setIndex(index++);
+    }
 }

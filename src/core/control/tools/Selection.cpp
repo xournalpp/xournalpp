@@ -56,6 +56,10 @@ auto Selection::isMultiLayerSelection() -> bool {
     return this->multiLayer;
 }
 
+void Selection::addSelection(const std::vector<Element*>& elements) {
+    std::copy(elements.begin(), elements.end(), std::back_inserter(selectedElements));
+}
+
 //////////////////////////////////////////////////////////
 
 RectSelection::RectSelection(double x, double y, bool multiLayer): Selection(multiLayer), sx(x), sy(y), ex(x), ey(y) {

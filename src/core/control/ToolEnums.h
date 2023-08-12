@@ -13,6 +13,7 @@
 
 #include <string>  // for string
 
+#include "model/LineStyle.h"
 
 enum ToolSize {
     TOOL_SIZE_VERY_FINE = 0,
@@ -81,7 +82,7 @@ enum ToolType {
     TOOL_END_ENTRY
 };
 auto isSelectToolType(ToolType type) -> bool;
-
+auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
 // The count of tools
 #define TOOL_COUNT (TOOL_END_ENTRY - 1)
 
@@ -110,6 +111,17 @@ enum ToolCapabilities : unsigned int {
     TOOL_CAP_SPLINE = 1 << 11,
     TOOL_CAP_LINE_STYLE = 1 << 12
 };
+
+enum StrokeType {
+    STROKE_TYPE_NONE = 0,
+    STROKE_TYPE_STANDARD = 1,
+    STROKE_TYPE_DASHED = 2,
+    STROKE_TYPE_DASHDOTTED = 3,
+    STROKE_TYPE_DOTTED = 4
+};
+auto strokeTypeFromString(const std::string& type) -> StrokeType;
+auto strokeTypeToLineStyle(StrokeType type) -> LineStyle;
+auto strokeTypeToString(StrokeType type) -> std::string;
 
 namespace xoj::tool {
 /// \return Whether the provided tool is used for selecting objects on a PDF.

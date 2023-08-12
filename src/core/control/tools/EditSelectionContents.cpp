@@ -30,6 +30,7 @@
 #include "undo/ScaleUndoAction.h"                 // for ScaleUndoAction
 #include "undo/SizeUndoAction.h"                  // for SizeUndoAction
 #include "undo/UndoRedoHandler.h"                 // for UndoRedoHandler
+#include "util/Assert.h"                          // for xoj_assert
 #include "util/safe_casts.h"                      // for as_signed
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
@@ -67,7 +68,7 @@ EditSelectionContents::~EditSelectionContents() {
  * Add an element to the this selection
  */
 void EditSelectionContents::addElement(Element* e, Element::Index order) {
-    g_assert(this->selected.size() == this->insertOrder.size());
+    xoj_assert(this->selected.size() == this->insertOrder.size());
     this->selected.emplace_back(e);
     auto item = std::make_pair(e, order);
     this->insertOrder.insert(std::upper_bound(this->insertOrder.begin(), this->insertOrder.end(), item, insertOrderCmp),
@@ -80,6 +81,15 @@ void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, El
     std::transform(begin(newInsertOrder), end(newInsertOrder), std::back_inserter(this->selected),
                    [](auto const& e) { return e.first; });
     this->insertOrder = std::move(newInsertOrder);
+}
+
+void EditSelectionContents::addMoveUndo(UndoRedoHandler* undo, double dx, double dy) {
+    undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, dx, dy,
+                                                         this->sourceLayer, this->sourcePage));
+    this->lastBounds.x += dx;
+    this->lastBounds.y += dy;
+    this->lastSnappedBounds.x += dx;
+    this->lastSnappedBounds.y += dy;
 }
 
 /**
@@ -364,7 +374,7 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
 
     bool move = mx != 0 || my != 0;
 
-    g_assert(this->selected.size() == this->insertOrder.size());
+    xoj_assert(this->selected.size() == this->insertOrder.size());
     for (auto&& [e, index]: this->insertOrder) {
         if (move) {
             e->move(mx, my);

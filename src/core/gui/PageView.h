@@ -32,6 +32,7 @@
 #include "LegacyRedrawable.h"  // for LegacyRedrawable
 
 class EraseHandler;
+class ImageSizeSelection;
 class InputHandler;
 class SearchControl;
 class Selection;
@@ -100,7 +101,7 @@ public:
 
     void endSpline();
 
-    bool searchTextOnPage(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
+    bool searchTextOnPage(const std::string& text, size_t index, size_t* occurrences, XojPdfRectangle* matchRect);
 
     bool onKeyPressEvent(GdkEventKey* event);
     bool onKeyReleaseEvent(GdkEventKey* event);
@@ -260,6 +261,11 @@ private:
      * The text editor
      */
     std::unique_ptr<TextEditor> textEditor;
+
+    /**
+     * For image insertion with size (selects the size)
+     */
+    std::unique_ptr<ImageSizeSelection> imageSizeSelection;
 
     /**
      * For keeping old text changes to undo!

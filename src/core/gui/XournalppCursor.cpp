@@ -303,13 +303,11 @@ void XournalppCursor::updateCursor() {
                 setCursor(CRSR_XTERM);
             }
         } else if (type == TOOL_IMAGE) {
-            setCursor(CRSR_DEFAULT);
+            setCursor(CRSR_TCROSS);
         } else if (type == TOOL_FLOATING_TOOLBOX) {
             setCursor(CRSR_DEFAULT);
         } else if (type == TOOL_VERTICAL_SPACE) {
-            if (this->mouseDown) {
-                setCursor(CRSR_SB_V_DOUBLE_ARROW);
-            }
+            setCursor(CRSR_SB_V_DOUBLE_ARROW);
         } else if (type == TOOL_SELECT_OBJECT) {
             setCursor(CRSR_DEFAULT);
         } else if (type == TOOL_PLAY_OBJECT) {

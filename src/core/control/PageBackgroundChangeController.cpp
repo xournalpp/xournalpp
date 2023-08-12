@@ -24,6 +24,7 @@
 #include "undo/PageBackgroundChangedUndoAction.h"        // for PageBackgrou...
 #include "undo/UndoAction.h"                             // for UndoAction
 #include "undo/UndoRedoHandler.h"                        // for UndoRedoHandler
+#include "util/Assert.h"                                 // for xoj_assert
 #include "util/PathUtil.h"                               // for fromGFile
 #include "util/Util.h"                                   // for npos
 #include "util/XojMsgBox.h"                              // for XojMsgBox
@@ -66,11 +67,11 @@ void PageBackgroundChangeController::changeAllPagesBackground(const PageType& pt
     ignoreEvent = false;
 }
 
-void PageBackgroundChangeController::changeCurrentPageBackground(PageTypeInfo* info) {
+void PageBackgroundChangeController::changeCurrentPageBackground(const PageTypeInfo* info) {
     changeCurrentPageBackground(info->page);
 }
 
-void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageType) {
+void PageBackgroundChangeController::changeCurrentPageBackground(const PageType& pageType) {
     if (ignoreEvent) {
         return;
     }
@@ -84,7 +85,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
 
     Document* doc = control->getDocument();
     const size_t pageNr = doc->indexOf(page);
-    g_assert(pageNr != npos);
+    xoj_assert(pageNr != npos);
 
     auto undoAction = commitPageTypeChange(pageNr, pageType);
     if (undoAction) {
@@ -105,7 +106,7 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
 
     Document* doc = control->getDocument();
     const size_t pageNr = doc->indexOf(page);
-    g_assert(pageNr != npos);
+    xoj_assert(pageNr != npos);
 
     // Get values for Undo / Redo
     const double origW = page->getWidth();
@@ -115,12 +116,7 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
     PageType origType = page->getBackgroundType();
 
     // Apply the new background
-    if (pageType.format != PageTypeFormat::Copy) {
-        applyPageBackground(page, pageType);
-    } else {
-        g_warning("Found 'Copy' page type. Doing nothing™.");
-    }
-
+    applyPageBackground(page, pageType);
 
     control->firePageChanged(pageNr);
     control->updateBackgroundSizeButton();
@@ -276,15 +272,15 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
     model.parse(control->getSettings()->getPageTemplate());
 
     auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
-    PageType pt = control->getNewPageType()->getSelected();
+    const std::optional<PageType>& pt = control->getNewPageType()->getSelected();
     PageRef current = control->getCurrentPage();
 
-    // current should always be valid, but if you open an invalid file or something like this...
-    if (pt.format == PageTypeFormat::Copy && current) {
+    if (!pt) {
+        xoj_assert(current);
         copyBackgroundFromOtherPage(page, current);
     } else {
         // Create a new page from template
-        if (!applyPageBackground(page, pt)) {
+        if (!applyPageBackground(page, pt.value())) {
             // User canceled PDF or Image Selection
             return;
         }
@@ -292,7 +288,8 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
         // Set background Color
         page->setBackgroundColor(model.getBackgroundColor());
 
-        if (model.isCopyLastPageSize() && current) {
+        if (model.isCopyLastPageSize()) {
+            xoj_assert(current);
             page->setSize(current->getWidth(), current->getHeight());
         }
     }
@@ -324,9 +321,12 @@ void PageBackgroundChangeController::pageSelected(size_t page) {
 void PageBackgroundChangeController::applySelectedPageBackground(bool allPages, ApplyPageTypeSource src) {
     PageType pt;
     switch (src) {
-        case ApplyPageTypeSource::SELECTED:
-            pt = control->getNewPageType()->getSelected();
+        case ApplyPageTypeSource::SELECTED: {
+            auto& optPt = control->getNewPageType()->getSelected();
+            xoj_assert(optPt);
+            pt = optPt.value();
             break;
+        }
         case ApplyPageTypeSource::CURRENT:
             pt = control->getCurrentPage()->getBackgroundType();
             break;

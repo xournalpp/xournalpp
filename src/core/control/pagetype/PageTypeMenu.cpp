@@ -9,6 +9,7 @@
 
 #include "control/settings/PageTemplateSettings.h"  // for PageTemplateSettings
 #include "control/settings/Settings.h"              // for Settings
+#include "util/Assert.h"                            // or xoj_assert
 #include "util/Color.h"                             // for Color
 #include "util/i18n.h"                              // for _
 #include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
@@ -72,8 +73,8 @@ auto PageTypeMenu::createPreviewImage(const PageType& pt) -> cairo_surface_t* {
     return surface;
 }
 
-void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
-    bool special = t->page.isSpecial();
+void PageTypeMenu::addMenuEntry(const PageTypeInfo* t) {
+    bool special = t == nullptr || t->page.isSpecial();
     bool showImg = !special && showPreview;
 
     GtkWidget* entry = nullptr;
@@ -89,7 +90,7 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
         gtk_container_add(GTK_CONTAINER(entry), box);
         gtk_widget_show_all(entry);
     } else {
-        entry = gtk_check_menu_item_new_with_label(t->name.c_str());
+        entry = gtk_check_menu_item_new_with_label(t ? t->name.c_str() : _("Copy current"));
         gtk_widget_show(entry);
         gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(entry), true);
     }
@@ -117,13 +118,19 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
 
     gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(entry), true);
 
-    MenuCallbackInfo info;
-    info.entry = entry;
-    info.info = t;
-    menuInfos.push_back(info);
+    if (t) {
+        menuInfos.push_back({entry, t});
+    } else {
+        copyCurrentBackgroundMenuEntry = entry;
+    }
 
     g_signal_connect(entry, "toggled", G_CALLBACK(+[](GtkWidget* togglebutton, PageTypeMenu* self) {
                          if (self->ignoreEvents) {
+                             return;
+                         }
+
+                         if (togglebutton == self->copyCurrentBackgroundMenuEntry) {
+                             self->entrySelected(nullptr);
                              return;
                          }
 
@@ -137,15 +144,18 @@ void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
                      this);
 }
 
-void PageTypeMenu::entrySelected(PageTypeInfo* t) {
+void PageTypeMenu::entrySelected(const PageTypeInfo* t) {
     ignoreEvents = true;
     for (MenuCallbackInfo& info: menuInfos) {
         bool enabled = info.info == t;
         gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(info.entry), enabled);
     }
+    if (copyCurrentBackgroundMenuEntry) {
+        gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(copyCurrentBackgroundMenuEntry), t == nullptr);
+    }
     ignoreEvents = false;
 
-    selected = t->page;
+    selected = t ? std::make_optional(t->page) : std::nullopt;
 
     if (listener != nullptr) {
         listener->changeCurrentPageBackground(t);
@@ -153,39 +163,28 @@ void PageTypeMenu::entrySelected(PageTypeInfo* t) {
 
     // Disable "Apply to current page" if current format is "Copy."
     if (this->menuEntryApply) {
-        gtk_widget_set_sensitive(this->menuEntryApply, t->page.format != PageTypeFormat::Copy);
+        gtk_widget_set_sensitive(this->menuEntryApply, t != nullptr);
     }
 }
 
-void PageTypeMenu::setSelected(const PageType& selected) {
-    for (MenuCallbackInfo& info: menuInfos) {
-        if (info.info->page == selected) {
-            entrySelected(info.info);
-            break;
-        }
+void PageTypeMenu::setSelected(std::optional<PageType> selected) {
+    if (selected) {
+        entrySelected(this->types->getInfoOn(selected.value()));
+    } else {
+        entrySelected(nullptr);
     }
 }
 
 void PageTypeMenu::setListener(PageTypeMenuChangeListener* listener) { this->listener = listener; }
 
-void PageTypeMenu::hideCopyPage() {
-    for (MenuCallbackInfo& info: menuInfos) {
-        if (info.info->page.format == PageTypeFormat::Copy) {
-            gtk_widget_hide(info.entry);
-            break;
-        }
-    }
-}
+void PageTypeMenu::hideCopyPage() { gtk_widget_hide(copyCurrentBackgroundMenuEntry); }
 
 /**
  * Apply background to current or to all pages button
  */
 void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu,
                                             ApplyPageTypeSource ptSource) {
-    if (this->menuEntryApply) {
-        g_warning("Button 'Apply to current page' already exists!");
-        return;
-    }
+    xoj_assert(!this->menuEntryApply);
 
     this->pageTypeApplyListener = pageTypeApplyListener;
     this->pageTypeSource = ptSource;
@@ -205,7 +204,7 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
                          }),
                          this);
         // Do not initially activate this option if the "Copy" format is selected
-        if (getSelected().format == PageTypeFormat::Copy) {
+        if (!selected) {
             gtk_widget_set_sensitive(menuEntryApply, false);
         }
     }
@@ -227,33 +226,31 @@ auto PageTypeMenu::createApplyMenuItem(const char* text) -> GtkWidget* {
 }
 
 void PageTypeMenu::initDefaultMenu() {
-    bool special = false;
-    for (PageTypeInfo* t: this->types->getPageTypes()) {
-        if (!showSpecial && t->page.isSpecial()) {
-            continue;
-        }
+    for (auto& t: this->types->getPageTypes()) {
+        addMenuEntry(t.get());
+    }
+    if (showSpecial) {
+        GtkWidget* separator = gtk_separator_menu_item_new();
+        gtk_widget_show(separator);
 
-        if (!special && t->page.isSpecial()) {
-            special = true;
-            GtkWidget* separator = gtk_separator_menu_item_new();
-            gtk_widget_show(separator);
-
-            if (showPreview) {
-                if (menuX != 0) {
-                    menuX = 0;
-                    menuY++;
-                }
-
-                gtk_menu_attach(GTK_MENU(menu), separator, menuX, menuX + PREVIEW_COLUMNS, menuY, menuY + 1);
+        if (showPreview) {
+            if (menuX != 0) {
+                menuX = 0;
                 menuY++;
-            } else {
-                gtk_container_add(GTK_CONTAINER(menu), separator);
             }
+
+            gtk_menu_attach(GTK_MENU(menu), separator, menuX, menuX + PREVIEW_COLUMNS, menuY, menuY + 1);
+            menuY++;
+        } else {
+            gtk_container_add(GTK_CONTAINER(menu), separator);
         }
-        addMenuEntry(t);
+        for (auto& t: this->types->getSpecialPageTypes()) {
+            addMenuEntry(t.get());
+        }
+        addMenuEntry(nullptr);  // Copy button
     }
 }
 
-auto PageTypeMenu::getMenu() -> GtkWidget* { return menu; }
+auto PageTypeMenu::getMenu() const -> GtkWidget* { return menu; }
 
-auto PageTypeMenu::getSelected() -> PageType { return selected; }
+auto PageTypeMenu::getSelected() const -> const std::optional<PageType>& { return selected; }

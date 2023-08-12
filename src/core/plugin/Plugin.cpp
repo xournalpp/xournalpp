@@ -8,6 +8,7 @@
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <glib.h>         // for g_key_file_free, g_warning, g_free
 
+#include "util/Assert.h"     // for xoj_assert
 #include "util/PathUtil.h"   // for toGFilename
 #include "util/XojMsgBox.h"  // for XojMsgBox
 #ifdef ENABLE_PLUGINS
@@ -80,7 +81,7 @@ size_t Plugin::populateMenuSection(GtkApplicationWindow* win, size_t startId) {
 
     // The menu should never be populated twice.
     // If this assert ever fails, do not recreate the GSimpleAction's below
-    assert(!menuSection);
+    xoj_assert(!menuSection);
 
     this->menuSection.reset(g_menu_new(), xoj::util::adopt);
 

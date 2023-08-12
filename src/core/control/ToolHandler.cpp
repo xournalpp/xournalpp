@@ -1,7 +1,7 @@
 #include "ToolHandler.h"
 
 #include <algorithm>  // for clamp
-#include <cinttypes>  // for uint32_t
+#include <cstdint>    // for uint32_t
 #include <cstdio>     // for size_t
 #include <optional>   // for nullopt, optional
 #include <string>     // for operator==, string, basic_string
@@ -319,7 +319,8 @@ void ToolHandler::setButtonSize(ToolSize size, Button button) {
 }
 
 void ToolHandler::setLineStyle(const LineStyle& style) {
-    this->tools[TOOL_PEN - TOOL_PEN]->setLineStyle(style);
+    Tool* tool = this->toolbarSelectedTool;
+    tool->setLineStyle(style);
     this->stateChangeListener->toolLineStyleChanged();
 }
 
@@ -347,9 +348,14 @@ auto ToolHandler::getColor() const -> Color {
     return tool->getColor();
 }
 
-/**
- * @return -1 if fill is disabled, else the fill alpha value
- */
+void ToolHandler::setFillEnabled(bool fill, bool fireEvent) {
+    Tool* tool = this->toolbarSelectedTool;
+    tool->setFill(fill);
+    if (fireEvent) {
+        this->stateChangeListener->toolFillChanged();
+    }
+}
+
 auto ToolHandler::getFill() const -> int {
     Tool* tool = this->activeTool;
     if (!tool->getFill()) {
@@ -376,6 +382,15 @@ void ToolHandler::setDrawingType(DrawingType drawingType) {
 void ToolHandler::setButtonDrawingType(DrawingType drawingType, Button button) {
     Tool* tool = getButtonTool(button);
     tool->setDrawingType(drawingType);
+}
+
+void ToolHandler::setButtonStrokeType(StrokeType strokeType, Button button) {
+    this->setButtonStrokeType(strokeTypeToLineStyle(strokeType), button);
+}
+
+void ToolHandler::setButtonStrokeType(const LineStyle& lineStyle, Button button) {
+    Tool* tool = getButtonTool(button);
+    tool->setLineStyle(lineStyle);
 }
 
 auto ToolHandler::getTools() const -> std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& { return tools; }

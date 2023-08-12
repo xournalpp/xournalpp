@@ -1,6 +1,5 @@
 #include "TextEditor.h"
 
-#include <cassert>
 #include <cmath>
 #include <cstring>  // for strcmp, size_t
 #include <memory>   // for allocator, make_unique, __shared_p...
@@ -20,6 +19,7 @@
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
 #include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
+#include "util/Assert.h"
 #include "util/DispatchPool.h"
 #include "util/Range.h"
 #include "util/raii/CStringWrapper.h"
@@ -62,7 +62,7 @@ static auto getByteOffsetOfCursor(GtkTextBuffer* buffer) -> int {
  * NB: This is much faster than relying on g_utf8_pointer_to_offset for long texts
  */
 static auto getIteratorAtByteOffset(GtkTextBuffer* buf, int byteIndex) {
-    assert(byteIndex >= 0);
+    xoj_assert(byteIndex >= 0);
     GtkTextIter it = {nullptr};
     gtk_text_buffer_get_start_iter(buf, &it);
 
@@ -136,7 +136,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         if (this->cursorBlink) {
             int tmp = 0;
             g_object_get(settings, "gtk-cursor-blink-time", &tmp, nullptr);
-            assert(tmp >= 0);
+            xoj_assert(tmp >= 0);
             auto cursorBlinkingPeriod = static_cast<unsigned int>(tmp);
             this->cursorBlinkingTimeOn = cursorBlinkingPeriod * CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER;
             this->cursorBlinkingTimeOff = cursorBlinkingPeriod - this->cursorBlinkingTimeOn;
@@ -300,6 +300,15 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
     bool obscure = false;
 
     GdkModifierType modifiers = gtk_accelerator_get_default_mod_mask();
+    auto keymap = gdk_keymap_get_for_display(gdk_display_get_default());
+    GdkModifierType consumed;
+    /*
+    According to https://docs.gtk.org/gdk3/method.Keymap.translate_keyboard_state.html
+    consumed modifiers should be masked out. For instance, on a US keyboard, the plus symbol is shifted, so when
+    comparing a key press to a <Control>plus accelerator <Shift> should be masked out.
+    */
+    gdk_keymap_translate_keyboard_state(keymap, event->hardware_keycode, static_cast<GdkModifierType>(event->state),
+                                        event->group, nullptr, nullptr, nullptr, &consumed);
 
     GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
     bool canInsert = gtk_text_iter_can_insert(&iter, true);
@@ -314,16 +323,16 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
         retval = true;
     } else if (gtk_bindings_activate_event(G_OBJECT(this->textWidget.get()), event)) {
         return true;
-    } else if ((event->state & modifiers) == GDK_CONTROL_MASK) {
+    } else if ((event->state & ~consumed & modifiers) == GDK_CONTROL_MASK) {
         if (event->keyval == GDK_KEY_b || event->keyval == GDK_KEY_B) {
             toggleBoldFace();
             return true;
         }
-        if (event->keyval == GDK_KEY_plus) {
+        if (event->keyval == GDK_KEY_plus || event->keyval == GDK_KEY_KP_Add) {
             increaseFontSize();
             return true;
         }
-        if (event->keyval == GDK_KEY_minus) {
+        if (event->keyval == GDK_KEY_minus || event->keyval == GDK_KEY_KP_Subtract) {
             decreaseFontSize();
             return true;
         }
@@ -1023,7 +1032,7 @@ void TextEditor::finalizeEdition() {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
             auto elementIndex = layer->indexOf(originalTextElement);
             layer->removeElement(originalTextElement, false);
-            assert(elementIndex != Element::InvalidIndex);
+            xoj_assert(elementIndex != Element::InvalidIndex);
             eraseDeleteUndoAction->addElement(layer, originalTextElement, elementIndex);
             undo->addUndoAction(std::move(eraseDeleteUndoAction));
             originalTextElement = nullptr;

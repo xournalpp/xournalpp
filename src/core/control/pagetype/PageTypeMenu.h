@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <optional>
 #include <vector>  // for vector
 
 #include <cairo.h>    // for cairo_surface_t
@@ -25,7 +26,7 @@ class Settings;
 
 typedef struct {
     GtkWidget* entry;
-    PageTypeInfo* info;
+    const PageTypeInfo* info;
 } MenuCallbackInfo;
 
 enum class ApplyPageTypeSource {
@@ -37,7 +38,7 @@ enum class ApplyPageTypeSource {
 
 class PageTypeMenuChangeListener {
 public:
-    virtual void changeCurrentPageBackground(PageTypeInfo* info) = 0;
+    virtual void changeCurrentPageBackground(const PageTypeInfo* info) = 0;
     virtual ~PageTypeMenuChangeListener();
 };
 
@@ -52,10 +53,10 @@ public:
     PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial);
 
 public:
-    GtkWidget* getMenu();
-    PageType getSelected();
+    GtkWidget* getMenu() const;
+    const std::optional<PageType>& getSelected() const;
     void loadDefaultPage();
-    void setSelected(const PageType& selected);
+    void setSelected(std::optional<PageType> selected);
     void setListener(PageTypeMenuChangeListener* listener);
     void hideCopyPage();
 
@@ -68,8 +69,9 @@ public:
 private:
     static GtkWidget* createApplyMenuItem(const char* text);
     void initDefaultMenu();
-    void addMenuEntry(PageTypeInfo* t);
-    void entrySelected(PageTypeInfo* t);
+    void addMenuEntry(const PageTypeInfo* t);
+    /// @brief Select the corresponding entry. If t == nullptr, the "Copy current page background" entry is selected.
+    void entrySelected(const PageTypeInfo* t);
     cairo_surface_t* createPreviewImage(const PageType& pt);
 
 private:
@@ -80,8 +82,9 @@ private:
     Settings* settings;
 
     std::vector<MenuCallbackInfo> menuInfos;
+    GtkWidget* copyCurrentBackgroundMenuEntry = nullptr;
 
-    PageType selected;
+    std::optional<PageType> selected;
 
     bool ignoreEvents;
 

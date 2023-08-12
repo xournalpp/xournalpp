@@ -103,7 +103,7 @@ public:
 };
 
 static void add_move_binding(GtkBindingSet* binding_set, guint keyval, guint modmask, int step, gint count) {
-    g_assert((modmask & GDK_SHIFT_MASK) == 0);
+    xoj_assert((modmask & GDK_SHIFT_MASK) == 0);
 
     gint bitmask = 0;
     if (count == 1) {

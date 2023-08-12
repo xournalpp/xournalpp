@@ -24,6 +24,7 @@
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
 #include "model/DocumentChangeType.h"   // for DocumentChangeType
 #include "model/DocumentListener.h"     // for DocumentListener
+#include "pdf/base/XojPdfPage.h"        // for XojPdfRectangle
 #include "util/Util.h"                  // for npos
 
 class Control;
@@ -31,6 +32,7 @@ class XournalppCursor;
 class Document;
 class EditSelection;
 class XojPageView;
+class XojPdfRectangle;
 class PdfCache;
 class RepaintHandler;
 class ScrollHandling;
@@ -50,7 +52,7 @@ public:
     // Recalculate the layout width and height amd layout the pages with the updated layout size
     void layoutPages();
 
-    void scrollTo(size_t pageNo, double y = 0);
+    void scrollTo(size_t pageNo, XojPdfRectangle rect = {0, 0, -1, -1});
 
     // Relative navigation in current layout:
     void pageRelativeXY(int offCol, int offRow);
@@ -67,7 +69,8 @@ public:
 
     XojPageView* getViewFor(size_t pageNr) const;
 
-    bool searchTextOnPage(const std::string& text, size_t pageNumber, size_t* occurrences, double* yOfUpperMostMatch);
+    bool searchTextOnPage(const std::string& text, size_t pageNumber, size_t index, size_t* occurrences,
+                          XojPdfRectangle* matchRect);
 
     bool cut();
     bool copy();

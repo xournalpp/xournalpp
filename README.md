@@ -241,8 +241,8 @@ master on a weekly basis are available from
 
 ### Arch Linux
 
-The latest stable release is available [in the [community]
-repository](https://www.archlinux.org/packages/community/x86_64/xournalpp/).
+The latest stable release is available [in the [extra]
+repository](https://www.archlinux.org/packages/extra/x86_64/xournalpp/).
 
 To build the latest state of the master branch yourself, use [this AUR
 package](https://aur.archlinux.org/packages/xournalpp-git/).

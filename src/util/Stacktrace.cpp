@@ -70,6 +70,13 @@ fs::path Stacktrace::getExePath() {
 }
 #else
 auto Stacktrace::getExePath() -> fs::path {
+#ifndef PATH_MAX
+    // This is because PATH_MAX is (per posix) not defined if there is
+    // no limit, e.g., on GNU Hurd. The "right" workaround is to not use
+    // PATH_MAX, instead stat the link and use stat.st_size for
+    // allocating the buffer.
+#define PATH_MAX 4096
+#endif
     std::array<char, PATH_MAX> result{};
     ssize_t count = readlink("/proc/self/exe", result.data(), PATH_MAX);
     return fs::path{std::string(result.data(), std::max(ssize_t{0}, count))};

@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include <cinttypes>  // for int64_t
+#include <cstdint>    // for int64_t
 #include <memory>     // for unique_ptr
 #include <ostream>    // for ostream
 #include <string>     // for string

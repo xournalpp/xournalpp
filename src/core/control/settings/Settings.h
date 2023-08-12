@@ -233,6 +233,9 @@ public:
     const bool isFilepathInTitlebarShown() const;
     void setFilepathInTitlebarShown(const bool shown);
 
+    const bool isPageNumberInTitlebarShown() const;
+    void setPageNumberInTitlebarShown(const bool shown);
+
     void setShowPairedPages(bool showPairedPages);
     bool isShowPairedPages() const;
 
@@ -322,6 +325,9 @@ public:
     IconTheme getIconTheme() const;
     void setIconTheme(IconTheme iconTheme);
 
+    SidebarNumberingStyle getSidebarNumberingStyle() const;
+    void setSidebarNumberingStyle(SidebarNumberingStyle numberingStyle);
+
     bool isHighlightPosition() const;
     void setHighlightPosition(bool highlight);
 
@@ -347,11 +353,9 @@ public:
     void setDefaultSaveName(const std::string& name);
 
     std::string const& getDefaultPdfExportName() const;
+    void setDefaultPdfExportName(const std::string& name);
 
     ButtonConfig* getButtonConfig(unsigned int id);
-
-    std::string const& getFullscreenHideElements() const;
-    void setFullscreenHideElements(std::string elements);
 
     void setViewMode(ViewModeId mode, ViewMode ViewMode);
 
@@ -363,6 +367,9 @@ public:
 
     Color getBackgroundColor() const;
     void setBackgroundColor(Color color);
+
+    Color getActiveSelectionColor() const;
+    void setActiveSelectionColor(Color color);
 
     // Re-render pages if document zoom differs from the last render zoom by the given threshold.
     double getPDFPageRerenderThreshold() const;
@@ -389,9 +396,11 @@ public:
     fs::path const& getAudioFolder() const;
     void setAudioFolder(fs::path audioFolder);
 
+    static constexpr PaDeviceIndex AUDIO_INPUT_SYSTEM_DEFAULT = -1;
     PaDeviceIndex getAudioInputDevice() const;
     void setAudioInputDevice(PaDeviceIndex deviceIndex);
 
+    static constexpr PaDeviceIndex AUDIO_OUTPUT_SYSTEM_DEFAULT = -1;
     PaDeviceIndex getAudioOutputDevice() const;
     void setAudioOutputDevice(PaDeviceIndex deviceIndex);
 
@@ -640,6 +649,11 @@ private:
     IconTheme iconTheme;
 
     /**
+     * Sidebar page number style
+     */
+    SidebarNumberingStyle sidebarNumberingStyle;
+
+    /**
      * Show a colored circle around the cursor
      */
     bool highlightPosition{};
@@ -685,6 +699,11 @@ private:
      * If the filepath is shown in titlebar
      */
     bool filepathShownInTitlebar{};
+
+    /**
+     * If the page number is shown in titlebar
+     */
+    bool pageNumberShownInTitlebar{};
 
     /**
      *  Hide the scrollbar
@@ -924,6 +943,11 @@ private:
      * Color for Text selection, Stroke selection etc.
      */
     Color selectionMarkerColor{};
+
+    /**
+     * Color for active selection.
+     */
+    Color activeSelectionColor{};
 
     /**
      * The color for Xournal page background

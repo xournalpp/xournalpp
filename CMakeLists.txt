@@ -6,7 +6,7 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment ve
 ## Project related Variables
 ## Also update changelog in debian folder!
 project(xournalpp
-        VERSION 1.1.3
+        VERSION 1.2.0
         DESCRIPTION "Xournal++ - Open source hand note-taking program"
         HOMEPAGE_URL "https://xournalpp.github.io/"
         LANGUAGES CXX C)
@@ -222,6 +222,7 @@ add_subdirectory(po)
 
 # Development options
 option(DEV_CALL_LOG "Call log" OFF)
+add_compile_definitions(G_LOG_DOMAIN="xopp")
 
 # Debug options
 option(DEBUG_INPUT "Input debugging, e.g. eraser events etc" OFF)

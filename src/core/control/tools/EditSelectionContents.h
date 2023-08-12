@@ -104,6 +104,11 @@ public:
      * */
     void replaceInsertOrder(std::deque<std::pair<Element*, Element::Index>> newInsertOrder);
 
+    /**
+     * Creates an undo/redo item for translating by (dx, dy), and then updates the bounding boxes accordingly.
+     */
+    void addMoveUndo(UndoRedoHandler* undo, double dx, double dy);
+
 public:
     /**
      * paints the selection

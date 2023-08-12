@@ -6,7 +6,7 @@
 
 #include <cmath>  // for round
 
-#include <glib.h>  // for gdouble, g_assert
+#include <glib.h>  // for gdouble
 
 #include "control/settings/Settings.h"           // for Settings
 #include "gui/Layout.h"                          // for Layout
@@ -17,6 +17,7 @@
 #include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
 #include "gui/widgets/XournalWidget.h"           // for GtkXournal
 #include "model/Point.h"                         // for Point, Point::NO_PRE...
+#include "util/Assert.h"                         // for xoj_assert
 
 #include "InputContext.h"  // for InputContext
 
@@ -51,7 +52,7 @@ auto AbstractInputHandler::handle(InputEvent const& event) -> bool {
  *
  * @return page or nullptr if none
  */
-auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) -> XojPageView* {
+auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) const -> XojPageView* {
     if (!event) {
         return nullptr;
     }
@@ -67,9 +68,9 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) -> 
 /**
  * Get input data relative to current input page
  */
-auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event)
+auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event) const
         -> PositionInputData {
-    g_assert(page != nullptr);
+    xoj_assert(page != nullptr);
 
     gdouble eventX = event.relativeX;
     gdouble eventY = event.relativeY;

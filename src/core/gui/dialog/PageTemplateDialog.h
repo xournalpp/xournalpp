@@ -42,7 +42,7 @@ public:
      */
     bool isSaved() const;
 
-    void changeCurrentPageBackground(PageTypeInfo* info) override;
+    void changeCurrentPageBackground(const PageTypeInfo* info) override;
 
 private:
     void showPageSizeDialog();

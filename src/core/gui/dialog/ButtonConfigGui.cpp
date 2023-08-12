@@ -145,6 +145,9 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     // Values in glade GUI!
     this->cbEraserType = get("cbEraserType");
 
+    // Possible values are defined in the .glade file
+    this->cbStrokeType = get("cbStrokeType");
+
     loadSettings();
 }
 
@@ -201,6 +204,8 @@ void ButtonConfigGui::loadSettings() {
     } else {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbEraserType), 0);
     }
+
+    gtk_combo_box_set_active(GTK_COMBO_BOX(cbStrokeType), cfg->strokeType);
 
     if (withDevice) {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbDevice), 0);
@@ -260,6 +265,8 @@ void ButtonConfigGui::saveSettings() {
         cfg->eraserMode = ERASER_TYPE_NONE;
     }
 
+    cfg->strokeType = static_cast<StrokeType>(gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbStrokeType)));
+
     if (this->withDevice) {
         int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1;
         cfg->device = (dev < 0 || this->deviceList.size() <= dev) ? "" : this->deviceList[dev].getName();
@@ -282,6 +289,12 @@ void ButtonConfigGui::enableDisableTools() {
 
     switch (action) {
         case TOOL_PEN:
+            gtk_widget_set_visible(cbThickness, true);
+            gtk_widget_set_visible(colorButton, true);
+            gtk_widget_set_visible(cbDrawingType, true);
+            gtk_widget_set_visible(cbEraserType, false);
+            gtk_widget_set_visible(cbStrokeType, true);
+            break;
         case TOOL_HIGHLIGHTER:
         case TOOL_SELECT_PDF_TEXT_LINEAR:
         case TOOL_SELECT_PDF_TEXT_RECT:
@@ -289,6 +302,7 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(colorButton, true);
             gtk_widget_set_visible(cbDrawingType, true);
             gtk_widget_set_visible(cbEraserType, false);
+            gtk_widget_set_visible(cbStrokeType, false);
             break;
 
         case TOOL_ERASER:
@@ -296,6 +310,7 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(colorButton, false);
             gtk_widget_set_visible(cbDrawingType, false);
             gtk_widget_set_visible(cbEraserType, true);
+            gtk_widget_set_visible(cbStrokeType, false);
             break;
 
         case TOOL_TEXT:
@@ -303,6 +318,7 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(colorButton, true);
             gtk_widget_set_visible(cbDrawingType, false);
             gtk_widget_set_visible(cbEraserType, false);
+            gtk_widget_set_visible(cbStrokeType, false);
             break;
 
         case TOOL_NONE:
@@ -319,6 +335,7 @@ void ButtonConfigGui::enableDisableTools() {
             gtk_widget_set_visible(colorButton, false);
             gtk_widget_set_visible(cbDrawingType, false);
             gtk_widget_set_visible(cbEraserType, false);
+            gtk_widget_set_visible(cbStrokeType, false);
             break;
         default:
             break;

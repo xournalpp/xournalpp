@@ -15,13 +15,15 @@
 
 #include "control/ToolEnums.h"               // for DrawingType, ToolType
 #include "control/settings/SettingsEnums.h"  // for Button
+#include "model/LineStyle.h"
 #include "util/Color.h"                      // for Color
 
 class ToolHandler;
 
 class ButtonConfig {
 public:
-    ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType, EraserType eraserMode);
+    ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType, EraserType eraserMode,
+                 StrokeType strokeType = STROKE_TYPE_NONE);
     virtual ~ButtonConfig();
 
 public:
@@ -67,6 +69,7 @@ private:
     ToolSize size;
     EraserType eraserMode;
     DrawingType drawingType;
+    StrokeType strokeType;
 
     bool disableDrawing;
 

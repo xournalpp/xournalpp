@@ -30,6 +30,7 @@
 #include "model/XojPage.h"                   // for XojPage
 #include "undo/InsertUndoAction.h"           // for InsertUndoAction
 #include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
+#include "util/Assert.h"                     // for xoj_assert
 #include "util/Color.h"                      // for Color, get_color_contrast
 #include "util/PathUtil.h"                   // for ensureFolderExists, getT...
 #include "util/PlaceholderString.h"          // for PlaceholderString
@@ -359,7 +360,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
 }
 
 void LatexController::insertTexImage() {
-    g_assert(this->temporaryRender != nullptr);
+    xoj_assert(this->temporaryRender != nullptr);
     TexImage* img = this->temporaryRender.release();
 
     this->control->clearSelectionEndText();
@@ -387,7 +388,7 @@ void LatexController::run() {
     const string newTex = this->showTexEditDialog();
 
     if (this->initialTex != newTex) {
-        g_assert(this->isValidTex);
+        xoj_assert(this->isValidTex);
         this->insertTexImage();
     }
 }

@@ -2,13 +2,14 @@
 
 #include <cairo.h>  // for CAIRO_STATUS_SUCCESS
 
+#include "util/Assert.h"                      // for xoj_assert
 #include "util/serializing/ObjectEncoding.h"  // for ObjectEncoding
 #include "util/serializing/Serializable.h"    // for XML_VERSION_STR
 
 template void ObjectOutputStream::writeData(const std::vector<double>& data);
 
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder) {
-    g_assert(encoder != nullptr);
+    xoj_assert(encoder != nullptr);
     this->encoder = encoder;
 
     writeString(XML_VERSION_STR);

@@ -14,7 +14,7 @@
 #include <string>  // for string
 
 
-enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, IsoDotted, IsoGraph, Pdf, Image, Copy };
+enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, IsoDotted, IsoGraph, Pdf, Image };
 
 class PageType {
 public:
@@ -29,6 +29,7 @@ public:
      * Compare Operator
      */
     bool operator==(const PageType& other) const;
+    bool operator!=(const PageType& other) const;
 
     /**
      * PDF background

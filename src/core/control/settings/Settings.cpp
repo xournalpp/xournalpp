@@ -89,6 +89,7 @@ void Settings::loadDefault() {
 
     this->showSidebar = true;
     this->sidebarWidth = 150;
+    this->sidebarNumberingStyle = SidebarNumberingStyle::DEFAULT;
 
     this->showToolbar = true;
 
@@ -180,6 +181,7 @@ void Settings::loadDefault() {
 
     this->selectionBorderColor = Colors::red;
     this->selectionMarkerColor = Colors::xopp_cornflowerblue;
+    this->activeSelectionColor = Colors::lawngreen;
 
     this->backgroundColor = Colors::xopp_gainsboro02;
 
@@ -188,8 +190,8 @@ void Settings::loadDefault() {
     // clang-format on
 
     this->audioSampleRate = 44100.0;
-    this->audioInputDevice = -1;
-    this->audioOutputDevice = -1;
+    this->audioInputDevice = AUDIO_INPUT_SYSTEM_DEFAULT;
+    this->audioOutputDevice = AUDIO_OUTPUT_SYSTEM_DEFAULT;
     this->audioGain = 1.0;
     this->defaultSeekTime = 5;
 
@@ -356,7 +358,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     xmlChar* value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("value"));
     if (value == nullptr) {
         xmlFree(name);
-        g_warning("No value property!\n");
+        g_warning("Settings::No value property!\n");
         return;
     }
 
@@ -400,8 +402,17 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->showToolbar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("filepathShownInTitlebar")) == 0) {
         this->filepathShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageNumberShownInTitlebar")) == 0) {
+        this->pageNumberShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showSidebar")) == 0) {
         this->showSidebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarNumberingStyle")) == 0) {
+        int num = std::stoi(reinterpret_cast<char*>(value));
+        if (num < static_cast<int>(SidebarNumberingStyle::MIN) || static_cast<int>(SidebarNumberingStyle::MAX) < num) {
+            num = static_cast<int>(SidebarNumberingStyle::DEFAULT);
+            g_warning("Settings::Invalid sidebarNumberingStyle value. Reset to default.");
+        }
+        this->sidebarNumberingStyle = static_cast<SidebarNumberingStyle>(num);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarWidth")) == 0) {
         this->sidebarWidth = std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 50);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarOnRight")) == 0) {
@@ -495,6 +506,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->selectionBorderColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionMarkerColor")) == 0) {
         this->selectionMarkerColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("activeSelectionColor")) == 0) {
+        this->activeSelectionColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
         this->backgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
@@ -653,6 +666,12 @@ void Settings::loadButtonConfig() {
         if (e.getString("tool", sType)) {
             ToolType type = toolTypeFromString(sType);
             cfg->action = type;
+
+            if (type == TOOL_PEN) {
+                string strokeType;
+                cfg->strokeType =
+                        e.getString("strokeType", strokeType) ? strokeTypeFromString(strokeType) : STROKE_TYPE_NONE;
+            }
 
             if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
                 string drawingType;
@@ -825,13 +844,17 @@ void Settings::saveButtonConfig() {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
         const auto& cfg = buttonConfig[i];
 
-        ToolType type = cfg->action;
+        ToolType const type = cfg->action;
         e.setString("tool", toolTypeToString(type));
+
+        if (type == TOOL_PEN) {
+            e.setString("strokeType", strokeTypeToString(cfg->strokeType));
+        }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
             e.setString("drawingType", drawingTypeToString(cfg->drawingType));
             e.setString("size", toolSizeToString(cfg->size));
-        }  // end if pen or highlighter
+        }
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
             e.setIntHex("color", int32_t(uint32_t(cfg->color)));
@@ -919,11 +942,13 @@ void Settings::save() {
 
     SAVE_BOOL_PROP(showSidebar);
     SAVE_INT_PROP(sidebarWidth);
+    xmlNode = saveProperty("sidebarNumberingStyle", static_cast<int>(sidebarNumberingStyle), root);
 
     SAVE_BOOL_PROP(sidebarOnRight);
     SAVE_BOOL_PROP(scrollbarOnLeft);
     SAVE_BOOL_PROP(menubarVisible);
     SAVE_BOOL_PROP(filepathShownInTitlebar);
+    SAVE_BOOL_PROP(pageNumberShownInTitlebar);
     SAVE_INT_PROP(numColumns);
     SAVE_INT_PROP(numRows);
     SAVE_BOOL_PROP(viewFixedRows);
@@ -1011,6 +1036,7 @@ void Settings::save() {
     xmlNode = savePropertyUnsigned("selectionBorderColor", uint32_t(selectionBorderColor), root);
     xmlNode = savePropertyUnsigned("backgroundColor", uint32_t(backgroundColor), root);
     xmlNode = savePropertyUnsigned("selectionMarkerColor", uint32_t(selectionMarkerColor), root);
+    xmlNode = savePropertyUnsigned("activeSelectionColor", uint32_t(activeSelectionColor), root);
 
     SAVE_DOUBLE_PROP(touchZoomStartThreshold);
     SAVE_DOUBLE_PROP(pageRerenderThreshold);
@@ -1228,6 +1254,18 @@ void Settings::setFilepathInTitlebarShown(const bool shown) {
     save();
 }
 
+const bool Settings::isPageNumberInTitlebarShown() const { return this->pageNumberShownInTitlebar; }
+
+void Settings::setPageNumberInTitlebarShown(const bool shown) {
+    if (this->pageNumberShownInTitlebar == shown) {
+        return;
+    }
+
+    this->pageNumberShownInTitlebar = shown;
+
+    save();
+}
+
 auto Settings::getAutosaveTimeout() const -> int { return this->autosaveTimeout; }
 
 void Settings::setAutosaveTimeout(int autosave) {
@@ -1331,6 +1369,18 @@ void Settings::setIconTheme(IconTheme iconTheme) {
     }
 
     this->iconTheme = iconTheme;
+
+    save();
+}
+
+auto Settings::getSidebarNumberingStyle() const -> SidebarNumberingStyle { return this->sidebarNumberingStyle; };
+
+void Settings::setSidebarNumberingStyle(SidebarNumberingStyle numberingStyle) {
+    if (this->sidebarNumberingStyle == numberingStyle) {
+        return;
+    }
+
+    this->sidebarNumberingStyle = numberingStyle;
 
     save();
 }
@@ -1522,14 +1572,24 @@ void Settings::setAutoloadPdfXoj(bool load) {
 
 auto Settings::getDefaultSaveName() const -> string const& { return this->defaultSaveName; }
 
-auto Settings::getDefaultPdfExportName() const -> string const& { return this->defaultPdfExportName; }
-
 void Settings::setDefaultSaveName(const string& name) {
     if (this->defaultSaveName == name) {
         return;
     }
 
     this->defaultSaveName = name;
+
+    save();
+}
+
+auto Settings::getDefaultPdfExportName() const -> string const& { return this->defaultPdfExportName; }
+
+void Settings::setDefaultPdfExportName(const string& name) {
+    if (this->defaultPdfExportName == name) {
+        return;
+    }
+
+    this->defaultPdfExportName = name;
 
     save();
 }
@@ -1965,6 +2025,16 @@ void Settings::setSelectionColor(Color color) {
         return;
     }
     this->selectionMarkerColor = color;
+    save();
+}
+
+auto Settings::getActiveSelectionColor() const -> Color { return this->activeSelectionColor; }
+
+void Settings::setActiveSelectionColor(Color color) {
+    if (this->activeSelectionColor == color) {
+        return;
+    }
+    this->activeSelectionColor = color;
     save();
 }
 

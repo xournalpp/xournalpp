@@ -1,7 +1,6 @@
 #include "StrokeHandler.h"
 
 #include <algorithm>  // for max, min
-#include <cassert>    // for assert
 #include <cmath>      // for ceil, pow, abs
 #include <limits>     // for numeric_limits
 #include <memory>     // for unique_ptr, mak...
@@ -10,27 +9,28 @@
 
 #include <gdk/gdk.h>  // for GdkEventKey
 
-#include "control/Control.h"                          // for Control
-#include "control/ToolEnums.h"                        // for DRAWING_TYPE_ST...
-#include "control/ToolHandler.h"                      // for ToolHandler
-#include "control/layer/LayerController.h"            // for LayerController
-#include "control/settings/Settings.h"                // for Settings
-#include "control/settings/SettingsEnums.h"           // for EmptyLastPageAppendType
-#include "control/shaperecognizer/ShapeRecognizer.h"  // for ShapeRecognizer
-#include "control/tools/InputHandler.h"               // for InputHandler::P...
-#include "control/tools/SnapToGridInputHandler.h"     // for SnapToGridInput...
-#include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
-#include "model/Document.h"                      // for Document
-#include "model/Layer.h"                         // for Layer
-#include "model/LineStyle.h"                     // for LineStyle
-#include "model/Stroke.h"                        // for Stroke, STROKE_...
-#include "model/XojPage.h"                       // for XojPage
-#include "undo/InsertUndoAction.h"               // for InsertUndoAction
-#include "undo/RecognizerUndoAction.h"           // for RecognizerUndoA...
-#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
-#include "util/DispatchPool.h"                   // for DispatchPool
-#include "util/Range.h"                          // for Range
-#include "util/Rectangle.h"                      // for Rectangle, util
+#include "control/Control.h"                                // for Control
+#include "control/ToolEnums.h"                              // for DRAWING_TYPE_ST...
+#include "control/ToolHandler.h"                            // for ToolHandler
+#include "control/layer/LayerController.h"                  // for LayerController
+#include "control/settings/Settings.h"                      // for Settings
+#include "control/settings/SettingsEnums.h"                 // for EmptyLastPageAppendType
+#include "control/shaperecognizer/ShapeRecognizer.h"        // for ShapeRecognizer
+#include "control/tools/InputHandler.h"                     // for InputHandler::P...
+#include "control/tools/SnapToGridInputHandler.h"           // for SnapToGridInput...
+#include "gui/inputdevices/PositionInputData.h"             // for PositionInputData
+#include "model/Document.h"                                 // for Document
+#include "model/Layer.h"                                    // for Layer
+#include "model/LineStyle.h"                                // for LineStyle
+#include "model/Stroke.h"                                   // for Stroke, STROKE_...
+#include "model/XojPage.h"                                  // for XojPage
+#include "undo/InsertUndoAction.h"                          // for InsertUndoAction
+#include "undo/RecognizerUndoAction.h"                      // for RecognizerUndoA...
+#include "undo/UndoRedoHandler.h"                           // for UndoRedoHandler
+#include "util/Assert.h"                                    // for xoj_assert
+#include "util/DispatchPool.h"                              // for DispatchPool
+#include "util/Range.h"                                     // for Range
+#include "util/Rectangle.h"                                 // for Rectangle, util
 #include "view/overlays/StrokeToolFilledHighlighterView.h"  // for StrokeToolFilledHighlighterView
 #include "view/overlays/StrokeToolFilledView.h"             // for StrokeToolFilledView
 #include "view/overlays/StrokeToolView.h"                   // for StrokeToolView
@@ -255,7 +255,7 @@ void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
 }
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
-    assert(!stroke);
+    xoj_assert(!stroke);
 
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
@@ -275,7 +275,7 @@ void StrokeHandler::onButtonDoublePressEvent(const PositionInputData&, double) {
 }
 
 auto StrokeHandler::createView(xoj::view::Repaintable* parent) const -> std::unique_ptr<xoj::view::OverlayView> {
-    assert(this->stroke);
+    xoj_assert(this->stroke);
     const Stroke& s = *this->stroke;
     if (s.getFill() != -1) {
         if (s.getToolType() == StrokeTool::HIGHLIGHTER) {

@@ -11,15 +11,16 @@
 
 #pragma once
 
-#include <cinttypes>  // for uint8_t
-#include <memory>     // for shared_ptr
-#include <string>     // for string
-#include <vector>     // for vector
+#include <cstdint>  // for uint8_t
+#include <memory>   // for shared_ptr
+#include <string>   // for string
+#include <vector>   // for vector
 
-#include <glib.h> // for GURI
 #include <cairo.h>  // for cairo_region_t, cairo_t
+#include <glib.h>   // for GURI
 
 #include "util/raii/CairoWrappers.h"
+
 #include "XojPdfAction.h"
 
 class XojPdfLink;

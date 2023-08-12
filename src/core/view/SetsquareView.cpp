@@ -1,7 +1,6 @@
 #include "SetsquareView.h"
 
 #include <algorithm>  // for max, min
-#include <cassert>    // for assert
 #include <cmath>      // for isnan, sqrt, cos, sin, atan2
 #include <iomanip>
 #include <sstream>
@@ -11,6 +10,7 @@
 
 #include "model/Setsquare.h"          // for Setsquare
 #include "model/Stroke.h"             // for Stroke
+#include "util/Assert.h"              // for xoj_assert
 #include "util/raii/CairoWrappers.h"  // for CairoSaveGuard
 #include "view/Repaintable.h"         // for Repaintable
 #include "view/View.h"                // for Context
@@ -47,7 +47,7 @@ SetsquareView::~SetsquareView() noexcept { this->unregisterFromPool(); };
 void SetsquareView::on(FlagDirtyRegionRequest, const Range& rg) { this->parent->flagDirtyRegion(rg); }
 
 void SetsquareView::on(UpdateValuesRequest, double h, double rot, cairo_matrix_t m) {
-    assert(h > 0 && "Non-positive setsquare height");
+    xoj_assert_message(h > 0, "Non-positive setsquare height");
     height = h;
     rotation = rot;
     matrix = m;

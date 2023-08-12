@@ -1,6 +1,5 @@
 #include "StrokeToolView.h"
 
-#include <cassert>
 #include <functional>
 #include <memory>
 #include <numeric>
@@ -8,6 +7,7 @@
 #include "control/tools/StrokeHandler.h"
 #include "model/LineStyle.h"
 #include "model/Stroke.h"
+#include "util/Assert.h"
 #include "util/Color.h"
 #include "util/PairView.h"
 #include "util/Range.h"
@@ -80,17 +80,17 @@ void StrokeToolView::draw(cairo_t* cr) const {
 
 void StrokeToolView::on(StrokeToolView::AddPointRequest, const Point& p) {
     this->singleDot = false;
-    assert(!this->pointBuffer.empty());  // front() is the last point we painted on the mask (see flushBuffer())
+    xoj_assert(!this->pointBuffer.empty());  // front() is the last point we painted on the mask (see flushBuffer())
     Point lastPoint = this->pointBuffer.back();
     this->pointBuffer.emplace_back(p);
     this->parent->flagDirtyRegion(this->getRepaintRange(lastPoint, p));
 }
 
 void StrokeToolView::on(StrokeToolView::ThickenFirstPointRequest, double newWidth) {
-    assert(newWidth > 0.0);
-    assert(this->pointBuffer.size() == 1);
+    xoj_assert(newWidth > 0.0);
+    xoj_assert(this->pointBuffer.size() == 1);
     Point& p = this->pointBuffer.back();
-    assert(p.z <= newWidth);  // Thicken means thicken
+    xoj_assert(p.z <= newWidth);  // Thicken means thicken
     p.z = newWidth;
     Range rg = Range(p.x, p.y);
     rg.addPadding(0.5 * newWidth);
@@ -107,10 +107,10 @@ void StrokeToolView::on(StrokeToolView::StrokeReplacementRequest, const Stroke& 
     this->pointBuffer = newStroke.getPointVector();
     this->dashOffset = 0;
     this->strokeWidth = newStroke.getWidth();
-    assert(this->strokeColor == strokeColorWithAlpha(newStroke));
-    assert(this->lineStyle == newStroke.getLineStyle());
-    assert(this->cairoOp ==
-           (newStroke.getToolType() == StrokeTool::HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER));
+    xoj_assert(this->strokeColor == strokeColorWithAlpha(newStroke));
+    xoj_assert(this->lineStyle == newStroke.getLineStyle());
+    xoj_assert(this->cairoOp ==
+               (newStroke.getToolType() == StrokeTool::HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER));
 }
 
 void StrokeToolView::deleteOn(StrokeToolView::FinalizationRequest, const Range& rg) {

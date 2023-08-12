@@ -12,6 +12,7 @@
 #include "gui/toolbarMenubar/ToolMenuHandler.h"        // for ToolMenuHandler
 #include "gui/toolbarMenubar/icon/ColorSelectImage.h"  // for ColorSelectImage
 #include "gui/toolbarMenubar/model/ToolbarData.h"      // for ToolbarData
+#include "util/Assert.h"                               // for xoj_assert
 #include "util/NamedColor.h"                           // for NamedColor
 #include "util/PlaceholderString.h"                    // for PlaceholderString
 #include "util/i18n.h"                                 // for FS, _F
@@ -112,9 +113,9 @@ void ToolbarAdapter::prepareToolItem(GtkToolItem* it) {
         gtk_widget_realize(GTK_WIDGET(it));
         GdkDisplay* display = gtk_widget_get_display(GTK_WIDGET(it));
         GdkCursor* cursor = gdk_cursor_new_for_display(display, GDK_HAND2);
-        g_assert_nonnull(cursor);
+        xoj_assert(cursor);
         GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(it));
-        g_assert_nonnull(window);
+        xoj_assert(window);
         gdk_window_set_cursor(window, cursor);
         g_object_unref(cursor);
     }

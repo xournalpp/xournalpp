@@ -107,6 +107,14 @@ public:
     Color getColor() const;
 
     /**
+     * @brief Enable/disable fill for the tool selected in the toolbar
+     *
+     * @param fill whether fill should be enabled
+     * @param fireEvent whether a toolFillChanged event should be fired
+     */
+    void setFillEnabled(bool fill, bool fireEvent);
+
+    /**
      * @brief Get the Fill of the active tool
      *
      * @return -1 if fill is disabled
@@ -138,6 +146,15 @@ public:
      * @param button button tool to be selected
      */
     void setButtonDrawingType(DrawingType drawingType, Button button);
+
+    /**
+     * @brief Set the Stroke Type of a button tool
+     *
+     * @param strokeType The stroke type to apply
+     * @param button The button tool to change
+     */
+    void setButtonStrokeType(StrokeType strokeType, Button button);
+    void setButtonStrokeType(const LineStyle& lineStyle, Button button);
 
     /**
      * @brief Get the Line Style of active tool

@@ -763,13 +763,17 @@ void EditSelection::updateMatrix() {
     cairo_matrix_translate(&this->cmatrix, -rx, -ry);
 }
 
-void EditSelection::moveSelection(double dx, double dy) {
+void EditSelection::moveSelection(double dx, double dy, bool addMoveUndo) {
     this->x += dx;
     this->y += dy;
     this->snappedBounds.x += dx;
     this->snappedBounds.y += dy;
 
     updateMatrix();
+
+    if (addMoveUndo) {
+        this->contents->addMoveUndo(this->undo, dx, dy);
+    }
 
     this->view->getXournal()->repaintSelection();
 }

@@ -8,9 +8,10 @@
 #include <vector>   // for vector
 
 #include <glib-object.h>  // for g_object_ref, G_CALLBACK, g_signal_connect
-#include <glib.h>         // for gulong, g_assert
+#include <glib.h>         // for gulong
 
 #include "gui/GladeGui.h"  // for GladeGui
+#include "util/Assert.h"   // for xoj_assert
 
 SidebarLayersContextMenu::SidebarLayersContextMenu(GladeGui* gui, SidebarToolbar* toolbar):
         SidebarBaseContextMenu(gui->get("sidebarPreviewLayersContextMenu")) {
@@ -36,7 +37,7 @@ SidebarLayersContextMenu::SidebarLayersContextMenu(GladeGui* gui, SidebarToolbar
     for (const auto& [name, action]: ctxMenuActions) {
 
         GtkWidget* const entry = gui->get(name);
-        g_assert(entry != nullptr);
+        xoj_assert(entry != nullptr);
 
         // Create callbacks, store the entry
         using Data = ContextMenuData;

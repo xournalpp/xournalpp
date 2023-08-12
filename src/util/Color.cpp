@@ -1,9 +1,10 @@
 #include "util/Color.h"
 
 #include <algorithm>  // for max, min
-#include <cassert>    // for assert
 #include <cstdio>     // for snprintf
 #include <sstream>    // for operator<<, stringstream, basic_ostream, char_t...
+
+#include "util/Assert.h"  // for xoj_assert
 
 float Util::as_grayscale_color(Color color) {
     GdkRGBA components = rgb_to_GdkRGBA(color);
@@ -23,7 +24,7 @@ auto Util::rgb_to_hex_string(Color rgb) -> std::string {
     char resultHex[7];
 
     // 06: Disregard alpha channel and pad with zeroes to a length of 6.
-    assert(std::snprintf(resultHex, 7, "%06x", uint32_t(rgb) & 0xffffff) > 0);
+    xoj_assert(std::snprintf(resultHex, 7, "%06x", uint32_t(rgb) & 0xffffff) > 0);
 
     std::stringstream result;
     result << "#" << resultHex;

@@ -123,7 +123,18 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->sequenceStartPage = currentPage;
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
-    if (toolHandler->getToolType() != TOOL_HAND && xournal->selection) {
+    bool changeSelection = xournal->selection && toolHandler->getToolType() != TOOL_HAND;
+    if ((event.state & GDK_SHIFT_MASK)) {
+        // When tap single selection is enabled, selections can happen with the Pen tool
+        if (toolHandler->getToolType() == TOOL_PEN && isCurrentTapSelection(event)) {
+            changeSelection = false;
+        }
+        // Selection tools does not change selection with Shift pressed
+        if (isSelectToolTypeSingleLayer(toolType)) {
+            changeSelection = false;
+        }
+    }
+    if (changeSelection) {
         EditSelection* selection = xournal->selection;
 
         XojPageView* view = selection->getView();
@@ -202,6 +213,36 @@ double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView
     return filteredPressure;
 }
 
+bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
+
+    ToolHandler* toolHandler = inputContext->getToolHandler();
+    if (!toolHandler->supportsTapFilter()) {
+        return false;
+    }
+
+    auto* settings = inputContext->getSettings();
+    if (!settings->getStrokeFilterEnabled()) {
+        return false;
+    }
+
+    int tapMaxDuration = 0, filterRepetitionTime = 0;
+    double tapMaxDistance = NAN;  // in mm
+
+    settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
+
+    const double dpmm = settings->getDisplayDpi() / 25.4;
+    const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
+                                   this->sequenceStartPosition.y - event.absoluteY);
+
+    const bool noMovement = dist < tapMaxDistance * dpmm;
+    const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
+    const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
+    if (noMovement && fastEnoughTap && notAnAftershock) {
+        return true;
+    }
+    return false;
+}
+
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     /*
      * Workaround for misbehaving devices where Enter events are not published every time
@@ -239,7 +280,20 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         }
         return false;
     }
-    if (xournal->selection) {
+
+    bool isShiftDown = (event.state & GDK_SHIFT_MASK);
+    bool handleSelectionMove = xournal->selection != nullptr;
+
+    if (xournal->selection && isSelectToolTypeSingleLayer(toolHandler->getToolType()) &&
+        !xournal->selection->isMoving()) {
+        if (isShiftDown || this->deviceClassPressed) {
+            handleSelectionMove = false;
+            // Cursor mode to match the multiple-selection mode
+            xournal->view->getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
+        }
+    }
+
+    if (handleSelectionMove) {
         EditSelection* selection = xournal->selection;
         XojPageView* view = selection->getView();
 
@@ -247,7 +301,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
 
         if (xournal->selection->isMoving()) {
             selection->mouseMove(pos.x, pos.y, pos.isAltDown());
-        } else {
+        } else if (!isShiftDown) {
             CursorSelectionType selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
             xournal->view->getCursor()->setMouseSelectionType(selType);
         }
@@ -332,37 +386,28 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
 
     cursor->setMouseDown(false);
 
+    bool cancelAction = isCurrentTapSelection(event);
+
+    // Holding shift (with selections) also does not imply drawing
     if (toolHandler->supportsTapFilter()) {
         auto* settings = inputContext->getSettings();
         if (settings->getStrokeFilterEnabled()) {
-            int tapMaxDuration = 0, filterRepetitionTime = 0;
-            double tapMaxDistance = NAN;  // in mm
-
-            settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
-
-            const double dpmm = settings->getDisplayDpi() / 25.4;
-            const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
-                                           this->sequenceStartPosition.y - event.absoluteY);
-
-            const bool noMovement = dist < tapMaxDistance * dpmm;
-            const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
-            const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
-
-            if (noMovement && fastEnoughTap && notAnAftershock) {
-                // Cancel the sequence and trigger the necessary action
-                XojPageView* pageUnderTap =
-                        this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
-                if (pageUnderTap) {
-                    pageUnderTap->onSequenceCancelEvent();
-                    PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
-                    pageUnderTap->onTapEvent(pos);
-                }
-                this->sequenceStartPage = nullptr;
-                this->inputRunning = false;
-                this->lastActionEndTimeStamp = event.timestamp;
-                return false;
-            }
+            cancelAction |= (event.state & GDK_SHIFT_MASK) && xournal->selection != nullptr;
         }
+    }
+
+    if (cancelAction) {
+        // Cancel the sequence and trigger the necessary action
+        XojPageView* pageUnderTap = this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
+        if (pageUnderTap) {
+            pageUnderTap->onSequenceCancelEvent();
+            PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
+            pageUnderTap->onTapEvent(pos);
+        }
+        this->sequenceStartPage = nullptr;
+        this->inputRunning = false;
+        this->lastActionEndTimeStamp = event.timestamp;
+        return false;
     }
     this->lastActionEndTimeStamp = event.timestamp;
 

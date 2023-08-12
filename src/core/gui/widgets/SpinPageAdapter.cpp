@@ -1,8 +1,10 @@
 #include "SpinPageAdapter.h"
 
-#include <cinttypes>  // for uint64_t
+#include <cstdint>  // for uint64_t
 
 #include <glib-object.h>  // for g_signal_handler_disconnect, G_CALLBACK
+
+#include "util/Assert.h"  // for xoj_assert
 
 SpinPageAdapter::SpinPageAdapter() {}
 
@@ -38,8 +40,8 @@ bool SpinPageAdapter::hasWidget() { return this->widget != nullptr; }
 
 void SpinPageAdapter::setWidget(GtkWidget* widget) {
     // only one widget is supported and the previous widget has to be removed via removeWidget
-    g_assert(!this->hasWidget());
-    g_assert_nonnull(widget);
+    xoj_assert(!this->hasWidget());
+    xoj_assert(widget);
 
     this->widget = widget;
     this->pageNrSpinChangedHandlerId =
@@ -52,7 +54,7 @@ void SpinPageAdapter::setWidget(GtkWidget* widget) {
 }
 
 void SpinPageAdapter::removeWidget() {
-    g_assert(this->hasWidget());
+    xoj_assert(this->hasWidget());
 
     g_signal_handler_disconnect(this->widget, this->pageNrSpinChangedHandlerId);
 
