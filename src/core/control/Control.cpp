@@ -2410,8 +2410,8 @@ auto Control::changePdfBackground() -> bool {
 
     LoadHandler loadHandler;
 
-    const fs::path current_filepath = ((*this).doc)->getFilepath();
-    const fs::path current_PDFfilepath = ((*this).doc)->getPdfFilepath();
+    const fs::path currentFilepath = ((*this).doc)->getFilepath();
+    const fs::path currentPdfFilepath = ((*this).doc)->getPdfFilepath();
 
     auto pageNr = getCurrentPageNo();
     PageRef page = this->doc->getPage(pageNr);
