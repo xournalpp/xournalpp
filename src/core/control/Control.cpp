@@ -2420,7 +2420,7 @@ auto Control::changePdfBackground() -> bool {
     if (current_PDFfilepath.empty()) {
         string msg = FS(_F("Error in changing the background: please open a pdf first."));
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
-        return true;
+        return false;
     }
 
     if (this->undoRedo->isChanged()) {
