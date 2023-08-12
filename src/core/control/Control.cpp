@@ -2443,6 +2443,10 @@ auto Control::changePdfBackground() -> bool {
     if (!pdfFilename.empty()) {
         loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
         loadedDocument = loadHandler.loadDocument(current_filepath);
+        if (!loadedDocument) {
+            string msg = FS(_F("Error opening file \"{1}\"") % currentFilepath.u8string()) + "\n" + loadHandler.getLastError();
+            XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+            return false;
     }
 
     this->closeDocument();
