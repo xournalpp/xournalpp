@@ -2415,7 +2415,7 @@ auto Control::changePdfBackground() -> bool {
 
     auto pageNr = getCurrentPageNo();
     PageRef page = this->doc->getPage(pageNr);
-    //Layer* layer = page->getSelectedLayer();
+    // Layer* layer = page->getSelectedLayer();
 
     if (currentPdfFilepath.empty()) {
         string msg = FS(_F("Error in changing the background: please open a pdf first."));
