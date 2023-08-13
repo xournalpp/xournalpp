@@ -286,6 +286,20 @@ auto EditSelection::getOriginalBounds() const -> Rectangle<double> {
 }
 
 /**
+ * get the cursor x position relative to the selection
+ */
+auto EditSelection::getRelMousePosX() const -> double {
+    return this->relMousePosX;
+}
+
+/**
+ * get the cursor y position relative to the selection
+ */
+auto EditSelection::getRelMousePosY() const -> double {
+    return this->relMousePosY;
+}
+
+/**
  * Get the rotation angle of the selection
  */
 auto EditSelection::getRotation() const -> double { return this->rotation; }
@@ -873,8 +887,8 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     const int layoutHeight = layout->getMinimalHeight();
     const auto visRect = layout->getVisibleRect();
     const auto bbox = self->getBoundingBoxInView();
-    const double mouseX = self->relMousePosX * zoom;
-    const double mouseY = self->relMousePosY * zoom;
+    const double mouseX = self->getRelMousePosX() * zoom;
+    const double mouseY = self->getRelMousePosY() * zoom;
     const auto layoutScrollX = computeScrollAmt(visRect.x, visRect.width, bbox.x, bbox.width, layoutWidth, mouseX);
     const auto layoutScrollY = computeScrollAmt(visRect.y, visRect.height, bbox.y, bbox.height, layoutHeight, mouseY);
     const auto translateX = layoutScrollX / zoom;
