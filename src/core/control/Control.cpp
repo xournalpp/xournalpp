@@ -2457,7 +2457,7 @@ auto Control::changePdfBackground() -> bool {
     *this->doc = *loadedDocument;
     this->doc->unlock();
 
-    fileLoaded(-1);
+    fileLoaded(/*scrollToPage=*/ npos);
     return true;
 }
 
