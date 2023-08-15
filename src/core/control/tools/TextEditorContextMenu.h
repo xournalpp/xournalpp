@@ -101,7 +101,7 @@ private:
     /**
      * UI Elements
      */
-    xoj::util::GObjectSPtr<GtkPopover> contextMenu;
+    GtkPopover* contextMenu;
 
     xoj::util::GObjectSPtr<GtkFontButton> fontBtn;
 

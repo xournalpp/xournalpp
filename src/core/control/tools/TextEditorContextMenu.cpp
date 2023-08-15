@@ -85,14 +85,17 @@ TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* edito
     this->create();
 }
 
-TextEditorContextMenu::~TextEditorContextMenu() { std::cout << "TextEditorContextMenu destroyed!" << std::endl; }
+TextEditorContextMenu::~TextEditorContextMenu() {
+    gtk_popover_set_relative_to(this->contextMenu, NULL);
+    std::cout << "TextEditorContextMenu destroyed!" << std::endl;
+}
 
 void TextEditorContextMenu::show() {
     if (!isVisible) {
         this->switchAlignmentButtons(this->editor->getTextElement()->getAlignment());
         this->reposition();
         this->showReducedMenu();
-        gtk_popover_popup(this->contextMenu.get());
+        gtk_popover_popup(this->contextMenu);
         isVisible = true;
         std::cout << "Popup menu should be shown" << std::endl;
     }
@@ -100,7 +103,7 @@ void TextEditorContextMenu::show() {
 
 void TextEditorContextMenu::hide() {
     if (isVisible) {
-        gtk_popover_popdown(this->contextMenu.get());
+        gtk_popover_popdown(this->contextMenu);
         isVisible = false;
         std::cout << "Popup menu should be hidden" << std::endl;
     }
@@ -128,7 +131,7 @@ void TextEditorContextMenu::reposition() {
     GdkRectangle rect{this->pageView->getX() + int(r.getX() * this->pageView->getZoom()),
                       this->pageView->getY() + int(r.getY() * this->pageView->getZoom()) - padding,
                       int(r.getWidth() * this->pageView->getZoom()), int(r.getHeight() * this->pageView->getZoom())};
-    gtk_popover_set_pointing_to(this->contextMenu.get(), &rect);
+    gtk_popover_set_pointing_to(this->contextMenu, &rect);
 }
 
 void TextEditorContextMenu::toggleSecondaryToolbar() {
@@ -155,13 +158,12 @@ void TextEditorContextMenu::create() {
         std::cout << err->message << std::endl;
     }
 
-    this->contextMenu = xoj::util::GObjectSPtr<GtkPopover>(
-            GTK_POPOVER(gtk_builder_get_object(builder.get(), "textEditorContextMenu")), xoj::util::adopt);
-    gtk_popover_set_relative_to(this->contextMenu.get(), this->xournalWidget);
-    gtk_popover_set_constrain_to(this->contextMenu.get(), GTK_POPOVER_CONSTRAINT_WINDOW);
-    gtk_popover_set_modal(this->contextMenu.get(), false);
-    gtk_widget_set_can_focus(GTK_WIDGET(this->contextMenu.get()), false);
-    gtk_widget_hide(GTK_WIDGET(this->contextMenu.get()));
+    this->contextMenu = GTK_POPOVER(gtk_builder_get_object(builder.get(), "textEditorContextMenu"));
+    gtk_popover_set_relative_to(this->contextMenu, this->xournalWidget);
+    gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
+    gtk_popover_set_modal(this->contextMenu, false);
+    gtk_widget_set_can_focus(GTK_WIDGET(this->contextMenu), false);
+    gtk_widget_hide(GTK_WIDGET(this->contextMenu));
 
     this->fontBtn = xoj::util::GObjectSPtr<GtkFontButton>(
             GTK_FONT_BUTTON(gtk_builder_get_object(builder.get(), "btnFontChooser")), xoj::util::adopt);
