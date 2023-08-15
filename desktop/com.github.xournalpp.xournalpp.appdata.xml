@@ -29,9 +29,12 @@
       <li>Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)</li>
       <li>Paper backgrounds for note-taking, scratch paper, or whiteboarding</li>
       <li>Annotate on top of PDFs</li>
+      <li>Select text from the background PDF, copy, highlight or underline it or strike it through</li>
+      <li>Follow links from the background PDF</li>
       <li>Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line</li>
       <li>Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)</li>
       <li>Shape drawing (line, arrow, circle, rectangle, spline)</li>
+      <li>Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii</li>
       <li>Fill shape functionality</li>
       <li>Shape resizing and rotation</li>
       <li>Rotation and grid snapping for precise alignment of objects</li>
@@ -39,10 +42,11 @@
       <li>Text tool for adding text in different fonts, colors, and sizes</li>
       <li>Enhanced support for image insertion</li>
       <li>Eraser with multiple configurations</li>
-      <li>LaTeX support (requires a working LaTeX installation) with customizable template</li>
+      <li>LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting</li>
       <li>Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)</li>
       <li>Allows mapping different tools/colors etc. to stylus/mouse buttons</li>
       <li>Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape</li>
+      <li>Custom color palette support using the .gpl format</li>
       <li>Page template definitions</li>
       <li>Bug reporting, autosave, and auto backup tools</li>
       <li>Audio recording and playback alongside with handwritten notes</li>
