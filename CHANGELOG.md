@@ -2,6 +2,31 @@
 
 ## 1.2.1~dev (Unreleased)
 
+Bugfixes from various community contributors.
+
+* Added a default toolbar, so that the app does not start without toolbar on
+  new installations (#4997, #5011, #5015).
+* Added exception handling to color palettes loading to prevent a possible
+  crash (#4994, #5016).
+* Added an age filter on crash logs reported at startup. Now only crash logs
+  no older than one week will be considered relevant (#5022).
+* Fixed opening crash logs and opening the directory containing the crash logs.
+  This affected the Windows build and (only for directories) the flatpak and
+  snap packages on Linux (#4976).
+* Changed the link address when sending a bugreport about a recent crash log
+  such that the appropriate template is used (#5032).
+* Added a missing double arrow preference to the button configuration dialog,
+  therewith also fixing selections below "Draw Arrow" (#4989).
+* Fixed occuring negative pressure values that previously resulted in a crash
+  due to a failing assertion (#5025, #5028).
+* Added options to the command line and preferences to disable the audio system
+  used for audio recording (#3905, #3531, #5020, #5068).
+* The official release builds are now built in "RelWithDeb" mode as intended
+  before. In particular they will not crash on failing asserts any more (#5042).
+* Linux: The official release builds are now compiled with the gtksourceview
+  styling for the LaTeX tool (#4996).
+* Updated the package description with the new features from v1.2.0 (#5056).
+
 ## 1.2.0
 
 This is a new major version of Xournal++ with many new features, improvements,
