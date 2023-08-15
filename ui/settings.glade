@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
@@ -952,6 +952,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                               </packing>
                             </child>
                             <child>
+<<<<<<< HEAD
                               <object class="GtkFrame" id="sid88">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -1060,6 +1061,8 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                               </packing>
                             </child>
                             <child>
+=======
+>>>>>>> 70d61d00 (Rearranged tab settings)
                               <object class="GtkFrame" id="frameStabilizerSettings">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -1367,6 +1370,126 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkFrame" id="sid88">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.009999999776482582</property>
+                                <child>
+                                  <object class="GtkAlignment" id="sid89">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="bottom-padding">8</property>
+                                    <property name="left-padding">12</property>
+                                    <property name="right-padding">12</property>
+                                    <child>
+                                      <object class="GtkBox" id="sid90">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbInputSystemDrawOutsideWindow">
+                                            <property name="name">cbInputSystemDrawOutsideWindow</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw-indicator">True</property>
+                                            <child>
+                                              <object class="GtkLabel" id="sid92">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Enable drawing outside of window &lt;i&gt;(Drawing will not stop at the border of the window)&lt;/i&gt;</property>
+                                                <property name="use-markup">True</property>
+                                                <property name="wrap">True</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbInputSystemTPCButton">
+                                            <property name="name">cbInputSystemTPCButton</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="tooltip-markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
+	    Drag UP acts as if Control key is being held.
+
+            Determination Radius: Radius at which modifiers will lock in until finished drawing.
+
+	    &lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw-indicator">True</property>
+                                            <child>
+                                              <object class="GtkLabel" id="sid93">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Merge button events with stylus tip events
+	    &lt;i&gt;(Check this if&lt;/i&gt; "&lt;tt&gt;xsetwacom get *deviceId* TabletPCButton&lt;/tt&gt;" &lt;i&gt;returns&lt;/i&gt; "&lt;tt&gt;on&lt;/tt&gt;"&lt;i&gt;)&lt;/i&gt;</property>
+                                                <property name="use-markup">True</property>
+                                                <property name="wrap">True</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbEnablePressureInference">
+                                            <property name="name">cbEnablePressureInference</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="tooltip-markup" translatable="yes">Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.
+
+&lt;i&gt;This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.&lt;/i&gt;</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw-indicator">True</property>
+                                            <child>
+                                              <object class="GtkLabel" id="sid201">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Enable Pressure Inference &lt;i&gt;(Guess pressure from drawing speed when device-supplied pressure is not available)&lt;/i&gt;</property>
+                                                <property name="use-markup">True</property>
+                                                <property name="wrap">True</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">3</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="sid94">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Options</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkFrame" id="frameTabControlSettings">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -1377,27 +1500,14 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                     <property name="can-focus">False</property>
                                     <property name="left-padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <!-- n-columns=2 n-rows=1 -->
+                                      <object class="GtkGrid">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="margin-end">10</property>
-                                        <property name="margin-bottom">5</property>
-                                        <property name="orientation">vertical</property>
-                                        <property name="spacing">3</property>
-                                        <child>
-                                          <object class="GtkCheckButton" id="cbUseSpacesAsTab">
-                                            <property name="label" translatable="yes">Indent using spaces</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="receives-default">False</property>
-                                            <property name="draw-indicator">True</property>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">0</property>
-                                          </packing>
-                                        </child>
+                                        <property name="margin-bottom">10</property>
+                                        <property name="row-homogeneous">True</property>
+                                        <property name="column-homogeneous">True</property>
                                         <child>
                                           <object class="GtkBox">
                                             <property name="visible">True</property>
@@ -1427,7 +1537,6 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                                 <property name="input-purpose">number</property>
                                                 <property name="adjustment">adjustmentNumberOfSpacesForTab</property>
                                                 <property name="climb-rate">2</property>
-                                                <property name="digits">0</property>
                                                 <property name="snap-to-ticks">True</property>
                                                 <property name="numeric">True</property>
                                                 <property name="value">5</property>
@@ -1440,9 +1549,22 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                             </child>
                                           </object>
                                           <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
+                                            <property name="left-attach">1</property>
+                                            <property name="top-attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbUseSpacesAsTab">
+                                            <property name="label" translatable="yes">Indent using spaces</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="halign">start</property>
+                                            <property name="draw-indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">0</property>
+                                            <property name="top-attach">0</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -2934,9 +3056,245 @@ This setting can make it easier to draw with touch. </property>
                                             <property name="label" translatable="yes">Show filepath in title bar</property>
                                             <property name="name">cbShowFilepathInTitlebar</property>
                                             <property name="visible">True</property>
+<<<<<<< HEAD
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
                                             <property name="draw-indicator">True</property>
+=======
+                                            <property name="can-focus">False</property>
+                                            <property name="label-xalign">0.009999999776482582</property>
+                                            <child>
+                                              <object class="GtkAlignment" id="sid102">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="bottom-padding">8</property>
+                                                <property name="left-padding">12</property>
+                                                <property name="right-padding">12</property>
+                                                <child>
+                                                  <!-- n-columns=3 n-rows=7 -->
+                                                  <object class="GtkGrid" id="grid2">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">False</property>
+                                                    <child>
+                                                      <object class="GtkLabel" id="label10">
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">False</property>
+                                                        <property name="hexpand">True</property>
+                                                        <property name="label" translatable="yes">Border color for current page and other selections</property>
+                                                        <property name="justify">right</property>
+                                                        <property name="xalign">0</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">0</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkColorButton" id="colorBorder">
+                                                        <property name="name">colorBorder</property>
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">True</property>
+                                                        <property name="receives-default">True</property>
+                                                        <property name="title" translatable="yes">Border color</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">1</property>
+                                                        <property name="top-attach">0</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkLabel" id="label13">
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">False</property>
+                                                        <property name="label" translatable="yes">Background color between pages</property>
+                                                        <property name="xalign">0</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">1</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkColorButton" id="colorBackground">
+                                                        <property name="name">colorBackground</property>
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">True</property>
+                                                        <property name="receives-default">True</property>
+                                                        <property name="margin-top">5</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">1</property>
+                                                        <property name="top-attach">1</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkLabel" id="label57">
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">False</property>
+                                                        <property name="label" translatable="yes">Selection Color (Text, Stroke Selection etc.)</property>
+                                                        <property name="xalign">0</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">2</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkColorButton" id="colorSelection">
+                                                        <property name="name">colorSelection</property>
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">True</property>
+                                                        <property name="receives-default">True</property>
+                                                        <property name="margin-top">5</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">1</property>
+                                                        <property name="top-attach">2</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkLabel">
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">False</property>
+                                                        <property name="label" translatable="yes">Active Selection Color (Search Results etc.)</property>
+                                                        <property name="xalign">0</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">3</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkColorButton" id="colorSelectionActive">
+                                                        <property name="name">colorSelectionActive</property>
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">True</property>
+                                                        <property name="receives-default">True</property>
+                                                        <property name="margin-top">5</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">1</property>
+                                                        <property name="top-attach">3</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkBox">
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">False</property>
+                                                        <child>
+                                                          <object class="GtkLabel">
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="label" translatable="yes">Icon Theme</property>
+                                                            <property name="xalign">0</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">0</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkComboBoxText" id="cbIconTheme">
+                                                            <property name="name">cbIconTheme</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="active">0</property>
+                                                            <items>
+                                                            <item id="iconsColor" translatable="yes">Color</item>
+                                                            <item id="iconsLucide" translatable="yes">Lucide</item>
+                                                            </items>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">1</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkLabel">
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="label" translatable="yes">(requires restart)</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">2</property>
+                                                          </packing>
+                                                        </child>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">4</property>
+                                                        <property name="width">2</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkCheckButton" id="cbDarkTheme">
+                                                        <property name="label" translatable="yes">Dark Theme (requires restart)</property>
+                                                        <property name="name">cbDarkTheme</property>
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">True</property>
+                                                        <property name="receives-default">False</property>
+                                                        <property name="xalign">0</property>
+                                                        <property name="draw-indicator">True</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">5</property>
+                                                        <property name="width">2</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkCheckButton" id="cbStockIcons">
+                                                        <property name="label" translatable="yes">Use available Stock Icons (requires restart)</property>
+                                                        <property name="name">cbStockIcons</property>
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">True</property>
+                                                        <property name="receives-default">False</property>
+                                                        <property name="xalign">0</property>
+                                                        <property name="draw-indicator">True</property>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">6</property>
+                                                        <property name="width">2</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <placeholder/>
+                                                    </child>
+                                                    <child>
+                                                      <placeholder/>
+                                                    </child>
+                                                    <child>
+                                                      <placeholder/>
+                                                    </child>
+                                                    <child>
+                                                      <placeholder/>
+                                                    </child>
+                                                    <child>
+                                                      <placeholder/>
+                                                    </child>
+                                                    <child>
+                                                      <placeholder/>
+                                                    </child>
+                                                    <child>
+                                                      <placeholder/>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child type="label">
+                                              <object class="GtkLabel" id="sid103">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Colors</property>
+                                              </object>
+                                            </child>
+>>>>>>> 70d61d00 (Rearranged tab settings)
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
