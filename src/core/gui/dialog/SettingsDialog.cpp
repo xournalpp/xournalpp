@@ -361,8 +361,9 @@ void SettingsDialog::load() {
      * Tab size related settings
      */
     loadCheckbox("cbUseSpacesAsTab", settings->getUseSpacesAsTab());
-    GtkSpinButton* sbNumberOfSpacesForTab = GTK_SPIN_BUTTON(get("sbNumberOfSpacesForTab"));
+    GtkSpinButton* sbNumberOfSpacesForTab = GTK_SPIN_BUTTON(builder.get("sbNumberOfSpacesForTab"));
     gtk_spin_button_set_value(sbNumberOfSpacesForTab, settings->getNumberOfSpacesForTab());
+    gtk_widget_set_sensitive(gtk_widget_get_parent(GTK_WIDGET(sbNumberOfSpacesForTab)), settings->getUseSpacesAsTab());
 
     /**
      * Stabilizer related settings
@@ -704,7 +705,8 @@ void SettingsDialog::save() {
      * Tab size relate settings
      */
     settings->setUseSpacesAsTab(getCheckbox("cbUseSpacesAsTab"));
-    settings->setNumberOfSpacesForTab(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(get("sbNumberOfSpacesForTab"))));
+    settings->setNumberOfSpacesForTab(
+            gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(builder.get("sbNumberOfSpacesForTab"))));
 
     /**
      * Stabilizer related settings
