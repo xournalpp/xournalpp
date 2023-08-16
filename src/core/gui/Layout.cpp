@@ -149,7 +149,7 @@ auto Layout::getVisibleRect() -> Rectangle<double> {
  * adds the addend to base if the predicate is true
  */
 
-constexpr auto sumIf = [](auto base, auto addend, bool predicate) {
+[[maybe_unused]] constexpr auto sumIf = [](auto base, auto addend, bool predicate) {
     if constexpr (std::is_signed_v<decltype(base)> || std::is_signed_v<decltype(addend)>) {
         using RT = std::make_signed_t<decltype(base + addend)>;
         if (predicate) {
@@ -184,18 +184,21 @@ void Layout::recalculate_int() const {
     }
 
     // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
-    auto const vPadding =
-            sumIf(sumIf(2 * XOURNAL_PADDING,
-                        settings->getAddVerticalSpaceAmountAbove() + settings->getAddVerticalSpaceAmountBelow(),
-                        settings->getAddVerticalSpace() && !settings->getUnlimitedScrolling()),
-                  2 * static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical())),
-                  settings->getUnlimitedScrolling());
-    auto const hPadding =
-            sumIf(sumIf(2 * XOURNAL_PADDING,
-                        settings->getAddHorizontalSpaceAmountLeft() + settings->getAddHorizontalSpaceAmountRight(),
-                        settings->getAddHorizontalSpace() && !settings->getUnlimitedScrolling()),
-                  2 * static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal())),
-                  settings->getUnlimitedScrolling());
+    auto vPadding = 2 * XOURNAL_PADDING;
+    if (settings->getUnlimitedScrolling()) {
+        vPadding += 2 * static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+    } else if (settings->getAddVerticalSpace()) {
+        vPadding += settings->getAddVerticalSpaceAmountAbove();
+        vPadding += settings->getAddVerticalSpaceAmountBelow();
+    }
+
+    auto hPadding = 2 * XOURNAL_PADDING;
+    if (settings->getUnlimitedScrolling()) {
+        hPadding += 2 * static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
+    } else if (settings->getAddHorizontalSpace()) {
+        hPadding += settings->getAddHorizontalSpaceAmountLeft();
+        hPadding += settings->getAddHorizontalSpaceAmountRight();
+    }
 
     pc.minWidth = as_unsigned(hPadding + as_signed_strict((pc.widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN));
     pc.minHeight = as_unsigned(vPadding + as_signed_strict((pc.heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN));
@@ -230,14 +233,19 @@ void Layout::layoutPages(int width, int height) {
 
 
     // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
-    auto const v_padding = sumIf(sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmountAbove(),
-                                       settings->getAddVerticalSpace() && !settings->getUnlimitedScrolling()),
-                                 static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical())),
-                                 settings->getUnlimitedScrolling());
-    auto const h_padding = sumIf(sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmountLeft(),
-                                       settings->getAddHorizontalSpace() && !settings->getUnlimitedScrolling()),
-                                 static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal())),
-                                 settings->getUnlimitedScrolling());
+    auto v_padding = XOURNAL_PADDING;
+    if (settings->getUnlimitedScrolling()) {
+        v_padding += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+    } else if (settings->getAddVerticalSpace()) {
+        v_padding += settings->getAddVerticalSpaceAmountAbove();
+    }
+
+    auto h_padding = XOURNAL_PADDING;
+    if (settings->getUnlimitedScrolling()) {
+        h_padding += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
+    } else if (settings->getAddHorizontalSpace()) {
+        h_padding += settings->getAddHorizontalSpaceAmountLeft();
+    }
 
     auto const centeringXBorder = (width - as_signed(pc.minWidth)) / 2;
     auto const centeringYBorder = (height - as_signed(pc.minHeight)) / 2;
@@ -323,10 +331,12 @@ auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
     const Settings* settings = this->view->getControl()->getSettings();
 
     // User-configured padding above all pages.
-    auto const paddingAbove = sumIf(sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmountAbove(),
-                                          settings->getAddVerticalSpace() && !settings->getUnlimitedScrolling()),
-                                    static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical())),
-                                    settings->getUnlimitedScrolling());
+    auto paddingAbove = XOURNAL_PADDING;
+    if (settings->getUnlimitedScrolling()) {
+        paddingAbove += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+    } else if (settings->getAddVerticalSpace()) {
+        paddingAbove += settings->getAddVerticalSpaceAmountAbove();
+    }
 
     // (x, y) coordinate pair gives grid indicies. This handles paired pages
     // and different page layouts for us.
@@ -339,10 +349,12 @@ auto Layout::getPaddingLeftOfPage(size_t pageIndex) const -> int {
     bool isPairedPages = this->mapper.isPairedPages();
     const Settings* settings = this->view->getControl()->getSettings();
 
-    auto paddingBefore = sumIf(sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmountLeft(),
-                                     settings->getAddHorizontalSpace() && !settings->getUnlimitedScrolling()),
-                               static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal())),
-                               settings->getUnlimitedScrolling());
+    auto paddingBefore = XOURNAL_PADDING;
+    if (settings->getUnlimitedScrolling()) {
+        paddingBefore += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
+    } else if (settings->getAddHorizontalSpace()) {
+        paddingBefore += settings->getAddHorizontalSpaceAmountLeft();
+    }
 
     auto const pageXLocation = as_signed(this->mapper.at(pageIndex).col);
 
