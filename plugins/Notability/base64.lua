@@ -1,6 +1,7 @@
 #!/usr/bin/env lua
 
 local mime = require "mime" -- https://lunarmodules.github.io/luasocket/
+-- local vstruct = require "vstruct" -- https://luarocks.org/modules/deepakjois/vstruct
 
 function dec(data,fmt)
 	local char, byte = string.char, string.byte
@@ -41,6 +42,11 @@ function dec(data,fmt)
 		mantissa = (math.ldexp(mantissa, -23) + 1) * sign 
 	  	table.insert(converted, math.ldexp(mantissa, exponent - 127))
 	  end)
+	-- The use of the vstruct module produces the same result, but is much slower
+	-- format = tostring(#result // 4).."*f4"
+	-- print("Reading in format: " .. format)
+	-- readfloats = vstruct.compile(format)
+	-- readfloats:read(result, converted)
 	elseif fmt == "I" then
 		result:gsub("....", function(cs)
 			local b4 = byte(cs:sub(1,1))
