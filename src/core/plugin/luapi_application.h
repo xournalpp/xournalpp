@@ -57,6 +57,32 @@ extern "C" {
 #include <lualib.h>   // for luaL_openlibs
 }
 
+
+static std::tuple<std::optional<std::string>, std::vector<Element*>> getElementsFromHelper(Control* control,
+                                                                                           const std::string& type) {
+    std::vector<Element*> elements = {};
+    if (type == "layer") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            control->clearSelection();  // otherwise texts in the selection won't be recognized
+        }
+        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
+    } else if (type == "selection") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            elements = sel->getElements();
+        } else {
+            return std::make_tuple(std::make_optional("There is no selection"), elements);
+        }
+    } else {
+        std::stringstream err_msg;
+        err_msg << "Unknown argument (" << type << ") for getting selection";
+        return std::make_tuple(std::make_optional(err_msg.str()), elements);
+    }
+    return std::make_tuple(std::nullopt, elements);
+}
+
+
 /*
  * Code conventions:
  *     Error handling:
@@ -1136,28 +1162,15 @@ static int applib_addTexts(lua_State* L) {
 static int applib_getTexts(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     std::string type = luaL_checkstring(L, 1);
-    std::vector<Element*> elements = {};
     Control* control = plugin->getControl();
 
     // Discard any extra arguments passed in
     lua_settop(L, 1);
     luaL_checktype(L, 1, LUA_TSTRING);
 
-    if (type == "layer") {
-        auto sel = control->getWindow()->getXournal()->getSelection();
-        if (sel) {
-            control->clearSelection();  // otherwise texts in the selection won't be recognized
-        }
-        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
-    } else if (type == "selection") {
-        auto sel = control->getWindow()->getXournal()->getSelection();
-        if (sel) {
-            elements = sel->getElements();
-        } else {
-            return luaL_error(L, "There is no selection! ");
-        }
-    } else {
-        return luaL_error(L, "Unknown argument: %s", type.c_str());
+    const auto& [err, elements] = getElementsFromHelper(control, type);
+    if (err.has_value()) {
+        return luaL_error(L, err.value().c_str());
     }
 
     lua_newtable(L);  // create table of the elements
@@ -1255,28 +1268,15 @@ static int applib_getTexts(lua_State* L) {
 static int applib_getStrokes(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     std::string type = luaL_checkstring(L, 1);
-    std::vector<Element*> elements = {};
     Control* control = plugin->getControl();
 
     // Discard any extra arguments passed in
     lua_settop(L, 1);
     luaL_checktype(L, 1, LUA_TSTRING);
 
-    if (type == "layer") {
-        auto sel = control->getWindow()->getXournal()->getSelection();
-        if (sel) {
-            control->clearSelection();  // otherwise strokes in the selection won't be recognized
-        }
-        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
-    } else if (type == "selection") {
-        auto sel = control->getWindow()->getXournal()->getSelection();
-        if (sel) {
-            elements = sel->getElements();
-        } else {
-            return luaL_error(L, "There is no selection! ");
-        }
-    } else {
-        return luaL_error(L, "Unknown argument: %s", type.c_str());
+    const auto& [err, elements] = getElementsFromHelper(control, type);
+    if (err.has_value()) {
+        return luaL_error(L, err.value().c_str());
     }
 
     lua_newtable(L);  // create table of the elements
@@ -2633,27 +2633,14 @@ static int applib_addImages(lua_State* L) {
 static int applib_getImages(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     std::string type = luaL_checkstring(L, 1);
-    std::vector<Element*> elements = {};
     Control* control = plugin->getControl();
 
     // Discard any extra arguments passed in
     lua_settop(L, 1);
 
-    if (type == "layer") {
-        auto sel = control->getWindow()->getXournal()->getSelection();
-        if (sel) {
-            control->clearSelection();  // otherwise strokes in the selection won't be recognized
-        }
-        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
-    } else if (type == "selection") {
-        auto sel = control->getWindow()->getXournal()->getSelection();
-        if (sel) {
-            elements = sel->getElements();
-        } else {
-            return luaL_error(L, "There is no selection! ");
-        }
-    } else {
-        return luaL_error(L, "Unknown argument: %s", type.c_str());
+    const auto& [err, elements] = getElementsFromHelper(control, type);
+    if (err.has_value()) {
+        return luaL_error(L, err.value().c_str());
     }
 
     lua_newtable(L);  // create table of all images
