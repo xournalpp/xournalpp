@@ -92,6 +92,12 @@ function import()
     end
   end
 
+  local rawText = getValue({"richText", "attributedString", 1})
+  if (rawText and #rawText>0) then
+    local font = {name = "Noto Sans Mono Medium", size=12.0}
+    app.addTexts{texts={{text=rawText, font=font, color=0x000000, x = 0.0,y = 0.0}}}
+  end
+
   local time3 = os.clock()
   
   local numpoints = getData("curvesnumpoints", "I")
@@ -261,10 +267,6 @@ function import()
   end
 
   local time8 = os.clock()
-
-  print("Text in document: ")
-  local rawText = getValue({"richText", "attributedString", 1})
-  print(rawText)
 
   print(string.format("Extract and parse file contents: %.2f sec", time2 - time1))
   print(string.format("Open PDF background: %.2f sec", time3 - time2))
