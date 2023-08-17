@@ -820,7 +820,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton">
+                              <object class="GtkCheckButton" id="cbNumbers">
                                 <property name="label" translatable="yes">Display numbers</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>

@@ -150,6 +150,7 @@ function showDialog()
     local drawAxisLines = ui.cbAxisLines:get_active()
     local drawTicks = ui.cbTicks:get_active()
     local drawGrid = ui.cbGrid:get_active()
+    local displayNumbers = ui.cbNumbers:get_active()
 
     if drawAxisLines then
       -- draw x-axis and y-axis
@@ -193,6 +194,31 @@ function showDialog()
 
     app.addStrokes({strokes = strokes})
     app.refreshPage()
+
+    texts = {}
+    font = {name = "Monospace Regular", size = 6.0}
+    if displayNumbers then
+      -- draw number on x-axis
+      for i = (wc.xMin // wc.xUnit) + 1, (wc.xMax // wc.xUnit) do
+        local v = i*wc.xUnit
+        local xval = fitX(v)
+        local text = (v == math.floor(v)) and tostring(math.floor(v)) or tostring(v)
+        if xval >= Mx - 2*arrowLength then break end
+        table.insert(texts, {text = text, font = font, x = xval-font.size/2, y = y0, color = colAxis})
+      end
+      -- draw ticks on y-axis
+      for i = (wc.yMin // wc.yUnit) + 1, (wc.yMax // wc.yUnit) do
+        local v = i*wc.yUnit
+        local yval = fitY(v)
+        local text = (v == math.floor(v)) and tostring(math.floor(v)) or tostring(v)
+        if yval <= My + 2*arrowLength then break end
+        if (v~=0) then
+          table.insert(texts, {text = text, font = font, x = x0+tickHeight, y = yval-font.size, color = colAxis}) 
+        end
+      end
+    end
+    print(#texts)
+    app.addTexts({texts = texts})
   end
 
   function appendStroke(strokes, xcoord, ycoord)
