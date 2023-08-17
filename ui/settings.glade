@@ -1487,39 +1487,38 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="frameTabControlSettings">
+                              <object class="GtkFrame" id="tabSettingsFrame">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="label-xalign">0</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkAlignment" id="tabSettingsAlignment">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="left-padding">12</property>
                                     <child>
-                                      <object class="GtkBox">
+                                      <object class="GtkGrid" id="tabSettingsLayout">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="margin-end">10</property>
-                                        <property name="margin-bottom">5</property>
-                                        <property name="orientation">vertical</property>
-                                        <property name="spacing">3</property>
+                                        <property name="margin-bottom">10</property>
+                                        <property name="column-homogeneous">True</property>
+                                        <property name="row-homogeneous">True</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbUseSpacesAsTab">
-                                            <property name="label" translatable="yes">Indent using spaces</property>
+                                            <property name="label" translatable="yes">Indent using spaces</property> 
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
                                             <property name="draw-indicator">True</property>
                                           </object>
                                           <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">0</property>
+                                            <property name="left-attach">0</property>
+                                            <property name="top-attach">0</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkBox">
+                                          <object class="GtkBox" id ="numberOfSpacesContainer">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
                                             <property name="spacing">14</property>
@@ -1560,9 +1559,8 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                             </child>
                                           </object>
                                           <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
+                                            <property name="left-attach">1</property>
+                                            <property name="top-attach">0</property>
                                           </packing>
                                         </child>
                                       </object>
