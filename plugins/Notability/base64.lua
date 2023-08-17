@@ -1,10 +1,28 @@
 #!/usr/bin/env lua
 
 local mime = require "mime" -- https://lunarmodules.github.io/luasocket/
+local lpeg = require "lpeg" -- https://luarocks.org/modules/gvvaughan/lpeg
 -- local vstruct = require "vstruct" -- https://luarocks.org/modules/deepakjois/vstruct
 
+local char, byte = string.char, string.byte
+local ldexp = math.ldexp
+
+function fl(cs)
+	local b4 = byte(cs:sub(1,1))
+	local b3 = byte(cs:sub(2,2))
+	local b2 = byte(cs:sub(3,3))
+	local b1 = byte(cs:sub(4,4))
+	local exponent = (b1 % 128) * 2 + (b2 >> 7)
+	local sign = (b1 > 127) and -1 or 1
+	local mantissa = ((b2 % 128) * 256 + b3) * 256 + b4
+	mantissa = (ldexp(mantissa, -23) + 1) * sign
+	return ldexp(mantissa, exponent - 127)
+end	
+
+local num = lpeg.C(lpeg.P(4)) / fl   		        -- capture a group of 4 chars and convert it to a float
+local extract_floats = lpeg.Ct(num^0)       		-- put the captures into a table
+
 function dec(data,fmt)
-	local char, byte = string.char, string.byte
 
     -- Inspired from http://lua-users.org/wiki/BaseSixtyFour
 
@@ -30,21 +48,24 @@ function dec(data,fmt)
  
 	converted = {}
 	if fmt == "f" then
-	  result:gsub("....", function(cs)
-	    local b4 = byte(cs:sub(1,1))
-	    local b3 = byte(cs:sub(2,2))
-		local b2 = byte(cs:sub(3,3))
-		local b1 = byte(cs:sub(4,4))
-        -- Inspired from http://lua-users.org/wiki/ReadWriteFormat
-        local exponent = (b1 % 128) * 2 + (b2 >> 7)
-		local sign = (b1 > 127) and -1 or 1
-		local mantissa = ((b2 % 128) * 256 + b3) * 256 + b4
-		mantissa = (math.ldexp(mantissa, -23) + 1) * sign 
-	  	table.insert(converted, math.ldexp(mantissa, exponent - 127))
-	  end)
-	-- The use of the vstruct module produces the same result, but is much slower
+		converted = extract_floats:match(result)   -- match with lpeg pattern
+
+	-- Alternative 1 (slightly slower)
+	-- result:gsub("....", function(cs)
+	--  local b4 = byte(cs:sub(1,1))
+	--  local b3 = byte(cs:sub(2,2))
+	--	local b2 = byte(cs:sub(3,3))
+	--	local b1 = byte(cs:sub(4,4))
+    --  -- Inspired from http://lua-users.org/wiki/ReadWriteFormat
+    --  local exponent = (b1 % 128) * 2 + (b2 >> 7)
+	--	local sign = (b1 > 127) and -1 or 1
+	--	local mantissa = ((b2 % 128) * 256 + b3) * 256 + b4
+	--	mantissa = (math.ldexp(mantissa, -23) + 1) * sign 
+	-- 	table.insert(converted, math.ldexp(mantissa, exponent - 127))
+	-- end)
+
+	-- Alternative 2 (much slower)
 	-- format = tostring(#result // 4).."*f4"
-	-- print("Reading in format: " .. format)
 	-- readfloats = vstruct.compile(format)
 	-- readfloats:read(result, converted)
 	elseif fmt == "I" then
