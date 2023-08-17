@@ -85,7 +85,25 @@ void LinkDialog::okButtonPressed(GtkButton* btn) {
 
     this->linkURL = std::string(gtk_entry_get_text(this->urlInput));
     if (!this->isUrlValid(this->linkURL)) {
-        this->linkURL = "xournalpp.github.io";
+        URLPrefix prefix =
+                static_cast<URLPrefix>(std::stoi(gtk_combo_box_get_active_id(GTK_COMBO_BOX(linkTypeChooser))));
+        switch (prefix) {
+            case URLPrefix::NONE:
+                this->linkURL = PLACEHOLDER_OTHER;
+                break;
+            case URLPrefix::HTTP:
+            case URLPrefix::HTTPS:
+                this->linkURL = PLACEHOLDER_HTTPS;
+                break;
+            case URLPrefix::MAILTO:
+                this->linkURL = PLACEHOLDER_MAIL;
+                break;
+            case URLPrefix::FILE:
+                this->linkURL = PLACEHOLDER_FILE;
+                break;
+            default:
+                break;
+        }
     }
 
     gtk_dialog_response(linkDialog, LinkDialog::SUCCESS);
