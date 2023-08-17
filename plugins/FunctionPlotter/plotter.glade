@@ -847,7 +847,7 @@
                             <property name="can-focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkSpinButton" id="spbtXUnit">
+                              <object class="GtkSpinButton" id="spbtYUnit">
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="text" translatable="yes">1.0</property>
@@ -863,7 +863,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkSpinButton" id="spbtYUnit">
+                              <object class="GtkSpinButton" id="spbtXUnit">
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="text" translatable="yes">1.0</property>
