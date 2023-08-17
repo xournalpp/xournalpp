@@ -41,10 +41,10 @@ function dec(data,fmt)
 	--   local d = base64bytes[cs:sub(4,4)] or 0
 	--   return char((a << 2) + (b >> 4)) .. char(((b << 4) & 255) + (c >> 2)) .. char(((c << 6) & 255) + d)
 	-- end)
-	local x = os.clock()
+	-- local x = os.clock()
 	local result = mime.unb64(data)
-	local y = os.clock()
-	print(string.format("elapsed time for mime.unb64: %.2f\n", y - x))
+	-- local y = os.clock()
+	-- print(string.format("elapsed time for mime.unb64: %.2f\n", y - x))
  
 	converted = {}
 	if fmt == "f" then
@@ -87,6 +87,6 @@ function dec(data,fmt)
 	  print("not handled (yet)!")
 	end
 
-	print(string.format("elapsed time for table creation: %.2f\n", os.clock() - y))
+	-- print(string.format("elapsed time for table creation: %.2f\n", os.clock() - y))
 	return converted
 end

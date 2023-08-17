@@ -10,6 +10,8 @@ local paperSizeDict = {
   a5 = {width = 420.85, height = 595.14}
 }
 
+local push = table.insert
+
 function getValue(keySeq, startIndex)
   local id = startIndex == nil and 1 or startIndex  -- Lua list index is always one bigger, since list indices start from 1
   for i=1, #keySeq do
@@ -60,19 +62,19 @@ function import()
 
   local notePath = app.getFilePath({'*.note'})
   notePath = "'" .. notePath .. "'" -- take care of spaces in file name
-  print(notePath)
 
+  local time1 = os.clock()
   local f = assert(io.popen("unzip -Z -1 " .. notePath .. " | head -1 | cut -d'/' -f1"))
   local dirname = assert(f:read('*a'))
   f:close()
   dirname = dirname:gsub('%\n', '')  --remove newline
-  print(dirname)
 
   local contents = extract(dirname, notePath, "Session.plist")
   parsedContents = plistParse(contents)
+  local time2 = os.clock()
 
   local pdfFileName = getValue({"richText", "pdfFiles", 1, "pdfFileName"})
-  print(pdfFileName)
+
   if pdfFileName then
     ans = app.msgbox("There is a PDF background in the .note-file. Do you want to save and use it? A new document will be created in that case. ", {[1]="Yes", [2]="No"}) 
     if ans == 1 then
@@ -90,12 +92,16 @@ function import()
     end
   end
 
+  local time3 = os.clock()
+  
   local numpoints = getData("curvesnumpoints", "I")
   local coords = getData("curvespoints", "f")
   local widths = getData("curveswidth", "f")
   local pressures = getData("curvesfractionalwidths", "f")
   local styles = getData("curvesstyles", "H") -- can be {}
   local cols = getData("curvescolors", "I")
+
+  local time4 = os.clock()
 
   -- post-process styles
   for i = 1, #styles do
@@ -123,28 +129,30 @@ function import()
      cols[i] = r + g*256 + b*256^2
   end
 
+  local time5 = os.clock()
+
   local strokes = {}
   local pi = 0
   local numCurves = getValue({"richText", "Handwriting Overlay", "SpatialHash", "numcurves"})
   print("Number of curves in document: " .. numCurves)
+  local b = 0
+
   for s = 1, numCurves do
-    local x = {}; y = {}; pressure = {}
-    local a = 1; b = numpoints[1]
-    for i=1, s-1 do
-      a=a+numpoints[i]
-      b=b+numpoints[i+1]
-    end
+    local x, y, pressure, pointIndex, strokeIndex = {}, {}, {}, 0
+    a,b = b+1, b + numpoints[s]
 
     for i = a, b do
       if i==a or ((i-a) % 3 == 1 and i>a+1) then pi = pi+1 end  -- the first point on each stroke and from there one each 3 consecutive points share the same pressure value
-      table.insert(x, coords[2*i-1]) 
-      table.insert(y, coords[2*i])
-      table.insert(pressure, pressures[pi]*widths[s])
+      pointIndex = pointIndex + 1
+      x[pointIndex] = coords[2*i-1] 
+      y[pointIndex] = coords[2*i]
+      pressure[pointIndex] = pressures[pi]*widths[s]
     end
 
-    stroke = {x=x, y=y, width = widths[s], pressure = pressure, color = math.floor(cols[s]), lineStyle = styles[s], tool = tools[s]}
-    table.insert(strokes, stroke)
+    strokes[s] = {x=x, y=y, width = widths[s], pressure = pressure, color = math.floor(cols[s]), lineStyle = styles[s], tool = tools[s]}
   end
+
+  local time6 = os.clock()
 
   local shapesBinary = getValue({"richText", "Handwriting Overlay", "SpatialHash", "shapes"})
   if shapesBinary then
@@ -170,20 +178,20 @@ function import()
         local cy = shape["rect"][1][2] + ry
         local npts = math.floor(math.max(24, 2*rx, 2*ry))
         for k = 0, npts do
-          table.insert(x, cx+rx*math.cos(2*math.pi*k/npts))
-          table.insert(y, cy+ry*math.sin(2*math.pi*k/npts))
+          push(x, cx+rx*math.cos(2*math.pi*k/npts))
+          push(y, cy+ry*math.sin(2*math.pi*k/npts))
         end
       elseif kind == "square" or kind == "polygon" then
         local points = shape["points"]
         local numVertices = #points
         print("polygon with " .. numVertices .. " vertices")
         for j = 1, numVertices do
-          table.insert(x, points[j][1])
-          table.insert(y, points[j][2])
+          push(x, points[j][1])
+          push(y, points[j][2])
         end
         if shape["isClosed"] then
-          table.insert(x, x[1])
-          table.insert(y, y[1])
+          push(x, x[1])
+          push(y, y[1])
         end
       elseif kind == "partialshape" then
         print("Partial shape")
@@ -199,10 +207,12 @@ function import()
         local style = shape["appearance"]["style"]
         local width = shape["appearance"]["strokeWidth"]
         local stroke = {x=x, y=y, width = width, color = math.floor(b*255 + g*256*255 + r*256^2*255), tool=tool}
-        table.insert(strokes, stroke)
+        push(strokes, stroke)
       end
     end
   end
+
+  local time7 = os.clock()
 
   local docStructure = app.getDocumentStructure()
   local currentPage = docStructure["currentPage"]
@@ -239,7 +249,7 @@ function import()
           for l = 1, #newStroke["y"] do 
             newStroke["y"][l] = newStroke["y"][l] - pageOffset[k]*paperHeight
           end
-          table.insert(strokesOfCurrentPage, newStroke)
+          push(strokesOfCurrentPage, newStroke)
         end
       end
       if #strokesOfCurrentPage > 0 then
@@ -250,7 +260,17 @@ function import()
     end
   end
 
+  local time8 = os.clock()
+
   print("Text in document: ")
   local rawText = getValue({"richText", "attributedString", 1})
   print(rawText)
+
+  print(string.format("Extract and parse file contents: %.2f sec", time2 - time1))
+  print(string.format("Open PDF background: %.2f sec", time3 - time2))
+  print(string.format("Decode points, styles and colors: %.2f sec", time4 - time3))
+  print(string.format("Postprocess styles and colors: %.2f sec", time5 - time4))
+  print(string.format("Create strokes table: %.2f sec", time6 - time5))
+  print(string.format("Process shapes: %.2f sec", time7 - time6))
+  print(string.format("Add elements to document: %.2f sec", time8 - time7))
 end
