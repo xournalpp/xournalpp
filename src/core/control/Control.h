@@ -75,7 +75,7 @@ class Control:
         public ClipboardListener,
         public ProgressListener {
 public:
-    Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath);
+    Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool disableAudio);
     Control(Control const&) = delete;
     Control(Control&&) = delete;
     auto operator=(Control const&) -> Control& = delete;

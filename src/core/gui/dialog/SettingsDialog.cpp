@@ -110,6 +110,17 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("cbDisableAudio"), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+                         self->disableWithCheckbox("cbDisableAudio", "sidAudio1");
+                         self->disableWithCheckbox("cbDisableAudio", "sidAudio2");
+                         self->disableWithCheckbox("cbDisableAudio", "sidAudio3");
+                         self->disableWithCheckbox("cbDisableAudio", "sidAudio4");
+                         self->disableWithCheckbox("cbDisableAudio", "sidAudioLbl");
+                     }),
+                     this);
+
+
     g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled",
                      G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
                          self->enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
@@ -360,6 +371,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
+    loadCheckbox("cbDisableAudio", settings->isAudioDisabled());
     loadCheckbox("cbEnablePressureInference", settings->isPressureGuessingEnabled());
     loadCheckbox("cbTouchDrawing", settings->getTouchDrawingEnabled());
     loadCheckbox("cbDisableGtkInertialScroll", !settings->getGtkTouchInertialScrollingEnabled());
@@ -607,50 +619,52 @@ void SettingsDialog::load() {
     touch.getInt("timeout", timeoutMs);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 
-    this->audioInputDevices = this->control->getAudioController()->getInputDevices();
-    gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", "System default");
-    gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), 0);
-    for (auto& audioInputDevice: this->audioInputDevices) {
-        gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "",
-                                  audioInputDevice.getDeviceName().c_str());
-    }
-    for (size_t i = 0; i < this->audioInputDevices.size(); i++) {
-        if (this->audioInputDevices[i].getSelected()) {
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), static_cast<gint>(i + 1));
+    if (this->control->getAudioController()) {
+        this->audioInputDevices = this->control->getAudioController()->getInputDevices();
+        gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "", "System default");
+        gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), 0);
+        for (auto& audioInputDevice: this->audioInputDevices) {
+            gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioInputDevice")), "",
+                                      audioInputDevice.getDeviceName().c_str());
         }
-    }
-
-    this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
-    gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", "System default");
-    gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), 0);
-    for (auto& audioOutputDevice: this->audioOutputDevices) {
-        gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "",
-                                  audioOutputDevice.getDeviceName().c_str());
-    }
-    for (size_t i = 0; i < this->audioOutputDevices.size(); i++) {
-        if (this->audioOutputDevices[i].getSelected()) {
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), static_cast<gint>(i + 1));
+        for (size_t i = 0; i < this->audioInputDevices.size(); i++) {
+            if (this->audioInputDevices[i].getSelected()) {
+                gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioInputDevice")), static_cast<gint>(i + 1));
+            }
         }
-    }
 
-    switch (static_cast<int>(settings->getAudioSampleRate())) {
-        case 16000:
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 0);
-            break;
-        case 96000:
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 2);
-            break;
-        case 192000:
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 3);
-            break;
-        case 44100:
-        default:
-            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 1);
-            break;
-    }
+        this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
+        gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", "System default");
+        gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), 0);
+        for (auto& audioOutputDevice: this->audioOutputDevices) {
+            gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "",
+                                      audioOutputDevice.getDeviceName().c_str());
+        }
+        for (size_t i = 0; i < this->audioOutputDevices.size(); i++) {
+            if (this->audioOutputDevices[i].getSelected()) {
+                gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), static_cast<gint>(i + 1));
+            }
+        }
 
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
+        switch (static_cast<int>(settings->getAudioSampleRate())) {
+            case 16000:
+                gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 0);
+                break;
+            case 96000:
+                gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 2);
+                break;
+            case 192000:
+                gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 3);
+                break;
+            case 44100:
+            default:
+                gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioSampleRate")), 1);
+                break;
+        }
+
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
+    }
 
     this->latexPanel.load(settings->latexSettings);
 }
@@ -683,6 +697,7 @@ void SettingsDialog::save() {
     settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
     settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));
+    settings->setAudioDisabled(getCheckbox("cbDisableAudio"));
 
     settings->setStabilizerAveragingMethod(static_cast<StrokeStabilizer::AveragingMethod>(
             gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbStabilizerAveragingMethods")))));

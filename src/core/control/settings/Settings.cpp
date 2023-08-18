@@ -116,6 +116,7 @@ void Settings::loadDefault() {
     this->useStockIcons = false;
     this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
     this->disableScrollbarFadeout = false;
+    this->disableAudio = false;
 
     // Set this for autosave frequency in minutes.
     this->autosaveTimeout = 3;
@@ -550,6 +551,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         }
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("disableScrollbarFadeout")) == 0) {
         this->disableScrollbarFadeout = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("disableAudio")) == 0) {
+        this->disableAudio = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioSampleRate")) == 0) {
         this->audioSampleRate = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioGain")) == 0) {
@@ -978,6 +981,7 @@ void Settings::save() {
     SAVE_BOOL_PROP(useStockIcons);
 
     SAVE_BOOL_PROP(disableScrollbarFadeout);
+    SAVE_BOOL_PROP(disableAudio);
 
     if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH) {
         xmlNode = saveProperty("scrollbarHideType", "both", root);
@@ -2233,6 +2237,16 @@ void Settings::setScrollbarFadeoutDisabled(bool disable) {
         return;
     }
     disableScrollbarFadeout = disable;
+    save();
+}
+
+auto Settings::isAudioDisabled() const -> bool { return disableAudio; }
+
+void Settings::setAudioDisabled(bool disable) {
+    if (disableAudio == disable) {
+        return;
+    }
+    disableAudio = disable;
     save();
 }
 

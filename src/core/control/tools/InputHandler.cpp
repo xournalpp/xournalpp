@@ -33,9 +33,9 @@ auto InputHandler::createStroke(Control* control) -> std::unique_ptr<Stroke> {
     if (h->getToolType() == TOOL_PEN) {
         s->setToolType(StrokeTool::PEN);
 
-        if (control->getAudioController()->isRecording()) {
-            fs::path audioFilename = control->getAudioController()->getAudioFilename();
-            size_t sttime = control->getAudioController()->getStartTime();
+        if (auto* audioController = control->getAudioController(); audioController && audioController->isRecording()) {
+            fs::path audioFilename = audioController->getAudioFilename();
+            size_t sttime = audioController->getStartTime();
             size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
             s->setTimestamp(milliseconds);
             s->setAudioFilename(audioFilename);

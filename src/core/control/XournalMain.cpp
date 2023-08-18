@@ -346,6 +346,7 @@ struct XournalMainPrivate {
     gboolean exportNoBackground = false;
     gboolean exportNoRuling = false;
     gboolean progressiveMode = false;
+    gboolean disableAudio = false;
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
@@ -452,7 +453,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
 
-    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
+    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
     // Set up icons
     {
@@ -641,6 +642,8 @@ auto XournalMain::run(int argc, char** argv) -> int {
                                        "<input>", nullptr},
                           GOptionEntry{"version", 0, 0, G_OPTION_ARG_NONE, &app_data.showVersion,
                                        _("Get version of xournalpp"), nullptr},
+                          GOptionEntry{"disable-audio", 0, 0, G_OPTION_ARG_NONE, &app_data.disableAudio,
+                                       _("Disable audio for this session"), nullptr},
                           GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     g_application_add_main_option_entries(G_APPLICATION(app), options.data());
 
