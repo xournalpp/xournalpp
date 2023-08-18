@@ -109,7 +109,7 @@
 
 using std::string;
 
-Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp(gtkApp) {
+Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool disableAudio): gtkApp(gtkApp) {
     this->undoRedo = new UndoRedoHandler(this);
     this->undoRedo->addUndoRedoListener(this);
     this->isBlocking = false;
@@ -132,7 +132,8 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
     this->newPageType = std::make_unique<PageTypeMenu>(this->pageTypes, settings, true, true);
 
-    this->audioController = new AudioController(this->settings, this);
+    this->audioController =
+            (disableAudio || this->settings->isAudioDisabled()) ? nullptr : new AudioController(this->settings, this);
 
     this->scrollHandler = new ScrollHandler(this);
 
@@ -1001,6 +1002,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
 
         case ACTION_AUDIO_RECORD: {
             bool result = false;
+            if (!audioController) {
+                g_warning("Audio has been disabled");
+                return;
+            }
             if (enabled) {
                 result = audioController->startRecording();
             } else {
@@ -1019,6 +1024,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         }
 
         case ACTION_AUDIO_PAUSE_PLAYBACK:
+            if (!audioController) {
+                g_warning("Audio has been disabled");
+                return;
+            }
             if (enabled) {
                 this->getAudioController()->pausePlayback();
             } else {
@@ -1027,14 +1036,29 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             break;
 
         case ACTION_AUDIO_SEEK_FORWARDS:
+            if (!audioController) {
+                g_warning("Audio has been disabled");
+                return;
+            }
+
             this->getAudioController()->seekForwards();
             break;
 
         case ACTION_AUDIO_SEEK_BACKWARDS:
+            if (!audioController) {
+                g_warning("Audio has been disabled");
+                return;
+            }
+
             this->getAudioController()->seekBackwards();
             break;
 
         case ACTION_AUDIO_STOP_PLAYBACK:
+            if (!audioController) {
+                g_warning("Audio has been disabled");
+                return;
+            }
+
             this->getAudioController()->stopPlayback();
             break;
 
@@ -2784,7 +2808,9 @@ void Control::quit(bool allowCancel) {
         return;
     }
 
-    audioController->stopRecording();
+    if (audioController) {
+        audioController->stopRecording();
+    }
     this->scheduler->lock();
     this->scheduler->removeAllJobs();
     this->scheduler->unlock();

@@ -170,8 +170,12 @@ protected:
                     // Assume path exists
                     fn = path / fn;
                 }
-                auto* ac = view->getXournal()->getControl()->getAudioController();
-                bool success = ac->startPlayback(fn, (unsigned int)ts);
+                auto* audioController = view->getXournal()->getControl()->getAudioController();
+                if (!audioController) {
+                    g_warning("Audio has been disabled");
+                    return false;
+                }
+                bool success = audioController->startPlayback(fn, (unsigned int)ts);
                 playbackStatus = {success, std::move(fn)};
                 return success;
             }
