@@ -14,7 +14,8 @@ class ActionHandler;
 
 using std::string;
 
-ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id):
+ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id,
+                                               bool hideAudio):
         ToolButton(handler, std::move(id), ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
                    toolMenuHandler->iconName("combo-selection"), _("Selection Combo")),
         toolMenuHandler(toolMenuHandler),
@@ -24,8 +25,9 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler,
     addMenuitem(_("Select Multi-Layer Rectangle"), toolMenuHandler->iconName("select-multilayer-rect"), ACTION_TOOL_SELECT_MULTILAYER_RECT, GROUP_TOOL);
     addMenuitem(_("Select Multi-Layer Region"), toolMenuHandler->iconName("select-multilayer-lasso"), ACTION_TOOL_SELECT_MULTILAYER_REGION, GROUP_TOOL);
     addMenuitem(_("Select Object"), toolMenuHandler->iconName("object-select"), ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL);
-    addMenuitem(_("Play Object"), toolMenuHandler->iconName("object-play"), ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL);
-
+    if (!hideAudio) {
+        addMenuitem(_("Play Object"), toolMenuHandler->iconName("object-play"), ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL);
+    }
     setPopupMenu(popup);
 }
 
