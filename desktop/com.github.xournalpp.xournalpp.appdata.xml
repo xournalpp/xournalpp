@@ -19,7 +19,7 @@
       Xournal++ is a hand note-taking software written in C++ with the target of
       flexibility, functionality and speed. Stroke recognizer and other parts are
       based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux
-      (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows 10. Supports pen input
+      (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input
       from devices such as Wacom Tablets.
     </p>
     <p>
@@ -59,7 +59,7 @@
       rugalmasság, a funkcionalitás és a sebesség céljával. A ütésfelismerő és
       egyéb részek a Xournal kódon alapulnak, amelyet a sourceforge oldalon
       találhat meg. Támogatja a GNU/Linuxot (pl. Ubuntu, Debian, Arch, SUSE),
-      macOS-t és Windows 10-et. Támogatja a tollbevitelt olyan eszközökről, mint
+      macOS-t és Windows. Támogatja a tollbevitelt olyan eszközökről, mint
       a Wacom Tablet.
     </p>
     <p xml:lang="hu">
