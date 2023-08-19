@@ -25,7 +25,7 @@ class ActionHandler;
 
 class ToolSelectCombocontrol: public ToolButton {
 public:
-    ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, std::string id);
+    ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, std::string id, bool hideAudio);
     ~ToolSelectCombocontrol() override;
 
 public:
