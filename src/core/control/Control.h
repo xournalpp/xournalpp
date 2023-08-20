@@ -52,6 +52,7 @@ class PageTypeHandler;
 class PageTypeMenu;
 class BaseExportJob;
 class LayerController;
+class PluginNotifier;
 class PluginController;
 class Document;
 class EditSelection;
@@ -462,6 +463,7 @@ private:
     PageBackgroundChangeController* pageBackgroundChangeController;
 
     LayerController* layerController;
+    std::unique_ptr<PluginNotifier> pluginNotifier;
 
     std::unique_ptr<GeometryTool> geometryTool;
     std::unique_ptr<GeometryToolController> geometryToolController;

@@ -43,6 +43,7 @@
 #include "model/Text.h"
 #include "model/XojPage.h"
 #include "plugin/Plugin.h"
+#include "plugin/PluginController.h"
 #include "undo/InsertUndoAction.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
@@ -2321,6 +2322,81 @@ static int applib_openFile(lua_State* L) {
     return 1;
 }
 
+/**
+ * Connects a signal (from PluginNotifier.h) to a callback function defined in the plugin
+ *
+ * Example: app.connectToSignal("pageChanged", "updatePageTime");
+ *          connects the "pageChanged" signal to the callback function named "updatePageTime"
+ */
+static int applib_connectToSignal(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+
+    const char* signalName = luaL_checkstring(L, 1);
+    const char* callback = luaL_checkstring(L, 2);
+
+    plugin->connectToSignal(signalName, callback);
+    return 0;
+}
+
+/**
+ * Disconnects a signal connected to via app.connectToSignal
+ *
+ * Example: app.disconnectFromSignal("pageChanged")
+ */
+static int applib_disconnectFromSignal(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+
+    const char* signalName = luaL_checkstring(L, 1);
+
+    plugin->disconnectFromSignal(signalName);
+
+    return 0;
+}
+
+struct TimeoutInfo {
+    std::string callback;
+    Plugin* plugin;
+} info;
+
+/**
+ * Adds a timeout via g_timeout_add_seconds, so that every specified number of seconds a given function
+ * in the plugin is called. Returns the timeout id that is needed for removing the timeout.
+ *
+ * Example: local timeoutId = app.addTimeout(5, "exportPages");
+ *          adds a timeout so that every 5 seconds the function "exportPages" is called
+ */
+static int applib_addTimeout(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+
+    const guint seconds = luaL_checkinteger(L, 1);
+    std::string callback = luaL_checkstring(L, 2);
+    info.callback = callback;
+    info.plugin = plugin;
+
+    auto timeoutId = g_timeout_add_seconds(
+            seconds,
+            reinterpret_cast<GSourceFunc>(+[](TimeoutInfo* i) { return i->plugin->callFunction(i->callback); }), &info);
+    g_message("Added timeout for %d seconds with callback: %s and id: %d", seconds, callback.c_str(), timeoutId);
+    lua_pushinteger(L, timeoutId);
+    return 1;
+}
+
+/**
+ * Removes a timeout with given id
+ *
+ * Example: app.removeTimeout(timeoutId)
+ *          removes the timeout with id timeoutId (that was obtained as return value in app.addTimeout)
+ */
+static int applib_removeTimeout(lua_State* L) {
+    const guint timeoutId = luaL_checkinteger(L, 1);
+    g_source_remove(timeoutId);
+    g_message("Removed timeout with id %d", timeoutId);
+
+    return 0;
+}
+
+
 /*
  * Adds images from the provided paths on the current page on the current layer.
  *
@@ -2546,6 +2622,10 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"getStrokes", applib_getStrokes},
                                   {"getTexts", applib_getTexts},
                                   {"openFile", applib_openFile},
+                                  {"connectToSignal", applib_connectToSignal},
+                                  {"disconnectFromSignal", applib_disconnectFromSignal},
+                                  {"addTimeout", applib_addTimeout},
+                                  {"removeTimeout", applib_removeTimeout},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 

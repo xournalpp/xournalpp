@@ -192,3 +192,14 @@ auto PluginController::getPlugins() const -> std::vector<Plugin*> {
     return {};
 #endif
 }
+
+void PluginController::broadcast(std::string signalName, long mode) {
+#ifdef ENABLE_PLUGINS
+    for (auto&& p: this->plugins) {
+        auto funcTable = p->getFunctionTable();
+        if (auto fnc = funcTable.find(signalName); fnc != funcTable.end()) {
+            p->callFunction(fnc->second, mode);
+        }
+    }
+#endif
+}

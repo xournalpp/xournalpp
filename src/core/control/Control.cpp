@@ -13,6 +13,7 @@
 #include "control/AudioController.h"                             // for Audi...
 #include "control/ClipboardHandler.h"                            // for Clip...
 #include "control/CompassController.h"                           // for Comp...
+#include "control/PluginNotifier.h"                              // for Plug...
 #include "control/RecentManager.h"                               // for Rece...
 #include "control/ScrollHandler.h"                               // for Scro...
 #include "control/SetsquareController.h"                         // for Sets...
@@ -163,6 +164,10 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
 
     this->layerController = new LayerController(this);
     this->layerController->registerListener(this);
+
+    this->pluginNotifier = std::make_unique<PluginNotifier>(this);
+    this->pluginNotifier->registerListener(this);
+    this->undoRedo->addUndoRedoListener(this->pluginNotifier.get());
 
     this->fullscreenHandler = new FullscreenHandler(settings);
 
@@ -2812,7 +2817,7 @@ void Control::quit(bool allowCancel) {
 
         return;
     }
-
+    pluginController->broadcast("quit");
     audioController->stopRecording();
     this->scheduler->lock();
     this->scheduler->removeAllJobs();
