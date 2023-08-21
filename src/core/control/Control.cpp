@@ -27,7 +27,6 @@
 #include "control/jobs/XournalScheduler.h"                       // for Xour...
 #include "control/layer/LayerController.h"                       // for Laye...
 #include "control/pagetype/PageTypeHandler.h"                    // for Page...
-#include "control/pagetype/PageTypeMenu.h"                       // for Page...
 #include "control/settings/ButtonConfig.h"                       // for Butt...
 #include "control/settings/MetadataManager.h"                    // for Meta...
 #include "control/settings/PageTemplateSettings.h"               // for Page...
@@ -58,6 +57,7 @@
 #include "gui/inputdevices/GeometryToolInputHandler.h"           // for Geom...
 #include "gui/inputdevices/HandRecognition.h"                    // for Hand...
 #include "gui/inputdevices/SetsquareInputHandler.h"              // for Sets...
+#include "gui/menus/menubar/Menubar.h"                           // for Menubar
 #include "gui/sidebar/Sidebar.h"                                 // for Sidebar
 #include "gui/toolbarMenubar/ToolMenuHandler.h"                  // for Tool...
 #include "gui/toolbarMenubar/model/ToolbarData.h"                // for Tool...
@@ -132,7 +132,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->applyPreferredLanguage();
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
-    this->newPageType = std::make_unique<PageTypeMenu>(this->pageTypes, settings, true, true);
 
     this->audioController =
             (disableAudio || this->settings->isAudioDisabled()) ? nullptr : new AudioController(this->settings, this);
@@ -160,7 +159,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
      */
     this->changeTimout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(checkChangedDocument), this);
 
-    this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
+    this->pageBackgroundChangeController = std::make_unique<PageBackgroundChangeController>(this);
 
     this->layerController = new LayerController(this);
     this->layerController->registerListener(this);
@@ -211,8 +210,6 @@ Control::~Control() {
     this->dragDropHandler = nullptr;
     delete this->audioController;
     this->audioController = nullptr;
-    delete this->pageBackgroundChangeController;
-    this->pageBackgroundChangeController = nullptr;
     delete this->layerController;
     this->layerController = nullptr;
     delete this->fullscreenHandler;
@@ -1561,7 +1558,9 @@ void Control::paperTemplate() {
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 
     if (dlg.isSaved()) {
-        newPageType->loadDefaultPage();
+        PageTemplateSettings model;
+        model.parse(settings->getPageTemplate());
+        this->win->getToolMenuHandler()->setDefaultNewPageType(model.getPageInsertType());
     }
 }
 
@@ -3339,10 +3338,8 @@ auto Control::getAudioController() const -> AudioController* { return this->audi
 
 auto Control::getPageTypes() const -> PageTypeHandler* { return this->pageTypes; }
 
-auto Control::getNewPageType() const -> PageTypeMenu* { return this->newPageType.get(); }
-
 auto Control::getPageBackgroundChangeController() const -> PageBackgroundChangeController* {
-    return this->pageBackgroundChangeController;
+    return this->pageBackgroundChangeController.get();
 }
 
 auto Control::getLayerController() const -> LayerController* { return this->layerController; }

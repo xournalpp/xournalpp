@@ -3,6 +3,7 @@
 #include "control/Control.h"
 #include "gui/MainWindow.h"
 
+#include "PageTypeSubmenu.h"
 #include "PluginsSubmenu.h"
 #include "RecentDocumentsSubmenu.h"
 #include "ToolbarSelectionSubmenu.h"
@@ -17,6 +18,8 @@ void Menubar::populate(MainWindow* win) {
     recentDocumentsSubmenu = std::make_unique<RecentDocumentsSubmenu>(ctrl, GTK_APPLICATION_WINDOW(win->getWindow()));
     toolbarSelectionSubmenu =
             std::make_unique<ToolbarSelectionSubmenu>(win, ctrl->getSettings(), win->getToolMenuHandler());
+    pageTypeSubmenu = std::make_unique<PageTypeSubmenu>(ctrl->getPageTypes(), ctrl->getPageBackgroundChangeController(),
+                                                        ctrl->getSettings(), GTK_APPLICATION_WINDOW(win->getWindow()));
 #ifdef ENABLE_PLUGINS
     pluginsSubmenu =
             std::make_unique<PluginsSubmenu>(ctrl->getPluginController(), GTK_APPLICATION_WINDOW(win->getWindow()));

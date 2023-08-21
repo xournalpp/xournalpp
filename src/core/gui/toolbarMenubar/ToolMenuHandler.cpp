@@ -3,27 +3,27 @@
 #include <algorithm>  // for max
 #include <sstream>    // for istringstream
 
-#include "control/Control.h"                         // for Control
-#include "control/PageBackgroundChangeController.h"  // for PageBackgroundCh...
-#include "control/pagetype/PageTypeMenu.h"           // for PageTypeMenu
-#include "control/settings/Settings.h"               // for Settings
-#include "gui/GladeGui.h"                            // for GladeGui
-#include "gui/GladeSearchpath.h"                     // for GladeSearchpath
-#include "gui/ToolitemDragDrop.h"                    // for ToolitemDragDrop
-#include "gui/toolbarMenubar/AbstractToolItem.h"     // for AbstractToolItem
-#include "gui/toolbarMenubar/ColorToolItem.h"        // for ColorToolItem
-#include "gui/toolbarMenubar/model/ColorPalette.h"   // for Palette
-#include "gui/toolbarMenubar/model/ToolbarData.h"    // for ToolbarData
-#include "gui/toolbarMenubar/model/ToolbarEntry.h"   // for ToolbarEntry
-#include "gui/toolbarMenubar/model/ToolbarItem.h"    // for ToolbarItem
-#include "gui/toolbarMenubar/model/ToolbarModel.h"   // for ToolbarModel
-#include "model/Font.h"                              // for XojFont
-#include "plugin/Plugin.h"                           // for ToolbarButtonEntr<
-#include "util/NamedColor.h"                         // for NamedColor
+#include "control/Actions.h"            // for ActionH...
+#include "control/Control.h"            // for Control
+#include "control/settings/Settings.h"  // for Settings
+#include "gui/GladeGui.h"               // for GladeGui
+#include "gui/GladeSearchpath.h"        // for GladeSearchpath
+#include "gui/ToolitemDragDrop.h"       // for ToolitemDragDrop
+#include "gui/menus/popoverMenus/PageTypeSelectionPopover.h"
+#include "gui/toolbarMenubar/AbstractToolItem.h"    // for AbstractToolItem
+#include "gui/toolbarMenubar/ColorToolItem.h"       // for ColorToolItem
+#include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
+#include "gui/toolbarMenubar/model/ToolbarData.h"   // for ToolbarData
+#include "gui/toolbarMenubar/model/ToolbarEntry.h"  // for ToolbarEntry
+#include "gui/toolbarMenubar/model/ToolbarItem.h"   // for ToolbarItem
+#include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
+#include "model/Font.h"                             // for XojFont
+#include "plugin/Plugin.h"                          // for ToolbarButtonEntr<
+#include "util/NamedColor.h"                        // for NamedColor
 #include "util/PathUtil.h"
-#include "util/StringUtils.h"                        // for StringUtils
+#include "util/StringUtils.h"  // for StringUtils
 #include "util/XojMsgBox.h"
-#include "util/i18n.h"                               // for _
+#include "util/i18n.h"  // for _
 
 #include "FontButton.h"              // for FontButton
 #include "MenuItem.h"                // for MenuItem
@@ -39,6 +39,7 @@
 #include "config-features.h"         // for ENABLE_PLUGINS
 #include "filesystem.h"              // for exists
 
+
 using std::string;
 
 ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui):
@@ -50,17 +51,12 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui):
         toolHandler(control->getToolHandler()),
         tbModel(std::make_unique<ToolbarModel>()),
         pageBackgroundChangeController(control->getPageBackgroundChangeController()),
-        iconNameHelper(control->getSettings()) {}
+        iconNameHelper(control->getSettings()),
+        pageTypeSelectionPopup(std::make_unique<PageTypeSelectionPopover>(
+                control->getPageTypes(), control->getPageBackgroundChangeController(), control->getSettings(),
+                GTK_APPLICATION_WINDOW(parent))) {}
 
 void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
-    // still owned by Control
-    this->newPageType = control->getNewPageType();
-    this->newPageType->addApplyBackgroundButton(control->getPageBackgroundChangeController(), false,
-                                                ApplyPageTypeSource::SELECTED);
-
-    // still owned by Control
-    this->pageBackgroundChangeController = control->getPageBackgroundChangeController();
-
     initToolItems();
 
     auto file = gladeSearchPath->findFile("", "toolbar.ini");
@@ -381,7 +377,16 @@ void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) {
 }
 #endif /* ENABLE_PLUGINS */
 
+static void actionCallback(GSimpleAction* ga, GVariant* p, ActionHandler* handler) {
+    ActionType a = static_cast<ActionType>(g_variant_get_uint64(p));
+    std::cout << "actionCallback -> " << ActionType_toString(a) << std::endl;
+    handler->actionPerformed(a, GROUP_NOGROUP, nullptr, true);
+}
+
 void ToolMenuHandler::initToolItems() {
+    gAction.reset(g_simple_action_new("the-action", G_VARIANT_TYPE_UINT64), xoj::util::adopt);
+    g_signal_connect(G_OBJECT(gAction.get()), "activate", G_CALLBACK(actionCallback), this->control);
+    g_action_map_add_action(G_ACTION_MAP(gui->getWindow()), G_ACTION(gAction.get()));
 
     // Use GTK Stock icon
     auto addStockItem = [=](std::string name, ActionType action, std::string stockIcon, std::string text) {
@@ -496,12 +501,9 @@ void ToolMenuHandler::initToolItems() {
     auto* tbInsertNewPage = new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
                                            iconName("page-add").c_str(), _("Insert page"));
     addToolItem(tbInsertNewPage);
-    tbInsertNewPage->setPopupMenu(this->newPageType->getMenu());
+    tbInsertNewPage->setPopupMenu(this->pageTypeSelectionPopup->getPopover());
 
     addCustomItem("DELETE_CURRENT_PAGE", ACTION_DELETE_PAGE, "page-delete", _("Delete current page"));
-
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")),
-                              pageBackgroundChangeController->getMenu());
 
     /*
      * Menu Tool
@@ -708,3 +710,7 @@ void ToolMenuHandler::setAudioPlaybackPaused(bool paused) {
 }
 
 auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNameHelper.iconName(icon); }
+
+void ToolMenuHandler::setDefaultNewPageType(const std::optional<PageType>& pt) {
+    this->pageTypeSelectionPopup->setSelected(pt);
+}

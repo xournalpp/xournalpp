@@ -2,8 +2,15 @@
 
 #include <utility>  // for move
 
+#include <glib.h>
+#include <gtk/gtkactionable.h>
+
 #include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
 #include "gui/widgets/gtkmenutooltogglebutton.h"  // for gtk_menu_tool_toggl...
+#include "util/gtk4_helper.h"
+#include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
+#include "util/raii/GVariantSPtr.h"
+
 
 class ActionHandler;
 
@@ -82,19 +89,41 @@ auto ToolButton::newItem() -> GtkToolItem* {
             it = gtk_toggle_tool_button_new();
             gtk_tool_button_set_icon_widget(
                     GTK_TOOL_BUTTON(it), gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
+            gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), description.c_str());
         }
     } else {
         if (popupMenu) {
-            it = gtk_menu_tool_button_new(gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR),
-                                          description.c_str());
-            gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(it), popupMenu.get());
+            if (GTK_IS_POPOVER(popupMenu.get())) {
+                GtkWidget* button = gtk_button_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_LARGE_TOOLBAR);
+                gtk_button_set_relief(GTK_BUTTON(button), GTK_RELIEF_NONE);
+                gtk_actionable_set_action_name(GTK_ACTIONABLE(button), "win.the-action");
+                gtk_actionable_set_action_target_value(GTK_ACTIONABLE(button),
+                                                       xoj::util::makeGVariantSPtr(action).get());
+
+                GtkMenuButton* menubutton = GTK_MENU_BUTTON(gtk_menu_button_new());
+                gtk_menu_button_set_popover(menubutton, popupMenu.get());
+                gtk_menu_button_set_direction(menubutton, GTK_ARROW_DOWN);
+                gtk_button_set_relief(GTK_BUTTON(menubutton), GTK_RELIEF_NONE);
+
+                GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0));
+                gtk_box_append(box, button);
+                gtk_box_append(box, GTK_WIDGET(menubutton));
+
+                // Todo(gtk4) Remove all uses of GtkToolItem and GtkToobar
+                it = gtk_tool_item_new();
+                gtk_container_add(GTK_CONTAINER(it), GTK_WIDGET(box));
+            } else {
+                it = gtk_menu_tool_button_new(
+                        gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR),
+                        description.c_str());
+                gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(it), popupMenu.get());
+            }
         } else {
             it = gtk_tool_button_new(gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR),
                                      description.c_str());
         }
     }
     gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), description.c_str());
-    gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), description.c_str());
 
     return it;
 }
