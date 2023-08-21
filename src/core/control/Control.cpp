@@ -2434,30 +2434,24 @@ auto Control::changePdfBackground() -> bool {
         return false;
     }
 
-    Document* loadedDocument = loadHandler.loadDocument(currentFilepath);
-
     bool attachToDocument = false;
     XojOpenDlg dlg(getGtkWindow(), this->settings);
     auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
-    if (!pdfFilename.empty()) {
-        loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
-        loadedDocument = loadHandler.loadDocument(currentFilepath);
-        if (!loadedDocument) {
-            string msg = FS(_F("Error opening file \"{1}\"") % currentFilepath.u8string()) + "\n" +
-                         loadHandler.getLastError();
-            XojMsgBox::showErrorToUser(getGtkWindow(), msg);
-            return false;
-        }
+
+    // To prevent render jobs from running while we are changing the document,
+    // we need to lock the scheduler.
+    getScheduler()->lock();
+    bool success = this->doc->readPdf(pdfFilename, false, attachToDocument);
+    if (!success) {
+        getScheduler()->unlock();
+        g_warning("Failed to read new PDF document.");
+    } else {
+        fileLoaded(-1);
+        getScheduler()->unlock();
+        // Pretend the whole document has changed to force re-render.
+        this->win->getXournal()->documentChanged(DOCUMENT_CHANGE_COMPLETE);
     }
-
-    this->closeDocument();
-
-    this->doc->lock();
-    this->doc->clearDocument();
-    *this->doc = *loadedDocument;
-    this->doc->unlock();
-
-    fileLoaded(/*scrollToPage=*/ npos);
+ 
     return true;
 }
 
