@@ -310,6 +310,7 @@ struct XournalMainPrivate {
     gchar* pdfFilename{};
     gchar* imgFilename{};
     gboolean showVersion = false;
+    gboolean forcePresentation = false;
     int openAtPageNumber = 0;  // when no --page is used, the document opens at the page specified in the metadata file
     gchar* exportRange{};
     gchar* exportLayerRange{};
@@ -467,7 +468,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(),
                                                  GTK_APPLICATION(application));
-    app_data->control->initWindow(app_data->win.get());
+    app_data->control->initWindow(app_data->win.get(), app_data->forcePresentation);
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
         Util::execInUiThread(
@@ -612,6 +613,8 @@ auto XournalMain::run(int argc, char** argv) -> int {
                                        "<input>", nullptr},
                           GOptionEntry{"version", 0, 0, G_OPTION_ARG_NONE, &app_data.showVersion,
                                        _("Get version of xournalpp"), nullptr},
+                          GOptionEntry{"presentation", 'p', 0, G_OPTION_ARG_NONE, &app_data.forcePresentation,
+                                       _("Force presentation mode at startup"), nullptr},
                           GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     g_application_add_main_option_entries(G_APPLICATION(app), options.data());
 

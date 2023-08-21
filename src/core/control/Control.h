@@ -84,7 +84,7 @@ public:
     auto operator=(Control&&) -> Control& = delete;
     ~Control() override;
 
-    void initWindow(MainWindow* win);
+    void initWindow(MainWindow* win, gboolean fP);
 
 public:
     // Menu File
