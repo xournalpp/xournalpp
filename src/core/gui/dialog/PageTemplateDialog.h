@@ -15,7 +15,6 @@
 
 #include <gtk/gtk.h>  // for GtkWindow
 
-#include "control/pagetype/PageTypeMenu.h"          // for PageTypeMenu (ptr...
 #include "control/settings/PageTemplateSettings.h"  // for PageTemplateSettings
 #include "gui/GladeGui.h"                           // for GladeGui
 
@@ -24,8 +23,9 @@ class PageTypeInfo;
 class PopupMenuButton;
 class GladeSearchpath;
 class Settings;
+class PageTypeSelectionPopoverGridOnly;
 
-class PageTemplateDialog: public GladeGui, public PageTypeMenuChangeListener {
+class PageTemplateDialog: public GladeGui {
 public:
     PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types);
     PageTemplateDialog(PageTemplateDialog&) = delete;
@@ -42,7 +42,7 @@ public:
      */
     bool isSaved() const;
 
-    void changeCurrentPageBackground(const PageTypeInfo* info) override;
+    void changeCurrentPageBackground(const PageTypeInfo* info);
 
 private:
     void showPageSizeDialog();
@@ -54,10 +54,11 @@ private:
 
 private:
     Settings* settings;
+    PageTypeHandler* types;
 
     PageTemplateSettings model;
 
-    std::unique_ptr<PageTypeMenu> pageMenu;
+    std::unique_ptr<PageTypeSelectionPopoverGridOnly> pageTypeSelectionMenu;
 
     std::unique_ptr<PopupMenuButton> popupMenuButton;
 

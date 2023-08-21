@@ -218,12 +218,15 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btBackgroundDropdown">
-                        <property name="label">⌄</property>
+                      <object class="GtkMenuButton" id="btBackgroundDropdown">
                         <property name="name">btBackgroundDropdown</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="direction">down</property>
+                        <child>
+                          <placeholder/>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>

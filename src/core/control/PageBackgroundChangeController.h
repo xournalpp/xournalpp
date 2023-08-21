@@ -13,33 +13,33 @@
 
 #include <cstddef>  // for size_t
 #include <memory>   // for unique_ptr
+#include <optional>
 
-#include <gtk/gtk.h>  // for GtkWidget
-
-#include "control/pagetype/PageTypeMenu.h"  // for ApplyPageTypeSource, Page...
 #include "model/DocumentChangeType.h"       // for DocumentChangeType
 #include "model/DocumentListener.h"         // for DocumentListener
 #include "model/PageRef.h"                  // for PageRef
+#include "model/PageType.h"
 
 class Control;
 class UndoAction;
-class PageType;
-class PageTypeInfo;
 
-class PageBackgroundChangeController:
-        public PageTypeMenuChangeListener,
-        public DocumentListener,
-        public PageTypeApplyListener {
+class PageBackgroundChangeController: public DocumentListener {
 public:
     PageBackgroundChangeController(Control* control);
     ~PageBackgroundChangeController() override = default;
 
 public:
-    virtual void changeCurrentPageBackground(const PageType& pageType);
-    void changeCurrentPageBackground(const PageTypeInfo* info) override;
-    void changeAllPagesBackground(const PageType& pt);
+    void changeCurrentPageBackground(const PageType& pageType);
+    /**
+     * @brief (Un)set the page type for newly created pages
+     * @param pageType The new page type.
+     *      Passing std::nullopt will unset the page type.
+     *      If the page type is not set, newly created pages will have the same type as the current page.
+     */
+    void setPageTypeForNewPages(const std::optional<PageType>& pageType);
+    void applyCurrentPageBackgroundToAll();
+    void applyBackgroundToAllPages(const PageType& pt);
     void insertNewPage(size_t position, bool shouldScrollToPage = true);
-    GtkWidget* getMenu();
 
     // DocumentListener
 public:
@@ -49,10 +49,6 @@ public:
     void pageInserted(size_t page) override;
     void pageDeleted(size_t page) override;
     void pageSelected(size_t page) override;
-
-    // PageTypeApplyListener
-public:
-    void applySelectedPageBackground(bool allPages, ApplyPageTypeSource src) override;
 
 private:
     /**
@@ -88,6 +84,5 @@ private:
 
 private:
     Control* control = nullptr;
-    PageTypeMenu currentPageType;
-    bool ignoreEvent = false;
+    std::optional<PageType> pageTypeForNewPages;
 };
