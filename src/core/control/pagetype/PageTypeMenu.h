@@ -66,11 +66,6 @@ public:
     void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu,
                                   ApplyPageTypeSource ptSource);
 
-    /**
-     * Create a small preview image of a specified page-type
-     */
-    static cairo_surface_t* createPreviewImage(const PageType& pt);
-
 private:
     static GtkWidget* createApplyMenuItem(const char* text);
     void initDefaultMenu();

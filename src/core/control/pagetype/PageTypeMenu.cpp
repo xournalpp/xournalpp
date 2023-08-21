@@ -9,6 +9,7 @@
 
 #include "control/settings/PageTemplateSettings.h"  // for PageTemplateSettings
 #include "control/settings/Settings.h"              // for Settings
+#include "gui/CreatePreviewImage.h"                 // for CreatePreviewImage
 #include "util/Assert.h"                            // or xoj_assert
 #include "util/Color.h"                             // for Color
 #include "util/i18n.h"                              // for _
@@ -45,42 +46,13 @@ void PageTypeMenu::loadDefaultPage() {
     setSelected(model.getPageInsertType());
 }
 
-auto PageTypeMenu::createPreviewImage(const PageType& pt) -> cairo_surface_t* {
-    const int previewWidth = 100;
-    const int previewHeight = 141;
-    const double zoom = 0.5;
-
-    cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, previewWidth, previewHeight);
-    cairo_t* cr = cairo_create(surface);
-    cairo_scale(cr, zoom, zoom);
-
-    auto bgView = xoj::view::BackgroundView::createRuled(previewWidth / zoom, previewHeight / zoom, Colors::white,
-                                                         pt, 2.0);
-    bgView->draw(cr);
-
-    cairo_identity_matrix(cr);
-
-    cairo_set_line_width(cr, 2);
-    cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
-    cairo_move_to(cr, 0, 0);
-    cairo_line_to(cr, previewWidth, 0);
-    cairo_line_to(cr, previewWidth, previewHeight);
-    cairo_line_to(cr, 0, previewHeight);
-    cairo_line_to(cr, 0, 0);
-    cairo_stroke(cr);
-
-    cairo_destroy(cr);
-    return surface;
-}
-
 void PageTypeMenu::addMenuEntry(const PageTypeInfo* t) {
     bool special = t == nullptr || t->page.isSpecial();
     bool showImg = !special && showPreview;
 
     GtkWidget* entry = nullptr;
     if (showImg) {
-        xoj::util::raii::CairoSurfaceSPtr img(createPreviewImage(t->page), xoj::util::adopt);
-        GtkWidget* preview = gtk_image_new_from_surface(img.get());
+        GtkWidget* preview = xoj::helper::createPreviewImage(t->page);
         entry = gtk_check_menu_item_new();
 
         GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);

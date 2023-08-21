@@ -10,10 +10,10 @@
 #include "control/AudioController.h"             // for AudioController
 #include "control/Control.h"                     // for Control
 #include "control/DeviceListHelper.h"            // for getDeviceList, Input...
-#include "control/pagetype/PageTypeMenu.h"       // for createPreviewImage
 #include "control/settings/Settings.h"           // for Settings, SElement
 #include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
+#include "gui/CreatePreviewImage.h"              // for createPreviewImage
 #include "gui/MainWindow.h"                      // for MainWindow
 #include "gui/XournalView.h"                     // for XournalView
 #include "gui/widgets/ZoomCallib.h"              // for zoomcallib_new, zoom...
@@ -54,9 +54,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     gtk_box_append(GTK_BOX(builder.get("zoomVBox")), callib);
     gtk_widget_show(callib);
 
-    const xoj::util::raii::CairoSurfaceSPtr img(PageTypeMenu::createPreviewImage(PageType{PageTypeFormat::Lined}),
-                                                xoj::util::adopt);
-    GtkWidget* preview = gtk_image_new_from_surface(img.get());
+    GtkWidget* preview = xoj::helper::createPreviewImage(PageType{PageTypeFormat::Lined});
     gtk_box_append(GTK_BOX(builder.get("pagePreviewImage")), preview);
     gtk_widget_show(preview);
 
