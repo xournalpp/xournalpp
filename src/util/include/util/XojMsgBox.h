@@ -45,6 +45,11 @@ public:
 
     static void askQuestion(GtkWindow* win, const std::string& maintext, const std::string& secondarytext,
                             const std::vector<Button>& buttons, std::function<void(int)> callback);
+    /**
+     * @brief same as askQuestion() but the string maintext is not escaped for Pango markups
+     */
+    static void askQuestionWithMarkup(GtkWindow* win, std::string_view maintext, const std::string& secondarytext,
+                                      const std::vector<Button>& buttons, std::function<void(int)> callback);
 
     /**
      * @brief Shows a message with title markupTitle and message content msg.
@@ -58,8 +63,9 @@ public:
     static void showErrorToUser(GtkWindow* win, const std::string& msg);
     static void showErrorAndQuit(std::string& msg, int exitCode);
     static void showPluginMessage(const std::string& pluginName, const std::string& msg, bool error = false);
-    static int askPluginQuestion(const std::string& pluginName, const std::string& msg,
-                                 const std::vector<Button>& buttons, bool error = false);
+    [[deprecated("Will be removed when porting to gtk4")]] static int askPluginQuestion(
+            const std::string& pluginName, const std::string& msg, const std::vector<Button>& buttons,
+            bool error = false);
     static int replaceFileQuestion(GtkWindow* win, const std::string& msg);
     static void showHelp(GtkWindow* win);
 };

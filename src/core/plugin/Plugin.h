@@ -155,9 +155,6 @@ private:
     /// Load ini file
     void loadIni();
 
-    /// Execute lua function
-    auto callFunction(const std::string& fnc, long mode = std::numeric_limits<long>::max()) -> bool;
-
     /// Load custom Lua Libraries
     static void registerXournalppLibs(lua_State* luaPtr);
 
@@ -167,6 +164,9 @@ private:
 public:
     /// Get Plugin from lua engine
     static auto getPluginFromLua(lua_State* lua) -> Plugin*;
+
+    /// Execute lua function
+    auto callFunction(const std::string& fnc, long mode = std::numeric_limits<long>::max()) -> bool;
 
 private:
     Control* control;                                      ///< The main controller
