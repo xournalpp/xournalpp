@@ -1877,7 +1877,7 @@ static int applib_getToolInfo(lua_State* L) {
  *     {
  *       "pageWidth" = number,
  *       "pageHeight" = number,
- *       "isAnnoated" = bool,
+ *       "isAnnotated" = bool,
  *       "pageTypeFormat" = string,
  *       "pageTypeConfig" = string,
  *       "backgroundColor" = integer,
@@ -1930,7 +1930,7 @@ static int applib_getDocumentStructure(lua_State* L) {
         lua_setfield(L, -2, "pageHeight");     // insert
 
         lua_pushboolean(L, page->isAnnotated());  // value
-        lua_setfield(L, -2, "isAnnoated");        // insert
+        lua_setfield(L, -2, "isAnnotated");       // insert
 
         PageType pt = page->getBackgroundType();
         std::string pageTypeFormat = PageTypeHandler::getStringForPageTypeFormat(pt.format);
@@ -1974,7 +1974,7 @@ static int applib_getDocumentStructure(lua_State* L) {
             lua_setfield(L, -2, "isVisible");    // insert
 
             lua_pushboolean(L, l->isAnnotated());  // value
-            lua_setfield(L, -2, "isAnnoated");     // insert
+            lua_setfield(L, -2, "isAnnotated");    // insert
 
             lua_settable(L, -3);  // end of table for layer l
         }
