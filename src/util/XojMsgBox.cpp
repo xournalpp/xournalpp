@@ -69,6 +69,13 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, const std::string& msg) {
 
 void XojMsgBox::askQuestion(GtkWindow* win, const std::string& maintext, const std::string& secondarytext,
                             const std::vector<Button>& buttons, std::function<void(int)> callback) {
+
+    auto formattedMsg = xoj::util::OwnedCString::assumeOwnership(g_markup_escape_text(maintext.c_str(), -1));
+    askQuestionWithMarkup(win, std::string_view(formattedMsg), secondarytext, buttons, std::move(callback));
+}
+
+void XojMsgBox::askQuestionWithMarkup(GtkWindow* win, std::string_view maintext, const std::string& secondarytext,
+                                      const std::vector<Button>& buttons, std::function<void(int)> callback) {
     if (win == nullptr) {
         win = defaultWindow;
     }
@@ -80,8 +87,7 @@ void XojMsgBox::askQuestion(GtkWindow* win, const std::string& maintext, const s
         gtk_dialog_add_button(GTK_DIALOG(dialog), b.label.c_str(), b.response);
     }
 
-    auto formattedMsg = xoj::util::OwnedCString::assumeOwnership(g_markup_escape_text(maintext.c_str(), -1));
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), formattedMsg.get());
+    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), maintext.data());
 
     gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog), "%s", secondarytext.c_str());
 
@@ -131,17 +137,17 @@ void XojMsgBox::showPluginMessage(const std::string& pluginName, const std::stri
 auto XojMsgBox::askPluginQuestion(const std::string& pluginName, const std::string& msg,
                                   const std::vector<Button>& buttons, bool error) -> int {
     /*
-     * Todo(gtk4): This should be a simple wrapper around XojMsgBox::askQuestion(), but we need to figure out how to
-     * handle non-blocking dialogs in lua
+     * Todo(gtk4): Remove this function entirely.
      */
-    auto header = (error ? std::string("<b>Error in </b>") : "") + std::string("Xournal++ Plugin «") + pluginName + "»";
+    std::string header = "<i>Warning: The plugin interface function msgbox() is deprecated and will soon be removed. "
+                         "Please adapt your plugin to use the function openDialog() instead</i>\n\n";
+    header += (error ? std::string("<b>Error in </b>") : "") + std::string("Xournal++ Plugin «") + pluginName + "»";
 
     GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL,
                                                            error ? GTK_MESSAGE_ERROR : GTK_MESSAGE_QUESTION,
                                                            GTK_BUTTONS_NONE, nullptr);
 
-    auto formattedHeader = xoj::util::OwnedCString::assumeOwnership(g_markup_escape_text(header.c_str(), -1));
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), formattedHeader.get());
+    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), header.c_str());
 
     if (defaultWindow != nullptr) {
         gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);

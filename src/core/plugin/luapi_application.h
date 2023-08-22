@@ -189,6 +189,8 @@ static int applib_getFilePath(lua_State* L) {
 }
 
 /**
+ * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_openDialog() instead.
+ *
  * Example: local result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"})
  * Pops up a message box with two buttons "Yes" and "No" and returns 1 for yes, 2 for no
  */
@@ -216,6 +218,53 @@ static int applib_msgbox(lua_State* L) {
     int result = XojMsgBox::askPluginQuestion(plugin->getName(), msg, buttons);
     lua_pushinteger(L, result);
     return 1;
+}
+
+/**
+ * Example 1: app.openDialog("Test123", {[1] = "Yes", [2] = "No"}, "cb", false)
+ *   or       app.openDialog("Test123", {"Yes", "No"}, "cb")
+ * Pops up a message box with two buttons "Yes" and "No" and executed function "cb" whose single parameter is the number
+ * corresponding to the button the user clicked.
+ *
+ * If the optional boolean parameter is true, the dialog is treated as an error message
+ * Example 2: app.openDialog("Invalid parameter", {"Ok"}, "", true)
+ *
+ * Warning: the callback function is never called if the dialog is closed without pressing one of the custom buttons.
+ */
+static int applib_openDialog(lua_State* L) {
+    const char* msg = luaL_checkstring(L, 1);
+
+    // discard any extra arguments passed in
+    lua_settop(L, 4);
+    luaL_checktype(L, 2, LUA_TTABLE);
+
+    lua_pushnil(L);  // initial key for table traversal with `next`
+
+    std::vector<XojMsgBox::Button> buttons;
+
+    while (lua_next(L, 2) != 0) {
+        int index = static_cast<int>(lua_tointeger(L, -2));
+        const char* buttonText = luaL_checkstring(L, -1);
+        lua_pop(L, 1);
+
+        buttons.emplace_back(buttonText, index);
+    }
+
+    std::string cb = luaL_optstring(L, 3, "");
+    bool error = lua_toboolean(L, 4);
+
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+
+    const std::string& pluginName = plugin->getName();
+    auto header = (error ? std::string("<b>Error in </b>") : "") + std::string("Xournal++ Plugin «") + pluginName + "»";
+
+    XojMsgBox::askQuestionWithMarkup(nullptr, header, msg, buttons, [cb, plugin](int response) {
+        if (cb != "" && response >= 1) {
+            plugin->callFunction(cb, static_cast<long>(response));
+        }
+    });
+
+    return 0;
 }
 
 
@@ -2511,7 +2560,8 @@ static int applib_addImagesFromFilepath(lua_State* L) {
  * The full Lua Plugin API.
  * See above for example usage of each function.
  */
-static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
+static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
+                                  {"openDialog", applib_openDialog},
                                   {"glib_rename", applib_glib_rename},
                                   {"saveAs", applib_saveAs},
                                   {"registerUi", applib_registerUi},
