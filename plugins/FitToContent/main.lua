@@ -6,7 +6,7 @@ end
 
 local function fit_to_layer_or_selection(type)
     if type ~= "selection" and type ~= "layer" then
-        app.msgbox("Invalid type for fitting", {[1]="Ok"})
+        app.openDialog("Invalid type for fitting", {"Ok"}, "", true)
         return
     end
 

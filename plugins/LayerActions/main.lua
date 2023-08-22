@@ -13,28 +13,40 @@ function clone()
 
   -- Make sure there is a next page, it has pdf background and no annotations or the annotations can be overwritten
   if currentPage == numPages then
-    app.msgbox("No next page. ", {[1] = "OK"})
+    app.openDialog("No next page. ", {"OK"}, "", true)
     return
   end
 
   local bgNextPage = docStructure["pages"][nextPage]["pageTypeFormat"]
   if bgNextPage ~= ":pdf" then
-    app.msgbox("Next page has no pdf background. ", {[1] = "OK"})
+    app.openDialog("Next page has no pdf background. ", {"OK"}, "", true)
     return
   end
 
-  local nextPdfPage = docStructure["pages"][nextPage]["pdfBackgroundPageNo"]
-  print(nextPdfPage)
-
   local isAnnotated = docStructure["pages"][nextPage]["isAnnotated"]
   if isAnnotated then
-    local res = app.msgbox("Next page contains annotations that will be lost, when proceeding. ", {[1]="Cancel", [2]="Proceed"})
-    if res == 1 then
-      return
-    end
+    app.openDialog("Next page contains annotations that will be lost, when proceeding. ", {"Cancel", "Proceed"}, "proceedIf")
+    return
   end
 
+  proceed()
+end
+
+function proceedIf(result)
+  if result == 2 then
+    proceed()
+  end
+end
+
+function proceed()
   -- Copy the page, change its background to the background of the next pdf page and delete the old page without cloned layers
+  local docStructure = app.getDocumentStructure()
+  local currentPage = docStructure["currentPage"]
+  local nextPage = currentPage + 1
+  local numPages = #docStructure["pages"]
+
+  local nextPdfPage = docStructure["pages"][nextPage]["pdfBackgroundPageNo"]
+
   local sidebarPage = app.getSidebarPageNo()
   app.setSidebarPageNo(2)
   app.sidebarAction("COPY");
