@@ -3,13 +3,14 @@
 #include <cstdlib>  // for abs, size_t
 
 #include <glib-object.h>  // for g_object_ref, G_CALLBACK, g_sig...
-#include <glib.h>         // for g_idle_add, GSourceFunc
+#include <glib.h>         // for g_idle_add
 
 #include "control/Control.h"   // for Control
 #include "control/PdfCache.h"  // for PdfCache
 #include "gui/MainWindow.h"    // for MainWindow
 #include "model/Document.h"    // for Document
 #include "util/Util.h"         // for npos
+#include "util/glib_casts.h"   // for wrap_for_once_v
 
 #include "SidebarLayout.h"            // for SidebarLayout
 #include "SidebarPreviewBaseEntry.h"  // for SidebarPreviewBaseEntry
@@ -135,7 +136,7 @@ auto SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar) -> bool {
         int y = allocation.y;
 
         if (x == -1) {
-            g_idle_add(reinterpret_cast<GSourceFunc>(scrollToPreview), sidebar);
+            g_idle_add(xoj::util::wrap_for_once_v<scrollToPreview>, sidebar);
             return false;
         }
 

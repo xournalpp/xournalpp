@@ -21,6 +21,7 @@
 #include "gui/inputdevices/StylusInputHandler.h"        // for StylusInputHa...
 #include "gui/inputdevices/TouchDrawingInputHandler.h"  // for TouchDrawingI...
 #include "gui/inputdevices/TouchInputHandler.h"         // for TouchInputHan...
+#include "util/glib_casts.h"                            // for wrap_for_g_callback
 
 #include "InputEvents.h"   // for InputEvent
 #include "config-debug.h"  // for DEBUG_INPUT
@@ -82,7 +83,7 @@ void InputContext::connect(GtkWidget* pWidget) {
 
     gtk_widget_add_events(pWidget, mask);
 
-    signal_id = g_signal_connect(pWidget, "event", G_CALLBACK(eventCallback), this);
+    signal_id = g_signal_connect(pWidget, "event", xoj::util::wrap_for_g_callback_v<eventCallback>, this);
 }
 
 auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self) -> bool {

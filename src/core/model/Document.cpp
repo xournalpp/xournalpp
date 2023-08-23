@@ -16,6 +16,7 @@
 #include "util/PlaceholderString.h"           // for PlaceholderString
 #include "util/SaveNameUtils.h"               // for parseFilename
 #include "util/Util.h"                        // for npos
+#include "util/glib_casts.h"                  // for wrap_v
 #include "util/i18n.h"                        // for FS, _F
 #include "util/raii/GObjectSPtr.h"            // for GObjectSPtr
 
@@ -32,8 +33,7 @@ Document::~Document() {
 
 void Document::freeTreeContentModel() {
     if (this->contentsModel) {
-        gtk_tree_model_foreach(this->contentsModel.get(),
-                               reinterpret_cast<GtkTreeModelForeachFunc>(freeTreeContentEntry), this);
+        gtk_tree_model_foreach(this->contentsModel.get(), xoj::util::wrap_v<freeTreeContentEntry>, this);
 
         this->contentsModel.reset();
     }
@@ -290,8 +290,7 @@ auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTre
 
 void Document::updateIndexPageNumbers() {
     if (this->contentsModel) {
-        gtk_tree_model_foreach(this->contentsModel.get(), reinterpret_cast<GtkTreeModelForeachFunc>(fillPageLabels),
-                               this);
+        gtk_tree_model_foreach(this->contentsModel.get(), xoj::util::wrap_v<fillPageLabels>, this);
     }
 }
 

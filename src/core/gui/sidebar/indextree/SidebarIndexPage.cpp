@@ -10,6 +10,7 @@
 #include "gui/sidebar/previews/base/SidebarToolbar.h"  // for SidebarToolbar
 #include "model/Document.h"                            // for Document
 #include "model/LinkDestination.h"                     // for XojLinkDest
+#include "util/glib_casts.h"                           // for wrap_v
 #include "util/i18n.h"                                 // for _
 
 SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
@@ -119,8 +120,8 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
         g_source_remove(sidebar->searchTimeout);
         sidebar->searchTimeout = 0;
     }
-    sidebar->searchTimeout = g_timeout_add_seconds_full(
-            G_PRIORITY_DEFAULT_IDLE, 2, reinterpret_cast<GSourceFunc>(searchTimeoutFunc), sidebar, nullptr);
+    sidebar->searchTimeout = g_timeout_add_seconds_full(G_PRIORITY_DEFAULT_IDLE, 2,
+                                                        xoj::util::wrap_v<searchTimeoutFunc>, sidebar, nullptr);
 
     // Source: Pidgin
     gchar* text = nullptr;

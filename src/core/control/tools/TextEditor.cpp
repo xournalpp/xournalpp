@@ -22,6 +22,7 @@
 #include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
 #include "util/DispatchPool.h"
 #include "util/Range.h"
+#include "util/glib_casts.h"  // for wrap_for_once_v
 #include "util/raii/CStringWrapper.h"
 #include "view/overlays/TextEditionView.h"
 
@@ -893,7 +894,7 @@ void TextEditor::resetImContext() {
 auto TextEditor::BlinkTimer::callback(TextEditor* te) -> bool {
     te->cursorVisible = !te->cursorVisible;
     auto time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
-    te->blinkTimer = gdk_threads_add_timeout(time, reinterpret_cast<GSourceFunc>(callback), te);
+    te->blinkTimer = gdk_threads_add_timeout(time, xoj::util::wrap_for_once_v<callback>, te);
 
     Range dirtyRange = te->cursorBox;
     dirtyRange.translate(te->textElement->getX(), te->textElement->getY());

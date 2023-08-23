@@ -1,7 +1,10 @@
 #include "Job.h"
 
 #include <gdk/gdk.h>  // for gdk_threads_add_idle
-#include <glib.h>     // for g_source_remove, GSourceFunc
+#include <glib.h>     // for g_source_remove
+
+#include "util/glib_casts.h"  // for wrap_for_once_v
+
 
 Job::Job(): refCount(1) {}
 
@@ -46,7 +49,7 @@ void Job::callAfterRun() {
     }
 
     this->ref();
-    this->afterRunId = gdk_threads_add_idle(reinterpret_cast<GSourceFunc>(Job::callAfterCallback), this);
+    this->afterRunId = gdk_threads_add_idle(xoj::util::wrap_for_once_v<Job::callAfterCallback>, this);
 }
 
 void Job::afterRun() {}
