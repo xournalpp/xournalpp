@@ -39,6 +39,7 @@
 #include "util/Point.h"                          // for Point
 #include "util/Rectangle.h"                      // for Rectangle
 #include "util/Util.h"                           // for npos
+#include "util/glib_casts.h"                     // for wrap_v
 
 #include "Layout.h"           // for Layout
 #include "PageView.h"         // for XojPageView
@@ -89,7 +90,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
     gtk_widget_grab_focus(this->widget);
 
-    this->cleanupTimeout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(clearMemoryTimer), this);
+    this->cleanupTimeout = g_timeout_add_seconds(5, xoj::util::wrap_v<clearMemoryTimer>, this);
 }
 
 XournalView::~XournalView() {

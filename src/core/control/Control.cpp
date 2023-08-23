@@ -91,6 +91,7 @@
 #include "util/Stacktrace.h"                                     // for Stac...
 #include "util/Util.h"                                           // for exec...
 #include "util/XojMsgBox.h"                                      // for XojM...
+#include "util/glib_casts.h"                                     // for wrap_v
 #include "util/i18n.h"                                           // for _, FS
 #include "util/serializing/InputStreamException.h"               // for Inpu...
 #include "util/serializing/ObjectInputStream.h"                  // for Obje...
@@ -155,7 +156,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     /**
      * This is needed to update the previews
      */
-    this->changeTimout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(checkChangedDocument), this);
+    this->changeTimout = g_timeout_add_seconds(5, xoj::util::wrap_v<checkChangedDocument>, this);
 
     this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
 
@@ -377,7 +378,7 @@ void Control::enableAutosave(bool enable) {
 
     if (enable) {
         auto timeout = guint(settings->getAutosaveTimeout()) * 60U;
-        this->autosaveTimeout = g_timeout_add_seconds(timeout, reinterpret_cast<GSourceFunc>(autosaveCallback), this);
+        this->autosaveTimeout = g_timeout_add_seconds(timeout, xoj::util::wrap_v<autosaveCallback>, this);
     }
 }
 
@@ -2479,7 +2480,6 @@ public:
  */
 auto Control::loadMetadataCallback(MetadataCallbackData* data) -> bool {
     if (!data->md.valid) {
-        delete data;
         return false;
     }
     ZoomControl* zoom = data->ctrl->zoom;
@@ -2493,9 +2493,6 @@ auto Control::loadMetadataCallback(MetadataCallbackData* data) -> bool {
         zoom->setZoom(data->md.zoom * zoom->getZoom100Value());
     }
     data->ctrl->scrollHandler->scrollToPage(data->md.page);
-
-    delete data;
-
     // Do not call again!
     return false;
 }
@@ -2505,7 +2502,8 @@ void Control::loadMetadata(MetadataEntry md) {
     data->md = std::move(md);
     data->ctrl = this;
 
-    g_idle_add(reinterpret_cast<GSourceFunc>(loadMetadataCallback), data);
+    g_idle_add_full(G_PRIORITY_DEFAULT_IDLE, xoj::util::wrap_v<loadMetadataCallback>, data,
+                    &xoj::util::destroy_cb<MetadataCallbackData>);
 }
 
 auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDocument) -> bool {

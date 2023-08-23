@@ -80,12 +80,12 @@ private:
     /**
      * A bookmark was selected
      */
-    static bool treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPage* sidebar);
+    static auto treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPage* sidebar) -> bool;
 
     /**
      * The function which is called after a search timeout
      */
-    static bool searchTimeoutFunc(SidebarIndexPage* sidebar);
+    static auto searchTimeoutFunc(SidebarIndexPage* sidebar) -> bool;
 
 private:
     /**
@@ -115,7 +115,7 @@ private:
      *
      * After a timeout we scroll to the selected page
      */
-    int searchTimeout = 0;
+    guint searchTimeout = 0;
 
     /**
      * If there is something to display in the tree

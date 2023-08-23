@@ -15,6 +15,7 @@
 #include "gui/XournalView.h"            // for XournalView
 #include "gui/widgets/XournalWidget.h"  // for gtk_xournal_get_layout
 #include "util/Util.h"                  // for execInUiThread
+#include "util/glib_casts.h"            // for wrap_for_g_callback
 
 using xoj::util::Rectangle;
 
@@ -227,9 +228,9 @@ void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalV
     this->control = c;
     this->view = v;
     gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
-    g_signal_connect(widget, "scroll-event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
-    g_signal_connect(widget, "event", G_CALLBACK(onTouchpadPinchEvent), this);
-    g_signal_connect(window, "configure-event", G_CALLBACK(onWindowSizeChangedEvent), this);
+    g_signal_connect(widget, "scroll-event", xoj::util::wrap_for_g_callback_v<onScrolledwindowMainScrollEvent>, this);
+    g_signal_connect(widget, "event", xoj::util::wrap_for_g_callback_v<onTouchpadPinchEvent>, this);
+    g_signal_connect(window, "configure-event", xoj::util::wrap_for_g_callback_v<onWindowSizeChangedEvent>, this);
     registerListener(this->control);
 }
 

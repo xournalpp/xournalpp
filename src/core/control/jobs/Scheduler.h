@@ -103,15 +103,15 @@ public:
     void unblockRerenderZoom();
 
 private:
-    static gpointer jobThreadCallback(Scheduler* scheduler);
-    Job* getNextJobUnlocked(bool onlyNotRender = false, bool* hasRenderJobs = nullptr);
+    static auto jobThreadCallback(Scheduler* scheduler) -> gpointer;
+    auto getNextJobUnlocked(bool onlyNotRender = false, bool* hasRenderJobs = nullptr) -> Job*;
 
-    static bool jobRenderThreadTimer(Scheduler* scheduler);
+    static auto jobRenderThreadTimer(Scheduler* scheduler) -> bool;
 
 protected:
     bool threadRunning = true;
 
-    int jobRenderThreadTimerId = 0;
+    guint jobRenderThreadTimerId = 0;
 
     GThread* thread = nullptr;
 
