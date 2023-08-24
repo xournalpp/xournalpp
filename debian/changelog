@@ -1,6 +1,17 @@
-xournalpp (1.2.0+dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.1+dev-1) UNRELEASED; urgency=medium
 
   * 
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 24 Aug 2023 17:22:55 +0200
+
+xournalpp (1.2.1-1) unstable; urgency=medium
+
+  * Added a default toolbar so that the app does not start without toolbar on new installations
+  * Fixed some crashes and various issues with the crash log handling
+  * Added options to the command line and preferences to disable the audio system used for audio recording
+  * The official release builds are now all built with gtksourceview styling for the LaTeX tool and in "RelWithDeb" mode. Thus failing asserts do not result in a crash anymore.
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 24 Aug 2023 17:22:54 +0200
 
 xournalpp (1.2.0-1) unstable; urgency=medium
 

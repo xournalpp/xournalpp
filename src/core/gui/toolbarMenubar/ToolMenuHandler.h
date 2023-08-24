@@ -102,6 +102,8 @@ public:
 
     void enableAudioPlaybackButtons();
 
+    void hideAudioMenuItems();
+
     void setAudioPlaybackPaused(bool paused);
     std::string iconName(const char* icon);
 

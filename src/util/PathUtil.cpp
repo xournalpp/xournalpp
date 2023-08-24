@@ -156,28 +156,15 @@ void Util::openFileWithDefaultApplication(const fs::path& filename) {
 #ifdef __APPLE__
     constexpr auto const OPEN_PATTERN = "open \"{1}\"";
 #elif _WIN32  // note the underscore: without it, it's not msdn official!
-    constexpr auto const OPEN_PATTERN = "start \"{1}\"";
+    constexpr auto const OPEN_PATTERN = "start \"\" \"{1}\"";
+    /**
+     * start command requires a (possibly empty) title when there are quotes around the command
+     * https://stackoverflow.com/questions/27261692/how-do-i-use-quotes-in-cmd-start
+     */
 #else         // linux, unix, ...
     constexpr auto const OPEN_PATTERN = "xdg-open \"{1}\"";
 #endif
 
-    std::string command = FS(FORMAT_STR(OPEN_PATTERN) % Util::getEscapedPath(filename));
-    if (system(command.c_str()) != 0) {
-        std::string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
-                                "URL: {1}") %
-                             filename.u8string());
-        XojMsgBox::showErrorToUser(nullptr, msg);
-    }
-}
-
-void Util::openFileWithFilebrowser(const fs::path& filename) {
-#ifdef __APPLE__
-    constexpr auto const OPEN_PATTERN = "open \"{1}\"";
-#elif _WIN32
-    constexpr auto const OPEN_PATTERN = "explorer.exe /n,/e,\"{1}\"";
-#else  // linux, unix, ...
-    constexpr auto const OPEN_PATTERN = R"(nautilus "file://{1}" || dolphin "file://{1}" || konqueror "file://{1}" &)";
-#endif
     std::string command = FS(FORMAT_STR(OPEN_PATTERN) % Util::getEscapedPath(filename));
     if (system(command.c_str()) != 0) {
         std::string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"

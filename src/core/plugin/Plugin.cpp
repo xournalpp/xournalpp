@@ -10,6 +10,9 @@
 #include "util/Assert.h"     // for xoj_assert
 #include "util/PathUtil.h"   // for toGFilename
 #include "util/XojMsgBox.h"  // for XojMsgBox
+
+#include "config-features.h"  // for ENABLE_PLUGINS
+
 #ifdef ENABLE_PLUGINS
 
 #include <utility>  // for move, pair

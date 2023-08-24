@@ -605,7 +605,7 @@ void MainWindow::updateToolbarMenu() {
 void MainWindow::createToolbar() {
     toolbarSelected(control->getSettings()->getSelectedToolbar());
 
-    if (!this->control->getAudioController()->isPlaying()) {
+    if (auto* audioController = this->control->getAudioController(); audioController && !audioController->isPlaying()) {
         this->getToolMenuHandler()->disableAudioPlaybackButtons();
     }
 

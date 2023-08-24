@@ -69,7 +69,7 @@ endif()
 
 if (WIN32)
   # generate .ico from .png
-  find_package(ImageMagick REQUIRED COMPONENTS convert)
+  find_package(ImageMagick REQUIRED COMPONENTS magick)
   set (ICON_SIZES 16 32 48 256)
   foreach (SIZE IN LISTS ICON_SIZES)
     set (RESIZED_ICON ${PROJECT_BINARY_DIR}/xournalpp-icon-${SIZE}.png)
@@ -82,7 +82,7 @@ if (WIN32)
   endforeach()
   add_custom_command (
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
-                COMMAND convert ${ICON_DEPS} ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
+                COMMAND magick convert ${ICON_DEPS} ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
                 DEPENDS ${ICON_DEPS}
   )
   unset(ICON_SIZES)

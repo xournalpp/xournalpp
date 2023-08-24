@@ -30,9 +30,12 @@ Xournal++ features:
 - Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
 - Paper backgrounds for note-taking, scratch paper, or whiteboarding
 - Annotate on top of PDFs
+- Select text from the background PDF, copy, highlight or underline it or strike it through
+- Follow links from the background PDF
 - Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line
 - Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)
 - Shape drawing (line, arrow, circle, rectangle, spline)
+- Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii
 - Fill shape functionality
 - Shape resizing and rotation
 - Rotation and grid snapping for precise alignment of objects
@@ -40,10 +43,11 @@ Xournal++ features:
 - Text tool for adding text in different fonts, colors, and sizes
 - Enhanced support for image insertion
 - Eraser with multiple configurations
-- LaTeX support (requires a working LaTeX installation) with customizable template
+- LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting
 - Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)
 - Allows mapping different tools/colors etc. to stylus/mouse buttons
 - Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
+- Custom color palette support using the .gpl format
 - Page template definitions
 - Bug reporting, auto-save, and auto backup tools
 - Audio recording and playback alongside with handwritten notes

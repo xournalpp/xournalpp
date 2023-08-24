@@ -24,6 +24,7 @@
 #include "gui/scroll/ScrollHandling.h"          // for ScrollHandling
 #include "gui/widgets/XournalWidget.h"          // for GtkXournal
 #include "model/Point.h"                        // for Point, Point::NO_PRES...
+#include "util/Assert.h"                        // for xoj_assert
 #include "util/Point.h"                         // for Point
 #include "util/Util.h"                          // for execInUiThread
 
@@ -163,6 +164,13 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     // Forward event to page
     if (currentPage) {
         PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
+        if (pos.pressure != Point::NO_PRESSURE) {
+            pressureMode = PressureMode::DEVICE_PRESSURE;
+        } else if (this->inputContext->getSettings()->isPressureGuessingEnabled()) {
+            pressureMode = PressureMode::INFERRED_PRESSURE;
+        } else {
+            pressureMode = PressureMode::NO_PRESSURE;
+        }
         pos.pressure = this->filterPressure(pos, currentPage);
 
         return currentPage->onButtonPressEvent(pos);
@@ -171,46 +179,57 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     return true;
 }
 
-double PenInputHandler::inferPressureIfEnabled(PositionInputData const& pos, XojPageView* page) {
-    if (pos.pressure == Point::NO_PRESSURE && this->inputContext->getSettings()->isPressureGuessingEnabled()) {
-        PositionInputData lastPos = getInputDataRelativeToCurrentPage(page, this->lastEvent);
+double PenInputHandler::inferPressureValue(PositionInputData const& pos, XojPageView* page) {
+    PositionInputData lastPos = getInputDataRelativeToCurrentPage(page, this->lastEvent);
 
-        double dt = (pos.timestamp - lastPos.timestamp) / 10.0;
-        double distance = utl::Point<double>(pos.x, pos.y).distance(utl::Point<double>(lastPos.x, lastPos.y));
-        double inverseSpeed = dt / (distance + 0.001);
+    double dt = (pos.timestamp - lastPos.timestamp) / 10.0;
+    double distance = utl::Point<double>(pos.x, pos.y).distance(utl::Point<double>(lastPos.x, lastPos.y));
+    double inverseSpeed = dt / (distance + 0.001);
 
-        // This doesn't have to be exact. Arctan is used here for its sigmoid-like shape,
-        // so that lim inverseSpeed->infinity (newPressure) is some finite value.
-        double newPressure = 3.142 / 2.0 + std::atan(inverseSpeed * 3.14 - 1.3);
+    // This doesn't have to be exact. Arctan is used here for its sigmoid-like shape,
+    // so that lim inverseSpeed->infinity (newPressure) is some finite value.
+    double newPressure = 3.142 / 2.0 + std::atan(inverseSpeed * 3.14 - 1.3);
 
-        // This weighted average both smooths abrupt changes in newPressure caused
-        // by changes to inverseSpeed and causes an initial increase in pressure.
-        newPressure = std::min(newPressure, 2.0) / 5.0 + this->lastPressure * 4.0 / 5.0;
+    // This weighted average both smooths abrupt changes in newPressure caused
+    // by changes to inverseSpeed and causes an initial increase in pressure.
+    newPressure = std::min(newPressure, 2.0) / 5.0 + this->lastPressure * 4.0 / 5.0;
 
-        // Handle the single-point case.
-        if (distance == 0) {
-            newPressure = std::sqrt(dt / 10.0) - 0.1;
-        }
-
-        this->lastPressure = newPressure;
-
-        // Final pressure tweaks...
-        return (newPressure * 1.1 + 0.8) / 2.0;
+    // Handle the single-point case.
+    if (distance == 0) {
+        newPressure = std::sqrt(dt / 10.0) - 0.1;
     }
 
-    return pos.pressure;
+    this->lastPressure = newPressure;
+
+    // Final pressure tweaks...
+    return (newPressure * 1.1 + 0.8) / 2.0;
 }
 
 double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView* page) {
-    double filteredPressure = inferPressureIfEnabled(pos, page);
-    Settings* settings = this->inputContext->getSettings();
-
-    if (filteredPressure != Point::NO_PRESSURE) {
-        filteredPressure *= settings->getPressureMultiplier();
-        filteredPressure = std::max(settings->getMinimumPressure(), filteredPressure);
+    if (pressureMode == PressureMode::NO_PRESSURE) {
+        return Point::NO_PRESSURE;
     }
 
-    return filteredPressure;
+    double filteredPressure;
+    if (pressureMode == PressureMode::INFERRED_PRESSURE) {
+        filteredPressure = inferPressureValue(pos, page);
+    } else {
+        xoj_assert(pressureMode == PressureMode::DEVICE_PRESSURE);
+        /**
+         * On some devices, the pressure value of some events is missing. Use the last recorded pressure value then.
+         */
+        if (pos.pressure == Point::NO_PRESSURE) {
+            g_debug("Pressure-sensitive device omitted pressure this time");
+            filteredPressure = lastPressure;
+        } else {
+            filteredPressure = pos.pressure;
+            lastPressure = pos.pressure;  // Record in case the pressure value is omitted in the next event
+        }
+    }
+
+    Settings* settings = this->inputContext->getSettings();
+    xoj_assert(settings->getMinimumPressure() >= 0.01);
+    return std::max(settings->getMinimumPressure(), filteredPressure * settings->getPressureMultiplier());
 }
 
 bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {

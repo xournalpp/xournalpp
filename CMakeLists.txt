@@ -6,7 +6,7 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment ve
 ## Project related Variables
 ## Also update changelog in debian folder!
 project(xournalpp
-        VERSION 1.2.0
+        VERSION 1.2.1
         DESCRIPTION "Xournal++ - Open source hand note-taking program"
         HOMEPAGE_URL "https://xournalpp.github.io/"
         LANGUAGES CXX C)
@@ -145,7 +145,6 @@ if (Lua_FOUND AND ENABLE_PLUGINS)
     add_library(lua INTERFACE)
     target_link_libraries(lua INTERFACE ${LUA_LIBRARIES})
     target_include_directories(lua INTERFACE ${LUA_INCLUDE_DIR})
-    target_compile_definitions(lua INTERFACE ENABLE_PLUGINS)
     add_library(Lua::lua ALIAS lua)
 else ()
     message(STATUS "Disable Xournal++ Plugins")

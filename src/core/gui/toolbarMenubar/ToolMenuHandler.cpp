@@ -35,7 +35,9 @@
 #include "ToolPdfCombocontrol.h"     // for ToolPdfCombocontrol
 #include "ToolSelectCombocontrol.h"  // for ToolSelectComboc...
 #include "ToolZoomSlider.h"          // for ToolZoomSlider
-#include "config-dev.h"
+#include "config-dev.h"              // for TOOLBAR_CONFIG
+#include "config-features.h"         // for ENABLE_PLUGINS
+#include "filesystem.h"              // for exists
 
 using std::string;
 
@@ -152,6 +154,12 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     name = "DRAW_ELLIPSE";
                 }
 
+                if (!this->control->getAudioController() &&
+                    (name == "AUDIO_RECORDING" || name == "AUDIO_SEEK_BACKWARDS" || name == "AUDIO_PAUSE_PLAYBACK" ||
+                     name == "AUDIO_STOP_PLAYBACK" || name == "AUDIO_SEEK_FORWARDS" || name == "PLAY_OBJECT")) {
+                    continue;
+                }
+
                 if (name == "SEPARATOR") {
                     GtkToolItem* it = gtk_separator_tool_item_new();
                     gtk_widget_show(GTK_WIDGET(it));
@@ -250,6 +258,10 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
         gtk_widget_hide(toolbar);
     } else {
         gtk_widget_show(toolbar);
+    }
+
+    if (!this->control->getAudioController()) {
+        hideAudioMenuItems();
     }
 }
 
@@ -595,8 +607,8 @@ void ToolMenuHandler::initToolItems() {
      * aka. COLOR_SELECT
      */
     addToolItem(new ColorToolItem(listener, toolHandler, this->parent, NamedColor{}, true));
-
-    addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
+    bool hideAudio = !this->control->getAudioController();
+    addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT", hideAudio));
     addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
     addToolItem(new ToolPdfCombocontrol(this, listener, "PDF_TOOL"));
 
@@ -679,6 +691,15 @@ void ToolMenuHandler::enableAudioPlaybackButtons() {
     gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), true);
     gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), true);
     gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), true);
+}
+
+void ToolMenuHandler::hideAudioMenuItems() {
+    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioRecord")));
+    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioPausePlayback")));
+    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioStopPlayback")));
+    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioSeekForwards")));
+    gtk_widget_hide(GTK_WIDGET(gui->get("menuAudioSeekBackwards")));
+    gtk_widget_hide(GTK_WIDGET(gui->get("menuToolsPlayObject")));
 }
 
 void ToolMenuHandler::setAudioPlaybackPaused(bool paused) {

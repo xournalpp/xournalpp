@@ -134,7 +134,7 @@ static void crashHandler(int sig) {
     fp << "Xournal++ version " << PROJECT_VERSION << std::endl;
 
     if (auto const gitCommitId = std::string{GIT_COMMIT_ID}; !gitCommitId.empty()) {
-        fp << "Git commit: " << gitCommitId << std::endl;
+        fp << "Git commit " << gitCommitId << " from " << GIT_ORIGIN_OWNER << "/" << GIT_BRANCH << std::endl;
     }
 
     fp << "Gtk version " << gtk_get_major_version() << "." << gtk_get_minor_version() << "." << gtk_get_micro_version()

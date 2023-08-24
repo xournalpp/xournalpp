@@ -356,6 +356,9 @@ public:
     bool isScrollbarFadeoutDisabled() const;
     void setScrollbarFadeoutDisabled(bool disable);
 
+    bool isAudioDisabled() const;
+    void setAudioDisabled(bool disable);
+
     std::string const& getDefaultSaveName() const;
     void setDefaultSaveName(const std::string& name);
 
@@ -721,6 +724,11 @@ private:
      * Disable scrollbar fade out (overlay scrolling)
      */
     bool disableScrollbarFadeout{};
+
+    /**
+     * Disable the audio system
+     */
+    bool disableAudio{};
 
     /**
      *  The selected Toolbar name

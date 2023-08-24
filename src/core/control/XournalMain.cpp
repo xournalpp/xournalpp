@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for copy, sort, max
 #include <array>      // for array
+#include <chrono>     // for time_point, duration, hours...
 #include <clocale>    // for setlocale, LC_NUMERIC
 #include <cstdio>     // for printf
 #include <cstdlib>    // for exit, size_t
@@ -150,16 +151,29 @@ static void deleteFile(const fs::path& file) {
 }
 
 void checkForErrorlog() {
-    const fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
-    if (!fs::exists(errorDir)) {
-        return;
-    }
-
     std::vector<fs::path> errorList;
-    for (auto const& f: fs::directory_iterator(errorDir)) {
-        if (f.is_regular_file() && f.path().filename().string().substr(0, 8) == "errorlog") {
-            errorList.emplace_back(f);
+
+    try {
+        const fs::path errorDir = Util::getCacheSubfolder(ERRORLOG_DIR);
+        if (!fs::exists(errorDir)) {
+            return;
         }
+
+        // Todo(cpp20): replace std::chrono::hours(168) with std::chrono::weeks(1)
+        const auto oldestModificationDate = fs::file_time_type::clock::now() - std::chrono::hours(168);
+        for (auto const& f: fs::directory_iterator(errorDir)) {
+            if (f.is_regular_file() && f.path().filename().string().substr(0, 8) == "errorlog") {
+                if (f.last_write_time() > oldestModificationDate) {
+                    errorList.emplace_back(f);
+                }
+            }
+        }
+    } catch (fs::filesystem_error& e) {
+        g_warning("Filesystem error while looking for crash logs:\n"
+                  "   %s\n"
+                  "   %s\n",
+                  e.path1().c_str(), e.what());
+        return;
     }
 
     if (errorList.empty()) {
@@ -167,12 +181,10 @@ void checkForErrorlog() {
     }
 
     std::sort(errorList.begin(), errorList.end());
-    std::string msg =
-            errorList.size() == 1 ?
-                    _("There is an errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed.") :
-                    _("There are errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed.");
-    msg += "\n";
-    msg += FS(_F("You're using \"{1}/{2}\" branch.") % GIT_ORIGIN_OWNER % GIT_BRANCH);
+    std::string msg = errorList.size() == 1 ? _("There is a recent errorlogfile from Xournal++. Please file a "
+                                                "Bugreport, so the bug may be fixed.") :
+                                              _("There are recent errorlogfiles from Xournal++. Please file a "
+                                                "Bugreport, so the bug may be fixed.");
     msg += "\n";
     msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
 
@@ -190,7 +202,7 @@ void checkForErrorlog() {
                                } else if (response == OPEN_FILE) {
                                    Util::openFileWithDefaultApplication(errorlogPath);
                                } else if (response == OPEN_DIR) {
-                                   Util::openFileWithFilebrowser(errorlogPath.parent_path());
+                                   Util::openFileWithDefaultApplication(errorlogPath.parent_path());
                                } else if (response == DELETE_FILE) {
                                    deleteFile(errorlogPath);
                                }
@@ -319,6 +331,7 @@ struct XournalMainPrivate {
     gboolean exportNoBackground = false;
     gboolean exportNoRuling = false;
     gboolean progressiveMode = false;
+    gboolean disableAudio = false;
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
@@ -423,7 +436,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
 
-    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
+    app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
     // Set up icons
     {
@@ -612,6 +625,8 @@ auto XournalMain::run(int argc, char** argv) -> int {
                                        "<input>", nullptr},
                           GOptionEntry{"version", 0, 0, G_OPTION_ARG_NONE, &app_data.showVersion,
                                        _("Get version of xournalpp"), nullptr},
+                          GOptionEntry{"disable-audio", 0, 0, G_OPTION_ARG_NONE, &app_data.disableAudio,
+                                       _("Disable audio for this session"), nullptr},
                           GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     g_application_add_main_option_entries(G_APPLICATION(app), options.data());
 

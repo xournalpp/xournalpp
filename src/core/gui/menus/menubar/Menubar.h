@@ -13,7 +13,7 @@
 
 #include <memory>
 
-#include "config-features.h"
+#include "config-features.h"  // for ENABLE_PLUGINS
 
 class MainWindow;
 
