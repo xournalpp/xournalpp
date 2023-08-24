@@ -14,7 +14,8 @@ Bugfixes from various community contributors.
   This affected the Windows build and (only for directories) the flatpak and
   snap packages on Linux (#4976).
 * Changed the link address when sending a bugreport about a recent crash log
-  such that the appropriate template is used (#5032).
+  such that the appropriate template from the xournalpp/xournalpp repository
+  is used (#5032, #4910, #5084).
 * Added a missing double arrow preference to the button configuration dialog,
   therewith also fixing selections below "Draw Arrow" (#4989).
 * Fixed occuring negative pressure values that previously resulted in a crash
