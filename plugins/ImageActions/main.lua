@@ -12,8 +12,8 @@ function cb(mode)
   local images = app.getImages("selection")
   local hasVips, vips = pcall(require, "vips")
   if not hasVips then
-    app.msgbox("You need to have lua-vips and luaffifb installed and included in your Lua package path in order to use this plugin. \n" .. 
-               "See https://github.com/rolandlo/lua-vips/tree/fix-lua-5.3#installation for installation instructions.\n\n", {[1]="OK"})
+    app.openDialog("You need to have lua-vips and luaffifb installed and included in your Lua package path in order to use this plugin. \n" .. 
+               "See https://github.com/rolandlo/lua-vips/tree/fix-lua-5.3#installation for installation instructions.\n\n", {"OK"}, "", true)
     return
   end
   imdata = {}
