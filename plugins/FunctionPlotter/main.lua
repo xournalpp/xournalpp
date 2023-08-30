@@ -8,13 +8,13 @@ function showDialog()
   local math = require("math")
   local hasLuaxp, luaxp = pcall(require, "luaxp")
   if not hasLuaxp then
-    app.msgbox("You should have a copy of the luaxp module inside the plugin folder")
+    app.openDialog("You should have a copy of the luaxp module inside the plugin folder.", {"OK"}, "", true)
     return
   end
 
   local hasLgi, lgi = pcall(require, "lgi")
   if not hasLgi then
-    app.msgbox("You need to have the Lua lgi-module installed and included in your Lua package path in order to use the GUI for migrating font sizes. \n\n", {[1]="OK"})
+    app.openDialog("You should have the Lua lgi-module installed and included in your Lua package path.", {"OK"}, "", true)
     return
   end
 
