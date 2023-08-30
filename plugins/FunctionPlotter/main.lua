@@ -141,6 +141,8 @@ function showDialog()
     local lwAxis = ui.spbtLineWidthAxis:get_value()
     local lwGrid = ui.spbtLineWidthGrid:get_value()
     local tickHeight = ui.spbtTickHeight:get_value()
+    local xLabel = ui.entryLabelX:get_text()
+    local yLabel = ui.entryLabelY:get_text()
     
     local arrowLength = 8
     local mx, my = fit(wc.xMin, wc.yMin)
@@ -151,6 +153,7 @@ function showDialog()
     local drawTicks = ui.cbTicks:get_active()
     local drawGrid = ui.cbGrid:get_active()
     local displayNumbers = ui.cbNumbers:get_active()
+    local displayAxisLabels = ui.cbAxisLabels:get_active()
 
     if drawAxisLines then
       -- draw x-axis and y-axis
@@ -197,6 +200,7 @@ function showDialog()
 
     texts = {}
     font = {name = "Monospace Regular", size = 6.0}
+
     if displayNumbers then
       -- draw number on x-axis
       for i = (wc.xMin // wc.xUnit) + 1, (wc.xMax // wc.xUnit) do
@@ -217,7 +221,14 @@ function showDialog()
         end
       end
     end
-    print(#texts)
+
+    if displayAxisLabels then
+      local xval = fitX(wc.xMax)
+      local yval = fitY(wc.yMax)
+      table.insert(texts, {text = xLabel, font = font, x=xval-font.size, y=y0+font.size, color=colAxis})
+      table.insert(texts, {text = yLabel, font = font, x=x0-2*font.size, y=yval-font.size, color=colAxis})
+    end
+
     app.addTexts({texts = texts})
   end
 
