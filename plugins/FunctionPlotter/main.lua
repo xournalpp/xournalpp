@@ -143,7 +143,8 @@ function showDialog()
     local tickHeight = ui.spbtTickHeight:get_value()
     local xLabel = ui.entryLabelX:get_text()
     local yLabel = ui.entryLabelY:get_text()
-    
+    local fontName = ui.fnt:get_font()
+    local fontSize = ui.fnt:get_font_size()
     local arrowLength = 8
     local mx, my = fit(wc.xMin, wc.yMin)
     local Mx, My = fit(wc.xMax, wc.yMax)
@@ -198,8 +199,9 @@ function showDialog()
     app.addStrokes({strokes = strokes})
     app.refreshPage()
 
-    texts = {}
-    font = {name = "Monospace Regular", size = 6.0}
+    local texts = {}
+    local PANGO_SCALE = fontSize > 500 and 1024 or 1   -- accounting for what looks like a bug in lua-lgi
+    local font = {name = fontName, size = fontSize/PANGO_SCALE}
 
     if displayNumbers then
       -- draw number on x-axis
