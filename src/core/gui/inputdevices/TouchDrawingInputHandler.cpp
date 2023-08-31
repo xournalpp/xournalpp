@@ -59,12 +59,6 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
         return false;
     }
 
-    // Don't handle more then 2 inputs
-    /*if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
-        this->secondarySequence != event.sequence) {
-        return false;
-    }*/
-
     // Multitouch
     if ((this->primarySequence && this->primarySequence != event.sequence) || this->secondarySequence) {
         if (!this->secondarySequence) {

@@ -34,9 +34,7 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
                         ZOOM_OUT;
         // use screen pixel coordinates for the zoom center
         // as relative coordinates depend on the changing zoom level
-        int rx, ry;
-        gdk_window_get_root_coords(gtk_widget_get_window(widget), 0, 0, &rx, &ry);
-        zoom->zoomScroll(direction, {event->x_root - rx, event->y_root - ry});
+        zoom->zoomScroll(direction, Util::toScreenCoords(widget, utl::Point{event->x_root, event->y_root}));
         return true;
     }
 
@@ -47,7 +45,6 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
 auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
     if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
         utl::Point<double> center;
-        int rx, ry;
         switch (event->phase) {
             case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN:
                 if (zoom->isZoomFitMode()) {
@@ -55,9 +52,7 @@ auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomC
                 }
                 // use screen pixel coordinates for the zoom center
                 // as relative coordinates depend on the changing zoom level
-                gdk_window_get_root_coords(gtk_widget_get_window(widget), 0, 0, &rx, &ry);
-                center = {event->x_root - rx, event->y_root - ry};
-                zoom->startZoomSequence(center);
+                zoom->startZoomSequence(Util::toScreenCoords(widget, utl::Point{event->x_root, event->y_root}));
                 break;
             case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
                 zoom->zoomSequenceChange(event->scale, true);
@@ -179,7 +174,11 @@ void ZoomControl::startZoomSequence(utl::Point<double> zoomCenter) {
 
 void ZoomControl::zoomSequenceChange(double zoom, bool relative) {
     if (relative) {
-        zoom *= this->zoomSequenceStart != -1 ? zoomSequenceStart : this->zoom;
+        if (this->zoomSequenceStart != -1) {
+            zoom *= zoomSequenceStart;
+        } else {
+            zoom *= this->zoom;
+        }
     }
 
     setZoom(zoom);
@@ -187,7 +186,11 @@ void ZoomControl::zoomSequenceChange(double zoom, bool relative) {
 
 void ZoomControl::zoomSequenceChange(double zoom, bool relative, utl::Point<double> scrollVector) {
     if (relative) {
-        zoom *= this->zoomSequenceStart != -1 ? zoomSequenceStart : this->zoom;
+        if (this->zoomSequenceStart != -1) {
+            zoom *= zoomSequenceStart;
+        } else {
+            zoom *= this->zoom;
+        }
     }
 
     // scroll update
@@ -217,7 +220,7 @@ auto ZoomControl::getVisibleRect() -> Rectangle<double> {
 auto ZoomControl::getScrollPositionAfterZoom() const -> utl::Point<double> {
     //  If we aren't in a zoomSequence, `unscaledPixels`, `scrollPosition`, and `zoomWidgetPos
     // can't be used to determine the scroll position! Return now.
-    // NOTE: this case should never happend currently.
+    // NOTE: this case should never happen currently.
     //       getScrollPositionAfterZoom is called from XournalView after setZoom() fired the ZoomListeners
     if (this->zoomSequenceStart == -1) {
         return {-1, -1};
@@ -251,7 +254,9 @@ void ZoomControl::fireZoomChanged() {
 }
 
 void ZoomControl::fireZoomRangeValueChanged() {
-    for (ZoomListener* z: this->listener) { z->zoomRangeValuesChanged(); }
+    for (ZoomListener* z: this->listener) {
+        z->zoomRangeValuesChanged();
+    }
 }
 
 auto ZoomControl::getZoom() const -> double { return this->zoom; }

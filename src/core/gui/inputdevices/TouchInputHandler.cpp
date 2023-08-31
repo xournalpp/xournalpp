@@ -146,16 +146,9 @@ void TouchInputHandler::zoomStart() {
     auto* mainWindow = inputContext->getView()->getControl()->getWindow();
     // use screen pixel coordinates for the zoom center
     // as relative coordinates depend on the changing zoom level
-    int rx, ry;
-    gdk_window_get_root_coords(gtk_widget_get_window(mainWindow->getWinXournal()), 0, 0, &rx, &ry);
-    center.x -= rx;
-    center.y -= ry;
-
-    // When not using touch drawing, we're using a different scrolling method.
-    // This requires different centering.
-    /*if (!mainWindow->getGtkTouchscreenScrollingEnabled()) {
-        center = (this->priLastRel + this->secLastRel) / 2.0;  // TODO check!
-    }*/
+    utl::Point<double> windowTopLeft = mainWindow->getScreenPos();
+    center.x -= windowTopLeft.x;
+    center.y -= windowTopLeft.y;
 
     zoomControl->startZoomSequence(center);
 

@@ -143,6 +143,7 @@ public:
      * @param relative If the zoom is relative to the start value (for Gesture)
      */
     void zoomSequenceChange(double zoom, bool relative);
+
     /**
      * Change the zoom and zoomCenter within a Zoom sequence (startZoomSequence() / endZoomSequence())
      * Used while touch pinch event
