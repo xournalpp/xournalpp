@@ -292,7 +292,9 @@ void MainWindow::initHideMenu() {
 
 auto MainWindow::getLayout() const -> Layout* { return gtk_xournal_get_layout(this->xournal->getWidget()); }
 
-auto MainWindow::getWinXournal() -> GtkWidget* { return this->winXournal; }
+auto MainWindow::getScreenPos() -> utl::Point<double> {
+    return Util::toScreenCoords(this->winXournal, utl::Point{0.0, 0.0});
+}
 
 auto cancellable_cancel(GCancellable* cancel) -> bool {
     g_cancellable_cancel(cancel);

@@ -48,6 +48,14 @@ auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboole
     return false;
 }
 
+utl::Point<double> Util::toScreenCoords(GtkWidget* widget, utl::Point<double> point) {
+    // use screen pixel coordinates for the zoom center
+    // as relative coordinates depend on the changing zoom level
+    int rx, ry;
+    gdk_window_get_root_origin(gtk_widget_get_window(widget), &rx, &ry);
+    return utl::Point<double>{point.x - rx, point.y - ry};
+}
+
 void Util::cairo_set_dash_from_vector(cairo_t* cr, const std::vector<double>& dashes, double offset) {
     cairo_set_dash(cr, dashes.data(), static_cast<int>(dashes.size()), offset);
 }

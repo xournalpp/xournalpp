@@ -24,6 +24,7 @@
 
 #include "control/layer/LayerCtrlListener.h"  // for LayerCtrlListener
 #include "model/Font.h"                       // for XojFont
+#include "util/Point.h"
 #include "util/raii/GObjectSPtr.h"
 
 #include "GladeGui.h"            // for GladeGui
@@ -114,8 +115,11 @@ public:
 
     [[maybe_unused]] Menubar* getMenubar() const;
 
-    GtkWidget* getWinXournal();
-
+    /**
+     * Get the position of the top left corner of this window on the screen.
+     * @see gdk_window_get_root_origin
+     */
+    utl::Point<double> getScreenPos();
 
     /**
      * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input
