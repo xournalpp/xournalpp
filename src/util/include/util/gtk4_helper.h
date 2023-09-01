@@ -53,11 +53,13 @@ void gtk_check_button_set_active(GtkCheckButton* bt, bool state);
 
 void gtk_button_set_child(GtkButton* button, GtkWidget* child);
 GtkWidget* gtk_button_get_child(GtkButton* button);
+void gtk_button_set_icon_name(GtkButton* button, const char* iconName);
 
 /**** GtkPopover ****/
 
 GtkWidget* gtk_popover_new();
 void gtk_popover_set_child(GtkPopover* popover, GtkWidget* child);
+GtkWidget* gtk_popover_menu_new_from_model(GMenuModel* model);
 
 /**** GtkLabel ****/
 void gtk_label_set_wrap(GtkLabel* label, gboolean wrap);

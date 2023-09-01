@@ -49,21 +49,22 @@ private:
     ActionHandler* handler;
 };
 
-class ActionHandler {
+class [[deprecated("Prefer the new interface in control/ActionDatabase")]] ActionHandler {
 public:
     ActionHandler();
     virtual ~ActionHandler();
 
 public:
-    virtual void actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled) = 0;
+    [[deprecated]] virtual void actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton,
+                                                bool enabled) = 0;
 
-    void fireEnableAction(ActionType action, bool enabled);
-    void addListener(ActionEnabledListener* listener);
-    void removeListener(ActionEnabledListener* listener);
+    [[deprecated]] void fireEnableAction(ActionType action, bool enabled);
+    [[deprecated]] void addListener(ActionEnabledListener* listener);
+    [[deprecated]] void removeListener(ActionEnabledListener* listener);
 
-    void fireActionSelected(ActionGroup group, ActionType action);
-    void addListener(ActionSelectionListener* listener);
-    void removeListener(ActionSelectionListener* listener);
+    [[deprecated]] void fireActionSelected(ActionGroup group, ActionType action);
+    [[deprecated]] void addListener(ActionSelectionListener* listener);
+    [[deprecated]] void removeListener(ActionSelectionListener* listener);
 
 private:
     std::list<ActionEnabledListener*> enabledListener;

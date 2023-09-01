@@ -79,49 +79,16 @@ function writeCppFile($output, $name, $values) {
     fwrite($fp, "// ** use generateConvertNEW.php to update this file **\n");
     fwrite($fp, "\n\n");
 
-    fwrite($fp, "#include <string_view>  // for string_view\n\n");
-    fwrite($fp, "#include <glib.h>  // for g_warning\n\n");
-    fwrite($fp, "#include \"../$name.enum.h\"\n");
-    fwrite($fp, "#include \"util/Assert.h\"  // for xoj_assert\n\n");
+    fwrite($fp, "#pragma once\n\n");
 
-
-    fwrite($fp, "// ** This needs to be copied to the header\n");
-    fwrite($fp, "" . $name . " " . $name . "_fromString(const std::string_view value);\n");
-    fwrite($fp, "const char* " . $name . "_toString($name value);\n");
-
-    fwrite($fp, "\n\n");
-
-    fwrite($fp, "constexpr const char* NAMES[] = {  // $name to string conversion map");
+    fwrite($fp, "constexpr const char* ACTION_NAMES[] = {  // $name to string conversion map");
 
     foreach ($values as $v) {
         $v = str_replace("_","-",$v);
         fwrite($fp, "\n" . $tab . $tab . "\"". strtolower($v) . "\",");
     }
     fseek($fp,-1,SEEK_CUR);
-    fwrite($fp, "};");
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    fwrite($fp, "\n\n");
-
-    fwrite($fp, "auto " . $name . "_toString($name value) -> const char* {\n");
-    fwrite($fp, $tab . "xoj_assert(value <= $name::_MAX_VALUE);\n");
-    fwrite($fp, $tab . "return NAMES[static_cast<size_t>(value)];\n");
-    fwrite($fp, "}\n\n");
-
-    fwrite($fp, "auto " . $name . "_fromString(const std::string_view value) -> " . $name . " {\n");
-    fwrite($fp, $tab . "for (size_t n = 0; n <= static_cast<size_t>(" . $name . "::_MAX_VALUE); n++) {\n");
-    fwrite($fp, $tab . $tab . "if (value == NAMES[n]) {\n");
-    fwrite($fp, $tab . $tab . $tab . "return static_cast<" . $name . ">(n);\n");
-    fwrite($fp, $tab . $tab . "}\n");
-    fwrite($fp, $tab . "}\n");
-
-    fwrite($fp, $tab . "g_warning(\"Invalid enum value for $name: \\\"%s\\\"\", value.data());\n");
-    fwrite($fp, $tab . "return $name::{$values[0]};\n");
-
-
-    fwrite($fp, "}\n");
-
+    fwrite($fp, "};\n");
 
     fclose($fp);
 
@@ -132,6 +99,6 @@ function generateEnum($file) {
 	$values = parseEnumFile($file);
 
 	$name = substr($file, 0, -7);
-	writeCppFile("generated/$name.generated.new.cpp", $name, $values);
+	writeCppFile("generated/${name}.NameMap.generated.h", $name, $values);
 }
 

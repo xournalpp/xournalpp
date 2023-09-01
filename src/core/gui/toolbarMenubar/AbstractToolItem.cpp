@@ -12,6 +12,8 @@ class ActionHandler;
 AbstractToolItem::AbstractToolItem(std::string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem):
         AbstractItem(std::move(id), handler, type, menuitem) {}
 
+AbstractToolItem::AbstractToolItem(std::string id): AbstractItem(id) {}
+
 AbstractToolItem::~AbstractToolItem() = default;
 
 auto AbstractToolItem::getItem() const -> GtkToolItem* {
@@ -55,6 +57,8 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToo
     item->activated(nullptr, toolbutton);
 }
 
+#include <iostream>
+
 auto AbstractToolItem::createItem(bool horizontal) -> GtkToolItem* {
     if (this->item) {
         return this->item;
@@ -64,6 +68,7 @@ auto AbstractToolItem::createItem(bool horizontal) -> GtkToolItem* {
     g_object_ref(this->item);
 
     if (GTK_IS_TOOL_BUTTON(this->item) || GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
+        std::cout << "connecting: " << getToolDisplayName() << std::endl;
         g_signal_connect(this->item, "clicked", G_CALLBACK(&toolButtonCallback), this);
     }
 
@@ -80,8 +85,6 @@ auto AbstractToolItem::createTmpItem(bool horizontal) -> GtkToolItem* {
     gtk_widget_show_all(GTK_WIDGET(item));
     return item;
 }
-
-void AbstractToolItem::setPopupMenu(GtkWidget* popupMenu) { this->popupMenu.reset(popupMenu, xoj::util::refsink); }
 
 auto AbstractToolItem::isUsed() const -> bool { return used; }
 

@@ -13,45 +13,39 @@
 
 #include <string>  // for string, allocator
 
-#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
-#include <gtk/gtk.h>                // for GtkWidget, GtkToolItem
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include "enums/ActionGroup.enum.h"  // for ActionGroup
-#include "enums/ActionType.enum.h"   // for ActionType
+#include "enums/Action.enum.h"  // for Action
+#include "util/raii/GVariantSPtr.h"
 
 #include "AbstractToolItem.h"  // for AbstractToolItem
 
-class ActionHandler;
-
 class ToolButton: public AbstractToolItem {
 public:
-    ToolButton(ActionHandler* handler, std::string id, ActionType type, std::string iconName, std::string description,
-               GtkWidget* menuitem = nullptr);
-    ToolButton(ActionHandler* handler, std::string id, ActionType type, ActionGroup group, bool toolToggleOnlyEnable,
-               std::string iconName, std::string description, GtkWidget* menuitem = nullptr);
+    ToolButton(std::string id, Action action, std::string iconName, std::string description, bool toggle);
+    ToolButton(std::string id, Action action, GVariant* target, std::string iconName, std::string description);
 
     ~ToolButton() override;
 
 public:
-    /**
-     * Register a popup menu entry, create a popup menu, if none is there
-     *
-     * @param name The name of the item
-     * @param iconName To load an icon
-     * @return The created menu item
-     */
-    GtkWidget* registerPopupMenuEntry(const std::string& name, const std::string& iconName = "");
-
     void updateDescription(const std::string& description);
     std::string getToolDisplayName() const override;
-    void setActive(bool active);
+    void setPopover(GtkWidget* popover);
 
 protected:
+    GtkToolItem* createItem(bool horizontal) override;
     GtkToolItem* newItem() override;
 
     GtkWidget* getNewToolIcon() const override;
 
-private:
+protected:
     std::string iconName;
     std::string description;
+    /// @brief If set, a MenuButton is added with this popover
+    xoj::util::WidgetSPtr popover;
+    Action newAction;
+    /// @brief If set, the action target value the button corresponds to
+    xoj::util::GVariantSPtr target;
+    /// @brief Whether or not the button is a ToggleButton.
+    bool toggle;
 };

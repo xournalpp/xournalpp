@@ -13,21 +13,16 @@
 
 class GladeGui;
 
-using std::string;
-
-FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
+FontButton::FontButton(ActionHandler* handler, std::string id, ActionType type, std::string description,
                        GtkWidget* menuitem):
         AbstractToolItem(std::move(id), handler, type, menuitem) {
-    this->gui = gui;
     this->description = std::move(description);
 }
 
 FontButton::~FontButton() = default;
 
 void FontButton::activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
-    GtkFontButton* button = GTK_FONT_BUTTON(fontButton);
-
-    string name = gtk_font_button_get_font_name(button);
+    std::string name = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(fontButton));
 
     auto pos = name.find_last_of(' ');
     this->font.setName(name.substr(0, pos));
@@ -36,12 +31,19 @@ void FontButton::activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
     handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, nullptr, true);
 }
 
-void FontButton::setFontFontButton(GtkWidget* fontButton, const XojFont& font) {
-    GtkFontButton* button = GTK_FONT_BUTTON(fontButton);
-    auto fontSizeStream = serdes_stream<std::stringstream>();
-    fontSizeStream << font.getSize();
-    string name = font.getName() + " " + fontSizeStream.str();
-    gtk_font_button_set_font_name(button, name.c_str());
+static void setFontFontButton(GtkWidget* fontButton, const XojFont& font) {
+    auto name = serdes_stream<std::stringstream>();
+    name << font.getName() << " " << font.getSize();
+    gtk_font_chooser_set_font(GTK_FONT_CHOOSER(fontButton), name.str().c_str());
+}
+
+static auto newFontButton() -> GtkWidget* {
+    GtkWidget* w = gtk_font_button_new();
+    gtk_widget_show(w);
+    gtk_font_button_set_use_font(GTK_FONT_BUTTON(w), true);
+    gtk_button_set_focus_on_click(GTK_BUTTON(w), false);
+
+    return w;
 }
 
 void FontButton::setFont(const XojFont& font) {
@@ -62,7 +64,7 @@ auto FontButton::getFont() const -> XojFont {
     return newfont;
 }
 
-auto FontButton::getToolDisplayName() const -> string { return _("Font"); }
+auto FontButton::getToolDisplayName() const -> std::string { return _("Font"); }
 
 auto FontButton::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name("font-x-generic", GTK_ICON_SIZE_SMALL_TOOLBAR);
@@ -104,15 +106,6 @@ void FontButton::showFontDialog() {
     gtk_button_clicked(GTK_BUTTON(this->fontButton));
 }
 
-auto FontButton::newFontButton() -> GtkWidget* {
-    GtkWidget* w = gtk_font_button_new();
-    gtk_widget_show(w);
-    gtk_font_button_set_use_font(GTK_FONT_BUTTON(w), true);
-    gtk_button_set_focus_on_click(GTK_BUTTON(w), false);
-
-    return w;
-}
-
 auto FontButton::newItem() -> GtkToolItem* {
     if (this->fontButton) {
         g_object_unref(this->fontButton);
@@ -124,7 +117,7 @@ auto FontButton::newItem() -> GtkToolItem* {
     gtk_tool_item_set_tooltip_text(it, this->description.c_str());
     gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
 
-    g_signal_connect(this->fontButton, "font_set", G_CALLBACK(&toolButtonCallback), this);
+    g_signal_connect(this->fontButton, "font-set", G_CALLBACK(&toolButtonCallback), this);
 
     if (!this->font.getName().empty()) {
         setFont(this->font);

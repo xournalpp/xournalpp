@@ -48,11 +48,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
         control(control),
         toolbar(std::make_unique<ToolMenuHandler>(control, this)),
         menubar(std::make_unique<Menubar>()) {
-
     gtk_window_set_application(GTK_WINDOW(getWindow()), parent);
-
-    toolbar->populate(gladeSearchPath);
-    menubar->populate(gladeSearchPath, this);
 
     panedContainerWidget.reset(get("panelMainContents"), xoj::util::ref);
     boxContainerWidget.reset(get("mainContentContainer"), xoj::util::ref);
@@ -68,7 +64,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     this->pdfFloatingToolBox = std::make_unique<PdfFloatingToolbox>(this, overlay);
     this->floatingToolbox = std::make_unique<FloatingToolbox>(this, overlay);
 
-    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         this->toolbarWidgets[i].reset(get(TOOLBAR_DEFINITIONS[i].guiName), xoj::util::ref);
     }
 
@@ -86,13 +82,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     g_signal_connect(this->window, "key-press-event", G_CALLBACK(gtk_window_propagate_key_event), nullptr);
     g_signal_connect(this->window, "key-release-event", G_CALLBACK(gtk_window_propagate_key_event), nullptr);
 
-    // need to create tool buttons registered in plugins, so they can be added to toolbars
-    control->registerPluginToolButtons(this->toolbar.get());
-
-    createToolbar();
-
-    setToolbarVisible(control->getSettings()->isToolbarVisible());
-
     updateScrollbarSidebarPosition();
 
     gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(),
@@ -104,9 +93,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
         gtk_window_unmaximize(GTK_WINDOW(this->window));
     }
 
-    getSpinPageNo()->addListener(this->control->getScrollHandler());
-
-
     // Drag and Drop
     g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
 
@@ -116,6 +102,20 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     gtk_drag_dest_add_text_targets(this->window);
 
     LayerCtrlListener::registerListener(control->getLayerController());
+}
+
+void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
+
+    toolbar->populate(gladeSearchPath);
+    menubar->populate(gladeSearchPath, this);
+
+    // need to create tool buttons registered in plugins, so they can be added to toolbars
+    control->registerPluginToolButtons(this->toolbar.get());
+
+    createToolbar();
+
+    setToolbarVisible(control->getSettings()->isToolbarVisible());
+    getSpinPageNo()->addListener(this->control->getScrollHandler());
 }
 
 GMenuModel* MainWindow::getMenuModel() const { return menubar->getModel(); }
@@ -375,7 +375,7 @@ void MainWindow::setSidebarVisible(bool visible) {
 }
 
 void MainWindow::setToolbarVisible(bool visible) {
-    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         auto* widget = this->toolbarWidgets[i].get();
         if (!visible || (GTK_IS_CONTAINER(widget))) {
             gtk_widget_set_visible(widget, visible);
@@ -423,7 +423,7 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
 
 auto MainWindow::clearToolbar() -> ToolbarData* {
     if (this->selectedToolbar != nullptr) {
-        for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+        for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
             ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i].get());
         }
 
@@ -440,7 +440,7 @@ auto MainWindow::clearToolbar() -> ToolbarData* {
 void MainWindow::loadToolbar(ToolbarData* d) {
     this->selectedToolbar = d;
 
-    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         this->toolbar->load(d, this->toolbarWidgets[i].get(), TOOLBAR_DEFINITIONS[i].propName,
                             TOOLBAR_DEFINITIONS[i].horizontal);
     }
@@ -453,7 +453,7 @@ auto MainWindow::getSelectedToolbar() const -> ToolbarData* { return this->selec
 auto MainWindow::getToolbarWidgets() const -> const ToolbarWidgetArray& { return toolbarWidgets; }
 
 auto MainWindow::getToolbarName(GtkToolbar* toolbar) const -> const char* {
-    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         if (static_cast<void*>(this->toolbarWidgets[i].get()) == static_cast<void*>(toolbar)) {
             return TOOLBAR_DEFINITIONS[i].propName;
         }
@@ -481,12 +481,16 @@ void MainWindow::createToolbar() {
     this->control->getScheduler()->unblockRerenderZoom();
 }
 
-void MainWindow::setFontButtonFont(const XojFont& font) { toolbar->setFontButtonFont(font); }
+void MainWindow::setFontButtonFont(const XojFont& font) {}  // toolbar->setFontButtonFont(font); }
 
 auto MainWindow::getFontButtonFont() const -> XojFont { return toolbar->getFontButtonFont(); }
 
 void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage) {
     SpinPageAdapter* spinPageNo = getSpinPageNo();
+    if (!spinPageNo) {
+        // Toolbar is not yet setup
+        return;
+    }
 
     size_t min = 0;
     size_t max = pagecount;

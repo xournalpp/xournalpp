@@ -2,19 +2,9 @@
 // ** use generateConvertNEW.php to update this file **
 
 
-#include <string_view>  // for string_view
+#pragma once
 
-#include <glib.h>  // for g_warning
-
-#include "../Action.enum.h"
-#include "util/Assert.h"  // for xoj_assert
-
-// ** This needs to be copied to the header
-Action Action_fromString(const std::string_view value);
-const char* Action_toString(Action value);
-
-
-constexpr const char* NAMES[] = {  // Action to string conversion map
+constexpr const char* ACTION_NAMES[] = {  // Action to string conversion map
         "new-file",
         "open",
         "annotate-pdf",
@@ -111,18 +101,3 @@ constexpr const char* NAMES[] = {  // Action to string conversion map
         "layer-goto-next",
         "layer-goto-previous",
         "layer-goto-top"};
-
-auto Action_toString(Action value) -> const char* {
-    xoj_assert(value <= Action::_MAX_VALUE);
-    return NAMES[static_cast<size_t>(value)];
-}
-
-auto Action_fromString(const std::string_view value) -> Action {
-    for (size_t n = 0; n <= static_cast<size_t>(Action::_MAX_VALUE); n++) {
-        if (value == NAMES[n]) {
-            return static_cast<Action>(n);
-        }
-    }
-    g_warning("Invalid enum value for Action: \"%s\"", value.data());
-    return Action::NEW_FILE;
-}

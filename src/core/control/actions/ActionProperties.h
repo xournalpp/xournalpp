@@ -124,6 +124,7 @@ struct ActionProperties<Action::QUIT> {
 template <>
 struct ActionProperties<Action::UNDO> {
     static constexpr const char* accelerators[] = {"<Ctrl>Z", nullptr};
+    static bool initiallyEnabled(Control* ctrl) { return ctrl->undoRedo->canUndo(); }
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->clearSelectionEndText();
         UndoRedoController::undo(ctrl);
@@ -132,6 +133,7 @@ struct ActionProperties<Action::UNDO> {
 template <>
 struct ActionProperties<Action::REDO> {
     static constexpr const char* accelerators[] = {"<Ctrl><Shift>Z", "<Ctrl>Y", nullptr};
+    static bool initiallyEnabled(Control* ctrl) { return ctrl->undoRedo->canRedo(); }
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->clearSelectionEndText();
         UndoRedoController::redo(ctrl);

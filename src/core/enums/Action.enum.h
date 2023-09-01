@@ -13,6 +13,9 @@
 
 #include <string>
 
+#include <glib.h>  // for g_warning
+
+#include "util/Assert.h"
 #include "util/StringUtils.h"
 
 /******************************************************************************
@@ -151,5 +154,19 @@ enum class Action {
     _MAX_VALUE = LAYER_GOTO_TOP
 };
 
-Action Action_fromString(const std::string_view value);
-const char* Action_toString(Action value);
+#include "generated/Action.NameMap.generated.h"
+
+constexpr auto Action_toString(Action value) -> const char* {
+    xoj_assert(value <= Action::_MAX_VALUE);
+    return ACTION_NAMES[static_cast<size_t>(value)];
+}
+
+constexpr auto Action_fromString(const std::string_view value) -> Action {
+    for (size_t n = 0; n <= static_cast<size_t>(Action::_MAX_VALUE); n++) {
+        if (value == ACTION_NAMES[n]) {
+            return static_cast<Action>(n);
+        }
+    }
+    g_warning("Invalid enum value for Action: \"%s\"", value.data());
+    return Action::NEW_FILE;
+}

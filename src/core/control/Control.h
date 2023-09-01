@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr
+#include <cstddef>   // for size_t
+#include <memory>    // for unique_ptr
 #include <optional>  // for optional
-#include <string>   // for string, allocator
-#include <vector>   // for vector
+#include <string>    // for string, allocator
+#include <vector>    // for vector
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gio/gio.h>                // for GApplication
@@ -187,7 +187,6 @@ public:
 
     void gotoPage();
 
-    void setShapeTool(ActionType type, bool enabled);
     void setToolDrawingType(DrawingType type);
 
     void paperTemplate();
@@ -334,13 +333,6 @@ public:
     inline ActionDatabase* getActionDatabase() const { return actionDB.get(); }
 
 protected:
-    /**
-     * This callback is used by used to be called later in the UI Thread
-     * On slower machine this feels more fluent, therefore this will not
-     * be removed
-     */
-    void zoomCallback(ActionType type, bool enabled);
-
     void setRotationSnapping(bool enable);
     void setGridSnapping(bool enable);
     void highlightPositionToggle();

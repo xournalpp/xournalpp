@@ -18,20 +18,24 @@
 
 #include "enums/ActionGroup.enum.h"  // for ActionGroup
 #include "enums/ActionType.enum.h"   // for ActionType
+#include "util/raii/GObjectSPtr.h"
 
-#include "ToolButton.h"  // for ToolButton
+#include "AbstractToolItem.h"  // for AbstractToolItem
 
 class ToolMenuHandler;
 class ToolDrawType;
 class ActionHandler;
 
-class ToolDrawCombocontrol: public ToolButton {
+class ToolDrawCombocontrol: public AbstractToolItem {
 public:
     ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, std::string id);
     ~ToolDrawCombocontrol() override;
 
 public:
     void selected(ActionGroup group, ActionType action) override;
+
+    std::string getToolDisplayName() const override;
+    GtkWidget* getNewToolIcon() const override;
 
 protected:
     GtkToolItem* newItem() override;
@@ -44,4 +48,7 @@ private:
     GtkWidget* labelWidget = nullptr;
 
     std::vector<ToolDrawType*> drawTypes;
+
+    std::string icon;
+    xoj::util::WidgetSPtr popover;
 };

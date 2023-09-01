@@ -14,6 +14,8 @@ AbstractItem::AbstractItem(std::string id, ActionHandler* handler, ActionType ac
     }
 }
 
+AbstractItem::AbstractItem(std::string id): id(std::move(id)) {}
+
 AbstractItem::~AbstractItem() {
     if (this->menuitem) {
         g_signal_handler_disconnect(this->menuitem, menuSignalHandler);

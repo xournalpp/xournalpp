@@ -50,6 +50,8 @@ public:
     MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent);
     ~MainWindow() override;
 
+    void populate(GladeSearchpath* gladeSearchPath);
+
     // LayerCtrlListener
 public:
     void rebuildLayerMenu() override;
