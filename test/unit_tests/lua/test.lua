@@ -27,7 +27,7 @@ local testDoc = sourceDir .. "testDoc.xopp"                                     
 function test_docStructure()
     local success = app.openFile(testDoc)
     assert_true(success)
-    
+
     app.setCurrentPage(3)
     app.setCurrentLayer(2)
     local doc = app.getDocumentStructure()
@@ -61,6 +61,30 @@ function test_sidebarPage()
     assert_equal(app.getSidebarPageNo(), 1)
     app.setSidebarPageNo(2)
     assert_equal(app.getSidebarPageNo(), 2)
+end
+
+function test_layers()
+
+    function getNumberOfLayers()
+        local doc = app.getDocumentStructure()
+        local curPage = doc["currentPage"]
+        return #doc["pages"][curPage]["layers"]
+    end
+    function getCurrentLayer()
+        local doc = app.getDocumentStructure()
+        local curPage = doc["currentPage"]
+        return doc["pages"][curPage]["currentLayer"]
+    end
+
+    local numLayer, curLayer = getNumberOfLayers(), getCurrentLayer()
+    print(numLayer, curLayer)
+    app.layerAction("ACTION_NEW_LAYER")
+    assert_equal(getNumberOfLayers(), numLayer + 1)
+    assert_equal(getCurrentLayer(), curLayer + 1)
+    app.layerAction("ACTION_DELETE_LAYER")
+    assert_equal(getNumberOfLayers(), numLayer)
+    local expectedLayer = curLayer < numLayer and curLayer + 1 or curLayer
+    assert_equal(getCurrentLayer(), expectedLayer)
 end
 
 lunatest.run()
