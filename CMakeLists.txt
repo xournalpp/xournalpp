@@ -3,6 +3,11 @@ cmake_policy(VERSION ${CMAKE_VERSION})
 ## The CMAKE_OSX_DEPLOYMENT_TARGET must be set before project(), so don't move the following line further down.
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version" FORCE)
 
+if(NOT CMAKE_BUILD_TYPE) 
+    # set default build type to RelWithDebInfo, we never supported multi config generators, therefore this is fine
+    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
+endif()
+
 ## Project related Variables
 ## Also update changelog in debian folder!
 project(xournalpp
