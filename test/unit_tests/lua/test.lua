@@ -32,35 +32,35 @@ function test_docStructure()
     app.setCurrentLayer(2)
     local doc = app.getDocumentStructure()
 
-    assert_equal(doc["xoppFilename"], testDoc)
-    assert_equal(doc["pdfBackgroundFilename"], "")
-    assert_equal(doc["currentPage"], 3)
+    assert_equal(testDoc, doc["xoppFilename"])
+    assert_equal("", doc["pdfBackgroundFilename"])
+    assert_equal(3, doc["currentPage"])
 
     local pages = doc["pages"]
-    assert_equal(#pages, 3)
+    assert_equal(3, #pages)
 
-    assert_equal(pages[3]["currentLayer"], 2)
+    assert_equal(2, pages[3]["currentLayer"])
 
     assert_true(pages[1]["isAnnotated"])
     assert_false(pages[2]["isAnnotated"])
     assert_true(pages[3]["isAnnotated"])
 
-    assert_equal(#pages[1]["layers"], 1)
-    assert_equal(#pages[3]["layers"], 3)
+    assert_equal(1, #pages[1]["layers"])
+    assert_equal(3, #pages[3]["layers"])
     assert_true(pages[3]["layers"][1]["isAnnotated"])
     assert_true(pages[3]["layers"][2]["isAnnotated"])
     assert_false(pages[3]["layers"][3]["isAnnotated"])
 
-    assert_equal(pages[1]["pageTypeFormat"], "graph")
-    assert_equal(pages[2]["pageTypeFormat"], "plain")
-    assert_equal(pages[3]["pageTypeFormat"], "ruled")
+    assert_equal("graph", pages[1]["pageTypeFormat"])
+    assert_equal("plain", pages[2]["pageTypeFormat"])
+    assert_equal("ruled", pages[3]["pageTypeFormat"])
 end
 
 function test_sidebarPage()
     app.setSidebarPageNo(1)
-    assert_equal(app.getSidebarPageNo(), 1)
+    assert_equal(1, app.getSidebarPageNo())
     app.setSidebarPageNo(2)
-    assert_equal(app.getSidebarPageNo(), 2)
+    assert_equal(2, app.getSidebarPageNo())
 end
 
 function test_layers()
@@ -79,12 +79,12 @@ function test_layers()
     local numLayer, curLayer = getNumberOfLayers(), getCurrentLayer()
     print(numLayer, curLayer)
     app.layerAction("ACTION_NEW_LAYER")
-    assert_equal(getNumberOfLayers(), numLayer + 1)
-    assert_equal(getCurrentLayer(), curLayer + 1)
+    assert_equal(numLayer + 1, getNumberOfLayers())
+    assert_equal(curLayer + 1, getCurrentLayer())
     app.layerAction("ACTION_DELETE_LAYER")
-    assert_equal(getNumberOfLayers(), numLayer)
+    assert_equal(numLayer, getNumberOfLayers())
     local expectedLayer = curLayer < numLayer and curLayer + 1 or curLayer
-    assert_equal(getCurrentLayer(), expectedLayer)
+    assert_equal(expectedLayer, getCurrentLayer())
 end
 
 lunatest.run()
