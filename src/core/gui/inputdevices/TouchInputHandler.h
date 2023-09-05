@@ -39,6 +39,8 @@ private:
 
     bool canBlockZoom{false};
 
+    bool detectingUndo = false;
+
 private:
     void sequenceStart(InputEvent const& event);
     void scrollMotion(InputEvent const& event);

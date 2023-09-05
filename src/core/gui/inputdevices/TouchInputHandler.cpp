@@ -14,6 +14,7 @@
 #include "gui/XournalView.h"                        // for XournalView
 #include "gui/inputdevices/AbstractInputHandler.h"  // for AbstractInputHandler
 #include "gui/inputdevices/InputEvents.h"           // for InputEvent, BUTTO...
+#include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler
 
 #include "InputContext.h"  // for InputContext
 
@@ -21,10 +22,17 @@ TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputH
 
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
+    bool undoGestureEnabled = true; //Set this to true until the setting is created
 
     // Don't handle more then 2 inputs
     if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
         this->secondarySequence != event.sequence) {
+
+        // If more than two inputs are detected cancel undo gesture
+        if (undoGestureEnabled && detectingUndo) {
+            detectingUndo = false;
+        }
+
         return false;
     }
 
@@ -36,7 +44,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             // Set sequence data
             sequenceStart(event);
         }
-        // Start zooming as soon as we have two sequences.
+        // Start zooming or checking for undo gesture as soon as we have two sequences.
         else if (this->primarySequence && this->primarySequence != event.sequence &&
                  this->secondarySequence == nullptr) {
             this->secondarySequence = event.sequence;
@@ -48,18 +56,29 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             sequenceStart(event);
 
             this->startZoomReady = true;
+
+            // If undo gesture is enabled set variable accordingly
+            if (undoGestureEnabled) {
+                detectingUndo = true; 
+            }
         }
     }
 
     if (event.type == MOTION_EVENT && this->primarySequence) {
-        if (this->primarySequence && this->secondarySequence && zoomGesturesEnabled) {
-            if (this->startZoomReady) {
-                if (this->primarySequence == event.sequence) {
-                    sequenceStart(event);
-                    zoomStart();
+        if (this->primarySequence && this->secondarySequence)
+            if (zoomGesturesEnabled) {
+                if (this->startZoomReady) {
+                    if (this->primarySequence == event.sequence) {
+                        sequenceStart(event);
+                        zoomStart();
+                    }
+                } else {
+                    zoomMotion(event);
                 }
-            } else {
-                zoomMotion(event);
+            }
+
+            if (undoGestureEnabled && detectingUndo) {
+                detectingUndo = false;
             }
         } else if (event.sequence == this->primarySequence) {
             scrollMotion(event);
@@ -69,9 +88,20 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     if (event.type == BUTTON_RELEASE_EVENT) {
-        // Only stop zooing if both sequences were active (we were scrolling)
-        if (this->primarySequence != nullptr && this->secondarySequence != nullptr && zoomGesturesEnabled) {
-            zoomEnd();
+        // If both sequences were active check if zoom or undo gestures need to be handled
+        if (this->primarySequence != nullptr && this->secondarySequence != nullptr) {
+            if (zoomGesturesEnabled) {
+                zoomEnd();
+            }
+
+            if (undoGestureEnabled && detectingUndo) {
+                UndoRedoHandler* undoRedoHandler = this->inputContext->getView()->getControl()->getUndoRedoHandler();
+
+                // Undo only if undo is possible
+                if (undoRedoHandler->canUndo()) {
+                    undoRedoHandler->undo();
+                }
+            }
         }
 
         if (event.sequence == this->primarySequence) {
