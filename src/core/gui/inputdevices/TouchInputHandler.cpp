@@ -14,6 +14,7 @@
 #include "gui/XournalView.h"                        // for XournalView
 #include "gui/inputdevices/AbstractInputHandler.h"  // for AbstractInputHandler
 #include "gui/inputdevices/InputEvents.h"           // for InputEvent, BUTTO...
+#include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler
 
 #include "InputContext.h"  // for InputContext
 
@@ -21,6 +22,7 @@ TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputH
 
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
+    bool undoGestureEnabled = true; //Set this to true until the setting is created
 
     if (event.type == BUTTON_PRESS_EVENT) {
         if (invalidActive.find(event.sequence) != invalidActive.end()) {
@@ -43,6 +45,9 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
                 sequenceStart(event);
                 if (secondarySequence) {
                     startZoomReady = true;
+                    if (undoGestureEnabled) {
+                        detectingUndo = true;
+                    }
                 }
             }
         } else {
@@ -52,30 +57,41 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
         return true;
     }
 
-    if (event.type == MOTION_EVENT) {
-        // NOTE: the first MOTION_EVENT from x11 touch input has sequence ID 0
-        if (primarySequence == event.sequence && !secondarySequence) {
-            scrollMotion(event);
-            return true;
-        } else if (event.sequence && zoomGesturesEnabled &&
-                   (primarySequence == event.sequence || secondarySequence == event.sequence)) {
-            xoj_assert(primarySequence);
-            if (startZoomReady) {
-                if (this->primarySequence == event.sequence) {
-                    sequenceStart(event);
-                    zoomStart();
+    if (event.type == MOTION_EVENT && this->primarySequence) {
+        if (this->primarySequence && this->secondarySequence)
+            if (zoomGesturesEnabled) {
+                if (this->startZoomReady) {
+                    if (this->primarySequence == event.sequence) {
+                        sequenceStart(event);
+                        zoomStart();
+                    }
+                } else {
+                    zoomMotion(event);
                 }
-            } else {
-                zoomMotion(event);
+            }
+
+            if (undoGestureEnabled && detectingUndo) {
+                detectingUndo = false;
             }
             return true;
         }
     }
 
     if (event.type == BUTTON_RELEASE_EVENT) {
-        if (zooming && primarySequence && secondarySequence &&
+        if (primarySequence && secondarySequence &&
             (event.sequence == primarySequence || event.sequence == secondarySequence)) {
-            zoomEnd();
+            if (zooming) {
+                zoomEnd();
+            }
+
+            if (undoGestureEnabled && detectingUndo) {
+                UndoRedoHandler* undoRedoHandler = this->inputContext->getView()->getControl()->getUndoRedoHandler();
+
+                // Undo only if undo is possible
+                if (undoRedoHandler->canUndo()) {
+                    undoRedoHandler->undo();
+                }
+            }
         }
 
         if (event.sequence == primarySequence) {
