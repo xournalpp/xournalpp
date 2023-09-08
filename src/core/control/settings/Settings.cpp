@@ -2007,7 +2007,10 @@ auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* {
     return this->buttonConfig[id].get();
 }
 
-void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) { viewModes.at(mode) = viewMode; }
+void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) { 
+    viewModes.at(mode) = viewMode;
+    save();
+}
 
 auto Settings::getTouchZoomStartThreshold() const -> double { return this->touchZoomStartThreshold; }
 void Settings::setTouchZoomStartThreshold(double threshold) {
