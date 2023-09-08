@@ -181,7 +181,8 @@ const char* TOP_WIDGETS[] = {"tbTop1", "tbTop2", "mainContainerBox", nullptr};
 
 void MainWindow::toggleMenuBar(MainWindow* win) {
     GtkWidget* menu = win->get("mainMenubar");
-    if (gtk_widget_is_visible(menu)) {
+    bool visible = gtk_widget_is_visible(menu);
+    if (visible) {
         gtk_widget_hide(menu);
     } else {
         gtk_widget_show(menu);
@@ -369,16 +370,18 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 }
 
 void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
-    bool a = gtk_check_menu_item_get_active(checkmenuitem);
-    if (win->control->getSettings()->isSidebarVisible() == a) {
+    bool showSidebar = gtk_check_menu_item_get_active(checkmenuitem);
+    Settings* settings = win->control->getSettings();
+    if (settings->isSidebarVisible() == showSidebar) {
         return;
     }
-    win->setSidebarVisible(a);
+    win->setSidebarVisible(showSidebar);
 }
 
 void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
     bool showToolbar = gtk_check_menu_item_get_active(checkmenuitem);
-    if (win->control->getSettings()->isToolbarVisible() == showToolbar) {
+    Settings* settings = win->control->getSettings();
+    if (settings->isToolbarVisible() == showToolbar) {
         return;
     }
     win->setToolbarVisible(showToolbar);
