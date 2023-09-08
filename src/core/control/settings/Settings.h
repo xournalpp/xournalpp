@@ -145,6 +145,12 @@ public:
     void setZoomGesturesEnabled(bool enable);
 
     /**
+     *  Undo Gesture getter and setter
+     */
+    bool isUndoGestureEnabled() const;
+    void setUndoGestureEnabled(bool enable);
+
+    /**
      * The last used font
      */
     XojFont& getFont();
@@ -617,6 +623,11 @@ private:
      * If the touch zoom gestures are enabled
      */
     bool zoomGesturesEnabled{};
+
+    /**
+     * If the touch undo gesture is enabled
+     */
+    bool undoGestureEnabled{};
 
     /**
      *  If fullscreen is active
