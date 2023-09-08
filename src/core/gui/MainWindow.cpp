@@ -187,6 +187,13 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
     } else {
         gtk_widget_show(menu);
     }
+    Settings* settings = win->control->getSettings();
+    if (!settings->isFullscreen() && !settings->isPresentationMode()) {
+        settings->setMenubarVisible(!visible);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showMenubar = !visible;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
 }
 
 void MainWindow::updateColorscheme() {
@@ -375,6 +382,12 @@ void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* wi
     if (settings->isSidebarVisible() == showSidebar) {
         return;
     }
+    if (!settings->isFullscreen() && !settings->isPresentationMode()) {
+        settings->setSidebarVisible(showSidebar);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showSidebar = showSidebar;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
     win->setSidebarVisible(showSidebar);
 }
 
@@ -383,6 +396,12 @@ void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* wi
     Settings* settings = win->control->getSettings();
     if (settings->isToolbarVisible() == showToolbar) {
         return;
+    }
+    if (!settings->isFullscreen() && !settings->isPresentationMode()) {
+        settings->setToolbarVisible(showToolbar);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showToolbar = showToolbar;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
     }
     win->setToolbarVisible(showToolbar);
 }
@@ -451,7 +470,16 @@ void MainWindow::updateScrollbarSidebarPosition() {
     g_object_unref(boxContents);
 }
 
-void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) { win->setSidebarVisible(false); }
+void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) { 
+    Settings* settings = win->control->getSettings();
+    if (!settings->isFullscreen() && !settings->isPresentationMode()) {
+        settings->setSidebarVisible(false);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showSidebar = false;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
+    win->setSidebarVisible(false);
+}
 
 auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control) -> bool {
     control->quit();
