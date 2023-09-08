@@ -22,7 +22,7 @@ TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputH
 
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
-    bool undoGestureEnabled = true; // Set this to true until the setting is created
+    bool undoGestureEnabled = inputContext->getSettings()->isUndoGestureEnabled();
 
     // Don't handle more then 2 inputs
     if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
