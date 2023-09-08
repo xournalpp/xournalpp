@@ -165,7 +165,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->layerController = new LayerController(this);
     this->layerController->registerListener(this);
 
-    this->fullscreenHandler = new FullscreenHandler(settings);
+    this->fullscreenHandler = new FullscreenHandler();
 
     this->pluginController = new PluginController(this);
     this->pluginController->registerToolbar();

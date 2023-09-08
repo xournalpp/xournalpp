@@ -22,7 +22,7 @@ class MainWindow;
 
 class FullscreenHandler {
 public:
-    FullscreenHandler(Settings* settings);
+    FullscreenHandler();
     virtual ~FullscreenHandler();
 
 public:
@@ -35,27 +35,7 @@ private:
 
 private:
     /**
-     * Settings
-     */
-    Settings* settings;
-
-    /**
      * Fullscreen enabled
      */
     bool fullscreen = false;
-
-    /**
-     * If the sidebar was hidden
-     */
-    bool sidebarHidden = false;
-
-    /**
-     * The menubar was hidden
-     */
-    bool menubarHidden = false;
-
-    /**
-     * Currently hidden widgets
-     */
-    std::vector<GtkWidget*> hiddenFullscreenWidgets;
 };
