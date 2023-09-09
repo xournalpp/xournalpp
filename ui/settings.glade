@@ -2806,7 +2806,7 @@ This setting can make it easier to draw with touch. </property>
                                       <object class="GtkLabel" id="lblUndoGestureDescription">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">&lt;i&gt;Quickly tap the touchscreen with to fingers to undo the last change.&lt;/i&gt;</property>
+                                        <property name="label" translatable="yes">&lt;i&gt;Quickly tap the touchscreen with two fingers to undo the last change.&lt;/i&gt;</property>
                                         <property name="use_markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max_width_chars">85</property>
@@ -5251,6 +5251,64 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Snapping</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">5</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="strokeRecognizerFrrame">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label_xalign">0.0099999997764825821</property>
+                                <child>
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_start">12</property>
+                                    <property name="margin_end">12</property>
+                                    <property name="margin_bottom">8</property>
+                                    <child>
+                                      <object class="GtkLabel">
+                                        <property name="name">lbStrokeRecognizerMinSize</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="margin_end">6</property>
+                                        <property name="label" translatable="yes">Minimum Stroke Size</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkSpinButton" id="spStrokeRecognizerMinSize">
+                                        <property name="name">spStrokeRecognizerMinSize</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="text" translatable="yes">0.20</property>
+                                        <property name="adjustment">adjustmentStrokeRecognizerMinSize</property>
+                                        <property name="climb_rate">2</property>
+                                        <property name="value">25</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Stroke Recognizer</property>
                                   </object>
                                 </child>
                               </object>
