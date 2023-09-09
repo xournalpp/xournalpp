@@ -17,8 +17,6 @@
 #include "model/StrokeStyle.h"          // for StrokeStyle
 #include "util/Color.h"
 
-#include "Actions.h"  // for ActionHandler
-
 class LineStyle;
 
 
