@@ -18,8 +18,6 @@
 #include "util/Color.h"
 #include "util/Stacktrace.h"  // for Stac...
 
-#include "Actions.h"  // for ActionHandler
-
 class LineStyle;
 
 

@@ -35,7 +35,6 @@
 #include "model/PageRef.h"                  // for PageRef
 #include "undo/UndoRedoHandler.h"           // for UndoRedoHandler (ptr only)
 
-#include "Actions.h"           // for ActionHandler
 #include "ClipboardHandler.h"  // for ClipboardListener
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
@@ -74,7 +73,6 @@ class Callback;
 class ActionDatabase;
 
 class Control:
-        public ActionHandler,
         public ToolListener,
         public DocumentHandler,
         public UndoRedoListener,

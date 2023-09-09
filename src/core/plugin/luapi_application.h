@@ -409,7 +409,8 @@ static int applib_uiActionSelected(lua_State* L) {
     ActionType action = ActionType_fromString(luaL_checkstring(L, 2));
 
     Control* ctrl = plugin->getControl();
-    ctrl->fireActionSelected(group, action);
+    // TODO Figure out a way for backwards compat.
+    // ctrl->fireActionSelected(group, action);
 
     return 0;
 }

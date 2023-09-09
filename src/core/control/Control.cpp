@@ -1467,7 +1467,8 @@ void Control::setViewPresentationMode(bool enabled) {
     this->actionDB->enableAction(Action::ZOOM_FIT, !enabled);
     this->actionDB->enableAction(Action::ZOOM_100, !enabled);
 
-    fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !enabled);
+    // TODO Figure out how to replace this
+    // fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !enabled);
 
     this->actionDB->enableAction(Action::SET_LAYOUT_BOTTOM_TO_TOP, !enabled);
     this->actionDB->enableAction(Action::SET_LAYOUT_RIGHT_TO_LEFT, !enabled);
@@ -1484,7 +1485,8 @@ void Control::setViewPresentationMode(bool enabled) {
 
 void Control::setPairsOffset(int numOffset) {
     settings->setPairsOffset(numOffset);
-    fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET : ACTION_NOT_SELECTED);
+    // TODO Implement unused action Action::PAIRED_PAGES_OFFSET??
+    // fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET : ACTION_NOT_SELECTED);
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
