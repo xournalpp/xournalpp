@@ -2007,7 +2007,7 @@ auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* {
     return this->buttonConfig[id].get();
 }
 
-void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) { 
+void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
     viewModes.at(mode) = viewMode;
     save();
 }

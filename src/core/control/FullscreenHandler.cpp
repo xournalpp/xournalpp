@@ -1,6 +1,6 @@
 #include "FullscreenHandler.h"
 
-#include "gui/MainWindow.h"             // for MainWindow
+#include "gui/MainWindow.h"  // for MainWindow
 
 using std::string;
 

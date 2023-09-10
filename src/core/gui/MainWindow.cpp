@@ -470,7 +470,7 @@ void MainWindow::updateScrollbarSidebarPosition() {
     g_object_unref(boxContents);
 }
 
-void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) { 
+void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) {
     Settings* settings = win->control->getSettings();
     if (!settings->isFullscreen() && !settings->isPresentationMode()) {
         settings->setSidebarVisible(false);
