@@ -15,7 +15,6 @@
 #include <list>     // for list
 #include <string>   // for string
 
-#include "enums/ActionType.enum.h"     // for ActionType
 #include "model/DocumentChangeType.h"  // for DocumentChangeType
 #include "model/DocumentListener.h"    // for DocumentListener
 #include "model/Layer.h"               // for Layer, Layer::Index
@@ -50,8 +49,6 @@ protected:
     void updateActions();
 
 public:
-    [[deprecated]] bool actionPerformed(ActionType type);
-
     /**
      * Show all layer on the current page
      */

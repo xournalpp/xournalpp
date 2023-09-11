@@ -58,6 +58,7 @@ enum class Action {
 
     // Menu View
     PAIRED_PAGES_MODE,
+    PAIRED_PAGES_OFFSET,
     PRESENTATION_MODE,
     FULLSCREEN,
     SHOW_SIDEBAR,
@@ -156,8 +157,11 @@ enum class Action {
     LAYER_GOTO_TOP,
     LAYER_ACTIVE,  ///< Action whose state is the current layer index
 
+    // Miscellaneous
+    POSITION_HIGHLIGHTING,
+
     // Maximal value
-    _MAX_VALUE = LAYER_ACTIVE
+    _MAX_VALUE = POSITION_HIGHLIGHTING
 };
 
 #include "generated/Action.NameMap.generated.h"

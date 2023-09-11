@@ -88,38 +88,6 @@ void LayerController::fireSelectedLayerChanged() {
     updateActions();
 }
 
-auto LayerController::actionPerformed(ActionType type) -> bool {
-    /*
-     * Legacy method. Used only for plugins now...
-     */
-    auto* actionDB = control->getActionDatabase();
-    switch (type) {
-        case ACTION_NEW_LAYER:
-            actionDB->fireActivateAction(Action::LAYER_NEW);
-            return true;
-        case ACTION_DELETE_LAYER:
-            actionDB->fireActivateAction(Action::LAYER_DELETE);
-            return true;
-        case ACTION_MERGE_LAYER_DOWN:
-            actionDB->fireActivateAction(Action::LAYER_MERGE_DOWN);
-            return true;
-        case ACTION_GOTO_NEXT_LAYER:
-            actionDB->fireActivateAction(Action::LAYER_GOTO_NEXT);
-            return true;
-        case ACTION_GOTO_PREVIOUS_LAYER:
-            actionDB->fireActivateAction(Action::LAYER_GOTO_PREVIOUS);
-            return true;
-        case ACTION_GOTO_TOP_LAYER:
-            actionDB->fireActivateAction(Action::LAYER_GOTO_TOP);
-            return true;
-        case ACTION_RENAME_LAYER:
-            actionDB->fireActivateAction(Action::LAYER_RENAME);
-            return true;
-        default:
-            return false;
-    }
-}
-
 /**
  * Show all layer on the current page
  */
