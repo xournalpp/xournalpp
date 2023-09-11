@@ -10,6 +10,7 @@
 #include "control/Control.h"                            // for Control
 #include "control/DeviceListHelper.h"                   // for getSourceMapping
 #include "control/ScrollHandler.h"                      // for ScrollHandler
+#include "control/actions/ActionDatabase.h"             // for ActionDatabase
 #include "control/jobs/XournalScheduler.h"              // for XournalScheduler
 #include "control/layer/LayerController.h"              // for LayerController
 #include "control/settings/Settings.h"                  // for Settings
@@ -560,22 +561,30 @@ void MainWindow::layerVisibilityChanged() {
     auto layer = lc->getCurrentLayerId();
     auto maxLayer = lc->getLayerCount();
 
-    control->fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
-    control->fireEnableAction(ACTION_MERGE_LAYER_DOWN, layer > 1);
-    control->fireEnableAction(ACTION_MOVE_SELECTION_LAYER_UP, layer < maxLayer);
-    control->fireEnableAction(ACTION_MOVE_SELECTION_LAYER_DOWN, layer > 1);
-    control->fireEnableAction(ACTION_GOTO_NEXT_LAYER, layer < maxLayer);
-    control->fireEnableAction(ACTION_GOTO_PREVIOUS_LAYER, layer > 0);
-    control->fireEnableAction(ACTION_GOTO_TOP_LAYER, layer < maxLayer);
+    auto* actionDB = control->getActionDatabase();
+
+    actionDB->enableAction(Action::LAYER_DELETE, layer > 0);
+    actionDB->enableAction(Action::LAYER_MERGE_DOWN, layer > 1);
+    actionDB->enableAction(Action::MOVE_SELECTION_LAYER_UP, layer < maxLayer);
+    actionDB->enableAction(Action::MOVE_SELECTION_LAYER_DOWN, layer > 1);
+    actionDB->enableAction(Action::LAYER_GOTO_NEXT, layer < maxLayer);
+    actionDB->enableAction(Action::LAYER_GOTO_PREVIOUS, layer > 0);
+    actionDB->enableAction(Action::LAYER_GOTO_TOP, layer < maxLayer);
 }
 
 auto MainWindow::getMenubar() const -> Menubar* { return menubar.get(); }
 
 void MainWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
 
-void MainWindow::setUndoDescription(const string& description) { toolbar->setUndoDescription(description); }
+void MainWindow::setUndoDescription(const string& description) {
+    toolbar->setUndoDescription(description);
+    menubar->setUndoDescription(description);
+}
 
-void MainWindow::setRedoDescription(const string& description) { toolbar->setRedoDescription(description); }
+void MainWindow::setRedoDescription(const string& description) {
+    toolbar->setRedoDescription(description);
+    menubar->setRedoDescription(description);
+}
 
 auto MainWindow::getSpinPageNo() const -> SpinPageAdapter* { return toolbar->getPageSpinner(); }
 

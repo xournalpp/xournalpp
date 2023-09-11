@@ -25,6 +25,8 @@
 #include "control/ToolEnums.h"              // for ToolSize, ToolType
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "control/settings/ViewModes.h"     // for ViewModeId
+#include "control/tools/EditSelection.h"    // for OrderChange
+#include "enums/Action.enum.h"              // for Action
 #include "enums/ActionGroup.enum.h"         // for ActionGroup
 #include "enums/ActionType.enum.h"          // for ActionType
 #include "model/DocumentHandler.h"          // for DocumentHandler
@@ -68,6 +70,8 @@ class ZoomControl;
 class ToolMenuHandler;
 class XojFont;
 class XojPdfRectangle;
+class Callback;
+class ActionDatabase;
 
 class Control:
         public ActionHandler,
@@ -177,10 +181,14 @@ public:
     void manageToolbars();
     void customizeToolbars();
     void setFullscreen(bool enabled);
+    void setShowSidebar(bool enabled);
+    void setShowToolbar(bool enabled);
+    void setHideMenubar(bool enabled);
 
     void gotoPage();
 
     void setShapeTool(ActionType type, bool enabled);
+    void setToolDrawingType(DrawingType type);
 
     void paperTemplate();
     void paperFormat();
@@ -235,7 +243,7 @@ public:
 
     void selectAllOnPage();
 
-    void reorderSelection(ActionType type);
+    void reorderSelection(EditSelection::OrderChange change);
 
     void setToolSize(ToolSize size);
 
@@ -321,6 +329,7 @@ public:
 
 public:
     void registerPluginToolButtons(ToolMenuHandler* toolMenuHandler);
+    inline ActionDatabase* getActionDatabase() const { return actionDB.get(); }
 
 protected:
     /**
@@ -330,8 +339,8 @@ protected:
      */
     void zoomCallback(ActionType type, bool enabled);
 
-    void rotationSnappingToggle();
-    void gridSnappingToggle();
+    void setRotationSnapping(bool enable);
+    void setGridSnapping(bool enable);
     void highlightPositionToggle();
 
     bool showSaveDialog();
@@ -362,9 +371,25 @@ protected:
     bool loadPdf(fs::path const& filepath, int scrollToPage);
 
 private:
-    template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass, ActionType a>
-    void makeGeometryTool();
+    /**
+     * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.
+     * @return true if a geometric tool was created
+     */
+    template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass, ActionType a,
+              GeometryToolType toolType>
+    bool toggleGeometryTool();
     void resetGeometryTool();
+
+    /**
+     * @brief Creates a compass if it's not on the current page yet. Deletes it if it already exists.
+     * @return true if a compass was created
+     */
+    bool toggleCompass();
+    /**
+     * @brief Creates a setsquare if it's not on the current page yet. Deletes it if it already exists.
+     * @return true if a setsquare was created
+     */
+    bool toggleSetsquare();
 
     /**
      * "Closes" the document, preparing the editor for a new document.
@@ -470,4 +495,8 @@ private:
      * Manage all Xournal++ plugins
      */
     PluginController* pluginController;
+
+    std::unique_ptr<ActionDatabase> actionDB;
+    template <Action a>
+    friend struct ActionProperties;
 };

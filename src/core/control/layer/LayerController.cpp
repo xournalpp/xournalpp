@@ -4,11 +4,10 @@
 #include <utility>  // for move
 #include <vector>   // for vector
 
-#include "control/Control.h"  // for Control
-#include "gui/MainWindow.h"   // for MainWindow
-#include "gui/PopupWindowWrapper.h"
-#include "gui/XournalView.h"                // for XournalView
-#include "gui/dialog/RenameLayerDialog.h"   // for RenameLayerDialog
+#include "control/Control.h"                 // for Control
+#include "control/actions/ActionDatabase.h"  // for ActionDatabase
+#include "gui/MainWindow.h"                  // for MainWindow
+#include "gui/XournalView.h"                 // for XournalView
 #include "model/Document.h"                 // for Document
 #include "model/XojPage.h"                  // for XojPage
 #include "undo/InsertLayerUndoAction.h"     // for InsertLayerUndoAction
@@ -62,53 +61,31 @@ void LayerController::fireLayerVisibilityChanged() {
 }
 
 auto LayerController::actionPerformed(ActionType type) -> bool {
+    /*
+     * Legacy method. Used only for plugins now...
+     */
+    auto* actionDB = control->getActionDatabase();
     switch (type) {
         case ACTION_NEW_LAYER:
-            addNewLayer();
+            actionDB->fireActivateAction(Action::LAYER_NEW);
             return true;
-
         case ACTION_DELETE_LAYER:
-            deleteCurrentLayer();
+            actionDB->fireActivateAction(Action::LAYER_DELETE);
             return true;
-
         case ACTION_MERGE_LAYER_DOWN:
-            mergeCurrentLayerDown();
+            actionDB->fireActivateAction(Action::LAYER_MERGE_DOWN);
             return true;
-
-        case ACTION_FOOTER_LAYER:
-            // This event is not fired anymore
-            // This controller is called directly
+        case ACTION_GOTO_NEXT_LAYER:
+            actionDB->fireActivateAction(Action::LAYER_GOTO_NEXT);
             return true;
-
-        case ACTION_GOTO_NEXT_LAYER: {
-            PageRef p = getCurrentPage();
-            auto layer = p->getSelectedLayerId();
-            if (layer < p->getLayerCount()) {
-                switchToLay(layer + 1, true);
-            }
-        }
+        case ACTION_GOTO_PREVIOUS_LAYER:
+            actionDB->fireActivateAction(Action::LAYER_GOTO_PREVIOUS);
             return true;
-
-        case ACTION_GOTO_PREVIOUS_LAYER: {
-            PageRef p = getCurrentPage();
-            auto layer = p->getSelectedLayerId();
-            if (layer > 0) {
-                switchToLay(layer - 1, true);
-            }
-        }
+        case ACTION_GOTO_TOP_LAYER:
+            actionDB->fireActivateAction(Action::LAYER_GOTO_TOP);
             return true;
-
-        case ACTION_GOTO_TOP_LAYER: {
-            PageRef p = getCurrentPage();
-            switchToLay(p->getLayerCount(), true);
-        }
-            return true;
-        case ACTION_RENAME_LAYER: {
-            xoj::popup::PopupWindowWrapper<RenameLayerDialog> dialog(control->getGladeSearchPath(),
-                                                                     control->getUndoRedoHandler(), this,
-                                                                     getCurrentPage()->getSelectedLayer());
-            dialog.show(control->getGtkWindow());
-        }
+        case ACTION_RENAME_LAYER:
+            actionDB->fireActivateAction(Action::LAYER_RENAME);
             return true;
         default:
             return false;

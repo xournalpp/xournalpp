@@ -42,6 +42,9 @@ public:
 
     void setDisabled(bool disabled);
 
+    void setUndoDescription(const std::string& description);
+    void setRedoDescription(const std::string& description);
+
     template <typename gobj, typename Fun>
     gobj* get(const std::string_view& name, Fun&& converter) const {
         gobj* w = converter(gtk_builder_get_object(const_cast<GtkBuilder*>(builder.get()), name.data()));
@@ -53,7 +56,7 @@ public:
 
 private:
     xoj::util::GObjectSPtr<GtkBuilder> builder;
-    GMenuModel* menu;
+    GMenuModel* menu;  // owned by `builder`
 
     // Dynamically created submenus -- also add to forEachSubmenu() below
     std::unique_ptr<RecentDocumentsSubmenu> recentDocumentsSubmenu;
@@ -72,4 +75,6 @@ private:
         fun(*pluginsSubmenu);
 #endif
     }
+
+    GMenu* undoRedoSection;  // owned by `builder`
 };

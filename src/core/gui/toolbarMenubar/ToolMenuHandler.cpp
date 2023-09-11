@@ -3,12 +3,13 @@
 #include <algorithm>  // for max
 #include <sstream>    // for istringstream
 
-#include "control/Actions.h"            // for ActionH...
-#include "control/Control.h"            // for Control
-#include "control/settings/Settings.h"  // for Settings
-#include "gui/GladeGui.h"               // for GladeGui
-#include "gui/GladeSearchpath.h"        // for GladeSearchpath
-#include "gui/ToolitemDragDrop.h"       // for ToolitemDragDrop
+#include "control/Actions.h"                 // for ActionH...
+#include "control/Control.h"                 // for Control
+#include "control/actions/ActionDatabase.h"  // for ActionDatabase
+#include "control/settings/Settings.h"       // for Settings
+#include "gui/GladeGui.h"                    // for GladeGui
+#include "gui/GladeSearchpath.h"
+#include "gui/ToolitemDragDrop.h"  // for ToolitemDragDrop
 #include "gui/menus/popoverMenus/PageTypeSelectionPopover.h"
 #include "gui/toolbarMenubar/AbstractToolItem.h"    // for AbstractToolItem
 #include "gui/toolbarMenubar/ColorToolItem.h"       // for ColorToolItem
@@ -286,8 +287,7 @@ void ToolMenuHandler::setTmpDisabled(bool disabled) {
         it->setTmpDisabled(disabled);
     }
 
-    // GtkWidget* menuViewSidebarVisible = gui->get("menuViewSidebarVisible");
-    // gtk_widget_set_sensitive(menuViewSidebarVisible, !disabled);
+    control->getActionDatabase()->enableAction(Action::SHOW_SIDEBAR, !disabled);
 }
 
 void ToolMenuHandler::addToolItem(AbstractToolItem* it) { this->toolItems.push_back(it); }

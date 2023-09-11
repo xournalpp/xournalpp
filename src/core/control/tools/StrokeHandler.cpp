@@ -178,7 +178,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     }
 
     ToolHandler* h = control->getToolHandler();
-    if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
+    if (h->getDrawingType() == DRAWING_TYPE_SHAPE_RECOGNIZER) {
         ShapeRecognizer reco;
 
         Stroke* recognized = reco.recognizePatterns(stroke.get(), control->getSettings()->getStrokeRecognizerMinSize());
