@@ -18,6 +18,7 @@
 #include "control/SetsquareController.h"                         // for Sets...
 #include "control/Tool.h"                                        // for Tool
 #include "control/ToolHandler.h"                                 // for Tool...
+#include "control/actions/ActionDatabase.h"                      // for Acti...
 #include "control/jobs/AutosaveJob.h"                            // for Auto...
 #include "control/jobs/BaseExportJob.h"                          // for Base...
 #include "control/jobs/CustomExportJob.h"                        // for Cust...
@@ -33,7 +34,6 @@
 #include "control/settings/Settings.h"                           // for Sett...
 #include "control/settings/SettingsEnums.h"                      // for Button
 #include "control/settings/ViewModes.h"                          // for ViewM..
-#include "control/tools/EditSelection.h"                         // for Edit...
 #include "control/tools/TextEditor.h"                            // for Text...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
@@ -344,6 +344,8 @@ void Control::initWindow(MainWindow* win) {
     fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
     fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
     fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
+
+    this->actionDB = std::make_unique<ActionDatabase>(this);
 }
 
 auto Control::autosaveCallback(Control* control) -> bool {
@@ -421,435 +423,328 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
     switch (type) {
             // Menu File
         case ACTION_NEW:
-            clearSelectionEndText();
-            newFile();
+            actionDB->fireActivateAction(Action::NEW_FILE);
             break;
         case ACTION_OPEN:
-            openFile();
+            actionDB->fireActivateAction(Action::OPEN);
             break;
         case ACTION_ANNOTATE_PDF:
-            clearSelectionEndText();
-            annotatePdf("", false, false);
+            actionDB->fireActivateAction(Action::ANNOTATE_PDF);
             break;
         case ACTION_SAVE:
-            save();
+            actionDB->fireActivateAction(Action::SAVE);
             break;
         case ACTION_SAVE_AS:
-            saveAs();
+            actionDB->fireActivateAction(Action::SAVE_AS);
             break;
         case ACTION_EXPORT_AS_PDF:
-            exportAsPdf();
+            actionDB->fireActivateAction(Action::EXPORT_AS_PDF);
             break;
         case ACTION_EXPORT_AS:
-            exportAs();
+            actionDB->fireActivateAction(Action::EXPORT_AS);
             break;
         case ACTION_PRINT:
-            print();
+            actionDB->fireActivateAction(Action::PRINT);
             break;
         case ACTION_QUIT:
-            quit();
+            actionDB->fireActivateAction(Action::QUIT);
             break;
             // Menu Edit
         case ACTION_UNDO:
-            clearSelectionEndText();
-            UndoRedoController::undo(this);
+            actionDB->fireActivateAction(Action::UNDO);
             break;
         case ACTION_REDO:
-            clearSelectionEndText();
-            UndoRedoController::redo(this);
+            actionDB->fireActivateAction(Action::REDO);
             break;
         case ACTION_CUT:
-            cut();
+            actionDB->fireActivateAction(Action::CUT);
             break;
         case ACTION_COPY:
-            copy();
+            actionDB->fireActivateAction(Action::COPY);
             break;
         case ACTION_PASTE:
-            paste();
+            actionDB->fireActivateAction(Action::PASTE);
             break;
         case ACTION_SEARCH:
-            clearSelectionEndText();
-            searchBar->showSearchBar(true);
+            actionDB->fireActivateAction(Action::SEARCH);
             break;
         case ACTION_SELECT_ALL:
-            selectAllOnPage();
+            actionDB->fireActivateAction(Action::SELECT_ALL);
             break;
         case ACTION_DELETE:
-            if (!win->getXournal()->actionDelete()) {
-                deleteSelection();
-            }
+            actionDB->fireActivateAction(Action::DELETE);
             break;
         case ACTION_SETTINGS:
-            showSettings();
+            actionDB->fireActivateAction(Action::SETTINGS);
             break;
+
         case ACTION_HIGHLIGHT_POSITION:
             highlightPositionToggle();
             break;
 
         case ACTION_ARRANGE_BRING_TO_FRONT:
+            actionDB->fireActivateAction(Action::ARRANGE_SELECTION_ORDER, EditSelection::OrderChange::BringToFront);
+            break;
         case ACTION_ARRANGE_BRING_FORWARD:
+            actionDB->fireActivateAction(Action::ARRANGE_SELECTION_ORDER, EditSelection::OrderChange::BringForward);
+            break;
         case ACTION_ARRANGE_SEND_BACKWARD:
+            actionDB->fireActivateAction(Action::ARRANGE_SELECTION_ORDER, EditSelection::OrderChange::SendBackward);
+            break;
         case ACTION_ARRANGE_SEND_TO_BACK:
-            this->reorderSelection(type);
+            actionDB->fireActivateAction(Action::ARRANGE_SELECTION_ORDER, EditSelection::OrderChange::SendToBack);
             break;
 
             // Menu Navigation
         case ACTION_GOTO_FIRST:
-            scrollHandler->scrollToPage(0);
+            actionDB->fireActivateAction(Action::GOTO_FIRST);
             break;
         case ACTION_GOTO_BACK:
-            scrollHandler->goToPreviousPage();
+            actionDB->fireActivateAction(Action::GOTO_PREVIOUS);
             break;
         case ACTION_GOTO_PAGE:
-            gotoPage();
+            actionDB->fireActivateAction(Action::GOTO_PAGE);
             break;
         case ACTION_GOTO_NEXT:
-            scrollHandler->goToNextPage();
+            actionDB->fireActivateAction(Action::GOTO_NEXT);
             break;
         case ACTION_GOTO_LAST:
-            scrollHandler->scrollToPage(this->doc->getPageCount() - 1);
+            actionDB->fireActivateAction(Action::GOTO_LAST);
             break;
         case ACTION_GOTO_NEXT_ANNOTATED_PAGE:
-            scrollHandler->scrollToAnnotatedPage(true);
+            actionDB->fireActivateAction(Action::GOTO_NEXT_ANNOTATED_PAGE);
             break;
         case ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE:
-            scrollHandler->scrollToAnnotatedPage(false);
+            actionDB->fireActivateAction(Action::GOTO_PREVIOUS_ANNOTATED_PAGE);
             break;
 
             // Menu Journal
         case ACTION_NEW_PAGE_BEFORE:
-            insertNewPage(getCurrentPageNo());
+            actionDB->fireActivateAction(Action::NEW_PAGE_BEFORE);
             break;
         case ACTION_DUPLICATE_PAGE:
-            duplicatePage();
+            actionDB->fireActivateAction(Action::DUPLICATE_PAGE);
             break;
         case ACTION_NEW_PAGE_AFTER:
-            insertNewPage(getCurrentPageNo() + 1);
+            actionDB->fireActivateAction(Action::NEW_PAGE_AFTER);
             break;
         case ACTION_APPEND_NEW_PDF_PAGES:
-            appendNewPdfPages();
+            actionDB->fireActivateAction(Action::APPEND_NEW_PDF_PAGES);
             break;
         case ACTION_NEW_PAGE_AT_END:
-            insertNewPage(this->doc->getPageCount());
+            actionDB->fireActivateAction(Action::NEW_PAGE_AT_END);
             break;
         case ACTION_DELETE_PAGE:
-            deletePage();
+            actionDB->fireActivateAction(Action::DELETE_PAGE);
             break;
         case ACTION_PAPER_FORMAT:
-            paperFormat();
+            actionDB->fireActivateAction(Action::PAPER_FORMAT);
             break;
         case ACTION_CONFIGURE_PAGE_TEMPLATE:
-            paperTemplate();
+            actionDB->fireActivateAction(Action::CONFIGURE_PAGE_TEMPLATE);
             break;
         case ACTION_PAPER_BACKGROUND_COLOR:
-            changePageBackgroundColor();
+            actionDB->fireActivateAction(Action::PAPER_BACKGROUND_COLOR);
             break;
         case ACTION_MOVE_SELECTION_LAYER_UP:
-            // moveSelectionToLayer takes layer number (layerid - 1) not id
-            // therefor the new layer is "layerid - 1 + 1"
-            moveSelectionToLayer(getCurrentPage()->getSelectedLayerId());
+            actionDB->fireActivateAction(Action::MOVE_SELECTION_LAYER_UP);
             break;
         case ACTION_MOVE_SELECTION_LAYER_DOWN:
-            if (this->getLayerController()->getCurrentLayerId() >= 2) {
-                // moveSelectionToLayer takes layer number (layerid - 1) not id
-                // therefor the new layer is "layerid - 1 - 1"
-                moveSelectionToLayer(getCurrentPage()->getSelectedLayerId() - 2);
-            }
+            actionDB->fireActivateAction(Action::MOVE_SELECTION_LAYER_DOWN);
             break;
 
             // Menu Tools
         case ACTION_TOOL_PEN:
-            clearSelection();
-            if (enabled) {
-                selectTool(TOOL_PEN);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_PEN);
             break;
         case ACTION_TOOL_ERASER:
-            clearSelection();
-            if (enabled) {
-                selectTool(TOOL_ERASER);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_ERASER);
             break;
 
         case ACTION_TOOL_ERASER_STANDARD:
-            if (enabled) {
-                toolHandler->setEraserType(ERASER_TYPE_DEFAULT);
-            }
+            actionDB->fireChangeActionState(Action::TOOL_ERASER_TYPE, ERASER_TYPE_DEFAULT);
             break;
         case ACTION_TOOL_ERASER_DELETE_STROKE:
-            if (enabled) {
-                toolHandler->setEraserType(ERASER_TYPE_DELETE_STROKE);
-            }
+            actionDB->fireChangeActionState(Action::TOOL_ERASER_TYPE, ERASER_TYPE_DELETE_STROKE);
             break;
         case ACTION_TOOL_ERASER_WHITEOUT:
-            if (enabled) {
-                toolHandler->setEraserType(ERASER_TYPE_WHITEOUT);
-            }
+            actionDB->fireChangeActionState(Action::TOOL_ERASER_TYPE, ERASER_TYPE_WHITEOUT);
             break;
 
         case ACTION_TOOL_HIGHLIGHTER:
-            clearSelection();
-            if (enabled) {
-                selectTool(TOOL_HIGHLIGHTER);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_HIGHLIGHTER);
             break;
         case ACTION_TOOL_TEXT:
-            clearSelection();
-            if (enabled) {
-                selectTool(TOOL_TEXT);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_TEXT);
             break;
         case ACTION_TOOL_IMAGE:
-            clearSelection();
-            if (enabled) {
-                selectTool(TOOL_IMAGE);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_IMAGE);
             break;
         case ACTION_TOOL_SELECT_RECT:
-            if (enabled) {
-                selectTool(TOOL_SELECT_RECT);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_SELECT_RECT);
             break;
         case ACTION_TOOL_SELECT_REGION:
-            if (enabled) {
-                selectTool(TOOL_SELECT_REGION);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_SELECT_REGION);
             break;
         case ACTION_TOOL_SELECT_MULTILAYER_RECT:
-            if (enabled) {
-                selectTool(TOOL_SELECT_MULTILAYER_RECT);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_SELECT_MULTILAYER_RECT);
             break;
         case ACTION_TOOL_SELECT_MULTILAYER_REGION:
-            if (enabled) {
-                selectTool(TOOL_SELECT_MULTILAYER_REGION);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_SELECT_MULTILAYER_REGION);
             break;
         case ACTION_TOOL_SELECT_OBJECT:
-            if (enabled) {
-                selectTool(TOOL_SELECT_OBJECT);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_SELECT_OBJECT);
             break;
         case ACTION_TOOL_PLAY_OBJECT:
-            if (enabled) {
-                selectTool(TOOL_PLAY_OBJECT);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_PLAY_OBJECT);
             break;
         case ACTION_TOOL_SELECT_PDF_TEXT_LINEAR:
-            clearSelection();
-            if (enabled) {
-                selectTool(TOOL_SELECT_PDF_TEXT_LINEAR);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_SELECT_PDF_TEXT_LINEAR);
             break;
         case ACTION_TOOL_SELECT_PDF_TEXT_RECT:
-            clearSelection();
-            if (enabled) {
-                selectTool(TOOL_SELECT_PDF_TEXT_RECT);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_SELECT_PDF_TEXT_RECT);
             break;
         case ACTION_TOOL_VERTICAL_SPACE:
-            clearSelection();
-            if (enabled) {
-                selectTool(TOOL_VERTICAL_SPACE);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_VERTICAL_SPACE);
             break;
 
         case ACTION_TOOL_HAND:
-            if (enabled) {
-                selectTool(TOOL_HAND);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_HAND);
             break;
-        case ACTION_SETSQUARE: {
-            bool needsNewSetsquare = !this->geometryToolController ||
-                                     this->geometryToolController->getType() != GeometryToolType::SETSQUARE;
-            resetGeometryTool();
-            if (needsNewSetsquare) {
-                makeGeometryTool<Setsquare, xoj::view::SetsquareView, SetsquareController, SetsquareInputHandler,
-                                 ACTION_SETSQUARE>();
-            }
+        case ACTION_SETSQUARE:
+            actionDB->fireChangeActionState(Action::SETSQUARE, enabled);
             break;
-        }
-        case ACTION_COMPASS: {
-            bool needsNewCompass = !this->geometryToolController ||
-                                   this->geometryToolController->getType() != GeometryToolType::COMPASS;
-            resetGeometryTool();
-            if (needsNewCompass) {
-                makeGeometryTool<Compass, xoj::view::CompassView, CompassController, CompassInputHandler,
-                                 ACTION_COMPASS>();
-            }
+        case ACTION_COMPASS:
+            actionDB->fireChangeActionState(Action::COMPASS, enabled);
             break;
-        }
         case ACTION_TOOL_FLOATING_TOOLBOX:
-            if (enabled) {
-                selectTool(TOOL_FLOATING_TOOLBOX);
-            }
+            actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_FLOATING_TOOLBOX);
             break;
         case ACTION_TOOL_DRAW_RECT:
+            actionDB->fireChangeActionState(Action::TOOL_DRAW_RECTANGLE, enabled);
+            break;
         case ACTION_TOOL_DRAW_ELLIPSE:
+            actionDB->fireChangeActionState(Action::TOOL_DRAW_ELLIPSE, enabled);
+            break;
         case ACTION_TOOL_DRAW_ARROW:
+            actionDB->fireChangeActionState(Action::TOOL_DRAW_ARROW, enabled);
+            break;
         case ACTION_TOOL_DRAW_DOUBLE_ARROW:
+            actionDB->fireChangeActionState(Action::TOOL_DRAW_DOUBLE_ARROW, enabled);
+            break;
         case ACTION_TOOL_DRAW_COORDINATE_SYSTEM:
+            actionDB->fireChangeActionState(Action::TOOL_DRAW_COORDINATE_SYSTEM, enabled);
+            break;
         case ACTION_RULER:
+            actionDB->fireChangeActionState(Action::TOOL_DRAW_LINE, enabled);
+            break;
         case ACTION_TOOL_DRAW_SPLINE:
+            actionDB->fireChangeActionState(Action::TOOL_DRAW_SPLINE, enabled);
+            break;
         case ACTION_SHAPE_RECOGNIZER:
-            setShapeTool(type, enabled);
+            actionDB->fireChangeActionState(Action::TOOL_DRAW_SHAPE_RECOGNIZER, enabled);
             break;
 
         case ACTION_TOOL_DEFAULT:
-            if (enabled) {
-                selectDefaultTool();
-            }
+            actionDB->fireActivateAction(Action::SELECT_DEFAULT_TOOL);
             break;
         case ACTION_TOOL_FILL:
-            setFill(enabled);
+            actionDB->fireChangeActionState(Action::TOOL_FILL, enabled);
             break;
 
         case ACTION_SIZE_VERY_FINE:
-            if (enabled) {
-                setToolSize(TOOL_SIZE_VERY_FINE);
-            }
+            actionDB->fireChangeActionState(Action::TOOL_SIZE, TOOL_SIZE_VERY_FINE);
             break;
         case ACTION_SIZE_FINE:
-            if (enabled) {
-                setToolSize(TOOL_SIZE_FINE);
-            }
+            actionDB->fireChangeActionState(Action::TOOL_SIZE, TOOL_SIZE_FINE);
             break;
         case ACTION_SIZE_MEDIUM:
-            if (enabled) {
-                setToolSize(TOOL_SIZE_MEDIUM);
-            }
+            actionDB->fireChangeActionState(Action::TOOL_SIZE, TOOL_SIZE_MEDIUM);
             break;
         case ACTION_SIZE_THICK:
-            if (enabled) {
-                setToolSize(TOOL_SIZE_THICK);
-            }
+            actionDB->fireChangeActionState(Action::TOOL_SIZE, TOOL_SIZE_THICK);
             break;
         case ACTION_SIZE_VERY_THICK:
-            if (enabled) {
-                setToolSize(TOOL_SIZE_VERY_THICK);
-            }
+            actionDB->fireChangeActionState(Action::TOOL_SIZE, TOOL_SIZE_VERY_THICK);
             break;
 
         case ACTION_TOOL_LINE_STYLE_PLAIN:
-            setLineStyle("plain");
+            actionDB->fireChangeActionState(Action::TOOL_PEN_LINE_STYLE, "plain");
             break;
         case ACTION_TOOL_LINE_STYLE_DASH:
-            setLineStyle("dash");
+            actionDB->fireChangeActionState(Action::TOOL_PEN_LINE_STYLE, "dash");
             break;
         case ACTION_TOOL_LINE_STYLE_DASH_DOT:
-            setLineStyle("dashdot");
+            actionDB->fireChangeActionState(Action::TOOL_PEN_LINE_STYLE, "dashdot");
             break;
         case ACTION_TOOL_LINE_STYLE_DOT:
-            setLineStyle("dot");
+            actionDB->fireChangeActionState(Action::TOOL_PEN_LINE_STYLE, "dot");
             break;
 
         case ACTION_TOOL_ERASER_SIZE_VERY_FINE:
-            if (enabled) {
-                this->toolHandler->setEraserSize(TOOL_SIZE_VERY_FINE);
-                eraserSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_ERASER_SIZE, TOOL_SIZE_VERY_FINE);
             break;
         case ACTION_TOOL_ERASER_SIZE_FINE:
-            if (enabled) {
-                this->toolHandler->setEraserSize(TOOL_SIZE_FINE);
-                eraserSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_ERASER_SIZE, TOOL_SIZE_FINE);
             break;
         case ACTION_TOOL_ERASER_SIZE_MEDIUM:
-            if (enabled) {
-                this->toolHandler->setEraserSize(TOOL_SIZE_MEDIUM);
-                eraserSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_ERASER_SIZE, TOOL_SIZE_MEDIUM);
             break;
         case ACTION_TOOL_ERASER_SIZE_THICK:
-            if (enabled) {
-                this->toolHandler->setEraserSize(TOOL_SIZE_THICK);
-                eraserSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_ERASER_SIZE, TOOL_SIZE_THICK);
             break;
         case ACTION_TOOL_ERASER_SIZE_VERY_THICK:
-            if (enabled) {
-                this->toolHandler->setEraserSize(TOOL_SIZE_VERY_THICK);
-                eraserSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_ERASER_SIZE, TOOL_SIZE_VERY_THICK);
             break;
+
         case ACTION_TOOL_PEN_SIZE_VERY_FINE:
-            if (enabled) {
-                this->toolHandler->setPenSize(TOOL_SIZE_VERY_FINE);
-                penSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_PEN_SIZE, TOOL_SIZE_VERY_FINE);
             break;
         case ACTION_TOOL_PEN_SIZE_FINE:
-            if (enabled) {
-                this->toolHandler->setPenSize(TOOL_SIZE_FINE);
-                penSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_PEN_SIZE, TOOL_SIZE_FINE);
             break;
         case ACTION_TOOL_PEN_SIZE_MEDIUM:
-            if (enabled) {
-                this->toolHandler->setPenSize(TOOL_SIZE_MEDIUM);
-                penSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_PEN_SIZE, TOOL_SIZE_MEDIUM);
             break;
         case ACTION_TOOL_PEN_SIZE_THICK:
-            if (enabled) {
-                this->toolHandler->setPenSize(TOOL_SIZE_THICK);
-                penSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_PEN_SIZE, TOOL_SIZE_THICK);
             break;
         case ACTION_TOOL_PEN_SIZE_VERY_THICK:
-            if (enabled) {
-                this->toolHandler->setPenSize(TOOL_SIZE_VERY_THICK);
-                penSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_PEN_SIZE, TOOL_SIZE_VERY_THICK);
             break;
+
         case ACTION_TOOL_PEN_FILL:
-            this->toolHandler->setPenFillEnabled(enabled);
+            actionDB->fireChangeActionState(Action::TOOL_PEN_FILL, enabled);
             break;
         case ACTION_TOOL_PEN_FILL_OPACITY:
-            selectAlpha(OPACITY_FILL_PEN);
+            actionDB->fireActivateAction(Action::TOOL_PEN_FILL_OPACITY);
             break;
-
 
         case ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE:
-            if (enabled) {
-                this->toolHandler->setHighlighterSize(TOOL_SIZE_VERY_FINE);
-                highlighterSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_HIGHLIGHTER_SIZE, TOOL_SIZE_VERY_FINE);
             break;
         case ACTION_TOOL_HIGHLIGHTER_SIZE_FINE:
-            if (enabled) {
-                this->toolHandler->setHighlighterSize(TOOL_SIZE_FINE);
-                highlighterSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_HIGHLIGHTER_SIZE, TOOL_SIZE_FINE);
             break;
         case ACTION_TOOL_HIGHLIGHTER_SIZE_MEDIUM:
-            if (enabled) {
-                this->toolHandler->setHighlighterSize(TOOL_SIZE_MEDIUM);
-                highlighterSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_HIGHLIGHTER_SIZE, TOOL_SIZE_MEDIUM);
             break;
         case ACTION_TOOL_HIGHLIGHTER_SIZE_THICK:
-            if (enabled) {
-                this->toolHandler->setHighlighterSize(TOOL_SIZE_THICK);
-                highlighterSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_HIGHLIGHTER_SIZE, TOOL_SIZE_THICK);
             break;
         case ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK:
-            if (enabled) {
-                this->toolHandler->setHighlighterSize(TOOL_SIZE_VERY_THICK);
-                highlighterSizeChanged();
-            }
+            actionDB->fireChangeActionState(Action::TOOL_HIGHLIGHTER_SIZE, TOOL_SIZE_VERY_THICK);
             break;
+
         case ACTION_TOOL_HIGHLIGHTER_FILL:
-            this->toolHandler->setHighlighterFillEnabled(enabled);
+            actionDB->fireChangeActionState(Action::TOOL_HIGHLIGHTER_FILL, enabled);
             break;
         case ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY:
-            selectAlpha(OPACITY_FILL_HIGHLIGHTER);
+            actionDB->fireActivateAction(Action::TOOL_HIGHLIGHTER_FILL_OPACITY);
             break;
 
         case ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY:
-            selectAlpha(OPACITY_SELECT_PDF_TEXT_MARKER);
+            actionDB->fireActivateAction(Action::TOOL_SELECT_PDF_TEXT_MARKER_OPACITY);
             break;
 
         case ACTION_FONT_BUTTON_CHANGED:
@@ -868,35 +763,41 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             // nothing to do here, the color toolbar item handles the color
             break;
         case ACTION_TEX:
-            runLatex();
+            actionDB->fireActivateAction(Action::TEX);
             break;
 
             // Menu View
         case ACTION_ZOOM_100:
+            actionDB->fireActivateAction(Action::ZOOM_100);
+            break;
         case ACTION_ZOOM_FIT:
+            actionDB->fireChangeActionState(Action::ZOOM_FIT, enabled);
+            break;
         case ACTION_ZOOM_IN:
+            actionDB->fireActivateAction(Action::ZOOM_IN);
+            break;
         case ACTION_ZOOM_OUT:
-            Util::execInUiThread([=]() { zoomCallback(type, enabled); });
+            actionDB->fireActivateAction(Action::ZOOM_OUT);
             break;
 
         case ACTION_VIEW_PAIRED_PAGES:
-            setViewPairedPages(enabled);
+            actionDB->fireChangeActionState(Action::PAIRED_PAGES_MODE, enabled);
             break;
 
         case ACTION_VIEW_PRESENTATION_MODE:
-            setViewPresentationMode(enabled);
+            actionDB->fireChangeActionState(Action::PRESENTATION_MODE, enabled);
             break;
 
         case ACTION_MANAGE_TOOLBAR:
-            manageToolbars();
+            actionDB->fireActivateAction(Action::MANAGE_TOOLBAR);
             break;
 
         case ACTION_CUSTOMIZE_TOOLBAR:
-            customizeToolbars();
+            actionDB->fireActivateAction(Action::CUSTOMIZE_TOOLBAR);
             break;
 
         case ACTION_FULLSCREEN:
-            setViewFullscreenMode(enabled);
+            actionDB->fireChangeActionState(Action::FULLSCREEN, enabled);
             break;
 
         case ACTION_TOGGLE_PAIRS_PARITY: {
@@ -912,161 +813,119 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         }
 
         case ACTION_SET_COLUMNS_1:
-            setViewColumns(1);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, 1);
             break;
 
         case ACTION_SET_COLUMNS_2:
-            setViewColumns(2);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, 2);
             break;
 
         case ACTION_SET_COLUMNS_3:
-            setViewColumns(3);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, 3);
             break;
 
         case ACTION_SET_COLUMNS_4:
-            setViewColumns(4);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, 4);
             break;
 
         case ACTION_SET_COLUMNS_5:
-            setViewColumns(5);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, 5);
             break;
 
         case ACTION_SET_COLUMNS_6:
-            setViewColumns(6);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, 6);
             break;
 
         case ACTION_SET_COLUMNS_7:
-            setViewColumns(7);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, 7);
             break;
 
         case ACTION_SET_COLUMNS_8:
-            setViewColumns(8);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, 8);
             break;
 
         case ACTION_SET_ROWS_1:
-            setViewRows(1);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, -1);
             break;
 
         case ACTION_SET_ROWS_2:
-            setViewRows(2);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, -2);
             break;
 
         case ACTION_SET_ROWS_3:
-            setViewRows(3);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, -3);
             break;
 
         case ACTION_SET_ROWS_4:
-            setViewRows(4);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, -4);
             break;
 
         case ACTION_SET_ROWS_5:
-            setViewRows(5);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, -5);
             break;
 
         case ACTION_SET_ROWS_6:
-            setViewRows(6);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, -6);
             break;
 
         case ACTION_SET_ROWS_7:
-            setViewRows(7);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, -7);
             break;
 
         case ACTION_SET_ROWS_8:
-            setViewRows(8);
+            actionDB->fireChangeActionState(Action::SET_COLUMNS_OR_ROWS, -8);
             break;
 
         case ACTION_SET_LAYOUT_HORIZONTAL:
-            setViewLayoutVert(false);
+            actionDB->fireChangeActionState(Action::SET_LAYOUT_VERTICAL, false);
             break;
 
         case ACTION_SET_LAYOUT_VERTICAL:
-            setViewLayoutVert(true);
+            actionDB->fireChangeActionState(Action::SET_LAYOUT_VERTICAL, true);
             break;
 
         case ACTION_SET_LAYOUT_L2R:
-            setViewLayoutR2L(false);
+            actionDB->fireChangeActionState(Action::SET_LAYOUT_RIGHT_TO_LEFT, false);
             break;
 
         case ACTION_SET_LAYOUT_R2L:
-            setViewLayoutR2L(true);
+            actionDB->fireChangeActionState(Action::SET_LAYOUT_RIGHT_TO_LEFT, true);
             break;
 
         case ACTION_SET_LAYOUT_T2B:
-            setViewLayoutB2T(false);
+            actionDB->fireChangeActionState(Action::SET_LAYOUT_BOTTOM_TO_TOP, false);
             break;
 
         case ACTION_SET_LAYOUT_B2T:
-            setViewLayoutB2T(true);
+            actionDB->fireChangeActionState(Action::SET_LAYOUT_BOTTOM_TO_TOP, true);
             break;
 
-
-        case ACTION_AUDIO_RECORD: {
-            bool result = false;
-            if (!audioController) {
-                g_warning("Audio has been disabled");
-                return;
-            }
-            if (enabled) {
-                result = audioController->startRecording();
-            } else {
-                result = audioController->stopRecording();
-            }
-
-            if (!result) {
-                Util::execInUiThread([=]() {
-                    gtk_toggle_tool_button_set_active(reinterpret_cast<GtkToggleToolButton*>(toolbutton), !enabled);
-                    string msg = _("Recorder could not be started.");
-                    XojMsgBox::showErrorToUser(Control::getGtkWindow(), msg);
-                });
-            }
+        case ACTION_AUDIO_RECORD:
+            actionDB->fireChangeActionState(Action::AUDIO_RECORD, enabled);
             break;
-        }
 
         case ACTION_AUDIO_PAUSE_PLAYBACK:
-            if (!audioController) {
-                g_warning("Audio has been disabled");
-                return;
-            }
-            if (enabled) {
-                this->getAudioController()->pausePlayback();
-            } else {
-                this->getAudioController()->continuePlayback();
-            }
+            actionDB->fireChangeActionState(Action::AUDIO_PAUSE_PLAYBACK, enabled);
             break;
 
         case ACTION_AUDIO_SEEK_FORWARDS:
-            if (!audioController) {
-                g_warning("Audio has been disabled");
-                return;
-            }
-
-            this->getAudioController()->seekForwards();
+            actionDB->fireActivateAction(Action::AUDIO_SEEK_FORWARDS);
             break;
 
         case ACTION_AUDIO_SEEK_BACKWARDS:
-            if (!audioController) {
-                g_warning("Audio has been disabled");
-                return;
-            }
-
-            this->getAudioController()->seekBackwards();
+            actionDB->fireActivateAction(Action::AUDIO_SEEK_BACKWARDS);
             break;
 
         case ACTION_AUDIO_STOP_PLAYBACK:
-            if (!audioController) {
-                g_warning("Audio has been disabled");
-                return;
-            }
-
-            this->getAudioController()->stopPlayback();
+            actionDB->fireActivateAction(Action::AUDIO_STOP_PLAYBACK);
             break;
 
         case ACTION_ROTATION_SNAPPING:
-            rotationSnappingToggle();
+            actionDB->fireChangeActionState(Action::ROTATION_SNAPPING, !settings->isSnapRotation());
             break;
 
         case ACTION_GRID_SNAPPING:
-            gridSnappingToggle();
+            actionDB->fireChangeActionState(Action::GRID_SNAPPING, !settings->isSnapGrid());
             break;
 
             // Footer, not really an action, but need an identifier to
@@ -1075,19 +934,17 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             // nothing to do here
             break;
 
-
             // Plugin menu
         case ACTION_PLUGIN_MANAGER:
-            this->pluginController->showPluginManager();
+            actionDB->fireActivateAction(Action::PLUGIN_MANAGER);
             break;
-
 
             // Menu Help
         case ACTION_HELP:
-            XojMsgBox::showHelp(getGtkWindow());
+            actionDB->fireActivateAction(Action::HELP);
             break;
         case ACTION_ABOUT:
-            showAbout();
+            actionDB->fireActivateAction(Action::ABOUT);
             break;
 
         case ACTION_NONE:
@@ -1108,8 +965,23 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
     }
 }
 
-template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass, ActionType a>
-void Control::makeGeometryTool() {
+bool Control::toggleCompass() {
+    return toggleGeometryTool<Compass, xoj::view::CompassView, CompassController, CompassInputHandler, ACTION_COMPASS,
+                              GeometryToolType::COMPASS>();
+}
+bool Control::toggleSetsquare() {
+    return toggleGeometryTool<Setsquare, xoj::view::SetsquareView, SetsquareController, SetsquareInputHandler,
+                              ACTION_SETSQUARE, GeometryToolType::SETSQUARE>();
+}
+
+template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass, ActionType a,
+          GeometryToolType toolType>
+bool Control::toggleGeometryTool() {
+    bool needsNewGeometryTool = !this->geometryToolController || this->geometryToolController->getType() != toolType;
+    this->resetGeometryTool();
+    if (!needsNewGeometryTool) {
+        return false;
+    }
     const auto view = this->win->getXournal()->getViewFor(getCurrentPageNo());
     const auto* xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
     auto tool = new ToolClass();
@@ -1122,6 +994,7 @@ void Control::makeGeometryTool() {
     xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
     fireActionSelected(GROUP_GEOMETRY_TOOL, a);
     geometryTool->notify();
+    return true;
 }
 
 void Control::resetGeometryTool() {
@@ -1229,28 +1102,10 @@ void Control::selectAllOnPage() {
     win->getXournal()->setSelection(selection);
 }
 
-void Control::reorderSelection(const ActionType type) {
+void Control::reorderSelection(EditSelection::OrderChange change) {
     EditSelection* sel = win->getXournal()->getSelection();
-    if (!sel)
+    if (!sel) {
         return;
-
-    EditSelection::OrderChange change;
-    switch (type) {
-        case ACTION_ARRANGE_BRING_TO_FRONT:
-            change = EditSelection::OrderChange::BringToFront;
-            break;
-        case ACTION_ARRANGE_BRING_FORWARD:
-            change = EditSelection::OrderChange::BringForward;
-            break;
-        case ACTION_ARRANGE_SEND_BACKWARD:
-            change = EditSelection::OrderChange::SendBackward;
-            break;
-        case ACTION_ARRANGE_SEND_TO_BACK:
-            change = EditSelection::OrderChange::SendToBack;
-            break;
-        default:
-            // Unknown selection order, do nothing.
-            return;
     }
 
     auto undoAction = sel->rearrangeInsertOrder(change);
@@ -1334,64 +1189,68 @@ void Control::setShapeTool(ActionType type, bool enabled) {
         return;
     }
 
-    // Check for nothing changed, and return in this case
-    if ((this->toolHandler->getDrawingType() == DRAWING_TYPE_LINE && type == ACTION_RULER) ||
-        (this->toolHandler->getDrawingType() == DRAWING_TYPE_RECTANGLE && type == ACTION_TOOL_DRAW_RECT) ||
-        (this->toolHandler->getDrawingType() == DRAWING_TYPE_ARROW && type == ACTION_TOOL_DRAW_ARROW) ||
-        (this->toolHandler->getDrawingType() == DRAWING_TYPE_DOUBLE_ARROW && type == ACTION_TOOL_DRAW_DOUBLE_ARROW) ||
-        (this->toolHandler->getDrawingType() == DRAWING_TYPE_COORDINATE_SYSTEM &&
-         type == ACTION_TOOL_DRAW_COORDINATE_SYSTEM) ||
-        (this->toolHandler->getDrawingType() == DRAWING_TYPE_ELLIPSE && type == ACTION_TOOL_DRAW_ELLIPSE) ||
-        (this->toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE && type == ACTION_TOOL_DRAW_SPLINE) ||
-        (this->toolHandler->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER && type == ACTION_SHAPE_RECOGNIZER)) {
-        return;
-    }
-
+    DrawingType dtype = DRAWING_TYPE_DEFAULT;
     switch (type) {
-        case ACTION_TOOL_DRAW_RECT:
-            this->toolHandler->setDrawingType(DRAWING_TYPE_RECTANGLE);
-            break;
-
-        case ACTION_TOOL_DRAW_ELLIPSE:
-            this->toolHandler->setDrawingType(DRAWING_TYPE_ELLIPSE);
-            break;
-
-        case ACTION_TOOL_DRAW_ARROW:
-            this->toolHandler->setDrawingType(DRAWING_TYPE_ARROW);
-            break;
-
-        case ACTION_TOOL_DRAW_DOUBLE_ARROW:
-            this->toolHandler->setDrawingType(DRAWING_TYPE_DOUBLE_ARROW);
-            break;
-
-        case ACTION_TOOL_DRAW_COORDINATE_SYSTEM:
-            this->toolHandler->setDrawingType(DRAWING_TYPE_COORDINATE_SYSTEM);
-            break;
-
         case ACTION_RULER:
-            this->toolHandler->setDrawingType(DRAWING_TYPE_LINE);
+            dtype = DRAWING_TYPE_LINE;
             break;
-
+        case ACTION_TOOL_DRAW_RECT:
+            dtype = DRAWING_TYPE_RECTANGLE;
+            break;
+        case ACTION_TOOL_DRAW_ARROW:
+            dtype = DRAWING_TYPE_ARROW;
+            break;
+        case ACTION_TOOL_DRAW_DOUBLE_ARROW:
+            dtype = DRAWING_TYPE_DOUBLE_ARROW;
+            break;
+        case ACTION_TOOL_DRAW_COORDINATE_SYSTEM:
+            dtype = DRAWING_TYPE_COORDINATE_SYSTEM;
+            break;
+        case ACTION_TOOL_DRAW_ELLIPSE:
+            dtype = DRAWING_TYPE_ELLIPSE;
+            break;
         case ACTION_TOOL_DRAW_SPLINE:
-            this->toolHandler->setDrawingType(DRAWING_TYPE_SPLINE);
+            dtype = DRAWING_TYPE_SPLINE;
             break;
-
         case ACTION_SHAPE_RECOGNIZER:
-            this->toolHandler->setDrawingType(DRAWING_TYPE_STROKE_RECOGNIZER);
+            dtype = DRAWING_TYPE_SHAPE_RECOGNIZER;
             break;
-
         default:
             g_warning("Invalid type for setShapeTool: %i", type);
             break;
     }
 
+    this->setToolDrawingType(dtype);
+
     fireActionSelected(GROUP_RULER, type);
+}
+
+void Control::setToolDrawingType(DrawingType type) {
+    if (this->toolHandler->getDrawingType() != type) {
+        this->toolHandler->setDrawingType(type);
+    }
 }
 
 void Control::setFullscreen(bool enabled) {
     win->toggleFullscreen(enabled);
+    actionDB->setActionState(Action::FULLSCREEN, enabled);
 
     fireActionSelected(GROUP_FULLSCREEN, enabled ? ACTION_FULLSCREEN : ACTION_NONE);
+}
+
+void Control::setShowSidebar(bool enabled) {
+    win->setSidebarVisible(enabled);
+    actionDB->setActionState(Action::SHOW_SIDEBAR, enabled);
+}
+
+void Control::setShowToolbar(bool enabled) {
+    win->setToolbarVisible(enabled);
+    actionDB->setActionState(Action::SHOW_TOOLBAR, enabled);
+}
+
+void Control::setHideMenubar(bool enabled) {
+    win->setMenubarVisible(!enabled);
+    actionDB->setActionState(Action::HIDE_MENUBAR, enabled);
 }
 
 void Control::disableSidebarTmp(bool disabled) { this->sidebar->setTmpDisabled(disabled); }
@@ -1416,10 +1275,7 @@ void Control::addDefaultPage(string pageTemplate) {
 }
 
 void Control::updateDeletePageButton() {
-    if (this->win) {
-        // GtkWidget* w = this->win->get("menuDeletePage");
-        // gtk_widget_set_sensitive(w, this->doc->getPageCount() > 1);
-    }
+    this->actionDB->enableAction(Action::DELETE_PAGE, this->doc->getPageCount() > 1);
 }
 
 void Control::deletePage() {
@@ -1561,14 +1417,11 @@ void Control::updateBackgroundSizeButton() {
     if (!p || this->win == nullptr) {
         return;
     }
-    // GtkWidget* paperColor = win->get("menuJournalPaperColor");
-    // GtkWidget* pageSize = win->get("menuJournalPaperFormat");
-    //
-    // PageType bg = p->getBackgroundType();
-    // gtk_widget_set_sensitive(paperColor, !bg.isSpecial());
-    //
-    // // PDF page size is defined, you cannot change it
-    // gtk_widget_set_sensitive(pageSize, !bg.isPdfPage());
+
+    PageType bg = p->getBackgroundType();
+    this->actionDB->enableAction(Action::PAPER_BACKGROUND_COLOR, !bg.isSpecial());
+    // PDF page size is defined, you cannot change it
+    this->actionDB->enableAction(Action::PAPER_FORMAT, !bg.isPdfPage());
 }
 
 void Control::paperTemplate() {
@@ -1671,8 +1524,10 @@ void Control::setViewPresentationMode(bool enabled) {
     fireEnableAction(ACTION_ZOOM_100, !enabled);
     fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !enabled);
 
-    // gtk_widget_set_sensitive(win->get("menuitemLayout"), !enabled);
-    // gtk_widget_set_sensitive(win->get("menuitemViewDimensions"), !enabled);
+    this->actionDB->enableAction(Action::SET_LAYOUT_BOTTOM_TO_TOP, !enabled);
+    this->actionDB->enableAction(Action::SET_LAYOUT_RIGHT_TO_LEFT, !enabled);
+    this->actionDB->enableAction(Action::SET_LAYOUT_VERTICAL, !enabled);
+    this->actionDB->enableAction(Action::SET_COLUMNS_OR_ROWS, !enabled);
 
     // disable selection of scroll hand tool
     fireEnableAction(ACTION_TOOL_HAND, !enabled);
@@ -1975,7 +1830,7 @@ void Control::toolChanged() {
     }
 
     ActionType rulerAction = ACTION_NOT_SELECTED;
-    if (toolHandler->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
+    if (toolHandler->getDrawingType() == DRAWING_TYPE_SHAPE_RECOGNIZER) {
         rulerAction = ACTION_SHAPE_RECOGNIZER;
     } else if (toolHandler->getDrawingType() == DRAWING_TYPE_LINE) {
         rulerAction = ACTION_RULER;
@@ -3310,14 +3165,14 @@ auto Control::getWindow() const -> MainWindow* { return this->win; }
 
 auto Control::getGtkWindow() const -> GtkWindow* { return GTK_WINDOW(this->win->getWindow()); }
 
-void Control::rotationSnappingToggle() {
-    settings->setSnapRotation(!settings->isSnapRotation());
-    fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
+void Control::setRotationSnapping(bool enable) {
+    settings->setSnapRotation(enable);
+    fireActionSelected(GROUP_SNAPPING, enable ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
 }
 
-void Control::gridSnappingToggle() {
-    settings->setSnapGrid(!settings->isSnapGrid());
-    fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
+void Control::setGridSnapping(bool enable) {
+    settings->setSnapGrid(enable);
+    fireActionSelected(GROUP_GRID_SNAPPING, enable ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }
 
 void Control::highlightPositionToggle() {

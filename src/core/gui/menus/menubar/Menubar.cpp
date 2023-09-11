@@ -3,6 +3,7 @@
 #include "control/Control.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/MainWindow.h"
+#include "util/Assert.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 #include "util/raii/GVariantSPtr.h"
@@ -15,6 +16,7 @@
 
 constexpr auto MENU_XML_FILE = "mainmenubar.xml";
 constexpr auto MENU_ID = "menubar";
+constexpr auto UNDO_REDO_SECTION_ID = "sectionUndoRedo";
 
 Menubar::Menubar() = default;
 Menubar::~Menubar() noexcept = default;
@@ -79,6 +81,20 @@ void Menubar::populate(const GladeSearchpath* gladeSearchPath, MainWindow* win) 
     if (!ctrl->getAudioController()) {
         removeItemsWithClass(G_MENU(menu), "audio");
     }
+
+    undoRedoSection = G_MENU(gtk_builder_get_object(builder.get(), UNDO_REDO_SECTION_ID));
+}
+
+void Menubar::setUndoDescription(const std::string& description) {
+    xoj_assert(undoRedoSection);
+    g_menu_remove(undoRedoSection, 0);
+    g_menu_prepend(undoRedoSection, description.c_str(), "win.undo");
+}
+
+void Menubar::setRedoDescription(const std::string& description) {
+    xoj_assert(undoRedoSection);
+    g_menu_remove(undoRedoSection, 1);
+    g_menu_append(undoRedoSection, description.c_str(), "win.redo");
 }
 
 void Menubar::setDisabled(bool disabled) {
