@@ -9,8 +9,6 @@
 #include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"  // for Settings
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
-#include "enums/ActionGroup.enum.h"     // for GROUP_ZOOM_FIT
-#include "enums/ActionType.enum.h"      // for ACTION_NOT_SELECTED, ACTION_Z...
 #include "gui/Layout.h"                 // for Layout
 #include "gui/PageView.h"               // for XojPageView
 #include "gui/XournalView.h"            // for XournalView

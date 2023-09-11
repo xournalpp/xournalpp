@@ -49,6 +49,8 @@
 #include "util/i18n.h"  // for _
 #include "util/safe_casts.h"
 
+#include "ActionBackwardCompatibilityLayer.h"
+
 extern "C" {
 #include <lauxlib.h>  // for luaL_Reg, luaL_newstate, luaL_requiref
 #include <lua.h>      // for lua_getglobal, lua_getfield, lua_setf...
@@ -357,60 +359,21 @@ static int applib_uiAction(lua_State* L) {
     lua_settop(L, 1);
     luaL_checktype(L, 1, LUA_TTABLE);
 
-    lua_getfield(L, 1, "group");
     lua_getfield(L, 1, "enabled");
     lua_getfield(L, 1, "action");
     // stack now has following:
     //    1 = {["action"] = "ACTION_GRID_SNAPPING", ["group"] = "GROUP_GRID_SNAPPING", ["enabled"] = true}
-    //   -3 = GROUP_GRID_SNAPPING
     //   -2 = true
     //   -1 = "ACTION_GRID_SNAPPING"
 
-    bool enabled = true;
-
-    ActionGroup group = GROUP_NOGROUP;
-    const char* groupStr = luaL_optstring(L, -3, nullptr);
-    if (groupStr != nullptr) {
-        group = ActionGroup_fromString(groupStr);
-    }
-
-    if (lua_isboolean(L, -2)) {
-        enabled = lua_toboolean(L, -2);
-    }
+    bool enabled = lua_isboolean(L, -2) ? lua_toboolean(L, -2) : true;
 
     const char* actionStr = luaL_optstring(L, -1, nullptr);
     if (actionStr == nullptr) {
         return luaL_error(L, "Missing action!");
     }
 
-    ActionType action = ActionType_fromString(actionStr);
-    GtkToolButton* toolbutton = nullptr;
-
-    Control* ctrl = plugin->getControl();
-    ctrl->actionPerformed(action, group, toolbutton, enabled);
-
-    return 0;
-}
-
-/**
- * Select UI action (notifies action listeners)
- * Unless you are sure what you do, use app.uiAction instead!
- * The problem is that only notifying action listeners does not store these changes in the settings, which may create
- * confusion
- *
- * Example: app.uiActionSelected("GROUP_GRID_SNAPPING", "ACTION_GRID_SNAPPING")
- * notifies the action listeners that grid snapping is turned on; it is not recorded in the settings,
- * so better use app.uiAction({["action"] = "ACTION_GRID_SNAPPING") instead
- */
-static int applib_uiActionSelected(lua_State* L) {
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-
-    ActionGroup group = ActionGroup_fromString(luaL_checkstring(L, 1));
-    ActionType action = ActionType_fromString(luaL_checkstring(L, 2));
-
-    Control* ctrl = plugin->getControl();
-    // TODO Figure out a way for backwards compat.
-    // ctrl->fireActionSelected(group, action);
+    ActionBackwardCompatibilityLayer::actionPerformed(plugin->getControl(), actionStr, enabled);
 
     return 0;
 }
@@ -502,10 +465,11 @@ static int applib_setSidebarPageNo(lua_State* L) {
 static int applib_layerAction(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
 
-    ActionType action = ActionType_fromString(luaL_checkstring(L, 1));
-
-    Control* ctrl = plugin->getControl();
-    ctrl->getLayerController()->actionPerformed(action);
+    const char* actionStr = luaL_checkstring(L, 1);
+    if (actionStr == nullptr) {
+        return luaL_error(L, "Missing action!");
+    }
+    ActionBackwardCompatibilityLayer::actionPerformed(plugin->getControl(), actionStr, true);
 
     return 0;
 }
@@ -2691,7 +2655,6 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"saveAs", applib_saveAs},
                                   {"registerUi", applib_registerUi},
                                   {"uiAction", applib_uiAction},
-                                  {"uiActionSelected", applib_uiActionSelected},
                                   {"sidebarAction", applib_sidebarAction},
                                   {"layerAction", applib_layerAction},
                                   {"changeToolColor", applib_changeToolColor},
