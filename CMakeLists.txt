@@ -193,7 +193,7 @@ target_link_libraries(external_modules INTERFACE
         )
 
 target_compile_definitions(external_modules INTERFACE
-        GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32
+        GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_40
         GDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18
         $<$<TARGET_EXISTS:X11::X11>:X11_ENABLED>
         )

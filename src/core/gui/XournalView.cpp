@@ -14,6 +14,7 @@
 #include "control/PdfCache.h"                    // for PdfCache
 #include "control/ScrollHandler.h"               // for ScrollHandler
 #include "control/ToolHandler.h"                 // for ToolHandler
+#include "control/actions/ActionDatabase.h"      // for ActionDatabase
 #include "control/jobs/XournalScheduler.h"       // for XournalScheduler
 #include "control/settings/MetadataManager.h"    // for MetadataManager
 #include "control/settings/Settings.h"           // for Settings

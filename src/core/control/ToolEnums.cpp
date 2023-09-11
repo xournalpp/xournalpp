@@ -56,7 +56,7 @@ auto drawingTypeToString(DrawingType type) -> std::string {
             return "arrow";
         case DRAWING_TYPE_DOUBLE_ARROW:
             return "doubleArrow";
-        case DRAWING_TYPE_STROKE_RECOGNIZER:
+        case DRAWING_TYPE_SHAPE_RECOGNIZER:
             return "strokeRecognizer";
         case DRAWING_TYPE_COORDINATE_SYSTEM:
             return "drawCoordinateSystem";
@@ -87,7 +87,7 @@ auto drawingTypeFromString(const std::string& type) -> DrawingType {
         return DRAWING_TYPE_DOUBLE_ARROW;
     }
     if (type == "strokeRecognizer") {
-        return DRAWING_TYPE_STROKE_RECOGNIZER;
+        return DRAWING_TYPE_SHAPE_RECOGNIZER;
     }
     if (type == "drawCoordinateSystem") {
         return DRAWING_TYPE_COORDINATE_SYSTEM;
@@ -105,6 +105,12 @@ auto isSelectToolType(ToolType type) -> bool {
 
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool {
     return type == TOOL_SELECT_RECT || type == TOOL_SELECT_REGION || type == TOOL_SELECT_OBJECT;
+}
+
+auto requiresClearedSelection(ToolType type) -> bool {
+    return type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_ERASER || type == TOOL_TEXT ||
+           type == TOOL_IMAGE || type == TOOL_SELECT_PDF_TEXT_RECT || type == TOOL_SELECT_PDF_TEXT_RECT ||
+           type == TOOL_VERTICAL_SPACE;
 }
 
 auto toolTypeToString(ToolType type) -> std::string {
