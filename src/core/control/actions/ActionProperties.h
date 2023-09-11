@@ -252,6 +252,17 @@ struct ActionProperties<Action::PAIRED_PAGES_MODE> {
 };
 
 template <>
+struct ActionProperties<Action::PAIRED_PAGES_OFFSET> {
+    using state_type = int;
+    static state_type initialState(Control* ctrl) { return ctrl->getSettings()->getPairsOffset(); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        int offset = g_variant_get_int32(p);
+        ctrl->setPairsOffset(offset);
+    }
+};
+
+template <>
 struct ActionProperties<Action::PRESENTATION_MODE> {
     using state_type = bool;
     static state_type initialState(Control* ctrl) { return ctrl->getSettings()->isPresentationMode(); }
@@ -956,5 +967,16 @@ struct ActionProperties<Action::LAYER_ACTIVE> {
         if (n != current && n <= max) {
             ctrl->getLayerController()->switchToLay(n);  // Will set the right state for this action
         }
+    }
+};
+
+template <>
+struct ActionProperties<Action::POSITION_HIGHLIGHTING> {
+    using state_type = bool;
+    static state_type initialState(Control* ctrl) { return ctrl->getSettings()->isHighlightPosition(); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        bool enable = g_variant_get_boolean(p);
+        ctrl->getSettings()->setHighlightPosition(enable);
     }
 };

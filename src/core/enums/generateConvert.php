@@ -15,7 +15,7 @@ while (($file = readdir($dh)) !== false) {
 		continue;
 	}
 
-	if (substr($file, -7) != '.enum.h') {
+	if ($file != 'Action.enum.h') {
 		continue;
 	}
 
@@ -30,7 +30,7 @@ function parseEnumFile($file) {
 	$values = array();
 	foreach (file($file) as $line) {
 		$line = trim($line);
-		
+
 		if (!$inEnum && substr($line, 0, 5) == 'enum ') {
 			$inEnum = true;
 			continue;
@@ -48,89 +48,57 @@ function parseEnumFile($file) {
 		if ($line == '' || substr($line, 0, 2) == '//') {
 			continue;
 		}
-		
-		$pos = strrpos($line, '=');
+
+		$pos = strpos($line, "ENUMERATOR_COUNT");
+        if ($pos !== false) {
+            continue;
+        }
+
+		$pos = strpos($line, '=');
+		if ($pos !== false) {
+            print "ERROR: non contiguous enum!!\n";
+			$line = substr($line, 0, $pos);
+		}
+		$pos = strpos($line, ',');
 		if ($pos !== false) {
 			$line = substr($line, 0, $pos);
 		}
-		$pos = strrpos($line, ',');
-		if ($pos !== false) {
-			$line = substr($line, 0, $pos);
-		}
-		
+
 		$line = trim($line);
 		$values[] = $line;
 	}
-	
+
 	return $values;
 }
 
 function writeCppFile($output, $name, $values) {
-	$fp = fopen($output, 'w');
+    $fp = fopen("$output", 'w');
     $tab = "    "; // 4 tab space as specified in .clang_format
 
-	fwrite($fp, "// ** THIS FILE IS GENERATED **\n");
-	fwrite($fp, "// ** use generateConvert.php to update this file **\n");
-	fwrite($fp, "\n\n");
+    fwrite($fp, "// ** THIS FILE IS GENERATED **\n");
+    fwrite($fp, "// ** use generateConvert.php to update this file **\n");
+    fwrite($fp, "\n\n");
 
-	fwrite($fp, "#include <string>\n\n");
-	fwrite($fp, "#include \"../$name.enum.h\"\n\n");
-	fwrite($fp, "using std::string;\n");
-	fwrite($fp, "#include <glib.h>\n");
+    fwrite($fp, "#pragma once\n\n");
 
+    fwrite($fp, "constexpr const char* ACTION_NAMES[] = {  // $name to string conversion map");
 
-	fwrite($fp, "\n\n");
+    foreach ($values as $v) {
+        $v = str_replace("_","-",$v);
+        fwrite($fp, "\n" . $tab . $tab . "\"". strtolower($v) . "\",");
+    }
+    fseek($fp,-1,SEEK_CUR);
+    fwrite($fp, "};\n");
 
-	fwrite($fp, "// ** This needs to be copied to the header\n");
-	fwrite($fp, $name . " " . $name . "_fromString(const string& value);\n");
-	fwrite($fp, "string " . $name . "_toString($name value);\n");
+    fclose($fp);
 
-	fwrite($fp, "\n\n");
-
-	fwrite($fp, "auto " . $name . "_fromString(const string& value) -> " . $name . " {\n");
-	
-	foreach ($values as $v) {
-		fwrite($fp, $tab . "if (value == \"$v\") {\n");
-		fwrite($fp, $tab . $tab . "return $v;\n");
-		fwrite($fp, $tab . "}\n");
-		fwrite($fp, "\n");
-	}
-
-	fwrite($fp, $tab . "g_warning(\"Invalid enum value for $name: \\\"%s\\\"\", value.c_str());\n");
-	fwrite($fp, $tab . "return {$values[0]};\n");
-
-	
-	fwrite($fp, "}\n");
-
-	////////////////////////////////////////////////////////////////////////////
-	
-	fwrite($fp, "\n\n");
-
-	fwrite($fp, "auto " . $name . "_toString($name value) -> string {\n");
-	
-	foreach ($values as $v) {
-		fwrite($fp, $tab . "if (value == $v) {\n");
-		fwrite($fp, $tab . $tab . "return \"$v\";\n");
-		fwrite($fp, $tab . "}\n");
-		fwrite($fp, "\n");
-	}
-
-	fwrite($fp, $tab . "g_error(\"Invalid enum value for $name: %i\", value);\n");
-	fwrite($fp, $tab . "return \"\";\n");
-
-	
-	fwrite($fp, "}\n");
-
-
-
-	fclose($fp);
 	print "Generated $output\n";
 }
 
 function generateEnum($file) {
 	$values = parseEnumFile($file);
-	
+
 	$name = substr($file, 0, -7);
-	writeCppFile("generated/$name.generated.cpp", $name, $values);
+	writeCppFile("generated/${name}.NameMap.generated.h", $name, $values);
 }
 

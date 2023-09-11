@@ -12,8 +12,6 @@
 #include "control/Tool.h"               // for Tool, Tool::toolSizes
 #include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"  // for SElement, Settings
-#include "enums/ActionGroup.enum.h"     // for GROUP_ERASER_MODE
-#include "enums/ActionType.enum.h"      // for ACTION_TOOL_ERASER_DELETE_STROKE
 #include "model/StrokeStyle.h"          // for StrokeStyle
 #include "util/Color.h"
 #include "util/Stacktrace.h"  // for Stac...

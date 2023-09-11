@@ -59,6 +59,7 @@ enum class Action : size_t {
 
     // Menu View
     PAIRED_PAGES_MODE,
+    PAIRED_PAGES_OFFSET,
     PRESENTATION_MODE,
     FULLSCREEN,
     SHOW_SIDEBAR,
@@ -158,6 +159,9 @@ enum class Action : size_t {
     LAYER_GOTO_PREVIOUS,
     LAYER_GOTO_TOP,
     LAYER_ACTIVE,  ///< Action whose state is the current layer index
+
+    // Miscellaneous
+    POSITION_HIGHLIGHTING,
 
     // Keep this last value
     ENUMERATOR_COUNT

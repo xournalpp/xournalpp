@@ -27,8 +27,6 @@
 #include "control/settings/ViewModes.h"     // for ViewModeId
 #include "control/tools/EditSelection.h"    // for OrderChange
 #include "enums/Action.enum.h"              // for Action
-#include "enums/ActionGroup.enum.h"         // for ActionGroup
-#include "enums/ActionType.enum.h"          // for ActionType
 #include "model/DocumentHandler.h"          // for DocumentHandler
 #include "model/DocumentListener.h"         // for DocumentListener
 #include "model/GeometryTool.h"             // for GeometryTool
@@ -134,8 +132,6 @@ public:
 
     // Menu Help
     void showAbout();
-
-    [[deprecated]] void actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled);
 
     /**
      * @brief Update the Cursor and the Toolbar based on the active color
@@ -340,7 +336,6 @@ public:
 protected:
     void setRotationSnapping(bool enable);
     void setGridSnapping(bool enable);
-    void highlightPositionToggle();
 
     bool showSaveDialog();
     void showFontDialog();
@@ -375,7 +370,7 @@ private:
      * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.
      * @return true if a geometric tool was created
      */
-    template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass, ActionType a,
+    template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass,
               GeometryToolType toolType>
     bool toggleGeometryTool();
     void resetGeometryTool();

@@ -29,6 +29,7 @@ constexpr const char* ACTION_NAMES[] = {  // Action to string conversion map
         "grid-snapping",
         "settings",
         "paired-pages-mode",
+        "paired-pages-offset",
         "presentation-mode",
         "fullscreen",
         "show-sidebar",
@@ -107,4 +108,5 @@ constexpr const char* ACTION_NAMES[] = {  // Action to string conversion map
         "layer-goto-next",
         "layer-goto-previous",
         "layer-goto-top",
-        "layer-active"};
+        "layer-active",
+        "position-highlighting"};

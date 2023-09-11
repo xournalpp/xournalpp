@@ -20,8 +20,6 @@
 #include "control/tools/CursorSelectionType.h"   // for CURSOR_SELECTION_NONE
 #include "control/tools/EditSelection.h"         // for EditSelection
 #include "control/zoom/ZoomControl.h"            // for ZoomControl
-#include "enums/ActionGroup.enum.h"              // for GROUP_GEOMETRY_TOOL
-#include "enums/ActionType.enum.h"               // for ACTION_NONE
 #include "gui/MainWindow.h"                      // for MainWindow
 #include "gui/PdfFloatingToolbox.h"              // for PdfFloatingToolbox
 #include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
