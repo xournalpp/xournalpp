@@ -27,7 +27,7 @@ typedef struct {
     bool horizontal;
 } ToolbarEntryDefintion;
 
-const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
+constexpr ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
         {"tbTop1", "toolbarTop1", true},       {"tbTop2", "toolbarTop2", true},
         {"tbLeft1", "toolbarLeft1", false},    {"tbLeft2", "toolbarLeft2", false},
         {"tbRight1", "toolbarRight1", false},  {"tbRight2", "toolbarRight2", false},
@@ -38,7 +38,7 @@ const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
 };
 
 
-const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
+constexpr size_t TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
 
 #define TBFloatFirst 8
 #define TBFloatLast 11

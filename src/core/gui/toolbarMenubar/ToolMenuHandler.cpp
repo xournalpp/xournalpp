@@ -90,11 +90,9 @@ ToolMenuHandler::~ToolMenuHandler() = default;
 void ToolMenuHandler::freeDynamicToolbarItems() { this->toolbarColorItems.clear(); }
 
 void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
-    for (int i = gtk_toolbar_get_n_items(GTK_TOOLBAR(toolbar)) - 1; i >= 0; i--) {
-        GtkToolItem* tbItem = gtk_toolbar_get_nth_item(GTK_TOOLBAR(toolbar), i);
-        gtk_container_remove(GTK_CONTAINER(toolbar), GTK_WIDGET(tbItem));
-    }
-
+    gtk_container_foreach(
+            GTK_CONTAINER(toolbar),
+            +[](GtkWidget* child, gpointer c) { gtk_container_remove(GTK_CONTAINER(c), child); }, toolbar);
     gtk_widget_hide(toolbar);
 }
 
@@ -132,11 +130,11 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                     auto& item =
                             this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor, recolor));
 
-                    auto it = item->createToolItem(horizontal);
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
+                    auto it = item->createItem(horizontal);
+                    gtk_widget_show_all(it.get());
+                    gtk_box_append(GTK_BOX(toolbar), it.get());
 
                     ToolitemDragDrop::attachMetadataColor(it.get(), dataItem.getId(), paletteIndex, item.get());
-
                     continue;
                 }
 
@@ -144,8 +142,9 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                 for (auto& item: this->toolItems) {
                     if (name == item->getId()) {
                         count++;
-                        auto it = item->createToolItem(horizontal);
-                        gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
+                        auto it = item->createItem(horizontal);
+                        gtk_widget_show_all(it.get());
+                        gtk_box_append(GTK_BOX(toolbar), it.get());
 
                         ToolitemDragDrop::attachMetadata(it.get(), dataItem.getId(), item.get());
 
@@ -163,9 +162,9 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
     }
 
     if (count == 0) {
-        gtk_widget_hide(toolbar);
+        gtk_widget_hide(GTK_WIDGET(toolbar));
     } else {
-        gtk_widget_show(toolbar);
+        gtk_widget_show_all(GTK_WIDGET(toolbar));
     }
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk+" version="3.18"/>
+  <requires lib="gtk+" version="3.24"/>
   <object class="GtkAdjustment" id="adjHorizontal">
     <property name="upper">100</property>
     <property name="step-increment">1</property>
@@ -42,61 +42,57 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="tbFloat1">
-            <property name="name">tbFloat1</property>
+          <object class="GtkBox" id="tbFloat1">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <style>
-              <class name="tbCss"/>
-            </style>
+            <child>
+              <placeholder/>
+            </child>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="tbFloat2">
-            <property name="name">tbFloat2</property>
+          <object class="GtkBox" id="tbFloat2">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <style>
-              <class name="tbCss"/>
-            </style>
+            <child>
+              <placeholder/>
+            </child>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">2</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="tbFloat3">
-            <property name="name">tbFloat3</property>
+          <object class="GtkBox" id="tbFloat3">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <style>
-              <class name="tbCss"/>
-            </style>
+            <child>
+              <placeholder/>
+            </child>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">3</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="tbFloat4">
-            <property name="name">tbFloat4</property>
+          <object class="GtkBox" id="tbFloat4">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <style>
-              <class name="tbCss"/>
-            </style>
+            <child>
+              <placeholder/>
+            </child>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">4</property>
           </packing>
@@ -140,11 +136,32 @@
             <property name="can-focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkToolbar" id="tbTop1">
-                <property name="name">tbTop1</property>
+              <object class="GtkBox" id="tbTop1">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="toolbar-style">icons</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <style>
+                  <class name="toolbar"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="tbTop2">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <style>
+                  <class name="toolbar"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -153,29 +170,21 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolbar" id="tbTop2">
-                <property name="name">tbTop2</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkBox" id="mainContainerBox">
                 <property name="name">mainContainerBox</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <child>
-                  <object class="GtkToolbar" id="tbLeft1">
-                    <property name="name">tbLeft1</property>
+                  <object class="GtkBox" id="tbLeft1">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
-                    <property name="toolbar-style">icons</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -184,12 +193,16 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolbar" id="tbLeft2">
-                    <property name="name">tbLeft2</property>
+                  <object class="GtkBox" id="tbLeft2">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
-                    <property name="toolbar-style">icons</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -330,12 +343,16 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolbar" id="tbRight1">
-                    <property name="name">tbRight1</property>
+                  <object class="GtkBox" id="tbRight1">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
-                    <property name="toolbar-style">icons</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -344,12 +361,16 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolbar" id="tbRight2">
-                    <property name="name">tbRight2</property>
+                  <object class="GtkBox" id="tbRight2">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
-                    <property name="toolbar-style">icons</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -392,7 +413,7 @@
                         <property name="name">toolbutton1</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="margin-right">12</property>
+                        <property name="margin-end">12</property>
                         <child>
                           <object class="GtkBox" id="box3">
                             <property name="visible">True</property>
@@ -534,27 +555,37 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolbar" id="tbBottom1">
-                <property name="name">tbBottom1</property>
+              <object class="GtkBox" id="tbBottom1">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <style>
+                  <class name="toolbar"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="tbBottom2">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <style>
+                  <class name="toolbar"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">5</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolbar" id="tbBottom2">
-                <property name="name">tbBottom2</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">6</property>
               </packing>
             </child>
             <child>
@@ -592,8 +623,8 @@
                     <property name="name">statusbar1</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="margin-left">10</property>
-                    <property name="margin-right">10</property>
+                    <property name="margin-start">10</property>
+                    <property name="margin-end">10</property>
                     <property name="margin-top">6</property>
                     <property name="margin-bottom">6</property>
                     <property name="orientation">vertical</property>
