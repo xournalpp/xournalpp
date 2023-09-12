@@ -56,7 +56,7 @@ public:
      * @param data DragDropData relevant during toolbar customization
      * @return GdkPixbuf* of the dragged tool
      */
-    static GdkPixbuf* getPixbuf(ToolItemDragDropData* data);
+    // static GdkPixbuf* getPixbuf(ToolItemDragDropData* data);
 
 public:
     static void removeFromToolbarForMove(GtkWidget* widget);

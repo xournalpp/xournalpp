@@ -241,9 +241,6 @@ auto ToolPageLayer::getNewToolIcon() const -> GtkWidget* {
                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
-auto ToolPageLayer::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
-
-
 auto ToolPageLayer::newItem() -> GtkToolItem* {
     GtkToolItem* it = gtk_tool_item_new();
 

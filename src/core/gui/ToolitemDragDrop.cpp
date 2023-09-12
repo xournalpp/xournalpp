@@ -69,19 +69,6 @@ auto ToolitemDragDrop::getIcon(ToolItemDragDropData* data) -> GtkWidget* {
     return gtk_image_new();
 }
 
-auto ToolitemDragDrop::getPixbuf(ToolItemDragDropData* data) -> GdkPixbuf* {
-    if (data->type == TOOL_ITEM_ITEM || data->type == TOOL_ITEM_COLOR) {
-        return data->item->getNewToolPixbuf();
-    }
-    if (data->type == TOOL_ITEM_SEPARATOR) {
-        return ToolbarSeparatorImage::getNewToolPixbuf(SeparatorType::SEPARATOR);
-    }
-    if (data->type == TOOL_ITEM_SPACER) {
-        return ToolbarSeparatorImage::getNewToolPixbuf(SeparatorType::SPACER);
-    }
-    g_error("ToolitemDragDrop::getIcon unhandled type: %i\n", data->type);
-}
-
 auto ToolitemDragDrop::checkToolItemDragDropData(ToolItemDragDropData const* d) -> bool {
     return d->identify == ToolItemDragDropData_Identify;
 }

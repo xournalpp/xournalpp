@@ -68,8 +68,6 @@ auto FontButton::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name("font-x-generic", GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
-auto FontButton::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
-
 auto FontButton::createItem(bool horizontal) -> GtkToolItem* {
     if (this->item) {
         return this->item;
