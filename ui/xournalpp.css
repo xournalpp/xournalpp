@@ -119,9 +119,10 @@ toolitem > box > label+label+button
 	background-image:none;
 }
 
-toolbar button,
+box.toolbar button,
 popover.toolbar button {
   padding:3px;
+  border-style:none;
 }
 
 .orientationFormatBox > button > widget > box > image {
@@ -129,9 +130,10 @@ popover.toolbar button {
 	margin-right: 3px;
 }
 
-toolbar button:not(:checked):not(:active):not(:hover),
+box.toolbar button:not(:checked):not(:active):not(:hover),
 popover.toolbar button:not(:checked):not(:active):not(:hover){
   border-color:transparent;
+  border-style:none;
   box-shadow:none;
   background-color:transparent;
   background-image:none;
