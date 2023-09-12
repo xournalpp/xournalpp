@@ -82,8 +82,9 @@ auto FloatingToolbox::countWidgets() -> int {
 
     for (int index = TBFloatFirst; index <= TBFloatLast; index++) {
         const char* guiName = TOOLBAR_DEFINITIONS[index].guiName;
-        GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(guiName));
-        count += gtk_toolbar_get_n_items(toolbar1);
+        GtkWidget* tb = this->mainWindow->get(guiName);
+        gtk_container_foreach(
+                GTK_CONTAINER(tb), +[](GtkWidget*, gpointer c) { (*static_cast<int*>(c))++; }, &count);
     }
 
     return count;
