@@ -47,7 +47,6 @@ protected:
 
 protected:
     GtkWidget* getNewToolIcon() const override;
-    GdkPixbuf* getNewToolPixbuf() const override;
 
     double scaleFunc(double x) const override;
     double scaleFuncInv(double x) const override;
