@@ -449,9 +449,9 @@ auto MainWindow::getSelectedToolbar() const -> ToolbarData* { return this->selec
 
 auto MainWindow::getToolbarWidgets() const -> const ToolbarWidgetArray& { return toolbarWidgets; }
 
-auto MainWindow::getToolbarName(GtkToolbar* toolbar) const -> const char* {
+auto MainWindow::getToolbarName(GtkWidget* toolbar) const -> const char* {
     for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        if (static_cast<void*>(this->toolbarWidgets[i].get()) == static_cast<void*>(toolbar)) {
+        if (this->toolbarWidgets[i].get() == toolbar) {
             return TOOLBAR_DEFINITIONS[i].propName;
         }
     }

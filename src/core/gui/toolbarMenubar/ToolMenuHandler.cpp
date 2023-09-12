@@ -142,23 +142,25 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                 }
 
                 if (name == "SEPARATOR") {
-                    GtkToolItem* it = gtk_separator_tool_item_new();
-                    gtk_widget_show(GTK_WIDGET(it));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
+                    auto* it = gtk_separator_new(horizontal ? GTK_ORIENTATION_VERTICAL : GTK_ORIENTATION_HORIZONTAL);
+                    gtk_box_append(GTK_BOX(toolbar), it);
 
-                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), TOOL_ITEM_SEPARATOR);
+                    ToolitemDragDrop::attachMetadata(it, dataItem->getId(), TOOL_ITEM_SEPARATOR);
 
                     continue;
                 }
 
                 if (name == "SPACER") {
-                    GtkToolItem* toolItem = gtk_separator_tool_item_new();
-                    gtk_separator_tool_item_set_draw(GTK_SEPARATOR_TOOL_ITEM(toolItem), false);
-                    gtk_tool_item_set_expand(toolItem, true);
-                    gtk_widget_show(GTK_WIDGET(toolItem));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
+                    // Todo Find a better way to get an invisible widget (separator with CSS?)
+                    auto* it = gtk_label_new("");
+                    if (horizontal) {
+                        gtk_widget_set_hexpand(it, true);
+                    } else {
+                        gtk_widget_set_vexpand(it, true);
+                    }
+                    gtk_box_append(GTK_BOX(toolbar), it);
 
-                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem->getId(), TOOL_ITEM_SPACER);
+                    ToolitemDragDrop::attachMetadata(it, dataItem->getId(), TOOL_ITEM_SPACER);
 
                     continue;
                 }
@@ -195,11 +197,11 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     const NamedColor& namedColor = palette.getColorAt(paletteIndex);
                     auto& item = this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor));
 
-                    GtkToolItem* it = item->createToolItem(horizontal);
-                    gtk_widget_show_all(GTK_WIDGET(it));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
+                    GtkWidget* it = item->createItem(horizontal);
+                    gtk_widget_show_all(it);
+                    gtk_box_append(GTK_BOX(toolbar), it);
 
-                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item.get());
+                    ToolitemDragDrop::attachMetadataColor(it, dataItem->getId(), &namedColor, item.get());
 
                     continue;
                 }
@@ -215,11 +217,11 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                         item->setUsed(true);
 
                         count++;
-                        GtkToolItem* it = item->createToolItem(horizontal);
-                        gtk_widget_show_all(GTK_WIDGET(it));
-                        gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
+                        GtkWidget* it = item->createItem(horizontal);
+                        gtk_widget_show_all(it);
+                        gtk_box_append(GTK_BOX(toolbar), it);
 
-                        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item.get());
+                        ToolitemDragDrop::attachMetadata(it, dataItem->getId(), item.get());
 
                         found = true;
                         break;
@@ -235,9 +237,9 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
     }
 
     if (count == 0) {
-        gtk_widget_hide(toolbar);
+        gtk_widget_hide(GTK_WIDGET(toolbar));
     } else {
-        gtk_widget_show(toolbar);
+        gtk_widget_show_all(GTK_WIDGET(toolbar));
     }
 
     if (!this->control->getAudioController()) {

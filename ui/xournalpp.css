@@ -119,13 +119,14 @@ toolitem > box > label+label+button
 	background-image:none;
 }
 
-toolbar button,
-popover.toolbar button{
+box.toolbar button,
+popover.toolbar button {
   border-style:none;
 }
 
-toolbar button:not(:checked):not(:active):not(:hover),
+box.toolbar button:not(:checked):not(:active):not(:hover),
 popover.toolbar button:not(:checked):not(:active):not(:hover){
+  border-style:none;
   box-shadow:none;
   background-color:transparent;
   background-image:none;

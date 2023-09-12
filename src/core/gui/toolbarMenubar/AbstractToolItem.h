@@ -32,8 +32,6 @@ public:
 public:
     virtual GtkWidget* createItem(bool horizontal) = 0;
 
-    GtkToolItem* createToolItem(bool horizontal);
-
     bool isUsed() const;
     void setUsed(bool used);
 

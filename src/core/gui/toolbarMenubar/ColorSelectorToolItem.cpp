@@ -40,25 +40,7 @@ auto ColorSelectorToolItem::createItem(bool) -> GtkWidget* {
                             }),
                             btn, GConnectFlags(0));
 
-    // Make a proxy for GtkToolbar
-    GtkToolItem* it = gtk_tool_item_new();
-    gtk_container_add(GTK_CONTAINER(it), btn);
-    /// Makes a proxy item for the toolbar's overflow menu
-    auto createProxy = [&]() {
-        constexpr int PROXY_ICON_SIZE = 16;
-        GtkWidget* proxy = gtk_menu_item_new();
-        auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
-        gtk_container_add(GTK_CONTAINER(proxy), box);
-        gtk_box_append(GTK_BOX(box), ColorIcon::newGtkImage(Colors::gray, PROXY_ICON_SIZE, false));
-        gtk_box_append(GTK_BOX(box), gtk_label_new(getToolDisplayName().c_str()));
-        gtk_actionable_set_action_name(GTK_ACTIONABLE(proxy),
-                                       (std::string("win.") + Action_toString(Action::SELECT_FONT)).c_str());
-        xoj::util::gtk::fixActionableInitialSensitivity(GTK_ACTIONABLE(proxy));
-        return proxy;
-    };
-    gtk_tool_item_set_proxy_menu_item(it, "", createProxy());
-    this->item.reset(GTK_WIDGET(it), xoj::util::adopt);
-
+    this->item.reset(GTK_WIDGET(btn), xoj::util::adopt);
     return this->item.get();
 }
 

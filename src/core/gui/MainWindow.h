@@ -103,7 +103,7 @@ public:
     void updateColorscheme();
 
     const ToolbarWidgetArray& getToolbarWidgets() const;
-    const char* getToolbarName(GtkToolbar* toolbar) const;
+    const char* getToolbarName(GtkWidget* toolbar) const;
 
     Layout* getLayout() const;
 
