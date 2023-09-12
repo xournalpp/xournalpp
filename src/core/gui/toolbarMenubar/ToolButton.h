@@ -50,7 +50,6 @@ protected:
     GtkToolItem* newItem() override;
 
     GtkWidget* getNewToolIcon() const override;
-    GdkPixbuf* getNewToolPixbuf() const override;
 
 private:
     std::string iconName;

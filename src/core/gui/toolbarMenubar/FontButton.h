@@ -48,7 +48,6 @@ protected:
     static void setFontFontButton(GtkWidget* fontButton, const XojFont& font);
 
     GtkWidget* getNewToolIcon() const override;
-    GdkPixbuf* getNewToolPixbuf() const override;
 
 private:
     GtkWidget* fontButton = nullptr;

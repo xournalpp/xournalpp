@@ -155,7 +155,3 @@ auto ColorToolItem::getToolDisplayName() const -> std::string { return this->nam
 auto ColorToolItem::getNewToolIcon() const -> GtkWidget* {
     return ColorSelectImage::newColorIcon(this->namedColor.getColor(), 16, !isSelector());
 }
-
-auto ColorToolItem::getNewToolPixbuf() const -> GdkPixbuf* {
-    return ColorSelectImage::newColorIconPixbuf(this->namedColor.getColor(), 16, !isSelector());
-}

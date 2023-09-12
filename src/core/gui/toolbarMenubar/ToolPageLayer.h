@@ -64,7 +64,6 @@ protected:
 
     GtkToolItem* newItem() override;
     GtkWidget* getNewToolIcon() const override;
-    GdkPixbuf* getNewToolPixbuf() const override;
 
 private:
     void createLayerMenuItem(const std::string& text, Layer::Index layerId);

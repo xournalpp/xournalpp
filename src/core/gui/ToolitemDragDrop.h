@@ -50,13 +50,6 @@ public:
      * Returns: (transfer floating)
      */
     static GtkWidget* getIcon(ToolItemDragDropData* data);
-    /**
-     * @brief Get Pixbuf for the respective tool contained in the DragDrop data
-     *
-     * @param data DragDropData relevant during toolbar customization
-     * @return GdkPixbuf* of the dragged tool
-     */
-    static GdkPixbuf* getPixbuf(ToolItemDragDropData* data);
 
 public:
     static void removeFromToolbarForMove(GtkWidget* widget);

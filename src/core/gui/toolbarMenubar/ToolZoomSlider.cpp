@@ -106,8 +106,6 @@ auto ToolZoomSlider::formatSliderValue(double value) const -> std::string {
     return out.str();
 }
 
-auto ToolZoomSlider::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
-
 void ToolZoomSlider::zoomChanged() {
     GtkRange* slider = getSliderWidget();
 

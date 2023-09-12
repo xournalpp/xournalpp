@@ -47,7 +47,6 @@ public:
 
     std::string getToolDisplayName() const override;
     GtkWidget* getNewToolIcon() const override;
-    GdkPixbuf* getNewToolPixbuf() const override;
 
     std::string getId() const final;
 
