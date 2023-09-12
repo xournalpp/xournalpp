@@ -76,10 +76,10 @@ auto FloatingToolbox::floatingToolboxActivated() -> bool {
 
 auto FloatingToolbox::hasWidgets() -> bool {
     for (int index = TBFloatFirst; index <= TBFloatLast; index++) {
-        GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(TOOLBAR_DEFINITIONS[index].guiName));
-        if (gtk_toolbar_get_n_items(toolbar1) > 0) {
-            return true;
-        }
+        const char* guiName = TOOLBAR_DEFINITIONS[index].guiName;
+        GtkWidget* tb = this->mainWindow->get(guiName);
+        gtk_container_foreach(
+                GTK_CONTAINER(tb), +[](GtkWidget*, gpointer c) { (*static_cast<int*>(c))++; }, &count);
     }
     return false;
 }
