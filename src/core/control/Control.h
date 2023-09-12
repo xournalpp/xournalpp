@@ -137,7 +137,7 @@ public:
     // Menu Help
     void showAbout();
 
-    void actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled) override;
+    [[deprecated]] void actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled);
 
     /**
      * @brief Update the Cursor and the Toolbar based on the active color
@@ -423,10 +423,6 @@ private:
     SearchBar* searchBar = nullptr;
 
     ToolHandler* toolHandler;
-
-    ActionType lastAction;
-    ActionGroup lastGroup;
-    bool lastEnabled;
 
     ScrollHandler* scrollHandler;
 
