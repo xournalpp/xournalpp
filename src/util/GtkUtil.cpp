@@ -160,18 +160,5 @@ void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, 
             new Data{actionNamespace, actionName}, +[](gpointer d, GClosure*) { delete static_cast<Data*>(d); },
             GConnectFlags(0));
 }
-
-void fixActionableInitialSensitivity(GtkActionable* w) {
-    g_signal_connect(w, "hierarchy-changed", G_CALLBACK(+[](GtkWidget* w, GtkWidget*, gpointer) {
-                         if (!GTK_IS_WINDOW(gtk_widget_get_toplevel(w))) {
-                             return;  // The widget was removed from the hierarchy
-                         }
-                         if (GAction* action = findAction(GTK_ACTIONABLE(w)); action) {
-                             gtk_widget_set_sensitive(w, g_action_get_enabled(action));
-                         }
-                     }),
-                     nullptr);
-}
-
 #endif
 };  // namespace xoj::util::gtk
