@@ -214,6 +214,9 @@ public:
     void setHighlighterFill(int alpha);
     int getHighlighterFill() const;
 
+    void setSelectPDFTextFill(int alpha);
+    int getSelectPDFTextFill() const;
+
     /**
      * @brief Set the toolbar selected tool to the type
      * This will also point the active tool to the same tool as the toolbar selected tool.

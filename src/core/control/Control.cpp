@@ -813,7 +813,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             this->toolHandler->setPenFillEnabled(enabled);
             break;
         case ACTION_TOOL_PEN_FILL_OPACITY:
-            selectFillAlpha(true);
+            selectFillAlpha(this->toolHandler->getToolType());
             break;
 
 
@@ -851,9 +851,11 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             this->toolHandler->setHighlighterFillEnabled(enabled);
             break;
         case ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY:
-            selectFillAlpha(false);
+            selectFillAlpha(this->toolHandler->getToolType());
             break;
-
+        case ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY:
+            selectFillAlpha(this->toolHandler->getToolType());
+            break;
         case ACTION_FONT_BUTTON_CHANGED:
             fontChanged();
             break;
@@ -1155,23 +1157,50 @@ auto Control::paste() -> bool {
     return this->clipboardHandler->paste();
 }
 
-void Control::selectFillAlpha(bool pen) {
+void Control::selectFillAlpha(ToolType toolType) {
+    bool pen = false;
     int alpha = 0;
 
-    if (pen) {
-        alpha = toolHandler->getPenFill();
-    } else {
-        alpha = toolHandler->getHighlighterFill();
+    switch (toolType) {
+        case TOOL_PEN:
+            pen = true;
+            alpha = this->toolHandler->getPenFill();
+            break;
+        case TOOL_HIGHLIGHTER:
+            pen = false;
+            alpha = this->toolHandler->getHighlighterFill();
+            break;
+        case TOOL_SELECT_PDF_TEXT_LINEAR:
+        case TOOL_SELECT_PDF_TEXT_RECT:
+            pen = false;
+            alpha = this->toolHandler->getSelectPDFTextFill();
+            break;
+        default:
+            g_warning("Unhandled ToolType for selectFillAlpha event: %s", toolTypeToString(toolType).c_str());
+            Stacktrace::printStracktrace();
+            break;
     }
-
-    auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::FillOpacityDialog>(gladeSearchPath, alpha, pen,
-                                                                             [&th = *toolHandler](int alpha, bool pen) {
-                                                                                 if (pen) {
-                                                                                     th.setPenFill(alpha);
-                                                                                 } else {
-                                                                                     th.setHighlighterFill(alpha);
-                                                                                 }
-                                                                             });
+    auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::FillOpacityDialog>(
+            gladeSearchPath, alpha, pen, [&th = *toolHandler](int alpha, bool pen) {
+                ToolType toolType = th.getToolType();
+                switch (toolType) {
+                    case TOOL_PEN:
+                        th.setPenFill(alpha);
+                        break;
+                    case TOOL_HIGHLIGHTER:
+                        th.setHighlighterFill(alpha);
+                        break;
+                    case TOOL_SELECT_PDF_TEXT_LINEAR:
+                    case TOOL_SELECT_PDF_TEXT_RECT:
+                        th.setSelectPDFTextFill(alpha);
+                        break;
+                    default:
+                        g_warning("Unhandled ToolType for callback of FillOpacityDialog: %s",
+                                  toolTypeToString(toolType).c_str());
+                        Stacktrace::printStracktrace();
+                        break;
+                }
+            });
     dlg.show(getGtkWindow());
 }
 

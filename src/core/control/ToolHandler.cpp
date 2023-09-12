@@ -119,11 +119,11 @@ void ToolHandler::initTools() {
 
     tools[TOOL_SELECT_PDF_TEXT_LINEAR - TOOL_PEN] =
             std::make_unique<Tool>("selectPdfTextLinear", TOOL_SELECT_PDF_TEXT_LINEAR, Colors::black,
-                                   TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt);
+                                   TOOL_CAP_COLOR | TOOL_CAP_RULER | TOOL_CAP_FILL, std::nullopt);
 
     tools[TOOL_SELECT_PDF_TEXT_RECT - TOOL_PEN] =
             std::make_unique<Tool>("selectPdfTextRect", TOOL_SELECT_PDF_TEXT_RECT, Colors::black,
-                                   TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt);
+                                   TOOL_CAP_COLOR | TOOL_CAP_RULER | TOOL_CAP_FILL, std::nullopt);
 
     this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
@@ -288,6 +288,17 @@ void ToolHandler::setHighlighterFill(int alpha) { this->tools[TOOL_HIGHLIGHTER -
 
 auto ToolHandler::getHighlighterFill() const -> int { return this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->getFillAlpha(); }
 
+void ToolHandler::setSelectPDFTextFill(int alpha) {
+    // Use same marker opacity for 'select linear pdf text' or 'select pdf text in rectangle'
+    this->tools[TOOL_SELECT_PDF_TEXT_LINEAR - TOOL_PEN]->setFillAlpha(alpha);
+    this->tools[TOOL_SELECT_PDF_TEXT_RECT - TOOL_PEN]->setFillAlpha(alpha);
+}
+
+auto ToolHandler::getSelectPDFTextFill() const -> int {
+    // Use same marker opacity for 'select linear pdf text' or 'select pdf text in rectangle'
+    return this->tools[TOOL_SELECT_PDF_TEXT_LINEAR - TOOL_PEN]->getFillAlpha();
+}
+
 auto ToolHandler::getThickness() const -> double {
     Tool* tool = this->activeTool;
     if (tool->thickness) {
@@ -434,7 +445,7 @@ void ToolHandler::saveSettings() const {
             st.setString("size", value);
         }
 
-        if (tool->type == TOOL_PEN || tool->type == TOOL_HIGHLIGHTER) {
+        if (tool->hasCapability(TOOL_CAP_FILL)) {
             st.setInt("fill", tool->getFill());
             st.setInt("fillAlpha", tool->getFillAlpha());
         }

@@ -2043,6 +2043,31 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkMenuItem" id="menuToolsSelectPDFTextOptions">
+                            <property name="name">menuToolsSelectPDFTextOptions</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Select PDF Text Options</property>
+                            <property name="use-underline">True</property>
+                            <child type="submenu">
+                              <object class="GtkMenu" id="menu14">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <child>
+                                  <object class="GtkMenuItem" id="selectPDFTextMarkerOpacity">
+                                    <property name="name">selectPDFTextMarkerOpacity</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Marker Opacity</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY" swapped="no"/>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkMenuItem" id="menuToolsTextFont">
                             <property name="name">menuToolsTextFont</property>
                             <property name="visible">True</property>
