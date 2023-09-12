@@ -90,7 +90,8 @@ auto ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d) -> bool {
 
     g_return_val_if_fail(d->item != nullptr, true);
 
-    return d->item->isEnabled();
+    // return d->item->isEnabled();
+    return true;
 }
 
 auto ToolitemDragDrop::metadataGetMetadata(GtkWidget* w) -> ToolItemDragDropData* {

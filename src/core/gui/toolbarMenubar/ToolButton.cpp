@@ -17,14 +17,14 @@ ToolButton::ToolButton(std::string id, Action action, std::string iconName, std:
         AbstractToolItem(id),
         iconName(std::move(iconName)),
         description(std::move(description)),
-        newAction(action),
+        action(action),
         toggle(toggle) {}
 
 ToolButton::ToolButton(std::string id, Action action, GVariant* target, std::string iconName, std::string description):
         AbstractToolItem(id),
         iconName(std::move(iconName)),
         description(std::move(description)),
-        newAction(action),
+        action(action),
         target(target, xoj::util::refsink),
         toggle(true) {}
 
@@ -39,7 +39,7 @@ auto ToolButton::createItem(bool horizontal) -> GtkWidget* {
     GtkWidget* btn = toggle ? gtk_toggle_button_new() : gtk_button_new();
     gtk_button_set_child(GTK_BUTTON(btn), getNewToolIcon());
     gtk_widget_set_tooltip_text(btn, getToolDisplayName().c_str());
-    gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), (std::string("win.") + Action_toString(newAction)).c_str());
+    gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), (std::string("win.") + Action_toString(action)).c_str());
     if (target) {
         gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), target.get());
         xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(btn));
@@ -92,8 +92,7 @@ auto ToolButton::createItem(bool horizontal) -> GtkWidget* {
         gtk_box_append(GTK_BOX(box), getNewToolIcon());
         gtk_box_append(GTK_BOX(box), gtk_label_new(getToolDisplayName().c_str()));
 
-        gtk_actionable_set_action_name(GTK_ACTIONABLE(proxy),
-                                       (std::string("win.") + Action_toString(newAction)).c_str());
+        gtk_actionable_set_action_name(GTK_ACTIONABLE(proxy), (std::string("win.") + Action_toString(action)).c_str());
         if (target) {
             gtk_actionable_set_action_target_value(GTK_ACTIONABLE(proxy), target.get());
         }

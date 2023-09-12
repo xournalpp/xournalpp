@@ -121,10 +121,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->metadata = new MetadataManager();
     this->cursor = new XournalppCursor(this);
 
-    this->lastAction = ACTION_NONE;
-    this->lastGroup = GROUP_NOGROUP;
-    this->lastEnabled = false;
-
     auto name = Util::getConfigFile(SETTINGS_XML_FILE);
     this->settings = new Settings(std::move(name));
     this->settings->load();
@@ -2872,11 +2868,7 @@ void Control::setGridSnapping(bool enable) {
     this->actionDB->setActionState(Action::GRID_SNAPPING, enable);
 }
 
-void Control::highlightPositionToggle() {
-    settings->setHighlightPosition(!settings->isHighlightPosition());
-    fireActionSelected(GROUP_HIGHLIGHT_POSITION,
-                       settings->isHighlightPosition() ? ACTION_HIGHLIGHT_POSITION : ACTION_NONE);
-}
+void Control::highlightPositionToggle() { settings->setHighlightPosition(!settings->isHighlightPosition()); }
 
 auto Control::getTextEditor() -> TextEditor* {
     if (this->win) {

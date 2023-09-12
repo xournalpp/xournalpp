@@ -3,7 +3,6 @@
 #include <algorithm>  // for max
 #include <sstream>    // for istringstream
 
-#include "control/Actions.h"                 // for ActionH...
 #include "control/Control.h"                 // for Control
 #include "control/actions/ActionDatabase.h"  // for ActionDatabase
 #include "control/settings/Settings.h"       // for Settings
@@ -48,7 +47,6 @@ using std::string;
 ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui):
         parent(GTK_WINDOW(gui->getWindow())),
         control(control),
-        listener(control),
         zoom(control->getZoomControl()),
         gui(gui),
         toolHandler(control->getToolHandler()),
@@ -281,13 +279,14 @@ void ToolMenuHandler::addColorToolItem(AbstractToolItem* it) {
 }
 
 void ToolMenuHandler::setTmpDisabled(bool disabled) {
-    for (AbstractToolItem* it: this->toolItems) {
-        it->setTmpDisabled(disabled);
-    }
-
-    for (ColorToolItem* it: this->toolbarColorItems) {
-        it->setTmpDisabled(disabled);
-    }
+    // for (AbstractToolItem* it: this->toolItems) {
+    //     it->setTmpDisabled(disabled);
+    // }
+    //
+    // for (ColorToolItem* it: this->toolbarColorItems) {
+    //     it->setTmpDisabled(disabled);
+    // }
+    // TODO Fix that
 
     control->getActionDatabase()->enableAction(Action::SHOW_SIDEBAR, !disabled);
 }
@@ -455,7 +454,7 @@ void ToolMenuHandler::initToolItems() {
     /*
      * Items ordered by menu, if possible.
      * There are some entries which are not available in the menu, like the Zoom slider
-     * All menu items without tool icon are not listed here - they are connected by Glade Signals
+     * All menu items without tool icon are not listed here - they are connected by ActionDatabase
      */
 
     /*
