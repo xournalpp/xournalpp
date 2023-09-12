@@ -13,55 +13,22 @@
 
 #include <string>  // for string
 
-#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
-#include <gio/gio.h>
-#include <gtk/gtk.h>  // for GtkToolItem, GtkWidget, GtkToolB...
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include "control/Actions.h"
 #include "enums/Action.enum.h"
-#include "enums/ActionGroup.enum.h"  // for ActionGroup
-#include "enums/ActionType.enum.h"   // for ActionType
 #include "util/raii/GObjectSPtr.h"
 #include "util/raii/GVariantSPtr.h"
 
-class ActionHandler;
-
-class AbstractToolItem: public ActionEnabledListener, public ActionSelectionListener {
+class AbstractToolItem {
 public:
-    AbstractToolItem(std::string id, ActionHandler* handler, ActionType type);
     AbstractToolItem(std::string id);
-    ~AbstractToolItem() override;
+    virtual ~AbstractToolItem();
 
     AbstractToolItem(AbstractToolItem const&) = delete;
     auto operator=(AbstractToolItem const&) -> AbstractToolItem& = delete;
     AbstractToolItem(AbstractToolItem&&) = delete;                     // Implement if desired
     auto operator=(AbstractToolItem&&) -> AbstractToolItem& = delete;  // Implement if desired
 
-public:
-    void actionSelected(ActionGroup group, ActionType action) override;
-    void actionEnabledAction(ActionType action, bool enabled) override;
-    virtual void selected(ActionGroup group, ActionType action);
-
-    void setTmpDisabled(bool disabled);
-    bool isEnabled() const;
-
-    ActionType getActionType();
-
-protected:
-    virtual void enable(bool enabled);
-
-protected:
-    ActionGroup group = GROUP_NOGROUP;
-    ActionType action = ACTION_NONE;
-
-    std::string id;
-
-    ActionHandler* handler = nullptr;
-
-    bool enabled = true;
-
-
-    ///////////////////////////////////////////////////////////
 public:
     virtual GtkWidget* createItem(bool horizontal) = 0;
 
@@ -85,10 +52,8 @@ public:
     GtkWidget* getItem() const;
 
 protected:
+    std::string id;
     xoj::util::WidgetSPtr item;
-
-    bool toolToggleButtonActive = false;
-    bool toolToggleOnlyEnable = false;
 
     /**
      * This item is already somewhere in the toolbar

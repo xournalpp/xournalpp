@@ -44,7 +44,7 @@ protected:
     std::string description;
     /// @brief If set, a MenuButton is added with this popover
     const PopoverFactory* popoverFactory = nullptr;
-    Action newAction;
+    Action action;
     /// @brief If set, the action target value the button corresponds to
     xoj::util::GVariantSPtr target;
     /// @brief Whether or not the button is a ToggleButton.
