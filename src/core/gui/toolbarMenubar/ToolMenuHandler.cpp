@@ -87,11 +87,9 @@ ToolMenuHandler::~ToolMenuHandler() = default;
 void ToolMenuHandler::freeDynamicToolbarItems() { this->toolbarColorItems.clear(); }
 
 void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
-    for (int i = gtk_toolbar_get_n_items(GTK_TOOLBAR(toolbar)) - 1; i >= 0; i--) {
-        GtkToolItem* tbItem = gtk_toolbar_get_nth_item(GTK_TOOLBAR(toolbar), i);
-        gtk_container_remove(GTK_CONTAINER(toolbar), GTK_WIDGET(tbItem));
-    }
-
+    gtk_container_foreach(
+            GTK_CONTAINER(toolbar),
+            +[](GtkWidget* child, gpointer c) { gtk_container_remove(GTK_CONTAINER(c), child); }, toolbar);
     gtk_widget_hide(toolbar);
 }
 
@@ -114,23 +112,25 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                 }
 
                 if (name == "SEPARATOR") {
-                    GtkToolItem* it = gtk_separator_tool_item_new();
-                    gtk_widget_show(GTK_WIDGET(it));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
+                    auto* it = gtk_separator_new(horizontal ? GTK_ORIENTATION_VERTICAL : GTK_ORIENTATION_HORIZONTAL);
+                    gtk_box_append(GTK_BOX(toolbar), it);
 
-                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem.getId(), TOOL_ITEM_SEPARATOR);
+                    ToolitemDragDrop::attachMetadata(it, dataItem.getId(), TOOL_ITEM_SEPARATOR);
 
                     continue;
                 }
 
                 if (name == "SPACER") {
-                    GtkToolItem* toolItem = gtk_separator_tool_item_new();
-                    gtk_separator_tool_item_set_draw(GTK_SEPARATOR_TOOL_ITEM(toolItem), false);
-                    gtk_tool_item_set_expand(toolItem, true);
-                    gtk_widget_show(GTK_WIDGET(toolItem));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
+                    // Todo Find a better way to get an invisible widget (separator with CSS?)
+                    auto* it = gtk_label_new("");
+                    if (horizontal) {
+                        gtk_widget_set_hexpand(it, true);
+                    } else {
+                        gtk_widget_set_vexpand(it, true);
+                    }
+                    gtk_box_append(GTK_BOX(toolbar), it);
 
-                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId(), TOOL_ITEM_SPACER);
+                    ToolitemDragDrop::attachMetadata(it, dataItem.getId(), TOOL_ITEM_SPACER);
 
                     continue;
                 }
@@ -150,11 +150,11 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                     auto& item =
                             this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor, recolor));
 
-                    auto it = item->createToolItem(horizontal);
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
+                    auto it = item->createItem(horizontal);
+                    gtk_widget_show_all(it.get());
+                    gtk_box_append(GTK_BOX(toolbar), it.get());
 
                     ToolitemDragDrop::attachMetadataColor(it.get(), dataItem.getId(), paletteIndex, item.get());
-
                     continue;
                 }
 
@@ -162,8 +162,9 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                 for (auto& item: this->toolItems) {
                     if (name == item->getId()) {
                         count++;
-                        auto it = item->createToolItem(horizontal);
-                        gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
+                        auto it = item->createItem(horizontal);
+                        gtk_widget_show_all(it.get());
+                        gtk_box_append(GTK_BOX(toolbar), it.get());
 
                         ToolitemDragDrop::attachMetadata(it.get(), dataItem.getId(), item.get());
 
@@ -181,9 +182,9 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
     }
 
     if (count == 0) {
-        gtk_widget_hide(toolbar);
+        gtk_widget_hide(GTK_WIDGET(toolbar));
     } else {
-        gtk_widget_show(toolbar);
+        gtk_widget_show_all(GTK_WIDGET(toolbar));
     }
 }
 
