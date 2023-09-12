@@ -43,7 +43,6 @@ class Control;
 class PageBackgroundChangeController;
 class ActionHandler;
 class ColorToolItem;
-class MenuItem;
 struct ToolbarButtonEntry;
 class PageTypeSelectionPopover;
 class PageType;
@@ -106,7 +105,6 @@ private:
     GtkWindow* parent = nullptr;
 
     std::vector<AbstractToolItem*> toolItems;
-    std::vector<MenuItem*> menuItems;
 
     ToolButton* undoButton = nullptr;
     ToolButton* redoButton = nullptr;

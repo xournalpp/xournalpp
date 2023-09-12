@@ -31,7 +31,6 @@
 #include "ColorToolItem.h"               // for ColorToolItem
 #include "DrawingTypeComboToolButton.h"  // for DrawingTypeComboToolButton
 #include "FontButton.h"                  // for FontButton
-#include "MenuItem.h"                    // for MenuItem
 #include "PluginToolButton.h"            // for PluginToolButton
 #include "StylePopoverFactory.h"         // for ToolButtonWithStylePopover
 #include "ToolButton.h"                  // for ToolButton
@@ -90,11 +89,6 @@ ToolMenuHandler::~ToolMenuHandler() {
 
     // Owned by control
     this->newPageType = nullptr;
-
-    for (MenuItem* it: this->menuItems) {
-        delete it;
-        it = nullptr;
-    }
 
     freeDynamicToolbarItems();
 
