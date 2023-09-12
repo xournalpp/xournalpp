@@ -47,10 +47,9 @@ public:
 public:
     virtual xoj::util::WidgetSPtr createItem(bool horizontal) = 0;
 
-    xoj::util::WidgetSPtr createToolItem(bool horizontal);
-
     const std::string& getId() const;
     Category getCategory() const;
+
     virtual std::string getToolDisplayName() const = 0;
 
     /**
