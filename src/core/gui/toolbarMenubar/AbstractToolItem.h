@@ -17,19 +17,18 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>  // for GtkToolItem, GtkWidget, GtkToolB...
 
+#include "control/Actions.h"
+#include "enums/Action.enum.h"
 #include "enums/ActionGroup.enum.h"  // for ActionGroup
 #include "enums/ActionType.enum.h"   // for ActionType
 #include "util/raii/GObjectSPtr.h"
 #include "util/raii/GVariantSPtr.h"
 
-#include "AbstractItem.h"  // for AbstractItem
-
 class ActionHandler;
 
-class AbstractToolItem: public AbstractItem {
+class AbstractToolItem: public ActionEnabledListener, public ActionSelectionListener {
 public:
-    AbstractToolItem(std::string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = nullptr);
-
+    AbstractToolItem(std::string id, ActionHandler* handler, ActionType type);
     AbstractToolItem(std::string id);
     ~AbstractToolItem() override;
 
@@ -39,15 +38,39 @@ public:
     auto operator=(AbstractToolItem&&) -> AbstractToolItem& = delete;  // Implement if desired
 
 public:
-    void selected(ActionGroup group, ActionType action) override;
+    void actionSelected(ActionGroup group, ActionType action) override;
+    void actionEnabledAction(ActionType action, bool enabled) override;
+    virtual void selected(ActionGroup group, ActionType action);
+
+    virtual std::string getId() const;
+
+    void setTmpDisabled(bool disabled);
+    bool isEnabled() const;
+
+    ActionType getActionType();
+
+protected:
+    virtual void enable(bool enabled);
+
+protected:
+    ActionGroup group = GROUP_NOGROUP;
+    ActionType action = ACTION_NONE;
+
+    std::string id;
+
+    ActionHandler* handler = nullptr;
+
+    bool enabled = true;
+
+
+    ///////////////////////////////////////////////////////////
+public:
     virtual GtkWidget* createItem(bool horizontal) = 0;
 
     GtkToolItem* createToolItem(bool horizontal);
 
     bool isUsed() const;
     void setUsed(bool used);
-
-    static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);
 
     virtual std::string getToolDisplayName() const = 0;
 
