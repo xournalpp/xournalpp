@@ -53,22 +53,7 @@ auto FontButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
                             }),
                             btn, GConnectFlags(0));
 
-    GtkToolItem* it = gtk_tool_item_new();
-    gtk_container_add(GTK_CONTAINER(it), btn);
-    /// Makes a proxy item for the toolbar's overflow menu
-    auto createProxy = [this]() {
-        GtkWidget* proxy = gtk_menu_item_new();
-        auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
-        gtk_container_add(GTK_CONTAINER(proxy), box);
-        gtk_box_append(GTK_BOX(box), getNewToolIcon());
-        gtk_box_append(GTK_BOX(box), gtk_label_new(getToolDisplayName().c_str()));
-        gtk_actionable_set_action_name(GTK_ACTIONABLE(proxy),
-                                       (std::string("win.") + Action_toString(Action::SELECT_FONT)).c_str());
-        xoj::util::gtk::fixActionableInitialSensitivity(GTK_ACTIONABLE(proxy));
-        return proxy;
-    };
-    gtk_tool_item_set_proxy_menu_item(it, "", createProxy());
-    return xoj::util::WidgetSPtr(GTK_WIDGET(it), xoj::util::adopt);
+    return xoj::util::WidgetSPtr(btn, xoj::util::adopt);
 }
 
 auto FontButton::getToolDisplayName() const -> std::string { return _("Font"); }
