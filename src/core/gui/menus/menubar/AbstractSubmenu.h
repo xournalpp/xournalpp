@@ -16,9 +16,9 @@
 class MainWindow;
 
 class Submenu {
-public:
+protected:
     Submenu() = default;
-    virtual ~Submenu() noexcept = default;
+    ~Submenu() noexcept = default;
 
 public:
     virtual void setDisabled(bool disabled) = 0;

@@ -24,7 +24,7 @@ class PageTypeHandler;
 class PageTypeInfo;
 class Settings;
 
-class PageTypeSelectionPopoverGridOnly: public PageTypeSelectionMenuBase {
+class PageTypeSelectionPopoverGridOnly final: public PageTypeSelectionMenuBase {
 public:
     PageTypeSelectionPopoverGridOnly(PageTypeHandler* typesHandler, const Settings* settings,
                                      PageTemplateDialog* parent);

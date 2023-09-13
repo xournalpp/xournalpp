@@ -20,10 +20,10 @@ class ToolMenuHandler;
 class ToolbarData;
 class MainWindow;
 
-class ToolbarSelectionSubmenu: public Submenu {
+class ToolbarSelectionSubmenu final: public Submenu {
 public:
     ToolbarSelectionSubmenu(MainWindow* win, Settings* settings, ToolMenuHandler* toolbar);
-    virtual ~ToolbarSelectionSubmenu();
+    ~ToolbarSelectionSubmenu();
 
 public:
     void update(ToolMenuHandler* toolbarHandler, const ToolbarData* selectedToolbar);
@@ -35,10 +35,4 @@ private:
     xoj::util::GObjectSPtr<GMenu> stockConfigurationsSection;
     xoj::util::GObjectSPtr<GMenu> customConfigurationsSection;
     xoj::util::GObjectSPtr<GSimpleAction> gAction;
-
-public:
-    static constexpr auto G_ACTION_NAMESPACE = "win.";
-    static constexpr auto G_ACTION_NAME = "select-toolbar";
-    /// id from ui/mainmenubar.xml
-    static constexpr auto SUBMENU_ID = "menuViewToolbar";
 };

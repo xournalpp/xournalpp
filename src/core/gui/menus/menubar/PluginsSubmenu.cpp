@@ -3,6 +3,8 @@
 #include "gui/MainWindow.h"
 #include "plugin/PluginController.h"
 
+static constexpr auto SUBMENU_ID = "menuitemPlugin";
+
 PluginsSubmenu::PluginsSubmenu(PluginController* pluginController, GtkApplicationWindow* win) {
     sections = pluginController->createMenuSections(win);
 }
@@ -36,7 +38,7 @@ void PluginsSubmenu::addToMenubar(MainWindow* win) {
     if (sections.empty()) {
         return;
     }
-    GtkWidget* parent = win->get("menuitemPlugin");
+    GtkWidget* parent = win->get(SUBMENU_ID);
     GtkWidget* previousMenu = win->get("menuPlugin");
 
     xoj::util::GObjectSPtr<GMenu> submenu(g_menu_new(), xoj::util::adopt);
