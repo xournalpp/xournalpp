@@ -125,6 +125,7 @@ public:
 
     // Getter- / Setter
     const std::vector<ViewMode>& getViewModes() const;
+    ViewModeId getActiveViewMode() const;
 
     bool isPressureSensitivity() const;
     void setPressureSensitivity(gboolean presureSensitivity);

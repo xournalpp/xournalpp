@@ -188,7 +188,7 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
         gtk_widget_show(menu);
     }
     Settings* settings = win->control->getSettings();
-    if (!settings->isFullscreen() && !settings->isPresentationMode()) {
+    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
         settings->setMenubarVisible(!visible);
         ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
         viewMode.showMenubar = !visible;
@@ -382,7 +382,7 @@ void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* wi
     if (settings->isSidebarVisible() == showSidebar) {
         return;
     }
-    if (!settings->isFullscreen() && !settings->isPresentationMode()) {
+    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
         settings->setSidebarVisible(showSidebar);
         ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
         viewMode.showSidebar = showSidebar;
@@ -397,7 +397,7 @@ void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* wi
     if (settings->isToolbarVisible() == showToolbar) {
         return;
     }
-    if (!settings->isFullscreen() && !settings->isPresentationMode()) {
+    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
         settings->setToolbarVisible(showToolbar);
         ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
         viewMode.showToolbar = showToolbar;
@@ -472,7 +472,7 @@ void MainWindow::updateScrollbarSidebarPosition() {
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) {
     Settings* settings = win->control->getSettings();
-    if (!settings->isFullscreen() && !settings->isPresentationMode()) {
+    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
         settings->setSidebarVisible(false);
         ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
         viewMode.showSidebar = false;
