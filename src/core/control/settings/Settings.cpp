@@ -2008,7 +2008,10 @@ auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* {
 }
 
 void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
-    viewModes.at(mode) = viewMode;
+    if (this->viewModes[mode] == viewMode) {
+        return;
+    }
+    this->viewModes.at(mode) = viewMode;
     save();
 }
 
