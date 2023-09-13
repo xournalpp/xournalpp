@@ -15,10 +15,15 @@
 #include "Menubar.h"
 
 namespace {
+constexpr auto G_ACTION_NAMESPACE = "win.";
+constexpr auto G_ACTION_NAME = "select-toolbar";
+/// id from ui/mainmenubar.xml
+constexpr auto SUBMENU_ID = "menuViewToolbar";
+
 auto createToolbarSelectionMenuItem(const ToolbarData* toolbarData) {
 
-    std::string action = ToolbarSelectionSubmenu::G_ACTION_NAMESPACE;
-    action += ToolbarSelectionSubmenu::G_ACTION_NAME;
+    std::string action = G_ACTION_NAMESPACE;
+    action += G_ACTION_NAME;
     action += "('";
     action += toolbarData->getId();
     action += "')";

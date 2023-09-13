@@ -15,6 +15,16 @@
 #include "util/i18n.h"               // for FS, FORMAT_STR, C_F
 
 namespace {
+constexpr auto SUBMENU_ID = "menuFileRecent";
+constexpr auto G_ACTION_NAMESPACE = "win.";
+constexpr auto OPEN_ACTION_NAME = "open-file-at";
+
+/**
+ * @brief For a disable placeholder saying "No recent files"
+ *  To disable a GMenu entry, give it an action name that does not correspond to any GAction
+ */
+constexpr auto DISABLED_ACTION_NAME = "always-disabled-action";
+constexpr auto CLEAR_LIST_ACTION_NAME = "clear-recent-files";
 
 void recentManagerChangedCallback(GtkRecentManager* /*manager*/, RecentDocumentsSubmenu* recentDocsSubmenu) {
     recentDocsSubmenu->updateMenu();
@@ -29,8 +39,8 @@ auto createRecentMenuItem(const GtkRecentInfo* info, size_t i) {
     StringUtils::replaceAllChars(display_name, {replace_pair('_', "__")});
     std::string label = FS(FORMAT_STR("{1}. {2}") % (i + 1) % display_name);
 
-    std::string action = RecentDocumentsSubmenu::G_ACTION_NAMESPACE;
-    action += RecentDocumentsSubmenu::OPEN_ACTION_NAME;
+    std::string action = G_ACTION_NAMESPACE;
+    action += OPEN_ACTION_NAME;
     action += "(uint64 ";
     action += std::to_string(i);
     action += ")";
@@ -52,14 +62,14 @@ auto createRecentMenu(const container& recentFiles, size_t start_index) -> xoj::
 }
 
 auto createEmptyListPlaceholder() {
-    return xoj::util::GObjectSPtr<GMenuItem>(
-            g_menu_item_new(_("No recent files"), RecentDocumentsSubmenu::DISABLED_ACTION_NAME), xoj::util::adopt);
+    return xoj::util::GObjectSPtr<GMenuItem>(g_menu_item_new(_("No recent files"), DISABLED_ACTION_NAME),
+                                             xoj::util::adopt);
 }
 
 auto createClearListSection() {
     // Todo(cpp20): constexpr this concatenation
-    std::string action = RecentDocumentsSubmenu::G_ACTION_NAMESPACE;
-    action += RecentDocumentsSubmenu::CLEAR_LIST_ACTION_NAME;
+    std::string action = G_ACTION_NAMESPACE;
+    action += CLEAR_LIST_ACTION_NAME;
 
     GMenu* menu = g_menu_new();
     g_menu_append(menu, _("Clear list"), action.c_str());

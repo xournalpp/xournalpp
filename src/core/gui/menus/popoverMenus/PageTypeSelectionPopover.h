@@ -24,7 +24,7 @@ class PageTypeHandler;
 class PageTypeInfo;
 class Settings;
 
-class PageTypeSelectionPopover: public PageTypeSelectionMenuBase {
+class PageTypeSelectionPopover final: public PageTypeSelectionMenuBase {
 public:
     PageTypeSelectionPopover(PageTypeHandler* typesHandler, PageBackgroundChangeController* controller,
                              const Settings* settings, GtkApplicationWindow* win);

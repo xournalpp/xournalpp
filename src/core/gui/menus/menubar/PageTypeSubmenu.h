@@ -22,11 +22,11 @@ class PageTypeHandler;
 class Settings;
 class PageBackgroundChangeController;
 
-class PageTypeSubmenu: public Submenu, public PageTypeSelectionMenuBase {
+class PageTypeSubmenu final: public Submenu, public PageTypeSelectionMenuBase {
 public:
     PageTypeSubmenu(PageTypeHandler* typesHandler, PageBackgroundChangeController* controller, const Settings* settings,
                     GtkApplicationWindow* win);
-    ~PageTypeSubmenu() override = default;
+    ~PageTypeSubmenu() = default;
 
     void setDisabled(bool disabled) override;
     void addToMenubar(MainWindow* win) override;
