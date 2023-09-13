@@ -4,6 +4,7 @@
 #include <cstdlib>    // for size_t
 #include <exception>  // for exce...
 #include <iterator>   // for end
+#include <locale>
 #include <memory>     // for make...
 #include <numeric>    // for accu...
 #include <optional>   // for opti...
@@ -2876,11 +2877,18 @@ void Control::closeDocument() {
 }
 
 void Control::applyPreferredLanguage() {
+    auto const& lang = this->settings->getPreferredLocale();
 #ifdef _WIN32
-    _putenv_s("LANGUAGE", this->settings->getPreferredLocale().c_str());
+    _putenv_s("LANGUAGE", lang.c_str());
 #else
-    setenv("LANGUAGE", this->settings->getPreferredLocale().c_str(), 1);
+    setenv("LANGUAGE", lang.c_str(), 1);
 #endif
+    try {
+        auto glob = std::locale{std::locale(".UTF-8"), lang, std::locale::all};
+        std::locale::global(glob);
+    } catch (std::runtime_error const& e) {
+        g_warning("Failed to set locale %s: %s", lang.c_str(), e.what());
+    }
 }
 
 void Control::initButtonTool() {

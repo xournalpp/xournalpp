@@ -96,7 +96,7 @@ void initLocalisation() {
 
     // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
     try {
-        std::locale::global(std::locale(""));  // "" - system default locale
+        std::locale::global(std::locale(".UTF-8"));  // "" - system default locale
     } catch (const std::runtime_error& e) {
         g_warning("XournalMain: System default locale could not be set.\n - Caused by: %s\n - Note that it is not "
                   "supported to set the locale using mingw-w64 on windows.\n - This could be solved by compiling "
