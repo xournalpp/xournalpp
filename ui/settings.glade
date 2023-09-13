@@ -572,19 +572,20 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
 %H		Hour in 24h format (00-23)
 %I		Hour in 12h format (01-12)
 %j		Day of the year (001-366)
-%m	Month as a decimal number (01-12)
-%M	Minute (00-59)
+%m		Month as a decimal number (01-12)
+%M		Minute (00-59)
 %p		AM or PM designation (e.g. PM)
 %S		Second (00-61)
 %U		Week number with the first Sunday as the first day of week one (00-53)
 %w		Weekday as a decimal number with Sunday as 0 (0-6)
-%W	Week number with the first Monday as the first day of week one (00-53)
+%W		Week number with the first Monday as the first day of week one (00-53)
 %x		Date representation (e.g. 08/23/01)
 %X		Time representation (e.g. 14:55:02)
 %y		Year, last two digits (00-99)
 %Y		Year (e.g. 2001)
 %Z		Timezone name or abbreviation (e.g. CDT)
-%%	A % sign</property>
+%%		%
+Illegal characters are replaced with "_"</property>
                                                 <property name="xalign">0</property>
                                               </object>
                                             </child>
@@ -743,19 +744,20 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
 %H			Hour in 24h format (00-23)
 %I			Hour in 12h format (01-12)
 %j			Day of the year (001-366)
-%m		Month as a decimal number (01-12)
-%M		Minute (00-59)
+%m			Month as a decimal number (01-12)
+%M			Minute (00-59)
 %p			AM or PM designation (e.g. PM)
 %S			Second (00-61)
 %U			Week number with the first Sunday as the first day of week one (00-53)
 %w			Weekday as a decimal number with Sunday as 0 (0-6)
-%W		Week number with the first Monday as the first day of week one (00-53)
+%W			Week number with the first Monday as the first day of week one (00-53)
 %x			Date representation (e.g. 08/23/01)
 %X			Time representation (e.g. 14:55:02 or 2:55:02 PM)
 %y			Year, last two digits (00-99)
 %Y			Year (e.g. 2001)
 %Z			Timezone name or abbreviation (e.g. CDT)
-%%		A % sign</property>
+%%			%
+Illegal characters are replaced with "_"</property>
                                             <property name="xalign">0</property>
                                           </object>
                                         </child>
