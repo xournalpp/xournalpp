@@ -62,12 +62,12 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
     g_signal_connect_swapped(builder.get("btSave"), "clicked",
                              G_CALLBACK(+[](PageTemplateDialog* self) { self->saveToFile(); }), this);
 
-    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
+    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->getWindow());
     g_signal_connect_swapped(builder.get("btOk"), "clicked", G_CALLBACK(+[](PageTemplateDialog* self) {
                                  self->saveToModel();
                                  self->settings->setPageTemplate(self->model.toString());
                                  self->toolMenuHandler->setDefaultNewPageType(self->model.getPageInsertType());
-                                 gtk_window_close(self->window.get());
+                                 gtk_window_close(self->getWindow());
                              }),
                              this);
 
@@ -108,8 +108,8 @@ void PageTemplateDialog::saveToFile() {
     saveToModel();
 
     GtkWidget* dialog =
-            gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()), GTK_FILE_CHOOSER_ACTION_SAVE,
-                                        _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
+            gtk_file_chooser_dialog_new(_("Save File"), this->getWindow(), GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"),
+                                        GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
 
     gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
@@ -131,7 +131,7 @@ void PageTemplateDialog::saveToFile() {
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()));
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), this->getWindow());
     if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
         gtk_widget_destroy(dialog);
         return;
@@ -146,7 +146,7 @@ void PageTemplateDialog::saveToFile() {
 }
 
 void PageTemplateDialog::loadFromFile() {
-    XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
+    XojOpenDlg dlg(this->getWindow(), this->settings);
     fs::path file = dlg.showOpenTemplateDialog();
 
     auto contents = Util::readString(file);
@@ -183,7 +183,7 @@ void PageTemplateDialog::showPageSizeDialog() {
 
                                                                               dlg->updatePageSize();
                                                                           });
-    popup.show(this->window.get());
+    popup.show(this->getWindow());
 }
 
 /**
