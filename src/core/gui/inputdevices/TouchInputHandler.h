@@ -45,6 +45,8 @@ private:
     bool canBlockZoom{false};
 
     bool detectingUndo = false;
+    utl::Point<double> priStartAbs{-1.0, -1.0};
+    utl::Point<double> secStartAbs{-1.0, -1.0};
 
 private:
     void sequenceStart(InputEvent const& event);
@@ -52,6 +54,10 @@ private:
     void zoomStart();
     void zoomMotion(InputEvent const& event);
     void zoomEnd();
+    void undoGestureStart();
+    void undoGestureMotion(InputEvent const& event);
+    void undoGestureCancel();
+    void undoGestureEnd();
 
 public:
     explicit TouchInputHandler(InputContext* inputContext);

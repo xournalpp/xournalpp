@@ -46,7 +46,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
                 if (secondarySequence) {
                     startZoomReady = true;
                     if (undoGestureEnabled) {
-                        detectingUndo = true;
+                        undoGestureStart();
                     }
                 }
             }
@@ -58,7 +58,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     if (event.type == MOTION_EVENT && this->primarySequence) {
-        if (this->primarySequence && this->secondarySequence)
+        if (this->primarySequence && this->secondarySequence && (zoomGesturesEnabled || undoGestureEnabled)) {
             if (zoomGesturesEnabled) {
                 if (this->startZoomReady) {
                     if (this->primarySequence == event.sequence) {
@@ -70,8 +70,8 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
                 }
             }
 
-            if (undoGestureEnabled && detectingUndo) {
-                detectingUndo = false;
+            if (undoGestureEnabled) {
+                undoGestureMotion(event);
             }
             return true;
         }
@@ -84,13 +84,8 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
                 zoomEnd();
             }
 
-            if (undoGestureEnabled && detectingUndo) {
-                UndoRedoHandler* undoRedoHandler = this->inputContext->getView()->getControl()->getUndoRedoHandler();
-
-                // Undo only if undo is possible
-                if (undoRedoHandler->canUndo()) {
-                    undoRedoHandler->undo();
-                }
+            if (undoGestureEnabled) {
+                undoGestureEnd();
             }
         }
 
@@ -117,9 +112,11 @@ void TouchInputHandler::sequenceStart(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
         this->priLastAbs = {event.absoluteX, event.absoluteY};
         this->priLastRel = {event.relativeX, event.relativeY};
+        this->priStartAbs = {event.absoluteX, event.absoluteY};
     } else {
         this->secLastAbs = {event.absoluteX, event.absoluteY};
         this->secLastRel = {event.relativeX, event.relativeY};
+        this->secStartAbs = {event.absoluteX, event.absoluteY};
     }
 }
 
@@ -226,8 +223,51 @@ void TouchInputHandler::onUnblock() {
     this->startZoomDistance = 0.0;
     this->lastZoomScrollCenter = {};
 
+    this->detectingUndo = false;
+
     priLastAbs = {-1.0, -1.0};
     secLastAbs = {-1.0, -1.0};
     priLastRel = {-1.0, -1.0};
     secLastRel = {-1.0, -1.0};
+
+    priStartAbs = {-1.0, -1.0};
+    secStartAbs = {-1.0, -1.0};
+}
+
+void TouchInputHandler::undoGestureStart() {
+    // Prevent the detection of an undo gesture from starting if one of the
+    // events has already moved more than 5 pixels away from its start point
+    if (this->priStartAbs.distance(priLastAbs) <= 5.0 && this->secStartAbs.distance(secLastAbs) <= 5.0) {
+        this->detectingUndo = true;
+    }
+}
+
+void TouchInputHandler::undoGestureMotion(InputEvent const& event) {
+    if (this->detectingUndo) {
+        double distance;
+        if (event.sequence == this->primarySequence) {
+            distance = this->priStartAbs.distance({event.absoluteX, event.absoluteY});
+        } else {
+            distance = this->secStartAbs.distance({event.absoluteX, event.absoluteY});
+        }
+
+        // If the distance from the start is greater than 5 pixels cancel the undo gesture
+        if (distance > 5.0) {
+            undoGestureCancel();
+        }
+    }
+}
+
+void TouchInputHandler::undoGestureCancel() { this->detectingUndo = false; }
+
+void TouchInputHandler::undoGestureEnd() {
+    if (this->detectingUndo) {
+        UndoRedoHandler* undoRedoHandler = this->inputContext->getView()->getControl()->getUndoRedoHandler();
+
+        // Undo only if undo is possible
+        if (undoRedoHandler->canUndo()) {
+            undoRedoHandler->undo();
+        }
+        this->detectingUndo = false;
+    }
 }
