@@ -47,10 +47,12 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     if (event.type == MOTION_EVENT) {
+        // NOTE: the first MOTION_EVENT from x11 touch input has sequence ID 0
         if (primarySequence == event.sequence && !secondarySequence) {
             scrollMotion(event);
             return true;
         } else if (event.sequence && (primarySequence == event.sequence || secondarySequence == event.sequence)) {
+            xoj_assert(primarySequence);
             zoomMotion(event);
             return true;
         }
@@ -65,8 +67,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
         if (event.sequence == primarySequence) {
             // If secondarySequence is nullptr, this sets primarySequence
             // to nullptr. If it isn't, then it is now the primary sequence!
-            primarySequence = secondarySequence;
-            secondarySequence = nullptr;
+            primarySequence = std::exchange(secondarySequence, nullptr);
 
             this->priLastAbs = this->secLastAbs;
             this->priLastRel = this->secLastRel;
