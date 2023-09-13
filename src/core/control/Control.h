@@ -192,8 +192,6 @@ public:
      */
     bool loadViewMode(ViewModeId mode);
 
-    bool isFullscreen();
-
     /**
      * @brief Search text on the given page. The matches (if any) are stored in the XojPageView::SearchControl instance.
      * @param occurrences If not nullptr, the pointed variable will contain the number of matches on the page
@@ -474,9 +472,4 @@ private:
      * Manage all Xournal++ plugins
      */
     PluginController* pluginController;
-
-    /**
-     * Fullscreen handler
-     */
-    FullscreenHandler* fullscreenHandler;
 };
