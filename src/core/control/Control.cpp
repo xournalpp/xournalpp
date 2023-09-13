@@ -2267,7 +2267,7 @@ auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {
  * Check if this is an autosave file, return false in this case and display a user instruction
  */
 auto Control::shouldFileOpen(fs::path const& filepath) const -> bool {
-    auto basePath = Util::getConfigSubfolder("");
+    auto basePath = Util::getCacheSubfolder("");
     auto isChild = Util::isChildOrEquivalent(filepath, basePath);
     if (isChild) {
         string msg = FS(_F("Do not open Autosave files. They may will be overwritten!\n"
