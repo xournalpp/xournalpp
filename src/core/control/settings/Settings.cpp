@@ -252,15 +252,7 @@ auto Settings::loadViewMode(ViewModeId mode) -> bool {
 
 auto Settings::getViewModes() const -> const std::vector<ViewMode>& { return this->viewModes; }
 
-auto Settings::getActiveViewMode() const -> ViewModeId {
-    if (this->isPresentationMode()) {
-        return PresetViewModeIds::VIEW_MODE_PRESENTATION;
-    } else if (this->isFullscreen()) {
-        return PresetViewModeIds::VIEW_MODE_FULLSCREEN;
-    } else {
-        return PresetViewModeIds::VIEW_MODE_DEFAULT;
-    }
-}
+auto Settings::getActiveViewMode() const -> ViewModeId { return this->activeViewMode; }
 
 /**
  * tempg_ascii_strtod
