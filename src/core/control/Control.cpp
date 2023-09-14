@@ -813,7 +813,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             this->toolHandler->setPenFillEnabled(enabled);
             break;
         case ACTION_TOOL_PEN_FILL_OPACITY:
-            selectFillAlpha(this->toolHandler->getToolType());
+            selectFillAlpha(TOOL_PEN);
             break;
 
 
@@ -851,10 +851,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             this->toolHandler->setHighlighterFillEnabled(enabled);
             break;
         case ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY:
-            selectFillAlpha(this->toolHandler->getToolType());
+            selectFillAlpha(TOOL_HIGHLIGHTER);
             break;
         case ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY:
-            selectFillAlpha(this->toolHandler->getToolType());
+            selectFillAlpha(TOOL_SELECT_PDF_TEXT_LINEAR);
             break;
         case ACTION_FONT_BUTTON_CHANGED:
             fontChanged();
@@ -1157,33 +1157,28 @@ auto Control::paste() -> bool {
     return this->clipboardHandler->paste();
 }
 
-void Control::selectFillAlpha(ToolType toolType) {
-    bool pen = false;
+void Control::selectFillAlpha(ToolType type) {
     int alpha = 0;
 
-    switch (toolType) {
+    switch (type) {
         case TOOL_PEN:
-            pen = true;
             alpha = this->toolHandler->getPenFill();
             break;
         case TOOL_HIGHLIGHTER:
-            pen = false;
             alpha = this->toolHandler->getHighlighterFill();
             break;
         case TOOL_SELECT_PDF_TEXT_LINEAR:
         case TOOL_SELECT_PDF_TEXT_RECT:
-            pen = false;
             alpha = this->toolHandler->getSelectPDFTextFill();
             break;
         default:
-            g_warning("Unhandled ToolType for selectFillAlpha event: %s", toolTypeToString(toolType).c_str());
+            g_warning("Unhandled ToolType for selectFillAlpha event: %s", toolTypeToString(type).c_str());
             Stacktrace::printStracktrace();
             break;
     }
     auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::FillOpacityDialog>(
-            gladeSearchPath, alpha, pen, [&th = *toolHandler](int alpha, bool pen) {
-                ToolType toolType = th.getToolType();
-                switch (toolType) {
+            gladeSearchPath, alpha, type, [&th = *toolHandler](int alpha, ToolType type) {
+                switch (type) {
                     case TOOL_PEN:
                         th.setPenFill(alpha);
                         break;
@@ -1196,7 +1191,7 @@ void Control::selectFillAlpha(ToolType toolType) {
                         break;
                     default:
                         g_warning("Unhandled ToolType for callback of FillOpacityDialog: %s",
-                                  toolTypeToString(toolType).c_str());
+                                  toolTypeToString(type).c_str());
                         Stacktrace::printStracktrace();
                         break;
                 }

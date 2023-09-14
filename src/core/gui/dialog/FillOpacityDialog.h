@@ -13,6 +13,7 @@
 
 #include <functional>
 
+#include "control/ToolEnums.h"
 #include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
@@ -20,7 +21,8 @@ class GladeSearchpath;
 namespace xoj::popup {
 class FillOpacityDialog {
 public:
-    FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen, std::function<void(int, bool)> callback);
+    FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, ToolType type,
+                      std::function<void(int, ToolType)> callback);
     ~FillOpacityDialog();
 
     inline GtkWindow* getWindow() const { return window.get(); }
@@ -33,7 +35,7 @@ private:
     GtkImage* previewImage;
     GtkRange* alphaRange;
 
-    bool pen;
-    std::function<void(int, bool)> callback;
+    ToolType toolType;
+    std::function<void(int, ToolType)> callback;
 };
 };  // namespace xoj::popup
