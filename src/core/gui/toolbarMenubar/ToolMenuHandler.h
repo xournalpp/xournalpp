@@ -83,8 +83,8 @@ public:
 
     ToolbarModel* getModel();
 
-    std::vector<AbstractToolItem*>* getToolItems();
-    const std::vector<ColorToolItem*>& getColorToolItems() const;
+    const std::vector<std::unique_ptr<AbstractToolItem>>& getToolItems() const;
+    const std::vector<std::unique_ptr<ColorToolItem>>& getColorToolItems() const;
 
     Control* getControl();
 
@@ -105,10 +105,10 @@ private:
     void initEraserToolItem();
 
 private:
-    std::vector<ColorToolItem*> toolbarColorItems;
+    std::vector<std::unique_ptr<ColorToolItem>> toolbarColorItems;
     GtkWindow* parent = nullptr;
 
-    std::vector<AbstractToolItem*> toolItems;
+    std::vector<std::unique_ptr<AbstractToolItem>> toolItems;
 
     ToolButton* undoButton = nullptr;
     ToolButton* redoButton = nullptr;

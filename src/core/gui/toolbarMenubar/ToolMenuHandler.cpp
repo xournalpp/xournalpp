@@ -80,29 +80,13 @@ void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
     }
 }
 
-ToolMenuHandler::~ToolMenuHandler() {
-    // Owned by control
-    this->pageBackgroundChangeController = nullptr;
-
-    // Owned by control
-    this->newPageType = nullptr;
-
-    freeDynamicToolbarItems();
-
-    for (AbstractToolItem* it: this->toolItems) {
-        delete it;
-        it = nullptr;
-    }
-}
+ToolMenuHandler::~ToolMenuHandler() = default;
 
 void ToolMenuHandler::freeDynamicToolbarItems() {
-    for (AbstractToolItem* it: this->toolItems) {
+    for (auto& it: this->toolItems) {
         it->setUsed(false);
     }
 
-    for (ColorToolItem* it: this->toolbarColorItems) {
-        delete it;
-    }
     this->toolbarColorItems.clear();
 }
 
@@ -209,20 +193,19 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
                     count++;
                     const NamedColor& namedColor = palette.getColorAt(paletteIndex);
-                    auto* item = new ColorToolItem(namedColor);
-                    this->toolbarColorItems.push_back(item);
+                    auto& item = this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor));
 
                     GtkToolItem* it = item->createToolItem(horizontal);
                     gtk_widget_show_all(GTK_WIDGET(it));
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item);
+                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item.get());
 
                     continue;
                 }
 
                 bool found = false;
-                for (AbstractToolItem* item: this->toolItems) {
+                for (auto& item: this->toolItems) {
                     if (name == item->getId()) {
                         if (item->isUsed()) {
                             g_warning("You can use the toolbar item \"%s\" only once!", item->getId().c_str());
@@ -236,7 +219,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                         gtk_widget_show_all(GTK_WIDGET(it));
                         gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
 
-                        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item);
+                        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item.get());
 
                         found = true;
                         break;
@@ -265,17 +248,16 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it) {
     g_return_if_fail(it != nullptr);
     for (unsigned int i = 0; i < this->toolbarColorItems.size(); i++) {
-        if (this->toolbarColorItems[i] == it) {
+        if (this->toolbarColorItems[i].get() == it) {
             this->toolbarColorItems.erase(this->toolbarColorItems.begin() + i);
             break;
         }
     }
-    delete dynamic_cast<ColorToolItem*>(it);
 }
 
 void ToolMenuHandler::addColorToolItem(AbstractToolItem* it) {
     g_return_if_fail(it != nullptr);
-    this->toolbarColorItems.push_back(dynamic_cast<ColorToolItem*>(it));
+    this->toolbarColorItems.emplace_back(dynamic_cast<ColorToolItem*>(it));
 }
 
 void ToolMenuHandler::setTmpDisabled(bool disabled) {
@@ -291,7 +273,7 @@ void ToolMenuHandler::setTmpDisabled(bool disabled) {
     control->getActionDatabase()->enableAction(Action::SHOW_SIDEBAR, !disabled);
 }
 
-void ToolMenuHandler::addToolItem(AbstractToolItem* it) { this->toolItems.push_back(it); }
+void ToolMenuHandler::addToolItem(AbstractToolItem* it) { this->toolItems.emplace_back(it); }
 
 /**
  * @return floating ref
@@ -675,9 +657,11 @@ auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel.get(); 
 
 auto ToolMenuHandler::getControl() -> Control* { return this->control; }
 
-auto ToolMenuHandler::getToolItems() -> std::vector<AbstractToolItem*>* { return &this->toolItems; }
+auto ToolMenuHandler::getToolItems() const -> const std::vector<std::unique_ptr<AbstractToolItem>>& {
+    return this->toolItems;
+}
 
-auto ToolMenuHandler::getColorToolItems() const -> const std::vector<ColorToolItem*>& {
+auto ToolMenuHandler::getColorToolItems() const -> const std::vector<std::unique_ptr<ColorToolItem>>& {
     return this->toolbarColorItems;
 }
 
