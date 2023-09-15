@@ -302,7 +302,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     auto& colors = control->getWindow()->getToolMenuHandler()->getColorToolItems();
     if (!state && (keyval >= GDK_KEY_0) && (keyval < GDK_KEY_0 + std::min((std::size_t)10, colors.size()))) {
         std::size_t index = std::min(colors.size() - 1, (std::size_t)(9 + (keyval - GDK_KEY_0)) % 10);
-        auto colorToolItem = colors.at(index);
+        const auto& colorToolItem = colors.at(index);
         if (gtk_widget_is_sensitive(colorToolItem->getItem())) {
             gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(colorToolItem->getItem()), true);
         }

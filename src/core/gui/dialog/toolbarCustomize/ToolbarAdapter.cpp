@@ -277,7 +277,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         int newId = tb->insertItem(name, id, pos);
         ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        auto* item = new ColorToolItem(*(d->namedColor));
+        auto item = std::make_unique<ColorToolItem>(*(d->namedColor));
 
         GtkToolItem* it = item->createToolItem(horizontal);
 
@@ -291,9 +291,9 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         string id = item->getId();
 
         int newId = tb->insertItem(name, id, pos);
-        ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->namedColor, item);
+        ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->namedColor, item.get());
 
-        adapter->window->getToolMenuHandler()->addColorToolItem(item);
+        adapter->window->getToolMenuHandler()->addColorToolItem(std::move(item));
     } else if (d->type == TOOL_ITEM_SEPARATOR) {
         GtkToolItem* it = gtk_separator_tool_item_new();
         gtk_widget_show_all(GTK_WIDGET(it));

@@ -81,29 +81,13 @@ void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
     }
 }
 
-ToolMenuHandler::~ToolMenuHandler() {
-    // Owned by control
-    this->pageBackgroundChangeController = nullptr;
-
-    // Owned by control
-    this->newPageType = nullptr;
-
-    freeDynamicToolbarItems();
-
-    for (AbstractToolItem* it: this->toolItems) {
-        delete it;
-        it = nullptr;
-    }
-}
+ToolMenuHandler::~ToolMenuHandler() = default;
 
 void ToolMenuHandler::freeDynamicToolbarItems() {
-    for (AbstractToolItem* it: this->toolItems) {
+    for (auto&& it: this->toolItems) {
         it->setUsed(false);
     }
 
-    for (ColorToolItem* it: this->toolbarColorItems) {
-        delete it;
-    }
     this->toolbarColorItems.clear();
 }
 
@@ -210,20 +194,19 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
                     count++;
                     const NamedColor& namedColor = palette.getColorAt(paletteIndex);
-                    auto* item = new ColorToolItem(namedColor);
-                    this->toolbarColorItems.push_back(item);
+                    auto& item = this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor));
 
                     GtkToolItem* it = item->createToolItem(horizontal);
                     gtk_widget_show_all(GTK_WIDGET(it));
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item);
+                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item.get());
 
                     continue;
                 }
 
                 bool found = false;
-                for (AbstractToolItem* item: this->toolItems) {
+                for (auto& item: this->toolItems) {
                     if (name == item->getId()) {
                         if (item->isUsed()) {
                             g_warning("You can use the toolbar item \"%s\" only once!", item->getId().c_str());
@@ -237,7 +220,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                         gtk_widget_show_all(GTK_WIDGET(it));
                         gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
 
-                        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item);
+                        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item.get());
 
                         found = true;
                         break;
@@ -261,24 +244,22 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
 void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it) {
     g_return_if_fail(it != nullptr);
-    for (unsigned int i = 0; i < this->toolbarColorItems.size(); i++) {
-        if (this->toolbarColorItems[i] == it) {
-            this->toolbarColorItems.erase(this->toolbarColorItems.begin() + i);
-            break;
-        }
-    }
-    delete dynamic_cast<ColorToolItem*>(it);
+    this->toolbarColorItems.erase(std::find_if(this->toolbarColorItems.begin(), this->toolbarColorItems.end(),
+                                               [it](const auto& p) { return p.get() == it; }));
 }
 
-void ToolMenuHandler::addColorToolItem(AbstractToolItem* it) {
+void ToolMenuHandler::addColorToolItem(std::unique_ptr<ColorToolItem> it) {
     g_return_if_fail(it != nullptr);
-    this->toolbarColorItems.push_back(dynamic_cast<ColorToolItem*>(it));
+    this->toolbarColorItems.emplace_back(std::move(it));
 }
 
-void ToolMenuHandler::addToolItem(AbstractToolItem* it) { this->toolItems.push_back(it); }
+template <class tool_item, class... Args>
+tool_item& ToolMenuHandler::emplaceItem(Args&&... args) {
+    return static_cast<tool_item&>(*toolItems.emplace_back(std::make_unique<tool_item>(std::forward<Args>(args)...)));
+}
 
 #ifdef ENABLE_PLUGINS
-void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) { addToolItem(new PluginToolButton(t)); }
+void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) { emplaceItem<PluginToolButton>(t); }
 #endif /* ENABLE_PLUGINS */
 
 void ToolMenuHandler::initToolItems() {
@@ -287,14 +268,14 @@ void ToolMenuHandler::initToolItems() {
      *      The corresponding action in ActionDatabase[action] should have no state (it can have a parameter)
      **/
     auto emplaceStockItem = [this](const char* name, Action action, const char* icon, std::string description) {
-        addToolItem(new ToolButton(name, action, icon, description, false));
+        emplaceItem<ToolButton>(name, action, icon, description, false);
     };
     /**
      * @brief Simple button, with a custom loaded icon
      *      The corresponding action in ActionDatabase[action] should have no state (it can have a parameter)
      **/
     auto emplaceCustomItem = [this](const char* name, Action action, const char* icon, std::string description) {
-        addToolItem(new ToolButton(name, action, iconName(icon), description, false));
+        emplaceItem<ToolButton>(name, action, iconName(icon), description, false);
     };
 
     /**
@@ -302,7 +283,7 @@ void ToolMenuHandler::initToolItems() {
      *      The corresponding action in ActionDatabase[action] should have a boolean state and no parameter
      **/
     auto emplaceStockItemTgl = [this](const char* name, Action action, const char* icon, std::string description) {
-        addToolItem(new ToolButton(name, action, icon, description, true));
+        emplaceItem<ToolButton>(name, action, icon, description, true);
     };
 
     /**
@@ -310,7 +291,7 @@ void ToolMenuHandler::initToolItems() {
      *      The corresponding action in ActionDatabase[action] should have a boolean state and no parameter
      **/
     auto emplaceCustomItemTgl = [this](const char* name, Action action, const char* icon, std::string description) {
-        addToolItem(new ToolButton(name, action, iconName(icon), description, true));
+        emplaceItem<ToolButton>(name, action, iconName(icon), description, true);
     };
 
     /**
@@ -320,7 +301,7 @@ void ToolMenuHandler::initToolItems() {
      **/
     auto emplaceCustomItemWithTarget = [this](const char* name, Action action, auto target, const char* icon,
                                               std::string description) {
-        addToolItem(new ToolButton(name, action, makeGVariant(target), iconName(icon), description));
+        emplaceItem<ToolButton>(name, action, makeGVariant(target), iconName(icon), description);
     };
 
     /**
@@ -329,16 +310,14 @@ void ToolMenuHandler::initToolItems() {
      **/
     auto emplaceCustomItemWithPopover = [this](const char* name, Action action, const char* icon,
                                                std::string description, const PopoverFactory* popover) {
-        auto* tb = new ToolButton(name, action, iconName(icon), description, false);
-        tb->setPopoverFactory(popover);
-        addToolItem(tb);
+        auto&& tb = emplaceItem<ToolButton>(name, action, iconName(icon), description, false);
+        tb.setPopoverFactory(popover);
     };
 
     auto emplaceCustomItemWithTargetAndMenu = [this](const char* name, Action action, auto target, const char* icon,
                                                      std::string description, const PopoverFactory* popover) {
-        auto* tb = new ToolButton(name, action, makeGVariant(target), iconName(icon), description);
-        tb->setPopoverFactory(popover);
-        addToolItem(tb);
+        auto&& tb = emplaceItem<ToolButton>(name, action, makeGVariant(target), iconName(icon), description);
+        tb.setPopoverFactory(popover);
     };
 
 
@@ -365,10 +344,8 @@ void ToolMenuHandler::initToolItems() {
      */
 
     // Undo / Redo Texts are updated from code, therefore a reference is held for this items
-    undoButton = new ToolButton("UNDO", Action::UNDO, iconName("edit-undo"), _("Undo"), false);
-    redoButton = new ToolButton("REDO", Action::REDO, iconName("edit-redo"), _("Redo"), false);
-    addToolItem(undoButton);
-    addToolItem(redoButton);
+    undoButton = &emplaceItem<ToolButton>("UNDO", Action::UNDO, iconName("edit-undo"), _("Undo"), false);
+    redoButton = &emplaceItem<ToolButton>("REDO", Action::REDO, iconName("edit-redo"), _("Redo"), false);
 
     emplaceCustomItem("CUT", Action::CUT, "edit-cut", _("Cut"));
     emplaceCustomItem("COPY", Action::COPY, "edit-copy", _("Copy"));
@@ -497,7 +474,7 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemWithTarget("PLAY_OBJECT", Action::SELECT_TOOL, TOOL_PLAY_OBJECT, "object-play", _("Play Object"));
     emplaceCustomItemWithTarget("HAND", Action::SELECT_TOOL, TOOL_HAND, "hand", _("Hand"));
 
-    addToolItem(new FontButton("SELECT_FONT", *control->getActionDatabase()));
+    emplaceItem<FontButton>("SELECT_FONT", *control->getActionDatabase());
 
     emplaceCustomItemTgl("AUDIO_RECORDING", Action::AUDIO_RECORD, "audio-record", _("Record Audio / Stop Recording"));
     emplaceCustomItemTgl("AUDIO_PAUSE_PLAYBACK", Action::AUDIO_PAUSE_PLAYBACK, "audio-playback-pause",
@@ -514,14 +491,11 @@ void ToolMenuHandler::initToolItems() {
      * Footer tools
      * ------------------------------------------------------------------------
      */
-    toolPageSpinner = new ToolPageSpinner("PAGE_SPIN", iconNameHelper);
-    addToolItem(toolPageSpinner);
+    toolPageSpinner = &emplaceItem<ToolPageSpinner>("PAGE_SPIN", iconNameHelper);
 
-    auto* toolZoomSlider = new ToolZoomSlider("ZOOM_SLIDER", zoom, iconNameHelper, *control->getActionDatabase());
-    addToolItem(toolZoomSlider);
+    emplaceItem<ToolZoomSlider>("ZOOM_SLIDER", zoom, iconNameHelper, *control->getActionDatabase());
 
-    toolPageLayer = new ToolPageLayer("LAYER", control->getLayerController(), iconNameHelper);
-    addToolItem(toolPageLayer);
+    toolPageLayer = &emplaceItem<ToolPageLayer>("LAYER", control->getLayerController(), iconNameHelper);
 
     /*
      * Non-menu items
@@ -532,13 +506,12 @@ void ToolMenuHandler::initToolItems() {
      * Color item - not in the menu
      * aka. COLOR_SELECT
      */
-    addToolItem(new ColorSelectorToolItem(*control->getActionDatabase()));
+    emplaceItem<ColorSelectorToolItem>(*control->getActionDatabase());
 
     bool hideAudio = !this->control->getAudioController();
-    addToolItem(
-            new ToolSelectCombocontrol("SELECT", this->iconNameHelper, *this->control->getActionDatabase(), hideAudio));
-    addToolItem(new DrawingTypeComboToolButton("DRAW", this->iconNameHelper, *this->control->getActionDatabase()));
-    addToolItem(new ToolPdfCombocontrol("PDF_TOOL", this->iconNameHelper, *this->control->getActionDatabase()));
+    emplaceItem<ToolSelectCombocontrol>("SELECT", this->iconNameHelper, *this->control->getActionDatabase(), hideAudio);
+    emplaceItem<DrawingTypeComboToolButton>("DRAW", this->iconNameHelper, *this->control->getActionDatabase());
+    emplaceItem<ToolPdfCombocontrol>("PDF_TOOL", this->iconNameHelper, *this->control->getActionDatabase());
 
     // General tool configuration - working for every tool which support it
     emplaceCustomItemTgl("TOOL_FILL", Action::TOOL_FILL, "fill", _("Fill"));
@@ -576,9 +549,11 @@ auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel.get(); 
 
 auto ToolMenuHandler::getControl() -> Control* { return this->control; }
 
-auto ToolMenuHandler::getToolItems() -> std::vector<AbstractToolItem*>* { return &this->toolItems; }
+auto ToolMenuHandler::getToolItems() const -> const std::vector<std::unique_ptr<AbstractToolItem>>& {
+    return this->toolItems;
+}
 
-auto ToolMenuHandler::getColorToolItems() const -> const std::vector<ColorToolItem*>& {
+auto ToolMenuHandler::getColorToolItems() const -> const std::vector<std::unique_ptr<ColorToolItem>>& {
     return this->toolbarColorItems;
 }
 
