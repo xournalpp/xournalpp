@@ -77,12 +77,12 @@ public:
     void setPageInfo(size_t pagecount, size_t pdfpage = 0);
 
     [[maybe_unused]] void removeColorToolItem(AbstractToolItem* it);
-    void addColorToolItem(AbstractToolItem* it);
+    void addColorToolItem(std::unique_ptr<ColorToolItem> it);
 
     ToolbarModel* getModel();
 
-    std::vector<AbstractToolItem*>* getToolItems();
-    const std::vector<ColorToolItem*>& getColorToolItems() const;
+    const std::vector<std::unique_ptr<AbstractToolItem>>& getToolItems() const;
+    const std::vector<std::unique_ptr<ColorToolItem>>& getColorToolItems() const;
 
     Control* getControl();
 
@@ -93,15 +93,17 @@ public:
     void setDefaultNewPageType(const std::optional<PageType>& pt);
 
 private:
-    void addToolItem(AbstractToolItem* it);
+    template <class tool_item, class... Args>
+    tool_item& emplaceItem(Args&&... args);
+
     void initPenToolItem();
     void initEraserToolItem();
 
 private:
-    std::vector<ColorToolItem*> toolbarColorItems;
+    std::vector<std::unique_ptr<ColorToolItem>> toolbarColorItems;
     GtkWindow* parent = nullptr;
 
-    std::vector<AbstractToolItem*> toolItems;
+    std::vector<std::unique_ptr<AbstractToolItem>> toolItems;
 
     ToolButton* undoButton = nullptr;
     ToolButton* redoButton = nullptr;

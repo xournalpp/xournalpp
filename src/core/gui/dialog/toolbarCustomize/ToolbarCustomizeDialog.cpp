@@ -67,7 +67,7 @@ constexpr auto UI_DIALOG_NAME = "DialogCustomizeToolbar";
 
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
                                                ToolbarDragDropHandler* handler):
-        itemData(buildToolDataVector(*win->getToolMenuHandler()->getToolItems())),
+        itemData(buildToolDataVector(win->getToolMenuHandler()->getToolItems())),
         colorItemData(buildColorDataVector(handler->getControl()->getSettings()->getColorPalette())) {
     Builder builder(gladeSearchPath, UI_FILE);
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
@@ -268,12 +268,12 @@ void ToolbarCustomizeDialog::freeIconview() {
 /**
  * builds up the icon list
  */
-auto ToolbarCustomizeDialog::buildToolDataVector(const std::vector<AbstractToolItem*>& tools)
+auto ToolbarCustomizeDialog::buildToolDataVector(const std::vector<std::unique_ptr<AbstractToolItem>>& tools)
         -> std::vector<ToolItemDragData> {
     // By reserving, we ensure no reallocation is done, so the pointer `&data` used below is not invalidated
     std::vector<ToolItemDragData> database;
     database.reserve(tools.size());
-    for (AbstractToolItem* item: tools) {
+    for (auto&& item: tools) {
         std::string name = item->getToolDisplayName();
         GtkWidget* icon = item->getNewToolIcon(); /* floating */
         xoj_assert(icon);
@@ -289,7 +289,7 @@ auto ToolbarCustomizeDialog::buildToolDataVector(const std::vector<AbstractToolI
         auto& data = database.emplace_back();
         data.dlg = this;
         data.icon = icon;
-        data.item = item;
+        data.item = item.get();
         data.ebox.reset(ebox, xoj::util::adopt);
 
         // make ebox a drag source

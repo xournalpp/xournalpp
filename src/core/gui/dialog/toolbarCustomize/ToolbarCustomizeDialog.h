@@ -42,7 +42,7 @@ private:
     struct ColorToolItemDragData;
     struct SeparatorData;
 
-    std::vector<ToolItemDragData> buildToolDataVector(const std::vector<AbstractToolItem*>& tools);
+    std::vector<ToolItemDragData> buildToolDataVector(const std::vector<std::unique_ptr<AbstractToolItem>>& tools);
     std::vector<ColorToolItemDragData> buildColorDataVector(const Palette& palette);
 
     void rebuildIconview();
