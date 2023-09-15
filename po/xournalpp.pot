@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.1+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-13 09:07+0000\n"
+"POT-Creation-Date: 2023-09-15 07:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgid ""
 " Do you want to continue?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2388
+#: ../src/core/control/Control.cpp:2383
 msgid ""
 "\n"
 "Proposed replacement file: \"{1}\""
@@ -168,7 +168,7 @@ msgstr ""
 msgid "Built on"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2400 ../src/core/control/Control.cpp:2888
+#: ../src/core/control/Control.cpp:2395 ../src/core/control/Control.cpp:2883
 #: ../src/core/control/XournalMain.cpp:196
 #: ../src/core/gui/sidebar/Sidebar.cpp:85
 msgid "Cancel"
@@ -394,7 +394,7 @@ msgstr ""
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2885
+#: ../src/core/control/Control.cpp:2880
 msgid "Discard"
 msgstr ""
 
@@ -402,7 +402,7 @@ msgstr ""
 msgid "Display advanced export options"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2313
+#: ../src/core/control/Control.cpp:2308
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
@@ -413,7 +413,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2879
+#: ../src/core/control/Control.cpp:2874
 msgid "Document file was removed."
 msgstr ""
 
@@ -531,7 +531,7 @@ msgstr ""
 msgid "Eraser"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2604
+#: ../src/core/control/Control.cpp:2599
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -541,7 +541,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2431
+#: ../src/core/control/Control.cpp:2426
 msgid "Error opening file \"{1}\""
 msgstr ""
 
@@ -1125,7 +1125,7 @@ msgstr ""
 msgid "Redo: "
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2399
+#: ../src/core/control/Control.cpp:2394
 msgid "Remove PDF Background"
 msgstr ""
 
@@ -1181,17 +1181,17 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2880 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2875 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2880
+#: ../src/core/control/Control.cpp:2875
 msgid "Save As..."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2703
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:88
+#: ../src/core/control/Control.cpp:2698
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr ""
 
@@ -1292,7 +1292,7 @@ msgstr ""
 msgid "Select Text from pdf"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2398
+#: ../src/core/control/Control.cpp:2393
 msgid "Select another PDF"
 msgstr ""
 
@@ -1475,7 +1475,7 @@ msgid ""
 "edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2375
+#: ../src/core/control/Control.cpp:2370
 msgid ""
 "The attached background file could not be found. It might have been moved, "
 "renamed or deleted."
@@ -1487,7 +1487,7 @@ msgid ""
 "renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2378
+#: ../src/core/control/Control.cpp:2373
 msgid ""
 "The background file \"{1}\" could not be found. It might have been moved, "
 "renamed or deleted.\n"
@@ -1498,7 +1498,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2439
+#: ../src/core/control/Control.cpp:2434
 msgid ""
 "The file being loaded has a file format version newer than the one currently "
 "supported by this version of Xournal++, so it may not load properly. Open "
@@ -1545,7 +1545,7 @@ msgstr ""
 msgid "Thick"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2879
+#: ../src/core/control/Control.cpp:2874
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1630,7 +1630,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2760
+#: ../src/core/control/Control.cpp:2755
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1638,7 +1638,7 @@ msgstr ""
 msgid "Unsupported graphics format: "
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2396
+#: ../src/core/control/Control.cpp:2391
 msgid "Use proposed PDF"
 msgstr ""
 
@@ -1695,13 +1695,13 @@ msgid ""
 "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2709
+#: ../src/core/control/Control.cpp:2704
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr ""
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:94
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
 msgstr ""
 
@@ -1745,11 +1745,11 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2698
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:89
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr ""
 
@@ -1758,9 +1758,9 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2704
+#: ../src/core/control/Control.cpp:2699
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:89
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr ""
 
@@ -1804,7 +1804,7 @@ msgstr ""
 msgid "eraser"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2327
+#: ../src/core/control/Control.cpp:2322
 msgid "file: {1}"
 msgstr ""
 
@@ -2052,11 +2052,11 @@ msgstr ""
 msgid "<b>... or select already used Image:</b>"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:248
+#: ../ui/pageTemplate.glade:179
 msgid "<b>Background Color</b>"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:261
+#: ../ui/pageTemplate.glade:192
 msgid "<b>Background</b>"
 msgstr ""
 
@@ -2090,7 +2090,7 @@ msgid ""
 "Select opacity for fill color"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:135
+#: ../ui/pageTemplate.glade:67
 msgid "<b>Page size</b>"
 msgstr ""
 
@@ -2440,7 +2440,7 @@ msgstr ""
 msgid "Button 2"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:160
+#: ../ui/pageTemplate.glade:92
 msgid "Change"
 msgstr ""
 
@@ -2485,15 +2485,15 @@ msgstr ""
 msgid "Configure Page Template"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:18
+#: ../ui/pageTemplate.glade:27
 msgid "Configure new page template"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:187
+#: ../ui/pageTemplate.glade:119
 msgid "Copy current page background instead"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:272
+#: ../ui/pageTemplate.glade:203
 msgid "Copy current page size instead"
 msgstr ""
 
@@ -2501,7 +2501,7 @@ msgstr ""
 msgid "Copy selected text"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:192
+#: ../ui/pageTemplate.glade:124
 msgid ""
 "Copy the background of the current page instead of using the background set "
 "above."
@@ -3042,7 +3042,7 @@ msgstr ""
 msgid "Load file"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:54
+#: ../ui/pageTemplate.glade:247
 msgid "Load from file"
 msgstr ""
 
@@ -3175,9 +3175,9 @@ msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr ""
 
 #: ../ui/exportSettings.glade:425 ../ui/fillOpacity.glade:135
-#: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/plugin.glade:113
-#: ../ui/renameLayerDialog.glade:71 ../ui/settings.glade:6095
-#: ../ui/texdialog.glade:203
+#: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
+#: ../ui/plugin.glade:113 ../ui/renameLayerDialog.glade:71
+#: ../ui/settings.glade:6095 ../ui/texdialog.glade:203
 msgid "Ok"
 msgstr ""
 
@@ -3367,7 +3367,7 @@ msgstr ""
 msgid "Sample layer name"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:40
+#: ../ui/pageTemplate.glade:233
 msgid "Save to file"
 msgstr ""
 
@@ -3379,7 +3379,7 @@ msgstr ""
 msgid "Scrolling outside the page"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:177
+#: ../ui/pageTemplate.glade:109
 msgid "Select Background Color"
 msgstr ""
 
@@ -3622,7 +3622,7 @@ msgstr ""
 msgid "The unit of the ruler is cm"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:114
+#: ../ui/pageTemplate.glade:45
 msgid "These settings will be used for new pages"
 msgstr ""
 
@@ -3677,7 +3677,7 @@ msgstr ""
 msgid "Use snapping for recognized shapes"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:277
+#: ../ui/pageTemplate.glade:208
 msgid "Use the current page size instead of the page size above."
 msgstr ""
 
