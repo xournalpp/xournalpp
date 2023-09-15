@@ -1554,14 +1554,9 @@ void Control::updateBackgroundSizeButton() {
 }
 
 void Control::paperTemplate() {
-    auto dlg = PageTemplateDialog(this->gladeSearchPath, settings, pageTypes);
-    dlg.show(GTK_WINDOW(this->win->getWindow()));
-
-    if (dlg.isSaved()) {
-        PageTemplateSettings model;
-        model.parse(settings->getPageTemplate());
-        this->win->getToolMenuHandler()->setDefaultNewPageType(model.getPageInsertType());
-    }
+    auto popup = xoj::popup::PopupWindowWrapper<xoj::popup::PageTemplateDialog>(this->gladeSearchPath, settings,
+                                                                                win->getToolMenuHandler(), pageTypes);
+    popup.show(GTK_WINDOW(this->win->getWindow()));
 }
 
 void Control::paperFormat() {

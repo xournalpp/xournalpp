@@ -53,16 +53,17 @@ GtkWidget* createPreviewGrid(const std::vector<std::unique_ptr<PageTypeInfo>>& p
 }
 };  // namespace
 
+
 PageTypeSelectionPopoverGridOnly::PageTypeSelectionPopoverGridOnly(PageTypeHandler* typesHandler,
                                                                    const Settings* settings,
-                                                                   PageTemplateDialog* parent):
+                                                                   xoj::popup::PageTemplateDialog* parent):
         PageTypeSelectionMenuBase(typesHandler, settings, SELECTION_ACTION_NAME),
         parent(parent),
         popover(createPopover()) {
 
     xoj::util::GObjectSPtr<GSimpleActionGroup> group(g_simple_action_group_new(), xoj::util::adopt);
     g_action_map_add_action(G_ACTION_MAP(group.get()), G_ACTION(typeSelectionAction.get()));
-    gtk_widget_insert_action_group(parent->getWindow(), G_ACTION_NAMESPACE, G_ACTION_GROUP(group.get()));
+    gtk_widget_insert_action_group(GTK_WIDGET(parent->getWindow()), G_ACTION_NAMESPACE, G_ACTION_GROUP(group.get()));
 }
 
 xoj::util::WidgetSPtr PageTypeSelectionPopoverGridOnly::createPopover() {

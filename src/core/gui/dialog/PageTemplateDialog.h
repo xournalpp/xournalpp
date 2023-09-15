@@ -13,36 +13,36 @@
 
 #include <memory>  // for unique_ptr
 
-#include <gtk/gtk.h>  // for GtkWindow
-
 #include "control/settings/PageTemplateSettings.h"  // for PageTemplateSettings
-#include "gui/GladeGui.h"                           // for GladeGui
+#include "util/raii/GtkWindowUPtr.h"
 
 class PageTypeHandler;
 class PageTypeInfo;
-class PopupMenuButton;
 class GladeSearchpath;
 class Settings;
+class ToolMenuHandler;
 class PageTypeSelectionPopoverGridOnly;
 
-class PageTemplateDialog: public GladeGui {
+namespace xoj::popup {
+class PageTemplateDialog final {
 public:
-    PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types);
+    PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, ToolMenuHandler* toolmenu,
+                       PageTypeHandler* types);
     PageTemplateDialog(PageTemplateDialog&) = delete;
     PageTemplateDialog(PageTemplateDialog&&) = delete;
     PageTemplateDialog& operator=(PageTemplateDialog&) = delete;
     PageTemplateDialog&& operator=(PageTemplateDialog&&) = delete;
-    ~PageTemplateDialog() override;
+    ~PageTemplateDialog();
 
 public:
-    void show(GtkWindow* parent) override;
-
     /**
      * The dialog was confirmed / saved
      */
     bool isSaved() const;
 
     void changeCurrentPageBackground(const PageTypeInfo* info);
+
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
     void showPageSizeDialog();
@@ -53,17 +53,28 @@ private:
     void saveToModel();
 
 private:
+    GladeSearchpath* gladeSearchPath;  // For opening subdialogs as needed
+    xoj::util::GtkWindowUPtr window;
+
     Settings* settings;
+    ToolMenuHandler* toolMenuHandler;
     PageTypeHandler* types;
 
     PageTemplateSettings model;
 
     std::unique_ptr<PageTypeSelectionPopoverGridOnly> pageTypeSelectionMenu;
 
-    std::unique_ptr<PopupMenuButton> popupMenuButton;
-
     /**
      * The dialog was confirmed / saved
      */
     bool saved = false;
+
+private:
+    // Sub-widgets, owned by this->window
+    GtkLabel* pageSizeLabel;
+    GtkLabel* backgroundTypeLabel;
+    GtkColorChooser* backgroundColorChooser;
+    GtkToggleButton* copyLastPageButton;
+    GtkToggleButton* copyLastPageSizeButton;
 };
+};  // namespace xoj::popup
