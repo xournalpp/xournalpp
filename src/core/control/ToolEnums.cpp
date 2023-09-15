@@ -232,6 +232,37 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
     return TOOL_NONE;
 }
 
+auto fillTypeToString(FillType type) -> std::string {
+    switch (type) {
+        case FILL_NONE:
+            return "none";
+        case FILL_PEN:
+            return "fillPen";
+        case FILL_HIGHLIGHTER:
+            return "fillHighlighter";
+        case FILL_PDF_TEXT_MARKER:
+            return "fillPdfTextMarker";
+        default:
+            return "";
+    }
+}
+
+auto fillTypeFromString(const std::string& type) -> FillType {
+    if (type == "none") {
+        return FILL_NONE;
+    }
+    if (type == "fillPen") {
+        return FILL_PEN;
+    }
+    if (type == "fillHighlighter") {
+        return FILL_HIGHLIGHTER;
+    }
+    if (type == "fillPdfTextMarker") {
+        return FILL_PDF_TEXT_MARKER;
+    }
+    return FILL_NONE;
+}
+
 auto eraserTypeToString(EraserType type) -> std::string {
     switch (type) {
         case ERASER_TYPE_NONE:

@@ -18,9 +18,9 @@ constexpr auto UI_DIALOG_NAME = "fillOpacityDialog";
 static int percentToByte(double percent) { return static_cast<int>(std::round(percent * 2.55)); }
 static double byteToPercent(int byte) { return byte / 2.55; }
 
-xoj::popup::FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, ToolType type,
-                                                 std::function<void(int, ToolType)> callback):
-        toolType(type), callback(callback) {
+xoj::popup::FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, FillType type,
+                                                 std::function<void(int, FillType)> callback):
+        fillType(type), callback(callback) {
     Builder builder(gladeSearchPath, UI_FILE);
     this->window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
 
@@ -40,7 +40,7 @@ xoj::popup::FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPat
 
     g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
     g_signal_connect(builder.get("btOk"), "clicked", G_CALLBACK(+[](GtkButton*, FillOpacityDialog* self) {
-                         self->callback(percentToByte(gtk_range_get_value(self->alphaRange)), self->toolType);
+                         self->callback(percentToByte(gtk_range_get_value(self->alphaRange)), self->fillType);
                          gtk_window_close(self->window.get());
                      }),
                      this);
@@ -73,7 +73,7 @@ void xoj::popup::FillOpacityDialog::setPreviewImage(int alpha) {
                     PREVIEW_HEIGTH - PREVIEW_BORDER * 2);
     cairo_fill(cr);
 
-    if (toolType == TOOL_PEN) {
+    if (fillType == FILL_PEN) {
         cairo_set_line_width(cr, 5);
         cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
         cairo_set_source_rgb(cr, 0, 0x80 / 255.0, 0);

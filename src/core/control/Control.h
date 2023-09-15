@@ -291,7 +291,7 @@ public:
 
     void help();
 
-    void selectFillAlpha(ToolType toolType);
+    void selectFillAlpha(FillType type);
 
     /**
      * @brief Initialize the all button tools based on the respective ButtonConfigs

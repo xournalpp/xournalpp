@@ -89,6 +89,14 @@ auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
 std::string toolTypeToString(ToolType type);
 ToolType toolTypeFromString(const std::string& type);
 
+enum FillType {
+    FILL_NONE,
+    FILL_PEN,
+    FILL_HIGHLIGHTER,
+    FILL_PDF_TEXT_MARKER,
+};
+std::string fillTypeToString(FillType type);
+FillType fillTypeFromString(const std::string& type);
 
 enum EraserType { ERASER_TYPE_NONE = 0, ERASER_TYPE_DEFAULT, ERASER_TYPE_WHITEOUT, ERASER_TYPE_DELETE_STROKE };
 std::string eraserTypeToString(EraserType type);

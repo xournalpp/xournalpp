@@ -21,8 +21,8 @@ class GladeSearchpath;
 namespace xoj::popup {
 class FillOpacityDialog {
 public:
-    FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, ToolType type,
-                      std::function<void(int, ToolType)> callback);
+    FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, FillType type,
+                      std::function<void(int, FillType)> callback);
     ~FillOpacityDialog();
 
     inline GtkWindow* getWindow() const { return window.get(); }
@@ -35,7 +35,7 @@ private:
     GtkImage* previewImage;
     GtkRange* alphaRange;
 
-    ToolType toolType;
-    std::function<void(int, ToolType)> callback;
+    FillType fillType;
+    std::function<void(int, FillType)> callback;
 };
 };  // namespace xoj::popup
