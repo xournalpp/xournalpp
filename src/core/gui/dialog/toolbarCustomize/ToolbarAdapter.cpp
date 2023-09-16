@@ -10,7 +10,7 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"       // for AbstractToolItem
 #include "gui/toolbarMenubar/ColorToolItem.h"          // for ColorToolItem
 #include "gui/toolbarMenubar/ToolMenuHandler.h"        // for ToolMenuHandler
-#include "gui/toolbarMenubar/icon/ColorSelectImage.h"  // for ColorSelectImage
+#include "gui/toolbarMenubar/icon/ColorIcon.h"         // for ColorIcon
 #include "gui/toolbarMenubar/model/ToolbarData.h"      // for ToolbarData
 #include "util/Assert.h"                               // for xoj_assert
 #include "util/NamedColor.h"                           // for NamedColor
@@ -80,10 +80,6 @@ void ToolbarAdapter::prepareToolItems() {
 }
 
 void ToolbarAdapter::cleanToolItem(GtkToolItem* it) {
-    ToolItemDragDropData* data = ToolitemDragDrop::metadataGetMetadata(GTK_WIDGET(it));
-    if (data) {
-        gtk_widget_set_sensitive(GTK_WIDGET(it), ToolitemDragDrop::isToolItemEnabled(data));
-    }
     GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(it));
 
     if (window) {
@@ -99,9 +95,6 @@ void ToolbarAdapter::cleanToolItem(GtkToolItem* it) {
 }
 
 void ToolbarAdapter::prepareToolItem(GtkToolItem* it) {
-    // if disable drag an drop is not possible
-    gtk_widget_set_sensitive(GTK_WIDGET(it), true);
-
     gtk_tool_item_set_use_drag_window(it, true);
 
     /*
@@ -245,7 +238,7 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
         gtk_tool_item_set_expand(it, true);
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        GtkWidget* iconWidget = ColorSelectImage::newColorIcon(d->namedColor->getColor(), 16, true);
+        GtkWidget* iconWidget = ColorIcon::newGtkImage(d->namedColor->getColor(), 16, true);
         GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else {
@@ -270,7 +263,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
     gint pos = toolbarGetDropIndex(toolbar, x, y, horizontal);
 
     if (d->type == TOOL_ITEM_ITEM) {
-        GtkToolItem* it = d->item->createItem(horizontal);
+        GtkToolItem* it = d->item->createToolItem(horizontal);
 
         gtk_widget_show_all(GTK_WIDGET(it));
         gtk_toolbar_insert(toolbar, it, pos);
@@ -284,10 +277,9 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         int newId = tb->insertItem(name, id, pos);
         ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        auto* item = new ColorToolItem(adapter->window->getControl(), adapter->window->getControl()->getToolHandler(),
-                                       GTK_WINDOW(adapter->window->getWindow()), *(d->namedColor));
+        auto* item = new ColorToolItem(*(d->namedColor));
 
-        GtkToolItem* it = item->createItem(horizontal);
+        GtkToolItem* it = item->createToolItem(horizontal);
 
         gtk_widget_show_all(GTK_WIDGET(it));
         gtk_toolbar_insert(toolbar, it, pos);

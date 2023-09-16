@@ -22,8 +22,6 @@
 #include <glib.h>         // for gpointer, gboolean, gint
 #include <gtk/gtk.h>      // for GtkWidget, GtkCheckMenu...
 
-#include "control/layer/LayerCtrlListener.h"  // for LayerCtrlListener
-#include "model/Font.h"                       // for XojFont
 #include "util/raii/GObjectSPtr.h"
 
 #include "GladeGui.h"            // for GladeGui
@@ -45,17 +43,12 @@ class Menubar;
 
 typedef std::array<xoj::util::WidgetSPtr, TOOLBAR_DEFINITIONS_LEN> ToolbarWidgetArray;
 
-class MainWindow: public GladeGui, public LayerCtrlListener {
+class MainWindow: public GladeGui {
 public:
     MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent);
     ~MainWindow() override;
 
     void populate(GladeSearchpath* gladeSearchPath);
-
-    // LayerCtrlListener
-public:
-    void rebuildLayerMenu() override;
-    void layerVisibilityChanged() override;
 
 public:
     GMenuModel* getMenuModel() const;
@@ -74,9 +67,6 @@ public:
 
 
     void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
-
-    void setFontButtonFont(const XojFont& font);
-    XojFont getFontButtonFont() const;
 
     void saveSidebarSize();
 
@@ -105,11 +95,7 @@ public:
     ToolbarModel* getToolbarModel() const;
     ToolMenuHandler* getToolMenuHandler() const;
 
-    void disableAudioPlaybackButtons();
-    void enableAudioPlaybackButtons();
-    void setAudioPlaybackPaused(bool paused);
-
-    void setControlTmpDisabled(bool disabled);
+    void setDynamicallyGeneratedSubmenuDisabled(bool disabled);
 
     void updateToolbarMenu();
     void updateColorscheme();

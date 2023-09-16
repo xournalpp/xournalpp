@@ -1,11 +1,12 @@
 #include "AudioPlayer.h"
 
-#include "audio/AudioQueue.h"         // for AudioQueue
-#include "audio/DeviceInfo.h"         // for DeviceInfo
-#include "audio/PortAudioConsumer.h"  // for PortAudioConsumer
-#include "audio/VorbisProducer.h"     // for VorbisProducer
-#include "control/Control.h"          // for Control
-#include "gui/MainWindow.h"           // for MainWindow
+#include "audio/AudioQueue.h"                // for AudioQueue
+#include "audio/DeviceInfo.h"                // for DeviceInfo
+#include "audio/PortAudioConsumer.h"         // for PortAudioConsumer
+#include "audio/VorbisProducer.h"            // for VorbisProducer
+#include "control/Control.h"                 // for Control
+#include "control/actions/ActionDatabase.h"  // for ActionDatabase
+#include "gui/MainWindow.h"                  // for MainWindow
 
 class Settings;
 
@@ -51,11 +52,17 @@ auto AudioPlayer::play() -> bool {
 
 void AudioPlayer::disableAudioPlaybackButtons() {
     if (this->audioQueue->hasStreamEnded()) {
-        this->control.getWindow()->disableAudioPlaybackButtons();
+        auto* actionDB = this->control.getActionDatabase();
+        actionDB->enableAction(Action::AUDIO_PAUSE_PLAYBACK, false);
+        actionDB->enableAction(Action::AUDIO_STOP_PLAYBACK, false);
+        actionDB->enableAction(Action::AUDIO_SEEK_FORWARDS, false);
+        actionDB->enableAction(Action::AUDIO_SEEK_BACKWARDS, false);
+        actionDB->setActionState(Action::AUDIO_PAUSE_PLAYBACK, false);
     }
 }
 
 void AudioPlayer::stop() {
+    disableAudioPlaybackButtons();
     // Stop playing audio
     this->portAudioConsumer->stopPlaying();
 

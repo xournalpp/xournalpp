@@ -73,26 +73,6 @@ auto ToolitemDragDrop::checkToolItemDragDropData(ToolItemDragDropData const* d) 
     return d->identify == ToolItemDragDropData_Identify;
 }
 
-auto ToolitemDragDrop::isToolItemEnabled(ToolItemDragDropData* d) -> bool {
-    if (!checkToolItemDragDropData(d)) {
-        g_warning("ToolitemDragDrop::isToolItemEnabled data is not an instance of ToolItemDragDropData!");
-        return false;
-    }
-    if (d->type == TOOL_ITEM_SEPARATOR) {
-        return true;
-    }
-    if (d->type == TOOL_ITEM_SPACER) {
-        return true;
-    }
-    if (d->type == TOOL_ITEM_COLOR && d->item == nullptr) {
-        return true;
-    }
-
-    g_return_val_if_fail(d->item != nullptr, true);
-
-    return d->item->isEnabled();
-}
-
 auto ToolitemDragDrop::metadataGetMetadata(GtkWidget* w) -> ToolItemDragDropData* {
     void* ptr = g_object_get_data(G_OBJECT(w), ATTACH_DRAG_DROP_DATA);
     if (ptr == nullptr) {

@@ -16,6 +16,8 @@
 
 #include <glib.h>
 
+#include "util/Color.h"
+
 template <class T>
 inline T getGVariantValue(GVariant* v) {
     static_assert(std::is_enum_v<T>);  // enum types are stored as size_t
@@ -120,4 +122,18 @@ inline const GVariantType* gVariantType<const std::string&>() {
 template <>
 inline const GVariantType* gVariantType<double>() {
     return G_VARIANT_TYPE_DOUBLE;
+}
+
+// Specialize util/GVariantTemplate to allow for states of type Color
+template <>
+inline Color getGVariantValue<Color>(GVariant* v) {
+    return static_cast<Color>(g_variant_get_uint32(v));
+}
+template <>
+inline GVariant* makeGVariant(Color v) {
+    return g_variant_new_uint32(static_cast<uint32_t>(v));
+}
+template <>
+inline const GVariantType* gVariantType<Color>() {
+    return G_VARIANT_TYPE_UINT32;
 }

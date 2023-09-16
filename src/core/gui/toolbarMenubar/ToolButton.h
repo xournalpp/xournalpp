@@ -33,8 +33,7 @@ public:
     void setPopover(GtkWidget* popover);
 
 protected:
-    GtkToolItem* createItem(bool horizontal) override;
-    GtkToolItem* newItem() override;
+    GtkWidget* createItem(bool horizontal) override;
 
     GtkWidget* getNewToolIcon() const override;
 

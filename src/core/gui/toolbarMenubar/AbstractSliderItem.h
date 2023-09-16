@@ -11,17 +11,14 @@
 
 #pragma once
 
-// GtkRange
 #include <memory>  // for unique_ptr
 #include <string>  // for string
 
 #include <gtk/gtk.h>  // for GtkToolItem, GtkRange
 
-#include "enums/ActionType.enum.h"  // for ActionType
+#include "control/actions/ActionRef.h"
 
 #include "AbstractToolItem.h"  // for AbstractToolItem
-
-class ActionHandler;
 
 class AbstractSliderItem: public AbstractToolItem {
 public:
@@ -38,18 +35,13 @@ public:
 public:
     /**
      * @param id Unique identifier for this. e.g. `TOOL_FOO_SLIDER`.
-     * @param handler Pointer to global tool-action listener.{@see /src/control/Actions.h}
-     * @param type The type of the action associated with this. {@see /src/enums/ActionType.enum.h}
      * @param range The minimum/maximum/step in internal units. {@see #scaleFunc}.
+     * @param enablingGAction If provided, the slider will be disabled whenever the GAction is.
      */
-    AbstractSliderItem(std::string id, ActionHandler* handler, ActionType type, SliderRange range);
+    AbstractSliderItem(std::string id, SliderRange range, ActionRef enablingGAction);
     ~AbstractSliderItem() override;
 
-    GtkToolItem* createItem(bool horizontal) override;
-    GtkToolItem* createTmpItem(bool horizontal) override;
-
-protected:
-    GtkToolItem* newItem() override;
+    GtkWidget* createItem(bool horizontal) override;
 
 protected:
     virtual void onSliderButtonPress();
@@ -90,11 +82,6 @@ protected:
      * @return whether this' slider is horizontal. Returns false if no such slider exists.
      */
     bool isCurrentHorizontal() const;
-
-    /**
-     * @param enabled `true` iff the slider should respond to user input.
-     */
-    void enable(bool enabled) override;
 
     /**
      * @param x Actual value of the slider.

@@ -50,11 +50,23 @@ void setToggleButtonUnreleasable(GtkToggleButton* btn) {
                                  btn, "toggled", G_CALLBACK(+[](GtkToggleButton* btn, gpointer a) {
                                      xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(a)), xoj::util::adopt);
                                      GVariant* target = gtk_actionable_get_action_target_value(GTK_ACTIONABLE(btn));
-                                     gtk_toggle_button_set_active(btn, g_variant_equal(state.get(), target));
+                                     if (bool active = g_variant_equal(state.get(), target);
+                                         active && !gtk_toggle_button_get_active(btn)) {
+                                         gtk_toggle_button_set_active(btn, true);
+                                     }
                                  }),
                                  action, GConnectFlags(0));
                      }),
                      nullptr);
+}
+
+void setWidgetFollowActionEnabled(GtkWidget* w, GAction* a) {
+    g_signal_connect_object(a, "notify::enabled", G_CALLBACK(+[](GObject* a, GParamSpec*, gpointer w) {
+                                bool b = g_action_get_enabled(G_ACTION(a));
+                                gtk_widget_set_sensitive(GTK_WIDGET(w), b);
+                            }),
+                            w, GConnectFlags(0));
+    gtk_widget_set_sensitive(w, g_action_get_enabled(a));
 }
 
 #if GTK_MAJOR_VERSION == 3
@@ -80,7 +92,15 @@ void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, 
                     return;
                 }
 
-                static auto callback = +[](GtkToggleButton* btn, gpointer action) {
+                {
+                    // btn owns the return GVariant of gtk_actionable_get_action_target_value()
+                    GVariant* target = gtk_actionable_get_action_target_value(GTK_ACTIONABLE(btn));
+                    // action does not own the return GVariant and it is not floating either!
+                    xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(action)), xoj::util::adopt);
+                    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(btn), g_variant_equal(target, state.get()));
+                }
+
+                static auto toggledCallback = +[](GtkToggleButton* btn, gpointer action) {
                     GVariant* tgt = gtk_actionable_get_action_target_value(GTK_ACTIONABLE(btn));
                     xoj_assert(tgt);
                     if (gtk_toggle_button_get_active(btn)) {
@@ -88,8 +108,7 @@ void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, 
                                               gtk_actionable_get_action_target_value(GTK_ACTIONABLE(btn)));
                     }
                 };
-
-                g_signal_connect_object(btn, "toggled", G_CALLBACK(callback), action, GConnectFlags(0));
+                g_signal_connect_object(btn, "toggled", G_CALLBACK(toggledCallback), action, GConnectFlags(0));
 
                 g_signal_connect_object(
                         action, "notify::state", G_CALLBACK(+[](GObject* action, GParamSpec*, gpointer btn) {
@@ -101,12 +120,14 @@ void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, 
                             xoj_assert(state);
                             if (g_variant_equal(target, state.get()) &&
                                 !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(btn))) {
-                                g_signal_handlers_block_by_func(btn, (gpointer)callback, action);
+                                g_signal_handlers_block_by_func(btn, (gpointer)toggledCallback, action);
                                 gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(btn), true);
-                                g_signal_handlers_unblock_by_func(btn, (gpointer)callback, action);
+                                g_signal_handlers_unblock_by_func(btn, (gpointer)toggledCallback, action);
                             }
                         }),
                         btn, GConnectFlags(0));
+
+                setWidgetFollowActionEnabled(btn, action);
             }),
             new Data{actionNamespace, actionName}, +[](gpointer d, GClosure*) { delete static_cast<Data*>(d); },
             GConnectFlags(0));

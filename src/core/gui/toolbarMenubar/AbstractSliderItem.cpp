@@ -10,12 +10,11 @@
 #include <glib.h>         // for g_strdup, gchar
 
 #include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
-
-class ActionHandler;
+#include "util/GtkUtil.h"                         // for setWidgetFollowActionEnabled
 
 class AbstractSliderItem::Impl {
 public:
-    Impl(AbstractSliderItem* publicApi_, SliderRange range);
+    Impl(AbstractSliderItem* publicApi, SliderRange range, ActionRef enablingGAction);
 
     static void onSliderChanged(GtkRange* range, AbstractSliderItem* parent);
     static bool onSliderButtonPress(GtkRange* range, GdkEvent* event, AbstractSliderItem* parent);
@@ -33,13 +32,11 @@ public:
      */
     void setSlider(GtkRange* slider);
 
-    void setEnabled(bool enabled);
-
     /**
      * Constructs a new toolbar item and slider.
      * Does not take ownership.
      */
-    std::tuple<GtkToolItem*, GtkRange*> newItem(bool horizontal) const;
+    GtkRange* newItem(bool horizontal) const;
 
     // Conversions to/from range_ (internal values) to external scale values:
     double getScaleMax() const { return publicApi_->scaleFunc(range_.max); };
@@ -50,15 +47,15 @@ public:
 public:
     bool horizontal_ = false;
     GtkRange* slider_ = nullptr;
-    GtkToolItem* toolItem_ = nullptr;
+    ActionRef enablingGAction_;  ///< The widget is sensitive exactly when this GAction's `enabled` property is true
     AbstractSliderItem* publicApi_;
 
     const SliderRange range_;
 };
 
 AbstractSliderItem::~AbstractSliderItem() = default;
-AbstractSliderItem::AbstractSliderItem(std::string id, ActionHandler* handler, ActionType type, SliderRange range):
-        AbstractToolItem{std::move(id), handler, type}, pImpl{std::make_unique<Impl>(this, range)} {}
+AbstractSliderItem::AbstractSliderItem(std::string id, SliderRange range, ActionRef enablingGAction):
+        AbstractToolItem{std::move(id)}, pImpl{std::make_unique<Impl>(this, range, std::move(enablingGAction))} {}
 
 void AbstractSliderItem::configure(GtkRange* slider, bool isHorizontal) const {
     double fineStepSize = pImpl->getFineStepSize();
@@ -73,37 +70,19 @@ void AbstractSliderItem::configure(GtkRange* slider, bool isHorizontal) const {
     }
 
     gtk_scale_set_draw_value(GTK_SCALE(slider), true);
-    gtk_widget_set_can_focus(GTK_WIDGET(slider), false);
+    gtk_widget_set_can_focus(GTK_WIDGET(slider), false);  // todo(gtk4) not necessary anymore
 }
 
-auto AbstractSliderItem::createItem(bool horizontal) -> GtkToolItem* {
+auto AbstractSliderItem::createItem(bool horizontal) -> GtkWidget* {
     pImpl->horizontal_ = horizontal;
-    auto [toolItem, slider] = pImpl->newItem(horizontal);
+    auto* slider = pImpl->newItem(horizontal);
 
-    pImpl->toolItem_ = toolItem;
-    g_object_ref(toolItem);
     pImpl->setSlider(slider);
 
-    if (GTK_IS_TOOL_ITEM(toolItem)) {
-        gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(toolItem), false);
-    }
-    if (GTK_IS_TOOL_BUTTON(toolItem) || GTK_IS_TOGGLE_TOOL_BUTTON(toolItem)) {
-        g_signal_connect(toolItem, "clicked", G_CALLBACK(&toolButtonCallback), this);
-    }
+    this->item.reset(GTK_WIDGET(slider), xoj::util::adopt);
 
-    return toolItem;
+    return GTK_WIDGET(slider);
 }
-
-auto AbstractSliderItem::createTmpItem(bool horizontal) -> GtkToolItem* {
-    auto [item, slider] = pImpl->newItem(horizontal);
-    g_object_ref(item);
-
-    gtk_widget_show_all(GTK_WIDGET(item));
-    return item;
-}
-
-// TODO(personalizedrefrigerator): Remove this (currently required by AbstractToolItem
-auto AbstractSliderItem::newItem() -> GtkToolItem* { return createTmpItem(true); }
 
 void AbstractSliderItem::onSliderButtonPress() {}
 void AbstractSliderItem::onSliderButtonRelease() {}
@@ -113,8 +92,6 @@ auto AbstractSliderItem::formatSliderValue(double value) const -> std::string {
     result << std::setw(3) << std::fixed << value;
     return result.str();
 }
-
-void AbstractSliderItem::enable(bool enabled) { pImpl->setEnabled(enabled); }
 
 auto AbstractSliderItem::getSliderWidget() -> GtkRange* { return pImpl->slider_; }
 auto AbstractSliderItem::isCurrentHorizontal() const -> bool {
@@ -126,17 +103,16 @@ auto AbstractSliderItem::isCurrentHorizontal() const -> bool {
     return pImpl->horizontal_;
 }
 
-AbstractSliderItem::Impl::Impl(AbstractSliderItem* parent, SliderRange range): publicApi_{parent}, range_{range} {}
+AbstractSliderItem::Impl::Impl(AbstractSliderItem* parent, SliderRange range, ActionRef enablingGAction):
+        enablingGAction_(std::move(enablingGAction)), publicApi_{parent}, range_{range} {}
 
-auto AbstractSliderItem::Impl::newItem(bool horizontal) const -> std::tuple<GtkToolItem*, GtkRange*> {
+auto AbstractSliderItem::Impl::newItem(bool horizontal) const -> GtkRange* {
     GtkOrientation orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
-    GtkToolItem* it = gtk_tool_item_new();
     GtkRange* slider =
             GTK_RANGE(gtk_scale_new_with_range(orientation, getScaleMin(), getScaleMax(), getFineStepSize()));
     publicApi_->configure(slider, horizontal);
 
-    gtk_container_add(GTK_CONTAINER(it), GTK_WIDGET(slider));
-    return {it, slider};
+    return slider;
 }
 
 void AbstractSliderItem::Impl::setSlider(GtkRange* slider) {
@@ -158,17 +134,11 @@ void AbstractSliderItem::Impl::setSlider(GtkRange* slider) {
     g_signal_connect(newSliderWidget, "button-release-event", G_CALLBACK(onSliderButtonRelease), publicApi_);
     g_signal_connect(newSliderWidget, "scroll-event", G_CALLBACK(onSliderHoverScroll), publicApi_);
     g_signal_connect(newSliderWidget, "format-value", G_CALLBACK(formatSliderValue), publicApi_);
+    if (enablingGAction_) {
+        xoj::util::gtk::setWidgetFollowActionEnabled(newSliderWidget, G_ACTION(enablingGAction_.get()));
+    }
 
     slider_ = slider;
-}
-
-void AbstractSliderItem::Impl::setEnabled(bool enabled) {
-    if (slider_) {
-        gtk_widget_set_sensitive(GTK_WIDGET(slider_), enabled);
-    }
-    if (toolItem_) {
-        gtk_widget_set_sensitive(GTK_WIDGET(toolItem_), enabled);
-    }
 }
 
 void AbstractSliderItem::Impl::onSliderChanged(GtkRange* range, AbstractSliderItem* parent) {

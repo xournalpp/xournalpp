@@ -44,7 +44,6 @@ public:
 public:
     static std::unique_ptr<ToolItemDragDropData> ToolItemDragDropData_new(AbstractToolItem* item);
     static bool checkToolItemDragDropData(ToolItemDragDropData const* d);
-    static bool isToolItemEnabled(ToolItemDragDropData* d);
 
     static ToolItemDragDropData* metadataGetMetadata(GtkWidget* w);
 

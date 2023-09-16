@@ -67,7 +67,7 @@ public:
      * Sets the font of all containing text elements, return an undo action
      * (or nullptr if there are no Text elements)
      */
-    UndoActionPtr setFont(XojFont& font);
+    UndoActionPtr setFont(const XojFont& font);
 
     /**
      * Fills the undo item if the selection is deleted

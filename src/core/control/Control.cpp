@@ -329,18 +329,11 @@ void Control::initWindow(MainWindow* win) {
 
     setViewPairedPages(settings->isShowPairedPages());
 
-    // penSizeChanged();
-    // eraserSizeChanged();
-    // highlighterSizeChanged();
-    // updateDeletePageButton();
-    // toolFillChanged();
     toolLineStyleChanged();
 
     this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
 
     this->enableAutosave(settings->isAutosaveEnabled());
-
-    win->setFontButtonFont(settings->getFont());
 }
 
 auto Control::autosaveCallback(Control* control) -> bool {
@@ -741,13 +734,11 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             break;
 
         case ACTION_FONT_BUTTON_CHANGED:
-            fontChanged();
+            // More of a signal than an action
             break;
 
         case ACTION_SELECT_FONT:
-            if (win) {
-                win->getToolMenuHandler()->showFontSelectionDlg();
-            }
+            showFontDialog();
             break;
 
             // Used for all colors
@@ -1165,36 +1156,6 @@ void Control::setToolDrawingType(DrawingType type) {
             }
         }
         this->toolHandler->setDrawingType(type);
-
-        switch (type) {
-            case DRAWING_TYPE_LINE:
-                fireActionSelected(GROUP_RULER, ACTION_RULER);
-                break;
-            case DRAWING_TYPE_RECTANGLE:
-                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_RECT);
-                break;
-            case DRAWING_TYPE_ARROW:
-                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_ARROW);
-                break;
-            case DRAWING_TYPE_DOUBLE_ARROW:
-                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_DOUBLE_ARROW);
-                break;
-            case DRAWING_TYPE_COORDINATE_SYSTEM:
-                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_COORDINATE_SYSTEM);
-                break;
-            case DRAWING_TYPE_ELLIPSE:
-                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_ELLIPSE);
-                break;
-            case DRAWING_TYPE_SPLINE:
-                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_SPLINE);
-                break;
-            case DRAWING_TYPE_SHAPE_RECOGNIZER:
-                fireActionSelected(GROUP_RULER, ACTION_SHAPE_RECOGNIZER);
-                break;
-            default:
-                fireActionSelected(GROUP_RULER, ACTION_NOT_SELECTED);
-                break;
-        }
     }
 }
 
@@ -1633,7 +1594,9 @@ void Control::selectDefaultTool() {
     }
 }
 
-void Control::setFontSelected(const XojFont& font) { this->getWindow()->setFontButtonFont(font); }
+void Control::setFontSelected(const XojFont& font) {
+    this->actionDB->setActionState(Action::FONT, font.asString().c_str());
+}
 
 void Control::toolChanged() {
     ToolType type = toolHandler->getToolType();
@@ -1659,44 +1622,6 @@ void Control::toolChanged() {
     this->actionDB->setActionState(Action::TOOL_DRAW_SPLINE, dt == DRAWING_TYPE_SPLINE);
     this->actionDB->setActionState(Action::TOOL_DRAW_SHAPE_RECOGNIZER, dt == DRAWING_TYPE_SHAPE_RECOGNIZER);
 
-
-    // Todo: adapt gui/toolbarMenubar/* and get rid of this
-
-    // Convert enum values, enums has to be in the same order!
-    auto at = static_cast<ActionType>(type - TOOL_PEN + ACTION_TOOL_PEN);
-    fireActionSelected(GROUP_TOOL, at);
-
-    fireEnableAction(ACTION_RULER, toolHandler->hasCapability(TOOL_CAP_RULER));
-    fireEnableAction(ACTION_TOOL_DRAW_RECT, toolHandler->hasCapability(TOOL_CAP_RECTANGLE));
-    fireEnableAction(ACTION_TOOL_DRAW_ELLIPSE, toolHandler->hasCapability(TOOL_CAP_ELLIPSE));
-    fireEnableAction(ACTION_TOOL_DRAW_ARROW, toolHandler->hasCapability(TOOL_CAP_ARROW));
-    fireEnableAction(ACTION_TOOL_DRAW_DOUBLE_ARROW, toolHandler->hasCapability(TOOL_CAP_DOUBLE_ARROW));
-    fireEnableAction(ACTION_TOOL_DRAW_COORDINATE_SYSTEM, toolHandler->hasCapability(TOOL_CAP_ARROW));
-    fireEnableAction(ACTION_TOOL_DRAW_SPLINE, toolHandler->hasCapability(TOOL_CAP_SPLINE));
-    fireEnableAction(ACTION_SHAPE_RECOGNIZER, toolHandler->hasCapability(TOOL_CAP_RECOGNIZER));
-
-    ActionType rulerAction = ACTION_NOT_SELECTED;
-    if (toolHandler->getDrawingType() == DRAWING_TYPE_SHAPE_RECOGNIZER) {
-        rulerAction = ACTION_SHAPE_RECOGNIZER;
-    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_LINE) {
-        rulerAction = ACTION_RULER;
-    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_RECTANGLE) {
-        rulerAction = ACTION_TOOL_DRAW_RECT;
-    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_ELLIPSE) {
-        rulerAction = ACTION_TOOL_DRAW_ELLIPSE;
-    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_ARROW) {
-        rulerAction = ACTION_TOOL_DRAW_ARROW;
-    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_DOUBLE_ARROW) {
-        rulerAction = ACTION_TOOL_DRAW_DOUBLE_ARROW;
-    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_COORDINATE_SYSTEM) {
-        rulerAction = ACTION_TOOL_DRAW_COORDINATE_SYSTEM;
-    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE) {
-        rulerAction = ACTION_TOOL_DRAW_SPLINE;
-    }
-    fireActionSelected(GROUP_RULER, rulerAction);
-    //////////////////////////
-
-
     bool enableSize = toolHandler->hasCapability(TOOL_CAP_SIZE);
     this->actionDB->enableAction(Action::TOOL_SIZE, enableSize);
     if (enableSize) {
@@ -1716,10 +1641,10 @@ void Control::toolChanged() {
         toolFillChanged();
     }
 
-    fireEnableAction(ACTION_SELECT_COLOR, toolHandler->hasCapability(TOOL_CAP_COLOR));
-    fireEnableAction(ACTION_SELECT_COLOR_CUSTOM, toolHandler->hasCapability(TOOL_CAP_COLOR));
-    // Update color
-    if (toolHandler->hasCapability(TOOL_CAP_COLOR)) {
+    bool enableColor = toolHandler->hasCapability(TOOL_CAP_COLOR);
+    this->actionDB->enableAction(Action::TOOL_COLOR, enableColor);
+    this->actionDB->enableAction(Action::SELECT_COLOR, enableColor);
+    if (enableColor) {
         toolColorChanged();
     }
 
@@ -1812,7 +1737,7 @@ auto Control::getLineStyleToSelect() -> std::optional<string> const {
 }
 
 void Control::toolColorChanged() {
-    fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
+    this->actionDB->setActionState(Action::TOOL_COLOR, getToolHandler()->getColorMaskAlpha());
     getCursor()->updateCursor();
 }
 
@@ -1832,8 +1757,6 @@ void Control::changeColorOfSelection() {
         }
     }
 }
-
-void Control::setCustomColorSelected() { fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR_CUSTOM); }
 
 void Control::showSettings() {
     // take note of some settings before to compare with after
@@ -2286,7 +2209,8 @@ void Control::block(const string& name) {
     }
 
     // Disable all gui Control, to get full control over the application
-    win->setControlTmpDisabled(true);
+    win->setDynamicallyGeneratedSubmenuDisabled(true);
+    actionDB->disableAll();
     getCursor()->setCursorBusy(true);
     disableSidebarTmp(true);
 
@@ -2306,7 +2230,8 @@ void Control::unblock() {
         return;
     }
 
-    this->win->setControlTmpDisabled(false);
+    this->win->setDynamicallyGeneratedSubmenuDisabled(false);
+    actionDB->resetEnableStatus();
     getCursor()->setCursorBusy(false);
     disableSidebarTmp(false);
 
@@ -2400,6 +2325,38 @@ auto Control::showSaveDialog() -> bool {
     this->doc->unlock();
 
     return true;
+}
+
+void Control::showFontDialog() {
+    this->actionDB->enableAction(Action::SELECT_FONT, false);  // Only one dialog
+    auto* dlg = gtk_font_chooser_dialog_new(_("Select font"), GTK_WINDOW(this->win->getWindow()));
+    gtk_font_chooser_set_font(GTK_FONT_CHOOSER(dlg), settings->getFont().asString().c_str());
+
+    auto popup = xoj::popup::PopupWindowWrapper<XojMsgBox>(GTK_DIALOG(dlg), [this, dlg](int response) {
+        if (response == GTK_RESPONSE_OK) {
+            auto font = xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(GTK_FONT_CHOOSER(dlg)));
+            this->actionDB->fireChangeActionState(Action::FONT, font.get());
+        }
+        this->actionDB->enableAction(Action::SELECT_FONT, true);
+    });
+    popup.show(GTK_WINDOW(this->win->getWindow()));
+}
+
+void Control::showColorChooserDialog() {
+    this->actionDB->enableAction(Action::SELECT_COLOR, false);  // Only one dialog
+    auto* dlg = gtk_color_chooser_dialog_new(_("Select color"), GTK_WINDOW(this->win->getWindow()));
+    GdkRGBA c = Util::argb_to_GdkRGBA(toolHandler->getColor());
+    gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(dlg), &c);
+
+    auto popup = xoj::popup::PopupWindowWrapper<XojMsgBox>(GTK_DIALOG(dlg), [this, dlg](int response) {
+        if (response == GTK_RESPONSE_OK) {
+            GdkRGBA c;
+            gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dlg), &c);
+            this->actionDB->fireChangeActionState(Action::TOOL_COLOR, Util::GdkRGBA_to_rgb(c));
+        }
+        this->actionDB->enableAction(Action::SELECT_COLOR, true);
+    });
+    popup.show(GTK_WINDOW(this->win->getWindow()));
 }
 
 void Control::updateWindowTitle() {
@@ -2897,20 +2854,16 @@ void Control::setToolSize(ToolSize size) {
     this->toolHandler->setSize(size);
 }
 
-void Control::fontChanged() {
-    XojFont font = win->getFontButtonFont();
+void Control::fontChanged(const XojFont& font) {
     settings->setFont(font);
 
-    EditSelection* sel = nullptr;
     if (this->win) {
-        sel = this->win->getXournal()->getSelection();
-    }
-    if (sel) {
-        undoRedo->addUndoAction(UndoActionPtr(sel->setFont(font)));
+        if (EditSelection* sel = this->win->getXournal()->getSelection(); sel) {
+            undoRedo->addUndoAction(UndoActionPtr(sel->setFont(font)));
+        }
     }
 
-    TextEditor* editor = getTextEditor();
-    if (editor) {
+    if (TextEditor* editor = getTextEditor(); editor) {
         editor->setFont(font);
     }
 }

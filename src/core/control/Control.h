@@ -149,7 +149,6 @@ public:
      *
      */
     void changeColorOfSelection() override;
-    void setCustomColorSelected() override;
     void toolChanged() override;
     void toolSizeChanged() override;
     void toolFillChanged() override;
@@ -158,7 +157,8 @@ public:
     void selectTool(ToolType type);
     void selectDefaultTool();
 
-    void setFontSelected(const XojFont& font);
+    void setFontSelected(const XojFont& font);  ///< Modifies the Action state without triggering callbacks
+    void fontChanged(const XojFont& font);      ///< Set the font after the user selected a font
 
     void updatePageNumbers(size_t page, size_t pdfPage);
 
@@ -336,6 +336,8 @@ protected:
     void highlightPositionToggle();
 
     bool showSaveDialog();
+    void showFontDialog();
+    void showColorChooserDialog();
 
     void fileLoaded(int scrollToPage = -1);
 
@@ -346,7 +348,6 @@ protected:
     static bool checkChangedDocument(Control* control);
     static bool autosaveCallback(Control* control);
 
-    void fontChanged();
     /**
      * Load metadata later, md will be deleted
      */

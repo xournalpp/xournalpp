@@ -16,6 +16,19 @@
 #define START_ROW "   * " << std::left << std::setw(30) << std::boolalpha << Action_toString(a)
 #endif
 
+namespace {
+template <Action a, class U = void>
+struct InitiallyEnabled {
+    static inline void setup(ActionDatabase* db, Control*) { db->enableAction(a, true); }
+};
+template <Action a>
+struct InitiallyEnabled<a, std::void_t<decltype(&ActionProperties<a>::initiallyEnabled)>> {
+    static inline void setup(ActionDatabase* db, Control* ctrl) {
+        db->enableAction(a, ActionProperties<a>::initiallyEnabled(ctrl));
+    }
+};
+};  // namespace
+
 class ActionDatabase::Populator {
     /**
      * Accelerators<a>::setup(ctrl); will setup the accelerators listed in ActionProperties<a>::accelerators (if any)
@@ -43,16 +56,6 @@ class ActionDatabase::Populator {
                     fullActionName.c_str(), ActionProperties<a>::accelerators);
         }
     };
-    template <Action a, class U = void>
-    struct InitiallyEnabled {
-        static inline void setup(ActionDatabase*) {}
-    };
-    template <Action a>
-    struct InitiallyEnabled<a, std::void_t<decltype(&ActionProperties<a>::initiallyEnabled)>> {
-        static inline void setup(ActionDatabase* db) {
-            db->enableAction(a, ActionProperties<a>::initiallyEnabled(db->control));
-        }
-    };
 
     template <Action a>
     static inline void finishSetup(ActionDatabase* db, const char* signal) {
@@ -60,7 +63,7 @@ class ActionDatabase::Populator {
                                             G_CALLBACK(ActionProperties<a>::callback), db->control);
         g_action_map_add_action(G_ACTION_MAP(db->win), G_ACTION(db->gActions[a].get()));
         Accelerators<a>::setup(db->control);
-        InitiallyEnabled<a>::setup(db);
+        InitiallyEnabled<a>::setup(db, db->control);
     }
 
     // Actions without state or parameter
@@ -164,4 +167,21 @@ void ActionDatabase::enableAction(Action action, bool enable) {
     xoj_assert(gActions[action]);
     g_simple_action_set_enabled(gActions[action].get(), enable);
     ACTIONDB_PRINT_DEBUG((enable ? "Enabling Action \"" : "Disabling Action\"") << Action_toString(action) << "\"");
+}
+
+auto ActionDatabase::getAction(Action a) const -> ActionRef { return gActions[a]; }
+
+void ActionDatabase::disableAll() {
+    for (auto&& a: gActions) {
+        g_simple_action_set_enabled(a.get(), false);
+    }
+}
+
+template <size_t... As>
+static void resetEnableStatusImpl(std::index_sequence<As...>, ActionDatabase* db, Control* ctrl) {
+    ((InitiallyEnabled<static_cast<Action>(As)>::setup(db, ctrl)), ...);
+}
+
+void ActionDatabase::resetEnableStatus() {
+    resetEnableStatusImpl(std::make_index_sequence<xoj::to_underlying(Action::ENUMERATOR_COUNT)>(), this, control);
 }

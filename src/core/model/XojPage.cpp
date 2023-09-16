@@ -15,6 +15,7 @@ XojPage::XojPage(double width, double height, bool suppressLayerCreation): width
     if (!suppressLayerCreation) {
         // ensure at least one valid layer exists
         this->addLayer(new Layer());
+        this->currentLayer = 1;
     }
 }
 

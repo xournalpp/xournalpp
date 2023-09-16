@@ -1,127 +1,79 @@
 #include "FontButton.h"
 
-#include <sstream>  // for stringstream, basic...
+#include <sstream>  // for stringstream
 #include <utility>  // for move
 
 #include <glib-object.h>  // for g_object_ref, g_obj...
 
-#include "control/Actions.h"                      // for ActionHandler
-#include "enums/ActionGroup.enum.h"               // for GROUP_NOGROUP
+#include "control/Control.h"                      // for Control
+#include "control/actions/ActionDatabase.h"       // for ActionDatabase
 #include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
+#include "model/Font.h"                           // for Font
+#include "util/GtkUtil.h"                         // for fixActionableInitialSensitivity
+#include "util/gtk4_helper.h"                     // for gtk_button_set_child
 #include "util/i18n.h"                            // for _
-#include "util/serdesstream.h"                    // for serdes_stream
+#include "util/raii/GVariantSPtr.h"
+#include "util/serdesstream.h"
 
-class GladeGui;
 
-FontButton::FontButton(ActionHandler* handler, std::string id, ActionType type, std::string description,
-                       GtkWidget* menuitem):
-        AbstractToolItem(std::move(id), handler, type, menuitem) {
-    this->description = std::move(description);
+FontButton::FontButton(std::string id, ActionDatabase& db):
+        AbstractToolItem(std::move(id)), gAction(db.getAction(Action::FONT)) {}
+
+static GtkWidget* makeChild(const char* desc) {
+    XojFont font(desc);
+    GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+    gtk_widget_set_margin_start(box, 4);
+    gtk_widget_set_margin_end(box, 4);
+    GtkWidget* label = gtk_label_new(nullptr);
+    auto markup = "<span font=\"" + font.getName() + "\">" + font.getName() + "</span>";
+    gtk_label_set_markup(GTK_LABEL(label), markup.c_str());
+    gtk_box_append(GTK_BOX(box), label);
+
+    auto size = serdes_stream<std::stringstream>();
+    size << font.getSize();
+    gtk_box_append(GTK_BOX(box), gtk_label_new(size.str().c_str()));
+    gtk_widget_show_all(box);
+    return box;
 }
 
-FontButton::~FontButton() = default;
+auto FontButton::createItem(bool horizontal) -> GtkWidget* {
+    GtkWidget* btn = gtk_button_new();
+    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
+    xoj::util::GVariantSPtr font(g_action_get_state(G_ACTION(gAction.get())), xoj::util::adopt);
+    const char* desc = g_variant_get_string(font.get(), nullptr);
+    gtk_button_set_child(GTK_BUTTON(btn), makeChild(desc));
+    gtk_widget_set_tooltip_text(btn, getToolDisplayName().c_str());
+    gtk_actionable_set_action_name(GTK_ACTIONABLE(btn),
+                                   (std::string("win.") + Action_toString(Action::SELECT_FONT)).c_str());
 
-void FontButton::activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
-    std::string name = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(fontButton));
+    g_signal_connect_object(gAction.get(), "notify::state", G_CALLBACK(+[](GObject* action, GParamSpec*, gpointer btn) {
+                                xoj::util::GVariantSPtr font(g_action_get_state(G_ACTION(action)), xoj::util::adopt);
+                                const char* desc = g_variant_get_string(font.get(), nullptr);
+                                gtk_button_set_child(GTK_BUTTON(btn), makeChild(desc));
+                            }),
+                            btn, GConnectFlags(0));
 
-    auto pos = name.find_last_of(' ');
-    this->font.setName(name.substr(0, pos));
-    this->font.setSize(std::stod(name.substr(pos + 1)));
-
-    handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, nullptr, true);
-}
-
-static void setFontFontButton(GtkWidget* fontButton, const XojFont& font) {
-    auto name = serdes_stream<std::stringstream>();
-    name << font.getName() << " " << font.getSize();
-    gtk_font_chooser_set_font(GTK_FONT_CHOOSER(fontButton), name.str().c_str());
-}
-
-static auto newFontButton() -> GtkWidget* {
-    GtkWidget* w = gtk_font_button_new();
-    gtk_widget_show(w);
-    gtk_font_button_set_use_font(GTK_FONT_BUTTON(w), true);
-    gtk_button_set_focus_on_click(GTK_BUTTON(w), false);
-
-    return w;
-}
-
-void FontButton::setFont(const XojFont& font) {
-    this->font = font;
-    if (this->fontButton == nullptr) {
-        return;
-    }
-
-    setFontFontButton(this->fontButton, font);
-}
-
-auto FontButton::getFont() const -> XojFont {
-    // essentially, copy the font object to prevent a memory leak.
-    XojFont newfont;
-    newfont.setName(font.getName());
-    newfont.setSize(font.getSize());
-
-    return newfont;
+    GtkToolItem* it = gtk_tool_item_new();
+    gtk_container_add(GTK_CONTAINER(it), btn);
+    /// Makes a proxy item for the toolbar's overflow menu
+    auto createProxy = [this]() {
+        GtkWidget* proxy = gtk_menu_item_new();
+        auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+        gtk_container_add(GTK_CONTAINER(proxy), box);
+        gtk_box_append(GTK_BOX(box), getNewToolIcon());
+        gtk_box_append(GTK_BOX(box), gtk_label_new(getToolDisplayName().c_str()));
+        gtk_actionable_set_action_name(GTK_ACTIONABLE(proxy),
+                                       (std::string("win.") + Action_toString(Action::SELECT_FONT)).c_str());
+        xoj::util::gtk::fixActionableInitialSensitivity(GTK_ACTIONABLE(proxy));
+        return proxy;
+    };
+    gtk_tool_item_set_proxy_menu_item(it, "", createProxy());
+    this->item.reset(GTK_WIDGET(it), xoj::util::adopt);
+    return this->item.get();
 }
 
 auto FontButton::getToolDisplayName() const -> std::string { return _("Font"); }
 
 auto FontButton::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name("font-x-generic", GTK_ICON_SIZE_SMALL_TOOLBAR);
-}
-
-auto FontButton::createItem(bool horizontal) -> GtkToolItem* {
-    if (this->item) {
-        return this->item;
-    }
-
-    this->item = newItem();
-    g_object_ref(this->item);
-    g_signal_connect(fontButton, "font_set", G_CALLBACK(&toolButtonCallback), this);
-    return this->item;
-}
-
-auto FontButton::createTmpItem(bool horizontal) -> GtkToolItem* {
-    GtkWidget* fontButton = newFontButton();
-
-    GtkToolItem* it = gtk_tool_item_new();
-
-    gtk_container_add(GTK_CONTAINER(it), fontButton);
-    gtk_tool_item_set_tooltip_text(it, this->description.c_str());
-    gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
-
-    if (!this->font.getName().empty()) {
-        setFontFontButton(fontButton, this->font);
-    }
-
-    gtk_widget_show_all(GTK_WIDGET(it));
-    return it;
-}
-
-void FontButton::showFontDialog() {
-    if (this->fontButton == nullptr) {
-        newItem();
-    }
-
-    gtk_button_clicked(GTK_BUTTON(this->fontButton));
-}
-
-auto FontButton::newItem() -> GtkToolItem* {
-    if (this->fontButton) {
-        g_object_unref(this->fontButton);
-    }
-    GtkToolItem* it = gtk_tool_item_new();
-
-    this->fontButton = newFontButton();
-    gtk_container_add(GTK_CONTAINER(it), this->fontButton);
-    gtk_tool_item_set_tooltip_text(it, this->description.c_str());
-    gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(it), false);
-
-    g_signal_connect(this->fontButton, "font-set", G_CALLBACK(&toolButtonCallback), this);
-
-    if (!this->font.getName().empty()) {
-        setFont(this->font);
-    }
-
-    return it;
+    return gtk_image_new_from_icon_name("font-x-generic", GTK_ICON_SIZE_LARGE_TOOLBAR);
 }

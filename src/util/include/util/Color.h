@@ -29,7 +29,7 @@ struct ColorU8 {
     uint8_t alpha{};
 
     constexpr ColorU8() = default;
-    constexpr ColorU8(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0): red(r), green(g), blue(b), alpha(a) {}
+    constexpr ColorU8(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0xffU): red(r), green(g), blue(b), alpha(a) {}
     constexpr explicit ColorU8(uint32_t val):
             // Legacy ordering for serdes: 0xAARRGGBB
             red(uint8_t((val >> 16U) & 0xffU)),

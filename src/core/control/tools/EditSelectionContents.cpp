@@ -204,7 +204,7 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
  * Sets the font of all containing text elements, return an undo action
  * (or nullptr if there are no Text elements)
  */
-auto EditSelectionContents::setFont(XojFont& font) -> UndoActionPtr {
+auto EditSelectionContents::setFont(const XojFont& font) -> UndoActionPtr {
     double x1 = std::numeric_limits<double>::quiet_NaN();
     double x2 = std::numeric_limits<double>::quiet_NaN();
     double y1 = std::numeric_limits<double>::quiet_NaN();

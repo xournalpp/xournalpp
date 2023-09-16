@@ -34,7 +34,7 @@ public:
     bool redo(Control* control) override;
     std::string getText() override;
 
-    void addStroke(Text* e, XojFont& oldFont, XojFont& newFont);
+    void addStroke(Text* e, const XojFont& oldFont, const XojFont& newFont);
 
 private:
     std::vector<FontUndoActionEntry*> data;

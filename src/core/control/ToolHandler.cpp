@@ -359,7 +359,6 @@ void ToolHandler::setColor(Color color, bool userSelection) {
         setColorAlpha(*tool, currentAlpha);
         this->stateChangeListener->changeColorOfSelection();
     }
-    this->stateChangeListener->setCustomColorSelected();
 }
 
 void ToolHandler::setButtonColor(Color color, Button button) {
@@ -367,9 +366,12 @@ void ToolHandler::setButtonColor(Color color, Button button) {
     tool->setColor(color);
 }
 
-auto ToolHandler::getColor() const -> Color {
-    Tool* tool = this->activeTool;
-    return tool->getColor();
+auto ToolHandler::getColor() const -> Color { return this->activeTool->getColor(); }
+
+auto ToolHandler::getColorMaskAlpha() const -> Color {
+    Color c = this->activeTool->getColor();
+    c.alpha = 0xff;
+    return c;
 }
 
 void ToolHandler::setFillEnabled(bool fill) {
