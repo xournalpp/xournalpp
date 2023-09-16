@@ -21,6 +21,11 @@ namespace xoj::util::gtk {
  */
 void setToggleButtonUnreleasable(GtkToggleButton* btn);
 
+/**
+ * @brief Make so a widget is automatically enabled/disabled whenever the given action is
+ */
+void setWidgetFollowActionEnabled(GtkWidget* w, GAction* a);
+
 #if GTK_MAJOR_VERSION == 3
 /**
  * @brief RadioButton's and GAction don't work as expected in GTK3:

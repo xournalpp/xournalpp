@@ -19,6 +19,7 @@
 #include "util/GVariantTemplate.h"
 #include "util/raii/GObjectSPtr.h"
 
+#include "ActionRef.h"
 #include "config-debug.h"  // for DEBUG_ACTION_DB
 
 class Control;
@@ -27,7 +28,9 @@ class Control;
 #include <iomanip>
 #include <iostream>
 
+#include "util/Color.h"
 #include "util/safe_casts.h"
+#include "util/serdesstream.h"
 #define ACTIONDB_PRINT_DEBUG(f) std::cout << f << std::endl
 template <class T, typename = void>
 struct to_stream {
@@ -43,6 +46,16 @@ struct to_stream<T, std::enable_if_t<std::is_enum_v<T>, void>> {
         return str << xoj::to_underlying(self.t);
     }
 };
+template <>
+struct to_stream<Color, void> {
+    to_stream(const Color& t): t(t) {}
+    const Color& t;
+    friend std::ostream& operator<<(std::ostream& str, const to_stream& self) {
+        auto s = serdes_stream<std::stringstream>();
+        s << std::hex << std::showbase << static_cast<uint32_t>(self.t);
+        return str << s.str();
+    }
+};
 #else
 #define ACTIONDB_PRINT_DEBUG(f)
 #endif
@@ -53,6 +66,12 @@ public:
     ~ActionDatabase();
 
     void enableAction(Action a, bool enable);
+    ActionRef getAction(Action a) const;
+
+    /// Disables every action
+    void disableAll();
+    /// Set the actions enabled flag depending on ActionProperties::initiallyEnabled()
+    void resetEnableStatus();
 
     /**
      * @brief Set the action's state, without triggering callbacks
@@ -90,7 +109,7 @@ public:
     }
 
 private:
-    EnumIndexedArray<xoj::util::GObjectSPtr<GSimpleAction>, Action> gActions;
+    EnumIndexedArray<ActionRef, Action> gActions;
     EnumIndexedArray<gulong, Action> signalIds;
     Control* control;
     GtkApplicationWindow* win;

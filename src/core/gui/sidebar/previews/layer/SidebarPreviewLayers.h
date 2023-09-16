@@ -37,6 +37,7 @@ public:
 public:
     void rebuildLayerMenu() override;
     void layerVisibilityChanged() override;
+    void updateSelectedLayer() override;
 
 public:
     /**
@@ -77,9 +78,6 @@ public:
      * the given layer.
      */
     void openPreviewContextMenu() override;
-
-protected:
-    void updateSelectedLayer();
 
 public:
     // DocumentListener interface (only the part which is not handled by SidebarPreviewBase)

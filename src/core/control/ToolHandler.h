@@ -51,7 +51,6 @@ public:
      *
      */
     virtual void changeColorOfSelection() = 0;
-    virtual void setCustomColorSelected() = 0;
     virtual void toolSizeChanged() = 0;
     virtual void toolFillChanged() = 0;
     virtual void toolLineStyleChanged() = 0;
@@ -104,6 +103,11 @@ public:
      * @return Color of active tool
      */
     Color getColor() const;
+
+    /**
+     * @brief Get the Color of the active tool except the alpha value is replaced by 0xFF
+     */
+    Color getColorMaskAlpha() const;
 
     /**
      * @brief Enable/disable fill for the tool selected in the toolbar

@@ -40,6 +40,7 @@ public:
 
     void show(GtkWindow* parent) {
         gtk_window_set_transient_for(popup->getWindow(), parent);
+        gtk_window_set_modal(popup->getWindow(), true);
 
 #if GTK_MAJOR_VERSION == 3
         gtk_window_set_position(popup->getWindow(), GTK_WIN_POS_CENTER_ON_PARENT);

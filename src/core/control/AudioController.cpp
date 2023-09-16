@@ -11,6 +11,7 @@
 #include "audio/AudioRecorder.h"                 // for AudioRecorder
 #include "audio/DeviceInfo.h"                    // for DeviceInfo
 #include "control/Control.h"                     // for Control
+#include "control/actions/ActionDatabase.h"      // for ActionDatabase
 #include "control/settings/Settings.h"           // for Settings
 #include "gui/MainWindow.h"                      // for MainWindow
 #include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
@@ -83,13 +84,17 @@ auto AudioController::startPlayback(fs::path const& file, unsigned int timestamp
     this->audioPlayer->stop();
     bool status = this->audioPlayer->start(file, timestamp);
     if (status) {
-        this->control.getWindow()->getToolMenuHandler()->enableAudioPlaybackButtons();
+        auto* actionDB = this->control.getActionDatabase();
+        actionDB->enableAction(Action::AUDIO_PAUSE_PLAYBACK, true);
+        actionDB->enableAction(Action::AUDIO_STOP_PLAYBACK, true);
+        actionDB->enableAction(Action::AUDIO_SEEK_FORWARDS, true);
+        actionDB->enableAction(Action::AUDIO_SEEK_BACKWARDS, true);
     }
     return status;
 }
 
 void AudioController::pausePlayback() {
-    this->control.getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(true);
+    this->control.getActionDatabase()->setActionState(Action::AUDIO_PAUSE_PLAYBACK, true);
 
     this->audioPlayer->pause();
 }
@@ -99,15 +104,12 @@ void AudioController::seekForwards() { this->audioPlayer->seek(this->settings.ge
 void AudioController::seekBackwards() { this->audioPlayer->seek(-1 * this->settings.getDefaultSeekTime()); }
 
 void AudioController::continuePlayback() {
-    this->control.getWindow()->getToolMenuHandler()->setAudioPlaybackPaused(false);
+    this->control.getActionDatabase()->setActionState(Action::AUDIO_PAUSE_PLAYBACK, false);
 
     this->audioPlayer->play();
 }
 
-void AudioController::stopPlayback() {
-    this->control.getWindow()->getToolMenuHandler()->disableAudioPlaybackButtons();
-    this->audioPlayer->stop();
-}
+void AudioController::stopPlayback() { this->audioPlayer->stop(); }
 
 auto AudioController::getAudioFilename() const -> fs::path const& { return this->audioFilename; }
 

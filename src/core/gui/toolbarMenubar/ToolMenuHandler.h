@@ -25,11 +25,9 @@
 #include "enums/ActionGroup.enum.h"  // for GROUP_NOGROUP, ActionGroup
 #include "enums/ActionType.enum.h"   // for ActionType
 #include "gui/IconNameHelper.h"      // for IconNameHelper
-#include "util/Color.h"              // for Color
 #include "util/raii/GObjectSPtr.h"
 
 class AbstractToolItem;
-class FontButton;
 class GladeGui;
 class GladeSearchpath;
 class ToolbarData;
@@ -40,7 +38,6 @@ class ToolPageLayer;
 class ToolPageSpinner;
 class PageTypeMenu;
 class SpinPageAdapter;
-class XojFont;
 class ZoomControl;
 class Control;
 class PageBackgroundChangeController;
@@ -73,8 +70,6 @@ public:
      */
     void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
 
-    void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
-
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);
 
@@ -83,13 +78,6 @@ public:
 
     SpinPageAdapter* getPageSpinner();
     void setPageInfo(size_t pagecount, size_t pdfpage = 0);
-
-    void setFontButtonFont(const XojFont& font);
-    XojFont getFontButtonFont();
-
-    void showFontSelectionDlg();
-
-    void setTmpDisabled(bool disabled);
 
     [[maybe_unused]] void removeColorToolItem(AbstractToolItem* it);
     void addColorToolItem(AbstractToolItem* it);
@@ -101,25 +89,14 @@ public:
 
     Control* getControl();
 
-    [[maybe_unused]] bool isColorInUse(Color color);
-
-    void disableAudioPlaybackButtons();
-
-    void enableAudioPlaybackButtons();
-
     void hideAudioMenuItems();
 
-    void setAudioPlaybackPaused(bool paused);
     std::string iconName(const char* icon);
 
     void setDefaultNewPageType(const std::optional<PageType>& pt);
 
 private:
     void addToolItem(AbstractToolItem* it);
-
-    static void signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
-                                      const gchar* handlerName, GObject* connectObject, GConnectFlags flags,
-                                      ToolMenuHandler* self);
     void initPenToolItem();
     void initEraserToolItem();
 
@@ -135,7 +112,6 @@ private:
 
     ToolPageSpinner* toolPageSpinner = nullptr;
     ToolPageLayer* toolPageLayer = nullptr;
-    FontButton* fontButton = nullptr;
 
     Control* control = nullptr;
     ActionHandler* listener = nullptr;

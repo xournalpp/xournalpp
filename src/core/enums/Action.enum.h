@@ -130,6 +130,7 @@ enum class Action : size_t {
     AUDIO_SEEK_BACKWARDS,
 
     SELECT_FONT,
+    FONT,  ///< Action whose state is the font's description
     TEX,
 
     // Plugin Menu
@@ -143,8 +144,12 @@ enum class Action : size_t {
     TOOL_SIZE,
     TOOL_FILL,
     TOOL_FILL_OPACITY,
+    TOOL_COLOR,    ///< Action whose state is the current color with alpha set to 0xff (in ARGB as a uint32_t)
+    SELECT_COLOR,  ///< Pops up a color chooser dialog
 
     // Layer handling
+    LAYER_SHOW_ALL,
+    LAYER_HIDE_ALL,
     LAYER_NEW,
     LAYER_DELETE,
     LAYER_MERGE_DOWN,
@@ -152,6 +157,7 @@ enum class Action : size_t {
     LAYER_GOTO_NEXT,
     LAYER_GOTO_PREVIOUS,
     LAYER_GOTO_TOP,
+    LAYER_ACTIVE,  ///< Action whose state is the current layer index
 
     // Keep this last value
     ENUMERATOR_COUNT

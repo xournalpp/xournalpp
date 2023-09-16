@@ -8,42 +8,17 @@
  *
  * @license GNU GPLv2 or later
  */
-
 #pragma once
 
-#include <string>  // for string
+#include <string>
 
-#include <gtk/gtk.h>  // for GtkWidget, GtkToolItem
+#include "ComboToolButton.h"
 
-#include "enums/ActionGroup.enum.h"  // for ActionGroup
-#include "enums/ActionType.enum.h"   // for ActionType
+class IconNameHelper;
+class ActionDatabase;
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
-
-class ToolMenuHandler;
-class ActionHandler;
-
-class ToolSelectCombocontrol: public AbstractToolItem {
+class ToolSelectCombocontrol: public ComboToolButton {
 public:
-    ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, std::string id, bool hideAudio);
-    ~ToolSelectCombocontrol() override;
-
-public:
-    void selected(ActionGroup group, ActionType action) override;
-
-    std::string getToolDisplayName() const override;
-    GtkWidget* getNewToolIcon() const override;
-
-protected:
-    GtkToolItem* newItem() override;
-    void addMenuitem(const std::string& text, const std::string& icon, ActionType type, ActionGroup group);
-
-private:
-    ToolMenuHandler* toolMenuHandler = nullptr;
-
-    GtkWidget* iconWidget = nullptr;
-    GtkWidget* labelWidget = nullptr;
-
-    std::string icon;
-    xoj::util::WidgetSPtr popover;
+    ToolSelectCombocontrol(std::string id, IconNameHelper& icons, const ActionDatabase& db, bool hideAudio);
+    ~ToolSelectCombocontrol() override = default;
 };

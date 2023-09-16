@@ -16,7 +16,3 @@ void LayerCtrlListener::unregisterListener() {
         this->handler->removeListener(this);
     }
 }
-
-void LayerCtrlListener::rebuildLayerMenu() {}
-
-void LayerCtrlListener::layerVisibilityChanged() {}

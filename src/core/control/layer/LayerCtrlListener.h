@@ -22,8 +22,9 @@ public:
     void registerListener(LayerController* handler);
     void unregisterListener();
 
-    virtual void rebuildLayerMenu();
-    virtual void layerVisibilityChanged();
+    virtual void rebuildLayerMenu() = 0;
+    virtual void layerVisibilityChanged() = 0;
+    virtual void updateSelectedLayer() = 0;
 
 private:
     LayerController* handler;

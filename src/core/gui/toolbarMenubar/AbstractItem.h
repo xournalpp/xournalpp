@@ -27,6 +27,7 @@ class AbstractItem: public ActionEnabledListener, public ActionSelectionListener
 public:
     AbstractItem(std::string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem = nullptr);
     AbstractItem(std::string id);
+
     ~AbstractItem() override;
 
     AbstractItem(AbstractItem const&) = delete;

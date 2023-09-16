@@ -16,7 +16,7 @@ using xoj::util::Rectangle;
 
 class FontUndoActionEntry {
 public:
-    FontUndoActionEntry(Text* e, XojFont& oldFont, XojFont& newFont) {
+    FontUndoActionEntry(Text* e, const XojFont& oldFont, const XojFont& newFont) {
         this->e = e;
         this->oldFont = oldFont;
         this->newFont = newFont;
@@ -37,7 +37,7 @@ FontUndoAction::~FontUndoAction() {
     this->data.clear();
 }
 
-void FontUndoAction::addStroke(Text* e, XojFont& oldFont, XojFont& newFont) {
+void FontUndoAction::addStroke(Text* e, const XojFont& oldFont, const XojFont& newFont) {
     this->data.push_back(new FontUndoActionEntry(e, oldFont, newFont));
 }
 
