@@ -1,12 +1,13 @@
-#include <utility>  // for move
+#include "PluginToolButton.h"
 
 #include "config-features.h"  // for ENABLE_PLUGINS
 
 #ifdef ENABLE_PLUGINS
 
+#include <utility>  // for move
+
 #include "plugin/Plugin.h"  // for ToolbarButtonEntry
 
-#include "PluginToolButton.h"
 
 PluginToolButton::PluginToolButton(ActionHandler* handler, ToolbarButtonEntry* t):
         ToolButton(handler, std::move(t->toolbarId), ACTION_NONE, std::move(t->iconName), std::move(t->description)),
