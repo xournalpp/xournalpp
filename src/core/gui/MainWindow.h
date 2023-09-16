@@ -22,8 +22,6 @@
 #include <glib.h>         // for gpointer, gboolean, gint
 #include <gtk/gtk.h>      // for GtkWidget, GtkCheckMenu...
 
-#include "control/layer/LayerCtrlListener.h"  // for LayerCtrlListener
-#include "model/Font.h"                       // for XojFont
 #include "util/raii/GObjectSPtr.h"
 
 #include "GladeGui.h"            // for GladeGui
@@ -45,15 +43,15 @@ class Menubar;
 
 typedef std::array<xoj::util::WidgetSPtr, TOOLBAR_DEFINITIONS_LEN> ToolbarWidgetArray;
 
-class MainWindow: public GladeGui, public LayerCtrlListener {
+class MainWindow: public GladeGui {
 public:
     MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent);
     ~MainWindow() override;
 
-    // LayerCtrlListener
+    void populate(GladeSearchpath* gladeSearchPath);
+
 public:
-    void rebuildLayerMenu() override;
-    void layerVisibilityChanged() override;
+    GMenuModel* getMenuModel() const;
 
     void show(GtkWindow* parent) override;
 
@@ -69,9 +67,6 @@ public:
 
 
     void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
-
-    void setFontButtonFont(const XojFont& font);
-    XojFont getFontButtonFont() const;
 
     void saveSidebarSize();
 
@@ -108,7 +103,7 @@ public:
     void updateColorscheme();
 
     const ToolbarWidgetArray& getToolbarWidgets() const;
-    const char* getToolbarName(GtkToolbar* toolbar) const;
+    const char* getToolbarName(GtkWidget* toolbar) const;
 
     Layout* getLayout() const;
 
@@ -121,34 +116,12 @@ public:
     void setGtkTouchscreenScrollingForDeviceMapping();
     void setGtkTouchscreenScrollingEnabled(bool enabled);
 
-    void rebindMenubarAccelerators();
-
 private:
     void initXournalWidget();
 
-    /**
-     * Allow to hide menubar, but only if global menu is not enabled
-     */
-    void initHideMenu();
-    static void toggleMenuBar(MainWindow* win);
-
     void createToolbar();
-    static void rebindAcceleratorsMenuItem(GtkWidget* widget, gpointer user_data);
-    static void rebindAcceleratorsSubMenu(GtkWidget* widget, gpointer user_data);
-    static gboolean isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data);
-    static gboolean invokeMenu(GtkWidget* widget);
 
     static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
-
-    /**
-     * Sidebar show / hidden
-     */
-    static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
-
-    /**
-     * Toolbar show / hidden
-     */
-    static void viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
 
     /**
      * Window close Button is pressed

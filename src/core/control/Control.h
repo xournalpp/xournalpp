@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr
+#include <cstddef>   // for size_t
+#include <memory>    // for unique_ptr
 #include <optional>  // for optional
-#include <string>   // for string, allocator
-#include <vector>   // for vector
+#include <string>    // for string, allocator
+#include <vector>    // for vector
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gio/gio.h>                // for GApplication
@@ -25,15 +25,14 @@
 #include "control/ToolEnums.h"              // for ToolSize, ToolType
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "control/settings/ViewModes.h"     // for ViewModeId
-#include "enums/ActionGroup.enum.h"         // for ActionGroup
-#include "enums/ActionType.enum.h"          // for ActionType
+#include "control/tools/EditSelection.h"    // for OrderChange
+#include "enums/Action.enum.h"              // for Action
 #include "model/DocumentHandler.h"          // for DocumentHandler
 #include "model/DocumentListener.h"         // for DocumentListener
 #include "model/GeometryTool.h"             // for GeometryTool
 #include "model/PageRef.h"                  // for PageRef
 #include "undo/UndoRedoHandler.h"           // for UndoRedoHandler (ptr only)
 
-#include "Actions.h"           // for ActionHandler
 #include "ClipboardHandler.h"  // for ClipboardListener
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
@@ -68,9 +67,10 @@ class ZoomControl;
 class ToolMenuHandler;
 class XojFont;
 class XojPdfRectangle;
+class Callback;
+class ActionDatabase;
 
 class Control:
-        public ActionHandler,
         public ToolListener,
         public DocumentHandler,
         public UndoRedoListener,
@@ -133,8 +133,6 @@ public:
     // Menu Help
     void showAbout();
 
-    void actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled) override;
-
     /**
      * @brief Update the Cursor and the Toolbar based on the active color
      *
@@ -145,7 +143,6 @@ public:
      *
      */
     void changeColorOfSelection() override;
-    void setCustomColorSelected() override;
     void toolChanged() override;
     void toolSizeChanged() override;
     void toolFillChanged() override;
@@ -154,7 +151,8 @@ public:
     void selectTool(ToolType type);
     void selectDefaultTool();
 
-    void setFontSelected(const XojFont& font);
+    void setFontSelected(const XojFont& font);  ///< Modifies the Action state without triggering callbacks
+    void fontChanged(const XojFont& font);      ///< Set the font after the user selected a font
 
     void updatePageNumbers(size_t page, size_t pdfPage);
 
@@ -177,10 +175,13 @@ public:
     void manageToolbars();
     void customizeToolbars();
     void setFullscreen(bool enabled);
+    void setShowSidebar(bool enabled);
+    void setShowToolbar(bool enabled);
+    void setHideMenubar(bool enabled);
 
     void gotoPage();
 
-    void setShapeTool(ActionType type, bool enabled);
+    void setToolDrawingType(DrawingType type);
 
     void paperTemplate();
     void paperFormat();
@@ -237,7 +238,7 @@ public:
 
     void selectAllOnPage();
 
-    void reorderSelection(ActionType type);
+    void reorderSelection(EditSelection::OrderChange change);
 
     void setToolSize(ToolSize size);
 
@@ -323,20 +324,15 @@ public:
 
 public:
     void registerPluginToolButtons(ToolMenuHandler* toolMenuHandler);
+    inline ActionDatabase* getActionDatabase() const { return actionDB.get(); }
 
 protected:
-    /**
-     * This callback is used by used to be called later in the UI Thread
-     * On slower machine this feels more fluent, therefore this will not
-     * be removed
-     */
-    void zoomCallback(ActionType type, bool enabled);
-
-    void rotationSnappingToggle();
-    void gridSnappingToggle();
-    void highlightPositionToggle();
+    void setRotationSnapping(bool enable);
+    void setGridSnapping(bool enable);
 
     bool showSaveDialog();
+    void showFontDialog();
+    void showColorChooserDialog();
 
     void fileLoaded(int scrollToPage = -1);
 
@@ -347,7 +343,6 @@ protected:
     static bool checkChangedDocument(Control* control);
     static bool autosaveCallback(Control* control);
 
-    void fontChanged();
     /**
      * Load metadata later, md will be deleted
      */
@@ -364,9 +359,25 @@ protected:
     bool loadPdf(fs::path const& filepath, int scrollToPage);
 
 private:
-    template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass, ActionType a>
-    void makeGeometryTool();
+    /**
+     * @brief Creates the specified geometric tool if it's not on the current page yet. Deletes it if it already exists.
+     * @return true if a geometric tool was created
+     */
+    template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass,
+              GeometryToolType toolType>
+    bool toggleGeometryTool();
     void resetGeometryTool();
+
+    /**
+     * @brief Creates a compass if it's not on the current page yet. Deletes it if it already exists.
+     * @return true if a compass was created
+     */
+    bool toggleCompass();
+    /**
+     * @brief Creates a setsquare if it's not on the current page yet. Deletes it if it already exists.
+     * @return true if a setsquare was created
+     */
+    bool toggleSetsquare();
 
     /**
      * "Closes" the document, preparing the editor for a new document.
@@ -398,10 +409,6 @@ private:
     SearchBar* searchBar = nullptr;
 
     ToolHandler* toolHandler;
-
-    ActionType lastAction;
-    ActionGroup lastGroup;
-    bool lastEnabled;
 
     ScrollHandler* scrollHandler;
 
@@ -477,4 +484,8 @@ private:
      * Fullscreen handler
      */
     FullscreenHandler* fullscreenHandler;
+
+    std::unique_ptr<ActionDatabase> actionDB;
+    template <Action a>
+    friend struct ActionProperties;
 };

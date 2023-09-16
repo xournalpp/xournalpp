@@ -14,11 +14,11 @@
 #include <string>
 #include <vector>
 
-#include <gtk/gtk.h>
+#include "util/raii/GObjectSPtr.h"
 
 
 class Settings;
-class MainWindow;
+class Control;
 
 class FullscreenHandler {
 public:
@@ -27,11 +27,11 @@ public:
 
 public:
     bool isFullscreen() const;
-    void setFullscreen(MainWindow* win, bool enabled);
+    void setFullscreen(Control* ctrl, bool enabled);
 
 private:
-    void enableFullscreen(MainWindow* win);
-    void disableFullscreen(MainWindow* win);
+    void enableFullscreen(Control* ctrl);
+    void disableFullscreen(Control* ctrl);
 
 private:
     /**
@@ -57,5 +57,5 @@ private:
     /**
      * Currently hidden widgets
      */
-    std::vector<GtkWidget*> hiddenFullscreenWidgets;
+    std::vector<xoj::util::WidgetSPtr> hiddenFullscreenWidgets;
 };

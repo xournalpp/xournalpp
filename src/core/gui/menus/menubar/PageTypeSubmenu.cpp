@@ -9,10 +9,11 @@
 
 #include "control/PageBackgroundChangeController.h"
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo, Pag...
-#include "gui/MainWindow.h"
 #include "gui/menus/StaticAssertActionNamespace.h"
 #include "util/i18n.h"  // for _
 #include "util/raii/GVariantSPtr.h"
+
+#include "Menubar.h"
 
 namespace {
 static constexpr auto G_ACTION_NAMESPACE = "win.";
@@ -76,17 +77,13 @@ PageTypeSubmenu::PageTypeSubmenu(PageTypeHandler* typesHandler, PageBackgroundCh
 void PageTypeSubmenu::setDisabled(bool disabled) {
     g_simple_action_set_enabled(typeSelectionAction.get(), !disabled);
     g_simple_action_set_enabled(applyToAllPagesAction.get(), !disabled);
-    gtk_widget_set_sensitive(menuItem.get(), !disabled);
 }
 
-void PageTypeSubmenu::addToMenubar(MainWindow* win) {
-    this->menuItem.reset(win->get(SUBMENU_ID), xoj::util::ref);
-    GtkMenuItem* item = GTK_MENU_ITEM(this->menuItem.get());
-    xoj::util::GObjectSPtr<GMenu> submenu(g_menu_new(), xoj::util::adopt);
-    g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(this->generatedPageTypesSection.get()));
-    g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(this->specialPageTypesSection.get()));
-    g_menu_append_section(submenu.get(), nullptr, G_MENU_MODEL(this->applyToAllPagesSection.get()));
-    gtk_menu_item_set_submenu(item, gtk_menu_new_from_model(G_MENU_MODEL(submenu.get())));
+void PageTypeSubmenu::addToMenubar(Menubar& menubar) {
+    GMenu* submenu = menubar.get<GMenu>(SUBMENU_ID, [](auto* p) { return G_MENU(p); });
+    g_menu_append_section(submenu, nullptr, G_MENU_MODEL(generatedPageTypesSection.get()));
+    g_menu_append_section(submenu, nullptr, G_MENU_MODEL(specialPageTypesSection.get()));
+    g_menu_append_section(submenu, nullptr, G_MENU_MODEL(applyToAllPagesSection.get()));
 }
 
 void PageTypeSubmenu::entrySelected(const PageTypeInfo*) {

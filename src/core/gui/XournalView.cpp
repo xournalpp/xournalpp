@@ -14,14 +14,13 @@
 #include "control/PdfCache.h"                    // for PdfCache
 #include "control/ScrollHandler.h"               // for ScrollHandler
 #include "control/ToolHandler.h"                 // for ToolHandler
+#include "control/actions/ActionDatabase.h"      // for ActionDatabase
 #include "control/jobs/XournalScheduler.h"       // for XournalScheduler
 #include "control/settings/MetadataManager.h"    // for MetadataManager
 #include "control/settings/Settings.h"           // for Settings
 #include "control/tools/CursorSelectionType.h"   // for CURSOR_SELECTION_NONE
 #include "control/tools/EditSelection.h"         // for EditSelection
 #include "control/zoom/ZoomControl.h"            // for ZoomControl
-#include "enums/ActionGroup.enum.h"              // for GROUP_GEOMETRY_TOOL
-#include "enums/ActionType.enum.h"               // for ACTION_NONE
 #include "gui/MainWindow.h"                      // for MainWindow
 #include "gui/PdfFloatingToolbox.h"              // for PdfFloatingToolbox
 #include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
@@ -303,8 +302,8 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     auto& colors = control->getWindow()->getToolMenuHandler()->getColorToolItems();
     if (!state && (keyval >= GDK_KEY_0) && (keyval < GDK_KEY_0 + std::min((std::size_t)10, colors.size()))) {
         std::size_t index = std::min(colors.size() - 1, (std::size_t)(9 + (keyval - GDK_KEY_0)) % 10);
-        auto colorToolItem = colors.at(index);
-        if (colorToolItem->isEnabled()) {
+        auto& colorToolItem = colors.at(index);
+        if (gtk_widget_is_sensitive(colorToolItem->getItem())) {
             gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(colorToolItem->getItem()), true);
         }
         return true;

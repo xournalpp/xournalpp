@@ -10,25 +10,19 @@
 #include <glib.h>  // for g_warning, g_error
 
 #include "control/Tool.h"               // for Tool, Tool::toolSizes
+#include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"  // for SElement, Settings
-#include "enums/ActionGroup.enum.h"     // for GROUP_ERASER_MODE
-#include "enums/ActionType.enum.h"      // for ACTION_TOOL_ERASER_DELETE_STROKE
 #include "model/StrokeStyle.h"          // for StrokeStyle
 #include "util/Color.h"
-
-#include "Actions.h"  // for ActionHandler
 
 class LineStyle;
 
 
 ToolListener::~ToolListener() = default;
 
-ToolHandler::ToolHandler(ToolListener* stateChangeListener, ActionHandler* actionHandler, Settings* settings) {
-    this->settings = settings;
+ToolHandler::ToolHandler(ToolListener* stateChangeListener, ActionDatabase* actionDB, Settings* settings):
+        stateChangeListener(stateChangeListener), actionDB(actionDB), settings(settings) {
     initTools();
-    this->actionHandler = actionHandler;
-
-    this->stateChangeListener = stateChangeListener;
 }
 
 void ToolHandler::initTools() {
@@ -150,28 +144,14 @@ void ToolHandler::setEraserType(EraserType eraserType) {
 void ToolHandler::setButtonEraserType(EraserType eraserType, Button button) {
     Tool* tool = getButtonTool(button);
     tool->setEraserType(eraserType);
-    eraserTypeChanged();
 }
 
 void ToolHandler::eraserTypeChanged() {
-    if (this->actionHandler == nullptr) {
+    if (this->actionDB == nullptr) {
         return;
     }
 
-    switch (this->getEraserType()) {
-        case ERASER_TYPE_DELETE_STROKE:
-            this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_DELETE_STROKE);
-            break;
-
-        case ERASER_TYPE_WHITEOUT:
-            this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_WHITEOUT);
-            break;
-
-        case ERASER_TYPE_DEFAULT:
-        default:
-            this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_STANDARD);
-            break;
-    }
+    this->actionDB->setActionState(Action::TOOL_ERASER_TYPE, this->getEraserType());
 }
 
 auto ToolHandler::getEraserType() const -> EraserType {
@@ -258,10 +238,10 @@ void ToolHandler::setHighlighterSize(ToolSize size) {
     }
 }
 
-void ToolHandler::setPenFillEnabled(bool fill, bool fireEvent) {
+void ToolHandler::setPenFillEnabled(bool fill) {
     this->tools[TOOL_PEN - TOOL_PEN]->setFill(fill);
 
-    if (this->activeTool->type == TOOL_PEN && fireEvent) {
+    if (this->activeTool->type == TOOL_PEN) {
         this->stateChangeListener->toolFillChanged();
     }
 }
@@ -272,10 +252,10 @@ void ToolHandler::setPenFill(int alpha) { this->tools[TOOL_PEN - TOOL_PEN]->setF
 
 auto ToolHandler::getPenFill() const -> int { return this->tools[TOOL_PEN - TOOL_PEN]->getFillAlpha(); }
 
-void ToolHandler::setHighlighterFillEnabled(bool fill, bool fireEvent) {
+void ToolHandler::setHighlighterFillEnabled(bool fill) {
     this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->setFill(fill);
 
-    if (this->activeTool->type == TOOL_HIGHLIGHTER && fireEvent) {
+    if (this->activeTool->type == TOOL_HIGHLIGHTER) {
         this->stateChangeListener->toolFillChanged();
     }
 }
@@ -315,7 +295,6 @@ void ToolHandler::setButtonSize(ToolSize size, Button button) {
 
     Tool* tool = getButtonTool(button);
     tool->setSize(clippedSize);
-    this->stateChangeListener->toolSizeChanged();
 }
 
 void ToolHandler::setLineStyle(const LineStyle& style) {
@@ -333,14 +312,11 @@ void ToolHandler::setColor(Color color, bool userSelection) {
     this->stateChangeListener->toolColorChanged();
     if (userSelection)
         this->stateChangeListener->changeColorOfSelection();
-    this->stateChangeListener->setCustomColorSelected();
 }
 
 void ToolHandler::setButtonColor(Color color, Button button) {
     Tool* tool = this->getButtonTool(button);
     tool->setColor(color);
-    this->stateChangeListener->toolColorChanged();
-    this->stateChangeListener->setCustomColorSelected();
 }
 
 auto ToolHandler::getColor() const -> Color {
@@ -348,12 +324,10 @@ auto ToolHandler::getColor() const -> Color {
     return tool->getColor();
 }
 
-void ToolHandler::setFillEnabled(bool fill, bool fireEvent) {
+void ToolHandler::setFillEnabled(bool fill) {
     Tool* tool = this->toolbarSelectedTool;
     tool->setFill(fill);
-    if (fireEvent) {
-        this->stateChangeListener->toolFillChanged();
-    }
+    this->stateChangeListener->toolFillChanged();
 }
 
 auto ToolHandler::getFill() const -> int {

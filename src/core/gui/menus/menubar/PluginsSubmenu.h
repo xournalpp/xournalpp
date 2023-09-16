@@ -27,9 +27,8 @@ public:
 
 public:
     void setDisabled(bool disabled) override;
-    void addToMenubar(MainWindow* win) override;
+    void addToMenubar(Menubar& menubar) override;
 
 private:
-    PluginController* pluginController;
-    std::vector<GMenuModel*> sections;
+    xoj::util::GObjectSPtr<GMenu> submenu;
 };

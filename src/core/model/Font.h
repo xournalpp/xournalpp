@@ -24,6 +24,17 @@ public:
     XojFont();
     XojFont(std::string name, double size);
 
+    /**
+     * Set this from a Pango-style font description.
+     * E.g.
+     *   Serif 12
+     * sets this' size to 12 and this font's name to Serif.
+     *
+     * @param description Pango-style font description.
+     */
+    explicit XojFont(const char* description);
+    XojFont& operator=(const std::string& description);
+
     ~XojFont() override;
 
 public:
@@ -39,17 +50,8 @@ public:
      */
     std::string asString() const;
 
-    void operator=(const XojFont& font);
+    XojFont& operator=(const XojFont& font);
 
-    /**
-     * Set this from a Pango-style font description.
-     * E.g.
-     *   Serif 12
-     * sets this' size to 12 and this font's name to Serif.
-     *
-     * @param description Pango-style font description.
-     */
-    void operator=(const std::string& description);
 
 public:
     // Serialize interface

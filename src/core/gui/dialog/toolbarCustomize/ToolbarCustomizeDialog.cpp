@@ -15,7 +15,7 @@
 #include "gui/ToolitemDragDrop.h"                           // for ToolItemD...
 #include "gui/toolbarMenubar/AbstractToolItem.h"            // for AbstractT...
 #include "gui/toolbarMenubar/ToolMenuHandler.h"             // for ToolMenuH...
-#include "gui/toolbarMenubar/icon/ColorSelectImage.h"       // for ColorSele...
+#include "gui/toolbarMenubar/icon/ColorIcon.h"              // for ColorIcon
 #include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"  // for getNewToo...
 #include "gui/toolbarMenubar/model/ColorPalette.h"          // for Palette
 #include "util/Assert.h"                                    // for xoj_assert
@@ -67,7 +67,7 @@ constexpr auto UI_DIALOG_NAME = "DialogCustomizeToolbar";
 
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
                                                ToolbarDragDropHandler* handler):
-        itemData(buildToolDataVector(*win->getToolMenuHandler()->getToolItems())),
+        itemData(buildToolDataVector(win->getToolMenuHandler()->getToolItems())),
         colorItemData(buildColorDataVector(handler->getControl()->getSettings()->getColorPalette())) {
     Builder builder(gladeSearchPath, UI_FILE);
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
@@ -191,9 +191,9 @@ void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragCo
                                                     ColorToolItemDragData* data) {
     ToolItemDragCurrentData::setDataColor(-1, data->namedColor);
 
-    GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(data->namedColor->getColor(), 16, true);
+    auto image = ColorIcon::newGdkPixbuf(data->namedColor->getColor(), 16, true);
 
-    gtk_drag_set_icon_pixbuf(context, image, -2, -2);
+    gtk_drag_set_icon_pixbuf(context, image.get(), -2, -2);
 }
 
 /**
@@ -275,12 +275,12 @@ void ToolbarCustomizeDialog::freeIconview() {
 /**
  * builds up the icon list
  */
-auto ToolbarCustomizeDialog::buildToolDataVector(const std::vector<AbstractToolItem*>& tools)
+auto ToolbarCustomizeDialog::buildToolDataVector(const std::vector<std::unique_ptr<AbstractToolItem>>& tools)
         -> std::vector<ToolItemDragData> {
     // By reserving, we ensure no reallocation is done, so the pointer `&data` used below is not invalidated
     std::vector<ToolItemDragData> database;
     database.reserve(tools.size());
-    for (AbstractToolItem* item: tools) {
+    for (auto& item: tools) {
         std::string name = item->getToolDisplayName();
         GtkWidget* icon = item->getNewToolIcon(); /* floating */
         xoj_assert(icon);
@@ -296,7 +296,7 @@ auto ToolbarCustomizeDialog::buildToolDataVector(const std::vector<AbstractToolI
         auto& data = database.emplace_back();
         data.dlg = this;
         data.icon = icon;
-        data.item = item;
+        data.item = item.get();
         data.ebox.reset(ebox, xoj::util::adopt);
 
         // make ebox a drag source
@@ -333,7 +333,7 @@ auto ToolbarCustomizeDialog::buildColorDataVector(const Palette& palette) -> std
         const NamedColor* namedColor = &(palette.getColorAt(i));
 
         GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 3));
-        gtk_box_append(box, ColorSelectImage::newColorIcon(namedColor->getColor(), 16, true));
+        gtk_box_append(box, ColorIcon::newGtkImage(namedColor->getColor(), 16, true));
         gtk_box_append(box, gtk_label_new(namedColor->getName().c_str()));
 
         GtkWidget* ebox = gtk_event_box_new();

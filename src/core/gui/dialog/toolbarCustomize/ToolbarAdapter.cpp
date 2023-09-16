@@ -10,7 +10,7 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"       // for AbstractToolItem
 #include "gui/toolbarMenubar/ColorToolItem.h"          // for ColorToolItem
 #include "gui/toolbarMenubar/ToolMenuHandler.h"        // for ToolMenuHandler
-#include "gui/toolbarMenubar/icon/ColorSelectImage.h"  // for ColorSelectImage
+#include "gui/toolbarMenubar/icon/ColorIcon.h"         // for ColorIcon
 #include "gui/toolbarMenubar/model/ToolbarData.h"      // for ToolbarData
 #include "util/Assert.h"                               // for xoj_assert
 #include "util/NamedColor.h"                           // for NamedColor
@@ -211,9 +211,9 @@ void ToolbarAdapter::toolitemDragDataGet(GtkWidget* widget, GdkDragContext* cont
 /**
  * A tool item was dragged to the toolbar
  */
-auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y, guint time,
+auto ToolbarAdapter::toolbarDragMotionCb(GtkWidget* toolbar, GdkDragContext* context, gint x, gint y, guint time,
                                          ToolbarAdapter* adapter) -> bool {
-    GdkAtom target = gtk_drag_dest_find_target(GTK_WIDGET(toolbar), context, nullptr);
+    GdkAtom target = gtk_drag_dest_find_target(toolbar, context, nullptr);
     if (target != ToolbarDragDropHelper::atomToolItem) {
         gdk_drag_status(context, static_cast<GdkDragAction>(0), time);
         return false;
@@ -236,18 +236,18 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
     if (d->type == TOOL_ITEM_ITEM) {
         GtkWidget* iconWidget = d->item->getNewToolIcon();
         GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
-        gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
+        // gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else if (d->type == TOOL_ITEM_SEPARATOR) {
         GtkToolItem* it = gtk_separator_tool_item_new();
-        gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
+        // gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else if (d->type == TOOL_ITEM_SPACER) {
         GtkToolItem* it = gtk_separator_tool_item_new();
         gtk_tool_item_set_expand(it, true);
-        gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
+        // gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        GtkWidget* iconWidget = ColorSelectImage::newColorIcon(d->namedColor->getColor(), 16, true);
+        GtkWidget* iconWidget = ColorIcon::newGtkImage(d->namedColor->getColor(), 16, true);
         GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
-        gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
+        // gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else {
         g_warning("ToolbarAdapter::toolbarDragMotionCb Unhandled type %i", d->type);
     }
@@ -255,12 +255,12 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
     return true;
 }
 
-void ToolbarAdapter::toolbarDragLeafeCb(GtkToolbar* toolbar, GdkDragContext* context, guint time,
+void ToolbarAdapter::toolbarDragLeafeCb(GtkWidget* toolbar, GdkDragContext* context, guint time,
                                         ToolbarAdapter* adapter) {
-    gtk_toolbar_set_drop_highlight_item(toolbar, nullptr, -1);
+    // gtk_toolbar_set_drop_highlight_item(toolbar, nullptr, -1);
 }
 
-void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y,
+void ToolbarAdapter::toolbarDragDataReceivedCb(GtkWidget* toolbar, GdkDragContext* context, gint x, gint y,
                                                GtkSelectionData* data, guint info, guint time,
                                                ToolbarAdapter* adapter) {
     auto* d = reinterpret_cast<ToolItemDragDropData const*>(gtk_selection_data_get_data(data));
@@ -270,11 +270,11 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
     gint pos = toolbarGetDropIndex(toolbar, x, y, horizontal);
 
     if (d->type == TOOL_ITEM_ITEM) {
-        GtkToolItem* it = d->item->createItem(horizontal);
+        GtkWidget* it = d->item->createItem(horizontal);
 
-        gtk_widget_show_all(GTK_WIDGET(it));
-        gtk_toolbar_insert(toolbar, it, pos);
-        adapter->prepareToolItem(it);
+        gtk_widget_show_all(it);
+        // gtk_toolbar_insert(toolbar, it, pos);
+        // adapter->prepareToolItem(it);
 
         ToolbarData* tb = adapter->window->getSelectedToolbar();
         const char* name = adapter->window->getToolbarName(toolbar);
@@ -284,28 +284,27 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         int newId = tb->insertItem(name, id, pos);
         ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        auto* item = new ColorToolItem(adapter->window->getControl(), adapter->window->getControl()->getToolHandler(),
-                                       GTK_WINDOW(adapter->window->getWindow()), *(d->namedColor));
+        auto* item = new ColorToolItem(*(d->namedColor));
 
-        GtkToolItem* it = item->createItem(horizontal);
+        // GtkToolItem* it = item->createItem(horizontal);
 
-        gtk_widget_show_all(GTK_WIDGET(it));
-        gtk_toolbar_insert(toolbar, it, pos);
-        adapter->prepareToolItem(it);
-
-        ToolbarData* tb = adapter->window->getSelectedToolbar();
-        const char* name = adapter->window->getToolbarName(toolbar);
-
-        string id = item->getId();
-
-        int newId = tb->insertItem(name, id, pos);
-        ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->namedColor, item);
+        // gtk_widget_show_all(GTK_WIDGET(it));
+        // gtk_toolbar_insert(toolbar, it, pos);
+        // adapter->prepareToolItem(it);
+        //
+        // ToolbarData* tb = adapter->window->getSelectedToolbar();
+        // const char* name = adapter->window->getToolbarName(toolbar);
+        //
+        // string id = item->getId();
+        //
+        // int newId = tb->insertItem(name, id, pos);
+        // ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->namedColor, item);
 
         adapter->window->getToolMenuHandler()->addColorToolItem(item);
     } else if (d->type == TOOL_ITEM_SEPARATOR) {
         GtkToolItem* it = gtk_separator_tool_item_new();
         gtk_widget_show_all(GTK_WIDGET(it));
-        gtk_toolbar_insert(toolbar, it, pos);
+        // gtk_toolbar_insert(toolbar, it, pos);
         adapter->prepareToolItem(it);
 
         ToolbarData* tb = adapter->window->getSelectedToolbar();
@@ -318,7 +317,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         gtk_separator_tool_item_set_draw(GTK_SEPARATOR_TOOL_ITEM(it), false);
         gtk_tool_item_set_expand(it, true);
         gtk_widget_show_all(GTK_WIDGET(it));
-        gtk_toolbar_insert(toolbar, it, pos);
+        // gtk_toolbar_insert(toolbar, it, pos);
         adapter->prepareToolItem(it);
 
         ToolbarData* tb = adapter->window->getSelectedToolbar();
@@ -331,19 +330,21 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
     }
 }
 
-auto ToolbarAdapter::toolbarGetDropIndex(GtkToolbar* toolbar, gint x, gint y, bool horizontal) -> gint {
+auto ToolbarAdapter::toolbarGetDropIndex(GtkWidget* toolbar, gint x, gint y, bool horizontal) -> gint {
+    return 0;
     /*
      * gtk_toolbar_get_drop_index does not use the correct coordinate system for the y coordinate
      * since the y coordinate is only relevant in vertical toolbars the transformation is NOT required for horizontal
      * toolbars
      */
-    if (horizontal) {
-        return gtk_toolbar_get_drop_index(toolbar, x, y);
-    } else {
-        gint wx = 0;
-        gint wy = 0;
-        gtk_widget_translate_coordinates(GTK_WIDGET(toolbar), gtk_widget_get_toplevel(GTK_WIDGET(toolbar)), x, y, &wx,
-                                         &wy);
-        return gtk_toolbar_get_drop_index(toolbar, x, wy);
-    }
+    // if (horizontal) {
+    //     return gtk_toolbar_get_drop_index(toolbar, x, y);
+    // } else {
+    //     gint wx = 0;
+    //     gint wy = 0;
+    //     gtk_widget_translate_coordinates(GTK_WIDGET(toolbar), gtk_widget_get_toplevel(GTK_WIDGET(toolbar)), x, y,
+    //     &wx,
+    //                                      &wy);
+    //     return gtk_toolbar_get_drop_index(toolbar, x, wy);
+    // }
 }

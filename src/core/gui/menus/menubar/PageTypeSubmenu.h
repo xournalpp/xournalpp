@@ -29,7 +29,7 @@ public:
     ~PageTypeSubmenu() = default;
 
     void setDisabled(bool disabled) override;
-    void addToMenubar(MainWindow* win) override;
+    void addToMenubar(Menubar& menubar) override;
 
 private:
     void entrySelected(const PageTypeInfo*) override;

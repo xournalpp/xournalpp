@@ -44,7 +44,7 @@ enum DrawingType {
     DRAWING_TYPE_ARROW,
     DRAWING_TYPE_DOUBLE_ARROW,
     DRAWING_TYPE_COORDINATE_SYSTEM,
-    DRAWING_TYPE_STROKE_RECOGNIZER,
+    DRAWING_TYPE_SHAPE_RECOGNIZER,
     DRAWING_TYPE_SPLINE
 };
 std::string drawingTypeToString(DrawingType type);
@@ -52,6 +52,7 @@ DrawingType drawingTypeFromString(const std::string& type);
 
 
 // Has to be in the same order as in Action.h: ActionType!
+// The numbers must agree with the action's targets in ui/mainmenubar.xml
 enum ToolType {
     TOOL_NONE = 0,
 
@@ -83,6 +84,12 @@ enum ToolType {
 };
 auto isSelectToolType(ToolType type) -> bool;
 auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
+
+/**
+ * @brief Whether or not the tool needs the selection to be cleared when selected
+ */
+auto requiresClearedSelection(ToolType type) -> bool;
+
 // The count of tools
 #define TOOL_COUNT (TOOL_END_ENTRY - 1)
 

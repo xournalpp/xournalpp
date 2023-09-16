@@ -37,7 +37,7 @@ public:
     void updateMenu();
 
     void setDisabled(bool disabled) override;
-    void addToMenubar(MainWindow* win) override;
+    void addToMenubar(Menubar& menubar) override;
 
 private:
     static void openFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self);
@@ -64,6 +64,7 @@ private:
      * </submenu>
      * and the section separator does not appear in this case...
      */
+    xoj::util::GObjectSPtr<GMenu> recentFilesSubmenu;
     xoj::util::GObjectSPtr<GMenu> menuXoppFiles;
     xoj::util::GObjectSPtr<GMenu> menuPdfFiles;
     xoj::util::GObjectSPtr<GSimpleAction> openFileAction;
