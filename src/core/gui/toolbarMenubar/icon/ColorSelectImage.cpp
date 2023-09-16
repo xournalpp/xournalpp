@@ -2,9 +2,8 @@
 
 #include <cmath>  // for M_PI
 
+#include <gdk/gdkpixbuf.h>
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
-
-#include "util/pixbuf-utils.h"  // for xoj_pixbuf_get_from_surface
 
 ColorSelectImage::ColorSelectImage(Color color, bool circle): color(color), circle(circle) {
     widget = gtk_drawing_area_new();
@@ -147,7 +146,7 @@ auto ColorSelectImage::newColorIconSurface(Color color, int size, bool circle) -
  */
 auto ColorSelectImage::newColorIconPixbuf(Color color, int size, bool circle) -> GdkPixbuf* {
     cairo_surface_t* surface = newColorIconSurface(color, size, circle);
-    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(surface, 0, 0, cairo_image_surface_get_width(surface),
+    GdkPixbuf* pixbuf = gdk_pixbuf_get_from_surface(surface, 0, 0, cairo_image_surface_get_width(surface),
                                                     cairo_image_surface_get_height(surface));
     cairo_surface_destroy(surface);
 
