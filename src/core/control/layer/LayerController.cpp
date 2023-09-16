@@ -52,12 +52,40 @@ void LayerController::addListener(LayerCtrlListener* listener) { this->listener.
 
 void LayerController::removeListener(LayerCtrlListener* listener) { this->listener.remove(listener); }
 
+void LayerController::updateActions() {
+    auto layer = getCurrentLayerId();
+    auto maxLayer = getLayerCount();
+
+    auto* actionDB = control->getActionDatabase();
+
+    actionDB->enableAction(Action::LAYER_DELETE, layer > 0);
+    actionDB->enableAction(Action::LAYER_MERGE_DOWN, layer > 1);
+    actionDB->enableAction(Action::MOVE_SELECTION_LAYER_UP, layer < maxLayer);
+    actionDB->enableAction(Action::MOVE_SELECTION_LAYER_DOWN, layer > 1);
+    actionDB->enableAction(Action::LAYER_GOTO_NEXT, layer < maxLayer);
+    actionDB->enableAction(Action::LAYER_GOTO_PREVIOUS, layer > 0);
+    actionDB->enableAction(Action::LAYER_GOTO_TOP, layer < maxLayer);
+
+    actionDB->setActionState(Action::LAYER_ACTIVE, layer);
+}
+
 void LayerController::fireRebuildLayerMenu() {
     for (LayerCtrlListener* l: this->listener) { l->rebuildLayerMenu(); }
+    updateActions();
 }
 
 void LayerController::fireLayerVisibilityChanged() {
     for (LayerCtrlListener* l: this->listener) { l->layerVisibilityChanged(); }
+
+    // Rerenders the page - Todo: make this another listener
+    control->getWindow()->getXournal()->layerChanged(selectedPage);
+}
+
+void LayerController::fireSelectedLayerChanged() {
+    for (LayerCtrlListener* l: this->listener) {
+        l->updateSelectedLayer();
+    }
+    updateActions();
 }
 
 auto LayerController::actionPerformed(ActionType type) -> bool {
@@ -95,22 +123,21 @@ auto LayerController::actionPerformed(ActionType type) -> bool {
 /**
  * Show all layer on the current page
  */
-void LayerController::showAllLayer() { hideOrHideAllLayer(true); }
+void LayerController::showAllLayer() { showOrHideAllLayer(true); }
 
 /**
  * Hide all layer on the current page
  */
-void LayerController::hideAllLayer() { hideOrHideAllLayer(false); }
+void LayerController::hideAllLayer() { showOrHideAllLayer(false); }
 
 /**
  * Show / Hide all layer on the current page
  */
-void LayerController::hideOrHideAllLayer(bool show) {
+void LayerController::showOrHideAllLayer(bool show) {
     PageRef page = getCurrentPage();
     for (Layer::Index i = 1; i <= page->getLayerCount(); i++) { page->setLayerVisible(i, show); }
 
     fireLayerVisibilityChanged();
-    control->getWindow()->getXournal()->layerChanged(selectedPage);
 }
 
 void LayerController::addNewLayer() {
@@ -245,6 +272,8 @@ void LayerController::mergeCurrentLayerDown() {
     undo_redo_action->redo(this->control);
 
     control->getUndoRedoHandler()->addUndoAction(std::move(undo_redo_action));
+
+    fireRebuildLayerMenu();
 }
 
 void LayerController::copyCurrentLayer() {
@@ -282,8 +311,6 @@ auto LayerController::getCurrentPageId() const -> size_t { return selectedPage; 
 void LayerController::setLayerVisible(Layer::Index layerId, bool visible) {
     getCurrentPage()->setLayerVisible(layerId, visible);
     fireLayerVisibilityChanged();
-
-    control->getWindow()->getXournal()->layerChanged(selectedPage);
 }
 
 /**
@@ -304,12 +331,11 @@ void LayerController::switchToLay(Layer::Index layerId, bool hideShow, bool clea
     }
 
     p->setSelectedLayerId(layerId);
+    fireSelectedLayerChanged();
 
     if (hideShow) {
         for (Layer::Index i = 1; i <= p->getLayerCount(); i++) { p->setLayerVisible(i, i <= layerId); }
 
-        // Repaint page
-        control->getWindow()->getXournal()->layerChanged(selectedPage);
         fireLayerVisibilityChanged();
     }
 }

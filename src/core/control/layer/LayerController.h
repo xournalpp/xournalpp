@@ -45,6 +45,9 @@ public:
 
 protected:
     void fireLayerVisibilityChanged();
+    void fireSelectedLayerChanged();
+
+    void updateActions();
 
 public:
     [[deprecated]] bool actionPerformed(ActionType type);
@@ -62,7 +65,7 @@ public:
     /**
      * Show / Hide all layer on the current page
      */
-    void hideOrHideAllLayer(bool show);
+    void showOrHideAllLayer(bool show);
 
     void addNewLayer();
     void deleteCurrentLayer();

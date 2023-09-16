@@ -22,6 +22,7 @@
 #include "gui/dialog/RenameLayerDialog.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "model/Document.h"
+#include "model/Font.h"
 #include "model/StrokeStyle.h"
 #include "model/XojPage.h"
 #include "plugin/PluginController.h"
@@ -686,14 +687,21 @@ struct ActionProperties<Action::TOOL_HIGHLIGHTER_FILL_OPACITY> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->selectFillAlpha(false); }
 };
 
-
 template <>
 struct ActionProperties<Action::SELECT_FONT> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
-        ctrl->getWindow()->getToolMenuHandler()->showFontSelectionDlg();
-    }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->showFontDialog(); }
 };
 
+template <>
+struct ActionProperties<Action::FONT> {
+    using state_type = const std::string&;
+    using parameter_type = state_type;
+    static std::string initialState(Control* ctrl) { return ctrl->getSettings()->getFont().asString(); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        ctrl->fontChanged(XojFont(g_variant_get_string(p, nullptr)));
+    }
+};
 
 template <>
 struct ActionProperties<Action::AUDIO_RECORD> {
@@ -850,6 +858,38 @@ struct ActionProperties<Action::TOOL_FILL_OPACITY> {
 };
 
 template <>
+struct ActionProperties<Action::TOOL_COLOR> {
+    using state_type = uint32_t;
+    using parameter_type = state_type;
+    static state_type initialState(Control* ctrl) {
+        bool enable = ctrl->getToolHandler()->hasCapability(TOOL_CAP_COLOR);
+        return enable ? static_cast<uint32_t>(ctrl->getToolHandler()->getActiveTool()->getColor()) : 0xFF000000U;
+    }
+    static bool initiallyEnabled(Control* ctrl) { return ctrl->getToolHandler()->hasCapability(TOOL_CAP_COLOR); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        g_simple_action_set_state(ga, p);
+        Color color = static_cast<Color>(getGVariantValue<uint32_t>(p));
+        ctrl->getToolHandler()->setColor(color, true);
+    }
+};
+
+template <>
+struct ActionProperties<Action::SELECT_COLOR> {
+    static bool initiallyEnabled(Control* ctrl) { return ctrl->getToolHandler()->hasCapability(TOOL_CAP_COLOR); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->showColorChooserDialog(); }
+};
+
+// Layers
+template <>
+struct ActionProperties<Action::LAYER_SHOW_ALL> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->showAllLayer(); }
+};
+template <>
+struct ActionProperties<Action::LAYER_HIDE_ALL> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->hideAllLayer(); }
+};
+
+template <>
 struct ActionProperties<Action::LAYER_NEW> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->addNewLayer(); }
 };
@@ -900,5 +940,19 @@ struct ActionProperties<Action::LAYER_GOTO_TOP> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         PageRef p = ctrl->getCurrentPage();
         ctrl->getLayerController()->switchToLay(p->getLayerCount(), true);
+    }
+};
+template <>
+struct ActionProperties<Action::LAYER_ACTIVE> {
+    using state_type = Layer::Index;
+    using parameter_type = state_type;
+    static state_type initialState(Control* ctrl) { return ctrl->getLayerController()->getCurrentLayerId(); }
+    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
+        Layer::Index max = ctrl->getLayerController()->getLayerCount();
+        Layer::Index current = ctrl->getLayerController()->getCurrentLayerId();
+        Layer::Index n = getGVariantValue<Layer::Index>(p);
+        if (n != current && n <= max) {
+            ctrl->getLayerController()->switchToLay(n);  // Will set the right state for this action
+        }
     }
 };

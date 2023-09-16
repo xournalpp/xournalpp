@@ -6,11 +6,11 @@
 
 #include <glib.h>  // for g_get_monotonic_time
 
+#include "control/actions/ActionDatabase.h"
 #include "control/zoom/ZoomControl.h"               // for ZoomControl, DEFA...
 #include "gui/toolbarMenubar/AbstractSliderItem.h"  // for AbstractSliderItem
 #include "util/i18n.h"                              // for _
 
-class ActionHandler;
 
 constexpr double SCALE_LOG_OFFSET = 0.20753;
 
@@ -44,9 +44,8 @@ public:
     IconNameHelper iconNameHelper_;
 };
 
-ToolZoomSlider::ToolZoomSlider(std::string id, ActionHandler* handler, ActionType type, ZoomControl* zoom,
-                               IconNameHelper iconNameHelper):
-        AbstractSliderItem{std::move(id), handler, type, SLIDER_RANGE},
+ToolZoomSlider::ToolZoomSlider(std::string id, ZoomControl* zoom, IconNameHelper iconNameHelper, ActionDatabase& db):
+        AbstractSliderItem{std::move(id), SLIDER_RANGE, db.getAction(Action::ZOOM_IN)},
         pImpl{std::make_unique<Impl>(this, zoom, iconNameHelper)} {
     zoom->addZoomListener(this);
 }

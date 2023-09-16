@@ -13,6 +13,8 @@
 #include "util/GVariantTemplate.h"
 #include "util/raii/GObjectSPtr.h"
 
+#include "ActionRef.h"
+
 class Control;
 
 class ActionDatabase {
@@ -21,6 +23,7 @@ public:
     ~ActionDatabase();
 
     void enableAction(Action a, bool enable);
+    ActionRef getAction(Action a) const;
 
     /**
      * @brief Set the action's state, without triggering callbacks
@@ -54,7 +57,7 @@ public:
     }
 
 private:
-    EnumIndexedArray<xoj::util::GObjectSPtr<GSimpleAction>, Action> gActions;
+    EnumIndexedArray<ActionRef, Action> gActions;
     EnumIndexedArray<gulong, Action> signalIds;
     Control* control;
     GtkApplicationWindow* win;

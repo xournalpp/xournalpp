@@ -14,11 +14,13 @@
 #include <string>  // for string
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
-#include <gtk/gtk.h>                // for GtkToolItem, GtkWidget, GtkToolB...
+#include <gio/gio.h>
+#include <gtk/gtk.h>  // for GtkToolItem, GtkWidget, GtkToolB...
 
 #include "enums/ActionGroup.enum.h"  // for ActionGroup
 #include "enums/ActionType.enum.h"   // for ActionType
 #include "util/raii/GObjectSPtr.h"
+#include "util/raii/GVariantSPtr.h"
 
 #include "AbstractItem.h"  // for AbstractItem
 
@@ -27,6 +29,7 @@ class ActionHandler;
 class AbstractToolItem: public AbstractItem {
 public:
     AbstractToolItem(std::string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = nullptr);
+
     AbstractToolItem(std::string id);
     ~AbstractToolItem() override;
 
@@ -37,8 +40,9 @@ public:
 
 public:
     void selected(ActionGroup group, ActionType action) override;
-    virtual GtkToolItem* createItem(bool horizontal);
-    virtual GtkToolItem* createTmpItem(bool horizontal);
+    virtual GtkWidget* createItem(bool horizontal) = 0;
+
+    GtkToolItem* createToolItem(bool horizontal);
 
     bool isUsed() const;
     void setUsed(bool used);
@@ -52,18 +56,10 @@ public:
      */
     virtual GtkWidget* getNewToolIcon() const = 0;
 
-    /**
-     * Enable / Disable the tool item
-     */
-    void enable(bool enabled) override;
-
-    GtkToolItem* getItem() const;
+    GtkWidget* getItem() const;
 
 protected:
-    virtual GtkToolItem* newItem() = 0;
-
-protected:
-    GtkToolItem* item = nullptr;
+    xoj::util::WidgetSPtr item;
 
     bool toolToggleButtonActive = false;
     bool toolToggleOnlyEnable = false;

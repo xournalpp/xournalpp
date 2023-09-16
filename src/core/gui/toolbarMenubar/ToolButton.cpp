@@ -3,13 +3,11 @@
 #include <utility>  // for move
 
 #include <glib.h>
-#include <gtk/gtkactionable.h>
+#include <gtk/gtk.h>
 
-#include "control/actions/ActionDatabase.h"
 #include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
 #include "util/GVariantTemplate.h"
 #include "util/GtkUtil.h"
-#include "util/StringUtils.h"
 #include "util/gtk4_helper.h"
 #include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 #include "util/raii/GVariantSPtr.h"
@@ -34,10 +32,10 @@ ToolButton::~ToolButton() = default;
 
 void ToolButton::updateDescription(const std::string& description) {
     this->description = description;
-    gtk_widget_set_tooltip_text(GTK_WIDGET(item), description.c_str());
+    gtk_widget_set_tooltip_text(this->item.get(), description.c_str());
 }
 
-auto ToolButton::createItem(bool horizontal) -> GtkToolItem* {
+auto ToolButton::createItem(bool horizontal) -> GtkWidget* {
     GtkWidget* btn = toggle ? gtk_toggle_button_new() : gtk_button_new();
     gtk_button_set_child(GTK_BUTTON(btn), getNewToolIcon());
     gtk_widget_set_tooltip_text(btn, getToolDisplayName().c_str());
@@ -103,13 +101,9 @@ auto ToolButton::createItem(bool horizontal) -> GtkToolItem* {
         return proxy;
     };
     gtk_tool_item_set_proxy_menu_item(it, "", createProxy());
-    this->item = it;
-    g_object_ref_sink(it);
-    return it;
+    this->item.reset(GTK_WIDGET(it), xoj::util::adopt);
+    return this->item.get();
 }
-
-// Not really used
-GtkToolItem* ToolButton::newItem() { return nullptr; }
 
 auto ToolButton::getToolDisplayName() const -> std::string { return this->description; }
 

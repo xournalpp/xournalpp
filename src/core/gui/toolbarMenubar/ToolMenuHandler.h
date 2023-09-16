@@ -29,7 +29,6 @@
 #include "util/raii/GObjectSPtr.h"
 
 class AbstractToolItem;
-class FontButton;
 class GladeGui;
 class GladeSearchpath;
 class ToolbarData;
@@ -40,7 +39,6 @@ class ToolPageLayer;
 class ToolPageSpinner;
 class PageTypeMenu;
 class SpinPageAdapter;
-class XojFont;
 class ZoomControl;
 class Control;
 class PageBackgroundChangeController;
@@ -73,8 +71,6 @@ public:
      */
     void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
 
-    void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
-
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);
 
@@ -83,11 +79,6 @@ public:
 
     SpinPageAdapter* getPageSpinner();
     void setPageInfo(size_t pagecount, size_t pdfpage = 0);
-
-    void setFontButtonFont(const XojFont& font);
-    XojFont getFontButtonFont();
-
-    void showFontSelectionDlg();
 
     void setTmpDisabled(bool disabled);
 
@@ -100,8 +91,6 @@ public:
     const std::vector<ColorToolItem*>& getColorToolItems() const;
 
     Control* getControl();
-
-    [[maybe_unused]] bool isColorInUse(Color color);
 
     void disableAudioPlaybackButtons();
 
@@ -116,10 +105,6 @@ public:
 
 private:
     void addToolItem(AbstractToolItem* it);
-
-    static void signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
-                                      const gchar* handlerName, GObject* connectObject, GConnectFlags flags,
-                                      ToolMenuHandler* self);
     void initPenToolItem();
     void initEraserToolItem();
 
@@ -135,7 +120,6 @@ private:
 
     ToolPageSpinner* toolPageSpinner = nullptr;
     ToolPageLayer* toolPageLayer = nullptr;
-    FontButton* fontButton = nullptr;
 
     Control* control = nullptr;
     ActionHandler* listener = nullptr;

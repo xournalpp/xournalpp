@@ -100,8 +100,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     gtk_drag_dest_add_uri_targets(this->window);
     gtk_drag_dest_add_image_targets(this->window);
     gtk_drag_dest_add_text_targets(this->window);
-
-    LayerCtrlListener::registerListener(control->getLayerController());
 }
 
 void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
@@ -481,10 +479,6 @@ void MainWindow::createToolbar() {
     this->control->getScheduler()->unblockRerenderZoom();
 }
 
-void MainWindow::setFontButtonFont(const XojFont& font) {}  // toolbar->setFontButtonFont(font); }
-
-auto MainWindow::getFontButtonFont() const -> XojFont { return toolbar->getFontButtonFont(); }
-
 void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage) {
     SpinPageAdapter* spinPageNo = getSpinPageNo();
     if (!spinPageNo) {
@@ -511,25 +505,6 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
     } else {
         toolbar->setPageInfo(pagecount);
     }
-}
-
-void MainWindow::rebuildLayerMenu() { layerVisibilityChanged(); }
-
-void MainWindow::layerVisibilityChanged() {
-    LayerController* lc = control->getLayerController();
-
-    auto layer = lc->getCurrentLayerId();
-    auto maxLayer = lc->getLayerCount();
-
-    auto* actionDB = control->getActionDatabase();
-
-    actionDB->enableAction(Action::LAYER_DELETE, layer > 0);
-    actionDB->enableAction(Action::LAYER_MERGE_DOWN, layer > 1);
-    actionDB->enableAction(Action::MOVE_SELECTION_LAYER_UP, layer < maxLayer);
-    actionDB->enableAction(Action::MOVE_SELECTION_LAYER_DOWN, layer > 1);
-    actionDB->enableAction(Action::LAYER_GOTO_NEXT, layer < maxLayer);
-    actionDB->enableAction(Action::LAYER_GOTO_PREVIOUS, layer > 0);
-    actionDB->enableAction(Action::LAYER_GOTO_TOP, layer < maxLayer);
 }
 
 auto MainWindow::getMenubar() const -> Menubar* { return menubar.get(); }

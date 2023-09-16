@@ -164,3 +164,5 @@ void ActionDatabase::enableAction(Action action, bool enable) {
     xoj_assert(gActions[action]);
     g_simple_action_set_enabled(gActions[action].get(), enable);
 }
+
+auto ActionDatabase::getAction(Action a) const -> ActionRef { return gActions[a]; }

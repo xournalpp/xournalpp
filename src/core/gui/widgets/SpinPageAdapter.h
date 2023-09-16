@@ -17,6 +17,8 @@
 #include <glib.h>     // for guint, gulong
 #include <gtk/gtk.h>  // for GtkWidget, GtkSpinButton
 
+#include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
+
 class SpinPageListener;
 
 class SpinPageAdapter {
@@ -31,9 +33,8 @@ public:
      * Assumes ownership of widget
      */
     void setWidget(GtkWidget* widget);
-    void removeWidget();
 
-    int getPage() const;
+    size_t getPage() const;
     void setPage(size_t page);
     void setMinMaxPage(size_t min, size_t max);
 
@@ -47,7 +48,7 @@ private:
     void firePageChanged();
 
 private:
-    GtkWidget* widget = nullptr;
+    xoj::util::WidgetSPtr widget;
     gulong pageNrSpinChangedHandlerId = 0;
     size_t page = 0;
 

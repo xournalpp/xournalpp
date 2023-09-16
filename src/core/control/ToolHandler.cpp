@@ -316,7 +316,6 @@ void ToolHandler::setColor(Color color, bool userSelection) {
     this->stateChangeListener->toolColorChanged();
     if (userSelection)
         this->stateChangeListener->changeColorOfSelection();
-    this->stateChangeListener->setCustomColorSelected();
 }
 
 void ToolHandler::setButtonColor(Color color, Button button) {

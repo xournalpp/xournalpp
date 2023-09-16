@@ -12,45 +12,42 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
 #include <string>   // for string
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gtk/gtk.h>                // for GtkWidget, GtkToolItem, GTK_ORIEN...
 
-#include "enums/ActionType.enum.h"  // for ActionType
 #include "gui/IconNameHelper.h"     // for IconNameHelper
+#include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 
 #include "AbstractToolItem.h"  // for AbstractToolItem
 
 class SpinPageAdapter;
-class ActionHandler;
 
 class ToolPageSpinner: public AbstractToolItem {
 public:
-    ToolPageSpinner(ActionHandler* handler, std::string id, ActionType type, IconNameHelper iconNameHelper);
+    ToolPageSpinner(std::string id, IconNameHelper iconNameHelper);
     ~ToolPageSpinner() override;
 
 public:
     SpinPageAdapter* getPageSpinner() const;
     void setPageInfo(size_t pagecount, size_t pdfpage);
     std::string getToolDisplayName() const override;
-    GtkToolItem* createItem(bool horizontal) override;
-    GtkToolItem* createTmpItem(bool horizontal) override;
+    GtkWidget* createItem(bool horizontal) override;
 
 protected:
-    GtkToolItem* newItem() override;
     GtkWidget* getNewToolIcon() const override;
 
 private:
     void updateLabels();
 
 private:
-    SpinPageAdapter* pageSpinner = nullptr;
+    std::unique_ptr<SpinPageAdapter> pageSpinner;
     GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
 
-    GtkWidget* box = nullptr;
-    GtkWidget* lbPageNo = nullptr;
-    GtkWidget* lbVerticalPdfPage = nullptr;
+    xoj::util::WidgetSPtr lbPageNo;
+    xoj::util::WidgetSPtr lbVerticalPdfPage;
 
     /** The current page of the document. */
     size_t pageCount = 0;

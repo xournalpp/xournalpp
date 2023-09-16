@@ -16,7 +16,6 @@
 #include "gui/toolbarMenubar/model/ToolbarEntry.h"  // for ToolbarEntry
 #include "gui/toolbarMenubar/model/ToolbarItem.h"   // for ToolbarItem
 #include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
-#include "model/Font.h"                             // for XojFont
 #include "plugin/Plugin.h"                          // for ToolbarButtonEntr<
 #include "util/GVariantTemplate.h"                  // for gVariantType
 #include "util/GtkUtil.h"
@@ -27,21 +26,22 @@
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _
 
-#include "AbstractToolItem.h"        // for AbstractToolItem
-#include "ColorToolItem.h"           // for ColorToolItem
-#include "FontButton.h"              // for FontButton
-#include "MenuItem.h"                // for MenuItem
-#include "PluginToolButton.h"        // for ToolButton
-#include "ToolButton.h"              // for ToolButton
-#include "ToolDrawCombocontrol.h"    // for ToolDrawCombocon...
-#include "ToolPageLayer.h"           // for ToolPageLayer
-#include "ToolPageSpinner.h"         // for ToolPageSpinner
-#include "ToolPdfCombocontrol.h"     // for ToolPdfCombocontrol
-#include "ToolSelectCombocontrol.h"  // for ToolSelectComboc...
-#include "ToolZoomSlider.h"          // for ToolZoomSlider
-#include "config-dev.h"              // for TOOLBAR_CONFIG
-#include "config-features.h"         // for ENABLE_PLUGINS
-#include "filesystem.h"              // for exists
+#include "AbstractToolItem.h"            // for AbstractToolItem
+#include "ColorSelectorToolItem.h"       // for ColorSelectorToolItem
+#include "ColorToolItem.h"               // for ColorToolItem
+#include "DrawingTypeComboToolButton.h"  // for DrawingTypeComboToolButton
+#include "FontButton.h"                  // for FontButton
+#include "MenuItem.h"                    // for MenuItem
+#include "PluginToolButton.h"            // for ToolButton
+#include "ToolButton.h"                  // for ToolButton
+#include "ToolPageLayer.h"               // for ToolPageLayer
+#include "ToolPageSpinner.h"             // for ToolPageSpinner
+#include "ToolPdfCombocontrol.h"         // for ToolPdfCombocontrol
+#include "ToolSelectCombocontrol.h"      // for ToolSelectComboc...
+#include "ToolZoomSlider.h"              // for ToolZoomSlider
+#include "config-dev.h"                  // for TOOLBAR_CONFIG
+#include "config-features.h"             // for ENABLE_PLUGINS
+#include "filesystem.h"                  // for exists
 
 
 using std::string;
@@ -217,10 +217,10 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
                     count++;
                     const NamedColor& namedColor = palette.getColorAt(paletteIndex);
-                    auto* item = new ColorToolItem(listener, toolHandler, this->parent, namedColor);
+                    auto* item = new ColorToolItem(namedColor);
                     this->toolbarColorItems.push_back(item);
 
-                    GtkToolItem* it = item->createItem(horizontal);
+                    GtkToolItem* it = item->createToolItem(horizontal);
                     gtk_widget_show_all(GTK_WIDGET(it));
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
@@ -240,7 +240,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                         item->setUsed(true);
 
                         count++;
-                        GtkToolItem* it = item->createItem(horizontal);
+                        GtkToolItem* it = item->createToolItem(horizontal);
                         gtk_widget_show_all(GTK_WIDGET(it));
                         gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
 
@@ -303,10 +303,6 @@ void ToolMenuHandler::setTmpDisabled(bool disabled) {
 }
 
 void ToolMenuHandler::addToolItem(AbstractToolItem* it) { this->toolItems.push_back(it); }
-
-void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group) {
-    this->menuItems.push_back(new MenuItem(listener, widget, type, group));
-}
 
 /**
  * @return floating ref
@@ -611,8 +607,7 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemWithTarget("PLAY_OBJECT", Action::SELECT_TOOL, TOOL_PLAY_OBJECT, "object-play", _("Play Object"));
     emplaceCustomItemWithTarget("HAND", Action::SELECT_TOOL, TOOL_HAND, "hand", _("Hand"));
 
-    fontButton = new FontButton(listener, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
-    addToolItem(fontButton);
+    addToolItem(new FontButton("SELECT_FONT", *control->getActionDatabase()));
 
     emplaceCustomItemTgl("AUDIO_RECORDING", Action::AUDIO_RECORD, "audio-record", _("Record Audio / Stop Recording"));
     emplaceCustomItemTgl("AUDIO_PAUSE_PLAYBACK", Action::AUDIO_PAUSE_PLAYBACK, "audio-playback-pause",
@@ -629,14 +624,13 @@ void ToolMenuHandler::initToolItems() {
      * Footer tools
      * ------------------------------------------------------------------------
      */
-    toolPageSpinner = new ToolPageSpinner(listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN, iconNameHelper);
+    toolPageSpinner = new ToolPageSpinner("PAGE_SPIN", iconNameHelper);
     addToolItem(toolPageSpinner);
 
-    auto* toolZoomSlider = new ToolZoomSlider("ZOOM_SLIDER", listener, ACTION_FOOTER_ZOOM_SLIDER, zoom, iconNameHelper);
+    auto* toolZoomSlider = new ToolZoomSlider("ZOOM_SLIDER", zoom, iconNameHelper, *control->getActionDatabase());
     addToolItem(toolZoomSlider);
 
-    toolPageLayer =
-            new ToolPageLayer(control->getLayerController(), listener, "LAYER", ACTION_FOOTER_LAYER, iconNameHelper);
+    toolPageLayer = new ToolPageLayer("LAYER", control->getLayerController(), iconNameHelper);
     addToolItem(toolPageLayer);
 
     /*
@@ -648,11 +642,13 @@ void ToolMenuHandler::initToolItems() {
      * Color item - not in the menu
      * aka. COLOR_SELECT
      */
-    addToolItem(new ColorToolItem(listener, toolHandler, this->parent, NamedColor{}, true));
+    addToolItem(new ColorSelectorToolItem(*control->getActionDatabase()));
+
     bool hideAudio = !this->control->getAudioController();
-    addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT", hideAudio));
-    addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
-    addToolItem(new ToolPdfCombocontrol(this, listener, "PDF_TOOL"));
+    addToolItem(
+            new ToolSelectCombocontrol("SELECT", this->iconNameHelper, *this->control->getActionDatabase(), hideAudio));
+    addToolItem(new DrawingTypeComboToolButton("DRAW", this->iconNameHelper, *this->control->getActionDatabase()));
+    addToolItem(new ToolPdfCombocontrol("PDF_TOOL", this->iconNameHelper, *this->control->getActionDatabase()));
 
     // General tool configuration - working for every tool which support it
     emplaceCustomItemTgl("TOOL_FILL", Action::TOOL_FILL, "fill", _("Fill"));
@@ -666,18 +662,16 @@ void ToolMenuHandler::initToolItems() {
                                 _("Very Thick"));
 }
 
-void ToolMenuHandler::setFontButtonFont(const XojFont& font) { this->fontButton->setFont(font); }
-
-auto ToolMenuHandler::getFontButtonFont() -> XojFont { return this->fontButton->getFont(); }
-
-void ToolMenuHandler::showFontSelectionDlg() { this->fontButton->showFontDialog(); }
-
 void ToolMenuHandler::setUndoDescription(const string& description) {
-    this->undoButton->updateDescription(description);
+    if (this->undoButton) {
+        this->undoButton->updateDescription(description);
+    }
 }
 
 void ToolMenuHandler::setRedoDescription(const string& description) {
-    this->redoButton->updateDescription(description);
+    if (this->redoButton) {
+        this->redoButton->updateDescription(description);
+    }
 }
 
 auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* {
@@ -691,16 +685,6 @@ void ToolMenuHandler::setPageInfo(const size_t pagecount, const size_t pdfpage) 
 auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel.get(); }
 
 auto ToolMenuHandler::getControl() -> Control* { return this->control; }
-
-auto ToolMenuHandler::isColorInUse(Color color) -> bool {
-    for (ColorToolItem* it: this->toolbarColorItems) {
-        if (it->getColor() == color) {
-            return true;
-        }
-    }
-
-    return false;
-}
 
 auto ToolMenuHandler::getToolItems() -> std::vector<AbstractToolItem*>* { return &this->toolItems; }
 

@@ -51,7 +51,6 @@ public:
      *
      */
     virtual void changeColorOfSelection() = 0;
-    virtual void setCustomColorSelected() = 0;
     virtual void toolSizeChanged() = 0;
     virtual void toolFillChanged() = 0;
     virtual void toolLineStyleChanged() = 0;

@@ -6,6 +6,7 @@
 #include <utility>  // for move
 #include <vector>   // for vector
 
+#include "util/serdesstream.h"
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -26,17 +27,18 @@ auto XojFont::getSize() const -> double { return size; }
 
 void XojFont::setSize(double size) { this->size = size; }
 
-void XojFont::operator=(const XojFont& font) {
+XojFont& XojFont::operator=(const XojFont& font) {
     this->name = font.name;
     this->size = font.size;
+    return *this;
 }
 
-void XojFont::operator=(const std::string& description) {
+XojFont::XojFont(const char* description) {
     // See https://stackoverflow.com/questions/44949784/c-regex-which-group-matched for
     // a good overview of regular expressions in C++.
     std::regex pangoFontDescriptionRegex{"^(.*) (\\d+[.]?\\d*)$"};
 
-    std::match_results<std::string::const_iterator> results;
+    std::match_results<const char*> results;
     std::regex_search(description, results, pangoFontDescriptionRegex);
 
     if (results.size() > 1) {
@@ -52,9 +54,10 @@ void XojFont::operator=(const std::string& description) {
     }
 }
 
-auto XojFont::asString() const -> std::string {
-    std::stringstream result;
+XojFont& XojFont::operator=(const std::string& description) { return *this = XojFont(description.c_str()); }
 
+auto XojFont::asString() const -> std::string {
+    auto result = serdes_stream<std::stringstream>();
     result << getName() << " " << getSize();
 
     return result.str();

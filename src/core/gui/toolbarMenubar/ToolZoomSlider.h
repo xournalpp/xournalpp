@@ -18,18 +18,16 @@
 #include <gtk/gtk.h>                // for GtkRange, GtkWidget
 
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
-#include "enums/ActionType.enum.h"      // for ActionType
 #include "gui/IconNameHelper.h"         // for IconNameHelper
 
 #include "AbstractSliderItem.h"  // for AbstractSliderItem
 
 class ZoomControl;
-class ActionHandler;
+class ActionDatabase;
 
 class ToolZoomSlider: public AbstractSliderItem, public ZoomListener {
 public:
-    ToolZoomSlider(std::string id, ActionHandler* handler, ActionType type, ZoomControl* zoom,
-                   IconNameHelper iconNameHelper);
+    ToolZoomSlider(std::string id, ZoomControl* zoom, IconNameHelper iconNameHelper, ActionDatabase& db);
     ~ToolZoomSlider() override;
 
 protected:
