@@ -112,6 +112,18 @@ auto ToolButton::newItem() -> GtkToolItem* {
                 // Todo(gtk4) Remove all uses of GtkToolItem and GtkToobar
                 it = gtk_tool_item_new();
                 gtk_container_add(GTK_CONTAINER(it), GTK_WIDGET(box));
+
+                g_signal_connect_object(it, "toolbar-reconfigured", G_CALLBACK(+[](GtkToolItem* it, gpointer box) {
+                                            gtk_orientable_set_orientation(GTK_ORIENTABLE(box),
+                                                                           gtk_tool_item_get_orientation(it));
+                                        }),
+                                        box, GConnectFlags(0));
+                g_signal_connect_object(
+                        it, "toolbar-reconfigured", G_CALLBACK(+[](GtkToolItem* it, gpointer btn) {
+                            const bool h = gtk_tool_item_get_orientation(it) == GTK_ORIENTATION_HORIZONTAL;
+                            gtk_menu_button_set_direction(GTK_MENU_BUTTON(btn), h ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);
+                        }),
+                        menubutton, GConnectFlags(0));
             } else {
                 it = gtk_menu_tool_button_new(
                         gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR),
