@@ -17,7 +17,6 @@
 #include "control/zoom/ZoomControl.h"        // for ZoomControl
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "util/Color.h"                      // for argb_to_GdkRGBA, rgb_to_...
-#include "util/pixbuf-utils.h"               // for xoj_pixbuf_get_from_surface
 
 #include "XournalView.h"  // for XournalView
 
@@ -75,7 +74,7 @@ cursorStruct cssCursors[CRSR_END_OF_CURSORS];
 
 XournalppCursor::XournalppCursor(Control* control): control(control) {
     // clang-format off
-	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor. 
+	// NOTE: Go ahead and use a fancy css cursor... but specify a common backup cursor.
 	cssCursors[CRSR_nullptr                ] = 	{"",""};
 	cssCursors[CRSR_BUSY                ] = 	{"wait", 		""					};
 	cssCursors[CRSR_MOVE                ] = 	{"all-scroll", 	""					};
@@ -370,7 +369,7 @@ auto XournalppCursor::getResizeCursor(double deltaAngle) -> GdkCursor* {
     }
 
     cairo_destroy(cr);
-    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, RESIZE_CURSOR_SIZE, RESIZE_CURSOR_SIZE);
+    GdkPixbuf* pixbuf = gdk_pixbuf_get_from_surface(crCursor, 0, 0, RESIZE_CURSOR_SIZE, RESIZE_CURSOR_SIZE);
     cairo_surface_destroy(crCursor);
     GdkCursor* cursor =
             gdk_cursor_new_from_pixbuf(gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf,
@@ -512,7 +511,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     }
 
     cairo_destroy(cr);
-    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
+    GdkPixbuf* pixbuf = gdk_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
     cairo_surface_destroy(crCursor);
     GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
             gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
@@ -633,7 +632,7 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
     }
 
     cairo_destroy(cr);
-    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
+    GdkPixbuf* pixbuf = gdk_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
     cairo_surface_destroy(crCursor);
     GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
             gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);

@@ -192,8 +192,8 @@ void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragCo
     ToolItemDragCurrentData::setDataColor(-1, data->namedColor);
 
     GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(data->namedColor->getColor(), 16, true);
-
     gtk_drag_set_icon_pixbuf(context, image, -2, -2);
+    g_object_unref(image);
 }
 
 /**
