@@ -36,6 +36,7 @@
 #include "util/Rectangle.h"                                 // for Rectangle, util
 #include "view/overlays/StrokeToolFilledHighlighterView.h"  // for StrokeToolFilledHighlighterView
 #include "view/overlays/StrokeToolFilledView.h"             // for StrokeToolFilledView
+#include "view/overlays/StrokeToolLiveApproximationView.h"  // for StrokeToolLiveApproximationView
 #include "view/overlays/StrokeToolView.h"                   // for StrokeToolView
 
 #include "StrokeStabilizer.h"  // for Base, get
@@ -44,7 +45,8 @@ StrokeHandler::StrokeHandler(Control* control, const PageRef& page):
         InputHandler(control, page),
         snappingHandler(control->getSettings()),
         stabilizer(StrokeStabilizer::get(control->getSettings())),
-        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::StrokeToolView>>()) {}
+        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::StrokeToolView>>()),
+        approxViewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::StrokeToolLiveApproximationView>>()) {}
 
 StrokeHandler::~StrokeHandler() = default;
 
@@ -130,6 +132,8 @@ void StrokeHandler::onSequenceCancelEvent() {
     if (this->stroke) {
         this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::CANCELLATION_REQUEST,
                                          Range(this->stroke->boundingRect()));
+        this->approxViewPool->dispatchAndClear(xoj::view::StrokeToolLiveApproximationView::CANCELLATION_REQUEST,
+                                               Range(this->stroke->boundingRect()));
         stroke.reset();
     }
 }
@@ -149,6 +153,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
 
     bool enoughPoints = true;
     if (this->splineLiveApproximation) {
+        printf("release\n");
         enoughPoints = this->liveApprox->dataCount >= 3;
         if (enoughPoints) {
             // Try to approximate the last points
@@ -191,7 +196,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
                 }
             }
             // this->pageView->repaintRect(rect.x, rect.y, rect.width, rect.height);
-            this->liveApprox->printStats();
         } else {
             // The stroke only has 1 or 2 points.
             // Either a degenerate line segment, or an actual line segment
@@ -208,6 +212,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
                                                                             this->liveApprox->liveSegment.secondKnot));
             }
         }
+        this->liveApprox->printStats();
     } else {
         enoughPoints = this->path->nbSegments() >= 1;
         if (!enoughPoints) {
@@ -284,6 +289,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
 
     // Blitt the stroke to the page's buffer and delete all views.
     this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::FINALIZATION_REQUEST, repaintRange);
+    this->approxViewPool->dispatchAndClear(xoj::view::StrokeToolLiveApproximationView::FINALIZATION_REQUEST,
+                                           repaintRange);
 
     page->fireElementChanged(ptr);
 }
@@ -364,9 +371,9 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom
                 std::make_shared<Spline>(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, firstKnotWidth));
         this->liveApprox = std::make_unique<SplineApproximator::Live>(this->approximatedSpline);
         this->stroke->setPath(this->approximatedSpline);
-        this->liveSegmentStroke = std::make_unique<Stroke>();
-        this->liveSegmentStroke->setWidth(this->stroke->getWidth());
-        this->liveSegmentStroke->setPressureSensitive(this->hasPressure);
+        // this->liveSegmentStroke = std::make_unique<Stroke>();
+        // this->liveSegmentStroke->setWidth(this->stroke->getWidth());
+        // this->liveSegmentStroke->setPressureSensitive(this->hasPressure);
 
         this->drawEvent = &StrokeHandler::normalDrawLiveApproximator;
     } else {
@@ -386,6 +393,9 @@ void StrokeHandler::onButtonDoublePressEvent(const PositionInputData&, double) {
 auto StrokeHandler::createView(xoj::view::Repaintable* parent) const -> std::unique_ptr<xoj::view::OverlayView> {
     xoj_assert(this->stroke);
     const Stroke& s = *this->stroke;
+    if (splineLiveApproximation) {
+        return std::make_unique<xoj::view::StrokeToolLiveApproximationView>(this, s, parent);
+    }
     if (s.getFill() != -1) {
         if (s.getToolType() == StrokeTool::HIGHLIGHTER) {
             // Filled highlighter requires to wipe the mask entirely at every iteration
@@ -402,6 +412,16 @@ auto StrokeHandler::createView(xoj::view::Repaintable* parent) const -> std::uni
 auto StrokeHandler::getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::StrokeToolView>>& {
     return viewPool;
 }
+auto StrokeHandler::getApproxViewPool() const
+        -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::StrokeToolLiveApproximationView>>& {
+    return approxViewPool;
+}
+
+const Spline& StrokeHandler::getSpline() const {
+    xoj_assert(splineLiveApproximation && approximatedSpline);
+    return *approximatedSpline;
+}
+const SplineSegment& StrokeHandler::getLiveSegment() const { return liveApprox->liveSegment; }
 
 void StrokeHandler::normalDraw(const Point& p) {
     this->path->addLineSegmentTo(this->hasPressure ? p : Point(p.x, p.y));
@@ -412,25 +432,27 @@ void StrokeHandler::normalDrawLiveApproximator(const Point& p) {
     const bool newDefinitiveSegment = !this->liveApprox->feedPoint(p);
 
     const SplineSegment& liveSegment = this->liveApprox->liveSegment;
+    this->approxViewPool->dispatch(xoj::view::StrokeToolLiveApproximationView::UPDATE_LIVE_SEGMENT_REQUEST,
+                                   liveSegment);
 
-    const auto getBBox = hasPressure ? &SplineSegment::getThickBoundingBox : &SplineSegment::getThinBoundingBox;
-    Range rg = (liveSegment.*getBBox)();
-
-    if (newDefinitiveSegment) {
-        // Fitting failed. Use the last cached segment and start a new live segment
-        const SplineSegment& seg = this->liveApprox->lastDefinitiveSegment;
-        this->liveSegmentStroke->setPath(std::make_shared<Spline>(seg));
-        this->liveSegmentStroke->clearPointCache();
-        /*
-                xoj::view::StrokeView sView(this->liveSegmentStroke.get());
-                sView.draw(xoj::view::Context::createColorBlind(mask->cr));
-        */
-        rg = rg.unite((seg.*getBBox)());
-    }
-
-    if (!hasPressure) {
-        rg.addPadding(0.5 * this->stroke->getWidth());
-    }
+    // const auto getBBox = hasPressure ? &SplineSegment::getThickBoundingBox : &SplineSegment::getThinBoundingBox;
+    // Range rg = (liveSegment.*getBBox)();
+    //
+    // if (newDefinitiveSegment) {
+    //     // Fitting failed. Use the last cached segment and start a new live segment
+    //     const SplineSegment& seg = this->liveApprox->lastDefinitiveSegment;
+    //     this->liveSegmentStroke->setPath(std::make_shared<Spline>(seg));
+    //     this->liveSegmentStroke->clearPointCache();
+    //     /*
+    //             xoj::view::StrokeView sView(this->liveSegmentStroke.get());
+    //             sView.draw(xoj::view::Context::createColorBlind(mask->cr));
+    //     */
+    //     rg = rg.unite((seg.*getBBox)());
+    // }
+    //
+    // if (!hasPressure) {
+    //     rg.addPadding(0.5 * this->stroke->getWidth());
+    // }
 
     //  this->pageView->repaintRect(rg.getX(), rg.getY(), rg.getWidth(), rg.getHeight());
 }
