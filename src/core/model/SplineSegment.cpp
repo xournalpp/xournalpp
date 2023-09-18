@@ -51,6 +51,14 @@ void SplineSegment::toPoints(std::vector<Point>& points) const {
     childSegments.second.toPoints(points);
 }
 
+double SplineSegment::length() const {
+    if (isFlatEnough()) {
+        return firstKnot.lineLengthTo(secondKnot);
+    }
+    auto const& childSegments = subdivide(0.5);
+    return childSegments.first.length() + childSegments.second.length();
+}
+
 void SplineSegment::toParametrizedPoints(std::vector<ParametrizedPoint>& points, double start, double end) const {
     if (isFlatEnough()) {
         points.emplace_back(firstKnot, start);

@@ -99,6 +99,11 @@ public:
     void toPoints(std::vector<point_t>& points) const;
 
     /**
+     * @brief Compute the linear length of the segment
+     */
+    double length() const;
+
+    /**
      * @brief A small helper structure for points with a parameter
      */
     struct ParametrizedPoint: public point_t {

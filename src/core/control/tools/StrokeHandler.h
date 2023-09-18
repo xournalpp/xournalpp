@@ -49,6 +49,7 @@ namespace xoj::view {
 class OverlayView;
 class Repaintable;
 class StrokeToolView;
+class StrokeToolLiveApproximationView;
 };  // namespace xoj::view
 
 namespace StrokeStabilizer {
@@ -90,6 +91,8 @@ public:
     auto createView(xoj::view::Repaintable* parent) const -> std::unique_ptr<xoj::view::OverlayView> override;
 
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::StrokeToolView>>& getViewPool() const;
+    const std::shared_ptr<xoj::util::DispatchPool<xoj::view::StrokeToolLiveApproximationView>>& getApproxViewPool()
+            const;
 
     // struct LiveApproximationData {
     //     const SplineSegment& liveSegment;
@@ -130,6 +133,7 @@ private:
     std::unique_ptr<StrokeStabilizer::Base> stabilizer;
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::StrokeToolView>> viewPool;
+    std::shared_ptr<xoj::util::DispatchPool<xoj::view::StrokeToolLiveApproximationView>> approxViewPool;
 
     bool hasPressure;
 
@@ -143,9 +147,12 @@ private:
 
     std::shared_ptr<Spline> approximatedSpline;
     std::unique_ptr<SplineApproximator::Live> liveApprox;
-    std::unique_ptr<Stroke> liveSegmentStroke;
-    size_t liveSegmentPointCacheBegin = 0;
 
+public:
+    const Spline& getSpline() const;
+    const SplineSegment& getLiveSegment() const;
+
+private:
 #ifdef DEBUG_FPS
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
     bool secondPassed() {
