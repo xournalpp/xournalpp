@@ -1369,11 +1369,7 @@ void Control::setShapeTool(ActionType type, bool enabled) {
 }
 
 void Control::setFullscreen(bool enabled) {
-    if (enabled) {
-        gtk_window_fullscreen(GTK_WINDOW(win->getWindow()));
-    } else {
-        gtk_window_unfullscreen(GTK_WINDOW(win->getWindow()));
-    }
+    win->toggleFullscreen(enabled);
 
     fireActionSelected(GROUP_FULLSCREEN, enabled ? ACTION_FULLSCREEN : ACTION_NONE);
 }

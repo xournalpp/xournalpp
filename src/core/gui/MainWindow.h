@@ -78,6 +78,8 @@ public:
     void setMaximized(bool maximized);
     bool isMaximized() const;
 
+    void toggleFullscreen(bool enabled) const;
+
     XournalView* getXournal() const;
 
     void setMenubarVisible(bool visible);
