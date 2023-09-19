@@ -33,7 +33,6 @@ bool SplineApproximator::Live::feedPoint(const Point& p) {
         // Success. Push the segment found and return
         this->liveSegment = SplineSegment(this->firstKnot, segmentFitter.getFirstVelocity(),
                                           segmentFitter.getSecondVelocity(), *this->P1);
-        this->spline->replaceLastSegment(this->liveSegment);
         APPROX_STATS(stopTimer());
         return true;
     }
@@ -63,8 +62,8 @@ bool SplineApproximator::Live::finalize() {
 
     if (SingleSegmentFitter segmentFitter(this->firstTangentVector, sTgt, this->buffer.begin(), this->buffer.end() - 1);
         !segmentFitter.findBestCubicSegment()) {
+        this->spline->addCubicSegment(this->liveSegment);
         // Use a quadratic segment euristics similar to Wu-Barsky to reach the last point
-        this->lastDefinitiveSegment = this->liveSegment;
         double l = 0.5 * this->P1->lineLengthTo(*this->P0);
         MathVect3 v(*this->P2, *this->P0);
         v.normalize();
@@ -77,7 +76,7 @@ bool SplineApproximator::Live::finalize() {
     } else {
         this->liveSegment = SplineSegment(this->firstKnot, segmentFitter.getFirstVelocity(),
                                           segmentFitter.getSecondVelocity(), *this->P0);
-        this->spline->replaceLastSegment(this->liveSegment);
+        this->spline->addCubicSegment(this->liveSegment);
 
         APPROX_STATS(stopTimer());
         return true;
@@ -111,15 +110,13 @@ void SplineApproximator::Live::processFirstEvents() {
         MathVect3 sTgt(*this->P0, this->firstKnot);
         sTgt.normalize();
         this->liveSegment = SplineSegment(this->firstKnot, scale * this->firstTangentVector, scale * sTgt, *this->P1);
-        this->spline->replaceLastSegment(this->liveSegment);
     } else {
         this->liveSegment = this->dataCount == 1 ? SplineSegment(*this->P0) : SplineSegment(*this->P0, *this->P1);
-        this->spline->addCubicSegment(this->liveSegment);
     }
 }
 
 void SplineApproximator::Live::startNewSegment(const MathVect3& lastTangentVector) {
-    this->lastDefinitiveSegment = this->liveSegment;
+    this->spline->addCubicSegment(this->liveSegment);
 
     this->firstKnot = *this->P2;
 
@@ -134,8 +131,6 @@ void SplineApproximator::Live::startNewSegment(const MathVect3& lastTangentVecto
     double scale = this->totalLength / 3.0;
     this->liveSegment =
             SplineSegment(this->firstKnot, scale * this->firstTangentVector, scale * lastTangentVector, *this->P1);
-
-    this->spline->addCubicSegment(this->liveSegment);
 }
 
 
