@@ -511,10 +511,9 @@ void MainWindow::setToolbarVisible(bool visible) {
     Settings* settings = control->getSettings();
 
     settings->setToolbarVisible(visible);
-    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        auto* widget = this->toolbarWidgets[i].get();
-        if (!visible || (GTK_IS_CONTAINER(widget))) {
-            gtk_widget_set_visible(widget, visible);
+    for (auto& w: this->toolbarWidgets) {
+        if (!visible || (gtk_toolbar_get_n_items(GTK_TOOLBAR(w.get())) != 0)) {
+            gtk_widget_set_visible(w.get(), visible);
         }
     }
 
