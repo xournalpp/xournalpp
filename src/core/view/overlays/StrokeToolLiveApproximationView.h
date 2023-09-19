@@ -45,10 +45,6 @@ public:
     /**
      * Listener interface
      */
-    static constexpr struct NewDefinitiveSegmentRequest {
-    } NEW_DEFINITIVE_SEGMENT_REQUEST = {};
-    void on(NewDefinitiveSegmentRequest, const SplineSegment& liveSeg);
-
     static constexpr struct UpdateLiveSegmentRequest {
     } UPDATE_LIVE_SEGMENT_REQUEST = {};
     void on(UpdateLiveSegmentRequest, const SplineSegment& liveSeg);

@@ -50,6 +50,7 @@ void StrokeToolLiveApproximationView::draw(cairo_t* cr) const {
              */
             return;
         }
+        xoj_assert(liveSegmentMask.isInitialized());
     }
 
     xoj::util::CairoSaveGuard saveGuard(cr);
@@ -71,6 +72,11 @@ void StrokeToolLiveApproximationView::draw(cairo_t* cr) const {
             auto segments = spline.segments();
             auto firstNewSeg = std::next(segments.begin(), static_cast<ptrdiff_t>(nbSegmentsOnMask));
 
+            for (auto& s: segments) {
+                printf("(%6.2f ; %6.2f) ", s.firstKnot.x, s.secondKnot.x);
+            }
+            printf("\n");
+
             if (!hasPressure) {
                 cairo_set_line_width(this->mask.get(), strokeWidth);
                 const auto& dashes = lineStyle.getDashes();
@@ -88,6 +94,7 @@ void StrokeToolLiveApproximationView::draw(cairo_t* cr) const {
                 for (auto it = firstNewSeg; it != segments.end(); it++) {
                     std::vector<Point> pts;
                     it->toPoints(pts);
+                    pts.emplace_back(it->secondKnot);
                     this->dashOffset = StrokeViewHelper::drawWithPressure(this->mask.get(), pts, this->lineStyle,
                                                                           this->dashOffset);
                 }
@@ -105,6 +112,7 @@ void StrokeToolLiveApproximationView::draw(cairo_t* cr) const {
         } else {
             std::vector<Point> pts;
             liveSeg.toPoints(pts);
+            pts.emplace_back(liveSeg.secondKnot);
             StrokeViewHelper::drawWithPressure(this->liveSegmentMask.get(), pts, this->lineStyle, this->dashOffset);
         }
         // Blitt the main mask onto the liveSegmentMask: we can only blitt one mask onto `cr` (to avoid visual artefact
@@ -121,11 +129,8 @@ void StrokeToolLiveApproximationView::on(UpdateLiveSegmentRequest, const SplineS
     this->singleDot = false;
     Range repaintRange = liveRange;
     liveRange = seg.getThickBoundingBox();
-    this->parent->flagDirtyRegion(repaintRange.unite(liveRange));
-}
-
-void StrokeToolLiveApproximationView::on(NewDefinitiveSegmentRequest, const SplineSegment& seg) {
-    on(UPDATE_LIVE_SEGMENT_REQUEST, seg);  // TODO
+    repaintRange = repaintRange.unite(liveRange);
+    this->parent->flagDirtyRegion(repaintRange);
 }
 
 void StrokeToolLiveApproximationView::on(StrokeToolLiveApproximationView::ThickenFirstPointRequest, double newWidth) {

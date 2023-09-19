@@ -50,7 +50,6 @@ public:
 
     double totalLength = 0.0;
     MathVect3 firstTangentVector;
-    SplineSegment lastDefinitiveSegment;
     SplineSegment liveSegment;
     size_t dataCount = 0;
 

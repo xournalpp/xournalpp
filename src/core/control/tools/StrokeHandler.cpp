@@ -153,7 +153,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
 
     bool enoughPoints = true;
     if (this->splineLiveApproximation) {
-        printf("release\n");
         enoughPoints = this->liveApprox->dataCount >= 3;
         if (enoughPoints) {
             // Try to approximate the last points
@@ -176,7 +175,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
                 if (lastFitSuccess) {
                     segs = std::make_shared<Spline>(liveSegment);
                 } else {
-                    segs = std::make_shared<Spline>(this->liveApprox->lastDefinitiveSegment);
+                    segs = std::make_shared<Spline>(
+                            this->liveApprox->getSpline().getSegment(this->liveApprox->getSpline().nbSegments() - 1));
                     segs->addCubicSegment(liveSegment);
                 }
                 liveSegmentStroke.setPath(segs);
@@ -212,6 +212,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
                                                                             this->liveApprox->liveSegment.secondKnot));
             }
         }
+        this->stroke->clearPointCache();
         this->liveApprox->printStats();
     } else {
         enoughPoints = this->path->nbSegments() >= 1;
@@ -371,9 +372,6 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom
                 std::make_shared<Spline>(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, firstKnotWidth));
         this->liveApprox = std::make_unique<SplineApproximator::Live>(this->approximatedSpline);
         this->stroke->setPath(this->approximatedSpline);
-        // this->liveSegmentStroke = std::make_unique<Stroke>();
-        // this->liveSegmentStroke->setWidth(this->stroke->getWidth());
-        // this->liveSegmentStroke->setPressureSensitive(this->hasPressure);
 
         this->drawEvent = &StrokeHandler::normalDrawLiveApproximator;
     } else {
@@ -431,9 +429,8 @@ void StrokeHandler::normalDraw(const Point& p) {
 void StrokeHandler::normalDrawLiveApproximator(const Point& p) {
     const bool newDefinitiveSegment = !this->liveApprox->feedPoint(p);
 
-    const SplineSegment& liveSegment = this->liveApprox->liveSegment;
     this->approxViewPool->dispatch(xoj::view::StrokeToolLiveApproximationView::UPDATE_LIVE_SEGMENT_REQUEST,
-                                   liveSegment);
+                                   this->liveApprox->liveSegment);
 
     // const auto getBBox = hasPressure ? &SplineSegment::getThickBoundingBox : &SplineSegment::getThinBoundingBox;
     // Range rg = (liveSegment.*getBBox)();
