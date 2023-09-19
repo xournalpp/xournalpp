@@ -37,9 +37,8 @@ void XmlNode::setAttrib(const char* attrib, size_t value) { putAttrib(new SizeTA
 /**
  * The double array is now owned by XmlNode and automatically deleted!
  */
-void XmlNode::setAttrib(const char* attrib, double* value, int count) {
-    putAttrib(new DoubleArrayAttribute(attrib, std::vector<double>{value, value + count}));
-    g_free(value);
+void XmlNode::setAttrib(const char* attrib, std::vector<double> values) {
+    putAttrib(new DoubleArrayAttribute(attrib, std::move(values)));
 }
 
 void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {

@@ -29,6 +29,7 @@
 #include "util/LoopUtil.h"
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/i18n.h"               // for _F, FC, FS, _
+#include "util/raii/GObjectSPtr.h"
 
 #include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
@@ -407,20 +408,25 @@ void LoadHandler::parseBgPixmap() {
         this->page->setBackgroundImage(img);
     } else if (!strcmp(domain, "attach")) {
         // This is the new zip file attach domain
-        auto readResult = readZipAttachment(filepath);
+        const auto readResult = readZipAttachment(filepath);  ///< Do not remove the const qualifier - see below
         if (!readResult) {
             return;
         }
-        std::string& imgData = *readResult;
+        const std::string& imgData = *readResult;  ///< Do not remove the const qualifier - see below
 
-        GBytes* attachment = g_bytes_new_take(imgData.data(), imgData.size());
-        GInputStream* inputStream = g_memory_input_stream_new_from_bytes(attachment);
+        /**
+         * To avoid an unecessary copy, the data is still managed by the std::optional<std::string> instance. The input
+         * stream assumes the data will not be modified: do not remove the const qualifier on readResult or imgData
+         */
+        xoj::util::GObjectSPtr<GInputStream> inputStream(
+                g_memory_input_stream_new_from_data(imgData.data(), static_cast<gssize>(imgData.size()), nullptr),
+                xoj::util::adopt);
 
         GError* error = nullptr;
         BackgroundImage img;
-        img.loadFile(inputStream, filepath, &error);
+        img.loadFile(inputStream.get(), filepath, &error);
 
-        g_input_stream_close(inputStream, nullptr, nullptr);
+        g_input_stream_close(inputStream.get(), nullptr, nullptr);
 
         if (error) {
             error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % filepath.string() % error->message));
