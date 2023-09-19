@@ -9,7 +9,7 @@
 
 XmlPointNode::XmlPointNode(const char* tag): XmlAudioNode(tag) {}
 
-void XmlPointNode::addPoint(Point point) { points.emplace_back(std::move(point)); }
+void XmlPointNode::setPoints(std::vector<Point> pts) { this->points = std::move(pts); }
 
 void XmlPointNode::writeOut(OutputStream* out) {
     /** Write stroke and its attributes */

@@ -24,7 +24,7 @@ public:
     XmlPointNode(const char* tag);
 
 public:
-    void addPoint(Point point);
+    void setPoints(std::vector<Point> points);
     void writeOut(OutputStream* out) override;
 
 private:
