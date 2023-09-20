@@ -49,4 +49,7 @@ private:
     ObjectEncoding* encoder = nullptr;
 };
 
-extern template void ObjectOutputStream::writeData(const std::vector<double>& data);
+template <typename T>
+void ObjectOutputStream::writeData(const std::vector<T>& data) {
+    writeData(data.data(), static_cast<int>(data.size()), sizeof(T));
+}

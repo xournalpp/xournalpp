@@ -196,11 +196,7 @@ void Stroke::readSerialized(ObjectInputStream& in) {
 
     this->capStyle = static_cast<StrokeCapStyle>(in.readInt());
 
-    Point* p{};
-    int count{};
-    in.readData(reinterpret_cast<void**>(&p), &count);
-    this->points = std::vector<Point>{p, p + count};
-    g_free(p);
+    in.readData(this->points);
     this->lineStyle.readSerialized(in);
 
     in.endObject();
