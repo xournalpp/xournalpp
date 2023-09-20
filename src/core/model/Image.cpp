@@ -138,20 +138,19 @@ auto Image::getImage() const -> cairo_surface_t* {
 
         GdkPixbuf* tmp = gdk_pixbuf_loader_get_pixbuf(loader.get());
         g_assert(tmp != nullptr);
-        GdkPixbuf* pixbuf = gdk_pixbuf_apply_embedded_orientation(tmp);
+        xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(gdk_pixbuf_apply_embedded_orientation(tmp), xoj::util::adopt);
 
-        this->imageSize = {gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf)};
+        this->imageSize = {gdk_pixbuf_get_width(pixbuf.get()), gdk_pixbuf_get_height(pixbuf.get())};
 
         // TODO: pass in window once this code is refactored into ImageView
-        this->image = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, gdk_pixbuf_get_width(pixbuf),
-                                                 gdk_pixbuf_get_height(pixbuf));
+        this->image = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->imageSize.first, this->imageSize.second);
         g_assert(this->image != nullptr);
 
         // Paint the pixbuf on to the surface
         // NOTE: we do this manually instead of using gdk_cairo_surface_create_from_pixbuf
         // since this does not work in CLI mode.
         cairo_t* cr = cairo_create(this->image);
-        gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
+        gdk_cairo_set_source_pixbuf(cr, pixbuf.get(), 0, 0);
         cairo_paint(cr);
         cairo_destroy(cr);
     }
