@@ -16,6 +16,8 @@
 #include <string>   // for string
 #include <vector>   // for vector
 
+#include "InputStreamException.h"
+
 class ObjectInputStream {
 public:
     ObjectInputStream() = default;
@@ -34,7 +36,6 @@ public:
     size_t readSizeT();
     std::string readString();
 
-    void readData(void** data, int* len);
     template <typename T>
     void readData(std::vector<T>& data);
 
@@ -46,10 +47,42 @@ private:
 
     static std::string getType(char type);
 
+    template <class T>
+    T readType();
+
 private:
     std::istringstream istream;
     size_t pos();
     size_t len = 0;
 };
 
-extern template void ObjectInputStream::readData(std::vector<double>& data);
+extern template int ObjectInputStream::readType<int>();
+
+template <typename T>
+void ObjectInputStream::readData(std::vector<T>& data) {
+    checkType('b');
+
+    if (istream.str().size() < 2 * sizeof(int)) {
+        throw InputStreamException("End reached, but try to read data len and width", __FILE__, __LINE__);
+    }
+
+    int len = readType<int>();
+    int width = readType<int>();
+
+    if (width != sizeof(T)) {
+        throw InputStreamException("Data width mismatch requested type width", __FILE__, __LINE__);
+    }
+
+    if (len < 0) {
+        throw InputStreamException("Negative length of data array", __FILE__, __LINE__);
+    }
+
+    if (istream.str().size() < static_cast<size_t>(len * width)) {
+        throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
+    }
+
+    if (len) {
+        data.resize(static_cast<size_t>(len));
+        istream.read((char*)data.data(), len * width);
+    }
+}
