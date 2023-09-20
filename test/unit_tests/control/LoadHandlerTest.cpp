@@ -366,7 +366,10 @@ void checkImageFormat(Image* img, const char* formatName) {
     ASSERT_TRUE(gdk_pixbuf_loader_close(imgLoader, nullptr));
     GdkPixbufFormat* format = gdk_pixbuf_loader_get_format(imgLoader);
     ASSERT_TRUE(format) << "could not determine image format";
-    EXPECT_STREQ(gdk_pixbuf_format_get_name(format), formatName);
+    auto gdkFormatName = gdk_pixbuf_format_get_name(format);
+    EXPECT_STREQ(gdkFormatName, formatName);
+    g_free(gdkFormatName);
+    g_object_unref(imgLoader);
 }
 }  // namespace
 
