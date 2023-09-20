@@ -183,7 +183,7 @@ void SidebarPreviewPages::updatePreviews() {
     size_t len = doc->getPageCount();
     for (size_t i = 0; i < len; i++) {
         auto p = std::make_unique<SidebarPreviewPageEntry>(this, doc->getPage(i), i);
-        gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+        gtk_layout_put(GTK_LAYOUT(this->iconViewPreview.get()), p->getWidget(), 0, 0);
         this->previews.emplace_back(std::move(p));
     }
 
@@ -234,7 +234,7 @@ void SidebarPreviewPages::pageInserted(size_t page) {
 
     doc->unlock();
 
-    gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+    gtk_layout_put(GTK_LAYOUT(this->iconViewPreview.get()), p->getWidget(), 0, 0);
     this->previews.insert(this->previews.begin() + page, std::move(p));
 
     // Unselect page, to prevent double selection displaying
