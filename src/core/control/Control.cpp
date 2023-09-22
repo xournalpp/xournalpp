@@ -45,11 +45,11 @@
 #include "gui/XournalView.h"                                     // for Xour...
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
-#include "gui/dialog/FillOpacityDialog.h"                        // for Fill...
 #include "gui/dialog/FormatDialog.h"                             // for Form...
 #include "gui/dialog/GotoDialog.h"                               // for Goto...
 #include "gui/dialog/PageTemplateDialog.h"                       // for Page...
 #include "gui/dialog/SelectBackgroundColorDialog.h"              // for Sele...
+#include "gui/dialog/SelectOpacityDialog.h"                      // for Opac...
 #include "gui/dialog/SettingsDialog.h"                           // for Sett...
 #include "gui/dialog/ToolbarManageDialog.h"                      // for Tool...
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"  // for Tool...
@@ -813,7 +813,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             this->toolHandler->setPenFillEnabled(enabled);
             break;
         case ACTION_TOOL_PEN_FILL_OPACITY:
-            selectFillAlpha(FILL_PEN);
+            selectAlpha(OPACITY_FILL_PEN);
             break;
 
 
@@ -851,11 +851,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             this->toolHandler->setHighlighterFillEnabled(enabled);
             break;
         case ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY:
-            selectFillAlpha(FILL_HIGHLIGHTER);
+            selectAlpha(OPACITY_FILL_HIGHLIGHTER);
             break;
+
         case ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY:
-            selectFillAlpha(FILL_PDF_TEXT_MARKER);
+            selectAlpha(OPACITY_SELECT_PDF_TEXT_MARKER);
             break;
+
         case ACTION_FONT_BUTTON_CHANGED:
             fontChanged();
             break;
@@ -1157,39 +1159,39 @@ auto Control::paste() -> bool {
     return this->clipboardHandler->paste();
 }
 
-void Control::selectFillAlpha(FillType type) {
+void Control::selectAlpha(OpacityFeature feature) {
     int alpha = 0;
 
-    switch (type) {
-        case FILL_PEN:
+    switch (feature) {
+        case OPACITY_FILL_PEN:
             alpha = this->toolHandler->getPenFill();
             break;
-        case FILL_HIGHLIGHTER:
+        case OPACITY_FILL_HIGHLIGHTER:
             alpha = this->toolHandler->getHighlighterFill();
             break;
-        case FILL_PDF_TEXT_MARKER:
-            alpha = this->toolHandler->getSelectPDFTextFill();
+        case OPACITY_SELECT_PDF_TEXT_MARKER:
+            alpha = this->toolHandler->getSelectPDFTextMarkerOpacity();
             break;
         default:
-            g_warning("Unhandled FillType for selectFillAlpha event: %s", fillTypeToString(type).c_str());
+            g_warning("Unhandled OpacityFeature for selectAlpha event: %s", opacityFeatureToString(feature).c_str());
             Stacktrace::printStracktrace();
             break;
     }
-    auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::FillOpacityDialog>(
-            gladeSearchPath, alpha, type, [&th = *toolHandler](int alpha, FillType type) {
-                switch (type) {
-                    case FILL_PEN:
+    auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::SelectOpacityDialog>(
+            gladeSearchPath, alpha, feature, [&th = *toolHandler](int alpha, OpacityFeature feature) {
+                switch (feature) {
+                    case OPACITY_FILL_PEN:
                         th.setPenFill(alpha);
                         break;
-                    case FILL_HIGHLIGHTER:
+                    case OPACITY_FILL_HIGHLIGHTER:
                         th.setHighlighterFill(alpha);
                         break;
-                    case FILL_PDF_TEXT_MARKER:
-                        th.setSelectPDFTextFill(alpha);
+                    case OPACITY_SELECT_PDF_TEXT_MARKER:
+                        th.setSelectPDFTextMarkerOpacity(alpha);
                         break;
                     default:
-                        g_warning("Unhandled FillType for callback of FillOpacityDialog: %s",
-                                  fillTypeToString(type).c_str());
+                        g_warning("Unhandled OpacityFeature for callback of SelectOpacityDialog: %s",
+                                  opacityFeatureToString(feature).c_str());
                         Stacktrace::printStracktrace();
                         break;
                 }

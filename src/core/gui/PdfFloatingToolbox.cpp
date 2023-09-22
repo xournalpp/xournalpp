@@ -113,7 +113,7 @@ void PdfFloatingToolbox::userCancelSelection() {
 }
 
 void PdfFloatingToolbox::highlightCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    int markerOpacity = pft->theMainWindow->getControl()->getToolHandler()->getSelectPDFTextFill();
+    int markerOpacity = pft->theMainWindow->getControl()->getToolHandler()->getSelectPDFTextMarkerOpacity();
     pft->createStrokes(PdfMarkerStyle::POS_TEXT_MIDDLE, PdfMarkerStyle::WIDTH_TEXT_HEIGHT, markerOpacity);
     pft->userCancelSelection();
 }

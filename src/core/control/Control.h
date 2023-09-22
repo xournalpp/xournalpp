@@ -291,7 +291,7 @@ public:
 
     void help();
 
-    void selectFillAlpha(FillType type);
+    void selectAlpha(OpacityFeature feature);
 
     /**
      * @brief Initialize the all button tools based on the respective ButtonConfigs

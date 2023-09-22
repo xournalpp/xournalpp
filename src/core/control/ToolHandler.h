@@ -214,8 +214,8 @@ public:
     void setHighlighterFill(int alpha);
     int getHighlighterFill() const;
 
-    void setSelectPDFTextFill(int alpha);
-    int getSelectPDFTextFill() const;
+    void setSelectPDFTextMarkerOpacity(int alpha);
+    int getSelectPDFTextMarkerOpacity() const;
 
     /**
      * @brief Set the toolbar selected tool to the type

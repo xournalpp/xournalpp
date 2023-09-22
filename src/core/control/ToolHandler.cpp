@@ -15,6 +15,7 @@
 #include "enums/ActionType.enum.h"      // for ACTION_TOOL_ERASER_DELETE_STROKE
 #include "model/StrokeStyle.h"          // for StrokeStyle
 #include "util/Color.h"
+#include "util/Stacktrace.h"  // for Stac...
 
 #include "Actions.h"  // for ActionHandler
 
@@ -30,6 +31,24 @@ ToolHandler::ToolHandler(ToolListener* stateChangeListener, ActionHandler* actio
 
     this->stateChangeListener = stateChangeListener;
 }
+
+class ToolSelectPDFText: public Tool {
+public:
+    ToolSelectPDFText(std::string name, ToolType type, Color color):
+            Tool(name, type, color, TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt) {}
+
+    ~ToolSelectPDFText(){};
+
+    void setColor(Color color) {
+        if (color.alpha == 0) {
+            color.alpha = DEFAULT_SELECT_PDF_TEXT_MARKER_OPACITY;
+        }
+        Tool::setColor(color);
+    }
+
+private:
+    static const int DEFAULT_SELECT_PDF_TEXT_MARKER_OPACITY = 60;
+};
 
 void ToolHandler::initTools() {
     std::array<double, Tool::toolSizes> thickness;
@@ -118,12 +137,10 @@ void ToolHandler::initTools() {
                                                                      Colors::black, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_SELECT_PDF_TEXT_LINEAR - TOOL_PEN] =
-            std::make_unique<Tool>("selectPdfTextLinear", TOOL_SELECT_PDF_TEXT_LINEAR, Colors::black,
-                                   TOOL_CAP_COLOR | TOOL_CAP_RULER | TOOL_CAP_FILL, std::nullopt);
+            std::make_unique<ToolSelectPDFText>("selectPdfTextLinear", TOOL_SELECT_PDF_TEXT_LINEAR, Colors::black);
 
     tools[TOOL_SELECT_PDF_TEXT_RECT - TOOL_PEN] =
-            std::make_unique<Tool>("selectPdfTextRect", TOOL_SELECT_PDF_TEXT_RECT, Colors::black,
-                                   TOOL_CAP_COLOR | TOOL_CAP_RULER | TOOL_CAP_FILL, std::nullopt);
+            std::make_unique<ToolSelectPDFText>("selectPdfTextRect", TOOL_SELECT_PDF_TEXT_RECT, Colors::black);
 
     this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
@@ -288,15 +305,26 @@ void ToolHandler::setHighlighterFill(int alpha) { this->tools[TOOL_HIGHLIGHTER -
 
 auto ToolHandler::getHighlighterFill() const -> int { return this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->getFillAlpha(); }
 
-void ToolHandler::setSelectPDFTextFill(int alpha) {
-    // Use same marker opacity for 'select linear pdf text' or 'select pdf text in rectangle'
-    this->tools[TOOL_SELECT_PDF_TEXT_LINEAR - TOOL_PEN]->setFillAlpha(alpha);
-    this->tools[TOOL_SELECT_PDF_TEXT_RECT - TOOL_PEN]->setFillAlpha(alpha);
+static void inline setColorAlpha(Tool& tool, int alpha) {
+    if (tool.hasCapability(TOOL_CAP_COLOR)) {
+        Color color = tool.getColor();
+        color.alpha = static_cast<uint8_t>(alpha);
+        tool.setColor(color);
+    } else {
+        g_warning("setColorAlpha : tool='%s' has no color capability!", tool.getName().c_str());
+        Stacktrace::printStracktrace();
+    }
 }
 
-auto ToolHandler::getSelectPDFTextFill() const -> int {
+void ToolHandler::setSelectPDFTextMarkerOpacity(int alpha) {
     // Use same marker opacity for 'select linear pdf text' or 'select pdf text in rectangle'
-    return this->tools[TOOL_SELECT_PDF_TEXT_LINEAR - TOOL_PEN]->getFillAlpha();
+    setColorAlpha(this->getTool(TOOL_SELECT_PDF_TEXT_LINEAR), alpha);
+    setColorAlpha(this->getTool(TOOL_SELECT_PDF_TEXT_RECT), alpha);
+}
+
+auto ToolHandler::getSelectPDFTextMarkerOpacity() const -> int {
+    // Use same marker opacity for 'select linear pdf text' or 'select pdf text in rectangle'
+    return this->getTool(TOOL_SELECT_PDF_TEXT_LINEAR).getColor().alpha;
 }
 
 auto ToolHandler::getThickness() const -> double {
@@ -340,10 +368,14 @@ void ToolHandler::setColor(Color color, bool userSelection) {
         this->toolbarSelectedTool->setColor(color);
     }
     Tool* tool = this->activeTool;
+    int currentAlpha = tool->getColor().alpha;
     tool->setColor(color);
     this->stateChangeListener->toolColorChanged();
-    if (userSelection)
+    if (userSelection) {
+        // ensure that tool color alpha is re-applied on new selected color;
+        setColorAlpha(*tool, currentAlpha);
         this->stateChangeListener->changeColorOfSelection();
+    }
     this->stateChangeListener->setCustomColorSelected();
 }
 

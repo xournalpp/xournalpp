@@ -232,35 +232,35 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
     return TOOL_NONE;
 }
 
-auto fillTypeToString(FillType type) -> std::string {
-    switch (type) {
-        case FILL_NONE:
+auto opacityFeatureToString(OpacityFeature feature) -> std::string {
+    switch (feature) {
+        case OPACITY_NONE:
             return "none";
-        case FILL_PEN:
-            return "fillPen";
-        case FILL_HIGHLIGHTER:
-            return "fillHighlighter";
-        case FILL_PDF_TEXT_MARKER:
-            return "fillPdfTextMarker";
+        case OPACITY_FILL_PEN:
+            return "opacityFillPen";
+        case OPACITY_FILL_HIGHLIGHTER:
+            return "opacityFillHighlighter";
+        case OPACITY_SELECT_PDF_TEXT_MARKER:
+            return "opacitySelectPdfTextMarker";
         default:
             return "";
     }
 }
 
-auto fillTypeFromString(const std::string& type) -> FillType {
-    if (type == "none") {
-        return FILL_NONE;
+auto opacityFeatureFromString(const std::string& feature) -> OpacityFeature {
+    if (feature == "none") {
+        return OPACITY_NONE;
     }
-    if (type == "fillPen") {
-        return FILL_PEN;
+    if (feature == "opacityFillPen") {
+        return OPACITY_FILL_PEN;
     }
-    if (type == "fillHighlighter") {
-        return FILL_HIGHLIGHTER;
+    if (feature == "opacityFillHighlighter") {
+        return OPACITY_FILL_HIGHLIGHTER;
     }
-    if (type == "fillPdfTextMarker") {
-        return FILL_PDF_TEXT_MARKER;
+    if (feature == "opacitySelectPdfTextMarker") {
+        return OPACITY_SELECT_PDF_TEXT_MARKER;
     }
-    return FILL_NONE;
+    return OPACITY_NONE;
 }
 
 auto eraserTypeToString(EraserType type) -> std::string {
