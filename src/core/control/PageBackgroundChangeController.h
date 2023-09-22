@@ -50,6 +50,7 @@ public:
     void setPaperSizeForNewPages(const std::optional<PaperSize>& paperSize);
     void applyCurrentPageBackgroundToAll();
     void applyBackgroundToAllPages(const PageType& pt);
+    void applyPageSizeToAllPages(const PaperSize& paperSize);
     void changePdfPagesBackground(const fs::path& filepath, bool attachPdf);
     void insertNewPage(size_t position, bool shouldScrollToPage = true);
 
