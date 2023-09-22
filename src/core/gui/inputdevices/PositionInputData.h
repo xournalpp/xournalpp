@@ -15,6 +15,8 @@
 #include <gdk/gdk.h>  // for GdkModifierType
 #include <glib.h>     // for guint32
 
+#include "DeviceId.h"
+
 class PositionInputData {
 public:
     bool isShiftDown() const;
@@ -26,7 +28,7 @@ public:
     double y;
     double pressure;
     guint32 timestamp;
-    size_t deviceHash;
+    DeviceId deviceId;
 
     /**
      * State flags from GDKevent (Shift down etc.)

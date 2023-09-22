@@ -87,13 +87,9 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
     pos.state = this->inputContext->getModifierState();
     pos.timestamp = event.timestamp;
 
-    pos.deviceHash = computeDeviceHash(event);
+    pos.deviceId = event.deviceId;
 
     return pos;
-}
-
-size_t AbstractInputHandler::computeDeviceHash(const InputEvent& event) {
-    return std::hash<std::string_view>{}(event.deviceName) ^ (std::hash<size_t>{}(event.deviceClass) << 1);
 }
 
 void AbstractInputHandler::onBlock() {}

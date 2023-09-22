@@ -87,7 +87,8 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> I
     GdkDevice* device = gdk_event_get_source_device(sourceEvent);
     targetEvent.deviceClass = translateDeviceType(device, settings);
 
-    targetEvent.deviceName = const_cast<gchar*>(gdk_device_get_name(device));
+    targetEvent.deviceName = gdk_device_get_name(device);
+    targetEvent.deviceId = DeviceId(device);
 
     // Copy both coordinates of the event
     gdk_event_get_root_coords(sourceEvent, &targetEvent.absoluteX, &targetEvent.absoluteY);

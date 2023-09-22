@@ -71,7 +71,7 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
             XojPageView* currentPage = this->getPageAtCurrentPosition(event);
 
             if (currentPage) {
-                currentPage->onSequenceCancelEvent(computeDeviceHash(event));
+                currentPage->onSequenceCancelEvent(event.deviceId);
             }
         }
 

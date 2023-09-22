@@ -31,7 +31,6 @@ protected:
 protected:
     XojPageView* getPageAtCurrentPosition(InputEvent const& event);
     PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event);
-    static size_t computeDeviceHash(InputEvent const& event);
 
 public:
     explicit AbstractInputHandler(InputContext* inputContext);

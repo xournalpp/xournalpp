@@ -373,7 +373,7 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
                         this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
                 if (pageUnderTap) {
                     PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
-                    pageUnderTap->onSequenceCancelEvent(pos.deviceHash);
+                    pageUnderTap->onSequenceCancelEvent(pos.deviceId);
                     pageUnderTap->onTapEvent(pos);
                 }
                 this->sequenceStartPage = nullptr;

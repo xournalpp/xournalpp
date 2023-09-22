@@ -21,6 +21,7 @@
 #include <gdk/gdk.h>  // for GdkEventKey, GdkRGBA, GdkRectangle
 #include <gtk/gtk.h>  // for GtkWidget
 
+#include "gui/inputdevices/DeviceId.h"
 #include "model/PageListener.h"       // for PageListener
 #include "model/PageRef.h"            // for PageRef
 #include "util/Rectangle.h"           // for Rectangle
@@ -178,7 +179,7 @@ public:  // event handler
     bool onButtonDoublePressEvent(const PositionInputData& pos);
     bool onButtonTriplePressEvent(const PositionInputData& pos);
     bool onMotionNotifyEvent(const PositionInputData& pos);
-    void onSequenceCancelEvent(size_t deviceHash);
+    void onSequenceCancelEvent(DeviceId id);
     void onTapEvent(const PositionInputData& pos);
 
     /**
@@ -295,7 +296,7 @@ private:
     int mappedRow{};
     int mappedCol{};
 
-    size_t currentSequenceDeviceHash = 0;
+    DeviceId currentSequenceDeviceId;
 
 
     friend class RenderJob;
