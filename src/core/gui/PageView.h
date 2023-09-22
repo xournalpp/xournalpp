@@ -178,7 +178,7 @@ public:  // event handler
     bool onButtonDoublePressEvent(const PositionInputData& pos);
     bool onButtonTriplePressEvent(const PositionInputData& pos);
     bool onMotionNotifyEvent(const PositionInputData& pos);
-    void onSequenceCancelEvent();
+    void onSequenceCancelEvent(size_t deviceHash);
     void onTapEvent(const PositionInputData& pos);
 
     /**
@@ -294,6 +294,8 @@ private:
 
     int mappedRow{};
     int mappedCol{};
+
+    size_t currentSequenceDeviceHash = 0;
 
 
     friend class RenderJob;

@@ -209,6 +209,12 @@ void XojPageView::endSpline() {
 }
 
 auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
+    if (currentSequenceDeviceHash) {
+        // An input sequence is already under way from another device
+        return false;
+    }
+    currentSequenceDeviceHash = pos.deviceHash;
+
     Control* control = xournal->getControl();
 
     if (!this->selected) {
@@ -495,6 +501,11 @@ auto XojPageView::onButtonTriplePressEvent(const PositionInputData& pos) -> bool
 }
 
 auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
+    if (currentSequenceDeviceHash != pos.deviceHash) {
+        // This motion event is not from the device which started the sequence: reject it
+        return false;
+    }
+
     double zoom = xournal->getZoom();
     double x = pos.x / zoom;
     double y = pos.y / zoom;
@@ -523,7 +534,13 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     return false;
 }
 
-void XojPageView::onSequenceCancelEvent() {
+void XojPageView::onSequenceCancelEvent(size_t deviceHash) {
+    if (currentSequenceDeviceHash != deviceHash) {
+        // This motion event is not from the device which started the sequence: reject it
+        return;
+    }
+    currentSequenceDeviceHash = 0;
+
     if (this->inputHandler) {
         this->inputHandler->onSequenceCancelEvent();
 
@@ -598,6 +615,12 @@ void XojPageView::deleteView(xoj::view::OverlayView* view) {
 }
 
 auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
+    if (currentSequenceDeviceHash != pos.deviceHash) {
+        // This event is not from the device which started the sequence: reject it
+        return false;
+    }
+    currentSequenceDeviceHash = 0;
+
     Control* control = xournal->getControl();
 
     if (this->inputHandler) {

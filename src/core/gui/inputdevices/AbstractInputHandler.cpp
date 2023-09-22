@@ -5,6 +5,7 @@
 #include "AbstractInputHandler.h"
 
 #include <cmath>  // for round
+#include <string_view>
 
 #include <glib.h>  // for gdouble, g_assert
 
@@ -86,7 +87,13 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
     pos.state = this->inputContext->getModifierState();
     pos.timestamp = event.timestamp;
 
+    pos.deviceHash = computeDeviceHash(event);
+
     return pos;
+}
+
+size_t AbstractInputHandler::computeDeviceHash(const InputEvent& event) {
+    return std::hash<std::string_view>{}(event.deviceName) ^ (std::hash<size_t>{}(event.deviceClass) << 1);
 }
 
 void AbstractInputHandler::onBlock() {}

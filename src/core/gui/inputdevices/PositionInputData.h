@@ -26,6 +26,7 @@ public:
     double y;
     double pressure;
     guint32 timestamp;
+    size_t deviceHash;
 
     /**
      * State flags from GDKevent (Shift down etc.)
