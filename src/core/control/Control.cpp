@@ -46,6 +46,7 @@
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
 #include "gui/dialog/FillOpacityDialog.h"                        // for Fill...
+#include "gui/dialog/MovePageDialog.h"                           // for Move...
 #include "gui/dialog/FormatDialog.h"                             // for Form...
 #include "gui/dialog/GotoDialog.h"                               // for Goto...
 #include "gui/dialog/PageTemplateDialog.h"                       // for Page...
@@ -84,6 +85,7 @@
 #include "undo/AddUndoAction.h"                                  // for AddU...
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
+#include "undo/MovePageUndoAction.h"                             // for Move...
 #include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
 #include "undo/UndoAction.h"                                     // for Undo...
 #include "util/Assert.h"                                         // for xoj_assert
@@ -392,6 +394,8 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     auto current = getCurrentPageNo();
     auto count = this->doc->getPageCount();
 
+    fireEnableAction(ACTION_MOVE_PAGE, count > 1);
+
     fireEnableAction(ACTION_GOTO_FIRST, current != 0);
     fireEnableAction(ACTION_GOTO_BACK, current != 0);
     fireEnableAction(ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE, current != 0);
@@ -529,6 +533,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             break;
         case ACTION_APPEND_NEW_PDF_PAGES:
             appendNewPdfPages();
+            break;
+        case ACTION_MOVE_PAGE:
+            selectPageMoveTo();
             break;
         case ACTION_NEW_PAGE_AT_END:
             insertNewPage(this->doc->getPageCount());
@@ -1170,6 +1177,18 @@ void Control::selectFillAlpha(bool pen) {
     dlg.show(getGtkWindow());
 }
 
+void Control::selectPageMoveTo() {
+    MovePageDialog dlg(gladeSearchPath, getCurrentPageNo(), this->doc->getPageCount());
+
+    dlg.show(GTK_WINDOW(this->win->getWindow()));
+    auto oldPage = dlg.getSelectedPageFrom();
+    auto newPage = dlg.getSelectedPageTo();
+
+    if (oldPage > 0 && newPage > 0) {
+        this->movePage(size_t(oldPage - 1), size_t(newPage - 1));
+    }
+}
+
 void Control::clearSelectionEndText() {
     clearSelection();
     if (win) {
@@ -1443,6 +1462,27 @@ void Control::deletePage() {
 
     scrollHandler->scrollToPage(pNr);
     this->win->getXournal()->forceUpdatePagenumbers();
+}
+
+void Control::movePage(size_t oldPos, size_t newPos) {
+    Document* doc = getDocument();
+    if (oldPos == newPos || doc->getPageCount() <= 1 || oldPos > doc->getPageCount() || newPos > doc->getPageCount()) {
+        return;
+    }
+
+    doc->lock();
+    PageRef page = doc->getPage(oldPos);
+    doc->deletePage(oldPos);
+    doc->insertPage(page, newPos);
+    doc->unlock();
+
+    UndoRedoHandler* undo = getUndoRedoHandler();
+    undo->addUndoAction(std::make_unique<MovePageUndoAction>(page, oldPos, newPos));
+
+    firePageDeleted(oldPos);
+    firePageInserted(newPos);
+    firePageSelected(newPos);
+    getScrollHandler()->scrollToPage(newPos);
 }
 
 void Control::duplicatePage() {

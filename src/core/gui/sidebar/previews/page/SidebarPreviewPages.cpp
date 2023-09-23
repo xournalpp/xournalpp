@@ -16,7 +16,6 @@
 #include "model/PageRef.h"                                      // for PageRef
 #include "model/XojPage.h"                                      // for XojPage
 #include "undo/CopyUndoAction.h"                                // for CopyU...
-#include "undo/SwapUndoAction.h"                                // for SwapU...
 #include "undo/UndoRedoHandler.h"                               // for UndoR...
 #include "util/Assert.h"                                        // for xoj_assert
 #include "util/Util.h"                                          // for npos
@@ -93,67 +92,13 @@ auto SidebarPreviewPages::getIconName() -> std::string { return this->iconNameHe
 void SidebarPreviewPages::actionPerformed(SidebarActions action) {
     switch (action) {
         case SIDEBAR_ACTION_MOVE_UP: {
-            Document* doc = control->getDocument();
-            PageRef swappedPage = control->getCurrentPage();
-            if (!swappedPage || doc->getPageCount() <= 1) {
-                return;
-            }
-
-            doc->lock();
-            size_t page = doc->indexOf(swappedPage);
-            PageRef otherPage = doc->getPage(page - 1);
-
-            if (!otherPage) {
-                doc->unlock();
-                return;
-            }
-
-            if (page != npos) {
-                doc->deletePage(page);
-                doc->insertPage(swappedPage, page - 1);
-            }
-            doc->unlock();
-
-            UndoRedoHandler* undo = control->getUndoRedoHandler();
-            undo->addUndoAction(std::make_unique<SwapUndoAction>(page - 1, true, swappedPage, otherPage));
-
-            control->firePageDeleted(page);
-            control->firePageInserted(page - 1);
-            control->firePageSelected(page - 1);
-
-            control->getScrollHandler()->scrollToPage(page - 1);
+            size_t currentPageNo = control->getCurrentPageNo();
+            control->movePage(currentPageNo, currentPageNo - 1);
             break;
         }
         case SIDEBAR_ACTION_MOVE_DOWN: {
-            Document* doc = control->getDocument();
-            PageRef swappedPage = control->getCurrentPage();
-            if (!swappedPage || doc->getPageCount() <= 1) {
-                return;
-            }
-
-            doc->lock();
-            size_t page = doc->indexOf(swappedPage);
-            PageRef otherPage = doc->getPage(page + 1);
-
-            if (!otherPage) {
-                doc->unlock();
-                return;
-            }
-
-            if (page != npos) {
-                doc->deletePage(page);
-                doc->insertPage(swappedPage, page + 1);
-            }
-            doc->unlock();
-
-            UndoRedoHandler* undo = control->getUndoRedoHandler();
-            undo->addUndoAction(std::make_unique<SwapUndoAction>(page, false, swappedPage, otherPage));
-
-            control->firePageDeleted(page);
-            control->firePageInserted(page + 1);
-            control->firePageSelected(page + 1);
-
-            control->getScrollHandler()->scrollToPage(page + 1);
+            size_t currentPageNo = control->getCurrentPageNo();
+            control->movePage(currentPageNo, currentPageNo + 1);
             break;
         }
         case SIDEBAR_ACTION_COPY: {
