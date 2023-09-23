@@ -37,9 +37,9 @@ public:
     ToolSelectPDFText(std::string name, ToolType type, Color color):
             Tool(name, type, color, TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt) {}
 
-    ~ToolSelectPDFText(){};
+    ~ToolSelectPDFText() override{};
 
-    void setColor(Color color) {
+    void setColor(Color color) override {
         if (color.alpha == 0) {
             color.alpha = DEFAULT_SELECT_PDF_TEXT_MARKER_OPACITY;
         }
