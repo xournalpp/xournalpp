@@ -372,8 +372,8 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
                 XojPageView* pageUnderTap =
                         this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
                 if (pageUnderTap) {
-                    pageUnderTap->onSequenceCancelEvent();
                     PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
+                    pageUnderTap->onSequenceCancelEvent(pos.deviceId);
                     pageUnderTap->onTapEvent(pos);
                 }
                 this->sequenceStartPage = nullptr;
