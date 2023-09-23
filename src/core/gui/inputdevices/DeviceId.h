@@ -14,7 +14,7 @@
 struct DeviceId {
     constexpr DeviceId() = default;
     explicit constexpr DeviceId(const void* id): id(id) {}
-    void reset(const void* id = nullptr) { this->id = id; }
+    constexpr void reset(const void* id = nullptr) { this->id = id; }
     explicit constexpr operator bool() const { return id != nullptr; }
     constexpr bool operator==(const DeviceId& o) const { return id == o.id; }
     constexpr bool operator!=(const DeviceId& o) const { return !(*this == o); }
