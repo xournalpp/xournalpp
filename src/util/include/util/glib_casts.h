@@ -136,6 +136,11 @@ constexpr void destroy_cb(gpointer data) {
     delete static_cast<T*>(data);
 };
 
+template <typename T, std::enable_if_t<!std::is_same_v<T, void>, int> = 1>
+constexpr void closure_notify_cb(gpointer data, GClosure*) {
+    delete static_cast<T*>(data);
+};
+
 #ifndef NDEBUG
 constexpr auto tester1(int*, double*, char*) -> bool { return true; }
 constexpr auto tester2(int*, double*, char*) -> uint64_t { return 1; }
