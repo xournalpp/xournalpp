@@ -12,10 +12,12 @@
 #pragma once
 
 struct DeviceId {
-    DeviceId() = default;
-    explicit DeviceId(const void* id): id(id) {}
-    void clear() { id = nullptr; }
-    operator bool() const { return id != nullptr; }
+    constexpr DeviceId() = default;
+    explicit constexpr DeviceId(const void* id): id(id) {}
+    void reset(const void* id = nullptr) { this->id = id; }
+    explicit constexpr operator bool() const { return id != nullptr; }
+    constexpr bool operator==(const DeviceId& o) const { return id == o.id; }
+    constexpr bool operator!=(const DeviceId& o) const { return !(*this == o); }
 
 private:
     const void* id = nullptr;

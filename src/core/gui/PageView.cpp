@@ -539,7 +539,7 @@ void XojPageView::onSequenceCancelEvent(DeviceId deviceId) {
         // This motion event is not from the device which started the sequence: reject it
         return;
     }
-    currentSequenceDeviceId.clear();
+    currentSequenceDeviceId.reset();
 
     if (this->inputHandler) {
         this->inputHandler->onSequenceCancelEvent();
@@ -619,7 +619,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         // This event is not from the device which started the sequence: reject it
         return false;
     }
-    currentSequenceDeviceId.clear();
+    currentSequenceDeviceId.reset();
 
     Control* control = xournal->getControl();
 
