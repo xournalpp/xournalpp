@@ -11,7 +11,6 @@
 #include "util/i18n.h"
 #include "util/raii/CairoWrappers.h"
 #include "util/raii/GObjectSPtr.h"
-using std::string;
 
 class GladeSearchpath;
 
@@ -25,9 +24,9 @@ static inline void buildLabel(Builder& builder, OpacityFeature opacityFeature) {
     // Used to set the label of the dialog in the form of:
     // <b>{toolOptionsDesc}</b>\n
     // Select opacity for: {opacityFeatureDesc}
-    string toolOptionsDesc;
-    string selectOpacityFor = _("Select opacity for: ");
-    string opacityFeatureDesc;
+    std::string toolOptionsDesc;
+    std::string selectOpacityFor = _("Select opacity for: ");
+    std::string opacityFeatureDesc;
 
     switch (opacityFeature) {
         case OPACITY_FILL_HIGHLIGHTER:
