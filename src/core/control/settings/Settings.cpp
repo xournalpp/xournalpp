@@ -252,6 +252,8 @@ auto Settings::loadViewMode(ViewModeId mode) -> bool {
 
 auto Settings::getViewModes() const -> const std::vector<ViewMode>& { return this->viewModes; }
 
+auto Settings::getActiveViewMode() const -> ViewModeId { return this->activeViewMode; }
+
 /**
  * tempg_ascii_strtod
  * 	Transition to using g_ascii_strtod to minimize disruption. May, 2019.
@@ -2007,7 +2009,13 @@ auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* {
     return this->buttonConfig[id].get();
 }
 
-void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) { viewModes.at(mode) = viewMode; }
+void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
+    if (this->viewModes[mode] == viewMode) {
+        return;
+    }
+    this->viewModes.at(mode) = viewMode;
+    save();
+}
 
 auto Settings::getTouchZoomStartThreshold() const -> double { return this->touchZoomStartThreshold; }
 void Settings::setTouchZoomStartThreshold(double threshold) {

@@ -101,7 +101,6 @@
 #include "view/overlays/OverlayView.h"                           // for Over...
 
 #include "CrashHandler.h"                    // for emer...
-#include "FullscreenHandler.h"               // for Full...
 #include "LatexController.h"                 // for Late...
 #include "PageBackgroundChangeController.h"  // for Page...
 #include "PrintHandler.h"                    // for print
@@ -164,8 +163,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->layerController = new LayerController(this);
     this->layerController->registerListener(this);
 
-    this->fullscreenHandler = new FullscreenHandler(settings);
-
     this->pluginController = new PluginController(this);
     this->pluginController->registerToolbar();
 }
@@ -212,8 +209,6 @@ Control::~Control() {
     this->audioController = nullptr;
     delete this->layerController;
     this->layerController = nullptr;
-    delete this->fullscreenHandler;
-    this->fullscreenHandler = nullptr;
 }
 
 
@@ -1371,7 +1366,7 @@ void Control::setShapeTool(ActionType type, bool enabled) {
 }
 
 void Control::setFullscreen(bool enabled) {
-    fullscreenHandler->setFullscreen(win, enabled);
+    win->toggleFullscreen(enabled);
 
     fireActionSelected(GROUP_FULLSCREEN, enabled ? ACTION_FULLSCREEN : ACTION_NONE);
 }
@@ -3291,8 +3286,6 @@ auto Control::getScheduler() const -> XournalScheduler* { return this->scheduler
 auto Control::getWindow() const -> MainWindow* { return this->win; }
 
 auto Control::getGtkWindow() const -> GtkWindow* { return GTK_WINDOW(this->win->getWindow()); }
-
-auto Control::isFullscreen() -> bool { return this->fullscreenHandler->isFullscreen(); }
 
 void Control::rotationSnappingToggle() {
     settings->setSnapRotation(!settings->isSnapRotation());

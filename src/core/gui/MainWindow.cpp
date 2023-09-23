@@ -181,10 +181,18 @@ const char* TOP_WIDGETS[] = {"tbTop1", "tbTop2", "mainContainerBox", nullptr};
 
 void MainWindow::toggleMenuBar(MainWindow* win) {
     GtkWidget* menu = win->get("mainMenubar");
-    if (gtk_widget_is_visible(menu)) {
+    bool visible = gtk_widget_is_visible(menu);
+    if (visible) {
         gtk_widget_hide(menu);
     } else {
         gtk_widget_show(menu);
+    }
+    Settings* settings = win->control->getSettings();
+    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setMenubarVisible(!visible);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showMenubar = !visible;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
     }
 }
 
@@ -369,17 +377,31 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
 }
 
 void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
-    bool a = gtk_check_menu_item_get_active(checkmenuitem);
-    if (win->control->getSettings()->isSidebarVisible() == a) {
+    bool showSidebar = gtk_check_menu_item_get_active(checkmenuitem);
+    Settings* settings = win->control->getSettings();
+    if (settings->isSidebarVisible() == showSidebar) {
         return;
     }
-    win->setSidebarVisible(a);
+    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setSidebarVisible(showSidebar);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showSidebar = showSidebar;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
+    win->setSidebarVisible(showSidebar);
 }
 
 void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
     bool showToolbar = gtk_check_menu_item_get_active(checkmenuitem);
-    if (win->control->getSettings()->isToolbarVisible() == showToolbar) {
+    Settings* settings = win->control->getSettings();
+    if (settings->isToolbarVisible() == showToolbar) {
         return;
+    }
+    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setToolbarVisible(showToolbar);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showToolbar = showToolbar;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
     }
     win->setToolbarVisible(showToolbar);
 }
@@ -448,7 +470,16 @@ void MainWindow::updateScrollbarSidebarPosition() {
     g_object_unref(boxContents);
 }
 
-void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) { win->setSidebarVisible(false); }
+void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) {
+    Settings* settings = win->control->getSettings();
+    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setSidebarVisible(false);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showSidebar = false;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
+    win->setSidebarVisible(false);
+}
 
 auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control) -> bool {
     control->quit();
@@ -525,6 +556,14 @@ void MainWindow::saveSidebarSize() {
 void MainWindow::setMaximized(bool maximized) { this->maximized = maximized; }
 
 auto MainWindow::isMaximized() const -> bool { return this->maximized; }
+
+auto MainWindow::toggleFullscreen(bool enabled) const -> void {
+    if (enabled) {
+        gtk_window_fullscreen(GTK_WINDOW(this->getWindow()));
+    } else {
+        gtk_window_unfullscreen(GTK_WINDOW(this->getWindow()));
+    }
+}
 
 auto MainWindow::getXournal() const -> XournalView* { return xournal.get(); }
 

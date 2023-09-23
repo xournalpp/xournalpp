@@ -35,6 +35,8 @@ struct ViewMode {
     bool showMenubar{false};
     bool showToolbar{false};
     bool showSidebar{false};
+
+    bool operator==(const ViewMode& other) const;
 };
 
 // default ViewModes
