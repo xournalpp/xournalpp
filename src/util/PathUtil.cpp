@@ -54,13 +54,15 @@ auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
  *
  * @param path Path to read
  * @param showErrorToUser Show an error to the user, if the file could not be read
+ * @param openmode Mode to open the file
  *
  * @return contents if the file was read, std::nullopt if not
  */
-auto Util::readString(fs::path const& path, bool showErrorToUser) -> std::optional<std::string> {
+auto Util::readString(fs::path const& path, bool showErrorToUser, std::ios_base::openmode openmode)
+        -> std::optional<std::string> {
     try {
         std::string s;
-        std::ifstream ifs{path};
+        std::ifstream ifs{path, openmode};
         s.resize(fs::file_size(path));
         ifs.read(s.data(), s.size());
         return {std::move(s)};
