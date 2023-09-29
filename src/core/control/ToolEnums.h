@@ -89,6 +89,14 @@ auto isSelectToolTypeSingleLayer(ToolType type) -> bool;
 std::string toolTypeToString(ToolType type);
 ToolType toolTypeFromString(const std::string& type);
 
+enum OpacityFeature {
+    OPACITY_NONE,
+    OPACITY_FILL_PEN,
+    OPACITY_FILL_HIGHLIGHTER,
+    OPACITY_SELECT_PDF_TEXT_MARKER,
+};
+std::string opacityFeatureToString(OpacityFeature feature);
+OpacityFeature opacityFeatureFromString(const std::string& feature);
 
 enum EraserType { ERASER_TYPE_NONE = 0, ERASER_TYPE_DEFAULT, ERASER_TYPE_WHITEOUT, ERASER_TYPE_DELETE_STROKE };
 std::string eraserTypeToString(EraserType type);

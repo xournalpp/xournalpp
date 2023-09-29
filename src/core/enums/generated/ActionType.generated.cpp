@@ -432,6 +432,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY;
     }
 
+    if (value == "ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY") {
+        return ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY;
+    }
+
     if (value == "ACTION_TOOL_FILL") {
         return ACTION_TOOL_FILL;
     }
@@ -1084,6 +1088,10 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY) {
         return "ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY";
+    }
+
+    if (value == ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY) {
+        return "ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY";
     }
 
     if (value == ACTION_TOOL_FILL) {

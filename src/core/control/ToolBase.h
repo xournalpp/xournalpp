@@ -36,7 +36,7 @@ public:
     /**
      * @param color Color of the tool for all drawing tools
      */
-    void setColor(Color color);
+    virtual void setColor(Color color);
 
     /**
      * @return Size of a drawing tool

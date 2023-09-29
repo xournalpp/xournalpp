@@ -55,6 +55,9 @@ void ColorToolItem::enableColor(Color color) {
         }
     } else {
         if (this->item) {
+            // Ignore alpha channel to compare button color with tool color
+            // to determine if the color is enabled.
+            color.alpha = 0;
             gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->namedColor.getColor() == color);
         }
     }

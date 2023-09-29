@@ -45,11 +45,11 @@
 #include "gui/XournalView.h"                                     // for Xour...
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
-#include "gui/dialog/FillOpacityDialog.h"                        // for Fill...
 #include "gui/dialog/FormatDialog.h"                             // for Form...
 #include "gui/dialog/GotoDialog.h"                               // for Goto...
 #include "gui/dialog/PageTemplateDialog.h"                       // for Page...
 #include "gui/dialog/SelectBackgroundColorDialog.h"              // for Sele...
+#include "gui/dialog/SelectOpacityDialog.h"                      // for Opac...
 #include "gui/dialog/SettingsDialog.h"                           // for Sett...
 #include "gui/dialog/ToolbarManageDialog.h"                      // for Tool...
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"  // for Tool...
@@ -808,7 +808,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             this->toolHandler->setPenFillEnabled(enabled);
             break;
         case ACTION_TOOL_PEN_FILL_OPACITY:
-            selectFillAlpha(true);
+            selectAlpha(OPACITY_FILL_PEN);
             break;
 
 
@@ -846,7 +846,11 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             this->toolHandler->setHighlighterFillEnabled(enabled);
             break;
         case ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY:
-            selectFillAlpha(false);
+            selectAlpha(OPACITY_FILL_HIGHLIGHTER);
+            break;
+
+        case ACTION_TOOL_SELECT_PDF_TEXT_MARKER_OPACITY:
+            selectAlpha(OPACITY_SELECT_PDF_TEXT_MARKER);
             break;
 
         case ACTION_FONT_BUTTON_CHANGED:
@@ -1150,23 +1154,43 @@ auto Control::paste() -> bool {
     return this->clipboardHandler->paste();
 }
 
-void Control::selectFillAlpha(bool pen) {
+void Control::selectAlpha(OpacityFeature feature) {
     int alpha = 0;
 
-    if (pen) {
-        alpha = toolHandler->getPenFill();
-    } else {
-        alpha = toolHandler->getHighlighterFill();
+    switch (feature) {
+        case OPACITY_FILL_PEN:
+            alpha = this->toolHandler->getPenFill();
+            break;
+        case OPACITY_FILL_HIGHLIGHTER:
+            alpha = this->toolHandler->getHighlighterFill();
+            break;
+        case OPACITY_SELECT_PDF_TEXT_MARKER:
+            alpha = this->toolHandler->getSelectPDFTextMarkerOpacity();
+            break;
+        default:
+            g_warning("Unhandled OpacityFeature for selectAlpha event: %s", opacityFeatureToString(feature).c_str());
+            Stacktrace::printStracktrace();
+            break;
     }
-
-    auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::FillOpacityDialog>(gladeSearchPath, alpha, pen,
-                                                                             [&th = *toolHandler](int alpha, bool pen) {
-                                                                                 if (pen) {
-                                                                                     th.setPenFill(alpha);
-                                                                                 } else {
-                                                                                     th.setHighlighterFill(alpha);
-                                                                                 }
-                                                                             });
+    auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::SelectOpacityDialog>(
+            gladeSearchPath, alpha, feature, [&th = *toolHandler](int alpha, OpacityFeature feature) {
+                switch (feature) {
+                    case OPACITY_FILL_PEN:
+                        th.setPenFill(alpha);
+                        break;
+                    case OPACITY_FILL_HIGHLIGHTER:
+                        th.setHighlighterFill(alpha);
+                        break;
+                    case OPACITY_SELECT_PDF_TEXT_MARKER:
+                        th.setSelectPDFTextMarkerOpacity(alpha);
+                        break;
+                    default:
+                        g_warning("Unhandled OpacityFeature for callback of SelectOpacityDialog: %s",
+                                  opacityFeatureToString(feature).c_str());
+                        Stacktrace::printStracktrace();
+                        break;
+                }
+            });
     dlg.show(getGtkWindow());
 }
 

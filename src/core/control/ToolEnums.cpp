@@ -232,6 +232,37 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
     return TOOL_NONE;
 }
 
+auto opacityFeatureToString(OpacityFeature feature) -> std::string {
+    switch (feature) {
+        case OPACITY_NONE:
+            return "none";
+        case OPACITY_FILL_PEN:
+            return "opacityFillPen";
+        case OPACITY_FILL_HIGHLIGHTER:
+            return "opacityFillHighlighter";
+        case OPACITY_SELECT_PDF_TEXT_MARKER:
+            return "opacitySelectPdfTextMarker";
+        default:
+            return "";
+    }
+}
+
+auto opacityFeatureFromString(const std::string& feature) -> OpacityFeature {
+    if (feature == "none") {
+        return OPACITY_NONE;
+    }
+    if (feature == "opacityFillPen") {
+        return OPACITY_FILL_PEN;
+    }
+    if (feature == "opacityFillHighlighter") {
+        return OPACITY_FILL_HIGHLIGHTER;
+    }
+    if (feature == "opacitySelectPdfTextMarker") {
+        return OPACITY_SELECT_PDF_TEXT_MARKER;
+    }
+    return OPACITY_NONE;
+}
+
 auto eraserTypeToString(EraserType type) -> std::string {
     switch (type) {
         case ERASER_TYPE_NONE:
