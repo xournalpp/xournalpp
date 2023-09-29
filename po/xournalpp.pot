@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.1+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-23 15:38+0000\n"
+"POT-Creation-Date: 2023-09-29 16:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgid ""
 " Do you want to continue?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2378
+#: ../src/core/control/Control.cpp:2402
 msgid ""
 "\n"
 "Proposed replacement file: \"{1}\""
@@ -52,6 +52,12 @@ msgstr ""
 #: ../src/core/gui/dialog/SettingsDialog.cpp:72
 msgid ""
 "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
+msgstr ""
+
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:50
+msgid ""
+"<b>{1}</b>\n"
+"{2}{3}"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:404
@@ -168,7 +174,7 @@ msgstr ""
 msgid "Built on"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2390 ../src/core/control/Control.cpp:2878
+#: ../src/core/control/Control.cpp:2414 ../src/core/control/Control.cpp:2902
 #: ../src/core/control/XournalMain.cpp:196
 #: ../src/core/gui/sidebar/Sidebar.cpp:85
 msgid "Cancel"
@@ -394,7 +400,7 @@ msgstr ""
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2875
+#: ../src/core/control/Control.cpp:2899
 msgid "Discard"
 msgstr ""
 
@@ -402,7 +408,7 @@ msgstr ""
 msgid "Display advanced export options"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2303
+#: ../src/core/control/Control.cpp:2327
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
@@ -413,7 +419,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2869
+#: ../src/core/control/Control.cpp:2893
 msgid "Document file was removed."
 msgstr ""
 
@@ -531,7 +537,7 @@ msgstr ""
 msgid "Eraser"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2594
+#: ../src/core/control/Control.cpp:2618
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -541,7 +547,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2421
+#: ../src/core/control/Control.cpp:2445
 msgid "Error opening file \"{1}\""
 msgstr ""
 
@@ -706,6 +712,11 @@ msgstr ""
 msgid "Fill Opacity"
 msgstr ""
 
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:34
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:38
+msgid "Fill color"
+msgstr ""
+
 #: ../src/core/gui/dialog/SettingsDialog.cpp:274
 msgid ""
 "Filter input pressure. Multiply the pressure by the pressure multiplier. If "
@@ -803,6 +814,10 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Highlighter"
+msgstr ""
+
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+msgid "Highlighter Options"
 msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
@@ -945,7 +960,7 @@ msgstr ""
 msgid "Next annotated page"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1275
+#: ../src/core/control/Control.cpp:1299
 msgid "No"
 msgstr ""
 
@@ -958,7 +973,7 @@ msgstr ""
 msgid "No pages to export!"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1478
+#: ../src/core/control/Control.cpp:1502
 msgid ""
 "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
@@ -1008,6 +1023,14 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:41
 msgid "PDF Page {1}"
+msgstr ""
+
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:42
+msgid "PDF Text Marker"
+msgstr ""
+
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
+msgid "PDF Text Options"
 msgstr ""
 
 #: ../src/core/control/PdfCache.cpp:123
@@ -1074,6 +1097,10 @@ msgstr ""
 msgid "Pen"
 msgstr ""
 
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
+msgid "Pen Options"
+msgstr ""
+
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:29
 msgid "Plain"
 msgstr ""
@@ -1108,7 +1135,7 @@ msgstr ""
 msgid "Record Audio / Stop Recording"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1015
+#: ../src/core/control/Control.cpp:1019
 msgid "Recorder could not be started."
 msgstr ""
 
@@ -1125,7 +1152,7 @@ msgstr ""
 msgid "Redo: "
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2389
+#: ../src/core/control/Control.cpp:2413
 msgid "Remove PDF Background"
 msgstr ""
 
@@ -1181,16 +1208,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2870 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2894 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2870
+#: ../src/core/control/Control.cpp:2894
 msgid "Save As..."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2693
+#: ../src/core/control/Control.cpp:2717
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr ""
@@ -1292,7 +1319,7 @@ msgstr ""
 msgid "Select Text from pdf"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2388
+#: ../src/core/control/Control.cpp:2412
 msgid "Select another PDF"
 msgstr ""
 
@@ -1304,7 +1331,7 @@ msgstr ""
 msgid "Select background color"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:79
+#: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:82
 msgid "Select color"
 msgstr ""
 
@@ -1314,6 +1341,10 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
 msgid "Select multi layer region"
+msgstr ""
+
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:28
+msgid "Select opacity for: "
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
@@ -1469,13 +1500,13 @@ msgstr ""
 msgid "Text not found, searched on all pages"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1272
+#: ../src/core/control/Control.cpp:1296
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2365
+#: ../src/core/control/Control.cpp:2389
 msgid ""
 "The attached background file could not be found. It might have been moved, "
 "renamed or deleted."
@@ -1487,7 +1518,7 @@ msgid ""
 "renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2368
+#: ../src/core/control/Control.cpp:2392
 msgid ""
 "The background file \"{1}\" could not be found. It might have been moved, "
 "renamed or deleted.\n"
@@ -1498,7 +1529,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2429
+#: ../src/core/control/Control.cpp:2453
 msgid ""
 "The file being loaded has a file format version newer than the one currently "
 "supported by this version of Xournal++, so it may not load properly. Open "
@@ -1545,7 +1576,7 @@ msgstr ""
 msgid "Thick"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2869
+#: ../src/core/control/Control.cpp:2893
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1581,7 +1612,7 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1492
+#: ../src/core/control/Control.cpp:1516
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
@@ -1630,7 +1661,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2750
+#: ../src/core/control/Control.cpp:2774
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1638,7 +1669,7 @@ msgstr ""
 msgid "Unsupported graphics format: "
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2386
+#: ../src/core/control/Control.cpp:2410
 msgid "Use proposed PDF"
 msgstr ""
 
@@ -1695,7 +1726,7 @@ msgid ""
 "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2699
+#: ../src/core/control/Control.cpp:2723
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr ""
@@ -1705,7 +1736,7 @@ msgstr ""
 msgid "Xournal++ template"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1275
+#: ../src/core/control/Control.cpp:1299
 msgid "Yes"
 msgstr ""
 
@@ -1745,7 +1776,7 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2693
+#: ../src/core/control/Control.cpp:2717
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1758,7 +1789,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2694
+#: ../src/core/control/Control.cpp:2718
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
@@ -1804,7 +1835,7 @@ msgstr ""
 msgid "eraser"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2317
+#: ../src/core/control/Control.cpp:2341
 msgid "file: {1}"
 msgstr ""
 
@@ -2082,12 +2113,6 @@ msgstr ""
 msgid ""
 "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
-
-#: ../ui/fillOpacity.glade:49
-msgid ""
-"<b>Fill opacity settings</b>\n"
-"Select opacity for fill color"
 msgstr ""
 
 #: ../ui/pageTemplate.glade:67
@@ -2497,7 +2522,7 @@ msgstr ""
 msgid "Copy current page size instead"
 msgstr ""
 
-#: ../ui/main.glade:2777
+#: ../ui/main.glade:2802
 msgid "Copy selected text"
 msgstr ""
 
@@ -2678,7 +2703,7 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/main.glade:2911 ../ui/main.glade:2948
+#: ../ui/main.glade:2936 ../ui/main.glade:2973
 msgid "Duplicate"
 msgstr ""
 
@@ -2686,7 +2711,7 @@ msgstr ""
 msgid "Duplicate Page"
 msgstr ""
 
-#: ../ui/main.glade:2985
+#: ../ui/main.glade:3010
 msgid "Edit (not implemented yet)"
 msgstr ""
 
@@ -2797,11 +2822,11 @@ msgstr ""
 msgid "Finalize the stroke"
 msgstr ""
 
-#: ../ui/main.glade:2575
+#: ../ui/main.glade:2600
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:2553
+#: ../ui/main.glade:2578
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -2887,7 +2912,7 @@ msgstr ""
 msgid "Highlight cursor position"
 msgstr ""
 
-#: ../ui/main.glade:2799
+#: ../ui/main.glade:2824
 msgid "Highlight selected text"
 msgstr ""
 
@@ -2990,11 +3015,11 @@ msgstr ""
 msgid "Insert Latex"
 msgstr ""
 
-#: ../ui/main.glade:2940
+#: ../ui/main.glade:2965
 msgid "Insert Page After"
 msgstr ""
 
-#: ../ui/main.glade:2932
+#: ../ui/main.glade:2957
 msgid "Insert Page Before"
 msgstr ""
 
@@ -3054,6 +3079,10 @@ msgstr ""
 msgid "Manage Toolbar"
 msgstr ""
 
+#: ../ui/main.glade:2061
+msgid "Marker Opacity"
+msgstr ""
+
 #: ../ui/settings.glade:1216
 msgid "Mass"
 msgstr ""
@@ -3070,7 +3099,7 @@ msgstr ""
 msgid "Max multiplier"
 msgstr ""
 
-#: ../ui/main.glade:2903
+#: ../ui/main.glade:2928
 msgid "Merge Down"
 msgstr ""
 
@@ -3109,7 +3138,7 @@ msgstr ""
 msgid "Mouse+Keyboard Combo"
 msgstr ""
 
-#: ../ui/main.glade:2895 ../ui/main.glade:2970
+#: ../ui/main.glade:2920 ../ui/main.glade:2995
 msgid "Move Down"
 msgstr ""
 
@@ -3121,7 +3150,7 @@ msgstr ""
 msgid "Move Selection Layer Up"
 msgstr ""
 
-#: ../ui/main.glade:2887 ../ui/main.glade:2962
+#: ../ui/main.glade:2912 ../ui/main.glade:2987
 msgid "Move Up"
 msgstr ""
 
@@ -3174,14 +3203,15 @@ msgstr ""
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr ""
 
-#: ../ui/exportSettings.glade:425 ../ui/fillOpacity.glade:135
-#: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
+#: ../ui/exportSettings.glade:425 ../ui/goto.glade:108
+#: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
 #: ../ui/plugin.glade:113 ../ui/renameLayerDialog.glade:71
-#: ../ui/settings.glade:6095 ../ui/texdialog.glade:203
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6095
+#: ../ui/texdialog.glade:203
 msgid "Ok"
 msgstr ""
 
-#: ../ui/fillOpacity.glade:23
+#: ../ui/selectOpacity.glade:23
 msgid "Opacity settings"
 msgstr ""
 
@@ -3243,7 +3273,7 @@ msgstr ""
 msgid "Path: "
 msgstr ""
 
-#: ../ui/main.glade:2072
+#: ../ui/main.glade:2097
 msgid "Pause"
 msgstr ""
 
@@ -3263,7 +3293,7 @@ msgstr ""
 msgid "Playback Settings"
 msgstr ""
 
-#: ../ui/main.glade:2137
+#: ../ui/main.glade:2162
 msgid "Plugin _Manager"
 msgstr ""
 
@@ -3323,7 +3353,7 @@ msgstr ""
 msgid "Recent _Documents"
 msgstr ""
 
-#: ../ui/main.glade:2062
+#: ../ui/main.glade:2087
 msgid "Record / Stop"
 msgstr ""
 
@@ -3397,6 +3427,10 @@ msgstr ""
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
+msgstr ""
+
+#: ../ui/main.glade:2050
+msgid "Select PDF Text Options"
 msgstr ""
 
 #: ../ui/main.glade:1420
@@ -3529,7 +3563,7 @@ msgstr ""
 msgid "Storage Folder"
 msgstr ""
 
-#: ../ui/main.glade:2839
+#: ../ui/main.glade:2864
 msgid "Strikethrough selected text"
 msgstr ""
 
@@ -3596,7 +3630,7 @@ msgid ""
 "command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/main.glade:2050
+#: ../ui/main.glade:2075
 msgid "Text Font..."
 msgstr ""
 
@@ -3630,7 +3664,7 @@ msgstr ""
 msgid "Timeout"
 msgstr ""
 
-#: ../ui/main.glade:2859
+#: ../ui/main.glade:2884
 msgid "Toggle standard / region text selection"
 msgstr ""
 
@@ -3657,7 +3691,7 @@ msgid ""
 "if enabled."
 msgstr ""
 
-#: ../ui/main.glade:2819
+#: ../ui/main.glade:2844
 msgid "Underline selected text"
 msgstr ""
 
@@ -3886,7 +3920,7 @@ msgstr ""
 msgid "_Goto Page"
 msgstr ""
 
-#: ../ui/main.glade:2151
+#: ../ui/main.glade:2176
 msgid "_Help"
 msgstr ""
 
@@ -3938,7 +3972,7 @@ msgstr ""
 msgid "_Pen"
 msgstr ""
 
-#: ../ui/main.glade:2126
+#: ../ui/main.glade:2151
 msgid "_Plugin"
 msgstr ""
 
