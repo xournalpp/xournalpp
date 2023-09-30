@@ -428,6 +428,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         case ACTION_OPEN:
             openFile();
             break;
+        case ACTION_CHANGE_PDF_BACKGROUND:
+            this->changePdfBackground();
+            break;
         case ACTION_ANNOTATE_PDF:
             clearSelectionEndText();
             annotatePdf("", false, false);
@@ -2474,6 +2477,55 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 
 
     fileLoaded(scrollToPage);
+    return true;
+}
+
+auto Control::changePdfBackground() -> bool {
+
+    LoadHandler loadHandler;
+
+    const fs::path currentFilepath = ((*this).doc)->getFilepath();
+    const fs::path currentPdfFilepath = ((*this).doc)->getPdfFilepath();
+
+    auto pageNr = getCurrentPageNo();
+    PageRef page = this->doc->getPage(pageNr);
+
+    if (currentPdfFilepath.empty()) {
+        string msg = FS(_F("Error in changing the background: please open a pdf first."));
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return false;
+    }
+
+    if (this->undoRedo->isChanged()) {
+        string msg = FS(_F("Error in changing the background: please save the recent changes first."));
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return false;
+    }
+
+    if (currentFilepath.empty()) {
+        string msg = FS(_F("Error in changing the background: please save the document first."));
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        return false;
+    }
+
+    bool attachToDocument = false;
+    XojOpenDlg dlg(getGtkWindow(), this->settings);
+    auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
+
+    // To prevent render jobs from running while we are changing the document,
+    // we need to lock the scheduler.
+    getScheduler()->lock();
+    bool success = this->doc->readPdf(pdfFilename, false, attachToDocument);
+    if (!success) {
+        getScheduler()->unlock();
+        g_warning("Failed to read new PDF document.");
+    } else {
+        fileLoaded(-1);
+        getScheduler()->unlock();
+        // Pretend the whole document has changed to force re-render.
+        this->win->getXournal()->documentChanged(DOCUMENT_CHANGE_COMPLETE);
+    }
+ 
     return true;
 }
 
