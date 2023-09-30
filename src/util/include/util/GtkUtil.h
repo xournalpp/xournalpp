@@ -20,4 +20,22 @@ namespace xoj::util::gtk {
  * different state).
  */
 void setToggleButtonUnreleasable(GtkToggleButton* btn);
+
+#if GTK_MAJOR_VERSION == 3
+/**
+ * @brief RadioButton's and GAction don't work as expected in GTK3:
+ * * Without setting the group, the RadioButtons are simply always ticked (all of them)
+ * * With the group properly set, when a RadioButton is "un-selected" (because we selected another one), it still
+ *   changes the GAction's state (it should only do that when being selected). This leads to infinite callback loops
+ *
+ * To circumvent this, we make our own GAction/RadioButton interactions. Don't forget to group the buttons together.
+ */
+void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, const char* actionName);
+
+/**
+ * @brief some Gtk3 GtkActionable implementations (e.g. GtkMEnuItem) do not set their sensitivity properly on startup
+ * Fixes that
+ */
+void fixActionableInitialSensitivity(GtkActionable* w);
+#endif
 };  // namespace xoj::util::gtk

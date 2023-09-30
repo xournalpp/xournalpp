@@ -50,6 +50,8 @@ public:
     MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent);
     ~MainWindow() override;
 
+    void populate(GladeSearchpath* gladeSearchPath);
+
     // LayerCtrlListener
 public:
     void rebuildLayerMenu() override;
@@ -81,7 +83,7 @@ public:
     void setMaximized(bool maximized);
     bool isMaximized() const;
 
-    void toggleFullscreen(bool enabled) const;
+    void setFullscreen(bool enabled) const;
 
     XournalView* getXournal() const;
 

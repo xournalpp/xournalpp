@@ -17,15 +17,20 @@
 
 #include "plugin/Plugin.h"
 
-#include "ToolButton.h"  // for AbstractToolItem
+#include "AbstractToolItem.h"  // for AbstractToolItem
 
-class PluginToolButton: public ToolButton {
+class PluginToolButton: public AbstractToolItem {
 public:
-    PluginToolButton(ActionHandler* handler, ToolbarButtonEntry* t);
+    PluginToolButton(ToolbarButtonEntry* t);
 
     ~PluginToolButton() override;
+    std::string getToolDisplayName() const override;
 
 protected:
     GtkToolItem* createItem(bool horizontal) override;
+    GtkToolItem* newItem() override;
+    GtkWidget* getNewToolIcon() const override;
+
+private:
     ToolbarButtonEntry* t;
 };

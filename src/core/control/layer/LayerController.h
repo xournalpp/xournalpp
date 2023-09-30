@@ -47,7 +47,7 @@ protected:
     void fireLayerVisibilityChanged();
 
 public:
-    bool actionPerformed(ActionType type);
+    [[deprecated]] bool actionPerformed(ActionType type);
 
     /**
      * Show all layer on the current page

@@ -84,10 +84,16 @@ void gtk_check_button_set_active(GtkCheckButton* bt, bool state) {
 void gtk_button_set_child(GtkButton* button, GtkWidget* child) { set_child(GTK_CONTAINER(button), child); }
 GtkWidget* gtk_button_get_child(GtkButton* button) { return gtk_bin_get_child(GTK_BIN(button)); }
 
+void gtk_button_set_icon_name(GtkButton* button, const char* iconName) {
+    // Is GTK_ICON_SIZE_LARGE_TOOLBAR i the right size??
+    gtk_button_set_image(button, gtk_image_new_from_icon_name(iconName, GTK_ICON_SIZE_LARGE_TOOLBAR));
+}
+
 /**** GtkPopover ****/
 
 GtkWidget* gtk_popover_new() { return gtk_popover_new(nullptr); }
 void gtk_popover_set_child(GtkPopover* popover, GtkWidget* child) { set_child(GTK_CONTAINER(popover), child); }
+GtkWidget* gtk_popover_menu_new_from_model(GMenuModel* model) { return gtk_popover_new_from_model(nullptr, model); }
 
 /**** GtkLabel ****/
 void gtk_label_set_wrap(GtkLabel* label, gboolean wrap) { gtk_label_set_line_wrap(label, wrap); }

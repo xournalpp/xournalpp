@@ -27,6 +27,7 @@ class ActionHandler;
 class AbstractToolItem: public AbstractItem {
 public:
     AbstractToolItem(std::string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = nullptr);
+    AbstractToolItem(std::string id);
     ~AbstractToolItem() override;
 
     AbstractToolItem(AbstractToolItem const&) = delete;
@@ -38,7 +39,6 @@ public:
     void selected(ActionGroup group, ActionType action) override;
     virtual GtkToolItem* createItem(bool horizontal);
     virtual GtkToolItem* createTmpItem(bool horizontal);
-    void setPopupMenu(GtkWidget* popupMenu);
 
     bool isUsed() const;
     void setUsed(bool used);
@@ -62,10 +62,8 @@ public:
 protected:
     virtual GtkToolItem* newItem() = 0;
 
-public:
 protected:
     GtkToolItem* item = nullptr;
-    xoj::util::WidgetSPtr popupMenu;
 
     bool toolToggleButtonActive = false;
     bool toolToggleOnlyEnable = false;

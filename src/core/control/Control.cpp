@@ -149,7 +149,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->zoom->setZoomStepScroll(this->settings->getZoomStepScroll() / 100.0);
     this->zoom->setZoom100Value(this->settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
 
-    this->toolHandler = new ToolHandler(this, this, this->settings);
+    this->toolHandler = new ToolHandler(this, this->actionDB.get(), this->settings);
     this->toolHandler->loadSettings();
     this->initButtonTool();
 
@@ -298,20 +298,20 @@ void Control::saveSettings() {
 }
 
 void Control::initWindow(MainWindow* win) {
-    selectTool(toolHandler->getToolType());
     this->win = win;
+
+    this->actionDB = std::make_unique<ActionDatabase>(this);
+
+    selectTool(toolHandler->getToolType());
     this->sidebar = new Sidebar(win, this);
 
     XojMsgBox::setDefaultWindow(getGtkWindow());
 
     updatePageNumbers(0, npos);
 
-    toolHandler->eraserTypeChanged();
+    // toolHandler->eraserTypeChanged();
 
     this->searchBar = new SearchBar(this);
-
-    // Disable undo buttons
-    undoRedoChanged();
 
     if (settings->isPresentationMode()) {
         setViewPresentationMode(true);
@@ -327,11 +327,11 @@ void Control::initWindow(MainWindow* win) {
 
     setViewPairedPages(settings->isShowPairedPages());
 
-    penSizeChanged();
-    eraserSizeChanged();
-    highlighterSizeChanged();
-    updateDeletePageButton();
-    toolFillChanged();
+    // penSizeChanged();
+    // eraserSizeChanged();
+    // highlighterSizeChanged();
+    // updateDeletePageButton();
+    // toolFillChanged();
     toolLineStyleChanged();
 
     this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
@@ -339,13 +339,6 @@ void Control::initWindow(MainWindow* win) {
     this->enableAutosave(settings->isAutosaveEnabled());
 
     win->setFontButtonFont(settings->getFont());
-
-
-    fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
-    fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
-    fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
-
-    this->actionDB = std::make_unique<ActionDatabase>(this);
 }
 
 auto Control::autosaveCallback(Control* control) -> bool {
@@ -393,15 +386,13 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     auto current = getCurrentPageNo();
     auto count = this->doc->getPageCount();
 
-    fireEnableAction(ACTION_GOTO_FIRST, current != 0);
-    fireEnableAction(ACTION_GOTO_BACK, current != 0);
-    fireEnableAction(ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE, current != 0);
-
-    fireEnableAction(ACTION_GOTO_PAGE, count > 1);
-
-    fireEnableAction(ACTION_GOTO_NEXT, current < count - 1);
-    fireEnableAction(ACTION_GOTO_LAST, current < count - 1);
-    fireEnableAction(ACTION_GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
+    this->actionDB->enableAction(Action::GOTO_FIRST, current != 0);
+    this->actionDB->enableAction(Action::GOTO_PREVIOUS, current != 0);
+    this->actionDB->enableAction(Action::GOTO_PREVIOUS_ANNOTATED_PAGE, current != 0);
+    this->actionDB->enableAction(Action::GOTO_PAGE, count > 1);
+    this->actionDB->enableAction(Action::GOTO_NEXT, current < count - 1);
+    this->actionDB->enableAction(Action::GOTO_LAST, current < count - 1);
+    this->actionDB->enableAction(Action::GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
 }
 
 void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled) {
@@ -956,13 +947,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
                       ActionGroup_toString(group).c_str(), type, group);
             Stacktrace::printStracktrace();
     }
-
-    if (type >= ACTION_TOOL_PEN && type <= ACTION_TOOL_HAND) {
-        auto at = static_cast<ActionType>(toolHandler->getToolType() - TOOL_PEN + ACTION_TOOL_PEN);
-        if (type == at && !enabled) {
-            fireActionSelected(GROUP_TOOL, at);
-        }
-    }
 }
 
 bool Control::toggleCompass() {
@@ -992,7 +976,6 @@ bool Control::toggleGeometryTool() {
             std::make_unique<InputHandlerClass>(this->win->getXournal(), geometryToolController.get());
     geometryToolInputHandler->registerToPool(tool->getHandlerPool());
     xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
-    fireActionSelected(GROUP_GEOMETRY_TOOL, a);
     geometryTool->notify();
     return true;
 }
@@ -1002,7 +985,6 @@ void Control::resetGeometryTool() {
     this->geometryTool.reset();
     auto* xournal = GTK_XOURNAL(this->win->getXournal()->getWidget());
     xournal->input->resetGeometryToolInputHandler();
-    fireActionSelected(GROUP_GEOMETRY_TOOL, ACTION_NONE);
 }
 
 auto Control::copy() -> bool {
@@ -1171,86 +1153,91 @@ void Control::customizeToolbars() {
     }
 }
 
-void Control::setShapeTool(ActionType type, bool enabled) {
-
-    if (this->toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE && (type != ACTION_TOOL_DRAW_SPLINE || !enabled)) {
-        // Shape changed from spline to something else: finish ongoing splines
-        if (win) {
-            win->getXournal()->endSplineAllPages();
-        }
-    }
-
-    if (!enabled) {
-        // Disable all entries
-        this->toolHandler->setDrawingType(DRAWING_TYPE_DEFAULT);
-
-        // fire disabled and return
-        fireActionSelected(GROUP_RULER, ACTION_NONE);
-        return;
-    }
-
-    DrawingType dtype = DRAWING_TYPE_DEFAULT;
-    switch (type) {
-        case ACTION_RULER:
-            dtype = DRAWING_TYPE_LINE;
-            break;
-        case ACTION_TOOL_DRAW_RECT:
-            dtype = DRAWING_TYPE_RECTANGLE;
-            break;
-        case ACTION_TOOL_DRAW_ARROW:
-            dtype = DRAWING_TYPE_ARROW;
-            break;
-        case ACTION_TOOL_DRAW_DOUBLE_ARROW:
-            dtype = DRAWING_TYPE_DOUBLE_ARROW;
-            break;
-        case ACTION_TOOL_DRAW_COORDINATE_SYSTEM:
-            dtype = DRAWING_TYPE_COORDINATE_SYSTEM;
-            break;
-        case ACTION_TOOL_DRAW_ELLIPSE:
-            dtype = DRAWING_TYPE_ELLIPSE;
-            break;
-        case ACTION_TOOL_DRAW_SPLINE:
-            dtype = DRAWING_TYPE_SPLINE;
-            break;
-        case ACTION_SHAPE_RECOGNIZER:
-            dtype = DRAWING_TYPE_SHAPE_RECOGNIZER;
-            break;
-        default:
-            g_warning("Invalid type for setShapeTool: %i", type);
-            break;
-    }
-
-    this->setToolDrawingType(dtype);
-
-    fireActionSelected(GROUP_RULER, type);
-}
-
 void Control::setToolDrawingType(DrawingType type) {
     if (this->toolHandler->getDrawingType() != type) {
+
+        if (this->toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE) {
+            // Shape changed from spline to something else: finish ongoing splines
+            if (win) {
+                win->getXournal()->endSplineAllPages();
+            }
+        }
         this->toolHandler->setDrawingType(type);
+
+        switch (type) {
+            case DRAWING_TYPE_LINE:
+                fireActionSelected(GROUP_RULER, ACTION_RULER);
+                break;
+            case DRAWING_TYPE_RECTANGLE:
+                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_RECT);
+                break;
+            case DRAWING_TYPE_ARROW:
+                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_ARROW);
+                break;
+            case DRAWING_TYPE_DOUBLE_ARROW:
+                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_DOUBLE_ARROW);
+                break;
+            case DRAWING_TYPE_COORDINATE_SYSTEM:
+                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_COORDINATE_SYSTEM);
+                break;
+            case DRAWING_TYPE_ELLIPSE:
+                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_ELLIPSE);
+                break;
+            case DRAWING_TYPE_SPLINE:
+                fireActionSelected(GROUP_RULER, ACTION_TOOL_DRAW_SPLINE);
+                break;
+            case DRAWING_TYPE_SHAPE_RECOGNIZER:
+                fireActionSelected(GROUP_RULER, ACTION_SHAPE_RECOGNIZER);
+                break;
+            default:
+                fireActionSelected(GROUP_RULER, ACTION_NOT_SELECTED);
+                break;
+        }
     }
 }
 
 void Control::setFullscreen(bool enabled) {
-    win->toggleFullscreen(enabled);
+    win->setFullscreen(enabled);
     actionDB->setActionState(Action::FULLSCREEN, enabled);
-
-    fireActionSelected(GROUP_FULLSCREEN, enabled ? ACTION_FULLSCREEN : ACTION_NONE);
 }
 
 void Control::setShowSidebar(bool enabled) {
     win->setSidebarVisible(enabled);
     actionDB->setActionState(Action::SHOW_SIDEBAR, enabled);
+
+    if (settings->isSidebarVisible() != enabled &&
+        settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setSidebarVisible(enabled);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showSidebar = enabled;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
 }
 
 void Control::setShowToolbar(bool enabled) {
     win->setToolbarVisible(enabled);
     actionDB->setActionState(Action::SHOW_TOOLBAR, enabled);
+
+    if (settings->isToolbarVisible() != enabled &&
+        settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setToolbarVisible(enabled);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showToolbar = enabled;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
 }
 
-void Control::setHideMenubar(bool enabled) {
-    win->setMenubarVisible(!enabled);
-    actionDB->setActionState(Action::HIDE_MENUBAR, enabled);
+void Control::setShowMenubar(bool enabled) {
+    win->setMenubarVisible(enabled);
+    actionDB->setActionState(Action::SHOW_MENUBAR, enabled);
+
+    if (settings->isMenubarVisible() != enabled &&
+        settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setMenubarVisible(enabled);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showMenubar = enabled;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
 }
 
 void Control::disableSidebarTmp(bool disabled) { this->sidebar->setTmpDisabled(disabled); }
@@ -1478,7 +1465,6 @@ void Control::changePageBackgroundColor() {
 
 void Control::setViewPairedPages(bool enabled) {
     settings->setShowPairedPages(enabled);
-    fireActionSelected(GROUP_PAIRED_PAGES, enabled ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
@@ -1498,7 +1484,6 @@ void Control::setViewPresentationMode(bool enabled) {
         bool success = zoom->updateZoomPresentationValue();
         if (!success) {
             g_warning("Error calculating zoom value");
-            fireActionSelected(GROUP_PRESENTATION_MODE, ACTION_NOT_SELECTED);
             return;
         }
     } else {
@@ -1518,10 +1503,11 @@ void Control::setViewPresentationMode(bool enabled) {
     settings->setPresentationMode(enabled);
 
     // Disable Zoom
-    fireEnableAction(ACTION_ZOOM_IN, !enabled);
-    fireEnableAction(ACTION_ZOOM_OUT, !enabled);
-    fireEnableAction(ACTION_ZOOM_FIT, !enabled);
-    fireEnableAction(ACTION_ZOOM_100, !enabled);
+    this->actionDB->enableAction(Action::ZOOM_IN, !enabled);
+    this->actionDB->enableAction(Action::ZOOM_OUT, !enabled);
+    this->actionDB->enableAction(Action::ZOOM_FIT, !enabled);
+    this->actionDB->enableAction(Action::ZOOM_100, !enabled);
+
     fireEnableAction(ACTION_FOOTER_ZOOM_SLIDER, !enabled);
 
     this->actionDB->enableAction(Action::SET_LAYOUT_BOTTOM_TO_TOP, !enabled);
@@ -1530,8 +1516,9 @@ void Control::setViewPresentationMode(bool enabled) {
     this->actionDB->enableAction(Action::SET_COLUMNS_OR_ROWS, !enabled);
 
     // disable selection of scroll hand tool
-    fireEnableAction(ACTION_TOOL_HAND, !enabled);
-    fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
+    // TODO Figure out how to replace this
+    // fireEnableAction(ACTION_TOOL_HAND, !enabled);
+
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
@@ -1546,40 +1533,6 @@ void Control::setPairsOffset(int numOffset) {
 void Control::setViewColumns(int numColumns) {
     settings->setViewColumns(numColumns);
     settings->setViewFixedRows(false);
-
-    ActionType action{};
-
-    switch (numColumns) {
-        case 1:
-            action = ACTION_SET_COLUMNS_1;
-            break;
-        case 2:
-            action = ACTION_SET_COLUMNS_2;
-            break;
-        case 3:
-            action = ACTION_SET_COLUMNS_3;
-            break;
-        case 4:
-            action = ACTION_SET_COLUMNS_4;
-            break;
-        case 5:
-            action = ACTION_SET_COLUMNS_5;
-            break;
-        case 6:
-            action = ACTION_SET_COLUMNS_6;
-            break;
-        case 7:
-            action = ACTION_SET_COLUMNS_7;
-            break;
-        case 8:
-            action = ACTION_SET_COLUMNS_8;
-            break;
-        default:
-            action = ACTION_SET_COLUMNS;
-    }
-
-    fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
-
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
@@ -1587,121 +1540,26 @@ void Control::setViewColumns(int numColumns) {
 void Control::setViewRows(int numRows) {
     settings->setViewRows(numRows);
     settings->setViewFixedRows(true);
-
-    ActionType action{};
-
-    switch (numRows) {
-        case 1:
-            action = ACTION_SET_ROWS_1;
-            break;
-        case 2:
-            action = ACTION_SET_ROWS_2;
-            break;
-        case 3:
-            action = ACTION_SET_ROWS_3;
-            break;
-        case 4:
-            action = ACTION_SET_ROWS_4;
-            break;
-        case 5:
-            action = ACTION_SET_ROWS_5;
-            break;
-        case 6:
-            action = ACTION_SET_ROWS_6;
-            break;
-        case 7:
-            action = ACTION_SET_ROWS_7;
-            break;
-        case 8:
-            action = ACTION_SET_ROWS_8;
-            break;
-        default:
-            action = ACTION_SET_ROWS;
-    }
-
-    fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
-
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutVert(bool vert) {
     settings->setViewLayoutVert(vert);
-
-    ActionType action{};
-
-    if (vert) {
-        action = ACTION_SET_LAYOUT_VERTICAL;
-    } else {
-        action = ACTION_SET_LAYOUT_HORIZONTAL;
-    }
-
-    fireActionSelected(GROUP_LAYOUT_HORIZONTAL, action);
-
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutR2L(bool r2l) {
     settings->setViewLayoutR2L(r2l);
-
-    ActionType action{};
-
-    if (r2l) {
-        action = ACTION_SET_LAYOUT_R2L;
-    } else {
-        action = ACTION_SET_LAYOUT_L2R;
-    }
-
-    fireActionSelected(GROUP_LAYOUT_LR, action);
-
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutB2T(bool b2t) {
     settings->setViewLayoutB2T(b2t);
-
-    ActionType action{};
-
-    if (b2t) {
-        action = ACTION_SET_LAYOUT_B2T;
-    } else {
-        action = ACTION_SET_LAYOUT_T2B;
-    }
-
-    fireActionSelected(GROUP_LAYOUT_TB, action);
-
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(getCurrentPageNo());
-}
-
-/**
- * This callback is used by used to be called later in the UI Thread
- * On slower machine this feels more fluent, therefore this will not
- * be removed
- */
-void Control::zoomCallback(ActionType type, bool enabled) {
-    switch (type) {
-        case ACTION_ZOOM_100:
-            zoom->zoom100();
-            break;
-        case ACTION_ZOOM_FIT:
-            if (enabled) {
-                zoom->updateZoomFitValue();
-            }
-            // enable/disable ZoomFit
-            zoom->setZoomFitMode(enabled);
-            break;
-        case ACTION_ZOOM_IN:
-            zoom->zoomOneStep(ZOOM_IN);
-            break;
-        case ACTION_ZOOM_OUT:
-            zoom->zoomOneStep(ZOOM_OUT);
-            break;
-        default:
-            break;
-    }
 }
 
 auto Control::getCurrentPageNo() const -> size_t {
@@ -1725,8 +1583,8 @@ auto Control::getCurrentPage() -> PageRef {
 }
 
 void Control::undoRedoChanged() {
-    fireEnableAction(ACTION_UNDO, undoRedo->canUndo());
-    fireEnableAction(ACTION_REDO, undoRedo->canRedo());
+    this->actionDB->enableAction(Action::UNDO, undoRedo->canUndo());
+    this->actionDB->enableAction(Action::REDO, undoRedo->canRedo());
 
     win->setUndoDescription(undoRedo->undoDescription());
     win->setRedoDescription(undoRedo->redoDescription());
@@ -1778,13 +1636,33 @@ void Control::setFontSelected(const XojFont& font) { this->getWindow()->setFontB
 void Control::toolChanged() {
     ToolType type = toolHandler->getToolType();
 
+    this->actionDB->setActionState(Action::SELECT_TOOL, type);
+
+    this->actionDB->enableAction(Action::TOOL_DRAW_LINE, toolHandler->hasCapability(TOOL_CAP_RULER));
+    this->actionDB->enableAction(Action::TOOL_DRAW_RECTANGLE, toolHandler->hasCapability(TOOL_CAP_RECTANGLE));
+    this->actionDB->enableAction(Action::TOOL_DRAW_ELLIPSE, toolHandler->hasCapability(TOOL_CAP_ELLIPSE));
+    this->actionDB->enableAction(Action::TOOL_DRAW_ARROW, toolHandler->hasCapability(TOOL_CAP_ARROW));
+    this->actionDB->enableAction(Action::TOOL_DRAW_DOUBLE_ARROW, toolHandler->hasCapability(TOOL_CAP_DOUBLE_ARROW));
+    this->actionDB->enableAction(Action::TOOL_DRAW_COORDINATE_SYSTEM, toolHandler->hasCapability(TOOL_CAP_ARROW));
+    this->actionDB->enableAction(Action::TOOL_DRAW_SPLINE, toolHandler->hasCapability(TOOL_CAP_SPLINE));
+    this->actionDB->enableAction(Action::TOOL_DRAW_SHAPE_RECOGNIZER, toolHandler->hasCapability(TOOL_CAP_RECOGNIZER));
+
+    DrawingType dt = toolHandler->getDrawingType();
+    this->actionDB->setActionState(Action::TOOL_DRAW_LINE, dt == DRAWING_TYPE_LINE);
+    this->actionDB->setActionState(Action::TOOL_DRAW_RECTANGLE, dt == DRAWING_TYPE_RECTANGLE);
+    this->actionDB->setActionState(Action::TOOL_DRAW_ELLIPSE, dt == DRAWING_TYPE_ELLIPSE);
+    this->actionDB->setActionState(Action::TOOL_DRAW_ARROW, dt == DRAWING_TYPE_ARROW);
+    this->actionDB->setActionState(Action::TOOL_DRAW_DOUBLE_ARROW, dt == DRAWING_TYPE_DOUBLE_ARROW);
+    this->actionDB->setActionState(Action::TOOL_DRAW_COORDINATE_SYSTEM, dt == DRAWING_TYPE_COORDINATE_SYSTEM);
+    this->actionDB->setActionState(Action::TOOL_DRAW_SPLINE, dt == DRAWING_TYPE_SPLINE);
+    this->actionDB->setActionState(Action::TOOL_DRAW_SHAPE_RECOGNIZER, dt == DRAWING_TYPE_SHAPE_RECOGNIZER);
+
+
+    // Todo: adapt gui/toolbarMenubar/* and get rid of this
+
     // Convert enum values, enums has to be in the same order!
     auto at = static_cast<ActionType>(type - TOOL_PEN + ACTION_TOOL_PEN);
-
     fireActionSelected(GROUP_TOOL, at);
-
-    fireEnableAction(ACTION_SELECT_COLOR, toolHandler->hasCapability(TOOL_CAP_COLOR));
-    fireEnableAction(ACTION_SELECT_COLOR_CUSTOM, toolHandler->hasCapability(TOOL_CAP_COLOR));
 
     fireEnableAction(ACTION_RULER, toolHandler->hasCapability(TOOL_CAP_RULER));
     fireEnableAction(ACTION_TOOL_DRAW_RECT, toolHandler->hasCapability(TOOL_CAP_RECTANGLE));
@@ -1794,40 +1672,6 @@ void Control::toolChanged() {
     fireEnableAction(ACTION_TOOL_DRAW_COORDINATE_SYSTEM, toolHandler->hasCapability(TOOL_CAP_ARROW));
     fireEnableAction(ACTION_TOOL_DRAW_SPLINE, toolHandler->hasCapability(TOOL_CAP_SPLINE));
     fireEnableAction(ACTION_SHAPE_RECOGNIZER, toolHandler->hasCapability(TOOL_CAP_RECOGNIZER));
-
-    bool enableSize = toolHandler->hasCapability(TOOL_CAP_SIZE);
-    fireEnableAction(ACTION_SIZE_MEDIUM, enableSize);
-    fireEnableAction(ACTION_SIZE_THICK, enableSize);
-    fireEnableAction(ACTION_SIZE_FINE, enableSize);
-    fireEnableAction(ACTION_SIZE_VERY_THICK, enableSize);
-    fireEnableAction(ACTION_SIZE_VERY_FINE, enableSize);
-    if (enableSize) {
-        toolSizeChanged();
-    }
-
-    bool enableLineStyle = toolHandler->hasCapability(TOOL_CAP_LINE_STYLE);
-    fireEnableAction(ACTION_TOOL_LINE_STYLE_PLAIN, enableLineStyle);
-    fireEnableAction(ACTION_TOOL_LINE_STYLE_DASH, enableLineStyle);
-    fireEnableAction(ACTION_TOOL_LINE_STYLE_DASH_DOT, enableLineStyle);
-    fireEnableAction(ACTION_TOOL_LINE_STYLE_DOT, enableLineStyle);
-    if (enableLineStyle) {
-        toolLineStyleChanged();
-    }
-
-    bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
-    fireEnableAction(ACTION_TOOL_FILL, enableFill);
-    if (enableFill) {
-        toolFillChanged();
-    }
-
-    // Update color
-    if (toolHandler->hasCapability(TOOL_CAP_COLOR)) {
-        toolColorChanged();
-    }
-
-    if (toolHandler->getToolType() == TOOL_PEN) {
-        toolLineStyleChanged();
-    }
 
     ActionType rulerAction = ACTION_NOT_SELECTED;
     if (toolHandler->getDrawingType() == DRAWING_TYPE_SHAPE_RECOGNIZER) {
@@ -1847,8 +1691,35 @@ void Control::toolChanged() {
     } else if (toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE) {
         rulerAction = ACTION_TOOL_DRAW_SPLINE;
     }
-
     fireActionSelected(GROUP_RULER, rulerAction);
+    //////////////////////////
+
+
+    bool enableSize = toolHandler->hasCapability(TOOL_CAP_SIZE);
+    this->actionDB->enableAction(Action::TOOL_SIZE, enableSize);
+    if (enableSize) {
+        toolSizeChanged();
+    }
+
+    bool enableLineStyle = toolHandler->hasCapability(TOOL_CAP_LINE_STYLE);
+    this->actionDB->enableAction(Action::TOOL_PEN_LINE_STYLE, enableLineStyle);
+    if (enableLineStyle) {
+        toolLineStyleChanged();
+    }
+
+    bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
+    this->actionDB->enableAction(Action::TOOL_FILL, enableFill);
+    this->actionDB->enableAction(Action::TOOL_FILL_OPACITY, enableFill);
+    if (enableFill) {
+        toolFillChanged();
+    }
+
+    fireEnableAction(ACTION_SELECT_COLOR, toolHandler->hasCapability(TOOL_CAP_COLOR));
+    fireEnableAction(ACTION_SELECT_COLOR_CUSTOM, toolHandler->hasCapability(TOOL_CAP_COLOR));
+    // Update color
+    if (toolHandler->hasCapability(TOOL_CAP_COLOR)) {
+        toolColorChanged();
+    }
 
     getCursor()->updateCursor();
 
@@ -1865,69 +1736,13 @@ void Control::toolChanged() {
 }
 
 void Control::eraserSizeChanged() {
-    switch (toolHandler->getEraserSize()) {
-        case TOOL_SIZE_VERY_FINE:
-            fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_VERY_FINE);
-            break;
-        case TOOL_SIZE_FINE:
-            fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_FINE);
-            break;
-        case TOOL_SIZE_MEDIUM:
-            fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_MEDIUM);
-            break;
-        case TOOL_SIZE_THICK:
-            fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_THICK);
-            break;
-        case TOOL_SIZE_VERY_THICK:
-            fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_VERY_THICK);
-            break;
-        default:
-            break;
-    }
+    this->actionDB->setActionState(Action::TOOL_ERASER_SIZE, toolHandler->getEraserSize());
 }
 
-void Control::penSizeChanged() {
-    switch (toolHandler->getPenSize()) {
-        case TOOL_SIZE_VERY_FINE:
-            fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_FINE);
-            break;
-        case TOOL_SIZE_FINE:
-            fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_FINE);
-            break;
-        case TOOL_SIZE_MEDIUM:
-            fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_MEDIUM);
-            break;
-        case TOOL_SIZE_THICK:
-            fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_THICK);
-            break;
-        case TOOL_SIZE_VERY_THICK:
-            fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_THICK);
-            break;
-        default:
-            break;
-    }
-}
+void Control::penSizeChanged() { this->actionDB->setActionState(Action::TOOL_PEN_SIZE, toolHandler->getPenSize()); }
 
 void Control::highlighterSizeChanged() {
-    switch (toolHandler->getHighlighterSize()) {
-        case TOOL_SIZE_VERY_FINE:
-            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE);
-            break;
-        case TOOL_SIZE_FINE:
-            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_FINE);
-            break;
-        case TOOL_SIZE_MEDIUM:
-            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_MEDIUM);
-            break;
-        case TOOL_SIZE_THICK:
-            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_THICK);
-            break;
-        case TOOL_SIZE_VERY_THICK:
-            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK);
-            break;
-        default:
-            break;
-    }
+    this->actionDB->setActionState(Action::TOOL_HIGHLIGHTER_SIZE, toolHandler->getHighlighterSize());
 }
 
 void Control::toolSizeChanged() {
@@ -1939,51 +1754,20 @@ void Control::toolSizeChanged() {
         highlighterSizeChanged();
     }
 
-    switch (toolHandler->getSize()) {
-        case TOOL_SIZE_NONE:
-            fireActionSelected(GROUP_SIZE, ACTION_NONE);
-            break;
-        case TOOL_SIZE_VERY_FINE:
-            fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_FINE);
-            break;
-        case TOOL_SIZE_FINE:
-            fireActionSelected(GROUP_SIZE, ACTION_SIZE_FINE);
-            break;
-        case TOOL_SIZE_MEDIUM:
-            fireActionSelected(GROUP_SIZE, ACTION_SIZE_MEDIUM);
-            break;
-        case TOOL_SIZE_THICK:
-            fireActionSelected(GROUP_SIZE, ACTION_SIZE_THICK);
-            break;
-        case TOOL_SIZE_VERY_THICK:
-            fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THICK);
-            break;
-    }
+    this->actionDB->setActionState(Action::TOOL_SIZE, toolHandler->getSize());
 
     getCursor()->updateCursor();
 }
 
 void Control::toolFillChanged() {
-    fireActionSelected(GROUP_FILL, toolHandler->getFill() != -1 ? ACTION_TOOL_FILL : ACTION_NONE);
-    fireActionSelected(GROUP_PEN_FILL, toolHandler->getPenFillEnabled() ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
-    fireActionSelected(GROUP_HIGHLIGHTER_FILL,
-                       toolHandler->getHighlighterFillEnabled() ? ACTION_TOOL_HIGHLIGHTER_FILL : ACTION_NONE);
+    this->actionDB->setActionState(Action::TOOL_FILL, toolHandler->getFill() != -1);
+    this->actionDB->setActionState(Action::TOOL_PEN_FILL, toolHandler->getPenFillEnabled());
+    this->actionDB->setActionState(Action::TOOL_HIGHLIGHTER_FILL, toolHandler->getHighlighterFillEnabled());
 }
 
 void Control::toolLineStyleChanged() {
     std::optional<string> style = getLineStyleToSelect();
-
-    if (!style) {
-        fireActionSelected(GROUP_LINE_STYLE, ACTION_NONE);
-    } else if (style == "dash") {
-        fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH);
-    } else if (style == "dashdot") {
-        fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH_DOT);
-    } else if (style == "dot") {
-        fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DOT);
-    } else {
-        fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_PLAIN);
-    }
+    this->actionDB->setActionState(Action::TOOL_PEN_LINE_STYLE, style ? style->c_str() : "none");
 }
 
 auto Control::getLineStyleToSelect() -> std::optional<string> const {
@@ -2839,11 +2623,11 @@ auto Control::loadViewMode(ViewModeId mode) -> bool {
 }
 
 void Control::clipboardCutCopyEnabled(bool enabled) {
-    fireEnableAction(ACTION_CUT, enabled);
-    fireEnableAction(ACTION_COPY, enabled);
+    this->actionDB->enableAction(Action::CUT, enabled);
+    this->actionDB->enableAction(Action::COPY, enabled);
 }
 
-void Control::clipboardPasteEnabled(bool enabled) { fireEnableAction(ACTION_PASTE, enabled); }
+void Control::clipboardPasteEnabled(bool enabled) { this->actionDB->enableAction(Action::PASTE, enabled); }
 
 void Control::clipboardPasteText(string text) {
     Text* t = new Text();
@@ -3082,7 +2866,7 @@ void Control::setFill(bool fill) {
         undoRedo->addUndoAction(UndoActionPtr(
                 sel->setFill(fill ? toolHandler->getPenFill() : -1, fill ? toolHandler->getHighlighterFill() : -1)));
     }
-    toolHandler->setFillEnabled(fill, true);
+    toolHandler->setFillEnabled(fill);
 }
 
 void Control::setLineStyle(const string& style) {
@@ -3167,12 +2951,12 @@ auto Control::getGtkWindow() const -> GtkWindow* { return GTK_WINDOW(this->win->
 
 void Control::setRotationSnapping(bool enable) {
     settings->setSnapRotation(enable);
-    fireActionSelected(GROUP_SNAPPING, enable ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
+    this->actionDB->setActionState(Action::ROTATION_SNAPPING, enable);
 }
 
 void Control::setGridSnapping(bool enable) {
     settings->setSnapGrid(enable);
-    fireActionSelected(GROUP_GRID_SNAPPING, enable ? ACTION_GRID_SNAPPING : ACTION_NONE);
+    this->actionDB->setActionState(Action::GRID_SNAPPING, enable);
 }
 
 void Control::highlightPositionToggle() {

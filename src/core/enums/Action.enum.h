@@ -69,7 +69,7 @@ enum class Action : size_t {
     SET_COLUMNS_OR_ROWS,
     MANAGE_TOOLBAR,
     CUSTOMIZE_TOOLBAR,
-    HIDE_MENUBAR,
+    SHOW_MENUBAR,
     ZOOM_IN,
     ZOOM_OUT,
     ZOOM_100,

@@ -20,11 +20,13 @@
 #include "control/Actions.h"         // for ActionHandler (ptr only), Action...
 #include "enums/ActionGroup.enum.h"  // for ActionGroup, GROUP_NOGROUP
 #include "enums/ActionType.enum.h"   // for ActionType, ACTION_NONE
+#include "util/raii/GVariantSPtr.h"
 
 
 class AbstractItem: public ActionEnabledListener, public ActionSelectionListener {
 public:
     AbstractItem(std::string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem = nullptr);
+    AbstractItem(std::string id);
     ~AbstractItem() override;
 
     AbstractItem(AbstractItem const&) = delete;

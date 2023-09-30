@@ -124,6 +124,7 @@ struct ActionProperties<Action::QUIT> {
 template <>
 struct ActionProperties<Action::UNDO> {
     static constexpr const char* accelerators[] = {"<Ctrl>Z", nullptr};
+    static bool initiallyEnabled(Control* ctrl) { return ctrl->undoRedo->canUndo(); }
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->clearSelectionEndText();
         UndoRedoController::undo(ctrl);
@@ -132,6 +133,7 @@ struct ActionProperties<Action::UNDO> {
 template <>
 struct ActionProperties<Action::REDO> {
     static constexpr const char* accelerators[] = {"<Ctrl><Shift>Z", "<Ctrl>Y", nullptr};
+    static bool initiallyEnabled(Control* ctrl) { return ctrl->undoRedo->canRedo(); }
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->clearSelectionEndText();
         UndoRedoController::redo(ctrl);
@@ -266,22 +268,14 @@ template <>
 struct ActionProperties<Action::SHOW_SIDEBAR> {
     using state_type = bool;
     static state_type initialState(Control* ctrl) { return ctrl->getSettings()->isSidebarVisible(); }
-    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
-        g_simple_action_set_state(ga, p);
-        bool enabled = g_variant_get_boolean(p);
-        ctrl->getWindow()->setSidebarVisible(enabled);
-    }
+    static void callback(GSimpleAction*, GVariant* p, Control* ctrl) { ctrl->setShowSidebar(g_variant_get_boolean(p)); }
 };
 
 template <>
 struct ActionProperties<Action::SHOW_TOOLBAR> {
     using state_type = bool;
     static state_type initialState(Control* ctrl) { return ctrl->getSettings()->isToolbarVisible(); }
-    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
-        g_simple_action_set_state(ga, p);
-        bool enabled = g_variant_get_boolean(p);
-        ctrl->getWindow()->setToolbarVisible(enabled);
-    }
+    static void callback(GSimpleAction*, GVariant* p, Control* ctrl) { ctrl->setShowToolbar(g_variant_get_boolean(p)); }
 };
 
 template <>
@@ -349,14 +343,10 @@ struct ActionProperties<Action::CUSTOMIZE_TOOLBAR> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->customizeToolbars(); }
 };
 template <>
-struct ActionProperties<Action::HIDE_MENUBAR> {
+struct ActionProperties<Action::SHOW_MENUBAR> {
     using state_type = bool;
-    static state_type initialState(Control* ctrl) { return !ctrl->getSettings()->isMenubarVisible(); }
-    static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
-        g_simple_action_set_state(ga, p);
-        bool enabled = g_variant_get_boolean(p);
-        ctrl->setHideMenubar(enabled);
-    }
+    static state_type initialState(Control* ctrl) { return ctrl->getSettings()->isMenubarVisible(); }
+    static void callback(GSimpleAction*, GVariant* p, Control* ctrl) { ctrl->setShowMenubar(g_variant_get_boolean(p)); }
 };
 
 
