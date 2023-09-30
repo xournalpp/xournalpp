@@ -349,8 +349,8 @@
    </section>
    <section>
     <item>
-     <attribute name="label" translatable="yes">Hide Menubar</attribute>
-     <attribute name="action">win.hide-menubar</attribute>
+     <attribute name="label" translatable="yes">Show Menubar</attribute>
+     <attribute name="action">win.show-menubar</attribute>
      <attribute name="accel">F10</attribute>
     </item>
    </section>

@@ -5,7 +5,8 @@
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <glib.h>         // for g_warning, guint
 
-#include "control/Control.h"            // for Control
+#include "control/Control.h"  // for Control
+#include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"  // for Settings
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
 #include "enums/ActionGroup.enum.h"     // for GROUP_ZOOM_FIT
@@ -361,7 +362,7 @@ void ZoomControl::zoomPresentation() {
 void ZoomControl::setZoomFitMode(bool isZoomFitMode) {
     if (this->zoomFitMode != isZoomFitMode) {
         this->zoomFitMode = isZoomFitMode;
-        this->control->fireActionSelected(GROUP_ZOOM_FIT, this->zoomFitMode ? ACTION_ZOOM_FIT : ACTION_NOT_SELECTED);
+        this->control->getActionDatabase()->setActionState(Action::ZOOM_FIT, this->zoomFitMode);
     }
 
     if (this->isZoomFitMode()) {

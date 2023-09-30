@@ -15,15 +15,17 @@ class ActionHandler;
 using std::string;
 
 ToolPdfCombocontrol::ToolPdfCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id):
-        ToolButton(handler, std::move(id), ACTION_TOOL_SELECT_PDF_TEXT_LINEAR, GROUP_TOOL, true,
-                   toolMenuHandler->iconName("select-pdf-text-ht"), _("Select Linear PDF Text")),
+        AbstractToolItem(std::move(id), handler, ACTION_TOOL_SELECT_PDF_TEXT_LINEAR),
         toolMenuHandler(toolMenuHandler),
-        popup(gtk_menu_new()) {
+        icon(toolMenuHandler->iconName("select-pdf-text-ht")),
+        popover(gtk_menu_new(), xoj::util::adopt) {
+    this->group = GROUP_TOOL;
+    this->toolToggleOnlyEnable = true;
+
     addMenuitem(_("Select Linear PDF Text"), toolMenuHandler->iconName("select-pdf-text-ht"),
                 ACTION_TOOL_SELECT_PDF_TEXT_LINEAR, GROUP_TOOL);
     addMenuitem(_("Select PDF Text In Rectangle"), toolMenuHandler->iconName("select-pdf-text-area"),
                 ACTION_TOOL_SELECT_PDF_TEXT_RECT, GROUP_TOOL);
-    setPopupMenu(popup);
 }
 
 ToolPdfCombocontrol::~ToolPdfCombocontrol() = default;
@@ -39,7 +41,7 @@ void ToolPdfCombocontrol::addMenuitem(const string& text, const string& icon, Ac
 
     gtk_container_add(GTK_CONTAINER(menuItem), box);
     gtk_widget_show_all(menuItem);
-    gtk_container_add(GTK_CONTAINER(popup), menuItem);
+    gtk_container_add(GTK_CONTAINER(popover.get()), menuItem);
 
     toolMenuHandler->registerMenupoint(menuItem, type, group);
 }
@@ -86,6 +88,11 @@ auto ToolPdfCombocontrol::newItem() -> GtkToolItem* {
 
     it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");
     gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
-    gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popup);
+    gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popover.get());
     return it;
+}
+
+std::string ToolPdfCombocontrol::getToolDisplayName() const { return _("Select Linear PDF Text"); }
+GtkWidget* ToolPdfCombocontrol::getNewToolIcon() const {
+    return gtk_image_new_from_icon_name(icon.c_str(), GTK_ICON_SIZE_LARGE_TOOLBAR);
 }

@@ -133,11 +133,6 @@ private:
     ToolButton* undoButton = nullptr;
     ToolButton* redoButton = nullptr;
 
-    ToolButton* audioPausePlaybackButton = nullptr;
-    ToolButton* audioStopPlaybackButton = nullptr;
-    ToolButton* audioSeekBackwardsButton = nullptr;
-    ToolButton* audioSeekForwardsButton = nullptr;
-
     ToolPageSpinner* toolPageSpinner = nullptr;
     ToolPageLayer* toolPageLayer = nullptr;
     FontButton* fontButton = nullptr;

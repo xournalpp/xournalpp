@@ -23,12 +23,11 @@
 #include "AbstractToolItem.h"  // for AbstractToolItem
 
 class ActionHandler;
-class GladeGui;
 
 
 class FontButton: public AbstractToolItem {
 public:
-    FontButton(ActionHandler* handler, GladeGui* gui, std::string id, ActionType type, std::string description,
+    FontButton(ActionHandler* handler, std::string id, ActionType type, std::string description,
                GtkWidget* menuitem = nullptr);
     ~FontButton() override;
 
@@ -44,14 +43,10 @@ protected:
     GtkToolItem* createTmpItem(bool horizontal) override;
     GtkToolItem* newItem() override;
 
-    static GtkWidget* newFontButton();
-    static void setFontFontButton(GtkWidget* fontButton, const XojFont& font);
-
     GtkWidget* getNewToolIcon() const override;
 
 private:
     GtkWidget* fontButton = nullptr;
-    GladeGui* gui = nullptr;
     std::string description;
 
     XojFont font;

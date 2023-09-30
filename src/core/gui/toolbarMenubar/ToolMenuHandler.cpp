@@ -11,8 +11,6 @@
 #include "gui/GladeSearchpath.h"
 #include "gui/ToolitemDragDrop.h"  // for ToolitemDragDrop
 #include "gui/menus/popoverMenus/PageTypeSelectionPopover.h"
-#include "gui/toolbarMenubar/AbstractToolItem.h"    // for AbstractToolItem
-#include "gui/toolbarMenubar/ColorToolItem.h"       // for ColorToolItem
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/toolbarMenubar/model/ToolbarData.h"   // for ToolbarData
 #include "gui/toolbarMenubar/model/ToolbarEntry.h"  // for ToolbarEntry
@@ -20,12 +18,17 @@
 #include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
 #include "model/Font.h"                             // for XojFont
 #include "plugin/Plugin.h"                          // for ToolbarButtonEntr<
-#include "util/NamedColor.h"                        // for NamedColor
+#include "util/GVariantTemplate.h"                  // for gVariantType
+#include "util/GtkUtil.h"
+#include "util/NamedColor.h"  // for NamedColor
 #include "util/PathUtil.h"
 #include "util/StringUtils.h"  // for StringUtils
 #include "util/XojMsgBox.h"
+#include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _
 
+#include "AbstractToolItem.h"        // for AbstractToolItem
+#include "ColorToolItem.h"           // for ColorToolItem
 #include "FontButton.h"              // for FontButton
 #include "MenuItem.h"                // for MenuItem
 #include "PluginToolButton.h"        // for ToolButton
@@ -149,6 +152,11 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                 // recognize previous name, V1.1.0+dev (Jan 2021) and earlier
                 if (name == "DRAW_CIRCLE") {
                     name = "DRAW_ELLIPSE";
+                }
+
+                // recognize previous name, V1.1.0+dev (Nov 2022) and earlier
+                if (name == "PEN_FILL_OPACITY") {
+                    name = "FILL_OPACITY";
                 }
 
                 if (!this->control->getAudioController() &&
@@ -296,121 +304,163 @@ void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type, Acti
     this->menuItems.push_back(new MenuItem(listener, widget, type, group));
 }
 
-void ToolMenuHandler::initPenToolItem() {
-    auto* tbPen = new ToolButton(listener, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, iconName("tool-pencil"), _("Pen"));
+/**
+ * @return floating ref
+ */
+template <typename state_type>
+static GtkWidget* makeRadioButton(const char* label, const char* actionName, state_type target, const char* icon) {
+    GtkWidget* btn = gtk_radio_button_new_from_widget(nullptr);
+    gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(target).get());
+    xoj::util::gtk::setRadioButtonActionName(GTK_RADIO_BUTTON(btn), "win", actionName);
 
-    registerMenupoint(tbPen->registerPopupMenuEntry(_("standard"), iconName("line-style-plain")),
-                      ACTION_TOOL_LINE_STYLE_PLAIN, GROUP_LINE_STYLE);
-
-    registerMenupoint(tbPen->registerPopupMenuEntry(_("dashed"), iconName("line-style-dash")),
-                      ACTION_TOOL_LINE_STYLE_DASH, GROUP_LINE_STYLE);
-
-    registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ dotted"), iconName("line-style-dash-dot")),
-                      ACTION_TOOL_LINE_STYLE_DASH_DOT, GROUP_LINE_STYLE);
-
-    registerMenupoint(tbPen->registerPopupMenuEntry(_("dotted"), iconName("line-style-dot")),
-                      ACTION_TOOL_LINE_STYLE_DOT, GROUP_LINE_STYLE);
-
-    addToolItem(tbPen);
-}
-
-void ToolMenuHandler::initEraserToolItem() {
-    auto* tbEraser = new ToolButton(listener, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true, iconName("tool-eraser"),
-                                    _("Eraser"));
-
-    registerMenupoint(tbEraser->registerPopupMenuEntry(_("standard")), ACTION_TOOL_ERASER_STANDARD, GROUP_ERASER_MODE);
-    registerMenupoint(tbEraser->registerPopupMenuEntry(_("whiteout")), ACTION_TOOL_ERASER_WHITEOUT, GROUP_ERASER_MODE);
-    registerMenupoint(tbEraser->registerPopupMenuEntry(_("delete stroke")), ACTION_TOOL_ERASER_DELETE_STROKE,
-                      GROUP_ERASER_MODE);
-
-    addToolItem(tbEraser);
-}
-
-void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
-                                            const gchar* handlerName, GObject* connectObject, GConnectFlags flags,
-                                            ToolMenuHandler* self) {
-    string actionName = handlerName;
-    string groupName{};
-
-    size_t pos = actionName.find(':');
-    if (pos != string::npos) {
-        groupName = actionName.substr(pos + 1);
-        actionName = actionName.substr(0, pos);
-    }
-
-    ActionGroup group = GROUP_NOGROUP;
-    ActionType action = ActionType_fromString(actionName);
-
-    if (action == ACTION_NONE) {
-        g_error("Unknown action name from glade file: \"%s\" / \"%s\"", signalName, handlerName);
-        return;
-    }
-
-    if (!groupName.empty()) {
-        group = ActionGroup_fromString(groupName);
-    }
-
-    if (GTK_IS_MENU_ITEM(object)) {
-        for (AbstractToolItem* it: self->toolItems) {
-            if (it->getActionType() == action) {
-                // There is already a toolbar item -> attach menu to it
-                it->setMenuItem(GTK_WIDGET(object));
-                return;
-            }
-        }
-
-        // There is no toolbar item -> register the menu only
-        self->registerMenupoint(GTK_WIDGET(object), action, group);
+    if (icon) {
+        GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+        gtk_box_append(GTK_BOX(hbox), gtk_image_new_from_icon_name(icon, GTK_ICON_SIZE_LARGE_TOOLBAR));
+        gtk_box_append(GTK_BOX(hbox), gtk_label_new(label));
+        gtk_button_set_child(GTK_BUTTON(btn), hbox);
     } else {
-        g_error("Unsupported signal handler from glade file: \"%s\" / \"%s\"", signalName, handlerName);
+        gtk_button_set_label(GTK_BUTTON(btn), label);
     }
+    return btn;
+}
+
+static auto createPenLineStylePopover(IconNameHelper& icons) {
+    xoj::util::WidgetSPtr popover(gtk_popover_new(), xoj::util::adopt);
+    GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_popover_set_child(GTK_POPOVER(popover.get()), box);
+
+#if GTK_MAJOR_VERSION == 3
+    GtkRadioButton* group = nullptr;
+    auto appendLineStyleItem = [&](const char* label, const char* target, const char* icon) {
+        GtkWidget* btn = gtk_radio_button_new_from_widget(group);
+        group = GTK_RADIO_BUTTON(btn);
+        xoj::util::gtk::setRadioButtonActionName(GTK_RADIO_BUTTON(btn), "win",
+                                                 Action_toString(Action::TOOL_PEN_LINE_STYLE));
+#else
+    GtkCheckButton* group = nullptr;
+    std::string actionName = std::string("win.") + Action_toString(Action::TOOL_PEN_LINE_STYLE);
+    auto appendLineStyleItem = [&](const char* label, const char* target, const char* icon) {
+        GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
+        // Is grouping necessary here? The GTK4 doc is unclear
+        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn));
+        gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
+#endif
+        gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(target).get());
+        GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+        gtk_box_append(GTK_BOX(hbox),
+                       gtk_image_new_from_icon_name(icons.iconName(icon).c_str(), GTK_ICON_SIZE_LARGE_TOOLBAR));
+        gtk_box_append(GTK_BOX(hbox), gtk_label_new(label));
+        gtk_button_set_child(GTK_BUTTON(btn), hbox);
+        gtk_box_append(GTK_BOX(box), btn);
+    };
+
+    appendLineStyleItem(_("standard"), "plain", "line-style-plain");
+    appendLineStyleItem(_("dashed"), "dash", "line-style-dash");
+    appendLineStyleItem(_("dash-/ dotted"), "dashdot", "line-style-dash-dot");
+    appendLineStyleItem(_("dotted"), "dot", "line-style-dot");
+
+    gtk_widget_show_all(box);
+    return popover;
+}
+
+static auto createEraserTypePopover() {
+    xoj::util::WidgetSPtr popover(gtk_popover_new(), xoj::util::adopt);
+    GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_popover_set_child(GTK_POPOVER(popover.get()), box);
+
+#if GTK_MAJOR_VERSION == 3
+    GtkRadioButton* group = nullptr;
+    auto appendEraserTypeItem = [&](const char* label, EraserType target) {
+        GtkWidget* btn = gtk_radio_button_new_from_widget(group);
+        group = GTK_RADIO_BUTTON(btn);
+        xoj::util::gtk::setRadioButtonActionName(GTK_RADIO_BUTTON(btn), "win",
+                                                 Action_toString(Action::TOOL_ERASER_TYPE));
+#else
+    GtkCheckButton* group = nullptr;
+    std::string actionName = std::string("win.") + Action_toString(Action::TOOL_ERASER_TYPE);
+    auto appendEraserTypeItem = [&](const char* label, EraserType target) {
+        GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
+        // Is grouping necessary here? The GTK4 doc is unclear
+        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn));
+        gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
+#endif
+        gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(target).get());
+        gtk_button_set_label(GTK_BUTTON(btn), label);
+        gtk_box_append(GTK_BOX(box), btn);
+    };
+
+    appendEraserTypeItem(_("standard"), ERASER_TYPE_DEFAULT);
+    appendEraserTypeItem(_("whiteout"), ERASER_TYPE_WHITEOUT);
+    appendEraserTypeItem(_("delete stroke"), ERASER_TYPE_DELETE_STROKE);
+
+    gtk_widget_show_all(box);
+    return popover;
 }
 
 #ifdef ENABLE_PLUGINS
-void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) {
-    PluginToolButton* button = new PluginToolButton(listener, t);
-    addToolItem(button);
-}
+void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) { addToolItem(new PluginToolButton(t)); }
 #endif /* ENABLE_PLUGINS */
 
-static void actionCallback(GSimpleAction* ga, GVariant* p, ActionHandler* handler) {
-    ActionType a = static_cast<ActionType>(g_variant_get_uint64(p));
-    std::cout << "actionCallback -> " << ActionType_toString(a) << std::endl;
-    handler->actionPerformed(a, GROUP_NOGROUP, nullptr, true);
-}
-
 void ToolMenuHandler::initToolItems() {
-    gAction.reset(g_simple_action_new("the-action", G_VARIANT_TYPE_UINT64), xoj::util::adopt);
-    g_signal_connect(G_OBJECT(gAction.get()), "activate", G_CALLBACK(actionCallback), this->control);
-    g_action_map_add_action(G_ACTION_MAP(gui->getWindow()), G_ACTION(gAction.get()));
-
-    // Use GTK Stock icon
-    auto addStockItem = [=](std::string name, ActionType action, std::string stockIcon, std::string text) {
-        addToolItem(new ToolButton(listener, name, action, stockIcon, text));
+    /**
+     * @brief Simple button, with a GTK stock icon name
+     *      The corresponding action in ActionDatabase[action] should have no state (it can have a parameter)
+     **/
+    auto emplaceStockItem = [this](const char* name, Action action, const char* icon, std::string description) {
+        addToolItem(new ToolButton(name, action, icon, description, false));
+    };
+    /**
+     * @brief Simple button, with a custom loaded icon
+     *      The corresponding action in ActionDatabase[action] should have no state (it can have a parameter)
+     **/
+    auto emplaceCustomItem = [this](const char* name, Action action, const char* icon, std::string description) {
+        addToolItem(new ToolButton(name, action, iconName(icon), description, false));
     };
 
-    // Use Custom loading Icon
-    auto addCustomItem = [=](std::string name, ActionType action, const char* icon, std::string text) {
-        addToolItem(new ToolButton(listener, name, action, iconName(icon), text));
+    /**
+     * @brief Toggle button, with a GTK stock icon name
+     *      The corresponding action in ActionDatabase[action] should have a boolean state and no parameter
+     **/
+    auto emplaceStockItemTgl = [this](const char* name, Action action, const char* icon, std::string description) {
+        addToolItem(new ToolButton(name, action, icon, description, true));
     };
 
-    /*
-     * Use Custom loading Icon, toggle item
-     * switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
-     */
-    auto addCustomItemTgl = [=](std::string name, ActionType action, ActionGroup group, bool switchOnly,
-                                const char* icon, std::string text) {
-        addToolItem(new ToolButton(listener, name, action, group, switchOnly, iconName(icon), text));
+    /**
+     * @brief Toggle button, with a custom loaded icon
+     *      The corresponding action in ActionDatabase[action] should have a boolean state and no parameter
+     **/
+    auto emplaceCustomItemTgl = [this](const char* name, Action action, const char* icon, std::string description) {
+        addToolItem(new ToolButton(name, action, iconName(icon), description, true));
     };
 
-    /*
-     * Use Stock Icon, toggle item
-     * switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
-     */
-    auto addStockItemTgl = [=](std::string name, ActionType action, ActionGroup group, bool switchOnly,
-                               std::string stockIcon, std::string text) {
-        addToolItem(new ToolButton(listener, name, action, group, switchOnly, stockIcon, text));
+    /**
+     * @brief Toggle button linked to others sharing the same action (with a custom loaded icon)
+     *      The corresponding action in ActionDatabase[action] should have a state and a parameter. The button is "on"
+     *when the action state matches `target`.
+     **/
+    auto emplaceCustomItemWithTarget = [this](const char* name, Action action, auto target, const char* icon,
+                                              std::string description) {
+        addToolItem(new ToolButton(name, action, makeGVariant(target), iconName(icon), description));
     };
+
+    /**
+     * @brief Simple button (with a custom loaded icon), with a popover menu to change parameters of the tool
+     *      The corresponding action in ActionDatabase[action] should have no state (it can have a parameter)
+     **/
+    auto emplaceCustomItemWithPopover = [this](const char* name, Action action, const char* icon,
+                                               std::string description, GtkWidget* popover) {
+        auto* tb = new ToolButton(name, action, iconName(icon), description, false);
+        tb->setPopover(popover);
+        addToolItem(tb);
+    };
+
+    auto emplaceCustomItemWithTargetAndMenu = [this](const char* name, Action action, auto target, const char* icon,
+                                                     std::string description, GtkWidget* popover) {
+        auto* tb = new ToolButton(name, action, makeGVariant(target), iconName(icon), description);
+        tb->setPopover(popover);
+        addToolItem(tb);
+    };
+
 
     /*
      * Items ordered by menu, if possible.
@@ -423,156 +473,149 @@ void ToolMenuHandler::initToolItems() {
      * ------------------------------------------------------------------------
      */
 
-    addCustomItem("NEW", ACTION_NEW, "document-new", _("New Xournal"));
-    addCustomItem("OPEN", ACTION_OPEN, "document-open", _("Open file"));
-    addCustomItem("SAVE", ACTION_SAVE, "document-save", _("Save"));
-    addCustomItem("SAVEPDF", ACTION_EXPORT_AS_PDF, "document-export-pdf", _("Export as PDF"));
-    addCustomItem("PRINT", ACTION_PRINT, "document-print", _("Print"));
+    emplaceCustomItem("NEW", Action::NEW_FILE, "document-new", _("New Xournal"));
+    emplaceCustomItem("OPEN", Action::OPEN, "document-open", _("Open file"));
+    emplaceCustomItem("SAVE", Action::SAVE, "document-save", _("Save"));
+    emplaceCustomItem("SAVEPDF", Action::EXPORT_AS_PDF, "document-export-pdf", _("Export as PDF"));
+    emplaceCustomItem("PRINT", Action::PRINT, "document-print", _("Print"));
 
     /*
      * Menu Edit
      * ------------------------------------------------------------------------
      */
 
-    // Undo / Redo Texts are updated from code, therefore a reference is hold for this items
-    undoButton = new ToolButton(listener, "UNDO", ACTION_UNDO, iconName("edit-undo"), _("Undo"));
-    redoButton = new ToolButton(listener, "REDO", ACTION_REDO, iconName("edit-redo"), _("Redo"));
+    // Undo / Redo Texts are updated from code, therefore a reference is held for this items
+    undoButton = new ToolButton("UNDO", Action::UNDO, iconName("edit-undo"), _("Undo"), false);
+    redoButton = new ToolButton("REDO", Action::REDO, iconName("edit-redo"), _("Redo"), false);
     addToolItem(undoButton);
     addToolItem(redoButton);
 
-    addCustomItem("CUT", ACTION_CUT, "edit-cut", _("Cut"));
-    addCustomItem("COPY", ACTION_COPY, "edit-copy", _("Copy"));
-    addCustomItem("PASTE", ACTION_PASTE, "edit-paste", _("Paste"));
+    emplaceCustomItem("CUT", Action::CUT, "edit-cut", _("Cut"));
+    emplaceCustomItem("COPY", Action::COPY, "edit-copy", _("Copy"));
+    emplaceCustomItem("PASTE", Action::PASTE, "edit-paste", _("Paste"));
 
-    addStockItem("SEARCH", ACTION_SEARCH, "edit-find", _("Search"));
+    emplaceStockItem("SEARCH", Action::SEARCH, "edit-find", _("Search"));
 
-    addStockItem("DELETE", ACTION_DELETE, "edit-delete", _("Delete"));
+    emplaceStockItem("DELETE", Action::DELETE, "edit-delete", _("Delete"));
 
-    addCustomItemTgl("ROTATION_SNAPPING", ACTION_ROTATION_SNAPPING, GROUP_SNAPPING, false, "snapping-rotation",
-                     _("Rotation Snapping"));
-    addCustomItemTgl("GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false, "snapping-grid",
-                     _("Grid Snapping"));
+    emplaceCustomItemTgl("ROTATION_SNAPPING", Action::ROTATION_SNAPPING, "snapping-rotation", _("Rotation Snapping"));
+    emplaceCustomItemTgl("GRID_SNAPPING", Action::GRID_SNAPPING, "snapping-grid", _("Grid Snapping"));
 
     /*
      * Menu View
      * ------------------------------------------------------------------------
      */
 
-    addCustomItemTgl("PAIRED_PAGES", ACTION_VIEW_PAIRED_PAGES, GROUP_PAIRED_PAGES, false, "show-paired-pages",
-                     _("Paired pages"));
-    addCustomItemTgl("PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false,
-                     "presentation-mode", _("Presentation mode"));
-    addCustomItemTgl("FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false, "fullscreen", _("Toggle fullscreen"));
+    emplaceCustomItemTgl("PAIRED_PAGES", Action::PAIRED_PAGES_MODE, "show-paired-pages", _("Paired pages"));
+    emplaceCustomItemTgl("PRESENTATION_MODE", Action::PRESENTATION_MODE, "presentation-mode", _("Presentation mode"));
+    emplaceCustomItemTgl("FULLSCREEN", Action::FULLSCREEN, "fullscreen", _("Toggle fullscreen"));
 
-    addCustomItem("MANAGE_TOOLBAR", ACTION_MANAGE_TOOLBAR, "toolbars-manage", _("Manage Toolbars"));
-    addCustomItem("CUSTOMIZE_TOOLBAR", ACTION_CUSTOMIZE_TOOLBAR, "toolbars-customize", _("Customize Toolbars"));
+    emplaceCustomItem("MANAGE_TOOLBAR", Action::MANAGE_TOOLBAR, "toolbars-manage", _("Manage Toolbars"));
+    emplaceCustomItem("CUSTOMIZE_TOOLBAR", Action::CUSTOMIZE_TOOLBAR, "toolbars-customize", _("Customize Toolbars"));
 
-    addStockItem("ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out"));
-    addStockItem("ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _("Zoom in"));
-    addStockItemTgl("ZOOM_FIT", ACTION_ZOOM_FIT, GROUP_ZOOM_FIT, false, "zoom-fit-best", _("Zoom fit to screen"));
-    addStockItem("ZOOM_100", ACTION_ZOOM_100, "zoom-original", _("Zoom to 100%"));
+    emplaceStockItem("ZOOM_OUT", Action::ZOOM_OUT, "zoom-out", _("Zoom out"));
+    emplaceStockItem("ZOOM_IN", Action::ZOOM_IN, "zoom-in", _("Zoom in"));
+    emplaceStockItemTgl("ZOOM_FIT", Action::ZOOM_FIT, "zoom-fit-best", _("Zoom fit to screen"));
+    emplaceStockItem("ZOOM_100", Action::ZOOM_100, "zoom-original", _("Zoom to 100%"));
 
     /*
      * Menu Navigation
      * ------------------------------------------------------------------------
      */
 
-    addStockItem("GOTO_FIRST", ACTION_GOTO_FIRST, "go-first", _("Go to first page"));
-    addStockItem("GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back"));
-    addCustomItem("GOTO_PAGE", ACTION_GOTO_PAGE, "go-to", _("Go to page"));
-    addStockItem("GOTO_NEXT", ACTION_GOTO_NEXT, "go-next", _("Next"));
-    addStockItem("GOTO_LAST", ACTION_GOTO_LAST, "go-last", _("Go to last page"));
+    emplaceStockItem("GOTO_FIRST", Action::GOTO_FIRST, "go-first", _("Go to first page"));
+    emplaceStockItem("GOTO_BACK", Action::GOTO_PREVIOUS, "go-previous", _("Back"));
+    emplaceCustomItem("GOTO_PAGE", Action::GOTO_PAGE, "go-to", _("Go to page"));
+    emplaceStockItem("GOTO_NEXT", Action::GOTO_NEXT, "go-next", _("Next"));
+    emplaceStockItem("GOTO_LAST", Action::GOTO_LAST, "go-last", _("Go to last page"));
 
-    addStockItem("GOTO_PREVIOUS_LAYER", ACTION_GOTO_PREVIOUS_LAYER, "go-previous", _("Go to previous layer"));
-    addStockItem("GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, "go-next", _("Go to next layer"));
-    addStockItem("GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, "go-top", _("Go to top layer"));
+    emplaceStockItem("GOTO_PREVIOUS_LAYER", Action::LAYER_GOTO_PREVIOUS, "go-previous", _("Go to previous layer"));
+    emplaceStockItem("GOTO_NEXT_LAYER", Action::LAYER_GOTO_NEXT, "go-next", _("Go to next layer"));
+    emplaceStockItem("GOTO_TOP_LAYER", Action::LAYER_GOTO_TOP, "go-top", _("Go to top layer"));
 
-    addCustomItem("GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE, "page-annotated-next",
-                  _("Next annotated page"));
+    emplaceCustomItem("GOTO_NEXT_ANNOTATED_PAGE", Action::GOTO_NEXT_ANNOTATED_PAGE, "page-annotated-next",
+                      _("Next annotated page"));
 
     /* Menu Journal
      * ------------------------------------------------------------------------
      */
 
-    auto* tbInsertNewPage = new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
-                                           iconName("page-add").c_str(), _("Insert page"));
-    addToolItem(tbInsertNewPage);
-    tbInsertNewPage->setPopupMenu(this->pageTypeSelectionPopup->getPopover());
-
-    addCustomItem("DELETE_CURRENT_PAGE", ACTION_DELETE_PAGE, "page-delete", _("Delete current page"));
+    emplaceCustomItemWithPopover("INSERT_NEW_PAGE", Action::NEW_PAGE_AFTER, "page-add", _("Insert page"),
+                                 this->pageTypeSelectionPopup->getPopover());
+    emplaceCustomItem("DELETE_CURRENT_PAGE", Action::DELETE_PAGE, "page-delete", _("Delete current page"));
 
     /*
      * Menu Tool
      * ------------------------------------------------------------------------
      */
 
-    initPenToolItem();
-    // Add individual line stylues as toolbar items
-    addCustomItemTgl("PLAIN", ACTION_TOOL_LINE_STYLE_PLAIN, GROUP_LINE_STYLE, true, "line-style-plain", _("standard"));
-    addCustomItemTgl("DASHED", ACTION_TOOL_LINE_STYLE_DASH, GROUP_LINE_STYLE, true, "line-style-dash", _("dashed"));
-    addCustomItemTgl("DASH-/ DOTTED", ACTION_TOOL_LINE_STYLE_DASH_DOT, GROUP_LINE_STYLE, true, "line-style-dash-dot",
-                     _("dash-/ dotted"));
-    addCustomItemTgl("DOTTED", ACTION_TOOL_LINE_STYLE_DOT, GROUP_LINE_STYLE, true, "line-style-dot", _("dotted"));
+    emplaceCustomItemWithTargetAndMenu("PEN", Action::SELECT_TOOL, TOOL_PEN, "tool-pencil", _("Pen"),
+                                       createPenLineStylePopover(this->iconNameHelper).get());
+    // Add individual line styles as toolbar items
+    emplaceCustomItemWithTarget("PLAIN", Action::TOOL_PEN_LINE_STYLE, "plain", "line-style-plain", _("standard"));
+    emplaceCustomItemWithTarget("DASHED", Action::TOOL_PEN_LINE_STYLE, "dash", "line-style-dash", _("dashed"));
+    emplaceCustomItemWithTarget("DASH-/ DOTTED", Action::TOOL_PEN_LINE_STYLE, "dashdot", "line-style-dash-dot",
+                                _("dash-/ dotted"));
+    emplaceCustomItemWithTarget("DOTTED", Action::TOOL_PEN_LINE_STYLE, "dot", "line-style-dot", _("dotted"));
 
-    initEraserToolItem();
+
+    emplaceCustomItemWithTargetAndMenu("ERASER", Action::SELECT_TOOL, TOOL_ERASER, "tool-eraser", _("Eraser"),
+                                       createEraserTypePopover().get());
     // no icons for individual eraser modes available, therefore can't add them as toolbar items
 
-    addCustomItemTgl("HIGHLIGHTER", ACTION_TOOL_HIGHLIGHTER, GROUP_TOOL, true, "tool-highlighter", _("Highlighter"));
 
-    addCustomItemTgl("TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true, "tool-text", _("Text"));
-    addCustomItem("MATH_TEX", ACTION_TEX, "tool-math-tex", _("Add/Edit TeX"));
-    addCustomItemTgl("IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, true, "tool-image", _("Image"));
-    addCustomItem("DEFAULT_TOOL", ACTION_TOOL_DEFAULT, "default", _("Default Tool"));
-    addCustomItemTgl("SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false, "shape-recognizer",
-                     _("Shape Recognizer"));
-    addCustomItemTgl("SELECT_PDF_TEXT_LINEAR", ACTION_TOOL_SELECT_PDF_TEXT_LINEAR, GROUP_TOOL, true,
-                     "select-pdf-text-ht", _("Select Linear PDF Text"));
-    addCustomItemTgl("SELECT_PDF_TEXT_RECT", ACTION_TOOL_SELECT_PDF_TEXT_RECT, GROUP_TOOL, true, "select-pdf-text-area",
-                     _("Select PDF Text in Rectangle"));
-    addCustomItemTgl("DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "draw-rect", _("Draw Rectangle"));
-    addCustomItemTgl("DRAW_ELLIPSE", ACTION_TOOL_DRAW_ELLIPSE, GROUP_RULER, false, "draw-ellipse", _("Draw Ellipse"));
-    addCustomItemTgl("DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false, "draw-arrow", _("Draw Arrow"));
-    addCustomItemTgl("DRAW_DOUBLE_ARROW", ACTION_TOOL_DRAW_DOUBLE_ARROW, GROUP_RULER, false, "draw-double-arrow",
-                     _("Draw Double Arrow"));
-    addCustomItemTgl("DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false,
-                     "draw-coordinate-system", _("Draw coordinate system"));
-    addCustomItemTgl("RULER", ACTION_RULER, GROUP_RULER, false, "draw-line", _("Draw Line"));
-    addCustomItemTgl("DRAW_SPLINE", ACTION_TOOL_DRAW_SPLINE, GROUP_RULER, false, "draw-spline", _("Draw Spline"));
+    emplaceCustomItemWithTarget("HIGHLIGHTER", Action::SELECT_TOOL, TOOL_HIGHLIGHTER, "tool-highlighter",
+                                _("Highlighter"));
 
-    addCustomItemTgl("SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, true, "select-lasso", _("Select Region"));
-    addCustomItemTgl("SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "select-rect", _("Select Rectangle"));
-    addCustomItemTgl("SELECT_MULTILAYER_REGION", ACTION_TOOL_SELECT_MULTILAYER_REGION, GROUP_TOOL, true, "select-multilayer-lasso", _("Select Multi-Layer Region"));
-    addCustomItemTgl("SELECT_MULTILAYER_RECTANGLE", ACTION_TOOL_SELECT_MULTILAYER_RECT, GROUP_TOOL, true, "select-multilayer-rect", _("Select Multi-Layer Rect"));
-    addCustomItemTgl("SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true, "object-select", _("Select Object"));
-    addCustomItemTgl("VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true, "spacer", _("Vertical Space"));
-    addCustomItemTgl("PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true, "object-play", _("Play Object"));
-    addCustomItemTgl("HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand", _("Hand"));
-    addCustomItemTgl("SETSQUARE", ACTION_SETSQUARE, GROUP_GEOMETRY_TOOL, false, "setsquare", _("Setsquare"));
-    addCustomItemTgl("COMPASS", ACTION_COMPASS, GROUP_GEOMETRY_TOOL, false, "compass", _("Compass"));
+    emplaceCustomItemWithTarget("TEXT", Action::SELECT_TOOL, TOOL_TEXT, "tool-text", _("Text"));
+    emplaceCustomItem("MATH_TEX", Action::TEX, "tool-math-tex", _("Add/Edit TeX"));
+    emplaceCustomItemWithTarget("IMAGE", Action::SELECT_TOOL, TOOL_IMAGE, "tool-image", _("Image"));
+    emplaceCustomItem("DEFAULT_TOOL", Action::SELECT_DEFAULT_TOOL, "default", _("Default Tool"));
+    emplaceCustomItemWithTarget("SELECT_PDF_TEXT_LINEAR", Action::SELECT_TOOL, TOOL_SELECT_PDF_TEXT_LINEAR,
+                                "select-pdf-text-ht", _("Select Linear PDF Text"));
+    emplaceCustomItemWithTarget("SELECT_PDF_TEXT_RECT", Action::SELECT_TOOL, TOOL_SELECT_PDF_TEXT_RECT,
+                                "select-pdf-text-area", _("Select PDF Text in Rectangle"));
 
-    fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
+    emplaceCustomItemTgl("SETSQUARE", Action::SETSQUARE, "setsquare", _("Setsquare"));
+    emplaceCustomItemTgl("COMPASS", Action::COMPASS, "compass", _("Compass"));
+
+
+    emplaceCustomItemTgl("SHAPE_RECOGNIZER", Action::TOOL_DRAW_SHAPE_RECOGNIZER, "shape-recognizer",
+                         _("Shape Recognizer"));
+    emplaceCustomItemTgl("DRAW_RECTANGLE", Action::TOOL_DRAW_RECTANGLE, "draw-rect", _("Draw Rectangle"));
+    emplaceCustomItemTgl("DRAW_ELLIPSE", Action::TOOL_DRAW_ELLIPSE, "draw-ellipse", _("Draw Ellipse"));
+    emplaceCustomItemTgl("DRAW_ARROW", Action::TOOL_DRAW_ARROW, "draw-arrow", _("Draw Arrow"));
+    emplaceCustomItemTgl("DRAW_DOUBLE_ARROW", Action::TOOL_DRAW_DOUBLE_ARROW, "draw-double-arrow",
+                         _("Draw Double Arrow"));
+    emplaceCustomItemTgl("DRAW_COORDINATE_SYSTEM", Action::TOOL_DRAW_COORDINATE_SYSTEM, "draw-coordinate-system",
+                         _("Draw coordinate system"));
+    emplaceCustomItemTgl("RULER", Action::TOOL_DRAW_LINE, "draw-line", _("Draw Line"));
+    emplaceCustomItemTgl("DRAW_SPLINE", Action::TOOL_DRAW_SPLINE, "draw-spline", _("Draw Spline"));
+
+    emplaceCustomItemWithTarget("SELECT_REGION", Action::SELECT_TOOL, TOOL_SELECT_REGION, "select-lasso",
+                                _("Select Region"));
+    emplaceCustomItemWithTarget("SELECT_RECTANGLE", Action::SELECT_TOOL, TOOL_SELECT_RECT, "select-rect",
+                                _("Select Rectangle"));
+    emplaceCustomItemWithTarget("SELECT_MULTILAYER_REGION", Action::SELECT_TOOL, TOOL_SELECT_MULTILAYER_REGION,
+                                "select-multilayer-lasso", _("Select Multi-Layer Region"));
+    emplaceCustomItemWithTarget("SELECT_MULTILAYER_RECTANGLE", Action::SELECT_TOOL, TOOL_SELECT_MULTILAYER_RECT,
+                                "select-multilayer-rect", _("Select Multi-Layer Rectangle"));
+    emplaceCustomItemWithTarget("SELECT_OBJECT", Action::SELECT_TOOL, TOOL_SELECT_OBJECT, "object-select",
+                                _("Select Object"));
+    emplaceCustomItemWithTarget("VERTICAL_SPACE", Action::SELECT_TOOL, TOOL_VERTICAL_SPACE, "spacer",
+                                _("Vertical Space"));
+    emplaceCustomItemWithTarget("PLAY_OBJECT", Action::SELECT_TOOL, TOOL_PLAY_OBJECT, "object-play", _("Play Object"));
+    emplaceCustomItemWithTarget("HAND", Action::SELECT_TOOL, TOOL_HAND, "hand", _("Hand"));
+
+    fontButton = new FontButton(listener, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
     addToolItem(fontButton);
 
-    addCustomItemTgl("AUDIO_RECORDING", ACTION_AUDIO_RECORD, GROUP_AUDIO, false, "audio-record",
-                     _("Record Audio / Stop Recording"));
-    audioPausePlaybackButton = new ToolButton(listener, "AUDIO_PAUSE_PLAYBACK", ACTION_AUDIO_PAUSE_PLAYBACK,
-                                              GROUP_AUDIO, false, iconName("audio-playback-pause"), _("Pause / Play"));
-    addToolItem(audioPausePlaybackButton);
-    audioStopPlaybackButton = new ToolButton(listener, "AUDIO_STOP_PLAYBACK", ACTION_AUDIO_STOP_PLAYBACK,
-                                             iconName("audio-playback-stop"), _("Stop"));
-    addToolItem(audioStopPlaybackButton);
-    audioSeekForwardsButton = new ToolButton(listener, "AUDIO_SEEK_FORWARDS", ACTION_AUDIO_SEEK_FORWARDS,
-                                             iconName("audio-seek-forwards"), _("Forward"));
-    addToolItem(audioSeekForwardsButton);
-    audioSeekBackwardsButton = new ToolButton(listener, "AUDIO_SEEK_BACKWARDS", ACTION_AUDIO_SEEK_BACKWARDS,
-                                              iconName("audio-seek-backwards"), _("Back"));
-    addToolItem(audioSeekBackwardsButton);
-
-    /*
-     * Menu Help
-     * ------------------------------------------------------------------------
-     * All tools are registered by the Glade Signals
-     */
+    emplaceCustomItemTgl("AUDIO_RECORDING", Action::AUDIO_RECORD, "audio-record", _("Record Audio / Stop Recording"));
+    emplaceCustomItemTgl("AUDIO_PAUSE_PLAYBACK", Action::AUDIO_PAUSE_PLAYBACK, "audio-playback-pause",
+                         _("Pause / Play"));
+    emplaceCustomItem("AUDIO_STOP_PLAYBACK", Action::AUDIO_STOP_PLAYBACK, "audio-playback-stop", _("Stop"));
+    emplaceCustomItem("AUDIO_SEEK_FORWARDS", Action::AUDIO_SEEK_FORWARDS, "audio-seek-forwards", _("Forward"));
+    emplaceCustomItem("AUDIO_SEEK_BACKWARDS", Action::AUDIO_SEEK_BACKWARDS, "audio-seek-backwards", _("Back"));
 
 
     ///////////////////////////////////////////////////////////////////////////
@@ -592,9 +635,6 @@ void ToolMenuHandler::initToolItems() {
             new ToolPageLayer(control->getLayerController(), listener, "LAYER", ACTION_FOOTER_LAYER, iconNameHelper);
     addToolItem(toolPageLayer);
 
-    addCustomItemTgl("TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false, "fill", _("Fill"));
-    addCustomItem("PEN_FILL_OPACITY", ACTION_TOOL_PEN_FILL_OPACITY, "pen-fill-opacity", _("Fill Opacity"));
-
     /*
      * Non-menu items
      * ------------------------------------------------------------------------
@@ -611,16 +651,15 @@ void ToolMenuHandler::initToolItems() {
     addToolItem(new ToolPdfCombocontrol(this, listener, "PDF_TOOL"));
 
     // General tool configuration - working for every tool which support it
-    addCustomItemTgl("VERY_FINE", ACTION_SIZE_VERY_FINE, GROUP_SIZE, true, "thickness-finer", _("Very Fine"));
-    addCustomItemTgl("FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness-fine", _("Fine"));
-    addCustomItemTgl("MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness-medium", _("Medium"));
-    addCustomItemTgl("THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness-thick", _("Thick"));
-    addCustomItemTgl("VERY_THICK", ACTION_SIZE_VERY_THICK, GROUP_SIZE, true, "thickness-thicker", _("Very Thick"));
+    emplaceCustomItemTgl("TOOL_FILL", Action::TOOL_FILL, "fill", _("Fill"));
+    emplaceCustomItem("FILL_OPACITY", Action::TOOL_FILL_OPACITY, "fill-opacity", _("Fill Opacity"));
 
-
-    // now connect all Glade Signals
-    gtk_builder_connect_signals_full(gui->getBuilder(), reinterpret_cast<GtkBuilderConnectFunc>(signalConnectCallback),
-                                     this);
+    emplaceCustomItemWithTarget("VERY_FINE", Action::TOOL_SIZE, TOOL_SIZE_VERY_FINE, "thickness-finer", _("Very Fine"));
+    emplaceCustomItemWithTarget("FINE", Action::TOOL_SIZE, TOOL_SIZE_FINE, "thickness-fine", _("Fine"));
+    emplaceCustomItemWithTarget("MEDIUM", Action::TOOL_SIZE, TOOL_SIZE_MEDIUM, "thickness-medium", _("Medium"));
+    emplaceCustomItemWithTarget("THICK", Action::TOOL_SIZE, TOOL_SIZE_THICK, "thickness-thick", _("Thick"));
+    emplaceCustomItemWithTarget("VERY_THICK", Action::TOOL_SIZE, TOOL_SIZE_VERY_THICK, "thickness-thicker",
+                                _("Very Thick"));
 }
 
 void ToolMenuHandler::setFontButtonFont(const XojFont& font) { this->fontButton->setFont(font); }
@@ -637,7 +676,9 @@ void ToolMenuHandler::setRedoDescription(const string& description) {
     this->redoButton->updateDescription(description);
 }
 
-auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* { return this->toolPageSpinner->getPageSpinner(); }
+auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* {
+    return this->toolPageSpinner ? this->toolPageSpinner->getPageSpinner() : nullptr;
+}
 
 void ToolMenuHandler::setPageInfo(const size_t pagecount, const size_t pdfpage) {
     this->toolPageSpinner->setPageInfo(pagecount, pdfpage);
@@ -666,32 +707,23 @@ auto ToolMenuHandler::getColorToolItems() const -> const std::vector<ColorToolIt
 void ToolMenuHandler::disableAudioPlaybackButtons() {
     setAudioPlaybackPaused(false);
 
-    this->audioPausePlaybackButton->enable(false);
-    this->audioStopPlaybackButton->enable(false);
-    this->audioSeekBackwardsButton->enable(false);
-    this->audioSeekForwardsButton->enable(false);
-
-    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), false);
-    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), false);
-    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), false);
-    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), false);
+    auto* actionDB = this->control->getActionDatabase();
+    actionDB->enableAction(Action::AUDIO_PAUSE_PLAYBACK, false);
+    actionDB->enableAction(Action::AUDIO_STOP_PLAYBACK, false);
+    actionDB->enableAction(Action::AUDIO_SEEK_FORWARDS, false);
+    actionDB->enableAction(Action::AUDIO_SEEK_BACKWARDS, false);
 }
 
 void ToolMenuHandler::enableAudioPlaybackButtons() {
-    this->audioPausePlaybackButton->enable(true);
-    this->audioStopPlaybackButton->enable(true);
-    this->audioSeekBackwardsButton->enable(true);
-    this->audioSeekForwardsButton->enable(true);
-
-    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), true);
-    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), true);
-    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekForwards")), true);
-    // gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioSeekBackwards")), true);
+    auto* actionDB = this->control->getActionDatabase();
+    actionDB->enableAction(Action::AUDIO_PAUSE_PLAYBACK, true);
+    actionDB->enableAction(Action::AUDIO_STOP_PLAYBACK, true);
+    actionDB->enableAction(Action::AUDIO_SEEK_FORWARDS, true);
+    actionDB->enableAction(Action::AUDIO_SEEK_BACKWARDS, true);
 }
 
 void ToolMenuHandler::setAudioPlaybackPaused(bool paused) {
-    this->audioPausePlaybackButton->setActive(paused);
-    // gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
+    this->control->getActionDatabase()->setActionState(Action::AUDIO_PAUSE_PLAYBACK, paused);
 }
 
 auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNameHelper.iconName(icon); }

@@ -24,6 +24,7 @@
 
 class LineStyle;
 class Settings;
+class ActionDatabase;
 
 
 // enum for ptrs that are dynamically pointing to different tools
@@ -59,12 +60,10 @@ public:
     virtual ~ToolListener();
 };
 
-class ActionHandler;
-
 class ToolHandler {
 public:
     using ToolChangedCallback = std::function<void(ToolType)>;
-    ToolHandler(ToolListener* stateChangedListener, ActionHandler* actionHandler, Settings* settings);
+    ToolHandler(ToolListener* stateChangedListener, ActionDatabase* actionDB, Settings* settings);
     virtual ~ToolHandler();
 
     /**
@@ -112,7 +111,7 @@ public:
      * @param fill whether fill should be enabled
      * @param fireEvent whether a toolFillChanged event should be fired
      */
-    void setFillEnabled(bool fill, bool fireEvent);
+    void setFillEnabled(bool fill);
 
     /**
      * @brief Get the Fill of the active tool
@@ -204,12 +203,12 @@ public:
     void setEraserSize(ToolSize size);
     void setHighlighterSize(ToolSize size);
 
-    void setPenFillEnabled(bool fill, bool fireEvent = true);
+    void setPenFillEnabled(bool fill);
     bool getPenFillEnabled() const;
     void setPenFill(int alpha);
     int getPenFill() const;
 
-    void setHighlighterFillEnabled(bool fill, bool fireEvent = true);
+    void setHighlighterFillEnabled(bool fill);
     bool getHighlighterFillEnabled() const;
     void setHighlighterFill(int alpha);
     int getHighlighterFill() const;
@@ -260,9 +259,9 @@ public:
 
     /**
      * @brief Get the active Tool, returns nullptr if no tool is active
-     * 
+     *
      * @return Tool*
-    */
+     */
     Tool* getActiveTool() const;
 
     /**
@@ -402,6 +401,6 @@ private:
     std::vector<ToolChangedCallback> toolChangeListeners;
 
     ToolListener* stateChangeListener = nullptr;
-    ActionHandler* actionHandler = nullptr;
+    ActionDatabase* actionDB = nullptr;
     Settings* settings = nullptr;
 };

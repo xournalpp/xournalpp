@@ -16,10 +16,13 @@ using std::string;
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id,
                                                bool hideAudio):
-        ToolButton(handler, std::move(id), ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
-                   toolMenuHandler->iconName("combo-selection"), _("Selection Combo")),
+        AbstractToolItem(std::move(id), handler, ACTION_TOOL_SELECT_RECT),
         toolMenuHandler(toolMenuHandler),
-        popup(gtk_menu_new()) {
+        icon(toolMenuHandler->iconName("combo-selection")),
+        popover(gtk_menu_new(), xoj::util::adopt) {
+    this->group = GROUP_TOOL;
+    this->toolToggleOnlyEnable = true;
+
     addMenuitem(_("Select Rectangle"), toolMenuHandler->iconName("select-rect"), ACTION_TOOL_SELECT_RECT, GROUP_TOOL);
     addMenuitem(_("Select Region"), toolMenuHandler->iconName("select-lasso"), ACTION_TOOL_SELECT_REGION, GROUP_TOOL);
     addMenuitem(_("Select Multi-Layer Rectangle"), toolMenuHandler->iconName("select-multilayer-rect"), ACTION_TOOL_SELECT_MULTILAYER_RECT, GROUP_TOOL);
@@ -28,7 +31,6 @@ ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler,
     if (!hideAudio) {
         addMenuitem(_("Play Object"), toolMenuHandler->iconName("object-play"), ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL);
     }
-    setPopupMenu(popup);
 }
 
 ToolSelectCombocontrol::~ToolSelectCombocontrol() = default;
@@ -44,7 +46,7 @@ void ToolSelectCombocontrol::addMenuitem(const string& text, const string& icon,
 
     gtk_container_add(GTK_CONTAINER(menuItem), box);
     gtk_widget_show_all(menuItem);
-    gtk_container_add(GTK_CONTAINER(popup), menuItem);
+    gtk_container_add(GTK_CONTAINER(popover.get()), menuItem);
 
     toolMenuHandler->registerMenupoint(menuItem, type, group);
 }
@@ -61,37 +63,39 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action) {
         if (action == ACTION_TOOL_SELECT_RECT && this->action != ACTION_TOOL_SELECT_RECT) {
             this->action = ACTION_TOOL_SELECT_RECT;
             gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), toolMenuHandler->iconName("select-rect").c_str(),
-                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
+                                         GTK_ICON_SIZE_LARGE_TOOLBAR);
 
             description = _("Select Rectangle");
         } else if (action == ACTION_TOOL_SELECT_REGION && this->action != ACTION_TOOL_SELECT_REGION) {
             this->action = ACTION_TOOL_SELECT_REGION;
             gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), toolMenuHandler->iconName("select-lasso").c_str(),
-                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
+                                         GTK_ICON_SIZE_LARGE_TOOLBAR);
 
             description = _("Select Region");
         } else if (action == ACTION_TOOL_SELECT_MULTILAYER_RECT && this->action != ACTION_TOOL_SELECT_MULTILAYER_RECT) {
             this->action = ACTION_TOOL_SELECT_MULTILAYER_RECT;
-            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), toolMenuHandler->iconName("select-multilayer-rect").c_str(),
-                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
+            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget),
+                                         toolMenuHandler->iconName("select-multilayer-rect").c_str(),
+                                         GTK_ICON_SIZE_LARGE_TOOLBAR);
 
             description = _("Select Multi-Layer Rectangle");
         } else if (action == ACTION_TOOL_SELECT_MULTILAYER_REGION && this->action != ACTION_TOOL_SELECT_MULTILAYER_REGION) {
             this->action = ACTION_TOOL_SELECT_MULTILAYER_REGION;
-            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), toolMenuHandler->iconName("select-multilayer-lasso").c_str(),
-                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
+            gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget),
+                                         toolMenuHandler->iconName("select-multilayer-lasso").c_str(),
+                                         GTK_ICON_SIZE_LARGE_TOOLBAR);
 
             description = _("Select Multi-Layer Region");
         } else if (action == ACTION_TOOL_SELECT_OBJECT && this->action != ACTION_TOOL_SELECT_OBJECT) {
             this->action = ACTION_TOOL_SELECT_OBJECT;
             gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), toolMenuHandler->iconName("object-select").c_str(),
-                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
+                                         GTK_ICON_SIZE_LARGE_TOOLBAR);
 
             description = _("Select Object");
         } else if (action == ACTION_TOOL_PLAY_OBJECT && this->action != ACTION_TOOL_PLAY_OBJECT) {
             this->action = ACTION_TOOL_PLAY_OBJECT;
             gtk_image_set_from_icon_name(GTK_IMAGE(iconWidget), toolMenuHandler->iconName("object-play").c_str(),
-                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
+                                         GTK_ICON_SIZE_LARGE_TOOLBAR);
 
             description = _("Play Object");
         }
@@ -110,10 +114,15 @@ auto ToolSelectCombocontrol::newItem() -> GtkToolItem* {
 
     labelWidget = gtk_label_new(_("Select Rectangle"));
     iconWidget =
-            gtk_image_new_from_icon_name(toolMenuHandler->iconName("select-rect").c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+            gtk_image_new_from_icon_name(toolMenuHandler->iconName("select-rect").c_str(), GTK_ICON_SIZE_LARGE_TOOLBAR);
 
     it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");
     gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
-    gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popup);
+    gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popover.get());
     return it;
+}
+
+std::string ToolSelectCombocontrol::getToolDisplayName() const { return _("Selection Combo"); }
+GtkWidget* ToolSelectCombocontrol::getNewToolIcon() const {
+    return gtk_image_new_from_icon_name(icon.c_str(), GTK_ICON_SIZE_LARGE_TOOLBAR);
 }
