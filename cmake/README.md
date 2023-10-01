@@ -34,6 +34,7 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 | `DEV_METADATA_MAX_ITEMS` *[A]* | 50               | Maximal amount of metadata elements
 | `DEV_PRINT_CONFIG_FILE` *[A]*  | print-config.ini | Print config file name
 | `DEV_SETTINGS_XML_FILE` *[A]*  | settings.xml     | Settings file name
+| `DEV_WORKSPACE_FILE` *[A]*     | workspace.txt    | Workspace folders list file name
 | `DEV_TOOLBAR_CONFIG` *[A]*     | toolbar.ini      | Toolbar config file name
 | `DEV_ERRORLOG_DIR` *[A]*       | errorlogs        | Directory where errorlogfiles will be placed
 

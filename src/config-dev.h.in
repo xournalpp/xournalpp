@@ -22,6 +22,10 @@
 #define SETTINGS_XML_FILE "@DEV_SETTINGS_XML_FILE@"
 
 /**
+ * Workspace file name
+ */
+#define WORKSPACE_FILE "@DEV_WORKSPACE_FILE@"
+/**
  * Gimp Palette File
  */
 #define PALETTE_FILE "@DEV_PALETTE_FILE@"

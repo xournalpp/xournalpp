@@ -74,6 +74,7 @@ public:
     XojFont getFontButtonFont() const;
 
     void saveSidebarSize();
+    void saveWorkspaceSize();
 
     void setMaximized(bool maximized);
     bool isMaximized() const;
@@ -84,6 +85,7 @@ public:
 
     void setMenubarVisible(bool visible);
     void setSidebarVisible(bool visible);
+    void setWorkspaceVisible(bool visible);
     void setToolbarVisible(bool visible);
 
     Control* getControl() const;
@@ -148,6 +150,11 @@ private:
     static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
 
     /**
+     * Workspace show / hidden
+     */
+    static void viewShowWorkspace(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
+
+    /**
      * Toolbar show / hidden
      */
     static void viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
@@ -199,7 +206,10 @@ private:
 
     bool sidebarVisible = true;
 
+    xoj::util::WidgetSPtr panedWorkspaceContainerWidget;
+    xoj::util::WidgetSPtr workspaceSidebarContainerWidget;
     xoj::util::WidgetSPtr boxContainerWidget;
+    xoj::util::WidgetSPtr workspaceSidebarWidget;
     xoj::util::WidgetSPtr panedContainerWidget;
     xoj::util::WidgetSPtr mainContentWidget;
     xoj::util::WidgetSPtr sidebarWidget;

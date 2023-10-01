@@ -92,6 +92,9 @@ void Settings::loadDefault() {
     this->sidebarWidth = 150;
     this->sidebarNumberingStyle = SidebarNumberingStyle::DEFAULT;
 
+    this->workspaceWidth = 200;
+    this->showWorkspace = false;
+
     this->showToolbar = true;
     this->selectedToolbar = DEFAULT_TOOLBAR;
 
@@ -246,6 +249,7 @@ auto Settings::loadViewMode(ViewModeId mode) -> bool {
     menubarVisible = viewMode.showMenubar;
     showToolbar = viewMode.showToolbar;
     showSidebar = viewMode.showSidebar;
+    showWorkspace = viewMode.showWorkspace;
     this->activeViewMode = mode;
     return true;
 }
@@ -410,6 +414,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->maximized = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showToolbar")) == 0) {
         this->showToolbar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showWorkspace")) == 0) {
+        this->showWorkspace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("workspaceWidth")) == 0) {
+        this->workspaceWidth = std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 50);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("filepathShownInTitlebar")) == 0) {
         this->filepathShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageNumberShownInTitlebar")) == 0) {
@@ -971,6 +979,9 @@ void Settings::save() {
     SAVE_BOOL_PROP(maximized);
 
     SAVE_BOOL_PROP(showToolbar);
+
+    SAVE_BOOL_PROP(showWorkspace);
+    SAVE_INT_PROP(workspaceWidth);
 
     SAVE_BOOL_PROP(showSidebar);
     SAVE_INT_PROP(sidebarWidth);
@@ -1950,6 +1961,17 @@ void Settings::setSidebarVisible(bool visible) {
     save();
 }
 
+auto Settings::isWorkspaceVisible() const -> bool { return this->showWorkspace; }
+
+void Settings::setWorkspaceVisible(bool visible) {
+    if (this->showWorkspace == visible) {
+        return;
+    }
+    this->showWorkspace = visible;
+    save();
+}
+
+
 auto Settings::isToolbarVisible() const -> bool { return this->showToolbar; }
 
 void Settings::setToolbarVisible(bool visible) {
@@ -1957,6 +1979,18 @@ void Settings::setToolbarVisible(bool visible) {
         return;
     }
     this->showToolbar = visible;
+    save();
+}
+
+auto Settings::getWorkspaceWidth() const -> int { return this->workspaceWidth; }
+
+void Settings::setWorkspaceWidth(int width) {
+    width = std::max(width, 50);
+
+    if (this->workspaceWidth == width) {
+        return;
+    }
+    this->workspaceWidth = width;
     save();
 }
 

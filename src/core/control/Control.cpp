@@ -42,6 +42,7 @@
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
 #include "gui/PopupWindowWrapper.h"                              // for PopupWindowWrapper
 #include "gui/SearchBar.h"                                       // for Sear...
+#include "gui/Workspace.h"                                       // for Work...
 #include "gui/XournalView.h"                                     // for Xour...
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
@@ -99,6 +100,7 @@
 #include "view/CompassView.h"                                    // for Comp...
 #include "view/SetsquareView.h"                                  // for Sets...
 #include "view/overlays/OverlayView.h"                           // for Over...
+#include "workspace/WorkspaceHandler.h"
 
 #include "CrashHandler.h"                    // for emer...
 #include "LatexController.h"                 // for Late...
@@ -107,6 +109,7 @@
 #include "UndoRedoController.h"              // for Undo...
 #include "config-dev.h"                      // for SETT...
 #include "config.h"                          // for PROJ...
+
 
 using std::string;
 
@@ -124,8 +127,12 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->lastGroup = GROUP_NOGROUP;
     this->lastEnabled = false;
 
-    auto name = Util::getConfigFile(SETTINGS_XML_FILE);
-    this->settings = new Settings(std::move(name));
+    auto workspaceFilepath = Util::getConfigFile(WORKSPACE_FILE);
+    this->workspaceHandler = new WorkspaceHandler(std::move(workspaceFilepath));
+    this->workspaceHandler->load();
+
+    auto settingsFilepath = Util::getConfigFile(SETTINGS_XML_FILE);
+    this->settings = new Settings(std::move(settingsFilepath));
     this->settings->load();
 
     this->applyPreferredLanguage();
@@ -187,6 +194,10 @@ Control::~Control() {
     this->toolHandler = nullptr;
     delete this->sidebar;
     this->sidebar = nullptr;
+    delete this->workspaceHandler;
+    this->workspaceHandler = nullptr;
+    delete this->workspace;
+    this->workspace = nullptr;
     delete this->doc;
     this->doc = nullptr;
     delete this->searchBar;
@@ -295,12 +306,14 @@ void Control::saveSettings() {
     this->settings->setMainWndMaximized(this->win->isMaximized());
 
     this->sidebar->saveSize();
+    this->workspace->saveSize();
 }
 
 void Control::initWindow(MainWindow* win) {
     selectTool(toolHandler->getToolType());
     this->win = win;
     this->sidebar = new Sidebar(win, this);
+    this->workspace = new Workspace(win, this, this->workspaceHandler);
 
     XojMsgBox::setDefaultWindow(getGtkWindow());
 
@@ -427,6 +440,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             break;
         case ACTION_OPEN:
             openFile();
+            break;
+        case ACTION_OPEN_FOLDER:
+            openFolder();
+            break;
+        case ACTION_CLOSE_ALL_FOLDERS:
+            closeAllFolders();
             break;
         case ACTION_ANNOTATE_PDF:
             clearSelectionEndText();
@@ -2477,6 +2496,25 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     return true;
 }
 
+void Control::openFolder() {
+    
+    XojOpenDlg dlg(getGtkWindow(), this->settings, "Add folder to workspace");
+    fs::path folderPath = dlg.showOpenFolderDialog();
+    g_message("%s", (_F("folder: {1}") % folderPath.string()).c_str());
+
+    if (workspaceHandler->addFolder(std::move(folderPath))) {
+        win->setWorkspaceVisible(true);
+    }
+}
+
+void Control::closeAllFolders(bool closeWorkspaceSidebar) {
+
+    workspaceHandler->closeAllFolders();
+
+    if (closeWorkspaceSidebar)
+        win->setWorkspaceVisible(false);
+}
+
 auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
     LoadHandler loadHandler;
 
@@ -2980,6 +3018,7 @@ auto Control::loadViewMode(ViewModeId mode) -> bool {
     this->win->setMenubarVisible(settings->isMenubarVisible());
     this->win->setToolbarVisible(settings->isToolbarVisible());
     this->win->setSidebarVisible(settings->isSidebarVisible());
+    this->win->setWorkspaceVisible(settings->isWorkspaceVisible());
     setFullscreen(settings->isFullscreen());
     return false;
 }
@@ -3343,6 +3382,9 @@ auto Control::getScrollHandler() const -> ScrollHandler* { return this->scrollHa
 auto Control::getMetadataManager() const -> MetadataManager* { return this->metadata; }
 
 auto Control::getSidebar() const -> Sidebar* { return this->sidebar; }
+
+auto Control::getWorkspaceHandler() const -> WorkspaceHandler* { return this->workspaceHandler; }
+auto Control::getWorkspace() const -> Workspace* { return this->workspace; }
 
 auto Control::getSearchBar() const -> SearchBar* { return this->searchBar; }
 

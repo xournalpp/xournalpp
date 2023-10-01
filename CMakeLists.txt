@@ -237,6 +237,7 @@ mark_as_advanced(FORCE
         )
 
 # Advanced development config
+set(DEV_WORKSPACE_FILE "workspaces.txt" CACHE STRING "Workspace folders list file name")
 set(DEV_TOOLBAR_CONFIG "toolbar.ini" CACHE STRING "Toolbar config file name")
 set(DEV_SETTINGS_XML_FILE "settings.xml" CACHE STRING "Settings file name")
 set(DEV_PALETTE_FILE "palette.gpl" CACHE STRING "Color Palette")
@@ -253,7 +254,7 @@ endif ()
 
 mark_as_advanced(FORCE
         DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE
-        DEV_ENABLE_GCOV DEV_CHECK_GTK3_COMPAT
+        DEV_ENABLE_GCOV DEV_CHECK_GTK3_COMPAT DEV_WORKSPACE_FILE
         )
 
 configure_file(

@@ -216,8 +216,14 @@ public:
     bool isSidebarVisible() const;
     void setSidebarVisible(bool visible);
 
+    bool isWorkspaceVisible() const;
+    void setWorkspaceVisible(bool visible);
+
     bool isToolbarVisible() const;
     void setToolbarVisible(bool visible);
+
+    int getWorkspaceWidth() const;
+    void setWorkspaceWidth(int width);
 
     int getSidebarWidth() const;
     void setSidebarWidth(int width);
@@ -630,7 +636,17 @@ private:
     bool showSidebar{};
 
     /**
-     *  If the sidebar is visible
+     *  If the workspace sidebar is visible
+     */
+    bool showWorkspace{};
+
+    /**
+     *  The Width of the Workspace
+     */
+    int workspaceWidth{};
+
+    /**
+     *  If the toolbar is visible
      */
     bool showToolbar{};
 

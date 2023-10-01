@@ -29,6 +29,8 @@ enum ActionType {
     // Menu file
     ACTION_NEW = 100,
     ACTION_OPEN,
+    ACTION_OPEN_FOLDER,
+    ACTION_CLOSE_ALL_FOLDERS,
     ACTION_ANNOTATE_PDF,
     ACTION_SAVE,
     ACTION_SAVE_AS,

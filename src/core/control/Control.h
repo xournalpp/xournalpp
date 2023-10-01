@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr
+#include <cstddef>   // for size_t
+#include <memory>    // for unique_ptr
 #include <optional>  // for optional
-#include <string>   // for string, allocator
-#include <vector>   // for vector
+#include <string>    // for string, allocator
+#include <vector>    // for vector
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gio/gio.h>                // for GApplication
@@ -41,6 +41,8 @@
 class GeometryToolController;
 class AudioController;
 class FullscreenHandler;
+class WorkspaceHandler;
+class Workspace;
 class Sidebar;
 class GladeSearchpath;
 class MetadataManager;
@@ -90,6 +92,8 @@ public:
     // Menu File
     bool newFile(std::string pageTemplate = "", fs::path filepath = {});
     bool openFile(fs::path filepath = "", int scrollToPage = -1, bool forceOpen = false);
+    void openFolder();
+    void closeAllFolders(bool closeWorkspaceSidebar = true);
     bool annotatePdf(fs::path filepath, bool attachPdf, bool attachToDocument);
     void print();
     void exportAsPdf();
@@ -264,6 +268,7 @@ public:
 
     MetadataManager* getMetadataManager() const;
     Settings* getSettings() const;
+    WorkspaceHandler* getWorkspaceHandler() const;
     ToolHandler* getToolHandler() const;
     ZoomControl* getZoomControl() const;
     Document* getDocument() const;
@@ -275,6 +280,7 @@ public:
     size_t getCurrentPageNo() const;
     XournalppCursor* getCursor() const;
     Sidebar* getSidebar() const;
+    Workspace* getWorkspace() const;
     SearchBar* getSearchBar() const;
     AudioController* getAudioController() const;
     PageTypeHandler* getPageTypes() const;
@@ -392,9 +398,11 @@ private:
 
     Document* doc = nullptr;
 
+    Workspace* workspace = nullptr;
     Sidebar* sidebar = nullptr;
     SearchBar* searchBar = nullptr;
 
+    WorkspaceHandler* workspaceHandler;
     ToolHandler* toolHandler;
 
     ActionType lastAction;

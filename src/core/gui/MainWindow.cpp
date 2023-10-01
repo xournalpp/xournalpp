@@ -14,6 +14,7 @@
 #include "control/layer/LayerController.h"              // for LayerController
 #include "control/settings/Settings.h"                  // for Settings
 #include "control/settings/SettingsEnums.h"             // for SCROLLBAR_HIDE_HO...
+#include "control/workspace/WorkspaceHandler.h"
 #include "control/zoom/ZoomControl.h"                   // for ZoomControl
 #include "enums/ActionType.enum.h"                      // for ACTION_DELETE_LAYER
 #include "gui/FloatingToolbox.h"                        // for FloatingToolbox
@@ -29,6 +30,7 @@
 #include "gui/toolbarMenubar/model/ToolbarModel.h"      // for ToolbarModel
 #include "gui/widgets/SpinPageAdapter.h"                // for SpinPageAdapter
 #include "gui/widgets/XournalWidget.h"                  // for gtk_xournal_get_l...
+#include "gui/Workspace.h"
 #include "util/GListView.h"                             // for GListView, GListV...
 #include "util/PathUtil.h"                              // for getConfigFile
 #include "util/Util.h"                                  // for execInUiThread, npos
@@ -53,6 +55,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     toolbar->populate(gladeSearchPath);
     menubar->populate(this);
 
+    panedWorkspaceContainerWidget.reset(get("panedWorkspaceContainer"), xoj::util::ref);
+    workspaceSidebarContainerWidget.reset(get("workspaceSidebarContainer"), xoj::util::ref);
+    workspaceSidebarWidget.reset(get("workspaceSidebar"), xoj::util::ref);
     panedContainerWidget.reset(get("panelMainContents"), xoj::util::ref);
     boxContainerWidget.reset(get("mainContentContainer"), xoj::util::ref);
     mainContentWidget.reset(get("boxContents"), xoj::util::ref);
@@ -73,6 +78,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     initXournalWidget();
 
+    setWorkspaceVisible(control->getSettings()->isWorkspaceVisible());
     setSidebarVisible(control->getSettings()->isSidebarVisible());
 
     // Window handler
@@ -94,6 +100,9 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 
     GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
     g_signal_connect(menuViewSidebarVisible, "toggled", G_CALLBACK(viewShowSidebar), this);
+
+    GtkWidget* menuViewWorkspaceVisible = get("menuViewWorkspaceVisible");
+    g_signal_connect(menuViewWorkspaceVisible, "toggled", G_CALLBACK(viewShowWorkspace), this);
 
     GtkWidget* menuViewToolbarsVisible = get("menuViewToolbarsVisible");
     g_signal_connect(menuViewToolbarsVisible, "toggled", G_CALLBACK(viewShowToolbar), this);
@@ -391,6 +400,21 @@ void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* wi
     win->setSidebarVisible(showSidebar);
 }
 
+void MainWindow::viewShowWorkspace(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
+    bool showWorkspace = gtk_check_menu_item_get_active(checkmenuitem);
+    Settings* settings = win->control->getSettings();
+    if (settings->isWorkspaceVisible() == showWorkspace) {
+        return;
+    }
+    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
+        settings->setWorkspaceVisible(showWorkspace);
+        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
+        viewMode.showWorkspace = showWorkspace;
+        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
+    }
+    win->setWorkspaceVisible(showWorkspace);
+}
+
 void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
     bool showToolbar = gtk_check_menu_item_get_active(checkmenuitem);
     Settings* settings = win->control->getSettings();
@@ -534,6 +558,26 @@ void MainWindow::setSidebarVisible(bool visible) {
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
 }
 
+void MainWindow::setWorkspaceVisible(bool visible) {
+    Settings* settings = control->getSettings();
+    settings->setWorkspaceVisible(visible);
+    if (!visible && (control->getWorkspace() != nullptr)) {
+        saveWorkspaceSize();
+    }
+
+    gtk_widget_set_visible(workspaceSidebarContainerWidget.get(), visible);
+
+    bool showMenuItem = control->getWorkspaceHandler()->getFoldersCount() > 0 || visible;
+    gtk_widget_set_sensitive(get("menuCloseAllFoldersWorkspace"), showMenuItem);
+
+    if (visible) {
+        gtk_paned_set_position(GTK_PANED(panedWorkspaceContainerWidget.get()), settings->getWorkspaceWidth());
+    }
+
+    GtkWidget* w = get("menuViewWorkspaceVisible");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+}
+
 void MainWindow::setToolbarVisible(bool visible) {
     Settings* settings = control->getSettings();
 
@@ -551,6 +595,11 @@ void MainWindow::setToolbarVisible(bool visible) {
 
 void MainWindow::saveSidebarSize() {
     this->control->getSettings()->setSidebarWidth(gtk_paned_get_position(GTK_PANED(panedContainerWidget.get())));
+}
+
+void MainWindow::saveWorkspaceSize() {
+    this->control->getSettings()->setWorkspaceWidth(
+            gtk_paned_get_position(GTK_PANED(panedWorkspaceContainerWidget.get())));
 }
 
 void MainWindow::setMaximized(bool maximized) { this->maximized = maximized; }
