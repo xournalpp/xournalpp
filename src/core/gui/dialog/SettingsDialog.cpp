@@ -538,18 +538,22 @@ void SettingsDialog::load() {
     bool showFullscreenMenubar = viewMode.showMenubar;
     bool showFullscreenToolbar = viewMode.showToolbar;
     bool showFullscreenSidebar = viewMode.showSidebar;
+    bool showFullscreenWorkspace = viewMode.showWorkspace;
     viewMode = settings->getViewModes().at(PresetViewModeIds::VIEW_MODE_PRESENTATION);
     bool showPresentationMenubar = viewMode.showMenubar;
     bool showPresentationToolbar = viewMode.showToolbar;
     bool showPresentationSidebar = viewMode.showSidebar;
+    bool showPresentationWorkspace = viewMode.showWorkspace;
     bool goPresentationFullscreen = viewMode.goFullscreen;
 
     loadCheckbox("cbShowFullscreenMenubar", showFullscreenMenubar);
     loadCheckbox("cbShowFullscreenToolbar", showFullscreenToolbar);
     loadCheckbox("cbShowFullscreenSidebar", showFullscreenSidebar);
+    loadCheckbox("cbShowFullscreenWorkspace", showFullscreenWorkspace);
     loadCheckbox("cbShowPresentationMenubar", showPresentationMenubar);
     loadCheckbox("cbShowPresentationToolbar", showPresentationToolbar);
     loadCheckbox("cbShowPresentationSidebar", showPresentationSidebar);
+    loadCheckbox("cbShowPresentationWorkspace", showPresentationWorkspace);
     loadCheckbox("cbPresentationGoFullscreen", goPresentationFullscreen);
     loadCheckbox("cbHideMenubarStartup", settings->isMenubarVisible());
     loadCheckbox("cbShowFilepathInTitlebar", settings->isFilepathInTitlebarShown());
@@ -789,12 +793,14 @@ void SettingsDialog::save() {
     viewModeFullscreen.showMenubar = getCheckbox("cbShowFullscreenMenubar");
     viewModeFullscreen.showToolbar = getCheckbox("cbShowFullscreenToolbar");
     viewModeFullscreen.showSidebar = getCheckbox("cbShowFullscreenSidebar");
+    viewModeFullscreen.showWorkspace = getCheckbox("cbShowFullscreenWorkspace");
     settings->setViewMode(PresetViewModeIds::VIEW_MODE_FULLSCREEN, viewModeFullscreen);
 
     ViewMode viewModePresentation;
     viewModePresentation.showMenubar = getCheckbox("cbShowPresentationMenubar");
     viewModePresentation.showToolbar = getCheckbox("cbShowPresentationToolbar");
     viewModePresentation.showSidebar = getCheckbox("cbShowPresentationSidebar");
+    viewModePresentation.showWorkspace = getCheckbox("cbShowPresentationWorkspace");
     viewModePresentation.goFullscreen = getCheckbox("cbPresentationGoFullscreen");
     settings->setViewMode(PresetViewModeIds::VIEW_MODE_PRESENTATION, viewModePresentation);
 

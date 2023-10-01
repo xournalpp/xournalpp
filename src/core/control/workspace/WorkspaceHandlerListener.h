@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Layer Controller listener
+ * Workspace Handler listener
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

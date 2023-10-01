@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * A tool
+ * Workspace Handler
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

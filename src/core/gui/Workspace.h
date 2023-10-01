@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * The Sidebar
+ * The Workspace
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -12,8 +12,6 @@
 #pragma once
 
 #include <string>   // for string
-#include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr
 #include <vector>   // for vector
 
 #include <gtk/gtk.h>  // for GtkWidget, Gtk...
@@ -33,7 +31,7 @@ public:
 
 public:
     void addFolder(fs::path folderPath);
-    void removeFolder(fs::path folderPath);
+    void closeAllFolders();
 
     void saveSize();
 
@@ -41,8 +39,11 @@ private:
     void createViewAndStore();
     void fillTreeFromFolderPath(GtkTreeStore* store, GtkTreeIter* parent, std::string folderPath);
 
-    static void treeViewRowClicked(GtkTreeView* self, GtkTreePath* path, GtkTreeViewColumn* column, Workspace* workspace);
-
+    static void buttonAddFolderWorkspaceClicked(GtkButton* button, Workspace* workspace);
+    static void buttonCloseWorkspaceClicked(GtkButton* button, Workspace* workspace);
+    
+    static void treeViewRowClicked(GtkTreeView* treeView, GtkTreePath* path, GtkTreeViewColumn* column, Workspace* workspace);
+    
     Control* control = nullptr;
 
     GladeGui* gui = nullptr;

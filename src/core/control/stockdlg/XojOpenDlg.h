@@ -20,11 +20,12 @@ class Settings;
 
 class XojOpenDlg {
 public:
-    XojOpenDlg(GtkWindow* win, Settings* settings);
+    XojOpenDlg(GtkWindow* win, Settings* settings, const char* dialogTitle = "Open file");
     virtual ~XojOpenDlg();
 
 public:
     fs::path showOpenDialog(bool pdf, bool& attachPdf);
+    fs::path showOpenFolderDialog();
     fs::path showOpenTemplateDialog();
 
 protected:

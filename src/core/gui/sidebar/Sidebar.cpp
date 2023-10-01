@@ -184,10 +184,12 @@ void Sidebar::setTmpDisabled(bool disabled) {
 }
 
 void Sidebar::saveSize() {
-    GtkAllocation alloc;
-    gtk_widget_get_allocation(this->sidebarContents, &alloc);
+    if (this->control->getSettings()->isSidebarVisible()) {
+        GtkAllocation alloc;
+        gtk_widget_get_allocation(this->sidebarContents, &alloc);
 
-    this->control->getSettings()->setSidebarWidth(alloc.width);
+        this->control->getSettings()->setSidebarWidth(alloc.width);
+    }
 }
 
 auto Sidebar::getToolbar() -> SidebarToolbar* { return &this->toolbar; }

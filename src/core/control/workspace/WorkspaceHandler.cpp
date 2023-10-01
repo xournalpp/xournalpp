@@ -1,9 +1,6 @@
-#include <iostream>
 #include <fstream>
 #include <glib.h>
-#include <memory>   // for __shared_ptr_access, make...
-#include <utility>  // for move
-#include <vector>   // for vector
+#include <set>
 
 #include "WorkspaceHandler.h"
 #include "WorkspaceHandlerListener.h"

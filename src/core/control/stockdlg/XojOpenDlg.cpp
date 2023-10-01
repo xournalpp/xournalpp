@@ -12,8 +12,8 @@
 #include "util/XojPreviewExtractor.h"   // for XojPreviewExtractor, PREVIEW_...
 #include "util/i18n.h"                  // for _
 
-XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings): win(win), settings(settings) {
-    dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),
+XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings, const char* dialogTitle): win(win), settings(settings) {
+    dialog = gtk_file_chooser_dialog_new(_(dialogTitle), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),
                                          GTK_RESPONSE_CANCEL, _("_Open"), GTK_RESPONSE_OK, nullptr);
 
     gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
@@ -146,6 +146,35 @@ auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> fs::path {
     }
 
     return file;
+}
+
+auto XojOpenDlg::showOpenFolderDialog() -> fs::path {
+
+    gtk_file_chooser_set_action(GTK_FILE_CHOOSER(this->dialog), GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
+
+    GtkWidget* image = gtk_image_new();
+    gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(this->dialog), image);
+    g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), nullptr);
+
+    auto lastOpenPath = this->settings->getLastOpenPath();
+    if (!lastOpenPath.empty()) {
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->dialog), Util::toGFilename(lastOpenPath).c_str());
+    }
+
+    auto lastSavePath = this->settings->getLastSavePath();
+    if (!lastSavePath.empty()) {
+        gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), lastSavePath.u8string().c_str(), nullptr);
+    }
+
+    fs::path folder = runDialog();
+
+    if (!folder.empty()) {
+        g_message("lastOpenPath set");
+        this->settings->setLastOpenPath(folder);
+    }
+
+
+    return folder;
 }
 
 void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userData) {

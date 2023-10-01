@@ -429,6 +429,8 @@ void ToolMenuHandler::initToolItems() {
 
     addCustomItem("NEW", ACTION_NEW, "document-new", _("New Xournal"));
     addCustomItem("OPEN", ACTION_OPEN, "document-open", _("Open file"));
+    addCustomItem("OPENFOLDER", ACTION_OPEN_FOLDER, "document-open-folder", _("Add folder to workspace"));
+    addCustomItem("CLOSEALLFOLDERS", ACTION_OPEN_FOLDER, "document-close-all-folders", _("Clear and close workspace"));
     addCustomItem("SAVE", ACTION_SAVE, "document-save", _("Save"));
     addCustomItem("SAVEPDF", ACTION_EXPORT_AS_PDF, "document-export-pdf", _("Export as PDF"));
     addCustomItem("PRINT", ACTION_PRINT, "document-print", _("Print"));

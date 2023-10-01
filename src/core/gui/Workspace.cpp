@@ -1,11 +1,8 @@
 #include "Workspace.h"
 
-#include <cstdint>  // for int64_t
-#include <memory>   // for std::make_unique and std::make_shared
 #include <set>
 #include <string>  // for string
 
-#include <config-features.h>
 #include <gdk/gdk.h>      // for gdk_display_get...
 #include <glib-object.h>  // for G_CALLBACK, g_s...
 #include <gtk/gtk.h>      // for gtk_toggle_tool_button_new...
@@ -14,12 +11,7 @@
 #include "control/settings/Settings.h"  // for Settings
 #include "control/workspace/WorkspaceHandler.h"
 #include "gui/GladeGui.h"         // for GladeGui
-#include "model/Document.h"       // for Document
-#include "model/XojPage.h"        // for XojPage
 #include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr
-#include "util/Util.h"            // for npos
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"  // for _, FC, _F
 
 enum
 {
@@ -33,12 +25,12 @@ Workspace::Workspace(GladeGui* gui, Control* control, WorkspaceHandler* workspac
 
     this->workspaceSidebar = gui->get("workspaceSidebar");
 
-    //this->folderPath = "/home/teogalletta/Documents/my-obsidian-vault/100 university";
     this->createViewAndStore();
 
     gtk_container_add(GTK_CONTAINER(this->workspaceSidebar), treeView);
 
-    //gtk_viewport_set_shadow_type(GTK_VIEWPORT(gui->get("workspaceSidebarContainer")), GTK_SHADOW_IN);
+    g_signal_connect(gui->get("buttonAddFolderWorkspace"), "clicked", G_CALLBACK(buttonAddFolderWorkspaceClicked), this);
+    g_signal_connect(gui->get("buttonCloseWorkspace"), "clicked", G_CALLBACK(buttonCloseWorkspaceClicked), this);
 
     gtk_widget_show_all(this->workspaceSidebar);
 
@@ -47,8 +39,15 @@ Workspace::Workspace(GladeGui* gui, Control* control, WorkspaceHandler* workspac
         addFolder(path);
 }
 
-
 Workspace::~Workspace() {}
+
+void Workspace::buttonAddFolderWorkspaceClicked(GtkButton* button, Workspace* workspace) {    
+    workspace->control->openFolder();
+}
+
+void Workspace::buttonCloseWorkspaceClicked(GtkButton* button, Workspace* workspace) {
+    workspace->control->closeAllFolders(false);
+}
 
 void Workspace::fillTreeFromFolderPath(GtkTreeStore* store, GtkTreeIter* parent, std::string folderPath) {
 
@@ -56,6 +55,8 @@ void Workspace::fillTreeFromFolderPath(GtkTreeStore* store, GtkTreeIter* parent,
         g_warning("The workspace folder path %s does not exist", folderPath.c_str());
         return;
     }
+
+    const std::set<std::string> exts = {".xopp", ".xoj", ".pdf", ".xopt", ".moj"};
 
     // to order the filenames
     std::set<fs::directory_entry> entries;
@@ -68,7 +69,7 @@ void Workspace::fillTreeFromFolderPath(GtkTreeStore* store, GtkTreeIter* parent,
         fs::path entryFilename = entryPath.filename();
         
         GtkTreeIter iter;
-        if (entry.is_directory() || entryPath.extension() == ".pdf" || entryPath.extension() == ".xopp") {
+        if (entry.is_directory() || exts.find(entryPath.extension()) != exts.end()) {
             gtk_tree_store_append(store, &iter, parent);
             gtk_tree_store_set(store, &iter, COL_NAME, entryFilename.generic_string().c_str(), COL_FULLPATH, entryPath.c_str(), -1);
         }
@@ -90,8 +91,7 @@ void Workspace::createViewAndStore() {
 
     renderer = gtk_cell_renderer_text_new();
     gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeView), -1, "Name", renderer, "text", 0, nullptr);
-    //g_signal_connect(renderer, "cell-data-func", G_CALLBACK(setRootFolderTextBold), nullptr);
-
+    
     gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeView), false);
 
     store = gtk_tree_store_new(NUM_COLS, G_TYPE_STRING, G_TYPE_STRING);
@@ -109,10 +109,19 @@ void Workspace::addFolder(fs::path folderPath) {
     gtk_tree_store_set(store, &iter, COL_NAME, fs::path(folderPath).filename().c_str(), -1);
     fillTreeFromFolderPath(store, &iter, folderPath);
 
+    gtk_widget_set_sensitive(gui->get("menuCloseAllFoldersWorkspace"), true);
+
     gtk_widget_show_all(GTK_WIDGET(workspaceSidebar));
 }
 
-void Workspace::removeFolder(fs::path folderPath) {}
+void Workspace::closeAllFolders() {
+
+    gtk_tree_store_clear(store);
+
+    //gtk_widget_set_sensitive(gui->get("menuCloseAllFoldersWorkspace"), false);
+
+    gtk_widget_show_all(GTK_WIDGET(workspaceSidebar));
+}
 
 void Workspace::treeViewRowClicked(GtkTreeView* treeView, GtkTreePath* path, GtkTreeViewColumn* column, Workspace* workspace) {
     
@@ -135,6 +144,7 @@ void Workspace::treeViewRowClicked(GtkTreeView* treeView, GtkTreePath* path, Gtk
                 gtk_tree_view_expand_row(treeView, path, false);
         }
         else {
+            workspace->control->close(true, true);
             workspace->control->openFile(fsPath);
         }
         
@@ -142,25 +152,6 @@ void Workspace::treeViewRowClicked(GtkTreeView* treeView, GtkTreePath* path, Gtk
     }
 
 }
-/*
-void Workspace::setRootFolderTextBold(GtkTreeViewColumn *column, GtkCellRenderer *renderer, GtkTreeModel *model, GtkTreeIter *iter, void* _ptr) {
-    gchar* text;
-    gtk_tree_model_get(model, iter, COL_FULLPATH, &text, -1);
-
-    if (text != nullptr)
-        return;
-    
-    // Creiamo una tag di stile Pango per il testo in grassetto
-    PangoAttrList* attrs = pango_attr_list_new();
-    PangoAttribute* attr = pango_attr_weight_new(PANGO_WEIGHT_BOLD);
-    pango_attr_list_insert(attrs, attr);
-
-    // Impostiamo il testo nel renderer con il tag di stile Pango
-    g_object_set(renderer, "text", text, "attributes", attrs, nullptr);
-
-    g_free(text);
-    pango_attr_list_unref(attrs);
-}*/
 
 void Workspace::saveSize() {
     if (this->control->getSettings()->isWorkspaceVisible()) {
