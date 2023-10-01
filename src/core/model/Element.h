@@ -52,6 +52,7 @@ public:
     virtual void move(double dx, double dy);
     virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) = 0;
     virtual void rotate(double x0, double y0, double th) = 0;
+    virtual void axisReflect(double x0, double y0, cairo_matrix_t *cmatrix, bool axis) {};
 
     void setColor(Color color);
     Color getColor() const;

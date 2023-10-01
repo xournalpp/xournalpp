@@ -176,6 +176,8 @@ void Image::scale(double x0, double y0, double fx, double fy, double rotation,
 
 void Image::rotate(double x0, double y0, double th) {}
 
+void Image::axisReflect(double x0, double y0, cairo_matrix_t* cmatrix, bool axis) {}
+
 void Image::serialize(ObjectOutputStream& out) const {
     out.writeObject("Image");
 

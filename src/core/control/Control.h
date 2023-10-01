@@ -135,6 +135,9 @@ public:
 
     void actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled) override;
 
+
+	void reflectAxisOfSelection(bool x_axis);
+
     /**
      * @brief Update the Cursor and the Toolbar based on the active color
      *

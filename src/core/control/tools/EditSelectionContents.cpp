@@ -26,6 +26,7 @@
 #include "undo/InsertUndoAction.h"                // for InsertsUndoAction
 #include "undo/LineStyleUndoAction.h"             // for LineStyleUndoAction
 #include "undo/MoveUndoAction.h"                  // for MoveUndoAction
+#include "undo/ReflectUndoAction.h"               // for ReflectUndoAction
 #include "undo/RotateUndoAction.h"                // for RotateUndoAction
 #include "undo/ScaleUndoAction.h"                 // for ScaleUndoAction
 #include "undo/SizeUndoAction.h"                  // for SizeUndoAction
@@ -303,6 +304,39 @@ auto EditSelectionContents::setColor(Color color) -> UndoActionPtr {
         this->deleteViewBuffer();
         this->sourceView->getXournal()->repaintSelection();
 
+        return undo;
+    }
+
+    return nullptr;
+}
+
+/**
+ * Computes the reflection with respect to either the horizontal or vertical axis of the selected region.
+ * 
+ */
+std::unique_ptr<UndoAction> EditSelectionContents::reflectSelection(const xoj::util::Rectangle<double>& bounds, cairo_matrix_t *cmatrix, bool x_axis) {
+	bool found = false;
+    double mx = bounds.x + bounds.width / 2;
+    double my = bounds.y + bounds.height / 2;
+	//TODO: if the selection is moved or rotated before applying the axis reflection then the document coordinates
+	// of the elements inside the selection are not updated when we reach this point 
+	//(only the coordinates of the bounds of the selection rectangle
+	// are updated). Therefore if we move a selection and then attempt to perform a reflection (keeping the selection)
+	// an unexpected behaviour happens.
+
+	for (Element* e: this->selected) {
+        if (e->getType() == ELEMENT_STROKE) {
+            e->axisReflect(mx, my, cmatrix, x_axis);
+            found = true;
+        }
+    }
+	
+	if (found) {
+		auto undo = std::make_unique<ReflectUndoAction>(
+			this->sourcePage, &this->selected, lastSnappedBounds.x + lastSnappedBounds.width / 2,
+			lastSnappedBounds.y + lastSnappedBounds.height / 2, cmatrix, x_axis);
+        this->deleteViewBuffer();
+        this->sourceView->getXournal()->repaintSelection();
         return undo;
     }
 
