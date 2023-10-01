@@ -37,6 +37,8 @@ class Repaintable;
 class ShapeToolView;
 };
 
+class Path;
+
 enum DIRSET_MODIFIERS { NONE = 0, SET = 1, SHIFT = 1 << 1, CONTROL = 1 << 2 };
 
 
@@ -58,9 +60,9 @@ public:
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::ShapeToolView>>& getViewPool() const;
 
     /**
-     * @brief Get the shape's points.
+     * @brief Get the shape's path.
      */
-    const std::vector<Point>& getShape() const;
+    const Path* getShape() const;
 
 private:
     /**
@@ -68,7 +70,8 @@ private:
      * @return Pair [vector, range] where vector contains the points drawing the shape and range is the smallest range
      * containing all those points. WARNING: Stroke thickness is not taken into account.
      */
-    virtual std::pair<std::vector<Point>, Range> createShape(bool isAltDown, bool isShiftDown, bool isControlDown) = 0;
+    virtual std::pair<std::shared_ptr<Path>, Range> createShape(bool isAltDown, bool isShiftDown,
+                                                                bool isControlDown) = 0;
 
     /**
      * @brief Update the current shape with the latest event info.
@@ -89,7 +92,7 @@ protected:
     void modifyModifiersByDrawDir(double width, double height, double zoom, bool changeCursor = true);
 
 protected:
-    std::vector<Point> shape;
+    std::shared_ptr<Path> shape;
 
     /**
      * @brief Bounding box of the stroke after its last update

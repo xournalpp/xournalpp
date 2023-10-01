@@ -7,6 +7,7 @@
 #include "model/GeometryTool.h"
 #include "model/Stroke.h"
 #include "model/XojPage.h"
+#include "model/path/PiecewiseLinearPath.h"
 
 CompassController::CompassController(XojPageView* view, Compass* compass): GeometryToolController(view, compass) {}
 
@@ -51,8 +52,7 @@ void CompassController::createOutlineStroke(double a) {
 
         const utl::Point<double> p = this->getPointForAngle(a);
         initializeStroke();
-        stroke->addPoint(Point(p.x, p.y));
-        stroke->addPoint(Point(p.x, p.y));  // doubled point
+        stroke->setPath(std::make_shared<PiecewiseLinearPath>(Point(p.x, p.y), Point(p.x, p.y)));  // doubled point
         geometryTool->notify();
     } else {
         g_warning("No valid stroke from compass!");
@@ -66,8 +66,7 @@ void CompassController::createRadialStroke(double x) {
 
         const utl::Point<double> p = posRelToSide(x, 0.);
         initializeStroke();
-        stroke->addPoint(Point(p.x, p.y));
-        stroke->addPoint(Point(p.x, p.y));  // doubled point
+        stroke->setPath(std::make_shared<PiecewiseLinearPath>(Point(p.x, p.y), Point(p.x, p.y)));  // doubled point
         geometryTool->notify();
     } else {
         g_warning("No valid radius from compass!");
@@ -77,34 +76,34 @@ void CompassController::createRadialStroke(double x) {
 void CompassController::updateOutlineStroke(double x) {
     angleMax = std::max(this->angleMax, x);
     angleMin = std::min(this->angleMin, x);
-    stroke->deletePointsFrom(0);
     const auto h = view->getXournal()->getControl()->getToolHandler();
     const bool filled = (h->getFill() != -1);
     const utl::Point<double> c = utl::Point<double>{geometryTool->getTranslationX(), geometryTool->getTranslationY()};
 
+    auto path = std::make_shared<PiecewiseLinearPath>();
+
     if (filled && angleMax < angleMin + 2 * M_PI) {
-        stroke->addPoint(Point(c.x, c.y));
+        path->addLineSegmentTo(Point(c.x, c.y));
     }
     for (auto i = 0; i <= 100; i++) {
         const utl::Point<double> p =
                 getPointForAngle(angleMin + static_cast<double>(i) / 100.0 * (angleMax - angleMin));
-        stroke->addPoint(Point(p.x, p.y));
+        path->addLineSegmentTo(Point(p.x, p.y));
     }
     if (filled && angleMax < angleMin + 2 * M_PI) {
-        stroke->addPoint(Point(c.x, c.y));
+        path->addLineSegmentTo(Point(c.x, c.y));
     }
+    stroke->setPath(std::move(path));
     geometryTool->notify();
 }
 
 void CompassController::updateRadialStroke(double x) {
     radiusMax = std::max(this->radiusMax, x);
     radiusMin = std::min(this->radiusMin, x);
-    stroke->deletePointsFrom(0);
     const utl::Point<double> p1 = getPointForRadius(radiusMin);
     const utl::Point<double> p2 = getPointForRadius(radiusMax);
 
-    stroke->addPoint(Point(p1.x, p1.y));
-    stroke->addPoint(Point(p2.x, p2.y));
+    stroke->setPath(std::make_shared<PiecewiseLinearPath>(Point(p1.x, p1.y), Point(p2.x, p2.y)));
     geometryTool->notify();
 }
 

@@ -19,7 +19,7 @@
 #include "BaseShapeOrSplineToolView.h"
 
 class SplineHandler;
-class SplineHandlerData;
+struct SplineHandlerData;
 class OverlayBase;
 class Range;
 class ZoomControl;

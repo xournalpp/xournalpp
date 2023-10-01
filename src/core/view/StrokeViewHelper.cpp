@@ -2,28 +2,23 @@
 
 #include "model/LineStyle.h"
 #include "model/Point.h"
+#include "model/path/Path.h"
 #include "util/Assert.h"
 #include "util/LoopUtil.h"
 #include "util/PairView.h"
 #include "util/Util.h"  // for cairo_set_dash_from_vector
 
-void xoj::view::StrokeViewHelper::pathToCairo(cairo_t* cr, const std::vector<Point>& pts) {
-    for_first_then_each(
-            pts, [cr](auto const& first) { cairo_move_to(cr, first.x, first.y); },
-            [cr](auto const& other) { cairo_line_to(cr, other.x, other.y); });
-}
-
 /**
  * No pressure sensitivity, one line is drawn
  */
-void xoj::view::StrokeViewHelper::drawNoPressure(cairo_t* cr, const std::vector<Point>& pts, const double strokeWidth,
+void xoj::view::StrokeViewHelper::drawNoPressure(cairo_t* cr, const Path& path, const double strokeWidth,
                                                  const LineStyle& lineStyle, double dashOffset) {
     cairo_set_line_width(cr, strokeWidth);
 
     const auto& dashes = lineStyle.getDashes();
     Util::cairo_set_dash_from_vector(cr, dashes, dashOffset);
 
-    pathToCairo(cr, pts);
+    path.addToCairo(cr);
     cairo_stroke(cr);
 }
 

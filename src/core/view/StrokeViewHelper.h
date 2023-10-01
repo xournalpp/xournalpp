@@ -16,19 +16,15 @@
 #include <cairo.h>
 
 class LineStyle;
+class Path;
 class Point;
 
 namespace xoj::view::StrokeViewHelper {
 
 /**
- * @brief Simply adds the points to a cairo context, as a single path
- */
-void pathToCairo(cairo_t* cr, const std::vector<Point>& pts);
-
-/**
  * @brief No pressure sensitivity, one line is drawn, with given width and line style (dashes)
  */
-void drawNoPressure(cairo_t* cr, const std::vector<Point>& pts, const double strokeWidth, const LineStyle& lineStyle,
+void drawNoPressure(cairo_t* cr, const Path& path, const double strokeWidth, const LineStyle& lineStyle,
                     double dashOffset = 0);
 
 /**

@@ -8,22 +8,17 @@
 
 #include <glib.h>  // for g_message
 
-#include "control/shaperecognizer/RecoSegment.h"            // for RecoSegment
-#include "control/shaperecognizer/ShapeRecognizerConfig.h"  // for RDEBUG
-#include "model/Point.h"                                    // for Point
-#include "model/Stroke.h"                                   // for Stroke
+#include "model/Point.h"  // for Point
+#include "model/path/PiecewiseLinearPath.h"
+#include "model/path/Spline.h"
 
-#include "CircleRecognizer.h"  // for CircleRec...
-#include "Inertia.h"           // for Inertia
-#include "config-debug.h"      // for DEBUG_REC...
+#include "CircleRecognizer.h"       // for CircleRec...
+#include "Inertia.h"                // for Inertia
+#include "RecoSegment.h"            // for RecoSegment
+#include "ShapeRecognizerConfig.h"  // for RDEBUG
+#include "config-debug.h"           // for DEBUG_REC...
 
-ShapeRecognizer::ShapeRecognizer() {
-    resetRecognizer();
-    this->stroke = nullptr;
-    this->queueLength = 0;
-}
-
-ShapeRecognizer::~ShapeRecognizer() { resetRecognizer(); }
+ShapeRecognizer::ShapeRecognizer(const PiecewiseLinearPath& path): path(path) {}
 
 void ShapeRecognizer::resetRecognizer() {
     RDEBUG("reset");
@@ -34,7 +29,7 @@ void ShapeRecognizer::resetRecognizer() {
 /**
  *  Test if segments form standard shapes
  */
-auto ShapeRecognizer::tryRectangle() -> Stroke* {
+auto ShapeRecognizer::tryRectangle() -> std::shared_ptr<PiecewiseLinearPath> {
     // first, we need whole strokes to combine to 4 segments...
     if (this->queueLength < 4) {
         return nullptr;
@@ -84,8 +79,7 @@ auto ShapeRecognizer::tryRectangle() -> Stroke* {
         avgAngle = M_PI / 2;
     }
 
-    auto* s = new Stroke();
-    s->applyStyleFrom(this->stroke);
+    std::shared_ptr<PiecewiseLinearPath> path = std::make_shared<PiecewiseLinearPath>();
 
     for (int i = 0; i <= 3; i++) {
         rs[i].angle = avgAngle + i * M_PI / 2;
@@ -93,12 +87,13 @@ auto ShapeRecognizer::tryRectangle() -> Stroke* {
 
     for (int i = 0; i <= 3; i++) {
         Point p = rs[i].calcEdgeIsect(&rs[(i + 1) % 4]);
-        s->addPoint(p);
+        path->addLineSegmentTo(p);
     }
 
-    s->addPoint(s->getPoint(0));
+    // Close the rectangle
+    path->close();
 
-    return s;
+    return path;
 }
 
 /*
@@ -247,32 +242,32 @@ void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks
 /**
  * Determine if a particular stroke is large enough as to make a shape out of it
  */
-auto ShapeRecognizer::isStrokeLargeEnough(Stroke* stroke, double strokeMinSize) -> bool {
-    if (stroke->getPointCount() < 3) {
+auto ShapeRecognizer::isPathLargeEnough(const Path& path, double strokeMinSize) -> bool {
+    if (path.nbSegments() < 2) {
         return false;
     }
 
-    auto rect = stroke->getSnappedBounds();
-    return std::hypot(rect.width, rect.height) >= strokeMinSize;
+    auto box = path.getThinBoundingBox();
+    return std::hypot(box.getWidth(), box.getHeight()) >= strokeMinSize;
 }
 
 /**
  * The main pattern recognition function
  */
-auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) -> Stroke* {
-    this->stroke = stroke;
-
-    if (!isStrokeLargeEnough(stroke, strokeMinSize)) {
+auto ShapeRecognizer::recognizePatterns(double strokeMinSize) -> std::shared_ptr<Path> {
+    if (!isPathLargeEnough(this->path, strokeMinSize)) {
         return nullptr;
     }
+
+    const Point* pts = this->path.getData().data();
 
     Inertia ss[4];
     int brk[5] = {0};
 
     // first see if it's a polygon
-    int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1, MAX_POLYGON_SIDES, brk, ss);
+    int n = findPolygonal(pts, 0, this->path.nbSegments(), MAX_POLYGON_SIDES, brk, ss);
     if (n > 0) {
-        optimizePolygonal(stroke->getPoints(), n, brk, ss);
+        optimizePolygonal(pts, n, brk, ss);
 #ifdef DEBUG_RECOGNIZER
         g_message("--");
         g_message("ShapeReco:: Polygon, %d edges:", n);
@@ -283,6 +278,9 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
 #endif
         // update recognizer segment queue (most recent at end)
         while (n + queueLength > MAX_POLYGON_SIDES) {
+            /**
+             * This loop is probably no longer of any use
+             */
             // remove oldest polygonal stroke
             int i = 1;
             while (i < queueLength && queue[i].startpt != 0) {
@@ -300,12 +298,12 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
         for (int i = 0; i < n; i++) {
             rs[i].startpt = brk[i];
             rs[i].endpt = brk[i + 1];
-            rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
+            rs[i].calcSegmentGeometry(pts, brk[i], brk[i + 1], ss + i);
         }
 
-        if (Stroke* result = tryRectangle(); result != nullptr) {
-            RDEBUG("return rectangle");
-            return result;
+        if (std::shared_ptr<PiecewiseLinearPath> rectangle = tryRectangle(); rectangle != nullptr) {
+            RDEBUG("return tryRectangle()");
+            return rectangle;
         }
 
         // Removed complicated recognition in commit 5494bd002050182cde3af70bd1924f4062579be5
@@ -324,28 +322,21 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
                 aligned = false;
             }
 
-            auto* s = new Stroke();
-            s->applyStyleFrom(this->stroke);
-
+            std::shared_ptr<PiecewiseLinearPath> line;
             if (aligned) {
-                s->addPoint(Point(rs->x1, rs->y1));
-                s->addPoint(Point(rs->x2, rs->y2));
+                line = std::make_shared<PiecewiseLinearPath>(Point(rs->x1, rs->y1), Point(rs->x2, rs->y2));
             } else {
-                auto points = stroke->getPointVector();
-                s->addPoint(Point(points.front().x, points.front().y));
-                s->addPoint(Point(points.back().x, points.back().y));
+                line = std::make_shared<PiecewiseLinearPath>(this->path.getFirstKnot(), this->path.getLastKnot());
             }
-
             RDEBUG("return line");
-            return s;
+            return line;
         }
     }
 
     // not a polygon: maybe a circle ?
-    Stroke* s = CircleRecognizer::recognize(stroke);
-    if (s) {
+    if (std::shared_ptr<Spline> circle = CircleRecognizer::recognize(this->path); circle != nullptr) {
         RDEBUG("return circle");
-        return s;
+        return circle;
     }
 
     return nullptr;

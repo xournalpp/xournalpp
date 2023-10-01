@@ -7,6 +7,7 @@
 #include "control/tools/StrokeHandler.h"
 #include "model/LineStyle.h"
 #include "model/Stroke.h"
+#include "model/path/SegmentIteratable.h"
 #include "util/Assert.h"
 #include "util/Color.h"
 #include "util/PairView.h"
@@ -18,7 +19,9 @@
 using namespace xoj::view;
 
 StrokeToolView::StrokeToolView(const StrokeHandler* strokeHandler, const Stroke& stroke, Repaintable* parent):
-        BaseStrokeToolView(parent, stroke), strokeHandler(strokeHandler), pointBuffer(stroke.getPointVector()) {
+        BaseStrokeToolView(parent, stroke),
+        strokeHandler(strokeHandler),
+        pointBuffer(dynamic_cast<const PiecewiseLinearPath&>(stroke.getPath())) {
     this->registerToPool(strokeHandler->getViewPool());
     parent->flagDirtyRegion(Range(stroke.boundingRect()));
 }
@@ -29,7 +32,7 @@ bool StrokeToolView::isViewOf(const OverlayBase* overlay) const { return overlay
 
 void StrokeToolView::draw(cairo_t* cr) const {
 
-    std::vector<Point> pts = this->flushBuffer();
+    PiecewiseLinearPath pts = this->flushBuffer();
     if (pts.empty()) {
         // The input sequence has probably been cancelled. This view should soon be deleted
         return;
@@ -55,24 +58,24 @@ void StrokeToolView::draw(cairo_t* cr) const {
 
     Util::cairo_set_source_argb(cr, strokeColor);
 
-    if (pts.size() > 1) {
+    if (pts.nbSegments() >= 1) {
         // Draw the new segments on the mask
-        if (pts.front().z == Point::NO_PRESSURE) {
+        if (pts.getFirstKnot().z == Point::NO_PRESSURE) {
             StrokeViewHelper::drawNoPressure(this->mask.get(), pts, this->strokeWidth, this->lineStyle,
                                              this->dashOffset);
             if (this->lineStyle.hasDashes()) {
                 // Keep the offset up to date, so we do not have to redraw the entire stroke every time.
-                PairView segments(pts);
+                auto segments = pts.segments();
                 this->dashOffset =
                         std::transform_reduce(segments.begin(), segments.end(), this->dashOffset, std::plus<>(),
-                                              [](auto& seg) { return seg.front().lineLengthTo(seg.back()); });
+                                              [](auto& seg) { return seg.firstKnot.lineLengthTo(seg.secondKnot); });
             }
         } else {
-            this->dashOffset =
-                    StrokeViewHelper::drawWithPressure(this->mask.get(), pts, this->lineStyle, this->dashOffset);
+            this->dashOffset = StrokeViewHelper::drawWithPressure(this->mask.get(), pts.getData(), this->lineStyle,
+                                                                  this->dashOffset);
         }
     } else if (this->singleDot) {
-        this->drawDot(this->mask.get(), pts.back());
+        this->drawDot(this->mask.get(), pts.getLastKnot());
     }
 
     this->mask.blitTo(cr);
@@ -81,17 +84,17 @@ void StrokeToolView::draw(cairo_t* cr) const {
 void StrokeToolView::on(StrokeToolView::AddPointRequest, const Point& p) {
     this->singleDot = false;
     xoj_assert(!this->pointBuffer.empty());  // front() is the last point we painted on the mask (see flushBuffer())
-    Point lastPoint = this->pointBuffer.back();
-    this->pointBuffer.emplace_back(p);
-    this->parent->flagDirtyRegion(this->getRepaintRange(lastPoint, p));
+    Range repaintRange = getRepaintRange(this->pointBuffer.getLastKnot(), p);
+    this->pointBuffer.addLineSegmentTo(p);
+    this->parent->flagDirtyRegion(repaintRange);
 }
 
 void StrokeToolView::on(StrokeToolView::ThickenFirstPointRequest, double newWidth) {
     xoj_assert(newWidth > 0.0);
-    xoj_assert(this->pointBuffer.size() == 1);
-    Point& p = this->pointBuffer.back();
+    xoj_assert(this->pointBuffer.getData().size() == 1);
+    const Point& p = this->pointBuffer.getLastKnot();
     xoj_assert(p.z <= newWidth);  // Thicken means thicken
-    p.z = newWidth;
+    this->pointBuffer.setFirstKnotPressure(newWidth);
     Range rg = Range(p.x, p.y);
     rg.addPadding(0.5 * newWidth);
     this->parent->flagDirtyRegion(rg);
@@ -104,7 +107,7 @@ void StrokeToolView::deleteOn(StrokeToolView::CancellationRequest, const Range& 
 
 void StrokeToolView::on(StrokeToolView::StrokeReplacementRequest, const Stroke& newStroke) {
     this->mask.wipe();
-    this->pointBuffer = newStroke.getPointVector();
+    this->pointBuffer = newStroke.getPointsToDraw();
     this->dashOffset = 0;
     this->strokeWidth = newStroke.getWidth();
     xoj_assert(this->strokeColor == strokeColorWithAlpha(newStroke));
@@ -125,20 +128,12 @@ auto StrokeToolView::getRepaintRange(const Point& lastPoint, const Point& addedP
     return rg;
 }
 
-void StrokeToolView::drawDot(cairo_t* cr, const Point& p) const {
-    cairo_set_line_width(cr, p.z == Point::NO_PRESSURE ? this->strokeWidth : p.z);
-    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-    cairo_move_to(cr, p.x, p.y);
-    cairo_line_to(cr, p.x, p.y);
-    cairo_stroke(cr);
-}
-
-std::vector<Point> StrokeToolView::flushBuffer() const {
-    std::vector<Point> pts;
+PiecewiseLinearPath StrokeToolView::flushBuffer() const {
+    PiecewiseLinearPath pts;
     std::swap(this->pointBuffer, pts);
     if (!pts.empty()) {
         // Keep the last point in the buffer - to be used in the next iteration
-        this->pointBuffer.emplace_back(pts.back());
+        this->pointBuffer.setFirstPoint(pts.getLastKnot());
     }
     return pts;
 }

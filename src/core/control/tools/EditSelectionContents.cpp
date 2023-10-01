@@ -121,9 +121,6 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
 
             double originalWidth = s->getWidth();
 
-            int pointCount = s->getPointCount();
-            vector<double> originalPressure = SizeUndoAction::getPressure(s);
-
             if (tool == StrokeTool::PEN) {
                 s->setWidth(thicknessPen[size]);
             } else if (tool == StrokeTool::HIGHLIGHTER) {
@@ -132,14 +129,22 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
                 s->setWidth(thicknessEraser[size]);
             }
 
-            // scale the stroke
-            double factor = s->getWidth() / originalWidth;
-            s->scalePressure(factor);
+            if (s->hasPressure()) {
+                vector<double> originalPressure = s->getPressureValues();
+                vector<double> newPressure;
+                newPressure.reserve(originalPressure.size());
 
-            // save the new pressure
-            vector<double> newPressure = SizeUndoAction::getPressure(s);
+                double factor = s->getWidth() / originalWidth;
+                std::transform(originalPressure.cbegin(), originalPressure.cend(), std::back_inserter(newPressure),
+                               [factor](double p) { return p * factor; });
 
-            undo->addStroke(s, originalWidth, s->getWidth(), originalPressure, newPressure, pointCount);
+                s->setPressureValues(newPressure);
+
+                undo->addStroke(s, originalWidth, s->getWidth(), originalPressure, newPressure);
+            } else {
+                undo->addStroke(s, originalWidth, s->getWidth(), {}, {});
+            }
+
             found = true;
         }
     }

@@ -42,7 +42,7 @@ void BaseShapeHandler::updateShape(bool isAltDown, bool isShiftDown, bool isCont
 }
 
 void BaseShapeHandler::cancelStroke() {
-    this->shape.clear();
+    this->shape.reset();
     Range repaintRange = this->lastSnappingRange;
     repaintRange.addPadding(0.5 * this->stroke->getWidth());
     this->viewPool->dispatchAndClear(xoj::view::ShapeToolView::FINALIZATION_REQUEST, repaintRange);
@@ -92,7 +92,7 @@ void BaseShapeHandler::onSequenceCancelEvent() { this->cancelStroke(); }
 void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
     control->getCursor()->activateDrawDirCursor(false);  // in case released within  fixate_Dir_Mods_Dist
 
-    if (this->shape.size() <= 1) {
+    if (this->shape->nbSegments() == 0) {
         // We need at least two points to make a stroke (it can be twice the same)
         this->cancelStroke();
         return;
@@ -102,7 +102,7 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-    stroke->setPointVector(this->shape, &lastSnappingRange);
+    stroke->setPath(this->shape, &lastSnappingRange);
 
     Range repaintRange = lastSnappingRange;
     repaintRange.addPadding(0.5 * this->stroke->getWidth());
@@ -168,7 +168,7 @@ void BaseShapeHandler::modifyModifiersByDrawDir(double width, double height, dou
     }
 }
 
-auto BaseShapeHandler::getShape() const -> const std::vector<Point>& { return this->shape; }
+auto BaseShapeHandler::getShape() const -> const Path* { return this->shape.get(); }
 
 auto BaseShapeHandler::createView(xoj::view::Repaintable* parent) const -> std::unique_ptr<xoj::view::OverlayView> {
     return std::make_unique<xoj::view::ShapeToolView>(this, parent);

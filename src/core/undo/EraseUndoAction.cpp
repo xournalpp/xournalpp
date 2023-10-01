@@ -31,7 +31,7 @@ void EraseUndoAction::removeEdited(Stroke* element) {
 
 void EraseUndoAction::finalize() {
     for (auto const& entry: original) {
-        if (entry.element->getPointCount() == 0) {
+        if (entry.element->getPath().empty()) {
             // TODO (Marmare314): is this really expected behaviour?
             continue;
         } else {

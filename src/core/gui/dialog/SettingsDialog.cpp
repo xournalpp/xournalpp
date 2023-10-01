@@ -381,6 +381,12 @@ void SettingsDialog::load() {
     gtk_combo_box_set_active(cbStabilizerPreprocessors, static_cast<int>(settings->getStabilizerPreprocessor()));
     showStabilizerPreprocessorOptions(settings->getStabilizerPreprocessor());
     /***********/
+    /**
+     * Spline Approximation
+     */
+    GtkComboBox* cbSplineApproximator = GTK_COMBO_BOX(builder.get("cbSplineApproximator"));
+    gtk_combo_box_set_active(cbSplineApproximator, static_cast<int>(settings->getSplineApproximatorType()));
+    /***********/
 
     GtkComboBox* cbSidebarNumberingStyle = GTK_COMBO_BOX(builder.get("cbSidebarPageNumberStyle"));
     gtk_combo_box_set_active(cbSidebarNumberingStyle, static_cast<int>(settings->getSidebarNumberingStyle()));
@@ -708,6 +714,9 @@ void SettingsDialog::save() {
 
     settings->setSidebarNumberingStyle(static_cast<SidebarNumberingStyle>(
             gtk_combo_box_get_active(GTK_COMBO_BOX(builder.get("cbSidebarPageNumberStyle")))));
+
+    settings->setSplineApproximatorType(static_cast<SplineApproximator::Type>(
+            gtk_combo_box_get_active(GTK_COMBO_BOX(builder.get("cbSplineApproximator")))));
 
     auto scrollbarHideType =
             static_cast<std::make_unsigned<std::underlying_type<ScrollbarHideType>::type>::type>(SCROLLBAR_HIDE_NONE);

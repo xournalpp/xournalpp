@@ -16,6 +16,7 @@
 class Stroke;
 class GeometryToolController;
 struct InputEvent;
+class PiecewiseLinearPath;
 
 /**
  * @brief Input handler for the setsquare

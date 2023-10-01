@@ -102,16 +102,18 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
             case ELEMENT_STROKE: {
                 auto sA = dynamic_cast<Stroke*>(a);
                 auto sB = dynamic_cast<Stroke*>(b);
-                EXPECT_EQ(sA->getPointCount(), sB->getPointCount());
                 EXPECT_EQ(sA->getToolType(), sB->getToolType());
                 EXPECT_EQ(sA->getLineStyle().hasDashes(), sB->getLineStyle().hasDashes());
-                EXPECT_TRUE(coordEq(sA->getAvgPressure(), sB->getAvgPressure()));
-                for (int j = 0; j < sA->getPointCount(); j++) {
-                    Point pA = sA->getPoint(j);
-                    Point pB = sB->getPoint(j);
-                    EXPECT_TRUE(coordEq(pA.x, pB.x));
-                    EXPECT_TRUE(coordEq(pA.y, pB.y));
-                    EXPECT_TRUE(coordEq(pA.z, pB.z));
+
+                const auto& pathA = sA->getPath();
+                const auto& pathB = sB->getPath();
+                EXPECT_EQ(pathA.getType(), pathB.getType());
+                EXPECT_EQ(pathA.getData().size(), pathB.getData().size());
+                for (auto itA = pathA.getData().begin(), itB = pathB.getData().begin(), end = pathA.getData().end();
+                     itA != end; ++itA, ++itB) {
+                    EXPECT_TRUE(coordEq(itA->x, itB->x));
+                    EXPECT_TRUE(coordEq(itA->y, itB->y));
+                    EXPECT_TRUE(coordEq(itA->z, itB->z));
                 }
                 break;
             }
@@ -468,7 +470,7 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
 
     Stroke* s1 = (Stroke*)layer->getElements()[0];
     EXPECT_EQ(ELEMENT_STROKE, s1->getType());
-    for (auto& p: s1->getPointVector()) {
+    for (auto& p: s1->getPath().getData()) {
         EXPECT_EQ(p.z, Point::NO_PRESSURE);
     }
 
@@ -478,7 +480,7 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
         EXPECT_EQ(ELEMENT_STROKE, s->getType());
         EXPECT_EQ(Color(0x0000ff00), s->getColor());
         EXPECT_EQ(1.41, s->getWidth());
-        auto pts = s->getPointVector();
+        const auto& pts = s->getPath().getData();
         EXPECT_EQ(pts.size(), pressures.size());
         EXPECT_EQ(std::mismatch(pressures.begin(), pressures.end(), pts.begin(),
                                 [](double v, const Point& p) { return v == p.z; })

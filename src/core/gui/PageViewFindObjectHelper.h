@@ -151,9 +151,8 @@ protected:
     bool checkElement(Element* e) override {
         if (e->getType() == ELEMENT_STROKE) {
             Stroke* s = (Stroke*)e;
-            double tmpGap = 0;
-            if ((s->intersects(x, y, 5, &tmpGap)) && (gap > tmpGap)) {
-                gap = tmpGap;
+            if (double sqDistance = s->isPointNearby(x, y, 25, gap * gap); sqDistance < gap * gap) {
+                gap = std::sqrt(sqDistance);
                 strokeMatch = s;
                 return true;
             }
@@ -194,8 +193,7 @@ protected:
         }
 
         AudioElement* s = (AudioElement*)e;
-        double tmpGap = 0;
-        if ((s->intersects(x, y, 15, &tmpGap))) {
+        if (s->isPointNearby(x, y, 15, 60) < 60) {
             size_t ts = s->getTimestamp();
 
             if (auto fn = s->getAudioFilename(); !fn.empty()) {

@@ -6,9 +6,8 @@
 #include "control/settings/Settings.h"             // for Settings
 #include "control/tools/BaseShapeHandler.h"        // for BaseShapeHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
-#include "gui/XournalView.h"                       // for XournalView
-#include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
 #include "model/Point.h"                           // for Point
+#include "model/path/PiecewiseLinearPath.h"
 
 CoordinateSystemHandler::CoordinateSystemHandler(Control* control, const PageRef& page, bool flipShift,
                                                  bool flipControl):
@@ -24,7 +23,7 @@ CoordinateSystemHandler::~CoordinateSystemHandler() = default;
  *                  It is currently not used.
  */
 auto CoordinateSystemHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
-        -> std::pair<std::vector<Point>, Range> {
+        -> std::pair<std::shared_ptr<Path>, Range> {
     /**
      * Snap point to grid (if enabled)
      */
@@ -57,9 +56,15 @@ auto CoordinateSystemHandler::createShape(bool isAltDown, bool isShiftDown, bool
 
     if (!this->modControl) {
         // draw out from starting point
-        return {{p1, Point(p1.x, p1.y + height), Point(p1.x + width, p1.y + height)}, rg};
+        auto shape = std::make_shared<PiecewiseLinearPath>(p1, 2);
+        shape->addLineSegmentTo(p1.x, p1.y + height);
+        shape->addLineSegmentTo(p1.x + width, p1.y + height);
+        return {std::move(shape), rg};
     } else {
         // Control is down
-        return {{Point(p1.x, p1.y + height), p1, Point(p1.x + width, p1.y)}, rg};
+        auto shape = std::make_shared<PiecewiseLinearPath>(Point(p1.x, p1.y + height), 2);
+        shape->addLineSegmentTo(p1);
+        shape->addLineSegmentTo(p1.x + width, p1.y);
+        return {std::move(shape), rg};
     }
 }

@@ -59,8 +59,7 @@ public:
      */
     Text* clone() const override;
 
-    bool intersects(double x, double y, double halfEraserSize) const override;
-    bool intersects(double x, double y, double halfEraserSize, double* gap) const override;
+    double isPointNearby(double x, double y, double veryClose, double toFar) const override;
 
 public:
     // Serialize interface

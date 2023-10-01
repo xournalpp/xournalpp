@@ -15,6 +15,8 @@
 
 #include <cairo.h>  // for cairo_t
 
+#include "config-debug.h"
+
 class ErasableStroke;
 class Range;
 
@@ -34,6 +36,12 @@ public:
     void draw(cairo_t* cr) const;
 
     /**
+     *
+     *
+     */
+    void drawPressureSpline(cairo_t* cr) const;
+
+    /**
      * @brief Draw the filling of the erasable stroke  assuming the cairo context is all set
      * @param cr The cairo context
      */
@@ -45,6 +53,10 @@ public:
      * @param cr The cairo context
      */
     void paintFilledHighlighter(cairo_t* cr) const;
+
+#ifdef DEBUG_ERASABLE_STROKE_BOXES
+    void blitDebugMask(cairo_t* cr) const;
+#endif
 
 private:
     /**

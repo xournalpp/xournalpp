@@ -21,7 +21,7 @@ Range Range::unite(const Range& o) const {
 
 Range Range::intersect(const Range& o) const {
     Range rg(std::max(minX, o.minX), std::max(minY, o.minY), std::min(maxX, o.maxX), std::min(maxY, o.maxY));
-    return rg.isValid() ? rg : Range();
+    return rg.hasContent() ? rg : Range();
 }
 
 auto Range::getX() const -> double { return this->minX; }
@@ -52,6 +52,8 @@ auto Range::empty() const -> bool {
 }
 
 bool Range::isValid() const { return minX <= maxX && minY <= maxY; }
+
+bool Range::hasContent() const { return minX < maxX && minY < maxY; }
 
 bool Range::contains(double x, double y) const { return x >= minX && x <= maxX && y >= minY && y <= maxY; }
 

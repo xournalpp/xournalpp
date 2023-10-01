@@ -8,6 +8,7 @@
 #include "model/GeometryTool.h"
 #include "model/Stroke.h"
 #include "model/XojPage.h"
+#include "model/path/PiecewiseLinearPath.h"
 #include "undo/InsertUndoAction.h"
 
 using xoj::util::Rectangle;
@@ -53,11 +54,12 @@ void GeometryToolController::markPoint(double x, double y) {
     Stroke* cross = new Stroke();
     cross->setWidth(h->getToolThickness(TOOL_PEN)[TOOL_SIZE_FINE]);
     cross->setColor(h->getTool(TOOL_PEN).getColor());
-    cross->addPoint(Point(x + MARK_SIZE, y + MARK_SIZE));
-    cross->addPoint(Point(x - MARK_SIZE, y - MARK_SIZE));
-    cross->addPoint(Point(x, y));
-    cross->addPoint(Point(x + MARK_SIZE, y - MARK_SIZE));
-    cross->addPoint(Point(x - MARK_SIZE, y + MARK_SIZE));
+    auto path = std::make_shared<PiecewiseLinearPath>(Point(x + MARK_SIZE, y + MARK_SIZE), 4);  // Reserve 4 segments
+    path->addLineSegmentTo(Point(x - MARK_SIZE, y - MARK_SIZE));
+    path->addLineSegmentTo(Point(x, y));
+    path->addLineSegmentTo(Point(x + MARK_SIZE, y - MARK_SIZE));
+    path->addLineSegmentTo(Point(x - MARK_SIZE, y + MARK_SIZE));
+    cross->setPath(std::move(path));
 
     const auto doc = control->getDocument();
     const auto page = view->getPage();

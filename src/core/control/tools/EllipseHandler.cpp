@@ -8,7 +8,7 @@
 #include "control/tools/BaseShapeHandler.h"        // for BaseShapeHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "model/Point.h"                           // for Point
-#include "util/Assert.h"
+#include "model/path/Spline.h"
 
 EllipseHandler::EllipseHandler(Control* control, const PageRef& page, bool flipShift, bool flipControl):
         BaseShapeHandler(control, page, flipShift, flipControl) {}
@@ -16,7 +16,7 @@ EllipseHandler::EllipseHandler(Control* control, const PageRef& page, bool flipS
 EllipseHandler::~EllipseHandler() = default;
 
 auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
-        -> std::pair<std::vector<Point>, Range> {
+        -> std::pair<std::shared_ptr<Path>, Range> {
     /**
      * Snap point to grid (if enabled - Alt key pressed will toggle)
      */
@@ -24,7 +24,6 @@ auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isContro
 
     double width = c.x - this->startPoint.x;
     double height = c.y - this->startPoint.y;
-
 
     this->modShift = isShiftDown;
     this->modControl = isControlDown;
@@ -44,63 +43,24 @@ auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isContro
 
     double radiusX = 0;
     double radiusY = 0;
-    double center_x = 0;
-    double center_y = 0;
+    double centerX = 0;
+    double centerY = 0;
 
     if (!this->modControl) {
         radiusX = 0.5 * width;
         radiusY = 0.5 * height;
-        center_x = this->startPoint.x + radiusX;
-        center_y = this->startPoint.y + radiusY;
+        centerX = this->startPoint.x + radiusX;
+        centerY = this->startPoint.y + radiusY;
     } else {
         // control key down, draw centered at cursor
         radiusX = width;
         radiusY = height;
-        center_x = this->startPoint.x;
-        center_y = this->startPoint.y;
+        centerX = this->startPoint.x;
+        centerY = this->startPoint.y;
     }
+    radiusX = std::abs(radiusX);  //  For bounding box computation
+    radiusY = std::abs(radiusY);  //
 
-    /*
-     * Set resolution depending on the radius (heuristic)
-     */
-    auto nbPtsPerQuadrant =
-            static_cast<unsigned int>(std::ceil(5 + 0.3 * (std::abs(radiusX) + std::abs(radiusY))));
-    const double stepAngle = M_PI_2 / nbPtsPerQuadrant;
-
-    std::pair<std::vector<Point>, Range> res;
-    std::vector<Point>& shape = res.first;
-
-    /*
-     * This call to reserve() makes the calls to std::transform() below safe.
-     * DO NOT REMOVE
-     * NB: the +1 is necessary to add a copy of the first point and close the ellipse.
-     */
-    shape.reserve(4 * nbPtsPerQuadrant + 1);
-
-    shape.emplace_back(center_x + radiusX, center_y);
-    for (unsigned int j = 1U; j < nbPtsPerQuadrant; j++) {
-        const double tgtAngle = stepAngle * j;
-        const double centerAngle = 0.25 * (std::atan2(std::abs(radiusY) * std::sin(tgtAngle), std::abs(radiusX) * std::cos(tgtAngle))) + 0.75 * tgtAngle;
-        double xp = center_x + radiusX * std::cos(centerAngle);
-        double yp = center_y + radiusY * std::sin(centerAngle);
-        shape.emplace_back(xp, yp);
-    }
-    shape.emplace_back(center_x, center_y + radiusY);
-
-    // The following std::transform() are only safe because no reallocations will happen (see reserve() above).
-    // Symmetry for second quadrant
-    xoj_assert(shape.capacity() >= 2 * shape.size() - 1);
-    std::transform(std::next(shape.rbegin()), shape.rend(), std::back_inserter(shape),
-                   [&](const Point& p) { return Point(2 * center_x - p.x, p.y); });
-
-    // Symmetry for the second half
-    xoj_assert(shape.capacity() >= 2 * shape.size() - 1);
-    std::transform(std::next(shape.rbegin()), shape.rend(), std::back_inserter(shape),
-                   [&](const Point& p) { return Point(p.x, 2 * center_y - p.y); });
-
-    Range rg(center_x + radiusX, center_y + radiusY);
-    rg.addPoint(center_x - radiusX, center_y - radiusY);
-    res.second = rg;
-
-    return res;
+    return std::make_pair(std::make_shared<Spline>(Spline::MAKE_ELLIPSE, Point(centerX, centerY), radiusX, radiusY),
+                          Range(centerX - radiusX, centerY - radiusY, centerX + radiusX, centerY + radiusY));
 }

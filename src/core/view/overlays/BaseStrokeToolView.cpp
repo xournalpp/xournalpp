@@ -56,3 +56,11 @@ auto BaseStrokeToolView::createMask(cairo_t* tgtcr) const -> Mask {
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
     return mask;
 }
+
+void BaseStrokeToolView::drawDot(cairo_t* cr, const Point& p) const {
+    cairo_set_line_width(cr, p.z == Point::NO_PRESSURE ? this->strokeWidth : p.z);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_move_to(cr, p.x, p.y);
+    cairo_line_to(cr, p.x, p.y);
+    cairo_stroke(cr);
+}

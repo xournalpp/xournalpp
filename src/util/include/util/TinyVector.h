@@ -11,13 +11,14 @@
 
 #pragma once
 
-#include <algorithm>
-#include <array>
-#include <cstddef>
-#include <iterator>
-#include <memory>
-#include <type_traits>
-#include <utility>
+#include <algorithm>    // for swap_ranges
+#include <array>        // for array
+#include <cstddef>      // for size_t
+#include <iterator>     // for back_inserter, distance
+#include <memory>       // for destroy, destroy_at
+#include <new>          // for new, launder
+#include <type_traits>  // for aligned_storage
+#include <utility>      // for forward
 
 #include "util/Assert.h"
 
@@ -52,11 +53,34 @@ public:
 
     TinyVector() = default;
     ~TinyVector() { std::destroy(begin(), end()); }
+
+    TinyVector(std::initializer_list<T> list) {
+        auto n = list.size();
+        xoj_assert(n <= N);
+        std::copy(list.begin(), list.end(), std::back_inserter(*this));
+        nb = n;
+    }
+
     TinyVector(const TinyVector& other) { std::copy(other.begin(), other.end(), std::back_inserter(*this)); }
     TinyVector(TinyVector&& other) {
         std::move(other.begin(), other.end(), std::back_inserter(*this));
         other.clear();
     }
+
+    // TinyVectors convert to bigger TinyVectors
+    template <size_type M>
+    TinyVector(const TinyVector<T, M>& other) {
+        static_assert(M <= N);
+        std::copy(other.begin(), other.end(), std::back_inserter(*this));
+    }
+
+    template <size_type M>
+    TinyVector(TinyVector<T, M>&& other) {
+        static_assert(M <= N);
+        std::move(other.begin(), other.end(), std::back_inserter(*this));
+        other.clear();
+    }
+
     TinyVector& operator=(const TinyVector& other) {
         if (this == &other) {
             return *this;
@@ -65,6 +89,7 @@ public:
         std::copy(other.begin(), other.end(), std::back_inserter(*this));
         return *this;
     }
+
     TinyVector& operator=(TinyVector&& other) {
         if (this == &other) {
             return *this;
@@ -82,6 +107,8 @@ public:
     const T& front() const { return *UninitializedStorage<T, N>::data(); }
     T& back() { return *(UninitializedStorage<T, N>::data() + nb - 1); }
     const T& back() const { return *(UninitializedStorage<T, N>::data() + nb - 1); }
+    T& operator[](size_type pos) { return *(UninitializedStorage<T, N>::data() + pos); }
+    const T& operator[](size_type pos) const { return *(UninitializedStorage<T, N>::data() + pos); }
 
     template <class... Args>
     void emplace_back(Args&&... args) {

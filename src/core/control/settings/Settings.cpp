@@ -235,6 +235,11 @@ void Settings::loadDefault() {
     this->stabilizerMass = 5.0;
     this->stabilizerFinalizeStroke = true;
     /**/
+
+    /**
+     * Spline Approximator
+     */
+    this->splineApproximatorType = SplineApproximator::Type::NONE;
 }
 
 auto Settings::loadViewMode(ViewModeId mode) -> bool {
@@ -667,6 +672,12 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->stabilizerCuspDetection = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerFinalizeStroke")) == 0) {
         this->stabilizerFinalizeStroke = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+        /**
+         * Spline Approximation
+         */
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("splineApproximatorType")) == 0) {
+        this->splineApproximatorType =
+                (SplineApproximator::Type)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     }
     /**/
 
@@ -1131,6 +1142,11 @@ void Settings::save() {
     SAVE_BOOL_PROP(stabilizerCuspDetection);
     SAVE_BOOL_PROP(stabilizerFinalizeStroke);
     /**/
+
+    /**
+     * Spline approximation
+     */
+    saveProperty("splineApproximatorType", static_cast<int>(splineApproximatorType), root);
 
     SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
     SAVE_STRING_PROP(latexSettings.defaultText);
@@ -2570,3 +2586,15 @@ void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preproce
  * @return Palette&
  */
 auto Settings::getColorPalette() -> const Palette& { return *(this->palette); }
+
+SplineApproximator::Type Settings::getSplineApproximatorType() const { return this->splineApproximatorType; }
+
+void Settings::setSplineApproximatorType(SplineApproximator::Type t) {
+    const SplineApproximator::Type tt = SplineApproximator::isValid(t) ? t : SplineApproximator::Type::NONE;
+
+    if (splineApproximatorType == tt) {
+        return;
+    }
+    splineApproximatorType = tt;
+    save();
+}

@@ -18,6 +18,7 @@
 #include "view/overlays/OverlayView.h"
 
 class Stroke;
+class Point;
 
 namespace xoj::view {
 class Mask;
@@ -34,6 +35,11 @@ protected:
      * If targetCr == nullptr, the surface is of CAIRO_SURFACE_TYPE_IMAGE.
      */
     Mask createMask(cairo_t* targetCr) const;
+
+    /**
+     * @brief Draws a dot (corresponding to the given Point) on the cairo context
+     */
+    void drawDot(cairo_t* cr, const Point& p) const;
 
     /**
      * @brief Helper function to get a color whose alpha value depends on the tool's properties

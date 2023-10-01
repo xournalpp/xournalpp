@@ -17,8 +17,6 @@
 
 #include "BaseShapeHandler.h"  // for BaseShapeHandler
 
-class XournalView;
-
 class CoordinateSystemHandler: public BaseShapeHandler {
 public:
     CoordinateSystemHandler(Control* control, const PageRef& page, bool flipShift = false, bool flipControl = false);
@@ -26,5 +24,5 @@ public:
 
 private:
     auto createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
-            -> std::pair<std::vector<Point>, Range> override;
+            -> std::pair<std::shared_ptr<Path>, Range> override;
 };

@@ -7,6 +7,7 @@
 #include "control/tools/BaseShapeHandler.h"        // for BaseShapeHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "model/Point.h"                           // for Point
+#include "model/path/PiecewiseLinearPath.h"
 
 
 RectangleHandler::RectangleHandler(Control* control, const PageRef& page, bool flipShift, bool flipControl):
@@ -15,7 +16,7 @@ RectangleHandler::RectangleHandler(Control* control, const PageRef& page, bool f
 RectangleHandler::~RectangleHandler() = default;
 
 auto RectangleHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
-        -> std::pair<std::vector<Point>, Range> {
+        -> std::pair<std::shared_ptr<Path>, Range> {
     /**
      * Snap point to grid (if enabled)
      */
@@ -23,7 +24,6 @@ auto RectangleHandler::createShape(bool isAltDown, bool isShiftDown, bool isCont
 
     double width = c.x - this->startPoint.x;
     double height = c.y - this->startPoint.y;
-
 
     this->modShift = isShiftDown;
     this->modControl = isControlDown;
@@ -55,5 +55,11 @@ auto RectangleHandler::createShape(bool isAltDown, bool isShiftDown, bool isCont
     Range rg(p1.x, p1.y);
     rg.addPoint(p2.x, p2.y);
 
-    return {{p1, {p1.x, p2.y}, p2, {p2.x, p1.y}, p1}, rg};
+    auto shape = std::make_shared<PiecewiseLinearPath>(p1, 4);
+    shape->addLineSegmentTo(Point(p1.x, p2.y));
+    shape->addLineSegmentTo(p2);
+    shape->addLineSegmentTo(Point(p2.x, p1.y));
+    shape->addLineSegmentTo(p1);
+
+    return {std::move(shape), rg};
 }

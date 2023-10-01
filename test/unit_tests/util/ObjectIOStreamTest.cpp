@@ -8,6 +8,9 @@
 #include <gtest/gtest.h>
 
 #include "model/Stroke.h"
+#include "model/path/Path.h"
+#include "model/path/PiecewiseLinearPath.h"
+#include "model/path/Spline.h"
 #include "util/serializing/BinObjectEncoding.h"
 #include "util/serializing/HexObjectEncoding.h"
 #include "util/serializing/ObjectInputStream.h"
@@ -301,29 +304,30 @@ void assertStrokeEquality(const Stroke& stroke1, const Stroke& stroke2) {
     EXPECT_EQ(stroke1.getFill(), stroke2.getFill());
     EXPECT_EQ(stroke1.getWidth(), stroke2.getWidth());
 
-    double avgPressure1 = stroke1.getAvgPressure();
-    double avgPressure2 = stroke2.getAvgPressure();
+    EXPECT_EQ(stroke1.hasPath(), stroke2.hasPath());
 
-    if (!std::isnan(avgPressure1)) {
-        EXPECT_DOUBLE_EQ(avgPressure1, avgPressure2);
-    } else {
-        EXPECT_TRUE(std::isnan(avgPressure2));
+    if (stroke1.hasPath()) {
+        EXPECT_EQ(stroke1.getPath().getType(), stroke2.getPath().getType());
+
+        std::vector<Point> points1 = stroke1.getPath().getData();
+        std::vector<Point> points2 = stroke2.getPath().getData();
+
+        EXPECT_EQ(points1.size(), points2.size());
+        for (size_t i = 0; i < points1.size(); ++i) {
+            EXPECT_TRUE(points1[i].equalsPos(points2[i]));
+            EXPECT_DOUBLE_EQ(points1[i].z, points2[i].z);
+        }
     }
-
-    std::vector<Point> points1 = stroke1.getPointVector();
-    std::vector<Point> points2 = stroke2.getPointVector();
-
-    EXPECT_EQ(points1.size(), points2.size());
-    for (size_t i = 0; i < points1.size(); ++i) { EXPECT_TRUE(points1[i].equalsPos(points2[i])); }
 }
 
 TEST(UtilObjectIOStream, testReadStroke) {
-    std::vector<Stroke> strokes(8);
+    std::vector<Stroke> strokes(9);
     // strokes[0]: empty stroke
 
-    strokes[1].addPoint(Point(42, 42));
-    strokes[1].addPoint(Point(42.1, 42.1));
-    strokes[1].addPoint(Point(1312., 8));
+    auto path = std::make_shared<PiecewiseLinearPath>(Point(42, 42));
+    path->addLineSegmentTo(Point(42.1, 42.1));
+    path->addLineSegmentTo(Point(1312., 8));
+    strokes[1].setPath(path);
 
     strokes[2].setWidth(42.);
 
@@ -334,23 +338,32 @@ TEST(UtilObjectIOStream, testReadStroke) {
     strokes[5].setAudioFilename("foo.mp3");
 
     // strokes[6]: complex stroke
-    strokes[6].addPoint(Point(-1312., 8));
-    strokes[6].addPoint(Point(-42, -42));
-    strokes[6].addPoint(Point(42.1, -42.1));
-    strokes[6].setPressure({42., 1332.});
+    path = std::make_shared<PiecewiseLinearPath>(Point(-1312., 8, 42.));
+    path->addLineSegmentTo(Point(-42, -42, 1332.));
+    path->addLineSegmentTo(Point(42.1, -42.1));
+    strokes[6].setPath(path);
     strokes[6].setWidth(1337.);
     strokes[6].setFill(-1);
     strokes[6].setToolType(StrokeTool::PEN);
     strokes[6].setAudioFilename("assets/bar.mp3");
 
     // strokes[7]: invalid stroke
-    strokes[7].addPoint(Point(0., 0.));
-    strokes[7].addPoint(Point(1., 2.));
-    strokes[7].addPoint(Point(1., 2.));
-    strokes[7].setPressure({42., 1332.});
+    path = std::make_shared<PiecewiseLinearPath>(Point(0., 0., 42.));
+    path->addLineSegmentTo(Point(1., 2., 1332.));
+    path->addLineSegmentTo(Point(1., 2.));
+    strokes[7].setPath(path);
     strokes[7].setFill(-42);
     strokes[7].setToolType(static_cast<StrokeTool::Value>(42));
     strokes[7].setWidth(-1337.);
+
+    // strokes[8]: spline
+    auto spline = std::make_shared<Spline>(Point(0., 0., 42.));
+    spline->addCubicSegment(Point(1., 2., 1332.), Point(1., 3., 1312.), Point(2., 2., 1232.));
+    spline->addCubicSegment(Point(10., 21., 332.), Point(12., 3.5, 13.12), Point(2., 4., 132.));
+    strokes[8].setPath(spline);
+    strokes[8].setFill(123);
+    strokes[8].setToolType(StrokeTool::HIGHLIGHTER);
+    strokes[8].setAudioFilename("assets/bar.mp3");
 
     size_t i = 0;
     try {
@@ -358,7 +371,6 @@ TEST(UtilObjectIOStream, testReadStroke) {
             std::string out_string = serializeStroke(stroke);
             ObjectInputStream istream;
             istream.read(out_string.c_str(), (int)out_string.size());
-
             Stroke in_stroke;
             in_stroke.readSerialized(istream);
             assertStrokeEquality(stroke, in_stroke);

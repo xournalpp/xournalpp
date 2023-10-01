@@ -236,6 +236,23 @@
     <property name="can-focus">False</property>
     <property name="icon-name">dialog-ok</property>
   </object>
+  <object class="GtkListStore" id="listSplineApproximationOptions">
+    <columns>
+      <!-- column-name Name -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">None</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Live approximation</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Approximate final stroke</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkListStore" id="listStabilizerAveragingMethods">
     <columns>
       <!-- column-name Name -->
@@ -1357,6 +1374,79 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="frameSplineApprox">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.01</property>
+                                <child>
+                                  <object class="GtkAlignment" id="alignmentSplineApprox">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="bottom-padding">12</property>
+                                    <property name="left-padding">12</property>
+                                    <property name="right-padding">12</property>
+                                    <child>
+                                      <!-- n-columns=2 n-rows=1 -->
+                                      <object class="GtkGrid" id="gridSplineApprox">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="column-spacing">10</property>
+                                        <child>
+                                          <object class="GtkLabel" id="lbSplineApproxInner">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="halign">start</property>
+                                            <property name="margin-left">16</property>
+                                            <property name="margin-start">16</property>
+                                            <property name="label" translatable="yes">Approximation</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">0</property>
+                                            <property name="top-attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkComboBox" id="cbSplineApproximator">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="model">listSplineApproximationOptions</property>
+                                            <property name="active">0</property>
+                                            <property name="popup-fixed-width">False</property>
+                                            <property name="id-column">0</property>
+                                            <property name="active-id">0</property>
+                                            <child>
+                                              <object class="GtkCellRendererText"/>
+                                              <attributes>
+                                                <attribute name="markup">0</attribute>
+                                                <attribute name="text">0</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">1</property>
+                                            <property name="top-attach">0</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="lbSplineApprox">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Spline Approximation</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                           </object>

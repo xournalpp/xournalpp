@@ -1,14 +1,13 @@
 #include "ArrowHandler.h"
 
-#include <algorithm>  // for minmax_element
 #include <cmath>      // for cos, sin, atan2, M_PI
 
 #include "control/Control.h"                       // for Control
 #include "control/ToolHandler.h"                   // for ToolHandler
 #include "control/tools/BaseShapeHandler.h"        // for BaseShapeHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
-#include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
 #include "model/Point.h"                           // for Point
+#include "model/path/PiecewiseLinearPath.h"
 #include "util/Range.h"                            // for Range
 
 ArrowHandler::ArrowHandler(Control* control, const PageRef& page, bool doubleEnded):
@@ -17,7 +16,7 @@ ArrowHandler::ArrowHandler(Control* control, const PageRef& page, bool doubleEnd
 ArrowHandler::~ArrowHandler() = default;
 
 auto ArrowHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
-        -> std::pair<std::vector<Point>, Range> {
+        -> std::pair<std::shared_ptr<Path>, Range> {
     Point c = snappingHandler.snap(this->currPoint, this->startPoint, isAltDown);
     const double lineLength = std::hypot(c.x - this->startPoint.x, c.y - this->startPoint.y);
     const double thickness = control->getToolHandler()->getThickness();
@@ -56,31 +55,25 @@ auto ArrowHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlD
     }
 
     const double angle = atan2(c.y - this->startPoint.y, c.x - this->startPoint.x);
-
-    std::pair<std::vector<Point>, Range> res; // members initialised below
-    std::vector<Point>& shape = res.first;
-
-    shape.reserve(doubleEnded ? 9 : 5);
-
-    shape.emplace_back(this->startPoint);
+    auto shape = std::make_shared<PiecewiseLinearPath>(this->startPoint, doubleEnded ? 8 : 4);
 
     if (doubleEnded) {
-        shape.emplace_back(startPoint.x + arrowDist * cos(angle + delta),
-                           startPoint.y + arrowDist * sin(angle + delta));
-        shape.emplace_back(startPoint);
-        shape.emplace_back(startPoint.x + arrowDist * cos(angle - delta),
-                           startPoint.y + arrowDist * sin(angle - delta));
-        shape.emplace_back(startPoint);
+        shape->addLineSegmentTo(startPoint.x + arrowDist * cos(angle + delta),
+                                startPoint.y + arrowDist * sin(angle + delta));
+        shape->addLineSegmentTo(startPoint);
+        shape->addLineSegmentTo(startPoint.x + arrowDist * cos(angle - delta),
+                                startPoint.y + arrowDist * sin(angle - delta));
+        shape->addLineSegmentTo(startPoint);
     }
 
-    shape.emplace_back(c);
-    shape.emplace_back(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta));
-    shape.emplace_back(c);
-    shape.emplace_back(c.x - arrowDist * cos(angle - delta), c.y - arrowDist * sin(angle - delta));
+    shape->addLineSegmentTo(c);
+    shape->addLineSegmentTo(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta));
+    shape->addLineSegmentTo(c);
+    shape->addLineSegmentTo(c.x - arrowDist * cos(angle - delta), c.y - arrowDist * sin(angle - delta));
 
-    auto [minX, maxX] = std::minmax_element(shape.begin(), shape.end(), [](auto& p, auto& q) { return p.x < q.x; });
-    auto [minY, maxY] = std::minmax_element(shape.begin(), shape.end(), [](auto& p, auto& q) { return p.y < q.y; });
-    res.second = Range(minX->x, minY->y, maxX->x, maxY->y);
+    auto res = std::make_pair<std::shared_ptr<Path>, Range>(std::move(shape), Range());
 
+    // No fast trick to compute the bbox of the arrow, because of the head(s). Use the default algorithm
+    res.second = Range(res.first->getThinBoundingBox());
     return res;
 }

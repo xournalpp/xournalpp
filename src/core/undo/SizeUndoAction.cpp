@@ -17,13 +17,12 @@ using std::vector;
 class SizeUndoActionEntry {
 public:
     SizeUndoActionEntry(Stroke* s, double originalWidth, double newWidth, vector<double> originalPressure,
-                        vector<double> newPressure, int pressureCount) {
+                        vector<double> newPressure) {
         this->s = s;
         this->originalWidth = originalWidth;
         this->newWidth = newWidth;
         this->originalPressure = std::move(originalPressure);
         this->newPressure = std::move(newPressure);
-        this->pressureCount = pressureCount;
     }
 
     ~SizeUndoActionEntry() = default;
@@ -33,7 +32,6 @@ public:
 
     vector<double> originalPressure;
     vector<double> newPressure;
-    int pressureCount;
 };
 
 SizeUndoAction::SizeUndoAction(const PageRef& page, Layer* layer): UndoAction("SizeUndoAction") {
@@ -46,19 +44,10 @@ SizeUndoAction::~SizeUndoAction() {
     this->data.clear();
 }
 
-auto SizeUndoAction::getPressure(Stroke* s) -> vector<double> {
-    int count = s->getPointCount();
-    vector<double> data;
-    data.reserve(count);
-    for (int i = 0; i < count; i++) { data.push_back(s->getPoint(i).z); }
-
-    return data;
-}
-
 void SizeUndoAction::addStroke(Stroke* s, double originalWidth, double newWidth, vector<double> originalPressure,
-                               vector<double> newPressure, int pressureCount) {
-    this->data.push_back(new SizeUndoActionEntry(s, originalWidth, newWidth, std::move(originalPressure),
-                                                 std::move(newPressure), pressureCount));
+                               vector<double> newPressure) {
+    this->data.push_back(
+            new SizeUndoActionEntry(s, originalWidth, newWidth, std::move(originalPressure), std::move(newPressure)));
 }
 
 auto SizeUndoAction::undo(Control* control) -> bool {
@@ -71,7 +60,7 @@ auto SizeUndoAction::undo(Control* control) -> bool {
 
     for (SizeUndoActionEntry* e: this->data) {
         e->s->setWidth(e->originalWidth);
-        e->s->setPressure(e->originalPressure);
+        e->s->setPressureValues(e->originalPressure);
 
         range.addPoint(e->s->getX(), e->s->getY());
         range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());
@@ -92,7 +81,7 @@ auto SizeUndoAction::redo(Control* control) -> bool {
 
     for (SizeUndoActionEntry* e: this->data) {
         e->s->setWidth(e->newWidth);
-        e->s->setPressure(e->newPressure);
+        e->s->setPressureValues(e->newPressure);
 
         range.addPoint(e->s->getX(), e->s->getY());
         range.addPoint(e->s->getX() + e->s->getElementWidth(), e->s->getY() + e->s->getElementHeight());

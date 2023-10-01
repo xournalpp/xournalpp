@@ -7,6 +7,7 @@
 #include "model/Setsquare.h"
 #include "model/Stroke.h"
 #include "model/XojPage.h"
+#include "model/path/PiecewiseLinearPath.h"
 
 using xoj::util::Rectangle;
 SetsquareController::SetsquareController(XojPageView* view, Setsquare* setsquare):
@@ -53,8 +54,7 @@ void SetsquareController::createEdgeStroke(double x) {
 
         const auto p = this->getPointForPos(x);
         initializeStroke();
-        stroke->addPoint(Point(p.x, p.y));
-        stroke->addPoint(Point(p.x, p.y));  // doubled point
+        stroke->setPath(std::make_shared<PiecewiseLinearPath>(Point(p.x, p.y), Point(p.x, p.y)));  // doubled point
         geometryTool->notify();
     } else {
         g_warning("No valid stroke from setsquare!");
@@ -71,34 +71,32 @@ void SetsquareController::createRadialStroke(double x, double y) {
 void SetsquareController::updateEdgeStroke(double x) {
     hypotenuseMax = std::max(this->hypotenuseMax, x);
     hypotenuseMin = std::min(this->hypotenuseMin, x);
-    stroke->deletePointsFrom(0);
     const auto p1 = getPointForPos(hypotenuseMin);
     const auto p2 = getPointForPos(hypotenuseMax);
 
-    stroke->addPoint(Point(p1.x, p1.y));
-    stroke->addPoint(Point(p2.x, p2.y));
+    stroke->setPath(std::make_shared<PiecewiseLinearPath>(Point(p1.x, p1.y), Point(p2.x, p2.y)));
     geometryTool->notify();
 }
 
 void SetsquareController::updateRadialStroke(double x, double y) {
-    stroke->deletePointsFrom(0);
     const auto c = getPointForPos(0);
-    stroke->addPoint(Point(c.x, c.y));
+    auto path = std::make_shared<PiecewiseLinearPath>(Point(c.x, c.y), 1);  // Reserve for 1 segment
 
     const auto p = posRelToSide(HYPOTENUSE, x, y);
     const auto rad = std::hypot(p.x, p.y);
 
     if (rad >= Setsquare::radiusFromHeight(geometryTool->getHeight()) || p.y > 0) {
         this->strokeAngle = std::atan2(p.y, p.x);
-        stroke->addPoint(Point(x, y));
+        path->addLineSegmentTo(Point(x, y));
     } else {
         cairo_matrix_t matrix = geometryTool->getMatrix();
         auto qx = rad * std::cos(this->strokeAngle);
         auto qy = -rad * std::sin(this->strokeAngle);
         cairo_matrix_transform_point(&matrix, &qx, &qy);
 
-        stroke->addPoint(Point(qx, qy));
+        path->addLineSegmentTo(Point(qx, qy));
     }
+    stroke->setPath(std::move(path));
     geometryTool->notify();
 }
 

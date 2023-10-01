@@ -129,17 +129,16 @@ auto Text::isInEditing() const -> bool { return this->inEditing; }
 
 auto Text::rescaleOnlyAspectRatio() -> bool { return true; }
 
-auto Text::intersects(double x, double y, double halfEraserSize) const -> bool {
-    return intersects(x, y, halfEraserSize, nullptr);
-}
+auto Text::isPointNearby(double x, double y, double veryClose, double toFar) const -> double {
+    double x1 = this->x - veryClose;
+    double x2 = this->x + this->getElementWidth() + veryClose;
+    double y1 = this->y - veryClose;
+    double y2 = this->y + this->getElementHeight() + veryClose;
 
-auto Text::intersects(double x, double y, double halfEraserSize, double* gap) const -> bool {
-    double x1 = this->x - halfEraserSize;
-    double x2 = this->x + this->getElementWidth() + halfEraserSize;
-    double y1 = this->y - halfEraserSize;
-    double y2 = this->y + this->getElementHeight() + halfEraserSize;
-
-    return x >= x1 && x <= x2 && y >= y1 && y <= y2;
+    if (x >= x1 && x <= x2 && y >= y1 && y <= y2) {
+        return veryClose;
+    }
+    return toFar;
 }
 
 void Text::serialize(ObjectOutputStream& out) const {

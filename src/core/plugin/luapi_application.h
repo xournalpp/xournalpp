@@ -42,6 +42,8 @@
 #include "model/StrokeStyle.h"
 #include "model/Text.h"
 #include "model/XojPage.h"
+#include "model/path/PiecewiseLinearPath.h"
+#include "model/path/Spline.h"
 #include "plugin/Plugin.h"
 #include "undo/InsertUndoAction.h"
 #include "util/StringUtils.h"
@@ -706,13 +708,13 @@ static int applib_addSplines(lua_State* L) {
     size_t numSplines = lua_rawlen(L, -1);
     for (size_t a = 1; a <= numSplines; a++) {
         std::vector<double> coordStream;
-        Stroke* stroke = new Stroke();
         // Get coordinates
         lua_pushnumber(L, a);
         lua_gettable(L, -2);                 // get current spline from splines table
         lua_getfield(L, -1, "coordinates");  // get coordinates of the current spline
-        if (!lua_istable(L, -1))
+        if (!lua_istable(L, -1)) {
             return luaL_error(L, "Missing coordinate table!");
+        }
         size_t numCoords = lua_rawlen(L, -1);
         for (size_t b = 1; b <= numCoords; b++) {
             lua_pushnumber(L, b);
@@ -725,30 +727,36 @@ static int applib_addSplines(lua_State* L) {
         lua_pop(L, 1);  // cleanup coordinates table
         // Handle those points
         // Check if the list is divisible by 8.
-        if (coordStream.size() % 8 != 0)
+        if (coordStream.size() % 8 != 0) {
             return luaL_error(L, "Point table incomplete!");
-
-        // Now take that gigantic list of splines and create SplineSegments out of them.
-        long unsigned int i = 0;
-        while (i < coordStream.size()) {
-            // start, ctrl1, ctrl2, end
-            Point start = Point(coordStream.at(i), coordStream.at(i + 1), Point::NO_PRESSURE);
-            Point ctrl1 = Point(coordStream.at(i + 2), coordStream.at(i + 3), Point::NO_PRESSURE);
-            Point ctrl2 = Point(coordStream.at(i + 4), coordStream.at(i + 5), Point::NO_PRESSURE);
-            Point end = Point(coordStream.at(i + 6), coordStream.at(i + 7), Point::NO_PRESSURE);
-            i += 8;
-            SplineSegment segment = SplineSegment(start, ctrl1, ctrl2, end);
-            std::list<Point> raster = segment.toPointSequence();
-            for (Point point: raster) stroke->addPoint(point);
-            // TODO: (willnilges) Is there a way we can get Pressure with Splines?
         }
 
-        if (stroke->getPointCount() >= 2) {
+        if (coordStream.empty()) {
+            lua_pop(L, 1);
+            continue;
+        }
+
+        const Point firstKnot(coordStream[0], coordStream[1]);
+        // Reserve the space for the right number of segments
+        std::shared_ptr<Spline> spline = std::make_shared<Spline>(firstKnot, coordStream.size() / 8);
+
+        // Now take that gigantic list of splines and create SplineSegments out of them.
+
+        for (size_t i = 0; i < coordStream.size(); i += 8) {
+            Point ctrl1 = Point(coordStream[i + 2], coordStream[i + 3]);
+            Point ctrl2 = Point(coordStream.at(i + 4), coordStream[i + 5]);
+            Point end = Point(coordStream[i + 6], coordStream[i + 7]);
+            spline->addCubicSegment(ctrl1, ctrl2, end);
+        }
+
+        if (spline->nbSegments() > 0) {
             // Finish building the Stroke and apply it to the layer.
+            Stroke* stroke = new Stroke();
+            stroke->setPath(std::move(spline));
             addStrokeHelper(L, stroke);
             strokes.push_back(stroke);
         } else {
-            g_warning("Stroke shorter than two points. Discarding. (Has %d)", stroke->getPointCount());
+            g_warning("Stroke has no spline segments. Discarding.");
         }
         // Onto the next stroke
         lua_pop(L, 1);  // cleanup current spline
@@ -847,15 +855,15 @@ static int applib_addStrokes(lua_State* L) {
         std::vector<double> xStream;
         std::vector<double> yStream;
         std::vector<double> pressureStream;
-        Stroke* stroke = new Stroke();
 
         // Fetch table of X values from the Lua stack
         lua_pushnumber(L, a);
         lua_gettable(L, -2);  // get current stroke
 
         lua_getfield(L, -1, "x");  // get x array of current stroke
-        if (!lua_istable(L, -1))
+        if (!lua_istable(L, -1)) {
             return luaL_error(L, "Missing X-Coordinate table!");
+        }
         size_t xPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= xPoints; b++) {
             lua_pushnumber(L, b);
@@ -868,8 +876,9 @@ static int applib_addStrokes(lua_State* L) {
 
         // Fetch table of Y values form the Lua stack
         lua_getfield(L, -1, "y");  // get y array of current stroke
-        if (!lua_istable(L, -1))
+        if (!lua_istable(L, -1)) {
             return luaL_error(L, "Missing Y-Coordinate table!");
+        }
         size_t yPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= yPoints; b++) {
             lua_pushnumber(L, b);
@@ -891,6 +900,8 @@ static int applib_addStrokes(lua_State* L) {
                 pressureStream.push_back(value);
                 lua_pop(L, 1);  // cleanup pressure
             }
+        } else {
+            g_warning("Missing pressure table. Assuming NO_PRESSURE.");
         }
 
         lua_pop(L, 1);  // cleanup pressure array
@@ -900,28 +911,37 @@ static int applib_addStrokes(lua_State* L) {
         if (xStream.size() != yStream.size()) {
             return luaL_error(L, "X and Y vectors are not equal length!");
         }
-        if (xStream.size() != pressureStream.size() && pressureStream.size() > 0)
+        if (xStream.size() != pressureStream.size() && pressureStream.size() > 0) {
             return luaL_error(L, "Pressure vector is not equal length!");
+        }
 
         // Check and make sure there's enough points (need at least 2)
         if (xStream.size() < 2) {
             g_warning("Stroke shorter than two points. Discarding. (Has %ld/2)", xStream.size());
             return 1;
         }
+
+        const Point firstKnot(xStream.front(), yStream.front(),
+                              pressureStream.size() > 0 ? pressureStream.front() : Point::NO_PRESSURE);
+        // Reserve space for xStream.size() - 1 segments.
+        std::shared_ptr<PiecewiseLinearPath> path =
+                std::make_shared<PiecewiseLinearPath>(firstKnot, xStream.size() - 1);
         // Add points to the stroke. Include pressure, if it exists.
         if (pressureStream.size() > 0) {
-            for (long unsigned int i = 0; i < xStream.size(); i++) {
+            for (long unsigned int i = 1; i < xStream.size(); i++) {
                 Point myPoint = Point(xStream.at(i), yStream.at(i), pressureStream.at(i));
-                stroke->addPoint(myPoint);
+                path->addLineSegmentTo(myPoint);
             }
         } else {
-            for (long unsigned int i = 0; i < xStream.size(); i++) {
+            for (long unsigned int i = 1; i < xStream.size(); i++) {
                 Point myPoint = Point(xStream.at(i), yStream.at(i), Point::NO_PRESSURE);
-                stroke->addPoint(myPoint);
+                path->addLineSegmentTo(myPoint);
             }
         }
 
         // Finish building the Stroke and apply it to the layer.
+        Stroke* stroke = new Stroke();
+        stroke->setPath(std::move(path));
         addStrokeHelper(L, stroke);
         strokes.push_back(stroke);
         // Onto the next stroke
@@ -1314,8 +1334,10 @@ static int applib_getStrokes(lua_State* L) {
             // -2 = index of the current stroke
             // -1 = current stroke
 
+            auto& pts = s->getPath().getData();
+
             lua_newtable(L);  // create table of x-coordinates
-            for (auto p: s->getPointVector()) {
+            for (auto p: pts) {
                 lua_pushnumber(L, ++currPointNo);  // key
                 lua_pushnumber(L, p.x);            // value
                 lua_settable(L, -3);               // insert
@@ -1324,7 +1346,7 @@ static int applib_getStrokes(lua_State* L) {
             currPointNo = 0;
 
             lua_newtable(L);  // create table for y-coordinates
-            for (auto p: s->getPointVector()) {
+            for (auto p: pts) {
                 lua_pushnumber(L, ++currPointNo);  // key
                 lua_pushnumber(L, p.y);            // value
                 lua_settable(L, -3);               // insert
@@ -1334,7 +1356,7 @@ static int applib_getStrokes(lua_State* L) {
 
             if (s->hasPressure()) {
                 lua_newtable(L);  // create table for pressures
-                for (auto p: s->getPointVector()) {
+                for (auto p: pts) {
                     lua_pushnumber(L, ++currPointNo);  // key
                     lua_pushnumber(L, p.z);            // value
                     lua_settable(L, -3);               // insert

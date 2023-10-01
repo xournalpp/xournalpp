@@ -24,6 +24,7 @@
 #include "model/Document.h"         // for Document
 #include "model/DocumentHandler.h"  // for DocumentHandler
 #include "model/PageRef.h"          // for PageRef
+#include "model/path/Path.h"        // for Path::Type
 #include "util/Color.h"             // for Color
 
 #include "LoadHandlerHelper.h"
@@ -34,6 +35,7 @@ class Layer;
 class Stroke;
 class TexImage;
 class Text;
+class PiecewiseLinearPath;
 
 
 enum ParserPosition {
@@ -88,7 +90,7 @@ private:
     bool openFile(fs::path const& filepath);
     bool parseXml();
 
-    void fixNullPressureValues();
+    void fixNullPressureValues(const std::vector<Point>& pts);
     static void parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,
                            GError** error);
     static void parserEndElement(GMarkupParseContext* context, const gchar* elementName, gpointer userdata,
@@ -144,6 +146,7 @@ private:
     bool isGzFile = false;
 
     std::vector<double> pressureBuffer;
+    Path::Type pathType;
 
     std::vector<PageRef> pages;
     PageRef page;

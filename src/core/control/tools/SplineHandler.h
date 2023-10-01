@@ -89,8 +89,6 @@ public:
     using Data = SplineHandlerData;
     std::optional<Data> getData() const;
 
-    static auto linearizeSpline(const Data& data) -> std::vector<Point>;
-
     Range computeTotalRepaintRange(const Data& data, double strokeWidth) const;
 
     Range computeLastSegmentRepaintRange() const;

@@ -15,6 +15,7 @@
 #include <cairo.h>
 
 #include "model/Point.h"
+#include "model/path/PiecewiseLinearPath.h"
 #include "util/Point.h"
 
 #include "StrokeToolView.h"
@@ -32,7 +33,7 @@ public:
     StrokeToolFilledView(const StrokeHandler* strokeHandler, const Stroke& stroke, Repaintable* parent);
     virtual ~StrokeToolFilledView() noexcept;
 
-    void drawFilling(cairo_t* cr, const std::vector<Point>& pts) const override;
+    void drawFilling(cairo_t* cr, const PiecewiseLinearPath& pts) const override;
 
     void on(AddPointRequest, const Point& p) override;
     void on(StrokeReplacementRequest, const Stroke& newStroke) override;
@@ -46,12 +47,12 @@ protected:
         utl::Point<double> firstPoint;  // Store a copy for safe concurrent access
 
 
-        void appendSegments(const std::vector<Point>& pts);
+        void appendSegments(const PiecewiseLinearPath& pts);
 
         /**
          * @brief Filling contour (i.e. the stroke's entire path)
          */
-        std::vector<Point> contour;
+        PiecewiseLinearPath contour;
     };
 
     mutable FillingData filling;
