@@ -541,12 +541,10 @@ void XournalView::zoomChanged() {
 
     if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
         scrollTo(currentPage);
-    } else {
+    } else if (zoom->isZoomSequenceActive()) {
         auto pos = zoom->getScrollPositionAfterZoom();
-        if (pos.x != -1 && pos.y != -1) {
-            Layout* layout = gtk_xournal_get_layout(this->widget);
-            layout->scrollAbs(pos.x, pos.y);
-        }
+        Layout* layout = gtk_xournal_get_layout(this->widget);
+        layout->scrollAbs(pos.x, pos.y);
     }
 
     Document* doc = control->getDocument();

@@ -32,9 +32,8 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
                 (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0)) ?
                         ZOOM_IN :
                         ZOOM_OUT;
-        // use screen pixel coordinates for the zoom center
-        // as relative coordinates depend on the changing zoom level
-        zoom->zoomScroll(direction, Util::toScreenCoords(widget, utl::Point{event->x_root, event->y_root}));
+        // translate absolute window coordinates to the widget-local coordinates and start zooming
+        zoom->zoomScroll(direction, Util::toWidgetCoords(widget, utl::Point{event->x_root, event->y_root}));
         return true;
     }
 
@@ -44,15 +43,13 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
 
 auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
     if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
-        utl::Point<double> center;
         switch (event->phase) {
             case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN:
                 if (zoom->isZoomFitMode()) {
                     zoom->setZoomFitMode(false);
                 }
-                // use screen pixel coordinates for the zoom center
-                // as relative coordinates depend on the changing zoom level
-                zoom->startZoomSequence(Util::toScreenCoords(widget, utl::Point{event->x_root, event->y_root}));
+                // translate absolute window coordinates to the widget-local coordinates and start zooming
+                zoom->startZoomSequence(Util::toWidgetCoords(widget, utl::Point{event->x_root, event->y_root}));
                 break;
             case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
                 zoom->zoomSequenceChange(event->scale, true);
@@ -146,7 +143,7 @@ void ZoomControl::startZoomSequence() {
 
 void ZoomControl::startZoomSequence(utl::Point<double> zoomCenter) {
     // * set zoom center and zoom startlevel
-    this->zoomWidgetPos = zoomCenter;  // window space coordinates of the zoomCenter!
+    this->zoomWidgetPos = zoomCenter;  // widget space coordinates of the zoomCenter!
     this->zoomSequenceStart = this->zoom;
 
     // * set unscaledPixels padding value
@@ -174,7 +171,7 @@ void ZoomControl::startZoomSequence(utl::Point<double> zoomCenter) {
 
 void ZoomControl::zoomSequenceChange(double zoom, bool relative) {
     if (relative) {
-        if (this->zoomSequenceStart != -1) {
+        if (isZoomSequenceActive()) {
             zoom *= zoomSequenceStart;
         } else {
             zoom *= this->zoom;
@@ -186,7 +183,7 @@ void ZoomControl::zoomSequenceChange(double zoom, bool relative) {
 
 void ZoomControl::zoomSequenceChange(double zoom, bool relative, utl::Point<double> scrollVector) {
     if (relative) {
-        if (this->zoomSequenceStart != -1) {
+        if (isZoomSequenceActive()) {
             zoom *= zoomSequenceStart;
         } else {
             zoom *= this->zoom;
@@ -205,11 +202,13 @@ void ZoomControl::endZoomSequence() {
 }
 
 void ZoomControl::cancelZoomSequence() {
-    if (zoomSequenceStart != -1) {
+    if (isZoomSequenceActive()) {
         setZoom(zoomSequenceStart);
         endZoomSequence();
     }
 }
+
+auto ZoomControl::isZoomSequenceActive() const -> bool { return zoomSequenceStart != -1; }
 
 auto ZoomControl::getVisibleRect() -> Rectangle<double> {
     GtkWidget* widget = view->getWidget();
@@ -222,8 +221,9 @@ auto ZoomControl::getScrollPositionAfterZoom() const -> utl::Point<double> {
     // can't be used to determine the scroll position! Return now.
     // NOTE: this case should never happen currently.
     //       getScrollPositionAfterZoom is called from XournalView after setZoom() fired the ZoomListeners
-    if (this->zoomSequenceStart == -1) {
-        return {-1, -1};
+    if (!this->isZoomSequenceActive()) {
+        assert(false && "ZoomControl::getScrollPositionAfterZoom() was called outside of a zoom sequence. ");
+        return {0, 0};
     }
 
     return this->scrollPosition * this->zoom - this->zoomWidgetPos + this->unscaledPixels;
