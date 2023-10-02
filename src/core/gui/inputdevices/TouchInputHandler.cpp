@@ -47,13 +47,13 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             // Set sequence data
             sequenceStart(event);
 
-            startZoomReady = true;
+            this->startZoomReady = true;
         }
     }
 
     if (event.type == MOTION_EVENT && this->primarySequence) {
         if (this->primarySequence && this->secondarySequence && zoomGesturesEnabled) {
-            if (startZoomReady) {
+            if (this->startZoomReady) {
                 if (this->primarySequence == event.sequence) {
                     sequenceStart(event);
                     zoomStart();
@@ -121,8 +121,6 @@ void TouchInputHandler::scrollMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomStart() {
-    auto center = (this->priLastRel + this->secLastRel) / 2.0;
-
     this->startZoomDistance = this->priLastAbs.distance(this->secLastAbs);
 
     if (this->startZoomDistance == 0.0) {
@@ -133,8 +131,6 @@ void TouchInputHandler::zoomStart() {
     // hasn't changed enough).
     this->canBlockZoom = true;
 
-    lastZoomScrollCenter = (this->priLastAbs + this->secLastAbs) / 2.0;
-
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
 
     // Disable zoom fit as we are zooming currently
@@ -143,16 +139,19 @@ void TouchInputHandler::zoomStart() {
         zoomControl->setZoomFitMode(false);
     }
 
-    auto* mainWindow = inputContext->getView()->getControl()->getWindow();
     // use screen pixel coordinates for the zoom center
     // as relative coordinates depend on the changing zoom level
-    utl::Point<double> windowTopLeft = mainWindow->getScreenPos();
-    center.x -= windowTopLeft.x;
-    center.y -= windowTopLeft.y;
+    auto center = (this->priLastAbs + this->secLastAbs) / 2.0;
+    this->lastZoomScrollCenter = center;
+
+    // translate absolute window coordinates to the widget-local coordinates
+    const auto* mainWindow = inputContext->getView()->getControl()->getWindow();
+    const auto translation = mainWindow->getNegativeXournalWidgetPos();
+    center += translation;
 
     zoomControl->startZoomSequence(center);
 
-    startZoomReady = false;
+    this->startZoomReady = false;
 }
 
 void TouchInputHandler::zoomMotion(InputEvent const& event) {
@@ -178,7 +177,7 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
     }
 
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
-    auto center = (this->priLastAbs + this->secLastAbs) / 2;
+    const auto center = (this->priLastAbs + this->secLastAbs) / 2;
     zoomControl->zoomSequenceChange(zoom, true, center - lastZoomScrollCenter);
     lastZoomScrollCenter = center;
 }
