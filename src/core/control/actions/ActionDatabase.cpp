@@ -12,14 +12,8 @@
 
 #include "ActionProperties.h"
 
-#define DEBUG_ACTION_DB
 #ifdef DEBUG_ACTION_DB
-#include <iomanip>
-#include <iostream>
-#define PRINT_DEBUG(f) std::cout << f << std::endl
 #define START_ROW "   * " << std::left << std::setw(30) << std::boolalpha << Action_toString(a)
-#else
-#define PRINT_DEBUG(f)
 #endif
 
 class ActionDatabase::Populator {
@@ -73,7 +67,7 @@ class ActionDatabase::Populator {
     template <Action a, std::enable_if_t<!has_param<a>() && !has_state<a>(), bool> = true>
     static void assign(ActionDatabase* db) {
 
-        PRINT_DEBUG(START_ROW << " |               |            |");
+        ACTIONDB_PRINT_DEBUG(START_ROW << " |               |            |");
 
         db->gActions[a].reset(g_simple_action_new(Action_toString(a), nullptr), xoj::util::adopt);
 
@@ -84,8 +78,9 @@ class ActionDatabase::Populator {
     template <Action a, std::enable_if_t<has_param<a>() && !has_state<a>(), bool> = true>
     static void assign(ActionDatabase* db) {
 
-        PRINT_DEBUG(START_ROW << " |               | type = \""
-                              << (const char*)gVariantType<typename ActionProperties<a>::parameter_type>() << "\" |");
+        ACTIONDB_PRINT_DEBUG(START_ROW << " |               | type = \""
+                                       << (const char*)gVariantType<typename ActionProperties<a>::parameter_type>()
+                                       << "\" |");
 
         db->gActions[a].reset(
                 g_simple_action_new(Action_toString(a), gVariantType<typename ActionProperties<a>::parameter_type>()),
@@ -98,9 +93,10 @@ class ActionDatabase::Populator {
     template <Action a, std::enable_if_t<!has_param<a>() && has_state<a>(), bool> = true>
     static void assign(ActionDatabase* db) {
 
-        PRINT_DEBUG(START_ROW << " | \"" << (const char*)gVariantType<typename ActionProperties<a>::state_type>()
-                              << "\" = " << std::setw(7) << ActionProperties<a>::initialState(db->control)
-                              << " |            |");
+        ACTIONDB_PRINT_DEBUG(START_ROW << " | \""
+                                       << (const char*)gVariantType<typename ActionProperties<a>::state_type>()
+                                       << "\" = " << std::setw(7) << ActionProperties<a>::initialState(db->control)
+                                       << " |            |");
 
         db->gActions[a].reset(g_simple_action_new_stateful(Action_toString(a), nullptr,
                                                            makeGVariant<typename ActionProperties<a>::state_type>(
@@ -116,10 +112,10 @@ class ActionDatabase::Populator {
         static_assert(
                 std::is_same_v<typename ActionProperties<a>::state_type, typename ActionProperties<a>::parameter_type>);
 
-        PRINT_DEBUG(START_ROW << " | \"" << (const char*)gVariantType<typename ActionProperties<a>::state_type>()
-                              << "\" = " << std::setw(7) << ActionProperties<a>::initialState(db->control)
-                              << " | type = \"" << (const char*)gVariantType<typename ActionProperties<a>::state_type>()
-                              << "\" |");
+        ACTIONDB_PRINT_DEBUG(
+                START_ROW << " | \"" << (const char*)gVariantType<typename ActionProperties<a>::state_type>()
+                          << "\" = " << std::setw(7) << ActionProperties<a>::initialState(db->control) << " | type = \""
+                          << (const char*)gVariantType<typename ActionProperties<a>::state_type>() << "\" |");
 
         db->gActions[a].reset(g_simple_action_new_stateful(Action_toString(a),
                                                            gVariantType<typename ActionProperties<a>::state_type>(),
@@ -141,8 +137,8 @@ public:
 };
 
 void ActionDatabase::Populator::populate(ActionDatabase* db) {
-    PRINT_DEBUG("Populating ActionDatabase:");
-    PRINT_DEBUG("        ACTION NAME:                |  STATE INIT   | PARAM TYPE |");
+    ACTIONDB_PRINT_DEBUG("Populating ActionDatabase:");
+    ACTIONDB_PRINT_DEBUG("        ACTION NAME:                |  STATE INIT   | PARAM TYPE |");
 
     populateImpl(std::make_index_sequence<std::to_underlying(Action::_COUNT)>(), db);
 }
@@ -167,4 +163,5 @@ ActionDatabase::~ActionDatabase() {
 void ActionDatabase::enableAction(Action action, bool enable) {
     xoj_assert(gActions[action]);
     g_simple_action_set_enabled(gActions[action].get(), enable);
+    ACTIONDB_PRINT_DEBUG((enable ? "Enabling Action \"" : "Disabling Action\"") << Action_toString(action) << "\"");
 }
