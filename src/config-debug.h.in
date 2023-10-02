@@ -57,3 +57,8 @@
  * Show eraser logging info when we get an inconsistent result
  */
 #cmakedefine ENABLE_ERASER_DEBUG
+
+/**
+ * Enable some debugging output around the action database
+ */
+#cmakedefine DEBUG_ACTION_DB
