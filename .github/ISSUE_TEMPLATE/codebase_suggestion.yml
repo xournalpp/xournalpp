@@ -1,6 +1,6 @@
 name: Codebase Suggestion
 description: Refactorings / Updating dependencies / About development tools
-labels: codebase suggestion
+labels: "codebase suggestion"
 body:
   - type: textarea
     attributes:
