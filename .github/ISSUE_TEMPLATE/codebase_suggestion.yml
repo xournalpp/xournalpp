@@ -1,0 +1,25 @@
+name: Codebase Suggestion
+description: Refactorings / Updating dependencies / About development tools
+labels: codebase suggestion
+body:
+  - type: textarea
+    attributes:
+      label: Is Your Feature Request Related to a Problem?
+      description: A clear and concise description of what your problem is.
+      placeholder: Ex. I'm always frustrated when...
+  - type: textarea
+    attributes:
+      label: Suggestion Description
+      description: A clear and concise description of the feature that you would propose.
+      placeholder: Ex. I suggest we do...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Alternative Suggestions
+      description: Add any alternative suggestions that you may have considered here.
+      placeholder: Ex. I also thought about...
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Add any other contextual information for the suggestion here.
