@@ -34,7 +34,7 @@ struct to_stream<T, std::enable_if_t<std::is_enum_v<T>, void>> {
     to_stream(const T& t): t(t) {}
     const T& t;
     friend std::ostream& operator<<(std::ostream& str, const to_stream& self) {
-        return str << std::to_underlying(self.t);
+        return str << xoj::to_underlying(self.t);
     }
 };
 #else
