@@ -100,12 +100,12 @@ inline auto floor_cast(Float f) -> Integral {
     return rv1;
 }
 
-namespace std {
+namespace xoj {
 template <class Enum>
 constexpr std::underlying_type_t<Enum> to_underlying(Enum e) noexcept {
     return static_cast<std::underlying_type_t<Enum>>(e);
 }
-}  // namespace std
+}  // namespace xoj
 
 // static_assert(is_safely_castable<int>(std::numeric_limits<size_t>::max()) == false);
 // static_assert(is_safely_castable<int>(std::numeric_limits<int64_t>::min()) == false);

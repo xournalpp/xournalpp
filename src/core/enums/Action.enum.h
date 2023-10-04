@@ -165,7 +165,7 @@ constexpr auto Action_toString(Action value) -> const char* {
 }
 
 constexpr auto Action_fromString(const std::string_view value) -> Action {
-    for (size_t n = 0; n < std::to_underlying(Action::_COUNT); n++) {
+    for (size_t n = 0; n < xoj::to_underlying(Action::_COUNT); n++) {
         if (value == ACTION_NAMES[n]) {
             return static_cast<Action>(n);
         }
