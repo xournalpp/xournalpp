@@ -16,9 +16,9 @@
 
 #include "control/settings/Settings.h"
 #include "gui/GladeSearchpath.h"
-#include "gui/PopupWindowWrapper.h"
 #include "gui/dialog/PluginDialog.h"
 #include "util/PathUtil.h"
+#include "util/PopupWindowWrapper.h"
 #include "util/StringUtils.h"
 
 #include "Plugin.h"

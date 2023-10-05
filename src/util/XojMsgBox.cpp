@@ -5,7 +5,7 @@
 #include <glib-object.h>  // for g_object_set_property, g_value_init, g_valu...
 #include <glib.h>         // for g_free, g_markup_escape_text, g_error_free
 
-#include "../core/gui/PopupWindowWrapper.h"
+#include "util/PopupWindowWrapper.h"
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _, FS, _F
 #include "util/raii/CStringWrapper.h"
