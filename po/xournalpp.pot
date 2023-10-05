@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.1+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-03 14:17+0000\n"
+"POT-Creation-Date: 2023-10-05 16:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1176,7 +1176,7 @@ msgstr ""
 msgid "Rename layer"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:178
+#: ../src/util/XojMsgBox.cpp:169
 msgid "Replace"
 msgstr ""
 
@@ -1328,7 +1328,7 @@ msgstr ""
 msgid "Select another PDF"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:177
+#: ../src/util/XojMsgBox.cpp:168
 msgid "Select another name"
 msgstr ""
 
@@ -1573,7 +1573,7 @@ msgid ""
 "the bug may be fixed."
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:196
+#: ../src/util/XojMsgBox.cpp:187
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
