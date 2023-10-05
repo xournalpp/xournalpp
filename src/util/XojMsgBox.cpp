@@ -21,8 +21,8 @@ GtkWindow* defaultWindow = nullptr;
 
 XojMsgBox::XojMsgBox(GtkDialog* dialog, std::function<void(int)> callback):
         window(reinterpret_cast<GtkWindow*>(dialog)), callback(std::move(callback)) {
-    g_signal_connect(dialog, "response", G_CALLBACK(+[](GtkDialog* dialog, int response, XojMsgBox* self) {
-                         self->callback(response);
+    g_signal_connect(dialog, "response", G_CALLBACK(+[](GtkDialog* dialog, int response, gpointer self) {
+                         reinterpret_cast<XojMsgBox*>(self)->callback(response);
                          gtk_window_close(reinterpret_cast<GtkWindow*>(dialog));
                      }),
                      this);
@@ -91,16 +91,7 @@ void XojMsgBox::askQuestionWithMarkup(GtkWindow* win, std::string_view maintext,
 
     gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog), "%s", secondarytext.c_str());
 
-    std::function<void(int)>* data = new std::function<void(int)>(std::move(callback));
-    g_signal_connect_data(dialog, "response",
-                          G_CALLBACK(+[](GtkDialog* dialog, int response, std::function<void(int)>* callback) {
-                              (*callback)(response);
-                              gtk_window_close(GTK_WINDOW(dialog));
-                          }),
-                          data, GClosureNotify(+[](std::function<void(int)>* self) { delete self; }),
-                          GConnectFlags(0U));  // G_CONNECT_DEFAULT = GConnectFlags(0U) only defined in glib 2.74
-
-    xoj::popup::PopupWindowWrapper<XojMsgBox> popup(GTK_DIALOG(dialog));
+    xoj::popup::PopupWindowWrapper<XojMsgBox> popup(GTK_DIALOG(dialog), std::move(callback));
     popup.show(win);
 }
 
