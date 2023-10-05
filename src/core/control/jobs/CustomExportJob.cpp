@@ -9,12 +9,12 @@
 #include "control/jobs/BaseExportJob.h"        // for BaseExportJob::ExportType
 #include "control/xojfile/XojExportHandler.h"  // for XojExportHandler
 #include "gui/MainWindow.h"                    // for MainWindow
-#include "gui/PopupWindowWrapper.h"            // for PopupWindowWrapper
 #include "gui/dialog/ExportDialog.h"           // for ExportDialog
 #include "model/Document.h"                    // for Document
 #include "pdf/base/XojPdfExport.h"             // for XojPdfExport
 #include "pdf/base/XojPdfExportFactory.h"      // for XojPdfExportFactory
 #include "util/PathUtil.h"                     // for clearExtensions
+#include "util/PopupWindowWrapper.h"           // for PopupWindowWrapper
 #include "util/XojMsgBox.h"                    // for XojMsgBox
 #include "util/i18n.h"                         // for _, FS, _F
 

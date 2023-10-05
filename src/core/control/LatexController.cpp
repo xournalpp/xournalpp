@@ -20,7 +20,6 @@
 #include "gui/Layout.h"                      // for Layout
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "gui/PageView.h"                    // for XojPageView
-#include "gui/PopupWindowWrapper.h"          // for PopupWindowWrapper
 #include "gui/XournalView.h"                 // for XournalView
 #include "gui/dialog/LatexDialog.h"          // for LatexDialog
 #include "model/Document.h"                  // for Document
@@ -35,6 +34,7 @@
 #include "util/Color.h"                      // for Color, get_color_contrast
 #include "util/PathUtil.h"                   // for ensureFolderExists, getT...
 #include "util/PlaceholderString.h"          // for PlaceholderString
+#include "util/PopupWindowWrapper.h"         // for PopupWindowWrapper
 #include "util/Rectangle.h"                  // for Rectangle
 #include "util/Util.h"                       // for npos
 #include "util/XojMsgBox.h"                  // for XojMsgBox

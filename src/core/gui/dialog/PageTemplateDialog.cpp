@@ -14,13 +14,13 @@
 #include "control/settings/Settings.h"         // for Settings
 #include "control/stockdlg/XojOpenDlg.h"       // for XojOpenDlg
 #include "gui/Builder.h"                       // for Builder
-#include "gui/PopupWindowWrapper.h"            // for PopupWindowWrapper
 #include "gui/menus/popoverMenus/PageTypeSelectionPopoverGridOnly.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "model/FormatDefinitions.h"  // for FormatUnits, XOJ_UNITS
 #include "model/PageType.h"           // for PageType
 #include "util/Color.h"               // for GdkRGBA_to_argb, rgb_t...
 #include "util/PathUtil.h"            // for fromGFilename, readString
+#include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/i18n.h"                // for _
 
 #include "FormatDialog.h"  // for FormatDialog
