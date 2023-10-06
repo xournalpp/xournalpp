@@ -944,8 +944,8 @@ void SettingsDialog::save() {
             static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioOutputDevice"))));
     if (selectedOutputDeviceIndex == 0) {
         settings->setAudioOutputDevice(Settings::AUDIO_OUTPUT_SYSTEM_DEFAULT);
-    } else if (selectedOutputDeviceIndex < this->audioOutputDevices.size()) {
-        settings->setAudioOutputDevice(this->audioOutputDevices[selectedOutputDeviceIndex].getIndex());
+    } else if (selectedOutputDeviceIndex - 1 < this->audioOutputDevices.size()) {
+        settings->setAudioOutputDevice(this->audioOutputDevices[selectedOutputDeviceIndex - 1].getIndex());
     }
 
     switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbAudioSampleRate")))) {
