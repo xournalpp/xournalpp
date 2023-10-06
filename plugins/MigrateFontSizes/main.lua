@@ -9,14 +9,14 @@ end
 function migrate()
   local displayDpi = app.getDisplayDpi()
   local dpiNormalizationFactor = 72
-  local factor = displayDpi / dpiNormalizationFactor
+  dpiFactor = displayDpi / dpiNormalizationFactor   -- global, since needed in callback
   -- print("Display DPI is " .. displayDpi .. " => scaling by factor " .. displayDpi .. "/72 = " .. factor)
-  app.openDialog("Display DPI is " .. displayDpi .. ". By proceeding the font sizes of all text elements will be scaled by the factor " .. displayDpi .. "/72 = " .. factor, {"Cancel", "OK"}, "migrateDialogCallback")
+  app.openDialog("Display DPI is " .. displayDpi .. ". By proceeding the font sizes of all text elements will be scaled by the factor " .. displayDpi .. "/72 = " .. dpiFactor, {"Cancel", "OK"}, "migrateDialogCallback")
 end
 
 function migrateDialogCallback(result)
   if result == 2 then
-    resize(factor)
+    resize(dpiFactor)
   end
 end
 
@@ -82,6 +82,7 @@ function resize(factor)
       app.setCurrentLayer(j)
       app.scaleTextElements(factor)
     end
+    app.refreshPage()
   end
   app.setCurrentPage(page)
   app.setCurrentLayer(layer)
