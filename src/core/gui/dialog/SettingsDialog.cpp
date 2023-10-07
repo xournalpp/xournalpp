@@ -199,7 +199,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 void SettingsDialog::initMouseButtonEvents(GladeSearchpath* gladeSearchPath) {
     auto emplaceButton = [gladeSearchPath, &btns = buttonConfigs, settings = settings, &bld = builder](
                                  const char* hbox, Button button, bool withDevice = false) {
-        btns.emplace_back(gladeSearchPath, GTK_BOX(bld.get(hbox)), settings, button, withDevice);
+        btns.emplace_back(std::make_unique<ButtonConfigGui>(gladeSearchPath, GTK_BOX(bld.get(hbox)), settings, button,
+                                                            withDevice));
     };
 
     emplaceButton("hboxMiddleMouse", BUTTON_MOUSE_MIDDLE);
@@ -905,8 +906,8 @@ void SettingsDialog::save() {
 
     settings->setDisplayDpi(dpi);
 
-    for (auto& bcg: this->buttonConfigs) {
-        bcg.saveSettings();
+    for (auto&& bcg: this->buttonConfigs) {
+        bcg->saveSettings();
     }
 
     languageConfig.saveSettings();
