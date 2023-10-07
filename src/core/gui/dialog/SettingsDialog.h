@@ -86,7 +86,7 @@ private:
     xoj::util::GtkWindowUPtr window;
 
     LanguageConfigGui languageConfig;
-    std::vector<ButtonConfigGui> buttonConfigs;
+    std::vector<std::unique_ptr<ButtonConfigGui>> buttonConfigs;
     std::vector<DeviceClassConfigGui> deviceClassConfigs;
 
     LatexSettingsPanel latexPanel;
