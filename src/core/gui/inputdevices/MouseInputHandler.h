@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <glib.h>  // for guint
+
 #include "PenInputHandler.h"  // for PenInputHandler
 
 class InputContext;
@@ -41,4 +43,9 @@ public:
      */
     bool changeTool(InputEvent const& event) override;
     void onBlock() override;
+
+private:
+    // see button member in https://docs.gtk.org/gdk3/struct.EventButton.html
+    static constexpr guint BUTTON_NONE = 0;
+    guint pressedButton = BUTTON_NONE;
 };
