@@ -2,6 +2,25 @@
 
 ## 1.2.2~dev (Unreleased)
 
+Bugfixes from various community contributors.
+
+* Fix undefined behaviour due to signal callbacks wrong type (#5057)
+* Fix reference handling of sidebar widgets, fixing crashes and warning (#5083,
+  #5074, #4026)
+* Default build type is now "RelWithDebInfo" (#5118)
+* Fix error message when trying to open an autosave file (#5140)
+* Fix empty toolbars being shown (#5160, #5051)
+* Add a device id check for input sequences, so devices don't interfere with one
+  another anymore (#5170, #5116, #5087)
+* Fix a bunch of memory leaks (#5164, #5216)
+* Properly read PDF files as binary, fixing some reading issues (#5174, #4740)
+* Remove unsafe symbols from document name generation (#5144, #5123)
+* Fix crash when a modification happens outside of the cached pages (#5144, 
+  #5178, #5162, #5046, #5126)
+* Fix audio output settings being off by 1 (#5205)
+* Clarify CrashLog message: deleting the crashlog will stop the message from popping up (#5214)
+* Fix a crash when pressing both mouse buttons at once (#5210, #5149)
+
 ## 1.2.1
 
 Bugfixes from various community contributors.
@@ -20,7 +39,7 @@ Bugfixes from various community contributors.
   is used (#5032, #4910, #5084).
 * Added a missing double arrow preference to the button configuration dialog,
   therewith also fixing selections below "Draw Arrow" (#4989).
-* Fixed occuring negative pressure values that previously resulted in a crash
+* Fixed occurring negative pressure values that previously resulted in a crash
   due to a failing assertion (#5025, #5028).
 * Added options to the command line and preferences to disable the audio system
   used for audio recording (#3905, #3531, #5020, #5068).
