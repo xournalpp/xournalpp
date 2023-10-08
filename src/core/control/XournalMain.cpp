@@ -188,6 +188,8 @@ void checkForErrorlog() {
                                                 "Bugreport, so the bug may be fixed.");
     msg += "\n";
     msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
+    msg += "\n\n";
+    msg += FS(_F("To prevent this popup from reappearing, simply delete the errorlogfiles."));
 
     GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
                                                msg.c_str());
