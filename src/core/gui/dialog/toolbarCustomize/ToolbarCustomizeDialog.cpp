@@ -137,13 +137,11 @@ void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget, Gdk
                                                           GtkSelectionData* selection_data, guint info, guint time,
                                                           void* data) {
     SeparatorData* sepData = static_cast<SeparatorData*>(data);
-    ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
+    auto it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
     it->type = sepData->type;
 
-    gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, reinterpret_cast<const guchar*>(it),
-                           sizeof(ToolItemDragDropData));
-
-    g_free(it);
+    gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
+                           reinterpret_cast<const guchar*>(it.get()), sizeof(ToolItemDragDropData));
 }
 
 /**
@@ -174,12 +172,10 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
     data->item->setUsed(true);
     data->dlg->rebuildIconview();
 
-    ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(data->item);
+    auto it = ToolitemDragDrop::ToolItemDragDropData_new(data->item);
 
-    gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, reinterpret_cast<const guchar*>(it),
-                           sizeof(ToolItemDragDropData));
-
-    g_free(it);
+    gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
+                           reinterpret_cast<const guchar*>(it.get()), sizeof(ToolItemDragDropData));
 }
 
 /**
@@ -210,14 +206,12 @@ void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDrag
                                                       ColorToolItemDragData* data) {
     ToolItemDragCurrentData::setDataColor(-1, data->namedColor);
 
-    ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
+    auto it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
     it->type = TOOL_ITEM_COLOR;
     it->namedColor = data->namedColor;
 
-    gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, reinterpret_cast<const guchar*>(it),
-                           sizeof(ToolItemDragDropData));
-
-    g_free(it);
+    gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
+                           reinterpret_cast<const guchar*>(it.get()), sizeof(ToolItemDragDropData));
 }
 
 /**

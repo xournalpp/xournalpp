@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gtk/gtk.h>                // for GtkWidget
 
@@ -40,7 +42,7 @@ public:
     static void attachMetadataColor(GtkWidget* w, int id, const NamedColor* namedColor, AbstractToolItem* item);
 
 public:
-    static ToolItemDragDropData* ToolItemDragDropData_new(AbstractToolItem* item);
+    static std::unique_ptr<ToolItemDragDropData> ToolItemDragDropData_new(AbstractToolItem* item);
     static bool checkToolItemDragDropData(ToolItemDragDropData const* d);
     static bool isToolItemEnabled(ToolItemDragDropData* d);
 
