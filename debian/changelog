@@ -1,8 +1,11 @@
-xournalpp (1.2.2~dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.2-1) unstable; urgency=medium
 
-  * 
+  * Fixed various memory leaks and segmentation faults
+  * Fixed some issues with input sequences mixing up devices and buttons
+  * Fixed LaTeX tool failing to open some PDF files
+  * Fixed audio output device selection
 
- -- rolandlo <roland_loetscher@hotmail.com>  Thu, 24 Aug 2023 17:22:55 +0200
+ -- Benjamin Hennion <benjamin.hennion@wanadoo.fr>  Sun, 08 Oct 2023 15:53:47 +0200
 
 xournalpp (1.2.1-1) unstable; urgency=medium
 
@@ -10,7 +13,7 @@ xournalpp (1.2.1-1) unstable; urgency=medium
   * Fixed some crashes and various issues with the crash log handling
   * Added options to the command line and preferences to disable the audio system used for audio recording
   * The official release builds are now all built with gtksourceview styling for the LaTeX tool and in "RelWithDeb" mode. Thus failing asserts do not result in a crash anymore.
- 
+
  -- rolandlo <roland_loetscher@hotmail.com>  Thu, 24 Aug 2023 17:22:54 +0200
 
 xournalpp (1.2.0-1) unstable; urgency=medium
