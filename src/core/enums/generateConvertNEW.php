@@ -49,7 +49,7 @@ function parseEnumFile($file) {
 			continue;
 		}
 
-		$pos = strrpos($line, "_COUNT");
+		$pos = strrpos($line, "ENUMERATOR_COUNT");
         if ($pos !== false) {
             continue;
         }

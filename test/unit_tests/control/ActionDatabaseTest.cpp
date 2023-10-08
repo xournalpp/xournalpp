@@ -51,7 +51,7 @@ static auto setupImpl(std::index_sequence<As...>) {
     return expectedTypes;
 }
 
-static const auto expectedTypes = setupImpl(std::make_index_sequence<std::to_underlying(Action::_COUNT)>());
+static const auto expectedTypes = setupImpl(std::make_index_sequence<xoj::to_underlying(Action::ENUMERATOR_COUNT)>());
 
 void exploreMenu(GMenuModel* m, int lvl = 1) {
     int n = g_menu_model_get_n_items(m);
