@@ -170,6 +170,5 @@ constexpr auto Action_fromString(const std::string_view value) -> Action {
             return static_cast<Action>(n);
         }
     }
-    g_warning("Invalid enum value for Action: \"%s\"", value.data());
     return Action::NEW_FILE;
 }
