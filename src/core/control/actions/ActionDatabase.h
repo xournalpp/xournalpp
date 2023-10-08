@@ -1,6 +1,12 @@
-/**
+/*
+ * Xournal++
  *
+ * A database for GSimpleAction corresponding to enum/Action.enum.h
  *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
  */
 #pragma once
 
