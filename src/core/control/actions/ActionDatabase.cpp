@@ -140,7 +140,7 @@ void ActionDatabase::Populator::populate(ActionDatabase* db) {
     ACTIONDB_PRINT_DEBUG("Populating ActionDatabase:");
     ACTIONDB_PRINT_DEBUG("        ACTION NAME:                |  STATE INIT   | PARAM TYPE |");
 
-    populateImpl(std::make_index_sequence<xoj::to_underlying(Action::_COUNT)>(), db);
+    populateImpl(std::make_index_sequence<xoj::to_underlying(Action::ENUMERATOR_COUNT)>(), db);
 }
 
 ActionDatabase::ActionDatabase(Control* control):

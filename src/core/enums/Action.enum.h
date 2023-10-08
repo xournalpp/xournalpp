@@ -154,18 +154,18 @@ enum class Action : size_t {
     LAYER_GOTO_TOP,
 
     // Keep this last value
-    _COUNT
+    ENUMERATOR_COUNT
 };
 
 #include "generated/Action.NameMap.generated.h"
 
 constexpr auto Action_toString(Action value) -> const char* {
-    xoj_assert(value < Action::_COUNT);
+    xoj_assert(value < Action::ENUMERATOR_COUNT);
     return ACTION_NAMES[static_cast<size_t>(value)];
 }
 
 constexpr auto Action_fromString(const std::string_view value) -> Action {
-    for (size_t n = 0; n < xoj::to_underlying(Action::_COUNT); n++) {
+    for (size_t n = 0; n < xoj::to_underlying(Action::ENUMERATOR_COUNT); n++) {
         if (value == ACTION_NAMES[n]) {
             return static_cast<Action>(n);
         }
