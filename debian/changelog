@@ -1,3 +1,9 @@
+xournalpp (1.2.3~dev-1) UNRELEASED; urgency=medium
+
+  * 
+
+ -- Benjamin Hennion <benjamin.hennion@wanadoo.fr>  Sun, 08 Oct 2023 15:53:47 +0200
+
 xournalpp (1.2.2-1) unstable; urgency=medium
 
   * Fixed various memory leaks and segmentation faults
