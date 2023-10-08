@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include <gtk/gtk.h>  // for GtkWidget
 
 #include "gui/ToolitemDragDrop.h"  // for ToolItemDragDropData (ptr only)
@@ -29,8 +31,8 @@ public:
     static void setData(ToolItemType type, int id, AbstractToolItem* item);
     static void setData(GtkWidget* widget);
     static void setDataColor(int id, const NamedColor* namedColor);
-    static ToolItemDragDropData* getData();
+    static const ToolItemDragDropData* getData();
 
 private:
-    static ToolItemDragDropData* data;
+    static std::unique_ptr<ToolItemDragDropData> data;
 };
