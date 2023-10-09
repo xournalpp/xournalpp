@@ -21,8 +21,14 @@ class ObjectOutputStream;
 
 class XojFont: public Serializable {
 public:
-    XojFont();
+    XojFont() = default;
     XojFont(std::string name, double size);
+    XojFont(const XojFont&) = default;
+    XojFont(XojFont&&) = default;
+    ~XojFont() override = default;
+
+    XojFont& operator=(const XojFont&) = default;
+    XojFont& operator=(XojFont&&) = default;
 
     /**
      * Set this from a Pango-style font description.
@@ -35,10 +41,8 @@ public:
     explicit XojFont(const char* description);
     XojFont& operator=(const std::string& description);
 
-    ~XojFont() override;
-
 public:
-    std::string getName() const;
+    const std::string& getName() const;
     void setName(std::string name);
 
     double getSize() const;
@@ -49,9 +53,6 @@ public:
      * font.
      */
     std::string asString() const;
-
-    XojFont& operator=(const XojFont& font);
-
 
 public:
     // Serialize interface
