@@ -2883,12 +2883,6 @@ void Control::applyPreferredLanguage() {
 #else
     setenv("LANGUAGE", lang.c_str(), 1);
 #endif
-    try {
-        auto glob = std::locale{std::locale(".UTF-8"), lang, std::locale::all};
-        std::locale::global(glob);
-    } catch (std::runtime_error const& e) {
-        g_warning("Failed to set locale %s: %s", lang.c_str(), e.what());
-    }
 }
 
 void Control::initButtonTool() {
