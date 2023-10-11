@@ -12,15 +12,20 @@ if (XGETTEXT_FOUND)
   gettext_create_pot ("${potfile}"
           PACKAGE ${PROJECT_NAME}
     VERSION ${PROJECT_VERSION}
-    OPTIONS --language=C++ -s --from-code=UTF-8
+    CPP_OPTIONS --language=C++ --from-code=UTF-8
             --keyword=_ --keyword=_F --keyword=N_
             --keyword=C_:1c,2 --keyword=C_F:1c,2 --keyword=NC_:1c,2
+
+    OPTIONS --from-code=UTF-8
 
     SRCFILES
       "${PROJECT_SOURCE_DIR}/src/*.cpp"
 
     GLADEFILES
       "${PROJECT_SOURCE_DIR}/ui/*.glade;${PROJECT_SOURCE_DIR}/ui/*.xml"
+
+    DESKTOPFILES
+      "${PROJECT_SOURCE_DIR}/desktop/com.github.xournalpp.xournalpp.desktop.in"
   )
 
   gettext_create_translations ("${potfile}" ALL NOUPDATE)

@@ -67,12 +67,7 @@
 #   supported.
 #   intltool required.
 #
-# GSETTINGSFILES (optional/mandatory)
-#   List of gsettings (.gschema.xml) files to extract gettext strings from.
-#   Globbing is supported.
-#   intltool required.
-#
-# Either SRCFILES or GLADEFILES or DESKTOPFILES or GSETTINGSFILES (or all)
+# Either SRCFILES or GLADEFILES or DESKTOPFILES (or all)
 # have to be filled with some files.
 #
 ##
@@ -182,17 +177,14 @@ set(XGETTEXT_GLADE_OPTIONS_DEFAULT
   "--language=Glade"
   "--omit-header"
 )
-set(XGETTEXT_INTLTOOL_OPTIONS
-  "--language=C"
-  "--keyword=N_:1"
+set(XGETTEXT_DESKTOP_OPTIONS
+  "--language=Desktop"
 )
-set(_INTLTOOL_DESKTOPFILES)
-
 
 if(XGETTEXT_FOUND)
   macro(gettext_create_pot potfile)
     cmake_parse_arguments(ARGS "" "PACKAGE;VERSION;WORKING_DIRECTORY"
-      "OPTIONS;VALA_OPTIONS;GLADE_OPTIONS;SRCFILES;GLADEFILES;DESKTOPFILES;GSETTINGSFILES" ${ARGN})
+      "OPTIONS;CPP_OPTIONS;VALA_OPTIONS;GLADE_OPTIONS;SRCFILES;GLADEFILES;DESKTOPFILES" ${ARGN})
 
     if(ARGS_PACKAGE)
       set(package_name "${ARGS_PACKAGE}")
@@ -227,6 +219,12 @@ if(XGETTEXT_FOUND)
       list(APPEND xgettext_options ${XGETTEXT_OPTIONS_DEFAULT})
     endif()
 
+    if(ARGS_CPP_OPTIONS)
+      set(xgettext_cpp_options ${ARGS_CPP_OPTIONS})
+    else()
+      set(xgettext_cpp_options ${xgettext_options})
+    endif()
+
     if(ARGS_XGETTEXT_VALA_OPTIONS_DEFAULT)
       set(xgettext_vala_options ${ARGS_XGETTEXT_VALA_OPTIONS_DEFAULT})
     else()
@@ -238,7 +236,7 @@ if(XGETTEXT_FOUND)
       set(xgettext_glade_options ${XGETTEXT_GLADE_OPTIONS_DEFAULT})
     endif()
 
-    if(ARGS_SRCFILES OR ARGS_GLADEFILES OR ARGS_DESKTOPFILES OR ARGS_GSETTINGSFILES)
+    if(ARGS_SRCFILES OR ARGS_GLADEFILES OR ARGS_DESKTOPFILES)
       set(src_list)
       set(src_list_abs)
       foreach(globexpr ${ARGS_SRCFILES})
@@ -283,135 +281,41 @@ if(XGETTEXT_FOUND)
         endif()
       endforeach()
 
-      if(ARGS_DESKTOPFILES OR ARGS_GSETTINGSFILES)
-        find_package(Intltool REQUIRED)
+      if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+        # macOs and Windows don't use .desktop files
+        set(desktop_list)
+        set(desktop_list_abs)
+        foreach(globexpr ${ARGS_DESKTOPFILES})
+          if(NOT IS_ABSOLUTE "${globexpr}")
+            get_filename_component(absDir "${ARGS_WORKING_DIRECTORY}" ABSOLUTE)
+            set(globexpr "${absDir}/${globexpr}")
+          endif()
+          set(tmpdesktopfiles)
+          file(GLOB tmpdesktopfiles ${globexpr})
+          if (tmpdesktopfiles)
+            foreach(absFile ${tmpdesktopfiles})
+              file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${absFile}")
+              list(APPEND desktop_list "${relFile}")
+              list(APPEND desktop_list_abs "${absFile}")
+            endforeach()
+          else()
+                file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${globexpr}")
+                list(APPEND desktop_list "${relFile}")
+                list(APPEND desktop_list_abs "${globexpr}")
+          endif()
+        endforeach()
+        set(_DESKTOPFILES ${desktop_list})
+      else()
+        set(_DESKTOPFILES)
       endif()
-      set(desktop_list)
-      set(desktop_list_abs)
-      set(desktop_list_b)
-      set(desktop_list_b_abs)
-      set(desktop_list_h)
-      set(desktop_list_h_abs)
-      foreach(globexpr ${ARGS_DESKTOPFILES})
-        if(NOT IS_ABSOLUTE "${globexpr}")
-          get_filename_component(absDir "${ARGS_WORKING_DIRECTORY}" ABSOLUTE)
-          set(globexpr "${absDir}/${globexpr}")
-        endif()
-        set(tmpdesktopfiles)
-        file(GLOB tmpdesktopfiles ${globexpr})
-        if (tmpdesktopfiles)
-          foreach(absFile ${tmpdesktopfiles})
-            file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${absFile}")
-            list(APPEND desktop_list "${relFile}")
-            list(APPEND desktop_list_abs "${absFile}")
 
-            file(RELATIVE_PATH relFile_b "${PROJECT_SOURCE_DIR}" "${absFile}")
-            list(APPEND desktop_list_b "${relFile_b}")
-            get_filename_component(absFile_b "${PROJECT_BINARY_DIR}/${relFile_b}" ABSOLUTE)
-            list(APPEND desktop_list_b_abs "${absFile_b}")
-            file(RELATIVE_PATH relFile_h "${CMAKE_CURRENT_SOURCE_DIR}" "${absFile_b}.h")
-            list(APPEND desktop_list_h "${relFile_h}")
-            list(APPEND desktop_list_h_abs "${absFile_b}.h")
-            add_custom_command(
-              OUTPUT
-                "${absFile_b}"
-              COMMAND
-                "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/${relFile}" "${absFile_b}"
-              DEPENDS
-                "${absFile}"
-              VERBATIM
-            )
-          endforeach()
-        else()
-          file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${globexpr}")
-          list(APPEND desktop_list "${relFile}")
-          list(APPEND desktop_list_abs "${globexpr}")
-
-          file(RELATIVE_PATH relFile_b "${PROJECT_SOURCE_DIR}" "${globexpr}")
-          list(APPEND desktop_list_b "${relFile_b}")
-          get_filename_component(absFile_b "${PROJECT_BINARY_DIR}/${relFile_b}" ABSOLUTE)
-          list(APPEND desktop_list_b_abs "${absFile_b}")
-          file(RELATIVE_PATH relFile_h "${CMAKE_CURRENT_SOURCE_DIR}" "${absFile_b}.h")
-          list(APPEND desktop_list_h "${relFile_h}")
-          list(APPEND desktop_list_h_abs "${absFile_b}.h")
-          add_custom_command(
-            OUTPUT
-              "${absFile_b}"
-            COMMAND
-              "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/${relFile}" "${absFile_b}"
-            DEPENDS
-              "${absFile}"
-            VERBATIM
-          )
-        endif()
-      endforeach()
-      set(_INTLTOOL_DESKTOPFILES ${desktop_list_b})
-
-      set(gsettings_list)
-      set(gsettings_list_abs)
-      set(gsettings_list_b)
-      set(gsettings_list_b_abs)
-      set(gsettings_list_h)
-      set(gsettings_list_h_abs)
-      foreach(globexpr ${ARGS_GSETTINGSFILES})
-        if(NOT IS_ABSOLUTE "${globexpr}")
-          get_filename_component(absDir "${ARGS_WORKING_DIRECTORY}" ABSOLUTE)
-          set(globexpr "${absDir}/${globexpr}")
-        endif()
-        set(tmpgsettingsfiles)
-        file(GLOB tmpgsettingsfiles ${globexpr})
-        if (tmpgsettingsfiles)
-          foreach(absFile ${tmpgsettingsfiles})
-            file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${absFile}")
-            list(APPEND gsettings_list "${relFile}")
-            list(APPEND gsettings_list_abs "${absFile}")
-
-            file(RELATIVE_PATH relFile_b "${PROJECT_SOURCE_DIR}" "${absFile}")
-            list(APPEND gsettings_list_b "${relFile_b}")
-            get_filename_component(absFile_b "${PROJECT_BINARY_DIR}/${relFile_b}" ABSOLUTE)
-            list(APPEND gsettings_list_b_abs "${absFile_b}")
-            file(RELATIVE_PATH relFile_h "${CMAKE_CURRENT_SOURCE_DIR}" "${absFile_b}.h")
-            list(APPEND gsettings_list_h "${relFile_h}")
-            list(APPEND gsettings_list_h_abs "${absFile_b}.h")
-            add_custom_command(
-              OUTPUT
-                "${absFile_b}"
-              COMMAND
-                "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/${relFile}" "${absFile_b}"
-              DEPENDS
-                "${absFile}"
-              VERBATIM
-            )
-          endforeach()
-        else()
-          file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${globexpr}")
-          list(APPEND gsettings_list "${relFile}")
-          list(APPEND gsettings_list_abs "${globexpr}")
-
-          file(RELATIVE_PATH relFile_b "${PROJECT_SOURCE_DIR}" "${globexpr}")
-          list(APPEND gsettings_list_b "${relFile_b}")
-          get_filename_component(absFile_b "${PROJECT_BINARY_DIR}/${relFile_b}" ABSOLUTE)
-          list(APPEND gsettings_list_b_abs "${absFile_b}")
-          file(RELATIVE_PATH relFile_h "${CMAKE_CURRENT_SOURCE_DIR}" "${absFile_b}.h")
-          list(APPEND gsettings_list_h "${relFile_h}")
-          list(APPEND gsettings_list_h_abs "${absFile_b}.h")
-          add_custom_command(
-            OUTPUT
-              "${absFile_b}"
-            COMMAND
-              "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/${relFile}" "${absFile_b}"
-            VERBATIM
-          )
-        endif()
-      endforeach()
-
-
+      set(generatedPotFiles)
       if(ARGS_SRCFILES)
         add_custom_command(
           OUTPUT
             "${CMAKE_CURRENT_BINARY_DIR}/_source.pot"
           COMMAND
-            "${XGETTEXT_EXECUTABLE}" ${xgettext_options} ${xgettext_vala_options} "-o" "${CMAKE_CURRENT_BINARY_DIR}/_source.pot" ${src_list}
+            "${XGETTEXT_EXECUTABLE}" ${xgettext_options} ${xgettext_cpp_options} "-o" "${CMAKE_CURRENT_BINARY_DIR}/_source.pot" ${src_list}
           COMMAND
             # Make sure file exists even if no translatable strings available.
             "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_source.pot"
@@ -420,15 +324,8 @@ if(XGETTEXT_FOUND)
           WORKING_DIRECTORY
             "${CMAKE_CURRENT_SOURCE_DIR}"
           VERBATIM
-      )
-      else()
-        add_custom_command(
-          OUTPUT
-            "${CMAKE_CURRENT_BINARY_DIR}/_source.pot"
-          COMMAND
-            "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_source.pot"
-          VERBATIM
         )
+        list(APPEND generatedPotFiles "${CMAKE_CURRENT_BINARY_DIR}/_source.pot")
       endif()
       if(ARGS_GLADEFILES)
         add_custom_command(
@@ -444,92 +341,31 @@ if(XGETTEXT_FOUND)
             "${CMAKE_CURRENT_SOURCE_DIR}"
           VERBATIM
         )
-      else()
-        add_custom_command(
-          OUTPUT
-            "${CMAKE_CURRENT_BINARY_DIR}/_glade.pot"
-          COMMAND
-            "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_glade.pot"
-          VERBATIM
-        )
+        list(APPEND generatedPotFiles "${CMAKE_CURRENT_BINARY_DIR}/_glade.pot")
       endif()
-      if(ARGS_DESKTOPFILES)
-        add_custom_command(
-          OUTPUT
-            ${desktop_list_h_abs}
-          COMMAND
-            "${INTLTOOL_EXTRACT_EXECUTABLE}" ${INTLTOOL_OPTIONS_DEFAULT} "--type" "gettext/ini" ${desktop_list_b}
-          DEPENDS
-            ${desktop_list_b_abs}
-          WORKING_DIRECTORY
-            "${PROJECT_BINARY_DIR}"
-          VERBATIM
-        )
+      if(_DESKTOPFILES)
         add_custom_command(
           OUTPUT
             "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot"
           COMMAND
-            "${XGETTEXT_EXECUTABLE}" ${xgettext_options} ${XGETTEXT_INTLTOOL_OPTIONS} "-o" "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot" ${desktop_list_h}
+            "${XGETTEXT_EXECUTABLE}" ${xgettext_options} ${XGETTEXT_DESKTOP_OPTIONS} "-o" "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot" ${desktop_list}
           COMMAND
             "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot"
           DEPENDS
-            ${desktop_list_h_abs}
+            ${desktop_list_abs}
           WORKING_DIRECTORY
             "${CMAKE_CURRENT_SOURCE_DIR}"
           VERBATIM
         )
-      else()
-        add_custom_command(
-          OUTPUT
-            "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot"
-          COMMAND
-            "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot"
-          VERBATIM
-        )
-      endif()
-      if(ARGS_GSETTINGSFILES)
-        add_custom_command(
-          OUTPUT
-            ${gsettings_list_h_abs}
-          COMMAND
-            "${INTLTOOL_EXTRACT_EXECUTABLE}" ${INTLTOOL_OPTIONS_DEFAULT} "--type" "gettext/gsettings" ${gsettings_list_b}
-          DEPENDS
-            ${gsettings_list_b_abs}
-          WORKING_DIRECTORY
-            "${PROJECT_BINARY_DIR}"
-          VERBATIM
-        )
-        add_custom_command(
-          OUTPUT
-            "${CMAKE_CURRENT_BINARY_DIR}/_gsettings.pot"
-          COMMAND
-            "${XGETTEXT_EXECUTABLE}" ${xgettext_options} ${XGETTEXT_INTLTOOL_OPTIONS} "-o" "${CMAKE_CURRENT_BINARY_DIR}/_gsettings.pot" ${gsettings_list_h}
-          COMMAND
-            "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_gsettings.pot"
-          DEPENDS
-            ${gsettings_list_h_abs}
-          WORKING_DIRECTORY
-            "${CMAKE_CURRENT_SOURCE_DIR}"
-          VERBATIM
-        )
-      else()
-        add_custom_command(
-          OUTPUT
-            "${CMAKE_CURRENT_BINARY_DIR}/_gsettings.pot"
-          COMMAND
-            "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_gsettings.pot"
-          VERBATIM
-        )
+        list(APPEND generatedPotFiles "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot")
       endif()
 
       add_custom_target(pot
+        COMMAND_EXPAND_LISTS
         COMMAND
-          "${GETTEXT_MSGCAT_EXECUTABLE}" "-o" "${potfile}" "--use-first" "${CMAKE_CURRENT_BINARY_DIR}/_source.pot" "${CMAKE_CURRENT_BINARY_DIR}/_glade.pot" "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot" "${CMAKE_CURRENT_BINARY_DIR}/_gsettings.pot"
+          "${GETTEXT_MSGCAT_EXECUTABLE}" "-o" "${potfile}" "--use-first" "${generatedPotFiles}"
         DEPENDS
-          "${CMAKE_CURRENT_BINARY_DIR}/_source.pot"
-          "${CMAKE_CURRENT_BINARY_DIR}/_glade.pot"
-          "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot"
-          "${CMAKE_CURRENT_BINARY_DIR}/_gsettings.pot"
+          "${generatedPotFiles}"
         WORKING_DIRECTORY
           "${CMAKE_CURRENT_SOURCE_DIR}"
         COMMENT
@@ -594,36 +430,35 @@ if(XGETTEXT_FOUND)
     endif()
 
 
-    set(_gmoFile)
+    if(langs AND (ARGS_NOUPDATE OR _DESKTOPFILES))
+      set(_copyPoFiles true)
+    else()
+      set(_copyPoFiles)
+    endif()
+
     set(_gmoFiles)
+    set(clonedPoFiles)
+    set(origPoFiles)
     foreach (lang ${langs})
       get_filename_component(_absFile "${lang}.po" ABSOLUTE)
       set(_gmoFile "${CMAKE_CURRENT_BINARY_DIR}/${lang}.gmo")
 
-      if(ARGS_NOUPDATE)
+      if(_copyPoFiles)
         set(_absFile_new "${CMAKE_CURRENT_BINARY_DIR}/${lang}.po")
-        add_custom_command(
-          OUTPUT
-            "${_absFile_new}"
-          COMMAND
-            "${CMAKE_COMMAND}" -E copy "${_absFile}" "${_absFile_new}"
-          DEPENDS
-            "${_absPotFile}"
-            "${_absFile}"
-          VERBATIM
-        )
+        list(APPEND clonedPoFiles "${_absFile_new}")
+        list(APPEND origPoFiles "${_absFile}")
         set(_absFile "${_absFile_new}")
+        set(gmodeps "${_absFile}" "prepare-po-folder")
+      else()
+        set(gmodeps "${_absFile}")
       endif()
       add_custom_command(
         OUTPUT
           "${_gmoFile}"
         COMMAND
-          "${GETTEXT_MSGMERGE_EXECUTABLE}" "--quiet" "--update" "--backup=none" "-s" "${_absFile}" "${_absPotFile}"
-        COMMAND
           "${GETTEXT_MSGFMT_EXECUTABLE}" "-o" "${_gmoFile}" "${_absFile}"
         DEPENDS
-          "${_absPotFile}"
-          "${_absFile}"
+          "${gmodeps}"
         WORKING_DIRECTORY
           "${CMAKE_CURRENT_BINARY_DIR}"
         VERBATIM
@@ -640,52 +475,45 @@ if(XGETTEXT_FOUND)
       list(APPEND _gmoFiles "${_gmoFile}")
     endforeach()
 
-    set(desktopfiles)
-    if(langs AND _INTLTOOL_DESKTOPFILES)
-      file(RELATIVE_PATH cursrcdir_rel "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
-      if(cursrcdir_rel STREQUAL "")
-        set(cursrcdir_rel ".")
-      endif()
-      foreach(desktopfiletmp ${_INTLTOOL_DESKTOPFILES})
-        string(REGEX REPLACE "(\\.desktop).*$" "\\1" desktopfile "${desktopfiletmp}")
-        set(desktopfile_abs "${PROJECT_BINARY_DIR}/${desktopfile}")
+    if(_copyPoFiles)
+      set(LINGUAS_file "${CMAKE_CURRENT_BINARY_DIR}/LINGUAS")
+      add_custom_target( prepare-po-folder
+        BYPRODUCTS
+          "${LINGUAS_file}"
+          "${clonedPoFiles}"
+        COMMAND_EXPAND_LISTS
+        COMMAND
+          "${CMAKE_COMMAND}" -E copy "${origPoFiles}" "${CMAKE_CURRENT_BINARY_DIR}"
+        COMMAND
+          echo ${langs} > ${LINGUAS_file}
+        DEPENDS
+          "${origPoFiles}"
+        VERBATIM
+      )
+    endif()
+
+    if(langs)
+      set(desktopfiles)
+      foreach(desktopfileIN ${_DESKTOPFILES})
+        # Convert foo.desktop.in into foo.desktop
+        string(REGEX REPLACE "(\\.desktop).*$" "\\1" desktopfile "${desktopfileIN}")
+        set(desktopfile_abs "${CMAKE_CURRENT_BINARY_DIR}/${desktopfile}")
+        get_filename_component(desktopFolder "${desktopfile_abs}" DIRECTORY)
+        file(MAKE_DIRECTORY "${desktopFolder}")
         list(APPEND desktopfiles "${desktopfile_abs}")
-        file(RELATIVE_PATH desktopfile_rel "${CMAKE_CURRENT_BINARY_DIR}" "${desktopfile_abs}")
-        file(RELATIVE_PATH desktopfiletmp_rel "${CMAKE_CURRENT_BINARY_DIR}" "${PROJECT_BINARY_DIR}/${desktopfiletmp}")
         add_custom_command(
           OUTPUT
             "${desktopfile_abs}"
           COMMAND
-            "${INTLTOOL_MERGE_EXECUTABLE}" ${INTLTOOL_OPTIONS_DEFAULT} "--desktop-style" "${cursrcdir_rel}" "${desktopfiletmp_rel}" "${desktopfile_rel}"
+            "${GETTEXT_MSGFMT_EXECUTABLE}" "--desktop" "--template=${CMAKE_CURRENT_SOURCE_DIR}/${desktopfileIN}" -d "${CMAKE_CURRENT_BINARY_DIR}" -o "${desktopfile_abs}"
           DEPENDS
-            "${PROJECT_BINARY_DIR}/${desktopfiletmp}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/${desktopfileIN}"
+          DEPENDS
+            "${LINGUAS_file}"
+          WORKING_DIRECTORY
+            "${CMAKE_CURRENT_BINARY_DIR}"
           VERBATIM
         )
-        if(ARGS_DESKTOPFILES_INSTALL AND NOT cursrcdir_rel STREQUAL ".")
-          add_custom_command(
-            OUTPUT
-              "${CMAKE_SOURCE_DIR}/${desktopfile}"
-              "desktopinstall.stamp"
-            COMMAND
-              "${CMAKE_COMMAND}" -E copy_if_different "${desktopfile_abs}" "${CMAKE_SOURCE_DIR}/${desktopfile}"
-            COMMAND
-              "${CMAKE_COMMAND}" -E touch "desktopinstall.stamp"
-            DEPENDS
-              "${desktopfile_abs}"
-            VERBATIM
-          )
-        else()
-          add_custom_command(
-            OUTPUT
-              "desktopinstall.stamp"
-            COMMAND
-              "${CMAKE_COMMAND}" -E touch "desktopinstall.stamp"
-            DEPENDS
-              "${desktopfile_abs}"
-            VERBATIM
-          )
-        endif()
-        list(APPEND desktopfiles "desktopinstall.stamp")
         install(
           FILES
             "${desktopfile_abs}"
@@ -700,8 +528,6 @@ if(XGETTEXT_FOUND)
       DEPENDS
         ${_gmoFiles}
         ${desktopfiles}
-      COMMENT
-        "Build translations."
     )
   endfunction()
 endif()
