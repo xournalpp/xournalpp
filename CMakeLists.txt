@@ -347,8 +347,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
             DESTINATION share/icons/hicolor/scalable/mimetypes/)
     install(FILES desktop/com.github.xournalpp.xournalpp.xml
             DESTINATION share/mime/packages)
-    install(FILES desktop/com.github.xournalpp.xournalpp.desktop
-            DESTINATION share/applications)
     install(FILES desktop/com.github.xournalpp.xournalpp.thumbnailer
             DESTINATION share/thumbnailers)
     install(FILES desktop/com.github.xournalpp.xournalpp.appdata.xml
