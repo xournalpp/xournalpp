@@ -332,6 +332,7 @@ struct XournalMainPrivate {
     gboolean exportNoRuling = false;
     gboolean progressiveMode = false;
     gboolean disableAudio = false;
+    gboolean attachMode = false;
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
@@ -505,8 +506,13 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
         try {
             if (fs::exists(p)) {
-                opened = app_data->control->openFile(p,
-                                                     app_data->openAtPageNumber - 1);  // First page for user is page 1
+                if (app_data->attachMode) {
+                    opened = app_data->control->annotatePdf(p, true, /*attachToDocument*/ true);
+                } else {
+                    opened = app_data->control->openFile(
+                            p,
+                            app_data->openAtPageNumber - 1);  // First page for user is page 1
+                }
             } else {
                 opened = app_data->control->newFile("", p);
             }
@@ -631,6 +637,8 @@ auto XournalMain::run(int argc, char** argv) -> int {
                                        _("Get version of xournalpp"), nullptr},
                           GOptionEntry{"disable-audio", 0, 0, G_OPTION_ARG_NONE, &app_data.disableAudio,
                                        _("Disable audio for this session"), nullptr},
+                          GOptionEntry{"attach-mode", 0, 0, G_OPTION_ARG_NONE, &app_data.attachMode,
+                                       _("Open PDF in attach mode"), nullptr},
                           GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     g_application_add_main_option_entries(G_APPLICATION(app), options.data());
 
