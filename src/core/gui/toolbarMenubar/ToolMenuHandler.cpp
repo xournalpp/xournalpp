@@ -32,7 +32,8 @@
 #include "DrawingTypeComboToolButton.h"  // for DrawingTypeComboToolButton
 #include "FontButton.h"                  // for FontButton
 #include "MenuItem.h"                    // for MenuItem
-#include "PluginToolButton.h"            // for ToolButton
+#include "PluginToolButton.h"            // for PluginToolButton
+#include "StylePopoverFactory.h"         // for ToolButtonWithStylePopover
 #include "ToolButton.h"                  // for ToolButton
 #include "ToolPageLayer.h"               // for ToolPageLayer
 #include "ToolPageSpinner.h"             // for ToolPageSpinner
@@ -284,91 +285,6 @@ void ToolMenuHandler::addColorToolItem(AbstractToolItem* it) {
 
 void ToolMenuHandler::addToolItem(AbstractToolItem* it) { this->toolItems.push_back(it); }
 
-static auto createPenLineStylePopover(IconNameHelper& icons) {
-    xoj::util::WidgetSPtr popover(gtk_popover_new(), xoj::util::adopt);
-    GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_popover_set_child(GTK_POPOVER(popover.get()), box);
-
-#if GTK_MAJOR_VERSION == 3
-    GtkRadioButton* group = nullptr;
-    auto appendLineStyleItem = [&](const char* label, const char* target, const char* icon) {
-        GtkWidget* btn = gtk_radio_button_new_from_widget(group);
-        group = GTK_RADIO_BUTTON(btn);
-        xoj::util::gtk::setRadioButtonActionName(GTK_RADIO_BUTTON(btn), "win",
-                                                 Action_toString(Action::TOOL_PEN_LINE_STYLE));
-        g_signal_connect_object(btn, "clicked", G_CALLBACK(+[](GtkButton*, gpointer popover) {
-                                    gtk_popover_popdown(GTK_POPOVER(popover));
-                                }),
-                                popover.get(), GConnectFlags(0));
-#else
-    GtkCheckButton* group = nullptr;
-    std::string actionName = std::string("win.") + Action_toString(Action::TOOL_PEN_LINE_STYLE);
-    auto appendLineStyleItem = [&](const char* label, const char* target, const char* icon) {
-        GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
-        // Is grouping necessary here? The GTK4 doc is unclear
-        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn));
-        gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
-        g_signal_connect_object(btn, "toggled", G_CALLBACK(+[](GtkCheckButton*, gpointer popover){
-            gtk_popover_popdown(GTK_POPOVER(popover));}), popover.get(), GConnectFlags(0));
-#endif
-        gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(target).get());
-        GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-        gtk_box_append(GTK_BOX(hbox),
-                       gtk_image_new_from_icon_name(icons.iconName(icon).c_str(), GTK_ICON_SIZE_LARGE_TOOLBAR));
-        gtk_box_append(GTK_BOX(hbox), gtk_label_new(label));
-        gtk_button_set_child(GTK_BUTTON(btn), hbox);
-        gtk_box_append(GTK_BOX(box), btn);
-    };
-
-    appendLineStyleItem(_("standard"), "plain", "line-style-plain");
-    appendLineStyleItem(_("dashed"), "dash", "line-style-dash");
-    appendLineStyleItem(_("dash-/ dotted"), "dashdot", "line-style-dash-dot");
-    appendLineStyleItem(_("dotted"), "dot", "line-style-dot");
-
-    gtk_widget_show_all(box);
-    return popover;
-}
-
-static auto createEraserTypePopover() {
-    xoj::util::WidgetSPtr popover(gtk_popover_new(), xoj::util::adopt);
-    GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_popover_set_child(GTK_POPOVER(popover.get()), box);
-
-#if GTK_MAJOR_VERSION == 3
-    GtkRadioButton* group = nullptr;
-    auto appendEraserTypeItem = [&](const char* label, EraserType target) {
-        GtkWidget* btn = gtk_radio_button_new_from_widget(group);
-        group = GTK_RADIO_BUTTON(btn);
-        xoj::util::gtk::setRadioButtonActionName(GTK_RADIO_BUTTON(btn), "win",
-                                                 Action_toString(Action::TOOL_ERASER_TYPE));
-        g_signal_connect_object(btn, "clicked", G_CALLBACK(+[](GtkButton*, gpointer popover) {
-                                    gtk_popover_popdown(GTK_POPOVER(popover));
-                                }),
-                                popover.get(), GConnectFlags(0));
-#else
-    GtkCheckButton* group = nullptr;
-    std::string actionName = std::string("win.") + Action_toString(Action::TOOL_ERASER_TYPE);
-    auto appendEraserTypeItem = [&](const char* label, EraserType target) {
-        GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
-        // Is grouping necessary here? The GTK4 doc is unclear
-        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn));
-        gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
-        g_signal_connect_object(btn, "toggled", G_CALLBACK(+[](GtkCheckButton*, gpointer popover){
-            gtk_popover_popdown(GTK_POPOVER(popover));}), popover.get(), GConnectFlags(0));
-#endif
-        gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(target).get());
-        gtk_button_set_label(GTK_BUTTON(btn), label);
-        gtk_box_append(GTK_BOX(box), btn);
-    };
-
-    appendEraserTypeItem(_("standard"), ERASER_TYPE_DEFAULT);
-    appendEraserTypeItem(_("whiteout"), ERASER_TYPE_WHITEOUT);
-    appendEraserTypeItem(_("delete stroke"), ERASER_TYPE_DELETE_STROKE);
-
-    gtk_widget_show_all(box);
-    return popover;
-}
-
 #ifdef ENABLE_PLUGINS
 void ToolMenuHandler::addPluginItem(ToolbarButtonEntry* t) { addToolItem(new PluginToolButton(t)); }
 #endif /* ENABLE_PLUGINS */
@@ -420,16 +336,16 @@ void ToolMenuHandler::initToolItems() {
      *      The corresponding action in ActionDatabase[action] should have no state (it can have a parameter)
      **/
     auto emplaceCustomItemWithPopover = [this](const char* name, Action action, const char* icon,
-                                               std::string description, GtkWidget* popover) {
+                                               std::string description, const PopoverFactory* popover) {
         auto* tb = new ToolButton(name, action, iconName(icon), description, false);
-        tb->setPopover(popover);
+        tb->setPopoverFactory(popover);
         addToolItem(tb);
     };
 
     auto emplaceCustomItemWithTargetAndMenu = [this](const char* name, Action action, auto target, const char* icon,
-                                                     std::string description, GtkWidget* popover) {
+                                                     std::string description, const PopoverFactory* popover) {
         auto* tb = new ToolButton(name, action, makeGVariant(target), iconName(icon), description);
-        tb->setPopover(popover);
+        tb->setPopoverFactory(popover);
         addToolItem(tb);
     };
 
@@ -513,27 +429,37 @@ void ToolMenuHandler::initToolItems() {
      */
 
     emplaceCustomItemWithPopover("INSERT_NEW_PAGE", Action::NEW_PAGE_AFTER, "page-add", _("Insert page"),
-                                 this->pageTypeSelectionPopup->getPopover());
+                                 this->pageTypeSelectionPopup.get());
     emplaceCustomItem("DELETE_CURRENT_PAGE", Action::DELETE_PAGE, "page-delete", _("Delete current page"));
 
     /*
      * Menu Tool
      * ------------------------------------------------------------------------
      */
-
+    this->penLineStylePopover = std::make_unique<StylePopoverFactory>(
+            Action::TOOL_PEN_LINE_STYLE,
+            std::vector<StylePopoverFactory::Entry>{{_("standard"), iconName("line-style-plain"), "plain"},
+                                                    {_("dashed"), iconName("line-style-dash"), "dash"},
+                                                    {_("dash-/ dotted"), iconName("line-style-dash-dot"), "dashdot"},
+                                                    {_("dotted"), iconName("line-style-dot"), "dot"}});
     emplaceCustomItemWithTargetAndMenu("PEN", Action::SELECT_TOOL, TOOL_PEN, "tool-pencil", _("Pen"),
-                                       createPenLineStylePopover(this->iconNameHelper).get());
-    // Add individual line styles as toolbar items
-    emplaceCustomItemWithTarget("PLAIN", Action::TOOL_PEN_LINE_STYLE, "plain", "line-style-plain", _("standard"));
-    emplaceCustomItemWithTarget("DASHED", Action::TOOL_PEN_LINE_STYLE, "dash", "line-style-dash", _("dashed"));
-    emplaceCustomItemWithTarget("DASH-/ DOTTED", Action::TOOL_PEN_LINE_STYLE, "dashdot", "line-style-dash-dot",
-                                _("dash-/ dotted"));
-    emplaceCustomItemWithTarget("DOTTED", Action::TOOL_PEN_LINE_STYLE, "dot", "line-style-dot", _("dotted"));
+                                       this->penLineStylePopover.get());
 
-
+    this->eraserTypePopover = std::make_unique<StylePopoverFactory>(
+            Action::TOOL_ERASER_TYPE,
+            std::vector<StylePopoverFactory::Entry>{{_("standard"), ERASER_TYPE_DEFAULT},
+                                                    {_("whiteout"), ERASER_TYPE_WHITEOUT},
+                                                    {_("delete stroke"), ERASER_TYPE_DELETE_STROKE}});
     emplaceCustomItemWithTargetAndMenu("ERASER", Action::SELECT_TOOL, TOOL_ERASER, "tool-eraser", _("Eraser"),
-                                       createEraserTypePopover().get());
-    // no icons for individual eraser modes available, therefore can't add them as toolbar items
+                                       this->eraserTypePopover.get());
+
+    // Add individual line styles as toolbar items
+    emplaceCustomItemWithTarget("PLAIN", Action::TOOL_PEN_LINE_STYLE, "plain", "line-style-plain-with-pen",
+                                _("standard"));
+    emplaceCustomItemWithTarget("DASHED", Action::TOOL_PEN_LINE_STYLE, "dash", "line-style-dash-with-pen", _("dashed"));
+    emplaceCustomItemWithTarget("DASH-/ DOTTED", Action::TOOL_PEN_LINE_STYLE, "dashdot", "line-style-dash-dot-with-pen",
+                                _("dash-/ dotted"));
+    emplaceCustomItemWithTarget("DOTTED", Action::TOOL_PEN_LINE_STYLE, "dot", "line-style-dot-with-pen", _("dotted"));
 
 
     emplaceCustomItemWithTarget("HIGHLIGHTER", Action::SELECT_TOOL, TOOL_HIGHLIGHTER, "tool-highlighter",

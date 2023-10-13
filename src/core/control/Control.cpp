@@ -1628,11 +1628,8 @@ void Control::toolChanged() {
         toolSizeChanged();
     }
 
-    bool enableLineStyle = toolHandler->hasCapability(TOOL_CAP_LINE_STYLE);
-    this->actionDB->enableAction(Action::TOOL_PEN_LINE_STYLE, enableLineStyle);
-    if (enableLineStyle) {
-        toolLineStyleChanged();
-    }
+    // Set or reset the lineStyle
+    toolLineStyleChanged();
 
     bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
     this->actionDB->enableAction(Action::TOOL_FILL, enableFill);
@@ -1698,8 +1695,10 @@ void Control::toolLineStyleChanged() {
 }
 
 auto Control::getLineStyleToSelect() -> std::optional<string> const {
-    const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
-    string style = StrokeStyle::formatStyle(lineStyle);
+    std::optional<std::string> style;
+    if (auto* tool = toolHandler->getActiveTool(); tool->getToolType() == TOOL_PEN) {
+        style = StrokeStyle::formatStyle(tool->getLineStyle());
+    }
 
     if (!win) {
         return style;
@@ -1711,7 +1710,7 @@ auto Control::getLineStyleToSelect() -> std::optional<string> const {
     }
 
     bool isFirstPenStrokeElement = true;
-    string previous_style = "none";
+    std::optional<std::string> previous_style;
 
     // Todo(cpp20) Replace with std::ranges::filter_view and for_first_then_for_each
     for (const Element* e: sel->getElements()) {
@@ -2830,14 +2829,21 @@ void Control::setLineStyle(const string& style) {
     LineStyle stl = StrokeStyle::parseStyle(style);
 
     EditSelection* sel = nullptr;
-    if (this->win) {
-        sel = this->win->getXournal()->getSelection();
-    }
-
-    if (sel) {
-        undoRedo->addUndoAction(sel->setLineStyle(stl));
+    if (this->win && this->win->getXournal()->getSelection()) {
+        undoRedo->addUndoAction(this->win->getXournal()->getSelection()->setLineStyle(stl));
+    } else if (this->toolHandler->getActiveTool()->getToolType() != TOOL_PEN) {
+        this->selectTool(TOOL_PEN);
     }
     this->toolHandler->setLineStyle(stl);
+}
+
+void Control::setEraserType(EraserType type) {
+    if (type != ERASER_TYPE_NONE) {
+        if (this->toolHandler->getActiveTool()->getToolType() != TOOL_ERASER) {
+            this->selectTool(TOOL_ERASER);
+        }
+    }
+    this->toolHandler->setEraserType(type);
 }
 
 void Control::setToolSize(ToolSize size) {

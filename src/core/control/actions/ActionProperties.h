@@ -598,9 +598,7 @@ template <>
 struct ActionProperties<Action::TOOL_PEN_LINE_STYLE> {
     using state_type = const std::string&;
     using parameter_type = state_type;
-    static std::string initialState(Control* ctrl) {
-        return StrokeStyle::formatStyle(ctrl->getToolHandler()->getTool(TOOL_PEN).getLineStyle());
-    }
+    static std::string initialState(Control* ctrl) { return ctrl->getLineStyleToSelect().value_or("none"); }
     static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
         g_simple_action_set_state(ga, p);
         const char* styleName = g_variant_get_string(p, nullptr);
@@ -646,7 +644,7 @@ struct ActionProperties<Action::TOOL_ERASER_TYPE> {
     static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
         g_simple_action_set_state(ga, p);
         EraserType type = getGVariantValue<EraserType>(p);
-        ctrl->getToolHandler()->setEraserType(type);
+        ctrl->setEraserType(type);
     }
 };
 

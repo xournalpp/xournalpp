@@ -11,26 +11,28 @@
 
 #pragma once
 
+#include <memory>
 #include <string>  // for string, allocator
 
 #include <gtk/gtk.h>  // for GtkWidget
 
 #include "enums/Action.enum.h"  // for Action
+#include "gui/PopoverFactory.h"
 #include "util/raii/GVariantSPtr.h"
 
 #include "AbstractToolItem.h"  // for AbstractToolItem
+
 
 class ToolButton: public AbstractToolItem {
 public:
     ToolButton(std::string id, Action action, std::string iconName, std::string description, bool toggle);
     ToolButton(std::string id, Action action, GVariant* target, std::string iconName, std::string description);
-
-    ~ToolButton() override;
+    ~ToolButton() override = default;
 
 public:
     void updateDescription(const std::string& description);
     std::string getToolDisplayName() const override;
-    void setPopover(GtkWidget* popover);
+    void setPopoverFactory(const PopoverFactory* factory);
 
 protected:
     GtkWidget* createItem(bool horizontal) override;
@@ -41,7 +43,7 @@ protected:
     std::string iconName;
     std::string description;
     /// @brief If set, a MenuButton is added with this popover
-    xoj::util::WidgetSPtr popover;
+    const PopoverFactory* popoverFactory = nullptr;
     Action newAction;
     /// @brief If set, the action target value the button corresponds to
     xoj::util::GVariantSPtr target;

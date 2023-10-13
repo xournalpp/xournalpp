@@ -47,6 +47,7 @@ class MenuItem;
 struct ToolbarButtonEntry;
 class PageTypeSelectionPopover;
 class PageType;
+class StylePopoverFactory;
 
 class ToolMenuHandler {
 public:
@@ -126,6 +127,8 @@ private:
     IconNameHelper iconNameHelper;
 
     std::unique_ptr<PageTypeSelectionPopover> pageTypeSelectionPopup;
+    std::unique_ptr<StylePopoverFactory> penLineStylePopover;
+    std::unique_ptr<StylePopoverFactory> eraserTypePopover;
 
     xoj::util::GObjectSPtr<GSimpleAction> gAction;
 };

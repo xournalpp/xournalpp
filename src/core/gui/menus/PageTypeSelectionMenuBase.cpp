@@ -10,7 +10,6 @@
 #include "control/pagetype/PageTypeHandler.h"       // for PageTypeInfo, Pag...
 #include "control/settings/PageTemplateSettings.h"  // for PageTemplateSettings
 #include "control/settings/Settings.h"              // for Settings
-#include "util/Util.h"
 #include "util/raii/GVariantSPtr.h"
 
 namespace {
@@ -29,13 +28,14 @@ std::optional<PageType> getInitiallySelectedPageType(const Settings* settings) {
 size_t findIndex(PageTypeHandler* types, const std::optional<PageType>& pt) {
     auto find_index_of = [](const std::vector<std::unique_ptr<PageTypeInfo>>& types, const PageType& pt) {
         auto it = std::find_if(types.begin(), types.end(), [&pt](const auto& info) { return info->page == pt; });
-        return it != types.end() ? static_cast<size_t>(std::distance(types.begin(), it)) : npos;
+        return it != types.end() ? static_cast<size_t>(std::distance(types.begin(), it)) :
+                                   PageTypeSelectionMenuBase::COPY_CURRENT_PLACEHOLDER;
     };
 
     return pt ? (pt->isSpecial() ?
                          find_index_of(types->getSpecialPageTypes(), pt.value()) + types->getPageTypes().size() :
                          find_index_of(types->getPageTypes(), pt.value())) :
-                npos;
+                PageTypeSelectionMenuBase::COPY_CURRENT_PLACEHOLDER;
 }
 
 GSimpleAction* createPageTypeSelectionAction(PageTypeHandler* types, const std::optional<PageType>& pt,

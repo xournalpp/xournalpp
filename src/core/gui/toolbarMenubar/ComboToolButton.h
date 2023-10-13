@@ -39,7 +39,6 @@ public:
      * @param iconName Icon used in the toolbar customization dialog to represent this combo button.
      * @param description Description used in the toolbar customization dialog to explain this combo button.
      * @param entries Entries of the combo menu.
-     * @param canBeReleased if true, the toggle button cannot be released by clicking on it
      */
     ComboToolButton(std::string id, std::string iconName, std::string description, std::vector<Entry> entries,
                     ActionRef gAction);

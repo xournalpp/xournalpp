@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <limits>
 #include <optional>
 #include <string_view>
 
@@ -53,4 +54,7 @@ protected:
     PageTypeHandler* types;
 
     bool changeCurrentPageUponCallback = false;
+
+public:
+    static constexpr size_t COPY_CURRENT_PLACEHOLDER = std::numeric_limits<size_t>::max();
 };
