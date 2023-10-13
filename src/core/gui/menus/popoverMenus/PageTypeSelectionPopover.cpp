@@ -110,9 +110,7 @@ GtkWidget* createPreviewGrid(const std::vector<std::unique_ptr<PageTypeInfo>>& p
 PageTypeSelectionPopover::PageTypeSelectionPopover(PageTypeHandler* typesHandler,
                                                    PageBackgroundChangeController* controller, const Settings* settings,
                                                    GtkApplicationWindow* win):
-        PageTypeSelectionMenuBase(typesHandler, settings, SELECTION_ACTION_NAME),
-        controller(controller),
-        popover(createPopover()) {
+        PageTypeSelectionMenuBase(typesHandler, settings, SELECTION_ACTION_NAME), controller(controller) {
     static_assert(is_action_namespace_match<decltype(win)>(G_ACTION_NAMESPACE));
 
     g_action_map_add_action(G_ACTION_MAP(win), G_ACTION(typeSelectionAction.get()));
@@ -120,15 +118,15 @@ PageTypeSelectionPopover::PageTypeSelectionPopover(PageTypeHandler* typesHandler
     controller->setPageTypeForNewPages(this->selectedPT);
 }
 
-xoj::util::WidgetSPtr PageTypeSelectionPopover::createPopover() {
-    xoj::util::WidgetSPtr popover(gtk_popover_new(), xoj::util::adopt);
+GtkWidget* PageTypeSelectionPopover::createPopover() const {
+    GtkWidget* popover = gtk_popover_new();
 
     // Todo(cpp20): constexpr this
     std::string prefixedActionName = G_ACTION_NAMESPACE;
     prefixedActionName += SELECTION_ACTION_NAME;
 
     GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
-    gtk_popover_set_child(GTK_POPOVER(popover.get()), GTK_WIDGET(box));
+    gtk_popover_set_child(GTK_POPOVER(popover), GTK_WIDGET(box));
 
     gtk_box_append(box, createPreviewGrid(types->getPageTypes(), prefixedActionName));
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
@@ -155,28 +153,37 @@ xoj::util::WidgetSPtr PageTypeSelectionPopover::createPopover() {
     gtk_box_append(box, GTK_WIDGET(grid));
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
 
-    this->applyToCurrentPageButton.reset(gtk_button_new_with_label(_("Apply to current page")), xoj::util::adopt);
-    // We cannot "Apply to current page" if no page type is selected...
-    gtk_widget_set_sensitive(this->applyToCurrentPageButton.get(), this->selectedPT.has_value());
-    g_signal_connect(this->applyToCurrentPageButton.get(), "clicked",
-                     G_CALLBACK(+[](GtkWidget*, const PageTypeSelectionPopover* self) {
+    GtkWidget* applyToCurrentPageButton = gtk_button_new_with_label(_("Apply to current page"));
+    g_signal_connect(applyToCurrentPageButton, "clicked", G_CALLBACK(+[](GtkWidget*, gpointer d) {
+                         auto self = static_cast<const PageTypeSelectionPopover*>(d);
                          if (self->selectedPT) {
                              self->controller->changeCurrentPageBackground(self->selectedPT.value());
                          }
                      }),
-                     this);
-    gtk_box_append(box, this->applyToCurrentPageButton.get());  // increases the ref-count of applyToCurrentPageButton
+                     const_cast<PageTypeSelectionPopover*>(this));
+    gtk_box_append(box, applyToCurrentPageButton);
+
+    // We cannot "Apply to current page" if no page type is selected...
+    gtk_widget_set_sensitive(applyToCurrentPageButton, this->selectedPT.has_value());
+    g_signal_connect_object(this->typeSelectionAction.get(), "notify::state",
+                            G_CALLBACK(+[](GObject* a, GParamSpec*, gpointer btn) {
+                                xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(a)), xoj::util::adopt);
+                                gtk_widget_set_sensitive(GTK_WIDGET(btn), getGVariantValue<size_t>(state.get()) !=
+                                                                                  COPY_CURRENT_PLACEHOLDER);
+                            }),
+                            applyToCurrentPageButton, GConnectFlags(0));
 
     GtkWidget* button = gtk_button_new_with_label(_("Apply to all pages"));
-    g_signal_connect(button, "clicked", G_CALLBACK(+[](GtkWidget*, const PageTypeSelectionPopover* self) {
+    g_signal_connect(button, "clicked", G_CALLBACK(+[](GtkWidget*, gpointer d) {
+                         auto self = static_cast<const PageTypeSelectionPopover*>(d);
                          if (self->selectedPT) {
                              self->controller->applyBackgroundToAllPages(self->selectedPT.value());
                          } else {
                              self->controller->applyCurrentPageBackgroundToAll();
                          }
                      }),
-                     this);
-    gtk_box_append(box, button);  // box takes over button's floating ref
+                     const_cast<PageTypeSelectionPopover*>(this));
+    gtk_box_append(box, button);
 
     gtk_widget_show_all(GTK_WIDGET(box));
 
@@ -184,8 +191,5 @@ xoj::util::WidgetSPtr PageTypeSelectionPopover::createPopover() {
 }
 
 void PageTypeSelectionPopover::entrySelected(const PageTypeInfo*) {
-    // We cannot "Apply to current page" if no page type is selected...
-    gtk_widget_set_sensitive(this->applyToCurrentPageButton.get(), this->selectedPT.has_value());
-
     this->controller->setPageTypeForNewPages(this->selectedPT);
 }

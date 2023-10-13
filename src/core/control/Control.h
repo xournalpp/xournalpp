@@ -246,7 +246,16 @@ public:
 
     void setToolSize(ToolSize size);
 
+    /**
+     * Change the line style of the PEN if select, or of selected elements if any
+     * Otherwise, select the PEN tool and set its linestyle
+     */
     void setLineStyle(const std::string& style);
+
+    /**
+     * Change the eraser type. If the eraser is not selected, select it as well.
+     */
+    void setEraserType(EraserType type);
 
     void setFill(bool fill);
 
