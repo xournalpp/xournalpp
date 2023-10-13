@@ -88,7 +88,7 @@ template <>
 struct ActionProperties<Action::ANNOTATE_PDF> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->clearSelectionEndText();
-        ctrl->annotatePdf("", false, false);
+        ctrl->annotatePdf("", false);
     }
 };
 

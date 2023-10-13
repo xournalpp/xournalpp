@@ -1507,7 +1507,7 @@ auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
         }
     }
 
-    bool an = annotatePdf(filepath, false, false);
+    bool an = annotatePdf(filepath, false);
     fileLoaded(scrollToPage);
     return an;
 }
@@ -1588,7 +1588,7 @@ void Control::loadMetadata(MetadataEntry md) {
                     &xoj::util::destroy_cb<MetadataCallbackData>);
 }
 
-auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDocument) -> bool {
+auto Control::annotatePdf(fs::path filepath, bool attachToDocument) -> bool {
     if (!this->close(false)) {
         return false;
     }
