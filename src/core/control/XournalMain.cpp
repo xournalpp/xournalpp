@@ -507,7 +507,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
         try {
             if (fs::exists(p)) {
                 if (app_data->attachMode && Util::hasPdfFileExt(p)) {
-                    opened = app_data->control->annotatePdf(p, true, /*attachToDocument*/ true);
+                    opened = app_data->control->annotatePdf(p, true);
                 } else {
                     opened = app_data->control->openFile(
                             p,

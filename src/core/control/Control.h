@@ -94,7 +94,7 @@ public:
     // Menu File
     bool newFile(std::string pageTemplate = "", fs::path filepath = {});
     bool openFile(fs::path filepath = "", int scrollToPage = -1, bool forceOpen = false);
-    bool annotatePdf(fs::path filepath, bool attachPdf, bool attachToDocument);
+    bool annotatePdf(fs::path filepath, bool attachToDocument);
     void print();
     void exportAsPdf();
     void exportAs();
