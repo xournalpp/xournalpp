@@ -952,234 +952,6 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid88">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label-xalign">0.009999999776482582</property>
-                                <child>
-                                  <object class="GtkAlignment" id="sid89">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">False</property>
-                                    <property name="bottom-padding">8</property>
-                                    <property name="left-padding">12</property>
-                                    <property name="right-padding">12</property>
-                                    <child>
-                                      <object class="GtkBox" id="sid90">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="orientation">vertical</property>
-                                        <child>
-                                          <object class="GtkCheckButton" id="cbInputSystemDrawOutsideWindow">
-                                            <property name="name">cbInputSystemDrawOutsideWindow</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="receives-default">False</property>
-                                            <property name="xalign">0.5</property>
-                                            <property name="draw-indicator">True</property>
-                                            <child>
-                                              <object class="GtkLabel" id="sid92">
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">Enable drawing outside of window &lt;i&gt;(Drawing will not stop at the border of the window)&lt;/i&gt;</property>
-                                                <property name="use-markup">True</property>
-                                                <property name="wrap">True</property>
-                                                <property name="xalign">0</property>
-                                              </object>
-                                            </child>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkCheckButton" id="cbInputSystemTPCButton">
-                                            <property name="name">cbInputSystemTPCButton</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="receives-default">False</property>
-                                            <property name="tooltip-markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
-	    Drag UP acts as if Control key is being held.
-
-            Determination Radius: Radius at which modifiers will lock in until finished drawing.
-
-	    &lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
-                                            <property name="xalign">0</property>
-                                            <property name="draw-indicator">True</property>
-                                            <child>
-                                              <object class="GtkLabel" id="sid93">
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">Merge button events with stylus tip events
-	    &lt;i&gt;(Check this if&lt;/i&gt; "&lt;tt&gt;xsetwacom get *deviceId* TabletPCButton&lt;/tt&gt;" &lt;i&gt;returns&lt;/i&gt; "&lt;tt&gt;on&lt;/tt&gt;"&lt;i&gt;)&lt;/i&gt;</property>
-                                                <property name="use-markup">True</property>
-                                                <property name="wrap">True</property>
-                                                <property name="xalign">0</property>
-                                              </object>
-                                            </child>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">2</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkCheckButton" id="cbEnablePressureInference">
-                                            <property name="name">cbEnablePressureInference</property>
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="receives-default">False</property>
-                                            <property name="tooltip-markup" translatable="yes">Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.
-
-&lt;i&gt;This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.&lt;/i&gt;</property>
-                                            <property name="xalign">0</property>
-                                            <property name="draw-indicator">True</property>
-                                            <child>
-                                              <object class="GtkLabel" id="sid201">
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">Enable Pressure Inference &lt;i&gt;(Guess pressure from drawing speed when device-supplied pressure is not available)&lt;/i&gt;</property>
-                                                <property name="use-markup">True</property>
-                                                <property name="wrap">True</property>
-                                                <property name="xalign">0</property>
-                                              </object>
-                                            </child>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">3</property>
-                                          </packing>
-                                        </child>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child type="label">
-                                  <object class="GtkLabel" id="sid94">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">Options</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkFrame" id="sid88">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label-xalign">0.009999999776482582</property>
-                                <child>
-                                  <object class="GtkBox" id="sid90">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">False</property>
-                                    <property name="margin-start">12</property>
-                                    <property name="margin-end">12</property>
-                                    <property name="margin-bottom">8</property>
-                                    <property name="orientation">vertical</property>
-                                    <child>
-                                      <object class="GtkCheckButton" id="cbInputSystemDrawOutsideWindow">
-                                        <property name="name">cbInputSystemDrawOutsideWindow</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">True</property>
-                                        <property name="receives-default">False</property>
-                                        <property name="draw-indicator">True</property>
-                                        <child>
-                                          <object class="GtkLabel" id="sid92">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">Enable drawing outside of window &lt;i&gt;(Drawing will not stop at the border of the window)&lt;/i&gt;</property>
-                                            <property name="use-markup">True</property>
-                                            <property name="wrap">True</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkCheckButton" id="cbInputSystemTPCButton">
-                                        <property name="name">cbInputSystemTPCButton</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">True</property>
-                                        <property name="receives-default">False</property>
-                                        <property name="tooltip-markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
-	    Drag UP acts as if Control key is being held.
-
-            Determination Radius: Radius at which modifiers will lock in until finished drawing.
-
-	    &lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
-                                        <property name="draw-indicator">True</property>
-                                        <child>
-                                          <object class="GtkLabel" id="sid93">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">Merge button events with stylus tip events
-	    &lt;i&gt;(Check this if&lt;/i&gt; "&lt;tt&gt;xsetwacom get *deviceId* TabletPCButton&lt;/tt&gt;" &lt;i&gt;returns&lt;/i&gt; "&lt;tt&gt;on&lt;/tt&gt;"&lt;i&gt;)&lt;/i&gt;</property>
-                                            <property name="use-markup">True</property>
-                                            <property name="wrap">True</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">2</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkCheckButton" id="cbEnablePressureInference">
-                                        <property name="name">cbEnablePressureInference</property>
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">True</property>
-                                        <property name="receives-default">False</property>
-                                        <property name="tooltip-markup" translatable="yes">Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.
-
-&lt;i&gt;This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.&lt;/i&gt;</property>
-                                        <property name="draw-indicator">True</property>
-                                        <child>
-                                          <object class="GtkLabel" id="sid201">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">Enable Pressure Inference &lt;i&gt;(Guess pressure from drawing speed when device-supplied pressure is not available)&lt;/i&gt;</property>
-                                            <property name="use-markup">True</property>
-                                            <property name="wrap">True</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">3</property>
-                                      </packing>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child type="label">
-                                  <object class="GtkLabel" id="sid94">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">Options</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkFrame" id="frameStabilizerSettings">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -1487,6 +1259,234 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkFrame" id="sid1">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.009999999776482582</property>
+                                <child>
+                                  <object class="GtkBox" id="sid2">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="margin-bottom">8</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkCheckButton" id="cbInputSystemDrawOutsideWindow1">
+                                        <property name="name">cbInputSystemDrawOutsideWindow</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">False</property>
+                                        <property name="draw-indicator">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="sid3">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Enable drawing outside of window &lt;i&gt;(Drawing will not stop at the border of the window)&lt;/i&gt;</property>
+                                            <property name="use-markup">True</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckButton" id="cbInputSystemTPCButton1">
+                                        <property name="name">cbInputSystemTPCButton</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">False</property>
+                                        <property name="tooltip-markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
+	    Drag UP acts as if Control key is being held.
+
+            Determination Radius: Radius at which modifiers will lock in until finished drawing.
+
+	    &lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
+                                        <property name="draw-indicator">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="sid4">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Merge button events with stylus tip events
+	    &lt;i&gt;(Check this if&lt;/i&gt; "&lt;tt&gt;xsetwacom get *deviceId* TabletPCButton&lt;/tt&gt;" &lt;i&gt;returns&lt;/i&gt; "&lt;tt&gt;on&lt;/tt&gt;"&lt;i&gt;)&lt;/i&gt;</property>
+                                            <property name="use-markup">True</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">2</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkCheckButton" id="cbEnablePressureInference1">
+                                        <property name="name">cbEnablePressureInference</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">False</property>
+                                        <property name="tooltip-markup" translatable="yes">Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.
+
+&lt;i&gt;This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.&lt;/i&gt;</property>
+                                        <property name="draw-indicator">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="sid5">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Enable Pressure Inference &lt;i&gt;(Guess pressure from drawing speed when device-supplied pressure is not available)&lt;/i&gt;</property>
+                                            <property name="use-markup">True</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">3</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="sid6">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Options</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="sid88">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.009999999776482582</property>
+                                <child>
+                                  <object class="GtkAlignment" id="sid89">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="bottom-padding">8</property>
+                                    <property name="left-padding">12</property>
+                                    <property name="right-padding">12</property>
+                                    <child>
+                                      <object class="GtkBox" id="sid90">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbInputSystemDrawOutsideWindow">
+                                            <property name="name">cbInputSystemDrawOutsideWindow</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw-indicator">True</property>
+                                            <child>
+                                              <object class="GtkLabel" id="sid92">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Enable drawing outside of window &lt;i&gt;(Drawing will not stop at the border of the window)&lt;/i&gt;</property>
+                                                <property name="use-markup">True</property>
+                                                <property name="wrap">True</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbInputSystemTPCButton">
+                                            <property name="name">cbInputSystemTPCButton</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="tooltip-markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
+	    Drag UP acts as if Control key is being held.
+
+            Determination Radius: Radius at which modifiers will lock in until finished drawing.
+
+	    &lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw-indicator">True</property>
+                                            <child>
+                                              <object class="GtkLabel" id="sid93">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Merge button events with stylus tip events
+	    &lt;i&gt;(Check this if&lt;/i&gt; "&lt;tt&gt;xsetwacom get *deviceId* TabletPCButton&lt;/tt&gt;" &lt;i&gt;returns&lt;/i&gt; "&lt;tt&gt;on&lt;/tt&gt;"&lt;i&gt;)&lt;/i&gt;</property>
+                                                <property name="use-markup">True</property>
+                                                <property name="wrap">True</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbEnablePressureInference">
+                                            <property name="name">cbEnablePressureInference</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="tooltip-markup" translatable="yes">Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.
+
+&lt;i&gt;This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.&lt;/i&gt;</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw-indicator">True</property>
+                                            <child>
+                                              <object class="GtkLabel" id="sid201">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Enable Pressure Inference &lt;i&gt;(Guess pressure from drawing speed when device-supplied pressure is not available)&lt;/i&gt;</property>
+                                                <property name="use-markup">True</property>
+                                                <property name="wrap">True</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">3</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="sid94">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Options</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkFrame" id="tabSettingsFrame">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -1497,16 +1497,17 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                     <property name="can-focus">False</property>
                                     <property name="left-padding">12</property>
                                     <child>
+                                      <!-- n-columns=2 n-rows=1 -->
                                       <object class="GtkGrid" id="tabSettingsLayout">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="margin-end">10</property>
                                         <property name="margin-bottom">10</property>
-                                        <property name="column-homogeneous">True</property>
                                         <property name="row-homogeneous">True</property>
+                                        <property name="column-homogeneous">True</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbUseSpacesAsTab">
-                                            <property name="label" translatable="yes">Indent using spaces</property> 
+                                            <property name="label" translatable="yes">Indent using spaces</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
@@ -1518,7 +1519,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkBox" id ="numberOfSpacesContainer">
+                                          <object class="GtkBox" id="numberOfSpacesContainer">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
                                             <property name="spacing">14</property>
@@ -1546,7 +1547,6 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                                 <property name="input-purpose">number</property>
                                                 <property name="adjustment">adjustmentNumberOfSpacesForTab</property>
                                                 <property name="climb-rate">2</property>
-                                                <property name="digits">0</property>
                                                 <property name="snap-to-ticks">True</property>
                                                 <property name="numeric">True</property>
                                                 <property name="value">5</property>
@@ -2204,7 +2204,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="sid5">
+                              <object class="GtkFrame" id="sid7">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="label-xalign">0.009999999776482582</property>
@@ -6077,7 +6077,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                   </object>
                                 </child>
                                 <child type="label">
-                                  <object class="GtkLabel" id="sid4">
+                                  <object class="GtkLabel" id="sid10">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">Playback Settings</property>

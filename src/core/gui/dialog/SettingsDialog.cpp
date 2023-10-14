@@ -193,6 +193,12 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                              this);
     g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), window.get());
 
+    g_signal_connect(builder.get("cbUseSpacesAsTab"), "toggled",
+                     G_CALLBACK(+[](GtkCheckButton* checkBox, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbUseSpacesAsTab", "numberOfSpacesContainer");
+                     }),
+                     this);
+
     load();
 }
 
