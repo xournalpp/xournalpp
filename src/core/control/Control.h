@@ -72,6 +72,7 @@ class XojFont;
 class XojPdfRectangle;
 class Callback;
 class ActionDatabase;
+class LinkEditor;
 
 class Control:
         public ActionHandler,

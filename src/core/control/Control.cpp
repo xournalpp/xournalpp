@@ -35,6 +35,7 @@
 #include "control/settings/Settings.h"                           // for Sett...
 #include "control/settings/SettingsEnums.h"                      // for Button
 #include "control/settings/ViewModes.h"                          // for ViewM..
+#include "control/tools/EditSelection.h"                         // for Edit...
 #include "control/tools/TextEditor.h"                            // for Text...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
@@ -569,6 +570,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
             break;
         case ACTION_TOOL_TEXT:
             actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_TEXT);
+            break;
+        case ACTION_TOOL_LINK:
+            clearSelection();
+            if (enabled) {
+                selectTool(TOOL_LINK);
+            }
             break;
         case ACTION_TOOL_IMAGE:
             actionDB->fireChangeActionState(Action::SELECT_TOOL, TOOL_IMAGE);
