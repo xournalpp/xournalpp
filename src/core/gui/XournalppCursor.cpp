@@ -411,7 +411,7 @@ auto XournalppCursor::getHighlighterCursor() -> GdkCursor* {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }
 
-    return createHighlighterOrPenCursor(5, 120 / 255.0);
+    return createHighlighterOrPenCursor(120 / 255.0);
 }
 
 
@@ -429,22 +429,23 @@ auto XournalppCursor::getPenCursor() -> GdkCursor* {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }
 
-    return createHighlighterOrPenCursor(3, 1.0);
+    return createHighlighterOrPenCursor(1.0);
 }
 
-auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> GdkCursor* {
+auto XournalppCursor::createHighlighterOrPenCursor(double alpha) -> GdkCursor* {
     auto irgb = control->getToolHandler()->getColor();
     auto drgb = Util::rgb_to_GdkRGBA(irgb);
     auto cursorType = control->getSettings()->getStylusCursorType();
     auto cursor = (cursorType == STYLUS_CURSOR_NONE) ? CRSR_BLANK_CURSOR : CRSR_PENORHIGHLIGHTER;
     bool bright = control->getSettings()->isHighlightPosition();
-    int height = size;
-    int width = size;
+    double cursorSize = std::min(90., control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom());
+    int height = static_cast<int>(std::ceil(cursorSize));
+    int width = height;
 
     // create a hash of variables so we notice if one changes despite being the same cursor type:
     gulong flavour = (cursorType == STYLUS_CURSOR_DOT ? 1U : 0U) | (cursorType == STYLUS_CURSOR_BIG ? 2U : 0U) |
-                     (bright ? 4U : 0U) | static_cast<gulong>(64 * alpha) << 3U | static_cast<gulong>(size) << 10U |
-                     static_cast<gulong>(uint32_t(irgb)) << 15U;
+                     (bright ? 4U : 0U) | static_cast<gulong>(64 * alpha) << 3U |
+                     static_cast<gulong>(cursorSize) << 10U | static_cast<gulong>(uint32_t(irgb)) << 15U;
 
     if ((cursor == this->currentCursor) && (flavour == this->currentCursorFlavour)) {
         return nullptr;
@@ -466,7 +467,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 
     if (cursorType == STYLUS_CURSOR_BIG) {
         // When using highlighter, paint the icon with the current color
-        if (size == 5) {
+        if (alpha != 1.0) {
             gdk_cairo_set_source_rgba(cr, &drgb);
         } else {
             cairo_set_source_rgb(cr, 1, 1, 1);
@@ -505,7 +506,6 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
         auto drgbCopy = drgb;
         drgbCopy.alpha = alpha;
         gdk_cairo_set_source_rgba(cr, &drgbCopy);
-        double cursorSize = control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom();
         cairo_arc(cr, centerX, centerY, cursorSize / 2., 0, 2. * M_PI);
         cairo_fill(cr);
     }
