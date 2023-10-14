@@ -7,15 +7,12 @@
 class AbstractToolItem;
 struct NamedColor;
 
-ToolItemDragDropData* ToolItemDragCurrentData::data = nullptr;
+std::unique_ptr<ToolItemDragDropData> ToolItemDragCurrentData::data = nullptr;
 
-void ToolItemDragCurrentData::clearData() {
-    g_free(data);
-    data = nullptr;
-}
+void ToolItemDragCurrentData::clearData() { data.reset(); }
 
 void ToolItemDragCurrentData::setData(GtkWidget* widget) {
-    data = g_new(ToolItemDragDropData, 1);
+    data = std::make_unique<ToolItemDragDropData>();
 
     ToolItemDragDropData* d = ToolitemDragDrop::metadataGetMetadata(widget);
     if (d == nullptr) {
@@ -43,8 +40,8 @@ void ToolItemDragCurrentData::setDataColor(int id, const NamedColor* namedColor)
 }
 
 void ToolItemDragCurrentData::setData(ToolItemDragDropData* d) {
-    data = g_new(ToolItemDragDropData, 1);
+    data = std::make_unique<ToolItemDragDropData>();
     *data = *d;
 }
 
-auto ToolItemDragCurrentData::getData() -> ToolItemDragDropData* { return data; }
+auto ToolItemDragCurrentData::getData() -> const ToolItemDragDropData* { return data.get(); }

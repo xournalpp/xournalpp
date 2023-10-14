@@ -135,7 +135,7 @@ void TexImage::serialize(ObjectOutputStream& out) const {
     out.writeDouble(this->height);
     out.writeString(this->text);
 
-    out.writeData(this->binaryData.c_str(), this->binaryData.length(), 1);
+    out.writeString(this->binaryData);
 
     out.endObject();
 }
@@ -151,11 +151,8 @@ void TexImage::readSerialized(ObjectInputStream& in) {
 
     freeImageAndPdf();
 
-    char* data = nullptr;
-    int len = 0;
-    in.readData(reinterpret_cast<void**>(&data), &len);
-
-    this->loadData(std::string(data, len), nullptr);
+    std::string data = in.readString();
+    this->loadData(std::move(data), nullptr);
 
     in.endObject();
     this->calcSize();

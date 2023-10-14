@@ -34,7 +34,12 @@ auto MouseInputHandler::handleImpl(InputEvent const& event) -> bool {
      */
     // Trigger start of action when pen/mouse is pressed
     if (event.type == BUTTON_PRESS_EVENT) {
-        this->actionStart(event);
+        if (pressedButton == BUTTON_NONE || !inputRunning) {
+            pressedButton = event.button;
+            this->actionStart(event);
+        } else if (event.button == pressedButton) {
+            g_warning("MouseInputHandler: Double BUTTON_PRESS_EVENT on button %u", event.button);
+        }
         return true;
     }
 
@@ -67,13 +72,17 @@ auto MouseInputHandler::handleImpl(InputEvent const& event) -> bool {
 
     // Trigger end of action if mouse button is released
     if (event.type == BUTTON_RELEASE_EVENT) {
-        this->actionEnd(event);
+        if (event.button == pressedButton) {
+            pressedButton = BUTTON_NONE;
+            this->actionEnd(event);
+        }
         return true;
     }
 
     // If we loose our Grab on the device end the current action
     if (event.type == GRAB_BROKEN_EVENT && this->deviceClassPressed) {
         // TODO(fabian): We may need to update pressed state manually here
+        pressedButton = BUTTON_NONE;
         this->actionEnd(event);
         return true;
     }

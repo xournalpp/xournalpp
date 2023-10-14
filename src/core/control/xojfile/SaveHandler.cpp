@@ -114,20 +114,16 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 
     stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
 
-    int pointCount = s->getPointCount();
+    const auto& pts = s->getPointVector();
 
-    for (int i = 0; i < pointCount; i++) {
-        stroke->addPoint(s->getPoint(i));
-    }
+    stroke->setPoints(pts);
 
     if (s->hasPressure()) {
-        auto* values = new double[pointCount + 1];
-        values[0] = s->getWidth();
-        for (int i = 0; i < pointCount; i++) {
-            values[i + 1] = s->getPoint(i).z;
-        }
-
-        stroke->setAttrib("width", values, pointCount);
+        std::vector<double> values;
+        values.reserve(pts.size() + 1);
+        values.emplace_back(s->getWidth());
+        std::transform(pts.begin(), pts.end(), std::back_inserter(values), [](const Point& p) { return p.z; });
+        stroke->setAttrib("width", std::move(values));
     } else {
         stroke->setAttrib("width", s->getWidth());
     }

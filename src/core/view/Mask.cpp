@@ -41,7 +41,10 @@ class SurfaceCreator {};
 template <>
 class SurfaceCreator<cairo_surface_t*> {
 public:
-    static constexpr auto create = cairo_surface_create_similar;
+    static constexpr auto create = [](cairo_surface_t* other, cairo_content_t content, int width,
+                                      int height) -> cairo_surface_t* {
+        return cairo_surface_create_similar(other, content, width, height);
+    };
 };
 template <>
 class SurfaceCreator<int> {

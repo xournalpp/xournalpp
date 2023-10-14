@@ -226,7 +226,7 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
 
     gdk_drag_status(context, gdk_drag_context_get_suggested_action(context), time);
 
-    ToolItemDragDropData* d = ToolItemDragCurrentData::getData();
+    const ToolItemDragDropData* d = ToolItemDragCurrentData::getData();
 
     if (d == nullptr) {
         g_warning("ToolbarAdapter.cpp, ToolItemDragDropData == nullptr");

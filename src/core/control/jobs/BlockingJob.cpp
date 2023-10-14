@@ -1,6 +1,6 @@
 #include "BlockingJob.h"
 
-#include <glib.h>     // for g_idle_add, GSourceFunc
+#include <glib.h>     // for g_idle_add
 #include <gtk/gtk.h>  // for gtk_widget_grab_focus
 
 #include "control/Control.h"   // for Control
@@ -8,6 +8,7 @@
 #include "gui/MainWindow.h"    // for MainWindow
 #include "gui/XournalView.h"   // for XournalView
 #include "util/Util.h"         // for execInUiThread
+#include "util/glib_casts.h"   // for wrap_for_once_v
 
 BlockingJob::BlockingJob(Control* control, const std::string& name): control(control) { control->block(name); }
 
@@ -16,7 +17,7 @@ BlockingJob::~BlockingJob() { this->control = nullptr; }
 void BlockingJob::execute() {
     this->run();
 
-    g_idle_add(reinterpret_cast<GSourceFunc>(finished), this->control);
+    g_idle_add(xoj::util::wrap_for_once_v<finished>, this->control);
 }
 
 auto BlockingJob::finished(Control* control) -> bool {

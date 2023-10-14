@@ -3,13 +3,14 @@
 #include <cstdlib>  // for abs, size_t
 
 #include <glib-object.h>  // for g_object_ref, G_CALLBACK, g_sig...
-#include <glib.h>         // for g_idle_add, GSourceFunc
+#include <glib.h>         // for g_idle_add
 
 #include "control/Control.h"   // for Control
 #include "control/PdfCache.h"  // for PdfCache
 #include "gui/MainWindow.h"    // for MainWindow
 #include "model/Document.h"    // for Document
 #include "util/Util.h"         // for npos
+#include "util/glib_casts.h"   // for wrap_for_once_v
 
 #include "SidebarLayout.h"            // for SidebarLayout
 #include "SidebarPreviewBaseEntry.h"  // for SidebarPreviewBaseEntry
@@ -18,7 +19,9 @@ class GladeGui;
 
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
-        AbstractSidebarPage(control, toolbar) {
+        AbstractSidebarPage(control, toolbar),
+        scrollPreview(gtk_scrolled_window_new(nullptr, nullptr), xoj::util::adopt),
+        iconViewPreview(gtk_layout_new(nullptr, nullptr), xoj::util::adopt) {
     this->layoutmanager = new SidebarLayout();
 
     Document* doc = this->control->getDocument();
@@ -28,37 +31,23 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
     }
     doc->unlock();
 
-    this->iconViewPreview = gtk_layout_new(nullptr, nullptr);
-    g_object_ref(this->iconViewPreview);
-
-    this->scrollPreview = gtk_scrolled_window_new(nullptr, nullptr);
-    g_object_ref(this->scrollPreview);
-
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_POLICY_AUTOMATIC,
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(this->scrollPreview.get()), GTK_POLICY_AUTOMATIC,
                                    GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_SHADOW_IN);
+    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(this->scrollPreview.get()), GTK_SHADOW_IN);
 
-    gtk_container_add(GTK_CONTAINER(this->scrollPreview), this->iconViewPreview);
-    gtk_widget_show(this->scrollPreview);
-
-    gtk_widget_show(this->iconViewPreview);
+    gtk_container_add(GTK_CONTAINER(this->scrollPreview.get()), this->iconViewPreview.get());
 
     registerListener(this->control);
     this->control->addChangedDocumentListener(this);
 
-    g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
+    g_signal_connect(this->scrollPreview.get(), "size-allocate", G_CALLBACK(sizeChanged), this);
 
-    gtk_widget_show_all(this->scrollPreview);
+    gtk_widget_show_all(this->scrollPreview.get());
 }
 
 SidebarPreviewBase::~SidebarPreviewBase() {
-    gtk_widget_destroy(this->iconViewPreview);
-    this->iconViewPreview = nullptr;
-
     delete this->layoutmanager;
     this->layoutmanager = nullptr;
-
-    this->scrollPreview = nullptr;
 
     this->control->removeChangedDocumentListener(this);
 
@@ -90,7 +79,7 @@ void SidebarPreviewBase::layout() { SidebarLayout::layout(this); }
 
 auto SidebarPreviewBase::hasData() -> bool { return true; }
 
-auto SidebarPreviewBase::getWidget() -> GtkWidget* { return this->scrollPreview; }
+auto SidebarPreviewBase::getWidget() -> GtkWidget* { return this->scrollPreview.get(); }
 
 void SidebarPreviewBase::documentChanged(DocumentChangeType type) {
     if (type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_CLEARED) {
@@ -125,8 +114,8 @@ auto SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar) -> bool {
         auto& p = sidebar->previews[sidebar->selectedEntry];
 
         // scroll to preview
-        GtkAdjustment* hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));
-        GtkAdjustment* vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview));
+        GtkAdjustment* hadj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview.get()));
+        GtkAdjustment* vadj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(sidebar->scrollPreview.get()));
         GtkWidget* widget = p->getWidget();
 
         GtkAllocation allocation;
@@ -135,7 +124,7 @@ auto SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar) -> bool {
         int y = allocation.y;
 
         if (x == -1) {
-            g_idle_add(reinterpret_cast<GSourceFunc>(scrollToPreview), sidebar);
+            g_idle_add(xoj::util::wrap_for_once_v<scrollToPreview>, sidebar);
             return false;
         }
 

@@ -31,6 +31,7 @@
 #include "undo/SizeUndoAction.h"                  // for SizeUndoAction
 #include "undo/UndoRedoHandler.h"                 // for UndoRedoHandler
 #include "util/Assert.h"                          // for xoj_assert
+#include "util/glib_casts.h"                      // for wrap_v
 #include "util/safe_casts.h"                      // for as_signed
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
@@ -536,7 +537,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
 
     if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > std::numeric_limits<double>::epsilon()) {
         if (!this->rescaleId) {
-            this->rescaleId = g_idle_add(reinterpret_cast<GSourceFunc>(repaintSelection), this);
+            this->rescaleId = g_idle_add(xoj::util::wrap_v<repaintSelection>, this);
         }
         cairo_scale(cr, sx, sy);
     }

@@ -5,6 +5,7 @@
 
 #include "control/jobs/Job.h"  // for Job, JOB_TYPE_RENDER
 #include "util/Assert.h"       // for xoj_assert
+#include "util/glib_casts.h"   // for wrap_for_once_v
 
 #include "config-debug.h"  // for DEBUG_SHEDULER
 
@@ -231,7 +232,7 @@ auto Scheduler::jobThreadCallback(Scheduler* scheduler) -> gpointer {
                         g_source_remove(scheduler->jobRenderThreadTimerId);
                     }
                     scheduler->jobRenderThreadTimerId = g_timeout_add(
-                            static_cast<guint>(diff), reinterpret_cast<GSourceFunc>(jobRenderThreadTimer), scheduler);
+                            static_cast<guint>(diff), xoj::util::wrap_for_once_v<jobRenderThreadTimer>, scheduler);
                 }
 
                 scheduler->jobQueueCond.wait(jobLock);

@@ -136,7 +136,7 @@ private:
     /**
      * Callback to redrawing the buffer asynchrony
      */
-    static bool repaintSelection(EditSelectionContents* selection);
+    static auto repaintSelection(EditSelectionContents* selection) -> bool;
 
 public:
     /**
@@ -218,7 +218,7 @@ private:
     /**
      * The source id for the rescaling task
      */
-    int rescaleId = 0;
+    guint rescaleId = 0;
 
     /**
      * Source Page for Undo operations

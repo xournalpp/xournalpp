@@ -29,10 +29,12 @@ namespace Util {
  *
  * @param path Path to read
  * @param showErrorToUser Show an error to the user, if the file could not be read
+ * @param openmode Mode to open the file
  *
  * @return contents if the file was read, std::nullopt if not
  */
-[[maybe_unused]] [[nodiscard]] std::optional<std::string> readString(fs::path const& path, bool showErrorToUser = true);
+[[maybe_unused]] [[nodiscard]] std::optional<std::string> readString(fs::path const& path, bool showErrorToUser = true,
+                                                                     std::ios_base::openmode openmode = std::ios::in);
 
 /**
  * Get escaped path, all " and \ are escaped

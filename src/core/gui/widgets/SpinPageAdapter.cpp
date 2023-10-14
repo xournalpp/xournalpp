@@ -5,8 +5,9 @@
 #include <glib-object.h>  // for g_signal_handler_disconnect, G_CALLBACK
 
 #include "util/Assert.h"  // for xoj_assert
+#include "util/glib_casts.h"  // for wrap_for_once_v
 
-SpinPageAdapter::SpinPageAdapter() {}
+SpinPageAdapter::SpinPageAdapter() = default;
 
 SpinPageAdapter::~SpinPageAdapter() {
     if (this->hasWidget()) {
@@ -33,7 +34,7 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinP
     }
 
     // Give the spin button some time to release, if we don't do he will send new events...
-    adapter->lastTimeoutId = g_timeout_add(100, reinterpret_cast<GSourceFunc>(pageNrSpinChangedTimerCallback), adapter);
+    adapter->lastTimeoutId = g_timeout_add(100, xoj::util::wrap_for_once_v<pageNrSpinChangedTimerCallback>, adapter);
 }
 
 bool SpinPageAdapter::hasWidget() { return this->widget != nullptr; }

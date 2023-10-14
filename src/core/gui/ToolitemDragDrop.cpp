@@ -21,8 +21,8 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, AbstractToolItem* ai
     g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, static_cast<GDestroyNotify>(g_free));
 }
 
-auto ToolitemDragDrop::ToolItemDragDropData_new(AbstractToolItem* item) -> ToolItemDragDropData* {
-    ToolItemDragDropData* d = g_new(ToolItemDragDropData, 1);
+auto ToolitemDragDrop::ToolItemDragDropData_new(AbstractToolItem* item) -> std::unique_ptr<ToolItemDragDropData> {
+    auto d = std::make_unique<ToolItemDragDropData>();
     d->identify = ToolItemDragDropData_Identify;
     d->id = -1;
     d->item = item;

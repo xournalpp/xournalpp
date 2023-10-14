@@ -5,6 +5,7 @@
 #include "AbstractInputHandler.h"
 
 #include <cmath>  // for round
+#include <string_view>
 
 #include <glib.h>  // for gdouble
 
@@ -86,6 +87,8 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
 
     pos.state = this->inputContext->getModifierState();
     pos.timestamp = event.timestamp;
+
+    pos.deviceId = event.deviceId;
 
     return pos;
 }

@@ -80,7 +80,7 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar) {
 
     GtkAllocation alloc;
 
-    gtk_widget_get_allocation(sidebar->scrollPreview, &alloc);
+    gtk_widget_get_allocation(sidebar->scrollPreview.get(), &alloc);
 
     SidebarRow row(alloc.width);
 
@@ -88,7 +88,7 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar) {
         if (row.isSpaceFor(p.get())) {
             row.add(p.get());
         } else {
-            y += row.placeAt(y, GTK_LAYOUT(sidebar->iconViewPreview));
+            y += row.placeAt(y, GTK_LAYOUT(sidebar->iconViewPreview.get()));
 
             width = std::max(width, row.getWidth());
 
@@ -98,12 +98,12 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar) {
     }
 
     if (row.getCount() != 0) {
-        y += row.placeAt(y, GTK_LAYOUT(sidebar->iconViewPreview));
+        y += row.placeAt(y, GTK_LAYOUT(sidebar->iconViewPreview.get()));
 
         width = std::max(width, row.getWidth());
 
         row.clear();
     }
 
-    gtk_layout_set_size(GTK_LAYOUT(sidebar->iconViewPreview), width, y);
+    gtk_layout_set_size(GTK_LAYOUT(sidebar->iconViewPreview.get()), width, y);
 }

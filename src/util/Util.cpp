@@ -20,32 +20,6 @@
 #include <unistd.h>  // for getpid, pid_t
 #endif
 
-struct CallbackUiData {
-    explicit CallbackUiData(std::function<void()> callback): callback(std::move(callback)) {}
-
-    std::function<void()> callback;  // NOLINT
-};
-
-/**
- * This method is called in the GTK UI Thread
- */
-static auto execInUiThreadCallback(CallbackUiData* cb) -> bool {
-    cb->callback();
-    // Do not call again
-    return false;
-}
-
-/**
- * Execute the callback in the UI Thread.
- *
- * Make sure the container class is not deleted before the UI stuff is finished!
- */
-void Util::execInUiThread(std::function<void()>&& callback, gint priority) {
-    // Note: nullptr = GDestroyNotify notify.
-    gdk_threads_add_idle_full(priority, reinterpret_cast<GSourceFunc>(execInUiThreadCallback),
-                              new CallbackUiData(std::move(callback)),
-                              [](void* data) { delete static_cast<CallbackUiData*>(data); });
-}
 
 void Util::cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha) {
     auto rgba = argb_to_GdkRGBA(color, alpha);

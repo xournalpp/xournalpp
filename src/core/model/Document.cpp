@@ -1,6 +1,9 @@
 #include "Document.h"
 
+#include <array>
 #include <ctime>    // for size_t, localtime, strf...
+#include <iomanip>
+#include <sstream>
 #include <string>   // for string
 #include <utility>  // for move, pair
 
@@ -16,6 +19,7 @@
 #include "util/PlaceholderString.h"           // for PlaceholderString
 #include "util/SaveNameUtils.h"               // for parseFilename
 #include "util/Util.h"                        // for npos
+#include "util/glib_casts.h"                  // for wrap_v
 #include "util/i18n.h"                        // for FS, _F
 #include "util/raii/GObjectSPtr.h"            // for GObjectSPtr
 
@@ -32,8 +36,7 @@ Document::~Document() {
 
 void Document::freeTreeContentModel() {
     if (this->contentsModel) {
-        gtk_tree_model_foreach(this->contentsModel.get(),
-                               reinterpret_cast<GtkTreeModelForeachFunc>(freeTreeContentEntry), this);
+        gtk_tree_model_foreach(this->contentsModel.get(), xoj::util::wrap_v<freeTreeContentEntry>, this);
 
         this->contentsModel.reset();
     }
@@ -131,6 +134,7 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
 }
 
 auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPdfName) -> fs::path {
+    constexpr static std::string_view forbiddenChars = {"\\/:*?\"<>|"};
     std::string wildcardString;
     if (type != Document::PDF) {
         if (!filepath.empty()) {
@@ -152,16 +156,22 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
 
     const char* format = wildcardString.empty() ? defaultSaveName.c_str() : wildcardString.c_str();
 
+    // Todo (cpp20): use <format>
+    std::ostringstream ss;
+    ss.imbue(std::locale());
     time_t curtime = time(nullptr);
-    char stime[128];
-    strftime(stime, sizeof(stime), format, localtime(&curtime));
-
-    // Remove the extension, file format is handled by the filter combo box
-    fs::path p = stime;
+    ss << std::put_time(localtime(&curtime), format);
+    auto filename = ss.str();
+    // Todo (cpp20): use <ranges>
+    for (auto& c: filename) {
+        if ((c < 32 && c > 0) || c == 127 || forbiddenChars.find(c) != std::string::npos) {
+            c = '_';
+        }
+    }
+    fs::path p = filename;
     Util::clearExtensions(p);
     return p;
 }
-
 
 auto Document::getPreview() const -> cairo_surface_t* { return this->preview; }
 
@@ -290,8 +300,7 @@ auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTre
 
 void Document::updateIndexPageNumbers() {
     if (this->contentsModel) {
-        gtk_tree_model_foreach(this->contentsModel.get(), reinterpret_cast<GtkTreeModelForeachFunc>(fillPageLabels),
-                               this);
+        gtk_tree_model_foreach(this->contentsModel.get(), xoj::util::wrap_v<fillPageLabels>, this);
     }
 }
 

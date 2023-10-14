@@ -17,10 +17,8 @@
 
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, const PageRef& page):
         sidebar(sidebar), page(page) {
-    this->widget = gtk_button_new();  // re: issue 1072
-
+    this->widget = GTK_WIDGET(g_object_ref_sink(gtk_button_new()));
     gtk_widget_show(this->widget);
-    g_object_ref(this->widget);
 
     updateSize();
     gtk_widget_set_events(widget, GDK_EXPOSURE_MASK);

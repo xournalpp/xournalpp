@@ -153,7 +153,7 @@ private:
 
     std::pair<size_t, size_t> preloadPageBounds(size_t page, size_t maxPage);
 
-    static gboolean clearMemoryTimer(XournalView* widget);
+    static auto clearMemoryTimer(XournalView* widget) -> gboolean;
 
     void cleanupBufferCache();
 
@@ -182,7 +182,7 @@ private:
     /**
      * Memory cleanup timeout
      */
-    int cleanupTimeout = -1;
+    guint cleanupTimeout = -1;
 
     /**
      * Helper class for Touch specific fixes

@@ -154,6 +154,9 @@ void ToolbarModel::save(fs::path const& filepath) {
     gsize len = 0;
     char* data = g_key_file_to_data(config, &len, nullptr);
 
+    g_key_file_free(config);
+    config = nullptr;
+
     GError* error = nullptr;
     if (!g_file_set_contents(filepath.u8string().c_str(), data, len, &error)) {
         XojMsgBox::showErrorToUser(nullptr, error->message);

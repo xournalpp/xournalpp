@@ -30,6 +30,7 @@
 #include "undo/UndoRedoHandler.h"                  // for UndoRedoHandler
 #include "util/Range.h"                            // for Range
 #include "util/Util.h"                             // for cairo_set_dash_from_vector
+#include "util/glib_casts.h"                       // for wrap_v
 #include "util/i18n.h"                             // for _
 #include "util/serializing/ObjectInputStream.h"    // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"   // for ObjectOutputStream
@@ -771,8 +772,7 @@ void EditSelection::moveSelection(double dx, double dy, bool addMoveUndo) {
 void EditSelection::setEdgePan(bool pan) {
     if (pan && !this->edgePanHandler) {
         this->edgePanHandler = g_timeout_source_new(1000 / PAN_TIMER_RATE);
-        g_source_set_callback(this->edgePanHandler, reinterpret_cast<GSourceFunc>(EditSelection::handleEdgePan), this,
-                              nullptr);
+        g_source_set_callback(this->edgePanHandler, xoj::util::wrap_v<EditSelection::handleEdgePan>, this, nullptr);
         g_source_attach(this->edgePanHandler, nullptr);
     } else if (!pan && this->edgePanHandler) {
         g_source_destroy(this->edgePanHandler);

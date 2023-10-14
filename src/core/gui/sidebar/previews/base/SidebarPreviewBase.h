@@ -19,6 +19,7 @@
 
 #include "gui/sidebar/AbstractSidebarPage.h"  // for AbstractSidebarPage
 #include "model/DocumentChangeType.h"         // for DocumentChangeType
+#include "util/raii/GObjectSPtr.h"
 
 class PdfCache;
 class SidebarLayout;
@@ -93,7 +94,7 @@ private:
     /**
      * The scrollbar with the icons
      */
-    GtkWidget* scrollPreview = nullptr;
+    xoj::util::WidgetSPtr scrollPreview;
 
     /**
      * The Zoom of the previews
@@ -122,7 +123,7 @@ protected:
     /**
      * The widget within the scrollarea with the page icons
      */
-    GtkWidget* iconViewPreview = nullptr;
+    xoj::util::WidgetSPtr iconViewPreview;
 
     /**
      * The previews

@@ -34,6 +34,7 @@
 #include "util/PathUtil.h"                              // for getConfigFile
 #include "util/Util.h"                                  // for execInUiThread, npos
 #include "util/XojMsgBox.h"                             // for XojMsgBox
+#include "util/glib_casts.h"                            // for wrap_for_once_v
 #include "util/i18n.h"                                  // for FS, _F
 
 #include "GladeSearchpath.h"     // for GladeSearchpath
@@ -73,10 +74,13 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     setSidebarVisible(control->getSettings()->isSidebarVisible());
 
     // Window handler
-    g_signal_connect(this->window, "delete-event", G_CALLBACK(deleteEventCallback), this->control);
-    g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
+    g_signal_connect(this->window, "delete-event", xoj::util::wrap_for_g_callback_v<deleteEventCallback>,
+                     this->control);
+    g_signal_connect(this->window, "window_state_event", xoj::util::wrap_for_g_callback_v<windowStateEventCallback>,
+                     this);
 
-    g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
+    g_signal_connect(get("buttonCloseSidebar"), "clicked", xoj::util::wrap_for_g_callback_v<buttonCloseSidebarClicked>,
+                     this);
 
     // "watch over" all key events
     g_signal_connect(this->window, "key-press-event", G_CALLBACK(gtk_window_propagate_key_event), nullptr);
@@ -229,7 +233,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
             const char* uri = uris[i];
 
             GCancellable* cancel = g_cancellable_new();
-            int cancelTimeout = g_timeout_add(3000, reinterpret_cast<GSourceFunc>(cancellable_cancel), cancel);
+            auto cancelTimeout = g_timeout_add(3000, xoj::util::wrap_for_once_v<cancellable_cancel>, cancel);
 
             xoj::util::GObjectSPtr<GFile> file(g_file_new_for_uri(uri), xoj::util::adopt);
             GError* err = nullptr;
@@ -384,10 +388,12 @@ void MainWindow::setSidebarVisible(bool visible) {
 }
 
 void MainWindow::setToolbarVisible(bool visible) {
-    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        auto* widget = this->toolbarWidgets[i].get();
-        if (!visible || (GTK_IS_CONTAINER(widget))) {
-            gtk_widget_set_visible(widget, visible);
+    Settings* settings = control->getSettings();
+
+    settings->setToolbarVisible(visible);
+    for (auto& w: this->toolbarWidgets) {
+        if (!visible || (gtk_toolbar_get_n_items(GTK_TOOLBAR(w.get())) != 0)) {
+            gtk_widget_set_visible(w.get(), visible);
         }
     }
 }

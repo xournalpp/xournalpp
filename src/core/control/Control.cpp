@@ -4,6 +4,7 @@
 #include <cstdlib>    // for size_t
 #include <exception>  // for exce...
 #include <iterator>   // for end
+#include <locale>
 #include <memory>     // for make...
 #include <numeric>    // for accu...
 #include <optional>   // for opti...
@@ -93,6 +94,7 @@
 #include "util/Stacktrace.h"                                     // for Stac...
 #include "util/Util.h"                                           // for exec...
 #include "util/XojMsgBox.h"                                      // for XojM...
+#include "util/glib_casts.h"                                     // for wrap_v
 #include "util/i18n.h"                                           // for _, FS
 #include "util/serializing/InputStreamException.h"               // for Inpu...
 #include "util/serializing/ObjectInputStream.h"                  // for Obje...
@@ -156,7 +158,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     /**
      * This is needed to update the previews
      */
-    this->changeTimout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(checkChangedDocument), this);
+    this->changeTimout = g_timeout_add_seconds(5, xoj::util::wrap_v<checkChangedDocument>, this);
 
     this->pageBackgroundChangeController = std::make_unique<PageBackgroundChangeController>(this);
 
@@ -366,7 +368,7 @@ void Control::enableAutosave(bool enable) {
 
     if (enable) {
         auto timeout = guint(settings->getAutosaveTimeout()) * 60U;
-        this->autosaveTimeout = g_timeout_add_seconds(timeout, reinterpret_cast<GSourceFunc>(autosaveCallback), this);
+        this->autosaveTimeout = g_timeout_add_seconds(timeout, xoj::util::wrap_v<autosaveCallback>, this);
     }
 }
 
@@ -1959,7 +1961,7 @@ auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {
  * Check if this is an autosave file, return false in this case and display a user instruction
  */
 auto Control::shouldFileOpen(fs::path const& filepath) const -> bool {
-    auto basePath = Util::getConfigSubfolder("");
+    auto basePath = Util::getCacheSubfolder("");
     auto isChild = Util::isChildOrEquivalent(filepath, basePath);
     if (isChild) {
         string msg = FS(_F("Do not open Autosave files. They may will be overwritten!\n"
@@ -2195,7 +2197,6 @@ public:
  */
 auto Control::loadMetadataCallback(MetadataCallbackData* data) -> bool {
     if (!data->md.valid) {
-        delete data;
         return false;
     }
     ZoomControl* zoom = data->ctrl->zoom;
@@ -2209,9 +2210,6 @@ auto Control::loadMetadataCallback(MetadataCallbackData* data) -> bool {
         zoom->setZoom(data->md.zoom * zoom->getZoom100Value());
     }
     data->ctrl->scrollHandler->scrollToPage(data->md.page);
-
-    delete data;
-
     // Do not call again!
     return false;
 }
@@ -2221,7 +2219,8 @@ void Control::loadMetadata(MetadataEntry md) {
     data->md = std::move(md);
     data->ctrl = this;
 
-    g_idle_add(reinterpret_cast<GSourceFunc>(loadMetadataCallback), data);
+    g_idle_add_full(G_PRIORITY_DEFAULT_IDLE, xoj::util::wrap_v<loadMetadataCallback>, data,
+                    &xoj::util::destroy_cb<MetadataCallbackData>);
 }
 
 auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDocument) -> bool {
@@ -2579,10 +2578,11 @@ void Control::closeDocument() {
 }
 
 void Control::applyPreferredLanguage() {
+    auto const& lang = this->settings->getPreferredLocale();
 #ifdef _WIN32
-    _putenv_s("LANGUAGE", this->settings->getPreferredLocale().c_str());
+    _putenv_s("LANGUAGE", lang.c_str());
 #else
-    setenv("LANGUAGE", this->settings->getPreferredLocale().c_str(), 1);
+    setenv("LANGUAGE", lang.c_str(), 1);
 #endif
 }
 

@@ -187,6 +187,8 @@ void checkForErrorlog() {
                                                 "Bugreport, so the bug may be fixed.");
     msg += "\n";
     msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
+    msg += "\n\n";
+    msg += FS(_F("To prevent this popup from reappearing, simply delete the errorlogfiles."));
 
     enum Responses { FILE_REPORT = 1, OPEN_FILE, OPEN_DIR, DELETE_FILE, CANCEL };
     std::vector<XojMsgBox::Button> buttons = {{_("File Bug Report"), FILE_REPORT},

@@ -32,11 +32,7 @@ public:
     void setAttrib(const char* attrib, double value);
     void setAttrib(const char* attrib, int value);
     void setAttrib(const char* attrib, size_t value);
-
-    /**
-     * The double array is now owned by XmlNode and automatically deleted!
-     */
-    void setAttrib(const char* attrib, double* value, int count);
+    void setAttrib(const char* attrib, std::vector<double> values);
 
     void writeOut(OutputStream* out, ProgressListener* _listener);
 
