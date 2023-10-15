@@ -2586,6 +2586,10 @@ void Settings::setUseSpacesAsTab(bool useSpaces) { this->useSpacesForTab = useSp
 bool Settings::getUseSpacesAsTab() { return this->useSpacesForTab; }
 
 void Settings::setNumberOfSpacesForTab(int numberOfSpaces) {
+    if (this->numberOfSpacesForTab == numberOfSpaces) {
+        return;
+    }
+
     // For performance reasons the number of spaces for a tab should be limited
     // if this limit is exceeded use a default value
     if (numberOfSpaces < 0 || numberOfSpaces > MAX_SPACES_FOR_TAB) {
@@ -2593,6 +2597,7 @@ void Settings::setNumberOfSpacesForTab(int numberOfSpaces) {
         numberOfSpaces = 4;
     }
     this->numberOfSpacesForTab = numberOfSpaces;
+    save();
 }
 
 int Settings::getNumberOfSpacesForTab() { return this->numberOfSpacesForTab; }
