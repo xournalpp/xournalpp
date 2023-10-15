@@ -171,6 +171,11 @@ void ActionDatabase::enableAction(Action action, bool enable) {
 
 auto ActionDatabase::getAction(Action a) const -> ActionRef { return gActions[a]; }
 
+bool ActionDatabase::isActionEnabled(Action a) const {
+    xoj_assert(gActions[a]);
+    return g_action_get_enabled(G_ACTION(gActions[a].get()));
+}
+
 void ActionDatabase::disableAll() {
     for (auto&& a: gActions) {
         g_simple_action_set_enabled(a.get(), false);

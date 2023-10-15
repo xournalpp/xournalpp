@@ -67,6 +67,7 @@ public:
 
     void enableAction(Action a, bool enable);
     ActionRef getAction(Action a) const;
+    bool isActionEnabled(Action a) const;
 
     /// Disables every action
     void disableAll();

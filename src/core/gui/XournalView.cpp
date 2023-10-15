@@ -14,6 +14,7 @@
 #include "control/PdfCache.h"                    // for PdfCache
 #include "control/ScrollHandler.h"               // for ScrollHandler
 #include "control/ToolHandler.h"                 // for ToolHandler
+#include "control/actions/ActionDatabase.h"      // for ActionDatabase
 #include "control/jobs/XournalScheduler.h"       // for XournalScheduler
 #include "control/settings/MetadataManager.h"    // for MetadataManager
 #include "control/settings/Settings.h"           // for Settings
@@ -132,9 +133,19 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     }
 
+    /*
+    According to https://docs.gtk.org/gdk3/method.Keymap.translate_keyboard_state.html
+    consumed modifiers should be masked out. For instance, on a US keyboard, the plus symbol is shifted, so when
+    comparing a key press to a <Control>plus accelerator <Shift> should be masked out.
+    */
+    GdkModifierType consumed;
+    gdk_keymap_translate_keyboard_state(gdk_keymap_get_for_display(gdk_display_get_default()), event->hardware_keycode,
+                                        static_cast<GdkModifierType>(event->state), event->group, nullptr, nullptr,
+                                        nullptr, &consumed);
+
     // Todo(gtk4) there is no GdkEventKey. Use a GdkEventControllerKey and connect to its key-pressed signal
     guint keyval = event->keyval;
-    GdkModifierType state = static_cast<GdkModifierType>(event->state & gtk_accelerator_get_default_mod_mask());
+    auto state = static_cast<GdkModifierType>(event->state & gtk_accelerator_get_default_mod_mask() & ~consumed);
 
     if (auto* tool = getControl()->getWindow()->getPdfToolbox(); tool->hasSelection()) {
         if (keyval == GDK_KEY_c && state == GDK_CONTROL_MASK) {
@@ -303,8 +314,8 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     if (!state && (keyval >= GDK_KEY_0) && (keyval < GDK_KEY_0 + std::min((std::size_t)10, colors.size()))) {
         std::size_t index = std::min(colors.size() - 1, (std::size_t)(9 + (keyval - GDK_KEY_0)) % 10);
         const auto& colorToolItem = colors.at(index);
-        if (gtk_widget_is_sensitive(colorToolItem->getItem())) {
-            gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(colorToolItem->getItem()), true);
+        if (auto* db = control->getActionDatabase(); db->isActionEnabled(Action::TOOL_COLOR)) {
+            control->getActionDatabase()->fireChangeActionState(Action::TOOL_COLOR, colorToolItem->getColor());
         }
         return true;
     }
