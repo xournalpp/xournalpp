@@ -1789,6 +1789,7 @@ void Control::showColorChooserDialog() {
     auto* dlg = gtk_color_chooser_dialog_new(_("Select color"), GTK_WINDOW(this->win->getWindow()));
     GdkRGBA c = Util::argb_to_GdkRGBA(toolHandler->getColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(dlg), &c);
+    gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dlg), false);
 
     auto popup = xoj::popup::PopupWindowWrapper<XojMsgBox>(GTK_DIALOG(dlg), [this, dlg](int response) {
         if (response == GTK_RESPONSE_OK) {
