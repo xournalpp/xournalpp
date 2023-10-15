@@ -122,7 +122,7 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
         std::vector<double> values;
         values.reserve(pts.size() + 1);
         values.emplace_back(s->getWidth());
-        std::transform(pts.begin(), pts.end(), std::back_inserter(values), [](const Point& p) { return p.z; });
+        std::transform(pts.begin(), pts.end() - 1, std::back_inserter(values), [](const Point& p) { return p.z; });
         stroke->setAttrib("width", std::move(values));
     } else {
         stroke->setAttrib("width", s->getWidth());
