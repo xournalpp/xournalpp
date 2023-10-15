@@ -369,7 +369,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbUseSpacesAsTab", settings->getUseSpacesAsTab());
     GtkSpinButton* sbNumberOfSpacesForTab = GTK_SPIN_BUTTON(builder.get("sbNumberOfSpacesForTab"));
     gtk_spin_button_set_value(sbNumberOfSpacesForTab, settings->getNumberOfSpacesForTab());
-    gtk_widget_set_sensitive(gtk_widget_get_parent(GTK_WIDGET(sbNumberOfSpacesForTab)), settings->getUseSpacesAsTab());
+    gtk_widget_set_sensitive(GTK_WIDGET(builder.get("numberOfSpacesContainer")), settings->getUseSpacesAsTab());
 
     /**
      * Stabilizer related settings
