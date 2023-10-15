@@ -571,11 +571,11 @@ public:
 
     const Palette& getColorPalette();
 
-    void setNumberOfSpacesForTab(int numberSpaces);
-    int getNumberOfSpacesForTab();
+    void setNumberOfSpacesForTab(unsigned int numberSpaces);
+    unsigned int getNumberOfSpacesForTab() const;
 
     void setUseSpacesAsTab(bool useSpaces);
-    bool getUseSpacesAsTab();
+    bool getUseSpacesAsTab() const;
 
 public:
     // Custom settings
