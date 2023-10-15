@@ -2583,9 +2583,9 @@ auto Settings::getColorPalette() -> const Palette& { return *(this->palette); }
 
 
 void Settings::setUseSpacesAsTab(bool useSpaces) { this->useSpacesForTab = useSpaces; }
-bool Settings::getUseSpacesAsTab() { return this->useSpacesForTab; }
+bool Settings::getUseSpacesAsTab() const { return this->useSpacesForTab; }
 
-void Settings::setNumberOfSpacesForTab(int numberOfSpaces) {
+void Settings::setNumberOfSpacesForTab(unsigned int numberOfSpaces) {
     if (this->numberOfSpacesForTab == numberOfSpaces) {
         return;
     }
@@ -2600,4 +2600,4 @@ void Settings::setNumberOfSpacesForTab(int numberOfSpaces) {
     save();
 }
 
-int Settings::getNumberOfSpacesForTab() { return this->numberOfSpacesForTab; }
+unsigned int Settings::getNumberOfSpacesForTab() const { return this->numberOfSpacesForTab; }
