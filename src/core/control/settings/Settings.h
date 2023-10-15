@@ -36,7 +36,7 @@
 struct Palette;
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
-constexpr int MAX_SPACES_FOR_TAB = 8;
+constexpr unsigned int MAX_SPACES_FOR_TAB = 8U;
 
 class ButtonConfig;
 class InputDevice;
