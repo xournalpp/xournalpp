@@ -46,7 +46,9 @@ constexpr auto DEFAULT_TOOLBAR = "Portrait";
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
+Settings::Settings(fs::path filepath): filepath(std::move(filepath)) {
+    loadDefault();
+}
 
 Settings::~Settings() = default;
 
@@ -2387,9 +2389,9 @@ SAttribute::~SAttribute() {
 
 //////////////////////////////////////////////////
 
-auto SElement::attributes() -> std::map<string, SAttribute>& { return this->element->attributes; }
+auto SElement::attributes() const -> std::map<string, SAttribute>& { return this->element->attributes; }
 
-auto SElement::children() -> std::map<string, SElement>& { return this->element->children; }
+auto SElement::children() const -> std::map<string, SElement>& { return this->element->children; }
 
 void SElement::clear() {
     this->element->attributes.clear();

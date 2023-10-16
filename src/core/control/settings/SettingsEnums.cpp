@@ -61,3 +61,46 @@ auto emptyLastPageAppendFromString(const std::string& str) -> EmptyLastPageAppen
     g_warning("Settings::Unknown empty last page append type: %s\n", str.c_str());
     return EmptyLastPageAppendType::Disabled;
 }
+
+auto scrollbarHideTypeFromString(const std::string& str) -> ScrollbarHideType {
+    if (str == "both") {
+        return SCROLLBAR_HIDE_BOTH;
+    }
+    if (str == "horizontal") {
+        return SCROLLBAR_HIDE_HORIZONTAL;
+    }
+    if (str == "vertical") {
+        return SCROLLBAR_HIDE_VERTICAL;
+    }
+    if (str == "none") {
+        return SCROLLBAR_HIDE_NONE;
+    }
+
+    g_warning("Settings::Unknown scrollbarHideType: %s\n", str.c_str());
+    return SCROLLBAR_HIDE_NONE;
+}
+
+auto buttonFromString(const std::string& str) -> std::optional<Button> {
+    if (str == "eraser") {
+        return std::optional<Button>{BUTTON_ERASER};
+    }
+    if (str == "middle") {
+        return std::optional<Button>{BUTTON_MOUSE_MIDDLE};
+    }
+    if (str == "right") {
+        return std::optional<Button>{BUTTON_MOUSE_RIGHT};
+    }
+    if (str == "touch") {
+        return std::optional<Button>{BUTTON_TOUCH};
+    }
+    if (str == "default") {
+        return std::optional<Button>{BUTTON_DEFAULT};
+    }
+    if (str == "stylus") {
+        return std::optional<Button>{BUTTON_STYLUS_ONE};
+    }
+    if (str == "stylus2") {
+        return std::optional<Button>{BUTTON_STYLUS_TWO};
+    }
+    return std::nullopt;
+}

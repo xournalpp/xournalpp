@@ -18,6 +18,7 @@
 #include <string>   // for string, basic_string
 #include <utility>  // for pair
 #include <vector>   // for vector
+#include <functional> // for function
 
 #include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
 #include <glib.h>                         // for gchar, gboolean, gint
@@ -27,11 +28,14 @@
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
 #include "model/Font.h"                          // for XojFont
 #include "util/Color.h"                          // for Color
+#include "util/i18n.h"                           // for _
 
 #include "LatexSettings.h"  // for LatexSettings
 #include "SettingsEnums.h"  // for InputDeviceTypeOption
 #include "ViewModes.h"      // for ViewModes
 #include "filesystem.h"     // for path
+
+#include "SettingsDescription.h"
 
 struct Palette;
 
@@ -40,6 +44,63 @@ constexpr unsigned int MAX_SPACES_FOR_TAB = 8U;
 
 class ButtonConfig;
 class InputDevice;
+
+
+template<class T> class SettingsContainer{};
+
+template<std::size_t... s>
+class SettingsContainer<std::index_sequence<s...>> {
+public:
+    using params = std::tuple<typename Setting<static_cast<SettingsElement>(s)>::value_type...>;
+
+    SettingsContainer() {
+        ((std::get<s>(vars) = Setting<(SettingsElement)s>::DEFAULT), ...);
+        ((importFunctions[Setting<(SettingsElement)s>::xmlName] = [this](xmlNodePtr node) {return importSetting<(SettingsElement)s>(node);}), ...);
+        ((exportFunctions[(int)s] = [this](xmlNodePtr parent) {return exportSetting<(SettingsElement)s>(parent);}), ...);
+    }
+
+    params vars;
+    std::map<std::string, std::function<void(xmlNodePtr)>> importFunctions;
+    std::array<std::function<xmlNodePtr(xmlNodePtr)>, (int)SettingsElement::ENUM_COUNT> exportFunctions;
+    template<SettingsElement t>
+    typename Setting<t>::get_return_type getValue() const { return std::get<(std::size_t)t>(vars); }
+    template<SettingsElement t>
+    constexpr const char* getXmlName() const { return Setting<t>::xmlName; }
+    template<SettingsElement t>
+    constexpr const char* getComment() const { return Setting<t>::COMMENT; }
+    template<SettingsElement t>
+    constexpr typename Setting<t>::value_type getDefault() const { return Setting<t>::DEFAULT; }
+    template<SettingsElement t>
+    constexpr auto getExportFN() const { return Setting<t>::EXPORT_FN; }
+    template<SettingsElement t>
+    constexpr auto getImportFN() const { return Setting<t>::IMPORT_FN; }
+    template<SettingsElement t>
+    constexpr auto getValidateFN() const { return Setting<t>::VALIDATE_FN; }
+    template<SettingsElement t>
+    void setValue(const typename Setting<t>::value_type& v) {
+        auto valFN = getValidateFN<t>();
+        std::get<(std::size_t)t>(vars) = valFN(v);
+    }
+    template<SettingsElement t>
+    void importSetting(xmlNodePtr node) {
+        if (Setting<t>::IMPORT_FN(node, std::get<(std::size_t)t>(vars))) {
+            auto valFN = Setting<t>::VALIDATE_FN;
+            std::get<(std::size_t)t>(vars) = valFN(std::get<(std::size_t)t>(vars));
+        }
+    }
+    template<SettingsElement t>
+    xmlNodePtr exportSetting(xmlNodePtr parent) {
+        xmlNodePtr node = Setting<t>::EXPORT_FN(parent, getXmlName<t>(), std::get<(std::size_t)t>(vars));
+        const char* com = getComment<t>();
+        if (com != nullptr) {
+            auto cNode = xmlNewComment((const xmlChar*)(com));
+            xmlAddPrevSibling(node, cNode);
+        }
+        return node;
+    }
+};
+
+using SettingsCont = SettingsContainer<std::make_index_sequence<static_cast<std::size_t>(SettingsElement::ENUM_COUNT)>>;
 
 class SAttribute {
 public:
@@ -86,8 +147,8 @@ public:
     bool getBool(const std::string& name, bool& value);
     bool getString(const std::string& name, std::string& value);
 
-    std::map<std::string, SAttribute>& attributes();
-    std::map<std::string, SElement>& children();
+    std::map<std::string, SAttribute>& attributes() const;
+    std::map<std::string, SElement>& children() const;
 
 private:
     std::shared_ptr<SElementData> element = std::make_shared<SElementData>();
@@ -100,7 +161,17 @@ public:
     void operator=(const Settings& settings) = delete;
     virtual ~Settings();
 
+private:
+    SettingsCont settings;
+    void loadNonLiteralDefaults();
+
 public:
+    template<SettingsElement t>
+    typename Setting<t>::get_return_type get() const { return settings.getValue<t>(); }
+
+    template<SettingsElement t>
+    void set(const typename Setting<t>::value_type& v) { settings.setValue<t>(v); }
+
     bool load();
     void parseData(xmlNodePtr cur, SElement& elem);
 

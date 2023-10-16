@@ -13,6 +13,8 @@
 
 #include <string>  // for string
 
+#include <libxml/tree.h> // for xmlNodePtr
+
 #include "control/ToolEnums.h"               // for DrawingType, ToolType
 #include "control/settings/SettingsEnums.h"  // for Button
 #include "model/LineStyle.h"
@@ -78,4 +80,6 @@ public:
 
     friend class Settings;
     friend class ButtonConfigGui;
+    friend bool importButtonConfig(xmlNodePtr, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>&);
+    friend xmlNodePtr exportButtonConfig(xmlNodePtr, std::string, const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>&);
 };
