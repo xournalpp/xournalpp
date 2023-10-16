@@ -152,38 +152,11 @@ void LatexController::findSelectedTexElement() {
     this->doc->unlock();
 }
 
-void LatexController::showTexEditDialog() {
-    xoj::popup::PopupWindowWrapper<LatexDialog> popup(
-            control->getGladeSearchPath(), settings,
-            this->initialTex.empty() ? this->settings.defaultText : this->initialTex, !this->initialTex.empty(),
-            [texCtrl = this]() {
-                xoj_assert(texCtrl->isValidTex);
-                texCtrl->insertTexImage();
-            });
+void LatexController::showTexEditDialog(std::unique_ptr<LatexController> ctrl) {
+    LatexController* texCtrl = ctrl.get();
+    xoj::popup::PopupWindowWrapper<LatexDialog> popup(texCtrl->control->getGladeSearchPath(), std::move(ctrl));
 
-    this->dlg = popup.getPopup();
-
-    if (this->temporaryRender) {
-        // Use preexisting pdf
-        this->dlg->setTempRender(this->temporaryRender->getPdf());
-    }
-
-    /*
-     * Connect handleTexChanged() to the text buffer containing the latex code, to trigger rebuilds upon code changes.
-     * This also handles the deletion of `this` upon disconnection of the signal (when the dialog is closed)
-     */
-    g_signal_connect_data(dlg->getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this,
-                          GClosureNotify(+[](LatexController* self) { self->control->deleteLatexController(); }),
-                          G_CONNECT_SWAPPED);
-
-    popup.show(GTK_WINDOW(control->getWindow()->getWindow()));
-
-    if (!this->temporaryRender) {
-        // Trigger an asynchronous compilation if we are not using a preexisting TexImage
-        // Keep this after popup.show() so that if an error message is to be displayed (e.g. missing Tex executable),
-        // it'll appear on top of the LatexDialog.
-        handleTexChanged(this);
-    }
+    popup.show(GTK_WINDOW(texCtrl->control->getWindow()->getWindow()));
 }
 
 void LatexController::triggerImageUpdate(const string& texString) {
@@ -351,6 +324,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
 }
 
 void LatexController::insertTexImage() {
+    xoj_assert(this->isValidTex);
     xoj_assert(this->temporaryRender != nullptr);
     TexImage* img = this->temporaryRender.release();
 
@@ -368,13 +342,14 @@ void LatexController::insertTexImage() {
     view->getXournal()->setSelection(selection);
 }
 
-void LatexController::run() {
-    auto depStatus = this->findTexDependencies();
+void LatexController::run(Control* ctrl) {
+    auto self = std::make_unique<LatexController>(ctrl);
+    auto depStatus = self->findTexDependencies();
     if (!depStatus.success) {
-        XojMsgBox::showErrorToUser(control->getGtkWindow(), depStatus.errorMsg);
+        XojMsgBox::showErrorToUser(ctrl->getGtkWindow(), depStatus.errorMsg);
         return;
     }
 
-    this->findSelectedTexElement();
-    this->showTexEditDialog();
+    self->findSelectedTexElement();
+    showTexEditDialog(std::move(self));
 }
