@@ -113,6 +113,16 @@ public:
     xoj::util::Rectangle<double> getOriginalBounds() const;
 
     /**
+     * get the cursor x position relative to the selection
+     */
+    double getRelMousePosX() const;
+
+    /**
+     * get the cursor y position relative to the selection
+     */
+    double getRelMousePosY() const;
+
+    /**
      * Get the rotation angle of the selection
      */
     double getRotation() const;
