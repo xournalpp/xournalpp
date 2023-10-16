@@ -49,7 +49,7 @@ public:
      * insert the rendered formula into the document if the supplied LaTeX is
      * valid.
      */
-    void run();
+    static void run(Control* ctrl);
 
 private:
     /**
@@ -87,7 +87,7 @@ private:
     /**
      * Show the LaTex Editor dialog and process its output
      */
-    void showTexEditDialog();
+    static void showTexEditDialog(std::unique_ptr<LatexController> texCtrl);
 
     /**
      * Signal handler, updates the rendered image when the text in the editor
@@ -129,6 +129,7 @@ private:
      * LaTex editor dialog
      */
     LatexDialog* dlg = nullptr;
+    friend class LatexDialog;
 
     /**
      * Tex binary full path

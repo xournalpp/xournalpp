@@ -26,9 +26,11 @@
 #include <gtksourceview/gtksource.h>  // for GTK_SOURCE_VIEW, gtk_sou...
 #endif
 
+#include "control/LatexController.h"
 #include "control/settings/LatexSettings.h"  // for LatexSettings
 #include "gui/Builder.h"
 #include "model/Font.h"  // for XojFont
+#include "model/TexImage.h"
 #include "util/Range.h"
 #include "util/StringUtils.h"  // for replace_pair, StringUtils
 #include "util/gtk4_helper.h"
@@ -45,11 +47,12 @@ constexpr auto UI_DIALOG_ID = "texDialog";
 constexpr auto TEX_BOX_WIDGET_NAME = "texBox";
 constexpr auto PREVIEW_WIDGET_ID = "texImage";
 
-LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& settings, const std::string initialTex,
-                         bool selectAll, std::function<void()> callback):
+LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<LatexController> ctrl):
+        texCtrl(std::move(ctrl)),
         cssProvider(gtk_css_provider_new(), xoj::util::adopt),
-        previewBackgroundColor{DEFAULT_PREVIEW_BACKGROUND},
-        callback(std::move(callback)) {
+        previewBackgroundColor{DEFAULT_PREVIEW_BACKGROUND} {
+    texCtrl->dlg = this;
+
     Builder builder(gladeSearchPath, UI_FILE_NAME);
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_ID)));
 
@@ -68,11 +71,15 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     gtk_text_view_set_editable(GTK_TEXT_VIEW(this->texBox), true);
 
     this->textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(this->texBox));
-    gtk_text_buffer_set_text(this->textBuffer, initialTex.c_str(), -1);
-    if (selectAll) {
+    const auto& settings = texCtrl->settings;
+    if (texCtrl->initialTex.empty()) {
+        gtk_text_buffer_set_text(this->textBuffer, settings.defaultText.c_str(), -1);
+        // Preselect the default
         GtkTextIter start, end;
         gtk_text_buffer_get_bounds(this->textBuffer, &start, &end);
         gtk_text_buffer_select_range(this->textBuffer, &start, &end);
+    } else {
+        gtk_text_buffer_set_text(this->textBuffer, texCtrl->initialTex.c_str(), -1);
     }
 
 #if GTK_MAJOR_VERSION == 3
@@ -143,12 +150,51 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
-    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
-    g_signal_connect_swapped(builder.get("btOk"), "clicked", G_CALLBACK(+[](LatexDialog* self) {
-                                 self->callback();
-                                 gtk_window_close(self->window.get());
-                             }),
-                             this);
+    g_signal_connect(builder.get("btCancel"), "clicked",
+                     G_CALLBACK(+[](GtkButton*, gpointer win) { gtk_window_close(GTK_WINDOW(win)); }),
+                     this->window.get());
+    g_signal_connect(builder.get("btOk"), "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
+                         auto* self = static_cast<LatexDialog*>(d);
+                         self->texCtrl->insertTexImage();
+                         gtk_window_close(self->window.get());
+                     }),
+                     this);
+
+    if (texCtrl->temporaryRender) {
+        // Use preexisting pdf
+        this->setTempRender(texCtrl->temporaryRender->getPdf());
+    }
+
+    /*
+     * Connect handleTexChanged() to the text buffer containing the latex code, to trigger rebuilds upon code changes.
+     */
+    g_signal_connect(this->getTextBuffer(), "changed", G_CALLBACK(+[](GtkTextBuffer*, gpointer ctrl) {
+                         LatexController::handleTexChanged(static_cast<LatexController*>(ctrl));
+                     }),
+                     texCtrl.get());
+
+    g_signal_connect(this->getWindow(), "delete-event", G_CALLBACK(+[](GtkWidget*, GdkEvent*, gpointer d) -> gboolean {
+                         auto self = static_cast<LatexDialog*>(d);
+                         /**
+                          * dlg->getTextBuffer() may survive the dialog. When copying all of its content, the
+                          * clipboard owns a ref to the GtkTextBuffer. We must disconnect the signal to avoid
+                          * dereferencing `self` after its destruction
+                          */
+                         g_signal_handlers_disconnect_by_data(self->getTextBuffer(), self->texCtrl.get());
+                         return false;  // Let the callback from PopupWindowWrapper delete the dialog
+                     }),
+                     this);
+
+    g_signal_connect(this->getWindow(), "show", G_CALLBACK(+[](GtkWidget*, gpointer d) {
+                         auto* texCtrl = static_cast<LatexController*>(d);
+                         if (!texCtrl->temporaryRender) {
+                             // Trigger an asynchronous compilation if we are not using a preexisting TexImage
+                             // Keep this after popup.show() so that if an error message is to be displayed (e.g.
+                             // missing Tex executable), it'll appear on top of the LatexDialog.
+                             LatexController::handleTexChanged(texCtrl);
+                         }
+                     }),
+                     texCtrl.get());
 }
 
 LatexDialog::~LatexDialog() = default;

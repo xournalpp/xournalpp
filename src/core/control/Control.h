@@ -50,7 +50,6 @@ class MetadataCallbackData;
 class PageBackgroundChangeController;
 class PageTypeHandler;
 class BaseExportJob;
-class LatexController;
 class LayerController;
 class PluginController;
 class Document;
@@ -128,7 +127,6 @@ public:
 
     // The core handler for inserting latex
     void runLatex();
-    void deleteLatexController();
 
     // Menu Help
     void showAbout();
@@ -479,8 +477,6 @@ private:
 
     std::unique_ptr<GeometryTool> geometryTool;
     std::unique_ptr<GeometryToolController> geometryToolController;
-
-    std::unique_ptr<LatexController> latexController;
 
     /**
      * Manage all Xournal++ plugins

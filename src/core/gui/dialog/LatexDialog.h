@@ -35,8 +35,7 @@ public:
     LatexDialog() = delete;
     LatexDialog(const LatexDialog& other) = delete;
     LatexDialog& operator=(const LatexDialog& other) = delete;
-    LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& settings, const std::string initialTex,
-                bool selectAll, std::function<void()> callback);
+    LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<LatexController> texCtrl);
     ~LatexDialog();
 
 public:
@@ -72,6 +71,7 @@ private:
     static void previewDrawFunc(GtkDrawingArea* drawing_area, cairo_t* cr, int width, int height, LatexDialog* self);
 
 private:
+    std::unique_ptr<LatexController> texCtrl;
     xoj::util::GtkWindowUPtr window;
 
     // Preview
