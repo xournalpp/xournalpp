@@ -2478,7 +2478,7 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
-msgid "Drag and drop Components fom here to the toolbars and back."
+msgid "Drag and drop Components from here to the toolbars and back."
 msgstr "在這裡和工具條之間可以來回拖動條目。"
 
 #: ../ui/settings.glade:1251 ../ui/settings.glade:1263

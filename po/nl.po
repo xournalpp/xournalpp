@@ -2498,7 +2498,7 @@ msgstr "Naar links verslepen vanaf het startpunt is gelijk aan het ingedrukt hou
 "<i>Dit is handig als je zonder toetsenbord werkt.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
-msgid "Drag and drop Components fom here to the toolbars and back."
+msgid "Drag and drop Components from here to the toolbars and back."
 msgstr "Versleep items van hier naar de werkbalken en omgekeerd."
 
 #: ../ui/settings.glade:1251 ../ui/settings.glade:1263

@@ -2659,7 +2659,7 @@ msgid ""
 msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:30
-msgid "Drag and drop Components fom here to the toolbars and back."
+msgid "Drag and drop Components from here to the toolbars and back."
 msgstr ""
 
 #: ../ui/settings.glade:1183 ../ui/settings.glade:1195

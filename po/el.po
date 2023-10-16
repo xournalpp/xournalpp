@@ -2484,7 +2484,7 @@ msgstr "Αν σύρετε ΑΡΙΣΤΕΡΑ από το σημείο έναρξη
 "<i>Χρήσιμο για χρήση χωρίς πληκτρολόγιο.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
-msgid "Drag and drop Components fom here to the toolbars and back."
+msgid "Drag and drop Components from here to the toolbars and back."
 msgstr "Σύρεται αντικείμενα από και προς τις γραμμές εργαλείων."
 
 #: ../ui/settings.glade:1251 ../ui/settings.glade:1263

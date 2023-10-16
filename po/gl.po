@@ -2504,7 +2504,7 @@ msgstr "Arrastrar á ESQUERDA a partir do punto de arranque actúa como manter a
 "<i>Resulta práctico para operar sen teclado.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
-msgid "Drag and drop Components fom here to the toolbars and back."
+msgid "Drag and drop Components from here to the toolbars and back."
 msgstr "Arrastrar e soltar compoñentes desde aquí ás barras de ferramentas e volver."
 
 #: ../ui/settings.glade:1251 ../ui/settings.glade:1263

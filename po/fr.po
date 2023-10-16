@@ -2559,7 +2559,7 @@ msgstr "Glissez À GAUCHE à partir du point de départ agit comme lorsque la to
 "<i>Utile pour fonctionner sans clavier.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
-msgid "Drag and drop Components fom here to the toolbars and back."
+msgid "Drag and drop Components from here to the toolbars and back."
 msgstr "Glissez et déposez des composants d'ici vers les barres barres d'outils et vice-versa."
 
 #: ../ui/settings.glade:1251 ../ui/settings.glade:1263

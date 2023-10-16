@@ -2564,7 +2564,7 @@ msgstr "Trascinare a SINISTRA dal punto iniziale è equivalente a tenere premuto
 "<i>Utile per operare senza tastiera.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
-msgid "Drag and drop Components fom here to the toolbars and back."
+msgid "Drag and drop Components from here to the toolbars and back."
 msgstr "Trascina e rilascia i Componenti da qui alla Barra degli Strumenti e viceversa."
 
 #: ../ui/settings.glade:1251 ../ui/settings.glade:1263

@@ -2510,7 +2510,7 @@ msgstr "Przeciągnięcie w LEWO od punktu startowego zachowuje się jak przytrzy
 "<i>Przydatne do pracy bez klawiatury.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
-msgid "Drag and drop Components fom here to the toolbars and back."
+msgid "Drag and drop Components from here to the toolbars and back."
 msgstr "Przeciągnij i upuść Komponenty na paski narzędzi i z powrotem."
 
 #: ../ui/settings.glade:1251 ../ui/settings.glade:1263

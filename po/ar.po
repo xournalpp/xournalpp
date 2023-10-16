@@ -2564,7 +2564,7 @@ msgstr "السحب <b>لليسار</b> من نقطة البداية يمثل ا�
 "<i>مفيد للتعامل بدون لوحة مفاتيح.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
-msgid "Drag and drop Components fom here to the toolbars and back."
+msgid "Drag and drop Components from here to the toolbars and back."
 msgstr "اسحب وأفلت المكونات من هذه النافذة إلى أشرطة الأدوات والعكس."
 
 #: ../ui/settings.glade:1251 ../ui/settings.glade:1263
