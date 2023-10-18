@@ -174,7 +174,9 @@ static int applib_getFilePath(lua_State* L) {
     if (formats.size() > 0) {
         GtkFileFilter* filterSupported = gtk_file_filter_new();
         gtk_file_filter_set_name(filterSupported, _("Supported files"));
-        for (std::string format: formats) gtk_file_filter_add_pattern(filterSupported, format.c_str());
+        for (std::string format: formats) {
+            gtk_file_filter_add_pattern(filterSupported, format.c_str());
+        }
         gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(native.get()), filterSupported);
     }
 
@@ -493,10 +495,12 @@ static int handleUndoRedoActionHelper(lua_State* L, Control* control, const char
         PageRef const& page = control->getCurrentPage();
         Layer* layer = page->getSelectedLayer();
         UndoRedoHandler* undo = control->getUndoRedoHandler();
-        for (Element* element: elements) undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
-    } else if (strcmp("none", allowUndoRedoAction) == 0)
+        for (Element* element: elements) {
+            undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
+        }
+    } else if (strcmp("none", allowUndoRedoAction) == 0) {
         g_warning("Not allowing undo/redo action.");
-    else {
+    } else {
         return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
     }
     return 0;
@@ -557,9 +561,9 @@ static void addStrokeHelper(lua_State* L, Stroke* stroke) {
         Tool& tool = toolHandler->getTool(TOOL_HIGHLIGHTER);
         color = tool.getColor();
     } else {
-        if (!(strcmp("pen", tool) == 0))
+        if (!(strcmp("pen", tool) == 0)) {
             g_warning("%s", FC(_F("Unknown stroke type: \"{1}\", defaulting to pen") % tool));
-
+        }
         stroke->setToolType(StrokeTool::PEN);
 
         size = toolSizeToString(toolHandler->getPenSize());
@@ -574,30 +578,34 @@ static void addStrokeHelper(lua_State* L, Stroke* stroke) {
     }
 
     // Set width
-    if (lua_isnumber(L, -4))  // Check if the width was provided
+    if (lua_isnumber(L, -4)) {  // Check if the width was provided
         stroke->setWidth(lua_tonumber(L, -4));
-    else
+    } else {
         stroke->setWidth(thickness);
+    }
 
     // Set color
-    if (lua_isinteger(L, -3))  // Check if the color was provided
+    if (lua_isinteger(L, -3)) {  // Check if the color was provided
         stroke->setColor(Color(lua_tointeger(L, -3)));
-    else
+    } else {
         stroke->setColor(color);
+    }
 
     // Set fill
-    if (lua_isinteger(L, -2))  // Check if fill settings were provided
+    if (lua_isinteger(L, -2)) {  // Check if fill settings were provided
         stroke->setFill(lua_tointeger(L, -2));
-    else if (filled)
+    } else if (filled) {
         stroke->setFill(fillOpacity);
-    else
+    } else {
         stroke->setFill(-1);  // No fill
+    }
 
     // Set line style
-    if (lua_isstring(L, -1))  // Check if line style settings were provided
+    if (lua_isstring(L, -1)) {  // Check if line style settings were provided
         stroke->setLineStyle(StrokeStyle::parseStyle(lua_tostring(L, -1)));
-    else
+    } else {
         stroke->setLineStyle(StrokeStyle::parseStyle(lineStyle.data()));
+    }
 
     // stack cleanup is needed as this is a helper function
     lua_pop(L, 5);  // Finally done with all that Lua data.
@@ -662,8 +670,9 @@ static int applib_addSplines(lua_State* L) {
     luaL_checktype(L, 1, LUA_TTABLE);
 
     lua_getfield(L, 1, "splines");
-    if (!lua_istable(L, -1))
+    if (!lua_istable(L, -1)) {
         return luaL_error(L, "Missing spline table!");
+    }
 
     // stack now has following:
     //  1 = table arg
@@ -677,8 +686,9 @@ static int applib_addSplines(lua_State* L) {
         lua_pushnumber(L, a);
         lua_gettable(L, -2);                 // get current spline from splines table
         lua_getfield(L, -1, "coordinates");  // get coordinates of the current spline
-        if (!lua_istable(L, -1))
+        if (!lua_istable(L, -1)) {
             return luaL_error(L, "Missing coordinate table!");
+        }
         size_t numCoords = lua_rawlen(L, -1);
         for (size_t b = 1; b <= numCoords; b++) {
             lua_pushnumber(L, b);
@@ -691,8 +701,9 @@ static int applib_addSplines(lua_State* L) {
         lua_pop(L, 1);  // cleanup coordinates table
         // Handle those points
         // Check if the list is divisible by 8.
-        if (coordStream.size() % 8 != 0)
+        if (coordStream.size() % 8 != 0) {
             return luaL_error(L, "Point table incomplete!");
+        }
 
         // Now take that gigantic list of splines and create SplineSegments out of them.
         long unsigned int i = 0;
@@ -705,7 +716,9 @@ static int applib_addSplines(lua_State* L) {
             i += 8;
             SplineSegment segment = SplineSegment(start, ctrl1, ctrl2, end);
             std::list<Point> raster = segment.toPointSequence();
-            for (Point point: raster) stroke->addPoint(point);
+            for (Point point: raster) {
+                stroke->addPoint(point);
+            }
             // TODO: (willnilges) Is there a way we can get Pressure with Splines?
         }
 
@@ -801,8 +814,9 @@ static int applib_addStrokes(lua_State* L) {
     luaL_checktype(L, 1, LUA_TTABLE);
 
     lua_getfield(L, 1, "strokes");
-    if (!lua_istable(L, -1))
+    if (!lua_istable(L, -1)) {
         return luaL_error(L, "Missing stroke table!");
+    }
 
     // stack now has following:
     //  1 = table arg
@@ -820,8 +834,9 @@ static int applib_addStrokes(lua_State* L) {
         lua_gettable(L, -2);  // get current stroke
 
         lua_getfield(L, -1, "x");  // get x array of current stroke
-        if (!lua_istable(L, -1))
+        if (!lua_istable(L, -1)) {
             return luaL_error(L, "Missing X-Coordinate table!");
+        }
         size_t xPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= xPoints; b++) {
             lua_pushnumber(L, b);
@@ -834,8 +849,9 @@ static int applib_addStrokes(lua_State* L) {
 
         // Fetch table of Y values form the Lua stack
         lua_getfield(L, -1, "y");  // get y array of current stroke
-        if (!lua_istable(L, -1))
+        if (!lua_istable(L, -1)) {
             return luaL_error(L, "Missing Y-Coordinate table!");
+        }
         size_t yPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= yPoints; b++) {
             lua_pushnumber(L, b);
@@ -866,8 +882,9 @@ static int applib_addStrokes(lua_State* L) {
         if (xStream.size() != yStream.size()) {
             return luaL_error(L, "X and Y vectors are not equal length!");
         }
-        if (xStream.size() != pressureStream.size() && pressureStream.size() > 0)
+        if (xStream.size() != pressureStream.size() && pressureStream.size() > 0) {
             return luaL_error(L, "Pressure vector is not equal length!");
+        }
 
         // Check and make sure there's enough points (need at least 2)
         if (xStream.size() < 2) {
@@ -910,12 +927,14 @@ static int applib_addStrokes(lua_State* L) {
         PageRef const& page = ctrl->getCurrentPage();
         Layer* layer = page->getSelectedLayer();
         UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
-        for (Element* element: strokes) undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
+        for (Element* element: strokes) {
+            undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
+        }
     } else if (strcmp("none", allowUndoRedoAction) == 0)
         g_warning("Not allowing undo/redo action.");
-    else
+    else {
         return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
-
+    }
     return 0;
 }
 
@@ -1037,7 +1056,7 @@ static int applib_addTexts(lua_State* L) {
             uint32_t color = lua_tointeger(L, -3);
             if (color > 0xffffff) {
                 std::stringstream msg;
-                msg << "Color 0x" << std::hex << color << " is no valid RGB color.");
+                msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
                 return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
             }
             t->setColor(Color(color | 0xff000000U));
@@ -1357,10 +1376,11 @@ static int applib_refreshPage(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* ctrl = plugin->getControl();
     PageRef const& page = ctrl->getCurrentPage();
-    if (page)
+    if (page) {
         page->firePageChanged();
-    else
+    } else {
         return luaL_error(L, "Called applib_refreshPage, but there is no current page.");
+    }
     return 0;
 }
 
@@ -1440,7 +1460,7 @@ static int applib_changeToolColor(lua_State* L) {
         color = as_unsigned(lua_tointeger(L, -1));
         if (color > 0xffffff) {
             std::stringstream msg;
-            msg << "Color 0x" << std::hex << color << " is no valid RGB color.");
+            msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
             return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
         }
     } else if (!lua_isnil(L, -1)) {
@@ -1454,8 +1474,9 @@ static int applib_changeToolColor(lua_State* L) {
     if (tool.hasCapability(TOOL_CAP_COLOR)) {
         tool.setColor(Color(color | 0xff000000U));
         ctrl->toolColorChanged();
-        if (selection)
+        if (selection) {
             ctrl->changeColorOfSelection();
+        }
     } else {
         return luaL_error(L, "tool \"%s\" has no color capability", toolTypeToString(toolType).c_str());
     }
