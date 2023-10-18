@@ -15,6 +15,7 @@
 #include <cstring>
 #include <limits>  // for numeric_limits
 #include <map>
+#include <sstream>
 
 #include <gtk/gtk.h>
 #include <stdint.h>
@@ -1035,7 +1036,9 @@ static int applib_addTexts(lua_State* L) {
         if (lua_isinteger(L, -3)) {  // Check if the color was provided
             uint32_t color = lua_tointeger(L, -3);
             if (color > 0xffffff) {
-                return luaL_error(L, "Color 0x%x is no valid RGB color. ", color);
+                std::stringstream msg;
+                msg << "Color 0x" << std::hex << color << " is no valid RGB color.");
+                return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
             }
             t->setColor(Color(color));
         } else if (lua_isnil(L, -3)) {
@@ -1436,7 +1439,9 @@ static int applib_changeToolColor(lua_State* L) {
     if (lua_isinteger(L, -1)) {
         color = as_unsigned(lua_tointeger(L, -1));
         if (color > 0xffffff) {
-            return luaL_error(L, "Color 0x%x is no valid RGB color. ", color);
+            std::stringstream msg;
+            msg << "Color 0x" << std::hex << color << " is no valid RGB color.");
+            return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
         }
     } else if (!lua_isnil(L, -1)) {
         return luaL_error(L, " "
