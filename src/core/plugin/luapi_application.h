@@ -1040,7 +1040,7 @@ static int applib_addTexts(lua_State* L) {
                 msg << "Color 0x" << std::hex << color << " is no valid RGB color.");
                 return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
             }
-            t->setColor(Color(color));
+            t->setColor(Color(color | 0xff000000U));
         } else if (lua_isnil(L, -3)) {
             t->setColor(default_color);
         } else {
@@ -1172,7 +1172,7 @@ static int applib_getTexts(lua_State* L) {
             lua_setfield(L, -2, "size");  // add size to text
             lua_setfield(L, -2, "font");  // insert font-table to text element
 
-            lua_pushinteger(L, int(uint32_t(t->getColor())));
+            lua_pushinteger(L, int(uint32_t(t->getColor()) & 0xffffffU));
             lua_setfield(L, -2, "color");  // add color to text
 
             lua_pushnumber(L, t->getX());
@@ -1332,7 +1332,7 @@ static int applib_getStrokes(lua_State* L) {
             lua_pushnumber(L, s->getWidth());
             lua_setfield(L, -2, "width");  // add width to stroke
 
-            lua_pushinteger(L, int(uint32_t(s->getColor())));
+            lua_pushinteger(L, int(uint32_t(s->getColor()) & 0xffffffU));
             lua_setfield(L, -2, "color");  // add color to stroke
 
             lua_pushinteger(L, s->getFill());
@@ -1452,7 +1452,7 @@ static int applib_changeToolColor(lua_State* L) {
     Tool& tool = toolHandler->getTool(toolType);
 
     if (tool.hasCapability(TOOL_CAP_COLOR)) {
-        tool.setColor(Color(color));
+        tool.setColor(Color(color | 0xff000000U));
         ctrl->toolColorChanged();
         if (selection)
             ctrl->changeColorOfSelection();
@@ -1693,8 +1693,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_setfield(L, -2, "size");  // end of "size" table
 
-        lua_pushinteger(L, int(uint32_t(color)));  // value
-        lua_setfield(L, -2, "color");              // insert
+        lua_pushinteger(L, int(uint32_t(color) & 0xffffffU));  // value
+        lua_setfield(L, -2, "color");                          // insert
 
         lua_pushinteger(L, fillOpacity);     // value
         lua_setfield(L, -2, "fillOpacity");  // insert
@@ -1726,8 +1726,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_setfield(L, -2, "size");  // end of "size" table
 
-        lua_pushinteger(L, int(uint32_t(color)));  // value
-        lua_setfield(L, -2, "color");              // insert
+        lua_pushinteger(L, int(uint32_t(color) & 0xffffffU));  // value
+        lua_setfield(L, -2, "color");                          // insert
 
         lua_pushstring(L, drawingType.c_str());  // value
         lua_setfield(L, -2, "drawingType");      // insert
@@ -1761,8 +1761,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_setfield(L, -2, "size");  // end of "size" table
 
-        lua_pushinteger(L, int(uint32_t(color)));  // value
-        lua_setfield(L, -2, "color");              // insert
+        lua_pushinteger(L, int(uint32_t(color) & 0xffffffU));  // value
+        lua_setfield(L, -2, "color");                          // insert
 
         lua_pushstring(L, drawingType.c_str());  // value
         lua_setfield(L, -2, "drawingType");      // insert
@@ -1809,8 +1809,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_setfield(L, -2, "font");  // insert font table
 
-        lua_pushinteger(L, int(uint32_t(color)));  // value
-        lua_setfield(L, -2, "color");              // insert
+        lua_pushinteger(L, int(uint32_t(color) & 0xffffffU));  // value
+        lua_setfield(L, -2, "color");                          // insert
         // results in {font={name="fontname", size=0}, color=0x0}
     } else if (strcmp(mode, "selection") == 0) {
         auto sel = control->getWindow()->getXournal()->getSelection();
@@ -1910,8 +1910,8 @@ static int applib_getDocumentStructure(lua_State* L) {
         lua_pushstring(L, pt.config.c_str());   // value
         lua_setfield(L, -2, "pageTypeConfig");  // insert
 
-        lua_pushinteger(L, int(uint32_t(page->getBackgroundColor())));  // value
-        lua_setfield(L, -2, "backgroundColor");                         // insert
+        lua_pushinteger(L, int(uint32_t(page->getBackgroundColor()) & 0xffffffU));  // value
+        lua_setfield(L, -2, "backgroundColor");                                     // insert
 
         lua_pushinteger(L, page->getPdfPageNr() + 1);  // value
         lua_setfield(L, -2, "pdfBackgroundPageNo");    // insert

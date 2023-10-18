@@ -24,7 +24,7 @@ auto Util::rgb_to_hex_string(Color rgb) -> std::string {
     char resultHex[7];
 
     // 06: Disregard alpha channel and pad with zeroes to a length of 6.
-    xoj_assert(std::snprintf(resultHex, 7, "%06x", uint32_t(rgb) & 0xffffff) > 0);
+    xoj_assert(std::snprintf(resultHex, 7, "%06x", uint32_t(rgb) & 0xffffffU) > 0);
 
     std::stringstream result;
     result << "#" << resultHex;
