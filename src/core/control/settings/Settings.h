@@ -78,8 +78,9 @@ public:
     constexpr auto getValidateFN() const { return Setting<t>::VALIDATE_FN; }
     template<SettingsElement t>
     void setValue(const typename Setting<t>::value_type& v) {
-        auto valFN = getValidateFN<t>();
-        std::get<(std::size_t)t>(vars) = valFN(v);
+        if (!(v == std::get<(std::size_t)t>(vars))) {
+            std::get<(std::size_t)t>(vars) = Setting<t>::VALIDATE_FN(v);
+        }
     }
     template<SettingsElement t>
     void importSetting(xmlNodePtr node) {
