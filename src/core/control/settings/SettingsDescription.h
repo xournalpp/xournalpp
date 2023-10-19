@@ -72,7 +72,7 @@ enum class SettingsElement {
     SETTING_LAYOUT_BOTTOM_TO_TOP,
     SETTING_SHOW_PAIRED_PAGES,
     SETTING_NUM_PAIRS_OFFSET,
-    SETTING_PRESENTATION_MODE,
+    //SETTING_PRESENTATION_MODE, // TODO: remove
     SETTING_AUTOLOAD_MOST_RECENT,
     SETTING_AUTOLOAD_PDF_XOJ,
     SETTING_STYLUS_CURSOR_TYPE,
@@ -675,7 +675,7 @@ struct Setting<SettingsElement::SETTING_NUM_PAIRS_OFFSET> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+/*template<>
 struct Setting<SettingsElement::SETTING_PRESENTATION_MODE> { // TODO: remove this as it is not needed
     using value_type = bool;
     using getter_return_type = bool;
@@ -685,7 +685,7 @@ struct Setting<SettingsElement::SETTING_PRESENTATION_MODE> { // TODO: remove thi
     static constexpr auto IMPORT_FN = importBoolProperty;
     static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
-};
+};*/
 
 template<>
 struct Setting<SettingsElement::SETTING_AUTOLOAD_MOST_RECENT> {
