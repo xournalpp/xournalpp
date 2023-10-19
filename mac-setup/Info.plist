@@ -55,6 +55,26 @@
     <key>NSRemovableVolumesUsageDescription</key>
     <string>Required to enable the internal file chooser to choose files from removable devices.</string>
 
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>xopp</string>
+        </array>
+        <key>CFBundleTypeIconFile</key>
+	        <string>xournalpp.icns</string>
+        <key>CFBundleTypeName</key>
+        <string>Xournal++ Document</string>
+        <key>CFBundleTypeMIMETypes</key>
+        <array>
+          <string>application/x-xopp</string>
+        </array>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+      </dict>
+    </array>
+
     <key>LSSupportsOpeningDocumentsInPlace</key>
     <true />
     <key>NSDownloadsUbiquitousContents</key>
