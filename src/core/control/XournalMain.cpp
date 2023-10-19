@@ -50,7 +50,8 @@
 
 namespace {
 
-constexpr auto APP_FLAGS = GApplicationFlags(G_APPLICATION_SEND_ENVIRONMENT | G_APPLICATION_NON_UNIQUE);
+constexpr auto APP_FLAGS =
+        GApplicationFlags(G_APPLICATION_SEND_ENVIRONMENT | G_APPLICATION_NON_UNIQUE | G_APPLICATION_HANDLES_OPEN);
 
 /// Configuration migration status.
 enum class MigrateStatus {
@@ -424,10 +425,29 @@ void on_command_line(GApplication*, GApplicationCommandLine*, XMPtr) {
     // Todo: implement this, if someone files the bug report
 }
 
-void on_open_files(GApplication*, gpointer, gint, gchar*, XMPtr) {
-    g_message("XournalMain::on_open_files: This should never happen, please file a bugreport with a detailed "
-              "description how to reproduce this message");
-    // Todo: implement this, if someone files the bug report
+void on_open_files(GApplication* application, GFile** files, gint numFiles, gchar* hint, XMPtr app_data) {
+    if (numFiles != 1) {
+        const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+                                  "Others are ignored.");
+        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+    }
+
+    const fs::path p = Util::fromGFilename(g_file_get_path(files[0]), false);
+
+    try {
+        if (fs::exists(p)) {
+            app_data->control->openFile(p);
+        } else {
+            const std::string msg = FS(_F("File {1} does not exist.") % p.u8string());
+            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+        }
+    } catch (const fs::filesystem_error& e) {
+        const std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
+                                      "You have to copy the file to a local directory.") %
+                                   p.u8string() % e.what());
+        XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
+    }
+    gtk_window_present(GTK_WINDOW(app_data->win->getWindow()));
 }
 
 void on_startup(GApplication* application, XMPtr app_data) {
@@ -623,6 +643,7 @@ auto XournalMain::run(int argc, char** argv) -> int {
 
     XournalMainPrivate app_data;
     GtkApplication* app = gtk_application_new("com.github.xournalpp.xournalpp", APP_FLAGS);
+    g_object_set(G_OBJECT(app), "register-session", true, NULL);  // Needed for opening files on MacOS from Finder
     g_set_prgname("com.github.xournalpp.xournalpp");
     g_signal_connect(app, "activate", G_CALLBACK(&on_activate), &app_data);
     g_signal_connect(app, "command-line", G_CALLBACK(&on_command_line), &app_data);
