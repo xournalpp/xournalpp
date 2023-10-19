@@ -676,7 +676,7 @@ struct Setting<SettingsElement::SETTING_NUM_PAIRS_OFFSET> {
 };
 
 template<>
-struct Setting<SettingsElement::SETTING_PRESENTATION_MODE> {
+struct Setting<SettingsElement::SETTING_PRESENTATION_MODE> { // TODO: remove this as it is not needed
     using value_type = bool;
     using getter_return_type = bool;
     static constexpr auto xmlName = "presentationMode";
@@ -1396,13 +1396,13 @@ struct Setting<SettingsElement::SETTING_AUDIO_GAIN> {
 
 template<>
 struct Setting<SettingsElement::SETTING_DEFAULT_SEEK_TIME> {
-    using value_type = double;
-    using getter_return_type = double;
+    using value_type = uint;
+    using getter_return_type = uint;
     static constexpr auto xmlName = "defaultSeekTime";
-    static constexpr value_type DEFAULT = 5.0;
+    static constexpr value_type DEFAULT = 5;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importDoubleProperty;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
+    static constexpr auto IMPORT_FN = importUintProperty;
+    static constexpr auto EXPORT_FN = exportUintProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1609,7 +1609,9 @@ struct Setting<SettingsElement::SETTING_STABILIZER_AVERAGING_METHOD> {
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importStrokeAveragingMethod;
     static constexpr auto EXPORT_FN = exportStrokeAveragingMethod;
-    static constexpr auto VALIDATE_FN = noValidate<value_type>;
+    static constexpr auto VALIDATE_FN = [] (value_type value) -> value_type {
+        return StrokeStabilizer::isValid(value) ? value : StrokeStabilizer::AveragingMethod::NONE;
+    };
 };
 
 template<>
@@ -1621,7 +1623,9 @@ struct Setting<SettingsElement::SETTING_STABILIZER_PREPROCESSOR> {
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importStrokePreprocessor;
     static constexpr auto EXPORT_FN = exportStrokePreprocessor;
-    static constexpr auto VALIDATE_FN = noValidate<value_type>;
+    static constexpr auto VALIDATE_FN = [] (value_type value) -> value_type {
+        return StrokeStabilizer::isValid(value) ? value : StrokeStabilizer::Preprocessor::NONE;
+    };
 };
 
 template<>

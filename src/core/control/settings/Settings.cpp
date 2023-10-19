@@ -1266,452 +1266,254 @@ void Settings::setZoomGesturesEnabled(bool enable) {
 auto Settings::isSidebarOnRight() const -> bool { return get<SettingsElement::SETTING_SIDEBAR_ON_RIGHT>(); }
 
 void Settings::setSidebarOnRight(bool right) {
-    if (this->sidebarOnRight == right) {
-        return;
-    }
-
-    this->sidebarOnRight = right;
-
-    save();
+    set<SettingsElement::SETTING_SIDEBAR_ON_RIGHT>(right);
 }
 
 auto Settings::isScrollbarOnLeft() const -> bool { return get<SettingsElement::SETTING_SCROLLBAR_ON_LEFT>(); }
 
 void Settings::setScrollbarOnLeft(bool right) {
-    if (this->scrollbarOnLeft == right) {
-        return;
-    }
-
-    this->scrollbarOnLeft = right;
-
-    save();
+    set<SettingsElement::SETTING_SCROLLBAR_ON_LEFT>(right);
 }
 
 auto Settings::isMenubarVisible() const -> bool { return get<SettingsElement::SETTING_MENUBAR_VISIBLE>(); }
 
 void Settings::setMenubarVisible(bool visible) {
-    if (this->menubarVisible == visible) {
-        return;
-    }
-
-    this->menubarVisible = visible;
-
-    save();
+    set<SettingsElement::SETTING_MENUBAR_VISIBLE>(visible);
 }
 
 const bool Settings::isFilepathInTitlebarShown() const { return get<SettingsElement::SETTING_SHOW_FILEPATH_IN_TITLEBAR>(); }
 
 void Settings::setFilepathInTitlebarShown(const bool shown) {
-    if (this->filepathShownInTitlebar == shown) {
-        return;
-    }
-
-    this->filepathShownInTitlebar = shown;
-
-    save();
+    set<SettingsElement::SETTING_SHOW_FILEPATH_IN_TITLEBAR>(shown);
 }
 
 const bool Settings::isPageNumberInTitlebarShown() const { return get<SettingsElement::SETTING_SHOW_PAGE_NUMBER_IN_TITLEBAR>(); }
 
 void Settings::setPageNumberInTitlebarShown(const bool shown) {
-    if (this->pageNumberShownInTitlebar == shown) {
-        return;
-    }
-
-    this->pageNumberShownInTitlebar = shown;
-
-    save();
+    set<SettingsElement::SETTING_SHOW_PAGE_NUMBER_IN_TITLEBAR>(shown);
 }
 
 auto Settings::getAutosaveTimeout() const -> int { return get<SettingsElement::SETTING_AUTOSAVE_TIMEOUT>(); }
 
 void Settings::setAutosaveTimeout(int autosave) {
-    if (this->autosaveTimeout == autosave) {
-        return;
-    }
-
-    this->autosaveTimeout = autosave;
-
-    save();
+    set<SettingsElement::SETTING_AUTOSAVE_TIMEOUT>(autosave);
 }
 
 auto Settings::isAutosaveEnabled() const -> bool { return get<SettingsElement::SETTING_AUTOSAVE_ENABLED>(); }
 
 void Settings::setAutosaveEnabled(bool autosave) {
-    if (this->autosaveEnabled == autosave) {
-        return;
-    }
-
-    this->autosaveEnabled = autosave;
-
-    save();
+    set<SettingsElement::SETTING_AUTOSAVE_ENABLED>(autosave);
 }
 
 auto Settings::getAddVerticalSpace() const -> bool { return get<SettingsElement::SETTING_ADD_VERTICAL_SPACE>(); }
 
-void Settings::setAddVerticalSpace(bool space) { this->addVerticalSpace = space; }
+void Settings::setAddVerticalSpace(bool space) { set<SettingsElement::SETTING_ADD_VERTICAL_SPACE>(space); }
 
 auto Settings::getAddVerticalSpaceAmountAbove() const -> int { return get<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_ABOVE>(); }
 
 void Settings::setAddVerticalSpaceAmountAbove(int pixels) {
-    if (this->addVerticalSpaceAmountAbove == pixels) {
-        return;
-    }
-
-    this->addVerticalSpaceAmountAbove = pixels;
+    set<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_ABOVE>(pixels);
 }
 
 auto Settings::getAddVerticalSpaceAmountBelow() const -> int { return get<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_BELOW>(); }
 
 void Settings::setAddVerticalSpaceAmountBelow(int pixels) {
-    if (this->addVerticalSpaceAmountBelow == pixels) {
-        return;
-    }
-
-    this->addVerticalSpaceAmountBelow = pixels;
+    set<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_BELOW>(pixels);
 }
 
 
 auto Settings::getAddHorizontalSpace() const -> bool { return get<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE>(); }
 
-void Settings::setAddHorizontalSpace(bool space) { this->addHorizontalSpace = space; }
+void Settings::setAddHorizontalSpace(bool space) { set<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE>(space); }
 
 auto Settings::getAddHorizontalSpaceAmountRight() const -> int { return get<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_RIGHT>(); }
 
 void Settings::setAddHorizontalSpaceAmountRight(int pixels) {
-    if (this->addHorizontalSpaceAmountRight == pixels) {
-        return;
-    }
-
-    this->addHorizontalSpaceAmountRight = pixels;
+    set<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_RIGHT>(pixels);
 }
 
 auto Settings::getAddHorizontalSpaceAmountLeft() const -> int { return get<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_LEFT>(); }
 
 void Settings::setAddHorizontalSpaceAmountLeft(int pixels) {
-    if (this->addHorizontalSpaceAmountLeft == pixels) {
-        return;
-    }
-
-    this->addHorizontalSpaceAmountLeft = pixels;
+    set<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_LEFT>(pixels);
 }
 
 auto Settings::getUnlimitedScrolling() const -> bool { return get<SettingsElement::SETTING_UNLIMITED_SCROLLING>(); }
 
 void Settings::setUnlimitedScrolling(bool enable) {
-    if (enable == this->unlimitedScrolling) {
-        return;
-    }
-
-    this->unlimitedScrolling = enable;
+    set<SettingsElement::SETTING_UNLIMITED_SCROLLING>(enable);
 }
 
 auto Settings::getDrawDirModsEnabled() const -> bool { return get<SettingsElement::SETTING_DRAW_DIRECTION_MODS_ENABLE>(); }
 
-void Settings::setDrawDirModsEnabled(bool enable) { this->drawDirModsEnabled = enable; }
+void Settings::setDrawDirModsEnabled(bool enable) { set<SettingsElement::SETTING_DRAW_DIRECTION_MODS_ENABLE>(enable); }
 
 auto Settings::getDrawDirModsRadius() const -> int { return get<SettingsElement::SETTING_DRAW_DIRECTION_MODS_RADIUS>(); }
 
 void Settings::setDrawDirModsRadius(int pixels) {
-    if (this->drawDirModsRadius == pixels) {
-        return;
-    }
-
-    this->drawDirModsRadius = pixels;
-    save();
+    set<SettingsElement::SETTING_DRAW_DIRECTION_MODS_RADIUS>(pixels);
 }
 
 auto Settings::getStylusCursorType() const -> StylusCursorType { return get<SettingsElement::SETTING_STYLUS_CURSOR_TYPE>(); }
 
 void Settings::setStylusCursorType(StylusCursorType type) {
-    if (this->stylusCursorType == type) {
-        return;
-    }
-
-    this->stylusCursorType = type;
-
-    save();
+    set<SettingsElement::SETTING_STYLUS_CURSOR_TYPE>(type);
 }
 
 auto Settings::getEraserVisibility() const -> EraserVisibility { return get<SettingsElement::SETTING_ERASER_VISIBILITY>(); }
 
 void Settings::setEraserVisibility(EraserVisibility eraserVisibility) {
-    if (this->eraserVisibility == eraserVisibility) {
-        return;
-    }
-
-    this->eraserVisibility = eraserVisibility;
-
-    save();
+    set<SettingsElement::SETTING_ERASER_VISIBILITY>(eraserVisibility);
 }
 
 auto Settings::getIconTheme() const -> IconTheme { return get<SettingsElement::SETTING_ICON_THEME>(); }
 
 void Settings::setIconTheme(IconTheme iconTheme) {
-    if (this->iconTheme == iconTheme) {
-        return;
-    }
-
-    this->iconTheme = iconTheme;
-
-    save();
+    set<SettingsElement::SETTING_ICON_THEME>(iconTheme);
 }
 
 auto Settings::getSidebarNumberingStyle() const -> SidebarNumberingStyle { return get<SettingsElement::SETTING_SIDEBAR_NUMBERING_STYLE>(); };
 
 void Settings::setSidebarNumberingStyle(SidebarNumberingStyle numberingStyle) {
-    if (this->sidebarNumberingStyle == numberingStyle) {
-        return;
-    }
-
-    this->sidebarNumberingStyle = numberingStyle;
-
-    save();
+    set<SettingsElement::SETTING_SIDEBAR_NUMBERING_STYLE>(numberingStyle);
 }
 
 auto Settings::isHighlightPosition() const -> bool { return get<SettingsElement::SETTING_HIGHLIGHT_POSITION>(); }
 
 void Settings::setHighlightPosition(bool highlight) {
-    if (this->highlightPosition == highlight) {
-        return;
-    }
-
-    this->highlightPosition = highlight;
-    save();
+    set<SettingsElement::SETTING_HIGHLIGHT_POSITION>(highlight);
 }
 
 auto Settings::getCursorHighlightColor() const -> Color { return get<SettingsElement::SETTING_CURSOR_HIGHLIGHT_COLOR>(); }
 
 void Settings::setCursorHighlightColor(Color color) {
-    if (this->cursorHighlightColor != color) {
-        this->cursorHighlightColor = color;
-        save();
-    }
+    set<SettingsElement::SETTING_CURSOR_HIGHLIGHT_COLOR>(color);
 }
 
 auto Settings::getCursorHighlightRadius() const -> double { return get<SettingsElement::SETTING_CURSOR_HIGHLIGHT_RADIUS>(); }
 
 void Settings::setCursorHighlightRadius(double radius) {
-    if (this->cursorHighlightRadius != radius) {
-        this->cursorHighlightRadius = radius;
-        save();
-    }
+    set<SettingsElement::SETTING_CURSOR_HIGHLIGHT_RADIUS>(radius);
 }
 
 auto Settings::getCursorHighlightBorderColor() const -> Color { return get<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_COLOR>(); }
 
 void Settings::setCursorHighlightBorderColor(Color color) {
-    if (this->cursorHighlightBorderColor != color) {
-        this->cursorHighlightBorderColor = color;
-        save();
-    }
+    set<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_COLOR>(color);
 }
 
 auto Settings::getCursorHighlightBorderWidth() const -> double { return get<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_WIDTH>(); }
 
 void Settings::setCursorHighlightBorderWidth(double radius) {
-    if (this->cursorHighlightBorderWidth != radius) {
-        this->cursorHighlightBorderWidth = radius;
-        save();
-    }
+    set<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_WIDTH>(radius);
 }
 
 auto Settings::isSnapRotation() const -> bool { return get<SettingsElement::SETTING_SNAP_ROTATION>(); }
 
 void Settings::setSnapRotation(bool b) {
-    if (this->snapRotation == b) {
-        return;
-    }
-
-    this->snapRotation = b;
-    save();
+    set<SettingsElement::SETTING_SNAP_ROTATION>(b);
 }
 
 auto Settings::getSnapRotationTolerance() const -> double { return get<SettingsElement::SETTING_SNAP_ROTATION_TOLERANCE>(); }
 
 void Settings::setSnapRotationTolerance(double tolerance) {
-    this->snapRotationTolerance = tolerance;
-    save();
+    set<SettingsElement::SETTING_SNAP_ROTATION_TOLERANCE>(tolerance);
 }
 
 auto Settings::isSnapGrid() const -> bool { return get<SettingsElement::SETTING_SNAP_GRID>(); }
 
 void Settings::setSnapGrid(bool b) {
-    if (this->snapGrid == b) {
-        return;
-    }
-
-    this->snapGrid = b;
-    save();
+    set<SettingsElement::SETTING_SNAP_GRID>(b);
 }
 
 void Settings::setSnapGridTolerance(double tolerance) {
-    this->snapGridTolerance = tolerance;
-    save();
+    set<SettingsElement::SETTING_SNAP_GRID_TOLERANCE>(tolerance);
 }
 
 auto Settings::getSnapGridTolerance() const -> double { return get<SettingsElement::SETTING_SNAP_GRID_TOLERANCE>(); }
 auto Settings::getSnapGridSize() const -> double { return get<SettingsElement::SETTING_SNAP_GRID_SIZE>(); };
 void Settings::setSnapGridSize(double gridSize) {
-    if (this->snapGridSize == gridSize) {
-        return;
-    }
-    this->snapGridSize = gridSize;
-    save();
+    set<SettingsElement::SETTING_SNAP_GRID_SIZE>(gridSize);
 }
 
 auto Settings::getStrokeRecognizerMinSize() const -> double { return get<SettingsElement::SETTING_STROKE_RECOGNIZER_MIN_SIZE>(); };
 void Settings::setStrokeRecognizerMinSize(double value) {
-    if (this->strokeRecognizerMinSize == value) {
-        return;
-    }
-
-    this->strokeRecognizerMinSize = value;
-    save();
-};
+    set<SettingsElement::SETTING_STROKE_RECOGNIZER_MIN_SIZE>(value);
+}
 
 auto Settings::getTouchDrawingEnabled() const -> bool { return get<SettingsElement::SETTING_TOUCH_DRAWING>(); }
 
 void Settings::setTouchDrawingEnabled(bool b) {
-    if (this->touchDrawing == b) {
-        return;
-    }
-
-    this->touchDrawing = b;
-    save();
+    set<SettingsElement::SETTING_TOUCH_DRAWING>(b);
 }
 
 auto Settings::getGtkTouchInertialScrollingEnabled() const -> bool { return get<SettingsElement::SETTING_GTK_TOUCH_INERTIAL_SCROLLING>(); };
 
 void Settings::setGtkTouchInertialScrollingEnabled(bool b) {
-    if (this->gtkTouchInertialScrolling == b) {
-        return;
-    }
-
-    this->gtkTouchInertialScrolling = b;
-    save();
+    set<SettingsElement::SETTING_GTK_TOUCH_INERTIAL_SCROLLING>(b);
 }
 
 auto Settings::isPressureGuessingEnabled() const -> bool { return get<SettingsElement::SETTING_PRESSURE_GUESSING>(); }
 void Settings::setPressureGuessingEnabled(bool b) {
-    if (this->pressureGuessing == b) {
-        return;
-    }
-
-    this->pressureGuessing = b;
-    save();
+    set<SettingsElement::SETTING_PRESSURE_GUESSING>(b);
 }
 
 double Settings::getMinimumPressure() const { return get<SettingsElement::SETTING_MINIMUM_PRESSURE>(); }
 void Settings::setMinimumPressure(double minimumPressure) {
-    if (this->minimumPressure == minimumPressure) {
-        return;
-    }
-
-    this->minimumPressure = minimumPressure;
-    save();
+    set<SettingsElement::SETTING_MINIMUM_PRESSURE>(minimumPressure);
 }
 
 double Settings::getPressureMultiplier() const { return get<SettingsElement::SETTING_PRESSURE_MULTIPLIER>(); }
 void Settings::setPressureMultiplier(double multiplier) {
-    if (this->pressureMultiplier == multiplier) {
-        return;
-    }
-
-    this->pressureMultiplier = multiplier;
-    save();
+    set<SettingsElement::SETTING_PRESSURE_MULTIPLIER>(multiplier);
 }
 
 auto Settings::getScrollbarHideType() const -> ScrollbarHideType { return get<SettingsElement::SETTING_SCROLLBAR_HIDE_TYPE>(); }
 
 void Settings::setScrollbarHideType(ScrollbarHideType type) {
-    if (this->scrollbarHideType == type) {
-        return;
-    }
-
-    this->scrollbarHideType = type;
-
-    save();
+    set<SettingsElement::SETTING_SCROLLBAR_HIDE_TYPE>(type);
 }
 
 auto Settings::isAutoloadMostRecent() const -> bool { return get<SettingsElement::SETTING_AUTOLOAD_MOST_RECENT>(); }
 
 void Settings::setAutoloadMostRecent(bool load) {
-    if (this->autoloadMostRecent == load) {
-        return;
-    }
-    this->autoloadMostRecent = load;
-    save();
+    set<SettingsElement::SETTING_AUTOLOAD_MOST_RECENT>(load);
 }
 
 auto Settings::isAutoloadPdfXoj() const -> bool { return get<SettingsElement::SETTING_AUTOLOAD_PDF_XOJ>(); }
 
 void Settings::setAutoloadPdfXoj(bool load) {
-    if (this->autoloadPdfXoj == load) {
-        return;
-    }
-    this->autoloadPdfXoj = load;
-    save();
+    set<SettingsElement::SETTING_AUTOLOAD_PDF_XOJ>(load);
 }
 
 auto Settings::getDefaultSaveName() const -> string const& { return get<SettingsElement::SETTING_DEFAULT_SAVE_NAME>(); }
 
 void Settings::setDefaultSaveName(const string& name) {
-    if (this->defaultSaveName == name) {
-        return;
-    }
-
-    this->defaultSaveName = name;
-
-    save();
+    set<SettingsElement::SETTING_DEFAULT_SAVE_NAME>(name);
 }
 
 auto Settings::getDefaultPdfExportName() const -> string const& { return get<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>(); }
 
 void Settings::setDefaultPdfExportName(const string& name) {
-    if (this->defaultPdfExportName == name) {
-        return;
-    }
-
-    this->defaultPdfExportName = name;
-
-    save();
+    set<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>(name);
 }
 
 auto Settings::getPageTemplate() const -> string const& { return get<SettingsElement::SETTING_PAGE_TEMPLATE>(); }
 
 void Settings::setPageTemplate(const string& pageTemplate) {
-    if (this->pageTemplate == pageTemplate) {
-        return;
-    }
-
-    this->pageTemplate = pageTemplate;
-
-    save();
+    set<SettingsElement::SETTING_PAGE_TEMPLATE>(pageTemplate);
 }
 
 auto Settings::getAudioFolder() const -> fs::path const& { return get<SettingsElement::SETTING_AUDIO_FOLDER>(); }
 
 void Settings::setAudioFolder(fs::path audioFolder) {
-    if (this->audioFolder == audioFolder) {
-        return;
-    }
-
-    this->audioFolder = std::move(audioFolder);
-
-    save();
+    set<SettingsElement::SETTING_AUDIO_FOLDER>(audioFolder);
 }
 
 auto Settings::getSizeUnit() const -> string const& { return get<SettingsElement::SETTING_SIZE_UNIT>(); }
 
 void Settings::setSizeUnit(const string& sizeUnit) {
-    if (this->sizeUnit == sizeUnit) {
-        return;
-    }
-
-    this->sizeUnit = sizeUnit;
-
-    save();
+    set<SettingsElement::SETTING_SIZE_UNIT>(sizeUnit);
 }
 
 /**
@@ -1741,25 +1543,15 @@ void Settings::setSizeUnitIndex(int sizeUnitId) {
 }
 
 void Settings::setShowPairedPages(bool showPairedPages) {
-    if (this->showPairedPages == showPairedPages) {
-        return;
-    }
-
-    this->showPairedPages = showPairedPages;
-    save();
+    set<SettingsElement::SETTING_SHOW_PAIRED_PAGES>(showPairedPages);
 }
 
 auto Settings::isShowPairedPages() const -> bool { return get<SettingsElement::SETTING_SHOW_PAIRED_PAGES>(); }
 
 void Settings::setPresentationMode(bool presentationMode) {
-    if (this->presentationMode == presentationMode) {
-        return;
-    }
     if (presentationMode) {
-        this->activeViewMode = PresetViewModeIds::VIEW_MODE_PRESENTATION;
+        set<SettingsElement::SETTING_ACTIVE_VIEW_MODE>(PresetViewModeIds::VIEW_MODE_PRESENTATION);
     }
-    this->presentationMode = presentationMode;
-    save();
 }
 
 auto Settings::isPresentationMode() const -> bool {
@@ -1767,193 +1559,114 @@ auto Settings::isPresentationMode() const -> bool {
 }
 
 void Settings::setPressureSensitivity(gboolean presureSensitivity) {
-    if (this->pressureSensitivity == presureSensitivity) {
-        return;
-    }
-    this->pressureSensitivity = presureSensitivity;
-
-    save();
+    set<SettingsElement::SETTING_PRESSURE_SENSITIVITY>(presureSensitivity);
 }
 
 void Settings::setPairsOffset(int numOffset) {
-    if (this->numPairsOffset == numOffset) {
-        return;
-    }
-
-    this->numPairsOffset = numOffset;
-    save();
+    set<SettingsElement::SETTING_NUM_PAIRS_OFFSET>(numOffset);
 }
 
 auto Settings::getPairsOffset() const -> int { return get<SettingsElement::SETTING_NUM_PAIRS_OFFSET>(); }
 
 void Settings::setEmptyLastPageAppend(EmptyLastPageAppendType emptyLastPageAppend) {
-    if (this->emptyLastPageAppend == emptyLastPageAppend) {
-        return;
-    }
-
-    this->emptyLastPageAppend = emptyLastPageAppend;
-    save();
+    set<SettingsElement::SETTING_EMPTY_LAST_PAGE_APPEND>(emptyLastPageAppend);
 }
 
 auto Settings::getEmptyLastPageAppend() const -> EmptyLastPageAppendType { return get<SettingsElement::SETTING_EMPTY_LAST_PAGE_APPEND>(); }
 
 void Settings::setViewColumns(int numColumns) {
-    if (this->numColumns == numColumns) {
-        return;
-    }
-
-    this->numColumns = numColumns;
-    save();
+    set<SettingsElement::SETTING_NUM_COLUMNS>(numColumns);
 }
 
 auto Settings::getViewColumns() const -> int { return get<SettingsElement::SETTING_NUM_COLUMNS>(); }
 
 
 void Settings::setViewRows(int numRows) {
-    if (this->numRows == numRows) {
-        return;
-    }
-
-    this->numRows = numRows;
-    save();
+    set<SettingsElement::SETTING_NUM_ROWS>(numRows);
 }
 
 auto Settings::getViewRows() const -> int { return get<SettingsElement::SETTING_NUM_ROWS>(); }
 
 void Settings::setViewFixedRows(bool viewFixedRows) {
-    if (this->viewFixedRows == viewFixedRows) {
-        return;
-    }
-
-    this->viewFixedRows = viewFixedRows;
-    save();
+    set<SettingsElement::SETTING_VIEW_FIXED_ROWS>(viewFixedRows);
 }
 
 auto Settings::isViewFixedRows() const -> bool { return get<SettingsElement::SETTING_VIEW_FIXED_ROWS>(); }
 
 void Settings::setViewLayoutVert(bool vert) {
-    if (this->layoutVertical == vert) {
-        return;
-    }
-
-    this->layoutVertical = vert;
-    save();
+    set<SettingsElement::SETTING_LAYOUT_VERTICAL>(vert);
 }
 
 auto Settings::getViewLayoutVert() const -> bool { return get<SettingsElement::SETTING_LAYOUT_VERTICAL>(); }
 
 void Settings::setViewLayoutR2L(bool r2l) {
-    if (this->layoutRightToLeft == r2l) {
-        return;
-    }
-
-    this->layoutRightToLeft = r2l;
-    save();
+    set<SettingsElement::SETTING_LAYOUT_RIGHT_TO_LEFT>(r2l);
 }
 
 auto Settings::getViewLayoutR2L() const -> bool { return get<SettingsElement::SETTING_LAYOUT_RIGHT_TO_LEFT>(); }
 
 void Settings::setViewLayoutB2T(bool b2t) {
-    if (this->layoutBottomToTop == b2t) {
-        return;
-    }
-
-    this->layoutBottomToTop = b2t;
-    save();
+    set<SettingsElement::SETTING_LAYOUT_BOTTOM_TO_TOP>(b2t);
 }
 
 auto Settings::getViewLayoutB2T() const -> bool { return get<SettingsElement::SETTING_LAYOUT_BOTTOM_TO_TOP>(); }
 
 void Settings::setLastSavePath(fs::path p) {
-    this->lastSavePath = std::move(p);
-    save();
+    set<SettingsElement::SETTING_LAST_SAVE_PATH>(p);
 }
 
 auto Settings::getLastSavePath() const -> fs::path const& { return get<SettingsElement::SETTING_LAST_SAVE_PATH>(); }
 
 void Settings::setLastOpenPath(fs::path p) {
-    this->lastOpenPath = std::move(p);
-    save();
+    set<SettingsElement::SETTING_LAST_OPEN_PATH>(p);
 }
 
 auto Settings::getLastOpenPath() const -> fs::path const& { return get<SettingsElement::SETTING_LAST_OPEN_PATH>(); }
 
 void Settings::setLastImagePath(const fs::path& path) {
-    if (this->lastImagePath == path) {
-        return;
-    }
-    this->lastImagePath = path;
-    save();
+    set<SettingsElement::SETTING_LAST_IMAGE_PATH>(path);
 }
 
 auto Settings::getLastImagePath() const -> fs::path const& { return get<SettingsElement::SETTING_LAST_IMAGE_PATH>(); }
 
 void Settings::setZoomStep(double zoomStep) {
-    if (this->zoomStep == zoomStep) {
-        return;
-    }
-    this->zoomStep = zoomStep;
-    save();
+    set<SettingsElement::SETTING_ZOOM_STEP>(zoomStep);
 }
 
 auto Settings::getZoomStep() const -> double { return get<SettingsElement::SETTING_ZOOM_STEP>(); }
 
 void Settings::setZoomStepScroll(double zoomStepScroll) {
-    if (this->zoomStepScroll == zoomStepScroll) {
-        return;
-    }
-    this->zoomStepScroll = zoomStepScroll;
-    save();
+    set<SettingsElement::SETTING_ZOOM_STEP_SCROLL>(zoomStepScroll);
 }
 
 auto Settings::getZoomStepScroll() const -> double { return get<SettingsElement::SETTING_ZOOM_STEP_SCROLL>(); }
 
 void Settings::setEdgePanSpeed(double speed) {
-    if (this->edgePanSpeed == speed) {
-        return;
-    }
-    this->edgePanSpeed = speed;
-    save();
+    set<SettingsElement::SETTING_EDGE_PAN_SPEED>(speed);
 }
 
 auto Settings::getEdgePanSpeed() const -> double { return get<SettingsElement::SETTING_EDGE_PAN_SPEED>(); }
 
 void Settings::setEdgePanMaxMult(double maxMult) {
-    if (this->edgePanMaxMult == maxMult) {
-        return;
-    }
-    this->edgePanMaxMult = maxMult;
-    save();
+    set<SettingsElement::SETTING_EDGE_PAN_MAX_MULT>(maxMult);
 }
 
 auto Settings::getEdgePanMaxMult() const -> double { return get<SettingsElement::SETTING_EDGE_PAN_MAX_MULT>(); }
 
 void Settings::setDisplayDpi(int dpi) {
-    if (this->displayDpi == dpi) {
-        return;
-    }
-    this->displayDpi = dpi;
-    save();
+    set<SettingsElement::SETTING_DISPLAY_DPI>(dpi);
 }
 
 auto Settings::getDisplayDpi() const -> int { return get<SettingsElement::SETTING_DISPLAY_DPI>(); }
 
 void Settings::setDarkTheme(bool dark) {
-    if (this->darkTheme == dark) {
-        return;
-    }
-    this->darkTheme = dark;
-    save();
+    set<SettingsElement::SETTING_DARK_THEME>(dark);
 }
 
 auto Settings::isDarkTheme() const -> bool { return get<SettingsElement::SETTING_DARK_THEME>(); }
 
 void Settings::setAreStockIconsUsed(bool use) {
-    if (this->useStockIcons == use) {
-        return;
-    }
-    this->useStockIcons = use;
-    save();
+    set<SettingsElement::SETTING_USE_STOCK_ICONS>(use);
 }
 
 auto Settings::areStockIconsUsed() const -> bool { return get<SettingsElement::SETTING_USE_STOCK_ICONS>(); }
@@ -1963,40 +1676,24 @@ auto Settings::isFullscreen() const -> bool { return getViewModes()[getActiveVie
 auto Settings::isSidebarVisible() const -> bool { return get<SettingsElement::SETTING_SHOW_SIDEBAR>(); }
 
 void Settings::setSidebarVisible(bool visible) {
-    if (this->showSidebar == visible) {
-        return;
-    }
-    this->showSidebar = visible;
-    save();
+    set<SettingsElement::SETTING_SHOW_SIDEBAR>(visible);
 }
 
 auto Settings::isToolbarVisible() const -> bool { return get<SettingsElement::SETTING_SHOW_TOOLBAR>(); }
 
 void Settings::setToolbarVisible(bool visible) {
-    if (this->showToolbar == visible) {
-        return;
-    }
-    this->showToolbar = visible;
-    save();
+    set<SettingsElement::SETTING_SHOW_TOOLBAR>(visible);
 }
 
 auto Settings::getSidebarWidth() const -> int { return get<SettingsElement::SETTING_SIDEBAR_WIDTH>(); }
 
 void Settings::setSidebarWidth(int width) {
-    width = std::max(width, 50);
-
-    if (this->sidebarWidth == width) {
-        return;
-    }
-    this->sidebarWidth = width;
-    save();
+    set<SettingsElement::SETTING_SIDEBAR_WIDTH>(width);
 }
 
 void Settings::setMainWndSize(int width, int height) {
-    this->mainWndWidth = width;
-    this->mainWndHeight = height;
-
-    save();
+    set<SettingsElement::SETTING_MAIN_WINDOW_WIDTH>(width);
+    set<SettingsElement::SETTING_MAIN_WINDOW_HEIGHT>(height);
 }
 
 auto Settings::getMainWndWidth() const -> int { return get<SettingsElement::SETTING_MAIN_WINDOW_WIDTH>(); }
@@ -2005,21 +1702,17 @@ auto Settings::getMainWndHeight() const -> int { return get<SettingsElement::SET
 
 auto Settings::isMainWndMaximized() const -> bool { return get<SettingsElement::SETTING_MAXIMIZED>(); }
 
-void Settings::setMainWndMaximized(bool max) { this->maximized = max; }
+void Settings::setMainWndMaximized(bool max) { set<SettingsElement::SETTING_MAXIMIZED>(max); }
 
 void Settings::setSelectedToolbar(const string& name) {
-    if (this->selectedToolbar == name) {
-        return;
-    }
-    this->selectedToolbar = name;
-    save();
+    set<SettingsElement::SETTING_SELECTED_TOOLBAR>(name);
 }
 
 auto Settings::getSelectedToolbar() const -> string const& { return get<SettingsElement::SETTING_SELECTED_TOOLBAR>(); }
 
 auto Settings::getCustomElement(const string& name) -> SElement& { return this->data[name]; } // TODO: make this work
 
-void Settings::customSettingsChanged() { save(); }
+void Settings::customSettingsChanged() { save(); } // TODO
 
 auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* { // TODO: make this work
     auto cfg = get<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>();
@@ -2031,194 +1724,129 @@ auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* { // TODO: make
 }
 
 void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
-    if (this->viewModes[mode] == viewMode) {
-        return;
+    switch (mode) {
+    case PresetViewModeIds::VIEW_MODE_DEFAULT:
+        set<SettingsElement::SETTING_DEFAULT_VIEW_MODE_ATTRIBUTES>(viewMode);
+        break;
+    case PresetViewModeIds::VIEW_MODE_FULLSCREEN:
+        set<SettingsElement::SETTING_FULLSCREEN_VIEW_MODE_ATTRIBUTES>(viewMode);
+        break;
+    case PresetViewModeIds::VIEW_MODE_PRESENTATION:
+        set<SettingsElement::SETTING_PRESENTATION_VIEW_MODE_ATTRIBUTES>(viewMode);
+        break;
+    default:
+        g_warning("Settings::Unknown ViewModeId '%d' in setViewMode", (int)mode);
     }
-    this->viewModes.at(mode) = viewMode;
-    save();
 }
 
 auto Settings::getTouchZoomStartThreshold() const -> double { return get<SettingsElement::SETTING_TOUCH_ZOOM_START_THRESHOLD>(); }
 void Settings::setTouchZoomStartThreshold(double threshold) {
-    if (this->touchZoomStartThreshold == threshold) {
-        return;
-    }
-
-    this->touchZoomStartThreshold = threshold;
-    save();
+    set<SettingsElement::SETTING_TOUCH_ZOOM_START_THRESHOLD>(threshold);
 }
 
 
 auto Settings::getPDFPageRerenderThreshold() const -> double { return get<SettingsElement::SETTING_PAGE_RERENDER_THRESHOLD>(); }
 void Settings::setPDFPageRerenderThreshold(double threshold) {
-    if (this->pageRerenderThreshold == threshold) {
-        return;
-    }
-
-    this->pageRerenderThreshold = threshold;
-    save();
+    set<SettingsElement::SETTING_PAGE_RERENDER_THRESHOLD>(threshold);
 }
 
 auto Settings::getPdfPageCacheSize() const -> int { return get<SettingsElement::SETTING_PDF_PAGE_CACHE_SIZE>(); }
 
 void Settings::setPdfPageCacheSize(int size) {
-    if (this->pdfPageCacheSize == size) {
-        return;
-    }
-    this->pdfPageCacheSize = size;
-    save();
+    set<SettingsElement::SETTING_PDF_PAGE_CACHE_SIZE>(size);
 }
 
 auto Settings::getPreloadPagesBefore() const -> unsigned int { return get<SettingsElement::SETTING_PRELOAD_PAGES_BEFORE>(); }
 
 void Settings::setPreloadPagesBefore(unsigned int n) {
-    if (this->preloadPagesBefore == n) {
-        return;
-    }
-    this->preloadPagesBefore = n;
-    save();
+    set<SettingsElement::SETTING_PRELOAD_PAGES_BEFORE>(n);
 }
 
 auto Settings::getPreloadPagesAfter() const -> unsigned int { return get<SettingsElement::SETTING_PRELOAD_PAGES_AFTER>(); }
 
 void Settings::setPreloadPagesAfter(unsigned int n) {
-    if (this->preloadPagesAfter == n) {
-        return;
-    }
-    this->preloadPagesAfter = n;
-    save();
+    set<SettingsElement::SETTING_PRELOAD_PAGES_AFTER>(n);
 }
 
 auto Settings::isEagerPageCleanup() const -> bool { return get<SettingsElement::SETTING_EAGER_PAGE_CLEANUP>(); }
 
 void Settings::setEagerPageCleanup(bool b) {
-    if (this->eagerPageCleanup == b) {
-        return;
-    }
-    this->eagerPageCleanup = b;
-    save();
+    set<SettingsElement::SETTING_EAGER_PAGE_CLEANUP>(b);
 }
 
 auto Settings::getBorderColor() const -> Color { return get<SettingsElement::SETTING_SELECTION_BORDER_COLOR>(); }
 
 void Settings::setBorderColor(Color color) {
-    if (this->selectionBorderColor == color) {
-        return;
-    }
-    this->selectionBorderColor = color;
-    save();
+    set<SettingsElement::SETTING_SELECTION_BORDER_COLOR>(color);
 }
 
 auto Settings::getSelectionColor() const -> Color { return get<SettingsElement::SETTING_SELECTION_MARKER_COLOR>(); }
 
 void Settings::setSelectionColor(Color color) {
-    if (this->selectionMarkerColor == color) {
-        return;
-    }
-    this->selectionMarkerColor = color;
-    save();
+    set<SettingsElement::SETTING_SELECTION_MARKER_COLOR>(color);
 }
 
 auto Settings::getActiveSelectionColor() const -> Color { return get<SettingsElement::SETTING_ACTIVE_SELECTION_COLOR>(); }
 
 void Settings::setActiveSelectionColor(Color color) {
-    if (this->activeSelectionColor == color) {
-        return;
-    }
-    this->activeSelectionColor = color;
-    save();
+    set<SettingsElement::SETTING_ACTIVE_SELECTION_COLOR>(color);
 }
 
 auto Settings::getBackgroundColor() const -> Color { return get<SettingsElement::SETTING_BACKGROUND_COLOR>(); }
 
 void Settings::setBackgroundColor(Color color) {
-    if (this->backgroundColor == color) {
-        return;
-    }
-    this->backgroundColor = color;
-    save();
+    set<SettingsElement::SETTING_BACKGROUND_COLOR>(color);
 }
 
 auto Settings::getFont() -> XojFont { return get<SettingsElement::SETTING_FONT>(); }
 
 void Settings::setFont(const XojFont& font) {
     set<SettingsElement::SETTING_FONT>(font);
-    save();
 }
 
 
 auto Settings::getAudioInputDevice() const -> PaDeviceIndex { return get<SettingsElement::SETTING_AUDIO_INPUT_DEVICE>(); }
 
 void Settings::setAudioInputDevice(PaDeviceIndex deviceIndex) {
-    if (this->audioInputDevice == deviceIndex) {
-        return;
-    }
-    this->audioInputDevice = deviceIndex;
-    save();
+    set<SettingsElement::SETTING_AUDIO_INPUT_DEVICE>(deviceIndex);
 }
 
 auto Settings::getAudioOutputDevice() const -> PaDeviceIndex { return get<SettingsElement::SETTING_AUDIO_OUTPUT_DEVICE>(); }
 
 void Settings::setAudioOutputDevice(PaDeviceIndex deviceIndex) {
-    if (this->audioOutputDevice == deviceIndex) {
-        return;
-    }
-    this->audioOutputDevice = deviceIndex;
-    save();
+    set<SettingsElement::SETTING_AUDIO_OUTPUT_DEVICE>(deviceIndex);
 }
 
 auto Settings::getAudioSampleRate() const -> double { return get<SettingsElement::SETTING_AUDIO_SAMPLE_RATE>(); }
 
 void Settings::setAudioSampleRate(double sampleRate) {
-    if (this->audioSampleRate == sampleRate) {
-        return;
-    }
-    this->audioSampleRate = sampleRate;
-    save();
+    set<SettingsElement::SETTING_AUDIO_SAMPLE_RATE>(sampleRate);
 }
 
 auto Settings::getAudioGain() const -> double { return get<SettingsElement::SETTING_AUDIO_GAIN>(); }
 
 void Settings::setAudioGain(double gain) {
-    if (this->audioGain == gain) {
-        return;
-    }
-    this->audioGain = gain;
-    save();
+    set<SettingsElement::SETTING_AUDIO_GAIN>(gain);
 }
 
 auto Settings::getDefaultSeekTime() const -> unsigned int { return get<SettingsElement::SETTING_DEFAULT_SEEK_TIME>(); }
 
 void Settings::setDefaultSeekTime(unsigned int t) {
-    if (this->defaultSeekTime == t) {
-        return;
-    }
-    this->defaultSeekTime = t;
-    save();
+    set<SettingsElement::SETTING_DEFAULT_SEEK_TIME>(t);
 }
 
 auto Settings::getPluginEnabled() const -> string const& {
-    g_info("getPluginEnabled()\n");
     return get<SettingsElement::SETTING_PLUGIN_ENABLED>(); }
 
 void Settings::setPluginEnabled(const string& pluginEnabled) {
-    if (this->pluginEnabled == pluginEnabled) {
-        return;
-    }
-    this->pluginEnabled = pluginEnabled;
-    save();
+    set<SettingsElement::SETTING_PLUGIN_ENABLED>(pluginEnabled);
 }
 
 auto Settings::getPluginDisabled() const -> string const& {
-    g_info("getPluginDisabled()\n");
     return get<SettingsElement::SETTING_PLUGIN_DISABLED>(); }
 
 void Settings::setPluginDisabled(const string& pluginDisabled) {
-    if (this->pluginDisabled == pluginDisabled) {
-        return;
-    }
-    this->pluginDisabled = pluginDisabled;
-    save();
+    set<SettingsElement::SETTING_PLUGIN_DISABLED>(pluginDisabled);
 }
 
 
@@ -2229,72 +1857,60 @@ void Settings::getStrokeFilter(int* ignoreTime, double* ignoreLength, int* succe
 }
 
 void Settings::setStrokeFilter(int ignoreTime, double ignoreLength, int successiveTime) {
-    this->strokeFilterIgnoreTime = ignoreTime;
-    this->strokeFilterIgnoreLength = ignoreLength;
-    this->strokeFilterSuccessiveTime = successiveTime;
+    set<SettingsElement::SETTING_STROKE_FILTER_IGNORE_TIME>(ignoreTime);
+    set<SettingsElement::SETTING_STROKE_FILTER_IGNORE_LENGTH>(ignoreLength);
+    set<SettingsElement::SETTING_STROKE_FILTER_SUCCESSIVE_TIME>(successiveTime);
 }
 
-void Settings::setStrokeFilterEnabled(bool enabled) { this->strokeFilterEnabled = enabled; }
+void Settings::setStrokeFilterEnabled(bool enabled) { set<SettingsElement::SETTING_STROKE_FILTER_ENABLED>(enabled); }
 
 auto Settings::getStrokeFilterEnabled() const -> bool { return get<SettingsElement::SETTING_STROKE_FILTER_ENABLED>(); }
 
-void Settings::setDoActionOnStrokeFiltered(bool enabled) { this->doActionOnStrokeFiltered = enabled; }
+void Settings::setDoActionOnStrokeFiltered(bool enabled) { set<SettingsElement::SETTING_DO_ACTION_ON_STROKE_FILTERED>(enabled); }
 
 auto Settings::getDoActionOnStrokeFiltered() const -> bool { return get<SettingsElement::SETTING_DO_ACTION_ON_STROKE_FILTERED>(); }
 
-void Settings::setTrySelectOnStrokeFiltered(bool enabled) { this->trySelectOnStrokeFiltered = enabled; }
+void Settings::setTrySelectOnStrokeFiltered(bool enabled) { set<SettingsElement::SETTING_TRY_SELECT_ON_STROKE_FILTERED>(enabled); }
 
 auto Settings::getTrySelectOnStrokeFiltered() const -> bool { return get<SettingsElement::SETTING_TRY_SELECT_ON_STROKE_FILTERED>(); }
 
-void Settings::setSnapRecognizedShapesEnabled(bool enabled) { this->snapRecognizedShapesEnabled = enabled; }
+void Settings::setSnapRecognizedShapesEnabled(bool enabled) { set<SettingsElement::SETTING_SNAP_RECOGNIZED_SHAPES>(enabled); }
 
 auto Settings::getSnapRecognizedShapesEnabled() const -> bool { return get<SettingsElement::SETTING_SNAP_RECOGNIZED_SHAPES>(); }
 
 
-void Settings::setRestoreLineWidthEnabled(bool enabled) { this->restoreLineWidthEnabled = enabled; }
+void Settings::setRestoreLineWidthEnabled(bool enabled) { set<SettingsElement::SETTING_RESTORE_LINE_WIDTH>(enabled); }
 
 auto Settings::getRestoreLineWidthEnabled() const -> bool { return get<SettingsElement::SETTING_RESTORE_LINE_WIDTH>(); }
 
-auto Settings::setPreferredLocale(std::string const& locale) -> void { this->preferredLocale = locale; }
+auto Settings::setPreferredLocale(std::string const& locale) -> void { set<SettingsElement::SETTING_PREFERRED_LOCALE>(locale); }
 
 auto Settings::getPreferredLocale() const -> std::string { return get<SettingsElement::SETTING_PREFERRED_LOCALE>(); }
 
 void Settings::setIgnoredStylusEvents(int numEvents) {
-    if (this->numIgnoredStylusEvents == numEvents) {
-        return;
-    }
-    this->numIgnoredStylusEvents = std::max<int>(numEvents, 0);
-    save();
+    set<SettingsElement::SETTING_NUM_IGNORED_STYLUS_EVENTS>(numEvents);
 }
 
 auto Settings::getIgnoredStylusEvents() const -> int { return get<SettingsElement::SETTING_NUM_IGNORED_STYLUS_EVENTS>(); }
 
 void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled) {
-    if (this->inputSystemTPCButton == tpcButtonEnabled) {
-        return;
-    }
-    this->inputSystemTPCButton = tpcButtonEnabled;
-    save();
+    set<SettingsElement::SETTING_INPUT_SYSTEM_TPC_BUTTON>(tpcButtonEnabled);
 }
 
 auto Settings::getInputSystemTPCButtonEnabled() const -> bool { return get<SettingsElement::SETTING_INPUT_SYSTEM_TPC_BUTTON>(); }
 
 void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnabled) {
-    if (this->inputSystemDrawOutsideWindow == drawOutsideWindowEnabled) {
-        return;
-    }
-    this->inputSystemDrawOutsideWindow = drawOutsideWindowEnabled;
-    save();
+    set<SettingsElement::SETTING_INPUT_SYSTEM_DRAW_OUTSIDE_WINDOW>(drawOutsideWindowEnabled);
 }
 
 auto Settings::getInputSystemDrawOutsideWindowEnabled() const -> bool { return get<SettingsElement::SETTING_INPUT_SYSTEM_DRAW_OUTSIDE_WINDOW>(); }
 
-void Settings::setDeviceClassForDevice(GdkDevice* device, InputDeviceTypeOption deviceClass) {
+void Settings::setDeviceClassForDevice(GdkDevice* device, InputDeviceTypeOption deviceClass) { // TODO: make this work
     this->setDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device), deviceClass);
 }
 
 void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource,
-                                       InputDeviceTypeOption deviceClass) {
+                                       InputDeviceTypeOption deviceClass) { // TODO: make this work
     auto it = inputDeviceClasses.find(deviceName);
     if (it != inputDeviceClasses.end()) {
         it->second.first = deviceClass;
@@ -2360,21 +1976,13 @@ auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource 
 auto Settings::isScrollbarFadeoutDisabled() const -> bool { return get<SettingsElement::SETTING_DISABLE_SCROLLBAR_FADEOUT>(); }
 
 void Settings::setScrollbarFadeoutDisabled(bool disable) {
-    if (disableScrollbarFadeout == disable) {
-        return;
-    }
-    disableScrollbarFadeout = disable;
-    save();
+    set<SettingsElement::SETTING_DISABLE_SCROLLBAR_FADEOUT>(disable);
 }
 
 auto Settings::isAudioDisabled() const -> bool { return get<SettingsElement::SETTING_DISABLE_AUDIO>(); }
 
 void Settings::setAudioDisabled(bool disable) {
-    if (disableAudio == disable) {
-        return;
-    }
-    disableAudio = disable;
-    save();
+    set<SettingsElement::SETTING_DISABLE_AUDIO>(disable);
 }
 
 //////////////////////////////////////////////////
@@ -2520,73 +2128,31 @@ auto Settings::getStabilizerAveragingMethod() const -> StrokeStabilizer::Averagi
 auto Settings::getStabilizerPreprocessor() const -> StrokeStabilizer::Preprocessor { return get<SettingsElement::SETTING_STABILIZER_PREPROCESSOR>(); }
 
 void Settings::setStabilizerCuspDetection(bool cuspDetection) {
-    if (stabilizerCuspDetection == cuspDetection) {
-        return;
-    }
-    stabilizerCuspDetection = cuspDetection;
-    save();
+    set<SettingsElement::SETTING_STABILIZER_CUSP_DETECTION>(cuspDetection);
 }
 void Settings::setStabilizerFinalizeStroke(bool finalizeStroke) {
-    if (stabilizerFinalizeStroke == finalizeStroke) {
-        return;
-    }
-    stabilizerFinalizeStroke = finalizeStroke;
-    save();
+    set<SettingsElement::SETTING_STABILIZER_FINALIZE_STROKE>(finalizeStroke);
 }
 void Settings::setStabilizerBuffersize(size_t buffersize) {
-    if (stabilizerBuffersize == buffersize) {
-        return;
-    }
-    stabilizerBuffersize = buffersize;
-    save();
+    set<SettingsElement::SETTING_STABILIZER_BUFFERSIZE>(buffersize);
 }
 void Settings::setStabilizerDeadzoneRadius(double deadzoneRadius) {
-    if (stabilizerDeadzoneRadius == deadzoneRadius) {
-        return;
-    }
-    stabilizerDeadzoneRadius = deadzoneRadius;
-    save();
+    set<SettingsElement::SETTING_STABILIZER_DEADZONE_RADIUS>(deadzoneRadius);
 }
 void Settings::setStabilizerDrag(double drag) {
-    if (stabilizerDrag == drag) {
-        return;
-    }
-    stabilizerDrag = drag;
-    save();
+    set<SettingsElement::SETTING_STABILIZER_DRAG>(drag);
 }
 void Settings::setStabilizerMass(double mass) {
-    if (stabilizerMass == mass) {
-        return;
-    }
-    stabilizerMass = mass;
-    save();
+    set<SettingsElement::SETTING_STABILIZER_MASS>(mass);
 }
 void Settings::setStabilizerSigma(double sigma) {
-    if (stabilizerSigma == sigma) {
-        return;
-    }
-    stabilizerSigma = sigma;
-    save();
+    set<SettingsElement::SETTING_STABILIZER_SIGMA>(sigma);
 }
 void Settings::setStabilizerAveragingMethod(StrokeStabilizer::AveragingMethod averagingMethod) {
-    const StrokeStabilizer::AveragingMethod method =
-            StrokeStabilizer::isValid(averagingMethod) ? averagingMethod : StrokeStabilizer::AveragingMethod::NONE;
-
-    if (stabilizerAveragingMethod == method) {
-        return;
-    }
-    stabilizerAveragingMethod = method;
-    save();
+    set<SettingsElement::SETTING_STABILIZER_AVERAGING_METHOD>(averagingMethod);
 }
 void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor) {
-    const StrokeStabilizer::Preprocessor p =
-            StrokeStabilizer::isValid(preprocessor) ? preprocessor : StrokeStabilizer::Preprocessor::NONE;
-
-    if (stabilizerPreprocessor == p) {
-        return;
-    }
-    stabilizerPreprocessor = p;
-    save();
+    set<SettingsElement::SETTING_STABILIZER_PREPROCESSOR>(preprocessor);
 }
 
 /**
