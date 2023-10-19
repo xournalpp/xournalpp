@@ -999,7 +999,7 @@ static int applib_addTexts(lua_State* L) {
     Tool& tool = toolHandler->getTool(TOOL_TEXT);
     Color default_color = tool.getColor();
     // default font
-    XojFont& default_font = settings->getFont();
+    const XojFont& default_font = settings->getFont();
 
     size_t numTexts = lua_rawlen(L, -1);
     for (size_t a = 1; a <= numTexts; a++) {
@@ -1812,7 +1812,7 @@ static int applib_getToolInfo(lua_State* L) {
         lua_setfield(L, -2, "size");  // end of "size" table
     } else if (strcmp(mode, "text") == 0) {
         Settings* settings = control->getSettings();
-        XojFont& font = settings->getFont();
+        const XojFont& font = settings->getFont();
         std::string fontname = font.getName();
         double size = font.getSize();
 

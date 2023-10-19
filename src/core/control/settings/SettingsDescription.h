@@ -171,10 +171,12 @@ enum class SettingsElement {
 
 // Definitions of import functions
 bool importStringProperty(xmlNodePtr node, std::string& var);
+bool importPathProperty(xmlNodePtr node, fs::path& var);
 bool importBoolProperty(xmlNodePtr node, bool& var);
 bool importDoubleProperty(xmlNodePtr node, double& var);
 bool importIntProperty(xmlNodePtr node, int& var);
 bool importUintProperty(xmlNodePtr node, uint& var);
+bool importColorProperty(xmlNodePtr node, Color& var);
 bool importULintProperty(xmlNodePtr node, size_t& var);
 bool importFont(xmlNodePtr node, XojFont& var);
 bool importSidebarNumbering(xmlNodePtr node, SidebarNumberingStyle& var);
@@ -195,10 +197,12 @@ bool importSElement(xmlNodePtr node, SElement& var);
 
 // Definitions of export functions
 xmlNodePtr exportStringProperty(xmlNodePtr node, std::string name, std::string value);
+xmlNodePtr exportPathProperty(xmlNodePtr node, std::string name, fs::path value);
 xmlNodePtr exportBoolProperty(xmlNodePtr node, std::string name, bool value);
 xmlNodePtr exportDoubleProperty(xmlNodePtr node, std::string name, double value);
 xmlNodePtr exportIntProperty(xmlNodePtr node, std::string name, int value);
 xmlNodePtr exportUintProperty(xmlNodePtr node, std::string name, uint value);
+xmlNodePtr exportColorProperty(xmlNodePtr node, std::string name, Color value);
 xmlNodePtr exportULintProperty(xmlNodePtr node, std::string name, size_t value);
 xmlNodePtr exportFont(xmlNodePtr node, std::string name, XojFont value);
 xmlNodePtr exportSidebarNumbering(xmlNodePtr node, std::string name, SidebarNumberingStyle value);
@@ -260,7 +264,7 @@ struct Setting {};
 template<>
 struct Setting<SettingsElement::SETTING_FONT> {
     using value_type = XojFont;
-    using getter_return_type = XojFont&;
+    using getter_return_type = XojFont;
     static constexpr auto xmlName = "font";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
@@ -322,7 +326,7 @@ struct Setting<SettingsElement::SETTING_ENABLE_ZOOM_GESTURES> {
 template<>
 struct Setting<SettingsElement::SETTING_SELECTED_TOOLBAR> {
     using value_type = std::string;
-    using getter_return_type = std::string;
+    using getter_return_type = const std::string&;
     static constexpr auto xmlName = "selectedToolbar";
     static constexpr const char* DEFAULT = "Portrait";
     static constexpr auto COMMENT = nullptr;
@@ -333,37 +337,37 @@ struct Setting<SettingsElement::SETTING_SELECTED_TOOLBAR> {
 
 template<>
 struct Setting<SettingsElement::SETTING_LAST_SAVE_PATH> {
-    using value_type = std::string;
-    using getter_return_type = fs::path;
+    using value_type = fs::path;
+    using getter_return_type = const fs::path&;
     static constexpr auto xmlName = "lastSavePath";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importStringProperty;
-    static constexpr auto EXPORT_FN = exportStringProperty;
+    static constexpr auto IMPORT_FN = importPathProperty;
+    static constexpr auto EXPORT_FN = exportPathProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
 template<>
 struct Setting<SettingsElement::SETTING_LAST_OPEN_PATH> {
-    using value_type = std::string;
-    using getter_return_type = fs::path;
+    using value_type = fs::path;
+    using getter_return_type = const fs::path&;
     static constexpr auto xmlName = "lastOpenPath";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importStringProperty;
-    static constexpr auto EXPORT_FN = exportStringProperty;
+    static constexpr auto IMPORT_FN = importPathProperty;
+    static constexpr auto EXPORT_FN = exportPathProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
 template<>
 struct Setting<SettingsElement::SETTING_LAST_IMAGE_PATH> {
-    using value_type = std::string;
-    using getter_return_type = fs::path;
+    using value_type = fs::path;
+    using getter_return_type = const fs::path&;
     static constexpr auto xmlName = "lastImagePath";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importStringProperty;
-    static constexpr auto EXPORT_FN = exportStringProperty;
+    static constexpr auto IMPORT_FN = importPathProperty;
+    static constexpr auto EXPORT_FN = exportPathProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -757,13 +761,13 @@ struct Setting<SettingsElement::SETTING_HIGHLIGHT_POSITION> {
 
 template<>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_COLOR> {
-    using value_type = uint;
-    using getter_return_type = Color;
+    using value_type = Color;
+    using getter_return_type = const Color&;
     static constexpr auto xmlName = "cursorHighlightColor";
-    static constexpr value_type DEFAULT = 0x80FFFF00;
+    static constexpr value_type DEFAULT = ColorU8(0x80FFFF00);
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importUintProperty;
-    static constexpr auto EXPORT_FN = exportUintProperty;
+    static constexpr auto IMPORT_FN = importColorProperty;
+    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -781,13 +785,13 @@ struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_RADIUS> {
 
 template<>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_COLOR> {
-    using value_type = uint;
-    using getter_return_type = Color;
+    using value_type = Color;
+    using getter_return_type = const Color&;
     static constexpr auto xmlName = "cursorHighlightBorderColor";
-    static constexpr value_type DEFAULT = 0x800000FF;
+    static constexpr value_type DEFAULT = ColorU8(0x800000FF);
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importUintProperty;
-    static constexpr auto EXPORT_FN = exportUintProperty;
+    static constexpr auto IMPORT_FN = importColorProperty;
+    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -830,7 +834,7 @@ struct Setting<SettingsElement::SETTING_USE_STOCK_ICONS> {
 template<>
 struct Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME> {
     using value_type = std::string;
-    using getter_return_type = std::string;
+    using getter_return_type = const std::string&;
     static constexpr auto xmlName = "defaultSaveName";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
@@ -842,7 +846,7 @@ struct Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME> {
 template<>
 struct Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME> {
     using value_type = std::string;
-    using getter_return_type = std::string;
+    using getter_return_type = const std::string&;
     static constexpr auto xmlName = "defaultPdfExportName";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
@@ -854,7 +858,7 @@ struct Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME> {
 template<>
 struct Setting<SettingsElement::SETTING_PLUGIN_ENABLED> {
     using value_type = std::string;
-    using getter_return_type = std::string;
+    using getter_return_type = const std::string&;
     static constexpr auto xmlName = "pluginEnabled";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
@@ -866,7 +870,7 @@ struct Setting<SettingsElement::SETTING_PLUGIN_ENABLED> {
 template<>
 struct Setting<SettingsElement::SETTING_PLUGIN_DISABLED> {
     using value_type = std::string;
-    using getter_return_type = std::string;
+    using getter_return_type = const std::string&;
     static constexpr auto xmlName = "pluginDisabled";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
@@ -878,7 +882,7 @@ struct Setting<SettingsElement::SETTING_PLUGIN_DISABLED> {
 template<>
 struct Setting<SettingsElement::SETTING_PAGE_TEMPLATE> {
     using value_type = std::string;
-    using getter_return_type = std::string;
+    using getter_return_type = const std::string&;
     static constexpr auto xmlName = "pageTemplate";
     static constexpr const char* DEFAULT = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
     static constexpr auto COMMENT = "Config for new pages";
@@ -890,7 +894,7 @@ struct Setting<SettingsElement::SETTING_PAGE_TEMPLATE> {
 template<>
 struct Setting<SettingsElement::SETTING_SIZE_UNIT> {
     using value_type = std::string;
-    using getter_return_type = std::string;
+    using getter_return_type = const std::string&;
     static constexpr auto xmlName = "sizeUnit";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
@@ -901,13 +905,13 @@ struct Setting<SettingsElement::SETTING_SIZE_UNIT> {
 
 template<>
 struct Setting<SettingsElement::SETTING_AUDIO_FOLDER> {
-    using value_type = std::string;
-    using getter_return_type = fs::path;
+    using value_type = fs::path;
+    using getter_return_type = const fs::path&;
     static constexpr auto xmlName = "audioFolder";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importStringProperty;
-    static constexpr auto EXPORT_FN = exportStringProperty;
+    static constexpr auto IMPORT_FN = importPathProperty;
+    static constexpr auto EXPORT_FN = exportPathProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1068,49 +1072,49 @@ struct Setting<SettingsElement::SETTING_EAGER_PAGE_CLEANUP> {
 
 template<>
 struct Setting<SettingsElement::SETTING_SELECTION_BORDER_COLOR> {
-    using value_type = uint;
-    using getter_return_type = Color;
+    using value_type = Color;
+    using getter_return_type = const Color&;
     static constexpr auto xmlName = "selectionBorderColor";
-    static constexpr value_type DEFAULT = uint32_t(Colors::red);
+    static constexpr value_type DEFAULT = Colors::red;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importUintProperty;
-    static constexpr auto EXPORT_FN = exportUintProperty;
+    static constexpr auto IMPORT_FN = importColorProperty;
+    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
 template<>
 struct Setting<SettingsElement::SETTING_SELECTION_MARKER_COLOR> {
-    using value_type = uint;
-    using getter_return_type = Color;
+    using value_type = Color;
+    using getter_return_type = const Color&;
     static constexpr auto xmlName = "selectionMarkerColor";
-    static constexpr value_type DEFAULT = uint32_t(Colors::xopp_cornflowerblue);
+    static constexpr value_type DEFAULT = Colors::xopp_cornflowerblue;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importUintProperty;
-    static constexpr auto EXPORT_FN = exportUintProperty;
+    static constexpr auto IMPORT_FN = importColorProperty;
+    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
 template<>
 struct Setting<SettingsElement::SETTING_ACTIVE_SELECTION_COLOR> {
-    using value_type = uint;
-    using getter_return_type = Color;
+    using value_type = Color;
+    using getter_return_type = const Color&;
     static constexpr auto xmlName = "activeSelectionColor";
-    static constexpr value_type DEFAULT = uint32_t(Colors::lawngreen);
+    static constexpr value_type DEFAULT = Colors::lawngreen;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importUintProperty;
-    static constexpr auto EXPORT_FN = exportUintProperty;
+    static constexpr auto IMPORT_FN = importColorProperty;
+    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
 template<>
 struct Setting<SettingsElement::SETTING_BACKGROUND_COLOR> {
-    using value_type = uint;
-    using getter_return_type = Color;
+    using value_type = Color;
+    using getter_return_type = const Color&;
     static constexpr auto xmlName = "backgroundColor";
-    static constexpr value_type DEFAULT = uint32_t(Colors::xopp_gainsboro02);
+    static constexpr value_type DEFAULT = Colors::xopp_gainsboro02;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto IMPORT_FN = importUintProperty;
-    static constexpr auto EXPORT_FN = exportUintProperty;
+    static constexpr auto IMPORT_FN = importColorProperty;
+    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1708,7 +1712,7 @@ struct Setting<SettingsElement::SETTING_STABILIZER_FINALIZE_STROKE> {
 template<>
 struct Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG> {
     using value_type = std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>;
-    using getter_return_type = std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>&;
+    using getter_return_type = const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>&;
     static constexpr auto xmlName = "buttonConfig";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
@@ -1720,7 +1724,7 @@ struct Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG> {
 template<>
 struct Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES> {
     using value_type = std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>;
-    using getter_return_type = std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>&;
+    using getter_return_type = const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>&;
     static constexpr auto xmlName = "deviceClasses";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
@@ -1732,7 +1736,7 @@ struct Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES> {
 template<>
 struct Setting<SettingsElement::SETTING_NESTED_TOOLS> {
     using value_type = SElement;
-    using getter_return_type = SElement&;
+    using getter_return_type = const SElement&;
     static constexpr auto xmlName = "tools";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
@@ -1744,7 +1748,7 @@ struct Setting<SettingsElement::SETTING_NESTED_TOOLS> {
 template<>
 struct Setting<SettingsElement::SETTING_NESTED_TOUCH> {
     using value_type = SElement;
-    using getter_return_type = SElement&;
+    using getter_return_type = const SElement&;
     static constexpr auto xmlName = "touch";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
@@ -1756,7 +1760,7 @@ struct Setting<SettingsElement::SETTING_NESTED_TOUCH> {
 template<>
 struct Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR> {
     using value_type = SElement;
-    using getter_return_type = SElement&;
+    using getter_return_type = const SElement&;
     static constexpr auto xmlName = "lastUsedPageBgColor";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;

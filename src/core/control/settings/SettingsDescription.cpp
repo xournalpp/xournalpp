@@ -23,7 +23,7 @@
 #include "SettingsDescription.h"
 
 // Initialize non literal DEFAULT values here
-Setting<SettingsElement::SETTING_FONT>::value_type Setting<SettingsElement::SETTING_FONT>::DEFAULT{"Sans", 12};
+Setting<SettingsElement::SETTING_FONT>::value_type Setting<SettingsElement::SETTING_FONT>::DEFAULT = XojFont("Sans", 12);
 Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME>::value_type Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME>::DEFAULT = _("%F-Note-%H-%M");
 Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>::value_type Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>::DEFAULT = _("%{name}_annotated");
 Setting<SettingsElement::SETTING_LATEX_SETTINGS>::value_type Setting<SettingsElement::SETTING_LATEX_SETTINGS>::DEFAULT{};
@@ -44,6 +44,18 @@ Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::value_
 
 // Implementation of import functions
 bool importStringProperty(xmlNodePtr node, std::string& var) {
+    xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
+    if (value) {
+        var = reinterpret_cast<const char*>(value);
+        xmlFree(value);
+        return true;
+    }
+    xmlChar* name = xmlGetProp(node, reinterpret_cast<const xmlChar*>("name"));
+    g_warning("SettingDescription::No value for property '%s'!\n", reinterpret_cast<const char*>(name));
+    xmlFree(name);
+    return false;
+}
+bool importPathProperty(xmlNodePtr node, fs::path& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = reinterpret_cast<const char*>(value);
@@ -95,6 +107,18 @@ bool importUintProperty(xmlNodePtr node, uint& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = static_cast<uint>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+        xmlFree(value);
+        return true;
+    }
+    xmlChar* name = xmlGetProp(node, reinterpret_cast<const xmlChar*>("name"));
+    g_warning("SettingDescription::No value for property '%s'!\n", reinterpret_cast<const char*>(name));
+    xmlFree(name);
+    return false;
+}
+bool importColorProperty(xmlNodePtr node, Color& var) {
+    xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
+    if (value) {
+        var = ColorU8(static_cast<uint>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
         xmlFree(value);
         return true;
     }
@@ -540,6 +564,9 @@ xmlNodePtr exportStringProperty(xmlNodePtr node, std::string name, std::string v
     xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(value.c_str()));
     return xmlNode;
 }
+xmlNodePtr exportPathProperty(xmlNodePtr node, std::string name, fs::path value) {
+    return exportStringProperty(node, name, value.string());
+}
 xmlNodePtr exportBoolProperty(xmlNodePtr node, std::string name, bool value) {
     return exportStringProperty(node, name, value ? "true" : "false");
 }
@@ -553,6 +580,9 @@ xmlNodePtr exportIntProperty(xmlNodePtr node, std::string name, int value) {
 }
 xmlNodePtr exportUintProperty(xmlNodePtr node, std::string name, uint value) {
     return exportStringProperty(node, name, std::to_string(value));
+}
+xmlNodePtr exportColorProperty(xmlNodePtr node, std::string name, Color value) {
+    return exportUintProperty(node, name, u_int32_t(value));
 }
 xmlNodePtr exportULintProperty(xmlNodePtr node, std::string name, size_t value) {
     return exportStringProperty(node, name, std::to_string(value));

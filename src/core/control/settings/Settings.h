@@ -63,7 +63,7 @@ public:
     std::map<std::string, std::function<void(xmlNodePtr)>> importFunctions;
     std::array<std::function<xmlNodePtr(xmlNodePtr)>, (int)SettingsElement::ENUM_COUNT> exportFunctions;
     template<SettingsElement t>
-    typename Setting<t>::get_return_type getValue() const { return std::get<(std::size_t)t>(vars); }
+    typename Setting<t>::getter_return_type getValue() const { return std::get<(std::size_t)t>(vars); }
     template<SettingsElement t>
     constexpr const char* getXmlName() const { return Setting<t>::xmlName; }
     template<SettingsElement t>
@@ -167,10 +167,13 @@ private:
 
 public:
     template<SettingsElement t>
-    typename Setting<t>::get_return_type get() const { return settings.getValue<t>(); }
+    typename Setting<t>::getter_return_type get() const { return settings.getValue<t>(); }
 
     template<SettingsElement t>
-    void set(const typename Setting<t>::value_type& v) { settings.setValue<t>(v); }
+    void set(const typename Setting<t>::value_type& v) {
+        settings.setValue<t>(v);
+        save();
+    }
 
     bool load();
     void parseData(xmlNodePtr cur, SElement& elem);
@@ -196,7 +199,7 @@ public:
     bool loadViewMode(ViewModeId mode);
 
     // Getter- / Setter
-    const std::vector<ViewMode>& getViewModes() const;
+    std::vector<ViewMode> getViewModes() const;
     ViewModeId getActiveViewMode() const;
 
     bool isPressureSensitivity() const;
@@ -220,7 +223,7 @@ public:
     /**
      * The last used font
      */
-    XojFont& getFont();
+    XojFont getFont();
     void setFont(const XojFont& font);
 
     /**
