@@ -30,6 +30,8 @@ public:
     XojFont& operator=(const XojFont&) = default;
     XojFont& operator=(XojFont&&) = default;
 
+    bool operator==(const XojFont& font) const { return name == font.name && size == font.size; }
+
     /**
      * Set this from a Pango-style font description.
      * E.g.
