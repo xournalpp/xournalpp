@@ -36,7 +36,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control, std::
         control(control), callback(callback) {
     lastBackgroundColors.fill(Util::rgb_to_GdkRGBA(Colors::white));
     Settings* settings = control->getSettings();
-    SElement& el = settings->getCustomElement("lastUsedPageBgColor");
+    const SElement& el = settings->get<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>();
 
     int count = 0;
     el.getInt("count", count);
@@ -99,7 +99,7 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings(GdkRGBA color) {
     }
 
     Settings* settings = control->getSettings();
-    SElement& el = settings->getCustomElement("lastUsedPageBgColor");
+    SElement el = settings->get<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>();
 
     // Move all colors one step back
     for (size_t i = LAST_BACKGROUND_COLOR_COUNT - 1; i > 0; i--) {
@@ -115,5 +115,5 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings(GdkRGBA color) {
         g_free(settingName);
     }
 
-    settings->customSettingsChanged();
+    settings->set<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>(el);
 }

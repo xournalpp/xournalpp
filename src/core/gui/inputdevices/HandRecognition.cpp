@@ -42,7 +42,7 @@ HandRecognition::~HandRecognition() {
  * Reload settings
  */
 void HandRecognition::reload() {
-    SElement& touch = settings->getCustomElement("touch");
+    const SElement& touch = settings->get<SettingsElement::SETTING_NESTED_TOUCH>();
 
     enabled = false;
     touch.getBool("disableTouch", enabled);

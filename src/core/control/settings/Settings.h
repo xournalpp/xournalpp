@@ -143,13 +143,17 @@ public:
 
     [[maybe_unused]] void setComment(const std::string& name, const std::string& comment);
 
-    bool getInt(const std::string& name, int& value);
-    [[maybe_unused]] bool getDouble(const std::string& name, double& value);
-    bool getBool(const std::string& name, bool& value);
-    bool getString(const std::string& name, std::string& value);
+    bool getInt(const std::string& name, int& value) const;
+    [[maybe_unused]] bool getDouble(const std::string& name, double& value) const;
+    bool getBool(const std::string& name, bool& value) const;
+    bool getString(const std::string& name, std::string& value) const;
 
     std::map<std::string, SAttribute>& attributes() const;
     std::map<std::string, SElement>& children() const;
+
+    bool operator== (const SElement& sel) const { // Use this operator implementation, to be able to use the setter for SElement setting properties
+        return false; // TODO: implement this correctly
+    };
 
 private:
     std::shared_ptr<SElementData> element = std::make_shared<SElementData>();
@@ -653,14 +657,6 @@ public:
     bool getUseSpacesAsTab() const;
 
 public:
-    // Custom settings
-    SElement& getCustomElement(const std::string& name);
-
-    /**
-     * Call this after you have done all custom settings changes
-     */
-    void customSettingsChanged();
-
     /**
      * Do not save settings until transactionEnd() is called
      */

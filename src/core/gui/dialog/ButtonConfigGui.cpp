@@ -223,7 +223,7 @@ void ButtonConfigGui::loadSettings() {
     }
 }
 
-void ButtonConfigGui::saveSettings() {
+void ButtonConfigGui::saveSettings() { // TODO: fix this method (should actually work, test it!)
     GtkTreeIter iter;
     gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
 
@@ -268,7 +268,8 @@ void ButtonConfigGui::saveSettings() {
         cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbDisableDrawing));
     }
 
-    settings->customSettingsChanged();
+    // settings->customSettingsChanged();
+    settings->save();
 }
 
 void ButtonConfigGui::cbSelectCallback(GtkComboBox*, ButtonConfigGui* gui) { gui->enableDisableTools(); }

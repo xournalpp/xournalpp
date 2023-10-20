@@ -689,7 +689,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
 }
 
 void Settings::loadDeviceClasses() {
-    SElement& s = getCustomElement("deviceClasses");
+    /*const SElement& s = get<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>();
     for (auto device: s.children()) {
         SElement& deviceNode = device.second;
         int deviceClass = 0;
@@ -698,11 +698,11 @@ void Settings::loadDeviceClasses() {
         deviceNode.getInt("deviceSource", deviceSource);
         inputDeviceClasses.emplace(device.first, std::make_pair(static_cast<InputDeviceTypeOption>(deviceClass),
                                                                 static_cast<GdkInputSource>(deviceSource)));
-    }
+    }*/
 }
 
 void Settings::loadButtonConfig() {
-    SElement& s = getCustomElement("buttonConfig");
+    /*SElement s = get<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>();
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
         SElement& e = s.child(buttonToString(static_cast<Button>(i)));
@@ -769,7 +769,7 @@ void Settings::loadButtonConfig() {
         } else {
             continue;
         }
-    }
+    }*/
 }
 
 auto Settings::load() -> bool {
@@ -877,7 +877,7 @@ auto Settings::saveProperty(const gchar* key, const gchar* value, xmlNodePtr par
 }
 
 void Settings::saveDeviceClasses() {
-    SElement& s = getCustomElement("deviceClasses");
+    /*SElement& s = getCustomElement("deviceClasses");
 
     for (auto& device: inputDeviceClasses) {
         const std::string& name = device.first;
@@ -886,11 +886,11 @@ void Settings::saveDeviceClasses() {
         SElement& e = s.child(name);
         e.setInt("deviceClass", static_cast<int>(deviceClass));
         e.setInt("deviceSource", source);
-    }
+    }*/
 }
 
 void Settings::saveButtonConfig() {
-    SElement& s = getCustomElement("buttonConfig");
+    /*SElement& s = getCustomElement("buttonConfig");
     s.clear();
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
@@ -923,7 +923,7 @@ void Settings::saveButtonConfig() {
             e.setString("device", cfg->device);
             e.setBool("disableDrawing", cfg->disableDrawing);
         }
-    }
+    }*/
 }
 
 /**
@@ -1710,11 +1710,7 @@ void Settings::setSelectedToolbar(const string& name) {
 
 auto Settings::getSelectedToolbar() const -> string const& { return get<SettingsElement::SETTING_SELECTED_TOOLBAR>(); }
 
-auto Settings::getCustomElement(const string& name) -> SElement& { return this->data[name]; } // TODO: make this work
-
-void Settings::customSettingsChanged() { save(); } // TODO
-
-auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* { // TODO: make this work
+auto Settings::getButtonConfig(unsigned int id) -> ButtonConfig* {
     auto cfg = get<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>();
     if (id >= cfg.size()) {
         g_error("Settings::getButtonConfig try to get id=%i out of range!", id);
@@ -1905,24 +1901,28 @@ void Settings::setInputSystemDrawOutsideWindowEnabled(bool drawOutsideWindowEnab
 
 auto Settings::getInputSystemDrawOutsideWindowEnabled() const -> bool { return get<SettingsElement::SETTING_INPUT_SYSTEM_DRAW_OUTSIDE_WINDOW>(); }
 
-void Settings::setDeviceClassForDevice(GdkDevice* device, InputDeviceTypeOption deviceClass) { // TODO: make this work
+void Settings::setDeviceClassForDevice(GdkDevice* device, InputDeviceTypeOption deviceClass) {
     this->setDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device), deviceClass);
 }
 
 void Settings::setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource,
-                                       InputDeviceTypeOption deviceClass) { // TODO: make this work
-    auto it = inputDeviceClasses.find(deviceName);
-    if (it != inputDeviceClasses.end()) {
+                                       InputDeviceTypeOption deviceClass) {
+    std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>> devClass =
+        get<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>();
+    auto it = devClass.find(deviceName);
+    if (it != devClass.end()) {
         it->second.first = deviceClass;
         it->second.second = deviceSource;
     } else {
-        inputDeviceClasses.emplace(deviceName, std::make_pair(deviceClass, deviceSource));
+        devClass.emplace(deviceName, std::make_pair(deviceClass, deviceSource));
     }
+    set<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>(devClass);
 }
 
-auto Settings::getKnownInputDevices() const -> std::vector<InputDevice> { // TODO: make this work
+auto Settings::getKnownInputDevices() const -> std::vector<InputDevice> {
+    auto devClass = get<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>();
     std::vector<InputDevice> inputDevices;
-    for (auto pair: inputDeviceClasses) {
+    for (auto pair: devClass) {
         const std::string& name = pair.first;
         GdkInputSource& source = pair.second.second;
         inputDevices.emplace_back(name, source);
@@ -1930,14 +1930,15 @@ auto Settings::getKnownInputDevices() const -> std::vector<InputDevice> { // TOD
     return inputDevices;
 }
 
-auto Settings::getDeviceClassForDevice(GdkDevice* device) const -> InputDeviceTypeOption { // TODO: make this work
+auto Settings::getDeviceClassForDevice(GdkDevice* device) const -> InputDeviceTypeOption {
     return this->getDeviceClassForDevice(gdk_device_get_name(device), gdk_device_get_source(device));
 }
 
-auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const // TODO: make this work
+auto Settings::getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const
         -> InputDeviceTypeOption {
-    auto search = inputDeviceClasses.find(deviceName);
-    if (search != inputDeviceClasses.end()) {
+    auto devClass = get<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>();
+    auto search = devClass.find(deviceName);
+    if (search != devClass.end()) {
         return search->second.first;
     }
 
@@ -2048,7 +2049,7 @@ void SElement::setDouble(const string& name, const double value) {
     attrib.type = ATTRIBUTE_TYPE_DOUBLE;
 }
 
-auto SElement::getDouble(const string& name, double& value) -> bool {
+auto SElement::getDouble(const string& name, double& value) const -> bool {
     SAttribute& attrib = this->element->attributes[name];
     if (attrib.type == ATTRIBUTE_TYPE_NONE) {
         this->element->attributes.erase(name);
@@ -2064,7 +2065,7 @@ auto SElement::getDouble(const string& name, double& value) -> bool {
     return true;
 }
 
-auto SElement::getInt(const string& name, int& value) -> bool {
+auto SElement::getInt(const string& name, int& value) const -> bool {
     SAttribute& attrib = this->element->attributes[name];
     if (attrib.type == ATTRIBUTE_TYPE_NONE) {
         this->element->attributes.erase(name);
@@ -2080,7 +2081,7 @@ auto SElement::getInt(const string& name, int& value) -> bool {
     return true;
 }
 
-auto SElement::getBool(const string& name, bool& value) -> bool {
+auto SElement::getBool(const string& name, bool& value) const -> bool {
     SAttribute& attrib = this->element->attributes[name];
     if (attrib.type == ATTRIBUTE_TYPE_NONE) {
         this->element->attributes.erase(name);
@@ -2096,7 +2097,7 @@ auto SElement::getBool(const string& name, bool& value) -> bool {
     return true;
 }
 
-auto SElement::getString(const string& name, string& value) -> bool {
+auto SElement::getString(const string& name, string& value) const -> bool {
     SAttribute& attrib = this->element->attributes[name];
     if (attrib.type == ATTRIBUTE_TYPE_NONE) {
         this->element->attributes.erase(name);
