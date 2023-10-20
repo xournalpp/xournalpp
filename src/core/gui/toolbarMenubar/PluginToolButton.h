@@ -15,9 +15,9 @@
 
 #include <gtk/gtk.h>  // for GtkWidget, GtkToolItem
 
-#include "plugin/Plugin.h"
-
 #include "AbstractToolItem.h"  // for AbstractToolItem
+
+struct ToolbarButtonEntry;
 
 class PluginToolButton: public AbstractToolItem {
 public:
