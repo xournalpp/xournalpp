@@ -442,9 +442,10 @@ void on_open_files(GApplication* application, GFile** files, gint numFiles, gcha
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
         }
     } catch (const fs::filesystem_error& e) {
-        const std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
-                                      "You have to copy the file to a local directory.") %
-                                   p.u8string() % e.what());
+        const std::string msg = FS(_F("Filesystem error: {1}\n"
+                                      "Sorry, Xournal++ cannot open the file: {2}\n"
+                                      "Consider copying the file to a local directory.") %
+                                   e.what() % p.u8string());
         XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
     }
     gtk_window_present(GTK_WINDOW(app_data->win->getWindow()));
@@ -539,9 +540,10 @@ void on_startup(GApplication* application, XMPtr app_data) {
                 opened = app_data->control->newFile("", p);
             }
         } catch (const fs::filesystem_error& e) {
-            const std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
-                                          "You have to copy the file to a local directory.") %
-                                       p.u8string() % e.what());
+            const std::string msg = FS(_F("Filesystem error: {1}\n"
+                                          "Sorry, Xournal++ cannot open the file: {2}\n"
+                                          "Consider copying the file to a local directory.") %
+                                       e.what() % p.u8string());
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
             opened = app_data->control->newFile("", p);
         }
