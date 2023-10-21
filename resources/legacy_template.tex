@@ -1,5 +1,11 @@
 % This template avoids the scontents package, which is only available on relatively recent TeX distributions
-\documentclass[varwidth=true, crop, border=5pt]{standalone}
+\documentclass[varwidth=0.999\maxdimen, crop, border=5pt]{standalone}
+% The upper limit value of 'varwidth' can be referenced by \hsize.
+\newcommand*{\setTextWidthReference}{%
+  \setlength{\textwidth}{345.0pt}% Same value when you use 'varwidth=true'.
+  \setlength{\linewidth}{\textwidth}%
+  \setlength{\columnwidth}{\textwidth}%
+}
 
 % Packages
 \usepackage{amsmath}
@@ -21,6 +27,7 @@
 }
 
 \begin{document}
+  \setTextWidthReference
   % Check if the formula is empty
   \settoheight{\pheight}{\preview}
   \ifthenelse{\pheight=0}{\GenericError{}{xournalpp:blankformula}{}{}}
