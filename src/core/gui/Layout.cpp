@@ -271,11 +271,10 @@ void Layout::layoutPages(int width, int height) {
                 auto& v = this->view->viewPages[*optionalPage];
                 v->setMappedRowCol(strict_cast<int>(r),
                                    strict_cast<int>(c));  // store row and column for e.g. proper arrow key navigation
-                auto vDisplayWidth = v->getDisplayWidthDouble();
-                auto vDisplayHeight = v->getDisplayHeightDouble();
+                const auto vDisplayWidth = v->getDisplayWidthDouble();
+                const auto vDisplayHeight = v->getDisplayHeightDouble();
                 {
                     auto paddingLeft = 0.0;
-                    auto paddingRight = 0.0;
                     auto columnPadding = this->pc.widthCols[c] - vDisplayWidth;
 
                     if (isPairedPages && len > 1) {
@@ -283,29 +282,21 @@ void Layout::layoutPages(int width, int height) {
                         if (c % 2 == 0) {
                             // align right
                             paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
-                            paddingRight = XOURNAL_ROOM_FOR_SHADOW;
                         } else {  // align left
                             paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
-                            paddingRight = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
                         }
                     } else {  // not paired page mode - center
                         paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0 + columnPadding / 2.0;  // center justify
-                        paddingRight = XOURNAL_PADDING_BETWEEN - paddingLeft + columnPadding;
                     }
-
-                    x += paddingLeft;
 
                     // center page vertically
                     const auto paddingTop = (this->pc.heightRows[r] - vDisplayHeight) / 2.0;
 
-                    v->setX(floor_cast<int>(x));  // set the page position
+                    v->setX(floor_cast<int>(x + paddingLeft));  // set the page position
                     v->setY(floor_cast<int>(y + paddingTop));
-
-                    x += vDisplayWidth + paddingRight;
                 }
-            } else {
-                x += this->pc.widthCols[c] + XOURNAL_PADDING_BETWEEN;
             }
+            x += this->pc.widthCols[c] + XOURNAL_PADDING_BETWEEN;
         }
         x = borderX;
         y += this->pc.heightRows[r] + XOURNAL_PADDING_BETWEEN;
