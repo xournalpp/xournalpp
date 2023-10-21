@@ -272,6 +272,7 @@ void Layout::layoutPages(int width, int height) {
                 v->setMappedRowCol(strict_cast<int>(r),
                                    strict_cast<int>(c));  // store row and column for e.g. proper arrow key navigation
                 auto vDisplayWidth = v->getDisplayWidthDouble();
+                auto vDisplayHeight = v->getDisplayHeightDouble();
                 {
                     auto paddingLeft = 0.0;
                     auto paddingRight = 0.0;
@@ -294,8 +295,11 @@ void Layout::layoutPages(int width, int height) {
 
                     x += paddingLeft;
 
+                    // center page vertically
+                    const auto paddingTop = (this->pc.heightRows[r] - vDisplayHeight) / 2.0;
+
                     v->setX(floor_cast<int>(x));  // set the page position
-                    v->setY(floor_cast<int>(y));
+                    v->setY(floor_cast<int>(y + paddingTop));
 
                     x += vDisplayWidth + paddingRight;
                 }
