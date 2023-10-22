@@ -29,6 +29,14 @@ if (XGETTEXT_FOUND)
 
     INIFILES
       "${PROJECT_SOURCE_DIR}/ui/pagetemplates.ini.in;${PROJECT_SOURCE_DIR}/ui/toolbar.ini.in"
+
+    XMLFILES
+      "${PROJECT_SOURCE_DIR}/desktop/com.github.xournalpp.xournalpp.appdata.xml.in;${PROJECT_SOURCE_DIR}/desktop/com.github.xournalpp.xournalpp.xml.in"
+
+    # The variable ITSDIR is used to find the .loc and .its files in po/its/
+    # This is only necessary for Ubuntu 20.04. On more up-to-date distributions, the package shared-mime-info contains those .loc and .its files.
+    ITSDIR
+      "${PROJECT_SOURCE_DIR}/po/"
   )
 
   gettext_create_translations ("${potfile}" ALL NOUPDATE)

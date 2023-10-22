@@ -192,10 +192,14 @@ set(XGETTEXT_INI_OPTIONS
   ${INI_KEYWORDS}
 )
 
+set(XGETTEXT_XML_OPTIONS)
+
 if(XGETTEXT_FOUND)
   macro(gettext_create_pot potfile)
+    # The variable =${ARGS_ITSDIR} is used to find the .loc and .its files in po/its/
+    # This is only necessary for Ubuntu 20.04. On more up-to-date distributions, the package shared-mime-info contains those .loc and .its files.
     cmake_parse_arguments(ARGS "" "PACKAGE;VERSION;WORKING_DIRECTORY"
-      "OPTIONS;CPP_OPTIONS;VALA_OPTIONS;GLADE_OPTIONS;SRCFILES;GLADEFILES;DESKTOPFILES;INIFILES" ${ARGN})
+      "OPTIONS;CPP_OPTIONS;VALA_OPTIONS;GLADE_OPTIONS;SRCFILES;GLADEFILES;DESKTOPFILES;INIFILES;XMLFILES;ITSDIR" ${ARGN})
 
     if(ARGS_PACKAGE)
       set(package_name "${ARGS_PACKAGE}")
@@ -247,7 +251,7 @@ if(XGETTEXT_FOUND)
       set(xgettext_glade_options ${XGETTEXT_GLADE_OPTIONS_DEFAULT})
     endif()
 
-    if(ARGS_SRCFILES OR ARGS_GLADEFILES OR ARGS_DESKTOPFILES OR ARGS_INIFILES)
+    if(ARGS_SRCFILES OR ARGS_GLADEFILES OR ARGS_DESKTOPFILES OR ARGS_INIFILES OR ARGS_XMLFILES)
       set(src_list)
       set(src_list_abs)
       foreach(globexpr ${ARGS_SRCFILES})
@@ -315,7 +319,7 @@ if(XGETTEXT_FOUND)
       endforeach()
 
       if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-        # macOs and Windows don't use .desktop files
+        # macOs and Windows don't use .desktop files nor .appdata.xml
         set(desktop_list)
         set(desktop_list_abs)
         foreach(globexpr ${ARGS_DESKTOPFILES})
@@ -338,8 +342,32 @@ if(XGETTEXT_FOUND)
           endif()
         endforeach()
         set(_DESKTOPFILES ${desktop_list})
+
+        set(xml_list)
+        set(xml_list_abs)
+        foreach(globexpr ${ARGS_XMLFILES})
+          if(NOT IS_ABSOLUTE "${globexpr}")
+            get_filename_component(absDir "${ARGS_WORKING_DIRECTORY}" ABSOLUTE)
+            set(globexpr "${absDir}/${globexpr}")
+          endif()
+          set(tmpxmlfiles)
+          file(GLOB tmpxmlfiles ${globexpr})
+          if (tmpxmlfiles)
+            foreach(absFile ${tmpxmlfiles})
+              file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${absFile}")
+              list(APPEND xml_list "${relFile}")
+              list(APPEND xml_list_abs "${absFile}")
+            endforeach()
+          else()
+                file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${globexpr}")
+                list(APPEND xml_list "${relFile}")
+                list(APPEND xml_list_abs "${globexpr}")
+          endif()
+        endforeach()
+        set(_XMLFILES ${xml_list})
       else()
         set(_DESKTOPFILES)
+        set(_XMLFILES)
       endif()
 
       set(generatedPotFiles)
@@ -407,6 +435,24 @@ if(XGETTEXT_FOUND)
           VERBATIM
         )
         list(APPEND generatedPotFiles "${CMAKE_CURRENT_BINARY_DIR}/_desktop.pot")
+      endif()
+      if(_XMLFILES)
+        add_custom_command(
+          OUTPUT
+            "${CMAKE_CURRENT_BINARY_DIR}/_xml.pot"
+          COMMAND
+            # The variable "GETTEXTDATADIRS=${ARGS_ITSDIR}" is used to find the .loc and .its files in po/its/
+            # This is only necessary for Ubuntu 20.04. On more up-to-date distributions, the package shared-mime-info contains those .loc and .its files.
+            "GETTEXTDATADIRS=${ARGS_ITSDIR}" "${XGETTEXT_EXECUTABLE}" ${xgettext_options} ${XGETTEXT_XML_OPTIONS} "-o" "${CMAKE_CURRENT_BINARY_DIR}/_xml.pot" ${xml_list}
+          COMMAND
+            "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_xml.pot"
+          DEPENDS
+            ${xml_list_abs}
+          WORKING_DIRECTORY
+            "${CMAKE_CURRENT_SOURCE_DIR}"
+          VERBATIM
+        )
+        list(APPEND generatedPotFiles "${CMAKE_CURRENT_BINARY_DIR}/_xml.pot")
       endif()
 
       add_custom_target(pot
@@ -479,7 +525,7 @@ if(XGETTEXT_FOUND)
     endif()
 
 
-    if(langs AND (ARGS_NOUPDATE OR _DESKTOPFILES OR ARGS_INIFILES))
+    if(langs AND (ARGS_NOUPDATE OR _DESKTOPFILES OR ARGS_INIFILES OR _XMLFILES))
       set(_copyPoFiles true)
     else()
       set(_copyPoFiles)
@@ -599,6 +645,31 @@ if(XGETTEXT_FOUND)
             "share/xournalpp/${folder_rel}"
         )
       endforeach()
+
+      set(xmlfiles)
+      foreach(xmlfileIN ${xml_list})
+        string(REGEX REPLACE "(\\.xml).*$" "\\1" xmlfile "${xmlfileIN}")
+        set(xmlfile_abs "${CMAKE_CURRENT_BINARY_DIR}/${xmlfile}")
+        get_filename_component(folder "${xmlfile_abs}" DIRECTORY)
+        file(MAKE_DIRECTORY "${folder}")
+        file(RELATIVE_PATH folder_rel "${PROJECT_BINARY_DIR}" "${folder}")
+        list(APPEND xmlfiles "${xmlfile_abs}")
+        add_custom_command(
+          OUTPUT
+            "${xmlfile_abs}"
+          COMMAND
+            # The variable "GETTEXTDATADIRS=${ARGS_ITSDIR}" is used to find the .loc and .its files in po/its/
+            # This is only necessary for Ubuntu 20.04. On more up-to-date distributions, the package shared-mime-info contains those .loc and .its files.
+            "GETTEXTDATADIRS=${ARGS_ITSDIR}" "${GETTEXT_MSGFMT_EXECUTABLE}" "--xml" "--template=${CMAKE_CURRENT_SOURCE_DIR}/${xmlfileIN}" -d "${CMAKE_CURRENT_BINARY_DIR}" -o "${xmlfile_abs}"
+          DEPENDS
+            "${CMAKE_CURRENT_SOURCE_DIR}/${xmlfileIN}"
+          DEPENDS
+            "${LINGUAS_file}"
+          WORKING_DIRECTORY
+            "${CMAKE_CURRENT_BINARY_DIR}"
+          VERBATIM
+        )
+      endforeach()
     endif()
 
     add_custom_target(translations
@@ -607,6 +678,7 @@ if(XGETTEXT_FOUND)
         ${_gmoFiles}
         ${desktopfiles}
         ${inifiles}
+        ${xmlfiles}
     )
   endfunction()
 endif()
