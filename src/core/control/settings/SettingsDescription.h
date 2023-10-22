@@ -945,7 +945,7 @@ template<>
 struct Setting<SettingsElement::SETTING_ACTIVE_VIEW_MODE> {
     using value_type = ViewModeId;
     using getter_return_type = ViewModeId;
-    static constexpr auto xmlName = ""; // This setting is not saved to the config file TODO: make sure this is handled correctly
+    static constexpr auto xmlName = "";  // This setting is not saved to the config file
     static constexpr value_type DEFAULT = PresetViewModeIds::VIEW_MODE_DEFAULT;
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = [](xmlNodePtr node, value_type& val) -> bool {

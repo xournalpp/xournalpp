@@ -223,7 +223,7 @@ void ButtonConfigGui::loadSettings() {
     }
 }
 
-void ButtonConfigGui::saveSettings() { // TODO: fix this method (should actually work, test it!)
+void ButtonConfigGui::saveSettings() {
     GtkTreeIter iter;
     gtk_combo_box_get_active_iter(GTK_COMBO_BOX(cbTool), &iter);
 
@@ -268,7 +268,6 @@ void ButtonConfigGui::saveSettings() { // TODO: fix this method (should actually
         cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbDisableDrawing));
     }
 
-    // settings->customSettingsChanged();
     settings->save();
 }
 

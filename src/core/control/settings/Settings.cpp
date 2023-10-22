@@ -137,7 +137,7 @@ void Settings::transactionEnd() {
 }
 
 void Settings::save() {
-    if (inTransaction || true) {  // TODO: do not prevent saving anymore
+    if (inTransaction) {
         return;
     }
 
