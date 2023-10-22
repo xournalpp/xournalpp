@@ -72,7 +72,7 @@ enum class SettingsElement {
     SETTING_LAYOUT_BOTTOM_TO_TOP,
     SETTING_SHOW_PAIRED_PAGES,
     SETTING_NUM_PAIRS_OFFSET,
-    //SETTING_PRESENTATION_MODE, // TODO: remove
+    // SETTING_PRESENTATION_MODE, // TODO: remove
     SETTING_AUTOLOAD_MOST_RECENT,
     SETTING_AUTOLOAD_PDF_XOJ,
     SETTING_STYLUS_CURSOR_TYPE,
@@ -157,6 +157,8 @@ enum class SettingsElement {
     SETTING_STABILIZER_MASS,
     SETTING_STABILIZER_CUSP_DETECTION,
     SETTING_STABILIZER_FINALIZE_STROKE,
+    USE_SPACES_AS_TAB,
+    NUMBER_OF_SPACES_FOR_TAB,
     // Nested Settings from here on
     // Saved in data tags in the settings file
     SETTING_NESTED_TOUCH,
@@ -164,7 +166,7 @@ enum class SettingsElement {
     SETTING_NESTED_DEVICE_CLASSES,
     SETTING_NESTED_BUTTON_CONFIG,
     SETTING_NESTED_TOOLS,
-    // Don't add more entries below this comment 
+    // Don't add more entries below this comment
     ENUM_COUNT
 };
 
@@ -1710,6 +1712,28 @@ struct Setting<SettingsElement::SETTING_STABILIZER_FINALIZE_STROKE> {
     static constexpr auto IMPORT_FN = importBoolProperty;
     static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
+};
+template <>
+struct Setting<SettingsElement::USE_SPACES_AS_TAB> {
+    using value_type = bool;
+    using getter_return_type = bool;
+    static constexpr auto xmlName = "useSpacesForTab";
+    static constexpr value_type DEFAULT = false;
+    static constexpr auto COMMENT = nullptr;
+    static constexpr auto IMPORT_FN = importBoolProperty;
+    static constexpr auto EXPORT_FN = exportBoolProperty;
+    static constexpr auto VALIDATE_FN = noValidate<value_type>;
+};
+template <>
+struct Setting<SettingsElement::NUMBER_OF_SPACES_FOR_TAB> {
+    using value_type = uint;
+    using getter_return_type = uint;
+    static constexpr auto xmlName = "numberOfSpacesForTab";
+    static constexpr value_type DEFAULT = 4;
+    static constexpr auto COMMENT = nullptr;
+    static constexpr auto IMPORT_FN = importUintProperty;
+    static constexpr auto EXPORT_FN = exportUintProperty;
+    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::min(val, 8U); };
 };
 
 // Nested Settings from here:

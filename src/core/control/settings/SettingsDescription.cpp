@@ -155,7 +155,7 @@ bool importFont(xmlNodePtr node, XojFont& var) {
 bool importSidebarNumbering(xmlNodePtr node, SidebarNumberingStyle& var) {
     int i = 0;
     if (importIntProperty(node, i)) {
-        if (i > static_cast<int>(SidebarNumberingStyle::MIN) && i < static_cast<int>(SidebarNumberingStyle::MIN)) {
+        if (i > static_cast<int>(SidebarNumberingStyle::MIN) && i < static_cast<int>(SidebarNumberingStyle::MAX)) {
             var = static_cast<SidebarNumberingStyle>(i);
             return true;
         }
@@ -301,11 +301,11 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
             xmlFree(nameProp);
 
             for (xmlNodePtr attr = cur->children; attr != nullptr; attr = attr->next) { // Loop through the attributes and put them into the map
-                if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("attribute")) == 0) {
-                    xmlChar* attrName = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
-                    xmlChar* value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("value"));
-                    xmlChar* type = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("type"));
-                    
+                if (xmlStrcmp(attr->name, reinterpret_cast<const xmlChar*>("attribute")) == 0) {
+                    xmlChar* attrName = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("name"));
+                    xmlChar* value = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("value"));
+                    xmlChar* type = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("type"));
+
                     if (attrName == nullptr || value == nullptr || type == nullptr) {
                         g_warning("SettingsDescription::attribute tag in buttonConfig for button '%s' is missing properties!",
                                 name.c_str());
@@ -450,8 +450,8 @@ bool importDeviceClasses(xmlNodePtr node, std::map<std::string, std::pair<InputD
     for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) { // Loop through the devices
         if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data")) == 0) {
             std::string name;
-            std::optional<int> deviceClass = std::nullopt;
-            std::optional<int> deviceSource = std::nullopt;
+            std::optional<int> deviceClass{};
+            std::optional<int> deviceSource{};
 
             xmlChar* nameProp = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
             if (nameProp == nullptr) {
@@ -462,40 +462,47 @@ bool importDeviceClasses(xmlNodePtr node, std::map<std::string, std::pair<InputD
             xmlFree(nameProp);
 
             for (xmlNodePtr attr = cur->children; attr != nullptr; attr = attr->next) {
-                xmlChar* attrName = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
-                xmlChar* value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("value"));
-                xmlChar* type = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("type"));
+                if (xmlStrcmp(attr->name, reinterpret_cast<const xmlChar*>("attribute")) == 0) {
+                    xmlChar* attrName = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("name"));
+                    xmlChar* value = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("value"));
+                    xmlChar* type = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("type"));
 
-                if (attrName == nullptr || value == nullptr || type == nullptr) {
-                    g_warning("SettingsDescription::attribute tag in deviceClasses for device '%s' is missing properties!",
-                            name.c_str());
-                    break;
-                }
+                    if (attrName == nullptr || value == nullptr || type == nullptr) {
+                        g_warning("SettingsDescription::attribute tag in deviceClasses for device '%s' is missing "
+                                  "properties!",
+                                  name.c_str());
+                        continue;
+                    }
 
-                if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceClass")) == 0
-                        && xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
-                    deviceClass = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-                    continue;
-                }
-                if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceSource")) == 0
-                        && xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
-                    deviceClass = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-                    continue;
-                }
+                    if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceClass")) == 0 &&
+                        xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
+                        deviceClass = (int)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+                        continue;
+                    }
+                    if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceSource")) == 0 &&
+                        xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
+                        deviceSource = (int)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+                        continue;
+                    }
 
-                if (xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) != 0) {
-                    g_warning("SettingsDescription::attribute '%s' in deviceClasses for device '%s' has non int value!",
-                            reinterpret_cast<const char*>(attrName), name.c_str());
-                    break;
+                    if (xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) != 0) {
+                        g_warning("SettingsDescription::attribute '%s' in deviceClasses for device '%s' has non int "
+                                  "value!",
+                                  reinterpret_cast<const char*>(attrName), name.c_str());
+                        continue;
+                    }
+                    g_warning("SettingsDescription::Unknown attribute '%s' in deviceClasses for device '%s'!",
+                              reinterpret_cast<const char*>(attrName), name.c_str());
+                } else {
+                    g_warning("SettingsDescription::Unexpected xml tag '%s' in deviceClasses for device '%s'!",
+                              reinterpret_cast<const char*>(cur->name), name.c_str());
                 }
-                g_warning("SettingsDescription::Unknown attribute '%s' in deviceClasses for device '%s'!",
-                            reinterpret_cast<const char*>(attrName), name.c_str());
             }
 
-            if (!deviceClass || !deviceSource) {
+            if (!(deviceClass.has_value() && deviceSource.has_value())) {
                 g_warning("SettingsDescription::device '%s' in deviceClasses is missing attributes!",
                             name.c_str());
-                break;
+                continue;
             }
 
             var.emplace(name, std::make_pair(static_cast<InputDeviceTypeOption>(deviceClass.value()),
@@ -565,7 +572,7 @@ xmlNodePtr exportStringProperty(xmlNodePtr node, std::string name, std::string v
     return xmlNode;
 }
 xmlNodePtr exportPathProperty(xmlNodePtr node, std::string name, fs::path value) {
-    return exportStringProperty(node, name, value.string());
+    return exportStringProperty(node, name, value.empty() ? "" : value.u8string().c_str());
 }
 xmlNodePtr exportBoolProperty(xmlNodePtr node, std::string name, bool value) {
     return exportStringProperty(node, name, value ? "true" : "false");
