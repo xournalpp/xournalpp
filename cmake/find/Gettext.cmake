@@ -181,10 +181,21 @@ set(XGETTEXT_DESKTOP_OPTIONS
   "--language=Desktop"
 )
 
+set(INI_KEYWORDS
+# A bug in msgfmt (fixed at least in 0.22.3) forbids us from using this. Not a big deal
+#  "--keyword"  # Removes default keywords
+  "--keyword=name"
+)
+
+set(XGETTEXT_INI_OPTIONS
+  "--language=Desktop"
+  ${INI_KEYWORDS}
+)
+
 if(XGETTEXT_FOUND)
   macro(gettext_create_pot potfile)
     cmake_parse_arguments(ARGS "" "PACKAGE;VERSION;WORKING_DIRECTORY"
-      "OPTIONS;CPP_OPTIONS;VALA_OPTIONS;GLADE_OPTIONS;SRCFILES;GLADEFILES;DESKTOPFILES" ${ARGN})
+      "OPTIONS;CPP_OPTIONS;VALA_OPTIONS;GLADE_OPTIONS;SRCFILES;GLADEFILES;DESKTOPFILES;INIFILES" ${ARGN})
 
     if(ARGS_PACKAGE)
       set(package_name "${ARGS_PACKAGE}")
@@ -236,7 +247,7 @@ if(XGETTEXT_FOUND)
       set(xgettext_glade_options ${XGETTEXT_GLADE_OPTIONS_DEFAULT})
     endif()
 
-    if(ARGS_SRCFILES OR ARGS_GLADEFILES OR ARGS_DESKTOPFILES)
+    if(ARGS_SRCFILES OR ARGS_GLADEFILES OR ARGS_DESKTOPFILES OR ARGS_INIFILES)
       set(src_list)
       set(src_list_abs)
       foreach(globexpr ${ARGS_SRCFILES})
@@ -278,6 +289,28 @@ if(XGETTEXT_FOUND)
           file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${globexpr}")
           list(APPEND glade_list "${relFile}")
           list(APPEND glade_list_abs "${globexpr}")
+        endif()
+      endforeach()
+
+      set(ini_list)
+      set(ini_list_abs)
+      foreach(globexpr ${ARGS_INIFILES})
+        if(NOT IS_ABSOLUTE "${globexpr}")
+          get_filename_component(absDir "${ARGS_WORKING_DIRECTORY}" ABSOLUTE)
+          set(globexpr "${absDir}/${globexpr}")
+        endif()
+        set(tmpinifiles)
+        file(GLOB tmpinifiles ${globexpr})
+        if (tmpinifiles)
+          foreach(absFile ${tmpinifiles})
+            file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${absFile}")
+            list(APPEND ini_list "${relFile}")
+            list(APPEND ini_list_abs "${absFile}")
+          endforeach()
+        else()
+          file(RELATIVE_PATH relFile "${CMAKE_CURRENT_SOURCE_DIR}" "${globexpr}")
+          list(APPEND ini_list "${relFile}")
+          list(APPEND ini_list_abs "${globexpr}")
         endif()
       endforeach()
 
@@ -342,6 +375,22 @@ if(XGETTEXT_FOUND)
           VERBATIM
         )
         list(APPEND generatedPotFiles "${CMAKE_CURRENT_BINARY_DIR}/_glade.pot")
+      endif()
+      if(ARGS_INIFILES)
+        add_custom_command(
+          OUTPUT
+            "${CMAKE_CURRENT_BINARY_DIR}/_ini.pot"
+          COMMAND
+            "${XGETTEXT_EXECUTABLE}" ${xgettext_options} ${XGETTEXT_INI_OPTIONS} "-o" "${CMAKE_CURRENT_BINARY_DIR}/_ini.pot" ${ini_list}
+          COMMAND
+            "${CMAKE_COMMAND}" -E touch "${CMAKE_CURRENT_BINARY_DIR}/_ini.pot"
+          DEPENDS
+            ${ini_list_abs}
+          WORKING_DIRECTORY
+            "${CMAKE_CURRENT_SOURCE_DIR}"
+          VERBATIM
+        )
+        list(APPEND generatedPotFiles "${CMAKE_CURRENT_BINARY_DIR}/_ini.pot")
       endif()
       if(_DESKTOPFILES)
         add_custom_command(
@@ -430,7 +479,7 @@ if(XGETTEXT_FOUND)
     endif()
 
 
-    if(langs AND (ARGS_NOUPDATE OR _DESKTOPFILES))
+    if(langs AND (ARGS_NOUPDATE OR _DESKTOPFILES OR ARGS_INIFILES))
       set(_copyPoFiles true)
     else()
       set(_copyPoFiles)
@@ -521,6 +570,35 @@ if(XGETTEXT_FOUND)
             "share/applications"
         )
       endforeach()
+
+      set(inifiles)
+      foreach(inifileIN ${ini_list})
+        string(REGEX REPLACE "(\\.ini).*$" "\\1" inifile "${inifileIN}")
+        set(inifile_abs "${CMAKE_CURRENT_BINARY_DIR}/${inifile}")
+        get_filename_component(folder "${inifile_abs}" DIRECTORY)
+        file(MAKE_DIRECTORY "${folder}")
+        file(RELATIVE_PATH folder_rel "${PROJECT_BINARY_DIR}" "${folder}")
+        list(APPEND inifiles "${inifile_abs}")
+        add_custom_command(
+          OUTPUT
+            "${inifile_abs}"
+          COMMAND
+            "${GETTEXT_MSGFMT_EXECUTABLE}" "--desktop" ${INI_KEYWORDS} "--template=${CMAKE_CURRENT_SOURCE_DIR}/${inifileIN}" -d "${CMAKE_CURRENT_BINARY_DIR}" -o "${inifile_abs}"
+          DEPENDS
+            "${CMAKE_CURRENT_SOURCE_DIR}/${inifileIN}"
+          DEPENDS
+            "${LINGUAS_file}"
+          WORKING_DIRECTORY
+            "${CMAKE_CURRENT_BINARY_DIR}"
+          VERBATIM
+        )
+        install(
+          FILES
+            "${inifile_abs}"
+          DESTINATION
+            "share/xournalpp/${folder_rel}"
+        )
+      endforeach()
     endif()
 
     add_custom_target(translations
@@ -528,6 +606,7 @@ if(XGETTEXT_FOUND)
       DEPENDS
         ${_gmoFiles}
         ${desktopfiles}
+        ${inifiles}
     )
   endfunction()
 endif()

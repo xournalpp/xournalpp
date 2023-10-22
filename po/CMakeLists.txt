@@ -26,6 +26,9 @@ if (XGETTEXT_FOUND)
 
     DESKTOPFILES
       "${PROJECT_SOURCE_DIR}/desktop/com.github.xournalpp.xournalpp.desktop.in"
+
+    INIFILES
+      "${PROJECT_SOURCE_DIR}/ui/pagetemplates.ini.in;${PROJECT_SOURCE_DIR}/ui/toolbar.ini.in"
   )
 
   gettext_create_translations ("${potfile}" ALL NOUPDATE)
