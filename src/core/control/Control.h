@@ -390,11 +390,6 @@ private:
     void closeDocument();
 
     /**
-     * Applies the preferred language to the UI
-     */
-    void applyPreferredLanguage();
-
-    /**
      * @brief Get the pen line style to select in the toolbar
      *
      * @return style to select, empty if no style should be selected (active

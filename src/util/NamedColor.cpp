@@ -6,6 +6,7 @@
 #include <utility>    // for move
 
 #include "util/StringUtils.h"   // for StringUtils
+#include "util/i18n.h"          // for fetch_translation
 #include "util/serdesstream.h"  // for serdes_stream
 
 
@@ -37,7 +38,7 @@ auto operator>>(std::istream& str, NamedColor& namedColor) -> std::istream& {
                 throw std::invalid_argument("RGB values bigger than 255 are not supported.");
             }
             tmp.color = Color(uint8_t(r), uint8_t(g), uint8_t(b));
-            tmp.name = StringUtils::trim(tmp.name);
+            tmp.name = fetch_translation_context("Color", StringUtils::trim(tmp.name).c_str());
             tmp.colorU16 = Util::argb_to_ColorU16(tmp.color);
             tmp.isPaletteColor = true;
             tmp.paletteIndex = namedColor.paletteIndex;

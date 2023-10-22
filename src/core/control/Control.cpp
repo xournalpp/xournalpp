@@ -126,8 +126,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     this->settings = new Settings(std::move(name));
     this->settings->load();
 
-    this->applyPreferredLanguage();
-
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
 
     this->audioController =
@@ -1975,15 +1973,6 @@ void Control::closeDocument() {
     this->doc->unlock();
 
     this->undoRedoChanged();
-}
-
-void Control::applyPreferredLanguage() {
-    auto const& lang = this->settings->getPreferredLocale();
-#ifdef _WIN32
-    _putenv_s("LANGUAGE", lang.c_str());
-#else
-    setenv("LANGUAGE", lang.c_str(), 1);
-#endif
 }
 
 void Control::initButtonTool() {
