@@ -1557,7 +1557,7 @@ struct Setting<SettingsElement::SETTING_TRY_SELECT_ON_STROKE_FILTERED> {
 template<>
 struct Setting<SettingsElement::SETTING_LATEX_SETTINGS> {
     using value_type = LatexSettings;
-    using getter_return_type = LatexSettings;
+    using getter_return_type = const LatexSettings&;
     static constexpr auto xmlName = "latexSettings";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;

@@ -650,8 +650,6 @@ public:
      */
     void transactionEnd();
 
-    LatexSettings latexSettings{};  // TODO: replace accesses to this
-
 private:
     /**
      *  The config filepath

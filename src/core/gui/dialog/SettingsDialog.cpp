@@ -674,7 +674,7 @@ void SettingsDialog::load() {
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")), settings->getDefaultSeekTime());
     }
 
-    this->latexPanel.load(settings->latexSettings);
+    this->latexPanel.load(settings->get<SettingsElement::SETTING_LATEX_SETTINGS>());
 }
 
 void SettingsDialog::save() {
@@ -1011,7 +1011,9 @@ void SettingsDialog::save() {
         deviceClassConfigGui.saveSettings();
     }
 
-    this->latexPanel.save(settings->latexSettings);
+    LatexSettings latexSettings{};
+    this->latexPanel.save(latexSettings);
+    settings->set<SettingsElement::SETTING_LATEX_SETTINGS>(latexSettings);
 
     settings->transactionEnd();
 
