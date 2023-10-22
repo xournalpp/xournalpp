@@ -809,6 +809,13 @@ auto Settings::load() -> bool {
     loadButtonConfig();
     loadDeviceClasses();
 
+    // This must be done before the color palette to ensure the color names are translated properly
+#ifdef _WIN32
+    _putenv_s("LANGUAGE", this->preferredLocale.c_str());
+#else
+    setenv("LANGUAGE", this->preferredLocale.c_str(), 1);
+#endif
+
     /*
      * load Color Palette
      *  - if path does not exist create default palette file
