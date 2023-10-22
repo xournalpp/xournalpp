@@ -6,12 +6,14 @@
  *
  *  See: https://wiki.gnome.org/action/show/Projects/GTK/Inspector
  */
-
+ 
+#vboxOpacityPreviewTool,
 #pdfFloatingToolGrid {
     padding: 7px;
 }
 
 /*Style the Floating Toolbox!*/
+#vboxOpacityPreviewTool,
 #floatingToolbox > box,
 #pdfFloatingToolGrid {
 	background-color: white;
@@ -43,6 +45,33 @@
 	box-shadow: inset 0px 0px 2px gray;
 }
 
+#opacityPreviewToolScaleAlpha slider {
+	background: rgba(255, 255, 255, 1);
+	box-shadow: inset 0px 0px 2px gray;
+}
+
+#opacityPreviewToolScaleAlpha slider:hover {
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 1);
+	box-shadow: inset 0px 0px 2px 1px orange;
+}
+
+#opacityPreviewToolScaleAlpha slider:active {
+	border-radius: 12px;
+	background: rgba(245, 245, 245, 0.6);
+	box-shadow: inset 0px 0px 2px 1px orange;
+}
+
+#opacityPreviewToolScaleAlpha value { 
+	color: gray;
+}
+/*
+Similar as
+#vboxOpacityPreviewTool scale value { 
+	color: gray;
+}
+*/
+
 /*
 	Use :checked for a selected ToggleButton.
 	See https://stackoverflow.com/questions/39824345/use-css-to-style-gtktogglebutton-depending-on-the-state
@@ -56,7 +85,8 @@
 }
 
 #floatingToolbox toolbar,
-#pdfFloatingToolGrid button {
+#pdfFloatingToolGrid button,
+#opacityPreviewToolScaleAlpha {
     /*
       The Adaptia GTK theme adds box-shadows to toolbars.
       Remove them to avoid horizontal lines that extend outside
@@ -66,6 +96,7 @@
     box-shadow: none;
 }
 
+window.darkMode #opacityPreviewToolScaleAlpha slider,
 window.darkMode #floatingToolbox button,
 window.darkMode #pdfFloatingToolGrid button {
 	background: rgba(55, 53, 53, 0.5);
@@ -78,6 +109,7 @@ window.darkMode #floatingToolbox button:checked {
 	box-shadow: 0px 0px 3px lightblue;
 }
 
+window.darkMode #vboxOpacityPreviewTool,
 window.darkMode #floatingToolbox > box,
 window.darkMode #pdfFloatingToolGrid  {
 	background-color: black;

@@ -13,6 +13,7 @@
 #include "control/settings/SettingsEnums.h"  // for BUTTON_COUNT
 
 #include "MainWindow.h"          // for MainWindow
+#include "OpacityPreviewToolbox.h"
 #include "ToolbarDefinitions.h"  // for ToolbarEntryDefintion
 
 
@@ -110,10 +111,12 @@ void FloatingToolbox::show() {
 
     if (this->floatingToolboxState != configuration) {
         gtk_widget_hide(this->mainWindow->get("labelFloatingToolbox"));
+        this->mainWindow->getOpacityPreviewToolbox()->showEventBoxesInFloatingToolBox();
     }
 
     if (this->floatingToolboxState == configuration || countWidgets() > 0) {
         gtk_widget_hide(this->mainWindow->get("showIfEmpty"));
+        this->mainWindow->getOpacityPreviewToolbox()->hideEventBoxesInFloatingToolBox();
     }
 }
 
@@ -124,6 +127,7 @@ void FloatingToolbox::hide() {
     }
 
     gtk_widget_hide(this->floatingToolbox);
+    this->mainWindow->getOpacityPreviewToolbox()->hideEventBoxesInFloatingToolBox();
 }
 
 
@@ -181,7 +185,24 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
 void FloatingToolbox::handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self) {
     if (floatingToolbox == self->floatingToolbox) {
         if (self->floatingToolboxState != configuration) {
-            self->hide();
+            // The floating toolbox is hidden when the pointer leaves it,
+            // except when it enters an eventbox that matches a ColorToolItem within the floating toolbox.
+            // In this situation, from the user's perspective, the pointer did not truly leave the floating toolbox;
+            // instead, it entered an invisible widget in front of it.
+            OpacityPreviewToolbox* opacityToolbox = self->mainWindow->getOpacityPreviewToolbox();
+
+            auto criteria = [event, opacityToolbox](OpacityPreviewToolbox::EventBox eventBox) {
+                return OpacityPreviewToolbox::isPointerOverWidget(static_cast<int>(event->crossing.x_root),
+                                                                  static_cast<int>(event->crossing.y_root),
+                                                                  eventBox.widget);
+            };
+
+            std::vector<OpacityPreviewToolbox::EventBox>::iterator it =
+                    std::find_if(opacityToolbox->eventBoxes.begin(), opacityToolbox->eventBoxes.end(), criteria);
+
+            if (it == opacityToolbox->eventBoxes.end()) {
+                self->hide();
+            }
         }
     }
 }

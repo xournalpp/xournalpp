@@ -18,6 +18,7 @@
 #include "control/zoom/ZoomControl.h"                   // for ZoomControl
 #include "gui/FloatingToolbox.h"                        // for FloatingToolbox
 #include "gui/GladeGui.h"                               // for GladeGui
+#include "gui/OpacityPreviewToolbox.h"                  // for OpacityPreviewToolbox
 #include "gui/PdfFloatingToolbox.h"                     // for PdfFloatingToolbox
 #include "gui/SearchBar.h"                              // for SearchBar
 #include "gui/inputdevices/InputEvents.h"               // for INPUT_DEVICE_TOUC...
@@ -63,6 +64,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     GtkOverlay* overlay = GTK_OVERLAY(get("mainOverlay"));
     this->pdfFloatingToolBox = std::make_unique<PdfFloatingToolbox>(this, overlay);
     this->floatingToolbox = std::make_unique<FloatingToolbox>(this, overlay);
+    this->opacityPreviewToolBox = std::make_unique<OpacityPreviewToolbox>(this, overlay);
 
     for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         this->toolbarWidgets[i].reset(get(TOOLBAR_DEFINITIONS[i].guiName), xoj::util::ref);
@@ -470,6 +472,7 @@ void MainWindow::loadToolbar(ToolbarData* d) {
     }
 
     this->floatingToolbox->flagRecalculateSizeRequired();
+    this->opacityPreviewToolBox->update();
 }
 
 auto MainWindow::getSelectedToolbar() const -> ToolbarData* { return this->selectedToolbar; }
@@ -555,5 +558,5 @@ void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssF
 }
 
 PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloatingToolBox.get(); }
-
+OpacityPreviewToolbox* MainWindow::getOpacityPreviewToolbox() const { return this->opacityPreviewToolBox.get(); }
 FloatingToolbox* MainWindow::getFloatingToolbox() const { return this->floatingToolbox.get(); }

@@ -39,6 +39,7 @@
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
 #include "gui/MainWindow.h"                                      // for Main...
+#include "gui/OpacityPreviewToolbox.h"                           // for OpacityPreviewToolbox
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
 #include "gui/SearchBar.h"                                       // for Sear...
@@ -1087,6 +1088,9 @@ void Control::toolChanged() {
     }
 
     getCursor()->updateCursor();
+    if (win) {
+        win->getOpacityPreviewToolbox()->update();
+    }
 
     if (type != TOOL_TEXT) {
         if (win) {
@@ -1128,6 +1132,9 @@ void Control::toolFillChanged() {
     this->actionDB->setActionState(Action::TOOL_FILL, toolHandler->getFill() != -1);
     this->actionDB->setActionState(Action::TOOL_PEN_FILL, toolHandler->getPenFillEnabled());
     this->actionDB->setActionState(Action::TOOL_HIGHLIGHTER_FILL, toolHandler->getHighlighterFillEnabled());
+    if (win) {
+        win->getOpacityPreviewToolbox()->update();
+    }
 }
 
 void Control::toolLineStyleChanged() {
@@ -1179,6 +1186,10 @@ auto Control::getLineStyleToSelect() -> std::optional<string> const {
 void Control::toolColorChanged() {
     this->actionDB->setActionState(Action::TOOL_COLOR, getToolHandler()->getColorMaskAlpha());
     getCursor()->updateCursor();
+
+    if (this->win) {
+        getWindow()->getOpacityPreviewToolbox()->update();
+    }
 }
 
 void Control::changeColorOfSelection() {
@@ -1195,6 +1206,10 @@ void Control::changeColorOfSelection() {
             // Todo move into selection
             edit->setColor(toolHandler->getColor());
         }
+    }
+
+    if (this->win) {
+        getWindow()->getOpacityPreviewToolbox()->update();
     }
 }
 
