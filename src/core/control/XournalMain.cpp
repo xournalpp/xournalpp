@@ -520,9 +520,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
             }
         }
 
-        for (auto& p: iconLoadOrder) {
-            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str());
-        }
+        for (auto& p: iconLoadOrder) { gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str()); }
     }
 
     auto latexSettings = app_data->control->getSettings()->get<SettingsElement::SETTING_LATEX_SETTINGS>();

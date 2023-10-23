@@ -10,29 +10,29 @@
  */
 #pragma once
 
-#include <string>
-#include <map>
-#include <vector>
 #include <array>
-#include <utility>
+#include <map>
 #include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 #include <libxml/tree.h>
 
 #include "model/Font.h"
 #include "util/Color.h"
 
+#include "ButtonConfig.h"
 #include "LatexSettings.h"
+#include "Settings.h"
 #include "SettingsEnums.h"
 #include "ViewModes.h"
 #include "filesystem.h"
-#include "Settings.h"
-#include "ButtonConfig.h"
 
 class SElement;
 class ButtonConfig;
 
-//TODO: improve this comment
+// TODO: improve this comment
 /*
  * In order to add settings add an element to the SettingsElement enum
  */
@@ -218,34 +218,38 @@ xmlNodePtr exportEmptyLastPageAppendType(xmlNodePtr node, std::string name, Empt
 xmlNodePtr exportLatexSettings(xmlNodePtr node, std::string name, LatexSettings value);
 xmlNodePtr exportStrokeAveragingMethod(xmlNodePtr node, std::string name, StrokeStabilizer::AveragingMethod value);
 xmlNodePtr exportStrokePreprocessor(xmlNodePtr node, std::string name, StrokeStabilizer::Preprocessor value);
-xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name, const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value);
-xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name, const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value);
+xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
+                              const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value);
+xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name,
+                               const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value);
 xmlNodePtr exportSElement(xmlNodePtr node, std::string name, const SElement& value);
 
 
 // Definitions of validation functions
-template<typename t>
-t noValidate(t val) { return val; }
+template <typename t>
+t noValidate(t val) {
+    return val;
+}
 
 
 // Definition of single Settings
-template<SettingsElement>
+template <SettingsElement>
 struct Setting {};
 
 // Definitions of SettingsElements
 /* Structs describing each setting
- * 
+ *
  * Define like this:
  * template<>
  * struct Setting<*The name of your settings element*> {
  *    value_type: The type your settings value should have
  *    getter_return_type: The type you want your getter to return (should be castable from value_type)
  *    xmlName: The name you want for your property in the file
- *    DEFAULT: The default value of your Setting, if your value_type is not a literal type leave it unset here, and add the initialization in SettingsDescriptions.cpp at the top
- *    COMMENT: The comment in the file above your setting, if not needed leave nullptr for none
- *    IMPORT_FN: Function that reads your value from the xml tag
- *    EXPORT_FN: Function that writes your value into an xml tag and adds it to the document root
- *    VALIDATE_FN: Function that checks if the value is correct and always returns a valid value, called at import and setter
+ *    DEFAULT: The default value of your Setting, if your value_type is not a literal type leave it unset here, and add
+ * the initialization in SettingsDescriptions.cpp at the top COMMENT: The comment in the file above your setting, if not
+ * needed leave nullptr for none IMPORT_FN: Function that reads your value from the xml tag EXPORT_FN: Function that
+ * writes your value into an xml tag and adds it to the document root VALIDATE_FN: Function that checks if the value is
+ * correct and always returns a valid value, called at import and setter
  * };
  */
 // TODO: fix these comments
@@ -263,7 +267,7 @@ struct Setting {};
  * };
  */
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_FONT> {
     using value_type = XojFont;
     using getter_return_type = XojFont;
@@ -275,7 +279,7 @@ struct Setting<SettingsElement::SETTING_FONT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PRESSURE_SENSITIVITY> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -287,7 +291,7 @@ struct Setting<SettingsElement::SETTING_PRESSURE_SENSITIVITY> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_MINIMUM_PRESSURE> {
     using value_type = double;
     using getter_return_type = double;
@@ -296,12 +300,10 @@ struct Setting<SettingsElement::SETTING_MINIMUM_PRESSURE> {
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importDoubleProperty;
     static constexpr auto EXPORT_FN = exportDoubleProperty;
-    static constexpr auto VALIDATE_FN = [] (value_type val) -> value_type {
-        return std::max<value_type>(val, 0.01);
-    };
+    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 0.01); };
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PRESSURE_MULTIPLIER> {
     using value_type = double;
     using getter_return_type = double;
@@ -313,7 +315,7 @@ struct Setting<SettingsElement::SETTING_PRESSURE_MULTIPLIER> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ENABLE_ZOOM_GESTURES> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -325,7 +327,7 @@ struct Setting<SettingsElement::SETTING_ENABLE_ZOOM_GESTURES> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SELECTED_TOOLBAR> {
     using value_type = std::string;
     using getter_return_type = const std::string&;
@@ -337,7 +339,7 @@ struct Setting<SettingsElement::SETTING_SELECTED_TOOLBAR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_LAST_SAVE_PATH> {
     using value_type = fs::path;
     using getter_return_type = const fs::path&;
@@ -349,7 +351,7 @@ struct Setting<SettingsElement::SETTING_LAST_SAVE_PATH> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_LAST_OPEN_PATH> {
     using value_type = fs::path;
     using getter_return_type = const fs::path&;
@@ -361,7 +363,7 @@ struct Setting<SettingsElement::SETTING_LAST_OPEN_PATH> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_LAST_IMAGE_PATH> {
     using value_type = fs::path;
     using getter_return_type = const fs::path&;
@@ -373,7 +375,7 @@ struct Setting<SettingsElement::SETTING_LAST_IMAGE_PATH> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_EDGE_PAN_SPEED> {
     using value_type = double;
     using getter_return_type = double;
@@ -385,7 +387,7 @@ struct Setting<SettingsElement::SETTING_EDGE_PAN_SPEED> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_EDGE_PAN_MAX_MULT> {
     using value_type = double;
     using getter_return_type = double;
@@ -397,7 +399,7 @@ struct Setting<SettingsElement::SETTING_EDGE_PAN_MAX_MULT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ZOOM_STEP> {
     using value_type = double;
     using getter_return_type = double;
@@ -409,7 +411,7 @@ struct Setting<SettingsElement::SETTING_ZOOM_STEP> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ZOOM_STEP_SCROLL> {
     using value_type = double;
     using getter_return_type = double;
@@ -421,7 +423,7 @@ struct Setting<SettingsElement::SETTING_ZOOM_STEP_SCROLL> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DISPLAY_DPI> {
     using value_type = int;
     using getter_return_type = int;
@@ -433,7 +435,7 @@ struct Setting<SettingsElement::SETTING_DISPLAY_DPI> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_MAIN_WINDOW_WIDTH> {
     using value_type = int;
     using getter_return_type = int;
@@ -445,7 +447,7 @@ struct Setting<SettingsElement::SETTING_MAIN_WINDOW_WIDTH> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_MAIN_WINDOW_HEIGHT> {
     using value_type = int;
     using getter_return_type = int;
@@ -457,7 +459,7 @@ struct Setting<SettingsElement::SETTING_MAIN_WINDOW_HEIGHT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_MAXIMIZED> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -469,7 +471,7 @@ struct Setting<SettingsElement::SETTING_MAXIMIZED> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SHOW_TOOLBAR> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -481,7 +483,7 @@ struct Setting<SettingsElement::SETTING_SHOW_TOOLBAR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SHOW_FILEPATH_IN_TITLEBAR> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -493,7 +495,7 @@ struct Setting<SettingsElement::SETTING_SHOW_FILEPATH_IN_TITLEBAR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SHOW_PAGE_NUMBER_IN_TITLEBAR> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -505,7 +507,7 @@ struct Setting<SettingsElement::SETTING_SHOW_PAGE_NUMBER_IN_TITLEBAR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SHOW_SIDEBAR> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -517,7 +519,7 @@ struct Setting<SettingsElement::SETTING_SHOW_SIDEBAR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SIDEBAR_NUMBERING_STYLE> {
     using value_type = SidebarNumberingStyle;
     using getter_return_type = SidebarNumberingStyle;
@@ -531,7 +533,7 @@ struct Setting<SettingsElement::SETTING_SIDEBAR_NUMBERING_STYLE> {
     };
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SIDEBAR_WIDTH> {
     using value_type = int;
     using getter_return_type = int;
@@ -540,12 +542,10 @@ struct Setting<SettingsElement::SETTING_SIDEBAR_WIDTH> {
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importIntProperty;
     static constexpr auto EXPORT_FN = exportIntProperty;
-    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type {
-        return  std::max<value_type>(val, 50);
-    };
+    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 50); };
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SIDEBAR_ON_RIGHT> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -557,7 +557,7 @@ struct Setting<SettingsElement::SETTING_SIDEBAR_ON_RIGHT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SCROLLBAR_ON_LEFT> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -569,7 +569,7 @@ struct Setting<SettingsElement::SETTING_SCROLLBAR_ON_LEFT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_MENUBAR_VISIBLE> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -581,7 +581,7 @@ struct Setting<SettingsElement::SETTING_MENUBAR_VISIBLE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_NUM_COLUMNS> {
     using value_type = int;
     using getter_return_type = int;
@@ -593,7 +593,7 @@ struct Setting<SettingsElement::SETTING_NUM_COLUMNS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_NUM_ROWS> {
     using value_type = int;
     using getter_return_type = int;
@@ -605,7 +605,7 @@ struct Setting<SettingsElement::SETTING_NUM_ROWS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_VIEW_FIXED_ROWS> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -617,7 +617,7 @@ struct Setting<SettingsElement::SETTING_VIEW_FIXED_ROWS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_LAYOUT_VERTICAL> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -629,7 +629,7 @@ struct Setting<SettingsElement::SETTING_LAYOUT_VERTICAL> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_LAYOUT_RIGHT_TO_LEFT> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -641,7 +641,7 @@ struct Setting<SettingsElement::SETTING_LAYOUT_RIGHT_TO_LEFT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_LAYOUT_BOTTOM_TO_TOP> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -653,7 +653,7 @@ struct Setting<SettingsElement::SETTING_LAYOUT_BOTTOM_TO_TOP> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SHOW_PAIRED_PAGES> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -665,7 +665,7 @@ struct Setting<SettingsElement::SETTING_SHOW_PAIRED_PAGES> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_NUM_PAIRS_OFFSET> {
     using value_type = int;
     using getter_return_type = int;
@@ -689,7 +689,7 @@ struct Setting<SettingsElement::SETTING_PRESENTATION_MODE> { // TODO: remove thi
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };*/
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_AUTOLOAD_MOST_RECENT> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -701,7 +701,7 @@ struct Setting<SettingsElement::SETTING_AUTOLOAD_MOST_RECENT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_AUTOLOAD_PDF_XOJ> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -713,31 +713,33 @@ struct Setting<SettingsElement::SETTING_AUTOLOAD_PDF_XOJ> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STYLUS_CURSOR_TYPE> {
     using value_type = StylusCursorType;
     using getter_return_type = StylusCursorType;
     static constexpr auto xmlName = "stylusCursorType";
     static constexpr value_type DEFAULT = StylusCursorType::STYLUS_CURSOR_DOT;
-    static constexpr auto COMMENT = "The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"";
+    static constexpr auto COMMENT =
+            "The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"";
     static constexpr auto IMPORT_FN = importStylusCursorType;
     static constexpr auto EXPORT_FN = exportStylusCursorType;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ERASER_VISIBILITY> {
     using value_type = EraserVisibility;
     using getter_return_type = EraserVisibility;
     static constexpr auto xmlName = "eraserVisibility";
     static constexpr value_type DEFAULT = EraserVisibility::ERASER_VISIBILITY_ALWAYS;
-    static constexpr auto COMMENT = "The eraser cursor visibility used with a stylus, allowed values are \"never\", \"always\", \"hover\", \"touch\"";
+    static constexpr auto COMMENT = "The eraser cursor visibility used with a stylus, allowed values are \"never\", "
+                                    "\"always\", \"hover\", \"touch\"";
     static constexpr auto IMPORT_FN = importEraserVisibility;
     static constexpr auto EXPORT_FN = exportEraserVisibility;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ICON_THEME> {
     using value_type = IconTheme;
     using getter_return_type = IconTheme;
@@ -749,7 +751,7 @@ struct Setting<SettingsElement::SETTING_ICON_THEME> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_HIGHLIGHT_POSITION> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -761,7 +763,7 @@ struct Setting<SettingsElement::SETTING_HIGHLIGHT_POSITION> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_COLOR> {
     using value_type = Color;
     using getter_return_type = const Color&;
@@ -773,7 +775,7 @@ struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_COLOR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_RADIUS> {
     using value_type = double;
     using getter_return_type = double;
@@ -785,7 +787,7 @@ struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_RADIUS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_COLOR> {
     using value_type = Color;
     using getter_return_type = const Color&;
@@ -797,7 +799,7 @@ struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_COLOR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_WIDTH> {
     using value_type = double;
     using getter_return_type = double;
@@ -809,7 +811,7 @@ struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_WIDTH> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DARK_THEME> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -821,7 +823,7 @@ struct Setting<SettingsElement::SETTING_DARK_THEME> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_USE_STOCK_ICONS> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -833,7 +835,7 @@ struct Setting<SettingsElement::SETTING_USE_STOCK_ICONS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME> {
     using value_type = std::string;
     using getter_return_type = const std::string&;
@@ -845,7 +847,7 @@ struct Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME> {
     using value_type = std::string;
     using getter_return_type = const std::string&;
@@ -857,7 +859,7 @@ struct Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PLUGIN_ENABLED> {
     using value_type = std::string;
     using getter_return_type = const std::string&;
@@ -869,7 +871,7 @@ struct Setting<SettingsElement::SETTING_PLUGIN_ENABLED> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PLUGIN_DISABLED> {
     using value_type = std::string;
     using getter_return_type = const std::string&;
@@ -881,19 +883,21 @@ struct Setting<SettingsElement::SETTING_PLUGIN_DISABLED> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PAGE_TEMPLATE> {
     using value_type = std::string;
     using getter_return_type = const std::string&;
     static constexpr auto xmlName = "pageTemplate";
-    static constexpr const char* DEFAULT = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
+    static constexpr const char* DEFAULT = "xoj/"
+                                           "template\ncopyLastPageSettings=true\nsize=595.275591x841."
+                                           "889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
     static constexpr auto COMMENT = "Config for new pages";
     static constexpr auto IMPORT_FN = importStringProperty;
     static constexpr auto EXPORT_FN = exportStringProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SIZE_UNIT> {
     using value_type = std::string;
     using getter_return_type = const std::string&;
@@ -905,7 +909,7 @@ struct Setting<SettingsElement::SETTING_SIZE_UNIT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_AUDIO_FOLDER> {
     using value_type = fs::path;
     using getter_return_type = const fs::path&;
@@ -917,7 +921,7 @@ struct Setting<SettingsElement::SETTING_AUDIO_FOLDER> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_AUTOSAVE_ENABLED> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -929,7 +933,7 @@ struct Setting<SettingsElement::SETTING_AUTOSAVE_ENABLED> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_AUTOSAVE_TIMEOUT> {
     using value_type = int;
     using getter_return_type = int;
@@ -941,7 +945,7 @@ struct Setting<SettingsElement::SETTING_AUTOSAVE_TIMEOUT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ACTIVE_VIEW_MODE> {
     using value_type = ViewModeId;
     using getter_return_type = ViewModeId;
@@ -949,22 +953,21 @@ struct Setting<SettingsElement::SETTING_ACTIVE_VIEW_MODE> {
     static constexpr value_type DEFAULT = PresetViewModeIds::VIEW_MODE_DEFAULT;
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = [](xmlNodePtr node, value_type& val) -> bool {
-        return false; // This setting is not stored in the file, returning false makes sure the default is loaded
+        return false;  // This setting is not stored in the file, returning false makes sure the default is loaded
     };
     static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, value_type& val) -> xmlNodePtr {
         return nullptr;
     };
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type {
-        if (val == PresetViewModeIds::VIEW_MODE_DEFAULT ||
-                val == PresetViewModeIds::VIEW_MODE_FULLSCREEN ||
-                val == PresetViewModeIds::VIEW_MODE_PRESENTATION) {
+        if (val == PresetViewModeIds::VIEW_MODE_DEFAULT || val == PresetViewModeIds::VIEW_MODE_FULLSCREEN ||
+            val == PresetViewModeIds::VIEW_MODE_PRESENTATION) {
             return val;
         }
         return PresetViewModeIds::VIEW_MODE_DEFAULT;
     };
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_VIEW_MODE_ATTRIBUTES> {
     using value_type = ViewMode;
     using getter_return_type = ViewMode;
@@ -976,7 +979,7 @@ struct Setting<SettingsElement::SETTING_DEFAULT_VIEW_MODE_ATTRIBUTES> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_FULLSCREEN_VIEW_MODE_ATTRIBUTES> {
     using value_type = ViewMode;
     using getter_return_type = ViewMode;
@@ -988,7 +991,7 @@ struct Setting<SettingsElement::SETTING_FULLSCREEN_VIEW_MODE_ATTRIBUTES> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PRESENTATION_VIEW_MODE_ATTRIBUTES> {
     using value_type = ViewMode;
     using getter_return_type = ViewMode;
@@ -1000,7 +1003,7 @@ struct Setting<SettingsElement::SETTING_PRESENTATION_VIEW_MODE_ATTRIBUTES> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_TOUCH_ZOOM_START_THRESHOLD> {
     using value_type = double;
     using getter_return_type = double;
@@ -1012,7 +1015,7 @@ struct Setting<SettingsElement::SETTING_TOUCH_ZOOM_START_THRESHOLD> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PAGE_RERENDER_THRESHOLD> {
     using value_type = double;
     using getter_return_type = double;
@@ -1024,7 +1027,7 @@ struct Setting<SettingsElement::SETTING_PAGE_RERENDER_THRESHOLD> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PDF_PAGE_CACHE_SIZE> {
     using value_type = int;
     using getter_return_type = int;
@@ -1036,7 +1039,7 @@ struct Setting<SettingsElement::SETTING_PDF_PAGE_CACHE_SIZE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PRELOAD_PAGES_BEFORE> {
     using value_type = uint;
     using getter_return_type = uint;
@@ -1048,7 +1051,7 @@ struct Setting<SettingsElement::SETTING_PRELOAD_PAGES_BEFORE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PRELOAD_PAGES_AFTER> {
     using value_type = uint;
     using getter_return_type = uint;
@@ -1060,7 +1063,7 @@ struct Setting<SettingsElement::SETTING_PRELOAD_PAGES_AFTER> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_EAGER_PAGE_CLEANUP> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1072,7 +1075,7 @@ struct Setting<SettingsElement::SETTING_EAGER_PAGE_CLEANUP> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SELECTION_BORDER_COLOR> {
     using value_type = Color;
     using getter_return_type = const Color&;
@@ -1084,7 +1087,7 @@ struct Setting<SettingsElement::SETTING_SELECTION_BORDER_COLOR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SELECTION_MARKER_COLOR> {
     using value_type = Color;
     using getter_return_type = const Color&;
@@ -1096,7 +1099,7 @@ struct Setting<SettingsElement::SETTING_SELECTION_MARKER_COLOR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ACTIVE_SELECTION_COLOR> {
     using value_type = Color;
     using getter_return_type = const Color&;
@@ -1108,7 +1111,7 @@ struct Setting<SettingsElement::SETTING_ACTIVE_SELECTION_COLOR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_BACKGROUND_COLOR> {
     using value_type = Color;
     using getter_return_type = const Color&;
@@ -1120,7 +1123,7 @@ struct Setting<SettingsElement::SETTING_BACKGROUND_COLOR> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1132,7 +1135,7 @@ struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_RIGHT> {
     using value_type = int;
     using getter_return_type = int;
@@ -1144,7 +1147,7 @@ struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_RIGHT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_LEFT> {
     using value_type = int;
     using getter_return_type = int;
@@ -1156,7 +1159,7 @@ struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_LEFT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1168,7 +1171,7 @@ struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_ABOVE> {
     using value_type = int;
     using getter_return_type = int;
@@ -1180,7 +1183,7 @@ struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_ABOVE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_BELOW> {
     using value_type = int;
     using getter_return_type = int;
@@ -1192,7 +1195,7 @@ struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_BELOW> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_UNLIMITED_SCROLLING> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1204,7 +1207,7 @@ struct Setting<SettingsElement::SETTING_UNLIMITED_SCROLLING> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DRAW_DIRECTION_MODS_ENABLE> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1216,7 +1219,7 @@ struct Setting<SettingsElement::SETTING_DRAW_DIRECTION_MODS_ENABLE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DRAW_DIRECTION_MODS_RADIUS> {
     using value_type = int;
     using getter_return_type = int;
@@ -1228,7 +1231,7 @@ struct Setting<SettingsElement::SETTING_DRAW_DIRECTION_MODS_RADIUS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SNAP_ROTATION> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1240,7 +1243,7 @@ struct Setting<SettingsElement::SETTING_SNAP_ROTATION> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SNAP_ROTATION_TOLERANCE> {
     using value_type = double;
     using getter_return_type = double;
@@ -1252,7 +1255,7 @@ struct Setting<SettingsElement::SETTING_SNAP_ROTATION_TOLERANCE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SNAP_GRID> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1264,7 +1267,7 @@ struct Setting<SettingsElement::SETTING_SNAP_GRID> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SNAP_GRID_SIZE> {
     using value_type = double;
     using getter_return_type = double;
@@ -1276,7 +1279,7 @@ struct Setting<SettingsElement::SETTING_SNAP_GRID_SIZE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SNAP_GRID_TOLERANCE> {
     using value_type = double;
     using getter_return_type = double;
@@ -1288,7 +1291,7 @@ struct Setting<SettingsElement::SETTING_SNAP_GRID_TOLERANCE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STROKE_RECOGNIZER_MIN_SIZE> {
     using value_type = double;
     using getter_return_type = double;
@@ -1300,7 +1303,7 @@ struct Setting<SettingsElement::SETTING_STROKE_RECOGNIZER_MIN_SIZE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_TOUCH_DRAWING> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1312,7 +1315,7 @@ struct Setting<SettingsElement::SETTING_TOUCH_DRAWING> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_GTK_TOUCH_INERTIAL_SCROLLING> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1324,7 +1327,7 @@ struct Setting<SettingsElement::SETTING_GTK_TOUCH_INERTIAL_SCROLLING> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PRESSURE_GUESSING> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1336,19 +1339,20 @@ struct Setting<SettingsElement::SETTING_PRESSURE_GUESSING> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SCROLLBAR_HIDE_TYPE> {
     using value_type = ScrollbarHideType;
     using getter_return_type = ScrollbarHideType;
     static constexpr auto xmlName = "scrollbarHideType";
     static constexpr value_type DEFAULT = ScrollbarHideType::SCROLLBAR_HIDE_NONE;
-    static constexpr auto COMMENT = "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"";
+    static constexpr auto COMMENT =
+            "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"";
     static constexpr auto IMPORT_FN = importScrollbarHideType;
     static constexpr auto EXPORT_FN = exportScrollbarHideType;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DISABLE_SCROLLBAR_FADEOUT> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1360,7 +1364,7 @@ struct Setting<SettingsElement::SETTING_DISABLE_SCROLLBAR_FADEOUT> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DISABLE_AUDIO> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1372,7 +1376,7 @@ struct Setting<SettingsElement::SETTING_DISABLE_AUDIO> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_AUDIO_SAMPLE_RATE> {
     using value_type = double;
     using getter_return_type = double;
@@ -1384,7 +1388,7 @@ struct Setting<SettingsElement::SETTING_AUDIO_SAMPLE_RATE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_AUDIO_GAIN> {
     using value_type = double;
     using getter_return_type = double;
@@ -1396,7 +1400,7 @@ struct Setting<SettingsElement::SETTING_AUDIO_GAIN> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_SEEK_TIME> {
     using value_type = uint;
     using getter_return_type = uint;
@@ -1408,31 +1412,31 @@ struct Setting<SettingsElement::SETTING_DEFAULT_SEEK_TIME> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_AUDIO_INPUT_DEVICE> {
     using value_type = PaDeviceIndex;
     using getter_return_type = PaDeviceIndex;
     static constexpr auto xmlName = "audioInputDevice";
-    static constexpr value_type DEFAULT = -1; // Value formerly in AUDIO_INPUT_SYSTEM_DEFAULT
+    static constexpr value_type DEFAULT = -1;  // Value formerly in AUDIO_INPUT_SYSTEM_DEFAULT
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importPADeviceIndex;
     static constexpr auto EXPORT_FN = exportPADeviceIndex;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_AUDIO_OUTPUT_DEVICE> {
     using value_type = PaDeviceIndex;
     using getter_return_type = PaDeviceIndex;
     static constexpr auto xmlName = "audioOutputDevice";
-    static constexpr value_type DEFAULT = -1; // Value formerly in AUDIO_OUTPUT_SYSTEM_DEFAULT
+    static constexpr value_type DEFAULT = -1;  // Value formerly in AUDIO_OUTPUT_SYSTEM_DEFAULT
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importPADeviceIndex;
     static constexpr auto EXPORT_FN = exportPADeviceIndex;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_NUM_IGNORED_STYLUS_EVENTS> {
     using value_type = int;
     using getter_return_type = int;
@@ -1441,12 +1445,10 @@ struct Setting<SettingsElement::SETTING_NUM_IGNORED_STYLUS_EVENTS> {
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importIntProperty;
     static constexpr auto EXPORT_FN = exportIntProperty;
-    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type {
-        return std::max<value_type>(val, 50);
-    };
+    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 50); };
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_INPUT_SYSTEM_TPC_BUTTON> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1458,7 +1460,7 @@ struct Setting<SettingsElement::SETTING_INPUT_SYSTEM_TPC_BUTTON> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_INPUT_SYSTEM_DRAW_OUTSIDE_WINDOW> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1470,19 +1472,20 @@ struct Setting<SettingsElement::SETTING_INPUT_SYSTEM_DRAW_OUTSIDE_WINDOW> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_EMPTY_LAST_PAGE_APPEND> {
     using value_type = EmptyLastPageAppendType;
     using getter_return_type = EmptyLastPageAppendType;
     static constexpr auto xmlName = "emptyLastPageAppend";
     static constexpr value_type DEFAULT = EmptyLastPageAppendType::Disabled;
-    static constexpr auto COMMENT = "empty Last Page Append Type, allowed values are \"disabled\", \"onDrawOfLastPage\", and \"onScrollOfLastPage\"";
+    static constexpr auto COMMENT = "empty Last Page Append Type, allowed values are \"disabled\", "
+                                    "\"onDrawOfLastPage\", and \"onScrollOfLastPage\"";
     static constexpr auto IMPORT_FN = importEmptyLastPageAppendType;
     static constexpr auto EXPORT_FN = exportEmptyLastPageAppendType;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STROKE_FILTER_IGNORE_TIME> {
     using value_type = int;
     using getter_return_type = int;
@@ -1494,7 +1497,7 @@ struct Setting<SettingsElement::SETTING_STROKE_FILTER_IGNORE_TIME> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STROKE_FILTER_IGNORE_LENGTH> {
     using value_type = double;
     using getter_return_type = double;
@@ -1506,7 +1509,7 @@ struct Setting<SettingsElement::SETTING_STROKE_FILTER_IGNORE_LENGTH> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STROKE_FILTER_SUCCESSIVE_TIME> {
     using value_type = int;
     using getter_return_type = int;
@@ -1518,7 +1521,7 @@ struct Setting<SettingsElement::SETTING_STROKE_FILTER_SUCCESSIVE_TIME> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STROKE_FILTER_ENABLED> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1530,7 +1533,7 @@ struct Setting<SettingsElement::SETTING_STROKE_FILTER_ENABLED> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_DO_ACTION_ON_STROKE_FILTERED> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1542,7 +1545,7 @@ struct Setting<SettingsElement::SETTING_DO_ACTION_ON_STROKE_FILTERED> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_TRY_SELECT_ON_STROKE_FILTERED> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1554,7 +1557,7 @@ struct Setting<SettingsElement::SETTING_TRY_SELECT_ON_STROKE_FILTERED> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_LATEX_SETTINGS> {
     using value_type = LatexSettings;
     using getter_return_type = const LatexSettings&;
@@ -1566,7 +1569,7 @@ struct Setting<SettingsElement::SETTING_LATEX_SETTINGS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_SNAP_RECOGNIZED_SHAPES> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1578,7 +1581,7 @@ struct Setting<SettingsElement::SETTING_SNAP_RECOGNIZED_SHAPES> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_RESTORE_LINE_WIDTH> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1590,7 +1593,7 @@ struct Setting<SettingsElement::SETTING_RESTORE_LINE_WIDTH> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_PREFERRED_LOCALE> {
     using value_type = std::string;
     using getter_return_type = std::string;
@@ -1602,7 +1605,7 @@ struct Setting<SettingsElement::SETTING_PREFERRED_LOCALE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_AVERAGING_METHOD> {
     using value_type = StrokeStabilizer::AveragingMethod;
     using getter_return_type = StrokeStabilizer::AveragingMethod;
@@ -1611,12 +1614,12 @@ struct Setting<SettingsElement::SETTING_STABILIZER_AVERAGING_METHOD> {
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importStrokeAveragingMethod;
     static constexpr auto EXPORT_FN = exportStrokeAveragingMethod;
-    static constexpr auto VALIDATE_FN = [] (value_type value) -> value_type {
+    static constexpr auto VALIDATE_FN = [](value_type value) -> value_type {
         return StrokeStabilizer::isValid(value) ? value : StrokeStabilizer::AveragingMethod::NONE;
     };
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_PREPROCESSOR> {
     using value_type = StrokeStabilizer::Preprocessor;
     using getter_return_type = StrokeStabilizer::Preprocessor;
@@ -1625,12 +1628,12 @@ struct Setting<SettingsElement::SETTING_STABILIZER_PREPROCESSOR> {
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importStrokePreprocessor;
     static constexpr auto EXPORT_FN = exportStrokePreprocessor;
-    static constexpr auto VALIDATE_FN = [] (value_type value) -> value_type {
+    static constexpr auto VALIDATE_FN = [](value_type value) -> value_type {
         return StrokeStabilizer::isValid(value) ? value : StrokeStabilizer::Preprocessor::NONE;
     };
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_BUFFERSIZE> {
     using value_type = size_t;
     using getter_return_type = size_t;
@@ -1642,7 +1645,7 @@ struct Setting<SettingsElement::SETTING_STABILIZER_BUFFERSIZE> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_SIGMA> {
     using value_type = double;
     using getter_return_type = double;
@@ -1654,7 +1657,7 @@ struct Setting<SettingsElement::SETTING_STABILIZER_SIGMA> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_DEADZONE_RADIUS> {
     using value_type = double;
     using getter_return_type = double;
@@ -1666,7 +1669,7 @@ struct Setting<SettingsElement::SETTING_STABILIZER_DEADZONE_RADIUS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_DRAG> {
     using value_type = double;
     using getter_return_type = double;
@@ -1678,7 +1681,7 @@ struct Setting<SettingsElement::SETTING_STABILIZER_DRAG> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_MASS> {
     using value_type = double;
     using getter_return_type = double;
@@ -1690,7 +1693,7 @@ struct Setting<SettingsElement::SETTING_STABILIZER_MASS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_CUSP_DETECTION> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1702,7 +1705,7 @@ struct Setting<SettingsElement::SETTING_STABILIZER_CUSP_DETECTION> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_FINALIZE_STROKE> {
     using value_type = bool;
     using getter_return_type = bool;
@@ -1737,7 +1740,7 @@ struct Setting<SettingsElement::NUMBER_OF_SPACES_FOR_TAB> {
 };
 
 // Nested Settings from here:
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG> {
     using value_type = std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>;
     using getter_return_type = const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>&;
@@ -1749,7 +1752,7 @@ struct Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES> {
     using value_type = std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>;
     using getter_return_type = const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>&;
@@ -1761,7 +1764,7 @@ struct Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_NESTED_TOOLS> {
     using value_type = SElement;
     using getter_return_type = const SElement&;
@@ -1773,7 +1776,7 @@ struct Setting<SettingsElement::SETTING_NESTED_TOOLS> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_NESTED_TOUCH> {
     using value_type = SElement;
     using getter_return_type = const SElement&;
@@ -1785,7 +1788,7 @@ struct Setting<SettingsElement::SETTING_NESTED_TOUCH> {
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
-template<>
+template <>
 struct Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR> {
     using value_type = SElement;
     using getter_return_type = const SElement&;
@@ -1800,18 +1803,16 @@ struct Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR> 
 // Definition of map mapping property names to other properties
 // If a property is renamed add a line like this '{"oldName", "newName"},'
 static std::map<std::string, std::string> propertyRenamerMap = {
-    {"presureSensitivity", "pressureSensitivity"},
-    // Redirect all latex setting properties to latexSettings
-    {"latexSettings.autoCheckDependencies", "latexSettings"},
-    {"latexSettings.defaultText", "latexSettings"},
-    {"latexSettings.globalTemplatePath", "latexSettings"},
-    {"latexSettings.genCmd", "latexSettings"},
-    {"latexSettings.sourceViewThemeId", "latexSettings"},
-    {"latexSettings.editorFont", "latexSettings"},
-    {"latexSettings.useCustomEditorFont", "latexSettings"},
-    {"latexSettings.editorWordWrap", "latexSettings"},
-    {"latexSettings.sourceViewAutoIndent", "latexSettings"},
-    {"latexSettings.sourceViewSyntaxHighlight", "latexSettings"},
-    {"latexSettings.sourceViewShowLineNumbers", "latexSettings"}
-};
-
+        {"presureSensitivity", "pressureSensitivity"},
+        // Redirect all latex setting properties to latexSettings
+        {"latexSettings.autoCheckDependencies", "latexSettings"},
+        {"latexSettings.defaultText", "latexSettings"},
+        {"latexSettings.globalTemplatePath", "latexSettings"},
+        {"latexSettings.genCmd", "latexSettings"},
+        {"latexSettings.sourceViewThemeId", "latexSettings"},
+        {"latexSettings.editorFont", "latexSettings"},
+        {"latexSettings.useCustomEditorFont", "latexSettings"},
+        {"latexSettings.editorWordWrap", "latexSettings"},
+        {"latexSettings.sourceViewAutoIndent", "latexSettings"},
+        {"latexSettings.sourceViewSyntaxHighlight", "latexSettings"},
+        {"latexSettings.sourceViewShowLineNumbers", "latexSettings"}};

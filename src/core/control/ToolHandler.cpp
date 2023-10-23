@@ -92,11 +92,11 @@ void ToolHandler::initTools() {
     tools[TOOL_SELECT_REGION - TOOL_PEN] =
             std::make_unique<Tool>("selectRegion", TOOL_SELECT_REGION, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
-    tools[TOOL_SELECT_MULTILAYER_RECT - TOOL_PEN] =
-            std::make_unique<Tool>("selectMultiLayerRect", TOOL_SELECT_MULTILAYER_RECT, Colors::black, TOOL_CAP_NONE, std::nullopt);
+    tools[TOOL_SELECT_MULTILAYER_RECT - TOOL_PEN] = std::make_unique<Tool>(
+            "selectMultiLayerRect", TOOL_SELECT_MULTILAYER_RECT, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
-    tools[TOOL_SELECT_MULTILAYER_REGION - TOOL_PEN] =
-            std::make_unique<Tool>("selectMultiLayerRegion", TOOL_SELECT_MULTILAYER_REGION, Colors::black, TOOL_CAP_NONE, std::nullopt);
+    tools[TOOL_SELECT_MULTILAYER_REGION - TOOL_PEN] = std::make_unique<Tool>(
+            "selectMultiLayerRegion", TOOL_SELECT_MULTILAYER_REGION, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_SELECT_OBJECT - TOOL_PEN] =
             std::make_unique<Tool>("selectObject", TOOL_SELECT_OBJECT, Colors::black, TOOL_CAP_NONE, std::nullopt);
@@ -104,8 +104,7 @@ void ToolHandler::initTools() {
     tools[TOOL_VERTICAL_SPACE - TOOL_PEN] =
             std::make_unique<Tool>("verticalSpace", TOOL_VERTICAL_SPACE, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
-    tools[TOOL_HAND - TOOL_PEN] =
-            std::make_unique<Tool>("hand", TOOL_HAND, Colors::black, TOOL_CAP_NONE, std::nullopt);
+    tools[TOOL_HAND - TOOL_PEN] = std::make_unique<Tool>("hand", TOOL_HAND, Colors::black, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_PLAY_OBJECT - TOOL_PEN] =
             std::make_unique<Tool>("playObject", TOOL_PLAY_OBJECT, Colors::black, TOOL_CAP_NONE, std::nullopt);
@@ -204,7 +203,7 @@ void ToolHandler::addToolChangedListener(ToolChangedCallback listener) {
 
 auto ToolHandler::getTool(ToolType type) const -> Tool& { return *(this->tools[type - TOOL_PEN]); }
 
-auto ToolHandler::getActiveTool() const -> Tool* {return this->activeTool; }
+auto ToolHandler::getActiveTool() const -> Tool* { return this->activeTool; }
 
 auto ToolHandler::getToolType() const -> ToolType {
     Tool* tool = this->activeTool;
@@ -586,8 +585,9 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
     }
 
     if (this->activeTool->type == TOOL_SELECT_RECT || this->activeTool->type == TOOL_SELECT_REGION ||
-        this->activeTool->type == TOOL_SELECT_MULTILAYER_RECT || this->activeTool->type == TOOL_SELECT_MULTILAYER_REGION ||
-        this->activeTool->type == TOOL_SELECT_OBJECT || this->activeTool->type == TOOL_PLAY_OBJECT) {
+        this->activeTool->type == TOOL_SELECT_MULTILAYER_RECT ||
+        this->activeTool->type == TOOL_SELECT_MULTILAYER_REGION || this->activeTool->type == TOOL_SELECT_OBJECT ||
+        this->activeTool->type == TOOL_PLAY_OBJECT) {
         this->stateChangeListener->toolColorChanged();
         this->stateChangeListener->toolSizeChanged();
         this->stateChangeListener->toolFillChanged();
@@ -606,11 +606,10 @@ auto ToolHandler::isSinglePageTool() const -> bool {
              drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE ||
              drawingType == DRAWING_TYPE_SPLINE)) ||
            toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_MULTILAYER_RECT ||
-           toolType == TOOL_SELECT_MULTILAYER_REGION || toolType == TOOL_SELECT_OBJECT ||
-           toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM ||
-           toolType == TOOL_DRAW_ARROW || toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_FLOATING_TOOLBOX ||
-           toolType == TOOL_DRAW_SPLINE || toolType == TOOL_SELECT_PDF_TEXT_LINEAR ||
-           toolType == TOOL_SELECT_PDF_TEXT_RECT;
+           toolType == TOOL_SELECT_MULTILAYER_REGION || toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT ||
+           toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
+           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE ||
+           toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT;
 }
 
 auto ToolHandler::supportsTapFilter() const -> bool {

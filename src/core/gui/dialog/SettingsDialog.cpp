@@ -931,9 +931,7 @@ void SettingsDialog::save() {
 
     settings->setDisplayDpi(dpi);
 
-    for (auto&& bcg: this->buttonConfigs) {
-        bcg->saveSettings();
-    }
+    for (auto&& bcg: this->buttonConfigs) { bcg->saveSettings(); }
 
     languageConfig.saveSettings();
 

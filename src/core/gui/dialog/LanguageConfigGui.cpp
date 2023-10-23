@@ -34,9 +34,7 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
                 availableLocales.push_back(d.path().filename().u8string());
             }
         }
-    } catch (const fs::filesystem_error& e) {
-        g_warning("%s", e.what());
-    }
+    } catch (const fs::filesystem_error& e) { g_warning("%s", e.what()); }
     std::sort(availableLocales.begin(), availableLocales.end());
 
     // No pot file for English

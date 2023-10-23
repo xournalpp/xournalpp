@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <string>  // for string
 #include <optional>
+#include <string>  // for string
 
 /**
  * @brief Buttons that can have a configuration attached to them
