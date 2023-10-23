@@ -20,7 +20,7 @@ if (XGETTEXT_FOUND)
       "${PROJECT_SOURCE_DIR}/src/*.cpp"
 
     GLADEFILES
-      "${PROJECT_SOURCE_DIR}/ui/*.glade"
+      "${PROJECT_SOURCE_DIR}/ui/*.glade;${PROJECT_SOURCE_DIR}/ui/*.xml"
   )
 
   gettext_create_translations ("${potfile}" ALL NOUPDATE)
