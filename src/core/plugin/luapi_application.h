@@ -1813,7 +1813,7 @@ static int applib_getToolInfo(lua_State* L) {
     } else if (strcmp(mode, "text") == 0) {
         Settings* settings = control->getSettings();
         const XojFont& font = settings->getFont();
-        std::string fontname = font.getName();
+        const std::string& fontname = font.getName();
         double size = font.getSize();
 
         Tool& tool = toolHandler->getTool(TOOL_TEXT);
