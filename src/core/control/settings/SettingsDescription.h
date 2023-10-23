@@ -673,7 +673,7 @@ struct Setting<SettingsElement::SETTING_NUM_PAIRS_OFFSET> {
     static constexpr value_type DEFAULT = 1;
     static constexpr auto COMMENT = nullptr;
     static constexpr auto IMPORT_FN = importIntProperty;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
+    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
