@@ -29,27 +29,13 @@ void ToolPageSpinner::setPageInfo(const size_t pageCount, const size_t pdfPage) 
 
 void ToolPageSpinner::updateLabels() {
     std::string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % this->pageCount);
-    if (this->orientation == GTK_ORIENTATION_HORIZONTAL) {
-        std::string pdfString;
-        if (this->pdfPage > 0) {  // zero means that theres no pdf currently
-            pdfString = std::string(", ") + FS(_F("PDF Page {1}") % this->pdfPage);
-        }
-        gtk_label_set_text(GTK_LABEL(lbPageNo.get()), (ofString + pdfString).c_str());
-    } else {
-        xoj_assert(lbVerticalPdfPage.get());
-        gtk_label_set_text(GTK_LABEL(lbPageNo.get()), ofString.c_str());
-        if (this->pdfPage > 0) {  // zero means that theres no pdf currently
-            gtk_label_set_text(GTK_LABEL(lbVerticalPdfPage.get()), FS(_F("PDF {1}") % this->pdfPage).c_str());
-            if (gtk_widget_get_parent(this->lbVerticalPdfPage.get()) == nullptr) {
-                // re-add pdf label if it has been removed previously
-                gtk_box_append(GTK_BOX(item.get()), this->lbVerticalPdfPage.get());
-                gtk_widget_show(this->lbVerticalPdfPage.get());
-            }
+    if (this->pdfPage > 0) {
+        if (this->orientation == GTK_ORIENTATION_HORIZONTAL) {
+            ofString += std::string(", ") + FS(_F("PDF Page {1}") % this->pdfPage);
         } else {
-            if (gtk_widget_get_parent(this->lbVerticalPdfPage.get()) != nullptr) {
-                gtk_box_remove(GTK_BOX(item.get()), this->lbVerticalPdfPage.get());
-            }
+            ofString += std::string("\n") + FS(_F("PDF {1}") % this->pdfPage);
         }
+        gtk_label_set_text(GTK_LABEL(lbPageNo.get()), ofString.c_str());
     }
 }
 
@@ -77,16 +63,16 @@ auto ToolPageSpinner::createItem(bool horizontal) -> GtkWidget* {
         gtk_widget_set_margin_start(this->lbPageNo.get(), 7);
         gtk_widget_set_margin_end(this->lbPageNo.get(), 7);
     } else {
-        this->lbVerticalPdfPage.reset(gtk_label_new(""), xoj::util::adopt);
-
-        gtk_widget_set_halign(pageLabel, GTK_ALIGN_BASELINE);
+        gtk_widget_set_halign(pageLabel, GTK_ALIGN_CENTER);
         gtk_widget_set_margin_top(pageLabel, 7);
         gtk_widget_set_margin_bottom(pageLabel, 7);
         gtk_widget_set_halign(spinner, GTK_ALIGN_CENTER);
-        gtk_widget_set_halign(this->lbPageNo.get(), GTK_ALIGN_BASELINE);
+        gtk_widget_set_halign(this->lbPageNo.get(), GTK_ALIGN_CENTER);
+        gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
+        gtk_widget_set_valign(this->lbPageNo.get(), GTK_ALIGN_BASELINE);
+        gtk_label_set_justify(GTK_LABEL(this->lbPageNo.get()), GTK_JUSTIFY_CENTER);
         gtk_widget_set_margin_top(this->lbPageNo.get(), 7);
         gtk_widget_set_margin_bottom(this->lbPageNo.get(), 7);
-        gtk_widget_set_halign(lbVerticalPdfPage.get(), GTK_ALIGN_BASELINE);
     }
 
     this->item.reset(gtk_box_new(orientation, 1), xoj::util::adopt);

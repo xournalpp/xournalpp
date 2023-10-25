@@ -47,7 +47,6 @@ private:
     GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
 
     xoj::util::WidgetSPtr lbPageNo;
-    xoj::util::WidgetSPtr lbVerticalPdfPage;
 
     /** The current page of the document. */
     size_t pageCount = 0;
