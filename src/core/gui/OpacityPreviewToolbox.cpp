@@ -249,8 +249,7 @@ void OpacityPreviewToolbox::resetEventBoxes() {
     this->opacityPreviewToolbox.eventBox = this->eventBoxes.end();
 
     this->updateColor();
-    const std::vector<std::unique_ptr<ColorToolItem>>& colorItems =
-            this->theMainWindow->getToolMenuHandler()->getColorToolItems();
+    const auto& colorItems = this->theMainWindow->getToolMenuHandler()->getColorToolItems();
 
     int index = 0;
 
