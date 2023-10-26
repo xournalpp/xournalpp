@@ -22,7 +22,7 @@ static int percentToByte(double percent) { return static_cast<int>(std::round(pe
 static double byteToPercent(int byte) { return byte / 2.55; }
 
 OpacityPreviewToolbox::OpacityPreviewToolbox(MainWindow* theMainWindow, GtkOverlay* overlay):
-        theMainWindow(theMainWindow), overlay(overlay, xoj::util::ref) {
+        theMainWindow(theMainWindow), overlay(overlay, xoj::util::refsink) {
     this->opacityPreviewToolbox.widget = theMainWindow->get("opacityPreviewTool");
 
     gtk_overlay_add_overlay(overlay, this->opacityPreviewToolbox.widget);
