@@ -1,61 +1,45 @@
-#include <array>
+#include <string>
 #include <map>
+#include <vector>
+#include <array>
+#include <utility>
 #include <memory>
 #include <optional>
-#include <string>
-#include <utility>
-#include <vector>
 
 #include <libxml/tree.h>
 
-#include "control/ToolEnums.h"
 #include "model/Font.h"
 #include "util/Color.h"
-#include "util/i18n.h"  // for _
+#include "control/ToolEnums.h"
+#include "util/i18n.h"                           // for _
 
-#include "ButtonConfig.h"
 #include "LatexSettings.h"
-#include "Settings.h"
 #include "SettingsEnums.h"
 #include "ViewModes.h"
 #include "filesystem.h"
+#include "ButtonConfig.h"
+#include "Settings.h"
 
-// clang-format off
-#include "SettingsDescription.h" // Turn format off for this, it only works if included after Settings.h
-// clang-format on
+#include "SettingsDescription.h"
 
 // Initialize non literal DEFAULT values here
-Setting<SettingsElement::SETTING_FONT>::value_type Setting<SettingsElement::SETTING_FONT>::DEFAULT =
-        XojFont("Sans", 12);
-Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME>::value_type
-        Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME>::DEFAULT = _("%F-Note-%H-%M");
-Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>::value_type
-        Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>::DEFAULT = _("%{name}_annotated");
-Setting<SettingsElement::SETTING_LATEX_SETTINGS>::value_type
-        Setting<SettingsElement::SETTING_LATEX_SETTINGS>::DEFAULT{};
-Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>::value_type
-        Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>::DEFAULT{
-                std::make_shared<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT,
-                                               ERASER_TYPE_NONE),  // Eraser
-                std::make_shared<ButtonConfig>(TOOL_HAND, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT,
-                                               ERASER_TYPE_NONE),  // Middle button
-                std::make_shared<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT,
-                                               ERASER_TYPE_NONE),  // Right button
-                std::make_shared<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT,
-                                               ERASER_TYPE_NONE),  // Touch
-                std::make_shared<ButtonConfig>(TOOL_PEN, Colors::black, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT,
-                                               ERASER_TYPE_NONE),  // Default config
-                std::make_shared<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT,
-                                               ERASER_TYPE_NONE),  // Pen button 1
-                std::make_shared<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT,
-                                               ERASER_TYPE_NONE)  // Pen button 2
-        };
-Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>::value_type
-        Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>::DEFAULT{};
+Setting<SettingsElement::SETTING_FONT>::value_type Setting<SettingsElement::SETTING_FONT>::DEFAULT = XojFont("Sans", 12);
+Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME>::value_type Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME>::DEFAULT = _("%F-Note-%H-%M");
+Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>::value_type Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>::DEFAULT = _("%{name}_annotated");
+Setting<SettingsElement::SETTING_LATEX_SETTINGS>::value_type Setting<SettingsElement::SETTING_LATEX_SETTINGS>::DEFAULT{};
+Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>::value_type Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>::DEFAULT{
+        std::make_shared<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE), // Eraser
+        std::make_shared<ButtonConfig>(TOOL_HAND, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE), // Middle button
+        std::make_shared<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE), // Right button
+        std::make_shared<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE), // Touch
+        std::make_shared<ButtonConfig>(TOOL_PEN, Colors::black, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE), // Default config
+        std::make_shared<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE), // Pen button 1
+        std::make_shared<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE) // Pen button 2
+};
+Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>::value_type Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>::DEFAULT{};
 Setting<SettingsElement::SETTING_NESTED_TOOLS>::value_type Setting<SettingsElement::SETTING_NESTED_TOOLS>::DEFAULT{};
 Setting<SettingsElement::SETTING_NESTED_TOUCH>::value_type Setting<SettingsElement::SETTING_NESTED_TOUCH>::DEFAULT{};
-Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::value_type
-        Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::DEFAULT{};
+Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::value_type Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::DEFAULT{};
 
 
 // Implementation of import functions
@@ -305,7 +289,7 @@ bool importStrokePreprocessor(xmlNodePtr node, StrokeStabilizer::Preprocessor& v
 }
 bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& var) {
     std::map<std::string, std::pair<std::string, std::string>> buttonConfigMap{};
-    for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) {  // Loop through the buttons
+    for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) { // Loop through the buttons
         if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data")) == 0) {
             std::string name;
             xmlChar* nameProp = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
@@ -316,32 +300,29 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
             name = reinterpret_cast<const char*>(nameProp);
             xmlFree(nameProp);
 
-            for (xmlNodePtr attr = cur->children; attr != nullptr;
-                 attr = attr->next) {  // Loop through the attributes and put them into the map
+            for (xmlNodePtr attr = cur->children; attr != nullptr; attr = attr->next) { // Loop through the attributes and put them into the map
                 if (xmlStrcmp(attr->name, reinterpret_cast<const xmlChar*>("attribute")) == 0) {
                     xmlChar* attrName = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("name"));
                     xmlChar* value = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("value"));
                     xmlChar* type = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("type"));
-
+                    
                     if (attrName == nullptr || value == nullptr || type == nullptr) {
-                        g_warning("SettingsDescription::attribute tag in buttonConfig for button '%s' is missing "
-                                  "properties!",
-                                  name.c_str());
+                        g_warning("SettingsDescription::attribute tag in buttonConfig for button '%s' is missing properties!",
+                                name.c_str());
                         xmlFree(attrName);
                         xmlFree(value);
                         xmlFree(type);
                         continue;
                     }
 
-                    buttonConfigMap.emplace(
-                            reinterpret_cast<const char*>(attrName),
+                    buttonConfigMap.emplace(reinterpret_cast<const char*>(attrName),
                             std::make_pair(reinterpret_cast<const char*>(type), reinterpret_cast<const char*>(value)));
                     xmlFree(attrName);
                     xmlFree(value);
                     xmlFree(type);
                 } else {
                     g_warning("SettingsDescription::Unexpected xml tag '%s' in buttonConfig for button '%s'!",
-                              reinterpret_cast<const char*>(cur->name), name.c_str());
+                            reinterpret_cast<const char*>(cur->name), name.c_str());
                 }
             }
 
@@ -353,24 +334,21 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
                 // Check if the tool type was read, if not skip this iteration
                 if (auto pTool = buttonConfigMap.find("tool"); pTool != buttonConfigMap.end()) {
                     ToolType tool = TOOL_NONE;
-                    if (pTool->second.first !=
-                        "string") {  // Check if tool type has a type of string, if not leave type none
-                        g_warning(
-                                "SettingsDescription::ButtonConfig unexpected type for attribute tool for button '%s'",
+                    if (pTool->second.first != "string") { // Check if tool type has a type of string, if not leave type none
+                        g_warning("SettingsDescription::ButtonConfig unexpected type for attribute tool for button '%s'", 
                                 reinterpret_cast<const char*>(cur->name));
                     } else {
                         tool = toolTypeFromString(pTool->second.second);
                     }
                     cfg->action = tool;
-
-                    if (tool == TOOL_PEN) {  // If the tool is a pen, check for strokeType
+                    
+                    if (tool == TOOL_PEN) { // If the tool is a pen, check for strokeType
                         auto strokeTypePair = buttonConfigMap.find("strokeType");
                         StrokeType strokeType = STROKE_TYPE_NONE;
                         if (strokeTypePair != buttonConfigMap.end()) {
                             if (strokeTypePair->second.first != "string") {
-                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute strokeType "
-                                          "for button '%s'",
-                                          reinterpret_cast<const char*>(cur->name));
+                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute strokeType for button '%s'",
+                                        reinterpret_cast<const char*>(cur->name));
                             } else {
                                 strokeType = strokeTypeFromString(strokeTypePair->second.second);
                             }
@@ -378,46 +356,38 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
                         cfg->strokeType = strokeType;
                     }
 
-                    if (tool == TOOL_PEN ||
-                        tool == TOOL_HIGHLIGHTER) {  // For Pen and highlighter check for drawingType
-                        if (auto drawingTypePair = buttonConfigMap.find("drawingType");
-                            drawingTypePair != buttonConfigMap.end()) {
-                            if (drawingTypePair->second.first !=
-                                "string") {  // If type is not string ignore and read string anyways, but warn about it
-                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute drawingType "
-                                          "for button '%s'",
-                                          reinterpret_cast<const char*>(cur->name));
+                    if (tool == TOOL_PEN || tool == TOOL_HIGHLIGHTER) { // For Pen and highlighter check for drawingType
+                        if (auto drawingTypePair = buttonConfigMap.find("drawingType"); drawingTypePair != buttonConfigMap.end()) {
+                            if (drawingTypePair->second.first != "string") { // If type is not string ignore and read string anyways, but warn about it
+                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute drawingType for button '%s'",
+                                        reinterpret_cast<const char*>(cur->name));
                             }
                             cfg->drawingType = drawingTypeFromString(drawingTypePair->second.second);
                         }
                     }
 
-                    if (tool == TOOL_PEN || tool == TOOL_HIGHLIGHTER || tool == TOOL_ERASER) {  // Check for size
+                    if (tool == TOOL_PEN || tool == TOOL_HIGHLIGHTER || tool == TOOL_ERASER) { // Check for size
                         auto sizePair = buttonConfigMap.find("size");
                         ToolSize size = TOOL_SIZE_NONE;
                         if (sizePair != buttonConfigMap.end()) {
                             if (sizePair->second.first != "string") {
-                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute size for "
-                                          "button '%s'",
-                                          reinterpret_cast<const char*>(cur->name));
+                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute size for button '%s'",
+                                        reinterpret_cast<const char*>(cur->name));
                             }
                             size = toolSizeFromString(sizePair->second.second);
                         }
                         cfg->size = size;
                     }
 
-                    if (tool == TOOL_PEN || tool == TOOL_HIGHLIGHTER || tool == TOOL_TEXT) {  // Check for color
+                    if (tool == TOOL_PEN || tool == TOOL_HIGHLIGHTER || tool == TOOL_TEXT) { // Check for color
                         if (auto colorPair = buttonConfigMap.find("color"); colorPair != buttonConfigMap.end()) {
                             if (colorPair->second.first == "int") {
-                                cfg->color = Color(static_cast<uint>(
-                                        g_ascii_strtoull(colorPair->second.second.c_str(), nullptr, 10)));
+                                cfg->color = Color(static_cast<uint>(g_ascii_strtoull(colorPair->second.second.c_str(), nullptr, 10)));
                             } else if (colorPair->second.first == "hex") {
-                                cfg->color = Color(static_cast<uint>(
-                                        g_ascii_strtoull(colorPair->second.second.c_str(), nullptr, 16)));
+                                cfg->color = Color(static_cast<uint>(g_ascii_strtoull(colorPair->second.second.c_str(), nullptr, 16)));
                             } else {
-                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute size for "
-                                          "button '%s'",
-                                          reinterpret_cast<const char*>(cur->name));
+                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute size for button '%s'",
+                                        reinterpret_cast<const char*>(cur->name));
                             }
                         }
                     }
@@ -428,9 +398,8 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
                         EraserType eraserMode = ERASER_TYPE_NONE;
                         if (eraserModePair != buttonConfigMap.end()) {
                             if (eraserModePair->second.first != "string") {
-                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute eraserMode "
-                                          "for button '%s'",
-                                          reinterpret_cast<const char*>(cur->name));
+                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute eraserMode for button '%s'",
+                                        reinterpret_cast<const char*>(cur->name));
                             }
                             eraserMode = eraserTypeFromString(eraserModePair->second.second);
                         }
@@ -442,9 +411,8 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
                         auto devicePair = buttonConfigMap.find("device");
                         if (devicePair != buttonConfigMap.end()) {
                             if (devicePair->second.first != "string") {
-                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute device for "
-                                          "button '%s'",
-                                          reinterpret_cast<const char*>(cur->name));
+                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute device for button '%s'",
+                                        reinterpret_cast<const char*>(cur->name));
                             }
                             cfg->device = devicePair->second.second;
                         }
@@ -452,9 +420,8 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
                         auto disableDrawingPair = buttonConfigMap.find("disableDrawing");
                         if (disableDrawingPair != buttonConfigMap.end()) {
                             if (disableDrawingPair->second.first != "boolean") {
-                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute "
-                                          "disableDrawing for button '%s'",
-                                          reinterpret_cast<const char*>(cur->name));
+                                g_warning("SettingsDescription::ButtonConfig unexpected type for attribute disableDrawing for button '%s'",
+                                        reinterpret_cast<const char*>(cur->name));
                             } else {
                                 cfg->disableDrawing = disableDrawingPair->second.second == "true";
                             }
@@ -463,25 +430,24 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
 
                 } else {
                     g_warning("SettingsDescription::ButtonConfig for '%s' does not contain tool attribute",
-                              reinterpret_cast<const char*>(cur->name));
+                            reinterpret_cast<const char*>(cur->name));
                 }
 
             } else {
-                g_warning("SettingsDescription::Unknown Button '%s'!", name.c_str());
+                g_warning("SettingsDescription::Unknown Button '%s'!",
+                        name.c_str());
             }
 
             // Finally clear map for next iteration
             buttonConfigMap.clear();
         } else {
-            g_warning("SettingsDescription::Unexpected xml tag '%s' in buttonConfig!",
-                      reinterpret_cast<const char*>(cur->name));
+            g_warning("SettingsDescription::Unexpected xml tag '%s' in buttonConfig!", reinterpret_cast<const char*>(cur->name));
         }
     }
     return true;
 }
-bool importDeviceClasses(xmlNodePtr node,
-                         std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& var) {
-    for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) {  // Loop through the devices
+bool importDeviceClasses(xmlNodePtr node, std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& var) {
+    for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) { // Loop through the devices
         if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data")) == 0) {
             std::string name;
             std::optional<int> deviceClass{};
@@ -502,48 +468,46 @@ bool importDeviceClasses(xmlNodePtr node,
                     xmlChar* type = xmlGetProp(attr, reinterpret_cast<const xmlChar*>("type"));
 
                     if (attrName == nullptr || value == nullptr || type == nullptr) {
-                        g_warning("SettingsDescription::attribute tag in deviceClasses for device '%s' is missing "
-                                  "properties!",
-                                  name.c_str());
+                        g_warning("SettingsDescription::attribute tag in deviceClasses for device '%s' is missing properties!",
+                                name.c_str());
                         continue;
                     }
 
-                    if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceClass")) == 0 &&
-                        xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
-                        deviceClass = (int)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+                    if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceClass")) == 0
+                            && xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
+                        deviceClass = (int) g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
                         continue;
                     }
-                    if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceSource")) == 0 &&
-                        xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
-                        deviceSource = (int)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+                    if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceSource")) == 0
+                            && xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
+                        deviceSource = (int) g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
                         continue;
                     }
 
                     if (xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) != 0) {
-                        g_warning("SettingsDescription::attribute '%s' in deviceClasses for device '%s' has non int "
-                                  "value!",
-                                  reinterpret_cast<const char*>(attrName), name.c_str());
+                        g_warning("SettingsDescription::attribute '%s' in deviceClasses for device '%s' has non int value!",
+                                reinterpret_cast<const char*>(attrName), name.c_str());
                         continue;
                     }
                     g_warning("SettingsDescription::Unknown attribute '%s' in deviceClasses for device '%s'!",
-                              reinterpret_cast<const char*>(attrName), name.c_str());
+                            reinterpret_cast<const char*>(attrName), name.c_str());
                 } else {
                     g_warning("SettingsDescription::Unexpected xml tag '%s' in deviceClasses for device '%s'!",
-                              reinterpret_cast<const char*>(cur->name), name.c_str());
+                            reinterpret_cast<const char*>(cur->name), name.c_str());
                 }
             }
 
             if (!(deviceClass.has_value() && deviceSource.has_value())) {
-                g_warning("SettingsDescription::device '%s' in deviceClasses is missing attributes!", name.c_str());
+                g_warning("SettingsDescription::device '%s' in deviceClasses is missing attributes!",
+                            name.c_str());
                 continue;
             }
 
             var.emplace(name, std::make_pair(static_cast<InputDeviceTypeOption>(deviceClass.value()),
-                                             static_cast<GdkInputSource>(deviceSource.value())));
+                                                                static_cast<GdkInputSource>(deviceSource.value())));
 
         } else {
-            g_warning("SettingsDescription::Unexpected xml tag '%s' in buttonConfig!",
-                      reinterpret_cast<const char*>(cur->name));
+            g_warning("SettingsDescription::Unexpected xml tag '%s' in buttonConfig!", reinterpret_cast<const char*>(cur->name));
         }
     }
     return true;
@@ -564,21 +528,22 @@ bool importSElement(xmlNodePtr node, SElement& var) {
 
             if (!(name == nullptr || value == nullptr || type == nullptr)) {
                 std::string typeString = reinterpret_cast<const char*>(type);
-
+                
                 if (typeString == "int") {
                     var.setInt(reinterpret_cast<const char*>(name),
-                               static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10)));
+                            static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10)));
                 } else if (typeString == "double") {
                     var.setDouble(reinterpret_cast<const char*>(name),
-                                  g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr));
+                            g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr));
                 } else if (typeString == "hex") {
                     var.setIntHex(reinterpret_cast<const char*>(name),
-                                  static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 16)));
+                            static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 16)));
                 } else if (typeString == "string") {
-                    var.setString(reinterpret_cast<const char*>(name), reinterpret_cast<const char*>(value));
+                    var.setString(reinterpret_cast<const char*>(name),
+                            reinterpret_cast<const char*>(value));
                 } else if (typeString == "boolean") {
                     var.setBool(reinterpret_cast<const char*>(name),
-                                strcmp(reinterpret_cast<const char*>(value), "true") == 0);
+                             strcmp(reinterpret_cast<const char*>(value), "true") == 0);
                 } else {
                     g_warning("SettingsDescription::Unknown datatype: %s\n", typeString.c_str());
                 }
@@ -695,44 +660,35 @@ xmlNodePtr exportStrokeAveragingMethod(xmlNodePtr node, std::string name, Stroke
 xmlNodePtr exportStrokePreprocessor(xmlNodePtr node, std::string name, StrokeStabilizer::Preprocessor value) {
     return exportIntProperty(node, name, static_cast<int>(value));
 }
-xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
-                              const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value) {
+xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name, const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value) {
     xmlNodePtr xmlNodeButtonConfig = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
-    xmlSetProp(xmlNodeButtonConfig, reinterpret_cast<const xmlChar*>("name"),
-               reinterpret_cast<const xmlChar*>(name.c_str()));
+    xmlSetProp(xmlNodeButtonConfig, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(name.c_str()));
     for (int i = 0; i < BUTTON_COUNT; i++) {
         const auto& cfg = value[i];
-        xmlNodePtr btnNode =
-                xmlNewChild(xmlNodeButtonConfig, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
-        xmlSetProp(btnNode, reinterpret_cast<const xmlChar*>("name"),
-                   reinterpret_cast<const xmlChar*>(buttonToString(static_cast<Button>(i))));
+        xmlNodePtr btnNode = xmlNewChild(xmlNodeButtonConfig, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
+        xmlSetProp(btnNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(buttonToString(static_cast<Button>(i))));
 
         // save the tool type first
         ToolType const tool = cfg->action;
         xmlNodePtr xmlNode = xmlNewChild(btnNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
         xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("tool"));
         xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>("string"));
-        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                   reinterpret_cast<const xmlChar*>(toolTypeToString(tool).c_str()));
+        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(toolTypeToString(tool).c_str()));
 
         // if tool is pen save stroke type next
         if (tool == TOOL_PEN) {
             xmlNode = xmlNewChild(btnNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"),
-                       reinterpret_cast<const xmlChar*>("strokeType"));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("strokeType"));
             xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>("string"));
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                       reinterpret_cast<const xmlChar*>(strokeTypeToString(cfg->strokeType).c_str()));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(strokeTypeToString(cfg->strokeType).c_str()));
         }
 
         // if tool is pen or highlighter save drawing type next
         if (tool == TOOL_PEN || tool == TOOL_HIGHLIGHTER) {
             xmlNode = xmlNewChild(btnNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"),
-                       reinterpret_cast<const xmlChar*>("drawingType"));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("drawingType"));
             xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>("string"));
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                       reinterpret_cast<const xmlChar*>(drawingTypeToString(cfg->drawingType).c_str()));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(drawingTypeToString(cfg->drawingType).c_str()));
         }
 
         // if tool is pen, highlighter or eraser save size next
@@ -740,8 +696,7 @@ xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
             xmlNode = xmlNewChild(btnNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
             xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("size"));
             xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>("string"));
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                       reinterpret_cast<const xmlChar*>(toolSizeToString(cfg->size).c_str()));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(toolSizeToString(cfg->size).c_str()));
         }
 
         // if tool is pen, highlighter or text save color next
@@ -757,11 +712,9 @@ xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
         // if tool is eraser save eraser mode next
         if (tool == TOOL_ERASER) {
             xmlNode = xmlNewChild(btnNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"),
-                       reinterpret_cast<const xmlChar*>("eraserMode"));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("eraserMode"));
             xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>("string"));
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                       reinterpret_cast<const xmlChar*>(eraserTypeToString(cfg->eraserMode).c_str()));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(eraserTypeToString(cfg->eraserMode).c_str()));
         }
 
         // if the button is touch device save touch device specific settings
@@ -769,41 +722,32 @@ xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
             xmlNode = xmlNewChild(btnNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
             xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("device"));
             xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>("string"));
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                       reinterpret_cast<const xmlChar*>(cfg->device.c_str()));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(cfg->device.c_str()));
 
             xmlNode = xmlNewChild(btnNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"),
-                       reinterpret_cast<const xmlChar*>("disableDrawing"));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("disableDrawing"));
             xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>("boolean"));
-            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                       reinterpret_cast<const xmlChar*>(cfg->disableDrawing ? "true" : "false"));
+            xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(cfg->disableDrawing ? "true" : "false"));
         }
     }
     return xmlNodeButtonConfig;
 }
-xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name,
-                               const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value) {
+xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name, const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value) {
     xmlNodePtr xmlNodeDeviceClasses = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
-    xmlSetProp(xmlNodeDeviceClasses, reinterpret_cast<const xmlChar*>("name"),
-               reinterpret_cast<const xmlChar*>(name.c_str()));
+    xmlSetProp(xmlNodeDeviceClasses, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(name.c_str()));
     for (auto& device: value) {
-        xmlNodePtr devNode =
-                xmlNewChild(xmlNodeDeviceClasses, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
-        xmlSetProp(devNode, reinterpret_cast<const xmlChar*>("name"),
-                   reinterpret_cast<const xmlChar*>(device.first.c_str()));
+        xmlNodePtr devNode = xmlNewChild(xmlNodeDeviceClasses, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
+        xmlSetProp(devNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(device.first.c_str()));
 
         xmlNodePtr xmlNode = xmlNewChild(devNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
         xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("deviceClass"));
         xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>("int"));
-        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                   reinterpret_cast<const xmlChar*>(std::to_string(static_cast<int>(device.second.first)).c_str()));
+        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(std::to_string(static_cast<int>(device.second.first)).c_str()));
 
         xmlNode = xmlNewChild(devNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
         xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("deviceSource"));
         xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>("int"));
-        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                   reinterpret_cast<const xmlChar*>(std::to_string(static_cast<int>(device.second.second)).c_str()));
+        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(std::to_string(static_cast<int>(device.second.second)).c_str()));
     }
     return xmlNodeDeviceClasses;
 }
@@ -842,16 +786,31 @@ xmlNodePtr exportSElement(xmlNodePtr node, std::string name, const SElement& val
 
         xmlNodePtr xmlNode = xmlNewChild(xmlDataNode, nullptr, reinterpret_cast<const xmlChar*>("attribute"), nullptr);
         xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(aname.c_str()));
-        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"),
-                   reinterpret_cast<const xmlChar*>(typeStr.c_str()));
-        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"),
-                   reinterpret_cast<const xmlChar*>(valueStr.c_str()));
+        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("type"), reinterpret_cast<const xmlChar*>(typeStr.c_str()));
+        xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(valueStr.c_str()));
 
         if (!attrib.comment.empty()) {
             xmlNodePtr com = xmlNewComment(reinterpret_cast<const xmlChar*>(attrib.comment.c_str()));
             xmlAddPrevSibling(xmlDataNode, com);
         }
+
     }
-    for (auto const& p: value.children()) { exportSElement(xmlDataNode, p.first, p.second); }
+    for (auto const& p: value.children()) {
+        exportSElement(xmlDataNode, p.first, p.second);
+    }
     return xmlDataNode;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

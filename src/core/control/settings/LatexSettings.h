@@ -14,7 +14,6 @@
 #include <string>
 
 #include "model/Font.h"
-
 #include "filesystem.h"
 
 class LatexSettings {
