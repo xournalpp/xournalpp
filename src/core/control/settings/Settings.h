@@ -65,7 +65,7 @@ public:
     std::map<std::string, std::function<void(xmlNodePtr)>> importFunctions;
     std::array<std::function<xmlNodePtr(xmlNodePtr)>, (int)SettingsElement::ENUM_COUNT> exportFunctions;
     template <SettingsElement t>
-    typename Setting<t>::getter_return_type getValue() const {
+    getter_return_t<typename Setting<t>::value_type> getValue() const {
         return std::get<(std::size_t)t>(vars);
     }
     template <SettingsElement t>
@@ -188,7 +188,7 @@ private:
 
 public:
     template <SettingsElement t>
-    typename Setting<t>::getter_return_type get() const {
+    getter_return_t<typename Setting<t>::value_type> get() const {
         return settings.getValue<t>();
     }
 
