@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <set>
+
 #include <gdk/gdk.h>  // for GdkEventSequence
 
 #include "util/Point.h"  // for Point
@@ -22,6 +24,9 @@ struct InputEvent;
 
 class TouchInputHandler: public AbstractInputHandler {
 private:
+    bool zooming = false;
+    std::set<GdkEventSequence*> invalidActive;
+
     GdkEventSequence* primarySequence{};
     GdkEventSequence* secondarySequence{};
 
@@ -48,5 +53,6 @@ public:
     ~TouchInputHandler() override = default;
 
     bool handleImpl(InputEvent const& event) override;
+    void onBlock() override;
     void onUnblock() override;
 };
