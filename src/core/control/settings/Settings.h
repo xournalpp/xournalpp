@@ -81,18 +81,6 @@ public:
         return Setting<t>::DEFAULT;
     }
     template <SettingsElement t>
-    constexpr auto getExportFN() const {
-        return Setting<t>::EXPORT_FN;
-    }
-    template <SettingsElement t>
-    constexpr auto getImportFN() const {
-        return Setting<t>::IMPORT_FN;
-    }
-    template <SettingsElement t>
-    constexpr auto getValidateFN() const {
-        return Setting<t>::VALIDATE_FN;
-    }
-    template <SettingsElement t>
     void setValue(const typename Setting<t>::value_type& v) {
         if (!(v == std::get<(std::size_t)t>(vars))) {
             std::get<(std::size_t)t>(vars) = Setting<t>::VALIDATE_FN(v);
@@ -100,7 +88,7 @@ public:
     }
     template <SettingsElement t>
     void importSetting(xmlNodePtr node) {
-        if (Setting<t>::IMPORT_FN(node, std::get<(std::size_t)t>(vars))) {
+        if (importer<t>::fn(node, std::get<(std::size_t)t>(vars))) {
             auto valFN = Setting<t>::VALIDATE_FN;
             std::get<(std::size_t)t>(vars) = valFN(std::get<(std::size_t)t>(vars));
         }

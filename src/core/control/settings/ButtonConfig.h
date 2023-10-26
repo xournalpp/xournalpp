@@ -80,7 +80,8 @@ public:
 
     friend class Settings;
     friend class ButtonConfigGui;
-    friend bool importButtonConfig(xmlNodePtr, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>&);
+    template <typename T>
+    friend bool importProperty(xmlNodePtr, T&);
     friend xmlNodePtr exportButtonConfig(xmlNodePtr, std::string,
                                          const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>&);
 };

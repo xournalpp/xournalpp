@@ -59,7 +59,8 @@ Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::value_
 
 
 // Implementation of import functions
-bool importStringProperty(xmlNodePtr node, std::string& var) {
+template <>
+bool importProperty(xmlNodePtr node, std::string& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = reinterpret_cast<const char*>(value);
@@ -71,7 +72,8 @@ bool importStringProperty(xmlNodePtr node, std::string& var) {
     xmlFree(name);
     return false;
 }
-bool importPathProperty(xmlNodePtr node, fs::path& var) {
+template <>
+bool importProperty(xmlNodePtr node, fs::path& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = reinterpret_cast<const char*>(value);
@@ -83,7 +85,8 @@ bool importPathProperty(xmlNodePtr node, fs::path& var) {
     xmlFree(name);
     return false;
 }
-bool importBoolProperty(xmlNodePtr node, bool& var) {
+template <>
+bool importProperty(xmlNodePtr node, bool& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
@@ -95,7 +98,8 @@ bool importBoolProperty(xmlNodePtr node, bool& var) {
     xmlFree(name);
     return false;
 }
-bool importDoubleProperty(xmlNodePtr node, double& var) {
+template <>
+bool importProperty(xmlNodePtr node, double& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
@@ -107,7 +111,8 @@ bool importDoubleProperty(xmlNodePtr node, double& var) {
     xmlFree(name);
     return false;
 }
-bool importIntProperty(xmlNodePtr node, int& var) {
+template <>
+bool importProperty(xmlNodePtr node, int& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
@@ -119,7 +124,8 @@ bool importIntProperty(xmlNodePtr node, int& var) {
     xmlFree(name);
     return false;
 }
-bool importUintProperty(xmlNodePtr node, uint& var) {
+template <>
+bool importProperty(xmlNodePtr node, uint& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = static_cast<uint>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
@@ -131,7 +137,8 @@ bool importUintProperty(xmlNodePtr node, uint& var) {
     xmlFree(name);
     return false;
 }
-bool importColorProperty(xmlNodePtr node, Color& var) {
+template <>
+bool importProperty(xmlNodePtr node, Color& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = ColorU8(static_cast<uint>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
@@ -143,7 +150,8 @@ bool importColorProperty(xmlNodePtr node, Color& var) {
     xmlFree(name);
     return false;
 }
-bool importULintProperty(xmlNodePtr node, size_t& var) {
+template <>
+bool importProperty(xmlNodePtr node, size_t& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
         var = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
@@ -155,7 +163,8 @@ bool importULintProperty(xmlNodePtr node, size_t& var) {
     xmlFree(name);
     return false;
 }
-bool importFont(xmlNodePtr node, XojFont& var) {
+template <>
+bool importProperty(xmlNodePtr node, XojFont& var) {
     xmlChar* font = xmlGetProp(node, reinterpret_cast<const xmlChar*>("font"));
     xmlChar* size = xmlGetProp(node, reinterpret_cast<const xmlChar*>("size"));
     if (font == nullptr || size == nullptr) {
@@ -168,9 +177,10 @@ bool importFont(xmlNodePtr node, XojFont& var) {
     xmlFree(size);
     return true;
 }
-bool importSidebarNumbering(xmlNodePtr node, SidebarNumberingStyle& var) {
+template <>
+bool importProperty(xmlNodePtr node, SidebarNumberingStyle& var) {
     int i = 0;
-    if (importIntProperty(node, i)) {
+    if (importProperty(node, i)) {
         if (i > static_cast<int>(SidebarNumberingStyle::MIN) && i < static_cast<int>(SidebarNumberingStyle::MAX)) {
             var = static_cast<SidebarNumberingStyle>(i);
             return true;
@@ -179,131 +189,136 @@ bool importSidebarNumbering(xmlNodePtr node, SidebarNumberingStyle& var) {
     }
     return false;
 }
-bool importStylusCursorType(xmlNodePtr node, StylusCursorType& var) {
+template <>
+bool importProperty(xmlNodePtr node, StylusCursorType& var) {
     std::string s = "";
-    if (importStringProperty(node, s)) {
+    if (importProperty(node, s)) {
         var = stylusCursorTypeFromString(s);
         return true;
     }
     return false;
 }
-bool importEraserVisibility(xmlNodePtr node, EraserVisibility& var) {
+template <>
+bool importProperty(xmlNodePtr node, EraserVisibility& var) {
     std::string s = "";
-    if (importStringProperty(node, s)) {
+    if (importProperty(node, s)) {
         var = eraserVisibilityFromString(s);
         return true;
     }
     return false;
 }
-bool importIconTheme(xmlNodePtr node, IconTheme& var) {
+template <>
+bool importProperty(xmlNodePtr node, IconTheme& var) {
     std::string s = "";
-    if (importStringProperty(node, s)) {
+    if (importProperty(node, s)) {
         var = iconThemeFromString(s);
         return true;
     }
     return false;
 }
-bool importViewMode(xmlNodePtr node, ViewMode& var) {
+template <>
+bool importProperty(xmlNodePtr node, ViewMode& var) {
     std::string s = "";
-    if (importStringProperty(node, s)) {
+    if (importProperty(node, s)) {
         var = settingsStringToViewMode(s);
         return true;
     }
     return false;
 }
-bool importScrollbarHideType(xmlNodePtr node, ScrollbarHideType& var) {
+template <>
+bool importProperty(xmlNodePtr node, ScrollbarHideType& var) {
     std::string s = "";
-    if (importStringProperty(node, s)) {
+    if (importProperty(node, s)) {
         var = scrollbarHideTypeFromString(s);
         return true;
     }
     return false;
 }
-bool importPADeviceIndex(xmlNodePtr node, PaDeviceIndex& var) {
+/*bool importPADeviceIndex(xmlNodePtr node, PaDeviceIndex& var) { // TODO: remove this as it is unnecessary
     int i = 0;
     if (importIntProperty(node, i)) {
         var = static_cast<PaDeviceIndex>(i);
         return true;
     }
     return false;
-}
-bool importEmptyLastPageAppendType(xmlNodePtr node, EmptyLastPageAppendType& var) {
+}*/
+template <>
+bool importProperty(xmlNodePtr node, EmptyLastPageAppendType& var) {
     std::string s = "";
-    if (importStringProperty(node, s)) {
+    if (importProperty(node, s)) {
         var = emptyLastPageAppendFromString(s);
         return true;
     }
     return false;
 }
-bool importLatexSettings(xmlNodePtr node, LatexSettings& var) {
+template <>
+bool importProperty(xmlNodePtr node, LatexSettings& var) {
     xmlChar* name = xmlGetProp(node, reinterpret_cast<const xmlChar*>("name"));
     std::string valName = reinterpret_cast<const char*>(name);
     xmlFree(name);
 
     if (valName == "latexSettings.autoCheckDependencies") {
-        return importBoolProperty(node, var.autoCheckDependencies);
+        return importProperty(node, var.autoCheckDependencies);
     }
     if (valName == "latexSettings.defaultText") {
-        return importStringProperty(node, var.defaultText);
+        return importProperty(node, var.defaultText);
     }
     if (valName == "latexSettings.globalTemplatePath") {
-        std::string globalTemplatePath;
-        if (importStringProperty(node, globalTemplatePath)) {
-            var.globalTemplatePath = globalTemplatePath;
-            return true;
-        }
-        return false;
+        return importProperty(node, var.globalTemplatePath);
     }
     if (valName == "latexSettings.genCmd") {
-        return importStringProperty(node, var.genCmd);
+        return importProperty(node, var.genCmd);
     }
     if (valName == "latexSettings.sourceViewThemeId") {
-        return importStringProperty(node, var.sourceViewThemeId);
+        return importProperty(node, var.sourceViewThemeId);
     }
     if (valName == "latexSettings.editorFont") {
         std::string editorFont;
-        if (importStringProperty(node, editorFont)) {
+        if (importProperty(node, editorFont)) {
             var.editorFont = editorFont;
             return true;
         }
         return false;
     }
     if (valName == "latexSettings.useCustomEditorFont") {
-        return importBoolProperty(node, var.useCustomEditorFont);
+        return importProperty(node, var.useCustomEditorFont);
     }
     if (valName == "latexSettings.editorWordWrap") {
-        return importBoolProperty(node, var.editorWordWrap);
+        return importProperty(node, var.editorWordWrap);
     }
     if (valName == "latexSettings.sourceViewAutoIndent") {
-        return importBoolProperty(node, var.sourceViewAutoIndent);
+        return importProperty(node, var.sourceViewAutoIndent);
     }
     if (valName == "latexSettings.sourceViewSyntaxHighlight") {
-        return importBoolProperty(node, var.sourceViewSyntaxHighlight);
+        return importProperty(node, var.sourceViewSyntaxHighlight);
     }
     if (valName == "latexSettings.sourceViewShowLineNumbers") {
-        return importBoolProperty(node, var.sourceViewShowLineNumbers);
+        return importProperty(node, var.sourceViewShowLineNumbers);
     }
 
     g_warning("SettingsDescription::Unknown Latex property '%s'!", valName.c_str());
     return false;
 }
-bool importStrokeAveragingMethod(xmlNodePtr node, StrokeStabilizer::AveragingMethod& var) {
+template <>
+bool importProperty(xmlNodePtr node, StrokeStabilizer::AveragingMethod& var) {
     int i = 0;
-    if (importIntProperty(node, i)) {
+    if (importProperty(node, i)) {
         var = static_cast<StrokeStabilizer::AveragingMethod>(i);
         return true;
     }
     return false;
 }
-bool importStrokePreprocessor(xmlNodePtr node, StrokeStabilizer::Preprocessor& var) {
+template <>
+bool importProperty(xmlNodePtr node, StrokeStabilizer::Preprocessor& var) {
     int i = 0;
-    if (importIntProperty(node, i)) {
+    if (importProperty(node, i)) {
         var = static_cast<StrokeStabilizer::Preprocessor>(i);
         return true;
     }
     return false;
 }
-bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& var) {
+template <>
+bool importProperty(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& var) {
     std::map<std::string, std::pair<std::string, std::string>> buttonConfigMap{};
     for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) {  // Loop through the buttons
         if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data")) == 0) {
@@ -479,8 +494,8 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
     }
     return true;
 }
-bool importDeviceClasses(xmlNodePtr node,
-                         std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& var) {
+template <>
+bool importProperty(xmlNodePtr node, std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& var) {
     for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) {  // Loop through the devices
         if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data")) == 0) {
             std::string name;
@@ -548,14 +563,15 @@ bool importDeviceClasses(xmlNodePtr node,
     }
     return true;
 }
-bool importSElement(xmlNodePtr node, SElement& var) {
+template <>
+bool importProperty(xmlNodePtr node, SElement& var) {
     for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) {
         if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data")) == 0) {
             xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
             if (name == nullptr) {
                 g_warning("SettingsDescription::data node for SElement import is missing name property");
             }
-            importSElement(cur, var.child(reinterpret_cast<const char*>(name)));
+            importProperty(cur, var.child(reinterpret_cast<const char*>(name)));
             xmlFree(name);
         } else if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("attribute")) == 0) {
             xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
@@ -596,6 +612,7 @@ bool importSElement(xmlNodePtr node, SElement& var) {
     }
     return true;
 }
+
 
 // Declarations of export functions
 xmlNodePtr exportStringProperty(xmlNodePtr node, std::string name, std::string value) {
