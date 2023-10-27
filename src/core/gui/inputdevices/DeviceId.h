@@ -8,17 +8,19 @@
  *
  * @license GNU GPLv2 or later
  */
-
 #pragma once
+
+#include <gdk/gdk.h>
 
 struct DeviceId {
     constexpr DeviceId() = default;
-    explicit constexpr DeviceId(const void* id): id(id) {}
-    constexpr void reset(const void* id = nullptr) { this->id = id; }
-    explicit constexpr operator bool() const { return id != nullptr; }
-    constexpr bool operator==(const DeviceId& o) const { return id == o.id; }
-    constexpr bool operator!=(const DeviceId& o) const { return !(*this == o); }
+    explicit DeviceId(const GdkDevice* id);
+    void reset(const GdkDevice* id = nullptr);
+    explicit operator bool() const;
+    bool operator==(const DeviceId& o) const;
+    bool operator!=(const DeviceId& o) const;
 
 private:
     const void* id = nullptr;
+    bool trackpointOrTouchpad = false;
 };

@@ -34,6 +34,9 @@ private:
     utl::Point<double> priLastRel{-1.0, -1.0};
     utl::Point<double> secLastRel{-1.0, -1.0};
 
+    // True, if a zoom sequence may be started by a motion event.
+    bool startZoomReady{false};
+
     bool canBlockZoom{false};
 
 private:

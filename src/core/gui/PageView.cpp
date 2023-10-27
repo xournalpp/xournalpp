@@ -514,7 +514,7 @@ auto XojPageView::onButtonTriplePressEvent(const PositionInputData& pos) -> bool
 }
 
 auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
-    if (currentSequenceDeviceId != pos.deviceId) {
+    if (currentSequenceDeviceId && currentSequenceDeviceId != pos.deviceId) {
         // This motion event is not from the device which started the sequence: reject it
         return false;
     }

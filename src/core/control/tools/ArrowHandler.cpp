@@ -60,7 +60,7 @@ auto ArrowHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlD
     std::pair<std::vector<Point>, Range> res; // members initialised below
     std::vector<Point>& shape = res.first;
 
-    shape.reserve(doubleEnded ? 9 : 5);
+    shape.reserve(doubleEnded ? 10 : 6);
 
     shape.emplace_back(this->startPoint);
 
@@ -77,6 +77,7 @@ auto ArrowHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlD
     shape.emplace_back(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta));
     shape.emplace_back(c);
     shape.emplace_back(c.x - arrowDist * cos(angle - delta), c.y - arrowDist * sin(angle - delta));
+    shape.emplace_back(c);
 
     auto [minX, maxX] = std::minmax_element(shape.begin(), shape.end(), [](auto& p, auto& q) { return p.x < q.x; });
     auto [minY, maxY] = std::minmax_element(shape.begin(), shape.end(), [](auto& p, auto& q) { return p.y < q.y; });

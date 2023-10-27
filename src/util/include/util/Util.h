@@ -22,6 +22,8 @@
 
 #include "util/glib_casts.h"
 
+#include "Point.h"
+
 class OutputStream;
 
 namespace Util {
@@ -66,6 +68,12 @@ void execInUiThread(Fun&& callback, gint priority = G_PRIORITY_DEFAULT_IDLE) {
 gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
 
 void cairo_set_dash_from_vector(cairo_t* cr, const std::vector<double>& dashes, double offset);
+
+/**
+ * Transform absolute coordinates into coordinates local to the specified widget.
+ * The top left corner of `widget` will have coordinates (0, 0).
+ */
+utl::Point<double> toWidgetCoords(GtkWidget* widget, utl::Point<double> absolute_coords);
 
 /**
  * Format coordinates to use 8 digits of precision https://m.xkcd.com/2170/
