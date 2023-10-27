@@ -616,13 +616,11 @@
      <attribute name="label" translatable="yes">Select Multi-Layer Rectangle</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">8</attribute> <!-- TOOL_SELECT_MULTILAYER_RECT -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;r</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Select Multi-Layer Region</attribute>
      <attribute name="action">win.select-tool</attribute>
      <attribute name="target" type="t">9</attribute> <!-- TOOL_SELECT_MULTILAYER_REGION -->
-     <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;g</attribute>
     </item>
     <item>
      <attribute name="label" translatable="yes">Select Object</attribute>
