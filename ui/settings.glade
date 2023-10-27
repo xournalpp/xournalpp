@@ -2789,11 +2789,10 @@ This setting can make it easier to draw with touch. </property>
                                     <child>
                                       <object class="GtkCheckButton" id="cbDisableGtkInertialScroll">
                                         <property name="label" translatable="yes">Disable GTK's built-in inertial scroll functionality (requires restart).</property>
-                                        <property name="name">cbTouchDrawing</property>
+                                        <property name="name">cbDisableGtkIntertialScroll</property>
                                         <property name="visible">True</property>
                                         <property name="can-focus">True</property>
                                         <property name="receives-default">False</property>
-                                        <property name="tooltip-text" translatable="yes">Use two fingers to pan/zoom and one finger to use the selected tool.</property>
                                         <property name="draw-indicator">True</property>
                                       </object>
                                       <packing>
@@ -5316,7 +5315,7 @@ It must be short in time and length and we can't have ignored another stroke rec
                                         <property name="can-focus">False</property>
                                         <child>
                                           <object class="GtkLabel" id="lbReRenderThreshold">
-                                            <property name="name">lbSnapRotationTolerance</property>
+                                            <property name="name">lbReRenderThreshold</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
                                             <property name="tooltip-text" translatable="yes">When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.
