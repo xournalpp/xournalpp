@@ -14,6 +14,7 @@
 #include "gui/XournalView.h"                        // for XournalView
 #include "gui/inputdevices/AbstractInputHandler.h"  // for AbstractInputHandler
 #include "gui/inputdevices/InputEvents.h"           // for InputEvent, BUTTO...
+#include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler
 
 #include "InputContext.h"  // for InputContext
 
@@ -21,10 +22,17 @@ TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputH
 
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
+    bool undoGestureEnabled = inputContext->getSettings()->isUndoGestureEnabled();
 
     // Don't handle more then 2 inputs
     if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
         this->secondarySequence != event.sequence) {
+
+        // If more than two inputs are detected cancel undo gesture
+        if (undoGestureEnabled) {
+            undoGestureCancel();
+        }
+
         return false;
     }
 
@@ -36,7 +44,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             // Set sequence data
             sequenceStart(event);
         }
-        // Start zooming as soon as we have two sequences.
+        // Start zooming or checking for undo gesture as soon as we have two sequences.
         else if (this->primarySequence && this->primarySequence != event.sequence &&
                  this->secondarySequence == nullptr) {
             this->secondarySequence = event.sequence;
@@ -50,12 +58,23 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             if (zoomGesturesEnabled) {
                 zoomStart();
             }
+
+            // If undo gesture is enabled start checking if this is one
+            if (undoGestureEnabled) {
+                undoGestureStart();
+            }
         }
     }
 
     if (event.type == MOTION_EVENT && this->primarySequence) {
-        if (this->primarySequence && this->secondarySequence && zoomGesturesEnabled) {
-            zoomMotion(event);
+        if (this->primarySequence && this->secondarySequence && (zoomGesturesEnabled || undoGestureEnabled)) {
+            if (zoomGesturesEnabled) {
+                zoomMotion(event);
+            }
+
+            if (undoGestureEnabled) {
+                undoGestureMotion(event);
+            }
         } else if (event.sequence == this->primarySequence) {
             scrollMotion(event);
         } else if (this->primarySequence && this->secondarySequence) {
@@ -64,9 +83,15 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     if (event.type == BUTTON_RELEASE_EVENT) {
-        // Only stop zooing if both sequences were active (we were scrolling)
-        if (this->primarySequence != nullptr && this->secondarySequence != nullptr && zoomGesturesEnabled) {
-            zoomEnd();
+        // If both sequences were active check if zoom or undo gestures need to be handled
+        if (this->primarySequence != nullptr && this->secondarySequence != nullptr) {
+            if (zoomGesturesEnabled) {
+                zoomEnd();
+            }
+
+            if (undoGestureEnabled) {
+                undoGestureEnd();
+            }
         }
 
         if (event.sequence == this->primarySequence) {
@@ -77,6 +102,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
 
             this->priLastAbs = this->secLastAbs;
             this->priLastRel = this->secLastRel;
+            this->priStartAbs = this->secStartAbs;
         } else {
             this->secondarySequence = nullptr;
         }
@@ -89,9 +115,11 @@ void TouchInputHandler::sequenceStart(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
         this->priLastAbs = {event.absoluteX, event.absoluteY};
         this->priLastRel = {event.relativeX, event.relativeY};
+        this->priStartAbs = {event.absoluteX, event.absoluteY};
     } else {
         this->secLastAbs = {event.absoluteX, event.absoluteY};
         this->secLastRel = {event.relativeX, event.relativeY};
+        this->secStartAbs = {event.absoluteX, event.absoluteY};
     }
 }
 
@@ -186,8 +214,51 @@ void TouchInputHandler::onUnblock() {
     this->startZoomDistance = 0.0;
     this->lastZoomScrollCenter = {};
 
+    this->detectingUndo = false;
+
     priLastAbs = {-1.0, -1.0};
     secLastAbs = {-1.0, -1.0};
     priLastRel = {-1.0, -1.0};
     secLastRel = {-1.0, -1.0};
+
+    priStartAbs = {-1.0, -1.0};
+    secStartAbs = {-1.0, -1.0};
+}
+
+void TouchInputHandler::undoGestureStart() {
+    // Prevent the detection of an undo gesture from starting if one of the
+    // events has already moved more than 5 pixels away from its start point
+    if (this->priStartAbs.distance(priLastAbs) <= 5.0 && this->secStartAbs.distance(secLastAbs) <= 5.0) {
+        this->detectingUndo = true;
+    }
+}
+
+void TouchInputHandler::undoGestureMotion(InputEvent const& event) {
+    if (this->detectingUndo) {
+        double distance;
+        if (event.sequence == this->primarySequence) {
+            distance = this->priStartAbs.distance({event.absoluteX, event.absoluteY});
+        } else {
+            distance = this->secStartAbs.distance({event.absoluteX, event.absoluteY});
+        }
+
+        // If the distance from the start is greater than 5 pixels cancel the undo gesture
+        if (distance > 5.0) {
+            undoGestureCancel();
+        }
+    }
+}
+
+void TouchInputHandler::undoGestureCancel() { this->detectingUndo = false; }
+
+void TouchInputHandler::undoGestureEnd() {
+    if (this->detectingUndo) {
+        UndoRedoHandler* undoRedoHandler = this->inputContext->getView()->getControl()->getUndoRedoHandler();
+
+        // Undo only if undo is possible
+        if (undoRedoHandler->canUndo()) {
+            undoRedoHandler->undo();
+        }
+        this->detectingUndo = false;
+    }
 }
