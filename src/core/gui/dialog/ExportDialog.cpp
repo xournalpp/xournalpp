@@ -40,9 +40,9 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
     if (format == EXPORT_GRAPHICS_PDF) {
         removeQualitySetting();
     } else if (format == EXPORT_GRAPHICS_PNG) {
-        removeQualitySetting();
         gtk_widget_hide(builder.get("cbProgressiveMode"));
     } else {  // (format == EXPORT_GRAPHICS_SVG)
+        removeQualitySetting();
         gtk_widget_hide(builder.get("cbProgressiveMode"));
     }
 
