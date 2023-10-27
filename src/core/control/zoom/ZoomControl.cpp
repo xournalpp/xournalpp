@@ -146,23 +146,21 @@ void ZoomControl::startZoomSequence(utl::Point<double> zoomCenter) {
     this->zoomWidgetPos = zoomCenter;  // widget space coordinates of the zoomCenter!
     this->zoomSequenceStart = this->zoom;
 
-    // * set unscaledPixels padding value
-    size_t currentPageIdx = this->view->getCurrentPage();
-
     // To get the layout, we need to call view->getWidget(), which isn't const.
     // As such, we get the view and determine `unscaledPixels` here, rather than
     // in `getScrollPositionAfterZoom`.
     GtkWidget* widget = view->getWidget();
     Layout* layout = gtk_xournal_get_layout(widget);
 
-    // Not everything changes size as we zoom in/out. The padding, for example,
-    // remains constant! (changed when page changes, but the error stays small enough)
-    this->unscaledPixels = {static_cast<double>(layout->getPaddingLeftOfPage(currentPageIdx)),
-                            static_cast<double>(layout->getPaddingAbovePage(currentPageIdx))};
-
     // * set initial scrollPosition value
     auto const& rect = getVisibleRect();
     auto const& view_pos = utl::Point{rect.x, rect.y};
+
+    // * set unscaledPixels padding value
+    // Not everything changes size as we zoom in/out. The padding, for example,
+    // remains constant!
+    this->unscaledPixels = {layout->getPaddingLeftOf(zoomCenter.x + view_pos.x),
+                            layout->getPaddingAbove(zoomCenter.y + view_pos.y)};
 
     // Use this->zoomWidgetPos to zoom into a location other than the top-left (e.g. where
     // the user pinched).
