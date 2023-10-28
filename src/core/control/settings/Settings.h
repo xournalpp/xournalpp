@@ -73,30 +73,27 @@ public:
         return Setting<t>::xmlName;
     }
     template <SettingsElement t>
-    constexpr const char* getComment() const {
-        return Setting<t>::COMMENT;
-    }
-    template <SettingsElement t>
     constexpr typename Setting<t>::value_type getDefault() const {
         return Setting<t>::DEFAULT;
     }
     template <SettingsElement t>
     void setValue(const typename Setting<t>::value_type& v) {
         if (!(v == std::get<(std::size_t)t>(vars))) {
-            std::get<(std::size_t)t>(vars) = Setting<t>::VALIDATE_FN(v);
+            if (validator<t>::enable)
+                std::get<(std::size_t)t>(vars) = validator<t>::fn(v);
         }
     }
     template <SettingsElement t>
     void importSetting(xmlNodePtr node) {
         if (importer<t>::fn(node, std::get<(std::size_t)t>(vars))) {
-            auto valFN = Setting<t>::VALIDATE_FN;
-            std::get<(std::size_t)t>(vars) = valFN(std::get<(std::size_t)t>(vars));
+            if (validator<t>::enable)
+                std::get<(std::size_t)t>(vars) = validator<t>::fn(std::get<(std::size_t)t>(vars));
         }
     }
     template <SettingsElement t>
     xmlNodePtr exportSetting(xmlNodePtr parent) {
         xmlNodePtr node = exporter<t>::fn(parent, getXmlName<t>(), std::get<(std::size_t)t>(vars));
-        const char* com = getComment<t>();
+        const char* com = comment<t>::text;
         if (com != nullptr) {
             auto cNode = xmlNewComment((const xmlChar*)(com));
             xmlAddPrevSibling(node, cNode);
