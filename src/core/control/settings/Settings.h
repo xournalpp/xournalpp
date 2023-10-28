@@ -95,7 +95,7 @@ public:
     }
     template <SettingsElement t>
     xmlNodePtr exportSetting(xmlNodePtr parent) {
-        xmlNodePtr node = Setting<t>::EXPORT_FN(parent, getXmlName<t>(), std::get<(std::size_t)t>(vars));
+        xmlNodePtr node = exporter<t>::fn(parent, getXmlName<t>(), std::get<(std::size_t)t>(vars));
         const char* com = getComment<t>();
         if (com != nullptr) {
             auto cNode = xmlNewComment((const xmlChar*)(com));

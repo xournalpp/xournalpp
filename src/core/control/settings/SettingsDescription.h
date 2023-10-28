@@ -243,31 +243,76 @@ bool importProperty(xmlNodePtr node, SElement& var);
 
 
 // Definitions of export functions
-xmlNodePtr exportStringProperty(xmlNodePtr node, std::string name, std::string value);
-xmlNodePtr exportPathProperty(xmlNodePtr node, std::string name, fs::path value);
-xmlNodePtr exportBoolProperty(xmlNodePtr node, std::string name, bool value);
-xmlNodePtr exportDoubleProperty(xmlNodePtr node, std::string name, double value);
-xmlNodePtr exportIntProperty(xmlNodePtr node, std::string name, int value);
-xmlNodePtr exportUintProperty(xmlNodePtr node, std::string name, uint value);
-xmlNodePtr exportColorProperty(xmlNodePtr node, std::string name, Color value);
-xmlNodePtr exportULintProperty(xmlNodePtr node, std::string name, size_t value);
-xmlNodePtr exportFont(xmlNodePtr node, std::string name, XojFont value);
-xmlNodePtr exportSidebarNumbering(xmlNodePtr node, std::string name, SidebarNumberingStyle value);
-xmlNodePtr exportStylusCursorType(xmlNodePtr node, std::string name, StylusCursorType value);
-xmlNodePtr exportEraserVisibility(xmlNodePtr node, std::string name, EraserVisibility value);
-xmlNodePtr exportIconTheme(xmlNodePtr node, std::string name, IconTheme value);
-xmlNodePtr exportViewMode(xmlNodePtr node, std::string name, ViewMode value);
-xmlNodePtr exportScrollbarHideType(xmlNodePtr node, std::string name, ScrollbarHideType value);
-xmlNodePtr exportPADeviceIndex(xmlNodePtr node, std::string name, PaDeviceIndex value);
-xmlNodePtr exportEmptyLastPageAppendType(xmlNodePtr node, std::string name, EmptyLastPageAppendType value);
-xmlNodePtr exportLatexSettings(xmlNodePtr node, std::string name, LatexSettings value);
-xmlNodePtr exportStrokeAveragingMethod(xmlNodePtr node, std::string name, StrokeStabilizer::AveragingMethod value);
-xmlNodePtr exportStrokePreprocessor(xmlNodePtr node, std::string name, StrokeStabilizer::Preprocessor value);
-xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
-                              const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value);
-xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name,
-                               const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value);
-xmlNodePtr exportSElement(xmlNodePtr node, std::string name, const SElement& value);
+template <typename T>
+xmlNodePtr exportProperty(xmlNodePtr parent, std::string name, const T& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const std::string& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const fs::path& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const bool& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const double& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const int& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const uint& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const Color& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const size_t& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const XojFont& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const SidebarNumberingStyle& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const StylusCursorType& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const EraserVisibility& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const IconTheme& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const ViewMode& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const ScrollbarHideType& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const EmptyLastPageAppendType& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const LatexSettings& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const StrokeStabilizer::AveragingMethod& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const StrokeStabilizer::Preprocessor& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name,
+                          const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name,
+                          const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value);
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const SElement& value);
 
 
 // Definitions of validation functions
@@ -413,7 +458,6 @@ struct Setting<SettingsElement::SETTING_FONT> {
     static constexpr auto xmlName = "font";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportFont;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -423,7 +467,6 @@ struct Setting<SettingsElement::SETTING_PRESSURE_SENSITIVITY> {
     static constexpr auto xmlName = "pressureSensitivity";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -433,7 +476,6 @@ struct Setting<SettingsElement::SETTING_MINIMUM_PRESSURE> {
     static constexpr auto xmlName = "minimumPressure";
     static constexpr value_type DEFAULT = 0.05;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 0.01); };
 };
 
@@ -443,7 +485,6 @@ struct Setting<SettingsElement::SETTING_PRESSURE_MULTIPLIER> {
     static constexpr auto xmlName = "pressureMultiplier";
     static constexpr value_type DEFAULT = 1.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -453,7 +494,6 @@ struct Setting<SettingsElement::SETTING_ENABLE_ZOOM_GESTURES> {
     static constexpr auto xmlName = "zoomGesturesEnabled";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -463,7 +503,6 @@ struct Setting<SettingsElement::SETTING_SELECTED_TOOLBAR> {
     static constexpr auto xmlName = "selectedToolbar";
     static constexpr const char* DEFAULT = "Portrait";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportStringProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -473,7 +512,6 @@ struct Setting<SettingsElement::SETTING_LAST_SAVE_PATH> {
     static constexpr auto xmlName = "lastSavePath";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportPathProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -483,7 +521,6 @@ struct Setting<SettingsElement::SETTING_LAST_OPEN_PATH> {
     static constexpr auto xmlName = "lastOpenPath";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportPathProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -493,7 +530,6 @@ struct Setting<SettingsElement::SETTING_LAST_IMAGE_PATH> {
     static constexpr auto xmlName = "lastImagePath";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportPathProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -503,7 +539,6 @@ struct Setting<SettingsElement::SETTING_EDGE_PAN_SPEED> {
     static constexpr auto xmlName = "edgePanSpeed";
     static constexpr value_type DEFAULT = 20.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -513,7 +548,6 @@ struct Setting<SettingsElement::SETTING_EDGE_PAN_MAX_MULT> {
     static constexpr auto xmlName = "edgePanMaxMult";
     static constexpr value_type DEFAULT = 5.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -523,7 +557,6 @@ struct Setting<SettingsElement::SETTING_ZOOM_STEP> {
     static constexpr auto xmlName = "zoomStep";
     static constexpr value_type DEFAULT = 10.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -533,7 +566,6 @@ struct Setting<SettingsElement::SETTING_ZOOM_STEP_SCROLL> {
     static constexpr auto xmlName = "zoomStepScroll";
     static constexpr value_type DEFAULT = 2.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -543,7 +575,6 @@ struct Setting<SettingsElement::SETTING_DISPLAY_DPI> {
     static constexpr auto xmlName = "displayDpi";
     static constexpr value_type DEFAULT = 72;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -553,7 +584,6 @@ struct Setting<SettingsElement::SETTING_MAIN_WINDOW_WIDTH> {
     static constexpr auto xmlName = "mainWndWidth";
     static constexpr value_type DEFAULT = 800;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -563,7 +593,6 @@ struct Setting<SettingsElement::SETTING_MAIN_WINDOW_HEIGHT> {
     static constexpr auto xmlName = "mainWndHeight";
     static constexpr value_type DEFAULT = 600;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -573,7 +602,6 @@ struct Setting<SettingsElement::SETTING_MAXIMIZED> {
     static constexpr auto xmlName = "maximized";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -583,7 +611,6 @@ struct Setting<SettingsElement::SETTING_SHOW_TOOLBAR> {
     static constexpr auto xmlName = "showToolbar";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -593,7 +620,6 @@ struct Setting<SettingsElement::SETTING_SHOW_FILEPATH_IN_TITLEBAR> {
     static constexpr auto xmlName = "filepathShownInTitlebar";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -603,7 +629,6 @@ struct Setting<SettingsElement::SETTING_SHOW_PAGE_NUMBER_IN_TITLEBAR> {
     static constexpr auto xmlName = "pageNumberShownInTitlebar";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -613,7 +638,6 @@ struct Setting<SettingsElement::SETTING_SHOW_SIDEBAR> {
     static constexpr auto xmlName = "showSidebar";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -623,7 +647,6 @@ struct Setting<SettingsElement::SETTING_SIDEBAR_NUMBERING_STYLE> {
     static constexpr auto xmlName = "sidebarNumberingStyle";
     static constexpr value_type DEFAULT = SidebarNumberingStyle::DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportSidebarNumbering;
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type {
         return std::max<value_type>(SidebarNumberingStyle::MIN, std::min<value_type>(val, SidebarNumberingStyle::MAX));
     };
@@ -635,7 +658,6 @@ struct Setting<SettingsElement::SETTING_SIDEBAR_WIDTH> {
     static constexpr auto xmlName = "sidebarWidth";
     static constexpr value_type DEFAULT = 150;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 50); };
 };
 
@@ -645,7 +667,6 @@ struct Setting<SettingsElement::SETTING_SIDEBAR_ON_RIGHT> {
     static constexpr auto xmlName = "sidebarOnRight";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -655,7 +676,6 @@ struct Setting<SettingsElement::SETTING_SCROLLBAR_ON_LEFT> {
     static constexpr auto xmlName = "scrollbarOnLeft";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -665,7 +685,6 @@ struct Setting<SettingsElement::SETTING_MENUBAR_VISIBLE> {
     static constexpr auto xmlName = "menubarVisible";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -675,7 +694,6 @@ struct Setting<SettingsElement::SETTING_NUM_COLUMNS> {
     static constexpr auto xmlName = "numColumns";
     static constexpr value_type DEFAULT = 1;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -685,7 +703,6 @@ struct Setting<SettingsElement::SETTING_NUM_ROWS> {
     static constexpr auto xmlName = "numRows";
     static constexpr value_type DEFAULT = 1;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -695,7 +712,6 @@ struct Setting<SettingsElement::SETTING_VIEW_FIXED_ROWS> {
     static constexpr auto xmlName = "viewFixedRows";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -705,7 +721,6 @@ struct Setting<SettingsElement::SETTING_LAYOUT_VERTICAL> {
     static constexpr auto xmlName = "layoutVertical";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -715,7 +730,6 @@ struct Setting<SettingsElement::SETTING_LAYOUT_RIGHT_TO_LEFT> {
     static constexpr auto xmlName = "layoutRightToLeft";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -725,7 +739,6 @@ struct Setting<SettingsElement::SETTING_LAYOUT_BOTTOM_TO_TOP> {
     static constexpr auto xmlName = "layoutBottomToTop";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -735,7 +748,6 @@ struct Setting<SettingsElement::SETTING_SHOW_PAIRED_PAGES> {
     static constexpr auto xmlName = "showPairedPages";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -745,7 +757,6 @@ struct Setting<SettingsElement::SETTING_NUM_PAIRS_OFFSET> {
     static constexpr auto xmlName = "numPairsOffset";
     static constexpr value_type DEFAULT = 1;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -755,7 +766,6 @@ struct Setting<SettingsElement::SETTING_PRESENTATION_MODE> { // TODO: remove thi
     static constexpr auto xmlName = "presentationMode";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };*/
 
@@ -765,7 +775,6 @@ struct Setting<SettingsElement::SETTING_AUTOLOAD_MOST_RECENT> {
     static constexpr auto xmlName = "autoloadMostRecent";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -775,7 +784,6 @@ struct Setting<SettingsElement::SETTING_AUTOLOAD_PDF_XOJ> {
     static constexpr auto xmlName = "autoloadPdfXoj";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -786,7 +794,6 @@ struct Setting<SettingsElement::SETTING_STYLUS_CURSOR_TYPE> {
     static constexpr value_type DEFAULT = StylusCursorType::STYLUS_CURSOR_DOT;
     static constexpr auto COMMENT =
             "The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"";
-    static constexpr auto EXPORT_FN = exportStylusCursorType;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -797,7 +804,6 @@ struct Setting<SettingsElement::SETTING_ERASER_VISIBILITY> {
     static constexpr value_type DEFAULT = EraserVisibility::ERASER_VISIBILITY_ALWAYS;
     static constexpr auto COMMENT = "The eraser cursor visibility used with a stylus, allowed values are \"never\", "
                                     "\"always\", \"hover\", \"touch\"";
-    static constexpr auto EXPORT_FN = exportEraserVisibility;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -807,7 +813,6 @@ struct Setting<SettingsElement::SETTING_ICON_THEME> {
     static constexpr auto xmlName = "iconTheme";
     static constexpr value_type DEFAULT = IconTheme::ICON_THEME_COLOR;
     static constexpr auto COMMENT = "The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"";
-    static constexpr auto EXPORT_FN = exportIconTheme;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -817,7 +822,6 @@ struct Setting<SettingsElement::SETTING_HIGHLIGHT_POSITION> {
     static constexpr auto xmlName = "highlightPosition";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -827,7 +831,6 @@ struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_COLOR> {
     static constexpr auto xmlName = "cursorHighlightColor";
     static constexpr value_type DEFAULT = ColorU8(0x80FFFF00);
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -837,7 +840,6 @@ struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_RADIUS> {
     static constexpr auto xmlName = "cursorHighlightRadius";
     static constexpr value_type DEFAULT = 30.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -847,7 +849,6 @@ struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_COLOR> {
     static constexpr auto xmlName = "cursorHighlightBorderColor";
     static constexpr value_type DEFAULT = ColorU8(0x800000FF);
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -857,7 +858,6 @@ struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_WIDTH> {
     static constexpr auto xmlName = "cursorHighlightBorderWidth";
     static constexpr value_type DEFAULT = 0.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -867,7 +867,6 @@ struct Setting<SettingsElement::SETTING_DARK_THEME> {
     static constexpr auto xmlName = "darkTheme";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -877,7 +876,6 @@ struct Setting<SettingsElement::SETTING_USE_STOCK_ICONS> {
     static constexpr auto xmlName = "useStockIcons";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -887,7 +885,6 @@ struct Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME> {
     static constexpr auto xmlName = "defaultSaveName";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportStringProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -897,7 +894,6 @@ struct Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME> {
     static constexpr auto xmlName = "defaultPdfExportName";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportStringProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -907,7 +903,6 @@ struct Setting<SettingsElement::SETTING_PLUGIN_ENABLED> {
     static constexpr auto xmlName = "pluginEnabled";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportStringProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -917,7 +912,6 @@ struct Setting<SettingsElement::SETTING_PLUGIN_DISABLED> {
     static constexpr auto xmlName = "pluginDisabled";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportStringProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -929,7 +923,6 @@ struct Setting<SettingsElement::SETTING_PAGE_TEMPLATE> {
                                            "template\ncopyLastPageSettings=true\nsize=595.275591x841."
                                            "889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
     static constexpr auto COMMENT = "Config for new pages";
-    static constexpr auto EXPORT_FN = exportStringProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -939,7 +932,6 @@ struct Setting<SettingsElement::SETTING_SIZE_UNIT> {
     static constexpr auto xmlName = "sizeUnit";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportStringProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -949,7 +941,6 @@ struct Setting<SettingsElement::SETTING_AUDIO_FOLDER> {
     static constexpr auto xmlName = "audioFolder";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportPathProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -959,7 +950,6 @@ struct Setting<SettingsElement::SETTING_AUTOSAVE_ENABLED> {
     static constexpr auto xmlName = "autosaveEnabled";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -969,7 +959,6 @@ struct Setting<SettingsElement::SETTING_AUTOSAVE_TIMEOUT> {
     static constexpr auto xmlName = "autosaveTimeout";
     static constexpr value_type DEFAULT = 3;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1000,7 +989,6 @@ struct Setting<SettingsElement::SETTING_DEFAULT_VIEW_MODE_ATTRIBUTES> {
     static constexpr auto xmlName = "defaultViewModeAttributes";
     static constexpr value_type DEFAULT = VIEW_MODE_STRUCT_DEFAULT;
     static constexpr auto COMMENT = "Which GUI elements are shown in default view mode, separated by a colon (,)";
-    static constexpr auto EXPORT_FN = exportViewMode;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1010,7 +998,6 @@ struct Setting<SettingsElement::SETTING_FULLSCREEN_VIEW_MODE_ATTRIBUTES> {
     static constexpr auto xmlName = "fullscreenViewModeAttributes";
     static constexpr value_type DEFAULT = VIEW_MODE_STRUCT_FULLSCREEN;
     static constexpr auto COMMENT = "Which GUI elements are shown in fullscreen view mode, separated by a colon (,)";
-    static constexpr auto EXPORT_FN = exportViewMode;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1020,7 +1007,6 @@ struct Setting<SettingsElement::SETTING_PRESENTATION_VIEW_MODE_ATTRIBUTES> {
     static constexpr auto xmlName = "presentationViewModeAttributes";
     static constexpr value_type DEFAULT = VIEW_MODE_STRUCT_PRESENTATION;
     static constexpr auto COMMENT = "Which GUI elements are shown in presentation view mode, separated by a colon (,)";
-    static constexpr auto EXPORT_FN = exportViewMode;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1030,7 +1016,6 @@ struct Setting<SettingsElement::SETTING_TOUCH_ZOOM_START_THRESHOLD> {
     static constexpr auto xmlName = "touchZoomStartThreshold";
     static constexpr value_type DEFAULT = 0.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1040,7 +1025,6 @@ struct Setting<SettingsElement::SETTING_PAGE_RERENDER_THRESHOLD> {
     static constexpr auto xmlName = "pageRerenderThreshold";
     static constexpr value_type DEFAULT = 5.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1050,7 +1034,6 @@ struct Setting<SettingsElement::SETTING_PDF_PAGE_CACHE_SIZE> {
     static constexpr auto xmlName = "pdfPageCacheSize";
     static constexpr value_type DEFAULT = 10;
     static constexpr auto COMMENT = "The count of rendered PDF pages which will be cached.";
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1060,7 +1043,6 @@ struct Setting<SettingsElement::SETTING_PRELOAD_PAGES_BEFORE> {
     static constexpr auto xmlName = "preloadPagesBefore";
     static constexpr value_type DEFAULT = 3;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportUintProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1070,7 +1052,6 @@ struct Setting<SettingsElement::SETTING_PRELOAD_PAGES_AFTER> {
     static constexpr auto xmlName = "preloadPagesAfter";
     static constexpr value_type DEFAULT = 5;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportUintProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1080,7 +1061,6 @@ struct Setting<SettingsElement::SETTING_EAGER_PAGE_CLEANUP> {
     static constexpr auto xmlName = "eagerPageCleanup";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1090,7 +1070,6 @@ struct Setting<SettingsElement::SETTING_SELECTION_BORDER_COLOR> {
     static constexpr auto xmlName = "selectionBorderColor";
     static constexpr value_type DEFAULT = Colors::red;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1100,7 +1079,6 @@ struct Setting<SettingsElement::SETTING_SELECTION_MARKER_COLOR> {
     static constexpr auto xmlName = "selectionMarkerColor";
     static constexpr value_type DEFAULT = Colors::xopp_cornflowerblue;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1110,7 +1088,6 @@ struct Setting<SettingsElement::SETTING_ACTIVE_SELECTION_COLOR> {
     static constexpr auto xmlName = "activeSelectionColor";
     static constexpr value_type DEFAULT = Colors::lawngreen;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1120,7 +1097,6 @@ struct Setting<SettingsElement::SETTING_BACKGROUND_COLOR> {
     static constexpr auto xmlName = "backgroundColor";
     static constexpr value_type DEFAULT = Colors::xopp_gainsboro02;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportColorProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1130,7 +1106,6 @@ struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE> {
     static constexpr auto xmlName = "addHorizontalSpace";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1140,7 +1115,6 @@ struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_RIGHT> {
     static constexpr auto xmlName = "addHorizontalSpaceAmountRight";
     static constexpr value_type DEFAULT = 150;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1150,7 +1124,6 @@ struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_LEFT> {
     static constexpr auto xmlName = "addHorizontalSpaceAmountLeft";
     static constexpr value_type DEFAULT = 150;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1160,7 +1133,6 @@ struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE> {
     static constexpr auto xmlName = "addVerticalSpace";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1170,7 +1142,6 @@ struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_ABOVE> {
     static constexpr auto xmlName = "addVerticalSpaceAmountAbove";
     static constexpr value_type DEFAULT = 150;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1180,7 +1151,6 @@ struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_BELOW> {
     static constexpr auto xmlName = "addVerticalSpaceAmountBelow";
     static constexpr value_type DEFAULT = 150;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1190,7 +1160,6 @@ struct Setting<SettingsElement::SETTING_UNLIMITED_SCROLLING> {
     static constexpr auto xmlName = "unlimitedScrolling";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1200,7 +1169,6 @@ struct Setting<SettingsElement::SETTING_DRAW_DIRECTION_MODS_ENABLE> {
     static constexpr auto xmlName = "drawDirModsEnabled";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1210,7 +1178,6 @@ struct Setting<SettingsElement::SETTING_DRAW_DIRECTION_MODS_RADIUS> {
     static constexpr auto xmlName = "drawDirModsRadius";
     static constexpr value_type DEFAULT = 50;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1220,7 +1187,6 @@ struct Setting<SettingsElement::SETTING_SNAP_ROTATION> {
     static constexpr auto xmlName = "snapRotation";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1230,7 +1196,6 @@ struct Setting<SettingsElement::SETTING_SNAP_ROTATION_TOLERANCE> {
     static constexpr auto xmlName = "snapRotationTolerance";
     static constexpr value_type DEFAULT = 0.3;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1240,7 +1205,6 @@ struct Setting<SettingsElement::SETTING_SNAP_GRID> {
     static constexpr auto xmlName = "snapGrid";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1250,7 +1214,6 @@ struct Setting<SettingsElement::SETTING_SNAP_GRID_SIZE> {
     static constexpr auto xmlName = "snapGridSize";
     static constexpr value_type DEFAULT = 14.17;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1260,7 +1223,6 @@ struct Setting<SettingsElement::SETTING_SNAP_GRID_TOLERANCE> {
     static constexpr auto xmlName = "snapGridTolerance";
     static constexpr value_type DEFAULT = 0.50;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1270,7 +1232,6 @@ struct Setting<SettingsElement::SETTING_STROKE_RECOGNIZER_MIN_SIZE> {
     static constexpr auto xmlName = "strokeRecognizerMinSize";
     static constexpr value_type DEFAULT = 40.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1280,7 +1241,6 @@ struct Setting<SettingsElement::SETTING_TOUCH_DRAWING> {
     static constexpr auto xmlName = "touchDrawing";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1290,7 +1250,6 @@ struct Setting<SettingsElement::SETTING_GTK_TOUCH_INERTIAL_SCROLLING> {
     static constexpr auto xmlName = "gtkTouchInertialScrolling";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1300,7 +1259,6 @@ struct Setting<SettingsElement::SETTING_PRESSURE_GUESSING> {
     static constexpr auto xmlName = "pressureGuessing";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1311,7 +1269,6 @@ struct Setting<SettingsElement::SETTING_SCROLLBAR_HIDE_TYPE> {
     static constexpr value_type DEFAULT = ScrollbarHideType::SCROLLBAR_HIDE_NONE;
     static constexpr auto COMMENT =
             "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"";
-    static constexpr auto EXPORT_FN = exportScrollbarHideType;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1321,7 +1278,6 @@ struct Setting<SettingsElement::SETTING_DISABLE_SCROLLBAR_FADEOUT> {
     static constexpr auto xmlName = "disableScrollbarFadeout";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1331,7 +1287,6 @@ struct Setting<SettingsElement::SETTING_DISABLE_AUDIO> {
     static constexpr auto xmlName = "disableAudio";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1341,7 +1296,6 @@ struct Setting<SettingsElement::SETTING_AUDIO_SAMPLE_RATE> {
     static constexpr auto xmlName = "audioSampleRate";
     static constexpr value_type DEFAULT = 44100.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1351,7 +1305,6 @@ struct Setting<SettingsElement::SETTING_AUDIO_GAIN> {
     static constexpr auto xmlName = "audioGain";
     static constexpr value_type DEFAULT = 1.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1361,7 +1314,6 @@ struct Setting<SettingsElement::SETTING_DEFAULT_SEEK_TIME> {
     static constexpr auto xmlName = "defaultSeekTime";
     static constexpr value_type DEFAULT = 5;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportUintProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1371,7 +1323,6 @@ struct Setting<SettingsElement::SETTING_AUDIO_INPUT_DEVICE> {
     static constexpr auto xmlName = "audioInputDevice";
     static constexpr value_type DEFAULT = -1;  // Value formerly in AUDIO_INPUT_SYSTEM_DEFAULT
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportPADeviceIndex;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1381,7 +1332,6 @@ struct Setting<SettingsElement::SETTING_AUDIO_OUTPUT_DEVICE> {
     static constexpr auto xmlName = "audioOutputDevice";
     static constexpr value_type DEFAULT = -1;  // Value formerly in AUDIO_OUTPUT_SYSTEM_DEFAULT
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportPADeviceIndex;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1391,7 +1341,6 @@ struct Setting<SettingsElement::SETTING_NUM_IGNORED_STYLUS_EVENTS> {
     static constexpr auto xmlName = "numIgnoredStylusEvents";
     static constexpr value_type DEFAULT = 0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 50); };
 };
 
@@ -1401,7 +1350,6 @@ struct Setting<SettingsElement::SETTING_INPUT_SYSTEM_TPC_BUTTON> {
     static constexpr auto xmlName = "inputSystemTPCButton";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1411,7 +1359,6 @@ struct Setting<SettingsElement::SETTING_INPUT_SYSTEM_DRAW_OUTSIDE_WINDOW> {
     static constexpr auto xmlName = "inputSystemDrawOutsideWindow";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1422,7 +1369,6 @@ struct Setting<SettingsElement::SETTING_EMPTY_LAST_PAGE_APPEND> {
     static constexpr value_type DEFAULT = EmptyLastPageAppendType::Disabled;
     static constexpr auto COMMENT = "empty Last Page Append Type, allowed values are \"disabled\", "
                                     "\"onDrawOfLastPage\", and \"onScrollOfLastPage\"";
-    static constexpr auto EXPORT_FN = exportEmptyLastPageAppendType;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1432,7 +1378,6 @@ struct Setting<SettingsElement::SETTING_STROKE_FILTER_IGNORE_TIME> {
     static constexpr auto xmlName = "strokeFilterIgnoreTime";
     static constexpr value_type DEFAULT = 150;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1442,7 +1387,6 @@ struct Setting<SettingsElement::SETTING_STROKE_FILTER_IGNORE_LENGTH> {
     static constexpr auto xmlName = "strokeFilterIgnoreLength";
     static constexpr value_type DEFAULT = 1.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1452,7 +1396,6 @@ struct Setting<SettingsElement::SETTING_STROKE_FILTER_SUCCESSIVE_TIME> {
     static constexpr auto xmlName = "strokeFilterSuccessiveTime";
     static constexpr value_type DEFAULT = 500;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportIntProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1462,7 +1405,6 @@ struct Setting<SettingsElement::SETTING_STROKE_FILTER_ENABLED> {
     static constexpr auto xmlName = "strokeFilterEnabled";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1472,7 +1414,6 @@ struct Setting<SettingsElement::SETTING_DO_ACTION_ON_STROKE_FILTERED> {
     static constexpr auto xmlName = "doActionOnStrokeFiltered";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1482,7 +1423,6 @@ struct Setting<SettingsElement::SETTING_TRY_SELECT_ON_STROKE_FILTERED> {
     static constexpr auto xmlName = "trySelectOnStrokeFiltered";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1492,7 +1432,6 @@ struct Setting<SettingsElement::SETTING_LATEX_SETTINGS> {
     static constexpr auto xmlName = "latexSettings";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportLatexSettings;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1502,7 +1441,6 @@ struct Setting<SettingsElement::SETTING_SNAP_RECOGNIZED_SHAPES> {
     static constexpr auto xmlName = "snapRecognizedShapesEnabled";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1512,7 +1450,6 @@ struct Setting<SettingsElement::SETTING_RESTORE_LINE_WIDTH> {
     static constexpr auto xmlName = "restoreLineWidthEnabled";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1522,7 +1459,6 @@ struct Setting<SettingsElement::SETTING_PREFERRED_LOCALE> {
     static constexpr auto xmlName = "preferredLocale";
     static constexpr const char* DEFAULT = "";
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportStringProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1532,7 +1468,6 @@ struct Setting<SettingsElement::SETTING_STABILIZER_AVERAGING_METHOD> {
     static constexpr auto xmlName = "stabilizerAveragingMethod";
     static constexpr value_type DEFAULT = StrokeStabilizer::AveragingMethod::NONE;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportStrokeAveragingMethod;
     static constexpr auto VALIDATE_FN = [](value_type value) -> value_type {
         return StrokeStabilizer::isValid(value) ? value : StrokeStabilizer::AveragingMethod::NONE;
     };
@@ -1544,7 +1479,6 @@ struct Setting<SettingsElement::SETTING_STABILIZER_PREPROCESSOR> {
     static constexpr auto xmlName = "stabilizerPreprocessor";
     static constexpr value_type DEFAULT = StrokeStabilizer::Preprocessor::NONE;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportStrokePreprocessor;
     static constexpr auto VALIDATE_FN = [](value_type value) -> value_type {
         return StrokeStabilizer::isValid(value) ? value : StrokeStabilizer::Preprocessor::NONE;
     };
@@ -1556,7 +1490,6 @@ struct Setting<SettingsElement::SETTING_STABILIZER_BUFFERSIZE> {
     static constexpr auto xmlName = "stabilizerBuffersize";
     static constexpr value_type DEFAULT = 20;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportULintProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1566,7 +1499,6 @@ struct Setting<SettingsElement::SETTING_STABILIZER_SIGMA> {
     static constexpr auto xmlName = "stabilizerSigma";
     static constexpr value_type DEFAULT = 0.5;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1576,7 +1508,6 @@ struct Setting<SettingsElement::SETTING_STABILIZER_DEADZONE_RADIUS> {
     static constexpr auto xmlName = "stabilizerDeadzoneRadius";
     static constexpr value_type DEFAULT = 1.3;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1586,7 +1517,6 @@ struct Setting<SettingsElement::SETTING_STABILIZER_DRAG> {
     static constexpr auto xmlName = "stabilizerDrag";
     static constexpr value_type DEFAULT = 0.4;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1596,7 +1526,6 @@ struct Setting<SettingsElement::SETTING_STABILIZER_MASS> {
     static constexpr auto xmlName = "stabilizerMass";
     static constexpr value_type DEFAULT = 5.0;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDoubleProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1606,7 +1535,6 @@ struct Setting<SettingsElement::SETTING_STABILIZER_CUSP_DETECTION> {
     static constexpr auto xmlName = "stabilizerCuspDetection";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1616,27 +1544,22 @@ struct Setting<SettingsElement::SETTING_STABILIZER_FINALIZE_STROKE> {
     static constexpr auto xmlName = "stabilizerFinalizeStroke";
     static constexpr value_type DEFAULT = true;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 template <>
 struct Setting<SettingsElement::USE_SPACES_AS_TAB> {
     using value_type = bool;
-    using getter_return_type = bool;
     static constexpr auto xmlName = "useSpacesForTab";
     static constexpr value_type DEFAULT = false;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportBoolProperty;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 template <>
 struct Setting<SettingsElement::NUMBER_OF_SPACES_FOR_TAB> {
     using value_type = uint;
-    using getter_return_type = uint;
     static constexpr auto xmlName = "numberOfSpacesForTab";
     static constexpr value_type DEFAULT = 4;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportUintProperty;
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::min(val, 8U); };
 };
 
@@ -1647,7 +1570,6 @@ struct Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG> {
     static constexpr auto xmlName = "buttonConfig";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportButtonConfig;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1657,7 +1579,6 @@ struct Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES> {
     static constexpr auto xmlName = "deviceClasses";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportDeviceClasses;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1667,7 +1588,6 @@ struct Setting<SettingsElement::SETTING_NESTED_TOOLS> {
     static constexpr auto xmlName = "tools";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportSElement;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1677,7 +1597,6 @@ struct Setting<SettingsElement::SETTING_NESTED_TOUCH> {
     static constexpr auto xmlName = "touch";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportSElement;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
@@ -1687,12 +1606,11 @@ struct Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR> 
     static constexpr auto xmlName = "lastUsedPageBgColor";
     static value_type DEFAULT;
     static constexpr auto COMMENT = nullptr;
-    static constexpr auto EXPORT_FN = exportSElement;
     static constexpr auto VALIDATE_FN = noValidate<value_type>;
 };
 
 
-// Importer, exporter and comment struct here:
+// Importer, exporter, validator and comment struct here:
 template <SettingsElement e, typename U = void>
 struct importer {
     static constexpr auto fn = importProperty<typename Setting<e>::value_type>;
@@ -1700,6 +1618,27 @@ struct importer {
 template <SettingsElement e>
 struct importer<e, std::void_t<decltype(Setting<e>::IMPORT_FN)>> {
     static constexpr auto fn = Setting<e>::IMPORT_FN;
+};
+
+template <SettingsElement e, typename U = void>
+struct exporter {
+    static constexpr auto fn = exportProperty<typename Setting<e>::value_type>;
+};
+template <SettingsElement e>
+struct exporter<e, std::void_t<decltype(Setting<e>::EXPORT_FN)>> {
+    static constexpr auto fn = Setting<e>::EXPORT_FN;
+};
+
+template <SettingsElement e, typename U = void>
+struct validator {
+    static constexpr auto fn = [](const typename Setting<e>::value_type& val) ->
+            typename Setting<e>::value_type { return val; };
+    static constexpr bool enable = false;
+};
+template <SettingsElement e>
+struct validator<e, std::void_t<decltype(Setting<e>::VALIDATE_FN)>> {
+    static constexpr auto fn = Setting<e>::VALIDATE_FN;
+    static constexpr bool enabled = true;
 };
 
 

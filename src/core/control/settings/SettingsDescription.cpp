@@ -615,36 +615,49 @@ bool importProperty(xmlNodePtr node, SElement& var) {
 
 
 // Declarations of export functions
-xmlNodePtr exportStringProperty(xmlNodePtr node, std::string name, std::string value) {
-    xmlNodePtr xmlNode = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
-    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(name.c_str()));
-    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(value.c_str()));
+inline xmlNodePtr exportProp(xmlNodePtr parent, const char* name, const char* value) {
+    xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
+    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(name));
+    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(value));
     return xmlNode;
 }
-xmlNodePtr exportPathProperty(xmlNodePtr node, std::string name, fs::path value) {
-    return exportStringProperty(node, name, value.empty() ? "" : value.u8string().c_str());
+
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const std::string& value) {
+    return exportProp(node, name.c_str(), value.c_str());
 }
-xmlNodePtr exportBoolProperty(xmlNodePtr node, std::string name, bool value) {
-    return exportStringProperty(node, name, value ? "true" : "false");
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const fs::path& value) {
+    return exportProp(node, name.c_str(), value.empty() ? "" : value.u8string().c_str());
 }
-xmlNodePtr exportDoubleProperty(xmlNodePtr node, std::string name, double value) {
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const bool& value) {
+    return exportProp(node, name.c_str(), value ? "true" : "false");
+}
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const double& value) {
     char text[G_ASCII_DTOSTR_BUF_SIZE];
     g_ascii_dtostr(text, G_ASCII_DTOSTR_BUF_SIZE, value);
-    return exportStringProperty(node, name, text);
+    return exportProp(node, name.c_str(), text);
 }
-xmlNodePtr exportIntProperty(xmlNodePtr node, std::string name, int value) {
-    return exportStringProperty(node, name, std::to_string(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const int& value) {
+    return exportProp(node, name.c_str(), std::to_string(value).c_str());
 }
-xmlNodePtr exportUintProperty(xmlNodePtr node, std::string name, uint value) {
-    return exportStringProperty(node, name, std::to_string(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const uint& value) {
+    return exportProp(node, name.c_str(), std::to_string(value).c_str());
 }
-xmlNodePtr exportColorProperty(xmlNodePtr node, std::string name, Color value) {
-    return exportUintProperty(node, name, u_int32_t(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const Color& value) {
+    return exportProperty(node, name, u_int32_t(value));
 }
-xmlNodePtr exportULintProperty(xmlNodePtr node, std::string name, size_t value) {
-    return exportStringProperty(node, name, std::to_string(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const size_t& value) {
+    return exportProp(node, name.c_str(), std::to_string(value).c_str());
 }
-xmlNodePtr exportFont(xmlNodePtr node, std::string name, XojFont value) {
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const XojFont& value) {
     xmlNodePtr xmlNode = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
     xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("font"));
     xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("font"),
@@ -654,22 +667,28 @@ xmlNodePtr exportFont(xmlNodePtr node, std::string name, XojFont value) {
     xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("size"), reinterpret_cast<const xmlChar*>(text));
     return xmlNode;
 }
-xmlNodePtr exportSidebarNumbering(xmlNodePtr node, std::string name, SidebarNumberingStyle value) {
-    return exportIntProperty(node, name, static_cast<int>(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const SidebarNumberingStyle& value) {
+    return exportProperty(node, name, static_cast<int>(value));
 }
-xmlNodePtr exportStylusCursorType(xmlNodePtr node, std::string name, StylusCursorType value) {
-    return exportStringProperty(node, name, stylusCursorTypeToString(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const StylusCursorType& value) {
+    return exportProp(node, name.c_str(), stylusCursorTypeToString(value));
 }
-xmlNodePtr exportEraserVisibility(xmlNodePtr node, std::string name, EraserVisibility value) {
-    return exportStringProperty(node, name, eraserVisibilityToString(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const EraserVisibility& value) {
+    return exportProp(node, name.c_str(), eraserVisibilityToString(value));
 }
-xmlNodePtr exportIconTheme(xmlNodePtr node, std::string name, IconTheme value) {
-    return exportStringProperty(node, name, iconThemeToString(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const IconTheme& value) {
+    return exportProp(node, name.c_str(), iconThemeToString(value));
 }
-xmlNodePtr exportViewMode(xmlNodePtr node, std::string name, ViewMode value) {
-    return exportStringProperty(node, name, viewModeToSettingsString(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const ViewMode& value) {
+    return exportProp(node, name.c_str(), viewModeToSettingsString(value).c_str());
 }
-xmlNodePtr exportScrollbarHideType(xmlNodePtr node, std::string name, ScrollbarHideType value) {
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const ScrollbarHideType& value) {
     std::string val = "none";
     switch (value) {
         case SCROLLBAR_HIDE_BOTH:
@@ -684,36 +703,38 @@ xmlNodePtr exportScrollbarHideType(xmlNodePtr node, std::string name, ScrollbarH
         case SCROLLBAR_HIDE_NONE:
             break;
     }
-    return exportStringProperty(node, name, val);
+    return exportProp(node, name.c_str(), val.c_str());
 }
-xmlNodePtr exportPADeviceIndex(xmlNodePtr node, std::string name, PaDeviceIndex value) {
-    return exportIntProperty(node, name, static_cast<int>(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const EmptyLastPageAppendType& value) {
+    return exportProp(node, name.c_str(), emptyLastPageAppendToString(value));
 }
-xmlNodePtr exportEmptyLastPageAppendType(xmlNodePtr node, std::string name, EmptyLastPageAppendType value) {
-    return exportStringProperty(node, name, emptyLastPageAppendToString(value));
-}
-xmlNodePtr exportLatexSettings(xmlNodePtr node, std::string name, LatexSettings value) {
-    xmlNodePtr xmlNode = exportBoolProperty(node, "latexSettings.autoCheckDependencies", value.autoCheckDependencies);
-    xmlNode = exportStringProperty(node, "latexSettings.defaultText", value.defaultText);
-    xmlNode = exportStringProperty(node, "latexSettings.globalTemplatePath", value.globalTemplatePath.string());
-    xmlNode = exportStringProperty(node, "latexSettings.genCmd", value.genCmd);
-    xmlNode = exportStringProperty(node, "latexSettings.sourceViewThemeId", value.sourceViewThemeId);
-    xmlNode = exportStringProperty(node, "latexSettings.editorFont", value.editorFont.asString());
-    xmlNode = exportBoolProperty(node, "latexSettings.useCustomEditorFont", value.useCustomEditorFont);
-    xmlNode = exportBoolProperty(node, "latexSettings.editorWordWrap", value.editorWordWrap);
-    xmlNode = exportBoolProperty(node, "latexSettings.sourceViewAutoIndent", value.sourceViewAutoIndent);
-    xmlNode = exportBoolProperty(node, "latexSettings.sourceViewSyntaxHighlight", value.sourceViewSyntaxHighlight);
-    xmlNode = exportBoolProperty(node, "latexSettings.sourceViewShowLineNumbers", value.sourceViewShowLineNumbers);
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const LatexSettings& value) {
+    xmlNodePtr xmlNode = exportProperty(node, "latexSettings.autoCheckDependencies", value.autoCheckDependencies);
+    xmlNode = exportProperty(node, "latexSettings.defaultText", value.defaultText);
+    xmlNode = exportProperty(node, "latexSettings.globalTemplatePath", value.globalTemplatePath.string());
+    xmlNode = exportProperty(node, "latexSettings.genCmd", value.genCmd);
+    xmlNode = exportProperty(node, "latexSettings.sourceViewThemeId", value.sourceViewThemeId);
+    xmlNode = exportProperty(node, "latexSettings.editorFont", value.editorFont.asString());
+    xmlNode = exportProperty(node, "latexSettings.useCustomEditorFont", value.useCustomEditorFont);
+    xmlNode = exportProperty(node, "latexSettings.editorWordWrap", value.editorWordWrap);
+    xmlNode = exportProperty(node, "latexSettings.sourceViewAutoIndent", value.sourceViewAutoIndent);
+    xmlNode = exportProperty(node, "latexSettings.sourceViewSyntaxHighlight", value.sourceViewSyntaxHighlight);
+    xmlNode = exportProperty(node, "latexSettings.sourceViewShowLineNumbers", value.sourceViewShowLineNumbers);
     return xmlNode;
 }
-xmlNodePtr exportStrokeAveragingMethod(xmlNodePtr node, std::string name, StrokeStabilizer::AveragingMethod value) {
-    return exportIntProperty(node, name, static_cast<int>(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const StrokeStabilizer::AveragingMethod& value) {
+    return exportProperty(node, name, static_cast<int>(value));
 }
-xmlNodePtr exportStrokePreprocessor(xmlNodePtr node, std::string name, StrokeStabilizer::Preprocessor value) {
-    return exportIntProperty(node, name, static_cast<int>(value));
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const StrokeStabilizer::Preprocessor& value) {
+    return exportProperty(node, name, static_cast<int>(value));
 }
-xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
-                              const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value) {
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name,
+                          const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value) {
     xmlNodePtr xmlNodeButtonConfig = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
     xmlSetProp(xmlNodeButtonConfig, reinterpret_cast<const xmlChar*>("name"),
                reinterpret_cast<const xmlChar*>(name.c_str()));
@@ -799,8 +820,9 @@ xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
     }
     return xmlNodeButtonConfig;
 }
-xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name,
-                               const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value) {
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name,
+                          const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value) {
     xmlNodePtr xmlNodeDeviceClasses = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
     xmlSetProp(xmlNodeDeviceClasses, reinterpret_cast<const xmlChar*>("name"),
                reinterpret_cast<const xmlChar*>(name.c_str()));
@@ -824,7 +846,8 @@ xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name,
     }
     return xmlNodeDeviceClasses;
 }
-xmlNodePtr exportSElement(xmlNodePtr node, std::string name, const SElement& value) {
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const SElement& value) {
     xmlNodePtr xmlDataNode = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
     xmlSetProp(xmlDataNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(name.c_str()));
     for (auto const& [aname, attrib]: value.attributes()) {
@@ -869,6 +892,6 @@ xmlNodePtr exportSElement(xmlNodePtr node, std::string name, const SElement& val
             xmlAddPrevSibling(xmlDataNode, com);
         }
     }
-    for (auto const& p: value.children()) { exportSElement(xmlDataNode, p.first, p.second); }
+    for (auto const& p: value.children()) { exportProperty(xmlDataNode, p.first, p.second); }
     return xmlDataNode;
 }
