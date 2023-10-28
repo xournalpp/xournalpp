@@ -152,10 +152,9 @@ public:
     std::map<std::string, SAttribute>& attributes() const;
     std::map<std::string, SElement>& children() const;
 
-    bool operator==(const SElement& sel)
-            const {    // Use this operator implementation, to be able to use the setter for SElement setting properties
-        return false;  // TODO: implement this correctly
-    };
+    // This is only used to always update the Setting of type SElement
+    // This does not actually check for equality
+    bool operator==(const SElement& sel) const { return false; };
 
 private:
     std::shared_ptr<SElementData> element = std::make_shared<SElementData>();

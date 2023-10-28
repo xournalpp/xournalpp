@@ -234,14 +234,6 @@ bool importProperty(xmlNodePtr node, ScrollbarHideType& var) {
     }
     return false;
 }
-/*bool importPADeviceIndex(xmlNodePtr node, PaDeviceIndex& var) { // TODO: remove this as it is unnecessary
-    int i = 0;
-    if (importIntProperty(node, i)) {
-        var = static_cast<PaDeviceIndex>(i);
-        return true;
-    }
-    return false;
-}*/
 template <>
 bool importProperty(xmlNodePtr node, EmptyLastPageAppendType& var) {
     std::string s = "";

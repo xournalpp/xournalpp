@@ -32,9 +32,10 @@
 class SElement;
 class ButtonConfig;
 
-// TODO: improve this comment
 /*
  * In order to add settings add an element to the SettingsElement enum
+ * after that add the specialization of the Setting struct further below
+ *
  */
 
 enum class SettingsElement {
@@ -72,7 +73,6 @@ enum class SettingsElement {
     SETTING_LAYOUT_BOTTOM_TO_TOP,
     SETTING_SHOW_PAIRED_PAGES,
     SETTING_NUM_PAIRS_OFFSET,
-    // SETTING_PRESENTATION_MODE, // TODO: remove
     SETTING_AUTOLOAD_MOST_RECENT,
     SETTING_AUTOLOAD_PDF_XOJ,
     SETTING_STYLUS_CURSOR_TYPE,
@@ -315,13 +315,6 @@ template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const SElement& value);
 
 
-// Definitions of validation functions
-template <typename t>
-t noValidate(t val) {
-    return val;
-}
-
-
 // Definitions of getter return types for value types
 template <typename T>
 struct getter_return {
@@ -431,22 +424,23 @@ struct Setting {};
  * template<>
  * struct Setting<*The name of your settings element*> {
  *    value_type: The type your settings value should have
+ *
  *    xmlName: The name you want for your property in the file
- *    DEFAULT: The default value of your Setting, if your value_type is not a literal type leave it unset here, and add
- * the initialization in SettingsDescriptions.cpp at the top COMMENT: The comment in the file above your setting, if not
- * needed leave nullptr for none IMPORT_FN: Function that reads your value from the xml tag EXPORT_FN: Function that
- * writes your value into an xml tag and adds it to the document root VALIDATE_FN: Function that checks if the value is
- * correct and always returns a valid value, called at import and setter
- * };
- */
-// TODO: fix these comments
-/* Template:
- * template<>
- * struct Setting<SettingsElement::> {
- *     using value_type = ;
- *     static constexpr auto xmlName = "";
- *     static value_type DEFAULT;
- *     static constexpr auto COMMENT = "";
+ *
+ *    DEFAULT: The default value of your Setting, if your value_type is not a literal type leave it
+ *             unset here, and add the initialization in SettingsDescriptions.cpp at the top
+ *
+ *    COMMENT: The comment in the file above your setting, if not needed leave this out of the
+ *             definition of the struct
+ *
+ *    IMPORT_FN: Function that reads your value from the xml tag, only set if the type's default
+ *               is not acceptable for some reason
+ *
+ *    EXPORT_FN: Function that writes your value into an xml tag and adds it to the document root,
+ *               only set this to override the default if necessary
+ *
+ *    VALIDATE_FN: Function that checks if the value is correct and always returns a valid value,
+ *                 called at import and setter. If not needed, do not set it
  * };
  */
 
@@ -692,13 +686,6 @@ struct Setting<SettingsElement::SETTING_NUM_PAIRS_OFFSET> {
     static constexpr auto xmlName = "numPairsOffset";
     static constexpr value_type DEFAULT = 1;
 };
-
-/*template<>
-struct Setting<SettingsElement::SETTING_PRESENTATION_MODE> { // TODO: remove this as it is not needed
-    using value_type = bool;
-    static constexpr auto xmlName = "presentationMode";
-    static constexpr value_type DEFAULT = false;
-};*/
 
 template <>
 struct Setting<SettingsElement::SETTING_AUTOLOAD_MOST_RECENT> {
