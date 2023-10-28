@@ -623,7 +623,6 @@ if(XGETTEXT_FOUND)
         set(inifile_abs "${CMAKE_CURRENT_BINARY_DIR}/${inifile}")
         get_filename_component(folder "${inifile_abs}" DIRECTORY)
         file(MAKE_DIRECTORY "${folder}")
-        file(RELATIVE_PATH folder_rel "${PROJECT_BINARY_DIR}" "${folder}")
         list(APPEND inifiles "${inifile_abs}")
         add_custom_command(
           OUTPUT
@@ -642,17 +641,17 @@ if(XGETTEXT_FOUND)
           FILES
             "${inifile_abs}"
           DESTINATION
-            "share/xournalpp/${folder_rel}"
+            "share/xournalpp/ui"
         )
       endforeach()
 
       set(xmlfiles)
       foreach(xmlfileIN ${xml_list})
         string(REGEX REPLACE "(\\.xml).*$" "\\1" xmlfile "${xmlfileIN}")
-        set(xmlfile_abs "${CMAKE_CURRENT_BINARY_DIR}/${xmlfile}")
-        get_filename_component(folder "${xmlfile_abs}" DIRECTORY)
-        file(MAKE_DIRECTORY "${folder}")
-        file(RELATIVE_PATH folder_rel "${PROJECT_BINARY_DIR}" "${folder}")
+        get_filename_component(name "${xmlfile}" NAME)
+        set(generateddir "${PROJECT_BINARY_DIR}/generated")
+        set(xmlfile_abs "${generateddir}/${name}")
+        file(MAKE_DIRECTORY "${generateddir}")
         list(APPEND xmlfiles "${xmlfile_abs}")
         add_custom_command(
           OUTPUT
