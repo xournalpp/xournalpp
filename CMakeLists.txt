@@ -345,11 +345,11 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
             DESTINATION share/icons/hicolor/scalable/mimetypes/)
     install(FILES ui/pixmaps/gnome-mime-application-x-xopt.svg
             DESTINATION share/icons/hicolor/scalable/mimetypes/)
-    install(FILES ${CMAKE_BINARY_DIR}/desktop/com.github.xournalpp.xournalpp.xml
+    install(FILES ${CMAKE_BINARY_DIR}/generated/com.github.xournalpp.xournalpp.xml
             DESTINATION share/mime/packages)
     install(FILES desktop/com.github.xournalpp.xournalpp.thumbnailer
             DESTINATION share/thumbnailers)
-    install(FILES ${CMAKE_BINARY_DIR}/desktop/com.github.xournalpp.xournalpp.appdata.xml
+    install(FILES ${CMAKE_BINARY_DIR}/generated/com.github.xournalpp.xournalpp.appdata.xml
             DESTINATION share/metainfo)
 endif ()
 
