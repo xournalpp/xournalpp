@@ -165,9 +165,9 @@ private:
     static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control);
 
     /**
-     * Callback fro window states, we ned to know if the window is fullscreen
+     * Window is maximized/minimized
      */
-    static bool windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win);
+    static void windowMaximizedCallback(GObject* window, GParamSpec*, MainWindow* win);
 
     /**
      * Callback for drag & drop files
