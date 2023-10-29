@@ -1899,7 +1899,13 @@ auto Settings::getMainWndHeight() const -> int { return this->mainWndHeight; }
 
 auto Settings::isMainWndMaximized() const -> bool { return this->maximized; }
 
-void Settings::setMainWndMaximized(bool max) { this->maximized = max; }
+void Settings::setMainWndMaximized(bool max) {
+    if (this->maximized == max) {
+        return;
+    }
+    this->maximized = max;
+    save();
+}
 
 void Settings::setSelectedToolbar(const string& name) {
     if (this->selectedToolbar == name) {

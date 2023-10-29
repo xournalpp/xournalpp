@@ -79,8 +79,13 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     // Window handler
     g_signal_connect(this->window, "delete-event", xoj::util::wrap_for_g_callback_v<deleteEventCallback>,
                      this->control);
-    g_signal_connect(this->window, "window_state_event", xoj::util::wrap_for_g_callback_v<windowStateEventCallback>,
+#if GTK_MAJOR_VERSION == 3
+    g_signal_connect(this->window, "notify::is-maximized", xoj::util::wrap_for_g_callback_v<windowMaximizedCallback>,
                      this);
+#else
+    g_signal_connect(this->window, "notify::maximized", xoj::util::wrap_for_g_callback_v<windowMaximizedCallback>,
+                     this);
+#endif
 
     g_signal_connect(get("buttonCloseSidebar"), "clicked", xoj::util::wrap_for_g_callback_v<buttonCloseSidebarClicked>,
                      this);
@@ -535,10 +540,8 @@ auto MainWindow::isMaximized() const -> bool { return this->maximized; }
 
 auto MainWindow::getXournal() const -> XournalView* { return xournal.get(); }
 
-auto MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win) -> bool {
+auto MainWindow::windowMaximizedCallback(GObject* window, GParamSpec*, MainWindow* win) -> void {
     win->setMaximized(gtk_window_is_maximized(GTK_WINDOW(window)));
-
-    return false;
 }
 
 void MainWindow::toolbarSelected(const std::string& id) {
