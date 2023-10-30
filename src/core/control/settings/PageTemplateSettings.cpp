@@ -1,9 +1,6 @@
 #include "PageTemplateSettings.h"
 
-#include <cinttypes>  // for PRIx32
-#include <cstdint>    // for uint32_t
-#include <cstdio>     // for snprintf, size_t
-#include <sstream>    // for basic_istream, strings...
+#include <sstream>  // for basic_istream, strings...
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 
@@ -116,9 +113,7 @@ auto PageTemplateSettings::toString() const -> string {
         str += string("backgroundTypeConfig=") + backgroundType.config + "\n";
     }
 
-    char buffer[64];
-    snprintf(buffer, sizeof(buffer), "#%06" PRIx32, uint32_t{this->backgroundColor});
-    str += string("backgroundColor=") + buffer + "\n";
+    str += string("backgroundColor=") + Util::rgb_to_hex_string(this->backgroundColor) + "\n";
 
     return str;
 }

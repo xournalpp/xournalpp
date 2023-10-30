@@ -1,7 +1,6 @@
 #include "ColorToolItem.h"
 
 #include <array>    // for array
-#include <cstdio>   // for snprintf, size_t
 #include <memory>   // for unique_ptr
 #include <sstream>  // for ostringstream
 #include <utility>  // for move

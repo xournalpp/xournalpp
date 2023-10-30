@@ -1,8 +1,6 @@
 #include "LatexGenerator.h"
 
-#include <iomanip>  // for operator<<, setfill, setw
-#include <regex>    // for smatch, sregex_iterator
-#include <sstream>  // for ostringstream, basic_ost...
+#include <regex>  // for smatch, sregex_iterator
 
 #include <glib.h>     // for GError, gchar, g_error_free
 #include <poppler.h>  // for g_object_unref
@@ -15,7 +13,6 @@
 #include "util/raii/GLibGuards.h"            // for GErrorGuard, GStrvGuard
 #include "util/raii/GObjectSPtr.h"           // for GObjectSptr
 #include "util/safe_casts.h"                 // for as_signed
-#include "util/serdesstream.h"               // for serdes_stream
 
 
 using namespace xoj::util;
@@ -36,11 +33,7 @@ auto LatexGenerator::templateSub(const std::string& input, const std::string& te
         if (matchStr == "TOOL_INPUT") {
             repl = input;
         } else if (matchStr == "TEXT_COLOR") {
-            auto s = serdes_stream<std::ostringstream>();
-            auto tmp_color = textColor;
-            tmp_color.alpha = 0;
-            s << std::hex << std::setfill('0') << std::setw(6) << std::right << tmp_color;
-            repl = s.str();
+            repl = Util::rgb_to_hex_string(textColor).substr(1);
         }
         output.append(templ, templatePos, as_unsigned(match.position()) - templatePos);
         output.append(repl);
