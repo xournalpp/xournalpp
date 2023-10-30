@@ -346,10 +346,10 @@ public:
     bool isSinglePageTool() const;
 
     /**
-     * Returns whether the current tool only accepts events from within the page input started (i.e. events
-     * should be clamped to page)
+     * Returns whether the current tool accepts events from outside the page input started in (i.e. events
+     * should not be clamped to the page)
      */
-    bool isPageLocalTool() const;
+    bool acceptsOutOfPageEvents() const;
 
     /**
      * @brief Whether the tool supports short taps filtering (for floating toolbox or selection)
