@@ -138,6 +138,10 @@ if (#[[${CMAKE_VERSION} VERSION_LESS "3.18" AND]] ${CMAKE_SYSTEM_NAME} MATCHES "
     endif ()
 endif ()
 
+if (UNIX AND NOT APPLE AND NOT CYGWIN)
+    set(INSTALL_DESKTOP_FILES true)
+endif()
+
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
@@ -329,7 +333,7 @@ install(DIRECTORY resources
         )
 
 # Install desktop shortcuts for Linux
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+if (${INSTALL_DESKTOP_FILES})
     message("Installing desktop files")
 
     # Install icons

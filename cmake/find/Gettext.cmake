@@ -24,6 +24,10 @@
 #
 # With modifications by Bryan Tan to fix an issue with the translation target.
 #
+# This files has been heavily modified by Benjamin Hennion to adapt to modern
+# versions of gettext and to translate more type of files. The dependency on
+# intl has been removed.
+#
 ##
 # Add find_package handler for gettext programs msgmerge, msgfmt, msgcat and
 # xgettext.
@@ -65,7 +69,15 @@
 # DESKTOPFILES (optional/mandatory)
 #   List of .desktop files to extract gettext strings from. Globbing is
 #   supported.
-#   intltool required.
+#
+# INIFILES
+#   List of .ini.in files whose entries "name=" will be translated
+#
+# XMLFILES
+#   List of .xml.in files for shared-mime-info and metainfo
+#
+# ITSDIR
+#   Additional directory where gettext's .loc/.its files will be looked for in order to process the XML files
 #
 # Either SRCFILES or GLADEFILES or DESKTOPFILES (or all)
 # have to be filled with some files.
@@ -318,7 +330,7 @@ if(XGETTEXT_FOUND)
         endif()
       endforeach()
 
-      if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+      if(${INSTALL_DESKTOP_FILES})
         # macOs and Windows don't use .desktop files nor .appdata.xml
         set(desktop_list)
         set(desktop_list_abs)
