@@ -77,13 +77,15 @@ public:
         return Setting<t>::DEFAULT;
     }
     template <SettingsElement t>
-    void setValue(const typename Setting<t>::value_type& v) {
+    bool setValue(const typename Setting<t>::value_type& v) {
         if (!(v == std::get<(std::size_t)t>(vars))) {
             if (validator<t>::enable)
                 std::get<(std::size_t)t>(vars) = validator<t>::fn(v);
             else
                 std::get<(std::size_t)t>(vars) = v;
+            return true;
         }
+        return false;
     }
     template <SettingsElement t>
     void importSetting(xmlNodePtr node) {
@@ -180,8 +182,7 @@ public:
 
     template <SettingsElement t>
     void set(const typename Setting<t>::value_type& v) {
-        settings.setValue<t>(v);
-        save();
+        if (settings.setValue<t>(v)) save();
     }
 
     bool load();
