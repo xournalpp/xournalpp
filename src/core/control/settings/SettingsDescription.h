@@ -244,7 +244,7 @@ bool importProperty(xmlNodePtr node, SElement& var);
 
 // Definitions of export functions
 template <typename T>
-xmlNodePtr exportProperty(xmlNodePtr parent, std::string name, const T& value);
+xmlNodePtr exportProperty(xmlNodePtr parent, std::string name, T value);
 
 template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const std::string& value);
@@ -253,55 +253,55 @@ template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const fs::path& value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const bool& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, bool value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const double& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, double value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const int& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, int value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const uint& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, uint value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const Color& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, Color value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const size_t& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, size_t value);
 
 template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const XojFont& value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const SidebarNumberingStyle& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, SidebarNumberingStyle value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const StylusCursorType& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, StylusCursorType value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const EraserVisibility& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, EraserVisibility value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const IconTheme& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, IconTheme value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const ViewMode& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, ViewMode value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const ScrollbarHideType& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, ScrollbarHideType value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const EmptyLastPageAppendType& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, EmptyLastPageAppendType value);
 
 template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const LatexSettings& value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const StrokeStabilizer::AveragingMethod& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, StrokeStabilizer::AveragingMethod value);
 
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const StrokeStabilizer::Preprocessor& value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, StrokeStabilizer::Preprocessor value);
 
 template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name,
@@ -1376,7 +1376,7 @@ struct importer<e, std::void_t<decltype(Setting<e>::IMPORT_FN)>> {
 
 template <SettingsElement e, typename U = void>
 struct exporter {
-    static constexpr auto fn = exportProperty<typename Setting<e>::value_type>;
+    static constexpr auto fn = exportProperty<getter_return_t<typename Setting<e>::value_type>>;
 };
 template <SettingsElement e>
 struct exporter<e, std::void_t<decltype(Setting<e>::EXPORT_FN)>> {

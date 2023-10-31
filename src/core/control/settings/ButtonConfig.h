@@ -83,5 +83,5 @@ public:
     template <typename T>
     friend bool importProperty(xmlNodePtr, T&);
     template <typename T>
-    friend xmlNodePtr exportProperty(xmlNodePtr, std::string, const T&);
+    friend xmlNodePtr exportProperty(xmlNodePtr, std::string, T);
 };
