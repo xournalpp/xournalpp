@@ -329,72 +329,12 @@ struct getter_return<fs::path> {
     using type = const fs::path&;
 };
 template <>
-struct getter_return<bool> {
-    using type = bool;
-};
-template <>
-struct getter_return<double> {
-    using type = double;
-};
-template <>
-struct getter_return<int> {
-    using type = int;
-};
-template <>
-struct getter_return<uint> {
-    using type = uint;
-};
-template <>
-struct getter_return<Color> {
-    using type = Color;
-};
-template <>
-struct getter_return<size_t> {
-    using type = size_t;
-};
-template <>
 struct getter_return<XojFont> {
     using type = const XojFont&;
 };
 template <>
-struct getter_return<SidebarNumberingStyle> {
-    using type = SidebarNumberingStyle;
-};
-template <>
-struct getter_return<StylusCursorType> {
-    using type = StylusCursorType;
-};
-template <>
-struct getter_return<EraserVisibility> {
-    using type = EraserVisibility;
-};
-template <>
-struct getter_return<IconTheme> {
-    using type = IconTheme;
-};
-template <>
-struct getter_return<ViewMode> {
-    using type = ViewMode;
-};
-template <>
-struct getter_return<ScrollbarHideType> {
-    using type = ScrollbarHideType;
-};
-template <>
-struct getter_return<EmptyLastPageAppendType> {
-    using type = EmptyLastPageAppendType;
-};
-template <>
 struct getter_return<LatexSettings> {
     using type = const LatexSettings&;
-};
-template <>
-struct getter_return<StrokeStabilizer::AveragingMethod> {
-    using type = StrokeStabilizer::AveragingMethod;
-};
-template <>
-struct getter_return<StrokeStabilizer::Preprocessor> {
-    using type = StrokeStabilizer::Preprocessor;
 };
 template <>
 struct getter_return<std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>> {
