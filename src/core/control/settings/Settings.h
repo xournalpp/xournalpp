@@ -81,6 +81,8 @@ public:
         if (!(v == std::get<(std::size_t)t>(vars))) {
             if (validator<t>::enable)
                 std::get<(std::size_t)t>(vars) = validator<t>::fn(v);
+            else
+                std::get<(std::size_t)t>(vars) = v;
         }
     }
     template <SettingsElement t>
