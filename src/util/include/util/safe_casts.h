@@ -35,6 +35,7 @@
 #include <type_traits>
 #include <utility>
 
+
 template <typename To, typename From>
 [[maybe_unused]] [[nodiscard]] constexpr auto is_safely_castable(From from) -> bool {
     using Big = decltype(from * std::declval<To>());
@@ -98,6 +99,40 @@ inline auto floor_cast(Float f) -> Integral {
     assert(rv0 == rv1);
     return rv1;
 }
+
+#if defined __has_include && !defined(XOJ_USE_STD_BIT_CAST)
+#if __has_include(<bit>)
+#include <bit>
+#if defined(__cpp_lib_bit_cast) && __cpp_lib_bit_cast >= 201806L
+#define XOJ_USE_STD_BIT_CAST 1
+#endif
+#endif
+#endif
+
+#if defined(XOJ_USE_STD_BIT_CAST) && XOJ_USE_STD_BIT_CAST == 1
+namespace xoj::util {
+using std::bit_cast;
+}  // namespace xoj::util
+#else
+#include <cstring>
+
+namespace xoj::util {
+/**
+ * A backport from C++20 of std::bit_cast()
+ */
+template <class To, class From>
+inline std::enable_if_t<
+        sizeof(To) == sizeof(From) && std::is_trivially_copyable_v<From> && std::is_trivially_copyable_v<To>, To>
+        // constexpr support needs compiler magic
+        bit_cast(const From& src) noexcept {
+    static_assert(std::is_trivially_constructible_v<To>,
+                  "backport of bit_cast requires destination type to be trivially constructible");
+    To dst;
+    std::memcpy(&dst, &src, sizeof(To));
+    return dst;
+}
+}  // namespace xoj::util
+#endif
 
 // static_assert(is_safely_castable<int>(std::numeric_limits<size_t>::max()) == false);
 // static_assert(is_safely_castable<int>(std::numeric_limits<int64_t>::min()) == false);
