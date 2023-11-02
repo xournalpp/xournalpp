@@ -2,14 +2,18 @@
 
 #include <algorithm>  // for max
 #include <array>      // for array
+#include <cstdint>    // for uintptr_t
 #include <cstdio>     // for fgets, pclose, popen, snprintf, FILE
 #include <iostream>   // for operator<<, basic_ostream, basic_ostream::...
 #include <string>     // for string
+
+#include "util/safe_casts.h"  // for bit_cast
 
 #ifdef _WIN32
 #include <Windows.h>
 #else
 
+#include <dlfcn.h>     // for dladdr
 #include <execinfo.h>  // for backtrace, backtrace_symbols
 #include <unistd.h>    // for readlink, ssize_t
 
@@ -90,21 +94,28 @@ void Stacktrace::printStracktrace(std::ostream& stream) {
     int trace_size = backtrace(trace.data(), trace.size());
     char** messages = backtrace_symbols(trace.data(), trace_size);
 
-    std::string exeName = getExePath();
-
     // skip first stack frame (points here)
-    for (int i = 1; i < trace_size; ++i) {
-        stream << "[bt] #" << i << " " << messages[i] << endl;
+    for (unsigned int i = 1; i < trace_size; ++i) {
+        stream << "[bt] #" << i - 1 << " " << messages[i] << endl;
+
+        Dl_info info;  // NOLINT(cppcoreguidelines-init-variables)
+        dladdr(trace[i], &info);
 
         std::array<char, 1024> syscom{};
 
-        snprintf(syscom.data(), syscom.size(), "addr2line %p -e %s", trace[i], exeName.c_str());
+        // Todo (cpp20): use std::format instead of snprintf
+        snprintf(syscom.data(), syscom.size(), "addr2line %lx -fCpe \"%s\"",
+                 xoj::util::bit_cast<std::uintptr_t>(trace[i]) - xoj::util::bit_cast<std::uintptr_t>(info.dli_fbase),
+                 info.dli_fname);
+
         FILE* fProc = popen(syscom.data(), "r");
         while (fgets(buff.data(), buff.size(), fProc) != nullptr) {
             stream << buff.data();
         }
         pclose(fProc);
     }
+
+    free(messages);
 }
 #endif
 
