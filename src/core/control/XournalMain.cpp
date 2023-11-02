@@ -28,6 +28,7 @@
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for ICON_THEME_COLOR, ICON_T...
 #include "control/xojfile/LoadHandler.h"     // for LoadHandler
+#include "control/xojfile/SaveHandler.h"     // for SaveHandler
 #include "gui/GladeSearchpath.h"             // for GladeSearchpath
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "gui/XournalView.h"                 // for XournalView
@@ -282,6 +283,33 @@ auto exportImg(const char* input, const char* output, const char* range, const c
 }
 
 /**
+ * @brief Save a xopp-file with given pdf-background
+ *
+ * @param input Path to the input .pdf file
+ * @param output Path to the output .xopp file
+ * @return int 0 on success
+ */
+auto saveDoc(const char* input, const char* output) -> int {
+    // LoadHandler loader;
+    SaveHandler saver;
+    char* inputFilename = (char*)input;
+    const fs::path p = Util::fromGFilename(inputFilename, false);
+    auto handler = std::make_unique<DocumentHandler>();
+    auto newDoc = std::make_unique<Document>(handler.get());
+    const bool res = newDoc->readPdf(p, /*initPages=*/true, false);
+    if (!res) {
+        g_error("%s", FC(_F("Error: {1}") % newDoc->getLastErrorMsg().c_str()));
+    }
+    saver.prepareSave(newDoc.get());
+    saver.saveTo(output);
+
+    if (!saver.getErrorMessage().empty()) {
+        g_error("%s", FC(_F("Error: {1}") % saver.getErrorMessage()));
+    }
+    return 0;
+}
+
+/**
  * @brief Export the input file as pdf
  * @param input Path to the input file
  * @param output Path to the output file
@@ -319,11 +347,13 @@ struct XournalMainPrivate {
         g_strfreev(optFilename);
         g_free(pdfFilename);
         g_free(imgFilename);
+        g_free(docFilename);
     }
 
     gchar** optFilename{};
     gchar* pdfFilename{};
     gchar* imgFilename{};
+    gchar* docFilename{};
     gboolean showVersion = false;
     int openAtPageNumber = 0;  // when no --page is used, the document opens at the page specified in the metadata file
     gchar* exportRange{};
@@ -630,6 +660,9 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
                 },
                 "exportImg");
     }
+    if (app_data->docFilename && app_data->optFilename && *app_data->optFilename) {
+        return exec_guarded([&] { return saveDoc(*app_data->optFilename, app_data->docFilename); }, "saveDocument");
+    }
     return -1;
 }
 
@@ -666,6 +699,8 @@ auto XournalMain::run(int argc, char** argv) -> int {
                                        _("Open PDF in attach mode\n"
                                          "                                 Ignored if no PDF file is specified."),
                                        nullptr},
+                          GOptionEntry{"save", 's', 0, G_OPTION_ARG_FILENAME, &app_data.docFilename,
+                                       _("Save xopp-file with the background PDF specified as FILE"), "XOPPFILE"},
                           GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     g_application_add_main_option_entries(G_APPLICATION(app), options.data());
 
