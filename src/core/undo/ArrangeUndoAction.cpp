@@ -9,9 +9,13 @@
 
 class Control;
 
-ArrangeUndoAction::ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertOrder oldOrder,
-                                     InsertOrder newOrder):
-        UndoAction("ArrangeUndoAction"), layer(layer), description(desc), oldOrder(oldOrder), newOrder(newOrder) {
+ArrangeUndoAction::ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertionOrder oldOrder,
+                                     InsertionOrder newOrder):
+        UndoAction("ArrangeUndoAction"),
+        layer(layer),
+        description(desc),
+        oldOrder(std::move(oldOrder)),
+        newOrder(std::move(newOrder)) {
     this->page = page;
 }
 

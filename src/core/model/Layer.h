@@ -17,6 +17,7 @@
 #include <vector>    // for vector
 
 #include "Element.h"  // for Element, Element::Index
+#include "ElementInsertionPosition.h"  // for InsertionOrder
 
 template <class T>
 using optional = std::optional<T>;
@@ -50,13 +51,26 @@ public:
 
     /**
      * Removes an Element from the Layer and optionally deletes it
+     * @return the position the element occupied
      */
     Element::Index removeElement(Element* e, bool free);
 
     /**
-     * Removes all Elements from the Layer *without freeing them*
+     * Removes the Element. If e is not at index pos, tries to find it elsewhere (this could happen is the layer was
+     * modified between now and when pos was computed)
+     * @return The actual position of the removed element
      */
-    void clearNoFree();
+    Element::Index removeElementAt(Element* e, Element::Index pos, bool free);
+
+    /**
+     * Removes the Elements. If an element cannot be found at its designated position, it is search through the layer
+     */
+    void removeElementsAt(const InsertionOrder& elts, bool free);
+
+    /**
+     * Removes all Elements from the Layer *without freeing them*. Returns the elements.
+     */
+    std::vector<Element*> clearNoFree();
 
     /**
      * Returns an iterator over the Element%s contained in this Layer

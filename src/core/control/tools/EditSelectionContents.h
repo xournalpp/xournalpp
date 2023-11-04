@@ -11,20 +11,19 @@
 
 #pragma once
 
-#include <deque>    // for deque
-#include <utility>  // for pair
 #include <vector>   // for vector
 
 #include <cairo.h>  // for cairo_surface_t, cairo_t
 
-#include "control/ToolEnums.h"              // for ToolSize
-#include "model/Element.h"                  // for Element::Index, Element
-#include "model/ElementContainer.h"         // for ElementContainer
-#include "model/PageRef.h"                  // for PageRef
-#include "undo/UndoAction.h"                // for UndoAction (ptr only)
-#include "util/Color.h"                     // for Color
-#include "util/Rectangle.h"                 // for Rectangle
-#include "util/serializing/Serializable.h"  // for Serializable
+#include "control/ToolEnums.h"               // for ToolSize
+#include "model/Element.h"                   // for Element::Index, Element
+#include "model/ElementContainer.h"          // for ElementContainer
+#include "model/ElementInsertionPosition.h"  // for InsertionOrder
+#include "model/PageRef.h"                   // for PageRef
+#include "undo/UndoAction.h"                 // for UndoAction (ptr only)
+#include "util/Color.h"                      // for Color
+#include "util/Rectangle.h"                  // for Rectangle
+#include "util/serializing/Serializable.h"   // for Serializable
 
 #include "CursorSelectionType.h"  // for CursorSelectionType
 
@@ -97,12 +96,12 @@ public:
     /**
      * Returns the insert order of this selection
      */
-    std::deque<std::pair<Element*, Element::Index>> const& getInsertOrder() const;
+    const InsertionOrder& getInsertionOrder() const;
 
     /** replaces all elements by a new vector of elements
      * @param newElements: the elements which should replace the old elements
      * */
-    void replaceInsertOrder(std::deque<std::pair<Element*, Element::Index>> newInsertOrder);
+    void replaceInsertionOrder(InsertionOrder newInsertOrder);
 
     /**
      * Creates an undo/redo item for translating by (dx, dy), and then updates the bounding boxes accordingly.
@@ -114,6 +113,10 @@ public:
      * paints the selection
      */
     void paint(cairo_t* cr, double x, double y, double rotation, double width, double height, double zoom);
+
+    /// Applies the transformation to the selected elements, empties the selection and return the modified elements
+    InsertionOrder makeMoveEffective(const xoj::util::Rectangle<double>& bounds,
+                                     const xoj::util::Rectangle<double>& snappedBounds, bool preserveAspectRatio);
 
     /**
      * Finish the editing
@@ -160,12 +163,6 @@ public:
      */
     xoj::util::Rectangle<double> getOriginalBounds() const;
 
-    constexpr static struct {
-        bool operator()(std::pair<Element*, Element::Index> p1, std::pair<Element*, Element::Index> p2) {
-            return p1.second < p2.second;
-        }
-    } insertOrderCmp{};
-
 public:
     // Serialize interface
     void serialize(ObjectOutputStream& out) const override;
@@ -208,7 +205,7 @@ private:
      *
      * Invariant: the insert order must be sorted by index in ascending order.
      */
-    std::deque<std::pair<Element*, Element::Index>> insertOrder;
+    InsertionOrder insertOrder;
 
     /**
      * The rendered elements
