@@ -509,15 +509,21 @@ void Control::selectAllOnPage() {
 
     win->getXournal()->clearSelection();
 
-    if (layer->getElements().empty()) {
-        this->doc->unlock();
-        return;
-    }
-
-    EditSelection* selection = new EditSelection(this->undoRedo, view, page, layer);
+    std::vector<Element*> elements = layer->clearNoFree();
     this->doc->unlock();
 
-    win->getXournal()->setSelection(selection);
+    if (!elements.empty()) {
+        InsertionOrder insertOrder;
+        insertOrder.reserve(elements.size());
+        Element::Index n = 0;
+        std::transform(elements.begin(), elements.end(), std::back_inserter(insertOrder),
+                       [&n](Element* e) { return InsertionPosition(e, n++); });
+        auto [sel, rg] = SelectionFactory::createFromFloatingElements(this, page, layer, view, std::move(insertOrder));
+
+        page->fireRangeChanged(rg);
+
+        win->getXournal()->setSelection(sel.release());
+    }
 }
 
 void Control::reorderSelection(EditSelection::OrderChange change) {
@@ -1016,12 +1022,10 @@ void Control::selectTool(ToolType type) {
         auto pageNr = getCurrentPageNo();
         XojPageView* view = xournal->getViewFor(pageNr);
         xoj_assert(view != nullptr);
-        this->doc->lock();
-        PageRef page = this->doc->getPage(pageNr);
-        auto selection = new EditSelection(this->undoRedo, textobj, view, page);
-        this->doc->unlock();
+        PageRef page = view->getPage();
+        auto sel = SelectionFactory::createFromElementOnActiveLayer(this, page, view, textobj);
 
-        xournal->setSelection(selection);
+        xournal->setSelection(sel.release());
     }
 
     toolHandler->selectTool(type);
@@ -2091,6 +2095,8 @@ void Control::clipboardPaste(Element* e) {
     this->doc->lock();
     PageRef page = this->doc->getPage(pageNr);
     Layer* layer = page->getSelectedLayer();
+    this->doc->unlock();
+
     win->getXournal()->getPasteTarget(x, y);
 
     double width = e->getElementWidth();
@@ -2101,14 +2107,11 @@ void Control::clipboardPaste(Element* e) {
 
     e->setX(x);
     e->setY(y);
-    layer->addElement(e);
-
-    this->doc->unlock();
 
     undoRedo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, e));
-    auto* selection = new EditSelection(this->undoRedo, e, view, page);
+    auto sel = SelectionFactory::createFromFloatingElement(this, page, layer, view, e);
 
-    win->getXournal()->setSelection(selection);
+    win->getXournal()->setSelection(sel.release());
 }
 
 void Control::registerPluginToolButtons(ToolMenuHandler* toolMenuHandler) {
@@ -2132,26 +2135,26 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         return;
     }
 
-    EditSelection* selection = nullptr;
+    auto selection = std::make_unique<EditSelection>(this, page, page->getSelectedLayer(), view);
+    this->doc->unlock();
+
     try {
         std::unique_ptr<Element> element;
-        string version = in.readString();
+        std::string version = in.readString();
         if (version != PROJECT_STRING) {
             g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PROJECT_STRING);
         }
 
-        selection = new EditSelection(this->undoRedo, page, view);
         selection->readSerialized(in);
 
         // document lock not needed anymore, because we don't change the document, we only change the selection
-        this->doc->unlock();
 
         int count = in.readInt();
         auto pasteAddUndoAction = std::make_unique<AddUndoAction>(page, false);
         // this will undo a group of elements that are inserted
 
         for (int i = 0; i < count; i++) {
-            string name = in.getNextObjectName();
+            std::string name = in.getNextObjectName();
             element.reset();
 
             if (name == "Stroke") {
@@ -2170,7 +2173,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
 
             pasteAddUndoAction->addElement(layer, element.get(), layer->indexOf(element.get()));
             // Todo: unique_ptr
-            selection->addElement(element.release(), Element::InvalidIndex);
+            selection->addElement(element.release(), std::numeric_limits<Element::Index>::max());
         }
         undoRedo->addUndoAction(std::move(pasteAddUndoAction));
 
@@ -2190,7 +2193,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         // update all Elements (same procedure as moving a element selection by hand and releasing the mouse button)
         selection->mouseUp();
 
-        win->getXournal()->setSelection(selection);
+        win->getXournal()->setSelection(selection.release());
     } catch (const std::exception& e) {
         g_warning("could not paste, Exception occurred: %s", e.what());
         Stacktrace::printStracktrace();
@@ -2198,7 +2201,6 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
             for (Element* el: selection->getElements()) {
                 delete el;
             }
-            delete selection;
         }
     }
 }

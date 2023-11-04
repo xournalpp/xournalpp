@@ -7,6 +7,7 @@
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
 
 #include "gui/LegacyRedrawable.h"  // for Redrawable
+#include "model/Document.h"        // for Document
 #include "model/Layer.h"           // for Layer
 #include "model/XojPage.h"         // for XojPage
 #include "util/safe_casts.h"       // for as_unsigned
@@ -16,22 +17,25 @@ Selection::Selection(bool multiLayer): multiLayer(multiLayer), viewPool(std::mak
 
 Selection::~Selection() = default;
 
-auto Selection::finalize(PageRef page) -> size_t {
+auto Selection::finalize(PageRef page, bool disableMultilayer, Document* doc) -> size_t {
     this->page = page;
     size_t layerId = 0;
 
-    if (multiLayer) {
+    if (multiLayer && !disableMultilayer) {
+        std::lock_guard lock(*doc);
         for (auto it = page->getLayers()->rbegin(); it != page->getLayers()->rend(); it--) {
             Layer* l = *it;
             if (!l->isVisible()) {
                 continue;
             }
             bool selectionOnLayer = false;
+            Element::Index pos = 0;
             for (Element* e: l->getElements()) {
                 if (e->isInSelection(this)) {
-                    this->selectedElements.push_back(e);
+                    this->selectedElements.emplace_back(e, pos);
                     selectionOnLayer = true;
                 }
+                pos++;
             }
             if (selectionOnLayer) {
                 layerId = page->getLayers()->size() - as_unsigned(std::distance(page->getLayers()->rbegin(), it));
@@ -39,12 +43,15 @@ auto Selection::finalize(PageRef page) -> size_t {
             }
         }
     } else {
+        std::lock_guard lock(*doc);
         Layer* l = page->getSelectedLayer();
+        Element::Index pos = 0;
         for (Element* e: l->getElements()) {
             if (e->isInSelection(this)) {
-                this->selectedElements.push_back(e);
+                this->selectedElements.emplace_back(e, pos);
                 layerId = page->getSelectedLayerId();
             }
+            pos++;
         }
     }
 
@@ -57,9 +64,7 @@ auto Selection::isMultiLayerSelection() -> bool {
     return this->multiLayer;
 }
 
-void Selection::addSelection(const std::vector<Element*>& elements) {
-    std::copy(elements.begin(), elements.end(), std::back_inserter(selectedElements));
-}
+InsertionOrder Selection::releaseElements() { return std::move(this->selectedElements); }
 
 //////////////////////////////////////////////////////////
 

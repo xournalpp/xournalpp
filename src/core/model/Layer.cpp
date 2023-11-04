@@ -3,6 +3,7 @@
 #include <glib.h>  // for g_warning
 
 #include "model/Element.h"    // for Element, Element::Index, Element::Inval...
+#include "util/Assert.h"      // for xoj_assert
 #include "util/Stacktrace.h"  // for Stacktrace
 
 Layer::Layer() = default;
@@ -97,7 +98,39 @@ auto Layer::removeElement(Element* e, bool free) -> Element::Index {
     return Element::InvalidIndex;
 }
 
-void Layer::clearNoFree() { this->elements.clear(); }
+auto Layer::removeElementAt(Element* e, Element::Index pos, bool free) -> Element::Index {
+    if (pos >= 0 && static_cast<size_t>(pos) < elements.size() && this->elements[static_cast<size_t>(pos)] == e) {
+        this->elements.erase(std::next(this->elements.begin(), pos));
+        if (free) {
+            delete e;
+        }
+        return pos;
+    }
+    return removeElement(e, free);
+}
+
+void Layer::removeElementsAt(const InsertionOrder& elts, bool free) {
+    Element::Index endIndex = static_cast<Element::Index>(elements.size());
+    for (auto&& [e, p]: elts) {
+        xoj_assert(e);
+        auto pos = p;
+        if (pos < 0 || pos > endIndex || elements[static_cast<size_t>(pos)] != e) {
+            pos = indexOf(e);
+            if (pos == Element::InvalidIndex) {
+                g_warning("Could not remove element from layer, it's not on the layer!");
+                Stacktrace::printStracktrace();
+                continue;
+            }
+        }
+        if (free) {
+            delete e;
+        }
+        elements[static_cast<size_t>(pos)] = nullptr;
+    }
+    this->elements.erase(std::remove(this->elements.begin(), this->elements.end(), nullptr), this->elements.end());
+}
+
+auto Layer::clearNoFree() -> std::vector<Element*> { return std::move(this->elements); }
 
 auto Layer::isAnnotated() const -> bool { return !this->elements.empty(); }
 

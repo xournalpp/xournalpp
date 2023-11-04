@@ -5,6 +5,7 @@
 #include <cstddef>    // for size_t
 #include <limits>     // for numeric_limits
 #include <memory>     // for make_unique, __sha...
+#include <numeric>    // for reduce
 #include <string>     // for string
 
 #include <gdk/gdk.h>  // for gdk_cairo_set_sour...
@@ -53,149 +54,217 @@ constexpr int ROTATE_PADDING = 8;
 /// Number of times to trigger edge pan timer per second
 constexpr unsigned int PAN_TIMER_RATE = 30;
 
-EditSelection::EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view):
+namespace SelectionFactory {
+/// @return Bounds and SnappingBounds
+static std::pair<Range, Range> computeBoxes(const InsertionOrder& elts) {
+    return std::transform_reduce(
+            elts.begin(), elts.end(), std::pair<Range, Range>(),
+            [](auto&& p, auto&& q) {
+                return std::pair<Range, Range>(p.first.unite(q.first), p.second.unite(q.second));
+            },
+            [](auto&& e) { return std::make_pair(Range(e.e->boundingRect()), Range(e.e->getSnappedBounds())); });
+}
+
+std::unique_ptr<EditSelection> createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer,
+                                                         XojPageView* view, Element* e) {
+    return std::make_unique<EditSelection>(ctrl, InsertionOrder{InsertionPosition(e)}, page, layer, view,
+                                           Range(e->boundingRect()), Range(e->getSnappedBounds()));
+}
+
+std::pair<std::unique_ptr<EditSelection>, Range> createFromFloatingElements(Control* ctrl, const PageRef& page,
+                                                                            Layer* layer, XojPageView* view,
+                                                                            InsertionOrder elts) {
+    xoj_assert(std::is_sorted(elts.begin(), elts.end()));
+    auto [bounds, snappingBounds] = computeBoxes(elts);
+    return std::make_pair(
+            std::make_unique<EditSelection>(ctrl, std::move(elts), page, layer, view, bounds, snappingBounds), bounds);
+}
+
+std::unique_ptr<EditSelection> createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view,
+                                                              Element* e, Element::Index pos) {
+    Document* doc = ctrl->getDocument();
+    Layer* layer;
+    {  // lock scope
+        std::lock_guard lock(*doc);
+        layer = page->getSelectedLayer();
+        pos = layer->removeElementAt(e, pos, false);
+    }
+    page->fireElementChanged(e);
+
+    return std::make_unique<EditSelection>(ctrl, InsertionOrder{InsertionPosition(e, pos)}, page, layer, view,
+                                           Range(e->boundingRect()), Range(e->getSnappedBounds()));
+}
+
+std::unique_ptr<EditSelection> createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view,
+                                                               InsertionOrder elts) {
+    xoj_assert(std::is_sorted(elts.begin(), elts.end()));
+    Document* doc = ctrl->getDocument();
+    Layer* layer;
+    {  // lock scope
+        std::lock_guard lock(*doc);
+        layer = page->getSelectedLayer();
+        layer->removeElementsAt(elts, false);
+    }
+
+    auto [bounds, snappingBounds] = computeBoxes(elts);
+    page->fireRangeChanged(bounds);
+
+    return std::make_unique<EditSelection>(ctrl, std::move(elts), page, layer, view, bounds, snappingBounds);
+}
+
+std::unique_ptr<EditSelection> addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element* e,
+                                                         Element::Index pos) {
+    Document* doc = ctrl->getDocument();
+    Layer* layer = base->getSourceLayer();
+    {  // lock scope
+        std::lock_guard lock(*doc);
+        pos = layer->removeElementAt(e, pos, false);
+    }
+    const PageRef& page = base->getSourcePage();
+    page->fireElementChanged(e);
+
+    InsertionOrder elts = base->makeMoveEffective();
+    xoj_assert(!elts.empty());
+    xoj_assert(std::is_sorted(elts.begin(), elts.end()));
+    /**
+     * To sort out the proper Element::Index of the added element *e,  we need to imagine elts were added to the layer,
+     * so that the index may need to be increased.
+     * Explicitly, we need to insert (e, pos + n) at position n so that the resulting vector is still sorted. Figuring
+     * out the value of n requires our own binary search (std::lower_bound won't work).
+     */
+    auto begin = elts.begin(), first = begin, last = elts.end();
+    while (first != last) {
+        auto it = std::next(first, std::distance(first, last) / 2);
+        if (it->pos <= pos + std::distance(begin, it)) {
+            first = std::next(it);
+        } else {
+            last = it;
+        }
+    }
+    elts.emplace(first, e, pos + std::distance(begin, first));
+    xoj_assert(std::is_sorted(elts.begin(), elts.end()));
+
+    auto [bounds, snappingBounds] = computeBoxes(elts);
+
+    return std::make_unique<EditSelection>(ctrl, std::move(elts), page, layer, base->getView(), bounds, snappingBounds);
+}
+
+std::unique_ptr<EditSelection> addElementsFromActiveLayer(Control* ctrl, EditSelection* base,
+                                                          const InsertionOrder& newElts) {
+    xoj_assert(std::is_sorted(newElts.begin(), newElts.end()));
+    Document* doc = ctrl->getDocument();
+    Layer* layer = base->getSourceLayer();
+    {  // lock scope
+        std::lock_guard lock(*doc);
+        layer->removeElementsAt(newElts, false);
+    }
+
+    auto [bounds, snappingBounds] = computeBoxes(newElts);
+    const PageRef& page = base->getSourcePage();
+    page->fireRangeChanged(bounds);
+
+    const InsertionOrder oldElts = base->makeMoveEffective();
+    xoj_assert(std::is_sorted(oldElts.begin(), oldElts.end()));
+    auto [oldBounds, oldSnappingBounds] = computeBoxes(oldElts);
+
+    InsertionOrder newSelection;
+    newSelection.reserve(oldElts.size() + newElts.size());
+    /**
+     * To sort out the proper Element::Indices, we need to imagine oldElts were added back to the layer, so that some of
+     * newElts' would see their indices increase. A simple std::merge won't do. See comment in addElementFromActiveLayer
+     */
+    auto itout = std::back_inserter(newSelection);
+    auto oldIt = oldElts.begin(), oldEnd = oldElts.end();
+    std::ptrdiff_t shift = 0;
+    for (auto newIt = newElts.begin(), newEnd = newElts.end(); newIt != newEnd; ++itout) {
+        if (oldIt == oldEnd) {
+            xoj_assert(shift == static_cast<std::ptrdiff_t>(oldElts.size()));
+            std::transform(newIt, newEnd, itout, [shift](auto& p) { return InsertionPosition(p.e, p.pos + shift); });
+            break;
+        }
+
+        if (oldIt->pos < newIt->pos + shift) {
+            *itout = *oldIt;
+            ++oldIt;
+            ++shift;
+        } else {
+            *itout = InsertionPosition(newIt->e, newIt->pos + shift);
+            ++newIt;
+        }
+    }
+    std::copy(oldIt, oldEnd, itout);
+    xoj_assert(newSelection.size() == oldElts.size() + newElts.size());
+    xoj_assert(std::is_sorted(newSelection.begin(), newSelection.end()));
+    return std::make_unique<EditSelection>(ctrl, std::move(newSelection), page, layer, base->getView(),
+                                           bounds.unite(oldBounds), snappingBounds.unite(oldSnappingBounds));
+}
+};  // namespace SelectionFactory
+
+EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& page, Layer* layer, XojPageView* view,
+                             const Range& bounds, const Range& snappingBounds):
+        snappedBounds(snappingBounds),
+        mouseDownType(CURSOR_SELECTION_NONE),
+        relMousePosX(0),
+        relMousePosY(0),
+        relMousePosRotX(0),
+        relMousePosRotY(0),
+        preserveAspectRatio(false),
+        supportMirroring(true),
+        btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
+        sourcePage(page),
+        sourceLayer(layer),
+        view(view),
+        undo(ctrl->getUndoRedoHandler()),
+        snappingHandler(ctrl->getSettings()) {
+    // make the visible bounding box large enough so that anchors do not collapse even for horizontal/vertical strokes
+    x = bounds.minX - 1.5 * this->btnWidth;
+    y = bounds.minY - 1.5 * this->btnWidth;
+    width = bounds.getWidth() + 3 * this->btnWidth;
+    height = bounds.getHeight() + 3 * this->btnWidth;
+
+    this->contents = std::make_unique<EditSelectionContents>(this->getRect(), this->snappedBounds, this->sourcePage,
+                                                             this->sourceLayer, this->view);
+    this->contents->replaceInsertionOrder(std::move(elts));
+
+    cairo_matrix_init_identity(&this->cmatrix);
+    this->view->getXournal()->getCursor()->setRotationAngle(0);
+    this->view->getXournal()->getCursor()->setMirror(false);
+
+    this->preserveAspectRatio = false;
+    this->supportMirroring = true;
+    this->supportRotation = true;
+    for (auto&& e: contents->getElements()) {
+        this->preserveAspectRatio = this->preserveAspectRatio || e->rescaleOnlyAspectRatio();
+        this->supportMirroring = this->supportMirroring && e->rescaleWithMirror();
+        this->supportRotation = this->supportRotation && e->getType() == ELEMENT_STROKE;
+    }
+}
+
+
+EditSelection::EditSelection(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view):
         x(0),
         y(0),
         rotation(0),
         width(0),
         height(0),
         snappedBounds(Rectangle<double>{}),
-        snappingHandler(view->getXournal()->getControl()->getSettings()) {
-    construct(undo, view, page);
-}
+        mouseDownType(CURSOR_SELECTION_NONE),
+        relMousePosX(0),
+        relMousePosY(0),
+        relMousePosRotX(0),
+        relMousePosRotY(0),
+        preserveAspectRatio(false),
+        supportMirroring(true),
 
-EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view):
-        snappingHandler(view->getXournal()->getControl()->getSettings()) {
-    Range r = calcSizeFromElements(selection->selectedElements);
-
-    construct(undo, view, view->getPage());
-
-    // Construct the insert order
-    std::vector<std::pair<Element*, Element::Index>> order;
-    for (Element* e: selection->selectedElements) {
-        auto i = std::make_pair(e, this->sourceLayer->indexOf(e));
-        order.insert(std::upper_bound(order.begin(), order.end(), i, EditSelectionContents::insertOrderCmp), i);
-    }
-
-    for (const auto& [e, i]: order) {
-        this->addElement(e, i);
-        this->sourceLayer->removeElement(e, false);
-    }
-
-    view->rerenderRange(r);
-}
-
-EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page):
-        snappingHandler(view->getXournal()->getControl()->getSettings()) {
-    calcSizeFromElements(std::vector<Element*>{e});
-    construct(undo, view, page);
-
-    addElement(e, this->sourceLayer->indexOf(e));
-    this->sourceLayer->removeElement(e, false);
-
-    view->rerenderElement(e);
-}
-
-EditSelection::EditSelection(UndoRedoHandler* undo, const vector<Element*>& elements, XojPageView* view,
-                             const PageRef& page):
-        snappingHandler(view->getXournal()->getControl()->getSettings()) {
-    Range r = calcSizeFromElements(elements);
-    construct(undo, view, page);
-
-    for (Element* e: elements) {
-        addElement(e, this->sourceLayer->indexOf(e));
-        this->sourceLayer->removeElement(e, false);
-    }
-
-    view->rerenderRange(r);
-}
-
-EditSelection::EditSelection(UndoRedoHandler* undo, XojPageView* view, const PageRef& page, Layer* layer):
-        snappingHandler(view->getXournal()->getControl()->getSettings()) {
-    const auto& elements = layer->getElements();
-    Range r = calcSizeFromElements(elements);
-    construct(undo, view, page);
-
-    long i = 0L;
-    for (Element* e: elements) {
-        addElement(e, i);
-        i++;
-    }
-
-    layer->clearNoFree();
-
-    view->rerenderRange(r);
-}
-
-auto EditSelection::calcSizeFromElements(vector<Element*> elements) -> Range {
-    if (elements.empty()) {
-        x = 0;
-        y = 0;
-        width = 0;
-        height = 0;
-        snappedBounds = Rectangle<double>{};
-        return Range();
-    }
-
-    Element* first = elements.front();
-    Range range(first->getX(), first->getY());
-    Rectangle<double> rect = first->getSnappedBounds();
-
-    for (Element* e: elements) {
-        range.addPoint(e->getX(), e->getY());
-        range.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
-        rect.unite(e->getSnappedBounds());  // size has already been calculated, so skip it
-    }
-
-    // make the visible bounding box large enough so that anchors do not colapse even for horizontal/vertical strokes
-    // stroke
-    x = range.getX() - 1.5 * this->btnWidth;
-    y = range.getY() - 1.5 * this->btnWidth;
-    width = range.getWidth() + 3 * this->btnWidth;
-    height = range.getHeight() + 3 * this->btnWidth;
-
-    snappedBounds = rect;
-    return range;
-}
-
-void EditSelection::construct(UndoRedoHandler* undo, XojPageView* view, const PageRef& sourcePage) {
-    this->view = view;
-    this->undo = undo;
-    this->sourcePage = sourcePage;
-    this->sourceLayer = this->sourcePage->getSelectedLayer();
-
-    this->aspectRatio = false;
-    this->mirror = true;
-
-    this->relMousePosX = 0;
-    this->relMousePosY = 0;
-    this->relMousePosRotX = 0;
-    this->relMousePosRotY = 0;
-    this->mouseDownType = CURSOR_SELECTION_NONE;
-
-
-    int dpi = this->view->getXournal()->getControl()->getSettings()->getDisplayDpi();
-    this->btnWidth = std::max(10, dpi / 8);
-
-    this->contents = new EditSelectionContents(this->getRect(), this->snappedBounds, this->sourcePage,
-                                               this->sourceLayer, this->view);
-
-    cairo_matrix_init_identity(&this->cmatrix);
-    this->view->getXournal()->getCursor()->setRotationAngle(0);
-    this->view->getXournal()->getCursor()->setMirror(false);
-}
+        btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
+        sourcePage(page),
+        sourceLayer(layer),
+        view(view),
+        undo(ctrl->getUndoRedoHandler()),
+        snappingHandler(ctrl->getSettings()) {}
 
 EditSelection::~EditSelection() {
     finalizeSelection();
-
-    this->sourcePage = nullptr;
-    this->sourceLayer = nullptr;
-
-    delete this->contents;
-    this->contents = nullptr;
-
-    this->view = nullptr;
-    this->undo = nullptr;
 
     if (this->edgePanHandler) {
         g_source_destroy(this->edgePanHandler);
@@ -224,8 +293,8 @@ void EditSelection::finalizeSelection() {
 
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
-    this->contents->finalizeSelection(this->getRect(), this->snappedBounds, this->aspectRatio, layer, page, this->view,
-                                      this->undo);
+    this->contents->finalizeSelection(this->getRect(), this->snappedBounds, this->preserveAspectRatio, layer, page,
+                                      this->view, this->undo);
 
 
     // Calculate new clip region delta due to rotation:
@@ -240,6 +309,11 @@ void EditSelection::finalizeSelection() {
     // This is needed if the selection not was 100% on a page
     this->view->getXournal()->repaintSelection(true);
 }
+
+auto EditSelection::makeMoveEffective() -> InsertionOrder {
+    return contents->makeMoveEffective(this->getRect(), this->snappedBounds, this->preserveAspectRatio);
+}
+
 
 /**
  * get the X coordinate relative to the provided view (getView())
@@ -297,17 +371,17 @@ auto EditSelection::isRotationSupported() const -> bool { return this->supportRo
 /**
  * Get the source page (where the selection was done)
  */
-auto EditSelection::getSourcePage() -> PageRef { return this->sourcePage; }
+auto EditSelection::getSourcePage() const -> PageRef { return this->sourcePage; }
 
 /**
  * Get the source layer (form where the Elements come)
  */
-auto EditSelection::getSourceLayer() -> Layer* { return this->sourceLayer; }
+auto EditSelection::getSourceLayer() const -> Layer* { return this->sourceLayer; }
 
 /**
  * Get the X coordinate in View coordinates (absolute)
  */
-auto EditSelection::getXOnViewAbsolute() -> int {
+auto EditSelection::getXOnViewAbsolute() const -> int {
     double zoom = view->getXournal()->getZoom();
     return this->view->getX() + static_cast<int>(this->getXOnView() * zoom);
 }
@@ -315,7 +389,7 @@ auto EditSelection::getXOnViewAbsolute() -> int {
 /**
  * Get the Y coordinate in View coordinates (absolute)
  */
-auto EditSelection::getYOnViewAbsolute() -> int {
+auto EditSelection::getYOnViewAbsolute() const -> int {
     double zoom = view->getXournal()->getZoom();
     return this->view->getY() + static_cast<int>(this->getYOnView() * zoom);
 }
@@ -367,19 +441,9 @@ void EditSelection::fillUndoItem(DeleteUndoAction* undo) { this->contents->fillU
  */
 void EditSelection::addElement(Element* e, Element::Index order) {
     this->contents->addElement(e, order);
-
-    if (e->rescaleOnlyAspectRatio()) {
-        this->aspectRatio = true;
-    }
-
-    if (!e->rescaleWithMirror()) {
-        this->mirror = false;
-    }
-
-    if (e->getType() != ELEMENT_STROKE) {
-        // Currently only stroke supports rotation
-        supportRotation = false;
-    }
+    this->preserveAspectRatio = this->preserveAspectRatio || e->rescaleOnlyAspectRatio();
+    this->supportMirroring = this->supportMirroring && e->rescaleWithMirror();
+    this->supportRotation = this->supportRotation && e->getType() == ELEMENT_STROKE;
 }
 
 /**
@@ -390,14 +454,11 @@ auto EditSelection::getElements() const -> const vector<Element*>& { return this
 /**
  * Returns the insert order of this selection
  */
-auto EditSelection::getInsertOrder() const -> std::deque<std::pair<Element*, Element::Index>> const& {
-    return this->contents->getInsertOrder();
-}
+auto EditSelection::getInsertOrder() const -> const InsertionOrder& { return this->contents->getInsertionOrder(); }
 
 auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoActionPtr {
-    using InsertOrder = std::deque<std::pair<Element*, Element::Index>>;
-    const InsertOrder oldOrd = this->getInsertOrder();
-    InsertOrder newOrd;
+    const InsertionOrder& oldOrd = this->getInsertOrder();
+    InsertionOrder newOrd;
     std::string desc = _("Arrange");
     switch (change) {
         case OrderChange::BringToFront:
@@ -408,35 +469,36 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
         case OrderChange::BringForward:
             // Set indices of elements to range from [max(indices) + 1, max(indices) + 1 + num elements)
             newOrd = oldOrd;
-            std::stable_sort(newOrd.begin(), newOrd.end(), EditSelectionContents::insertOrderCmp);
             if (!newOrd.empty()) {
-                Element::Index i = newOrd.back().second + 1;
-                for (auto& it: newOrd) { it.second = i++; }
+                Element::Index i = newOrd.back().pos + 1;
+                for (auto& it: newOrd) {
+                    it.pos = i++;
+                }
             }
             desc = _("Bring forward");
             break;
         case OrderChange::SendBackward:
             // Set indices of elements to range from [min(indices) - 1, min(indices) + num elements - 1)
             newOrd = oldOrd;
-            std::stable_sort(newOrd.begin(), newOrd.end(), EditSelectionContents::insertOrderCmp);
             if (!newOrd.empty()) {
-                Element::Index i = newOrd.front().second;
+                Element::Index i = newOrd.front().pos;
                 i = i > 0 ? i - 1 : 0;
-                for (auto& it: newOrd) { it.second = i++; }
+                for (auto& it: newOrd) {
+                    it.pos = i++;
+                }
             }
             desc = _("Send backward");
             break;
         case OrderChange::SendToBack:
             Element::Index i = 0;
             for (const auto& [e, _]: oldOrd) {
-                newOrd.emplace_back(e, i);
-                i++;
+                newOrd.emplace_back(e, i++);
             }
             desc = _("Send to back");
             break;
     }
 
-    this->contents->replaceInsertOrder(newOrd);
+    this->contents->replaceInsertionOrder(newOrd);
     PageRef page = this->view->getPage();
 
     return std::make_unique<ArrangeUndoAction>(page, page->getSelectedLayer(), desc, std::move(oldOrd),
@@ -461,8 +523,8 @@ void EditSelection::mouseUp() {
     this->sourcePage = page;
     this->sourceLayer = layer;
 
-    this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->aspectRatio, layer, page,
-                                  this->view, this->undo, this->mouseDownType);
+    this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->preserveAspectRatio,
+                                  layer, page, this->view, this->undo, this->mouseDownType);
 
     this->mouseDownType = CURSOR_SELECTION_NONE;
 
@@ -597,7 +659,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
             double f = (xOffset * nx + yOffset * ny + diag) / diag;
             f = std::copysign(std::max(std::abs(f), minSize / std::min(std::abs(this->width), std::abs(this->height))),
                               f);
-            if (mirror || f > 0) {
+            if (supportMirroring || f > 0) {
                 scaleShift(xSide ? f : 1, ySide ? f : 1, xSide == -1, ySide == -1);
 
                 // in each case first scale without snapping consideration then snap
@@ -718,14 +780,14 @@ void EditSelection::translateToView(XojPageView* v) {
 
 void EditSelection::copySelection() {
     // clone elements in the insert order
-    std::deque<std::pair<Element*, Element::Index>> clonedInsertOrder;
+    InsertionOrder clonedInsertOrder;
     for (auto [e, index]: getInsertOrder()) { clonedInsertOrder.emplace_back(e->clone(), index); }
 
     // apply transformations and add to layer
     finalizeSelection();
 
     // restore insert order
-    contents->replaceInsertOrder(clonedInsertOrder);
+    contents->replaceInsertionOrder(clonedInsertOrder);
 
     // add undo action
     PageRef page = this->view->getPage();
@@ -935,7 +997,7 @@ auto EditSelection::getSelectionTypeForPos(double x, double y, double zoom) -> C
         return CURSOR_SELECTION_ROTATE;
     }
 
-    if (!this->aspectRatio) {
+    if (!this->preserveAspectRatio) {
         if (xmin <= x && x <= xmax) {
             if (y1 - BORDER_PADDING <= y && y <= y1 + BORDER_PADDING) {
                 return CURSOR_SELECTION_TOP;
@@ -1018,7 +1080,7 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
     ToolHandler* toolHandler = view->getXournal()->getControl()->getToolHandler();
     if (toolHandler->getToolType() != TOOL_HAND) {
         cairo_set_dash(cr, nullptr, 0, 0);
-        if (!this->aspectRatio) {
+        if (!this->preserveAspectRatio) {
             // top
             drawAnchorRect(cr, x + width / 2, y, zoom);
             // bottom
@@ -1106,6 +1168,8 @@ void EditSelection::serialize(ObjectOutputStream& out) const {
     out.writeDouble(this->snappedBounds.width);
     out.writeDouble(this->snappedBounds.height);
 
+    out.writeDouble(this->rotation);
+
     this->contents->serialize(out);
     out.endObject();
 
@@ -1125,6 +1189,12 @@ void EditSelection::readSerialized(ObjectInputStream& in) {
     double wSnap = in.readDouble();
     double hSnap = in.readDouble();
     this->snappedBounds = Rectangle<double>{xSnap, ySnap, wSnap, hSnap};
+
+    this->rotation = in.readDouble();
+
+    this->contents =
+            std::make_unique<EditSelectionContents>(xoj::util::Rectangle<double>(), xoj::util::Rectangle<double>(),
+                                                    this->sourcePage, this->sourceLayer, this->view);
     this->contents->readSerialized(in);
 
     in.endObject();

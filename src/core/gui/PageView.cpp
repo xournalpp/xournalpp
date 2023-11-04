@@ -461,9 +461,12 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
                 this->onButtonPressEvent(pos);
             } else if (elemType == ELEMENT_TEXIMAGE) {
                 Control* control = this->xournal->getControl();
-                this->xournal->clearSelection();
-                auto* sel = new EditSelection(control->getUndoRedoHandler(), object, this, this->getPage());
-                this->xournal->setSelection(sel);
+                if (elems.size() > 1) {
+                    // Deselect the other elements
+                    this->xournal->clearSelection();
+                    auto sel = SelectionFactory::createFromElementOnActiveLayer(control, getPage(), this, object);
+                    this->xournal->setSelection(sel.release());
+                }
                 control->runLatex();
             }
         }
@@ -693,26 +696,28 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     }
 
     if (this->selection) {
-        size_t layerOfFinalizedSel = this->selection->finalize(this->page);
-
-        // Aggregate selection
-        if (pos.isShiftDown() && xournal->getSelection()) {
-            this->selection->addSelection(xournal->getSelection()->getElements());
-        }
+        const bool aggregate = pos.isShiftDown() && xournal->getSelection();
+        size_t layerOfFinalizedSel = this->selection->finalize(this->page, aggregate, control->getDocument());
 
         if (layerOfFinalizedSel) {
-            xournal->getControl()->getLayerController()->switchToLay(layerOfFinalizedSel);
-            xournal->setSelection(new EditSelection(control->getUndoRedoHandler(), this->selection.get(), this));
-        } else {
-            const double zoom = xournal->getZoom();
-            if (this->selection->userTapped(zoom)) {
-                bool isMultiLayerSelection{this->selection->isMultiLayerSelection()};
-                SelectObject select(this);
-                if (pos.isShiftDown()) {
-                    select.atAggregate(pos.x / zoom, pos.y / zoom, isMultiLayerSelection);
+            xournal->setSelection([&]() {
+                if (aggregate) {
+                    // Aggregate selection
+                    return SelectionFactory::addElementsFromActiveLayer(control, xournal->getSelection(),
+                                                                        selection->releaseElements());
                 } else {
-                    select.at(pos.x / zoom, pos.y / zoom, isMultiLayerSelection);
+                    // if selection->multiLayer == true, the selected objects might be on another layer
+                    xournal->getControl()->getLayerController()->switchToLay(layerOfFinalizedSel);
+                    return SelectionFactory::createFromElementsOnActiveLayer(control, page, this,
+                                                                             selection->releaseElements());
                 }
+            }()
+                                          .release());
+        } else if (const double zoom = xournal->getZoom(); selection->userTapped(zoom)) {
+            if (aggregate) {
+                SelectObject(this).atAggregate(pos.x / zoom, pos.y / zoom);
+            } else {
+                SelectObject(this).at(pos.x / zoom, pos.y / zoom, this->selection->isMultiLayerSelection());
             }
         }
         this->selection.reset();

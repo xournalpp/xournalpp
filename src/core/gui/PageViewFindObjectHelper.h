@@ -31,25 +31,29 @@ public:
     virtual ~BaseSelectObject() = default;
 
 public:
-    virtual bool at(double x, double y, bool multiLayer = false) {
+    bool findAt(double x, double y, bool multiLayer = false, bool clearSelection = true) {
         this->x = x;
         this->y = y;
 
-        // clear old selection anyway
-        view->xournal->getControl()->clearSelection();
+        Control* ctrl = this->view->getXournal()->getControl();
 
+        if (clearSelection) {
+            ctrl->clearSelection();
+        }
+
+        std::lock_guard lock(*ctrl->getDocument());
         if (multiLayer) {
             size_t initialLayer = this->view->getPage()->getSelectedLayerId();
             auto* layers = this->view->getPage()->getLayers();
             for (auto it = layers->rbegin(); it != layers->rend(); it--) {
                 Layer* layer = *it;
                 Layer::Index index = layers->size() - as_unsigned(std::distance(layers->rbegin(), it));
-                this->view->getXournal()->getControl()->getLayerController()->switchToLay(index);
+                ctrl->getLayerController()->switchToLay(index);
                 if (checkLayer(layer)) {
                     return true;
                 }
             }
-            this->view->getXournal()->getControl()->getLayerController()->switchToLay(initialLayer);
+            ctrl->getLayerController()->switchToLay(initialLayer);
             return false;
         } else {
             Layer* layer = this->view->getPage()->getSelectedLayer();
@@ -64,6 +68,7 @@ protected:
          */
         bool found = false;
         double minDistSq = std::numeric_limits<double>::max();
+        Element::Index pos = 0;
         for (Element* e: l->getElements()) {
             const double eX = e->getX() + e->getElementWidth() / 2.0;
             const double eY = e->getY() + e->getElementHeight() / 2.0;
@@ -72,16 +77,17 @@ protected:
             const double distSq = dx * dx + dy * dy;
             const GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
             if (e->intersectsArea(&matchRect) && distSq < minDistSq) {
-                if (this->checkElement(e)) {
+                if (this->checkElement(e, pos)) {
                     minDistSq = distSq;
                     found = true;
                 }
             }
+            pos++;
         }
         return found;
     }
 
-    virtual bool checkElement(Element* e) = 0;
+    virtual bool checkElement(Element* e, Element::Index pos) = 0;
 
 protected:
     XojPageView* view{};
@@ -96,16 +102,18 @@ public:
 
     ~SelectObject() override = default;
 
-    bool at(double x, double y, bool multiLayer = false) override {
-        BaseSelectObject::at(x, y, multiLayer);
+    bool at(double x, double y, bool multiLayer = false) {
+        findAt(x, y, multiLayer);
 
         if (strokeMatch) {
             elementMatch = strokeMatch;
         }
 
         if (elementMatch) {
-            view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(),
-                                                          elementMatch, view, view->page));
+            Control* ctrl = view->getXournal()->getControl();
+            auto sel = SelectionFactory::createFromElementOnActiveLayer(ctrl, view->getPage(), view, elementMatch,
+                                                                        matchIndex);
+            view->xournal->setSelection(sel.release());
 
             view->repaintPage();
 
@@ -115,52 +123,41 @@ public:
         return false;
     }
 
-    bool atAggregate(double x, double y, bool multiLayer = false) {
-        // If no previous elements, redirect to simple select
-        if (view->xournal->getSelection() == nullptr) {
-            return at(x, y, multiLayer);
-        }
+    bool atAggregate(double x, double y) {
+        EditSelection* previousSelection = view->getXournal()->getSelection();
+        xoj_assert(previousSelection);
 
-        // Store previous elements to aggregate them
-        std::vector<Element*> allElements(view->xournal->getSelection()->getElements());
-
-        BaseSelectObject::at(x, y, multiLayer);
+        findAt(x, y, false, false);
         if (strokeMatch) {
             elementMatch = strokeMatch;
         }
 
         if (elementMatch) {
-            if (std::find(allElements.begin(), allElements.end(), elementMatch) == allElements.end()) {
-                allElements.push_back(elementMatch);
-            }
-            view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(),
-                                                          allElements, view, view->page));
+            auto sel = SelectionFactory::addElementFromActiveLayer(view->getXournal()->getControl(), previousSelection,
+                                                                   elementMatch, matchIndex);
+            view->getXournal()->setSelection(sel.release());
 
             view->repaintPage();
 
             return true;
-        } else {
-            // No match, but we are aggregating, so it should not clear selection
-            view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(),
-                                                          allElements, view, view->page));
-            view->repaintPage();
-
-            return false;
         }
+        return false;
     }
 
 protected:
-    bool checkElement(Element* e) override {
+    bool checkElement(Element* e, Element::Index pos) override {
         if (e->getType() == ELEMENT_STROKE) {
             Stroke* s = (Stroke*)e;
             double tmpGap = 0;
             if ((s->intersects(x, y, 5, &tmpGap)) && (gap > tmpGap)) {
                 gap = tmpGap;
                 strokeMatch = s;
+                matchIndex = pos;
                 return true;
             }
         } else {
             elementMatch = e;
+            matchIndex = pos;
             return true;
         }
 
@@ -170,6 +167,7 @@ protected:
 private:
     Stroke* strokeMatch;
     Element* elementMatch;
+    Element::Index matchIndex;
     double gap;
 };
 
@@ -187,10 +185,10 @@ public:
     std::optional<Status> playbackStatus;
 
 public:
-    bool at(double x, double y, bool multiLayer = false) override { return BaseSelectObject::at(x, y, multiLayer); }
+    bool at(double x, double y, bool multiLayer = false) { return findAt(x, y, multiLayer); }
 
 protected:
-    bool checkElement(Element* e) override {
+    bool checkElement(Element* e, Element::Index) override {
         if (e->getType() != ELEMENT_STROKE && e->getType() != ELEMENT_TEXT) {
             return false;
         }

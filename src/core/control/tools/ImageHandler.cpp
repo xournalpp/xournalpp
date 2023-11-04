@@ -78,17 +78,14 @@ auto ImageHandler::createImageFromFile(GFile* file, double x, double y) -> std::
 
 auto ImageHandler::addImageToDocument(Image* img, bool addUndoAction) -> bool {
     PageRef const page = view->getPage();
-
-    page->getSelectedLayer()->addElement(img);
+    Layer* layer = page->getSelectedLayer();
 
     if (addUndoAction) {
-        control->getUndoRedoHandler()->addUndoAction(
-                std::make_unique<InsertUndoAction>(page, page->getSelectedLayer(), img));
+        control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
     }
 
-    view->rerenderElement(img);
-    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
-    control->getWindow()->getXournal()->setSelection(selection);
+    auto sel = SelectionFactory::createFromFloatingElement(control, page, layer, view, img);
+    control->getWindow()->getXournal()->setSelection(sel.release());
 
     return true;
 }

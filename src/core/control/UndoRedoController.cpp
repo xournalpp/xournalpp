@@ -10,6 +10,7 @@
 #include "model/Document.h"               // for Document
 #include "model/Layer.h"                  // for Layer
 #include "model/PageRef.h"                // for PageRef
+#include "model/XojPage.h"                // for XojPage
 #include "undo/UndoRedoHandler.h"         // for UndoRedoHandler
 
 #include "Control.h"  // for Control
@@ -18,20 +19,16 @@ class XojPageView;
 
 UndoRedoController::UndoRedoController(Control* control): control(control) {}
 
-UndoRedoController::~UndoRedoController() {
-    this->control = nullptr;
-    this->layer = nullptr;
-    elements.clear();
-}
+UndoRedoController::~UndoRedoController() = default;
 
 void UndoRedoController::before() {
     EditSelection* selection = control->getWindow()->getXournal()->getSelection();
     if (selection != nullptr) {
         layer = selection->getSourceLayer();
-        std::copy(selection->getElements().begin(), selection->getElements().end(), std::back_inserter(elements));
+        elements = selection->getElements();
     }
 
-    control->clearSelection();
+    control->clearSelectionEndText();
 }
 
 void UndoRedoController::after() {
@@ -45,34 +42,35 @@ void UndoRedoController::after() {
     Document* doc = control->getDocument();
 
     PageRef page = control->getCurrentPage();
+    std::unique_lock lock(*doc);
     size_t pageNo = doc->indexOf(page);
     XojPageView* view = control->getWindow()->getXournal()->getViewFor(pageNo);
 
     if (!view || !page) {
+        // The page may have been undone
         return;
     }
 
-    std::vector<Element*> visibleElements;
+    InsertionOrder remainingElements;
     for (Element* e: elements) {
-        if (layer->indexOf(e) == -1) {
-            // Element is gone - so it's not selectable
-            continue;
+        // Test is the element has been removed since
+        if (auto pos = layer->indexOf(e); pos != -1) {
+            remainingElements.emplace_back(e, pos);
         }
-
-        visibleElements.push_back(e);
     }
-    if (!visibleElements.empty()) {
-        auto* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, page);
-        control->getWindow()->getXournal()->setSelection(selection);
+    if (!remainingElements.empty()) {
+        layer->removeElementsAt(remainingElements, false);
+        lock.unlock();  // Not needed anymore. For all other paths, the lock is released via ~unique_lock()
+        auto [sel, bounds] =
+                SelectionFactory::createFromFloatingElements(control, page, layer, view, std::move(remainingElements));
+        control->getWindow()->getXournal()->setSelection(sel.release());
+        page->fireRangeChanged(bounds);
     }
 }
 
 void UndoRedoController::undo(Control* control) {
     UndoRedoController handler(control);
     handler.before();
-
-    // Move out of text mode to allow textboxundo to work
-    control->clearSelectionEndText();
 
     control->getUndoRedoHandler()->undo();
 

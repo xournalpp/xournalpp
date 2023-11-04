@@ -277,8 +277,8 @@ void LatexController::updateStatus() { this->dlg->setCompilationStatus(isValidTe
 
 void LatexController::deleteOldImage() {
     if (this->selectedElem) {
-        EditSelection selection(control->getUndoRedoHandler(), selectedElem, view, page);
-        this->view->getXournal()->deleteSelection(&selection);
+        auto sel = SelectionFactory::createFromElementOnActiveLayer(control, page, view, selectedElem);
+        this->view->getXournal()->deleteSelection(sel.release());
         this->selectedElem = nullptr;
     }
 }
@@ -332,15 +332,11 @@ void LatexController::insertTexImage() {
     this->control->clearSelectionEndText();
     this->deleteOldImage();
 
-    doc->lock();
-    layer->addElement(img);
-    view->rerenderElement(img);
-    doc->unlock();
     control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
 
     // Select element
-    auto* selection = new EditSelection(control->getUndoRedoHandler(), img, view, page);
-    view->getXournal()->setSelection(selection);
+    auto selection = SelectionFactory::createFromFloatingElement(control, page, layer, view, img);
+    view->getXournal()->setSelection(selection.release());
 }
 
 void LatexController::run(Control* ctrl) {

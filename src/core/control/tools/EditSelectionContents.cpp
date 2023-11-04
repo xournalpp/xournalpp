@@ -71,16 +71,15 @@ EditSelectionContents::~EditSelectionContents() {
 void EditSelectionContents::addElement(Element* e, Element::Index order) {
     xoj_assert(this->selected.size() == this->insertOrder.size());
     this->selected.emplace_back(e);
-    auto item = std::make_pair(e, order);
-    this->insertOrder.insert(std::upper_bound(this->insertOrder.begin(), this->insertOrder.end(), item, insertOrderCmp),
-                             item);
+    auto item = InsertionPosition(e, order);
+    this->insertOrder.insert(std::upper_bound(this->insertOrder.begin(), this->insertOrder.end(), item), item);
 }
 
-void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, Element::Index>> newInsertOrder) {
+void EditSelectionContents::replaceInsertionOrder(InsertionOrder newInsertOrder) {
     this->selected.clear();
     this->selected.reserve(newInsertOrder.size());
     std::transform(begin(newInsertOrder), end(newInsertOrder), std::back_inserter(this->selected),
-                   [](auto const& e) { return e.first; });
+                   [](auto const& p) { return p.e; });
     this->insertOrder = std::move(newInsertOrder);
 }
 
@@ -101,9 +100,7 @@ auto EditSelectionContents::getElements() const -> const vector<Element*>& { ret
 /**
  * Returns the insert order of this selection
  */
-auto EditSelectionContents::getInsertOrder() const -> std::deque<std::pair<Element*, Element::Index>> const& {
-    return this->insertOrder;
-}
+auto EditSelectionContents::getInsertionOrder() const -> const InsertionOrder& { return this->insertOrder; }
 
 /**
  * Sets the tool size for pen or eraser, returs an undo action
@@ -353,16 +350,13 @@ void EditSelectionContents::deleteViewBuffer() {
     }
 }
 
-/**
- * The contents of the selection
- */
-void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,
-                                              bool aspectRatio, Layer* layer, const PageRef& targetPage,
-                                              XojPageView* targetView, UndoRedoHandler* undo) {
+InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectangle<double>& bounds,
+                                                        const xoj::util::Rectangle<double>& snappedBounds,
+                                                        bool preserveAspectRatio) {
     double fx = bounds.width / this->originalBounds.width;
     double fy = bounds.height / this->originalBounds.height;
 
-    if (aspectRatio) {
+    if (preserveAspectRatio) {
         double f = (fx + fy) / 2;
         fx = f;
         fy = f;
@@ -375,8 +369,7 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
 
     bool move = mx != 0 || my != 0;
 
-    xoj_assert(this->selected.size() == this->insertOrder.size());
-    for (auto&& [e, index]: this->insertOrder) {
+    for (auto&& [e, _]: this->insertOrder) {
         if (move) {
             e->move(mx, my);
         }
@@ -387,8 +380,22 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
             e->rotate(snappedBounds.x + this->lastSnappedBounds.width / 2,
                       snappedBounds.y + this->lastSnappedBounds.height / 2, this->rotation);
         }
+    }
+    this->selected.clear();
+    return std::move(this->insertOrder);
+}
+
+/**
+ * The contents of the selection
+ */
+void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,
+                                              bool aspectRatio, Layer* layer, const PageRef& targetPage,
+                                              XojPageView* targetView, UndoRedoHandler* undo) {
+    xoj_assert(this->selected.size() == this->insertOrder.size());
+    for (auto&& [e, index]: this->makeMoveEffective(bounds, snappedBounds, aspectRatio)) {
         if (index == Element::InvalidIndex) {
             // if the element didn't have a source layer (e.g, clipboard)
+            g_warning("Invalid index");
             layer->addElement(e);
         } else {
             layer->insertElement(e, index);
@@ -564,6 +571,8 @@ void EditSelectionContents::serialize(ObjectOutputStream& out) const {
     out.writeDouble(this->lastSnappedBounds.width);
     out.writeDouble(this->lastSnappedBounds.height);
 
+    out.writeDouble(this->rotation);
+
     out.writeDouble(this->relativeX);
     out.writeDouble(this->relativeY);
 
@@ -584,6 +593,8 @@ void EditSelectionContents::readSerialized(ObjectInputStream& in) {
     double snappedW = in.readDouble();
     double snappedH = in.readDouble();
     this->lastSnappedBounds = Rectangle<double>{snappedX, snappedY, snappedW, snappedH};
+
+    this->rotation = in.readDouble();
 
     this->relativeX = in.readDouble();
     this->relativeY = in.readDouble();

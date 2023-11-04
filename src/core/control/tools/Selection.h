@@ -14,12 +14,15 @@
 #include <vector>  // for vector
 
 #include "model/Element.h"  // for Element (ptr only), ShapeContainer
+#include "model/ElementInsertionPosition.h"
 #include "model/OverlayBase.h"
 #include "model/PageRef.h"  // for PageRef
 #include "util/DispatchPool.h"
 #include "util/Point.h"
 #include "util/Range.h"
 #include "view/overlays/SelectionView.h"
+
+class Document;
 
 class Selection: public ShapeContainer, public OverlayBase {
 public:
@@ -32,7 +35,7 @@ public:
     /**
      * @return layerId of selected objects, 0 if there is nothing in RectSelection
     */
-    size_t finalize(PageRef page);
+    size_t finalize(PageRef page, bool disableMultilayer, Document* doc);
 
     virtual void currentPos(double x, double y) = 0;
     virtual bool userTapped(double zoom) const = 0;
@@ -43,7 +46,10 @@ public:
     }
 
     bool isMultiLayerSelection();
-    void addSelection(const std::vector<Element*>& elements);
+    /**
+     * Get the selected elements and clears them (std::move)
+     */
+    InsertionOrder releaseElements();
 
 private:
 protected:
@@ -51,7 +57,7 @@ protected:
 
     bool multiLayer;
 
-    std::vector<Element*> selectedElements;
+    InsertionOrder selectedElements;
     PageRef page;
 
     Range bbox;
