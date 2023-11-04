@@ -13,16 +13,17 @@
 
 #include <gtk/gtk.h>  // for GtkWidget
 
-#include "util/Color.h"       // for Color
-#include "util/NamedColor.h"  // for NamedColor
+#include "util/Color.h"                 // for Color
+#include "util/NamedColor.h"            // for NamedColor
 
 #include "AbstractToolItem.h"
 
 class ActionDatabase;
+class OpacityPreviewToolbox;
 
 class ColorToolItem: public AbstractToolItem {
 public:
-    ColorToolItem(NamedColor namedColor);
+    ColorToolItem(NamedColor namedColor, OpacityPreviewToolbox* opacityToolbox);
     ColorToolItem(ColorToolItem const&) = delete;
     ColorToolItem(ColorToolItem&&) noexcept = delete;
     auto operator=(ColorToolItem const&) -> ColorToolItem& = delete;
@@ -41,4 +42,12 @@ public:
 private:
     NamedColor namedColor;
     xoj::util::GVariantSPtr target;  ///< Contains the color in ARGB as a uint32_t
+
+    OpacityPreviewToolbox* opacityToolbox;
+    xoj::util::GObjectSPtr<GtkEventController> enterLeaveController;
+    xoj::util::GObjectSPtr<GtkGesture> singleClickGesture;
+
+    static void handleRelease(GtkGesture* gesture, int n_press, double x, double y, ColorToolItem* self);
+    static bool handleEnter(GtkEventController* eventController, gdouble x, gdouble y, ColorToolItem* self);
+    static bool handleLeave(GtkEventController* eventController, ColorToolItem* self);
 };

@@ -11,8 +11,9 @@
 #include "control/settings/ButtonConfig.h"   // for ButtonConfig
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for BUTTON_COUNT
+#include "util/GtkUtil.h"                    // for isEventOverWidget()
 
-#include "MainWindow.h"          // for MainWindow
+#include "MainWindow.h"  // for MainWindow
 #include "OpacityPreviewToolbox.h"
 #include "ToolbarDefinitions.h"  // for ToolbarEntryDefintion
 
@@ -26,8 +27,19 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
     gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, true);
+
+#if GTK_MAJOR_VERSION == 3
+    GtkEventController* controller = gtk_event_controller_motion_new(this->floatingToolbox);
     gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
-    g_signal_connect(this->floatingToolbox, "leave-notify-event", G_CALLBACK(handleLeaveFloatingToolbox), this);
+#else
+    GtkEventController* controller = gtk_event_controller_motion_new();
+    gtk_widget_add_controller(this->floatingToolbox, leaveController);
+#endif
+    gtk_event_controller_set_propagation_phase(controller, GTK_PHASE_TARGET);
+    g_signal_connect(controller, "leave", G_CALLBACK(handleLeaveFloatingToolbox), this);
+
+    this->leaveController.reset(controller, xoj::util::refsink);
+
     // position overlay widgets
     g_signal_connect(overlay, "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
 }
@@ -111,12 +123,10 @@ void FloatingToolbox::show() {
 
     if (this->floatingToolboxState != configuration) {
         gtk_widget_hide(this->mainWindow->get("labelFloatingToolbox"));
-        this->mainWindow->getOpacityPreviewToolbox()->showEventBoxesInFloatingToolBox();
     }
 
     if (this->floatingToolboxState == configuration || countWidgets() > 0) {
         gtk_widget_hide(this->mainWindow->get("showIfEmpty"));
-        this->mainWindow->getOpacityPreviewToolbox()->hideEventBoxesInFloatingToolBox();
     }
 }
 
@@ -127,7 +137,6 @@ void FloatingToolbox::hide() {
     }
 
     gtk_widget_hide(this->floatingToolbox);
-    this->mainWindow->getOpacityPreviewToolbox()->hideEventBoxesInFloatingToolBox();
 }
 
 
@@ -181,26 +190,13 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
     return false;
 }
 
-
-void FloatingToolbox::handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self) {
-    if (floatingToolbox == self->floatingToolbox) {
+void FloatingToolbox::handleLeaveFloatingToolbox(GtkEventController* eventController, FloatingToolbox* self) {
+    if (eventController == self->leaveController.get()) {
         if (self->floatingToolboxState != configuration) {
-            // The floating toolbox is hidden when the pointer leaves it,
-            // except when it enters an eventbox that matches a ColorToolItem within the floating toolbox.
-            // In this situation, from the user's perspective, the pointer did not truly leave the floating toolbox;
-            // instead, it entered an invisible widget in front of it.
-            OpacityPreviewToolbox* opacityToolbox = self->mainWindow->getOpacityPreviewToolbox();
-
-            auto criteria = [event, opacityToolbox](OpacityPreviewToolbox::EventBox eventBox) {
-                return OpacityPreviewToolbox::isPointerOverWidget(static_cast<int>(event->crossing.x_root),
-                                                                  static_cast<int>(event->crossing.y_root),
-                                                                  eventBox.widget);
-            };
-
-            std::vector<OpacityPreviewToolbox::EventBox>::iterator it =
-                    std::find_if(opacityToolbox->eventBoxes.begin(), opacityToolbox->eventBoxes.end(), criteria);
-
-            if (it == opacityToolbox->eventBoxes.end()) {
+            // Do not hide the floating toolbox when leaving it, if the pointer is over
+            // the opacity toolbox
+            if (!xoj::util::gtk::isEventOverWidget(eventController,
+                                                   self->mainWindow->getOpacityPreviewToolbox()->widget.get())) {
                 self->hide();
             }
         }

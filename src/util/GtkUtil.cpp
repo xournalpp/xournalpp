@@ -6,9 +6,41 @@
 #include <gtk/gtk.h>
 
 #include "util/Assert.h"
+#include "util/Stacktrace.h"
+#include "util/gtk4_helper.h"
 #include "util/raii/GVariantSPtr.h"
 
 namespace xoj::util::gtk {
+
+bool isEventOverWidget(GtkEventController* eventController, GtkWidget* widget, xoj::util::gtk::WidgetMargins margins) {
+    GdkEvent* event = gtk_event_controller_get_current_event(eventController);
+    GtkWidget* eventControllerWidget = gtk_event_controller_get_widget(eventController);
+
+    gdouble eventX, eventY;
+    gdk_event_get_position(event, &eventX, &eventY);
+
+    const graphene_point_t eventInControllerCoords = {static_cast<float>(eventX), static_cast<float>(eventY)};
+    graphene_point_t eventInWidgetCoords = {static_cast<float>(eventX), static_cast<float>(eventY)};
+
+    bool computed =
+            gtk_widget_compute_point(eventControllerWidget, widget, &eventInControllerCoords, &eventInWidgetCoords);
+
+    if (!computed) {
+        g_warning("gtk_widget_compute_point returned false! xoj::util::gtk::isEventOverWidget will also return false");
+        Stacktrace::printStracktrace();
+        return false;
+    }
+
+    bool result = eventInWidgetCoords.x >= 0 + margins.left && eventInWidgetCoords.y >= 0 + margins.top &&
+                  eventInWidgetCoords.x <= gtk_widget_get_width(widget) + margins.right &&
+                  eventInWidgetCoords.y <= gtk_widget_get_height(widget) + margins.bottom;
+
+    return result;
+}
+
+bool isEventOverWidget(GtkEventController* eventController, GtkWidget* widget) {
+    return isEventOverWidget(eventController, widget, {0, 0, 0, 0});
+}
 
 static GAction* findAction(GtkActionable* w) {
     const char* name = gtk_actionable_get_action_name(w);

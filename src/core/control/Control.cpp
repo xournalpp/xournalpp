@@ -39,7 +39,7 @@
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
 #include "gui/MainWindow.h"                                      // for Main...
-#include "gui/OpacityPreviewToolbox.h"                           // for OpacityPreviewToolbox
+#include "gui/OpacityPreviewToolbox.h"                           // for OpacityPreviewToolbox...
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
 #include "gui/SearchBar.h"                                       // for Sear...
@@ -461,8 +461,11 @@ void Control::selectAlpha(OpacityFeature feature) {
             Stacktrace::printStracktrace();
             break;
     }
+
+    OpacityPreviewToolbox* opacityToolbox = this->win->getOpacityPreviewToolbox();
+
     auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::SelectOpacityDialog>(
-            gladeSearchPath, alpha, feature, [&th = *toolHandler](int alpha, OpacityFeature feature) {
+            gladeSearchPath, alpha, feature, [&th = *toolHandler, &opatb = *opacityToolbox](int alpha, OpacityFeature feature) {
                 switch (feature) {
                     case OPACITY_FILL_PEN:
                         th.setPenFill(alpha);
@@ -479,6 +482,7 @@ void Control::selectAlpha(OpacityFeature feature) {
                         Stacktrace::printStracktrace();
                         break;
                 }
+                opatb.update();
             });
     dlg.show(getGtkWindow());
 }

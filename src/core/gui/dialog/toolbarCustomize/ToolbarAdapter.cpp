@@ -277,7 +277,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         int newId = tb->insertItem(name, id, pos);
         ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        auto item = std::make_unique<ColorToolItem>(*(d->namedColor));
+        auto item = std::make_unique<ColorToolItem>(*(d->namedColor), adapter->window->getOpacityPreviewToolbox());
 
         GtkToolItem* it = item->createToolItem(horizontal);
 

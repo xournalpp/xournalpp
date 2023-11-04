@@ -64,7 +64,7 @@ private:
     /**
      * Callback to hide floating Toolbar when mouse leaves it
      */
-    static void handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self);
+    static void handleLeaveFloatingToolbox(GtkEventController* eventController, FloatingToolbox* self);
 
     /**
      * Show the Floating Toolbox
@@ -87,6 +87,9 @@ private:
 private:
     MainWindow* mainWindow;
     GtkWidget* floatingToolbox;
+
+    // For leave event on the widget
+    xoj::util::GObjectSPtr<GtkEventController> leaveController;
 
     /**
      * Communicating with getOverlayPosition callback
