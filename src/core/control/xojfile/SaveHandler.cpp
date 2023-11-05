@@ -78,7 +78,7 @@ void SaveHandler::prepareSave(Document* doc) {
 void SaveHandler::writeHeader() {
     this->root->setAttrib("creator", PROJECT_STRING);
     this->root->setAttrib("fileversion", FILE_FORMAT_VERSION);
-    this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_URL));
+    this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_HOMEPAGE_URL));
 }
 
 auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {

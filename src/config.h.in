@@ -36,7 +36,7 @@ constexpr auto PROJECT_STRING = "@PROJECT_NAME@ @PROJECT_VERSION@";
 /**
  * Project URL
  */
-constexpr auto PROJECT_URL = "@PROJECT_URL@";
+constexpr auto PROJECT_HOMEPAGE_URL = "@PROJECT_HOMEPAGE_URL@";
 
 /**
  * File format version
