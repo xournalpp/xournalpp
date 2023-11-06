@@ -583,6 +583,14 @@ auto ToolHandler::isSinglePageTool() const -> bool {
            toolType == TOOL_SELECT_PDF_TEXT_RECT;
 }
 
+auto ToolHandler::acceptsOutOfPageEvents() const -> bool {
+    ToolType toolType = this->getToolType();
+    DrawingType drawingType = this->getDrawingType();
+
+    return ((toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER) && (drawingType == DRAWING_TYPE_SPLINE)) ||
+           (toolType == TOOL_DRAW_SPLINE);
+}
+
 auto ToolHandler::supportsTapFilter() const -> bool {
     ToolType toolType = this->getToolType();
 

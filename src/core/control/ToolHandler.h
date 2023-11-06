@@ -346,6 +346,12 @@ public:
     bool isSinglePageTool() const;
 
     /**
+     * Returns whether the current tool accepts events from outside the page input started in (i.e. events
+     * should not be clamped to the page)
+     */
+    bool acceptsOutOfPageEvents() const;
+
+    /**
      * @brief Whether the tool supports short taps filtering (for floating toolbox or selection)
      * see Preferences->Drawing Area->Action on Tool tap
      */

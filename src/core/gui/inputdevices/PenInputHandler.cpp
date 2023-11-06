@@ -317,9 +317,11 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         // Relay the event to the page
         PositionInputData pos = getInputDataRelativeToCurrentPage(sequenceStartPage, event);
 
-        // Enforce input to stay within page
-        pos.x = std::clamp(pos.x, 0.0, static_cast<double>(sequenceStartPage->getDisplayWidth()));
-        pos.y = std::clamp(pos.y, 0.0, static_cast<double>(sequenceStartPage->getDisplayHeight()));
+        if (!toolHandler->acceptsOutOfPageEvents()) {
+            // Enforce input to stay within page
+            pos.x = std::clamp(pos.x, 0.0, static_cast<double>(sequenceStartPage->getDisplayWidth()));
+            pos.y = std::clamp(pos.y, 0.0, static_cast<double>(sequenceStartPage->getDisplayHeight()));
+        }
 
         pos.pressure = this->filterPressure(pos, sequenceStartPage);
 
