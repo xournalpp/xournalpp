@@ -68,7 +68,8 @@ void BackgroundSelectDialogBase::layout() {
         }
         max_row_width = std::max(max_row_width, x + static_cast<double>(p->getWidth()));
 
-        gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), x, y);
+        gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), static_cast<int>(std::round(x)),
+                        static_cast<int>(std::round(y)));
 
         row_height =
                 std::max(row_height,
@@ -77,7 +78,8 @@ void BackgroundSelectDialogBase::layout() {
         x += p->getWidth();
     }
 
-    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), max_row_width, y + row_height);
+    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), static_cast<int>(std::round(max_row_width)),
+                        static_cast<int>(std::round(y + row_height)));
 }
 
 void BackgroundSelectDialogBase::show(GtkWindow* parent) {

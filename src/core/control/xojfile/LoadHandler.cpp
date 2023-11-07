@@ -47,9 +47,9 @@ using std::string;
     }
 
 namespace {
-    constexpr size_t MAX_VERSION_LENGTH = 50;
-    constexpr size_t MAX_MIMETYPE_LENGTH = 25;
-}
+constexpr size_t MAX_VERSION_LENGTH = 50;
+constexpr size_t MAX_MIMETYPE_LENGTH = 25;
+}  // namespace
 
 LoadHandler::LoadHandler():
         attachedPdfMissing(false),
@@ -326,7 +326,7 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/true);
+        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/ true);
 
         pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {
@@ -845,7 +845,7 @@ void LoadHandler::parseAudio() {
             return;
         }
 
-        readBytes += read;
+        readBytes += static_cast<zip_uint64_t>(read);
     }
     g_free(data);
     zip_fclose(attachmentFile);
@@ -1063,7 +1063,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
 
 auto LoadHandler::parseBase64(const gchar* base64, gsize length) -> string {
     // We have to copy the string in order to null terminate it, sigh.
-    auto* base64data = static_cast<gchar*>(g_memdup(base64, length + 1));
+    auto* base64data = static_cast<gchar*>(g_memdup(base64, static_cast<guint>(length) + 1));
     base64data[length] = '\0';
 
     gsize binaryBufferLen = 0;

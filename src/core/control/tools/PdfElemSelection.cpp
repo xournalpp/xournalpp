@@ -125,7 +125,7 @@ auto PdfElemSelection::getSelectedTextRects() const -> const std::vector<XojPdfR
 
 auto PdfElemSelection::getSelectedText() const -> const std::string& { return this->selectedText; }
 
-auto PdfElemSelection::getSelectionPageNr() const -> uint64_t { return selectionPageNr; }
+auto PdfElemSelection::getSelectionPageNr() const -> size_t { return selectionPageNr; }
 
 auto PdfElemSelection::isFinalized() const -> bool { return this->finalized; }
 

@@ -1,5 +1,6 @@
 #include "PdfElementView.h"
 
+#include <cmath>    // for ceil, floor
 #include <memory>   // for __shared_pt...
 #include <utility>  // for move
 
@@ -28,6 +29,10 @@ void PdfElementView::paintContents(cairo_t* cr) {
     page->render(cr);
 }
 
-auto PdfElementView::getContentWidth() -> int { return page->getWidth() * PdfPagesDialog::getZoom(); }
+auto PdfElementView::getContentWidth() -> int {
+    return static_cast<int>(std::ceil(page->getWidth() * PdfPagesDialog::getZoom()));
+}
 
-auto PdfElementView::getContentHeight() -> int { return page->getHeight() * PdfPagesDialog::getZoom(); }
+auto PdfElementView::getContentHeight() -> int {
+    return static_cast<int>(std::ceil(page->getHeight() * PdfPagesDialog::getZoom()));
+}

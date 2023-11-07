@@ -114,7 +114,7 @@ auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& fil
         // Not valid
         return entry;
     }
-    entry.page = strtoll(line.substr(5).c_str(), nullptr, 10);
+    entry.page = static_cast<int>(strtoll(line.substr(5).c_str(), nullptr, 10));
 
     if (!getline(infile, line) || line.length() < 6 || line.substr(0, 5) != "zoom=") {
         deleteMetadataFile(path);

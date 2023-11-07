@@ -16,6 +16,7 @@
 #include "model/BackgroundImage.h"  // for BackgroundImage
 #include "model/PageRef.h"          // for PageRef
 #include "model/PageType.h"         // for PageType
+#include "util/Util.h"              // for npos
 
 #include "UndoAction.h"  // for UndoAction
 
@@ -24,7 +25,7 @@ class Control;
 
 class PageBackgroundChangedUndoAction: public UndoAction {
 public:
-    PageBackgroundChangedUndoAction(const PageRef& page, const PageType& origType, int origPdfPage,
+    PageBackgroundChangedUndoAction(const PageRef& page, const PageType& origType, size_t origPdfPage,
                                     BackgroundImage origBackgroundImage, double origW, double origH);
     ~PageBackgroundChangedUndoAction() override;
 
@@ -36,13 +37,13 @@ public:
 
 private:
     PageType origType;
-    int origPdfPage;
+    size_t origPdfPage;
     BackgroundImage origBackgroundImage;
     double origW;
     double origH;
 
     PageType newType;
-    int newPdfPage = -1;
+    size_t newPdfPage = npos;
     BackgroundImage newBackgroundImage;
     double newW = 0;
     double newH = 0;

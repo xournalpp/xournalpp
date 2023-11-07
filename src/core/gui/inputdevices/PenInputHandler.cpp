@@ -27,6 +27,7 @@
 #include "util/Assert.h"                        // for xoj_assert
 #include "util/Point.h"                         // for Point
 #include "util/Util.h"                          // for execInUiThread
+#include "util/safe_casts.h"
 
 #include "AbstractInputHandler.h"  // for AbstractInputHandler
 #include "InputContext.h"          // for InputContext
@@ -254,8 +255,8 @@ bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
                                    this->sequenceStartPosition.y - event.absoluteY);
 
     const bool noMovement = dist < tapMaxDistance * dpmm;
-    const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
-    const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
+    const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < as_unsigned(tapMaxDuration);
+    const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > as_unsigned(filterRepetitionTime);
     if (noMovement && fastEnoughTap && notAnAftershock) {
         return true;
     }

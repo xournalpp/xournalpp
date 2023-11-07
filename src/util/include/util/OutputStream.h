@@ -24,7 +24,7 @@ public:
 
 public:
     virtual void write(const char* str);
-    virtual void write(const char* data, int len) = 0;
+    virtual void write(const char* data, unsigned int len) = 0;
     virtual void write(const std::string& str);
 
     virtual void close() = 0;
@@ -36,7 +36,7 @@ public:
     ~GzOutputStream() override;
 
 public:
-    void write(const char* data, int len) override;
+    void write(const char* data, unsigned int len) override;
 
     void close() override;
 

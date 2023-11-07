@@ -174,7 +174,7 @@ void checkForErrorlog() {
         g_warning("Filesystem error while looking for crash logs:\n"
                   "   %s\n"
                   "   %s\n",
-                  e.path1().c_str(), e.what());
+                  e.path1().u8string().c_str(), e.what());
         return;
     }
 

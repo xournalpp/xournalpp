@@ -16,9 +16,13 @@ class Control;
 
 EraseUndoAction::EraseUndoAction(const PageRef& page): UndoAction("EraseUndoAction") { this->page = page; }
 
-void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, int pos) { original.emplace(layer, element, pos); }
+void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, Element::Index pos) {
+    original.emplace(layer, element, pos);
+}
 
-void EraseUndoAction::addEdited(Layer* layer, Stroke* element, int pos) { edited.emplace(layer, element, pos); }
+void EraseUndoAction::addEdited(Layer* layer, Stroke* element, Element::Index pos) {
+    edited.emplace(layer, element, pos);
+}
 
 void EraseUndoAction::removeEdited(Stroke* element) {
     for (auto entryIter = edited.begin(); entryIter != edited.end(); ++entryIter) {

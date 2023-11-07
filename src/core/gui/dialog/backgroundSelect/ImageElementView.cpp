@@ -1,5 +1,7 @@
 #include "ImageElementView.h"
 
+#include <cmath>  // for ceil, floor
+
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_...
 #include <gdk/gdk.h>                // for gdk_cairo_s...
 
@@ -23,8 +25,8 @@ void ImageElementView::calcSize() {
         } else {
             zoom = 128.0 / this->width;
         }
-        this->width *= zoom;
-        this->height *= zoom;
+        this->width = static_cast<int>(std::ceil(this->width * zoom));
+        this->height = static_cast<int>(std::ceil(this->height * zoom));
     }
 }
 

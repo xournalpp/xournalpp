@@ -253,7 +253,7 @@ void Stroke::addPoint(const Point& p) {
     }
 }
 
-auto Stroke::getPointCount() const -> int { return this->points.size(); }
+auto Stroke::getPointCount() const -> size_t { return this->points.size(); }
 
 auto Stroke::getPointVector() const -> std::vector<Point> const& { return points; }
 
@@ -262,10 +262,10 @@ void Stroke::deletePointsFrom(size_t index) {
     this->sizeCalculated = false;
 }
 
-auto Stroke::getPoint(int index) const -> Point {
+auto Stroke::getPoint(size_t index) const -> Point {
     if (index < 0 || index >= this->points.size()) {
-        g_warning("Stroke::getPoint(%i) out of bounds!", index);
-        return Point(0, 0, Point::NO_PRESSURE);
+        g_warning("Stroke::getPoint(%zu) out of bounds!", index);
+        return Point(0., 0., Point::NO_PRESSURE);
     }
     return points.at(index);
 }
@@ -373,7 +373,7 @@ auto Stroke::hasPressure() const -> bool {
 auto Stroke::getAvgPressure() const -> double {
     return std::accumulate(begin(this->points), end(this->points), 0.0,
                            [](double l, Point const& p) { return l + p.z; }) /
-           this->points.size();
+           static_cast<double>(this->points.size());
 }
 
 void Stroke::updateBoundsLastTwoPressures() {

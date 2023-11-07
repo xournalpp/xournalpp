@@ -390,7 +390,8 @@ auto XournalppCursor::getEraserCursor() -> GdkCursor* {
     this->currentCursor = CRSR_ERASER;
     this->currentCursorFlavour = flavour;
 
-    cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, cursorSize, cursorSize);
+    cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(std::ceil(cursorSize)),
+                                                          static_cast<int>(std::ceil(cursorSize)));
     cairo_t* cr = cairo_create(surface);
     cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
     cairo_set_source_rgb(cr, 1, 1, 1);
@@ -520,7 +521,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(double alpha) -> GdkCursor* {
 }
 
 
-void XournalppCursor::setCursor(int cursorID) {
+void XournalppCursor::setCursor(guint cursorID) {
     if (cursorID == this->currentCursor) {
         return;
     }
@@ -571,7 +572,7 @@ auto XournalppCursor::createCustomDrawDirCursor(int size, bool shift, bool ctrl)
     bool big = control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_BIG;
     bool bright = control->getSettings()->isHighlightPosition();
 
-    int newCursorID = CRSR_DRAWDIRNONE + (shift ? 1 : 0) + (ctrl ? 2 : 0);
+    guint newCursorID = CRSR_DRAWDIRNONE + (shift ? 1 : 0) + (ctrl ? 2 : 0);
     gulong flavour =
             (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(size) << 2;  // hash of variables for comparison only
 

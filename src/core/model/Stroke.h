@@ -108,10 +108,10 @@ public:
     void setFill(int fill);
 
     void addPoint(const Point& p);
-    int getPointCount() const;
+    size_t getPointCount() const;
     void freeUnusedPointItems();
     std::vector<Point> const& getPointVector() const;
-    Point getPoint(int index) const;
+    Point getPoint(size_t index) const;
     Point getPoint(PathParameter parameter) const;
     const Point* getPoints() const;
 

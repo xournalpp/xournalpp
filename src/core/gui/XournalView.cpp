@@ -388,7 +388,7 @@ void XournalView::pageSelected(size_t page) {
     auto const& file = doc->getEvMetadataFilename();
     doc->unlock();
 
-    control->getMetadataManager()->storeMetadata(file, page, getZoom());
+    control->getMetadataManager()->storeMetadata(file, static_cast<int>(page), getZoom());
 
     control->getWindow()->getPdfToolbox()->userCancelSelection();
 
@@ -570,7 +570,7 @@ void XournalView::zoomChanged() {
     auto const& file = doc->getEvMetadataFilename();
     doc->unlock();
 
-    control->getMetadataManager()->storeMetadata(file, getCurrentPage(), zoom->getZoomReal());
+    control->getMetadataManager()->storeMetadata(file, static_cast<int>(getCurrentPage()), zoom->getZoomReal());
 
     // Updates the Eraser's cursor icon in order to make it as big as the erasing area
     control->getCursor()->updateCursor();
@@ -656,7 +656,6 @@ void XournalView::deleteSelection(EditSelection* sel) {
     }
 
     if (sel) {
-        XojPageView* view = sel->getView();
         auto undo = std::make_unique<DeleteUndoAction>(sel->getSourcePage(), false);
         sel->fillUndoItem(undo.get());
         control->getUndoRedoHandler()->addUndoAction(std::move(undo));
@@ -735,8 +734,8 @@ void XournalView::layoutPages() {
     // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be
     // called by an expose event, but removing it, will break "add page".
     auto rectangle = layout->getVisibleRect();
-    layout->layoutPages(std::max<int>(layout->getMinimalWidth(), std::lround(rectangle.width)),
-                        std::max<int>(layout->getMinimalHeight(), std::lround(rectangle.height)));
+    layout->layoutPages(std::max<int>(layout->getMinimalWidth(), static_cast<int>(std::round(rectangle.width))),
+                        std::max<int>(layout->getMinimalHeight(), static_cast<int>(std::round(rectangle.height))));
 }
 
 auto XournalView::getDisplayHeight() const -> int {
@@ -755,7 +754,7 @@ auto XournalView::isPageVisible(size_t page, int* visibleHeight) const -> bool {
     Rectangle<double>* rect = getVisibleRect(page);
     if (rect) {
         if (visibleHeight) {
-            *visibleHeight = std::lround(rect->height);
+            *visibleHeight = static_cast<int>(std::round(rect->height));
         }
 
         delete rect;

@@ -26,7 +26,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
         BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "pdfpages.glade", "pdfPagesDialog") {
     for (size_t i = 0; i < doc->getPdfPageCount(); i++) {
         XojPdfPageSPtr p = doc->getPdfPage(i);
-        auto* pv = new PdfElementView(elements.size(), p, this);
+        auto* pv = new PdfElementView(static_cast<int>(elements.size()), p, this);
         elements.push_back(pv);
     }
     if (doc->getPdfPageCount() > 0) {

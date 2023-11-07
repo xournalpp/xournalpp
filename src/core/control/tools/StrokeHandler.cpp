@@ -71,7 +71,7 @@ void StrokeHandler::paintTo(Point point) {
         point.z *= this->stroke->getWidth();
     }
 
-    auto pointCount = stroke->getPointCount();
+    size_t pointCount = stroke->getPointCount();
 
     if (pointCount > 0) {
         Point endPoint = stroke->getPoint(pointCount - 1);

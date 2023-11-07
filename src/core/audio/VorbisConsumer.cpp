@@ -44,7 +44,7 @@ auto VorbisConsumer::start(fs::path const& file) -> bool {
         auto buffer_size{size_t(64 * channels)};
         std::vector<float> buffer;
         buffer.reserve(buffer_size);  // efficiency
-        double audioGain = this->settings.getAudioGain();
+        float audioGain = static_cast<float>(this->settings.getAudioGain());
 
         while (!(this->stopConsumer || (audioQueue.hasStreamEnded() && audioQueue.empty()))) {
             audioQueue.waitForProducer(lock);
@@ -52,7 +52,7 @@ auto VorbisConsumer::start(fs::path const& file) -> bool {
                 buffer.resize(0);
                 this->audioQueue.pop(std::back_inserter(buffer), buffer_size);
                 // apply gain
-                if (audioGain != 1.0) {
+                if (audioGain != 1.0f) {
                     std::for_each(begin(buffer), end(buffer), [audioGain](auto& val) { val *= audioGain; });
                 }
                 sf_writef_float(sfFile.get(), buffer.data(),

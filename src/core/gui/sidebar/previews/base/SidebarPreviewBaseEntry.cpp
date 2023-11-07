@@ -135,10 +135,12 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
         cairo_stroke(cr);
 
         cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4, height + 4);
+        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(),
+                           static_cast<int>(std::round(width)) + 4, static_cast<int>(std::round(height)) + 4);
     } else {
         cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
-        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
+        Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2,
+                           static_cast<int>(std::round(width)), static_cast<int>(std::round(height)));
     }
 
     this->drawingMutex.unlock();
@@ -153,12 +155,12 @@ void SidebarPreviewBaseEntry::updateSize() {
 }
 
 auto SidebarPreviewBaseEntry::getWidgetWidth() -> int {
-    return page->getWidth() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() +
-           4;
+    return static_cast<int>(std::ceil(page->getWidth() * sidebar->getZoom())) + Shadow::getShadowBottomRightSize() +
+           Shadow::getShadowTopLeftSize() + 4;
 }
 
 auto SidebarPreviewBaseEntry::getWidgetHeight() -> int {
-    return page->getHeight() * sidebar->getZoom() + Shadow::getShadowBottomRightSize() +
+    return static_cast<int>(std::ceil(page->getHeight() * sidebar->getZoom())) + Shadow::getShadowBottomRightSize() +
            Shadow::getShadowTopLeftSize() + 4;
 }
 

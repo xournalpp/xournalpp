@@ -4,8 +4,9 @@
 
 #include <glib-object.h>  // for g_signal_handler_disconnect, G_CALLBACK
 
-#include "util/Assert.h"  // for xoj_assert
+#include "util/Assert.h"      // for xoj_assert
 #include "util/glib_casts.h"  // for wrap_for_once_v
+#include "util/safe_casts.h"
 
 SpinPageAdapter::SpinPageAdapter() = default;
 
@@ -26,7 +27,8 @@ auto SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter) -
 
 void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinPageAdapter* adapter) {
     // Nothing changed.
-    if (gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton)) == static_cast<uint64_t>(adapter->page)) {
+    if (as_unsigned(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton))) ==
+        static_cast<uint64_t>(adapter->page)) {
         return;
     }
 
@@ -77,7 +79,9 @@ void SpinPageAdapter::addListener(SpinPageListener* listener) { this->listener.p
 void SpinPageAdapter::removeListener(SpinPageListener* listener) { this->listener.remove(listener); }
 
 void SpinPageAdapter::firePageChanged() {
-    for (SpinPageListener* listener: this->listener) { listener->pageChanged(this->page); }
+    for (SpinPageListener* listener: this->listener) {
+        listener->pageChanged(this->page);
+    }
 }
 
 SpinPageListener::~SpinPageListener() = default;

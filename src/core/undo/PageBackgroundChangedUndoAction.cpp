@@ -11,8 +11,9 @@
 #include "util/i18n.h"        // for _
 
 PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(const PageRef& page, const PageType& origType,
-                                                                 int origPdfPage, BackgroundImage origBackgroundImage,
-                                                                 double origW, double origH):
+                                                                 size_t origPdfPage,
+                                                                 BackgroundImage origBackgroundImage, double origW,
+                                                                 double origH):
         UndoAction("PageBackgroundChangedUndoAction") {
     this->page = page;
     this->origType = origType;

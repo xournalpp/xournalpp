@@ -87,7 +87,7 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
      * Using the last two points of the stroke, draw a spline quadratic segment to the coordinates of ev.
      */
     Stroke* stroke = strokeHandler->getStroke();
-    int pointCount = stroke->getPointCount();
+    size_t pointCount = stroke->getPointCount();
     if (pointCount <= 0) {
         return;
     }
@@ -238,7 +238,7 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
 
 void StrokeStabilizer::Deadzone::rebalanceStrokePressures() {
     Stroke* stroke = strokeHandler->getStroke();
-    int pointCount = stroke->getPointCount();
+    size_t pointCount = stroke->getPointCount();
     if (pointCount >= 3) {
         /**
          * Smoothen a little bit the pressure variations
@@ -279,7 +279,7 @@ void StrokeStabilizer::Inertia::processEvent(const PositionInputData& pos) {
 
 void StrokeStabilizer::Inertia::rebalanceStrokePressures() {
     Stroke* stroke = strokeHandler->getStroke();
-    int pointCount = stroke->getPointCount();
+    size_t pointCount = stroke->getPointCount();
     if (pointCount >= 3) {
         /**
          * Smoothen a little bit the pressure variations

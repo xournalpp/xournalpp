@@ -327,7 +327,7 @@ static int applib_registerUi(lua_State* L) {
         return luaL_error(L, "Missing callback function!");
     }
 
-    int menuId = plugin->registerMenu(menu, callback, mode, accelerator);
+    size_t menuId = plugin->registerMenu(menu, callback, mode, accelerator);
     plugin->registerToolButton(menu, toolbarId, iconName, callback, mode);
 
     // Make sure to remove all vars which are put to the stack before!
@@ -443,13 +443,13 @@ static int applib_setSidebarPageNo(lua_State* L) {
         return luaL_error(L, "Missing pageNo for setSidebarPageNo!");
     }
 
-    int page = lua_tointeger(L, 1);
+    auto page = static_cast<int>(lua_tointeger(L, 1));
     if (page <= 0) {
         lua_pushnil(L);
         lua_pushfstring(L, "Invalid pageNo (%d) provided!", page);
         return 2;
     }
-    if (page > sidebar->getNumberOfPages()) {
+    if (static_cast<size_t>(page) > sidebar->getNumberOfPages()) {
         lua_pushnil(L);
         lua_pushfstring(L, "Invalid pageNo (%d >= %d) provided!", page, sidebar->getNumberOfPages());
         return 2;
@@ -586,14 +586,14 @@ static void addStrokeHelper(lua_State* L, Stroke* stroke) {
 
     // Set color
     if (lua_isinteger(L, -3)) {  // Check if the color was provided
-        stroke->setColor(Color(lua_tointeger(L, -3)));
+        stroke->setColor(static_cast<Color>(static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -3)))));
     } else {
         stroke->setColor(color);
     }
 
     // Set fill
     if (lua_isinteger(L, -2)) {  // Check if fill settings were provided
-        stroke->setFill(lua_tointeger(L, -2));
+        stroke->setFill(static_cast<int>(lua_tointeger(L, -2)));
     } else if (filled) {
         stroke->setFill(fillOpacity);
     } else {
@@ -683,7 +683,7 @@ static int applib_addSplines(lua_State* L) {
         std::vector<double> coordStream;
         Stroke* stroke = new Stroke();
         // Get coordinates
-        lua_pushnumber(L, a);
+        lua_pushinteger(L, a);
         lua_gettable(L, -2);                 // get current spline from splines table
         lua_getfield(L, -1, "coordinates");  // get coordinates of the current spline
         if (!lua_istable(L, -1)) {
@@ -691,7 +691,7 @@ static int applib_addSplines(lua_State* L) {
         }
         size_t numCoords = lua_rawlen(L, -1);
         for (size_t b = 1; b <= numCoords; b++) {
-            lua_pushnumber(L, b);
+            lua_pushinteger(L, b);
             lua_gettable(L, -2);  // get current coordinate from coordinates
             double point = lua_tonumber(L, -1);
             coordStream.push_back(point);  // Each segment is going to have multiples of 8 points.
@@ -727,7 +727,7 @@ static int applib_addSplines(lua_State* L) {
             addStrokeHelper(L, stroke);
             strokes.push_back(stroke);
         } else {
-            g_warning("Stroke shorter than two points. Discarding. (Has %d)", stroke->getPointCount());
+            g_warning("Stroke shorter than two points. Discarding. (Has %zu)", stroke->getPointCount());
         }
         // Onto the next stroke
         lua_pop(L, 1);  // cleanup current spline
@@ -830,7 +830,7 @@ static int applib_addStrokes(lua_State* L) {
         Stroke* stroke = new Stroke();
 
         // Fetch table of X values from the Lua stack
-        lua_pushnumber(L, a);
+        lua_pushinteger(L, a);
         lua_gettable(L, -2);  // get current stroke
 
         lua_getfield(L, -1, "x");  // get x array of current stroke
@@ -839,7 +839,7 @@ static int applib_addStrokes(lua_State* L) {
         }
         size_t xPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= xPoints; b++) {
-            lua_pushnumber(L, b);
+            lua_pushinteger(L, b);
             lua_gettable(L, -2);  // get current x-Coordinate
             double value = lua_tonumber(L, -1);
             xStream.push_back(value);
@@ -854,7 +854,7 @@ static int applib_addStrokes(lua_State* L) {
         }
         size_t yPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= yPoints; b++) {
-            lua_pushnumber(L, b);
+            lua_pushinteger(L, b);
             lua_gettable(L, -2);  // get current y-Coordinate
             double value = lua_tonumber(L, -1);
             yStream.push_back(value);
@@ -867,7 +867,7 @@ static int applib_addStrokes(lua_State* L) {
         if (lua_istable(L, -1)) {
             size_t pressurePoints = lua_rawlen(L, -1);
             for (size_t b = 1; b <= pressurePoints; b++) {
-                lua_pushnumber(L, b);
+                lua_pushinteger(L, b);
                 lua_gettable(L, -2);  // get current pressure
                 double value = lua_tonumber(L, -1);
                 pressureStream.push_back(value);
@@ -1007,7 +1007,7 @@ static int applib_addTexts(lua_State* L) {
         Text* t = new Text();
 
         // Fetch table of X values from the Lua stack
-        lua_pushnumber(L, a);
+        lua_pushinteger(L, a);
         lua_gettable(L, -2);  // get current text
         luaL_checktype(L, -1, LUA_TTABLE);
 
@@ -1053,7 +1053,7 @@ static int applib_addTexts(lua_State* L) {
         t->setFont(font);
 
         if (lua_isinteger(L, -3)) {  // Check if the color was provided
-            uint32_t color = lua_tointeger(L, -3);
+            uint32_t color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -3)));
             if (color > 0xffffff) {
                 std::stringstream msg;
                 msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
@@ -1172,7 +1172,7 @@ static int applib_getTexts(lua_State* L) {
     for (Element* e: elements) {
         if (e->getType() == ELEMENT_TEXT) {
             auto* t = static_cast<Text*>(e);
-            lua_pushnumber(L, ++currTextNo);  // index for later (settable)
+            lua_pushinteger(L, ++currTextNo);  // index for later (settable)
             lua_newtable(L);                  // create text table
 
             // stack now has following:
@@ -1292,7 +1292,7 @@ static int applib_getStrokes(lua_State* L) {
     for (Element* e: elements) {
         if (e->getType() == ELEMENT_STROKE) {
             auto* s = static_cast<Stroke*>(e);
-            lua_pushnumber(L, ++currStrokeNo);  // index for later (settable)
+            lua_pushinteger(L, ++currStrokeNo);  // index for later (settable)
             lua_newtable(L);                    // create stroke table
 
             // stack now has following:
@@ -1303,7 +1303,7 @@ static int applib_getStrokes(lua_State* L) {
 
             lua_newtable(L);  // create table of x-coordinates
             for (auto p: s->getPointVector()) {
-                lua_pushnumber(L, ++currPointNo);  // key
+                lua_pushinteger(L, ++currPointNo);  // key
                 lua_pushnumber(L, p.x);            // value
                 lua_settable(L, -3);               // insert
             }
@@ -1312,7 +1312,7 @@ static int applib_getStrokes(lua_State* L) {
 
             lua_newtable(L);  // create table for y-coordinates
             for (auto p: s->getPointVector()) {
-                lua_pushnumber(L, ++currPointNo);  // key
+                lua_pushinteger(L, ++currPointNo);  // key
                 lua_pushnumber(L, p.y);            // value
                 lua_settable(L, -3);               // insert
             }
@@ -1322,7 +1322,7 @@ static int applib_getStrokes(lua_State* L) {
             if (s->hasPressure()) {
                 lua_newtable(L);  // create table for pressures
                 for (auto p: s->getPointVector()) {
-                    lua_pushnumber(L, ++currPointNo);  // key
+                    lua_pushinteger(L, ++currPointNo);  // key
                     lua_pushnumber(L, p.z);            // value
                     lua_settable(L, -3);               // insert
                 }
@@ -1457,7 +1457,7 @@ static int applib_changeToolColor(lua_State* L) {
 
     uint32_t color = 0x000000;
     if (lua_isinteger(L, -1)) {
-        color = as_unsigned(lua_tointeger(L, -1));
+        color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -1)));
         if (color > 0xffffff) {
             std::stringstream msg;
             msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
@@ -2004,16 +2004,16 @@ static int applib_scrollToPage(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
 
-    int val = luaL_checkinteger(L, 1);
+    int val = static_cast<int>(luaL_checkinteger(L, 1));
     bool relative = false;
     if (lua_isboolean(L, 2)) {
         relative = lua_toboolean(L, 2);
     }
-    int page = (relative) ? control->getCurrentPageNo() + val : val - 1;
+    int page = (relative) ? static_cast<int>(control->getCurrentPageNo()) + val : val - 1;
 
     const int first = 0;
     const int last = static_cast<int>(control->getDocument()->getPageCount()) - 1;
-    control->getScrollHandler()->scrollToPage(std::clamp(page, first, last));
+    control->getScrollHandler()->scrollToPage(static_cast<size_t>(std::clamp(page, first, last)));
 
     return 0;
 }
@@ -2302,9 +2302,9 @@ static int applib_export(lua_State* L) {
     const char* layerRange = luaL_optstring(L, -6, nullptr);
     const char* background = luaL_optstring(L, -5, "all");
     bool progressiveMode = lua_toboolean(L, -4);  // true unless nil or false
-    int pngDpi = luaL_optinteger(L, -3, -1);
-    int pngWidth = luaL_optinteger(L, -2, -1);
-    int pngHeight = luaL_optinteger(L, -1, -1);
+    int pngDpi = static_cast<int>(luaL_optinteger(L, -3, -1));
+    int pngWidth = static_cast<int>(luaL_optinteger(L, -2, -1));
+    int pngHeight = static_cast<int>(luaL_optinteger(L, -1, -1));
 
     ExportBackgroundType bgType = EXPORT_BACKGROUND_ALL;
     if (strcmp(background, "unruled") == 0) {
@@ -2348,7 +2348,7 @@ static int applib_openFile(lua_State* L) {
 
     int scrollToPage = 0;  // by default scroll to the same page like last time
     if (lua_isinteger(L, 2)) {
-        scrollToPage = lua_tointeger(L, 2);
+        scrollToPage = static_cast<int>(lua_tointeger(L, 2));
     }
 
     bool forceOpen = false;  // by default asks the user
@@ -2415,12 +2415,12 @@ static int applib_addImages(lua_State* L) {
         return luaL_error(L, "Missing image table!");
     }
 
-    size_t cntParams = lua_rawlen(L, 2);
+    auto cntParams = static_cast<int>(lua_rawlen(L, 2));
 
     std::vector<Element*> images{};
     for (int imgParam{1}; imgParam <= cntParams; imgParam++) {
 
-        lua_pushnumber(L, imgParam);
+        lua_pushinteger(L, imgParam);
         lua_gettable(L, 2);
         luaL_checktype(L, -1, LUA_TTABLE);
 
@@ -2449,12 +2449,12 @@ static int applib_addImages(lua_State* L) {
         double x = luaL_optnumber(L, -6, 0);
         double y = luaL_optnumber(L, -5, 0);
 
-        int maxHeightParam = luaL_optinteger(L, -3, -1);
+        int maxHeightParam = static_cast<int>(luaL_optinteger(L, -3, -1));
         if (maxHeightParam <= 0 && maxHeightParam != -1) {
             return luaL_error(L, "Invalid height given, must be positive integer or -1 to deactivate manual setting.");
         }
 
-        int maxWidthParam = luaL_optinteger(L, -4, -1);
+        int maxWidthParam = static_cast<int>(luaL_optinteger(L, -4, -1));
         if (maxWidthParam <= 0 && maxWidthParam != -1) {
             return luaL_error(L, "Invalid width given, must be positive integer or -1 to deactivate manual setting.");
         }
@@ -2567,7 +2567,7 @@ static int applib_addImages(lua_State* L) {
     lua_pop(L, 1);
     handleUndoRedoActionHelper(L, control, allowUndoRedoAction, images);
 
-    return static_cast<int>(cntParams);
+    return cntParams;
 }
 
 /**
@@ -2629,7 +2629,7 @@ static int applib_getImages(lua_State* L) {
     for (Element* e: elements) {
         if (e->getType() == ELEMENT_IMAGE) {
             auto* im = static_cast<Image*>(e);
-            lua_pushnumber(L, ++currImageNo);  // index for later (settable)
+            lua_pushinteger(L, ++currImageNo);  // index for later (settable)
             lua_newtable(L);                   // create table for current image
 
             // "x": number

@@ -270,7 +270,8 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
     int brk[5] = {0};
 
     // first see if it's a polygon
-    int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1, MAX_POLYGON_SIDES, brk, ss);
+    int n = findPolygonal(stroke->getPoints(), 0, static_cast<int>(stroke->getPointCount()) - 1, MAX_POLYGON_SIDES, brk,
+                          ss);
     if (n > 0) {
         optimizePolygonal(stroke->getPoints(), n, brk, ss);
 #ifdef DEBUG_RECOGNIZER

@@ -50,14 +50,14 @@ void ObjectOutputStream::writeString(const std::string& s) {
     this->encoder->addData(s.c_str(), len);
 }
 
-void ObjectOutputStream::writeData(const void* data, int len, int width) {
+void ObjectOutputStream::writeData(const void* data, size_t len, int width) {
     this->encoder->addStr("_b");
     this->encoder->addData(&len, sizeof(int));
 
     // size of one element
     this->encoder->addData(&width, sizeof(int));
     if (data != nullptr) {
-        this->encoder->addData(data, len * width);
+        this->encoder->addData(data, static_cast<int>(len * width));
     }
 }
 

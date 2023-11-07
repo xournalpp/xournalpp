@@ -71,7 +71,7 @@ void ScrollHandler::scrollToSpinPage() {
         return;
     }
     SpinPageAdapter* spinPageNo = this->control->getWindow()->getSpinPageNo();
-    int page = spinPageNo->getPage();
+    size_t page = spinPageNo->getPage();
     if (page == 0) {
         return;
     }

@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs
+#include <cstddef>    // for size_t
 #include <string>     // for string
 #include <utility>    // for move
 #include <vector>     // for vector
@@ -146,14 +147,14 @@ void PdfFloatingToolbox::copyTextToClipboard() {
 }
 
 void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity) {
-    const uint64_t pdfPageNo = this->pdfElemSelection->getSelectionPageNr();
-    const uint64_t currentPage = theMainWindow->getXournal()->getCurrentPage();
+    const size_t pdfPageNo = this->pdfElemSelection->getSelectionPageNr();
+    const size_t currentPage = theMainWindow->getXournal()->getCurrentPage();
 
     // Get the PDF page that the current page corresponds to.
     // It should be the same as the PDF page of the selection.
     auto doc = this->theMainWindow->getControl()->getDocument();
     doc->lock();
-    const uint64_t pdfPageOfCurrentPage = doc->getPage(currentPage)->getPdfPageNr();
+    const size_t pdfPageOfCurrentPage = doc->getPage(currentPage)->getPdfPageNr();
     doc->unlock();
 
     if (pdfPageOfCurrentPage != pdfPageNo) {
