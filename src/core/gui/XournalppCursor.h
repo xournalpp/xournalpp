@@ -38,7 +38,7 @@ public:
     void setMirror(bool mirror);
 
 private:
-    void setCursor(int id);
+    void setCursor(guint id);
 
     GdkCursor* getPenCursor();
 

@@ -44,9 +44,8 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
     g_signal_connect_swapped(this->cbUseSystemFont, "toggled",
                              G_CALLBACK(+[](LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
 
-    GtkBox* themeSelectionBox = GTK_BOX(builder.get("bxThemeSelectionContainer"));
-
 #ifdef USE_GTK_SOURCEVIEW
+    GtkBox* themeSelectionBox = GTK_BOX(builder.get("bxThemeSelectionContainer"));
     this->sourceViewThemeSelector = gtk_source_style_scheme_chooser_button_new();
     gtk_box_append(themeSelectionBox, sourceViewThemeSelector);
 

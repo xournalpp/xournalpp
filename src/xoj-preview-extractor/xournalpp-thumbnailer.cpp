@@ -166,7 +166,9 @@ int main(int argc, char* argv[]) {
                     return CAIRO_STATUS_READ_ERROR;
                 }
 
-                for (auto i = 0; i < length; i++) { data[i] = closure->data[closure->pos + i]; }
+                for (auto i = 0U; i < length; i++) {
+                    data[i] = closure->data[closure->pos + i];
+                }
                 closure->pos += length;
                 return CAIRO_STATUS_SUCCESS;
             };
@@ -185,14 +187,15 @@ int main(int argc, char* argv[]) {
             logMessage((_F("xoj-preview-extractor: could not find icon \"{1}\"") % iconName).str(), true);
         } else {
             rsvg_handle_set_dpi(handle, 90);  // does the dpi matter for an icon overlay?
-            RsvgDimensionData dims;
-            rsvg_handle_get_dimensions(handle, &dims);
-
             // Render at bottom right
             cairo_t* cr = cairo_create(thumbnail);
-            cairo_translate(cr, width - iconSize, height - iconSize);
-            cairo_scale(cr, iconSize / dims.width, iconSize / dims.height);
-            rsvg_handle_render_cairo(handle, cr);
+            const RsvgRectangle viewport{width - iconSize, height - iconSize, iconSize, iconSize};
+            GError* error = nullptr;
+            rsvg_handle_render_document(handle, cr, &viewport, &error);
+            if (error != nullptr) {
+                g_warning("Could not render the icon");
+                g_clear_error(&error);
+            }
         }
         cairo_surface_write_to_png(thumbnail, argv[2]);
     } else {

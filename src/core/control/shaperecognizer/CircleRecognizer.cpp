@@ -60,7 +60,7 @@ auto CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia) -> double {
 
 auto CircleRecognizer::recognize(Stroke* stroke) -> Stroke* {
     Inertia s;
-    s.calc(stroke->getPoints(), 0, stroke->getPointCount());
+    s.calc(stroke->getPoints(), 0, static_cast<int>(stroke->getPointCount()));
     RDEBUG("Mass=%.0f, Center=(%.1f,%.1f), I=(%.0f,%.0f, %.0f), Rad=%.2f, Det=%.4f", s.getMass(), s.centerX(),
            s.centerY(), s.xx(), s.yy(), s.xy(), s.rad(), s.det());
 

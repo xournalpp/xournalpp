@@ -44,7 +44,7 @@ public:
         this->currentWidth = 0;
     }
 
-    auto getCount() -> int { return this->list.size(); }
+    auto getCount() -> int { return static_cast<int>(this->list.size()); }
 
     auto getWidth() const -> int { return this->currentWidth; }
 

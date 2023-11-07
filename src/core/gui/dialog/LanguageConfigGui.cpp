@@ -68,8 +68,8 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
         // Use system default
         return availableLocales.begin();
     }();
-
-    gtk_combo_box_set_active(GTK_COMBO_BOX(dropdown), prefPos - availableLocales.begin());
+    gtk_combo_box_set_active(GTK_COMBO_BOX(dropdown),
+                             static_cast<gint>(std::distance(availableLocales.begin(), prefPos)));
 }
 
 

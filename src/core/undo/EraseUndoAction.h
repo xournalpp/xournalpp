@@ -31,8 +31,8 @@ public:
     bool undo(Control* control) override;
     bool redo(Control* control) override;
 
-    void addOriginal(Layer* layer, Stroke* element, int pos);
-    void addEdited(Layer* layer, Stroke* element, int pos);
+    void addOriginal(Layer* layer, Stroke* element, Element::Index pos);
+    void addEdited(Layer* layer, Stroke* element, Element::Index pos);
     [[maybe_unused]] void removeEdited(Stroke* element);
 
     void finalize();

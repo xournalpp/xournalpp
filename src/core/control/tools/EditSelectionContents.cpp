@@ -122,7 +122,7 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
 
             double originalWidth = s->getWidth();
 
-            int pointCount = s->getPointCount();
+            size_t pointCount = s->getPointCount();
             vector<double> originalPressure = SizeUndoAction::getPressure(s);
 
             if (tool == StrokeTool::PEN) {

@@ -149,7 +149,8 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
     size_t len = g_utf8_strlen(normalized, -1);
     PangoLogAttr* log_attrs = g_new(PangoLogAttr, len + 1);
 
-    pango_get_log_attrs(normalized, strlen(normalized), -1, nullptr, log_attrs, len + 1);
+    pango_get_log_attrs(normalized, static_cast<int>(strlen(normalized)), -1, nullptr, log_attrs,
+                        static_cast<int>(len + 1));
 
     gchar* word = normalized;
     gboolean result = true;

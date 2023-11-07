@@ -39,8 +39,8 @@ void SwapUndoAction::swap(Control* control) {
 
     doc->unlock();
 
-    gint insertPos = this->pageNr;
-    gint deletePos = this->pageNr + 1;
+    size_t insertPos = this->pageNr;
+    size_t deletePos = this->pageNr + 1;
 
     if (moveUp != this->undone) {
         std::swap(insertPos, deletePos);

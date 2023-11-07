@@ -367,7 +367,8 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
     this->sidebar->selectPageNr(page, pdfPage);
 
-    this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), int(page), getZoomControl()->getZoomReal());
+    this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), static_cast<int>(page),
+                                  getZoomControl()->getZoomReal());
     if (settings->isPageNumberInTitlebarShown()) {
         this->updateWindowTitle();
     }
@@ -2261,7 +2262,6 @@ void Control::setFill(bool fill) {
 void Control::setLineStyle(const string& style) {
     LineStyle stl = StrokeStyle::parseStyle(style);
 
-    EditSelection* sel = nullptr;
     if (this->win && this->win->getXournal()->getSelection()) {
         undoRedo->addUndoAction(this->win->getXournal()->getSelection()->setLineStyle(stl));
     } else if (this->toolHandler->getActiveTool()->getToolType() != TOOL_PEN) {

@@ -106,7 +106,7 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
                 EXPECT_EQ(sA->getToolType(), sB->getToolType());
                 EXPECT_EQ(sA->getLineStyle().hasDashes(), sB->getLineStyle().hasDashes());
                 EXPECT_TRUE(coordEq(sA->getAvgPressure(), sB->getAvgPressure()));
-                for (int j = 0; j < sA->getPointCount(); j++) {
+                for (size_t j = 0; j < sA->getPointCount(); j++) {
                     Point pA = sA->getPoint(j);
                     Point pB = sB->getPoint(j);
                     EXPECT_TRUE(coordEq(pA.x, pB.x));

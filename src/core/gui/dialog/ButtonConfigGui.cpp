@@ -263,7 +263,7 @@ void ButtonConfigGui::saveSettings() {
     cfg->strokeType = static_cast<StrokeType>(gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbStrokeType)));
 
     if (this->withDevice) {
-        int dev = gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1;
+        size_t dev = static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1);
         cfg->device = (dev < 0 || this->deviceList.size() <= dev) ? "" : this->deviceList[dev].getName();
         cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbDisableDrawing));
     }

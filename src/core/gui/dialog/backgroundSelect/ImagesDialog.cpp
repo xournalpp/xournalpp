@@ -48,7 +48,7 @@ void ImagesDialog::loadImagesFromPages() {
             continue;
         }
 
-        auto* iv = new ImageElementView(this->elements.size(), this);
+        auto* iv = new ImageElementView(static_cast<int>(this->elements.size()), this);
         iv->backgroundImage = p->getBackgroundImage();
         this->elements.push_back(iv);
     }

@@ -88,7 +88,7 @@ template <typename Integral, typename Float>
 inline auto ceil_cast(Float f) -> Integral {
     auto rv0 = std::ceil(f);
     auto rv1 = Integral(rv0);
-    xoj_assert(rv0 == rv1);
+    xoj_assert(rv0 == static_cast<Float>(rv1));
     return rv1;
 }
 
@@ -96,7 +96,7 @@ template <typename Integral, typename Float>
 inline auto floor_cast(Float f) -> Integral {
     auto rv0 = std::floor(f);
     auto rv1 = Integral(rv0);
-    xoj_assert(rv0 == rv1);
+    xoj_assert(rv0 == static_cast<Float>(rv1));
     return rv1;
 }
 

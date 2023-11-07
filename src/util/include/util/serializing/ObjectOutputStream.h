@@ -35,7 +35,7 @@ public:
     void writeString(const char* str);
     void writeString(const std::string& s);
 
-    void writeData(const void* data, int len, int width);
+    void writeData(const void* data, size_t len, int width);
 
     template <typename T>
     void writeData(const std::vector<T>& data);
@@ -51,5 +51,5 @@ private:
 
 template <typename T>
 void ObjectOutputStream::writeData(const std::vector<T>& data) {
-    writeData(data.data(), static_cast<int>(data.size()), sizeof(T));
+    writeData(data.data(), data.size(), sizeof(T));
 }

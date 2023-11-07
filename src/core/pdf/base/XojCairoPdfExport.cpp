@@ -184,7 +184,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& r
     for (const auto& e: range) { count += e.last - e.first + 1; }
 
     if (this->progressListener) {
-        this->progressListener->setMaximumState(count);
+        this->progressListener->setMaximumState(static_cast<int>(count));
     }
 
     size_t c = 0;
@@ -198,7 +198,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& r
             }
 
             if (this->progressListener) {
-                this->progressListener->setCurrentState(c++);
+                this->progressListener->setCurrentState(static_cast<int>(c++));
             }
         }
     }
@@ -222,7 +222,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) ->
 
     auto count = doc->getPageCount();
     if (this->progressListener) {
-        this->progressListener->setMaximumState(count);
+        this->progressListener->setMaximumState(static_cast<int>(count));
     }
 
     for (decltype(count) i = 0; i < count; i++) {
@@ -233,7 +233,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) ->
         }
 
         if (this->progressListener) {
-            this->progressListener->setCurrentState(i);
+            this->progressListener->setCurrentState(static_cast<int>(i));
         }
     }
 

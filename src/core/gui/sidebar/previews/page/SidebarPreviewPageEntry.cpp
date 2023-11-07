@@ -39,7 +39,8 @@ void SidebarPreviewPageEntry::drawEntryNumber(cairo_t* cr) {
 int SidebarPreviewPageEntry::getWidgetHeight() {
     if (sidebar->getControl()->getSettings()->getSidebarNumberingStyle() ==
         SidebarNumberingStyle::NUMBER_BELOW_PREVIEW) {
-        return SidebarPreviewBaseEntry::getWidgetHeight() + PagePreviewDecoration::MARGIN_BOTTOM;
+        return SidebarPreviewBaseEntry::getWidgetHeight() +
+               static_cast<int>(std::ceil(PagePreviewDecoration::MARGIN_BOTTOM));
     }
     return SidebarPreviewBaseEntry::getWidgetHeight();
 }

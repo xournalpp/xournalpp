@@ -10,9 +10,9 @@ OutputStream::OutputStream() = default;
 
 OutputStream::~OutputStream() = default;
 
-void OutputStream::write(const std::string& str) { write(str.c_str(), str.length()); }
+void OutputStream::write(const std::string& str) { write(str.c_str(), static_cast<unsigned int>(str.length())); }
 
-void OutputStream::write(const char* str) { write(str, strlen(str)); }
+void OutputStream::write(const char* str) { write(str, static_cast<unsigned int>(strlen(str))); }
 
 ////////////////////////////////////////////////////////
 /// GzOutputStream /////////////////////////////////////
@@ -34,7 +34,7 @@ GzOutputStream::~GzOutputStream() {
 
 auto GzOutputStream::getLastError() -> std::string& { return this->error; }
 
-void GzOutputStream::write(const char* data, int len) { gzwrite(this->fp, data, len); }
+void GzOutputStream::write(const char* data, unsigned int len) { gzwrite(this->fp, data, len); }
 
 void GzOutputStream::close() {
     if (this->fp) {
