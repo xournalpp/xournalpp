@@ -1,12 +1,12 @@
 #include "Mask.h"
 
-#include <cmath>
 #include <iostream>
 
 #include <cairo.h>
 
 #include "util/Assert.h"
 #include "util/Range.h"
+#include "util/safe_casts.h"  // for ceil_cast, floor_cast
 
 #include "config-debug.h"
 
@@ -23,16 +23,12 @@ std::string getSurfaceTypeName(cairo_surface_t*);
 #endif
 
 Mask::Mask(cairo_surface_t* target, const Range& extent, double zoom, cairo_content_t contentType):
-        xOffset(static_cast<int>(std::floor(extent.minX * zoom))),
-        yOffset(static_cast<int>(std::floor(extent.minY * zoom))),
-        zoom(zoom) {
+        xOffset(floor_cast<int>(extent.minX * zoom)), yOffset(floor_cast<int>(extent.minY * zoom)), zoom(zoom) {
     constructorImpl(target, extent, zoom, contentType);
 }
 
 Mask::Mask(int DPIScaling, const Range& extent, double zoom, cairo_content_t contentType):
-        xOffset(static_cast<int>(std::floor(extent.minX * zoom))),
-        yOffset(static_cast<int>(std::floor(extent.minY * zoom))),
-        zoom(zoom) {
+        xOffset(floor_cast<int>(extent.minX * zoom)), yOffset(floor_cast<int>(extent.minY * zoom)), zoom(zoom) {
     constructorImpl(DPIScaling, extent, zoom, contentType);
 }
 
@@ -67,8 +63,8 @@ void Mask::constructorImpl(DPIInfoType dpiInfo, const Range& extent, double zoom
                                                  " -- " + std::to_string(extent.maxY));
     xoj_assert(zoom > 0.0);
 
-    const int width = static_cast<int>(std::ceil(extent.maxX * zoom)) - xOffset;
-    const int height = static_cast<int>(std::ceil(extent.maxY * zoom)) - yOffset;
+    const int width = ceil_cast<int>(extent.maxX * zoom) - xOffset;
+    const int height = ceil_cast<int>(extent.maxY * zoom) - yOffset;
 
     /*
      * Create the most suitable kind of surface.

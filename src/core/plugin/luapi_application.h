@@ -11,7 +11,6 @@
 #pragma once
 
 #include <climits>
-#include <cmath>  // for rounding
 #include <cstring>
 #include <limits>  // for numeric_limits
 #include <map>
@@ -47,8 +46,8 @@
 #include "undo/InsertUndoAction.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
-#include "util/i18n.h"  // for _
-#include "util/safe_casts.h"
+#include "util/i18n.h"        // for _
+#include "util/safe_casts.h"  // for round_cast
 
 #include "ActionBackwardCompatibilityLayer.h"
 
@@ -1173,7 +1172,7 @@ static int applib_getTexts(lua_State* L) {
         if (e->getType() == ELEMENT_TEXT) {
             auto* t = static_cast<Text*>(e);
             lua_pushinteger(L, ++currTextNo);  // index for later (settable)
-            lua_newtable(L);                  // create text table
+            lua_newtable(L);                   // create text table
 
             // stack now has following:
             //  1 = type (string)
@@ -1293,7 +1292,7 @@ static int applib_getStrokes(lua_State* L) {
         if (e->getType() == ELEMENT_STROKE) {
             auto* s = static_cast<Stroke*>(e);
             lua_pushinteger(L, ++currStrokeNo);  // index for later (settable)
-            lua_newtable(L);                    // create stroke table
+            lua_newtable(L);                     // create stroke table
 
             // stack now has following:
             //  1 = type (string)
@@ -1304,8 +1303,8 @@ static int applib_getStrokes(lua_State* L) {
             lua_newtable(L);  // create table of x-coordinates
             for (auto p: s->getPointVector()) {
                 lua_pushinteger(L, ++currPointNo);  // key
-                lua_pushnumber(L, p.x);            // value
-                lua_settable(L, -3);               // insert
+                lua_pushnumber(L, p.x);             // value
+                lua_settable(L, -3);                // insert
             }
             lua_setfield(L, -2, "x");  // add x-coordinates to stroke
             currPointNo = 0;
@@ -1313,8 +1312,8 @@ static int applib_getStrokes(lua_State* L) {
             lua_newtable(L);  // create table for y-coordinates
             for (auto p: s->getPointVector()) {
                 lua_pushinteger(L, ++currPointNo);  // key
-                lua_pushnumber(L, p.y);            // value
-                lua_settable(L, -3);               // insert
+                lua_pushnumber(L, p.y);             // value
+                lua_settable(L, -3);                // insert
             }
             lua_setfield(L, -2, "y");  // add y-coordinates to stroke
             currPointNo = 0;
@@ -1323,8 +1322,8 @@ static int applib_getStrokes(lua_State* L) {
                 lua_newtable(L);  // create table for pressures
                 for (auto p: s->getPointVector()) {
                     lua_pushinteger(L, ++currPointNo);  // key
-                    lua_pushnumber(L, p.z);            // value
-                    lua_settable(L, -3);               // insert
+                    lua_pushnumber(L, p.z);             // value
+                    lua_settable(L, -3);                // insert
                 }
                 lua_setfield(L, -2, "pressure");  // add pressures to stroke
                 currPointNo = 0;
@@ -2517,8 +2516,8 @@ static int applib_addImages(lua_State* L) {
                 double scale_x{static_cast<double>(maxWidthParam) / static_cast<double>(width)};
                 double scale{std::min(scale_y, scale_x)};
 
-                height = static_cast<int>(std::round(height * scale));
-                width = static_cast<int>(std::round(width * scale));
+                height = round_cast<int>(height * scale);
+                width = round_cast<int>(width * scale);
             } else {
                 width = maxWidthParam;
                 height = maxHeightParam;
@@ -2526,22 +2525,20 @@ static int applib_addImages(lua_State* L) {
         } else if (maxWidthParam != -1 && maxHeightParam == -1) {
             // maxHeight is set
             if (aspectRatio) {
-                height = static_cast<int>(
-                        std::round(static_cast<double>(height) / static_cast<double>(width) * maxWidthParam));
+                height = round_cast<int>(static_cast<double>(height) / static_cast<double>(width) * maxWidthParam);
             }
             width = maxWidthParam;
         } else if (maxHeightParam != -1 && maxWidthParam == -1) {
             // maxWidth is set
             if (aspectRatio) {
-                width = static_cast<int>(
-                        std::round(static_cast<double>(width) / static_cast<double>(height) * maxHeightParam));
+                width = round_cast<int>(static_cast<double>(width) / static_cast<double>(height) * maxHeightParam);
             }
             height = maxHeightParam;
         }
 
         // apply scale option
-        width = static_cast<int>(std::round(width * scale));
-        height = static_cast<int>(std::round(height * scale));
+        width = round_cast<int>(width * scale);
+        height = round_cast<int>(height * scale);
 
         // scale down keeping the current aspect ratio after the manual scaling to fit the image on the page
         // if the image already fits on the screen, no other scaling is applied here
@@ -2630,7 +2627,7 @@ static int applib_getImages(lua_State* L) {
         if (e->getType() == ELEMENT_IMAGE) {
             auto* im = static_cast<Image*>(e);
             lua_pushinteger(L, ++currImageNo);  // index for later (settable)
-            lua_newtable(L);                   // create table for current image
+            lua_newtable(L);                    // create table for current image
 
             // "x": number
             lua_pushnumber(L, im->getX());

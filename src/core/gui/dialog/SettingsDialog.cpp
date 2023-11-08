@@ -25,6 +25,7 @@
 #include "util/gtk4_helper.h"                    //
 #include "util/i18n.h"                           // for _
 #include "util/raii/CairoWrappers.h"             // for CairoSurfaceSPtr
+#include "util/safe_casts.h"                     // for round_cast
 
 #include "ButtonConfigGui.h"       // for ButtonConfigGui
 #include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
@@ -78,7 +79,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
     g_signal_connect(builder.get("zoomCallibSlider"), "change-value",
                      G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, SettingsDialog* self) {
-                         self->setDpi(static_cast<int>(std::round(value)));
+                         self->setDpi(round_cast<int>(value));
                      }),
                      this);
 

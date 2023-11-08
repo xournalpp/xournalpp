@@ -1,6 +1,5 @@
 #include "TextEditor.h"
 
-#include <cmath>
 #include <cstring>  // for strcmp, size_t
 #include <memory>   // for allocator, make_unique, __shared_p...
 #include <string>   // for std::string()
@@ -25,6 +24,7 @@
 #include "util/Range.h"
 #include "util/glib_casts.h"  // for wrap_for_once_v
 #include "util/raii/CStringWrapper.h"
+#include "util/safe_casts.h"  // for round_cast
 #include "view/overlays/TextEditionView.h"
 
 #include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
@@ -592,8 +592,8 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
 void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos) const {
     int index = 0;
     int trailing = 0;
-    pango_layout_xy_to_index(this->getUpToDateLayout(), static_cast<int>(std::round(xPos * PANGO_SCALE)),
-                             static_cast<int>(std::round(yPos * PANGO_SCALE)), &index, &trailing);
+    pango_layout_xy_to_index(this->getUpToDateLayout(), round_cast<int>(xPos * PANGO_SCALE),
+                             round_cast<int>(yPos * PANGO_SCALE), &index, &trailing);
     /*
      * trailing is non-zero iff the abscissa is past the middle of the grapheme.
      * In this case, it contains the length of the grapheme in utf8 char count.

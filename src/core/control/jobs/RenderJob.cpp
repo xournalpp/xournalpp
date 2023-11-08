@@ -1,6 +1,5 @@
 #include "RenderJob.h"
 
-#include <cmath>    // for ceil, floor
 #include <mutex>    // for mutex
 #include <utility>  // for move
 #include <vector>   // for vector
@@ -20,6 +19,7 @@
 #include "util/Rectangle.h"             // for Rectangle
 #include "util/Util.h"                  // for execInUiThread
 #include "util/raii/CairoWrappers.h"    // for CairoSurfaceSPtr, CairoSPtr
+#include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
 #include "view/DocumentView.h"          // for DocumentView
 #include "view/Mask.h"                  // for Mask
 
@@ -99,9 +99,8 @@ void RenderJob::repaintPageArea(double x1, double y1, double x2, double y2) cons
     double zoom = view->xournal->getZoom();
     int x = view->getX();
     int y = view->getY();
-    repaintWidgetArea(view->xournal->getWidget(), x + static_cast<int>(std::floor(zoom * x1)),
-                      y + static_cast<int>(std::floor(zoom * y1)), x + static_cast<int>(std::ceil(zoom * x2)),
-                      y + static_cast<int>(std::ceil(zoom * y2)));
+    repaintWidgetArea(view->xournal->getWidget(), x + floor_cast<int>(zoom * x1), y + floor_cast<int>(zoom * y1),
+                      x + ceil_cast<int>(zoom * x2), y + ceil_cast<int>(zoom * y2));
 }
 
 void RenderJob::renderToBuffer(cairo_t* cr) const {

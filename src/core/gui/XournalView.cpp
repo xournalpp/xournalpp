@@ -1,7 +1,6 @@
 #include "XournalView.h"
 
 #include <algorithm>  // for max, min
-#include <cmath>      // for lround
 #include <iterator>   // for begin
 #include <memory>     // for unique_ptr, make_unique
 #include <optional>   // for optional
@@ -40,6 +39,7 @@
 #include "util/Rectangle.h"                      // for Rectangle
 #include "util/Util.h"                           // for npos
 #include "util/glib_casts.h"                     // for wrap_v
+#include "util/safe_casts.h"                     // for round_cast
 
 #include "Layout.h"           // for Layout
 #include "PageView.h"         // for XojPageView
@@ -440,16 +440,16 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
     // Make sure it is visible
     Layout* layout = gtk_xournal_get_layout(this->widget);
 
-    int x = v->getX() + static_cast<int>(std::lround(rect.x1 * zoom));
-    int y = v->getY() + static_cast<int>(std::lround(rect.y1 * zoom));
+    int x = v->getX() + round_cast<int>(rect.x1 * zoom);
+    int y = v->getY() + round_cast<int>(rect.y1 * zoom);
     int width;
     int height;
     if (rect.x2 == -1 || rect.y2 == -1) {
         width = v->getDisplayWidth();
         height = v->getDisplayHeight();
     } else {
-        width = static_cast<int>(std::lround((rect.x2 - rect.x1) * zoom));
-        height = static_cast<int>(std::lround((rect.y2 - rect.y1) * zoom));
+        width = round_cast<int>((rect.x2 - rect.x1) * zoom);
+        height = round_cast<int>((rect.y2 - rect.y1) * zoom);
     }
 
     layout->ensureRectIsVisible(x, y, width, height);
@@ -734,8 +734,8 @@ void XournalView::layoutPages() {
     // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be
     // called by an expose event, but removing it, will break "add page".
     auto rectangle = layout->getVisibleRect();
-    layout->layoutPages(std::max<int>(layout->getMinimalWidth(), static_cast<int>(std::round(rectangle.width))),
-                        std::max<int>(layout->getMinimalHeight(), static_cast<int>(std::round(rectangle.height))));
+    layout->layoutPages(std::max<int>(layout->getMinimalWidth(), round_cast<int>(rectangle.width)),
+                        std::max<int>(layout->getMinimalHeight(), round_cast<int>(rectangle.height)));
 }
 
 auto XournalView::getDisplayHeight() const -> int {
@@ -754,7 +754,7 @@ auto XournalView::isPageVisible(size_t page, int* visibleHeight) const -> bool {
     Rectangle<double>* rect = getVisibleRect(page);
     if (rect) {
         if (visibleHeight) {
-            *visibleHeight = static_cast<int>(std::round(rect->height));
+            *visibleHeight = round_cast<int>(rect->height);
         }
 
         delete rect;

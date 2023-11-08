@@ -1,6 +1,5 @@
 #include "PdfElementView.h"
 
-#include <cmath>    // for ceil, floor
 #include <memory>   // for __shared_pt...
 #include <utility>  // for move
 
@@ -8,9 +7,9 @@
 
 #include "gui/dialog/backgroundSelect/BaseElementView.h"  // for BaseElement...
 #include "pdf/base/XojPdfPage.h"                          // for XojPdfPageSPtr
+#include "util/safe_casts.h"                              // for ceil_cast
 
 #include "PdfPagesDialog.h"  // for PdfPagesDialog
-
 
 PdfElementView::PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg):
         BaseElementView(id, dlg), page(std::move(page)) {}
@@ -29,10 +28,6 @@ void PdfElementView::paintContents(cairo_t* cr) {
     page->render(cr);
 }
 
-auto PdfElementView::getContentWidth() -> int {
-    return static_cast<int>(std::ceil(page->getWidth() * PdfPagesDialog::getZoom()));
-}
+auto PdfElementView::getContentWidth() -> int { return ceil_cast<int>(page->getWidth() * PdfPagesDialog::getZoom()); }
 
-auto PdfElementView::getContentHeight() -> int {
-    return static_cast<int>(std::ceil(page->getHeight() * PdfPagesDialog::getZoom()));
-}
+auto PdfElementView::getContentHeight() -> int { return ceil_cast<int>(page->getHeight() * PdfPagesDialog::getZoom()); }

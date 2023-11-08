@@ -4,6 +4,7 @@
 #include <memory>  // for allocator
 
 #include "model/BackgroundConfig.h"                  // for BackgroundConfig
+#include "util/safe_casts.h"                         // for floor_cast
 #include "view/background/BackgroundView.h"          // for view
 #include "view/background/OneColorBackgroundView.h"  // for OneColorBackgrou...
 #include "view/background/PlainBackgroundView.h"     // for PlainBackgroundView
@@ -28,8 +29,8 @@ void BaseIsometricBackgroundView::draw(cairo_t* cr) const {
 
     // Deduce the maximum grid size
     const double margin = triangleSize;
-    int cols = static_cast<int>(std::floor((pageWidth - 2 * margin) / xstep));
-    int rows = static_cast<int>(std::floor((pageHeight - 2 * margin) / ystep));
+    int cols = floor_cast<int>((pageWidth - 2 * margin) / xstep);
+    int rows = floor_cast<int>((pageHeight - 2 * margin) / ystep);
 
     // Center the grid on the page
     const double contentWidth = cols * xstep;

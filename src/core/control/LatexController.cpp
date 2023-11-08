@@ -39,6 +39,7 @@
 #include "util/Util.h"                       // for npos
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for FS, _, _F, N_
+#include "util/safe_casts.h"                 // for round_cast
 
 #include "Control.h"  // for Control
 
@@ -138,8 +139,7 @@ void LatexController::findSelectedTexElement() {
         const double centerX = visibleBounds.x + 0.5 * visibleBounds.width;
         const double centerY = visibleBounds.y + 0.5 * visibleBounds.height;
 
-        if (layout->getPageViewAt(static_cast<int>(std::round(centerX)), static_cast<int>(std::round(centerY))) ==
-            this->view) {
+        if (layout->getPageViewAt(round_cast<int>(centerX), round_cast<int>(centerY)) == this->view) {
             // Pick the center of the visible area (converting from screen to page coordinates)
             this->posx = (centerX - this->view->getX()) / zoom;
             this->posy = (centerY - this->view->getY()) / zoom;

@@ -1,12 +1,11 @@
 #include "ImageElementView.h"
 
-#include <cmath>  // for ceil, floor
-
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_...
 #include <gdk/gdk.h>                // for gdk_cairo_s...
 
 #include "gui/Shadow.h"                                   // for Shadow
 #include "gui/dialog/backgroundSelect/BaseElementView.h"  // for BaseElement...
+#include "util/safe_casts.h"                              // for ceil_cast
 
 class BackgroundSelectDialogBase;
 
@@ -25,8 +24,8 @@ void ImageElementView::calcSize() {
         } else {
             zoom = 128.0 / this->width;
         }
-        this->width = static_cast<int>(std::ceil(this->width * zoom));
-        this->height = static_cast<int>(std::ceil(this->height * zoom));
+        this->width = ceil_cast<int>(this->width * zoom);
+        this->height = ceil_cast<int>(this->height * zoom);
     }
 }
 

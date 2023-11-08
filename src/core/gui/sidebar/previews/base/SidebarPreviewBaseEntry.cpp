@@ -12,6 +12,7 @@
 #include "model/XojPage.h"                  // for XojPage
 #include "util/Color.h"                     // for cairo_set_source_rgbi
 #include "util/i18n.h"                      // for _
+#include "util/safe_casts.h"                // for ceil_cast, round_cast
 
 #include "SidebarPreviewBase.h"  // for SidebarPreviewBase
 
@@ -136,11 +137,11 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
 
         cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
         Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(),
-                           static_cast<int>(std::round(width)) + 4, static_cast<int>(std::round(height)) + 4);
+                           round_cast<int>(width) + 4, round_cast<int>(height) + 4);
     } else {
         cairo_set_operator(cr, CAIRO_OPERATOR_ATOP);
         Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2,
-                           static_cast<int>(std::round(width)), static_cast<int>(std::round(height)));
+                           round_cast<int>(width), round_cast<int>(height));
     }
 
     this->drawingMutex.unlock();
@@ -155,12 +156,12 @@ void SidebarPreviewBaseEntry::updateSize() {
 }
 
 auto SidebarPreviewBaseEntry::getWidgetWidth() -> int {
-    return static_cast<int>(std::ceil(page->getWidth() * sidebar->getZoom())) + Shadow::getShadowBottomRightSize() +
+    return ceil_cast<int>(page->getWidth() * sidebar->getZoom()) + Shadow::getShadowBottomRightSize() +
            Shadow::getShadowTopLeftSize() + 4;
 }
 
 auto SidebarPreviewBaseEntry::getWidgetHeight() -> int {
-    return static_cast<int>(std::ceil(page->getHeight() * sidebar->getZoom())) + Shadow::getShadowBottomRightSize() +
+    return ceil_cast<int>(page->getHeight() * sidebar->getZoom()) + Shadow::getShadowBottomRightSize() +
            Shadow::getShadowTopLeftSize() + 4;
 }
 
