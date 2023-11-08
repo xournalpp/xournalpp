@@ -17,6 +17,7 @@
 #include "control/zoom/ZoomControl.h"        // for ZoomControl
 #include "gui/MainWindow.h"                  // for MainWindow
 #include "util/Color.h"                      // for argb_to_GdkRGBA, rgb_to_...
+#include "util/safe_casts.h"                 // for ceil_cast
 
 #include "XournalView.h"  // for XournalView
 
@@ -390,8 +391,8 @@ auto XournalppCursor::getEraserCursor() -> GdkCursor* {
     this->currentCursor = CRSR_ERASER;
     this->currentCursorFlavour = flavour;
 
-    cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(std::ceil(cursorSize)),
-                                                          static_cast<int>(std::ceil(cursorSize)));
+    cairo_surface_t* surface =
+            cairo_image_surface_create(CAIRO_FORMAT_ARGB32, ceil_cast<int>(cursorSize), ceil_cast<int>(cursorSize));
     cairo_t* cr = cairo_create(surface);
     cairo_rectangle(cr, 0, 0, cursorSize, cursorSize);
     cairo_set_source_rgb(cr, 1, 1, 1);
@@ -440,7 +441,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(double alpha) -> GdkCursor* {
     auto cursor = (cursorType == STYLUS_CURSOR_NONE) ? CRSR_BLANK_CURSOR : CRSR_PENORHIGHLIGHTER;
     bool bright = control->getSettings()->isHighlightPosition();
     double cursorSize = std::min(90., control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom());
-    int height = static_cast<int>(std::ceil(cursorSize));
+    int height = ceil_cast<int>(cursorSize);
     int width = height;
 
     // create a hash of variables so we notice if one changes despite being the same cursor type:

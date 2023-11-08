@@ -8,6 +8,7 @@
 #include "control/settings/Settings.h"  // for Settings
 #include "util/PathUtil.h"              // for fromGFilename, toGFilename
 #include "util/i18n.h"                  // for _
+#include "util/safe_casts.h"            // for floor_cast
 
 #include "filesystem.h"  // for path
 
@@ -68,8 +69,8 @@ auto ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize) -
     if (width > maxSize || height > maxSize) {
         double factor = static_cast<gdouble>(maxSize) / std::max(width, height);
 
-        width = static_cast<int>(width * factor);
-        height = static_cast<int>(height * factor);
+        width = floor_cast<int>(width * factor);
+        height = floor_cast<int>(height * factor);
 
         return gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_HYPER);
     }

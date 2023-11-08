@@ -1,7 +1,5 @@
 #include "SelectOpacityDialog.h"
 
-#include <cmath>
-
 #include <cairo.h>        // for cairo_set_operator, cairo_rectangle, cairo_...
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <glib.h>         // for gdouble
@@ -11,13 +9,14 @@
 #include "util/i18n.h"
 #include "util/raii/CairoWrappers.h"
 #include "util/raii/GObjectSPtr.h"
+#include "util/safe_casts.h"  // for round_cast
 
 class GladeSearchpath;
 
 constexpr auto UI_FILE = "selectOpacity.glade";
 constexpr auto UI_DIALOG_NAME = "selectOpacityDialog";
 
-static int percentToByte(double percent) { return static_cast<int>(std::round(percent * 2.55)); }
+static int percentToByte(double percent) { return round_cast<int>(percent * 2.55); }
 static double byteToPercent(int byte) { return byte / 2.55; }
 
 static inline void buildLabel(Builder& builder, OpacityFeature opacityFeature) {

@@ -2,7 +2,6 @@
 
 #include <algorithm>  // for max, find_if
 #include <cinttypes>  // for int64_t
-#include <cmath>      // for lround
 #include <cstdint>    // for int64_t
 #include <cstdlib>    // for size_t
 #include <iomanip>    // for operator<<, quoted
@@ -75,6 +74,7 @@
 #include "util/gtk4_helper.h"                       // for gtk_box_append
 #include "util/i18n.h"                              // for _F, FC, FS, _
 #include "util/raii/CLibrariesSPtr.h"               // for adopt
+#include "util/safe_casts.h"                        // for ceil_cast, floor_cast, round_cast
 #include "util/serdesstream.h"                      // for serdes_stream
 #include "view/DebugShowRepaintBounds.h"            // for IF_DEBUG_REPAINT
 #include "view/overlays/OverlayView.h"              // for OverlayView, Tool...
@@ -620,8 +620,8 @@ auto XojPageView::showPdfToolbox(const PositionInputData& pos) -> void {
 
     // Add the position of the current page view widget (relative to canvas origin)
     // and add the input position (relative to the current page view widget).
-    wx += this->getX() + static_cast<gint>(std::lround(pos.x));
-    wy += this->getY() + static_cast<gint>(std::lround(pos.y));
+    wx += this->getX() + round_cast<gint>(pos.x);
+    wy += this->getY() + round_cast<gint>(pos.y);
 
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
     pdfToolbox->show(wx, wy);
@@ -794,9 +794,8 @@ void XojPageView::repaintPage() const { xournal->getRepaintHandler()->repaintPag
 
 void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const {
     double zoom = xournal->getZoom();
-    xournal->getRepaintHandler()->repaintPageArea(
-            this, static_cast<int>(std::floor(x1 * zoom)), static_cast<int>(std::floor(y1 * zoom)),
-            static_cast<int>(std::ceil(x2 * zoom)), static_cast<int>(std::ceil(y2 * zoom)));
+    xournal->getRepaintHandler()->repaintPageArea(this, floor_cast<int>(x1 * zoom), floor_cast<int>(y1 * zoom),
+                                                  ceil_cast<int>(x2 * zoom), ceil_cast<int>(y2 * zoom));
 }
 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
@@ -1010,10 +1009,10 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
     GtkWidget* popover = gtk_popover_new(this->getXournal()->getWidget());
     gtk_container_add(GTK_CONTAINER(popover), child);
 
-    auto x = static_cast<int>(this->getX() + rect.x1 * zoom);
-    auto y = static_cast<int>(this->getY() + rect.y1 * zoom);
-    auto w = static_cast<int>((rect.x2 - rect.x1) * zoom);
-    auto h = static_cast<int>((rect.y2 - rect.y1) * zoom);
+    auto x = floor_cast<int>(this->getX() + rect.x1 * zoom);
+    auto y = floor_cast<int>(this->getY() + rect.y1 * zoom);
+    auto w = ceil_cast<int>((rect.x2 - rect.x1) * zoom);
+    auto h = ceil_cast<int>((rect.y2 - rect.y1) * zoom);
 
     GdkRectangle canvasRect{x, y, w, h};
     gtk_popover_set_pointing_to(GTK_POPOVER(popover), &canvasRect);
@@ -1094,11 +1093,11 @@ auto XojPageView::getPage() const -> const PageRef { return page; }
 auto XojPageView::getXournal() const -> XournalView* { return this->xournal; }
 
 auto XojPageView::getDisplayWidth() const -> int {
-    return static_cast<int>(std::round(this->page->getWidth() * this->xournal->getZoom()));
+    return round_cast<int>(this->page->getWidth() * this->xournal->getZoom());
 }
 
 auto XojPageView::getDisplayHeight() const -> int {
-    return static_cast<int>(std::round(this->page->getHeight() * this->xournal->getZoom()));
+    return round_cast<int>(this->page->getHeight() * this->xournal->getZoom());
 }
 
 auto XojPageView::getDisplayWidthDouble() const -> double { return this->page->getWidth() * this->xournal->getZoom(); }
@@ -1176,8 +1175,8 @@ void XojPageView::showFloatingToolbox(const PositionInputData& pos) {
     GtkWidget* widget = xournal->getWidget();
     gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
 
-    wx += static_cast<int>(std::round(pos.x) + this->getX());
-    wy += static_cast<int>(std::round(pos.y) + this->getY());
+    wx += round_cast<int>(pos.x) + this->getX();
+    wy += round_cast<int>(pos.y) + this->getY();
 
     control->getWindow()->getFloatingToolbox()->show(wx, wy);
 }

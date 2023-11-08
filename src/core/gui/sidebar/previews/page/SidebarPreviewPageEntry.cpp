@@ -5,6 +5,7 @@
 #include "control/settings/Settings.h"                      // for Settings
 #include "gui/PagePreviewDecoration.h"                      // for Drawing  ...
 #include "gui/sidebar/previews/page/SidebarPreviewPages.h"  // for SidebarPr...
+#include "util/safe_casts.h"                                // for ceil_cast
 
 SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page, size_t index):
         SidebarPreviewBaseEntry(sidebar, page), sidebar(sidebar), index(index) {}
@@ -39,8 +40,7 @@ void SidebarPreviewPageEntry::drawEntryNumber(cairo_t* cr) {
 int SidebarPreviewPageEntry::getWidgetHeight() {
     if (sidebar->getControl()->getSettings()->getSidebarNumberingStyle() ==
         SidebarNumberingStyle::NUMBER_BELOW_PREVIEW) {
-        return SidebarPreviewBaseEntry::getWidgetHeight() +
-               static_cast<int>(std::ceil(PagePreviewDecoration::MARGIN_BOTTOM));
+        return SidebarPreviewBaseEntry::getWidgetHeight() + ceil_cast<int>(PagePreviewDecoration::MARGIN_BOTTOM);
     }
     return SidebarPreviewBaseEntry::getWidgetHeight();
 }

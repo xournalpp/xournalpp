@@ -1,8 +1,7 @@
 #include "IsoGraphBackgroundView.h"
 
-#include <cmath>  // for floor
-
 #include "model/BackgroundConfig.h"                       // for BackgroundC...
+#include "util/safe_casts.h"                              // for floor_cast
 #include "view/background/BackgroundView.h"               // for view
 #include "view/background/BaseIsometricBackgroundView.h"  // for BaseIsometr...
 
@@ -36,8 +35,8 @@ void IsoGraphBackgroundView::paintGrid(cairo_t* cr, int cols, int rows, double x
     }
 
     // Determine the number of diagonals to draw
-    auto hdiags = static_cast<int>(std::floor(cols / 2));
-    auto vdiags = static_cast<int>(std::floor(rows / 2));
+    auto hdiags = floor_cast<int>(cols / 2);
+    auto vdiags = floor_cast<int>(rows / 2);
     auto diags = hdiags + vdiags;
     auto hcorr = cols - 2 * hdiags;
     auto vcorr = rows - 2 * vdiags;

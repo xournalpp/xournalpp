@@ -1,6 +1,5 @@
 #include "SaveJob.h"
 
-#include <cmath>   // for ceil
 #include <memory>  // for __shared_ptr_access
 
 #include <cairo.h>  // for cairo_create, cairo_destroy
@@ -65,8 +64,8 @@ void SaveJob::updatePreview(Control* control) {
         width *= zoom;
         height *= zoom;
 
-        cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(std::ceil(width)),
-                                                               static_cast<int>(std::ceil(height)));
+        cairo_surface_t* crBuffer =
+                cairo_image_surface_create(CAIRO_FORMAT_ARGB32, ceil_cast<int>(width), ceil_cast<int>(height));
 
         cairo_t* cr = cairo_create(crBuffer);
         cairo_scale(cr, zoom, zoom);
@@ -137,7 +136,9 @@ auto SaveJob::save() -> bool {
         try {
             // If a backup was created it can be removed now since no error occured during the save
             fs::remove(fs::path{target} += "~");
-        } catch (const fs::filesystem_error& fe) { g_warning("Could not delete backup! Failed with %s", fe.what()); }
+        } catch (const fs::filesystem_error& fe) {
+            g_warning("Could not delete backup! Failed with %s", fe.what());
+        }
     } else {
         doc->setCreateBackupOnSave(true);
     }

@@ -6,7 +6,8 @@
 #include <gdk/gdk.h>      // for GDK_EXPOSURE_MASK
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
-#include "util/Util.h"  // for paintBackgroundWhite
+#include "util/Util.h"        // for paintBackgroundWhite
+#include "util/safe_casts.h"  // for round_cast
 
 #include "BaseElementView.h"  // for BaseElementView
 
@@ -68,8 +69,7 @@ void BackgroundSelectDialogBase::layout() {
         }
         max_row_width = std::max(max_row_width, x + static_cast<double>(p->getWidth()));
 
-        gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), static_cast<int>(std::round(x)),
-                        static_cast<int>(std::round(y)));
+        gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), round_cast<int>(x), round_cast<int>(y));
 
         row_height =
                 std::max(row_height,
@@ -78,8 +78,8 @@ void BackgroundSelectDialogBase::layout() {
         x += p->getWidth();
     }
 
-    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), static_cast<int>(std::round(max_row_width)),
-                        static_cast<int>(std::round(y + row_height)));
+    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), round_cast<int>(max_row_width),
+                        round_cast<int>(y + row_height));
 }
 
 void BackgroundSelectDialogBase::show(GtkWindow* parent) {

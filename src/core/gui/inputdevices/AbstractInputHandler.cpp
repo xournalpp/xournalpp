@@ -4,7 +4,6 @@
 
 #include "AbstractInputHandler.h"
 
-#include <cmath>  // for round
 #include <string_view>
 
 #include <glib.h>  // for gdouble
@@ -19,6 +18,7 @@
 #include "gui/widgets/XournalWidget.h"           // for GtkXournal
 #include "model/Point.h"                         // for Point, Point::NO_PRE...
 #include "util/Assert.h"                         // for xoj_assert
+#include "util/safe_casts.h"                     // for round_cast
 
 #include "InputContext.h"  // for InputContext
 
@@ -60,8 +60,8 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) con
 
     GtkXournal* xournal = this->inputContext->getXournal();
 
-    int x = static_cast<int>(std::round(event.relativeX));
-    int y = static_cast<int>(std::round(event.relativeY));
+    int x = round_cast<int>(event.relativeX);
+    int y = round_cast<int>(event.relativeY);
 
     return xournal->layout->getPageViewAt(x, y);
 }
