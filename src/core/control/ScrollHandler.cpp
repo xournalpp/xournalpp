@@ -107,12 +107,11 @@ void ScrollHandler::scrollToAnnotatedPage(bool next) {
         return;
     }
 
-    int step = next ? 1 : -1;
+    size_t step = next ? 1 : npos;
 
     Document* doc = this->control->getDocument();
 
-    for (size_t i = this->control->getCurrentPageNo() + step; i != npos && i < doc->getPageCount();
-         i = ((i == 0 && step == -1) ? npos : i + step)) {
+    for (size_t i = this->control->getCurrentPageNo() + step; i < doc->getPageCount() && i != npos; i += step) {
         if (doc->getPage(i)->isAnnotated()) {
             scrollToPage(i);
             break;

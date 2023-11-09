@@ -860,7 +860,7 @@ auto Stroke::getStrokeCapStyle() const -> StrokeCapStyle { return this->capStyle
 void Stroke::setStrokeCapStyle(const StrokeCapStyle capStyle) { this->capStyle = capStyle; }
 
 void Stroke::debugPrint() const {
-    g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t)this % this->hasPressure()));
+    g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (int64_t)this % this->hasPressure()));
 
     for (auto&& p: points) {
         g_message("%lf / %lf / %lf", p.x, p.y, p.z);

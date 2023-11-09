@@ -17,7 +17,7 @@
 #include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
 #include "util/XojMsgBox.h"                      // for XojMsgBox
 #include "util/i18n.h"                           // for _
-
+#include "util/safe_casts.h"                     // for as_signed
 
 using std::string;
 using std::vector;
@@ -99,9 +99,9 @@ void AudioController::pausePlayback() {
     this->audioPlayer->pause();
 }
 
-void AudioController::seekForwards() { this->audioPlayer->seek(this->settings.getDefaultSeekTime()); }
+void AudioController::seekForwards() { this->audioPlayer->seek(as_signed(this->settings.getDefaultSeekTime())); }
 
-void AudioController::seekBackwards() { this->audioPlayer->seek(-1 * this->settings.getDefaultSeekTime()); }
+void AudioController::seekBackwards() { this->audioPlayer->seek(-1 * as_signed(this->settings.getDefaultSeekTime())); }
 
 void AudioController::continuePlayback() {
     this->control.getActionDatabase()->setActionState(Action::AUDIO_PAUSE_PLAYBACK, false);

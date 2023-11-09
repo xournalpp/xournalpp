@@ -9,7 +9,7 @@
 #include "util/Util.h"              // for npos
 #include "util/i18n.h"              // for _
 
-InsertDeletePageUndoAction::InsertDeletePageUndoAction(const PageRef& page, int pagePos, bool inserted):
+InsertDeletePageUndoAction::InsertDeletePageUndoAction(const PageRef& page, size_t pagePos, bool inserted):
         UndoAction("InsertDeletePageUndoAction") {
     this->inserted = inserted;
     this->page = page;

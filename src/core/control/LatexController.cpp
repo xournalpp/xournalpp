@@ -3,6 +3,7 @@
 #include <cstdlib>   // for free
 #include <fstream>   // for ifstream, basic_istream
 #include <iterator>  // for istreambuf_iterator, ope...
+#include <limits>    // for numeric_limits
 #include <memory>    // for unique_ptr, allocator
 #include <optional>  // for optional
 #include <utility>   // for move
@@ -310,7 +311,7 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     img->setX(posx);
     img->setY(posy);
     img->setText(std::move(renderedTex));
-    if (imgheight) {
+    if (std::abs(imgheight) > 1024 * std::numeric_limits<double>::epsilon()) {
         double ratio = img->getElementWidth() / img->getElementHeight();
         if (ratio == 0) {
             img->setWidth(imgwidth == 0 ? 10 : imgwidth);

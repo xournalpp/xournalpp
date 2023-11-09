@@ -467,7 +467,7 @@ void XournalView::pageRelativeXY(int offCol, int offRow) {
     int col = view->getMappedCol();
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
-    auto optionalPageIndex = layout->getPageIndexAtGridMap(row + offRow, col + offCol);
+    auto optionalPageIndex = layout->getPageIndexAtGridMap(as_unsigned(row + offRow), as_unsigned(col + offCol));
     if (optionalPageIndex) {
         this->scrollTo(*optionalPageIndex);
     }
@@ -627,7 +627,7 @@ void XournalView::pageInserted(size_t page) {
     auto pageView = std::make_unique<XojPageView>(this, doc->getPage(page));
     doc->unlock();
 
-    viewPages.insert(begin(viewPages) + page, std::move(pageView));
+    viewPages.insert(begin(viewPages) + as_signed(page), std::move(pageView));
 
     layoutPages();
     // check which pages are visible and select the most visible page

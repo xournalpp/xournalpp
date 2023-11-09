@@ -31,6 +31,7 @@
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/i18n.h"               // for _F, FC, FS, _
 #include "util/raii/GObjectSPtr.h"
+#include "util/safe_casts.h"  // for as_signed, as_unsigned
 
 #include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
@@ -441,7 +442,7 @@ void LoadHandler::parseBgPdf() {
     bool attachToDocument = false;
     fs::path pdfFilename;
 
-    this->page->setBackgroundPdfPageNr(pageno - 1);
+    this->page->setBackgroundPdfPageNr(as_unsigned(pageno) - 1);
 
     if (!this->pdfFilenameParsed) {
 
@@ -595,7 +596,7 @@ void LoadHandler::parseStroke() {
     if (this->fileVersion < 4) {
         int ts = 0;
         if (LoadHandlerHelper::getAttribInt("ts", true, this, ts)) {
-            stroke->setTimestamp(ts * 1000);
+            stroke->setTimestamp(as_unsigned(ts) * 1000);
         }
     } else {
         size_t ts = 0;
@@ -645,7 +646,7 @@ void LoadHandler::parseStroke() {
      * Afterwards, clean the read timestamp data.
      */
     if (loadedFilename.length() != 0) {
-        this->stroke->setTimestamp(loadedTimeStamp);
+        this->stroke->setTimestamp(as_unsigned(loadedTimeStamp));
         this->stroke->setAudioFilename(loadedFilename);
         loadedFilename = "";
         loadedTimeStamp = 0;
@@ -1046,7 +1047,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
             } else {
                 g_warning("%s", FC(_F("xoj-File: {1}") % handler->filepath.string().c_str()));
                 g_warning("%s", FC(_F("Wrong number of pressure values, got {1}, expected {2}") %
-                                   handler->pressureBuffer.size() % (handler->stroke->getPointCount() - 1)));
+                                   handler->pressureBuffer.size() % (as_signed(handler->stroke->getPointCount()) - 1)));
             }
             handler->pressureBuffer.clear();
         }

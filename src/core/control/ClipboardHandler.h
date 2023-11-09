@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <limits>  // for numeric_limits
 #include <string>  // for string
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
@@ -62,7 +63,7 @@ private:
 private:
     ClipboardListener* listener = nullptr;
     GtkClipboard* clipboard = nullptr;
-    gulong hanlderId = -1;
+    gulong handlerId = std::numeric_limits<gulong>::max();
 
     EditSelection* selection = nullptr;
 

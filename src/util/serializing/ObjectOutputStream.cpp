@@ -57,7 +57,7 @@ void ObjectOutputStream::writeData(const void* data, size_t len, int width) {
     // size of one element
     this->encoder->addData(&width, sizeof(int));
     if (data != nullptr) {
-        this->encoder->addData(data, static_cast<int>(len * width));
+        this->encoder->addData(data, static_cast<int>(len) * width);
     }
 }
 

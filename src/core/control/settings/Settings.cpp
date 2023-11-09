@@ -20,9 +20,10 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"  // for getConfigFile
-#include "util/Util.h"      // for PRECISION_FORMAT_...
-#include "util/i18n.h"      // for _
+#include "util/PathUtil.h"    // for getConfigFile
+#include "util/Util.h"        // for PRECISION_FORMAT_...
+#include "util/i18n.h"        // for _
+#include "util/safe_casts.h"  // for as_unsigned
 
 #include "ButtonConfig.h"  // for ButtonConfig
 #include "config-dev.h"    // for PALETTE_FILE
@@ -729,7 +730,7 @@ void Settings::loadButtonConfig() {
 
             if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
                 if (int iColor; e.getInt("color", iColor)) {
-                    cfg->color = Color(iColor);
+                    cfg->color = Color(as_unsigned(iColor));
                 }
             }
 

@@ -19,6 +19,7 @@
 
 #include "gui/sidebar/AbstractSidebarPage.h"  // for AbstractSidebarPage
 #include "model/DocumentChangeType.h"         // for DocumentChangeType
+#include "util/Util.h"
 #include "util/raii/GObjectSPtr.h"
 
 class PdfCache;
@@ -40,7 +41,7 @@ public:
     /**
      * Layout the pages to the current size of the sidebar
      */
-    void layout();
+    void layout() override;
 
     /**
      * Update the preview images
@@ -118,7 +119,7 @@ protected:
      * The currently selected entry in the sidebar, starting from 0
      * -1 means no valid selection
      */
-    size_t selectedEntry = -1;
+    size_t selectedEntry = npos;
 
     /**
      * The widget within the scrollarea with the page icons

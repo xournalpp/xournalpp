@@ -81,7 +81,7 @@ void Scheduler::addJob(Job* job, JobPriority priority) {
 auto Scheduler::getNextJobUnlocked(bool onlyNotRender, bool* hasRenderJobs) -> Job* {
     Job* job = nullptr;
 
-    for (int i = JOB_PRIORITY_URGENT; i < JOB_N_PRIORITIES; i++) {
+    for (size_t i = JOB_PRIORITY_URGENT; i < JOB_N_PRIORITIES; i++) {
         std::deque<Job*>& queue = *this->jobQueue[i];
 
         if (onlyNotRender) {

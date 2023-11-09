@@ -29,7 +29,7 @@ ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widge
     this->listener = listener;
     this->clipboard = gtk_widget_get_clipboard(widget, GDK_SELECTION_CLIPBOARD);
 
-    this->hanlderId = g_signal_connect(this->clipboard, "owner-change", G_CALLBACK(&ownerChangedCallback), this);
+    this->handlerId = g_signal_connect(this->clipboard, "owner-change", G_CALLBACK(&ownerChangedCallback), this);
 
     this->listener->clipboardCutCopyEnabled(false);
 
@@ -37,7 +37,7 @@ ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widge
                                    reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
 }
 
-ClipboardHandler::~ClipboardHandler() { g_signal_handler_disconnect(this->clipboard, this->hanlderId); }
+ClipboardHandler::~ClipboardHandler() { g_signal_handler_disconnect(this->clipboard, this->handlerId); }
 
 static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
 

@@ -30,6 +30,7 @@
 #include "util/Util.h"                                   // for npos
 #include "util/XojMsgBox.h"                              // for XojMsgBox
 #include "util/i18n.h"                                   // for FS, _, _F
+#include "util/safe_casts.h"                             // for as_unsigned
 
 #include "Control.h"  // for Control
 
@@ -197,11 +198,11 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool {
 
     int selected = dlg.getSelectedPage();
 
-    if (selected >= 0 && selected < static_cast<int>(doc->getPdfPageCount())) {
+    if (selected >= 0 && as_unsigned(selected) < doc->getPdfPageCount()) {
         // no need to set a type, if we set the page number the type is also set
-        page->setBackgroundPdfPageNr(selected);
+        page->setBackgroundPdfPageNr(as_unsigned(selected));
 
-        XojPdfPageSPtr p = doc->getPdfPage(selected);
+        XojPdfPageSPtr p = doc->getPdfPage(as_unsigned(selected));
         page->setSize(p->getWidth(), p->getHeight());
     }
 

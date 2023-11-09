@@ -12,6 +12,7 @@
 #include "util/StringUtils.h"           // for StringUtils
 #include "util/XojMsgBox.h"             // for XojMsgBox
 #include "util/i18n.h"                  // for _
+#include "util/safe_casts.h"            // for as_unsigned
 
 #include "config.h"      // for GETTEXT_PACKAGE
 #include "filesystem.h"  // for directory_iterator, operator/
@@ -75,7 +76,7 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
 
 void LanguageConfigGui::saveSettings() {
     gint pos = gtk_combo_box_get_active(GTK_COMBO_BOX(get("languageSettingsDropdown")));
-    auto pref = (pos == 0) ? "" : availableLocales[pos];
+    auto pref = (pos == 0) ? "" : availableLocales[as_unsigned(pos)];
 
     settings->setPreferredLocale(pref);
     settings->customSettingsChanged();

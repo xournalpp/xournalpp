@@ -13,6 +13,7 @@
 #include "pdf/base/XojPdfDocument.h"    // for XojPdfDocument
 #include "util/Range.h"                 // for Range
 #include "util/i18n.h"                  // for _
+#include "util/safe_casts.h"            // for as_unsigned
 #include "view/Mask.h"                  // for Mask
 
 class PdfCacheEntry {
@@ -51,7 +52,7 @@ void PdfCache::setMaxSize(size_t newSize) {
 
 void PdfCache::updateSettings(Settings* settings) {
     if (settings) {
-        setMaxSize(settings->getPdfPageCacheSize());
+        setMaxSize(as_unsigned(settings->getPdfPageCacheSize()));
         setRefreshThreshold(settings->getPDFPageRerenderThreshold());
     }
 }

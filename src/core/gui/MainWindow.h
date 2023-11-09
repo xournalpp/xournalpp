@@ -173,8 +173,6 @@ private:
 
     ToolbarWidgetArray toolbarWidgets;
 
-    GtkAccelGroup* globalAccelGroup;
-
     bool sidebarVisible = true;
 
     xoj::util::WidgetSPtr boxContainerWidget;

@@ -2,8 +2,9 @@
 
 #include <cstddef>  // for size_t
 
-#include "util/XojMsgBox.h"  // for XojMsgBox
-#include "util/i18n.h"       // for _
+#include "util/XojMsgBox.h"   // for XojMsgBox
+#include "util/i18n.h"        // for _
+#include "util/safe_casts.h"  // for as_signed
 
 #include "ToolbarData.h"  // for ToolbarData
 #include "filesystem.h"   // for path
@@ -33,7 +34,7 @@ void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefin
 void ToolbarModel::remove(ToolbarData* data) {
     for (size_t i = 0; i < this->toolbars.size(); i++) {
         if (this->toolbars[i] == data) {
-            this->toolbars.erase(this->toolbars.begin() + i);
+            this->toolbars.erase(this->toolbars.begin() + as_signed(i));
             break;
         }
     }

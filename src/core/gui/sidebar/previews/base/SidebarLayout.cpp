@@ -6,6 +6,8 @@
 
 #include <gtk/gtk.h>  // for GTK_LAYOUT, gtk_layout_move
 
+#include "util/safe_casts.h"  // for as_unsigned
+
 #include "SidebarPreviewBase.h"       // for SidebarPreviewBase
 #include "SidebarPreviewBaseEntry.h"  // for SidebarPreviewBaseEntry
 
@@ -105,5 +107,5 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar) {
         row.clear();
     }
 
-    gtk_layout_set_size(GTK_LAYOUT(sidebar->iconViewPreview.get()), width, y);
+    gtk_layout_set_size(GTK_LAYOUT(sidebar->iconViewPreview.get()), as_unsigned(width), as_unsigned(y));
 }

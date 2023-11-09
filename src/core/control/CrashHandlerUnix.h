@@ -112,10 +112,8 @@ static void crashHandler(int sig) {
     void* array[100];
     char** messages;
 
-    size_t size;
-
     // get void*'s for all entries on the stack
-    size = backtrace(array, 100);
+    int size = backtrace(array, 100);
 
     time_t curtime = time(0);
     char stime[128];
@@ -141,9 +139,9 @@ static void crashHandler(int sig) {
        << std::endl
        << std::endl;
 
-    messages = backtrace_symbols(array, static_cast<int>(size));
+    messages = backtrace_symbols(array, size);
 
-    for (size_t i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         fp << FORMAT_STR("[bt]: ({1}) {2}") % i % messages[i];
         fp << "\n";
     }

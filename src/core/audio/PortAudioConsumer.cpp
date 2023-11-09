@@ -10,6 +10,7 @@
 #include "audio/AudioQueue.h"           // for AudioQueue
 #include "audio/DeviceInfo.h"           // for DeviceInfo
 #include "control/settings/Settings.h"  // for Settings
+#include "util/safe_casts.h"            // for as_unsigned
 
 #include "AudioPlayer.h"  // for AudioPlayer
 
@@ -17,7 +18,7 @@ constexpr auto FRAMES_PER_BUFFER{64U};
 
 auto PortAudioConsumer::getOutputDevices() const -> std::vector<DeviceInfo> {
     std::vector<DeviceInfo> deviceList;
-    deviceList.reserve(this->sys.deviceCount());
+    deviceList.reserve(as_unsigned(this->sys.deviceCount()));
 
     for (auto i = this->sys.devicesBegin(); i != sys.devicesEnd(); ++i) {
         if (i->isFullDuplexDevice() || i->isOutputOnlyDevice()) {
@@ -63,7 +64,7 @@ auto PortAudioConsumer::startPlaying() -> bool {
         return false;
     }
 
-    if (static_cast<unsigned int>(device->maxOutputChannels()) < channels) {
+    if (device->maxOutputChannels() < channels) {
         this->audioQueue.signalEndOfStream();
         g_warning("Output device has not enough channels to play audio file. (Requires at least 2 channels)");
         return false;
@@ -103,8 +104,8 @@ auto PortAudioConsumer::playCallback(const void* /*inputBuffer*/, void* outputBu
 
     if (outputBuffer != nullptr) {
         auto begI = static_cast<float*>(outputBuffer);
-        auto midI = this->audioQueue.pop(begI, framesPerBuffer * this->outputChannels);
-        auto endI = std::next(begI, framesPerBuffer * this->outputChannels);
+        auto midI = this->audioQueue.pop(begI, framesPerBuffer * as_unsigned(this->outputChannels));
+        auto endI = std::next(begI, as_signed(framesPerBuffer) * this->outputChannels);
         // Fill buffer to requested length if necessary
 
         if (midI != endI) {

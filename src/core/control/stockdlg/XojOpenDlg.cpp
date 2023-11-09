@@ -11,6 +11,7 @@
 #include "util/PathUtil.h"              // for fromGFilename, toGFilename
 #include "util/XojPreviewExtractor.h"   // for XojPreviewExtractor, PREVIEW_...
 #include "util/i18n.h"                  // for _
+#include "util/safe_casts.h"            // for as_signed
 
 XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings): win(win), settings(settings) {
     dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),
@@ -173,7 +174,7 @@ void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userDa
     gsize dataLen = 0;
     unsigned char* imageData = extractor.getData(dataLen);
 
-    GInputStream* in = g_memory_input_stream_new_from_data(imageData, dataLen, nullptr);
+    GInputStream* in = g_memory_input_stream_new_from_data(imageData, as_signed(dataLen), nullptr);
     GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(in, nullptr, &error);
     if (error != nullptr) {
         g_warning("Could not load preview image, error: %s\n", error->message);

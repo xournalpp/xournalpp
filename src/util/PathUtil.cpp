@@ -64,7 +64,7 @@ auto Util::readString(fs::path const& path, bool showErrorToUser, std::ios_base:
         std::string s;
         std::ifstream ifs{path, openmode};
         s.resize(fs::file_size(path));
-        ifs.read(s.data(), s.size());
+        ifs.read(s.data(), static_cast<std::streamsize>(s.size()));
         return {std::move(s)};
     } catch (const fs::filesystem_error& e) {
         if (showErrorToUser) {

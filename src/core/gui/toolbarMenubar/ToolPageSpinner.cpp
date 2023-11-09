@@ -9,6 +9,7 @@
 #include "util/Assert.h"                          // for xoj_assert
 #include "util/gtk4_helper.h"                     // for gtk_box_append
 #include "util/i18n.h"                            // for FS, _, _F, C_F
+#include "util/safe_casts.h"                      // for as_signed
 
 ToolPageSpinner::ToolPageSpinner(std::string id, IconNameHelper iconNameHelper):
         AbstractToolItem(std::move(id)),
@@ -28,12 +29,12 @@ void ToolPageSpinner::setPageInfo(const size_t pageCount, const size_t pdfPage) 
 }
 
 void ToolPageSpinner::updateLabels() {
-    std::string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % this->pageCount);
+    std::string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % as_signed(this->pageCount));
     if (this->pdfPage > 0) {
         if (this->orientation == GTK_ORIENTATION_HORIZONTAL) {
-            ofString += std::string(", ") + FS(_F("PDF Page {1}") % this->pdfPage);
+            ofString += std::string(", ") + FS(_F("PDF Page {1}") % as_signed(this->pdfPage));
         } else {
-            ofString += std::string("\n") + FS(_F("PDF {1}") % this->pdfPage);
+            ofString += std::string("\n") + FS(_F("PDF {1}") % as_signed(this->pdfPage));
         }
         gtk_label_set_text(GTK_LABEL(lbPageNo.get()), ofString.c_str());
     }

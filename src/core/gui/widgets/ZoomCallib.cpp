@@ -71,7 +71,6 @@ static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocatio
 
 static void zoomcallib_realize(GtkWidget* widget) {
     GdkWindowAttr attributes;
-    guint attributes_mask = 0;
     GtkAllocation allocation;
 
     g_return_if_fail(widget != nullptr);
@@ -91,7 +90,7 @@ static void zoomcallib_realize(GtkWidget* widget) {
     attributes.wclass = GDK_INPUT_OUTPUT;
     attributes.event_mask = gtk_widget_get_events(widget) | GDK_EXPOSURE_MASK;
 
-    attributes_mask = GDK_WA_X | GDK_WA_Y;
+    gint attributes_mask = GDK_WA_X | GDK_WA_Y;
 
     gtk_widget_set_window(widget, gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
 
