@@ -20,7 +20,7 @@ auto Selection::finalize(PageRef page) -> size_t {
     size_t layerId = 0;
 
     if (multiLayer) {
-        for (int layerNo = static_cast<int>(page->getLayers()->size()) - 1; layerNo >= 0; layerNo--) {
+        for (size_t layerNo = page->getLayers()->size() - 1; layerNo != npos; layerNo--) {
             Layer* l = page->getLayers()->at(layerNo);
             if (!l->isVisible()) {
                 continue;

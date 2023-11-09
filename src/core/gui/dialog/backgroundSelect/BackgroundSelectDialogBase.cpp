@@ -78,8 +78,8 @@ void BackgroundSelectDialogBase::layout() {
         x += p->getWidth();
     }
 
-    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), round_cast<int>(max_row_width),
-                        round_cast<int>(y + row_height));
+    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), as_unsigned(round_cast<int>(max_row_width)),
+                        as_unsigned(round_cast<int>(y + row_height)));
 }
 
 void BackgroundSelectDialogBase::show(GtkWindow* parent) {
@@ -103,11 +103,11 @@ void BackgroundSelectDialogBase::setSelected(int selected) {
 
     int lastSelected = this->selected;
     if (lastSelected >= 0 && lastSelected < static_cast<int>(elements.size())) {
-        elements[lastSelected]->setSelected(false);
+        elements[as_unsigned(lastSelected)]->setSelected(false);
     }
 
     if (selected >= 0 && selected < static_cast<int>(elements.size())) {
-        elements[selected]->setSelected(true);
+        elements[as_unsigned(selected)]->setSelected(true);
         this->selected = selected;
     }
 }

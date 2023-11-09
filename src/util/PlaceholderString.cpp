@@ -6,6 +6,8 @@
 
 #include <glib.h>  // for g_error
 
+#include "util/safe_casts.h"  // for as_unsigned
+
 /**
  * Format String
  */
@@ -74,7 +76,7 @@ auto PlaceholderString::formatPart(std::string format) const -> std::string {
         return notFound;
     }
 
-    auto const& pe = data[index];
+    auto const& pe = data[as_unsigned(index)];
 
     return pe->format(formatDef);
 }

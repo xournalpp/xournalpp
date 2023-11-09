@@ -10,11 +10,13 @@
 #include "audio/AudioQueue.h"           // for AudioQueue
 #include "audio/DeviceInfo.h"           // for DeviceInfo
 #include "control/settings/Settings.h"  // for Settings
+#include "util/safe_casts.h"            // for as_unsigned
+
 
 constexpr auto FRAMES_PER_BUFFER{64U};
 
 auto PortAudioProducer::getInputDevices() const -> std::vector<DeviceInfo> {
-    auto devCount = this->sys.deviceCount();
+    auto devCount = as_unsigned(this->sys.deviceCount());
     std::vector<DeviceInfo> deviceList;
     deviceList.reserve(devCount);
 
@@ -94,9 +96,9 @@ auto PortAudioProducer::recordCallback(const void* inputBuffer, void* /*outputBu
     }
 
     if (inputBuffer != nullptr) {
-        size_t providedFrames = framesPerBuffer * this->inputChannels;
+        size_t providedFrames = framesPerBuffer * as_unsigned(this->inputChannels);
         auto begI = static_cast<float const*>(inputBuffer);
-        this->audioQueue.emplace(begI, std::next(begI, providedFrames));
+        this->audioQueue.emplace(begI, std::next(begI, as_signed(providedFrames)));
     }
     return paContinue;
 }

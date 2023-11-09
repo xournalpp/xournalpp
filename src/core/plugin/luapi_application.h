@@ -336,7 +336,7 @@ static int applib_registerUi(lua_State* L) {
     lua_createtable(L, 0, 2);
 
     lua_pushstring(L, "menuId");
-    lua_pushinteger(L, menuId);
+    lua_pushinteger(L, as_signed(menuId));
     lua_settable(L, -3); /* 3rd element from the stack top */
 
     return 1;
@@ -420,7 +420,7 @@ static int applib_sidebarAction(lua_State* L) {
 static int applib_getSidebarPageNo(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Sidebar* sidebar = plugin->getControl()->getSidebar();
-    lua_pushinteger(L, sidebar->getSelectedPage() + 1);
+    lua_pushinteger(L, as_signed(sidebar->getSelectedPage()) + 1);
     return 1;
 }
 
@@ -682,7 +682,7 @@ static int applib_addSplines(lua_State* L) {
         std::vector<double> coordStream;
         Stroke* stroke = new Stroke();
         // Get coordinates
-        lua_pushinteger(L, a);
+        lua_pushinteger(L, as_signed(a));
         lua_gettable(L, -2);                 // get current spline from splines table
         lua_getfield(L, -1, "coordinates");  // get coordinates of the current spline
         if (!lua_istable(L, -1)) {
@@ -690,7 +690,7 @@ static int applib_addSplines(lua_State* L) {
         }
         size_t numCoords = lua_rawlen(L, -1);
         for (size_t b = 1; b <= numCoords; b++) {
-            lua_pushinteger(L, b);
+            lua_pushinteger(L, as_signed(b));
             lua_gettable(L, -2);  // get current coordinate from coordinates
             double point = lua_tonumber(L, -1);
             coordStream.push_back(point);  // Each segment is going to have multiples of 8 points.
@@ -829,7 +829,7 @@ static int applib_addStrokes(lua_State* L) {
         Stroke* stroke = new Stroke();
 
         // Fetch table of X values from the Lua stack
-        lua_pushinteger(L, a);
+        lua_pushinteger(L, as_signed(a));
         lua_gettable(L, -2);  // get current stroke
 
         lua_getfield(L, -1, "x");  // get x array of current stroke
@@ -838,7 +838,7 @@ static int applib_addStrokes(lua_State* L) {
         }
         size_t xPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= xPoints; b++) {
-            lua_pushinteger(L, b);
+            lua_pushinteger(L, as_signed(b));
             lua_gettable(L, -2);  // get current x-Coordinate
             double value = lua_tonumber(L, -1);
             xStream.push_back(value);
@@ -853,7 +853,7 @@ static int applib_addStrokes(lua_State* L) {
         }
         size_t yPoints = lua_rawlen(L, -1);
         for (size_t b = 1; b <= yPoints; b++) {
-            lua_pushinteger(L, b);
+            lua_pushinteger(L, as_signed(b));
             lua_gettable(L, -2);  // get current y-Coordinate
             double value = lua_tonumber(L, -1);
             yStream.push_back(value);
@@ -866,7 +866,7 @@ static int applib_addStrokes(lua_State* L) {
         if (lua_istable(L, -1)) {
             size_t pressurePoints = lua_rawlen(L, -1);
             for (size_t b = 1; b <= pressurePoints; b++) {
-                lua_pushinteger(L, b);
+                lua_pushinteger(L, as_signed(b));
                 lua_gettable(L, -2);  // get current pressure
                 double value = lua_tonumber(L, -1);
                 pressureStream.push_back(value);
@@ -1006,7 +1006,7 @@ static int applib_addTexts(lua_State* L) {
         Text* t = new Text();
 
         // Fetch table of X values from the Lua stack
-        lua_pushinteger(L, a);
+        lua_pushinteger(L, as_signed(a));
         lua_gettable(L, -2);  // get current text
         luaL_checktype(L, -1, LUA_TTABLE);
 
@@ -1497,7 +1497,7 @@ static int applib_changeToolColor(lua_State* L) {
 static int applib_changeBackgroundPdfPageNr(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
 
-    size_t nr = luaL_checkinteger(L, 1);
+    size_t nr = as_unsigned(luaL_checkinteger(L, 1));
     bool relative = true;
     if (lua_isboolean(L, 2)) {
         relative = lua_toboolean(L, 2);
@@ -1910,7 +1910,7 @@ static int applib_getDocumentStructure(lua_State* L) {
     // add pages
     for (size_t p = 1; p <= doc->getPageCount(); ++p) {
         auto page = doc->getPage(p - 1);
-        lua_pushinteger(L, p);  // key of the page
+        lua_pushinteger(L, as_signed(p));  // key of the page
         lua_newtable(L);        // beginning of table for page p
 
         lua_pushnumber(L, page->getWidth());  // value
@@ -1933,7 +1933,7 @@ static int applib_getDocumentStructure(lua_State* L) {
         lua_pushinteger(L, int(uint32_t(page->getBackgroundColor()) & 0xffffffU));  // value
         lua_setfield(L, -2, "backgroundColor");                                     // insert
 
-        lua_pushinteger(L, page->getPdfPageNr() + 1);  // value
+        lua_pushinteger(L, as_signed(page->getPdfPageNr()) + 1);  // value
         lua_setfield(L, -2, "pdfBackgroundPageNo");    // insert
 
         lua_newtable(L);  // beginning of layers table
@@ -1970,14 +1970,14 @@ static int applib_getDocumentStructure(lua_State* L) {
         }
         lua_setfield(L, -2, "layers");  // end of layers table
 
-        lua_pushinteger(L, page->getSelectedLayerId());  // value
+        lua_pushinteger(L, as_signed(page->getSelectedLayerId()));  // value
         lua_setfield(L, -2, "currentLayer");             // insert
 
         lua_settable(L, -3);  // end of table for page p
     }
     lua_settable(L, -3);  // end of pages table
 
-    lua_pushinteger(L, control->getCurrentPageNo() + 1);  // value
+    lua_pushinteger(L, as_signed(control->getCurrentPageNo()) + 1);  // value
     lua_setfield(L, -2, "currentPage");                   // insert
 
     lua_pushstring(L, doc->getPdfFilepath().string().c_str());  // value
@@ -2057,7 +2057,7 @@ static int applib_scrollToPos(lua_State* L) {
 static int applib_setCurrentPage(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
-    size_t pageId = luaL_checkinteger(L, 1);
+    size_t pageId = as_unsigned(luaL_checkinteger(L, 1));
     const size_t first = 1;
     const size_t last = control->getDocument()->getPageCount();
     control->firePageSelected(std::clamp(pageId, first, last) - 1);
@@ -2132,7 +2132,7 @@ static int applib_setCurrentLayer(lua_State* L) {
     }
 
     size_t layerCount = page->getLayerCount();
-    size_t layerId = luaL_checkinteger(L, 1);
+    size_t layerId = as_unsigned(luaL_checkinteger(L, 1));
 
     if (layerId > layerCount) {
         return luaL_error(L, "No layer with layer ID %d", layerId);

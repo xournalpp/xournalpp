@@ -27,7 +27,7 @@ T ObjectInputStream::readType() {
     return output;
 }
 
-size_t ObjectInputStream::pos() { return istream.tellg(); }
+size_t ObjectInputStream::pos() { return static_cast<size_t>(istream.tellg()); }
 
 auto ObjectInputStream::read(const char* data, int data_len) -> bool {
     istream.clear();

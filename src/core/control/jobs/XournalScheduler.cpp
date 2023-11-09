@@ -29,7 +29,7 @@ void XournalScheduler::removePage(XojPageView* view) { removeSource(view, JOB_TY
 void XournalScheduler::removeAllJobs() {
     std::lock_guard lock{this->jobQueueMutex};
 
-    for (int priority = JOB_PRIORITY_URGENT; priority < JOB_N_PRIORITIES; priority++) {
+    for (size_t priority = JOB_PRIORITY_URGENT; priority < JOB_N_PRIORITIES; priority++) {
         std::deque<Job*>& queue = *this->jobQueue[priority];
         auto it = queue.begin();
 

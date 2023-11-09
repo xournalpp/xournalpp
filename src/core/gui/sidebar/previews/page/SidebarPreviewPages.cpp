@@ -20,6 +20,7 @@
 #include "util/Assert.h"                                        // for xoj_assert
 #include "util/Util.h"                                          // for npos
 #include "util/i18n.h"                                          // for _
+#include "util/safe_casts.h"                                    // for as_signed
 
 #include "SidebarPreviewPageEntry.h"  // for Sideb...
 
@@ -216,7 +217,7 @@ void SidebarPreviewPages::pageDeleted(size_t page) {
         return;
     }
 
-    previews.erase(previews.begin() + page);
+    previews.erase(previews.begin() + as_signed(page));
 
     // Unselect page, to prevent double selection displaying
     unselectPage();
@@ -235,7 +236,7 @@ void SidebarPreviewPages::pageInserted(size_t page) {
     doc->unlock();
 
     gtk_layout_put(GTK_LAYOUT(this->iconViewPreview.get()), p->getWidget(), 0, 0);
-    this->previews.insert(this->previews.begin() + page, std::move(p));
+    this->previews.insert(this->previews.begin() + as_signed(page), std::move(p));
 
     // Unselect page, to prevent double selection displaying
     unselectPage();

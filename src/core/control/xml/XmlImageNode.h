@@ -33,6 +33,6 @@ private:
     cairo_surface_t* img;
 
     OutputStream* out;
-    int pos;
+    unsigned int pos;
     unsigned char buffer[30] = {0};
 };

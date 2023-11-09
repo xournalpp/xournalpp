@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <limits>   // for numeric_limits
 #include <memory>   // for unique_ptr
 #include <string>   // for string
 #include <utility>  // for pair
@@ -182,7 +183,7 @@ private:
     /**
      * Memory cleanup timeout
      */
-    guint cleanupTimeout = -1;
+    guint cleanupTimeout = std::numeric_limits<guint>::max();
 
     /**
      * Helper class for Touch specific fixes

@@ -63,7 +63,7 @@ auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned 
         if (image->read >= image->binaryData.length()) {
             return CAIRO_STATUS_READ_ERROR;
         }
-        data[i] = image->binaryData[image->read];
+        data[i] = static_cast<unsigned char>(image->binaryData[image->read]);
     }
 
     return CAIRO_STATUS_SUCCESS;
@@ -93,7 +93,7 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
         if (!pdf.get() || poppler_document_get_n_pages(this->pdf.get()) < 1) {
             return false;
         }
-        if (!this->width && !this->height) {
+        if (std::abs(this->width * this->height) <= std::numeric_limits<double>::epsilon()) {
             xoj::util::GObjectSPtr<PopplerPage> page(poppler_document_get_page(this->pdf.get(), 0), xoj::util::adopt);
             poppler_page_get_size(page.get(), &this->width, &this->height);
         }

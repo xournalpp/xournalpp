@@ -24,7 +24,7 @@
 #include "util/Range.h"
 #include "util/glib_casts.h"  // for wrap_for_once_v
 #include "util/raii/CStringWrapper.h"
-#include "util/safe_casts.h"  // for round_cast
+#include "util/safe_casts.h"  // for round_cast, as_unsigned
 #include "view/overlays/TextEditionView.h"
 
 #include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
@@ -1099,7 +1099,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
         if (auto audioController = control->getAudioController(); audioController && audioController->isRecording()) {
             fs::path audioFilename = audioController->getAudioFilename();
             size_t sttime = audioController->getStartTime();
-            size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
+            size_t milliseconds = (as_unsigned(g_get_monotonic_time() / 1000) - sttime);
             this->textElement->setTimestamp(milliseconds);
             this->textElement->setAudioFilename(audioFilename);
         }

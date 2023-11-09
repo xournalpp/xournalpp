@@ -28,7 +28,7 @@ auto VorbisConsumer::start(fs::path const& file) -> bool {
     }
 
     SF_INFO sfInfo;
-    sfInfo.channels = int(channels);
+    sfInfo.channels = channels;
     sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
     sfInfo.samplerate = static_cast<int>(this->settings.getAudioSampleRate());
 

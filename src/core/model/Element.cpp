@@ -6,6 +6,7 @@
 
 #include <glib.h>  // for gint
 
+#include "util/safe_casts.h"                      // for as_unsigned
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -140,7 +141,7 @@ void Element::readSerialized(ObjectInputStream& in) {
 
     this->x = in.readDouble();
     this->y = in.readDouble();
-    this->color = Color(in.readInt());
+    this->color = Color(as_unsigned(in.readInt()));
 
     in.endObject();
 }

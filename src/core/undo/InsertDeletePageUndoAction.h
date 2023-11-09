@@ -22,7 +22,7 @@ class Control;
 
 class InsertDeletePageUndoAction: public UndoAction {
 public:
-    InsertDeletePageUndoAction(const PageRef& page, int pagePos, bool inserted);
+    InsertDeletePageUndoAction(const PageRef& page, size_t pagePos, bool inserted);
     ~InsertDeletePageUndoAction() override;
 
 public:
@@ -37,5 +37,5 @@ private:
 
 private:
     bool inserted;
-    int pagePos;
+    size_t pagePos;
 };

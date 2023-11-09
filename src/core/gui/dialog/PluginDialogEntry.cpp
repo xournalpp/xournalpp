@@ -16,7 +16,7 @@ constexpr auto UI_WIDGET_NAME = "pluginMainBox";
 
 PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkBox* box): plugin(plugin) {
     Builder builder(gladeSearchPath, UI_FILE);
-    gtk_box_append(box, builder.get("pluginMainBox"));
+    gtk_box_append(box, builder.get(UI_WIDGET_NAME));
     stateButton = GTK_CHECK_BUTTON(builder.get("cbEnabled"));
 
     gtk_label_set_text(GTK_LABEL(builder.get("pluginName")), plugin->getName().c_str());

@@ -12,6 +12,7 @@
 #include "control/shaperecognizer/ShapeRecognizerConfig.h"  // for RDEBUG
 #include "model/Point.h"                                    // for Point
 #include "model/Stroke.h"                                   // for Stroke
+#include "util/safe_casts.h"                                // for as_unsigned
 
 #include "CircleRecognizer.h"  // for CircleRec...
 #include "Inertia.h"           // for Inertia
@@ -40,7 +41,7 @@ auto ShapeRecognizer::tryRectangle() -> Stroke* {
         return nullptr;
     }
 
-    RecoSegment* rs = &this->queue[this->queueLength - 4];
+    RecoSegment* rs = &this->queue[as_unsigned(this->queueLength - 4)];
     if (rs->startpt != 0) {
         return nullptr;
     }
@@ -286,7 +287,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
         while (n + queueLength > MAX_POLYGON_SIDES) {
             // remove oldest polygonal stroke
             int i = 1;
-            while (i < queueLength && queue[i].startpt != 0) {
+            while (i < queueLength && queue[as_unsigned(i)].startpt != 0) {
                 i++;
             }
             queueLength -= i;
@@ -295,7 +296,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
 
         RDEBUG("Queue now has %i + %i edges", this->queueLength, n);
 
-        RecoSegment* rs = &this->queue[this->queueLength];
+        RecoSegment* rs = &this->queue[as_unsigned(this->queueLength)];
         this->queueLength += n;
 
         for (int i = 0; i < n; i++) {

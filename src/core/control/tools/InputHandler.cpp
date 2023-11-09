@@ -12,6 +12,7 @@
 #include "model/Point.h"              // for Point, Point::NO_PRESSURE
 #include "model/Stroke.h"             // for Stroke, StrokeTool::ERASER, STR...
 #include "util/Color.h"               // for Color
+#include "util/safe_casts.h"          // for as_unsigned
 
 #include "filesystem.h"  // for path
 
@@ -36,7 +37,7 @@ auto InputHandler::createStroke(Control* control) -> std::unique_ptr<Stroke> {
         if (auto* audioController = control->getAudioController(); audioController && audioController->isRecording()) {
             fs::path audioFilename = audioController->getAudioFilename();
             size_t sttime = audioController->getStartTime();
-            size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
+            size_t milliseconds = (as_unsigned(g_get_monotonic_time() / 1000) - sttime);
             s->setTimestamp(milliseconds);
             s->setAudioFilename(audioFilename);
         }

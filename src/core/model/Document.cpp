@@ -1,7 +1,7 @@
 #include "Document.h"
 
 #include <array>
-#include <ctime>    // for size_t, localtime, strf...
+#include <ctime>  // for size_t, localtime, strf...
 #include <iomanip>
 #include <sstream>
 #include <string>   // for string
@@ -22,6 +22,7 @@
 #include "util/glib_casts.h"                  // for wrap_v
 #include "util/i18n.h"                        // for FS, _F
 #include "util/raii/GObjectSPtr.h"            // for GObjectSPtr
+#include "util/safe_casts.h"                  // for as_signed
 
 #include "LinkDestination.h"  // for XojLinkDest, DOCUMENT_L...
 #include "XojPage.h"          // for XojPage
@@ -204,7 +205,7 @@ auto Document::findPdfPage(size_t pdfPage) -> size_t {
         indexPdfPages();
     auto pos = this->pageIndex->find(pdfPage);
     if (pos == this->pageIndex->end()) {
-        return -1;
+        return npos;
     } else {
         return pos->second;
     }
@@ -371,7 +372,7 @@ auto Document::getPageHeight(PageRef p) -> double { return p->getHeight(); }
 auto Document::getLastErrorMsg() const -> std::string { return lastError; }
 
 void Document::deletePage(size_t pNr) {
-    auto it = this->pages.begin() + pNr;
+    auto it = this->pages.begin() + as_signed(pNr);
     this->pages.erase(it);
 
     // Reset the page index
@@ -380,7 +381,7 @@ void Document::deletePage(size_t pNr) {
 }
 
 void Document::insertPage(const PageRef& p, size_t position) {
-    this->pages.insert(this->pages.begin() + position, p);
+    this->pages.insert(this->pages.begin() + as_signed(position), p);
 
     // Reset the page index
     this->pageIndex.reset();

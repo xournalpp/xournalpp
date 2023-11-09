@@ -160,7 +160,7 @@ auto XojPreviewExtractor::readFile(const fs::path& file) -> PreviewExtractResult
             zip_close(zipFp);
             return PREVIEW_RESULT_ERROR_READING_PREVIEW;
         }
-        readBytes += read;
+        readBytes += static_cast<zip_uint64_t>(read);
     }
 
     zip_fclose(thumb);

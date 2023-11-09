@@ -9,12 +9,13 @@
 
 #include <glib.h>  // for g_warning, g_error
 
-#include "control/Tool.h"               // for Tool, Tool::toolSizes
+#include "control/Tool.h"  // for Tool, Tool::toolSizes
 #include "control/actions/ActionDatabase.h"
 #include "control/settings/Settings.h"  // for SElement, Settings
 #include "model/StrokeStyle.h"          // for StrokeStyle
 #include "util/Color.h"
 #include "util/Stacktrace.h"  // for Stac...
+#include "util/safe_casts.h"  // for as_unsigned
 
 class LineStyle;
 
@@ -492,7 +493,7 @@ void ToolHandler::loadSettings() {
 
             int iColor{};
             if (tool->hasCapability(TOOL_CAP_COLOR) && st.getInt("color", iColor)) {
-                tool->setColor(Color(iColor));
+                tool->setColor(Color(as_unsigned(iColor)));
             }
 
             std::string drawingType;
@@ -580,7 +581,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
         t->setCapability(TOOL_CAP_FILL, setFill);
         t->setCapability(TOOL_CAP_LINE_STYLE, setLineStyle);
         t->setSize(TOOL_SIZE_NONE);
-        t->setColor(Color(-1));
+        t->setColor(Colors::white);
         t->setFill(false);
     }
 

@@ -141,7 +141,7 @@ auto MetadataManager::getForFile(fs::path const& file) -> MetadataEntry {
         }
     }
 
-    for (int i = 20; i < static_cast<int>(files.size()); i++) {
+    for (size_t i = 20; i < files.size(); i++) {
         auto path = files[i].metadataFile;
         deleteMetadataFile(path);
     }

@@ -6,12 +6,14 @@
 
 #include <glib.h>  // for g_free, g_malloc, g_string_append_len
 
+#include "util/safe_casts.h"  // for as_unsigned
+
 HexObjectEncoding::HexObjectEncoding() = default;
 
 HexObjectEncoding::~HexObjectEncoding() = default;
 
 void HexObjectEncoding::addData(const void* data, int len) {
-    char* buffer = static_cast<char*>(g_malloc(len * 2));
+    char* buffer = static_cast<char*>(g_malloc(as_unsigned(len) * 2));
 
     for (int i = 0; i < len; i++) {
         uint8_t x = static_cast<uint8_t const*>(data)[i];

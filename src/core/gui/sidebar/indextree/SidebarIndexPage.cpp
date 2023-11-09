@@ -13,6 +13,7 @@
 #include "util/Assert.h"                               // for xoj_assert
 #include "util/glib_casts.h"                           // for wrap_v
 #include "util/i18n.h"                                 // for _
+#include "util/safe_casts.h"                           // for as_unsigned
 
 SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
         AbstractSidebarPage(control, toolbar), iconNameHelper(control->getSettings()) {
@@ -146,7 +147,7 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
     }
 
     /* Use Pango to separate by words. */
-    size_t len = g_utf8_strlen(normalized, -1);
+    size_t len = as_unsigned(g_utf8_strlen(normalized, -1));
     PangoLogAttr* log_attrs = g_new(PangoLogAttr, len + 1);
 
     pango_get_log_attrs(normalized, static_cast<int>(strlen(normalized)), -1, nullptr, log_attrs,

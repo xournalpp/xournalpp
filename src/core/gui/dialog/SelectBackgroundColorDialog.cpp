@@ -9,6 +9,7 @@
 #include "control/settings/Settings.h"  // for SElement, Settings
 #include "util/Color.h"
 #include "util/i18n.h"                  // for _
+#include "util/safe_casts.h"            // for as_unsigned
 
 static inline std::array<GdkRGBA, 9> background1 = {
         Util::rgb_to_GdkRGBA(Colors::xopp_lightpink),  //
@@ -52,7 +53,7 @@ SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control, std::
             continue;
         }
 
-        lastBackgroundColors[index] = Util::rgb_to_GdkRGBA(Color(iColor));
+        lastBackgroundColors[index] = Util::rgb_to_GdkRGBA(Color(as_unsigned(iColor)));
 
         ++index;
     }

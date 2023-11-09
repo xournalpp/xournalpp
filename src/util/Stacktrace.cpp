@@ -6,6 +6,8 @@
 #include <iostream>   // for operator<<, basic_ostream, basic_ostream::...
 #include <string>     // for string
 
+#include "util/safe_casts.h"  // for as_signed, as_unsigned
+
 #ifdef _WIN32
 #include <Windows.h>
 #else
@@ -79,7 +81,7 @@ auto Stacktrace::getExePath() -> fs::path {
 #endif
     std::array<char, PATH_MAX> result{};
     ssize_t count = readlink("/proc/self/exe", result.data(), PATH_MAX);
-    return fs::path{std::string(result.data(), std::max(ssize_t{0}, count))};
+    return fs::path{std::string(result.data(), as_unsigned(std::max(ssize_t{0}, count)))};
 }
 #endif
 
@@ -93,7 +95,7 @@ void Stacktrace::printStracktrace(std::ostream& stream) {
     std::string exeName = getExePath();
 
     // skip first stack frame (points here)
-    for (int i = 1; i < trace_size; ++i) {
+    for (unsigned int i = 1; as_signed(i) < trace_size; ++i) {
         stream << "[bt] #" << i << " " << messages[i] << endl;
 
         std::array<char, 1024> syscom{};
