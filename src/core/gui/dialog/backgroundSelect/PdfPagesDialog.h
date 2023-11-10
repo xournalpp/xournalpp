@@ -29,7 +29,7 @@ public:
     void show(GtkWindow* parent) override;
     void updateOkButton();
     static double getZoom();
-    int getSelectedPage();
+    size_t getSelectedPage();
 
 private:
     static void onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dlg);

@@ -14,6 +14,7 @@
 #include "model/PageRef.h"
 #include "model/PageType.h"
 #include "model/XojPage.h"
+#include "util/Util.h"  // for npos
 
 #include "ImageElementView.h"
 
@@ -48,7 +49,7 @@ void ImagesDialog::loadImagesFromPages() {
             continue;
         }
 
-        auto* iv = new ImageElementView(static_cast<int>(this->elements.size()), this);
+        auto* iv = new ImageElementView(this->elements.size(), this);
         iv->backgroundImage = p->getBackgroundImage();
         this->elements.push_back(iv);
     }
@@ -71,15 +72,15 @@ void ImagesDialog::okButtonCallback(GtkButton* button, ImagesDialog* dlg) {
 }
 
 void ImagesDialog::filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg) {
-    dlg->selected = -2;
+    dlg->selected = npos;
     dlg->confirmed = true;
     gtk_widget_hide(dlg->window);
 }
 
-auto ImagesDialog::shouldShowFilechooser() -> bool { return selected == -2 && confirmed; }
+auto ImagesDialog::shouldShowFilechooser() -> bool { return selected == npos && confirmed; }
 
 auto ImagesDialog::getSelectedImage() -> BackgroundImage {
-    if (confirmed && selected >= 0 && selected < static_cast<int>(elements.size())) {
+    if (confirmed && selected != npos && selected < elements.size()) {
         return (dynamic_cast<ImageElementView*>(elements[selected]))->backgroundImage;
     }
 
@@ -89,7 +90,7 @@ auto ImagesDialog::getSelectedImage() -> BackgroundImage {
 
 void ImagesDialog::show(GtkWindow* parent) {
     if (this->elements.empty()) {
-        this->selected = -2;
+        this->selected = npos;
         this->confirmed = true;
     } else {
         BackgroundSelectDialogBase::show(parent);

@@ -9,7 +9,7 @@
 
 class BackgroundSelectDialogBase;
 
-ImageElementView::ImageElementView(int id, BackgroundSelectDialogBase* dlg): BaseElementView(id, dlg) {}
+ImageElementView::ImageElementView(size_t id, BackgroundSelectDialogBase* dlg): BaseElementView(id, dlg) {}
 
 ImageElementView::~ImageElementView() = default;
 

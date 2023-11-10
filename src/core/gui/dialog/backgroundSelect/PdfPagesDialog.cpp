@@ -14,6 +14,7 @@
 #include "model/PageType.h"
 #include "model/XojPage.h"
 #include "pdf/base/XojPdfPage.h"
+#include "util/Util.h"  // for npos
 #include "util/i18n.h"  // for FC
 
 #include "PdfElementView.h"
@@ -26,7 +27,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
         BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "pdfpages.glade", "pdfPagesDialog") {
     for (size_t i = 0; i < doc->getPdfPageCount(); i++) {
         XojPdfPageSPtr p = doc->getPdfPage(i);
-        auto* pv = new PdfElementView(static_cast<int>(elements.size()), p, this);
+        auto* pv = new PdfElementView(elements.size(), p, this);
         elements.push_back(pv);
     }
     if (doc->getPdfPageCount() > 0) {
@@ -54,7 +55,7 @@ PdfPagesDialog::~PdfPagesDialog() = default;
 
 void PdfPagesDialog::updateOkButton() {
     bool valid = false;
-    if (selected >= 0 && selected < static_cast<int>(elements.size())) {
+    if (selected != npos && selected < elements.size()) {
         BaseElementView* p = this->elements[this->selected];
         valid = gtk_widget_get_visible(p->getWidget());
     }
@@ -80,12 +81,12 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dl
 
 auto PdfPagesDialog::getZoom() -> double { return 0.25; }
 
-auto PdfPagesDialog::getSelectedPage() -> int {
+auto PdfPagesDialog::getSelectedPage() -> size_t {
     if (confirmed) {
         return this->selected;
     }
 
-    return -1;
+    return npos;
 }
 
 void PdfPagesDialog::show(GtkWindow* parent) {

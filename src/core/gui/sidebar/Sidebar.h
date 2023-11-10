@@ -149,10 +149,10 @@ private:
 
 class SidebarPageButton {
 public:
-    SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page);
+    SidebarPageButton(Sidebar* sidebar, size_t index, AbstractSidebarPage* page);
 
 public:
     Sidebar* sidebar = nullptr;
-    int index = 0;
+    size_t index = 0;
     AbstractSidebarPage* page = nullptr;
 };

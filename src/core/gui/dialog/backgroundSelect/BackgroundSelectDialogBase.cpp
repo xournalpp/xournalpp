@@ -96,18 +96,18 @@ void BackgroundSelectDialogBase::show(GtkWindow* parent) {
     gtk_widget_hide(this->window);
 }
 
-void BackgroundSelectDialogBase::setSelected(int selected) {
+void BackgroundSelectDialogBase::setSelected(size_t selected) {
     if (this->selected == selected) {
         return;
     }
 
-    int lastSelected = this->selected;
-    if (lastSelected >= 0 && lastSelected < static_cast<int>(elements.size())) {
-        elements[as_unsigned(lastSelected)]->setSelected(false);
+    size_t lastSelected = this->selected;
+    if (lastSelected != npos && lastSelected < elements.size()) {
+        elements[lastSelected]->setSelected(false);
     }
 
-    if (selected >= 0 && selected < static_cast<int>(elements.size())) {
-        elements[as_unsigned(selected)]->setSelected(true);
+    if (selected != npos && selected < elements.size()) {
+        elements[selected]->setSelected(true);
         this->selected = selected;
     }
 }

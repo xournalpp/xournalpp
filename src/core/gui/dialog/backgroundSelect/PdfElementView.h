@@ -21,7 +21,7 @@ class PdfPagesDialog;
 
 class PdfElementView: public BaseElementView {
 public:
-    PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg);
+    PdfElementView(size_t id, XojPdfPageSPtr page, PdfPagesDialog* dlg);
     ~PdfElementView() override;
 
 protected:
