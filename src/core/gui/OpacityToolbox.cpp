@@ -1,4 +1,4 @@
-#include "OpacityPreviewToolbox.h"
+#include "OpacityToolbox.h"
 
 #include <cmath>  // for std::round
 
@@ -21,15 +21,15 @@
 static int percentToByte(double percent) { return static_cast<int>(std::round(percent * 2.55)); }
 static double byteToPercent(int byte) { return byte / 2.55; }
 
-OpacityPreviewToolbox::OpacityPreviewToolbox(MainWindow* theMainWindow, GtkOverlay* overlay):
+OpacityToolbox::OpacityToolbox(MainWindow* theMainWindow, GtkOverlay* overlay):
         theMainWindow(theMainWindow), overlay(overlay, xoj::util::refsink) {
-    GtkWidget* oWidget = theMainWindow->get("opacityPreviewTool");
+    GtkWidget* oWidget = theMainWindow->get("opacityToolbox");
     this->widget.reset(oWidget, xoj::util::refsink);
 
     gtk_overlay_add_overlay(overlay, oWidget);
 
     g_signal_connect(overlay, "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
-    g_signal_connect(theMainWindow->get("opacityPreviewToolScaleAlpha"), "change-value", G_CALLBACK(this->changeValue),
+    g_signal_connect(theMainWindow->get("opacityToolboxScaleAlpha"), "change-value", G_CALLBACK(this->changeValue),
                      this);
 
 #if GTK_MAJOR_VERSION == 3
@@ -46,22 +46,21 @@ OpacityPreviewToolbox::OpacityPreviewToolbox(MainWindow* theMainWindow, GtkOverl
     g_signal_connect(controller, "leave", G_CALLBACK(handleLeave), this);
 }
 
-void OpacityPreviewToolbox::changeValue(GtkRange* range, GtkScrollType scroll, gdouble value,
-                                        OpacityPreviewToolbox* self) {
+void OpacityToolbox::changeValue(GtkRange* range, GtkScrollType scroll, gdouble value, OpacityToolbox* self) {
     gtk_range_set_value(range, value);
     gdouble rangedValue = gtk_range_get_value(range);
     self->color.alpha = static_cast<uint8_t>(percentToByte(rangedValue));
     self->updatePreviewImage();
 }
 
-bool OpacityPreviewToolbox::handleLeave(GtkEventController* eventController, OpacityPreviewToolbox* self) {
+bool OpacityToolbox::handleLeave(GtkEventController* eventController, OpacityToolbox* self) {
     if (!self->isHidden()) {
 
         // Leave signal will be emitted if entering another child widget (GtkScale in the present case)
         // So, this condition is needed to check if the pointer is truly outside of the opacity toolbox.
         if (!xoj::util::gtk::isEventOverWidget(eventController, self->widget.get())) {
             // Save tool opacity before hiding the toolbox
-            GtkRange* range = GTK_RANGE(self->theMainWindow->get("opacityPreviewToolScaleAlpha"));
+            GtkRange* range = GTK_RANGE(self->theMainWindow->get("opacityToolboxScaleAlpha"));
             double value = gtk_range_get_value(range);
 
             self->color.alpha = static_cast<uint8_t>(percentToByte(value));
@@ -98,7 +97,7 @@ bool OpacityPreviewToolbox::handleLeave(GtkEventController* eventController, Opa
     return true;
 }
 
-void OpacityPreviewToolbox::updateEnabled() {
+void OpacityToolbox::updateEnabled() {
     bool result;
 
     switch (this->toolHandler->getToolType()) {
@@ -119,9 +118,9 @@ void OpacityPreviewToolbox::updateEnabled() {
     this->enabled = result;
 }
 
-bool OpacityPreviewToolbox::isEnabled() { return this->enabled; }
+bool OpacityToolbox::isEnabled() { return this->enabled; }
 
-void OpacityPreviewToolbox::updateColor() {
+void OpacityToolbox::updateColor() {
     this->color = this->toolHandler->getColor();
     ToolType tooltype = this->toolHandler->getToolType();
 
@@ -137,13 +136,13 @@ void OpacityPreviewToolbox::updateColor() {
     }
 }
 
-void OpacityPreviewToolbox::setColorWidget(GtkWidget* colorWidget) {
+void OpacityToolbox::setColorWidget(GtkWidget* colorWidget) {
     if (this->isEnabled()) {
         this->colorWidget = colorWidget;
     }
 }
 
-void OpacityPreviewToolbox::update() {
+void OpacityToolbox::update() {
     if (this->toolHandler == nullptr) {
         this->toolHandler = theMainWindow->getControl()->getToolHandler();
     }
@@ -162,7 +161,7 @@ void OpacityPreviewToolbox::update() {
     }
 }
 
-void OpacityPreviewToolbox::updateOpacityToolboxSizeAllocation() {
+void OpacityToolbox::updateOpacityToolboxSizeAllocation() {
     // Get existing width and height
     GtkRequisition natural;
 
@@ -176,7 +175,7 @@ void OpacityPreviewToolbox::updateOpacityToolboxSizeAllocation() {
  * Adjust the position of the opacity toolbox so that it sits below, above, on the right or
  * on the left of the selected color item, in a manner that makes it fully visible.
  */
-void OpacityPreviewToolbox::updateOpacityToolboxAllocation(GtkWidget* colorWidget) {
+void OpacityToolbox::updateOpacityToolboxAllocation(GtkWidget* colorWidget) {
     this->updateOpacityToolboxSizeAllocation();
 
     // If the toolbox will go out of the window, then we'll flip the corresponding directions.
@@ -200,7 +199,7 @@ void OpacityPreviewToolbox::updateOpacityToolboxAllocation(GtkWidget* colorWidge
     colorWidgetAlloc.x = colorWidgetOriginInOverlayCoords.x;
     colorWidgetAlloc.y = colorWidgetOriginInOverlayCoords.y;
 
-    // Make sure the "OpacityPreviewToolbox" is fully displayed.
+    // Make sure the "OpacityToolbox" is fully displayed.
     //        const int gap = 5;
     const int gap = 0;
 
@@ -232,10 +231,10 @@ void OpacityPreviewToolbox::updateOpacityToolboxAllocation(GtkWidget* colorWidge
  * Adjust the horizontal position of the opacity toolbox so that it sits on the right, on the left
  * or is vertically centered with the selected color item, in a manner that makes it fully visible.
  */
-void OpacityPreviewToolbox::updateOpacityToolboxAllocationX(GtkAllocation colorWidgetAlloc, const int toolbox_width,
-                                                            const bool isColorItemTooFarLeft,
-                                                            const bool isColorItemTooFarRight,
-                                                            const int overlap_offset_value) {
+void OpacityToolbox::updateOpacityToolboxAllocationX(GtkAllocation colorWidgetAlloc, const int toolbox_width,
+                                                     const bool isColorItemTooFarLeft,
+                                                     const bool isColorItemTooFarRight,
+                                                     const int overlap_offset_value) {
     int overlap_offset_x = 0;
 
     if (isColorItemTooFarLeft) {
@@ -259,11 +258,11 @@ void OpacityPreviewToolbox::updateOpacityToolboxAllocationX(GtkAllocation colorW
  * Adjust the vertical position of the opacity toolbox so that it sits below, above or
  * horizontally centered with the selected color item, in a manner that makes it fully visible.
  */
-void OpacityPreviewToolbox::updateOpacityToolboxAllocationY(GtkAllocation colorWidgetAlloc, const int toolbox_height,
-                                                            const bool isColorItemTooFarLeft,
-                                                            const bool isColorItemTooFarRight,
-                                                            const bool isColorItemTooFarBottom,
-                                                            const int overlap_offset_value) {
+void OpacityToolbox::updateOpacityToolboxAllocationY(GtkAllocation colorWidgetAlloc, const int toolbox_height,
+                                                     const bool isColorItemTooFarLeft,
+                                                     const bool isColorItemTooFarRight,
+                                                     const bool isColorItemTooFarBottom,
+                                                     const int overlap_offset_value) {
     int overlap_offset_y = 0;
 
     if (isColorItemTooFarBottom) {
@@ -283,8 +282,8 @@ void OpacityPreviewToolbox::updateOpacityToolboxAllocationY(GtkAllocation colorW
     this->allocation.y += overlap_offset_y;
 }
 
-void OpacityPreviewToolbox::updateScaleValue() {
-    GtkRange* rangeWidget = (GtkRange*)this->theMainWindow->get("opacityPreviewToolScaleAlpha");
+void OpacityToolbox::updateScaleValue() {
+    GtkRange* rangeWidget = (GtkRange*)this->theMainWindow->get("opacityToolboxScaleAlpha");
     gtk_range_set_value(rangeWidget, byteToPercent(this->color.alpha));
 }
 
@@ -301,7 +300,7 @@ const int PREVIEW_WIDTH = 70;
 const int PREVIEW_HEIGHT = 50;
 const int PREVIEW_BORDER = 10;
 
-void OpacityPreviewToolbox::updatePreviewImage() {
+void OpacityToolbox::updatePreviewImage() {
     bool addBorder = useBorderForPreview(toolHandler->getToolType());
 
     xoj::util::CairoSurfaceSPtr surface(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, PREVIEW_WIDTH, PREVIEW_HEIGHT),
@@ -332,27 +331,27 @@ void OpacityPreviewToolbox::updatePreviewImage() {
 
     xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(
             gdk_pixbuf_get_from_surface(surface.get(), 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT), xoj::util::adopt);
-    gtk_image_set_from_pixbuf(GTK_IMAGE(theMainWindow->get("opacityPreviewToolImg")), pixbuf.get());
+    gtk_image_set_from_pixbuf(GTK_IMAGE(theMainWindow->get("opacityToolboxImg")), pixbuf.get());
 }
 
-OpacityPreviewToolbox::~OpacityPreviewToolbox() = default;
+OpacityToolbox::~OpacityToolbox() = default;
 
-void OpacityPreviewToolbox::showAt(GtkWidget* colorWidget) {
+void OpacityToolbox::showAt(GtkWidget* colorWidget) {
     gtk_widget_hide(this->widget.get());  // force showing in new position
     gtk_widget_show_all(this->widget.get());
 
     this->updateOpacityToolboxAllocation(colorWidget);
 }
 
-void OpacityPreviewToolbox::hide() {
+void OpacityToolbox::hide() {
     if (isHidden())
         return;
 
     gtk_widget_hide(this->widget.get());
 }
 
-auto OpacityPreviewToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
-                                               OpacityPreviewToolbox* self) -> gboolean {
+auto OpacityToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
+                                        OpacityToolbox* self) -> gboolean {
     if (!self->isEnabled() || self->isHidden()) {
         return false;
     }
@@ -369,4 +368,4 @@ auto OpacityPreviewToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* w
     return false;
 }
 
-bool OpacityPreviewToolbox::isHidden() const { return !gtk_widget_is_visible(this->widget.get()); }
+bool OpacityToolbox::isHidden() const { return !gtk_widget_is_visible(this->widget.get()); }

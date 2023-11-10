@@ -19,11 +19,11 @@
 #include "AbstractToolItem.h"
 
 class ActionDatabase;
-class OpacityPreviewToolbox;
+class OpacityToolbox;
 
 class ColorToolItem: public AbstractToolItem {
 public:
-    ColorToolItem(NamedColor namedColor, OpacityPreviewToolbox* opacityToolbox);
+    ColorToolItem(NamedColor namedColor, OpacityToolbox* opacityToolbox);
     ColorToolItem(ColorToolItem const&) = delete;
     ColorToolItem(ColorToolItem&&) noexcept = delete;
     auto operator=(ColorToolItem const&) -> ColorToolItem& = delete;
@@ -43,7 +43,7 @@ private:
     NamedColor namedColor;
     xoj::util::GVariantSPtr target;  ///< Contains the color in ARGB as a uint32_t
 
-    OpacityPreviewToolbox* opacityToolbox;
+    OpacityToolbox* opacityToolbox;
     xoj::util::GObjectSPtr<GtkEventController> enterLeaveController;
     xoj::util::GObjectSPtr<GtkGesture> singleClickGesture;
 

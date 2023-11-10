@@ -7,13 +7,13 @@
  *  See: https://wiki.gnome.org/action/show/Projects/GTK/Inspector
  */
  
-#vboxOpacityPreviewTool,
+#vboxOpacityToolbox,
 #pdfFloatingToolGrid {
     padding: 7px;
 }
 
 /*Style the Floating Toolbox!*/
-#vboxOpacityPreviewTool,
+#vboxOpacityToolbox,
 #floatingToolbox > box,
 #pdfFloatingToolGrid {
 	background-color: white;
@@ -45,29 +45,29 @@
 	box-shadow: inset 0px 0px 2px gray;
 }
 
-#opacityPreviewToolScaleAlpha slider {
+#opacityToolboxScaleAlpha slider {
 	background: rgba(255, 255, 255, 1);
 	box-shadow: inset 0px 0px 2px gray;
 }
 
-#opacityPreviewToolScaleAlpha slider:hover {
+#opacityToolboxScaleAlpha slider:hover {
 	border-radius: 12px;
 	background: rgba(255, 255, 255, 1);
 	box-shadow: inset 0px 0px 2px 1px orange;
 }
 
-#opacityPreviewToolScaleAlpha slider:active {
+#opacityToolboxScaleAlpha slider:active {
 	border-radius: 12px;
 	background: rgba(245, 245, 245, 0.6);
 	box-shadow: inset 0px 0px 2px 1px orange;
 }
 
-#opacityPreviewToolScaleAlpha value { 
+#opacityToolboxScaleAlpha value {
 	color: gray;
 }
 /*
 Similar as
-#vboxOpacityPreviewTool scale value { 
+#vboxOpacityToolbox scale value {
 	color: gray;
 }
 */
@@ -86,7 +86,7 @@ Similar as
 
 #floatingToolbox toolbar,
 #pdfFloatingToolGrid button,
-#opacityPreviewToolScaleAlpha {
+#opacityToolboxScaleAlpha {
     /*
       The Adaptia GTK theme adds box-shadows to toolbars.
       Remove them to avoid horizontal lines that extend outside
@@ -96,7 +96,7 @@ Similar as
     box-shadow: none;
 }
 
-window.darkMode #opacityPreviewToolScaleAlpha slider,
+window.darkMode #opacityToolboxScaleAlpha slider,
 window.darkMode #floatingToolbox button,
 window.darkMode #pdfFloatingToolGrid button {
 	background: rgba(55, 53, 53, 0.5);
@@ -109,7 +109,7 @@ window.darkMode #floatingToolbox button:checked {
 	box-shadow: 0px 0px 3px lightblue;
 }
 
-window.darkMode #vboxOpacityPreviewTool,
+window.darkMode #vboxOpacityToolbox,
 window.darkMode #floatingToolbox > box,
 window.darkMode #pdfFloatingToolGrid  {
 	background-color: black;

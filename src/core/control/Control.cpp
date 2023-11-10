@@ -39,7 +39,7 @@
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
 #include "gui/MainWindow.h"                                      // for Main...
-#include "gui/OpacityPreviewToolbox.h"                           // for OpacityPreviewToolbox...
+#include "gui/OpacityToolbox.h"                                  // for OpacityToolbox...
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
 #include "gui/SearchBar.h"                                       // for Sear...
@@ -462,7 +462,7 @@ void Control::selectAlpha(OpacityFeature feature) {
             break;
     }
 
-    OpacityPreviewToolbox* opacityToolbox = this->win->getOpacityPreviewToolbox();
+    OpacityToolbox* opacityToolbox = this->win->getOpacityToolbox();
 
     auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::SelectOpacityDialog>(
             gladeSearchPath, alpha, feature, [&th = *toolHandler, &opatb = *opacityToolbox](int alpha, OpacityFeature feature) {
@@ -1093,7 +1093,7 @@ void Control::toolChanged() {
 
     getCursor()->updateCursor();
     if (win) {
-        win->getOpacityPreviewToolbox()->update();
+        win->getOpacityToolbox()->update();
     }
 
     if (type != TOOL_TEXT) {
@@ -1137,7 +1137,7 @@ void Control::toolFillChanged() {
     this->actionDB->setActionState(Action::TOOL_PEN_FILL, toolHandler->getPenFillEnabled());
     this->actionDB->setActionState(Action::TOOL_HIGHLIGHTER_FILL, toolHandler->getHighlighterFillEnabled());
     if (win) {
-        win->getOpacityPreviewToolbox()->update();
+        win->getOpacityToolbox()->update();
     }
 }
 
@@ -1192,7 +1192,7 @@ void Control::toolColorChanged() {
     getCursor()->updateCursor();
 
     if (this->win) {
-        getWindow()->getOpacityPreviewToolbox()->update();
+        getWindow()->getOpacityToolbox()->update();
     }
 }
 
@@ -1213,7 +1213,7 @@ void Control::changeColorOfSelection() {
     }
 
     if (this->win) {
-        getWindow()->getOpacityPreviewToolbox()->update();
+        getWindow()->getOpacityToolbox()->update();
     }
 }
 

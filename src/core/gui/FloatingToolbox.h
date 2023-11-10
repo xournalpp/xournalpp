@@ -16,7 +16,7 @@
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkWidget, GtkOverlay
 
-#include "OpacityPreviewToolbox.h"
+#include "OpacityToolbox.h"
 
 class MainWindow;
 
@@ -99,5 +99,5 @@ private:
     FloatingToolBoxState floatingToolboxState = recalcSize;
 
 public:
-    friend class OpacityPreviewToolbox;
+    friend class OpacityToolbox;
 };

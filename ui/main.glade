@@ -826,27 +826,27 @@
       </object>
     </child>
   </object>
-  <object class="GtkAdjustment" id="opacityPreviewToolAdjustment">
+  <object class="GtkAdjustment" id="opacityToolboxAdjustment">
     <property name="lower">5</property>
     <property name="upper">100</property>
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
-  <object class="GtkRevealer" id="opacityPreviewTool">
-    <property name="name">opacityPreviewTool</property>
+  <object class="GtkRevealer" id="opacityToolbox">
+    <property name="name">opacityToolbox</property>
     <property name="visible">False</property>
     <property name="can-focus">False</property>
     <property name="transition-type">none</property>
     <property name="reveal-child">True</property>
     <child>
-      <object class="GtkBox" id="vboxOpacityPreviewTool">
-        <property name="name">vboxOpacityPreviewTool</property>
+      <object class="GtkBox" id="vboxOpacityToolbox">
+        <property name="name">vboxOpacityToolbox</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">1</property>
         <child>
-          <object class="GtkImage" id="opacityPreviewToolImg">
+          <object class="GtkImage" id="opacityToolboxImg">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="icon-name">image-missing</property>
@@ -858,11 +858,11 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScale" id="opacityPreviewToolScaleAlpha">
-            <property name="name">opacityPreviewToolScaleAlpha</property>
+          <object class="GtkScale" id="opacityToolboxScaleAlpha">
+            <property name="name">opacityToolboxScaleAlpha</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="adjustment">opacityPreviewToolAdjustment</property>
+            <property name="adjustment">opacityToolboxAdjustment</property>
             <property name="show-fill-level">True</property>
             <property name="fill-level">100</property>
             <property name="round-digits">0</property>

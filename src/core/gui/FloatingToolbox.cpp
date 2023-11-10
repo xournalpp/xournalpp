@@ -14,7 +14,7 @@
 #include "util/GtkUtil.h"                    // for isEventOverWidget()
 
 #include "MainWindow.h"  // for MainWindow
-#include "OpacityPreviewToolbox.h"
+#include "OpacityToolbox.h"
 #include "ToolbarDefinitions.h"  // for ToolbarEntryDefintion
 
 
@@ -196,7 +196,7 @@ void FloatingToolbox::handleLeaveFloatingToolbox(GtkEventController* eventContro
             // Do not hide the floating toolbox when leaving it, if the pointer is over
             // the opacity toolbox
             if (!xoj::util::gtk::isEventOverWidget(eventController,
-                                                   self->mainWindow->getOpacityPreviewToolbox()->widget.get())) {
+                                                   self->mainWindow->getOpacityToolbox()->widget.get())) {
                 self->hide();
             }
         }
