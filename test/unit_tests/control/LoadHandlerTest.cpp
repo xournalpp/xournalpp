@@ -130,7 +130,7 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
     }
 }
 
-void checkPageType(Document* doc, int pageIndex, string expectedText, PageType expectedBgType) {
+void checkPageType(Document* doc, size_t pageIndex, string expectedText, PageType expectedBgType) {
     PageRef page = doc->getPage(pageIndex);
 
     PageType bgType = page->getBackgroundType();
@@ -147,7 +147,7 @@ void checkPageType(Document* doc, int pageIndex, string expectedText, PageType e
 }
 
 
-void checkLayer(PageRef page, int layerIndex, string expectedText) {
+void checkLayer(PageRef page, size_t layerIndex, string expectedText) {
     Layer* layer = (*(*page).getLayers())[layerIndex];
 
     Element* element = layer->getElements().front();
