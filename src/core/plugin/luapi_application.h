@@ -47,7 +47,7 @@
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"        // for _
-#include "util/safe_casts.h"  // for round_cast
+#include "util/safe_casts.h"  // for round_cast, as_signed, as_unsigned
 
 #include "ActionBackwardCompatibilityLayer.h"
 
@@ -454,7 +454,7 @@ static int applib_setSidebarPageNo(lua_State* L) {
         return 2;
     }
 
-    sidebar->setSelectedPage(page - 1);
+    sidebar->setSelectedPage(as_unsigned(page) - 1);
     return 0;
 }
 

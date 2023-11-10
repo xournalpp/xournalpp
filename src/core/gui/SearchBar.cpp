@@ -126,10 +126,11 @@ void SearchBar::search(Fun next) {
         if (found) {
             control->getScrollHandler()->scrollToPage(page, matchRect);
             control->getScrollHandler();
-            gtk_label_set_text(GTK_LABEL(lbSearchState),
-                               (occurrences == 1 ? FC(_F("Text found once on page {1}") % (as_signed(page) + 1)) :
-                                                   FC(_F("Text found {1} times on page {2} ({3} of {1})") %
-                                                      occurrences % (as_signed(page) + 1) % indexInPage)));
+            gtk_label_set_text(
+                    GTK_LABEL(lbSearchState),
+                    (occurrences == 1 ? FC(_F("Text found once on page {1}") % (as_signed(page) + 1)) :
+                                        FC(_F("Text found {1} times on page {2} ({3} of {1})") %
+                                           as_signed(occurrences) % (as_signed(page) + 1) % as_signed(indexInPage))));
             return;
         }
         if (page == originalPage) {
