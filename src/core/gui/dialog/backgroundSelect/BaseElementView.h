@@ -16,11 +16,13 @@
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkWidget
 
+#include "util/Util.h"  // for npos
+
 class BackgroundSelectDialogBase;
 
 class BaseElementView {
 public:
-    BaseElementView(int id, BackgroundSelectDialogBase* dlg);
+    BaseElementView(size_t id, BackgroundSelectDialogBase* dlg);
     virtual ~BaseElementView();
 
 public:
@@ -79,9 +81,9 @@ protected:
 
 private:
     /**
-     * Element ID, starting with 0
+     * Element ID
      */
-    int id = -1;
+    size_t id = npos;
 
     bool selected = false;
 

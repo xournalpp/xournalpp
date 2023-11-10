@@ -202,7 +202,7 @@ void Sidebar::documentChanged(DocumentChangeType type) {
     }
 }
 
-SidebarPageButton::SidebarPageButton(Sidebar* sidebar, int index, AbstractSidebarPage* page):
+SidebarPageButton::SidebarPageButton(Sidebar* sidebar, size_t index, AbstractSidebarPage* page):
         sidebar(sidebar), index(index), page(page) {}
 
 void Sidebar::layout() {

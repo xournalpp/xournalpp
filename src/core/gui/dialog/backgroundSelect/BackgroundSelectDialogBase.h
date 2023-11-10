@@ -17,6 +17,7 @@
 #include <gtk/gtk.h>  // for GtkWidget, GtkRequisition, GtkWindow
 
 #include "gui/GladeGui.h"  // for GladeGui
+#include "util/Util.h"     // for npos
 
 class Document;
 class Settings;
@@ -32,7 +33,7 @@ public:
 public:
     Settings* getSettings();
     void show(GtkWindow* parent) override;
-    virtual void setSelected(int selected);
+    virtual void setSelected(size_t selected);
 
 protected:
     void layout();
@@ -54,9 +55,9 @@ protected:
     bool confirmed = false;
 
     /**
-     * Selected image, none if negative
+     * Selected image, none if npos
      */
-    int selected = -1;
+    size_t selected = npos;
 
     /**
      * To check if the size has real changed

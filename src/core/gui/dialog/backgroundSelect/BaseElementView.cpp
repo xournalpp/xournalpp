@@ -8,7 +8,7 @@
 
 #include "BackgroundSelectDialogBase.h"  // for BackgroundSelectDialogBase
 
-BaseElementView::BaseElementView(int id, BackgroundSelectDialogBase* dlg): dlg(dlg), id(id) {
+BaseElementView::BaseElementView(size_t id, BackgroundSelectDialogBase* dlg): dlg(dlg), id(id) {
     this->widget = gtk_drawing_area_new();
     gtk_widget_show(this->widget);
 

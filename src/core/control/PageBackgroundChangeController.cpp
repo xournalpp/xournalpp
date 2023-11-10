@@ -30,7 +30,6 @@
 #include "util/Util.h"                                   // for npos
 #include "util/XojMsgBox.h"                              // for XojMsgBox
 #include "util/i18n.h"                                   // for FS, _, _F
-#include "util/safe_casts.h"                             // for as_unsigned
 
 #include "Control.h"  // for Control
 
@@ -196,13 +195,13 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool {
 
     dlg.show(GTK_WINDOW(control->getGtkWindow()));
 
-    int selected = dlg.getSelectedPage();
+    size_t selected = dlg.getSelectedPage();
 
-    if (selected >= 0 && as_unsigned(selected) < doc->getPdfPageCount()) {
+    if (selected != npos && selected < doc->getPdfPageCount()) {
         // no need to set a type, if we set the page number the type is also set
-        page->setBackgroundPdfPageNr(as_unsigned(selected));
+        page->setBackgroundPdfPageNr(selected);
 
-        XojPdfPageSPtr p = doc->getPdfPage(as_unsigned(selected));
+        XojPdfPageSPtr p = doc->getPdfPage(selected);
         page->setSize(p->getWidth(), p->getHeight());
     }
 

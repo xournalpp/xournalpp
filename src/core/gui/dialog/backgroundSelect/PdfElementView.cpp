@@ -11,7 +11,7 @@
 
 #include "PdfPagesDialog.h"  // for PdfPagesDialog
 
-PdfElementView::PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg):
+PdfElementView::PdfElementView(size_t id, XojPdfPageSPtr page, PdfPagesDialog* dlg):
         BaseElementView(id, dlg), page(std::move(page)) {}
 
 PdfElementView::~PdfElementView() = default;
