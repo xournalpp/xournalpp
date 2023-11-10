@@ -21,7 +21,7 @@
 
 #include "util/raii/GtkWindowUPtr.h"
 
-class Palette;
+struct Palette;
 class AbstractToolItem;
 class MainWindow;
 class ToolbarDragDropHandler;
