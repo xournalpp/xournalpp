@@ -13,8 +13,8 @@
 
 #include <gtk/gtk.h>  // for GtkWidget
 
-#include "util/Color.h"                 // for Color
-#include "util/NamedColor.h"            // for NamedColor
+#include "util/Color.h"       // for Color
+#include "util/NamedColor.h"  // for NamedColor
 
 #include "AbstractToolItem.h"
 

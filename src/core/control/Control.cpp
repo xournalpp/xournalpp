@@ -465,7 +465,8 @@ void Control::selectAlpha(OpacityFeature feature) {
     OpacityToolbox* opacityToolbox = this->win->getOpacityToolbox();
 
     auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::SelectOpacityDialog>(
-            gladeSearchPath, alpha, feature, [&th = *toolHandler, &opatb = *opacityToolbox](int alpha, OpacityFeature feature) {
+            gladeSearchPath, alpha, feature,
+            [&th = *toolHandler, &opatb = *opacityToolbox](int alpha, OpacityFeature feature) {
                 switch (feature) {
                     case OPACITY_FILL_PEN:
                         th.setPenFill(alpha);

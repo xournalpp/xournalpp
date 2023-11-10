@@ -8,9 +8,9 @@
 #include "control/settings/Settings.h"       // for Settings
 #include "gui/GladeGui.h"                    // for GladeGui
 #include "gui/GladeSearchpath.h"
-#include "gui/MainWindow.h"             // for Main...
-#include "gui/OpacityToolbox.h"         // for OpacityToolbox
-#include "gui/ToolitemDragDrop.h"       // for ToolitemDragDrop
+#include "gui/MainWindow.h"        // for Main...
+#include "gui/OpacityToolbox.h"    // for OpacityToolbox
+#include "gui/ToolitemDragDrop.h"  // for ToolitemDragDrop
 #include "gui/menus/popoverMenus/PageTypeSelectionPopover.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/toolbarMenubar/model/ToolbarData.h"   // for ToolbarData
