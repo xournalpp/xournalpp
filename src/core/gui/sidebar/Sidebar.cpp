@@ -45,7 +45,7 @@ void Sidebar::initPages(GtkWidget* sidebarContents, GladeGui* gui) {
 
     // Init toolbar with icons
 
-    int i = 0;
+    size_t i = 0;
     for (auto&& p: this->pages) {
         GtkToolItem* it = gtk_toggle_tool_button_new();
         p->tabButton = it;

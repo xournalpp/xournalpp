@@ -159,7 +159,7 @@ void ToolbarModel::save(fs::path const& filepath) {
     config = nullptr;
 
     GError* error = nullptr;
-    if (!g_file_set_contents(filepath.u8string().c_str(), data, len, &error)) {
+    if (!g_file_set_contents(filepath.u8string().c_str(), data, as_signed(len), &error)) {
         XojMsgBox::showErrorToUser(nullptr, error->message);
         g_error_free(error);
     }
