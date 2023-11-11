@@ -313,8 +313,8 @@ public:
 
 public:
     // ProgressListener interface
-    void setMaximumState(int max) override;
-    void setCurrentState(int state) override;
+    void setMaximumState(size_t max) override;
+    void setCurrentState(size_t state) override;
 
 public:
     // ClipboardListener interface
@@ -457,7 +457,7 @@ private:
     GtkWidget* statusbar = nullptr;
     GtkLabel* lbState = nullptr;
     GtkProgressBar* pgState = nullptr;
-    int maxState = 0;
+    size_t maxState = 0;
     bool isBlocking;
 
     GladeSearchpath* gladeSearchPath;

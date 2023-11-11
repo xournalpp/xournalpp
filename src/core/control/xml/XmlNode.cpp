@@ -52,10 +52,10 @@ void XmlNode::writeOut(OutputStream* out, ProgressListener* listener) {
         out->write(">\n");
 
         if (listener) {
-            listener->setMaximumState(static_cast<int>(children.size()));
+            listener->setMaximumState(children.size());
         }
 
-        int i = 1;
+        size_t i = 1;
 
         for (auto& node: children) {
             node->writeOut(out);

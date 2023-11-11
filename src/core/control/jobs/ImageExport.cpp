@@ -211,7 +211,7 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
     bool onePage = ((this->exportRange.size() == 1) && (this->exportRange[0].first == this->exportRange[0].last));
 
     std::vector<char> selectedPages(count, 0);
-    int selectedCount = 0;
+    size_t selectedCount = 0;
     for (PageRangeEntry const& e: this->exportRange) {
         for (size_t x = e.first; x <= e.last; x++) {
             selectedPages[x] = true;
@@ -230,7 +230,7 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
     }
 
     DocumentView view;
-    int current = 0;
+    size_t current = 0;
 
     for (size_t i = 0; i < count; i++) {
         auto id = i + 1;
@@ -241,7 +241,7 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
         if (selectedPages[i]) {
             stateListener->setCurrentState(current++);
 
-            exportImagePage(i, id, zoomRatio, format, view);  // Todo(narrowing): remove cast
+            exportImagePage(i, id, zoomRatio, format, view);
         }
     }
 }
