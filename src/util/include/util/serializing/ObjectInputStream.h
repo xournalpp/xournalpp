@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <cstdint>  // for uint32_t
 #include <sstream>  // for istringstream
 #include <string>   // for string
 #include <vector>   // for vector
@@ -32,6 +33,7 @@ public:
     void endObject();
 
     int readInt();
+    uint32_t readUInt();
     double readDouble();
     size_t readSizeT();
     std::string readString();

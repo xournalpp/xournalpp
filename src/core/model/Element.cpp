@@ -131,7 +131,7 @@ void Element::serialize(ObjectOutputStream& out) const {
 
     out.writeDouble(this->x);
     out.writeDouble(this->y);
-    out.writeInt(int(uint32_t(this->color)));
+    out.writeUInt(uint32_t(this->color));
 
     out.endObject();
 }
@@ -141,7 +141,7 @@ void Element::readSerialized(ObjectInputStream& in) {
 
     this->x = in.readDouble();
     this->y = in.readDouble();
-    this->color = Color(as_unsigned(in.readInt()));
+    this->color = Color(in.readUInt());
 
     in.endObject();
 }

@@ -1,4 +1,5 @@
 #include <array>
+#include <cstdint>
 #include <random>
 #include <string>
 #include <tuple>
@@ -64,6 +65,15 @@ std::string serializeDouble(double x) {
 std::string serializeInt(int x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeInt(x);
+    auto outStr = outStream.getStr();
+    auto resStr = std::string{outStr->str, outStr->len};
+    g_string_free(outStr, true);
+    return resStr;
+}
+
+std::string serializeUInt(uint32_t x) {
+    ObjectOutputStream outStream(new BinObjectEncoding);
+    outStream.writeUInt(x);
     auto outStr = outStream.getStr();
     auto resStr = std::string{outStr->str, outStr->len};
     g_string_free(outStr, true);
@@ -207,6 +217,26 @@ TEST(UtilObjectIOStream, testReadInt) {
     }
 }
 
+TEST(UtilObjectIOStream, testReadUInt) {
+    std::vector<uint32_t> uintToTest{0, 1, 42, 144, 65000, 12345678, 4294967295};
+
+    std::vector<std::pair<std::string, uint32_t>> testData;
+    testData.reserve(uintToTest.size());
+    for (auto&& number: uintToTest) {
+        testData.emplace_back(serializeUInt(number), number);
+    }
+
+    for (auto&& data: testData) {
+        std::string& str = data.first;
+        uint32_t x = data.second;
+
+        ObjectInputStream stream;
+        // The +1 stands for the \0 character
+        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        uint32_t output = stream.readUInt();
+        EXPECT_EQ(x, output);
+    }
+}
 
 TEST(UtilObjectIOStream, testReadDouble) {
     std::vector<double> doubleToTest{0., 0.5, 42., 46.5, -85.2, -1337, 1e50};

@@ -31,6 +31,11 @@ void ObjectOutputStream::writeInt(int i) {
     this->encoder->addData(&i, sizeof(int));
 }
 
+void ObjectOutputStream::writeUInt(uint32_t u) {
+    this->encoder->addStr("_u");
+    this->encoder->addData(&u, sizeof(uint32_t));
+}
+
 void ObjectOutputStream::writeDouble(double d) {
     this->encoder->addStr("_d");
     this->encoder->addData(&d, sizeof(double));
