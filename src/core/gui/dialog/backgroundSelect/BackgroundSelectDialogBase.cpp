@@ -102,7 +102,7 @@ void BackgroundSelectDialogBase::setSelected(size_t selected) {
     }
 
     size_t lastSelected = this->selected;
-    if (lastSelected != npos && lastSelected < elements.size()) {
+    if (lastSelected < elements.size()) {
         elements[lastSelected]->setSelected(false);
     }
 

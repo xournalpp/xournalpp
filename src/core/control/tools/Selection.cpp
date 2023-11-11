@@ -9,6 +9,7 @@
 #include "gui/LegacyRedrawable.h"  // for Redrawable
 #include "model/Layer.h"           // for Layer
 #include "model/XojPage.h"         // for XojPage
+#include "util/safe_casts.h"       // for as_unsigned
 
 Selection::Selection(bool multiLayer): multiLayer(multiLayer), viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SelectionView>>()) {
 }
@@ -20,8 +21,8 @@ auto Selection::finalize(PageRef page) -> size_t {
     size_t layerId = 0;
 
     if (multiLayer) {
-        for (size_t layerNo = page->getLayers()->size() - 1; layerNo != npos; layerNo--) {
-            Layer* l = page->getLayers()->at(layerNo);
+        for (auto it = page->getLayers()->rbegin(); it != page->getLayers()->rend(); it--) {
+            Layer* l = *it;
             if (!l->isVisible()) {
                 continue;
             }
@@ -33,7 +34,7 @@ auto Selection::finalize(PageRef page) -> size_t {
                 }
             }
             if (selectionOnLayer) {
-                layerId = layerNo + 1;
+                layerId = page->getLayers()->size() - as_unsigned(std::distance(page->getLayers()->rbegin(), it));
                 break;
             }
         }

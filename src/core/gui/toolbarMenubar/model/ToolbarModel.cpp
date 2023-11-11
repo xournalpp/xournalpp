@@ -32,9 +32,9 @@ void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefin
 }
 
 void ToolbarModel::remove(ToolbarData* data) {
-    for (size_t i = 0; i < this->toolbars.size(); i++) {
-        if (this->toolbars[i] == data) {
-            this->toolbars.erase(this->toolbars.begin() + as_signed(i));
+    for (auto it = this->toolbars.begin(); it != this->toolbars.end(); it++) {
+        if (*it == data) {
+            this->toolbars.erase(it);
             break;
         }
     }
