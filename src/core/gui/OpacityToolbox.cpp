@@ -196,8 +196,8 @@ void OpacityToolbox::updateOpacityToolboxAllocation(GtkWidget* colorWidget) {
     gtk_widget_compute_point(colorWidget, GTK_WIDGET(this->overlay.get()), &colorWidgetOrigin,
                              &colorWidgetOriginInOverlayCoords);
 
-    colorWidgetAlloc.x = colorWidgetOriginInOverlayCoords.x;
-    colorWidgetAlloc.y = colorWidgetOriginInOverlayCoords.y;
+    colorWidgetAlloc.x = static_cast<int>(colorWidgetOriginInOverlayCoords.x);
+    colorWidgetAlloc.y = static_cast<int>(colorWidgetOriginInOverlayCoords.y);
 
     // Make sure the "OpacityToolbox" is fully displayed.
     //        const int gap = 5;
