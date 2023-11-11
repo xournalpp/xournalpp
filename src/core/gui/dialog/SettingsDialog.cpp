@@ -678,11 +678,11 @@ void SettingsDialog::load() {
 
     //
     // Load keyboard shortcuts from settings
-    // 
+    //
 
     // TODO: make shortcut names (keys) constant
-    gtk_entry_set_text(GTK_ENTRY(builder.get("txtKeyboardShortcutPen")), settings->getKeyboardShortcut("pen").value_or("ERROR: pen unset"));
-
+    gtk_entry_set_text(GTK_ENTRY(builder.get("txtKeyboardShortcutPen")),
+                       settings->getKeyboardShortcut("pen").value_or("ERROR: pen unset"));
 }
 
 void SettingsDialog::save() {

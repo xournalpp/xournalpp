@@ -11,14 +11,14 @@
 
 #pragma once
 
-#include <array>    // for array
-#include <cstddef>  // for size_t
-#include <map>      // for map
-#include <memory>   // for make_shared, shared_ptr
-#include <string>   // for string, basic_string
-#include <utility>  // for pair
-#include <vector>   // for vector
-#include <optional> // for optional (retrieving keyboard shortcuts)
+#include <array>     // for array
+#include <cstddef>   // for size_t
+#include <map>       // for map
+#include <memory>    // for make_shared, shared_ptr
+#include <optional>  // for optional (retrieving keyboard shortcuts)
+#include <string>    // for string, basic_string
+#include <utility>   // for pair
+#include <vector>    // for vector
 
 #include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
 #include <glib.h>                         // for gchar, gboolean, gint
@@ -579,8 +579,8 @@ public:
     bool getUseSpacesAsTab() const;
 
     /**
-     * @brief Set custom keyboard shortcut 
-     * 
+     * @brief Set custom keyboard shortcut
+     *
      * @param name shortcut name, e.g. pen
      * @param shortcut accelerator according to gtk syntax
      * @returns true if accelerator is valid and can the shortcut can be set
@@ -596,7 +596,7 @@ public:
 
     /**
      * @brief Get custom keyboard shortcut accelerator, if exists
-     * 
+     *
      * @param name shortcut name, e.g. pen
      * @return std::optional<const char> shortcut accel as cstring (to feed gtk), if exists, otherwise std::nullopt
      */
