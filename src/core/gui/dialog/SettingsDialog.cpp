@@ -6,6 +6,7 @@
 
 #include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
 #include <glib-object.h>  // for G_CALLBACK, g_signal...
+#include <glib.h>         // for g_message
 
 #include "control/AudioController.h"             // for AudioController
 #include "control/Control.h"                     // for Control
@@ -674,6 +675,14 @@ void SettingsDialog::load() {
     }
 
     this->latexPanel.load(settings->latexSettings);
+
+    //
+    // Load keyboard shortcuts from settings
+    // 
+
+    // TODO: make shortcut names (keys) constant
+    gtk_entry_set_text(GTK_ENTRY(builder.get("txtKeyboardShortcutPen")), settings->getKeyboardShortcut("pen").value_or("ERROR: pen unset"));
+
 }
 
 void SettingsDialog::save() {
@@ -1015,4 +1024,26 @@ void SettingsDialog::save() {
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
+
+    //
+    // Save custom keyboard shortcuts
+    //
+
+    auto tryToGetGtkEntryText = [&](std::string entryName) -> const char* {
+        auto widgetPtr = builder.get(entryName);
+
+        if (widgetPtr == nullptr) {
+            return "[Keyboard Shortcuts] Error retrieving widget";
+        }
+
+        auto result = gtk_entry_get_text(GTK_ENTRY(widgetPtr));
+
+        if (result == nullptr) {
+            return "[Keyboard Shortcuts] Error retrieving name from text entry";
+        }
+
+        return result;
+    };
+
+    this->settings->setKeyboardShortcut("pen", tryToGetGtkEntryText("txtKeyboardShortcutPen"));
 }
