@@ -1682,10 +1682,13 @@ void Control::unblock() {
     this->isBlocking = false;
 }
 
-void Control::setMaximumState(int max) { this->maxState = max; }
+void Control::setMaximumState(size_t max) { this->maxState = max; }
 
-void Control::setCurrentState(int state) {
-    Util::execInUiThread([=]() { gtk_progress_bar_set_fraction(this->pgState, gdouble(state) / this->maxState); });
+void Control::setCurrentState(size_t state) {
+    Util::execInUiThread([=]() {
+        gtk_progress_bar_set_fraction(this->pgState,
+                                      static_cast<gdouble>(state) / static_cast<gdouble>(this->maxState));
+    });
 }
 
 auto Control::save(bool synchron) -> bool {
