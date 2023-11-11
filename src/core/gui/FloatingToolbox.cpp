@@ -195,8 +195,10 @@ void FloatingToolbox::handleLeaveFloatingToolbox(GtkEventController* eventContro
         if (self->floatingToolboxState != configuration) {
             // Do not hide the floating toolbox when leaving it, if the pointer is over
             // the opacity toolbox
-            if (!xoj::util::gtk::isEventOverWidget(eventController,
-                                                   self->mainWindow->getOpacityToolbox()->widget.get())) {
+            OpacityToolbox* opacityToolbox = self->mainWindow->getOpacityToolbox();
+
+            if (opacityToolbox->isHidden() ||
+                !xoj::util::gtk::isEventOverWidget(eventController, opacityToolbox->widget.get())) {
                 self->hide();
             }
         }
