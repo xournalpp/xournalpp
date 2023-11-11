@@ -79,6 +79,11 @@ auto ObjectInputStream::readInt() -> int {
     return readType<int>();
 }
 
+auto ObjectInputStream::readUInt() -> uint32_t {
+    checkType('u');
+    return readType<uint32_t>();
+}
+
 auto ObjectInputStream::readDouble() -> double {
     checkType('d');
     return readType<double>();
@@ -153,6 +158,8 @@ auto ObjectInputStream::getType(char type) -> std::string {
         ret = "Object end";
     } else if (type == 'i') {
         ret = "Number";
+    } else if (type == 'u') {
+        ret = "Unsigned Number";
     } else if (type == 'd') {
         ret = "Floating point";
     } else if (type == 's') {

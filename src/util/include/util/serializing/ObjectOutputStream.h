@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>      // for size_t
+#include <cstdint>      // for uint32_t
 #include <string>       // for string
 #include <string_view>  // for string_view
 #include <vector>       // for vector
@@ -30,6 +31,7 @@ public:
     void endObject();
 
     void writeInt(int i);
+    void writeUInt(uint32_t u);
     void writeDouble(double d);
     void writeSizeT(size_t st);
     void writeString(const char* str);
