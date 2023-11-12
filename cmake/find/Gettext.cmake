@@ -584,8 +584,8 @@ if(XGETTEXT_FOUND)
 
     if(_copyPoFiles)
       set(LINGUAS_file "${CMAKE_CURRENT_BINARY_DIR}/LINGUAS")
-      add_custom_target( prepare-po-folder
-        BYPRODUCTS
+      add_custom_command(
+        OUTPUT
           "${LINGUAS_file}"
           "${clonedPoFiles}"
         COMMAND_EXPAND_LISTS
@@ -596,6 +596,11 @@ if(XGETTEXT_FOUND)
         DEPENDS
           "${origPoFiles}"
         VERBATIM
+      )
+      add_custom_target(prepare-po-folder
+        DEPENDS
+          "${LINGUAS_file}"
+          "${clonedPoFiles}"
       )
     endif()
 
