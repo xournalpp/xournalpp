@@ -13,6 +13,7 @@
 #include "model/Element.h"                        // for Element, ELEMENT_TEXT
 #include "model/Text.h"                           // for Text
 #include "util/Util.h"                            // for DPI_NORMALIZATION_F...
+#include "util/safe_casts.h"                      // for as_unsigned
 #include "util/serializing/BinObjectEncoding.h"   // for BinObjectEncoding
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
@@ -281,7 +282,7 @@ void ClipboardHandler::pasteClipboardContents(GtkClipboard* clipboard, GtkSelect
     ObjectInputStream in;
 
     if (in.read(reinterpret_cast<const char*>(gtk_selection_data_get_data(selectionData)),
-                gtk_selection_data_get_length(selectionData))) {
+                as_unsigned(gtk_selection_data_get_length(selectionData)))) {
         handler->listener->clipboardPasteXournal(in);
     }
 }
