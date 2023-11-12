@@ -239,9 +239,8 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
         }
 
         if (selectedPages[i]) {
-            stateListener->setCurrentState(current++);
-
             exportImagePage(i, id, zoomRatio, format, view);
+            stateListener->setCurrentState(++current);
         }
     }
 }
