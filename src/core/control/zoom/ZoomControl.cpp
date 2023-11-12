@@ -15,15 +15,17 @@
 #include "gui/widgets/XournalWidget.h"  // for gtk_xournal_get_layout
 #include "util/Assert.h"                // for xoj_assert
 #include "util/Util.h"                  // for execInUiThread
+#include "util/gdk4_helper.h"           // for gdk_event_get_modifier_state
 #include "util/glib_casts.h"            // for wrap_for_g_callback
 
 using xoj::util::Rectangle;
 
 auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom) -> bool {
-    guint state = event->state & gtk_accelerator_get_default_mod_mask();
+    auto state =
+            gdk_event_get_modifier_state(reinterpret_cast<GdkEvent*>(event)) & gtk_accelerator_get_default_mod_mask();
 
     // do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
-    if (as_signed(state) & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
+    if (state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
         return true;
     }
 
