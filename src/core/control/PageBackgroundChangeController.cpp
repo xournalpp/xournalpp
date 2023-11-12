@@ -197,7 +197,7 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool {
 
     size_t selected = dlg.getSelectedPage();
 
-    if (selected != npos && selected < doc->getPdfPageCount()) {
+    if (selected < doc->getPdfPageCount()) {
         // no need to set a type, if we set the page number the type is also set
         page->setBackgroundPdfPageNr(selected);
 

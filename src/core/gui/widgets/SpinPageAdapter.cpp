@@ -27,8 +27,7 @@ auto SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter) -
 
 void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinPageAdapter* adapter) {
     // Nothing changed.
-    if (as_unsigned(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton))) ==
-        static_cast<uint64_t>(adapter->page)) {
+    if (as_unsigned(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinbutton))) == adapter->page) {
         return;
     }
 
