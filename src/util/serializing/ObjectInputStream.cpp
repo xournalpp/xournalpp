@@ -132,16 +132,16 @@ auto ObjectInputStream::readImage() -> std::string {
 
 void ObjectInputStream::checkType(char type) {
     if (istream.str().size() < 2) {
-        throw InputStreamException(FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}") % getType(type) %
-                                      (uint32_t)pos() % (uint32_t)len),
-                                   __FILE__, __LINE__);
+        throw InputStreamException(
+                FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}") % getType(type) % pos() % len),
+                __FILE__, __LINE__);
     }
     char t = 0, underscore = 0;
     istream >> underscore >> t;
 
     if (underscore != '_') {
         throw InputStreamException(FS(FORMAT_STR("Expected type signature of {1}, index {2} of {3}, but read '{4}'") %
-                                      getType(type) % ((uint32_t)pos() + 1) % (uint32_t)len % underscore),
+                                      getType(type) % (pos() + 1) % len % underscore),
                                    __FILE__, __LINE__);
     }
 
