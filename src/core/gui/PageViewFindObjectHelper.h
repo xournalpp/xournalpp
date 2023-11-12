@@ -19,6 +19,7 @@
 #include "control/AudioController.h"
 #include "control/tools/EditSelection.h"
 #include "util/PathUtil.h"
+#include "util/safe_casts.h"  // for as_unsigned
 
 #include "XournalView.h"
 #include "filesystem.h"
@@ -39,9 +40,11 @@ public:
 
         if (multiLayer) {
             size_t initialLayer = this->view->getPage()->getSelectedLayerId();
-            for (size_t layerNo = this->view->getPage()->getLayers()->size() - 1; layerNo != npos; layerNo--) {
-                Layer* layer = this->view->getPage()->getLayers()->at(layerNo);
-                this->view->getXournal()->getControl()->getLayerController()->switchToLay(layerNo + 1);
+            auto* layers = this->view->getPage()->getLayers();
+            for (auto it = layers->rbegin(); it != layers->rend(); it--) {
+                Layer* layer = *it;
+                Layer::Index index = layers->size() - as_unsigned(std::distance(layers->rbegin(), it));
+                this->view->getXournal()->getControl()->getLayerController()->switchToLay(index);
                 if (checkLayer(layer)) {
                     return true;
                 }

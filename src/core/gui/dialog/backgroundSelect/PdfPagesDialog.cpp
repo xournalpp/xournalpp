@@ -55,7 +55,7 @@ PdfPagesDialog::~PdfPagesDialog() = default;
 
 void PdfPagesDialog::updateOkButton() {
     bool valid = false;
-    if (selected != npos && selected < elements.size()) {
+    if (selected < elements.size()) {
         BaseElementView* p = this->elements[this->selected];
         valid = gtk_widget_get_visible(p->getWidget());
     }
