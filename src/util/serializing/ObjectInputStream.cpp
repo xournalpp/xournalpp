@@ -6,10 +6,11 @@
 
 #include "util/PlaceholderString.h"                 // for PlaceholderString
 #include "util/i18n.h"                              // for FORMAT_STR, FS
+#include "util/safe_casts.h"                        // for as_signed
 #include "util/serializing/InputStreamException.h"  // for InputStreamException
 #include "util/serializing/Serializable.h"          // for XML_VERSION_STR
 
-template int ObjectInputStream::readType<int>();
+template size_t ObjectInputStream::readType<size_t>();
 
 // This function requires that T is read from its binary representation to work (e.g. integer type)
 template <typename T>
@@ -22,16 +23,16 @@ T ObjectInputStream::readType() {
     }
     T output;
 
-    istream.read((char*)&output, sizeof(T));
+    istream.read((char*)&output, as_signed(sizeof(T)));
 
     return output;
 }
 
 size_t ObjectInputStream::pos() { return static_cast<size_t>(istream.tellg()); }
 
-auto ObjectInputStream::read(const char* data, int data_len) -> bool {
+auto ObjectInputStream::read(const char* data, size_t data_len) -> bool {
     istream.clear();
-    len = (size_t)data_len;
+    len = data_len;
     std::string dataStr = std::string(data, len);
     istream.str(dataStr);
 
@@ -97,7 +98,7 @@ auto ObjectInputStream::readSizeT() -> size_t {
 auto ObjectInputStream::readString() -> std::string {
     checkType('s');
 
-    size_t lenString = (size_t)readType<int>();
+    size_t lenString = readType<size_t>();
 
     if (istream.str().size() < len) {
         throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
@@ -106,7 +107,7 @@ auto ObjectInputStream::readString() -> std::string {
     std::string output;
     output.resize(lenString);
 
-    istream.read(&output[0], (long)lenString);
+    istream.read(&output[0], as_signed(lenString));
 
     return output;
 }
@@ -124,7 +125,7 @@ auto ObjectInputStream::readImage() -> std::string {
     }
     std::string data;
     data.resize(len);
-    istream.read(data.data(), static_cast<int>(len));
+    istream.read(data.data(), as_signed(len));
 
     return data;
 }
@@ -162,6 +163,8 @@ auto ObjectInputStream::getType(char type) -> std::string {
         ret = "Unsigned Number";
     } else if (type == 'd') {
         ret = "Floating point";
+    } else if (type == 'l') {
+        ret = "Size";
     } else if (type == 's') {
         ret = "String";
     } else if (type == 'b') {

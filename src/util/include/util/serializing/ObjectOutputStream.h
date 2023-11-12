@@ -37,7 +37,7 @@ public:
     void writeString(const char* str);
     void writeString(const std::string& s);
 
-    void writeData(const void* data, size_t len, int width);
+    void writeData(const void* data, size_t len, size_t width);
 
     template <typename T>
     void writeData(const std::vector<T>& data);

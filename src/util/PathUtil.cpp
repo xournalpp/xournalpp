@@ -15,6 +15,7 @@
 #include "util/Util.h"               // for getPid, execInUiThread
 #include "util/XojMsgBox.h"          // for XojMsgBox
 #include "util/i18n.h"               // for FS, _F, FORMAT_STR
+#include "util/safe_casts.h"         // for as_signed
 
 #include "config.h"  // for PROJECT_NAME
 
@@ -64,7 +65,7 @@ auto Util::readString(fs::path const& path, bool showErrorToUser, std::ios_base:
         std::string s;
         std::ifstream ifs{path, openmode};
         s.resize(fs::file_size(path));
-        ifs.read(s.data(), static_cast<std::streamsize>(s.size()));
+        ifs.read(s.data(), as_signed(s.size()));
         return {std::move(s)};
     } catch (const fs::filesystem_error& e) {
         if (showErrorToUser) {

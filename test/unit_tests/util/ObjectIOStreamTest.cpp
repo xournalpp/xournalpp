@@ -93,7 +93,7 @@ template <typename T>
 void testReadDataType(const std::vector<T>& data) {
     std::string str = serializeDataVector<T>(data);
     ObjectInputStream stream;
-    EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+    EXPECT_TRUE(stream.read(&str[0], str.size() + 1));
 
     std::vector<T> outputData;
     stream.readData(outputData);
@@ -135,7 +135,7 @@ TEST(UtilObjectIOStream, testReadImage) {
     std::string strSurface = serializeImage(surface);
 
     ObjectInputStream stream;
-    EXPECT_TRUE(stream.read(&strSurface[0], (int)strSurface.size() + 1));
+    EXPECT_TRUE(stream.read(&strSurface[0], strSurface.size() + 1));
 
     std::string outputStr = stream.readImage();
 
@@ -173,7 +173,7 @@ TEST(UtilObjectIOStream, testReadString) {
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        EXPECT_TRUE(stream.read(&str[0], str.size() + 1));
         std::string output = stream.readString();
         EXPECT_EQ(x, output);
     }
@@ -192,7 +192,7 @@ TEST(UtilObjectIOStream, testReadSizeT) {
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        EXPECT_TRUE(stream.read(&str[0], str.size() + 1));
         size_t output = stream.readSizeT();
         EXPECT_EQ(x, output);
     }
@@ -211,7 +211,7 @@ TEST(UtilObjectIOStream, testReadInt) {
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        EXPECT_TRUE(stream.read(&str[0], str.size() + 1));
         int output = stream.readInt();
         EXPECT_EQ(x, output);
     }
@@ -232,7 +232,7 @@ TEST(UtilObjectIOStream, testReadUInt) {
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        EXPECT_TRUE(stream.read(&str[0], str.size() + 1));
         uint32_t output = stream.readUInt();
         EXPECT_EQ(x, output);
     }
@@ -251,7 +251,7 @@ TEST(UtilObjectIOStream, testReadDouble) {
 
         ObjectInputStream stream;
         // The +1 stands for the \0 character
-        EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+        EXPECT_TRUE(stream.read(&str[0], str.size() + 1));
         double output = stream.readDouble();
         EXPECT_DOUBLE_EQ(dbl, output);
     }
@@ -289,7 +289,7 @@ TEST(UtilObjectIOStream, testReadComplexObject) {
             g_string_free(gstr, true);
 
             ObjectInputStream stream;
-            EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+            EXPECT_TRUE(stream.read(&str[0], str.size() + 1));
 
             std::string outputName = stream.readObject();
             EXPECT_EQ(outputName, objectName);
@@ -386,7 +386,7 @@ TEST(UtilObjectIOStream, testReadStroke) {
         for (auto&& stroke: strokes) {
             std::string out_string = serializeStroke(stroke);
             ObjectInputStream istream;
-            istream.read(out_string.c_str(), (int)out_string.size());
+            istream.read(out_string.c_str(), out_string.size());
 
             Stroke in_stroke;
             in_stroke.readSerialized(istream);
