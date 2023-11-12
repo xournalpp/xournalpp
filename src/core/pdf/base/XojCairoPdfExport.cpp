@@ -19,6 +19,7 @@
 #include "model/PageType.h"                 // for PageType
 #include "model/XojPage.h"                  // for XojPage
 #include "pdf/base/XojPdfPage.h"            // for XojPdfPageSPtr, XojPdfPage
+#include "util/Assert.h"                    // for xoj_assert
 #include "util/Util.h"                      // for npos
 #include "util/i18n.h"                      // for _
 #include "util/serdesstream.h"              // for serdes_stream
@@ -181,7 +182,10 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& r
     }
 
     size_t count = 0;
-    for (const auto& e: range) { count += e.last - e.first + 1; }
+    for (const auto& e: range) {
+        xoj_assert(e.last >= e.first);  // Ok, when the PageRangeVector was the result of parsing
+        count += e.last - e.first + 1;  // Not accurate, if e.last is > doc->getPageCount()
+    }
 
     if (this->progressListener) {
         this->progressListener->setMaximumState(count);
@@ -189,7 +193,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& r
 
     size_t c = 0;
     for (const auto& e: range) {
-        auto max = std::min(e.last, doc->getPageCount());
+        auto max = std::min(e.last, doc->getPageCount());  // Should be e.last for parsed PageRangeVector
         for (size_t i = e.first; i <= max; i++) {
             if (progressiveMode) {
                 exportPageLayers(i);
@@ -198,7 +202,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& r
             }
 
             if (this->progressListener) {
-                this->progressListener->setCurrentState(c++);
+                this->progressListener->setCurrentState(++c);
             }
         }
     }
@@ -233,7 +237,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) ->
         }
 
         if (this->progressListener) {
-            this->progressListener->setCurrentState(i);
+            this->progressListener->setCurrentState(i + 1);
         }
     }
 
