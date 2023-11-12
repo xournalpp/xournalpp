@@ -1047,8 +1047,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
             } else {
                 g_warning("%s", FC(_F("xoj-File: {1}") % handler->filepath.string().c_str()));
                 g_warning("%s", FC(_F("Wrong number of pressure values, got {1}, expected {2}") %
-                                   as_signed(handler->pressureBuffer.size()) %
-                                   (as_signed(handler->stroke->getPointCount()) - 1)));
+                                   handler->pressureBuffer.size() % (handler->stroke->getPointCount() - 1)));
             }
             handler->pressureBuffer.clear();
         }

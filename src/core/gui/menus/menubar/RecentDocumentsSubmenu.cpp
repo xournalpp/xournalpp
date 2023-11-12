@@ -39,7 +39,7 @@ auto createRecentMenuItem(const GtkRecentInfo* info, size_t i) {
 
     // escape underscore
     StringUtils::replaceAllChars(display_name, {replace_pair('_', "__")});
-    std::string label = FS(FORMAT_STR("{1}. {2}") % (as_signed(i) + 1) % display_name);
+    std::string label = FS(FORMAT_STR("{1}. {2}") % (i + 1) % display_name);
 
     std::string action = G_ACTION_NAMESPACE;
     action += OPEN_ACTION_NAME;

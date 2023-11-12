@@ -14,11 +14,15 @@
 
 #pragma once
 
-#include <cstdint>    // for int64_t
-#include <memory>     // for unique_ptr
-#include <ostream>    // for ostream
-#include <string>     // for string
-#include <vector>     // for vector
+#include <cstddef>  // for size_t
+#include <cstdint>  // for int64_t
+#include <memory>   // for unique_ptr
+#include <ostream>  // for ostream
+#include <string>   // for string
+#include <utility>  // for move
+#include <vector>   // for vector
+
+#include <glib.h>  // for g_error
 
 /**
  * Base class for Formatting
@@ -34,6 +38,35 @@ public:
     virtual auto format(std::string format) const -> std::string = 0;
 };
 
+
+/**
+ * Format String
+ */
+class PlaceholderElementString: public PlaceholderElement {
+public:
+    explicit PlaceholderElementString(std::string text): text(std::move(text)) {}
+
+    auto format(std::string format) const -> std::string override { return text; }
+
+private:
+    std::string text;
+};
+
+/**
+ * Format int
+ */
+template <typename T>
+class PlaceholderElementInt: public PlaceholderElement {
+public:
+    explicit PlaceholderElementInt(T value): value(value) {}
+
+    auto format(std::string format) const -> std::string override { return std::to_string(value); }
+
+private:
+    T value;
+};
+
+
 /**
  * Placeholder String, used for formatting. Support Placeholder like
  * {1}, {2} etc. Use {{ for {
@@ -42,8 +75,15 @@ struct PlaceholderString {
     PlaceholderString(std::string text);
 
     // Placeholder methods
-    PlaceholderString& operator%(int64_t value);
-    PlaceholderString& operator%(std::string value);
+    template <typename T>
+    auto operator%(T value) -> PlaceholderString& {
+        if constexpr (std::is_integral_v<T>) {
+            data.emplace_back(std::make_unique<PlaceholderElementInt<T>>(value));
+        } else {
+            data.emplace_back(std::make_unique<PlaceholderElementString>(std::move(value)));
+        }
+        return *this;
+    }
 
     // Process Method
     std::string str() const;
