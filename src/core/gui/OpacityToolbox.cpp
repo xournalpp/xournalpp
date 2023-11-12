@@ -8,6 +8,8 @@
 
 #include "control/Control.h"
 #include "control/ToolHandler.h"
+#include "gui/FloatingToolbox.h"
+#include "gui/XournalView.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "util/Color.h"
 #include "util/GtkUtil.h"
@@ -51,6 +53,31 @@ void OpacityToolbox::changeValue(GtkRange* range, GtkScrollType scroll, gdouble 
     gdouble rangedValue = gtk_range_get_value(range);
     self->color.alpha = static_cast<uint8_t>(percentToByte(rangedValue));
     self->updatePreviewImage();
+
+    ToolHandler* toolHandler = self->toolHandler;
+
+    switch (toolHandler->getToolType()) {
+        case TOOL_SELECT_PDF_TEXT_RECT:
+        case TOOL_SELECT_PDF_TEXT_LINEAR:
+            toolHandler->setSelectPDFTextMarkerOpacity(self->color.alpha);
+            break;
+        case TOOL_PEN:
+            toolHandler->setPenFill(self->color.alpha);
+            break;
+        case TOOL_HIGHLIGHTER:
+            toolHandler->setHighlighterFill(self->color.alpha);
+            break;
+        case TOOL_SELECT_RECT:
+        case TOOL_SELECT_REGION:
+        case TOOL_SELECT_MULTILAYER_RECT:
+        case TOOL_SELECT_MULTILAYER_REGION:
+        case TOOL_SELECT_OBJECT:
+            self->theMainWindow->getXournal()->getSelection()->setFill(self->color.alpha, self->color.alpha);
+            break;
+        default:
+            toolHandler->setColor(self->color, false);
+            break;
+    }
 }
 
 bool OpacityToolbox::handleLeave(GtkEventController* eventController, OpacityToolbox* self) {
@@ -59,30 +86,6 @@ bool OpacityToolbox::handleLeave(GtkEventController* eventController, OpacityToo
         // Leave signal will be emitted if entering another child widget (GtkScale in the present case)
         // So, this condition is needed to check if the pointer is truly outside of the opacity toolbox.
         if (!xoj::util::gtk::isEventOverWidget(eventController, self->widget.get())) {
-            // Save tool opacity before hiding the toolbox
-            GtkRange* range = GTK_RANGE(self->theMainWindow->get("opacityToolboxScaleAlpha"));
-            double value = gtk_range_get_value(range);
-
-            self->color.alpha = static_cast<uint8_t>(percentToByte(value));
-
-            ToolHandler* toolHandler = self->toolHandler;
-
-            switch (toolHandler->getToolType()) {
-                case TOOL_SELECT_PDF_TEXT_RECT:
-                case TOOL_SELECT_PDF_TEXT_LINEAR:
-                    toolHandler->setSelectPDFTextMarkerOpacity(self->color.alpha);
-                    break;
-                case TOOL_PEN:
-                    toolHandler->setPenFill(self->color.alpha);
-                    break;
-                case TOOL_HIGHLIGHTER:
-                    toolHandler->setHighlighterFill(self->color.alpha);
-                    break;
-                default:
-                    toolHandler->setColor(self->color, false);
-                    break;
-            }
-
             // Hide the floating toolbox if the mouse is not over it.
             // This handles the case where the pointer entered the opacity toolbox
             // for a ColorToolItem within the floating toolbox.
@@ -107,6 +110,11 @@ void OpacityToolbox::updateEnabled() {
         case TOOL_HIGHLIGHTER:
             result = toolHandler->getHighlighterFillEnabled() ? true : false;
             break;
+        case TOOL_SELECT_RECT:
+        case TOOL_SELECT_REGION:
+        case TOOL_SELECT_MULTILAYER_RECT:
+        case TOOL_SELECT_MULTILAYER_REGION:
+        case TOOL_SELECT_OBJECT:
         case TOOL_SELECT_PDF_TEXT_RECT:
         case TOOL_SELECT_PDF_TEXT_LINEAR:
             result = true;
