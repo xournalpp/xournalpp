@@ -352,8 +352,9 @@ void OpacityToolbox::showAt(GtkWidget* colorWidget) {
 }
 
 void OpacityToolbox::hide() {
-    if (isHidden())
+    if (isHidden()) {
         return;
+    }
 
     gtk_widget_hide(this->widget.get());
 }
