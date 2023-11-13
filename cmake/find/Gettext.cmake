@@ -552,12 +552,16 @@ if(XGETTEXT_FOUND)
 
       if(_copyPoFiles)
         set(_absFile_new "${CMAKE_CURRENT_BINARY_DIR}/${lang}.po")
-        list(APPEND clonedPoFiles "${_absFile_new}")
-        list(APPEND origPoFiles "${_absFile}")
+        add_custom_command(
+          OUTPUT
+            "${_absFile_new}"
+          COMMAND
+            "${CMAKE_COMMAND}" -E copy "${_absFile}" "${_absFile_new}"
+          DEPENDS
+            "${_absFile}"
+          VERBATIM
+        )
         set(_absFile "${_absFile_new}")
-        set(gmodeps "${_absFile}" "prepare-po-folder")
-      else()
-        set(gmodeps "${_absFile}")
       endif()
       add_custom_command(
         OUTPUT
@@ -565,7 +569,7 @@ if(XGETTEXT_FOUND)
         COMMAND
           "${GETTEXT_MSGFMT_EXECUTABLE}" "-o" "${_gmoFile}" "${_absFile}"
         DEPENDS
-          "${gmodeps}"
+          "${_absFile}"
         WORKING_DIRECTORY
           "${CMAKE_CURRENT_BINARY_DIR}"
         VERBATIM
@@ -587,20 +591,9 @@ if(XGETTEXT_FOUND)
       add_custom_command(
         OUTPUT
           "${LINGUAS_file}"
-          "${clonedPoFiles}"
-        COMMAND_EXPAND_LISTS
-        COMMAND
-          "${CMAKE_COMMAND}" -E copy "${origPoFiles}" "${CMAKE_CURRENT_BINARY_DIR}"
         COMMAND
           echo ${langs} > ${LINGUAS_file}
-        DEPENDS
-          "${origPoFiles}"
         VERBATIM
-      )
-      add_custom_target(prepare-po-folder
-        DEPENDS
-          "${LINGUAS_file}"
-          "${clonedPoFiles}"
       )
     endif()
 
