@@ -31,7 +31,7 @@ struct WidgetMargins {
  * `margins.right = 0`, the device is still over the widget when exactly on the right border.
  * `margins.right = -1`, the device is no longer over the widget when exactly on the right border.
  *
- * `margins.right = 0` signifies the device is still over the widget when 1px right of right border.
+ * `margins.right = 1`, the device is still over the widget when 1px right of right border.
  */
 bool isEventOverWidget(GtkEventController*, GtkWidget* widget, WidgetMargins margins);
 
