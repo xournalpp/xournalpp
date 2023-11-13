@@ -544,20 +544,23 @@ if(XGETTEXT_FOUND)
     endif()
 
     set(_gmoFiles)
-    set(clonedPoFiles)
-    set(origPoFiles)
+    set(copiedPoFiles)
     foreach (lang ${langs})
       get_filename_component(_absFile "${lang}.po" ABSOLUTE)
       set(_gmoFile "${CMAKE_CURRENT_BINARY_DIR}/${lang}.gmo")
 
       if(_copyPoFiles)
         set(_absFile_new "${CMAKE_CURRENT_BINARY_DIR}/${lang}.po")
-        list(APPEND clonedPoFiles "${_absFile_new}")
-        list(APPEND origPoFiles "${_absFile}")
-        set(_absFile "${_absFile_new}")
-        set(gmodeps "${_absFile}" "prepare-po-folder")
-      else()
-        set(gmodeps "${_absFile}")
+        add_custom_command(
+          OUTPUT
+            "${_absFile_new}"
+          COMMAND
+            "${CMAKE_COMMAND}" -E copy "${_absFile}" "${_absFile_new}"
+          DEPENDS
+            "${_absFile}"
+          VERBATIM
+        )
+        list(APPEND copiedPoFiles "${_absFile_new}")
       endif()
       add_custom_command(
         OUTPUT
@@ -565,7 +568,7 @@ if(XGETTEXT_FOUND)
         COMMAND
           "${GETTEXT_MSGFMT_EXECUTABLE}" "-o" "${_gmoFile}" "${_absFile}"
         DEPENDS
-          "${gmodeps}"
+          "${_absFile}"
         WORKING_DIRECTORY
           "${CMAKE_CURRENT_BINARY_DIR}"
         VERBATIM
@@ -587,20 +590,9 @@ if(XGETTEXT_FOUND)
       add_custom_command(
         OUTPUT
           "${LINGUAS_file}"
-          "${clonedPoFiles}"
-        COMMAND_EXPAND_LISTS
-        COMMAND
-          "${CMAKE_COMMAND}" -E copy "${origPoFiles}" "${CMAKE_CURRENT_BINARY_DIR}"
         COMMAND
           echo ${langs} > ${LINGUAS_file}
-        DEPENDS
-          "${origPoFiles}"
         VERBATIM
-      )
-      add_custom_target(prepare-po-folder
-        DEPENDS
-          "${LINGUAS_file}"
-          "${clonedPoFiles}"
       )
     endif()
 
@@ -622,6 +614,7 @@ if(XGETTEXT_FOUND)
             "${CMAKE_CURRENT_SOURCE_DIR}/${desktopfileIN}"
           DEPENDS
             "${LINGUAS_file}"
+            "${copiedPoFiles}"
           WORKING_DIRECTORY
             "${CMAKE_CURRENT_BINARY_DIR}"
           VERBATIM
@@ -650,6 +643,7 @@ if(XGETTEXT_FOUND)
             "${CMAKE_CURRENT_SOURCE_DIR}/${inifileIN}"
           DEPENDS
             "${LINGUAS_file}"
+            "${copiedPoFiles}"
           WORKING_DIRECTORY
             "${CMAKE_CURRENT_BINARY_DIR}"
           VERBATIM
@@ -681,6 +675,7 @@ if(XGETTEXT_FOUND)
             "${CMAKE_CURRENT_SOURCE_DIR}/${xmlfileIN}"
           DEPENDS
             "${LINGUAS_file}"
+            "${copiedPoFiles}"
           WORKING_DIRECTORY
             "${CMAKE_CURRENT_BINARY_DIR}"
           VERBATIM
