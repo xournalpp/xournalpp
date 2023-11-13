@@ -544,8 +544,7 @@ if(XGETTEXT_FOUND)
     endif()
 
     set(_gmoFiles)
-    set(clonedPoFiles)
-    set(origPoFiles)
+    set(copiedPoFiles)
     foreach (lang ${langs})
       get_filename_component(_absFile "${lang}.po" ABSOLUTE)
       set(_gmoFile "${CMAKE_CURRENT_BINARY_DIR}/${lang}.gmo")
@@ -561,7 +560,7 @@ if(XGETTEXT_FOUND)
             "${_absFile}"
           VERBATIM
         )
-        set(_absFile "${_absFile_new}")
+        list(APPEND copiedPoFiles "${_absFile_new}")
       endif()
       add_custom_command(
         OUTPUT
@@ -615,6 +614,7 @@ if(XGETTEXT_FOUND)
             "${CMAKE_CURRENT_SOURCE_DIR}/${desktopfileIN}"
           DEPENDS
             "${LINGUAS_file}"
+            "${copiedPoFiles}"
           WORKING_DIRECTORY
             "${CMAKE_CURRENT_BINARY_DIR}"
           VERBATIM
@@ -643,6 +643,7 @@ if(XGETTEXT_FOUND)
             "${CMAKE_CURRENT_SOURCE_DIR}/${inifileIN}"
           DEPENDS
             "${LINGUAS_file}"
+            "${copiedPoFiles}"
           WORKING_DIRECTORY
             "${CMAKE_CURRENT_BINARY_DIR}"
           VERBATIM
@@ -674,6 +675,7 @@ if(XGETTEXT_FOUND)
             "${CMAKE_CURRENT_SOURCE_DIR}/${xmlfileIN}"
           DEPENDS
             "${LINGUAS_file}"
+            "${copiedPoFiles}"
           WORKING_DIRECTORY
             "${CMAKE_CURRENT_BINARY_DIR}"
           VERBATIM
