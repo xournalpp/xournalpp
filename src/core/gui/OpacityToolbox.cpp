@@ -20,7 +20,7 @@
 #include "MainWindow.h"
 
 
-static int percentToByte(double percent) { return static_cast<int>(std::round(percent * 2.55)); }
+static int percentToByte(double percent) { return round_cast<int>(percent * 2.55); }
 static double byteToPercent(int byte) { return byte / 2.55; }
 
 OpacityToolbox::OpacityToolbox(MainWindow* theMainWindow, GtkOverlay* overlay):
