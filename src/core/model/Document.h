@@ -68,15 +68,16 @@ public:
      */
     std::string getLastErrorMsg() const;
 
-    size_t findPdfPage(size_t pdfPage);
+    size_t findPdfPage(size_t pdfPage) const;
 
     Document& operator=(const Document& doc);
 
     void setFilepath(fs::path filepath);
     fs::path getFilepath() const;
     fs::path getPdfFilepath() const;
-    fs::path createSaveFolder(fs::path lastSavePath);
-    fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPfdName = "");
+    fs::path createSaveFoldername(const fs::path& lastSavePath) const;
+    fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName,
+                                const std::string& defaultPfdName = "") const;
 
     fs::path getEvMetadataFilename() const;
 

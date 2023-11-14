@@ -28,7 +28,7 @@ class ProgressListener;
 
 class XojCairoPdfExport: public XojPdfExport {
 public:
-    XojCairoPdfExport(Document* doc, ProgressListener* progressListener);
+    XojCairoPdfExport(const Document* doc, ProgressListener* progressListener);
     ~XojCairoPdfExport() override;
 
 public:
@@ -68,7 +68,7 @@ private:
     void setLayerRange(const char* rangeStr) override;
 
 private:
-    Document* doc = nullptr;
+    const Document* doc = nullptr;
     ProgressListener* progressListener = nullptr;
 
     cairo_surface_t* surface = nullptr;

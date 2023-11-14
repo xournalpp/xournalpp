@@ -67,7 +67,9 @@ void XojPage::removeLayer(Layer* l) {
 
 void XojPage::setSelectedLayerId(Layer::Index id) { this->currentLayer = id; }
 
-auto XojPage::getLayers() -> std::vector<Layer*>* { return &this->layer; }
+auto XojPage::getLayers() -> std::vector<Layer*>& { return this->layer; }
+
+auto XojPage::getLayers() const -> PointerContainerView<std::vector<Layer*>> { return this->layer; }
 
 auto XojPage::getLayerCount() const -> Layer::Index { return this->layer.size(); }
 
@@ -150,9 +152,10 @@ void XojPage::setBackgroundType(const PageType& bgType) {
     }
 }
 
-auto XojPage::getBackgroundType() -> PageType { return this->bgType; }
+auto XojPage::getBackgroundType() const -> PageType { return this->bgType; }
 
 auto XojPage::getBackgroundImage() -> BackgroundImage& { return this->backgroundImage; }
+auto XojPage::getBackgroundImage() const -> const BackgroundImage& { return this->backgroundImage; }
 
 void XojPage::setBackgroundImage(BackgroundImage img) { this->backgroundImage = std::move(img); }
 

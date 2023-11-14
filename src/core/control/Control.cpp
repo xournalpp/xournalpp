@@ -1727,7 +1727,7 @@ auto Control::showSaveDialog() -> bool {
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
     this->doc->lock();
-    auto suggested_folder = this->doc->createSaveFolder(this->settings->getLastSavePath());
+    auto suggested_folder = this->doc->createSaveFoldername(this->settings->getLastSavePath());
     auto suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
     this->doc->unlock();
 
@@ -2209,7 +2209,7 @@ void Control::moveSelectionToLayer(size_t layerNo) {
     }
 
     auto* oldLayer = currentP->getSelectedLayer();
-    auto* newLayer = currentP->getLayers()->at(layerNo);
+    auto* newLayer = currentP->getLayers().at(layerNo);
     auto moveSelUndo = std::make_unique<MoveSelectionToLayerUndoAction>(currentP, getLayerController(), oldLayer,
                                                                         currentP->getSelectedLayerId() - 1, layerNo);
     for (auto* e: selection->getElements()) {

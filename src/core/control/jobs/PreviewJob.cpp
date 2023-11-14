@@ -68,7 +68,7 @@ void PreviewJob::finishPaint() {
 }
 
 void PreviewJob::drawPage() {
-    PageRef page = this->sidebarPreview->page;
+    ConstPageRef page = this->sidebarPreview->page;
     Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
     DocumentView view;
     view.setPdfCache(this->sidebarPreview->sidebar->getCache());
@@ -96,25 +96,26 @@ void PreviewJob::drawPage() {
             if (layer == 0) {
                 view.drawBackground(xoj::view::BACKGROUND_SHOW_ALL);
             } else {
-                Layer* drawLayer = (*page->getLayers())[layer - 1];
+                const Layer* drawLayer = page->getLayers()[layer - 1];
                 xoj::view::LayerView layerView(drawLayer);
                 layerView.draw(context);
             }
             view.finializeDrawing();
             break;
 
-        case RENDER_TYPE_PAGE_LAYERSTACK:
+        case RENDER_TYPE_PAGE_LAYERSTACK: {
             // render all layers up to layer
             view.initDrawing(page, cr2, true);
             view.drawBackground(xoj::view::BACKGROUND_SHOW_ALL);
+            const auto& layers = page->getLayers();
             for (Layer::Index i = 0; i < layer; i++) {
-                Layer* drawLayer = (*page->getLayers())[i];
+                const Layer* drawLayer = layers[i];
                 xoj::view::LayerView layerView(drawLayer);
                 layerView.draw(context);
             }
             view.finializeDrawing();
             break;
-
+        }
         default:
             // unknown type
             break;

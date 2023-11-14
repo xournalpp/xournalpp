@@ -15,7 +15,7 @@
 
 #include <cairo.h>  // for cairo_t
 
-#include "model/PageRef.h"  // for PageRef
+#include "model/PageRef.h"  // for ConstPageRef
 #include "util/Color.h"     // for Color
 
 class PdfCache;
@@ -52,7 +52,8 @@ public:
     [[nodiscard]] static std::unique_ptr<BackgroundView> createRuled(double width, double height, Color backgroundColor,
                                                                      const PageType& pt, double lineWidthFactor = 1.0);
 
-    [[nodiscard]] static std::unique_ptr<BackgroundView> createForPage(PageRef page, xoj::view::BackgroundFlags bgFlags,
+    [[nodiscard]] static std::unique_ptr<BackgroundView> createForPage(ConstPageRef page,
+                                                                       xoj::view::BackgroundFlags bgFlags,
                                                                        PdfCache* pdfCache = nullptr);
 
 protected:

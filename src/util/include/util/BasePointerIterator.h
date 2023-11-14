@@ -64,7 +64,7 @@ public:
     BasePointerIterator operator-(difference_type n) const { return BasePointerIterator(p - n); }
     difference_type operator-(const BasePointerIterator& other) const { return p - other.p; }
 
-    reference operator[](difference_type n) { return *(p + n); }
+    reference operator[](difference_type n) const { return *(p + n); }
 
     bool operator==(const BasePointerIterator& other) const { return p == other.p; }
     bool operator!=(const BasePointerIterator& other) const { return p != other.p; }
@@ -74,7 +74,7 @@ public:
     bool operator<=(const BasePointerIterator& other) const { return !(other < *this); }
     bool operator>=(const BasePointerIterator& other) const { return !(*this < other); }
 
-    friend BasePointerIterator operator+(difference_type n, BasePointerIterator& it) { return it + n; }
+    friend BasePointerIterator operator+(difference_type n, const BasePointerIterator& it) { return it + n; }
 
 private:
     pointer p = nullptr;

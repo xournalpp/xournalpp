@@ -20,20 +20,21 @@ auto Selection::finalize(PageRef page) -> size_t {
     size_t layerId = 0;
 
     if (multiLayer) {
-        for (int layerNo = page->getLayers()->size() - 1; layerNo >= 0; layerNo--) {
-            Layer* l = page->getLayers()->at(layerNo);
-            if (!l->isVisible()) {
+        const auto& layers = page->getLayers();
+        size_t layerNo = layers.size();
+        for (auto l = layers.rbegin(); l != layers.rend(); l = std::next(l), layerNo--) {
+            if (!(*l)->isVisible()) {
                 continue;
             }
             bool selectionOnLayer = false;
-            for (Element* e: l->getElements()) {
+            for (Element* e: (*l)->getElements()) {
                 if (e->isInSelection(this)) {
                     this->selectedElements.push_back(e);
                     selectionOnLayer = true;
                 }
             }
             if (selectionOnLayer) {
-                layerId = layerNo + 1;
+                layerId = layerNo;
                 break;
             }
         }

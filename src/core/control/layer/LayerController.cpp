@@ -233,7 +233,7 @@ void LayerController::mergeCurrentLayerDown() {
      * the background is not in the vector, so layer 1 has index 0 and so on.
      */
     const Layer::Index layerBelowIndex = layerBelowID - 1;
-    Layer* layerBelow = (*page->getLayers())[layerBelowIndex];
+    Layer* layerBelow = page->getLayers()[layerBelowIndex];
 
     UndoActionPtr undo_redo_action =
             std::make_unique<MergeLayerDownUndoAction>(this, page, currentLayer, layerBelow, layerID - 1, pageID);

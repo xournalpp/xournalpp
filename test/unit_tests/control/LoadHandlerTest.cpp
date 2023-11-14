@@ -19,6 +19,7 @@
 #include "control/xojfile/LoadHandler.h"
 #include "control/xojfile/SaveHandler.h"
 #include "model/Image.h"
+#include "model/PageRef.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
 #include "model/XojPage.h"
@@ -40,8 +41,8 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
         EXPECT_EQ((size_t)1, doc->getPageCount());
         PageRef page = doc->getPage(0);
 
-        EXPECT_EQ((size_t)1, (*page).getLayerCount());
-        Layer* layer = (*(*page).getLayers())[0];
+        EXPECT_EQ((size_t)1, page->getLayerCount());
+        Layer* layer = page->getLayers()[0];
 
         const std::vector<Element*>& elements = layer->getElements();
         EXPECT_EQ(8, static_cast<int>(layer->getElements().size()));
@@ -136,8 +137,8 @@ void checkPageType(Document* doc, int pageIndex, string expectedText, PageType e
     PageType bgType = page->getBackgroundType();
     EXPECT_TRUE(expectedBgType == bgType);
 
-    EXPECT_EQ((size_t)1, (*page).getLayerCount());
-    Layer* layer = (*(*page).getLayers())[0];
+    EXPECT_EQ((size_t)1, page->getLayerCount());
+    Layer* layer = page->getLayers()[0];
 
     Element* element = layer->getElements().front();
     EXPECT_EQ(ELEMENT_TEXT, element->getType());
@@ -148,7 +149,7 @@ void checkPageType(Document* doc, int pageIndex, string expectedText, PageType e
 
 
 void checkLayer(PageRef page, int layerIndex, string expectedText) {
-    Layer* layer = (*(*page).getLayers())[layerIndex];
+    Layer* layer = page->getLayers()[layerIndex];
 
     Element* element = layer->getElements().front();
 
@@ -165,8 +166,8 @@ TEST(ControlLoadHandler, testLoad) {
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)1, (*page).getLayerCount());
-    Layer* layer = (*(*page).getLayers())[0];
+    EXPECT_EQ((size_t)1, page->getLayerCount());
+    Layer* layer = page->getLayers()[0];
 
     Element* element = layer->getElements().front();
     EXPECT_EQ(ELEMENT_TEXT, element->getType());
@@ -183,8 +184,8 @@ TEST(ControlLoadHandler, testLoadZipped) {
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)1, (*page).getLayerCount());
-    Layer* layer = (*(*page).getLayers())[0];
+    EXPECT_EQ((size_t)1, page->getLayerCount());
+    Layer* layer = page->getLayers()[0];
 
     Element* element = layer->getElements().front();
     EXPECT_EQ(ELEMENT_TEXT, element->getType());
@@ -201,8 +202,8 @@ TEST(ControlLoadHandler, testLoadUnzipped) {
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)1, (*page).getLayerCount());
-    Layer* layer = (*(*page).getLayers())[0];
+    EXPECT_EQ((size_t)1, page->getLayerCount());
+    Layer* layer = page->getLayers()[0];
 
     Element* element = layer->getElements().front();
     EXPECT_EQ(ELEMENT_TEXT, element->getType());
@@ -270,7 +271,7 @@ TEST(ControlLoadHandler, testLayer) {
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)3, (*page).getLayerCount());
+    EXPECT_EQ((size_t)3, page->getLayerCount());
     checkLayer(page, 0, "l1");
     checkLayer(page, 1, "l2");
     checkLayer(page, 2, "l3");
@@ -283,7 +284,7 @@ TEST(ControlLoadHandler, testLayerZipped) {
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)3, (*page).getLayerCount());
+    EXPECT_EQ((size_t)3, page->getLayerCount());
     checkLayer(page, 0, "l1");
     checkLayer(page, 1, "l2");
     checkLayer(page, 2, "l3");
@@ -296,8 +297,8 @@ TEST(ControlLoadHandler, testText) {
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)1, (*page).getLayerCount());
-    Layer* layer = (*(*page).getLayers())[0];
+    EXPECT_EQ((size_t)1, page->getLayerCount());
+    Layer* layer = page->getLayers()[0];
 
     Text* t1 = (Text*)layer->getElements()[0];
     EXPECT_EQ(ELEMENT_TEXT, t1->getType());
@@ -324,8 +325,8 @@ TEST(ControlLoadHandler, testTextZipped) {
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
 
-    EXPECT_EQ((size_t)1, (*page).getLayerCount());
-    Layer* layer = (*(*page).getLayers())[0];
+    EXPECT_EQ((size_t)1, page->getLayerCount());
+    Layer* layer = page->getLayers()[0];
 
     Text* t1 = (Text*)layer->getElements()[0];
     EXPECT_EQ(ELEMENT_TEXT, t1->getType());
@@ -352,7 +353,7 @@ TEST(ControlLoadHandler, testImageZipped) {
     EXPECT_EQ(1U, doc->getPageCount());
     PageRef page = doc->getPage(0);
     EXPECT_EQ(1U, page->getLayerCount());
-    Layer* layer = (*page->getLayers())[0];
+    Layer* layer = page->getLayers()[0];
     EXPECT_EQ(layer->getElements().size(), 1);
 
     Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
@@ -381,7 +382,7 @@ TEST(ControlLoadHandler, imageLoadJpeg) {
     ASSERT_EQ(1U, doc->getPageCount());
     PageRef page = doc->getPage(0);
     ASSERT_EQ(1U, page->getLayerCount());
-    Layer* layer = (*page->getLayers())[0];
+    Layer* layer = page->getLayers()[0];
     ASSERT_EQ(layer->getElements().size(), 1);
 
     Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
@@ -416,7 +417,7 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     ASSERT_EQ(1U, doc->getPageCount());
     PageRef page = doc->getPage(0);
     ASSERT_EQ(1U, page->getLayerCount());
-    Layer* layer = (*page->getLayers())[0];
+    Layer* layer = page->getLayers()[0];
     ASSERT_EQ(layer->getElements().size(), 1);
 
     Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
@@ -465,7 +466,7 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
 
     EXPECT_EQ((size_t)1, page->getLayerCount());
 
-    Layer* layer = (*(page->getLayers()))[0];
+    Layer* layer = page->getLayers()[0];
 
     EXPECT_EQ(9U, layer->getElements().size());
 

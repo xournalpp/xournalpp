@@ -26,7 +26,7 @@ void DocumentView::setPdfCache(PdfCache* cache) { pdfCache = cache; }
  * @param cr Draw to this context
  * @param dontRenderEditingStroke false to draw currently drawing stroke
  */
-void DocumentView::initDrawing(PageRef page, cairo_t* cr, bool dontRenderEditingStroke) {
+void DocumentView::initDrawing(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke) {
     this->cr = cr;
     this->page = page;
     this->dontRenderEditingStroke = dontRenderEditingStroke;
@@ -72,7 +72,7 @@ void DocumentView::drawBackground(xoj::view::BackgroundFlags bgFlags) const {
  * @param dontRenderEditingStroke false to draw currently drawing stroke
  * @param hideBackground true to hide the background
  */
-void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground,
+void DocumentView::drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground,
                             bool hideImageBackground, bool hideRulingBackground) {
     initDrawing(page, cr, dontRenderEditingStroke);
 
@@ -86,7 +86,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
-    for (Layer* layer: *page->getLayers()) {
+    for (const Layer* layer: page->getLayers()) {
         if (layer->isVisible()) {
             xoj::view::LayerView layerView(layer);
             layerView.draw(context);
@@ -97,7 +97,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 }
 
 
-void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, PageRef page, cairo_t* cr,
+void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, ConstPageRef page, cairo_t* cr,
                                     bool dontRenderEditingStroke, bool hidePdfBackground, bool hideImageBackground,
                                     bool hideRulingBackground) {
     initDrawing(page, cr, dontRenderEditingStroke);
@@ -126,7 +126,7 @@ void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, PageRef 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
     auto visibilityIt = visible.begin();
-    for (Layer* l: *page->getLayers()) {
+    for (const Layer* l: page->getLayers()) {
         if (!*(visibilityIt++)) {
             continue;
         }

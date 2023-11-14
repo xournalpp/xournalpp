@@ -17,7 +17,8 @@
 #include <vector>    // for vector
 
 #include "util/Color.h"  // for Color
-#include "util/Util.h"   // for npos
+#include "util/PointerContainerView.h"
+#include "util/Util.h"  // for npos
 
 #include "BackgroundImage.h"  // for BackgroundImage
 #include "Layer.h"            // for Layer, Layer::Index
@@ -44,7 +45,7 @@ public:
     void setBackgroundPdfPageNr(size_t page);
 
     void setBackgroundType(const PageType& bgType);
-    PageType getBackgroundType();
+    PageType getBackgroundType() const;
 
     /**
      * Do not call this, cal doc->setPageSize(Page * p, double width, double height);
@@ -61,7 +62,9 @@ public:
     void setBackgroundColor(Color color);
     Color getBackgroundColor() const;
 
-    std::vector<Layer*>* getLayers();
+    std::vector<Layer*>& getLayers();
+    PointerContainerView<std::vector<Layer*>> getLayers() const;
+
     Layer::Index getLayerCount() const;
     Layer::Index getSelectedLayerId();
     void setSelectedLayerId(Layer::Index id);
@@ -70,6 +73,7 @@ public:
     Layer* getSelectedLayer();
 
     BackgroundImage& getBackgroundImage();
+    const BackgroundImage& getBackgroundImage() const;
     void setBackgroundImage(BackgroundImage img);
 
     std::string getBackgroundName() const;

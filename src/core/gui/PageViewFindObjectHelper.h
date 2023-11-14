@@ -39,11 +39,11 @@ public:
 
         if (multiLayer) {
             size_t initialLayer = this->view->getPage()->getSelectedLayerId();
-            for (int layerNo = static_cast<int>(this->view->getPage()->getLayers()->size() - 1); layerNo >= 0;
-                 layerNo--) {
-                Layer* layer = this->view->getPage()->getLayers()->at(layerNo);
-                this->view->getXournal()->getControl()->getLayerController()->switchToLay(layerNo + 1);
-                if (checkLayer(layer)) {
+            const auto& layers = this->view->getPage()->getLayers();
+            size_t layerNo = layers.size();
+            for (auto l = layers.rbegin(); l != layers.rend(); l = std::next(l), layerNo--) {
+                this->view->getXournal()->getControl()->getLayerController()->switchToLay(layerNo);
+                if (checkLayer(*l)) {
                     return true;
                 }
             }
@@ -56,7 +56,7 @@ public:
     }
 
 protected:
-    bool checkLayer(Layer* l) {
+    bool checkLayer(const Layer* l) {
         /* Search for Element whose bounding box center is closest to the place (x,y) where the object is searched for.
          * Only those strokes are taken into account that pass the appropriate checkElement test.
          */

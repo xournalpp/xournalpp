@@ -56,7 +56,7 @@ auto BackgroundView::createRuled(double width, double height, Color backgroundCo
     return res;
 }
 
-auto BackgroundView::createForPage(PageRef page, BackgroundFlags bgFlags, PdfCache* pdfCache)
+auto BackgroundView::createForPage(ConstPageRef page, BackgroundFlags bgFlags, PdfCache* pdfCache)
         -> std::unique_ptr<BackgroundView> {
     const double width = page->getWidth();
     const double height = page->getHeight();

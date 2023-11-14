@@ -13,7 +13,7 @@
 
 #include <cairo.h>  // for cairo_t
 
-#include "model/PageRef.h"  // for PageRef
+#include "model/PageRef.h"  // for ConstPageRef
 #include "util/ElementRange.h"
 
 class PdfCache;
@@ -37,7 +37,7 @@ public:
      * @param hideImageBackground true to hide the PDF background
      * @param hideRulingBacground true to hide the ruling background
      */
-    void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground = false,
+    void drawPage(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground = false,
                   bool hideImageBackground = false, bool hideRulingBackground = false);
 
     /**
@@ -50,9 +50,9 @@ public:
      * @param hideImageBackground true to hide the PDF background
      * @param hideRulingBacground true to hide the ruling background
      */
-    void drawLayersOfPage(const LayerRangeVector& layerRange, PageRef page, cairo_t* cr, bool dontRenderEditingStroke,
-                          bool hidePdfBackground = false, bool hideImageBackground = false,
-                          bool hideRulingBackground = false);
+    void drawLayersOfPage(const LayerRangeVector& layerRange, ConstPageRef page, cairo_t* cr,
+                          bool dontRenderEditingStroke, bool hidePdfBackground = false,
+                          bool hideImageBackground = false, bool hideRulingBackground = false);
 
     /**
      * Mark stroke with Audio
@@ -69,7 +69,7 @@ public:
      * @param cr Draw to thgis context
      * @param dontRenderEditingStroke false to draw currently drawing stroke
      */
-    void initDrawing(PageRef page, cairo_t* cr, bool dontRenderEditingStroke);
+    void initDrawing(ConstPageRef page, cairo_t* cr, bool dontRenderEditingStroke);
 
     /**
      * Draw the background
@@ -88,7 +88,7 @@ public:
 
 private:
     cairo_t* cr = nullptr;
-    PageRef page = nullptr;
+    ConstPageRef page = nullptr;
     PdfCache* pdfCache = nullptr;
     bool dontRenderEditingStroke = false;
     bool markAudioStroke = false;

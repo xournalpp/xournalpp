@@ -15,3 +15,4 @@
 class XojPage;
 
 using PageRef = std::shared_ptr<XojPage>;
+using ConstPageRef = std::shared_ptr<const XojPage>;

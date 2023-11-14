@@ -44,7 +44,7 @@ SaveHandler::SaveHandler() {
     this->attachBgId = 1;
 }
 
-void SaveHandler::prepareSave(Document* doc) {
+void SaveHandler::prepareSave(const Document* doc) {
     if (this->root) {
         // cleanup old data
         backgroundImages.clear();
@@ -88,20 +88,20 @@ auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
     return color;
 }
 
-void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
+void SaveHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement) {
     /** set stroke timestamp value to the XmlPointNode */
     xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
     xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
 }
 
-void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
+void SaveHandler::visitStroke(XmlPointNode* stroke, const Stroke* s) {
     StrokeTool t = s->getToolType();
 
     unsigned char alpha = 0xff;
 
     if (t == StrokeTool::PEN) {
         stroke->setAttrib("tool", "pen");
-        writeTimestamp(s, stroke);
+        writeTimestamp(stroke, s);
     } else if (t == StrokeTool::ERASER) {
         stroke->setAttrib("tool", "eraser");
     } else if (t == StrokeTool::HIGHLIGHTER) {
@@ -134,7 +134,7 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 /**
  * Export the fill attributes
  */
-void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
+void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, const Stroke* s) {
     if (s->getFill() != -1) {
         stroke->setAttrib("fill", s->getFill());
     }
@@ -156,7 +156,7 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
     }
 }
 
-void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
+void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
     auto* layer = new XmlNode("layer");
     page->addChild(layer);
     if (l->hasName()) {
@@ -182,7 +182,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
             text->setAttrib("y", t->getY());
             text->setAttrib("color", getColorStr(t->getColor()).c_str());
 
-            writeTimestamp(t, text);
+            writeTimestamp(text, t);
         } else if (e->getType() == ELEMENT_IMAGE) {
             auto* i = dynamic_cast<Image*>(e);
             auto* image = new XmlImageNode("image");
@@ -208,7 +208,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
     }
 }
 
-void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
+void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id) {
     auto* page = new XmlNode("page");
     root->addChild(page);
     page->setAttrib("width", p->getWidth());
@@ -269,33 +269,46 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
             char* filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
             background->setAttrib("domain", "attach");
             background->setAttrib("filename", filename);
-            p->getBackgroundImage().setFilepath(filename);
 
             backgroundImages.emplace_back(p->getBackgroundImage());
 
+            /*
+             * Because BackgroundImage is basically a wrapped pointer, the following lines actually modify
+             * *(p->getBackgroundImage().content) and thus the Document.
+             * TODO Find a better way
+             */
+            backgroundImages.back().setFilepath(filename);
+            backgroundImages.back().setCloneId(id);
+
             g_free(filename);
-            p->getBackgroundImage().setCloneId(id);
         } else {
             background->setAttrib("domain", "absolute");
             background->setAttrib("filename", p->getBackgroundImage().getFilepath().string());
-            p->getBackgroundImage().setCloneId(id);
+            BackgroundImage img = p->getBackgroundImage();
+
+            /*
+             * Because BackgroundImage is basically a wrapped pointer, the following line actually modifies
+             * *(p->getBackgroundImage().content) and thus the Document.
+             * TODO Find a better way
+             */
+            img.setCloneId(id);
         }
     } else {
         writeSolidBackground(background, p);
     }
 
     // no layer, but we need to write one layer, else the old Xournal cannot read the file
-    if (p->getLayers()->empty()) {
+    if (p->getLayerCount() == 0) {
         auto* layer = new XmlNode("layer");
         page->addChild(layer);
     }
 
-    for (Layer* l: *p->getLayers()) {
+    for (const Layer* l: p->getLayers()) {
         visitLayer(page, l);
     }
 }
 
-void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
+void SaveHandler::writeSolidBackground(XmlNode* background, ConstPageRef p) {
     background->setAttrib("type", "solid");
     background->setAttrib("color", getColorStr(p->getBackgroundColor()));
     background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(p->getBackgroundType().format));
@@ -307,7 +320,7 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
     }
 }
 
-void SaveHandler::writeBackgroundName(XmlNode* background, PageRef p) {
+void SaveHandler::writeBackgroundName(XmlNode* background, ConstPageRef p) {
     if (p->backgroundHasName()) {
         background->setAttrib("name", p->getBackgroundName());
     }
@@ -336,9 +349,11 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
     out->write("<?xml version=\"1.0\" standalone=\"no\"?>\n");
     root->writeOut(out, listener);
 
-    for (BackgroundImage const& img: backgroundImages) {
+    for (const BackgroundImage& img: backgroundImages) {
         auto tmpfn = (fs::path(filepath) += ".") += img.getFilepath();
-        if (!gdk_pixbuf_save(img.getPixbuf(), tmpfn.u8string().c_str(), "png", nullptr, nullptr)) {
+        // Are we certain that does not modify the GdkPixbuf?
+        if (!gdk_pixbuf_save(const_cast<GdkPixbuf*>(img.getPixbuf()), tmpfn.u8string().c_str(), "png", nullptr,
+                             nullptr)) {
             if (!this->errorMessage.empty()) {
                 this->errorMessage += "\n";
             }
@@ -348,4 +363,4 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
     }
 }
 
-auto SaveHandler::getErrorMessage() -> std::string { return this->errorMessage; }
+auto SaveHandler::getErrorMessage() -> const std::string& { return this->errorMessage; }

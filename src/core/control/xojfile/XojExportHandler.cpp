@@ -23,7 +23,7 @@ XojExportHandler::~XojExportHandler() = default;
 /**
  * Export the fill attributes
  */
-void XojExportHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
+void XojExportHandler::visitStrokeExtended(XmlPointNode* stroke, const Stroke* s) {
     // Fill is not exported in .xoj
     // Line style is also not supported
 }
@@ -36,7 +36,7 @@ void XojExportHandler::writeHeader() {
             new XmlTextNode("title", std::string{"Xournal document (Compatibility) - see "} + PROJECT_URL));
 }
 
-void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p) {
+void XojExportHandler::writeSolidBackground(XmlNode* background, ConstPageRef p) {
     background->setAttrib("type", "solid");
     background->setAttrib("color", getColorStr(p->getBackgroundColor()));
 
@@ -52,10 +52,10 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p) {
     background->setAttrib("style", format);
 }
 
-void XojExportHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
+void XojExportHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement) {
     // Do nothing since timestamp are not supported by Xournal
 }
 
-void XojExportHandler::writeBackgroundName(XmlNode* background, PageRef p) {
+void XojExportHandler::writeBackgroundName(XmlNode* background, ConstPageRef p) {
     // Do nothing since background name is not supported by Xournal
 }

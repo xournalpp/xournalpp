@@ -32,11 +32,11 @@ protected:
     /**
      * Export the fill attributes
      */
-    void visitStrokeExtended(XmlPointNode* stroke, Stroke* s) override;
+    void visitStrokeExtended(XmlPointNode* stroke, const Stroke* s) override;
     void writeHeader() override;
-    void writeSolidBackground(XmlNode* background, PageRef p) override;
-    void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) override;
-    void writeBackgroundName(XmlNode* background, PageRef p) override;
+    void writeSolidBackground(XmlNode* background, ConstPageRef p) override;
+    void writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement* audioElement) override;
+    void writeBackgroundName(XmlNode* background, ConstPageRef p) override;
 
 private:
 };

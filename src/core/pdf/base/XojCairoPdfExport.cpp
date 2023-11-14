@@ -27,7 +27,7 @@
 #include "config.h"      // for PROJECT_STRING
 #include "filesystem.h"  // for path
 
-XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressListener):
+XojCairoPdfExport::XojCairoPdfExport(const Document* doc, ProgressListener* progressListener):
         doc(doc), progressListener(progressListener) {}
 
 XojCairoPdfExport::~XojCairoPdfExport() {
@@ -151,20 +151,20 @@ void XojCairoPdfExport::exportPageLayers(size_t page) {
 
     // We keep a copy of the layers initial Visible state
     std::map<Layer*, bool> initialVisibility;
-    for (const auto& layer: *p->getLayers()) {
+    for (const auto& layer: p->getLayers()) {
         initialVisibility[layer] = layer->isVisible();
         layer->setVisible(false);
     }
 
     // We draw as many pages as there are layers. The first page has
     // only Layer 1 visible, the last has all layers visible.
-    for (const auto& layer: *p->getLayers()) {
+    for (const auto& layer: p->getLayers()) {
         layer->setVisible(true);
         exportPage(page);
     }
 
     // We restore the initial visibilities
-    for (const auto& layer: *p->getLayers()) layer->setVisible(initialVisibility[layer]);
+    for (const auto& layer: p->getLayers()) layer->setVisible(initialVisibility[layer]);
 }
 
 auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode) -> bool {

@@ -68,7 +68,7 @@ auto BaseExportJob::showFilechooser() -> bool {
     Settings* settings = control->getSettings();
     Document* doc = control->getDocument();
     doc->lock();
-    fs::path folder = doc->createSaveFolder(settings->getLastSavePath());
+    fs::path folder = doc->createSaveFoldername(settings->getLastSavePath());
     fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName(), settings->getDefaultPdfExportName());
     doc->unlock();
 
