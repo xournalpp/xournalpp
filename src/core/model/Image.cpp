@@ -134,7 +134,7 @@ auto Image::getImage() const -> cairo_surface_t* {
         xoj::util::GObjectSPtr<GdkPixbufLoader> loader(gdk_pixbuf_loader_new(), xoj::util::adopt);
         gdk_pixbuf_loader_write(loader.get(), reinterpret_cast<const guchar*>(this->data.c_str()), this->data.length(),
                                 nullptr);
-        bool success = gdk_pixbuf_loader_close(loader.get(), nullptr);
+        [[maybe_unused]] bool success = gdk_pixbuf_loader_close(loader.get(), nullptr);
         xoj_assert_message(success, "errors in loading image data!");
 
         GdkPixbuf* tmp = gdk_pixbuf_loader_get_pixbuf(loader.get());

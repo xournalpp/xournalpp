@@ -12,6 +12,7 @@
 
 #include <bitset>
 #include <fstream>  // std::ofstream
+#include <iomanip>  // for operator<<, setw
 
 #include <execinfo.h>
 #include <gtk/gtk.h>

@@ -56,7 +56,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     sidebarWidget.reset(get("sidebar"), xoj::util::ref);
 
     GtkSettings* appSettings = gtk_settings_get_default();
-    g_object_set(appSettings, "gtk-application-prefer-dark-theme", control->getSettings()->isDarkTheme(), NULL);
+    g_object_set(appSettings, "gtk-application-prefer-dark-theme", control->getSettings()->isDarkTheme(), nullptr);
 
     loadMainCSS(gladeSearchPath, "xournalpp.css");
 
