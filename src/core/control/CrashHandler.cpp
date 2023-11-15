@@ -15,7 +15,7 @@ static Document* document = nullptr;
 static std::stringstream logBuffer;
 
 void setEmergencyDocument(Document* doc) { document = doc; }
-static std::stringstream* getCrashHandlerLogBuffer() { return &logBuffer; }
+[[maybe_unused]] static std::stringstream* getCrashHandlerLogBuffer() { return &logBuffer; }
 
 #ifdef _WIN32
 #include "CrashHandlerWindows.h"
@@ -28,7 +28,7 @@ void emergencySave() {
         return;
     }
 
-    g_warning(_("Trying to emergency save the current open document…"));
+    g_warning("%s", _("Trying to emergency save the current open document..."));
 
     auto const& filepath = Util::getConfigFile("emergencysave.xopp");
 

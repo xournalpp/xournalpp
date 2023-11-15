@@ -48,11 +48,9 @@ auto RecognizerUndoAction::undo(Control* control) -> bool {
     Element::Index pos = this->layer->removeElement(this->recognized, false);
     this->page->fireElementChanged(this->recognized);
 
-    int i = 0;
     for (Stroke* s: this->original) {
         this->layer->insertElement(s, pos);
         this->page->fireElementChanged(s);
-        i++;
     }
 
     this->undone = true;
