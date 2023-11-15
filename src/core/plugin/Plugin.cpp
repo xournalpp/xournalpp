@@ -115,7 +115,7 @@ size_t Plugin::populateMenuSection(GtkApplicationWindow* win, size_t startId) {
 
 void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback, entry->mode); }
 
-auto Plugin::registerMenu(std::string menu, std::string callback, long mode, std::string accelerator) -> size_t {
+auto Plugin::registerMenu(std::string menu, std::string callback, ptrdiff_t mode, std::string accelerator) -> size_t {
     menuEntries.emplace_back(this, std::move(menu), std::move(callback), mode, std::move(accelerator));
     return menuEntries.size() - 1;
 }
@@ -135,7 +135,7 @@ void Plugin::registerToolButton(ToolMenuHandler* toolMenuHandler) {
 void Plugin::executeToolbarButton(ToolbarButtonEntry* entry) { callFunction(entry->callback, entry->mode); }
 
 void Plugin::registerToolButton(std::string description, std::string toolbarId, std::string iconName,
-                                std::string callback, long mode) {
+                                std::string callback, ptrdiff_t mode) {
     if (toolbarId == "") {
         return;
     }
@@ -274,12 +274,12 @@ void Plugin::loadScript() {
     }
 }
 
-auto Plugin::callFunction(const std::string& fnc, long mode) -> bool {
+auto Plugin::callFunction(const std::string& fnc, ptrdiff_t mode) -> bool {
     lua_getglobal(lua.get(), fnc.c_str());
 
     int numArgs = 0;
 
-    if (mode != std::numeric_limits<long>::max()) {
+    if (mode != std::numeric_limits<ptrdiff_t>::max()) {
         lua_pushinteger(lua.get(), mode);
         numArgs = 1;
     }

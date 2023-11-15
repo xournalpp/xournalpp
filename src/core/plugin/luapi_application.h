@@ -264,7 +264,7 @@ static int applib_openDialog(lua_State* L) {
 
     XojMsgBox::askQuestionWithMarkup(nullptr, header, msg, buttons, [cb, plugin](int response) {
         if (cb != "" && response >= 1) {
-            plugin->callFunction(cb, static_cast<long>(response));
+            plugin->callFunction(cb, static_cast<ptrdiff_t>(response));
         }
     });
 
@@ -319,7 +319,7 @@ static int applib_registerUi(lua_State* L) {
     const char* accelerator = luaL_optstring(L, -6, "");
     const char* menu = luaL_optstring(L, -5, "");
     const char* callback = luaL_optstring(L, -4, nullptr);
-    const long mode = luaL_optinteger(L, -3, std::numeric_limits<long>::max());
+    const ptrdiff_t mode = luaL_optinteger(L, -3, std::numeric_limits<ptrdiff_t>::max());
     const char* toolbarId = luaL_optstring(L, -2, "");
     const char* iconName = luaL_optstring(L, -1, "");
     if (callback == nullptr) {
@@ -448,7 +448,7 @@ static int applib_setSidebarPageNo(lua_State* L) {
         lua_pushfstring(L, "Invalid pageNo (%d) provided!", page);
         return 2;
     }
-    if (static_cast<size_t>(page) > sidebar->getNumberOfPages()) {
+    if (as_unsigned(page) > sidebar->getNumberOfPages()) {
         lua_pushnil(L);
         lua_pushfstring(L, "Invalid pageNo (%d >= %d) provided!", page, sidebar->getNumberOfPages());
         return 2;
@@ -887,7 +887,7 @@ static int applib_addStrokes(lua_State* L) {
 
         // Check and make sure there's enough points (need at least 2)
         if (xStream.size() < 2) {
-            g_warning("Stroke shorter than two points. Discarding. (Has %ld/2)", xStream.size());
+            g_warning("Stroke shorter than two points. Discarding. (Has %zu/2)", xStream.size());
             return 1;
         }
         // Add points to the stroke. Include pressure, if it exists.

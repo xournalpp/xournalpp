@@ -39,17 +39,17 @@ class ToolMenuHandler;
 
 struct MenuEntry final {
     MenuEntry() = default;
-    MenuEntry(Plugin* plugin, std::string label, std::string callback, long mode, std::string accelerator):
+    MenuEntry(Plugin* plugin, std::string label, std::string callback, ptrdiff_t mode, std::string accelerator):
             plugin(plugin),
             label(std::move(label)),
             callback(std::move(callback)),
             mode(mode),
             accelerator(std::move(accelerator)) {}
 
-    Plugin* plugin = nullptr;                     ///< The Plugin
-    std::string label{};                          ///< Menu display name
-    std::string callback{};                       ///< Callback function name
-    long mode{std::numeric_limits<long>::max()};  ///< mode in which the callback function is run
+    Plugin* plugin = nullptr;                               ///< The Plugin
+    std::string label{};                                    ///< Menu display name
+    std::string callback{};                                 ///< Callback function name
+    ptrdiff_t mode{std::numeric_limits<ptrdiff_t>::max()};  ///< mode in which the callback function is run
     /**
      * @brief Accelerator key, see
      *     https://developer.gnome.org/gtk3/stable/gtk3-Keyboard-Accelerators.html#gtk-accelerator-parse
@@ -62,7 +62,7 @@ struct MenuEntry final {
 struct ToolbarButtonEntry final {
     ToolbarButtonEntry() = default;
     ToolbarButtonEntry(Plugin* plugin, std::string description, std::string toolbarId, std::string iconName,
-                       std::string callback, long mode):
+                       std::string callback, ptrdiff_t mode):
             plugin(plugin),
             description(std::move(description)),
             toolbarId(std::move(toolbarId)),
@@ -71,11 +71,11 @@ struct ToolbarButtonEntry final {
             mode(mode) {}
 
     Plugin* plugin = nullptr;
-    std::string description{};                    ///< description displayed on hovering over the toolbar button
-    std::string toolbarId{};                      ///< toolbar ID to be used in toolbar.ini
-    std::string iconName{};                       ///< name of the icon which should be stored as iconName + ".svg"
-    std::string callback{};                       ///< Callback function name
-    long mode{std::numeric_limits<long>::max()};  ///< mode in which the callback function is run
+    std::string description{};  ///< description displayed on hovering over the toolbar button
+    std::string toolbarId{};    ///< toolbar ID to be used in toolbar.ini
+    std::string iconName{};     ///< name of the icon which should be stored as iconName + ".svg"
+    std::string callback{};     ///< Callback function name
+    ptrdiff_t mode{std::numeric_limits<ptrdiff_t>::max()};  ///< mode in which the callback function is run
 };
 
 struct LuaDeleter {
@@ -108,7 +108,7 @@ public:
 
     // Register toolbar button
     void registerToolButton(std::string description, std::string toolbarId, std::string iconName, std::string callback,
-                            long mode);
+                            ptrdiff_t mode);
     // Register all toolbar buttons
     void registerToolButton(ToolMenuHandler* toolMenuHandler);
 
@@ -146,7 +146,7 @@ public:
 
     /// Register a menu item
     /// @return Internal ID, can e.g. be used to disable the menu
-    auto registerMenu(std::string menu, std::string callback, long mode, std::string accelerator) -> size_t;
+    auto registerMenu(std::string menu, std::string callback, ptrdiff_t mode, std::string accelerator) -> size_t;
 
     ///@return The main controller
     auto getControl() const -> Control*;
@@ -166,7 +166,7 @@ public:
     static auto getPluginFromLua(lua_State* lua) -> Plugin*;
 
     /// Execute lua function
-    auto callFunction(const std::string& fnc, long mode = std::numeric_limits<long>::max()) -> bool;
+    auto callFunction(const std::string& fnc, ptrdiff_t mode = std::numeric_limits<ptrdiff_t>::max()) -> bool;
 
 private:
     Control* control;                                      ///< The main controller
