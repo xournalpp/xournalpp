@@ -47,7 +47,9 @@ auto PdfElemSelection::finalizeSelectionAndRepaint(XojPdfPageSelectionStyle styl
     Range rg = getRegionBbox();
     bool result = this->finalizeSelection(style);
     rg = rg.unite(getRegionBbox());
-    this->viewPool->dispatch(xoj::view::PdfElementSelectionView::FLAG_DIRTY_REGION_REQUEST, rg);
+    if (!rg.empty()) {
+        this->viewPool->dispatch(xoj::view::PdfElementSelectionView::FLAG_DIRTY_REGION_REQUEST, rg);
+    }
     return result;
 }
 
@@ -110,7 +112,9 @@ void PdfElemSelection::currentPos(double x, double y, XojPdfPageSelectionStyle s
     g_assert(this->selectedTextRegion);
 
     rg = rg.unite(getRegionBbox());
-    this->viewPool->dispatch(xoj::view::PdfElementSelectionView::FLAG_DIRTY_REGION_REQUEST, rg);
+    if (!rg.empty()) {
+        this->viewPool->dispatch(xoj::view::PdfElementSelectionView::FLAG_DIRTY_REGION_REQUEST, rg);
+    }
 }
 
 auto PdfElemSelection::contains(double x, double y) -> bool {
