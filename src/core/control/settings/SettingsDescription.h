@@ -255,24 +255,32 @@ struct Setting {};
  * Define like this:
  * template<>
  * struct Setting<*The name of your settings element*> {
- *    value_type: The type your settings value should have
+ *    value_type: The type your settings value should have.
  *
- *    xmlName: The name you want for your property in the file
+ *    xmlName: The name you want for your property in the file.
  *
  *    DEFAULT: The default value of your Setting, if your value_type is not a literal type leave it
- *             unset here, and add the initialization in SettingsDescriptions.cpp at the top
+ *             unset here, and add the initialization in SettingsDescriptions.cpp at the top.
  *
  *    COMMENT: The comment in the file above your setting, if not needed leave this out of the
- *             definition of the struct
+ *             definition of the struct.
  *
- *    IMPORT_FN: Function that reads your value from the xml tag, only set if the type's default
- *               is not acceptable for some reason
+ *    IMPORT_FN: Function that reads a settings value from the xml tag.
+ *               Only required if the setting is not of a type that has a default import function.
+ *               Function signature: (xmlNodePtr, value_type&) -> bool
+ *                               tag from file^ | ^save value here | ^operation success
  *
- *    EXPORT_FN: Function that writes your value into an xml tag and adds it to the document root,
- *               only set this to override the default if necessary
+ *    EXPORT_FN: Function that writes a setting value into an xml tag and adds it to the document root.
+ *               Only required if the setting is not of a type that has a default export function.
+ *               Function signature: (xmlNodePtr, std::string, getter_return_t<value_type>) -> xmlNodePtr
+ *                                    ^parent   | ^tag name  | ^value to be saved            | ^node that was added
  *
  *    VALIDATE_FN: Function that checks if the value is correct and always returns a valid value,
- *                 called at import and setter. If not needed, do not set it
+ *                 called at import and setter.
+ *                 Only required if the settings value needs to be checked.
+ *                 Function signature: (value_type) -> value_type
+ *                                      ^value to be checked | ^corrected value
+ *
  * };
  */
 
