@@ -163,8 +163,7 @@ bool importProperty(xmlNodePtr node, size_t& var) {
     xmlFree(name);
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, XojFont& var) {
+bool importFont(xmlNodePtr node, XojFont& var) {
     xmlChar* font = xmlGetProp(node, reinterpret_cast<const xmlChar*>("font"));
     xmlChar* size = xmlGetProp(node, reinterpret_cast<const xmlChar*>("size"));
     if (font == nullptr || size == nullptr) {
@@ -177,8 +176,7 @@ bool importProperty(xmlNodePtr node, XojFont& var) {
     xmlFree(size);
     return true;
 }
-template <>
-bool importProperty(xmlNodePtr node, SidebarNumberingStyle& var) {
+bool importSidebarNumberingStyle(xmlNodePtr node, SidebarNumberingStyle& var) {
     int i = 0;
     if (importProperty(node, i)) {
         if (i > static_cast<int>(SidebarNumberingStyle::MIN) && i < static_cast<int>(SidebarNumberingStyle::MAX)) {
@@ -189,8 +187,7 @@ bool importProperty(xmlNodePtr node, SidebarNumberingStyle& var) {
     }
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, StylusCursorType& var) {
+bool importStylusCursorType(xmlNodePtr node, StylusCursorType& var) {
     std::string s = "";
     if (importProperty(node, s)) {
         var = stylusCursorTypeFromString(s);
@@ -198,8 +195,7 @@ bool importProperty(xmlNodePtr node, StylusCursorType& var) {
     }
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, EraserVisibility& var) {
+bool importEraserVisibility(xmlNodePtr node, EraserVisibility& var) {
     std::string s = "";
     if (importProperty(node, s)) {
         var = eraserVisibilityFromString(s);
@@ -207,8 +203,7 @@ bool importProperty(xmlNodePtr node, EraserVisibility& var) {
     }
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, IconTheme& var) {
+bool importIconTheme(xmlNodePtr node, IconTheme& var) {
     std::string s = "";
     if (importProperty(node, s)) {
         var = iconThemeFromString(s);
@@ -225,8 +220,7 @@ bool importProperty(xmlNodePtr node, ViewMode& var) {
     }
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, ScrollbarHideType& var) {
+bool importScrollbarHideType(xmlNodePtr node, ScrollbarHideType& var) {
     std::string s = "";
     if (importProperty(node, s)) {
         var = scrollbarHideTypeFromString(s);
@@ -234,8 +228,7 @@ bool importProperty(xmlNodePtr node, ScrollbarHideType& var) {
     }
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, EmptyLastPageAppendType& var) {
+bool importEmptyLastPageAppendType(xmlNodePtr node, EmptyLastPageAppendType& var) {
     std::string s = "";
     if (importProperty(node, s)) {
         var = emptyLastPageAppendFromString(s);
@@ -243,8 +236,7 @@ bool importProperty(xmlNodePtr node, EmptyLastPageAppendType& var) {
     }
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, LatexSettings& var) {
+bool importLatexSettings(xmlNodePtr node, LatexSettings& var) {
     xmlChar* name = xmlGetProp(node, reinterpret_cast<const xmlChar*>("name"));
     std::string valName = reinterpret_cast<const char*>(name);
     xmlFree(name);
@@ -291,8 +283,7 @@ bool importProperty(xmlNodePtr node, LatexSettings& var) {
     g_warning("SettingsDescription::Unknown Latex property '%s'!", valName.c_str());
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, StrokeStabilizer::AveragingMethod& var) {
+bool importAveragingMethod(xmlNodePtr node, StrokeStabilizer::AveragingMethod& var) {
     int i = 0;
     if (importProperty(node, i)) {
         var = static_cast<StrokeStabilizer::AveragingMethod>(i);
@@ -300,8 +291,7 @@ bool importProperty(xmlNodePtr node, StrokeStabilizer::AveragingMethod& var) {
     }
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, StrokeStabilizer::Preprocessor& var) {
+bool importPreprocessor(xmlNodePtr node, StrokeStabilizer::Preprocessor& var) {
     int i = 0;
     if (importProperty(node, i)) {
         var = static_cast<StrokeStabilizer::Preprocessor>(i);
@@ -309,8 +299,7 @@ bool importProperty(xmlNodePtr node, StrokeStabilizer::Preprocessor& var) {
     }
     return false;
 }
-template <>
-bool importProperty(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& var) {
+bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& var) {
     std::map<std::string, std::pair<std::string, std::string>> buttonConfigMap{};
     for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) {  // Loop through the buttons
         if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data")) == 0) {
@@ -486,8 +475,8 @@ bool importProperty(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig>, B
     }
     return true;
 }
-template <>
-bool importProperty(xmlNodePtr node, std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& var) {
+bool importDeviceClasses(xmlNodePtr node,
+                         std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& var) {
     for (xmlNodePtr cur = node->children; cur != nullptr; cur = cur->next) {  // Loop through the devices
         if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data")) == 0) {
             std::string name;
@@ -648,8 +637,7 @@ template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, size_t value) {
     return exportProp(node, name.c_str(), std::to_string(value).c_str());
 }
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const XojFont& value) {
+xmlNodePtr exportFont(xmlNodePtr node, std::string name, const XojFont& value) {
     xmlNodePtr xmlNode = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
     xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>("font"));
     xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("font"),
@@ -660,27 +648,10 @@ xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const XojFont& valu
     return xmlNode;
 }
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, SidebarNumberingStyle value) {
-    return exportProperty(node, name, static_cast<int>(value));
-}
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, StylusCursorType value) {
-    return exportProp(node, name.c_str(), stylusCursorTypeToString(value));
-}
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, EraserVisibility value) {
-    return exportProp(node, name.c_str(), eraserVisibilityToString(value));
-}
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, IconTheme value) {
-    return exportProp(node, name.c_str(), iconThemeToString(value));
-}
-template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, ViewMode value) {
     return exportProp(node, name.c_str(), viewModeToSettingsString(value).c_str());
 }
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, ScrollbarHideType value) {
+xmlNodePtr exportScrollbarHideType(xmlNodePtr node, std::string name, ScrollbarHideType value) {
     std::string val = "none";
     switch (value) {
         case SCROLLBAR_HIDE_BOTH:
@@ -697,12 +668,7 @@ xmlNodePtr exportProperty(xmlNodePtr node, std::string name, ScrollbarHideType v
     }
     return exportProp(node, name.c_str(), val.c_str());
 }
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, EmptyLastPageAppendType value) {
-    return exportProp(node, name.c_str(), emptyLastPageAppendToString(value));
-}
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const LatexSettings& value) {
+xmlNodePtr exportLatexSettings(xmlNodePtr node, std::string name, const LatexSettings& value) {
     xmlNodePtr xmlNode = exportProperty(node, "latexSettings.autoCheckDependencies", value.autoCheckDependencies);
     xmlNode = exportProp(node, "latexSettings.defaultText", value.defaultText.c_str());
     xmlNode = exportProp(node, "latexSettings.globalTemplatePath", value.globalTemplatePath.u8string().c_str());
@@ -716,17 +682,8 @@ xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const LatexSettings
     xmlNode = exportProperty(node, "latexSettings.sourceViewShowLineNumbers", value.sourceViewShowLineNumbers);
     return xmlNode;
 }
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, StrokeStabilizer::AveragingMethod value) {
-    return exportProperty(node, name, static_cast<int>(value));
-}
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, StrokeStabilizer::Preprocessor value) {
-    return exportProperty(node, name, static_cast<int>(value));
-}
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name,
-                          const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value) {
+xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
+                              const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value) {
     xmlNodePtr xmlNodeButtonConfig = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
     xmlSetProp(xmlNodeButtonConfig, reinterpret_cast<const xmlChar*>("name"),
                reinterpret_cast<const xmlChar*>(name.c_str()));
@@ -812,9 +769,8 @@ xmlNodePtr exportProperty(xmlNodePtr node, std::string name,
     }
     return xmlNodeButtonConfig;
 }
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name,
-                          const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value) {
+xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name,
+                               const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value) {
     xmlNodePtr xmlNodeDeviceClasses = xmlNewChild(node, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
     xmlSetProp(xmlNodeDeviceClasses, reinterpret_cast<const xmlChar*>("name"),
                reinterpret_cast<const xmlChar*>(name.c_str()));

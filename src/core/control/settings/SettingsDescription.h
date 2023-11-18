@@ -180,6 +180,32 @@ bool importProperty(xmlNodePtr node, T& var);
 template <typename T>
 xmlNodePtr exportProperty(xmlNodePtr parent, std::string name, T value);
 
+template <>
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, int value);
+
+// Definitions of helper functions
+xmlNodePtr exportProp(xmlNodePtr parent, const char* name, const char* value);
+bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& var);
+bool importDeviceClasses(xmlNodePtr node, std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& var);
+bool importSidebarNumberingStyle(xmlNodePtr node, SidebarNumberingStyle& var);
+bool importStylusCursorType(xmlNodePtr node, StylusCursorType& var);
+bool importEraserVisibility(xmlNodePtr node, EraserVisibility& var);
+bool importIconTheme(xmlNodePtr node, IconTheme& var);
+bool importScrollbarHideType(xmlNodePtr node, ScrollbarHideType& var);
+bool importEmptyLastPageAppendType(xmlNodePtr node, EmptyLastPageAppendType& var);
+bool importLatexSettings(xmlNodePtr node, LatexSettings& var);
+bool importAveragingMethod(xmlNodePtr node, StrokeStabilizer::AveragingMethod& var);
+bool importPreprocessor(xmlNodePtr node, StrokeStabilizer::Preprocessor& var);
+bool importFont(xmlNodePtr node, XojFont& var);
+
+xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
+                              const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value);
+xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name,
+                               const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value);
+xmlNodePtr exportScrollbarHideType(xmlNodePtr node, std::string name, ScrollbarHideType value);
+xmlNodePtr exportLatexSettings(xmlNodePtr node, std::string name, const LatexSettings& value);
+xmlNodePtr exportFont(xmlNodePtr node, std::string name, const XojFont& value);
+
 
 // Definitions of getter return types for value types
 template <typename T>
@@ -255,6 +281,8 @@ struct Setting<SettingsElement::SETTING_FONT> {
     using value_type = XojFont;
     static constexpr auto xmlName = "font";
     static value_type DEFAULT;
+    static constexpr auto IMPORT_FN = importFont;
+    static constexpr auto EXPORT_FN = exportFont;
 };
 
 template <>
@@ -403,6 +431,10 @@ struct Setting<SettingsElement::SETTING_SIDEBAR_NUMBERING_STYLE> {
     using value_type = SidebarNumberingStyle;
     static constexpr auto xmlName = "sidebarNumberingStyle";
     static constexpr value_type DEFAULT = SidebarNumberingStyle::DEFAULT;
+    static constexpr auto IMPORT_FN = importSidebarNumberingStyle;
+    static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, SidebarNumberingStyle value) {
+        return exportProperty(node, name, static_cast<int>(value));
+    };
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type {
         return std::max<value_type>(SidebarNumberingStyle::MIN, std::min<value_type>(val, SidebarNumberingStyle::MAX));
     };
@@ -514,6 +546,10 @@ struct Setting<SettingsElement::SETTING_STYLUS_CURSOR_TYPE> {
     static constexpr value_type DEFAULT = StylusCursorType::STYLUS_CURSOR_DOT;
     static constexpr auto COMMENT =
             "The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"";
+    static constexpr auto IMPORT_FN = importStylusCursorType;
+    static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, StylusCursorType value) {
+        return exportProp(node, name.c_str(), stylusCursorTypeToString(value));
+    };
 };
 
 template <>
@@ -523,6 +559,10 @@ struct Setting<SettingsElement::SETTING_ERASER_VISIBILITY> {
     static constexpr value_type DEFAULT = EraserVisibility::ERASER_VISIBILITY_ALWAYS;
     static constexpr auto COMMENT = "The eraser cursor visibility used with a stylus, allowed values are \"never\", "
                                     "\"always\", \"hover\", \"touch\"";
+    static constexpr auto IMPORT_FN = importEraserVisibility;
+    static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, EraserVisibility value) {
+        return exportProp(node, name.c_str(), eraserVisibilityToString(value));
+    };
 };
 
 template <>
@@ -531,6 +571,10 @@ struct Setting<SettingsElement::SETTING_ICON_THEME> {
     static constexpr auto xmlName = "iconTheme";
     static constexpr value_type DEFAULT = IconTheme::ICON_THEME_COLOR;
     static constexpr auto COMMENT = "The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"";
+    static constexpr auto IMPORT_FN = importIconTheme;
+    static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, IconTheme value) {
+        return exportProp(node, name.c_str(), iconThemeToString(value));
+    };
 };
 
 template <>
@@ -896,6 +940,8 @@ struct Setting<SettingsElement::SETTING_SCROLLBAR_HIDE_TYPE> {
     static constexpr value_type DEFAULT = ScrollbarHideType::SCROLLBAR_HIDE_NONE;
     static constexpr auto COMMENT =
             "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"";
+    static constexpr auto IMPORT_FN = importScrollbarHideType;
+    static constexpr auto EXPORT_FN = exportScrollbarHideType;
 };
 
 template <>
@@ -976,6 +1022,10 @@ struct Setting<SettingsElement::SETTING_EMPTY_LAST_PAGE_APPEND> {
     static constexpr value_type DEFAULT = EmptyLastPageAppendType::Disabled;
     static constexpr auto COMMENT = "empty Last Page Append Type, allowed values are \"disabled\", "
                                     "\"onDrawOfLastPage\", and \"onScrollOfLastPage\"";
+    static constexpr auto IMPORT_FN = importEmptyLastPageAppendType;
+    static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, EmptyLastPageAppendType value) {
+        return exportProp(node, name.c_str(), emptyLastPageAppendToString(value));
+    };
 };
 
 template <>
@@ -1025,6 +1075,8 @@ struct Setting<SettingsElement::SETTING_LATEX_SETTINGS> {
     using value_type = LatexSettings;
     static constexpr auto xmlName = "latexSettings";
     static value_type DEFAULT;
+    static constexpr auto IMPORT_FN = importLatexSettings;
+    static constexpr auto EXPORT_FN = exportLatexSettings;
 };
 
 template <>
@@ -1053,6 +1105,10 @@ struct Setting<SettingsElement::SETTING_STABILIZER_AVERAGING_METHOD> {
     using value_type = StrokeStabilizer::AveragingMethod;
     static constexpr auto xmlName = "stabilizerAveragingMethod";
     static constexpr value_type DEFAULT = StrokeStabilizer::AveragingMethod::NONE;
+    static constexpr auto IMPORT_FN = importAveragingMethod;
+    static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, StrokeStabilizer::AveragingMethod value) {
+        return exportProperty(node, name, static_cast<int>(value));
+    };
     static constexpr auto VALIDATE_FN = [](value_type value) -> value_type {
         return StrokeStabilizer::isValid(value) ? value : StrokeStabilizer::AveragingMethod::NONE;
     };
@@ -1063,6 +1119,10 @@ struct Setting<SettingsElement::SETTING_STABILIZER_PREPROCESSOR> {
     using value_type = StrokeStabilizer::Preprocessor;
     static constexpr auto xmlName = "stabilizerPreprocessor";
     static constexpr value_type DEFAULT = StrokeStabilizer::Preprocessor::NONE;
+    static constexpr auto IMPORT_FN = importPreprocessor;
+    static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, StrokeStabilizer::Preprocessor value) {
+        return exportProperty(node, name, static_cast<int>(value));
+    };
     static constexpr auto VALIDATE_FN = [](value_type value) -> value_type {
         return StrokeStabilizer::isValid(value) ? value : StrokeStabilizer::Preprocessor::NONE;
     };
@@ -1139,6 +1199,8 @@ struct Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG> {
     using value_type = std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>;
     static constexpr auto xmlName = "buttonConfig";
     static value_type DEFAULT;
+    static constexpr auto IMPORT_FN = importButtonConfig;
+    static constexpr auto EXPORT_FN = exportButtonConfig;
 };
 
 template <>
@@ -1146,6 +1208,8 @@ struct Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES> {
     using value_type = std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>;
     static constexpr auto xmlName = "deviceClasses";
     static value_type DEFAULT;
+    static constexpr auto IMPORT_FN = importDeviceClasses;
+    static constexpr auto EXPORT_FN = exportDeviceClasses;
 };
 
 template <>
