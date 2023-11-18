@@ -228,13 +228,13 @@ template <>
 struct getter_return<LatexSettings> {
     using type = const LatexSettings&;
 };
-template <>
-struct getter_return<std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>> {
-    using type = const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>&;
+template <typename T, size_t N>
+struct getter_return<std::array<T, N>> {
+    using type = const std::array<T, N>&;
 };
-template <>
-struct getter_return<std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>> {
-    using type = const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>&;
+template <typename T, typename U>
+struct getter_return<std::map<T, U>> {
+    using type = const std::map<T, U>&;
 };
 template <>
 struct getter_return<SElement> {
