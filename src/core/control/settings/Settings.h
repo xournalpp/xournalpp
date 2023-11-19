@@ -54,7 +54,7 @@ public:
 
     SettingsContainer() {
         ((std::get<s>(vars) = Setting<(SettingsElement)s>::DEFAULT), ...);
-        ((importFunctions[Setting<(SettingsElement)s>::xmlName] =
+        ((importFunctions[Setting<(SettingsElement)s>::XML_NAME] =
                   [this](xmlNodePtr node) { return importSetting<(SettingsElement)s>(node); }),
          ...);
         ((exportFunctions[(int)s] = [this](xmlNodePtr parent) { return exportSetting<(SettingsElement)s>(parent); }),
@@ -70,7 +70,7 @@ public:
     }
     template <SettingsElement t>
     constexpr const char* getXmlName() const {
-        return Setting<t>::xmlName;
+        return Setting<t>::XML_NAME;
     }
     template <SettingsElement t>
     constexpr typename Setting<t>::value_type getDefault() const {

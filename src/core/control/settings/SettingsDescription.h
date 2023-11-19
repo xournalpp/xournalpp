@@ -257,7 +257,7 @@ struct Setting {};
  * struct Setting<*The name of your settings element*> {
  *    value_type: The type your settings value should have.
  *
- *    xmlName: The name you want for your property in the file.
+ *    XML_NAME: The name you want for your property in the file.
  *
  *    DEFAULT: The default value of your Setting, if your value_type is not a literal type leave it
  *             unset here, and add the initialization in SettingsDescriptions.cpp at the top.
@@ -287,7 +287,7 @@ struct Setting {};
 template <>
 struct Setting<SettingsElement::SETTING_FONT> {
     using value_type = XojFont;
-    static constexpr auto xmlName = "font";
+    static constexpr auto XML_NAME = "font";
     static const value_type DEFAULT;
     static constexpr auto IMPORT_FN = importFont;
     static constexpr auto EXPORT_FN = exportFont;
@@ -296,14 +296,14 @@ struct Setting<SettingsElement::SETTING_FONT> {
 template <>
 struct Setting<SettingsElement::SETTING_PRESSURE_SENSITIVITY> {
     using value_type = bool;
-    static constexpr auto xmlName = "pressureSensitivity";
+    static constexpr auto XML_NAME = "pressureSensitivity";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_MINIMUM_PRESSURE> {
     using value_type = double;
-    static constexpr auto xmlName = "minimumPressure";
+    static constexpr auto XML_NAME = "minimumPressure";
     static constexpr value_type DEFAULT = 0.05;
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 0.01); };
 };
@@ -311,133 +311,133 @@ struct Setting<SettingsElement::SETTING_MINIMUM_PRESSURE> {
 template <>
 struct Setting<SettingsElement::SETTING_PRESSURE_MULTIPLIER> {
     using value_type = double;
-    static constexpr auto xmlName = "pressureMultiplier";
+    static constexpr auto XML_NAME = "pressureMultiplier";
     static constexpr value_type DEFAULT = 1.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ENABLE_ZOOM_GESTURES> {
     using value_type = bool;
-    static constexpr auto xmlName = "zoomGesturesEnabled";
+    static constexpr auto XML_NAME = "zoomGesturesEnabled";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SELECTED_TOOLBAR> {
     using value_type = std::string;
-    static constexpr auto xmlName = "selectedToolbar";
+    static constexpr auto XML_NAME = "selectedToolbar";
     static constexpr const char* DEFAULT = "Portrait";
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_LAST_SAVE_PATH> {
     using value_type = fs::path;
-    static constexpr auto xmlName = "lastSavePath";
+    static constexpr auto XML_NAME = "lastSavePath";
     static constexpr const char* DEFAULT = "";
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_LAST_OPEN_PATH> {
     using value_type = fs::path;
-    static constexpr auto xmlName = "lastOpenPath";
+    static constexpr auto XML_NAME = "lastOpenPath";
     static constexpr const char* DEFAULT = "";
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_LAST_IMAGE_PATH> {
     using value_type = fs::path;
-    static constexpr auto xmlName = "lastImagePath";
+    static constexpr auto XML_NAME = "lastImagePath";
     static constexpr const char* DEFAULT = "";
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_EDGE_PAN_SPEED> {
     using value_type = double;
-    static constexpr auto xmlName = "edgePanSpeed";
+    static constexpr auto XML_NAME = "edgePanSpeed";
     static constexpr value_type DEFAULT = 20.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_EDGE_PAN_MAX_MULT> {
     using value_type = double;
-    static constexpr auto xmlName = "edgePanMaxMult";
+    static constexpr auto XML_NAME = "edgePanMaxMult";
     static constexpr value_type DEFAULT = 5.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ZOOM_STEP> {
     using value_type = double;
-    static constexpr auto xmlName = "zoomStep";
+    static constexpr auto XML_NAME = "zoomStep";
     static constexpr value_type DEFAULT = 10.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ZOOM_STEP_SCROLL> {
     using value_type = double;
-    static constexpr auto xmlName = "zoomStepScroll";
+    static constexpr auto XML_NAME = "zoomStepScroll";
     static constexpr value_type DEFAULT = 2.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DISPLAY_DPI> {
     using value_type = int;
-    static constexpr auto xmlName = "displayDpi";
+    static constexpr auto XML_NAME = "displayDpi";
     static constexpr value_type DEFAULT = 72;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_MAIN_WINDOW_WIDTH> {
     using value_type = int;
-    static constexpr auto xmlName = "mainWndWidth";
+    static constexpr auto XML_NAME = "mainWndWidth";
     static constexpr value_type DEFAULT = 800;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_MAIN_WINDOW_HEIGHT> {
     using value_type = int;
-    static constexpr auto xmlName = "mainWndHeight";
+    static constexpr auto XML_NAME = "mainWndHeight";
     static constexpr value_type DEFAULT = 600;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_MAXIMIZED> {
     using value_type = bool;
-    static constexpr auto xmlName = "maximized";
+    static constexpr auto XML_NAME = "maximized";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SHOW_TOOLBAR> {
     using value_type = bool;
-    static constexpr auto xmlName = "showToolbar";
+    static constexpr auto XML_NAME = "showToolbar";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SHOW_FILEPATH_IN_TITLEBAR> {
     using value_type = bool;
-    static constexpr auto xmlName = "filepathShownInTitlebar";
+    static constexpr auto XML_NAME = "filepathShownInTitlebar";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SHOW_PAGE_NUMBER_IN_TITLEBAR> {
     using value_type = bool;
-    static constexpr auto xmlName = "pageNumberShownInTitlebar";
+    static constexpr auto XML_NAME = "pageNumberShownInTitlebar";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SHOW_SIDEBAR> {
     using value_type = bool;
-    static constexpr auto xmlName = "showSidebar";
+    static constexpr auto XML_NAME = "showSidebar";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SIDEBAR_NUMBERING_STYLE> {
     using value_type = SidebarNumberingStyle;
-    static constexpr auto xmlName = "sidebarNumberingStyle";
+    static constexpr auto XML_NAME = "sidebarNumberingStyle";
     static constexpr value_type DEFAULT = SidebarNumberingStyle::DEFAULT;
     static constexpr auto IMPORT_FN = importSidebarNumberingStyle;
     static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, SidebarNumberingStyle value) {
@@ -451,7 +451,7 @@ struct Setting<SettingsElement::SETTING_SIDEBAR_NUMBERING_STYLE> {
 template <>
 struct Setting<SettingsElement::SETTING_SIDEBAR_WIDTH> {
     using value_type = int;
-    static constexpr auto xmlName = "sidebarWidth";
+    static constexpr auto XML_NAME = "sidebarWidth";
     static constexpr value_type DEFAULT = 150;
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 50); };
 };
@@ -459,98 +459,98 @@ struct Setting<SettingsElement::SETTING_SIDEBAR_WIDTH> {
 template <>
 struct Setting<SettingsElement::SETTING_SIDEBAR_ON_RIGHT> {
     using value_type = bool;
-    static constexpr auto xmlName = "sidebarOnRight";
+    static constexpr auto XML_NAME = "sidebarOnRight";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SCROLLBAR_ON_LEFT> {
     using value_type = bool;
-    static constexpr auto xmlName = "scrollbarOnLeft";
+    static constexpr auto XML_NAME = "scrollbarOnLeft";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_MENUBAR_VISIBLE> {
     using value_type = bool;
-    static constexpr auto xmlName = "menubarVisible";
+    static constexpr auto XML_NAME = "menubarVisible";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_NUM_COLUMNS> {
     using value_type = int;
-    static constexpr auto xmlName = "numColumns";
+    static constexpr auto XML_NAME = "numColumns";
     static constexpr value_type DEFAULT = 1;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_NUM_ROWS> {
     using value_type = int;
-    static constexpr auto xmlName = "numRows";
+    static constexpr auto XML_NAME = "numRows";
     static constexpr value_type DEFAULT = 1;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_VIEW_FIXED_ROWS> {
     using value_type = bool;
-    static constexpr auto xmlName = "viewFixedRows";
+    static constexpr auto XML_NAME = "viewFixedRows";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_LAYOUT_VERTICAL> {
     using value_type = bool;
-    static constexpr auto xmlName = "layoutVertical";
+    static constexpr auto XML_NAME = "layoutVertical";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_LAYOUT_RIGHT_TO_LEFT> {
     using value_type = bool;
-    static constexpr auto xmlName = "layoutRightToLeft";
+    static constexpr auto XML_NAME = "layoutRightToLeft";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_LAYOUT_BOTTOM_TO_TOP> {
     using value_type = bool;
-    static constexpr auto xmlName = "layoutBottomToTop";
+    static constexpr auto XML_NAME = "layoutBottomToTop";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SHOW_PAIRED_PAGES> {
     using value_type = bool;
-    static constexpr auto xmlName = "showPairedPages";
+    static constexpr auto XML_NAME = "showPairedPages";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_NUM_PAIRS_OFFSET> {
     using value_type = int;
-    static constexpr auto xmlName = "numPairsOffset";
+    static constexpr auto XML_NAME = "numPairsOffset";
     static constexpr value_type DEFAULT = 1;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_AUTOLOAD_MOST_RECENT> {
     using value_type = bool;
-    static constexpr auto xmlName = "autoloadMostRecent";
+    static constexpr auto XML_NAME = "autoloadMostRecent";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_AUTOLOAD_PDF_XOJ> {
     using value_type = bool;
-    static constexpr auto xmlName = "autoloadPdfXoj";
+    static constexpr auto XML_NAME = "autoloadPdfXoj";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STYLUS_CURSOR_TYPE> {
     using value_type = StylusCursorType;
-    static constexpr auto xmlName = "stylusCursorType";
+    static constexpr auto XML_NAME = "stylusCursorType";
     static constexpr value_type DEFAULT = StylusCursorType::STYLUS_CURSOR_DOT;
     static constexpr auto COMMENT =
             "The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"";
@@ -563,7 +563,7 @@ struct Setting<SettingsElement::SETTING_STYLUS_CURSOR_TYPE> {
 template <>
 struct Setting<SettingsElement::SETTING_ERASER_VISIBILITY> {
     using value_type = EraserVisibility;
-    static constexpr auto xmlName = "eraserVisibility";
+    static constexpr auto XML_NAME = "eraserVisibility";
     static constexpr value_type DEFAULT = EraserVisibility::ERASER_VISIBILITY_ALWAYS;
     static constexpr auto COMMENT = "The eraser cursor visibility used with a stylus, allowed values are \"never\", "
                                     "\"always\", \"hover\", \"touch\"";
@@ -576,7 +576,7 @@ struct Setting<SettingsElement::SETTING_ERASER_VISIBILITY> {
 template <>
 struct Setting<SettingsElement::SETTING_ICON_THEME> {
     using value_type = IconTheme;
-    static constexpr auto xmlName = "iconTheme";
+    static constexpr auto XML_NAME = "iconTheme";
     static constexpr value_type DEFAULT = IconTheme::ICON_THEME_COLOR;
     static constexpr auto COMMENT = "The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"";
     static constexpr auto IMPORT_FN = importIconTheme;
@@ -588,84 +588,84 @@ struct Setting<SettingsElement::SETTING_ICON_THEME> {
 template <>
 struct Setting<SettingsElement::SETTING_HIGHLIGHT_POSITION> {
     using value_type = bool;
-    static constexpr auto xmlName = "highlightPosition";
+    static constexpr auto XML_NAME = "highlightPosition";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_COLOR> {
     using value_type = Color;
-    static constexpr auto xmlName = "cursorHighlightColor";
+    static constexpr auto XML_NAME = "cursorHighlightColor";
     static constexpr value_type DEFAULT = ColorU8(0x80FFFF00);
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_RADIUS> {
     using value_type = double;
-    static constexpr auto xmlName = "cursorHighlightRadius";
+    static constexpr auto XML_NAME = "cursorHighlightRadius";
     static constexpr value_type DEFAULT = 30.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_COLOR> {
     using value_type = Color;
-    static constexpr auto xmlName = "cursorHighlightBorderColor";
+    static constexpr auto XML_NAME = "cursorHighlightBorderColor";
     static constexpr value_type DEFAULT = ColorU8(0x800000FF);
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_CURSOR_HIGHLIGHT_BORDER_WIDTH> {
     using value_type = double;
-    static constexpr auto xmlName = "cursorHighlightBorderWidth";
+    static constexpr auto XML_NAME = "cursorHighlightBorderWidth";
     static constexpr value_type DEFAULT = 0.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DARK_THEME> {
     using value_type = bool;
-    static constexpr auto xmlName = "darkTheme";
+    static constexpr auto XML_NAME = "darkTheme";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_USE_STOCK_ICONS> {
     using value_type = bool;
-    static constexpr auto xmlName = "useStockIcons";
+    static constexpr auto XML_NAME = "useStockIcons";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME> {
     using value_type = std::string;
-    static constexpr auto xmlName = "defaultSaveName";
+    static constexpr auto XML_NAME = "defaultSaveName";
     static const value_type DEFAULT;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME> {
     using value_type = std::string;
-    static constexpr auto xmlName = "defaultPdfExportName";
+    static constexpr auto XML_NAME = "defaultPdfExportName";
     static const value_type DEFAULT;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_PLUGIN_ENABLED> {
     using value_type = std::string;
-    static constexpr auto xmlName = "pluginEnabled";
+    static constexpr auto XML_NAME = "pluginEnabled";
     static constexpr const char* DEFAULT = "";
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_PLUGIN_DISABLED> {
     using value_type = std::string;
-    static constexpr auto xmlName = "pluginDisabled";
+    static constexpr auto XML_NAME = "pluginDisabled";
     static constexpr const char* DEFAULT = "";
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_PAGE_TEMPLATE> {
     using value_type = std::string;
-    static constexpr auto xmlName = "pageTemplate";
+    static constexpr auto XML_NAME = "pageTemplate";
     static constexpr const char* DEFAULT = "xoj/"
                                            "template\ncopyLastPageSettings=true\nsize=595.275591x841."
                                            "889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
@@ -675,35 +675,35 @@ struct Setting<SettingsElement::SETTING_PAGE_TEMPLATE> {
 template <>
 struct Setting<SettingsElement::SETTING_SIZE_UNIT> {
     using value_type = std::string;
-    static constexpr auto xmlName = "sizeUnit";
+    static constexpr auto XML_NAME = "sizeUnit";
     static constexpr const char* DEFAULT = "";
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_AUDIO_FOLDER> {
     using value_type = fs::path;
-    static constexpr auto xmlName = "audioFolder";
+    static constexpr auto XML_NAME = "audioFolder";
     static constexpr const char* DEFAULT = "";
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_AUTOSAVE_ENABLED> {
     using value_type = bool;
-    static constexpr auto xmlName = "autosaveEnabled";
+    static constexpr auto XML_NAME = "autosaveEnabled";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_AUTOSAVE_TIMEOUT> {
     using value_type = int;
-    static constexpr auto xmlName = "autosaveTimeout";
+    static constexpr auto XML_NAME = "autosaveTimeout";
     static constexpr value_type DEFAULT = 3;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ACTIVE_VIEW_MODE> {
     using value_type = ViewModeId;
-    static constexpr auto xmlName = "";  // This setting is not saved to the config file
+    static constexpr auto XML_NAME = "";  // This setting is not saved to the config file
     static constexpr value_type DEFAULT = PresetViewModeIds::VIEW_MODE_DEFAULT;
     static constexpr auto IMPORT_FN = [](xmlNodePtr node, value_type& val) -> bool {
         return false;  // This setting is not stored in the file, returning false makes sure the default is loaded
@@ -723,7 +723,7 @@ struct Setting<SettingsElement::SETTING_ACTIVE_VIEW_MODE> {
 template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_VIEW_MODE_ATTRIBUTES> {
     using value_type = ViewMode;
-    static constexpr auto xmlName = "defaultViewModeAttributes";
+    static constexpr auto XML_NAME = "defaultViewModeAttributes";
     static constexpr value_type DEFAULT = VIEW_MODE_STRUCT_DEFAULT;
     static constexpr auto COMMENT = "Which GUI elements are shown in default view mode, separated by a colon (,)";
 };
@@ -731,7 +731,7 @@ struct Setting<SettingsElement::SETTING_DEFAULT_VIEW_MODE_ATTRIBUTES> {
 template <>
 struct Setting<SettingsElement::SETTING_FULLSCREEN_VIEW_MODE_ATTRIBUTES> {
     using value_type = ViewMode;
-    static constexpr auto xmlName = "fullscreenViewModeAttributes";
+    static constexpr auto XML_NAME = "fullscreenViewModeAttributes";
     static constexpr value_type DEFAULT = VIEW_MODE_STRUCT_FULLSCREEN;
     static constexpr auto COMMENT = "Which GUI elements are shown in fullscreen view mode, separated by a colon (,)";
 };
@@ -739,7 +739,7 @@ struct Setting<SettingsElement::SETTING_FULLSCREEN_VIEW_MODE_ATTRIBUTES> {
 template <>
 struct Setting<SettingsElement::SETTING_PRESENTATION_VIEW_MODE_ATTRIBUTES> {
     using value_type = ViewMode;
-    static constexpr auto xmlName = "presentationViewModeAttributes";
+    static constexpr auto XML_NAME = "presentationViewModeAttributes";
     static constexpr value_type DEFAULT = VIEW_MODE_STRUCT_PRESENTATION;
     static constexpr auto COMMENT = "Which GUI elements are shown in presentation view mode, separated by a colon (,)";
 };
@@ -747,21 +747,21 @@ struct Setting<SettingsElement::SETTING_PRESENTATION_VIEW_MODE_ATTRIBUTES> {
 template <>
 struct Setting<SettingsElement::SETTING_TOUCH_ZOOM_START_THRESHOLD> {
     using value_type = double;
-    static constexpr auto xmlName = "touchZoomStartThreshold";
+    static constexpr auto XML_NAME = "touchZoomStartThreshold";
     static constexpr value_type DEFAULT = 0.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_PAGE_RERENDER_THRESHOLD> {
     using value_type = double;
-    static constexpr auto xmlName = "pageRerenderThreshold";
+    static constexpr auto XML_NAME = "pageRerenderThreshold";
     static constexpr value_type DEFAULT = 5.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_PDF_PAGE_CACHE_SIZE> {
     using value_type = int;
-    static constexpr auto xmlName = "pdfPageCacheSize";
+    static constexpr auto XML_NAME = "pdfPageCacheSize";
     static constexpr value_type DEFAULT = 10;
     static constexpr auto COMMENT = "The count of rendered PDF pages which will be cached.";
 };
@@ -769,182 +769,182 @@ struct Setting<SettingsElement::SETTING_PDF_PAGE_CACHE_SIZE> {
 template <>
 struct Setting<SettingsElement::SETTING_PRELOAD_PAGES_BEFORE> {
     using value_type = uint;
-    static constexpr auto xmlName = "preloadPagesBefore";
+    static constexpr auto XML_NAME = "preloadPagesBefore";
     static constexpr value_type DEFAULT = 3;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_PRELOAD_PAGES_AFTER> {
     using value_type = uint;
-    static constexpr auto xmlName = "preloadPagesAfter";
+    static constexpr auto XML_NAME = "preloadPagesAfter";
     static constexpr value_type DEFAULT = 5;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_EAGER_PAGE_CLEANUP> {
     using value_type = bool;
-    static constexpr auto xmlName = "eagerPageCleanup";
+    static constexpr auto XML_NAME = "eagerPageCleanup";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SELECTION_BORDER_COLOR> {
     using value_type = Color;
-    static constexpr auto xmlName = "selectionBorderColor";
+    static constexpr auto XML_NAME = "selectionBorderColor";
     static constexpr value_type DEFAULT = Colors::red;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SELECTION_MARKER_COLOR> {
     using value_type = Color;
-    static constexpr auto xmlName = "selectionMarkerColor";
+    static constexpr auto XML_NAME = "selectionMarkerColor";
     static constexpr value_type DEFAULT = Colors::xopp_cornflowerblue;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ACTIVE_SELECTION_COLOR> {
     using value_type = Color;
-    static constexpr auto xmlName = "activeSelectionColor";
+    static constexpr auto XML_NAME = "activeSelectionColor";
     static constexpr value_type DEFAULT = Colors::lawngreen;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_BACKGROUND_COLOR> {
     using value_type = Color;
-    static constexpr auto xmlName = "backgroundColor";
+    static constexpr auto XML_NAME = "backgroundColor";
     static constexpr value_type DEFAULT = Colors::xopp_gainsboro02;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE> {
     using value_type = bool;
-    static constexpr auto xmlName = "addHorizontalSpace";
+    static constexpr auto XML_NAME = "addHorizontalSpace";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_RIGHT> {
     using value_type = int;
-    static constexpr auto xmlName = "addHorizontalSpaceAmountRight";
+    static constexpr auto XML_NAME = "addHorizontalSpaceAmountRight";
     static constexpr value_type DEFAULT = 150;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ADD_HORIZONTAL_SPACE_AMOUNT_LEFT> {
     using value_type = int;
-    static constexpr auto xmlName = "addHorizontalSpaceAmountLeft";
+    static constexpr auto XML_NAME = "addHorizontalSpaceAmountLeft";
     static constexpr value_type DEFAULT = 150;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE> {
     using value_type = bool;
-    static constexpr auto xmlName = "addVerticalSpace";
+    static constexpr auto XML_NAME = "addVerticalSpace";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_ABOVE> {
     using value_type = int;
-    static constexpr auto xmlName = "addVerticalSpaceAmountAbove";
+    static constexpr auto XML_NAME = "addVerticalSpaceAmountAbove";
     static constexpr value_type DEFAULT = 150;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_ADD_VERTICAL_SPACE_AMOUNT_BELOW> {
     using value_type = int;
-    static constexpr auto xmlName = "addVerticalSpaceAmountBelow";
+    static constexpr auto XML_NAME = "addVerticalSpaceAmountBelow";
     static constexpr value_type DEFAULT = 150;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_UNLIMITED_SCROLLING> {
     using value_type = bool;
-    static constexpr auto xmlName = "unlimitedScrolling";
+    static constexpr auto XML_NAME = "unlimitedScrolling";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DRAW_DIRECTION_MODS_ENABLE> {
     using value_type = bool;
-    static constexpr auto xmlName = "drawDirModsEnabled";
+    static constexpr auto XML_NAME = "drawDirModsEnabled";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DRAW_DIRECTION_MODS_RADIUS> {
     using value_type = int;
-    static constexpr auto xmlName = "drawDirModsRadius";
+    static constexpr auto XML_NAME = "drawDirModsRadius";
     static constexpr value_type DEFAULT = 50;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SNAP_ROTATION> {
     using value_type = bool;
-    static constexpr auto xmlName = "snapRotation";
+    static constexpr auto XML_NAME = "snapRotation";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SNAP_ROTATION_TOLERANCE> {
     using value_type = double;
-    static constexpr auto xmlName = "snapRotationTolerance";
+    static constexpr auto XML_NAME = "snapRotationTolerance";
     static constexpr value_type DEFAULT = 0.3;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SNAP_GRID> {
     using value_type = bool;
-    static constexpr auto xmlName = "snapGrid";
+    static constexpr auto XML_NAME = "snapGrid";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SNAP_GRID_SIZE> {
     using value_type = double;
-    static constexpr auto xmlName = "snapGridSize";
+    static constexpr auto XML_NAME = "snapGridSize";
     static constexpr value_type DEFAULT = 14.17;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SNAP_GRID_TOLERANCE> {
     using value_type = double;
-    static constexpr auto xmlName = "snapGridTolerance";
+    static constexpr auto XML_NAME = "snapGridTolerance";
     static constexpr value_type DEFAULT = 0.50;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STROKE_RECOGNIZER_MIN_SIZE> {
     using value_type = double;
-    static constexpr auto xmlName = "strokeRecognizerMinSize";
+    static constexpr auto XML_NAME = "strokeRecognizerMinSize";
     static constexpr value_type DEFAULT = 40.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_TOUCH_DRAWING> {
     using value_type = bool;
-    static constexpr auto xmlName = "touchDrawing";
+    static constexpr auto XML_NAME = "touchDrawing";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_GTK_TOUCH_INERTIAL_SCROLLING> {
     using value_type = bool;
-    static constexpr auto xmlName = "gtkTouchInertialScrolling";
+    static constexpr auto XML_NAME = "gtkTouchInertialScrolling";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_PRESSURE_GUESSING> {
     using value_type = bool;
-    static constexpr auto xmlName = "pressureGuessing";
+    static constexpr auto XML_NAME = "pressureGuessing";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_SCROLLBAR_HIDE_TYPE> {
     using value_type = ScrollbarHideType;
-    static constexpr auto xmlName = "scrollbarHideType";
+    static constexpr auto XML_NAME = "scrollbarHideType";
     static constexpr value_type DEFAULT = ScrollbarHideType::SCROLLBAR_HIDE_NONE;
     static constexpr auto COMMENT =
             "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"";
@@ -955,56 +955,56 @@ struct Setting<SettingsElement::SETTING_SCROLLBAR_HIDE_TYPE> {
 template <>
 struct Setting<SettingsElement::SETTING_DISABLE_SCROLLBAR_FADEOUT> {
     using value_type = bool;
-    static constexpr auto xmlName = "disableScrollbarFadeout";
+    static constexpr auto XML_NAME = "disableScrollbarFadeout";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DISABLE_AUDIO> {
     using value_type = bool;
-    static constexpr auto xmlName = "disableAudio";
+    static constexpr auto XML_NAME = "disableAudio";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_AUDIO_SAMPLE_RATE> {
     using value_type = double;
-    static constexpr auto xmlName = "audioSampleRate";
+    static constexpr auto XML_NAME = "audioSampleRate";
     static constexpr value_type DEFAULT = 44100.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_AUDIO_GAIN> {
     using value_type = double;
-    static constexpr auto xmlName = "audioGain";
+    static constexpr auto XML_NAME = "audioGain";
     static constexpr value_type DEFAULT = 1.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_SEEK_TIME> {
     using value_type = uint;
-    static constexpr auto xmlName = "defaultSeekTime";
+    static constexpr auto XML_NAME = "defaultSeekTime";
     static constexpr value_type DEFAULT = 5;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_AUDIO_INPUT_DEVICE> {
     using value_type = PaDeviceIndex;
-    static constexpr auto xmlName = "audioInputDevice";
+    static constexpr auto XML_NAME = "audioInputDevice";
     static constexpr value_type DEFAULT = -1;  // Value formerly in AUDIO_INPUT_SYSTEM_DEFAULT
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_AUDIO_OUTPUT_DEVICE> {
     using value_type = PaDeviceIndex;
-    static constexpr auto xmlName = "audioOutputDevice";
+    static constexpr auto XML_NAME = "audioOutputDevice";
     static constexpr value_type DEFAULT = -1;  // Value formerly in AUDIO_OUTPUT_SYSTEM_DEFAULT
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_NUM_IGNORED_STYLUS_EVENTS> {
     using value_type = int;
-    static constexpr auto xmlName = "numIgnoredStylusEvents";
+    static constexpr auto XML_NAME = "numIgnoredStylusEvents";
     static constexpr value_type DEFAULT = 0;
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 50); };
 };
@@ -1012,21 +1012,21 @@ struct Setting<SettingsElement::SETTING_NUM_IGNORED_STYLUS_EVENTS> {
 template <>
 struct Setting<SettingsElement::SETTING_INPUT_SYSTEM_TPC_BUTTON> {
     using value_type = bool;
-    static constexpr auto xmlName = "inputSystemTPCButton";
+    static constexpr auto XML_NAME = "inputSystemTPCButton";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_INPUT_SYSTEM_DRAW_OUTSIDE_WINDOW> {
     using value_type = bool;
-    static constexpr auto xmlName = "inputSystemDrawOutsideWindow";
+    static constexpr auto XML_NAME = "inputSystemDrawOutsideWindow";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_EMPTY_LAST_PAGE_APPEND> {
     using value_type = EmptyLastPageAppendType;
-    static constexpr auto xmlName = "emptyLastPageAppend";
+    static constexpr auto XML_NAME = "emptyLastPageAppend";
     static constexpr value_type DEFAULT = EmptyLastPageAppendType::Disabled;
     static constexpr auto COMMENT = "empty Last Page Append Type, allowed values are \"disabled\", "
                                     "\"onDrawOfLastPage\", and \"onScrollOfLastPage\"";
@@ -1039,49 +1039,49 @@ struct Setting<SettingsElement::SETTING_EMPTY_LAST_PAGE_APPEND> {
 template <>
 struct Setting<SettingsElement::SETTING_STROKE_FILTER_IGNORE_TIME> {
     using value_type = int;
-    static constexpr auto xmlName = "strokeFilterIgnoreTime";
+    static constexpr auto XML_NAME = "strokeFilterIgnoreTime";
     static constexpr value_type DEFAULT = 150;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STROKE_FILTER_IGNORE_LENGTH> {
     using value_type = double;
-    static constexpr auto xmlName = "strokeFilterIgnoreLength";
+    static constexpr auto XML_NAME = "strokeFilterIgnoreLength";
     static constexpr value_type DEFAULT = 1.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STROKE_FILTER_SUCCESSIVE_TIME> {
     using value_type = int;
-    static constexpr auto xmlName = "strokeFilterSuccessiveTime";
+    static constexpr auto XML_NAME = "strokeFilterSuccessiveTime";
     static constexpr value_type DEFAULT = 500;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STROKE_FILTER_ENABLED> {
     using value_type = bool;
-    static constexpr auto xmlName = "strokeFilterEnabled";
+    static constexpr auto XML_NAME = "strokeFilterEnabled";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DO_ACTION_ON_STROKE_FILTERED> {
     using value_type = bool;
-    static constexpr auto xmlName = "doActionOnStrokeFiltered";
+    static constexpr auto XML_NAME = "doActionOnStrokeFiltered";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_TRY_SELECT_ON_STROKE_FILTERED> {
     using value_type = bool;
-    static constexpr auto xmlName = "trySelectOnStrokeFiltered";
+    static constexpr auto XML_NAME = "trySelectOnStrokeFiltered";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_LATEX_SETTINGS> {
     using value_type = LatexSettings;
-    static constexpr auto xmlName = "latexSettings";
+    static constexpr auto XML_NAME = "latexSettings";
     static const value_type DEFAULT;
     static constexpr auto IMPORT_FN = importLatexSettings;
     static constexpr auto EXPORT_FN = exportLatexSettings;
@@ -1090,28 +1090,28 @@ struct Setting<SettingsElement::SETTING_LATEX_SETTINGS> {
 template <>
 struct Setting<SettingsElement::SETTING_SNAP_RECOGNIZED_SHAPES> {
     using value_type = bool;
-    static constexpr auto xmlName = "snapRecognizedShapesEnabled";
+    static constexpr auto XML_NAME = "snapRecognizedShapesEnabled";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_RESTORE_LINE_WIDTH> {
     using value_type = bool;
-    static constexpr auto xmlName = "restoreLineWidthEnabled";
+    static constexpr auto XML_NAME = "restoreLineWidthEnabled";
     static constexpr value_type DEFAULT = false;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_PREFERRED_LOCALE> {
     using value_type = std::string;
-    static constexpr auto xmlName = "preferredLocale";
+    static constexpr auto XML_NAME = "preferredLocale";
     static constexpr const char* DEFAULT = "";
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_AVERAGING_METHOD> {
     using value_type = StrokeStabilizer::AveragingMethod;
-    static constexpr auto xmlName = "stabilizerAveragingMethod";
+    static constexpr auto XML_NAME = "stabilizerAveragingMethod";
     static constexpr value_type DEFAULT = StrokeStabilizer::AveragingMethod::NONE;
     static constexpr auto IMPORT_FN = importAveragingMethod;
     static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, StrokeStabilizer::AveragingMethod value) {
@@ -1125,7 +1125,7 @@ struct Setting<SettingsElement::SETTING_STABILIZER_AVERAGING_METHOD> {
 template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_PREPROCESSOR> {
     using value_type = StrokeStabilizer::Preprocessor;
-    static constexpr auto xmlName = "stabilizerPreprocessor";
+    static constexpr auto XML_NAME = "stabilizerPreprocessor";
     static constexpr value_type DEFAULT = StrokeStabilizer::Preprocessor::NONE;
     static constexpr auto IMPORT_FN = importPreprocessor;
     static constexpr auto EXPORT_FN = [](xmlNodePtr node, std::string name, StrokeStabilizer::Preprocessor value) {
@@ -1139,49 +1139,49 @@ struct Setting<SettingsElement::SETTING_STABILIZER_PREPROCESSOR> {
 template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_BUFFERSIZE> {
     using value_type = size_t;
-    static constexpr auto xmlName = "stabilizerBuffersize";
+    static constexpr auto XML_NAME = "stabilizerBuffersize";
     static constexpr value_type DEFAULT = 20;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_SIGMA> {
     using value_type = double;
-    static constexpr auto xmlName = "stabilizerSigma";
+    static constexpr auto XML_NAME = "stabilizerSigma";
     static constexpr value_type DEFAULT = 0.5;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_DEADZONE_RADIUS> {
     using value_type = double;
-    static constexpr auto xmlName = "stabilizerDeadzoneRadius";
+    static constexpr auto XML_NAME = "stabilizerDeadzoneRadius";
     static constexpr value_type DEFAULT = 1.3;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_DRAG> {
     using value_type = double;
-    static constexpr auto xmlName = "stabilizerDrag";
+    static constexpr auto XML_NAME = "stabilizerDrag";
     static constexpr value_type DEFAULT = 0.4;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_MASS> {
     using value_type = double;
-    static constexpr auto xmlName = "stabilizerMass";
+    static constexpr auto XML_NAME = "stabilizerMass";
     static constexpr value_type DEFAULT = 5.0;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_CUSP_DETECTION> {
     using value_type = bool;
-    static constexpr auto xmlName = "stabilizerCuspDetection";
+    static constexpr auto XML_NAME = "stabilizerCuspDetection";
     static constexpr value_type DEFAULT = true;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_STABILIZER_FINALIZE_STROKE> {
     using value_type = bool;
-    static constexpr auto xmlName = "stabilizerFinalizeStroke";
+    static constexpr auto XML_NAME = "stabilizerFinalizeStroke";
     static constexpr value_type DEFAULT = true;
 };
 template <>
@@ -1205,7 +1205,7 @@ struct Setting<SettingsElement::NUMBER_OF_SPACES_FOR_TAB> {
 template <>
 struct Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG> {
     using value_type = std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>;
-    static constexpr auto xmlName = "buttonConfig";
+    static constexpr auto XML_NAME = "buttonConfig";
     static const value_type DEFAULT;
     static constexpr auto IMPORT_FN = importButtonConfig;
     static constexpr auto EXPORT_FN = exportButtonConfig;
@@ -1214,7 +1214,7 @@ struct Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG> {
 template <>
 struct Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES> {
     using value_type = std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>;
-    static constexpr auto xmlName = "deviceClasses";
+    static constexpr auto XML_NAME = "deviceClasses";
     static const value_type DEFAULT;
     static constexpr auto IMPORT_FN = importDeviceClasses;
     static constexpr auto EXPORT_FN = exportDeviceClasses;
@@ -1223,21 +1223,21 @@ struct Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES> {
 template <>
 struct Setting<SettingsElement::SETTING_NESTED_TOOLS> {
     using value_type = SElement;
-    static constexpr auto xmlName = "tools";
+    static constexpr auto XML_NAME = "tools";
     static const value_type DEFAULT;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_NESTED_TOUCH> {
     using value_type = SElement;
-    static constexpr auto xmlName = "touch";
+    static constexpr auto XML_NAME = "touch";
     static const value_type DEFAULT;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR> {
     using value_type = SElement;
-    static constexpr auto xmlName = "lastUsedPageBgColor";
+    static constexpr auto XML_NAME = "lastUsedPageBgColor";
     static const value_type DEFAULT;
 };
 
