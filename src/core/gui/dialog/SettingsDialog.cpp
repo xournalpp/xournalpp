@@ -599,7 +599,7 @@ void SettingsDialog::load() {
     updatePressureSensitivityOptions();
 
 
-    const SElement& touch = settings->get<SettingsElement::SETTING_NESTED_TOUCH>();
+    const SElement& touch = settings->get<SettingsElement::NESTED_TOUCH>();
     bool disablePen = false;
     touch.getBool("disableTouch", disablePen);
     loadCheckbox("cbDisableTouchOnPenNear", disablePen);
@@ -674,7 +674,7 @@ void SettingsDialog::load() {
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")), settings->getDefaultSeekTime());
     }
 
-    this->latexPanel.load(settings->get<SettingsElement::SETTING_LATEX_SETTINGS>());
+    this->latexPanel.load(settings->get<SettingsElement::LATEX_SETTINGS>());
 }
 
 void SettingsDialog::save() {
@@ -937,7 +937,7 @@ void SettingsDialog::save() {
 
     languageConfig.saveSettings();
 
-    SElement touch = settings->get<SettingsElement::SETTING_NESTED_TOUCH>();
+    SElement touch = settings->get<SettingsElement::NESTED_TOUCH>();
     touch.setBool("disableTouch", getCheckbox("cbDisableTouchOnPenNear"));
     int touchMethod = gtk_combo_box_get_active(GTK_COMBO_BOX(builder.get("cbTouchDisableMethod")));
 
@@ -958,7 +958,7 @@ void SettingsDialog::save() {
     touch.setInt(
             "timeout",
             static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spTouchDisableTimeout"))) * 1000));
-    settings->set<SettingsElement::SETTING_NESTED_TOUCH>(touch);
+    settings->set<SettingsElement::NESTED_TOUCH>(touch);
 
 
     settings->setSnapRotationTolerance(
@@ -1013,7 +1013,7 @@ void SettingsDialog::save() {
 
     LatexSettings latexSettings{};
     this->latexPanel.save(latexSettings);
-    settings->set<SettingsElement::SETTING_LATEX_SETTINGS>(latexSettings);
+    settings->set<SettingsElement::LATEX_SETTINGS>(latexSettings);
 
     settings->transactionEnd();
 

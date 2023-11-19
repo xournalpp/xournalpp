@@ -25,16 +25,14 @@
 // clang-format on
 
 // Initialize non literal DEFAULT values here
-const Setting<SettingsElement::SETTING_FONT>::value_type Setting<SettingsElement::SETTING_FONT>::DEFAULT =
-        XojFont("Sans", 12);
-const Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME>::value_type
-        Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME>::DEFAULT = _("%F-Note-%H-%M");
-const Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>::value_type
-        Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME>::DEFAULT = _("%{name}_annotated");
-const Setting<SettingsElement::SETTING_LATEX_SETTINGS>::value_type
-        Setting<SettingsElement::SETTING_LATEX_SETTINGS>::DEFAULT{};
-const Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>::value_type
-        Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>::DEFAULT{
+const Setting<SettingsElement::FONT>::value_type Setting<SettingsElement::FONT>::DEFAULT = XojFont("Sans", 12);
+const Setting<SettingsElement::DEFAULT_SAVE_NAME>::value_type Setting<SettingsElement::DEFAULT_SAVE_NAME>::DEFAULT =
+        _("%F-Note-%H-%M");
+const Setting<SettingsElement::DEFAULT_PDF_EXPORT_NAME>::value_type
+        Setting<SettingsElement::DEFAULT_PDF_EXPORT_NAME>::DEFAULT = _("%{name}_annotated");
+const Setting<SettingsElement::LATEX_SETTINGS>::value_type Setting<SettingsElement::LATEX_SETTINGS>::DEFAULT{};
+const Setting<SettingsElement::NESTED_BUTTON_CONFIG>::value_type
+        Setting<SettingsElement::NESTED_BUTTON_CONFIG>::DEFAULT{
                 std::make_shared<ButtonConfig>(TOOL_ERASER, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT,
                                                ERASER_TYPE_NONE),  // Eraser
                 std::make_shared<ButtonConfig>(TOOL_HAND, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT,
@@ -50,14 +48,12 @@ const Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG>::value_type
                 std::make_shared<ButtonConfig>(TOOL_NONE, Colors::black, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT,
                                                ERASER_TYPE_NONE)  // Pen button 2
         };
-const Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>::value_type
-        Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES>::DEFAULT{};
-const Setting<SettingsElement::SETTING_NESTED_TOOLS>::value_type
-        Setting<SettingsElement::SETTING_NESTED_TOOLS>::DEFAULT{};
-const Setting<SettingsElement::SETTING_NESTED_TOUCH>::value_type
-        Setting<SettingsElement::SETTING_NESTED_TOUCH>::DEFAULT{};
-const Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::value_type
-        Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::DEFAULT{};
+const Setting<SettingsElement::NESTED_DEVICE_CLASSES>::value_type
+        Setting<SettingsElement::NESTED_DEVICE_CLASSES>::DEFAULT{};
+const Setting<SettingsElement::NESTED_TOOLS>::value_type Setting<SettingsElement::NESTED_TOOLS>::DEFAULT{};
+const Setting<SettingsElement::NESTED_TOUCH>::value_type Setting<SettingsElement::NESTED_TOUCH>::DEFAULT{};
+const Setting<SettingsElement::NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::value_type
+        Setting<SettingsElement::NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::DEFAULT{};
 
 
 // Implementation of import functions
@@ -598,7 +594,7 @@ bool importProperty(xmlNodePtr node, SElement& var) {
 
 
 // Declarations of export functions
-inline xmlNodePtr exportProp(xmlNodePtr parent, const char* name, const char* value) {
+xmlNodePtr exportProp(xmlNodePtr parent, const char* name, const char* value) {
     xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
     xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(name));
     xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(value));
