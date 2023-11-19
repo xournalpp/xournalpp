@@ -288,7 +288,7 @@ template <>
 struct Setting<SettingsElement::SETTING_FONT> {
     using value_type = XojFont;
     static constexpr auto xmlName = "font";
-    static value_type DEFAULT;
+    static const value_type DEFAULT;
     static constexpr auto IMPORT_FN = importFont;
     static constexpr auto EXPORT_FN = exportFont;
 };
@@ -638,14 +638,14 @@ template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_SAVE_NAME> {
     using value_type = std::string;
     static constexpr auto xmlName = "defaultSaveName";
-    static value_type DEFAULT;
+    static const value_type DEFAULT;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_DEFAULT_PDF_EXPORT_NAME> {
     using value_type = std::string;
     static constexpr auto xmlName = "defaultPdfExportName";
-    static value_type DEFAULT;
+    static const value_type DEFAULT;
 };
 
 template <>
@@ -1082,7 +1082,7 @@ template <>
 struct Setting<SettingsElement::SETTING_LATEX_SETTINGS> {
     using value_type = LatexSettings;
     static constexpr auto xmlName = "latexSettings";
-    static value_type DEFAULT;
+    static const value_type DEFAULT;
     static constexpr auto IMPORT_FN = importLatexSettings;
     static constexpr auto EXPORT_FN = exportLatexSettings;
 };
@@ -1206,7 +1206,7 @@ template <>
 struct Setting<SettingsElement::SETTING_NESTED_BUTTON_CONFIG> {
     using value_type = std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>;
     static constexpr auto xmlName = "buttonConfig";
-    static value_type DEFAULT;
+    static const value_type DEFAULT;
     static constexpr auto IMPORT_FN = importButtonConfig;
     static constexpr auto EXPORT_FN = exportButtonConfig;
 };
@@ -1215,7 +1215,7 @@ template <>
 struct Setting<SettingsElement::SETTING_NESTED_DEVICE_CLASSES> {
     using value_type = std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>;
     static constexpr auto xmlName = "deviceClasses";
-    static value_type DEFAULT;
+    static const value_type DEFAULT;
     static constexpr auto IMPORT_FN = importDeviceClasses;
     static constexpr auto EXPORT_FN = exportDeviceClasses;
 };
@@ -1224,21 +1224,21 @@ template <>
 struct Setting<SettingsElement::SETTING_NESTED_TOOLS> {
     using value_type = SElement;
     static constexpr auto xmlName = "tools";
-    static value_type DEFAULT;
+    static const value_type DEFAULT;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_NESTED_TOUCH> {
     using value_type = SElement;
     static constexpr auto xmlName = "touch";
-    static value_type DEFAULT;
+    static const value_type DEFAULT;
 };
 
 template <>
 struct Setting<SettingsElement::SETTING_NESTED_LAST_USED_PAGE_BACKGROUND_COLOR> {
     using value_type = SElement;
     static constexpr auto xmlName = "lastUsedPageBgColor";
-    static value_type DEFAULT;
+    static const value_type DEFAULT;
 };
 
 
