@@ -31,8 +31,8 @@
 #include "util/i18n.h"                           // for _
 
 #include "LatexSettings.h"  // for LatexSettings
-#include "SettingsDescription.h"
 #include "SettingsEnums.h"  // for InputDeviceTypeOption
+#include "SettingsUtils.h"
 #include "ViewModes.h"      // for ViewModes
 #include "filesystem.h"     // for path
 
@@ -42,7 +42,6 @@ constexpr auto DEFAULT_GRID_SIZE = 14.17;
 
 class ButtonConfig;
 class InputDevice;
-
 
 template <class T>
 class SettingsContainer {};

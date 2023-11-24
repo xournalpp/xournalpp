@@ -14,8 +14,6 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <utility>
-#include <vector>
 
 #include <libxml/tree.h>
 
@@ -24,13 +22,12 @@
 
 #include "ButtonConfig.h"
 #include "LatexSettings.h"
-#include "Settings.h"
 #include "SettingsEnums.h"
+#include "SettingsImExporters.h"
 #include "ViewModes.h"
 #include "filesystem.h"
 
 class SElement;
-class ButtonConfig;
 
 /*
  * In order to add settings add an element to the SettingsElement enum
@@ -169,80 +166,6 @@ enum class SettingsElement {
     // Don't add more entries below this comment
     ENUM_COUNT
 };
-
-
-// Definition of import function template
-template <typename T>
-bool importProperty(xmlNodePtr node, T& var);
-
-
-// Definition of export function template
-template <typename T>
-xmlNodePtr exportProperty(xmlNodePtr parent, std::string name, T value);
-
-template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, int value);
-
-// Definitions of helper functions
-xmlNodePtr exportProp(xmlNodePtr parent, const char* name, const char* value);
-bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& var);
-bool importDeviceClasses(xmlNodePtr node, std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& var);
-bool importSidebarNumberingStyle(xmlNodePtr node, SidebarNumberingStyle& var);
-bool importStylusCursorType(xmlNodePtr node, StylusCursorType& var);
-bool importEraserVisibility(xmlNodePtr node, EraserVisibility& var);
-bool importIconTheme(xmlNodePtr node, IconTheme& var);
-bool importScrollbarHideType(xmlNodePtr node, ScrollbarHideType& var);
-bool importEmptyLastPageAppendType(xmlNodePtr node, EmptyLastPageAppendType& var);
-bool importLatexSettings(xmlNodePtr node, LatexSettings& var);
-bool importAveragingMethod(xmlNodePtr node, StrokeStabilizer::AveragingMethod& var);
-bool importPreprocessor(xmlNodePtr node, StrokeStabilizer::Preprocessor& var);
-bool importFont(xmlNodePtr node, XojFont& var);
-
-xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
-                              const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value);
-xmlNodePtr exportDeviceClasses(xmlNodePtr node, std::string name,
-                               const std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>>& value);
-xmlNodePtr exportScrollbarHideType(xmlNodePtr node, std::string name, ScrollbarHideType value);
-xmlNodePtr exportLatexSettings(xmlNodePtr node, std::string name, const LatexSettings& value);
-xmlNodePtr exportFont(xmlNodePtr node, std::string name, const XojFont& value);
-
-
-// Definitions of getter return types for value types
-template <typename T>
-struct getter_return {
-    using type = T;
-};
-template <>
-struct getter_return<std::string> {
-    using type = const std::string&;
-};
-template <>
-struct getter_return<fs::path> {
-    using type = const fs::path&;
-};
-template <>
-struct getter_return<XojFont> {
-    using type = const XojFont&;
-};
-template <>
-struct getter_return<LatexSettings> {
-    using type = const LatexSettings&;
-};
-template <typename T, size_t N>
-struct getter_return<std::array<T, N>> {
-    using type = const std::array<T, N>&;
-};
-template <typename T, typename U>
-struct getter_return<std::map<T, U>> {
-    using type = const std::map<T, U>&;
-};
-template <>
-struct getter_return<SElement> {
-    using type = const SElement&;
-};
-
-template <typename T>
-using getter_return_t = typename getter_return<T>::type;
 
 
 // Definition of single Settings
@@ -1236,47 +1159,6 @@ struct Setting<SettingsElement::NESTED_LAST_USED_PAGE_BACKGROUND_COLOR> {
     using value_type = SElement;
     static constexpr auto XML_NAME = "lastUsedPageBgColor";
     static const value_type DEFAULT;
-};
-
-
-// Importer, exporter, validator and comment struct here:
-template <SettingsElement e, typename U = void>
-struct importer {
-    static constexpr auto fn = importProperty<typename Setting<e>::value_type>;
-};
-template <SettingsElement e>
-struct importer<e, std::void_t<decltype(Setting<e>::IMPORT_FN)>> {
-    static constexpr auto fn = Setting<e>::IMPORT_FN;
-};
-
-template <SettingsElement e, typename U = void>
-struct exporter {
-    static constexpr auto fn = exportProperty<getter_return_t<typename Setting<e>::value_type>>;
-};
-template <SettingsElement e>
-struct exporter<e, std::void_t<decltype(Setting<e>::EXPORT_FN)>> {
-    static constexpr auto fn = Setting<e>::EXPORT_FN;
-};
-
-template <SettingsElement e, typename U = void>
-struct validator {
-    static constexpr auto fn = [](const typename Setting<e>::value_type& val) ->
-            typename Setting<e>::value_type { return val; };
-    static constexpr bool enable = false;
-};
-template <SettingsElement e>
-struct validator<e, std::void_t<decltype(Setting<e>::VALIDATE_FN)>> {
-    static constexpr auto fn = Setting<e>::VALIDATE_FN;
-    static constexpr bool enable = true;
-};
-
-template <SettingsElement e, typename U = void>
-struct comment {
-    static constexpr auto text = nullptr;
-};
-template <SettingsElement e>
-struct comment<e, std::void_t<decltype(Setting<e>::COMMENT)>> {
-    static constexpr auto text = Setting<e>::COMMENT;
 };
 
 
