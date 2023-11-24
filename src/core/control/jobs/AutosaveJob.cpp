@@ -43,18 +43,32 @@ void AutosaveJob::run() {
     Util::clearExtensions(filepath);
     filepath += ".autosave.xopp";
 
-    control->renameLastAutosaveFile();
-
     g_message("%s", FS(_F("Autosaving to {1}") % filepath.string()).c_str());
 
-    handler.saveTo(filepath);
+    fs::path tempfile = filepath;
+    tempfile += u8"~";
+    handler.saveTo(tempfile);
 
     this->error = handler.getErrorMessage();
     if (!this->error.empty()) {
         callAfterRun();
     } else {
-        // control->deleteLastAutosaveFile(filepath);
-        control->setLastAutosaveFile(filepath);
+        try {
+            if (fs::exists(filepath)) {
+                fs::path swaptmpfile = filepath;
+                swaptmpfile += u8".swap";
+                Util::safeRenameFile(filepath, swaptmpfile);
+                Util::safeRenameFile(tempfile, filepath);
+                // All went well, we can delete the old autosave file
+                fs::remove(swaptmpfile);
+            } else {
+                Util::safeRenameFile(tempfile, filepath);
+            }
+            control->setLastAutosaveFile(filepath);
+        } catch (const fs::filesystem_error& e) {
+            auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
+            this->error = FS(fmtstr % tempfile.u8string() % filepath.u8string() % e.what());
+        }
     }
 }
 

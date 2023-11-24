@@ -23,10 +23,10 @@ public:
     virtual ~OutputStream();
 
 public:
-    virtual void write(const char* str);
-    virtual void write(const char* data, int len) = 0;
-    virtual void write(const std::string& str);
+    void write(const char* str);
+    void write(const std::string& str);
 
+    virtual void write(const char* data, size_t len) = 0;
     virtual void close() = 0;
 };
 
@@ -36,17 +36,15 @@ public:
     ~GzOutputStream() override;
 
 public:
-    void write(const char* data, int len) override;
+    void write(const char* data, size_t len) override;
 
     void close() override;
 
-    std::string& getLastError();
+    const std::string& getLastError() const;
 
 private:
     gzFile fp = nullptr;
 
     std::string error;
-
-    std::string target;
     fs::path file;
 };

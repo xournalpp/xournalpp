@@ -89,9 +89,11 @@ auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
 }
 
 void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
-    /** set stroke timestamp value to the XmlPointNode */
-    xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
-    xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+    if (!audioElement->getAudioFilename().empty()) {
+        /** set stroke timestamp value to the XmlPointNode */
+        xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
+        xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+    }
 }
 
 void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
