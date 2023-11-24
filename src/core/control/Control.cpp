@@ -175,7 +175,7 @@ Control::~Control() {
     g_source_remove(this->changeTimout);
     this->enableAutosave(false);
 
-    deleteLastAutosaveFile("");
+    deleteLastAutosaveFile();
     this->scheduler->stop();
     this->changedPages.clear();  // can be removed, will be done by implicit destructor
 
@@ -219,55 +219,29 @@ Control::~Control() {
     this->fullscreenHandler = nullptr;
 }
 
-
-void Control::renameLastAutosaveFile() {
-    if (this->lastAutosaveFilename.empty()) {
-        return;
-    }
-
-    auto const& filename = this->lastAutosaveFilename;
-    auto renamed = Util::getAutosaveFilepath();
-    Util::clearExtensions(renamed);
-    if (!filename.empty() && filename.string().front() != '.') {
-        // This file must be a fresh, unsaved document. Since this file is
-        // already in the autosave directory, we need to change the renamed filename.
-        renamed += ".old.autosave.xopp";
-    } else {
-        // The file is a saved document with the form ".<filename>.autosave.xopp"
-        renamed += filename.filename();
-    }
-
-    g_message("%s", FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.string() % renamed.string())
-                            .c_str());
-
-    if (!fs::exists(filename)) {
-        this->save(false);
-    }
-
-    std::vector<string> errors;
+void Control::setLastAutosaveFile(fs::path newAutosaveFile) {
     try {
-        Util::safeRenameFile(filename, renamed);
+        if (!fs::equivalent(newAutosaveFile, this->lastAutosaveFilename) && fs::exists(newAutosaveFile)) {
+            deleteLastAutosaveFile();
+        }
     } catch (const fs::filesystem_error& e) {
-        auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
-        errors.emplace_back(FS(fmtstr % filename.u8string() % renamed.u8string() % e.what()));
+        auto fmtstr = FS(_F("Filesystem error: {2}") % e.what());
+        Util::execInUiThread([fmtstr, win = getGtkWindow()]() { XojMsgBox::showErrorToUser(win, fmtstr); });
     }
-
-
-    if (!errors.empty()) {
-        string error = std::accumulate(errors.begin() + 1, errors.end(), *errors.begin(),
-                                       [](const string& e1, const string& e2) { return e1 + "\n" + e2; });
-        Util::execInUiThread([=]() {
-            string msg = FS(_F("Autosave failed with an error: {1}") % error);
-            XojMsgBox::showErrorToUser(getGtkWindow(), msg);
-        });
-    }
+    this->lastAutosaveFilename = std::move(newAutosaveFile);
 }
 
-void Control::setLastAutosaveFile(fs::path newAutosaveFile) { this->lastAutosaveFilename = std::move(newAutosaveFile); }
-
-void Control::deleteLastAutosaveFile(fs::path newAutosaveFile) {
-    fs::remove(this->lastAutosaveFilename);
-    this->lastAutosaveFilename = std::move(newAutosaveFile);
+void Control::deleteLastAutosaveFile() {
+    try {
+        if (fs::exists(this->lastAutosaveFilename)) {
+            fs::remove(this->lastAutosaveFilename);
+        }
+    } catch (const fs::filesystem_error& e) {
+        auto fmtstr = FS(_F("Could not remove old autosave file \"{1}\": {2}") % this->lastAutosaveFilename.string() %
+                         e.what());
+        Util::execInUiThread([fmtstr, win = getGtkWindow()]() { XojMsgBox::showErrorToUser(win, fmtstr); });
+    }
+    this->lastAutosaveFilename.clear();
 }
 
 auto Control::checkChangedDocument(Control* control) -> bool {
@@ -360,10 +334,6 @@ auto Control::autosaveCallback(Control* control) -> bool {
         // do nothing, nothing changed
         return true;
     }
-
-
-    g_message("Info: autosave document...");
-
 
     auto* job = new AutosaveJob(control);
     control->scheduler->addJob(job, JOB_PRIORITY_NONE);
