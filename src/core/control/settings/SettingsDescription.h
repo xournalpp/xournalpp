@@ -10,6 +10,7 @@
  */
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <map>
 #include <memory>
@@ -228,7 +229,7 @@ struct Setting<SettingsElement::MINIMUM_PRESSURE> {
     using value_type = double;
     static constexpr auto XML_NAME = "minimumPressure";
     static constexpr value_type DEFAULT = 0.05;
-    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 0.01); };
+    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max(val, 0.01); };
 };
 
 template <>
@@ -367,7 +368,7 @@ struct Setting<SettingsElement::SIDEBAR_NUMBERING_STYLE> {
         return exportProperty(node, name, static_cast<int>(value));
     };
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type {
-        return std::max<value_type>(SidebarNumberingStyle::MIN, std::min<value_type>(val, SidebarNumberingStyle::MAX));
+        return std::clamp(val, SidebarNumberingStyle::MIN, SidebarNumberingStyle::MAX);
     };
 };
 
@@ -376,7 +377,7 @@ struct Setting<SettingsElement::SIDEBAR_WIDTH> {
     using value_type = int;
     static constexpr auto XML_NAME = "sidebarWidth";
     static constexpr value_type DEFAULT = 150;
-    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 50); };
+    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max(val, 50); };
 };
 
 template <>
@@ -929,7 +930,7 @@ struct Setting<SettingsElement::NUM_IGNORED_STYLUS_EVENTS> {
     using value_type = int;
     static constexpr auto XML_NAME = "numIgnoredStylusEvents";
     static constexpr value_type DEFAULT = 0;
-    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max<value_type>(val, 50); };
+    static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::max(val, 50); };
 };
 
 template <>
