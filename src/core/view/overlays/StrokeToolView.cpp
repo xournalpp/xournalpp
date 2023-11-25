@@ -103,7 +103,10 @@ void StrokeToolView::deleteOn(StrokeToolView::CancellationRequest, const Range& 
 }
 
 void StrokeToolView::on(StrokeToolView::StrokeReplacementRequest, const Stroke& newStroke) {
-    this->mask.wipe();
+    if (this->mask.isInitialized()) {
+        // only wipe mask it actually exists (the view has already been drawn at least once)
+        this->mask.wipe();
+    }
     this->pointBuffer = newStroke.getPointVector();
     this->dashOffset = 0;
     this->strokeWidth = newStroke.getWidth();
