@@ -85,9 +85,8 @@ public:
     template <SettingsElement t>
     xmlNodePtr exportSetting(xmlNodePtr parent) {
         xmlNodePtr node = exporter<t>::fn(parent, Setting<t>::XML_NAME, std::get<(std::size_t)t>(vars));
-        const char* com = comment<t>::text;
-        if (com != nullptr) {
-            auto cNode = xmlNewComment((const xmlChar*)(com));
+        if constexpr (comment<t>::text != nullptr) {
+            auto cNode = xmlNewComment((const xmlChar*)(comment<t>::text));
             xmlAddPrevSibling(node, cNode);
         }
         return node;
