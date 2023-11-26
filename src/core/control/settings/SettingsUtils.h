@@ -84,12 +84,10 @@ template <SettingsElement e, typename U = void>
 struct validator {
     static constexpr auto fn = [](const typename Setting<e>::value_type& val) ->
             typename Setting<e>::value_type { return val; };
-    static constexpr bool enable = false;
 };
 template <SettingsElement e>
 struct validator<e, std::void_t<decltype(Setting<e>::VALIDATE_FN)>> {
     static constexpr auto fn = Setting<e>::VALIDATE_FN;
-    static constexpr bool enable = true;
 };
 
 template <SettingsElement e, typename U = void>

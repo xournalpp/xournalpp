@@ -71,10 +71,7 @@ public:
     template <SettingsElement t>
     bool setValue(const typename Setting<t>::value_type& v) {
         if (!(v == std::get<(std::size_t)t>(vars))) {
-            if (validator<t>::enable)
-                std::get<(std::size_t)t>(vars) = validator<t>::fn(v);
-            else
-                std::get<(std::size_t)t>(vars) = v;
+            std::get<(std::size_t)t>(vars) = validator<t>::fn(v);
             return true;
         }
         return false;
@@ -82,8 +79,7 @@ public:
     template <SettingsElement t>
     void importSetting(xmlNodePtr node) {
         if (importer<t>::fn(node, std::get<(std::size_t)t>(vars))) {
-            if (validator<t>::enable)
-                std::get<(std::size_t)t>(vars) = validator<t>::fn(std::get<(std::size_t)t>(vars));
+            std::get<(std::size_t)t>(vars) = validator<t>::fn(std::get<(std::size_t)t>(vars));
         }
     }
     template <SettingsElement t>
