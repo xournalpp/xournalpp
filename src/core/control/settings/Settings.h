@@ -63,17 +63,10 @@ public:
     params vars;
     std::map<std::string, std::function<void(xmlNodePtr)>> importFunctions;
     std::array<std::function<xmlNodePtr(xmlNodePtr)>, (int)SettingsElement::ENUM_COUNT> exportFunctions;
+
     template <SettingsElement t>
     getter_return_t<typename Setting<t>::value_type> getValue() const {
         return std::get<(std::size_t)t>(vars);
-    }
-    template <SettingsElement t>
-    constexpr const char* getXmlName() const {
-        return Setting<t>::XML_NAME;
-    }
-    template <SettingsElement t>
-    constexpr typename Setting<t>::value_type getDefault() const {
-        return Setting<t>::DEFAULT;
     }
     template <SettingsElement t>
     bool setValue(const typename Setting<t>::value_type& v) {
@@ -95,7 +88,7 @@ public:
     }
     template <SettingsElement t>
     xmlNodePtr exportSetting(xmlNodePtr parent) {
-        xmlNodePtr node = exporter<t>::fn(parent, getXmlName<t>(), std::get<(std::size_t)t>(vars));
+        xmlNodePtr node = exporter<t>::fn(parent, Setting<t>::XML_NAME, std::get<(std::size_t)t>(vars));
         const char* com = comment<t>::text;
         if (com != nullptr) {
             auto cNode = xmlNewComment((const xmlChar*)(com));
