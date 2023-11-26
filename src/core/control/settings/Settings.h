@@ -56,37 +56,38 @@ public:
         ((importFunctions[Setting<(SettingsElement)s>::XML_NAME] =
                   [this](xmlNodePtr node) { return importSetting<(SettingsElement)s>(node); }),
          ...);
-        ((exportFunctions[(int)s] = [this](xmlNodePtr parent) { return exportSetting<(SettingsElement)s>(parent); }),
+        ((exportFunctions[static_cast<int>(s)] =
+                  [this](xmlNodePtr parent) { return exportSetting<(SettingsElement)s>(parent); }),
          ...);
     }
 
     params vars;
     std::map<std::string, std::function<void(xmlNodePtr)>> importFunctions;
-    std::array<std::function<xmlNodePtr(xmlNodePtr)>, (int)SettingsElement::ENUM_COUNT> exportFunctions;
+    std::array<std::function<xmlNodePtr(xmlNodePtr)>, static_cast<int>(SettingsElement::ENUM_COUNT)> exportFunctions;
 
     template <SettingsElement t>
     getter_return_t<typename Setting<t>::value_type> getValue() const {
-        return std::get<(std::size_t)t>(vars);
+        return std::get<static_cast<std::size_t>(t)>(vars);
     }
     template <SettingsElement t>
     bool setValue(const typename Setting<t>::value_type& v) {
-        if (!(v == std::get<(std::size_t)t>(vars))) {
-            std::get<(std::size_t)t>(vars) = validator<t>::fn(v);
+        if (!(v == std::get<static_cast<std::size_t>(t)>(vars))) {
+            std::get<static_cast<std::size_t>(t)>(vars) = validator<t>::fn(v);
             return true;
         }
         return false;
     }
     template <SettingsElement t>
     void importSetting(xmlNodePtr node) {
-        if (importer<t>::fn(node, std::get<(std::size_t)t>(vars))) {
-            std::get<(std::size_t)t>(vars) = validator<t>::fn(std::get<(std::size_t)t>(vars));
+        if (importer<t>::fn(node, std::get<static_cast<std::size_t>(t)>(vars))) {
+            std::get<static_cast<std::size_t>(t)>(vars) = validator<t>::fn(std::get<static_cast<std::size_t>(t)>(vars));
         }
     }
     template <SettingsElement t>
     xmlNodePtr exportSetting(xmlNodePtr parent) {
-        xmlNodePtr node = exporter<t>::fn(parent, Setting<t>::XML_NAME, std::get<(std::size_t)t>(vars));
+        xmlNodePtr node = exporter<t>::fn(parent, Setting<t>::XML_NAME, std::get<static_cast<std::size_t>(t)>(vars));
         if constexpr (comment<t>::text != nullptr) {
-            auto cNode = xmlNewComment((const xmlChar*)(comment<t>::text));
+            auto cNode = xmlNewComment(reinterpret_cast<const xmlChar*>(comment<t>::text));
             xmlAddPrevSibling(node, cNode);
         }
         return node;
@@ -169,7 +170,9 @@ public:
 
     template <SettingsElement t>
     void set(const typename Setting<t>::value_type& v) {
-        if (settings.setValue<t>(v)) save();
+        if (settings.setValue<t>(v)) {
+            save();
+        }
     }
 
     bool load();

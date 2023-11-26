@@ -621,12 +621,14 @@ bool importDeviceClasses(xmlNodePtr node,
 
                     if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceClass")) == 0 &&
                         xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
-                        deviceClass = (int)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+                        deviceClass =
+                                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
                         continue;
                     }
                     if (xmlStrcmp(attrName, reinterpret_cast<const xmlChar*>("deviceSource")) == 0 &&
                         xmlStrcmp(type, reinterpret_cast<const xmlChar*>("int")) == 0) {
-                        deviceSource = (int)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+                        deviceSource =
+                                static_cast<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10));
                         continue;
                     }
 

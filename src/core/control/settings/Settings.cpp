@@ -579,7 +579,7 @@ void Settings::setViewMode(ViewModeId mode, ViewMode viewMode) {
             set<SettingsElement::PRESENTATION_VIEW_MODE_ATTRIBUTES>(viewMode);
             break;
         default:
-            g_warning("Settings::Unknown ViewModeId '%d' in setViewMode", (int)mode);
+            g_warning("Settings::Unknown ViewModeId '%d' in setViewMode", static_cast<int>(mode));
     }
 }
 
