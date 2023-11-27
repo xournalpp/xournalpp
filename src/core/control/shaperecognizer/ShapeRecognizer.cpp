@@ -127,7 +127,7 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
         i1 = start + (k * (end - start)) / nsides;
         i2 = start + ((k + 1) * (end - start)) / nsides;
         s.calc(pt, i1, i2);
-        if (s.det() < LINE_MAX_DET) {
+        if (s.det() < SEGMENT_MAX_DET) {
             break;
         }
     }
@@ -158,10 +158,10 @@ auto ShapeRecognizer::findPolygonal(const Point* pt, int start, int end, int nsi
             det2 = 1.0;
         }
 
-        if (det1 < det2 && det1 < LINE_MAX_DET) {
+        if (det1 < det2 && det1 < SEGMENT_MAX_DET) {
             i1--;
             s = s1;
-        } else if (det2 < det1 && det2 < LINE_MAX_DET) {
+        } else if (det2 < det1 && det2 < SEGMENT_MAX_DET) {
             i2++;
             s = s2;
         } else {
@@ -312,7 +312,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
 
         // Removed complicated recognition in commit 5494bd002050182cde3af70bd1924f4062579be5
 
-        if (n == 1)  // current stroke is a line
+        if (n == 1 && ss->det() < LINE_MAX_DET)  // current stroke is a line
         {
             bool aligned = true;
             if (fabs(rs->angle) < SLANT_TOLERANCE)  // nearly horizontal

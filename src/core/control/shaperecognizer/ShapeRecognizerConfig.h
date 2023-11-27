@@ -15,7 +15,8 @@
 
 #define MAX_POLYGON_SIDES 4
 
-#define LINE_MAX_DET 0.015                           // maximum score for line (ideal line = 0)
+#define SEGMENT_MAX_DET 0.045                        // maximum score for a polygon segment (ideal line = 0)
+#define LINE_MAX_DET 0.015                           // maximum score for single line, stricter than for polygons
 #define CIRCLE_MIN_DET 0.95                          // minimum det. score for circle (ideal circle = 1)
 #define CIRCLE_MAX_SCORE 0.10                        // max circle score for circle (ideal circle = 0)
 #define SLANT_TOLERANCE (5 * M_PI / 180)             // ignore slanting by +/- 5 degrees
