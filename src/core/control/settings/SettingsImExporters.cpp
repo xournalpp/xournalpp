@@ -89,10 +89,10 @@ bool importProperty(xmlNodePtr node, int& var) {
     return false;
 }
 template <>
-bool importProperty(xmlNodePtr node, uint& var) {
+bool importProperty(xmlNodePtr node, unsigned int& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
-        var = static_cast<uint>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+        var = static_cast<unsigned int>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
         xmlFree(value);
         return true;
     }
@@ -105,7 +105,7 @@ template <>
 bool importProperty(xmlNodePtr node, Color& var) {
     xmlChar* value = xmlGetProp(node, reinterpret_cast<const xmlChar*>("value"));
     if (value) {
-        var = ColorU8(static_cast<uint>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
+        var = ColorU8(static_cast<unsigned int>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
         xmlFree(value);
         return true;
     }
@@ -211,12 +211,12 @@ xmlNodePtr exportProperty(xmlNodePtr node, std::string name, int value) {
     return exportProp(node, name.c_str(), std::to_string(value).c_str());
 }
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, uint value) {
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, unsigned int value) {
     return exportProp(node, name.c_str(), std::to_string(value).c_str());
 }
 template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, Color value) {
-    return exportProperty(node, name, u_int32_t(value));
+    return exportProperty(node, name, uint32_t(value));
 }
 template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, size_t value) {
@@ -512,10 +512,10 @@ bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig
                     if (tool == TOOL_PEN || tool == TOOL_HIGHLIGHTER || tool == TOOL_TEXT) {  // Check for color
                         if (auto colorPair = buttonConfigMap.find("color"); colorPair != buttonConfigMap.end()) {
                             if (colorPair->second.first == "int") {
-                                cfg->color = Color(static_cast<uint>(
+                                cfg->color = Color(static_cast<unsigned int>(
                                         g_ascii_strtoull(colorPair->second.second.c_str(), nullptr, 10)));
                             } else if (colorPair->second.first == "hex") {
-                                cfg->color = Color(static_cast<uint>(
+                                cfg->color = Color(static_cast<unsigned int>(
                                         g_ascii_strtoull(colorPair->second.second.c_str(), nullptr, 16)));
                             } else {
                                 g_warning("SettingsDescription::ButtonConfig unexpected type for attribute size for "

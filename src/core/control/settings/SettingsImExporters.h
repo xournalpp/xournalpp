@@ -49,7 +49,7 @@ bool importProperty(xmlNodePtr node, double& var);
 template <>
 bool importProperty(xmlNodePtr node, int& var);
 template <>
-bool importProperty(xmlNodePtr node, uint& var);
+bool importProperty(xmlNodePtr node, unsigned int& var);
 template <>
 bool importProperty(xmlNodePtr node, Color& var);
 template <>
@@ -83,7 +83,7 @@ xmlNodePtr exportProperty(xmlNodePtr node, std::string name, double value);
 template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, int value);
 template <>
-xmlNodePtr exportProperty(xmlNodePtr node, std::string name, uint value);
+xmlNodePtr exportProperty(xmlNodePtr node, std::string name, unsigned int value);
 template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, Color value);
 template <>

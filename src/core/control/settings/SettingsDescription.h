@@ -692,14 +692,14 @@ struct Setting<SettingsElement::PDF_PAGE_CACHE_SIZE> {
 
 template <>
 struct Setting<SettingsElement::PRELOAD_PAGES_BEFORE> {
-    using value_type = uint;
+    using value_type = unsigned int;
     static constexpr auto XML_NAME = "preloadPagesBefore";
     static constexpr value_type DEFAULT = 3;
 };
 
 template <>
 struct Setting<SettingsElement::PRELOAD_PAGES_AFTER> {
-    using value_type = uint;
+    using value_type = unsigned int;
     static constexpr auto XML_NAME = "preloadPagesAfter";
     static constexpr value_type DEFAULT = 5;
 };
@@ -906,7 +906,7 @@ struct Setting<SettingsElement::AUDIO_GAIN> {
 
 template <>
 struct Setting<SettingsElement::DEFAULT_SEEK_TIME> {
-    using value_type = uint;
+    using value_type = unsigned int;
     static constexpr auto XML_NAME = "defaultSeekTime";
     static constexpr value_type DEFAULT = 5;
 };
@@ -1116,7 +1116,7 @@ struct Setting<SettingsElement::USE_SPACES_AS_TAB> {
 };
 template <>
 struct Setting<SettingsElement::NUMBER_OF_SPACES_FOR_TAB> {
-    using value_type = uint;
+    using value_type = unsigned int;
     static constexpr auto XML_NAME = "numberOfSpacesForTab";
     static constexpr value_type DEFAULT = 4;
     static constexpr auto VALIDATE_FN = [](value_type val) -> value_type { return std::min(val, 8U); };
