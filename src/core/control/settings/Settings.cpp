@@ -837,6 +837,26 @@ SAttribute::~SAttribute() {
     this->type = ATTRIBUTE_TYPE_NONE;
 }
 
+bool SAttribute::operator==(const SAttribute& sat) const {
+    if (type != sat.type || comment != sat.comment) {
+        return false;
+    }
+    switch (type) {
+        case ATTRIBUTE_TYPE_NONE:
+            return true;
+        case ATTRIBUTE_TYPE_STRING:
+            return sValue == sat.sValue;
+        case ATTRIBUTE_TYPE_INT:
+        case ATTRIBUTE_TYPE_INT_HEX:
+        case ATTRIBUTE_TYPE_BOOLEAN:
+            return iValue == sat.iValue;
+        case ATTRIBUTE_TYPE_DOUBLE:
+            return dValue == sat.dValue;
+        default:  // If for some reason the AttributeType is different from the ones before return false
+            return false;
+    }
+}
+
 //////////////////////////////////////////////////
 
 auto SElement::attributes() const -> const std::map<string, SAttribute>& { return this->element->attributes; }
@@ -947,6 +967,10 @@ auto SElement::getString(const string& name, string& value) const -> bool {
     value = attrib.sValue;
 
     return true;
+}
+
+bool SElement::operator==(const SElement& sel) const {
+    return children() == sel.children() && attributes() == sel.attributes();
 }
 
 /**

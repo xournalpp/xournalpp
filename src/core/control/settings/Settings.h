@@ -108,6 +108,8 @@ public:
     AttributeType type;
 
     std::string comment;
+
+    bool operator==(const SAttribute& sat) const;
 };
 
 
@@ -142,9 +144,7 @@ public:
     const std::map<std::string, SAttribute>& attributes() const;
     const std::map<std::string, SElement>& children() const;
 
-    // This is only used to always update the Setting of type SElement
-    // This does not actually check for equality
-    bool operator==(const SElement& sel) const { return false; };
+    bool operator==(const SElement& sel) const;
 
 private:
     std::shared_ptr<SElementData> element = std::make_shared<SElementData>();
