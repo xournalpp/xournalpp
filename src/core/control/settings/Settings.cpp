@@ -829,9 +829,9 @@ SAttribute::~SAttribute() {
 
 //////////////////////////////////////////////////
 
-auto SElement::attributes() const -> std::map<string, SAttribute>& { return this->element->attributes; }
+auto SElement::attributes() const -> const std::map<string, SAttribute>& { return this->element->attributes; }
 
-auto SElement::children() const -> std::map<string, SElement>& { return this->element->children; }
+auto SElement::children() const -> const std::map<string, SElement>& { return this->element->children; }
 
 void SElement::clear() {
     this->element->attributes.clear();

@@ -141,8 +141,8 @@ public:
     bool getBool(const std::string& name, bool& value) const;
     bool getString(const std::string& name, std::string& value) const;
 
-    std::map<std::string, SAttribute>& attributes() const;
-    std::map<std::string, SElement>& children() const;
+    const std::map<std::string, SAttribute>& attributes() const;
+    const std::map<std::string, SElement>& children() const;
 
     // This is only used to always update the Setting of type SElement
     // This does not actually check for equality
