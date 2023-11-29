@@ -187,14 +187,6 @@ bool importProperty(xmlNodePtr node, SElement& var) {
 }
 
 
-// exportProp function used by multiple exporters
-xmlNodePtr exportProp(xmlNodePtr parent, const char* name, const char* value) {
-    xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
-    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(name));
-    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(value));
-    return xmlNode;
-}
-
 // Implementations of exportProperty template functions
 template <>
 xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const std::string& value) {

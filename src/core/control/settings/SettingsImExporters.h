@@ -61,8 +61,12 @@ bool importProperty(xmlNodePtr node, SElement& var);
 
 
 // exportProp function
-xmlNodePtr exportProp(xmlNodePtr parent, const char* name, const char* value);
-
+inline static xmlNodePtr exportProp(xmlNodePtr parent, const char* name, const char* value) {
+    xmlNodePtr xmlNode = xmlNewChild(parent, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
+    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("name"), reinterpret_cast<const xmlChar*>(name));
+    xmlSetProp(xmlNode, reinterpret_cast<const xmlChar*>("value"), reinterpret_cast<const xmlChar*>(value));
+    return xmlNode;
+}
 
 // Definition of export function template
 template <typename T>
