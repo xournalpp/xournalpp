@@ -51,19 +51,17 @@ class SettingsContainer<std::index_sequence<s...>> {
 public:
     using params = std::tuple<typename Setting<static_cast<SettingsElement>(s)>::value_type...>;
 
-    SettingsContainer() {
-        ((std::get<s>(vars) = Setting<(SettingsElement)s>::DEFAULT), ...);
+    SettingsContainer() { ((std::get<s>(vars) = Setting<(SettingsElement)s>::DEFAULT), ...); }
+
+    params vars;
+
+    auto getImportMap() {
+        std::map<std::string, std::function<void(xmlNodePtr)>> importFunctions;
         ((importFunctions[Setting<(SettingsElement)s>::XML_NAME] =
                   [this](xmlNodePtr node) { return importSetting<(SettingsElement)s>(node); }),
          ...);
-        ((exportFunctions[static_cast<int>(s)] =
-                  [this](xmlNodePtr parent) { return exportSetting<(SettingsElement)s>(parent); }),
-         ...);
+        return importFunctions;
     }
-
-    params vars;
-    std::map<std::string, std::function<void(xmlNodePtr)>> importFunctions;
-    std::array<std::function<xmlNodePtr(xmlNodePtr)>, static_cast<int>(SettingsElement::ENUM_COUNT)> exportFunctions;
 
     template <SettingsElement t>
     getter_return_t<typename Setting<t>::value_type> getValue() const {
@@ -161,6 +159,9 @@ public:
 
 private:
     SettingsCont settings;
+
+    template <size_t... s>
+    xmlNodePtr saveImpl(std::index_sequence<s...>, xmlNodePtr root);
 
 public:
     template <SettingsElement t>

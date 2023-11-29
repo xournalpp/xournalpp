@@ -69,6 +69,8 @@ auto Settings::load() -> bool {
     cur = xmlDocGetRootElement(doc);
     cur = cur->xmlChildrenNode;
 
+    auto importerMap = settings.getImportMap();
+
     while (cur != nullptr) {
         if (cur->type != XML_COMMENT_NODE) {
             xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
@@ -84,8 +86,8 @@ auto Settings::load() -> bool {
                 nameString = propertyRenamerMap[nameString];
             }
 
-            if (settings.importFunctions.find(nameString) != settings.importFunctions.end()) {
-                settings.importFunctions[nameString](cur);
+            if (importerMap.find(nameString) != importerMap.end()) {
+                importerMap[nameString](cur);
             } else {
                 g_warning("Settings::load: No importer function found for '%s'", nameString.c_str());
             }
@@ -136,6 +138,15 @@ void Settings::transactionEnd() {
     save();
 }
 
+template <size_t... s>
+xmlNodePtr Settings::saveImpl(std::index_sequence<s...>, xmlNodePtr root) {
+    xmlNodePtr xmlNode = nullptr;
+
+    ((xmlNode = settings.exportSetting<static_cast<SettingsElement>(s)>(root)), ...);
+
+    return xmlNode;
+}
+
 void Settings::save() {
     if (inTransaction) {
         return;
@@ -143,7 +154,6 @@ void Settings::save() {
 
     xmlDocPtr doc = nullptr;
     xmlNodePtr root = nullptr;
-    xmlNodePtr xmlNode = nullptr;
 
     xmlIndentTreeOutput = true;
 
@@ -161,7 +171,7 @@ void Settings::save() {
                                              "the others are commented in this file, but handle with care!"));
     xmlAddPrevSibling(root, com);
 
-    for (auto exportFunction: settings.exportFunctions) { xmlNode = exportFunction(root); }
+    saveImpl(std::make_index_sequence<static_cast<size_t>(SettingsElement::ENUM_COUNT)>(), root);
 
     xmlSaveFormatFileEnc(filepath.u8string().c_str(), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
