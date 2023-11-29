@@ -272,7 +272,9 @@ xmlNodePtr exportProperty(xmlNodePtr node, std::string name, const SElement& val
             xmlAddPrevSibling(xmlDataNode, com);
         }
     }
-    for (auto const& p: value.children()) { exportProperty<const SElement&>(xmlDataNode, p.first, p.second); }
+    for (auto const& p: value.children()) {
+        exportProperty<const SElement&>(xmlDataNode, p.first, p.second);
+    }
     return xmlDataNode;
 }
 

@@ -41,4 +41,3 @@ const Setting<SettingsElement::NESTED_TOOLS>::value_type Setting<SettingsElement
 const Setting<SettingsElement::NESTED_TOUCH>::value_type Setting<SettingsElement::NESTED_TOUCH>::DEFAULT{};
 const Setting<SettingsElement::NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::value_type
         Setting<SettingsElement::NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>::DEFAULT{};
-
