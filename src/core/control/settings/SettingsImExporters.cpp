@@ -705,7 +705,7 @@ xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
     xmlSetProp(xmlNodeButtonConfig, reinterpret_cast<const xmlChar*>("name"),
                reinterpret_cast<const xmlChar*>(name.c_str()));
     for (int i = 0; i < BUTTON_COUNT; i++) {
-        const auto& cfg = value[i];
+        const auto& cfg = value[static_cast<size_t>(i)];
         xmlNodePtr btnNode =
                 xmlNewChild(xmlNodeButtonConfig, nullptr, reinterpret_cast<const xmlChar*>("data"), nullptr);
         xmlSetProp(btnNode, reinterpret_cast<const xmlChar*>("name"),
