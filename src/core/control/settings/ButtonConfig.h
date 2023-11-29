@@ -14,6 +14,8 @@
 #include <string>  // for string
 
 #include <libxml/tree.h>  // for xmlNodePtr
+#include <memory>
+#include <array>
 
 #include "control/ToolEnums.h"               // for DrawingType, ToolType
 #include "control/settings/SettingsEnums.h"  // for Button
