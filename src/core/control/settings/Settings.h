@@ -51,14 +51,14 @@ class SettingsContainer<std::index_sequence<s...>> {
 public:
     using params = std::tuple<typename Setting<static_cast<SettingsElement>(s)>::value_type...>;
 
-    SettingsContainer() { ((std::get<s>(vars) = Setting<(SettingsElement)s>::DEFAULT), ...); }
+    SettingsContainer() { ((std::get<s>(vars) = Setting<static_cast<SettingsElement>(s)>::DEFAULT), ...); }
 
     params vars;
 
     auto getImportMap() {
         std::map<std::string, std::function<void(xmlNodePtr)>> importFunctions;
         ((importFunctions[Setting<(SettingsElement)s>::XML_NAME] =
-                  [this](xmlNodePtr node) { return importSetting<(SettingsElement)s>(node); }),
+                  [this](xmlNodePtr node) { return importSetting<static_cast<SettingsElement>(s)>(node); }),
          ...);
         return importFunctions;
     }
