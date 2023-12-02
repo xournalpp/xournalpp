@@ -45,7 +45,7 @@ public:
         if (multiLayer) {
             size_t initialLayer = this->view->getPage()->getSelectedLayerId();
             auto* layers = this->view->getPage()->getLayers();
-            for (auto it = layers->rbegin(); it != layers->rend(); it--) {
+            for (auto it = layers->rbegin(); it != layers->rend(); it++) {
                 Layer* layer = *it;
                 Layer::Index index = layers->size() - as_unsigned(std::distance(layers->rbegin(), it));
                 ctrl->getLayerController()->switchToLay(index);
