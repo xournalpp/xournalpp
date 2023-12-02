@@ -23,7 +23,7 @@ auto Selection::finalize(PageRef page, bool disableMultilayer, Document* doc) ->
 
     if (multiLayer && !disableMultilayer) {
         std::lock_guard lock(*doc);
-        for (auto it = page->getLayers()->rbegin(); it != page->getLayers()->rend(); it--) {
+        for (auto it = page->getLayers()->rbegin(); it != page->getLayers()->rend(); it++) {
             Layer* l = *it;
             if (!l->isVisible()) {
                 continue;
