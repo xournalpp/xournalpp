@@ -9,14 +9,15 @@
 
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
-#include "control/Control.h"            // for Control
-#include "control/settings/Settings.h"  // for Settings
-#include "gui/LayoutMapper.h"           // for LayoutMapper, GridPosition
-#include "gui/PageView.h"               // for XojPageView
-#include "gui/scroll/ScrollHandling.h"  // for ScrollHandling
-#include "model/Document.h"             // for Document
-#include "util/Rectangle.h"             // for Rectangle
-#include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
+#include "control/Control.h"                 // for Control
+#include "control/settings/Settings.h"       // for Settings
+#include "control/settings/SettingsEnums.h"  // for LayoutType
+#include "gui/LayoutMapper.h"                // for LayoutMapper, GridPosition
+#include "gui/PageView.h"                    // for XojPageView
+#include "gui/scroll/ScrollHandling.h"       // for ScrollHandling
+#include "model/Document.h"                  // for Document
+#include "util/Rectangle.h"                  // for Rectangle
+#include "util/safe_casts.h"                 // for strict_cast, as_signed, as_si...
 
 #include "XournalView.h"  // for XournalView
 
@@ -213,6 +214,42 @@ void Layout::recalculate() {
     gtk_widget_queue_resize(view->getWidget());
 }
 
+auto Layout::getPaddingAboveAll() const -> int {
+    Settings* settings = this->view->getControl()->getSettings();
+
+    // Minimal padding around the page area in order to accomodate older Wacom tablets
+    // with limited sense area
+    auto padding = XOURNAL_PADDING;
+
+    if (settings->getUnlimitedScrolling()) {
+        // add the widget's size in padding for "unlimited scrolling"
+        padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+    } else if (settings->getAddVerticalSpace()) {
+        // add user-defined space above the drawing area
+        padding += settings->getAddVerticalSpaceAmountAbove();
+    }
+
+    return padding;
+}
+
+auto Layout::getPaddingLeftOfAll() const -> int {
+    Settings* settings = this->view->getControl()->getSettings();
+
+    // Minimal padding around the page area in order to accomodate older Wacom tablets
+    // with limited sense area
+    auto padding = XOURNAL_PADDING;
+
+    if (settings->getUnlimitedScrolling()) {
+        // add the widget's size in padding for "unlimited scrolling"
+        padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
+    } else if (settings->getAddHorizontalSpace()) {
+        // add user-defined space left of the drawing area
+        padding += settings->getAddHorizontalSpaceAmountLeft();
+    }
+
+    return padding;
+}
+
 void Layout::layoutPages(int width, int height) {
     std::lock_guard g{pc.m};
     if (!pc.valid) {
@@ -228,24 +265,12 @@ void Layout::layoutPages(int width, int height) {
     // get from mapper (some may have changed to accommodate paired setting etc.)
     bool const isPairedPages = this->mapper.isPairedPages();
 
-    auto const rows = this->pc.heightRows.size();
-    auto const columns = this->pc.widthCols.size();
+    // Retrieve and store layout type
+    this->layoutType = settings->getViewLayoutType();
 
-
-    // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
-    auto v_padding = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        v_padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
-    } else if (settings->getAddVerticalSpace()) {
-        v_padding += settings->getAddVerticalSpaceAmountAbove();
-    }
-
-    auto h_padding = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        h_padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
-    } else if (settings->getAddHorizontalSpace()) {
-        h_padding += settings->getAddHorizontalSpaceAmountLeft();
-    }
+    // start with the padding around the page area
+    auto v_padding = getPaddingAboveAll();
+    auto h_padding = getPaddingLeftOfAll();
 
     auto const centeringXBorder = (width - as_signed(pc.minWidth)) / 2;
     auto const centeringYBorder = (height - as_signed(pc.minHeight)) / 2;
@@ -254,52 +279,163 @@ void Layout::layoutPages(int width, int height) {
     auto const borderX = static_cast<double>(std::max<SBig>(h_padding, centeringXBorder));
     auto const borderY = static_cast<double>(std::max<SBig>(v_padding, centeringYBorder));
 
-    // initialize here and x again in loop below.
-    auto x = borderX;
-    auto y = borderY;
+    struct PageLayoutDescription {
+        double paddingLeft = 0.0;
+        double paddingTop = 0.0;
+        double width = 0.0;
+        double height = 0.0;
+        std::optional<size_t> optionalPage = std::nullopt;
+    };
+
+    auto const rows = this->pc.heightRows.size();
+    auto const columns = this->pc.widthCols.size();
+
+    std::vector<PageLayoutDescription> pages;  // access with r * rows + c
+    pages.resize(rows * columns);
 
 
-    // Iterate over ALL possible rows and columns.
-    // We don't know which page, if any,  is to be displayed in each row, column -  ask the mapper object!
-    // Then assign that page coordinates with center, left or right justify within row,column grid cell as required.
+    // Iterate over ALL possible rows and columns 3 times:
+    // We don't know which page, if any, is to be displayed in each row, column -  ask the mapper object!
+    // Once we know the dimensions of all pages, define the paddings above and left of each page as required.
+    // Finally, assign page coordinates by propagating page paddings and sizes from the border.
+
+    // first loop: set mapped position in view object and retrieve page dimensions
     for (size_t r = 0; r < rows; r++) {
         for (size_t c = 0; c < columns; c++) {
-            auto optionalPage = this->mapper.at({c, r});
+            const auto index = c * rows + r;
+            pages[index].optionalPage = this->mapper.at({c, r});
 
-            if (optionalPage) {
+            if (pages[index].optionalPage) {
+                auto& v = this->view->viewPages[*pages[index].optionalPage];
 
-                auto& v = this->view->viewPages[*optionalPage];
                 v->setMappedRowCol(strict_cast<int>(r),
                                    strict_cast<int>(c));  // store row and column for e.g. proper arrow key navigation
-                const auto vDisplayWidth = v->getDisplayWidthDouble();
-                const auto vDisplayHeight = v->getDisplayHeightDouble();
-                {
-                    auto paddingLeft = 0.0;
-                    auto columnPadding = this->pc.widthCols[c] - vDisplayWidth;
+
+                pages[index].width = v->getDisplayWidthDouble();
+                pages[index].height = v->getDisplayHeightDouble();
+            }
+        }
+    }
+
+    // second loop: set paddings, width and height according to the layout style and orientation
+    if (this->layoutType == LAYOUT_TYPE_GRID) {
+        for (size_t r = 0; r < rows; r++) {
+            for (size_t c = 0; c < columns; c++) {
+                const auto index = c * rows + r;
+
+                auto columnPadding = this->pc.widthCols[c] - pages[index].width;
+
+                if (isPairedPages && len > 1) {
+                    // pair pages mode
+                    if (c % 2 == 0) {
+                        // align right
+                        pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
+                    } else {  // align left
+                        pages[index].paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
+                    }
+                } else {  // not paired page mode - center
+                    pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0 + columnPadding / 2.0;  // center justify
+                }
+
+                // center page vertically
+                pages[index].paddingTop = (this->pc.heightRows[r] - pages[index].height) / 2.0;
+
+                pages[index].width = pc.widthCols[c];
+                pages[index].height = pc.heightRows[r];
+            }
+        }
+    } else if (this->layoutType == LAYOUT_TYPE_CONST_PADDING) {
+        if (mapper.getOrientation() == LayoutSettings::Orientation::Horizontal) {
+            for (size_t r = 0; r < rows; r++) {
+                for (size_t c = 0; c < columns; c++) {
+                    const auto index = c * rows + r;
 
                     if (isPairedPages && len > 1) {
                         // pair pages mode
                         if (c % 2 == 0) {
                             // align right
-                            paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
+                            pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW;
                         } else {  // align left
-                            paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
+                            pages[index].paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
                         }
                     } else {  // not paired page mode - center
-                        paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0 + columnPadding / 2.0;  // center justify
+                        pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0;
                     }
 
                     // center page vertically
-                    const auto paddingTop = (this->pc.heightRows[r] - vDisplayHeight) / 2.0;
-
-                    v->setX(floor_cast<int>(x + paddingLeft));  // set the page position
-                    v->setY(floor_cast<int>(y + paddingTop));
+                    pages[index].paddingTop = (this->pc.heightRows[r] - pages[index].height) / 2.0;
                 }
             }
-            x += this->pc.widthCols[c] + XOURNAL_PADDING_BETWEEN;
+        } else if (mapper.getOrientation() == LayoutSettings::Orientation::Vertical) {
+            for (size_t c = 0; c < columns; c++) {
+                for (size_t r = 0; r < rows; r++) {
+                    const auto index = c * rows + r;
+
+                    auto columnPadding = this->pc.widthCols[c] - pages[index].width;
+
+                    if (isPairedPages && len > 1) {
+                        // pair pages mode
+                        if (c % 2 == 0) {
+                            // align right
+                            pages[index].paddingLeft =
+                                    XOURNAL_PADDING_BETWEEN - XOURNAL_ROOM_FOR_SHADOW + columnPadding;
+                            if (pages[index + rows].height > pages[index].height) {
+                                pages[index].paddingTop = (pages[index + rows].height - pages[index].height) / 2;
+                                pages[index].height = pages[index + rows].height;
+                            }
+                        } else {  // align left
+                            pages[index].paddingLeft = XOURNAL_ROOM_FOR_SHADOW;
+                            if (pages[index - rows].height > pages[index].height) {
+                                pages[index].paddingTop = (pages[index - rows].height - pages[index].height) / 2;
+                                pages[index].height = pages[index - rows].height;
+                            }
+                        }
+                    } else {  // not paired page mode - center
+                        pages[index].paddingLeft = XOURNAL_PADDING_BETWEEN / 2.0 + columnPadding / 2.0;
+                    }
+                }
+            }
         }
-        x = borderX;
-        y += this->pc.heightRows[r] + XOURNAL_PADDING_BETWEEN;
+    }
+
+    // initialize x and y here and again in loop below.
+    auto x = borderX;
+    auto y = borderY;
+
+    // third loop: set the position of each page
+    if (mapper.getOrientation() == LayoutSettings::Orientation::Horizontal) {
+        for (size_t r = 0; r < rows; r++) {
+            for (size_t c = 0; c < columns; c++) {
+                const auto index = c * rows + r;
+
+                if (pages[index].optionalPage) {
+                    auto& v = this->view->viewPages[*pages[index].optionalPage];
+
+                    v->setX(round_cast<int>(x + pages[index].paddingLeft));  // set the page position
+                    v->setY(round_cast<int>(y + pages[index].paddingTop));
+                }
+                x += pages[index].width + XOURNAL_PADDING_BETWEEN;
+            }
+            x = borderX;
+            y += this->pc.heightRows[r] + XOURNAL_PADDING_BETWEEN;
+        }
+    } else {  // mapper.getOrientation() == LayoutSettings::Orientation::Vertical
+        for (size_t c = 0; c < columns; c++) {
+            for (size_t r = 0; r < rows; r++) {
+                const auto index = c * rows + r;
+                auto optionalPage = this->mapper.at({c, r});
+
+                if (optionalPage) {
+
+                    auto& v = this->view->viewPages[*optionalPage];
+                    v->setX(round_cast<int>(x + pages[index].paddingLeft));  // set the page position
+                    v->setY(round_cast<int>(y + pages[index].paddingTop));
+                }
+                y += pages[index].height + XOURNAL_PADDING_BETWEEN;
+            }
+            x += this->pc.widthCols[c] + XOURNAL_PADDING_BETWEEN;
+            y = borderY;
+        }
     }
 
     this->colXStart.resize(this->pc.widthCols.size());
@@ -323,15 +459,8 @@ void Layout::layoutPages(int width, int height) {
 
 
 auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
-    const Settings* settings = this->view->getControl()->getSettings();
-
     // User-configured padding above all pages.
-    auto paddingAbove = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        paddingAbove += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
-    } else if (settings->getAddVerticalSpace()) {
-        paddingAbove += settings->getAddVerticalSpaceAmountAbove();
-    }
+    const auto paddingAbove = getPaddingAboveAll();
 
     // (x, y) coordinate pair gives grid indices. This handles paired pages and different page layouts for us.
     auto pageYLocation = strict_cast<int>(this->mapper.at(pageIndex).row);
@@ -341,14 +470,9 @@ auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
 
 auto Layout::getPaddingLeftOfPage(size_t pageIndex) const -> int {
     bool isPairedPages = this->mapper.isPairedPages();
-    const Settings* settings = this->view->getControl()->getSettings();
 
-    auto paddingBefore = XOURNAL_PADDING;
-    if (settings->getUnlimitedScrolling()) {
-        paddingBefore += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
-    } else if (settings->getAddHorizontalSpace()) {
-        paddingBefore += settings->getAddHorizontalSpaceAmountLeft();
-    }
+    // User-configured padding left of all pages.
+    const auto paddingBefore = getPaddingLeftOfAll();
 
     auto const pageXLocation = strict_cast<int>(this->mapper.at(pageIndex).col);
 

@@ -30,7 +30,7 @@
 
 #include "LatexSettings.h"      // for LatexSettings
 #include "RecolorParameters.h"  // for RecolorParameters
-#include "SettingsEnums.h"      // for InputDeviceTypeOption
+#include "SettingsEnums.h"      // for InputDeviceTypeOption, LayoutType
 #include "ViewModes.h"          // for ViewModes
 #include "config-features.h"    // for ENABLE_AUDIO
 #include "filesystem.h"         // for path
@@ -258,6 +258,9 @@ public:
 
     void setViewFixedRows(bool viewFixedRows);
     bool isViewFixedRows() const;
+
+    void setViewLayoutType(LayoutType type);
+    LayoutType getViewLayoutType() const;
 
     void setViewLayoutVert(bool vert);
     bool getViewLayoutVert() const;
@@ -857,6 +860,11 @@ private:
      *  USE  fixed rows, otherwise fixed columns
      */
     bool viewFixedRows{};
+
+    /**
+     * Layout as grid or with constant padding
+     */
+    LayoutType layoutType;
 
     /**
      *  Layout Vertical then Horizontal

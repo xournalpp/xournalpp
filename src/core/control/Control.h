@@ -24,6 +24,7 @@
 
 #include "control/ToolEnums.h"                      // for ToolSize, ToolType
 #include "control/jobs/ProgressListener.h"          // for ProgressListener
+#include "control/settings/SettingsEnums.h"         // for LayoutType
 #include "control/settings/ViewModes.h"             // for ViewModeId
 #include "control/tools/EditSelection.h"            // for OrderChange
 #include "enums/Action.enum.h"                      // for Action
@@ -187,6 +188,7 @@ public:
     void setPairsOffset(int numOffset);
     void setViewColumns(int numColumns);
     void setViewRows(int numRows);
+    void setViewLayoutType(LayoutType type);
     void setViewLayoutVert(bool vert);
     void setViewLayoutR2L(bool r2l);
     void setViewLayoutB2T(bool b2t);

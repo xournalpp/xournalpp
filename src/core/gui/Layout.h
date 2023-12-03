@@ -18,7 +18,8 @@
 
 #include <gtk/gtk.h>  // for GtkAdjustment
 
-#include "util/Rectangle.h"  // for Rectangle
+#include "control/settings/SettingsEnums.h"  // for LayoutType
+#include "util/Rectangle.h"                  // for Rectangle
 
 #include "LayoutMapper.h"  // for LayoutMapper
 
@@ -150,6 +151,19 @@ protected:
 private:
     void recalculate_int() const;
 
+    /**
+     * Get the static padding above all pages.
+     * This includes the default padding, plus the user-defined additional space
+     * above the page area or the widget's size for "infinite scrolling"
+     */
+    int getPaddingAboveAll() const;
+    /**
+     * Get the static padding left of all pages.
+     * This includes the default padding, plus the user-defined additional space
+     * left of the page area or the widget's size for "infinite scrolling"
+     */
+    int getPaddingLeftOfAll() const;
+
     void maybeAddLastPage(Layout* layout);
 
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
@@ -170,6 +184,7 @@ private:
      */
     mutable LayoutMapper mapper;
     mutable PreCalculated pc{};
+    LayoutType layoutType;
     mutable std::vector<unsigned> colXStart;
     mutable std::vector<unsigned> rowYStart;
 };
