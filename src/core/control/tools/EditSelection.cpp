@@ -203,13 +203,6 @@ std::unique_ptr<EditSelection> addElementsFromActiveLayer(Control* ctrl, EditSel
 EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& page, Layer* layer, XojPageView* view,
                              const Range& bounds, const Range& snappingBounds):
         snappedBounds(snappingBounds),
-        mouseDownType(CURSOR_SELECTION_NONE),
-        relMousePosX(0),
-        relMousePosY(0),
-        relMousePosRotX(0),
-        relMousePosRotY(0),
-        preserveAspectRatio(false),
-        supportMirroring(true),
         btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
         sourcePage(page),
         sourceLayer(layer),
@@ -230,9 +223,6 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
     this->view->getXournal()->getCursor()->setRotationAngle(0);
     this->view->getXournal()->getCursor()->setMirror(false);
 
-    this->preserveAspectRatio = false;
-    this->supportMirroring = true;
-    this->supportRotation = true;
     for (auto&& e: contents->getElements()) {
         this->preserveAspectRatio = this->preserveAspectRatio || e->rescaleOnlyAspectRatio();
         this->supportMirroring = this->supportMirroring && e->rescaleWithMirror();
@@ -242,19 +232,7 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
 
 
 EditSelection::EditSelection(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view):
-        x(0),
-        y(0),
-        rotation(0),
-        width(0),
-        height(0),
         snappedBounds(Rectangle<double>{}),
-        mouseDownType(CURSOR_SELECTION_NONE),
-        relMousePosX(0),
-        relMousePosY(0),
-        relMousePosRotX(0),
-        relMousePosRotY(0),
-        preserveAspectRatio(false),
-        supportMirroring(true),
 
         btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
         sourcePage(page),
@@ -356,7 +334,9 @@ auto EditSelection::getSnappedBounds() const -> Rectangle<double> { return Recta
 /**
  * get the original bounding rectangle in document coordinates
  */
-auto EditSelection::getOriginalBounds() const -> Rectangle<double> { return Rectangle<double>{this->contents->getOriginalBounds()}; }
+auto EditSelection::getOriginalBounds() const -> Rectangle<double> {
+    return Rectangle<double>{this->contents->getOriginalBounds()};
+}
 
 /**
  * Get the rotation angle of the selection
@@ -1174,7 +1154,9 @@ void EditSelection::serialize(ObjectOutputStream& out) const {
     out.endObject();
 
     out.writeInt(static_cast<int>(this->getElements().size()));
-    for (Element* e: this->getElements()) { e->serialize(out); }
+    for (Element* e: this->getElements()) {
+        e->serialize(out);
+    }
 }
 
 void EditSelection::readSerialized(ObjectInputStream& in) {

@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <memory>   // for unique_ptr
+#include <utility>  // for pair
 #include <vector>   // for vector
 
 #include <cairo.h>  // for cairo_surface_t, cairo_t
@@ -91,12 +93,12 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    const std::vector<Element*>& getElements() const override;
+    auto getElements() const -> std::vector<Element*> const& override;
 
     /**
      * Returns the insert order of this selection
      */
-    const InsertionOrder& getInsertionOrder() const;
+    auto getInsertionOrder() const -> const InsertionOrder&;
 
     /** replaces all elements by a new vector of elements
      * @param newElements: the elements which should replace the old elements
@@ -161,7 +163,7 @@ public:
     /**
      * Gets the complete original bounding box as rectangle
      */
-    xoj::util::Rectangle<double> getOriginalBounds() const;
+    auto getOriginalBounds() const -> xoj::util::Rectangle<double>;
 
 public:
     // Serialize interface

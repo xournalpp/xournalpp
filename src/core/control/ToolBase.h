@@ -132,7 +132,6 @@ private:
      * Alpha for fill
      */
     int fillAlpha = 128;
-    ;
 
     /**
      * Style of the line drawing

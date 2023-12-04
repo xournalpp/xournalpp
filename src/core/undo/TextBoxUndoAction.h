@@ -27,10 +27,10 @@ public:
     ~TextBoxUndoAction() override;
 
 public:
-    bool undo(Control* control) override;
-    bool redo(Control* control) override;
+    auto undo(Control* control) -> bool override;
+    auto redo(Control* control) -> bool override;
 
-    std::string getText() override;
+    auto getText() -> std::string override;
 
 private:
     Layer* layer;

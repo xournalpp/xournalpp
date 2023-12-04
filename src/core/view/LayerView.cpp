@@ -1,7 +1,6 @@
 #include "LayerView.h"
 
 #include <memory>  // for unique_ptr
-#include <vector>  // for vector
 
 #include <cairo.h>  // for cairo_clip_extents, cairo_rectangle
 #include <glib.h>   // for g_message

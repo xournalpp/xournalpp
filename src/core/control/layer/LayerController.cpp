@@ -236,7 +236,7 @@ void LayerController::mergeCurrentLayerDown() {
     Layer* layerBelow = (*page->getLayers())[layerBelowIndex];
 
     UndoActionPtr undo_redo_action =
-            std::make_unique<MergeLayerDownUndoAction>(this, page, currentLayer, layerBelow, layerID - 1, pageID);
+            std::make_unique<MergeLayerDownUndoAction>(this, page, currentLayer, layerID - 1, layerBelow, pageID);
     undo_redo_action->redo(this->control);
 
     control->getUndoRedoHandler()->addUndoAction(std::move(undo_redo_action));
