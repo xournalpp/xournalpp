@@ -16,14 +16,14 @@
 class Element;
 
 MergeLayerDownUndoAction::MergeLayerDownUndoAction(LayerController* layerController, const PageRef& page,
-                                                   Layer* upperLayer, Layer* lowerLayer, Layer::Index upperLayerPos,
+                                                   Layer* upperLayer, Layer::Index upperLayerPos, Layer* lowerLayer,
                                                    size_t selectedPage):
         UndoAction("MergeLayerDownUndoAction"),
-        upperLayerPos(upperLayerPos),
         layerController(layerController),
         upperLayer(upperLayer),
-        lowerLayer(lowerLayer),
+        upperLayerPos(upperLayerPos),
         upperLayerID(upperLayerPos + 1),
+        lowerLayer(lowerLayer),
         lowerLayerID(upperLayerPos),
         selectedPage(selectedPage) {
     this->page = page;

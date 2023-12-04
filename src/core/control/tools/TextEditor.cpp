@@ -1108,21 +1108,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->control->setFontSelected(text->getFont());
         this->originalTextElement = text;
 
-        // The original code did not use clone here (but did the cloning by hand). Why?
         this->textElement.reset(text->clone());
-
-        /*
-         * Original code
-         *
-        this->textElement = std::make_unique<Text>();
-        this->textElement->setX(text->getX());
-        this->textElement->setY(text->getY());
-        this->textElement->setColor(text->getColor());
-        this->textElement->setFont(text->getFont());
-        this->textElement->setText(text->getText());
-        this->textElement->setTimestamp(text->getTimestamp());
-        this->textElement->setAudioFilename(text->getAudioFilename());
-        **/
 
         text->setInEditing(true);
         this->page->fireElementChanged(text);

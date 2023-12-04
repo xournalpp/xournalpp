@@ -1,5 +1,10 @@
 #include "Layer.h"
 
+#include <cstddef>
+#include <memory>
+#include <utility>
+#include <vector>
+
 #include <glib.h>  // for g_warning
 
 #include "model/Element.h"    // for Element, Element::Index, Element::Inval...

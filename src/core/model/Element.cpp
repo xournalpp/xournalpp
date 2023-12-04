@@ -14,8 +14,6 @@ using xoj::util::Rectangle;
 
 Element::Element(ElementType type): type(type) {}
 
-Element::~Element() = default;
-
 auto Element::getType() const -> ElementType { return this->type; }
 
 void Element::setX(double x) {

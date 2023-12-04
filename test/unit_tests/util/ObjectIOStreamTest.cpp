@@ -121,7 +121,7 @@ TEST(UtilObjectIOStream, testReadData) {
 TEST(UtilObjectIOStream, testReadImage) {
     // Generate a "random" image and serialize/deserialize it.
     std::mt19937 gen(4242);
-    std::uniform_int_distribution<unsigned char> distrib(0, 255);
+    std::uniform_int_distribution<uint16_t> distrib(0, 255);
 
     const cairo_format_t format = CAIRO_FORMAT_ARGB32;
     cairo_surface_t* surface = cairo_image_surface_create(format, 800, 800);

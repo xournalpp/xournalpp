@@ -12,7 +12,6 @@
 #pragma once
 
 #include <memory>    // for unique_ptr
-#include <optional>  // for optional
 #include <vector>    // for vector
 
 #include <cairo.h>    // for cairo_surface_t, cairo_t

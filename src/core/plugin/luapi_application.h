@@ -10,10 +10,8 @@
  */
 #pragma once
 
-#include <climits>
 #include <cstring>
 #include <limits>  // for numeric_limits
-#include <map>
 #include <sstream>
 
 #include <gtk/gtk.h>
@@ -41,11 +39,10 @@
 #include "model/Stroke.h"
 #include "model/StrokeStyle.h"
 #include "model/Text.h"
-#include "model/XojPage.h"
+#include "model/XojPage.h"  // IWYU pragma: keep for XojPage
 #include "plugin/Plugin.h"
 #include "undo/InsertUndoAction.h"
 #include "util/StringUtils.h"
-#include "util/XojMsgBox.h"
 #include "util/i18n.h"        // for _
 #include "util/safe_casts.h"  // for round_cast, as_signed, as_unsigned
 
@@ -1911,7 +1908,7 @@ static int applib_getDocumentStructure(lua_State* L) {
     for (size_t p = 1; p <= doc->getPageCount(); ++p) {
         auto page = doc->getPage(p - 1);
         lua_pushinteger(L, as_signed(p));  // key of the page
-        lua_newtable(L);        // beginning of table for page p
+        lua_newtable(L);                   // beginning of table for page p
 
         lua_pushnumber(L, page->getWidth());  // value
         lua_setfield(L, -2, "pageWidth");     // insert
@@ -1934,7 +1931,7 @@ static int applib_getDocumentStructure(lua_State* L) {
         lua_setfield(L, -2, "backgroundColor");                                     // insert
 
         lua_pushinteger(L, as_signed(page->getPdfPageNr()) + 1);  // value
-        lua_setfield(L, -2, "pdfBackgroundPageNo");    // insert
+        lua_setfield(L, -2, "pdfBackgroundPageNo");               // insert
 
         lua_newtable(L);  // beginning of layers table
 
@@ -1971,14 +1968,14 @@ static int applib_getDocumentStructure(lua_State* L) {
         lua_setfield(L, -2, "layers");  // end of layers table
 
         lua_pushinteger(L, as_signed(page->getSelectedLayerId()));  // value
-        lua_setfield(L, -2, "currentLayer");             // insert
+        lua_setfield(L, -2, "currentLayer");                        // insert
 
         lua_settable(L, -3);  // end of table for page p
     }
     lua_settable(L, -3);  // end of pages table
 
     lua_pushinteger(L, as_signed(control->getCurrentPageNo()) + 1);  // value
-    lua_setfield(L, -2, "currentPage");                   // insert
+    lua_setfield(L, -2, "currentPage");                              // insert
 
     lua_pushstring(L, doc->getPdfFilepath().string().c_str());  // value
     lua_setfield(L, -2, "pdfBackgroundFilename");               // insert

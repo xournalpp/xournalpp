@@ -19,15 +19,15 @@
 #include <cairo.h>  // for cairo_t, cairo_matrix_t
 #include <glib.h>   // for GSource
 
-#include "control/ToolEnums.h"              // for ToolSize
-#include "model/Element.h"                  // for Element, Element::Index
-#include "model/ElementContainer.h"         // for ElementContainer
+#include "control/ToolEnums.h"               // for ToolSize
+#include "model/Element.h"                   // for Element, Element::Index
+#include "model/ElementContainer.h"          // for ElementContainer
 #include "model/ElementInsertionPosition.h"  // for InsertionOrder
-#include "model/PageRef.h"                  // for PageRef
-#include "undo/UndoAction.h"                // for UndoAction (ptr only)
-#include "util/Color.h"                     // for Color
-#include "util/Rectangle.h"                 // for Rectangle
-#include "util/serializing/Serializable.h"  // for Serializable
+#include "model/PageRef.h"                   // for PageRef
+#include "undo/UndoAction.h"                 // for UndoAction (ptr only)
+#include "util/Color.h"                      // for Color
+#include "util/Rectangle.h"                  // for Rectangle
+#include "util/serializing/Serializable.h"   // for Serializable
 
 #include "CursorSelectionType.h"     // for CursorSelectionType, CURS...
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
@@ -46,27 +46,28 @@ class Document;
 class EditSelection;
 
 namespace SelectionFactory {
-std::unique_ptr<EditSelection> createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer,
-                                                         XojPageView* view, Element* e);
-std::pair<std::unique_ptr<EditSelection>, Range> createFromFloatingElements(Control* ctrl, const PageRef& page,
-                                                                            Layer* layer, XojPageView* view,
-                                                                            InsertionOrder elts);
-std::unique_ptr<EditSelection> createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view,
-                                                              Element* e, Element::Index pos = Element::InvalidIndex);
-std::unique_ptr<EditSelection> createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view,
-                                                               InsertionOrder elts);
+auto createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view, Element* e)
+        -> std::unique_ptr<EditSelection>;
+auto createFromFloatingElements(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view,
+                                InsertionOrder elts)  //
+        -> std::pair<std::unique_ptr<EditSelection>, Range>;
+auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, Element* e,
+                                    Element::Index pos = Element::InvalidIndex)  //
+        -> std::unique_ptr<EditSelection>;
+auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, InsertionOrder elts)
+        -> std::unique_ptr<EditSelection>;
 /**
  * @brief Creates a new instance containing base->getElements() and *e. The content of *base is cleared but *base is not
  * destroyed.
  */
-std::unique_ptr<EditSelection> addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element* e,
-                                                         Element::Index pos);
+auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element*, Element::Index pos)
+        -> std::unique_ptr<EditSelection>;
 /**
  * @brief Creates a new instance containing base->getElements() and the content of elts. The content of *base is cleared
  * but *base is not destroyed.
  */
-std::unique_ptr<EditSelection> addElementsFromActiveLayer(Control* ctrl, EditSelection* base,
-                                                          const InsertionOrder& elts);
+auto addElementsFromActiveLayer(Control* ctrl, EditSelection* base, const InsertionOrder& elts)
+        -> std::unique_ptr<EditSelection>;
 };  // namespace SelectionFactory
 
 class EditSelection: public ElementContainer, public Serializable {
@@ -210,12 +211,12 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    const std::vector<Element*>& getElements() const override;
+    auto getElements() const -> std::vector<Element*> const& override;
 
     /**
      * Returns the insert order of this selection
      */
-    const InsertionOrder& getInsertOrder() const;
+    auto getInsertOrder() const -> InsertionOrder const&;
 
     enum class OrderChange {
         BringToFront,
@@ -227,7 +228,7 @@ public:
     /**
      * Change the insert order of this selection.
      */
-    UndoActionPtr rearrangeInsertOrder(const OrderChange change);
+    auto rearrangeInsertOrder(const OrderChange change) -> UndoActionPtr;
 
     /**
      * Finish the current movement

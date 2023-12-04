@@ -1,7 +1,6 @@
 #include "VerticalToolHandler.h"
 
 #include <algorithm>  // for max, min, minmax
-#include <cmath>      // for abs
 #include <memory>     // for __shared_ptr_access
 
 #include <cairo.h>           // for cairo_fill, cairo_...

@@ -14,15 +14,20 @@
 // No include needed, this is included after PageView.h
 
 #include <limits>
+#include <mutex>
 #include <optional>
 
 #include "control/AudioController.h"
+#include "control/Control.h"
+#include "control/layer/LayerController.h"
+#include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
-#include "util/PathUtil.h"
-#include "util/safe_casts.h"  // for as_unsigned
+#include "gui/PageView.h"
+#include "model/Layer.h"
+#include "model/XojPage.h"
+#include "util/safe_casts.h"
 
 #include "XournalView.h"
-#include "filesystem.h"
 
 class BaseSelectObject {
 public:

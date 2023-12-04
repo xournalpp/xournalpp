@@ -13,7 +13,7 @@ ArrangeUndoAction::ArrangeUndoAction(const PageRef& page, Layer* layer, std::str
                                      InsertionOrder newOrder):
         UndoAction("ArrangeUndoAction"),
         layer(layer),
-        description(desc),
+        description(std::move(desc)),
         oldOrder(std::move(oldOrder)),
         newOrder(std::move(newOrder)) {
     this->page = page;

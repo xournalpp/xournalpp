@@ -36,7 +36,7 @@ protected:
     Element(ElementType type);
 
 public:
-    ~Element() override;
+    ~Element() override = default;
 
     using Index = std::ptrdiff_t;
     static constexpr auto InvalidIndex = static_cast<Index>(-1);
