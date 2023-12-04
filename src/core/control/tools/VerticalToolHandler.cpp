@@ -36,18 +36,18 @@ void VerticalToolHandler::adoptElements(const Side side) {
     this->spacingSide = side;
 
     // Return current elements back to page
-    for (Element* e: this->elements) { this->layer->addElement(e); }
+    for (auto&& e: this->elements) {
+        this->layer->addElement(std::move(e));
+    }
     this->elements.clear();
 
     // Add new elements based on position
-    for (Element* e: this->layer->getElements()) {
+    for (Element* e: xoj::refElementContainer(this->layer->getElements())) {
         if ((side == Side::Below && e->getY() >= this->startY) ||
             (side == Side::Above && e->getY() + e->getElementHeight() <= this->startY)) {
-            this->elements.push_back(e);
+            this->elements.push_back(this->layer->removeElement(e).e);
         }
     }
-
-    for (Element* e: this->elements) { this->layer->removeElement(e, false); }
 
     Range rg = this->ownedElementsOriginalBoundingBox;
     this->ownedElementsOriginalBoundingBox = this->computeElementsBoundingBox();
@@ -86,11 +86,21 @@ bool VerticalToolHandler::onKeyReleaseEvent(GdkEventKey* event) {
     return false;
 }
 
-auto VerticalToolHandler::getElements() const -> const std::vector<Element*>& { return this->elements; }
+auto VerticalToolHandler::refElements() const -> std::vector<Element*> {
+    auto result = std::vector<Element*>(this->elements.size());
+    std::transform(this->elements.begin(), this->elements.end(), result.begin(), [](auto const& e) { return e.get(); });
+    return result;
+}
+
+void VerticalToolHandler::forEachElement(std::function<void(Element*)> f) const {
+    for (auto const& e: this->elements) {
+        f(e.get());
+    }
+}
 
 auto VerticalToolHandler::computeElementsBoundingBox() const -> Range {
     Range rg;
-    for (Element* e: this->elements) {
+    for (auto const& e: this->elements) {
         rg = rg.unite(Range(e->boundingRect()));
     }
     return rg;
@@ -106,13 +116,12 @@ auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction> {
     }
 
     const double dY = this->endY - this->startY;
-    auto undo =
-            std::make_unique<MoveUndoAction>(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
+    auto undo = std::make_unique<MoveUndoAction>(this->layer, this->page, this->refElements(), 0, dY, this->layer,
+                                                 this->page);
 
-    for (Element* e: this->elements) {
+    for (auto&& e: this->elements) {
         e->move(0, dY);
-
-        this->layer->addElement(e);
+        this->layer->addElement(std::move(e));
     }
     this->elements.clear();
 

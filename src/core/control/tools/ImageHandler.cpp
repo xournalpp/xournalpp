@@ -28,7 +28,7 @@ ImageHandler::ImageHandler(Control* control, XojPageView* view): control(control
 ImageHandler::~ImageHandler() = default;
 
 
-auto ImageHandler::chooseAndCreateImage(double x, double y) -> std::tuple<Image*, int, int> {
+auto ImageHandler::chooseAndCreateImage(double x, double y) -> std::tuple<std::unique_ptr<Image>, int, int> {
     const xoj::util::GObjectSPtr<GFile> fileObj(ImageOpenDlg::show(control->getGtkWindow(), control->getSettings()),
                                                 xoj::util::adopt);
     if (!fileObj) {
@@ -41,24 +41,23 @@ auto ImageHandler::chooseAndCreateImage(double x, double y) -> std::tuple<Image*
 }
 
 
-auto ImageHandler::createImageFromFile(GFile* file, double x, double y) -> std::tuple<Image*, int, int> {
-    Image* img = nullptr;
-    {
-        // Load the image data from disk
-        GError* err = nullptr;
-        gchar* contents{};
-        gsize length{};
-        if (!g_file_load_contents(file, nullptr, &contents, &length, nullptr, &err)) {
-            g_error_free(err);
-            return std::make_tuple(nullptr, 0, 0);
-        }
-
-        img = new Image();
-        img->setX(x);
-        img->setY(y);
-        img->setImage(std::string(contents, length));
-        g_free(contents);
+auto ImageHandler::createImageFromFile(GFile* file, double x, double y)
+        -> std::tuple<std::unique_ptr<Image>, int, int> {
+    // Load the image data from disk
+    GError* err = nullptr;
+    gchar* contents{};
+    gsize length{};
+    if (!g_file_load_contents(file, nullptr, &contents, &length, nullptr, &err)) {
+        g_error_free(err);
+        return std::make_tuple(nullptr, 0, 0);
     }
+
+    auto img = std::make_unique<Image>();
+    img->setX(x);
+    img->setY(y);
+    img->setImage(std::string(contents, length));
+    g_free(contents);
+
 
     // Render the image.
     // FIXME: this is horrible. We need an ImageView class...
@@ -67,24 +66,23 @@ auto ImageHandler::createImageFromFile(GFile* file, double x, double y) -> std::
     const auto imgSize = img->getImageSize();
     auto [width, height] = imgSize;
     if (imgSize == Image::NOSIZE) {
-        delete img;
         XojMsgBox::showErrorToUser(this->control->getGtkWindow(),
                                    _("Failed to load image, could not determine image size!"));
         return std::make_tuple(nullptr, 0, 0);
     }
 
-    return std::make_tuple(img, width, height);
+    return std::make_tuple(std::move(img), width, height);
 }
 
-auto ImageHandler::addImageToDocument(Image* img, bool addUndoAction) -> bool {
+auto ImageHandler::addImageToDocument(std::unique_ptr<Image> img, bool addUndoAction) -> bool {
     PageRef const page = view->getPage();
     Layer* layer = page->getSelectedLayer();
 
     if (addUndoAction) {
-        control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
+        control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img.get()));
     }
 
-    auto sel = SelectionFactory::createFromFloatingElement(control, page, layer, view, img);
+    auto sel = SelectionFactory::createFromFloatingElement(control, page, layer, view, std::move(img));
     control->getWindow()->getXournal()->setSelection(sel.release());
 
     return true;
@@ -126,8 +124,8 @@ auto ImageHandler::insertImageWithSize(const xoj::util::Rectangle<double>& space
         }
     } else {
         // zero space is selected, scale original image size down to fit on the page
-        automaticScaling(img, space.x, space.y, width, height);
+        automaticScaling(img.get(), space.x, space.y, width, height);
     }
 
-    return addImageToDocument(img, true);
+    return addImageToDocument(std::move(img), true);
 }

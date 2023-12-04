@@ -20,6 +20,7 @@
 #include "control/tools/SnapToGridInputHandler.h"           // for SnapToGridInput...
 #include "gui/inputdevices/PositionInputData.h"             // for PositionInputData
 #include "model/Document.h"                                 // for Document
+#include "model/Element.h"
 #include "model/Layer.h"                                    // for Layer
 #include "model/LineStyle.h"                                // for LineStyle
 #include "model/Stroke.h"                                   // for Stroke, STROKE_...
@@ -181,29 +182,29 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     if (h->getDrawingType() == DRAWING_TYPE_SHAPE_RECOGNIZER) {
         ShapeRecognizer reco;
 
-        Stroke* recognized = reco.recognizePatterns(stroke.get(), control->getSettings()->getStrokeRecognizerMinSize());
+        auto recognized = reco.recognizePatterns(stroke.get(), control->getSettings()->getStrokeRecognizerMinSize());
 
         if (recognized) {
             // strokeRecognizerDetected handles the repainting and the deletion of the views.
-            strokeRecognizerDetected(recognized, layer);
+            strokeRecognizerDetected(std::move(recognized), layer);
             return;
         }
     }
 
+    auto ptr = stroke.get();
     Document* doc = control->getDocument();
     doc->lock();
-    layer->addElement(stroke.get());
+    layer->addElement(std::move(stroke));
     doc->unlock();
 
     // Blitt the stroke to the page's buffer and delete all views.
     // Passing the empty Range() as no actual redrawing is necessary at this point
     this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::FINALIZATION_REQUEST, Range());
 
-    page->fireElementChanged(stroke.get());
-    stroke.release();
+    page->fireElementChanged(ptr);
 }
 
-void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
+void StrokeHandler::strokeRecognizerDetected(std::unique_ptr<Stroke> recognized, Layer* layer) {
     recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
 
     // snapping
@@ -227,31 +228,28 @@ void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
     }
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
-    undo->addUndoAction(std::make_unique<RecognizerUndoAction>(page, layer, stroke.get(), recognized));
+    auto recognizedPtr = recognized.get();
+    auto strokePtr = stroke.get();
+    undo->addUndoAction(std::make_unique<RecognizerUndoAction>(page, layer, std::move(stroke), recognizedPtr));
 
     Document* doc = control->getDocument();
     doc->lock();
-    layer->addElement(recognized);
+    layer->addElement(std::move(recognized));
     doc->unlock();
 
-    Range range(recognized->getX(), recognized->getY());
-    range.addPoint(recognized->getX() + recognized->getElementWidth(),
-                   recognized->getY() + recognized->getElementHeight());
+    Range range(recognizedPtr->getX(), recognizedPtr->getY());
+    range.addPoint(recognizedPtr->getX() + recognizedPtr->getElementWidth(),
+                   recognizedPtr->getY() + recognizedPtr->getElementHeight());
 
-    range.addPoint(stroke->getX(), stroke->getY());
-    range.addPoint(stroke->getX() + stroke->getElementWidth(), stroke->getY() + stroke->getElementHeight());
+    range.addPoint(strokePtr->getX(), strokePtr->getY());
+    range.addPoint(strokePtr->getX() + strokePtr->getElementWidth(), strokePtr->getY() + strokePtr->getElementHeight());
 
-    stroke.release();  // The stroke is now owned by the UndoRedoHandler (to undo the recognition)
-
-    this->viewPool->dispatch(xoj::view::StrokeToolView::STROKE_REPLACEMENT_REQUEST, *recognized);
+    this->viewPool->dispatch(xoj::view::StrokeToolView::STROKE_REPLACEMENT_REQUEST, *recognizedPtr);
 
     // Blitt the new stroke to the page's buffer, delete all the views and refresh the area (so the recognized stroke
     // gets displayed instead of the old one).
     this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::FINALIZATION_REQUEST, range);
-
-    stroke.reset(recognized);  // To ensure PageView::elementChanged knows the recognized stroke is handler by *this
-    page->fireElementChanged(recognized);
-    stroke.release();  // The recognized stroke is owned by the layer
+    page->fireElementChanged(recognizedPtr);
 }
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {

@@ -2,6 +2,7 @@
 
 #include <cmath>     // for hypot, cos, fabs, sin, M_PI
 #include <iterator>  // for begin, end, next
+#include <memory>
 #include <vector>    // for vector
 
 #include "model/Point.h"   // for Point
@@ -13,13 +14,13 @@
 /**
  * Create circle stroke for inertia
  */
-auto CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inertia) -> Stroke* {
+auto CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inertia) -> std::unique_ptr<Stroke> {
     int npts = static_cast<int>(2 * inertia.rad());
     if (npts < 24) {
         npts = 24;  // min. number of points
     }
 
-    auto* s = new Stroke();
+    auto s = std::make_unique<Stroke>();
     s->applyStyleFrom(originalStroke);
 
     for (int i = 0; i <= npts; i++) {
@@ -58,7 +59,7 @@ auto CircleRecognizer::scoreCircle(Stroke* s, Inertia& inertia) -> double {
     return sum / (divisor);
 }
 
-auto CircleRecognizer::recognize(Stroke* stroke) -> Stroke* {
+auto CircleRecognizer::recognize(Stroke* stroke) -> std::unique_ptr<Stroke> {
     Inertia s;
     s.calc(stroke->getPoints(), 0, static_cast<int>(stroke->getPointCount()));
     RDEBUG("Mass=%.0f, Center=(%.1f,%.1f), I=(%.0f,%.0f, %.0f), Rad=%.2f, Det=%.4f", s.getMass(), s.centerX(),

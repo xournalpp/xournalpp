@@ -31,7 +31,7 @@ auto AddUndoAction::redo(Control*) -> bool {
     }
 
     for (const auto& elem: elements) {
-        elem.layer->insertElement(elem.element, elem.pos);
+        elem.layer->insertElement(std::move(elem.elementOwn), elem.pos);
         this->page->fireElementChanged(elem.element);
     }
 
@@ -48,7 +48,7 @@ auto AddUndoAction::undo(Control*) -> bool {
     }
 
     for (const auto& elem: elements) {
-        elem.layer->removeElement(elem.element, false);
+        elem.elementOwn = elem.layer->removeElement(elem.element).e;
         this->page->fireElementChanged(elem.element);
     }
 

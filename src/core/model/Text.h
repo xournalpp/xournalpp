@@ -16,6 +16,7 @@
 
 #include <pango/pango.h>
 
+#include "model/Element.h"
 #include "util/raii/GObjectSPtr.h"
 
 #include "AudioElement.h"  // for AudioElement
@@ -54,10 +55,8 @@ public:
 
     bool rescaleOnlyAspectRatio() override;
 
-    /**
-     * @overwrite
-     */
-    Text* clone() const override;
+    auto cloneText() const -> std::unique_ptr<Text>;
+    auto clone() const -> ElementPtr override;
 
     bool intersects(double x, double y, double halfEraserSize) const override;
     bool intersects(double x, double y, double halfEraserSize, double* gap) const override;

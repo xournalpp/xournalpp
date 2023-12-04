@@ -15,6 +15,8 @@
 #include <memory>   // for unique_ptr
 #include <vector>   // for vector
 
+#include "model/Element.h"
+
 #include "AudioElement.h"  // for AudioElement
 #include "LineStyle.h"     // for LineStyle
 #include "Point.h"         // for Point
@@ -64,8 +66,8 @@ public:
     ~Stroke() override;
 
 public:
-    Stroke* cloneStroke() const;
-    Element* clone() const override;
+    auto cloneStroke() const -> std::unique_ptr<Stroke>;
+    auto clone() const -> ElementPtr override;
 
     /**
      * @brief Create a partial clone whose points are those of parameters between lowerBound and upperBound

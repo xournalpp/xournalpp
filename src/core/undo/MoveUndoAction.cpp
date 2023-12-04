@@ -1,6 +1,7 @@
 #include "MoveUndoAction.h"
 
 #include <memory>  // for allocator, operator!=, __shared_ptr_access
+#include <utility>
 
 #include "model/Element.h"    // for Element
 #include "model/Layer.h"      // for Layer
@@ -11,20 +12,18 @@
 
 class Control;
 
-MoveUndoAction::MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, std::vector<Element*>* selected,
-                               double mx, double my, Layer* targetLayer, PageRef targetPage):
-        UndoAction("MoveUndoAction") {
+MoveUndoAction::MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, std::vector<Element*> selected, double mx,
+                               double my, Layer* targetLayer, PageRef targetPage):
+        UndoAction("MoveUndoAction"),
+        elements(std::move(selected)),
+        sourceLayer(sourceLayer),
+        text(_("Move")),
+        dx(mx),
+        dy(my) {
     this->page = sourcePage;
-    this->sourceLayer = sourceLayer;
-    this->text = _("Move");
-
-    this->dx = mx;
-    this->dy = my;
-
-    this->elements = *selected;
 
     if (this->page != targetPage) {
-        this->targetPage = targetPage;
+        this->targetPage = std::move(targetPage);
         this->targetLayer = targetLayer;
     }
 }
@@ -65,8 +64,7 @@ auto MoveUndoAction::redo(Control* control) -> bool {
 
 void MoveUndoAction::switchLayer(std::vector<Element*>* entries, Layer* oldLayer, Layer* newLayer) {
     for (Element* e: this->elements) {
-        oldLayer->removeElement(e, false);
-        newLayer->addElement(e);
+        newLayer->addElement(oldLayer->removeElement(e).e);
     }
 }
 

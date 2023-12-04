@@ -31,11 +31,12 @@ public:
     bool undo(Control*) override;
     bool redo(Control*) override;
 
-    void addElement(Layer* layer, Element* e, Element::Index pos);
+    void addElement(Layer* layer, ElementPtr e, Element::Index pos);
 
     std::string getText() override;
 
 private:
+    // Todo (performance): replace by flat_multi_set / sorted_vector
     std::multiset<PageLayerPosEntry<Element>> elements{};
     bool eraser = true;
 };

@@ -1,7 +1,9 @@
 #include "ArrangeUndoAction.h"
 
 #include <memory>  // for allocator, __shared_ptr_access, __share...
+#include <unordered_map>
 
+#include "model/Element.h"
 #include "model/Layer.h"      // for Layer
 #include "model/PageRef.h"    // for PageRef
 #include "model/XojPage.h"    // for XojPage
@@ -9,8 +11,8 @@
 
 class Control;
 
-ArrangeUndoAction::ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertionOrder oldOrder,
-                                     InsertionOrder newOrder):
+ArrangeUndoAction::ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertionOrderRef oldOrder,
+                                     InsertionOrderRef newOrder):
         UndoAction("ArrangeUndoAction"),
         layer(layer),
         description(std::move(desc)),
@@ -38,9 +40,15 @@ void ArrangeUndoAction::applyRearrange() {
     const auto& srcOrder = this->undone ? this->newOrder : this->oldOrder;
     const auto& tgtOrder = this->undone ? this->oldOrder : this->newOrder;
 
-    for (const auto& [e, _]: srcOrder) { layer->removeElement(e, false); }
+    std::unordered_map<Element*, ElementPtr> removedElements;
+    removedElements.reserve(srcOrder.size());
+    for (const auto& [e, _]: srcOrder) {
+        removedElements.emplace(e, layer->removeElement(e).e);
+    }
 
-    for (const auto& [e, i]: tgtOrder) { layer->insertElement(e, i); }
+    for (const auto& [e, i]: tgtOrder) {
+        layer->insertElement(std::move(removedElements[e]), i);
+    }
 
     this->page->firePageChanged();
 }

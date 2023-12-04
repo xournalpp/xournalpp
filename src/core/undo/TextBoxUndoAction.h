@@ -21,9 +21,11 @@ class Element;
 class Layer;
 class Control;
 
+using ElementPtr = std::unique_ptr<Element>;
+
 class TextBoxUndoAction: public UndoAction {
 public:
-    TextBoxUndoAction(const PageRef& page, Layer* layer, Element* element, Element* oldelement);
+    TextBoxUndoAction(const PageRef& page, Layer* layer, Element* element, ElementPtr oldelement);
     ~TextBoxUndoAction() override;
 
 public:
@@ -35,5 +37,5 @@ public:
 private:
     Layer* layer;
     Element* element;
-    Element* oldelement;
+    ElementPtr oldelement;
 };

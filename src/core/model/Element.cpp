@@ -143,3 +143,13 @@ void Element::readSerialized(ObjectInputStream& in) {
 
     in.endObject();
 }
+
+namespace xoj {
+
+auto refElementContainer(const std::vector<ElementPtr>& elements) -> std::vector<Element*> {
+    std::vector<Element*> result(elements.size());
+    std::transform(elements.begin(), elements.end(), result.begin(), [](auto const& e) { return e.get(); });
+    return result;
+}
+
+}  // namespace xoj

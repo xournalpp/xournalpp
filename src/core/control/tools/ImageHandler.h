@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <tuple>  // for tuple
 
 #include <gio/gio.h>  // for GFile
@@ -34,9 +35,9 @@ public:
     /**
      * creates the image from the given file
      */
-    auto createImageFromFile(GFile* file, double x, double y) -> std::tuple<Image*, int, int>;
+    auto createImageFromFile(GFile* file, double x, double y) -> std::tuple<std::unique_ptr<Image>, int, int>;
 
-    auto addImageToDocument(Image* img, bool addUndoAction) -> bool;
+    auto addImageToDocument(std::unique_ptr<Image> img, bool addUndoAction) -> bool;
 
     /**
      * scale down (only if necessary) the image so that it then fits on the page
@@ -48,7 +49,7 @@ private:
     /**
      * lets the user choose an image file and then creates the image
      */
-    auto chooseAndCreateImage(double x, double y) -> std::tuple<Image*, int, int>;
+    auto chooseAndCreateImage(double x, double y) -> std::tuple<std::unique_ptr<Image>, int, int>;
 
 private:
     Control* control;

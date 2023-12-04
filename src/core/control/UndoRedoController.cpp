@@ -8,6 +8,7 @@
 #include "gui/MainWindow.h"               // for MainWindow
 #include "gui/XournalView.h"              // for XournalView
 #include "model/Document.h"               // for Document
+#include "model/ElementInsertionPosition.h"
 #include "model/Layer.h"                  // for Layer
 #include "model/PageRef.h"                // for PageRef
 #include "model/XojPage.h"                // for XojPage
@@ -51,18 +52,18 @@ void UndoRedoController::after() {
         return;
     }
 
-    InsertionOrder remainingElements;
+    InsertionOrderRef remainingElements;
     for (Element* e: elements) {
-        // Test is the element has been removed since
+        // Test, if the element has been removed since
         if (auto pos = layer->indexOf(e); pos != -1) {
             remainingElements.emplace_back(e, pos);
         }
     }
     if (!remainingElements.empty()) {
-        layer->removeElementsAt(remainingElements, false);
+        auto removedElements = layer->removeElementsAt(remainingElements);
         lock.unlock();  // Not needed anymore. For all other paths, the lock is released via ~unique_lock()
         auto [sel, bounds] =
-                SelectionFactory::createFromFloatingElements(control, page, layer, view, std::move(remainingElements));
+                SelectionFactory::createFromFloatingElements(control, page, layer, view, std::move(removedElements));
         control->getWindow()->getXournal()->setSelection(sel.release());
         page->fireRangeChanged(bounds);
     }

@@ -14,6 +14,7 @@
 #include <string>  // for string
 #include <vector>  // for vector
 
+#include "model/Element.h"
 #include "model/PageRef.h"  // for PageRef
 
 #include "UndoAction.h"  // for UndoAction
@@ -21,6 +22,8 @@
 class Element;
 class Layer;
 class Control;
+
+using ElementPtr = std::unique_ptr<Element>;
 
 class InsertUndoAction: public UndoAction {
 public:
@@ -36,6 +39,7 @@ public:
 private:
     Layer* layer;
     Element* element;
+    ElementPtr elementOwn;
 };
 
 class InsertsUndoAction: public UndoAction {
@@ -52,4 +56,5 @@ public:
 private:
     Layer* layer;
     std::vector<Element*> elements;
+    std::vector<ElementPtr> elementsOwn;
 };

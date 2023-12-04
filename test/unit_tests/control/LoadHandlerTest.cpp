@@ -18,6 +18,7 @@
 
 #include "control/xojfile/LoadHandler.h"
 #include "control/xojfile/SaveHandler.h"
+#include "model/Element.h"
 #include "model/Image.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
@@ -43,31 +44,31 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
         EXPECT_EQ((size_t)1, (*page).getLayerCount());
         Layer* layer = (*(*page).getLayers())[0];
 
-        const std::vector<Element*>& elements = layer->getElements();
-        EXPECT_EQ(8, static_cast<int>(layer->getElements().size()));
+        const auto& elements = xoj::refElementContainer(layer->getElements());
+        EXPECT_EQ(8, static_cast<int>(elements.size()));
 
-        Stroke* e0 = (Stroke*)layer->getElements()[0];
+        Stroke* e0 = (Stroke*)elements[0];
         EXPECT_EQ(ELEMENT_STROKE, e0->getType());
 
-        Stroke* e1 = (Stroke*)layer->getElements()[1];
+        Stroke* e1 = (Stroke*)elements[1];
         EXPECT_EQ(ELEMENT_STROKE, e1->getType());
 
-        Stroke* e2 = (Stroke*)layer->getElements()[2];
+        Stroke* e2 = (Stroke*)elements[2];
         EXPECT_EQ(ELEMENT_STROKE, e2->getType());
 
-        Stroke* e3 = (Stroke*)layer->getElements()[3];
+        Stroke* e3 = (Stroke*)elements[3];
         EXPECT_EQ(ELEMENT_STROKE, e3->getType());
 
-        Stroke* e4 = (Stroke*)layer->getElements()[4];
+        Stroke* e4 = (Stroke*)elements[4];
         EXPECT_EQ(ELEMENT_STROKE, e4->getType());
 
-        Text* e5 = (Text*)layer->getElements()[5];
+        Text* e5 = (Text*)elements[5];
         EXPECT_EQ(ELEMENT_TEXT, e5->getType());
 
-        Stroke* e6 = (Stroke*)layer->getElements()[6];
+        Stroke* e6 = (Stroke*)elements[6];
         EXPECT_EQ(ELEMENT_STROKE, e6->getType());
 
-        Stroke* e7 = (Stroke*)layer->getElements()[7];
+        Stroke* e7 = (Stroke*)elements[7];
         EXPECT_EQ(ELEMENT_STROKE, e7->getType());
 
         return elements;
@@ -139,10 +140,10 @@ void checkPageType(Document* doc, size_t pageIndex, string expectedText, PageTyp
     EXPECT_EQ((size_t)1, (*page).getLayerCount());
     Layer* layer = (*(*page).getLayers())[0];
 
-    Element* element = layer->getElements().front();
+    auto&& element = layer->getElements().front();
     EXPECT_EQ(ELEMENT_TEXT, element->getType());
 
-    Text* text = (Text*)element;
+    Text* text = (Text*)element.get();
     EXPECT_EQ(expectedText, text->getText());
 }
 
@@ -150,11 +151,11 @@ void checkPageType(Document* doc, size_t pageIndex, string expectedText, PageTyp
 void checkLayer(PageRef page, size_t layerIndex, string expectedText) {
     Layer* layer = (*(*page).getLayers())[layerIndex];
 
-    Element* element = layer->getElements().front();
+    auto&& element = layer->getElements().front();
 
     EXPECT_EQ(ELEMENT_TEXT, element->getType());
 
-    Text* text = (Text*)element;
+    Text* text = (Text*)element.get();
     EXPECT_EQ(expectedText, text->getText());
 }
 
@@ -168,10 +169,10 @@ TEST(ControlLoadHandler, testLoad) {
     EXPECT_EQ((size_t)1, (*page).getLayerCount());
     Layer* layer = (*(*page).getLayers())[0];
 
-    Element* element = layer->getElements().front();
+    auto&& element = layer->getElements().front();
     EXPECT_EQ(ELEMENT_TEXT, element->getType());
 
-    Text* text = (Text*)element;
+    Text* text = (Text*)element.get();
 
     EXPECT_EQ(string("12345"), text->getText());
 }
@@ -186,10 +187,10 @@ TEST(ControlLoadHandler, testLoadZipped) {
     EXPECT_EQ((size_t)1, (*page).getLayerCount());
     Layer* layer = (*(*page).getLayers())[0];
 
-    Element* element = layer->getElements().front();
+    auto&& element = layer->getElements().front();
     EXPECT_EQ(ELEMENT_TEXT, element->getType());
 
-    Text* text = (Text*)element;
+    Text* text = (Text*)element.get();
 
     EXPECT_EQ(string("12345"), text->getText());
 }
@@ -204,10 +205,10 @@ TEST(ControlLoadHandler, testLoadUnzipped) {
     EXPECT_EQ((size_t)1, (*page).getLayerCount());
     Layer* layer = (*(*page).getLayers())[0];
 
-    Element* element = layer->getElements().front();
+    auto&& element = layer->getElements().front();
     EXPECT_EQ(ELEMENT_TEXT, element->getType());
 
-    Text* text = (Text*)element;
+    Text* text = (Text*)element.get();
 
     EXPECT_EQ(string("12345"), text->getText());
 }
@@ -299,13 +300,13 @@ TEST(ControlLoadHandler, testText) {
     EXPECT_EQ((size_t)1, (*page).getLayerCount());
     Layer* layer = (*(*page).getLayers())[0];
 
-    Text* t1 = (Text*)layer->getElements()[0];
+    Text* t1 = (Text*)layer->getElements()[0].get();
     EXPECT_EQ(ELEMENT_TEXT, t1->getType());
 
-    Text* t2 = (Text*)layer->getElements()[1];
+    Text* t2 = (Text*)layer->getElements()[1].get();
     EXPECT_EQ(ELEMENT_TEXT, t2->getType());
 
-    Text* t3 = (Text*)layer->getElements()[2];
+    Text* t3 = (Text*)layer->getElements()[2].get();
     EXPECT_EQ(ELEMENT_TEXT, t3->getType());
 
     EXPECT_EQ(string("red"), t1->getText());
@@ -327,13 +328,13 @@ TEST(ControlLoadHandler, testTextZipped) {
     EXPECT_EQ((size_t)1, (*page).getLayerCount());
     Layer* layer = (*(*page).getLayers())[0];
 
-    Text* t1 = (Text*)layer->getElements()[0];
+    Text* t1 = (Text*)layer->getElements()[0].get();
     EXPECT_EQ(ELEMENT_TEXT, t1->getType());
 
-    Text* t2 = (Text*)layer->getElements()[1];
+    Text* t2 = (Text*)layer->getElements()[1].get();
     EXPECT_EQ(ELEMENT_TEXT, t2->getType());
 
-    Text* t3 = (Text*)layer->getElements()[2];
+    Text* t3 = (Text*)layer->getElements()[2].get();
     EXPECT_EQ(ELEMENT_TEXT, t3->getType());
 
     EXPECT_EQ(string("red"), t1->getText());
@@ -355,7 +356,7 @@ TEST(ControlLoadHandler, testImageZipped) {
     Layer* layer = (*page->getLayers())[0];
     EXPECT_EQ(layer->getElements().size(), 1);
 
-    Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
+    Image* img = dynamic_cast<Image*>(layer->getElements()[0].get());
     EXPECT_TRUE(img);
 }
 
@@ -384,7 +385,7 @@ TEST(ControlLoadHandler, imageLoadJpeg) {
     Layer* layer = (*page->getLayers())[0];
     ASSERT_EQ(layer->getElements().size(), 1);
 
-    Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
+    Image* img = dynamic_cast<Image*>(layer->getElements()[0].get());
     ASSERT_TRUE(img) << "element should be an image";
 
     checkImageFormat(img, "jpeg");
@@ -419,7 +420,7 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     Layer* layer = (*page->getLayers())[0];
     ASSERT_EQ(layer->getElements().size(), 1);
 
-    Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
+    Image* img = dynamic_cast<Image*>(layer->getElements()[0].get());
     ASSERT_TRUE(img) << "element should be an image";
     checkImageFormat(img, "png");
 }
@@ -469,14 +470,14 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
 
     EXPECT_EQ(9U, layer->getElements().size());
 
-    Stroke* s1 = (Stroke*)layer->getElements()[0];
+    auto* s1 = (Stroke*)layer->getElements()[0].get();
     EXPECT_EQ(ELEMENT_STROKE, s1->getType());
     for (auto& p: s1->getPointVector()) {
         EXPECT_EQ(p.z, Point::NO_PRESSURE);
     }
 
     auto testPressureValues = [&elts = layer->getElements()](size_t n, const std::vector<double>& pressures) {
-        Stroke* s = (Stroke*)elts[n];
+        auto* s = (Stroke*)elts[n].get();
         printf("Testing stroke %zu\n", n);
         EXPECT_EQ(ELEMENT_STROKE, s->getType());
         EXPECT_EQ(Color(0x0000ff00), s->getColor());

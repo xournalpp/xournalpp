@@ -35,7 +35,7 @@ void ShapeRecognizer::resetRecognizer() {
 /**
  *  Test if segments form standard shapes
  */
-auto ShapeRecognizer::tryRectangle() -> Stroke* {
+auto ShapeRecognizer::tryRectangle() -> std::unique_ptr<Stroke> {
     // first, we need whole strokes to combine to 4 segments...
     if (this->queueLength < 4) {
         return nullptr;
@@ -85,7 +85,7 @@ auto ShapeRecognizer::tryRectangle() -> Stroke* {
         avgAngle = M_PI / 2;
     }
 
-    auto* s = new Stroke();
+    auto s = std::make_unique<Stroke>();
     s->applyStyleFrom(this->stroke);
 
     for (int i = 0; i <= 3; i++) {
@@ -260,7 +260,7 @@ auto ShapeRecognizer::isStrokeLargeEnough(Stroke* stroke, double strokeMinSize) 
 /**
  * The main pattern recognition function
  */
-auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) -> Stroke* {
+auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) -> std::unique_ptr<Stroke> {
     this->stroke = stroke;
 
     if (!isStrokeLargeEnough(stroke, strokeMinSize)) {
@@ -305,7 +305,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
             rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
         }
 
-        if (Stroke* result = tryRectangle(); result != nullptr) {
+        if (auto result = tryRectangle(); result != nullptr) {
             RDEBUG("return rectangle");
             return result;
         }
@@ -326,7 +326,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
                 aligned = false;
             }
 
-            auto* s = new Stroke();
+            auto s = std::make_unique<Stroke>();
             s->applyStyleFrom(this->stroke);
 
             if (aligned) {
@@ -344,7 +344,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
     }
 
     // not a polygon: maybe a circle ?
-    Stroke* s = CircleRecognizer::recognize(stroke);
+    auto s = CircleRecognizer::recognize(stroke);
     if (s) {
         RDEBUG("return circle");
         return s;

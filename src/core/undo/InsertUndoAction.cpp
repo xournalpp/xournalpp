@@ -13,19 +13,11 @@
 class Control;
 
 InsertUndoAction::InsertUndoAction(const PageRef& page, Layer* layer, Element* element):
-        UndoAction("InsertUndoAction") {
+        UndoAction("InsertUndoAction"), layer(layer), element(element), elementOwn(nullptr) {
     this->page = page;
-    this->layer = layer;
-    this->element = element;
 }
 
-InsertUndoAction::~InsertUndoAction() {
-    if (this->undone) {
-        // Insert was undone, so this is not needed anymore
-        delete this->element;
-    }
-    this->element = nullptr;
-}
+InsertUndoAction::~InsertUndoAction() = default;
 
 auto InsertUndoAction::getText() -> std::string {
     switch (element->getType()) {
@@ -43,7 +35,7 @@ auto InsertUndoAction::getText() -> std::string {
 }
 
 auto InsertUndoAction::undo(Control* control) -> bool {
-    this->layer->removeElement(this->element, false);
+    this->elementOwn = this->layer->removeElement(this->element).e;
 
     this->page->fireElementChanged(this->element);
 
@@ -53,7 +45,7 @@ auto InsertUndoAction::undo(Control* control) -> bool {
 }
 
 auto InsertUndoAction::redo(Control* control) -> bool {
-    this->layer->addElement(this->element);
+    this->layer->addElement(std::move(this->elementOwn));
 
     this->page->fireElementChanged(this->element);
 
@@ -63,27 +55,18 @@ auto InsertUndoAction::redo(Control* control) -> bool {
 }
 
 InsertsUndoAction::InsertsUndoAction(const PageRef& page, Layer* layer, std::vector<Element*> elements):
-        UndoAction("InsertsUndoAction") {
+        UndoAction("InsertsUndoAction"), layer(layer), elements(std::move(elements)), elementsOwn(0) {
     this->page = page;
-    this->layer = layer;
-    this->elements = std::move(elements);
 }
 
-InsertsUndoAction::~InsertsUndoAction() {
-    if (this->undone) {
-        // Insert was undone, so this is not needed anymore
-        for (Element* e: this->elements) {
-            delete e;
-            e = nullptr;
-        }
-    }
-}
+InsertsUndoAction::~InsertsUndoAction() = default;
 
 auto InsertsUndoAction::getText() -> std::string { return _("Insert elements"); }
 
 auto InsertsUndoAction::undo(Control* control) -> bool {
+    this->elementsOwn.reserve(this->elements.size());
     for (Element* elem: this->elements) {
-        this->layer->removeElement(elem, false);
+        this->elementsOwn.emplace_back(this->layer->removeElement(elem).e);
         this->page->fireElementChanged(elem);
     }
 
@@ -93,10 +76,12 @@ auto InsertsUndoAction::undo(Control* control) -> bool {
 }
 
 auto InsertsUndoAction::redo(Control* control) -> bool {
-    for (Element* elem: this->elements) {
-        this->layer->addElement(elem);
-        this->page->fireElementChanged(elem);
+    for (auto&& elem: this->elementsOwn) {
+        auto ptr = elem.get();
+        this->layer->addElement(std::move(elem));
+        this->page->fireElementChanged(ptr);
     }
+    this->elementsOwn = std::vector<ElementPtr>(0);
 
     this->undone = false;
 

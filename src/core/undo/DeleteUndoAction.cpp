@@ -19,7 +19,9 @@ DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser): UndoAction
     this->page = page;
 }
 
-void DeleteUndoAction::addElement(Layer* layer, Element* e, Element::Index pos) { elements.emplace(layer, e, pos); }
+void DeleteUndoAction::addElement(Layer* layer, ElementPtr e, Element::Index pos) {
+    elements.emplace(layer, std::move(e), pos);
+}
 
 auto DeleteUndoAction::undo(Control*) -> bool {
     if (elements.empty()) {
@@ -29,8 +31,8 @@ auto DeleteUndoAction::undo(Control*) -> bool {
         return false;
     }
 
-    for (const auto& elem: elements) {
-        elem.layer->insertElement(elem.element, elem.pos);
+    for (auto& elem: elements) {
+        elem.layer->insertElement(std::move(elem.elementOwn), elem.pos);
         this->page->fireElementChanged(elem.element);
     }
 
@@ -46,8 +48,8 @@ auto DeleteUndoAction::redo(Control*) -> bool {
         return false;
     }
 
-    for (const auto& elem: elements) {
-        elem.layer->removeElement(elem.element, false);
+    for (auto& elem: elements) {
+        elem.elementOwn = elem.layer->removeElement(elem.element).e;
         this->page->fireElementChanged(elem.element);
     }
 

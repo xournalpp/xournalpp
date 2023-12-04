@@ -11,12 +11,15 @@
 
 #pragma once
 
-#include <vector>
+#include <functional>
 
 class Element;
 
 class ElementContainer {
 public:
-    virtual const std::vector<Element*>& getElements() const = 0;
-    virtual ~ElementContainer() {}
+    virtual void forEachElement(std::function<void(Element*)> f) const = 0;
+
+protected:
+    // interface -> protected, non virtual
+    ~ElementContainer() = default;
 };

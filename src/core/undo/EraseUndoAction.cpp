@@ -40,15 +40,16 @@ void EraseUndoAction::finalize() {
             continue;
         } else {
             // Remove the original and add the copy
-            int pos = static_cast<int>(entry.layer->removeElement(entry.element, false));
+            auto [own, pos] = entry.layer->removeElement(entry.element);
+            entry.elementOwn = std::move(own);
 
             ErasableStroke* e = entry.element->getErasable();
             std::vector<std::unique_ptr<Stroke>> strokeList = e->getStrokes();
             for (auto& stroke: strokeList) {
                 // TODO (Marmare314): should use unique_ptr in layer
-                Stroke* copy = stroke.release();
-                entry.layer->insertElement(copy, pos);
-                this->addEdited(entry.layer, copy, pos);
+                auto copy = std::move(stroke);
+                this->addEdited(entry.layer, copy.get(), pos);
+                entry.layer->insertElement(std::move(copy), pos);
                 pos++;
             }
 
@@ -65,12 +66,12 @@ auto EraseUndoAction::getText() -> std::string { return _("Erase stroke"); }
 
 auto EraseUndoAction::undo(Control* control) -> bool {
     for (auto const& entry: edited) {
-        entry.layer->removeElement(entry.element, false);
+        entry.elementOwn = entry.layer->removeElement(entry.element).e;
         this->page->fireElementChanged(entry.element);
     }
 
     for (auto const& entry: original) {
-        entry.layer->insertElement(entry.element, entry.pos);
+        entry.layer->insertElement(std::move(entry.elementOwn), entry.pos);
         this->page->fireElementChanged(entry.element);
     }
 
@@ -80,12 +81,12 @@ auto EraseUndoAction::undo(Control* control) -> bool {
 
 auto EraseUndoAction::redo(Control* control) -> bool {
     for (auto const& entry: original) {
-        entry.layer->removeElement(entry.element, false);
+        entry.elementOwn = entry.layer->removeElement(entry.element).e;
         page->fireElementChanged(entry.element);
     }
 
     for (auto const& entry: edited) {
-        entry.layer->insertElement(entry.element, entry.pos);
+        entry.layer->insertElement(std::move(entry.elementOwn), entry.pos);
         page->fireElementChanged(entry.element);
     }
 
