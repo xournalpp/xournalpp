@@ -37,7 +37,9 @@ private:
     void triggerUIUpdate(Control* control);
 
     LayerController* layerController;
+
     Layer* upperLayer;
+    std::vector<Element*> upperLayerElements;
     Layer::Index upperLayerPos;
     Layer::Index upperLayerID;
 

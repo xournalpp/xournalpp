@@ -2,6 +2,7 @@
 
 #include <algorithm>  // for min
 #include <array>      // for array
+#include <memory>
 #include <utility>    // for move, pair
 
 #include <cairo.h>    // for cairo_surface_destroy
@@ -31,8 +32,8 @@ Image::~Image() {
     }
 }
 
-auto Image::clone() const -> Element* {
-    auto* img = new Image();
+auto Image::clone() const -> ElementPtr {
+    auto img = std::make_unique<Image>();
 
     img->x = this->x;
     img->y = this->y;

@@ -1038,10 +1038,9 @@ void TextEditor::finalizeEdition() {
         // Delete the edited element from layer
         if (originalTextElement) {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
-            auto elementIndex = layer->indexOf(originalTextElement);
-            layer->removeElement(originalTextElement, false);
+            auto [orig, elementIndex] = layer->removeElement(originalTextElement);
             xoj_assert(elementIndex != Element::InvalidIndex);
-            eraseDeleteUndoAction->addElement(layer, originalTextElement, elementIndex);
+            eraseDeleteUndoAction->addElement(layer, std::move(orig), elementIndex);
             undo->addUndoAction(std::move(eraseDeleteUndoAction));
             originalTextElement = nullptr;
         }
@@ -1056,20 +1055,20 @@ void TextEditor::finalizeEdition() {
 
         this->originalTextElement->setInEditing(false);
 
-        layer->removeElement(this->originalTextElement, false);
-        layer->addElement(this->textElement.get());
+        auto [orig, _] = layer->removeElement(this->originalTextElement);
+        auto ptr = this->textElement.get();
+        layer->addElement(std::move(this->textElement));
 
-        this->page->fireElementChanged(this->textElement.get());
+        this->page->fireElementChanged(ptr);
 
-        undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, this->textElement.release(),
-                                                                this->originalTextElement));
-        originalTextElement = nullptr;
+        undo->addUndoAction(std::make_unique<TextBoxUndoAction>(this->page, layer, ptr, std::move(orig)));
     } else {
         // Creating a new element
-        layer->addElement(textElement.get());
+        auto ptr = this->textElement.get();
+        layer->addElement(std::move(this->textElement));
         this->viewPool->dispatchAndClear(xoj::view::TextEditionView::FINALIZATION_REQUEST, this->previousBoundingBox);
-        this->page->fireElementChanged(textElement.get());
-        undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, textElement.release()));
+        this->page->fireElementChanged(ptr);
+        undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, ptr));
     }
 }
 
@@ -1078,11 +1077,11 @@ void TextEditor::initializeEditionAt(double x, double y) {
     Text* text = nullptr;
 
     // Should we reverse this loop to select the most recent text rather than the oldest?
-    for (Element* e: this->page->getSelectedLayer()->getElements()) {
+    for (auto&& e: this->page->getSelectedLayer()->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
             GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
             if (e->intersectsArea(&matchRect)) {
-                text = dynamic_cast<Text*>(e);
+                text = dynamic_cast<Text*>(e.get());
                 break;
             }
         }
@@ -1108,7 +1107,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
         this->control->setFontSelected(text->getFont());
         this->originalTextElement = text;
 
-        this->textElement.reset(text->clone());
+        this->textElement = text->cloneText();
 
         text->setInEditing(true);
         this->page->fireElementChanged(text);

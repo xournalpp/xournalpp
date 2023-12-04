@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>  // for string
 
 #include <cairo.h>    // for cairo_surface_t, cairo_status_t
@@ -62,7 +63,8 @@ public:
     void setText(std::string text);
     std::string getText() const;
 
-    TexImage* clone() const override;
+    auto cloneTexImage() const -> std::unique_ptr<TexImage>;
+    auto clone() const -> ElementPtr override;
 
     /**
      * @return true if the binary data (PNG or PDF) was loaded successfully.

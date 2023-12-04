@@ -5,6 +5,7 @@
 #include <cstdint>    // for uint64_t
 #include <iterator>   // for back_insert_iterator
 #include <limits>     // for numeric_limits
+#include <memory>
 #include <numeric>    // for accumulate
 #include <optional>   // for optional, nullopt
 #include <string>     // for to_string, operator<<
@@ -95,8 +96,8 @@ void Stroke::applyStyleFrom(const Stroke* other) {
     cloneAudioData(other);
 }
 
-auto Stroke::cloneStroke() const -> Stroke* {
-    auto* s = new Stroke();
+auto Stroke::cloneStroke() const -> std::unique_ptr<Stroke> {
+    auto s = std::make_unique<Stroke>();
     s->applyStyleFrom(this);
     s->points = this->points;
     s->x = this->x;
@@ -108,7 +109,7 @@ auto Stroke::cloneStroke() const -> Stroke* {
     return s;
 }
 
-auto Stroke::clone() const -> Element* { return this->cloneStroke(); }
+auto Stroke::clone() const -> ElementPtr { return this->cloneStroke(); }
 
 std::unique_ptr<Stroke> Stroke::cloneSection(const PathParameter& lowerBound, const PathParameter& upperBound) const {
     xoj_assert(lowerBound.isValid() && upperBound.isValid());

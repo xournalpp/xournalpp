@@ -1,5 +1,6 @@
 #include "Text.h"
 
+#include <memory>
 #include <utility>  // for move
 
 #include <glib.h>  // for g_warning
@@ -25,8 +26,8 @@ Text::Text(): AudioElement(ELEMENT_TEXT) {
 
 Text::~Text() = default;
 
-auto Text::clone() const -> Text* {
-    Text* text = new Text();
+auto Text::cloneText() const -> std::unique_ptr<Text> {
+    auto text = std::make_unique<Text>();
     text->font = this->font;
     text->text = this->text;
     text->setColor(this->getColor());
@@ -41,6 +42,8 @@ auto Text::clone() const -> Text* {
 
     return text;
 }
+
+auto Text::clone() const -> ElementPtr { return cloneText(); }
 
 auto Text::getFont() -> XojFont& { return font; }
 

@@ -74,7 +74,7 @@ protected:
         bool found = false;
         double minDistSq = std::numeric_limits<double>::max();
         Element::Index pos = 0;
-        for (Element* e: l->getElements()) {
+        for (auto&& e: l->getElements()) {
             const double eX = e->getX() + e->getElementWidth() / 2.0;
             const double eY = e->getY() + e->getElementHeight() / 2.0;
             const double dx = eX - this->x;
@@ -82,7 +82,7 @@ protected:
             const double distSq = dx * dx + dy * dy;
             const GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
             if (e->intersectsArea(&matchRect) && distSq < minDistSq) {
-                if (this->checkElement(e, pos)) {
+                if (this->checkElement(e.get(), pos)) {
                     minDistSq = distSq;
                     found = true;
                 }

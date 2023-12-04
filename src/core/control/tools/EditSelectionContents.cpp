@@ -5,6 +5,7 @@
 #include <iterator>   // for back_insert_iterator
 #include <limits>     // for numeric_limits
 #include <memory>     // for make_unique, __shar...
+#include <utility>
 
 #include <glib.h>  // for g_idle_add, g_sourc...
 
@@ -68,23 +69,25 @@ EditSelectionContents::~EditSelectionContents() {
 /**
  * Add an element to the this selection
  */
-void EditSelectionContents::addElement(Element* e, Element::Index order) {
-    xoj_assert(this->selected.size() == this->insertOrder.size());
-    this->selected.emplace_back(e);
-    auto item = InsertionPosition(e, order);
-    this->insertOrder.insert(std::upper_bound(this->insertOrder.begin(), this->insertOrder.end(), item), item);
+void EditSelectionContents::addElement(ElementPtr e, Element::Index order) {
+    xoj_assert(this->selected.size() == this->insertionOrder.size());
+    this->selected.emplace_back(e.get());
+    this->insertionOrder.emplace(std::upper_bound(this->insertionOrder.begin(), this->insertionOrder.end(), order),  //
+                                 std::move(e), order);
 }
 
-void EditSelectionContents::replaceInsertionOrder(InsertionOrder newInsertOrder) {
+void EditSelectionContents::replaceInsertionOrder(InsertionOrder newInsertionOrder) {
     this->selected.clear();
-    this->selected.reserve(newInsertOrder.size());
-    std::transform(begin(newInsertOrder), end(newInsertOrder), std::back_inserter(this->selected),
-                   [](auto const& p) { return p.e; });
-    this->insertOrder = std::move(newInsertOrder);
+    this->selected.reserve(newInsertionOrder.size());
+    std::transform(begin(newInsertionOrder), end(newInsertionOrder), std::back_inserter(this->selected),
+                   [](auto const& e) { return e.e.get(); });
+    this->insertionOrder = std::move(newInsertionOrder);
 }
+
+auto EditSelectionContents::stealInsertionOrder() -> InsertionOrder { return std::move(this->insertionOrder); }
 
 void EditSelectionContents::addMoveUndo(UndoRedoHandler* undo, double dx, double dy) {
-    undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, dx, dy,
+    undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, this->selected, dx, dy,
                                                          this->sourceLayer, this->sourcePage));
     this->lastBounds.x += dx;
     this->lastBounds.y += dy;
@@ -95,12 +98,18 @@ void EditSelectionContents::addMoveUndo(UndoRedoHandler* undo, double dx, double
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelectionContents::getElements() const -> const vector<Element*>& { return this->selected; }
+auto EditSelectionContents::getElements() const -> std::vector<Element*> const& { return this->selected; }
+
+void EditSelectionContents::forEachElement(std::function<void(Element*)> f) const {
+    for (auto const& e: this->selected) {
+        f(e);
+    }
+}
 
 /**
  * Returns the insert order of this selection
  */
-auto EditSelectionContents::getInsertionOrder() const -> const InsertionOrder& { return this->insertOrder; }
+auto EditSelectionContents::getInsertionOrder() const -> const InsertionOrder& { return this->insertionOrder; }
 
 /**
  * Sets the tool size for pen or eraser, returs an undo action
@@ -319,12 +328,12 @@ void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo) {
     // and owned by the selection, therefore the layer
     // doesn't know the index anymore
     Element::Index index = as_signed(layer->getElements().size());
-    for (Element* e: this->selected) {
-        undo->addElement(layer, e, index);
+    for (auto& [e, _]: this->insertionOrder) {
+        undo->addElement(layer, std::move(e), index);
     }
 
     this->selected.clear();
-    this->insertOrder.clear();
+    this->insertionOrder.clear();
 }
 
 /**
@@ -369,7 +378,7 @@ InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectang
 
     bool move = mx != 0 || my != 0;
 
-    for (auto&& [e, _]: this->insertOrder) {
+    for (auto&& [e, _]: this->insertionOrder) {
         if (move) {
             e->move(mx, my);
         }
@@ -382,7 +391,7 @@ InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectang
         }
     }
     this->selected.clear();
-    return std::move(this->insertOrder);
+    return std::move(this->insertionOrder);
 }
 
 /**
@@ -391,14 +400,14 @@ InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectang
 void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,
                                               bool aspectRatio, Layer* layer, const PageRef& targetPage,
                                               XojPageView* targetView, UndoRedoHandler* undo) {
-    xoj_assert(this->selected.size() == this->insertOrder.size());
+    xoj_assert(this->selected.size() == this->insertionOrder.size());
     for (auto&& [e, index]: this->makeMoveEffective(bounds, snappedBounds, aspectRatio)) {
         if (index == Element::InvalidIndex) {
             // if the element didn't have a source layer (e.g, clipboard)
             g_warning("Invalid index");
-            layer->addElement(e);
+            layer->addElement(std::move(e));
         } else {
-            layer->insertElement(e, index);
+            layer->insertElement(std::move(e), index);
         }
     }
 }
@@ -437,7 +446,7 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
                   snappedBounds.height != this->lastSnappedBounds.height);
 
     if (type == CURSOR_SELECTION_MOVE && move) {
-        undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, mx,
+        undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, this->selected, mx,
                                                              my, layer, targetPage));
     } else if (type == CURSOR_SELECTION_ROTATE && rotate) {
         undo->addUndoAction(std::make_unique<RotateUndoAction>(

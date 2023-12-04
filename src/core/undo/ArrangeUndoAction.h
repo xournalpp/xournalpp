@@ -27,8 +27,8 @@ class Layer;
 
 class ArrangeUndoAction: public UndoAction {
 public:
-    ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertionOrder oldOrder,
-                      InsertionOrder newOrder);
+    ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertionOrderRef oldOrder,
+                      InsertionOrderRef newOrder);
     ~ArrangeUndoAction() override;
 
 public:
@@ -40,13 +40,12 @@ private:
     void applyRearrange();
 
 private:
-    std::vector<Element*> elements;
     Layer* layer;
 
     /** Description of the ordering action. */
     std::string description;
 
     // These track the ordering of elements
-    InsertionOrder oldOrder;
-    InsertionOrder newOrder;
+    InsertionOrderRef oldOrder;
+    InsertionOrderRef newOrder;
 };

@@ -123,7 +123,7 @@ void LatexController::findSelectedTexElement() {
 
         if (auto* img = dynamic_cast<TexImage*>(this->selectedElem)) {
             this->initialTex = img->getText();
-            this->temporaryRender = std::unique_ptr<TexImage>(img->clone());
+            this->temporaryRender = img->cloneTexImage();
             this->isValidTex = true;
         } else if (auto* txt = dynamic_cast<Text*>(this->selectedElem)) {
             this->initialTex = "\\text{" + txt->getText() + "}";
@@ -327,15 +327,16 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
 void LatexController::insertTexImage() {
     xoj_assert(this->isValidTex);
     xoj_assert(this->temporaryRender != nullptr);
-    TexImage* img = this->temporaryRender.release();
 
     this->control->clearSelectionEndText();
     this->deleteOldImage();
 
-    control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, img));
+    control->getUndoRedoHandler()->addUndoAction(
+            std::make_unique<InsertUndoAction>(page, layer, this->temporaryRender.get()));
 
     // Select element
-    auto selection = SelectionFactory::createFromFloatingElement(control, page, layer, view, img);
+    auto selection =
+            SelectionFactory::createFromFloatingElement(control, page, layer, view, std::move(this->temporaryRender));
     view->getXournal()->setSelection(selection.release());
 }
 

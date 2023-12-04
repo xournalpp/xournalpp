@@ -324,7 +324,7 @@ public:
     void clipboardPasteXournal(ObjectInputStream& in) override;
     void deleteSelection() override;
 
-    void clipboardPaste(Element* e);
+    void clipboardPaste(ElementPtr e);
 
 public:
     void registerPluginToolButtons(ToolMenuHandler* toolMenuHandler);

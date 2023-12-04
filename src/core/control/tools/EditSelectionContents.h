@@ -88,12 +88,14 @@ public:
      * @param orderInSourceLayer: specifies the index of the element from the source layer,
      * in case we want to replace it back where it came from.
      */
-    void addElement(Element* e, Element::Index order);
+    void addElement(ElementPtr e, Element::Index order);
 
     /**
      * Returns all containing elements of this selection
      */
-    auto getElements() const -> std::vector<Element*> const& override;
+    auto getElements() const -> std::vector<Element*> const&;
+
+    void forEachElement(std::function<void(Element*)> f) const override;
 
     /**
      * Returns the insert order of this selection
@@ -103,7 +105,12 @@ public:
     /** replaces all elements by a new vector of elements
      * @param newElements: the elements which should replace the old elements
      * */
-    void replaceInsertionOrder(InsertionOrder newInsertOrder);
+    void replaceInsertionOrder(InsertionOrder newInsertionOrder);
+
+    /**
+     * Returns InsertionOrder of this selection and clears it
+     */
+    auto stealInsertionOrder() -> InsertionOrder;
 
     /**
      * Creates an undo/redo item for translating by (dx, dy), and then updates the bounding boxes accordingly.
@@ -207,7 +214,7 @@ private:
      *
      * Invariant: the insert order must be sorted by index in ascending order.
      */
-    InsertionOrder insertOrder;
+    InsertionOrder insertionOrder;
 
     /**
      * The rendered elements

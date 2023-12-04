@@ -12,6 +12,7 @@
 
 #include <cstring>
 #include <limits>  // for numeric_limits
+#include <memory>
 #include <sstream>
 
 #include <gtk/gtk.h>
@@ -34,6 +35,7 @@
 #include "gui/sidebar/previews/base/SidebarToolbar.h"
 #include "gui/widgets/XournalWidget.h"
 #include "model/Document.h"
+#include "model/Element.h"
 #include "model/Font.h"
 #include "model/SplineSegment.h"
 #include "model/Stroke.h"
@@ -507,7 +509,7 @@ static int handleUndoRedoActionHelper(lua_State* L, Control* control, const char
  * Helper function for addStroke API. Parses pen settings from API call, taking
  * in a Stroke and a chosen Layer, sets the pen settings, and applies the stroke.
  */
-static void addStrokeHelper(lua_State* L, Stroke* stroke) {
+static void addStrokeHelper(lua_State* L, std::unique_ptr<Stroke> stroke) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* ctrl = plugin->getControl();
     PageRef const& page = ctrl->getCurrentPage();
@@ -607,7 +609,7 @@ static void addStrokeHelper(lua_State* L, Stroke* stroke) {
     lua_pop(L, 5);  // Finally done with all that Lua data.
 
     // Add the stroke
-    layer->addElement(stroke);
+    layer->addElement(std::move(stroke));
     return;
 }
 
@@ -677,7 +679,7 @@ static int applib_addSplines(lua_State* L) {
     size_t numSplines = lua_rawlen(L, -1);
     for (size_t a = 1; a <= numSplines; a++) {
         std::vector<double> coordStream;
-        Stroke* stroke = new Stroke();
+        auto stroke = std::make_unique<Stroke>();
         // Get coordinates
         lua_pushinteger(L, as_signed(a));
         lua_gettable(L, -2);                 // get current spline from splines table
@@ -720,8 +722,8 @@ static int applib_addSplines(lua_State* L) {
 
         if (stroke->getPointCount() >= 2) {
             // Finish building the Stroke and apply it to the layer.
-            addStrokeHelper(L, stroke);
-            strokes.push_back(stroke);
+            strokes.push_back(stroke.get());
+            addStrokeHelper(L, std::move(stroke));
         } else {
             g_warning("Stroke shorter than two points. Discarding. (Has %zu)", stroke->getPointCount());
         }
@@ -823,7 +825,7 @@ static int applib_addStrokes(lua_State* L) {
         std::vector<double> xStream;
         std::vector<double> yStream;
         std::vector<double> pressureStream;
-        Stroke* stroke = new Stroke();
+        auto stroke = std::make_unique<Stroke>();
 
         // Fetch table of X values from the Lua stack
         lua_pushinteger(L, as_signed(a));
@@ -901,8 +903,7 @@ static int applib_addStrokes(lua_State* L) {
         }
 
         // Finish building the Stroke and apply it to the layer.
-        addStrokeHelper(L, stroke);
-        strokes.push_back(stroke);
+        addStrokeHelper(L, std::move(stroke));
         // Onto the next stroke
         lua_pop(L, 1);  // cleanup stroke table
     }
@@ -1000,7 +1001,7 @@ static int applib_addTexts(lua_State* L) {
 
     size_t numTexts = lua_rawlen(L, -1);
     for (size_t a = 1; a <= numTexts; a++) {
-        Text* t = new Text();
+        auto text = std::make_unique<Text>();
 
         // Fetch table of X values from the Lua stack
         lua_pushinteger(L, as_signed(a));
@@ -1041,12 +1042,12 @@ static int applib_addTexts(lua_State* L) {
         if (!lua_isstring(L, -7)) {
             return luaL_error(L, "Missing text!/'text' must be a string");
         }
-        t->setText(lua_tostring(L, -7));
+        text->setText(lua_tostring(L, -7));
 
         XojFont font{};
         font.setName(luaL_optstring(L, -5, default_font.getName().c_str()));
         font.setSize(luaL_optnumber(L, -4, default_font.getSize()));
-        t->setFont(font);
+        text->setFont(font);
 
         if (lua_isinteger(L, -3)) {  // Check if the color was provided
             uint32_t color = static_cast<uint32_t>(as_unsigned(lua_tointeger(L, -3)));
@@ -1055,9 +1056,9 @@ static int applib_addTexts(lua_State* L) {
                 msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
                 return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
             }
-            t->setColor(Color(color | 0xff000000U));
+            text->setColor(Color(color | 0xff000000U));
         } else if (lua_isnil(L, -3)) {
-            t->setColor(default_color);
+            text->setColor(default_color);
         } else {
             return luaL_error(L, "'color' must be an integer/hex-code or unset");
         }
@@ -1065,18 +1066,18 @@ static int applib_addTexts(lua_State* L) {
         if (!lua_isnumber(L, -2)) {  // Check if x was provided
             return luaL_error(L, "Missing X-Coordinate!/must be a number");
         }
-        t->setX(lua_tonumber(L, -2));
+        text->setX(lua_tonumber(L, -2));
 
         if (!lua_isnumber(L, -1)) {  // Check if y was provided
             return luaL_error(L, "Missing Y-Coordinate!/must be a number");
         }
-        t->setY(lua_tonumber(L, -1));
+        text->setY(lua_tonumber(L, -1));
 
         lua_pop(L, 8);  // remove values read out from the text table + text-table itself
 
         // Finish building the Text and apply it to the layer.
-        layer->addElement(t);
-        texts.push_back(t);
+        texts.push_back(text.get());
+        layer->addElement(std::move(text));
         // Onto the next text
     }
 
@@ -1146,7 +1147,7 @@ static int applib_getTexts(lua_State* L) {
         if (sel) {
             control->clearSelection();  // otherwise texts in the selection won't be recognized
         }
-        elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
     } else if (type == "selection") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
@@ -1265,7 +1266,7 @@ static int applib_getStrokes(lua_State* L) {
         if (sel) {
             control->clearSelection();  // otherwise strokes in the selection won't be recognized
         }
-        elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
     } else if (type == "selection") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {
@@ -2223,11 +2224,11 @@ static int applib_scaleTextElements(lua_State* L) {
 
     control->clearSelectionEndText();
 
-    const std::vector<Element*>& elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+    const auto& elements = control->getCurrentPage()->getSelectedLayer()->getElements();
 
-    for (Element* e: elements) {
+    for (auto const& e: elements) {
         if (e->getType() == ELEMENT_TEXT) {
-            Text* t = static_cast<Text*>(e);
+            Text* t = static_cast<Text*>(e.get());
             t->scale(t->getX(), t->getY(), f, f, 0.0, false);
         }
     }
@@ -2477,7 +2478,7 @@ static int applib_addImages(lua_State* L) {
                               "both 'path' parameter and image 'data' were provided. Only one should be specified. ");
         }
 
-        Image* img;
+        std::unique_ptr<Image> img;
         int width;
         int height;
         XojPageView* pv = control->getWindow()->getXournal()->getViewFor(control->getCurrentPageNo());
@@ -2497,7 +2498,7 @@ static int applib_addImages(lua_State* L) {
                 continue;
             }
         } else {  // data was provided instead
-            img = new Image();
+            img = std::make_unique<Image>();
             img->setImage(std::string(data, dataLen));
             img->getImage();  // render image first to get the proper width and height
             std::tie(width, height) = img->getImageSize();
@@ -2540,14 +2541,14 @@ static int applib_addImages(lua_State* L) {
         // scale down keeping the current aspect ratio after the manual scaling to fit the image on the page
         // if the image already fits on the screen, no other scaling is applied here
         // already sets width/height in the image
-        imgHandler.automaticScaling(img, x, y, width, height);
+        imgHandler.automaticScaling(img.get(), x, y, width, height);
 
         // store the image to later build the undo/redo action chain
-        images.push_back(img);
+        images.push_back(img.get());
 
         lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
 
-        bool succ = imgHandler.addImageToDocument(img, false);
+        bool succ = imgHandler.addImageToDocument(std::move(img), false);
         if (!succ) {
             lua_pushfstring(L, "Error: Inserting the image (%s) failed.", path);  // soft error
         }
@@ -2605,7 +2606,7 @@ static int applib_getImages(lua_State* L) {
         if (sel) {
             control->clearSelection();  // otherwise strokes in the selection won't be recognized
         }
-        elements = control->getCurrentPage()->getSelectedLayer()->getElements();
+        elements = xoj::refElementContainer(control->getCurrentPage()->getSelectedLayer()->getElements());
     } else if (type == "selection") {
         auto sel = control->getWindow()->getXournal()->getSelection();
         if (sel) {

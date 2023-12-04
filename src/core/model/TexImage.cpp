@@ -1,5 +1,6 @@
 #include "TexImage.h"
 
+#include <memory>
 #include <utility>  // for move
 
 #include <poppler-document.h>  // for poppler_document_ge...
@@ -26,8 +27,9 @@ void TexImage::freeImageAndPdf() {
     this->pdf.reset();
 }
 
-auto TexImage::clone() const -> TexImage* {
-    auto* img = new TexImage();
+auto TexImage::cloneTexImage() const -> std::unique_ptr<TexImage> {
+
+    auto img = std::make_unique<TexImage>();
     img->x = this->x;
     img->y = this->y;
     img->setColor(this->getColor());
@@ -47,6 +49,8 @@ auto TexImage::clone() const -> TexImage* {
 
     return img;
 }
+
+auto TexImage::clone() const -> ElementPtr { return cloneTexImage(); }
 
 void TexImage::setWidth(double width) {
     this->width = width;

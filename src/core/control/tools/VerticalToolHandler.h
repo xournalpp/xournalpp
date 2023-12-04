@@ -30,6 +30,8 @@ class MoveUndoAction;
 class Settings;
 class ZoomControl;
 
+using ElementPtr = std::unique_ptr<Element>;
+
 namespace xoj::view {
 class OverlayView;
 class Repaintable;
@@ -67,7 +69,7 @@ public:
 
     std::unique_ptr<MoveUndoAction> finalize();
 
-    const std::vector<Element*>& getElements() const override;
+    void forEachElement(std::function<void(Element*)> f) const override;
 
     auto createView(xoj::view::Repaintable* parent, ZoomControl* zoomControl, const Settings* settings) const
             -> std::unique_ptr<xoj::view::OverlayView>;
@@ -90,6 +92,11 @@ public:
 
 private:
     /**
+     * Returns a vector of pointers to the elements we have adopted
+     * This function copies the element ptrs into a new vector
+     */
+    auto refElements() const -> std::vector<Element*>;
+    /**
      * Clear the currently moved elements, and then select all elements
      * above/below startY (depending on the side) to use for the spacing.
      * Lastly, redraw the elements to the buffer.
@@ -105,7 +112,7 @@ private:
 
     PageRef page;
     Layer* layer;
-    std::vector<Element*> elements;
+    std::vector<ElementPtr> elements;
     /**
      * @brief Stores the smallest box containing all the adopted elements. 
      *     Used to only refresh the part of the screen that needs refreshing.

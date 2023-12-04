@@ -224,7 +224,7 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
     // time a finger has been put onto the screen
     for (const auto& e: layer->getElements()) {
         if (e->getType() == ELEMENT_STROKE) {
-            Stroke* s = dynamic_cast<Stroke*>(e);
+            auto* s = dynamic_cast<Stroke*>(e.get());
             if (s->getPointCount() == 2) {
                 lines.push_back(s);
             }

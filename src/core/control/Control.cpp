@@ -479,16 +479,18 @@ void Control::selectAllOnPage() {
 
     win->getXournal()->clearSelection();
 
-    std::vector<Element*> elements = layer->clearNoFree();
+    auto elements = layer->clearNoFree();
     this->doc->unlock();
 
     if (!elements.empty()) {
-        InsertionOrder insertOrder;
-        insertOrder.reserve(elements.size());
+        InsertionOrder insertionOrder;
+        insertionOrder.reserve(elements.size());
         Element::Index n = 0;
-        std::transform(elements.begin(), elements.end(), std::back_inserter(insertOrder),
-                       [&n](Element* e) { return InsertionPosition(e, n++); });
-        auto [sel, rg] = SelectionFactory::createFromFloatingElements(this, page, layer, view, std::move(insertOrder));
+        for (auto&& e: elements) {
+            insertionOrder.emplace_back(std::move(e), n++);
+        }
+        auto [sel, rg] =
+                SelectionFactory::createFromFloatingElements(this, page, layer, view, std::move(insertionOrder));
 
         page->fireRangeChanged(rg);
 
@@ -502,7 +504,7 @@ void Control::reorderSelection(EditSelection::OrderChange change) {
         return;
     }
 
-    auto undoAction = sel->rearrangeInsertOrder(change);
+    auto undoAction = sel->rearrangeInsertionOrder(change);
     this->undoRedo->addUndoAction(std::move(undoAction));
 }
 
@@ -1998,16 +2000,16 @@ void Control::clipboardCutCopyEnabled(bool enabled) {
 void Control::clipboardPasteEnabled(bool enabled) { this->actionDB->enableAction(Action::PASTE, enabled); }
 
 void Control::clipboardPasteText(string text) {
-    Text* t = new Text();
+    auto t = std::make_unique<Text>();
     t->setText(text);
     t->setFont(settings->getFont());
     t->setColor(toolHandler->getTool(TOOL_TEXT).getColor());
 
-    clipboardPaste(t);
+    clipboardPaste(std::move(t));
 }
 
 void Control::clipboardPasteImage(GdkPixbuf* img) {
-    auto image = new Image();
+    auto image = std::make_unique<Image>();
     image->setImage(img);
 
     auto width =
@@ -2046,10 +2048,10 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
     image->setWidth(scaledWidth);
     image->setHeight(scaledHeight);
 
-    clipboardPaste(image);
+    clipboardPaste(std::move(image));
 }
 
-void Control::clipboardPaste(Element* e) {
+void Control::clipboardPaste(ElementPtr e) {
     double x = 0;
     double y = 0;
     auto pageNr = getCurrentPageNo();
@@ -2078,8 +2080,8 @@ void Control::clipboardPaste(Element* e) {
     e->setX(x);
     e->setY(y);
 
-    undoRedo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, e));
-    auto sel = SelectionFactory::createFromFloatingElement(this, page, layer, view, e);
+    undoRedo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, e.get()));
+    auto sel = SelectionFactory::createFromFloatingElement(this, page, layer, view, std::move(e));
 
     win->getXournal()->setSelection(sel.release());
 }
@@ -2109,7 +2111,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
     this->doc->unlock();
 
     try {
-        std::unique_ptr<Element> element;
+        ElementPtr element;
         std::string version = in.readString();
         if (version != PROJECT_STRING) {
             g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PROJECT_STRING);
@@ -2143,7 +2145,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
 
             pasteAddUndoAction->addElement(layer, element.get(), layer->indexOf(element.get()));
             // Todo: unique_ptr
-            selection->addElement(element.release(), std::numeric_limits<Element::Index>::max());
+            selection->addElement(std::move(element), std::numeric_limits<Element::Index>::max());
         }
         undoRedo->addUndoAction(std::move(pasteAddUndoAction));
 

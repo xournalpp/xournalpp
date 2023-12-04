@@ -30,9 +30,9 @@ auto Selection::finalize(PageRef page, bool disableMultilayer, Document* doc) ->
             }
             bool selectionOnLayer = false;
             Element::Index pos = 0;
-            for (Element* e: l->getElements()) {
+            for (auto&& e: l->getElements()) {
                 if (e->isInSelection(this)) {
-                    this->selectedElements.emplace_back(e, pos);
+                    this->selectedElements.emplace_back(e.get(), pos);
                     selectionOnLayer = true;
                 }
                 pos++;
@@ -46,9 +46,9 @@ auto Selection::finalize(PageRef page, bool disableMultilayer, Document* doc) ->
         std::lock_guard lock(*doc);
         Layer* l = page->getSelectedLayer();
         Element::Index pos = 0;
-        for (Element* e: l->getElements()) {
+        for (auto&& e: l->getElements()) {
             if (e->isInSelection(this)) {
-                this->selectedElements.emplace_back(e, pos);
+                this->selectedElements.emplace_back(e.get(), pos);
                 layerId = page->getSelectedLayerId();
             }
             pos++;
@@ -64,7 +64,7 @@ auto Selection::isMultiLayerSelection() -> bool {
     return this->multiLayer;
 }
 
-InsertionOrder Selection::releaseElements() { return std::move(this->selectedElements); }
+auto Selection::releaseElements() -> InsertionOrderRef { return std::move(this->selectedElements); }
 
 //////////////////////////////////////////////////////////
 

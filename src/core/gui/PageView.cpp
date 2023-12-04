@@ -703,8 +703,8 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
             xournal->setSelection([&]() {
                 if (aggregate) {
                     // Aggregate selection
-                    return SelectionFactory::addElementsFromActiveLayer(control, xournal->getSelection(),
-                                                                        selection->releaseElements());
+                    auto sel = selection->releaseElements();
+                    return SelectionFactory::addElementsFromActiveLayer(control, xournal->getSelection(), sel);
                 } else {
                     // if selection->multiLayer == true, the selected objects might be on another layer
                     xournal->getControl()->getLayerController()->switchToLay(layerOfFinalizedSel);

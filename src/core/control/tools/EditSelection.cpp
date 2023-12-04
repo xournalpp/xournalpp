@@ -7,6 +7,7 @@
 #include <memory>     // for make_unique, __sha...
 #include <numeric>    // for reduce
 #include <string>     // for string
+#include <utility>
 
 #include <gdk/gdk.h>  // for gdk_cairo_set_sour...
 
@@ -22,19 +23,20 @@
 #include "gui/widgets/XournalWidget.h"             // for gtk_xournal_get_la...
 #include "model/Document.h"                        // for Document
 #include "model/Element.h"                         // for Element::Index
-#include "model/Layer.h"                           // for Layer
-#include "model/LineStyle.h"                       // for LineStyle
-#include "model/Point.h"                           // for Point
-#include "model/XojPage.h"                         // for XojPage
-#include "undo/ArrangeUndoAction.h"                // for ArrangeUndoAction
-#include "undo/InsertUndoAction.h"                 // for InsertsUndoAction
-#include "undo/UndoRedoHandler.h"                  // for UndoRedoHandler
-#include "util/Range.h"                            // for Range
-#include "util/Util.h"                             // for cairo_set_dash_from_vector
-#include "util/glib_casts.h"                       // for wrap_v
-#include "util/i18n.h"                             // for _
-#include "util/serializing/ObjectInputStream.h"    // for ObjectInputStream
-#include "util/serializing/ObjectOutputStream.h"   // for ObjectOutputStream
+#include "model/ElementInsertionPosition.h"
+#include "model/Layer.h"                          // for Layer
+#include "model/LineStyle.h"                      // for LineStyle
+#include "model/Point.h"                          // for Point
+#include "model/XojPage.h"                        // for XojPage
+#include "undo/ArrangeUndoAction.h"               // for ArrangeUndoAction
+#include "undo/InsertUndoAction.h"                // for InsertsUndoAction
+#include "undo/UndoRedoHandler.h"                 // for UndoRedoHandler
+#include "util/Range.h"                           // for Range
+#include "util/Util.h"                            // for cairo_set_dash_from_vector
+#include "util/glib_casts.h"                      // for wrap_v
+#include "util/i18n.h"                            // for _
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 #include "EditSelectionContents.h"  // for EditSelectionConte...
 #include "Selection.h"              // for Selection
@@ -56,7 +58,7 @@ constexpr unsigned int PAN_TIMER_RATE = 30;
 
 namespace SelectionFactory {
 /// @return Bounds and SnappingBounds
-static std::pair<Range, Range> computeBoxes(const InsertionOrder& elts) {
+static auto computeBoxes(const InsertionOrder& elts) -> std::pair<Range, Range> {
     return std::transform_reduce(
             elts.begin(), elts.end(), std::pair<Range, Range>(),
             [](auto&& p, auto&& q) {
@@ -65,61 +67,65 @@ static std::pair<Range, Range> computeBoxes(const InsertionOrder& elts) {
             [](auto&& e) { return std::make_pair(Range(e.e->boundingRect()), Range(e.e->getSnappedBounds())); });
 }
 
-std::unique_ptr<EditSelection> createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer,
-                                                         XojPageView* view, Element* e) {
-    return std::make_unique<EditSelection>(ctrl, InsertionOrder{InsertionPosition(e)}, page, layer, view,
-                                           Range(e->boundingRect()), Range(e->getSnappedBounds()));
+auto createFromFloatingElement(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view, ElementPtr eOwn)
+        -> std::unique_ptr<EditSelection> {
+    auto* e = eOwn.get();  // Order of parameter evaluation is unspecified, eOwn.get() must be evaluated before moving
+    InsertionOrder i{1};
+    i[0] = InsertionPosition{std::move(eOwn)};
+    return std::make_unique<EditSelection>(ctrl, std::move(i), page, layer, view, Range(e->boundingRect()),
+                                           Range(e->getSnappedBounds()));
 }
 
-std::pair<std::unique_ptr<EditSelection>, Range> createFromFloatingElements(Control* ctrl, const PageRef& page,
-                                                                            Layer* layer, XojPageView* view,
-                                                                            InsertionOrder elts) {
+auto createFromFloatingElements(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view,
+                                InsertionOrder elts) -> std::pair<std::unique_ptr<EditSelection>, Range> {
     xoj_assert(std::is_sorted(elts.begin(), elts.end()));
     auto [bounds, snappingBounds] = computeBoxes(elts);
     return std::make_pair(
             std::make_unique<EditSelection>(ctrl, std::move(elts), page, layer, view, bounds, snappingBounds), bounds);
 }
 
-std::unique_ptr<EditSelection> createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view,
-                                                              Element* e, Element::Index pos) {
+auto createFromElementOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, Element* e,
+                                    Element::Index pos) -> std::unique_ptr<EditSelection> {
     Document* doc = ctrl->getDocument();
-    Layer* layer;
-    {  // lock scope
-        std::lock_guard lock(*doc);
-        layer = page->getSelectedLayer();
-        pos = layer->removeElementAt(e, pos, false);
-    }
-    page->fireElementChanged(e);
+    Layer* layer = nullptr;
 
-    return std::make_unique<EditSelection>(ctrl, InsertionOrder{InsertionPosition(e, pos)}, page, layer, view,
-                                           Range(e->boundingRect()), Range(e->getSnappedBounds()));
+    InsertionOrder i(1);
+    i[0] = [&] {
+        std::lock_guard lock(*doc);  // lock scope
+        layer = page->getSelectedLayer();
+        return layer->removeElementAt(e, pos);
+    }();
+    page->fireElementChanged(e);
+    return std::make_unique<EditSelection>(ctrl, std::move(i), page, layer, view, Range(e->boundingRect()),
+                                           Range(e->getSnappedBounds()));
 }
 
-std::unique_ptr<EditSelection> createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view,
-                                                               InsertionOrder elts) {
+auto createFromElementsOnActiveLayer(Control* ctrl, const PageRef& page, XojPageView* view, InsertionOrderRef elts)
+        -> std::unique_ptr<EditSelection> {
     xoj_assert(std::is_sorted(elts.begin(), elts.end()));
     Document* doc = ctrl->getDocument();
-    Layer* layer;
-    {  // lock scope
-        std::lock_guard lock(*doc);
+    Layer* layer = nullptr;
+    auto ownedElts = [&] {
+        std::lock_guard lock(*doc);  // lock scope
         layer = page->getSelectedLayer();
-        layer->removeElementsAt(elts, false);
-    }
+        return layer->removeElementsAt(elts);
+    }();
 
-    auto [bounds, snappingBounds] = computeBoxes(elts);
+    auto [bounds, snappingBounds] = computeBoxes(ownedElts);
     page->fireRangeChanged(bounds);
 
-    return std::make_unique<EditSelection>(ctrl, std::move(elts), page, layer, view, bounds, snappingBounds);
+    return std::make_unique<EditSelection>(ctrl, std::move(ownedElts), page, layer, view, bounds, snappingBounds);
 }
 
-std::unique_ptr<EditSelection> addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element* e,
-                                                         Element::Index pos) {
+auto addElementFromActiveLayer(Control* ctrl, EditSelection* base, Element* e, Element::Index pos)
+        -> std::unique_ptr<EditSelection> {
     Document* doc = ctrl->getDocument();
     Layer* layer = base->getSourceLayer();
-    {  // lock scope
-        std::lock_guard lock(*doc);
-        pos = layer->removeElementAt(e, pos, false);
-    }
+    auto ownedElem = [&] {
+        std::lock_guard lock(*doc);  // lock scope
+        return layer->removeElementAt(e, pos);
+    }();
+    pos = ownedElem.pos;
     const PageRef& page = base->getSourcePage();
     page->fireElementChanged(e);
 
@@ -141,7 +147,8 @@ std::unique_ptr<EditSelection> addElementFromActiveLayer(Control* ctrl, EditSele
             last = it;
         }
     }
-    elts.emplace(first, e, pos + std::distance(begin, first));
+    ownedElem.pos += std::distance(begin, first);
+    elts.insert(first, std::move(ownedElem));
     xoj_assert(std::is_sorted(elts.begin(), elts.end()));
 
     auto [bounds, snappingBounds] = computeBoxes(elts);
@@ -149,21 +156,21 @@ std::unique_ptr<EditSelection> addElementFromActiveLayer(Control* ctrl, EditSele
     return std::make_unique<EditSelection>(ctrl, std::move(elts), page, layer, base->getView(), bounds, snappingBounds);
 }
 
-std::unique_ptr<EditSelection> addElementsFromActiveLayer(Control* ctrl, EditSelection* base,
-                                                          const InsertionOrder& newElts) {
+auto addElementsFromActiveLayer(Control* ctrl, EditSelection* base, const InsertionOrderRef& newElts)
+        -> std::unique_ptr<EditSelection> {
     xoj_assert(std::is_sorted(newElts.begin(), newElts.end()));
     Document* doc = ctrl->getDocument();
     Layer* layer = base->getSourceLayer();
-    {  // lock scope
+    auto ownedElts = [&] {  // lock scope
         std::lock_guard lock(*doc);
-        layer->removeElementsAt(newElts, false);
-    }
+        return layer->removeElementsAt(newElts);
+    }();
 
-    auto [bounds, snappingBounds] = computeBoxes(newElts);
+    auto [bounds, snappingBounds] = computeBoxes(ownedElts);
     const PageRef& page = base->getSourcePage();
     page->fireRangeChanged(bounds);
 
-    const InsertionOrder oldElts = base->makeMoveEffective();
+    InsertionOrder oldElts = base->makeMoveEffective();
     xoj_assert(std::is_sorted(oldElts.begin(), oldElts.end()));
     auto [oldBounds, oldSnappingBounds] = computeBoxes(oldElts);
 
@@ -173,26 +180,28 @@ std::unique_ptr<EditSelection> addElementsFromActiveLayer(Control* ctrl, EditSel
      * To sort out the proper Element::Indices, we need to imagine oldElts were added back to the layer, so that some of
      * newElts' would see their indices increase. A simple std::merge won't do. See comment in addElementFromActiveLayer
      */
-    auto itout = std::back_inserter(newSelection);
     auto oldIt = oldElts.begin(), oldEnd = oldElts.end();
-    std::ptrdiff_t shift = 0;
-    for (auto newIt = newElts.begin(), newEnd = newElts.end(); newIt != newEnd; ++itout) {
+    std::ptrdiff_t shift = 0;  // number of elements from oldElts that have been added to newSelection
+
+    for (auto newIt = ownedElts.begin(), newEnd = ownedElts.end(); newIt != newEnd;) {
         if (oldIt == oldEnd) {
             xoj_assert(shift == static_cast<std::ptrdiff_t>(oldElts.size()));
-            std::transform(newIt, newEnd, itout, [shift](auto& p) { return InsertionPosition(p.e, p.pos + shift); });
+            for (; newIt != newEnd; ++newIt) {
+                newSelection.emplace_back(std::move(newIt->e), newIt->pos + shift);
+            }
             break;
         }
 
         if (oldIt->pos < newIt->pos + shift) {
-            *itout = *oldIt;
+            newSelection.emplace_back(std::move(*oldIt));
             ++oldIt;
             ++shift;
         } else {
-            *itout = InsertionPosition(newIt->e, newIt->pos + shift);
+            newSelection.emplace_back(std::move(newIt->e), newIt->pos + shift);
             ++newIt;
         }
     }
-    std::copy(oldIt, oldEnd, itout);
+    std::move(oldIt, oldEnd, std::back_inserter(newSelection));
     xoj_assert(newSelection.size() == oldElts.size() + newElts.size());
     xoj_assert(std::is_sorted(newSelection.begin(), newSelection.end()));
     return std::make_unique<EditSelection>(ctrl, std::move(newSelection), page, layer, base->getView(),
@@ -233,7 +242,6 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
 
 EditSelection::EditSelection(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view):
         snappedBounds(Rectangle<double>{}),
-
         btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
         sourcePage(page),
         sourceLayer(layer),
@@ -419,8 +427,9 @@ void EditSelection::fillUndoItem(DeleteUndoAction* undo) { this->contents->fillU
  * Add an element to this selection
  *
  */
-void EditSelection::addElement(Element* e, Element::Index order) {
-    this->contents->addElement(e, order);
+void EditSelection::addElement(ElementPtr eOwned, Element::Index order) {
+    auto e = eOwned.get();
+    this->contents->addElement(std::move(eOwned), order);
     this->preserveAspectRatio = this->preserveAspectRatio || e->rescaleOnlyAspectRatio();
     this->supportMirroring = this->supportMirroring && e->rescaleWithMirror();
     this->supportRotation = this->supportRotation && e->getType() == ELEMENT_STROKE;
@@ -429,56 +438,60 @@ void EditSelection::addElement(Element* e, Element::Index order) {
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelection::getElements() const -> const vector<Element*>& { return this->contents->getElements(); }
+auto EditSelection::getElements() const -> std::vector<Element*> const& { return this->contents->getElements(); }
+
+void EditSelection::forEachElement(std::function<void(Element*)> f) const {
+    this->contents->forEachElement(std::move(f));
+}
 
 /**
  * Returns the insert order of this selection
  */
-auto EditSelection::getInsertOrder() const -> const InsertionOrder& { return this->contents->getInsertionOrder(); }
+auto EditSelection::getInsertionOrder() const -> const InsertionOrder& { return this->contents->getInsertionOrder(); }
 
-auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoActionPtr {
-    const InsertionOrder& oldOrd = this->getInsertOrder();
-    InsertionOrder newOrd;
+auto EditSelection::rearrangeInsertionOrder(const OrderChange change) -> UndoActionPtr {
+    InsertionOrder orderOwned = this->contents->stealInsertionOrder();
+    auto oldOrd = refInsertionOrder(orderOwned);
     std::string desc = _("Arrange");
     switch (change) {
         case OrderChange::BringToFront:
-            // Set to largest positive signed integer
-            for (const auto& [e, _]: oldOrd) { newOrd.emplace_back(e, std::numeric_limits<Element::Index>::max()); }
-            desc = _("Bring to front");
+            for (auto& [_, i]: orderOwned) {
+                i = std::numeric_limits<Element::Index>::max();
+            }
             break;
         case OrderChange::BringForward:
             // Set indices of elements to range from [max(indices) + 1, max(indices) + 1 + num elements)
-            newOrd = oldOrd;
-            if (!newOrd.empty()) {
-                Element::Index i = newOrd.back().pos + 1;
-                for (auto& it: newOrd) {
-                    it.pos = i++;
+            if (!orderOwned.empty()) {
+                Element::Index i = orderOwned.back().pos + 1;
+                for (auto& [_, pos]: orderOwned) {
+                    pos = i++;
                 }
             }
             desc = _("Bring forward");
             break;
         case OrderChange::SendBackward:
             // Set indices of elements to range from [min(indices) - 1, min(indices) + num elements - 1)
-            newOrd = oldOrd;
-            if (!newOrd.empty()) {
-                Element::Index i = newOrd.front().pos;
+            if (!orderOwned.empty()) {
+                Element::Index i = orderOwned.front().pos;
                 i = i > 0 ? i - 1 : 0;
-                for (auto& it: newOrd) {
-                    it.pos = i++;
+                for (auto& [_, pos]: orderOwned) {
+                    pos = i++;
                 }
             }
             desc = _("Send backward");
             break;
         case OrderChange::SendToBack:
             Element::Index i = 0;
-            for (const auto& [e, _]: oldOrd) {
-                newOrd.emplace_back(e, i++);
+            for (auto& [_, pos]: orderOwned) {
+                pos = i++;
             }
             desc = _("Send to back");
             break;
     }
 
-    this->contents->replaceInsertionOrder(newOrd);
+
+    auto newOrd = refInsertionOrder(orderOwned);
+    this->contents->replaceInsertionOrder(std::move(orderOwned));
     PageRef page = this->view->getPage();
 
     return std::make_unique<ArrangeUndoAction>(page, page->getSelectedLayer(), desc, std::move(oldOrd),
@@ -760,14 +773,18 @@ void EditSelection::translateToView(XojPageView* v) {
 
 void EditSelection::copySelection() {
     // clone elements in the insert order
-    InsertionOrder clonedInsertOrder;
-    for (auto [e, index]: getInsertOrder()) { clonedInsertOrder.emplace_back(e->clone(), index); }
+    auto const& orig = getInsertionOrder();
+    InsertionOrder clonedInsertionOrder;
+    clonedInsertionOrder.reserve(orig.size());
+    for (const auto& [e, index]: orig) {
+        clonedInsertionOrder.emplace_back(e->clone(), index);
+    }
 
     // apply transformations and add to layer
     finalizeSelection();
 
     // restore insert order
-    contents->replaceInsertionOrder(clonedInsertOrder);
+    contents->replaceInsertionOrder(std::move(clonedInsertionOrder));
 
     // add undo action
     PageRef page = this->view->getPage();

@@ -3,6 +3,7 @@
 #include <algorithm>  // for max, min
 #include <cmath>      // for abs
 #include <cstddef>    // for size_t
+#include <memory>
 #include <string>     // for string
 #include <utility>    // for move
 #include <vector>     // for vector
@@ -175,7 +176,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
     auto color = theMainWindow->getXournal()->getControl()->getToolHandler()->getColor();
 
     Range dirtyRange;
-    std::vector<Element*> strokes;
+    std::vector<ElementPtr> strokes;
     for (XojPdfRectangle rect: textRects) {
         const double topOfLine = std::min(rect.y1, rect.y2);
         const double middleOfLine = (rect.y1 + rect.y2) / 2;
@@ -189,7 +190,7 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         // the width of stroke
         const double w = width == PdfMarkerStyle::WIDTH_TEXT_LINE ? 1 : rectWidth;
 
-        auto* stroke = new Stroke();
+        auto stroke = std::make_unique<Stroke>();
         stroke->setColor(color);
         stroke->setFill(markerOpacity);
         stroke->setToolType(StrokeTool::HIGHLIGHTER);
@@ -201,18 +202,21 @@ void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle w
         dirtyRange.addPoint(rect.x1, h - 0.5 * w);
         dirtyRange.addPoint(rect.x2, h + 0.5 * w);
 
-        strokes.push_back(stroke);
+        strokes.push_back(std::move(stroke));
     }
+
+    std::vector<Element*> strokePtrs(strokes.size());
+    std::transform(strokes.begin(), strokes.end(), strokePtrs.begin(), [](auto& e) { return e.get(); });
 
     doc->lock();
-    for (auto* s: strokes) {
-        layer->addElement(s);
+    for (auto&& s: strokes) {
+        layer->addElement(std::move(s));
     }
     doc->unlock();
-    page->fireElementsChanged(strokes, dirtyRange);
+    page->fireElementsChanged(strokePtrs, dirtyRange);
 
     auto undoAct = std::make_unique<GroupUndoAction>();
-    for (auto* stroke: strokes) {
+    for (auto* stroke: strokePtrs) {
         undoAct->addAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
     }
     control->getUndoRedoHandler()->addUndoAction(std::move(undoAct));

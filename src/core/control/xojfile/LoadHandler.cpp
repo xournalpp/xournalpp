@@ -543,8 +543,9 @@ void LoadHandler::parsePage() {
 }
 
 void LoadHandler::parseStroke() {
-    this->stroke = new Stroke();
-    this->layer->addElement(this->stroke);
+    auto strokeOwn = std::make_unique<Stroke>();
+    this->stroke = strokeOwn.get();
+    this->layer->addElement(std::move(strokeOwn));
 
     const char* width = LoadHandlerHelper::getAttrib("width", false, this);
 
@@ -654,8 +655,9 @@ void LoadHandler::parseStroke() {
 }
 
 void LoadHandler::parseText() {
-    this->text = new Text();
-    this->layer->addElement(this->text);
+    auto textOwn = std::make_unique<Text>();
+    this->text = textOwn.get();
+    this->layer->addElement(std::move(textOwn));
 
     const char* sFont = LoadHandlerHelper::getAttrib("font", false, this);
     double fontSize = LoadHandlerHelper::getAttribDouble("size", this);
@@ -698,8 +700,9 @@ void LoadHandler::parseImage() {
     double bottom = LoadHandlerHelper::getAttribDouble("bottom", this);
 
     xoj_assert(this->image == nullptr);
-    this->image = new Image();
-    this->layer->addElement(this->image);
+    auto imageOwn = std::make_unique<Image>();
+    this->image = imageOwn.get();
+    this->layer->addElement(std::move(imageOwn));
     this->image->setX(left);
     this->image->setY(top);
     this->image->setWidth(right - left);
@@ -719,8 +722,9 @@ void LoadHandler::parseTexImage() {
         imTextLen = LoadHandlerHelper::getAttribSizeT("texlength", this);
     }
 
-    this->teximage = new TexImage();
-    this->layer->addElement(this->teximage);
+    auto teximageOwn = std::make_unique<TexImage>();
+    this->teximage = teximageOwn.get();
+    this->layer->addElement(std::move(teximageOwn));
     this->teximage->setX(left);
     this->teximage->setY(top);
     this->teximage->setWidth(right - left);
@@ -977,7 +981,7 @@ void LoadHandler::fixNullPressureValues() {
     if (strokePortions.empty()) {
         // There was no valid pressure values! Delete the stroke entirely
         g_warning("Found a stroke with only non-positive pressure values! Removing this invisible stroke.");
-        layer->removeElement(stroke, true);
+        std::ignore = layer->removeElement(stroke);
         stroke = nullptr;
         return;
     }
@@ -986,11 +990,11 @@ void LoadHandler::fixNullPressureValues() {
     for_first_then_each(
             strokePortions, [&](std::vector<Point>& points) { stroke->setPointVector(std::move(points)); },
             [&](std::vector<Point>& points) {
-                Stroke* s = new Stroke();
-                s->applyStyleFrom(stroke);
-                s->setPointVector(std::move(points));
-                layer->addElement(s);
-                stroke = s;
+                auto strokeOwn = std::make_unique<Stroke>();
+                strokeOwn->applyStyleFrom(stroke);
+                strokeOwn->setPointVector(std::move(points));
+                stroke = strokeOwn.get();
+                layer->addElement(std::move(strokeOwn));
             });
 }
 

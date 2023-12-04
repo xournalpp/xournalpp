@@ -82,7 +82,7 @@ protected:
      */
     void drawSegmentTo(const Point& point);
 
-    void strokeRecognizerDetected(Stroke* recognized, Layer* layer);
+    void strokeRecognizerDetected(std::unique_ptr<Stroke> recognized, Layer* layer);
 
 protected:
     Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
