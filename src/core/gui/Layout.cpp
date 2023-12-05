@@ -99,6 +99,11 @@ void Layout::updateVisibility() {
     std::optional<size_t> mostPageNr;
     double mostPagePercent = 0;
 
+    const bool horizontalPosUnknown = this->layoutType == LAYOUT_TYPE_CONST_PADDING &&
+                                      this->mapper.getOrientation() == LayoutSettings::Orientation::Horizontal;
+    const bool verticalPosUnknown = this->layoutType == LAYOUT_TYPE_CONST_PADDING &&
+                                    this->mapper.getOrientation() == LayoutSettings::Orientation::Vertical;
+
     for (size_t row = 0; row < this->rowYStart.size(); ++row) {
         auto y2 = as_signed_strict(this->rowYStart[row]);
         for (size_t col = 0; col < this->colXStart.size(); ++col) {
@@ -109,8 +114,9 @@ void Layout::updateVisibility() {
                 auto& pageView = this->view->viewPages[*optionalPage];
 
                 // check if grid location is visible as an aprox for page visiblity:
-                if (!(visRect.x > x2 || visRect.x + visRect.width < x1)  // visrect not outside current row/col
-                    && !(visRect.y > y2 || visRect.y + visRect.height < y1)) {
+                if ((!(visRect.x > x2 || visRect.x + visRect.width < x1) || horizontalPosUnknown) &&
+                    (!(visRect.y > y2 || visRect.y + visRect.height < y1) || verticalPosUnknown)) {
+                    // visrect not outside current row/col
                     // now use exact check of page itself:
                     // visrect not outside current page dimensions:
                     auto const& pageRect = pageView->getRect();
