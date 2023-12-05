@@ -517,12 +517,66 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
 
 
 auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
-    // Binary Search:
-    auto rit = std::lower_bound(this->rowYStart.begin(), this->rowYStart.end(), y);
-    auto const foundRow = size_t(std::distance(this->rowYStart.begin(), rit));
-    auto cit = std::lower_bound(this->colXStart.begin(), this->colXStart.end(), x);
-    auto const foundCol = size_t(std::distance(this->colXStart.begin(), cit));
+    size_t foundRow = 0;
+    size_t foundCol = 0;
 
+    // At first, find position in raster
+    if (this->mapper.getOrientation() == LayoutSettings::Orientation::Horizontal ||
+        this->layoutType == LAYOUT_TYPE_GRID) {
+
+        // find row
+        const auto rit = std::lower_bound(this->rowYStart.begin(), this->rowYStart.end(), y);
+        foundRow = size_t(std::distance(this->rowYStart.begin(), rit));
+
+        if (this->layoutType == LAYOUT_TYPE_CONST_PADDING) {
+            // find column
+
+            // if nothing is found in the loop below, the position may be in the last column
+            foundCol = this->mapper.getColumns() - 1;
+
+            for (size_t col = 0; col < this->mapper.getColumns(); col++) {
+                const auto optionalPage = this->mapper.at({col, foundRow});
+                if (optionalPage && x < this->view->viewPages[*optionalPage]->getX()) {
+                    if (col == 0) {
+                        // position is left of first page
+                        return nullptr;
+                    } else {
+                        foundCol = col - 1;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if (this->mapper.getOrientation() == LayoutSettings::Orientation::Vertical ||
+        this->layoutType == LAYOUT_TYPE_GRID) {
+
+        // find column
+        const auto cit = std::lower_bound(this->colXStart.begin(), this->colXStart.end(), x);
+        foundCol = size_t(std::distance(this->colXStart.begin(), cit));
+
+        if (this->layoutType == LAYOUT_TYPE_CONST_PADDING) {
+            // find row
+
+            // if nothing is found in the loop below, the position may be in the last row
+            foundRow = this->mapper.getRows() - 1;
+
+            for (size_t row = 0; row < this->mapper.getRows(); row++) {
+                const auto optionalPage = this->mapper.at({foundCol, row});
+                if (optionalPage && y < this->view->viewPages[*optionalPage]->getY()) {
+                    if (row == 0) {
+                        // position is above first page
+                        return nullptr;
+                    } else {
+                        foundRow = row - 1;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // Then, use precise check of the page view itself
     auto optionalPage = this->mapper.at({foundCol, foundRow});
 
     if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false)) {
