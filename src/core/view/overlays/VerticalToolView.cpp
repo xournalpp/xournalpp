@@ -63,9 +63,9 @@ void VerticalToolView::on(VerticalToolView::SetVerticalShiftRequest, double shif
     // Padding for taking into account the drawing aid line width
     const double padding = 0.5 * BORDER_WIDTH_IN_PIXELS / this->parent->getZoom();
     if (side == VerticalToolHandler::Side::Above) {
-        rg.maxY = std::min(std::max(shift, this->lastShift) + padding, rg.maxY);
+        rg.maxY = std::clamp(std::max(shift, this->lastShift) + padding, rg.minY, rg.maxY);
     } else {
-        rg.minY = std::max(std::min(shift, this->lastShift) - padding, rg.minY);
+        rg.minY = std::clamp(std::min(shift, this->lastShift) - padding, rg.minY, rg.maxY);
     }
     this->parent->flagDirtyRegion(rg);
     this->lastShift = shift;
