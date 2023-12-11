@@ -871,15 +871,9 @@ auto XojPageView::actionDelete() -> bool {
 void XojPageView::drawLoadingPage(cairo_t* cr) {
     static const string txtLoading = _("Loading...");
 
-    double zoom = xournal->getZoom();
-    int dispWidth = getDisplayWidth();
-    int dispHeight = getDisplayHeight();
-
     cairo_set_source_rgb(cr, 1, 1, 1);
-    cairo_rectangle(cr, 0, 0, dispWidth, dispHeight);
+    cairo_rectangle(cr, 0, 0, page->getWidth(), page->getHeight());
     cairo_fill(cr);
-
-    cairo_scale(cr, zoom, zoom);
 
     cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
     cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
