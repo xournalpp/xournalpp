@@ -128,8 +128,6 @@ private:
 
     void createToolbar();
 
-    static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
-
     /**
      * Window close Button is pressed
      */
