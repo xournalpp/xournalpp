@@ -33,6 +33,7 @@
 #include "gui/XournalView.h"
 #include "gui/sidebar/Sidebar.h"
 #include "gui/sidebar/previews/base/SidebarToolbar.h"
+#include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/widgets/XournalWidget.h"
 #include "model/Document.h"
 #include "model/Element.h"
@@ -1188,7 +1189,7 @@ static int applib_getTexts(lua_State* L) {
             lua_setfield(L, -2, "size");  // add size to text
             lua_setfield(L, -2, "font");  // insert font-table to text element
 
-            lua_pushinteger(L, int(uint32_t(t->getColor()) & 0xffffffU));
+            lua_pushinteger(L, as_signed(uint32_t(t->getColor()) & 0xffffffU));
             lua_setfield(L, -2, "color");  // add color to text
 
             lua_pushnumber(L, t->getX());
@@ -1348,7 +1349,7 @@ static int applib_getStrokes(lua_State* L) {
             lua_pushnumber(L, s->getWidth());
             lua_setfield(L, -2, "width");  // add width to stroke
 
-            lua_pushinteger(L, int(uint32_t(s->getColor()) & 0xffffffU));
+            lua_pushinteger(L, as_signed(uint32_t(s->getColor()) & 0xffffffU));
             lua_setfield(L, -2, "color");  // add color to stroke
 
             lua_pushinteger(L, s->getFill());
@@ -1398,6 +1399,43 @@ static int applib_changeCurrentPageBackground(lua_State* L) {
     pageBgCtrl->changeCurrentPageBackground(pt);
 
     return 0;
+}
+
+/**
+ * Query all colors of the current palette.
+ *
+ * Example: palette = app.getColorPalette()
+ * possible return value:
+ * {
+ *     [1] = {color = 0xffffff, name = "white" },
+ *     [2] = {color = 0x000000, name = "black" },
+ *     [3] = {color = 0xdc8a78, name = "Rosewater" },
+ * }
+ *
+ */
+static int applib_getColorPalette(lua_State* L) {
+    // discard any extra arguments passed in
+    lua_settop(L, 0);
+
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Settings* settings = plugin->getControl()->getSettings();
+    const Palette& palette = settings->getColorPalette();
+
+
+    lua_newtable(L);  // return table
+    for (size_t i = 0; i < palette.size(); i++) {
+        lua_pushinteger(L, as_signed(i) + 1);  // index in return table
+        lua_newtable(L);                       // item table
+
+        const auto& col = palette.getColorAt(i);
+        lua_pushstring(L, col.getName().c_str());
+        lua_setfield(L, -2, "name");
+        lua_pushinteger(L, as_signed(uint32_t(col.getColor()) & 0xffffffU));
+        lua_setfield(L, -2, "color");
+
+        lua_settable(L, -3);
+    }
+    return 1;
 }
 
 /**
@@ -1711,8 +1749,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_setfield(L, -2, "size");  // end of "size" table
 
-        lua_pushinteger(L, int(uint32_t(color) & 0xffffffU));  // value
-        lua_setfield(L, -2, "color");                          // insert
+        lua_pushinteger(L, as_signed(uint32_t(color) & 0xffffffU));  // value
+        lua_setfield(L, -2, "color");                                // insert
 
         lua_pushinteger(L, fillOpacity);     // value
         lua_setfield(L, -2, "fillOpacity");  // insert
@@ -1744,8 +1782,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_setfield(L, -2, "size");  // end of "size" table
 
-        lua_pushinteger(L, int(uint32_t(color) & 0xffffffU));  // value
-        lua_setfield(L, -2, "color");                          // insert
+        lua_pushinteger(L, as_signed(uint32_t(color) & 0xffffffU));  // value
+        lua_setfield(L, -2, "color");                                // insert
 
         lua_pushstring(L, drawingType.c_str());  // value
         lua_setfield(L, -2, "drawingType");      // insert
@@ -1779,8 +1817,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_setfield(L, -2, "size");  // end of "size" table
 
-        lua_pushinteger(L, int(uint32_t(color) & 0xffffffU));  // value
-        lua_setfield(L, -2, "color");                          // insert
+        lua_pushinteger(L, as_signed(uint32_t(color) & 0xffffffU));  // value
+        lua_setfield(L, -2, "color");                                // insert
 
         lua_pushstring(L, drawingType.c_str());  // value
         lua_setfield(L, -2, "drawingType");      // insert
@@ -1827,8 +1865,8 @@ static int applib_getToolInfo(lua_State* L) {
 
         lua_setfield(L, -2, "font");  // insert font table
 
-        lua_pushinteger(L, int(uint32_t(color) & 0xffffffU));  // value
-        lua_setfield(L, -2, "color");                          // insert
+        lua_pushinteger(L, as_signed(uint32_t(color) & 0xffffffU));  // value
+        lua_setfield(L, -2, "color");                                // insert
         // results in {font={name="fontname", size=0}, color=0x0}
     } else if (strcmp(mode, "selection") == 0) {
         auto sel = control->getWindow()->getXournal()->getSelection();
@@ -1928,8 +1966,8 @@ static int applib_getDocumentStructure(lua_State* L) {
         lua_pushstring(L, pt.config.c_str());   // value
         lua_setfield(L, -2, "pageTypeConfig");  // insert
 
-        lua_pushinteger(L, int(uint32_t(page->getBackgroundColor()) & 0xffffffU));  // value
-        lua_setfield(L, -2, "backgroundColor");                                     // insert
+        lua_pushinteger(L, as_signed(uint32_t(page->getBackgroundColor()) & 0xffffffU));  // value
+        lua_setfield(L, -2, "backgroundColor");                                           // insert
 
         lua_pushinteger(L, as_signed(page->getPdfPageNr()) + 1);  // value
         lua_setfield(L, -2, "pdfBackgroundPageNo");               // insert
@@ -2679,6 +2717,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"sidebarAction", applib_sidebarAction},
                                   {"layerAction", applib_layerAction},
                                   {"changeToolColor", applib_changeToolColor},
+                                  {"getColorPalette", applib_getColorPalette},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
                                   {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
                                   {"getToolInfo", applib_getToolInfo},
