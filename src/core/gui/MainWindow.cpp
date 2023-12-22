@@ -78,9 +78,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     g_signal_connect(this->window, "window_state_event", xoj::util::wrap_for_g_callback_v<windowStateEventCallback>,
                      this);
 
-    g_signal_connect(get("buttonCloseSidebar"), "clicked", xoj::util::wrap_for_g_callback_v<buttonCloseSidebarClicked>,
-                     this);
-
     // "watch over" all key events
     g_signal_connect(this->window, "key-press-event", G_CALLBACK(gtk_window_propagate_key_event), nullptr);
     g_signal_connect(this->window, "key-release-event", G_CALLBACK(gtk_window_propagate_key_event), nullptr);
@@ -337,17 +334,6 @@ void MainWindow::updateScrollbarSidebarPosition() {
     gtk_paned_set_position(GTK_PANED(panelMainContents), divider);
     g_object_unref(sidebar);
     g_object_unref(boxContents);
-}
-
-void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) {
-    Settings* settings = win->control->getSettings();
-    if (settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
-        settings->setSidebarVisible(false);
-        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
-        viewMode.showSidebar = false;
-        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
-    }
-    win->setSidebarVisible(false);
 }
 
 auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control) -> bool {
