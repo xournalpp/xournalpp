@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.2+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-22 08:35+0000\n"
+"POT-Creation-Date: 2023-12-24 09:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2268,59 +2268,59 @@ msgid ""
 "            <i>Menu: View/Toolbars</i>"
 msgstr ""
 
-#: ../ui/main.glade:504
+#: ../ui/main.glade:505
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:526
+#: ../ui/main.glade:527
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:728
+#: ../ui/main.glade:729
 msgid "Copy selected text"
 msgstr ""
 
-#: ../ui/main.glade:750
+#: ../ui/main.glade:751
 msgid "Highlight selected text"
 msgstr ""
 
-#: ../ui/main.glade:770
+#: ../ui/main.glade:771
 msgid "Underline selected text"
 msgstr ""
 
-#: ../ui/main.glade:790
+#: ../ui/main.glade:791
 msgid "Strikethrough selected text"
 msgstr ""
 
-#: ../ui/main.glade:810
+#: ../ui/main.glade:811
 msgid "Toggle standard / region text selection"
 msgstr ""
 
-#: ../ui/main.glade:838
+#: ../ui/main.glade:839
 msgid "Insert Page Before"
 msgstr ""
 
-#: ../ui/main.glade:846
+#: ../ui/main.glade:847
 msgid "Insert Page After"
 msgstr ""
 
-#: ../ui/main.glade:854 ../ui/main.glade:942
+#: ../ui/main.glade:855 ../ui/main.glade:943
 msgid "Duplicate"
 msgstr ""
 
-#: ../ui/main.glade:868 ../ui/main.glade:918
+#: ../ui/main.glade:869 ../ui/main.glade:919
 msgid "Move Up"
 msgstr ""
 
-#: ../ui/main.glade:876 ../ui/main.glade:926
+#: ../ui/main.glade:877 ../ui/main.glade:927
 msgid "Move Down"
 msgstr ""
 
-#: ../ui/main.glade:891
+#: ../ui/main.glade:892
 msgid "Edit (not implemented yet)"
 msgstr ""
 
-#: ../ui/main.glade:934
+#: ../ui/main.glade:935
 msgid "Merge Down"
 msgstr ""
 
