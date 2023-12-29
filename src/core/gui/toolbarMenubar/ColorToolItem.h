@@ -36,7 +36,7 @@ public:
 
     Color getColor() const;
 
-    GtkWidget* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
 private:
     NamedColor namedColor;

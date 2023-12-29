@@ -21,14 +21,12 @@
 
 class SpinPageListener;
 
-class SpinPageAdapter {
+class SpinPageAdapter final {
 public:
-    SpinPageAdapter();
-    virtual ~SpinPageAdapter();
+    SpinPageAdapter() = default;
+    ~SpinPageAdapter() = default;
 
 public:
-    bool hasWidget();
-
     /**
      * Assumes ownership of widget
      */
@@ -53,7 +51,7 @@ private:
     size_t page = 0;
 
     guint lastTimeoutId = 0;
-    std::list<SpinPageListener*> listener;
+    SpinPageListener* listener;
 
     size_t min = 0;
     size_t max = 0;

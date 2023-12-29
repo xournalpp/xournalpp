@@ -66,18 +66,6 @@ void ScrollHandler::scrollToPage(size_t page, XojPdfRectangle rect) {
     win->getXournal()->scrollTo(page, rect);
 }
 
-void ScrollHandler::scrollToSpinPage() {
-    if (!this->control->getWindow()) {
-        return;
-    }
-    SpinPageAdapter* spinPageNo = this->control->getWindow()->getSpinPageNo();
-    size_t page = spinPageNo->getPage();
-    if (page == 0) {
-        return;
-    }
-    scrollToPage(page - 1);
-}
-
 void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
     size_t pdfPage = dest.getPdfPage();
     Sidebar* sidebar = control->getSidebar();
@@ -130,4 +118,9 @@ auto ScrollHandler::isPageVisible(size_t page, int* visibleHeight) -> bool {
     return this->control->getWindow()->getXournal()->isPageVisible(page, visibleHeight);
 }
 
-void ScrollHandler::pageChanged(size_t page) { scrollToSpinPage(); }
+void ScrollHandler::pageChanged(size_t page) {
+    if (page == 0) {
+        return;
+    }
+    scrollToPage(page - 1);
+}

@@ -7,6 +7,7 @@
 #include <utility>  // for move
 
 #include "plugin/Plugin.h"  // for ToolbarButtonEntry
+#include "util/glib_casts.h"
 #include "util/gtk4_helper.h"
 
 
@@ -14,21 +15,23 @@ PluginToolButton::PluginToolButton(ToolbarButtonEntry* t): AbstractToolItem(std:
 
 PluginToolButton::~PluginToolButton() = default;
 
-GtkWidget* PluginToolButton::createItem(bool) {
-    this->item.reset(gtk_button_new(), xoj::util::adopt);
-    gtk_widget_set_can_focus(this->item.get(), false);  // todo(gtk4) not necessary anymore
+auto PluginToolButton::createItem(bool) -> xoj::util::WidgetSPtr {
+    xoj::util::WidgetSPtr item(gtk_button_new(), xoj::util::adopt);
+    gtk_widget_set_can_focus(item.get(), false);  // todo(gtk4) not necessary anymore
 
-    GtkButton* btn = GTK_BUTTON(this->item.get());
+    GtkButton* btn = GTK_BUTTON(item.get());
     gtk_button_set_relief(btn, GTK_RELIEF_NONE);
     gtk_button_set_icon_name(btn, t->iconName.c_str());
     gtk_widget_set_tooltip_text(GTK_WIDGET(btn), t->description.c_str());
 
     // Connect signal
-    g_signal_connect(item.get(), "clicked",
-                     G_CALLBACK(+[](GtkWidget* bt, ToolbarButtonEntry* te) { te->plugin->executeToolbarButton(te); }),
+    g_signal_connect(item.get(), "clicked", G_CALLBACK(+[](GtkWidget*, gpointer d) {
+                         auto* te = static_cast<ToolbarButtonEntry*>(d);
+                         te->plugin->executeToolbarButton(te);
+                     }),
                      this->t);
 
-    return this->item.get();
+    return item;
 }
 
 auto PluginToolButton::getToolDisplayName() const -> std::string { return this->t->description; }

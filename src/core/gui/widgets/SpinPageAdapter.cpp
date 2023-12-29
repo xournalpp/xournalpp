@@ -8,15 +8,6 @@
 #include "util/glib_casts.h"  // for wrap_for_once_v
 #include "util/safe_casts.h"
 
-SpinPageAdapter::SpinPageAdapter() = default;
-
-SpinPageAdapter::~SpinPageAdapter() {
-    if (this->widget && this->pageNrSpinChangedHandlerId) {
-        // In case the widget outlives *this
-        g_signal_handler_disconnect(this->widget.get(), this->pageNrSpinChangedHandlerId);
-    }
-}
-
 auto SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter) -> bool {
     adapter->lastTimeoutId = 0;
     adapter->page = static_cast<size_t>(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(adapter->widget.get())));
@@ -38,8 +29,6 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinP
     // Give the spin button some time to release, if we don't do he will send new events...
     adapter->lastTimeoutId = g_timeout_add(100, xoj::util::wrap_for_once_v<pageNrSpinChangedTimerCallback>, adapter);
 }
-
-bool SpinPageAdapter::hasWidget() { return this->widget != nullptr; }
 
 void SpinPageAdapter::setWidget(GtkWidget* widget) {
     if (this->widget && this->pageNrSpinChangedHandlerId) {
@@ -73,14 +62,13 @@ void SpinPageAdapter::setMinMaxPage(size_t min, size_t max) {
     }
 }
 
-void SpinPageAdapter::addListener(SpinPageListener* listener) { this->listener.push_back(listener); }
+void SpinPageAdapter::addListener(SpinPageListener* listener) { this->listener = listener; }
 
-void SpinPageAdapter::removeListener(SpinPageListener* listener) { this->listener.remove(listener); }
-
-void SpinPageAdapter::firePageChanged() {
-    for (SpinPageListener* listener: this->listener) {
-        listener->pageChanged(this->page);
-    }
+void SpinPageAdapter::removeListener(SpinPageListener* listener) {
+    xoj_assert(listener == this->listener);
+    this->listener = nullptr;
 }
+
+void SpinPageAdapter::firePageChanged() { this->listener->pageChanged(this->page); }
 
 SpinPageListener::~SpinPageListener() = default;

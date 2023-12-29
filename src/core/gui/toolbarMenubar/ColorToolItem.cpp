@@ -16,7 +16,7 @@ ColorToolItem::~ColorToolItem() = default;
 
 auto ColorToolItem::getColor() const -> Color { return this->namedColor.getColor(); }
 
-auto ColorToolItem::createItem(bool) -> GtkWidget* {
+auto ColorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
     auto* btn = gtk_toggle_button_new();
     gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
     auto actionName = std::string("win.") + Action_toString(Action::TOOL_COLOR);
@@ -51,9 +51,7 @@ auto ColorToolItem::createItem(bool) -> GtkWidget* {
         return proxy;
     };
     gtk_tool_item_set_proxy_menu_item(it, "", createProxy());
-    this->item.reset(GTK_WIDGET(it), xoj::util::adopt);
-
-    return this->item.get();
+    return xoj::util::WidgetSPtr(GTK_WIDGET(it), xoj::util::adopt);
 }
 
 auto ColorToolItem::getToolDisplayName() const -> std::string { return this->namedColor.getName(); }

@@ -34,7 +34,7 @@ public:
     std::string getToolDisplayName() const override;
     GtkWidget* getNewToolIcon() const override;
 
-    GtkWidget* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
 private:
     ActionRef gAction;  ///< Corresponds to Action::TOOL_COLOR

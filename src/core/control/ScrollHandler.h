@@ -54,8 +54,5 @@ public:
     void pageChanged(size_t page) override;
 
 private:
-    void scrollToSpinPage();
-
-private:
     Control* control = nullptr;
 };

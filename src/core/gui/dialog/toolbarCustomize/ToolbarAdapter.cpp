@@ -263,11 +263,10 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
     gint pos = toolbarGetDropIndex(toolbar, x, y, horizontal);
 
     if (d->type == TOOL_ITEM_ITEM) {
-        GtkToolItem* it = d->item->createToolItem(horizontal);
+        auto it = d->item->createToolItem(horizontal);
 
-        gtk_widget_show_all(GTK_WIDGET(it));
-        gtk_toolbar_insert(toolbar, it, pos);
-        adapter->prepareToolItem(it);
+        gtk_toolbar_insert(toolbar, GTK_TOOL_ITEM(it.get()), pos);  // Increases the ref-count of *it
+        adapter->prepareToolItem(GTK_TOOL_ITEM(it.get()));
 
         ToolbarData* tb = adapter->window->getSelectedToolbar();
         const char* name = adapter->window->getToolbarName(toolbar);
@@ -275,15 +274,14 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         string id = d->item->getId();
 
         int newId = tb->insertItem(name, id, pos);
-        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
+        ToolitemDragDrop::attachMetadata(it.get(), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
         auto item = std::make_unique<ColorToolItem>(*(d->namedColor));
 
-        GtkToolItem* it = item->createToolItem(horizontal);
+        auto it = item->createToolItem(horizontal);
 
-        gtk_widget_show_all(GTK_WIDGET(it));
-        gtk_toolbar_insert(toolbar, it, pos);
-        adapter->prepareToolItem(it);
+        gtk_toolbar_insert(toolbar, GTK_TOOL_ITEM(it.get()), pos);
+        adapter->prepareToolItem(GTK_TOOL_ITEM(it.get()));
 
         ToolbarData* tb = adapter->window->getSelectedToolbar();
         const char* name = adapter->window->getToolbarName(toolbar);
@@ -291,7 +289,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         string id = item->getId();
 
         int newId = tb->insertItem(name, id, pos);
-        ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->namedColor, item.get());
+        ToolitemDragDrop::attachMetadataColor(it.get(), newId, d->namedColor, item.get());
 
         adapter->window->getToolMenuHandler()->addColorToolItem(std::move(item));
     } else if (d->type == TOOL_ITEM_SEPARATOR) {
