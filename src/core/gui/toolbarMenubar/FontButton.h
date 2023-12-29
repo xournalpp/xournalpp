@@ -30,7 +30,7 @@ public:
     GtkWidget* getNewToolIcon() const override;
     std::string getToolDisplayName() const override;
 
-    GtkWidget* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
 private:
     ActionRef gAction;  ///< Points to the GAction corresponding to Action::FONT

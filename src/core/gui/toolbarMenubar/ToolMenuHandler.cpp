@@ -4,6 +4,7 @@
 #include <sstream>    // for istringstream
 
 #include "control/Control.h"                 // for Control
+#include "control/ScrollHandler.h"           // for ScrollHandler
 #include "control/actions/ActionDatabase.h"  // for ActionDatabase
 #include "control/settings/Settings.h"       // for Settings
 #include "gui/GladeGui.h"                    // for GladeGui
@@ -38,6 +39,7 @@
 #include "ToolPdfCombocontrol.h"         // for ToolPdfCombocontrol
 #include "ToolSelectCombocontrol.h"      // for ToolSelectComboc...
 #include "ToolZoomSlider.h"              // for ToolZoomSlider
+#include "TooltipToolButton.h"           // for TooltipToolButton
 #include "config-dev.h"                  // for TOOLBAR_CONFIG
 #include "config-features.h"             // for ENABLE_PLUGINS
 #include "filesystem.h"                  // for exists
@@ -83,13 +85,7 @@ void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
 
 ToolMenuHandler::~ToolMenuHandler() = default;
 
-void ToolMenuHandler::freeDynamicToolbarItems() {
-    for (auto&& it: this->toolItems) {
-        it->setUsed(false);
-    }
-
-    this->toolbarColorItems.clear();
-}
+void ToolMenuHandler::freeDynamicToolbarItems() { this->toolbarColorItems.clear(); }
 
 void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
     for (int i = gtk_toolbar_get_n_items(GTK_TOOLBAR(toolbar)) - 1; i >= 0; i--) {
@@ -196,11 +192,10 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     const NamedColor& namedColor = palette.getColorAt(paletteIndex);
                     auto& item = this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor));
 
-                    GtkToolItem* it = item->createToolItem(horizontal);
-                    gtk_widget_show_all(GTK_WIDGET(it));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
+                    auto it = item->createToolItem(horizontal);
+                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
 
-                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item.get());
+                    ToolitemDragDrop::attachMetadataColor(it.get(), dataItem->getId(), &namedColor, item.get());
 
                     continue;
                 }
@@ -208,19 +203,11 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                 bool found = false;
                 for (auto& item: this->toolItems) {
                     if (name == item->getId()) {
-                        if (item->isUsed()) {
-                            g_warning("You can use the toolbar item \"%s\" only once!", item->getId().c_str());
-                            found = true;
-                            continue;
-                        }
-                        item->setUsed(true);
-
                         count++;
-                        GtkToolItem* it = item->createToolItem(horizontal);
-                        gtk_widget_show_all(GTK_WIDGET(it));
-                        gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
+                        auto it = item->createToolItem(horizontal);
+                        gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
 
-                        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item.get());
+                        ToolitemDragDrop::attachMetadata(it.get(), dataItem->getId(), item.get());
 
                         found = true;
                         break;
@@ -343,9 +330,13 @@ void ToolMenuHandler::initToolItems() {
      * ------------------------------------------------------------------------
      */
 
-    // Undo / Redo Texts are updated from code, therefore a reference is held for this items
-    undoButton = &emplaceItem<ToolButton>("UNDO", Action::UNDO, iconName("edit-undo"), _("Undo"), false);
-    redoButton = &emplaceItem<ToolButton>("REDO", Action::REDO, iconName("edit-redo"), _("Redo"), false);
+    // Undo / Redo Texts are updated
+    emplaceItem<TooltipToolButton>(
+            "UNDO", Action::UNDO, iconName("edit-undo"), _("Undo"),
+            [undoredo = control->getUndoRedoHandler()]() { return undoredo->undoDescription(); });
+    emplaceItem<TooltipToolButton>(
+            "REDO", Action::REDO, iconName("edit-redo"), _("Redo"),
+            [undoredo = control->getUndoRedoHandler()]() { return undoredo->redoDescription(); });
 
     emplaceCustomItem("CUT", Action::CUT, "edit-cut", _("Cut"));
     emplaceCustomItem("COPY", Action::COPY, "edit-copy", _("Copy"));
@@ -491,11 +482,11 @@ void ToolMenuHandler::initToolItems() {
      * Footer tools
      * ------------------------------------------------------------------------
      */
-    toolPageSpinner = &emplaceItem<ToolPageSpinner>("PAGE_SPIN", iconNameHelper);
+    toolPageSpinner = &emplaceItem<ToolPageSpinner>("PAGE_SPIN", iconNameHelper, control->getScrollHandler());
 
     emplaceItem<ToolZoomSlider>("ZOOM_SLIDER", zoom, iconNameHelper, *control->getActionDatabase());
 
-    toolPageLayer = &emplaceItem<ToolPageLayer>("LAYER", control->getLayerController(), iconNameHelper);
+    emplaceItem<ToolPageLayer>("LAYER", control->getLayerController(), iconNameHelper);
 
     /*
      * Non-menu items
@@ -525,24 +516,10 @@ void ToolMenuHandler::initToolItems() {
                                 _("Very Thick"));
 }
 
-void ToolMenuHandler::setUndoDescription(const string& description) {
-    if (this->undoButton) {
-        this->undoButton->updateDescription(description);
+void ToolMenuHandler::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage) {
+    if (this->toolPageSpinner) {
+        this->toolPageSpinner->setPageInfo(currentPage, pageCount, pdfpage);
     }
-}
-
-void ToolMenuHandler::setRedoDescription(const string& description) {
-    if (this->redoButton) {
-        this->redoButton->updateDescription(description);
-    }
-}
-
-auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* {
-    return this->toolPageSpinner ? this->toolPageSpinner->getPageSpinner() : nullptr;
-}
-
-void ToolMenuHandler::setPageInfo(const size_t pagecount, const size_t pdfpage) {
-    this->toolPageSpinner->setPageInfo(pagecount, pdfpage);
 }
 
 auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel.get(); }

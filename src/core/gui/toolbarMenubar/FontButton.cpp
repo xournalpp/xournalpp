@@ -36,7 +36,7 @@ static GtkWidget* makeChild(const char* desc) {
     return box;
 }
 
-auto FontButton::createItem(bool horizontal) -> GtkWidget* {
+auto FontButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     GtkWidget* btn = gtk_button_new();
     gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
     xoj::util::GVariantSPtr font(g_action_get_state(G_ACTION(gAction.get())), xoj::util::adopt);
@@ -68,8 +68,7 @@ auto FontButton::createItem(bool horizontal) -> GtkWidget* {
         return proxy;
     };
     gtk_tool_item_set_proxy_menu_item(it, "", createProxy());
-    this->item.reset(GTK_WIDGET(it), xoj::util::adopt);
-    return this->item.get();
+    return xoj::util::WidgetSPtr(GTK_WIDGET(it), xoj::util::adopt);
 }
 
 auto FontButton::getToolDisplayName() const -> std::string { return _("Font"); }

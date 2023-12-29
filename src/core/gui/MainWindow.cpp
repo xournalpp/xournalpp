@@ -120,7 +120,6 @@ void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
     createToolbar();
 
     setToolbarVisible(control->getSettings()->isToolbarVisible());
-    getSpinPageNo()->addListener(this->control->getScrollHandler());
 }
 
 GMenuModel* MainWindow::getMenuModel() const { return menubar->getModel(); }
@@ -565,48 +564,16 @@ void MainWindow::createToolbar() {
 }
 
 void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage) {
-    SpinPageAdapter* spinPageNo = getSpinPageNo();
-    if (!spinPageNo) {
-        // Toolbar is not yet setup
-        return;
-    }
-
-    size_t min = 0;
-    size_t max = pagecount;
-
-    if (pagecount == 0) {
-        min = 0;
-        page = 0;
-    } else {
-        min = 1;
-        page++;
-    }
-
-    spinPageNo->setMinMaxPage(min, max);
-    spinPageNo->setPage(page);
-
-    if (pdfpage != npos) {
-        toolbar->setPageInfo(pagecount, pdfpage + 1);
-    } else {
-        toolbar->setPageInfo(pagecount);
-    }
+    toolbar->setPageInfo(page, pagecount, pdfpage);
 }
 
 auto MainWindow::getMenubar() const -> Menubar* { return menubar.get(); }
 
 void MainWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
 
-void MainWindow::setUndoDescription(const string& description) {
-    toolbar->setUndoDescription(description);
-    menubar->setUndoDescription(description);
-}
+void MainWindow::setUndoDescription(const string& description) { menubar->setUndoDescription(description); }
 
-void MainWindow::setRedoDescription(const string& description) {
-    toolbar->setRedoDescription(description);
-    menubar->setRedoDescription(description);
-}
-
-auto MainWindow::getSpinPageNo() const -> SpinPageAdapter* { return toolbar->getPageSpinner(); }
+void MainWindow::setRedoDescription(const string& description) { menubar->setRedoDescription(description); }
 
 auto MainWindow::getToolbarModel() const -> ToolbarModel* { return this->toolbar->getModel(); }
 

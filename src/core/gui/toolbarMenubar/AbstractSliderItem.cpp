@@ -73,15 +73,13 @@ void AbstractSliderItem::configure(GtkRange* slider, bool isHorizontal) const {
     gtk_widget_set_can_focus(GTK_WIDGET(slider), false);  // todo(gtk4) not necessary anymore
 }
 
-auto AbstractSliderItem::createItem(bool horizontal) -> GtkWidget* {
+auto AbstractSliderItem::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     pImpl->horizontal_ = horizontal;
     auto* slider = pImpl->newItem(horizontal);
 
     pImpl->setSlider(slider);
 
-    this->item.reset(GTK_WIDGET(slider), xoj::util::adopt);
-
-    return GTK_WIDGET(slider);
+    return xoj::util::WidgetSPtr(GTK_WIDGET(slider), xoj::util::adopt);
 }
 
 void AbstractSliderItem::onSliderButtonPress() {}
