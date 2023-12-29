@@ -41,7 +41,7 @@ public:
     AbstractSliderItem(std::string id, SliderRange range, ActionRef enablingGAction);
     ~AbstractSliderItem() override;
 
-    GtkWidget* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
 protected:
     virtual void onSliderButtonPress();

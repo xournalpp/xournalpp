@@ -30,12 +30,11 @@ public:
     ~ToolButton() override = default;
 
 public:
-    void updateDescription(const std::string& description);
     std::string getToolDisplayName() const override;
     void setPopoverFactory(const PopoverFactory* factory);
 
 protected:
-    GtkWidget* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
     GtkWidget* getNewToolIcon() const override;
 

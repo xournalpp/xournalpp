@@ -70,11 +70,7 @@ public:
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);
 
-    void setUndoDescription(const std::string& description);
-    void setRedoDescription(const std::string& description);
-
-    SpinPageAdapter* getPageSpinner();
-    void setPageInfo(size_t pagecount, size_t pdfpage = 0);
+    void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage);
 
     [[maybe_unused]] void removeColorToolItem(AbstractToolItem* it);
     void addColorToolItem(std::unique_ptr<ColorToolItem> it);
@@ -105,11 +101,7 @@ private:
 
     std::vector<std::unique_ptr<AbstractToolItem>> toolItems;
 
-    ToolButton* undoButton = nullptr;
-    ToolButton* redoButton = nullptr;
-
     ToolPageSpinner* toolPageSpinner = nullptr;
-    ToolPageLayer* toolPageLayer = nullptr;
 
     Control* control = nullptr;
     ZoomControl* zoom = nullptr;

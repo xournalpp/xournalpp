@@ -90,7 +90,6 @@ public:
     void setUndoDescription(const std::string& description);
     void setRedoDescription(const std::string& description);
 
-    SpinPageAdapter* getSpinPageNo() const;
     ToolbarModel* getToolbarModel() const;
     ToolMenuHandler* getToolMenuHandler() const;
 

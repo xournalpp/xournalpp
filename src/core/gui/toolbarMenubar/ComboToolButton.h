@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -49,14 +50,12 @@ public:
     std::string getToolDisplayName() const override;
 
 protected:
-    GtkWidget* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
     GtkWidget* getNewToolIcon() const override;
 
 protected:
-    xoj::util::WidgetSPtr popover;
-    xoj::util::WidgetSPtr button;
-    std::vector<Entry> entries;
+    std::shared_ptr<const std::vector<Entry>> entries;
     ActionRef gAction;
     std::string iconName;
     std::string description;

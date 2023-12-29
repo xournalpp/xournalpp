@@ -170,8 +170,6 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
     g_return_if_fail(data != nullptr);
     g_return_if_fail(data->item != nullptr);
 
-    data->item->setUsed(true);
-
     auto it = ToolitemDragDrop::ToolItemDragDropData_new(data->item);
 
     gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
@@ -225,31 +223,6 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget* widget, GdkDragContext*
 
     auto* d = reinterpret_cast<ToolItemDragDropData const*>(gtk_selection_data_get_data(data));
     g_return_if_fail(ToolitemDragDrop::checkToolItemDragDropData(d));
-
-    if (d->type == TOOL_ITEM_ITEM) {
-        d->item->setUsed(false);
-        dlg->rebuildIconview();
-    } else if (d->type == TOOL_ITEM_SEPARATOR) {
-        /*
-         * There is always a seperator shown in the dialog.
-         * Hence dragging a separator into the dialog does not
-         * require any action.
-         */
-    } else if (d->type == TOOL_ITEM_SPACER) {
-        /*
-         * There is always a spacer shown in the dialog.
-         * Hence dragging a spacer into the dialog does not
-         * require any action.
-         */
-    } else if (d->type == TOOL_ITEM_COLOR) {
-        /*
-         * The dialog always contains the full palette of colors.
-         * Hence dragging a color toolitem into the dialog does note
-         * require any action.
-         */
-    } else {
-        g_warning("ToolbarCustomizeDialog::dragDataReceived unhandled type: %i", d->type);
-    }
 
     gtk_drag_finish(dragContext, true, false, time);
 }
@@ -307,13 +280,11 @@ void ToolbarCustomizeDialog::rebuildIconview() {
     freeIconview();
     int i = 0;
     for (auto& data: itemData) {
-        if (!data.item->isUsed()) {
-            const int x = i % 3;
-            const int y = i / 3;
-            gtk_grid_attach(toolTable, data.ebox.get(), x, y, 1, 1);
+        const int x = i % 3;
+        const int y = i / 3;
+        gtk_grid_attach(toolTable, data.ebox.get(), x, y, 1, 1);
 
-            i++;
-        }
+        i++;
     }
 }
 

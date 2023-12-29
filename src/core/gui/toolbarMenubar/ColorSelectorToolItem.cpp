@@ -13,7 +13,7 @@ constexpr int ICON_SIZE = 22;
 ColorSelectorToolItem::ColorSelectorToolItem(ActionDatabase& db):
         AbstractToolItem("COLOR_SELECT"), gAction(db.getAction(Action::TOOL_COLOR)) {}
 
-auto ColorSelectorToolItem::createItem(bool) -> GtkWidget* {
+auto ColorSelectorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
     GtkWidget* btn = gtk_button_new();
     gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
     xoj::util::GVariantSPtr v(g_action_get_state(G_ACTION(gAction.get())), xoj::util::adopt);
@@ -51,9 +51,7 @@ auto ColorSelectorToolItem::createItem(bool) -> GtkWidget* {
         return proxy;
     };
     gtk_tool_item_set_proxy_menu_item(it, "", createProxy());
-    this->item.reset(GTK_WIDGET(it), xoj::util::adopt);
-
-    return this->item.get();
+    return xoj::util::WidgetSPtr(GTK_WIDGET(it), xoj::util::adopt);
 }
 
 auto ColorSelectorToolItem::getToolDisplayName() const -> std::string { return _("Select color"); }

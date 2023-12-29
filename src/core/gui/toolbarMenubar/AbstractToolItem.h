@@ -12,6 +12,7 @@
 #pragma once
 
 #include <string>  // for string
+#include <vector>
 
 #include <gtk/gtk.h>  // for GtkWidget
 
@@ -30,16 +31,9 @@ public:
     auto operator=(AbstractToolItem&&) -> AbstractToolItem& = delete;  // Implement if desired
 
 public:
-    virtual GtkWidget* createItem(bool horizontal) = 0;
+    virtual xoj::util::WidgetSPtr createItem(bool horizontal) = 0;
 
-    GtkToolItem* createToolItem(bool horizontal);
-
-    bool isUsed() const;
-    /**
-     * May be used to clean up data in derived class when an item is no longer used
-     * Derived implementations should call AbstractToolItem::setUsed()
-     */
-    virtual void setUsed(bool used);
+    xoj::util::WidgetSPtr createToolItem(bool horizontal);
 
     const std::string& getId() const;
     virtual std::string getToolDisplayName() const = 0;
@@ -49,14 +43,7 @@ public:
      */
     virtual GtkWidget* getNewToolIcon() const = 0;
 
-    GtkWidget* getItem() const;
-
 protected:
     std::string id;
-    xoj::util::WidgetSPtr item;
-
-    /**
-     * This item is already somewhere in the toolbar
-     */
-    bool used = false;
+    std::vector<xoj::util::WidgetSPtr> instances;  // useful?
 };
