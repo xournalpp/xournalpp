@@ -3,6 +3,7 @@
 #include <algorithm>    // for max, lower_bound, transform
 #include <cmath>        // for abs
 #include <iterator>     // for begin, end, distance
+#include <memory>       // for weak_ptr
 #include <numeric>      // for accumulate
 #include <optional>     // for optional
 #include <type_traits>  // for make_signed_t, remove_referen...
@@ -403,7 +404,7 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
 }
 
 
-auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
+auto Layout::getPageIndexAt(int x, int y) -> std::optional<size_t> {
     // Binary Search:
     auto rit = std::lower_bound(this->rowYStart.begin(), this->rowYStart.end(), y);
     auto const foundRow = size_t(std::distance(this->rowYStart.begin(), rit));
@@ -413,10 +414,28 @@ auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
     auto optionalPage = this->mapper.at({foundCol, foundRow});
 
     if (optionalPage && this->view->viewPages[*optionalPage]->containsPoint(x, y, false)) {
+        return optionalPage;
+    }
+
+    return std::nullopt;
+}
+
+auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
+    std::optional<size_t> optionalPage = getPageIndexAt(x, y);
+    if (optionalPage) {
         return this->view->viewPages[*optionalPage].get();
     }
 
     return nullptr;
+}
+
+auto Layout::getPageViewRefAt(int x, int y) -> std::shared_ptr<XojPageView> {
+    std::optional<size_t> optionalPage = getPageIndexAt(x, y);
+    if (optionalPage) {
+        return this->view->viewPages[*optionalPage];
+    }
+
+    return std::shared_ptr<XojPageView>();
 }
 
 auto Layout::getPageIndexAtGridMap(size_t row, size_t col) -> std::optional<size_t> {

@@ -75,7 +75,7 @@ protected:
     /**
      * Page a selection started at as we require this for motion updates
      */
-    XojPageView* sequenceStartPage = nullptr;
+    std::weak_ptr<XojPageView> sequenceStartPage = {};
 
     /**
      * For tap event filtering. See Preferences->Drawing Area->Action on Tool Tap

@@ -86,7 +86,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->lastActionStartTimeStamp = event.timestamp;
     this->sequenceStartPosition = {event.absoluteX, event.absoluteY};
 
-    XojPageView* currentPage = this->getPageAtCurrentPosition(event);
+    std::shared_ptr<XojPageView> currentPage = this->getPageViewRefAtCurrentPosition(event);
     // set reference data for handling of entering/leaving page
     this->updateLastEvent(event);
 
@@ -164,7 +164,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
 
     // Forward event to page
     if (currentPage) {
-        PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
+        PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage.get(), event);
         if (pos.pressure != Point::NO_PRESSURE) {
             pressureMode = PressureMode::DEVICE_PRESSURE;
         } else if (this->inputContext->getSettings()->isPressureGuessingEnabled()) {
@@ -172,7 +172,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
         } else {
             pressureMode = PressureMode::NO_PRESSURE;
         }
-        pos.pressure = this->filterPressure(pos, currentPage);
+        pos.pressure = this->filterPressure(pos, currentPage.get());
 
         return currentPage->onButtonPressEvent(pos);
     }
@@ -333,13 +333,15 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     XojPageView* lastHitEventPage = getPageAtCurrentPosition(this->lastHitEvent);
     XojPageView* currentPage = getPageAtCurrentPosition(event);
 
+    auto lockedSequenceStartPage = this->sequenceStartPage.lock();
+
     if (!toolHandler->isSinglePageTool()) {
         /*
          * Get all events where the input sequence moved from one page to another without stopping the input.
          * Only trigger once the new page was entered to ensure that an input device can leave the page temporarily.
          * For these events we need to fake an end point in the old page and a start point in the new page.
          */
-        if (this->deviceClassPressed && currentPage && currentPage != sequenceStartPage && lastHitEventPage) {
+        if (this->deviceClassPressed && currentPage && currentPage != lockedSequenceStartPage.get() && lastHitEventPage) {
 #ifdef DEBUG_INPUT
             g_message("PenInputHandler: Start new input on switching page...");
 #endif
@@ -368,17 +370,17 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     xournal->view->getCursor()->setInsidePage(currentPage != nullptr);
 
     // Selections and single-page elements will always work on one page so we need to handle them differently
-    if (this->sequenceStartPage && toolHandler->isSinglePageTool()) {
+    if (lockedSequenceStartPage && toolHandler->isSinglePageTool()) {
         // Relay the event to the page
-        PositionInputData pos = getInputDataRelativeToCurrentPage(sequenceStartPage, event);
+        PositionInputData pos = getInputDataRelativeToCurrentPage(lockedSequenceStartPage.get(), event);
 
         // Enforce input to stay within page
-        pos.x = std::clamp(pos.x, 0.0, static_cast<double>(sequenceStartPage->getDisplayWidth()));
-        pos.y = std::clamp(pos.y, 0.0, static_cast<double>(sequenceStartPage->getDisplayHeight()));
+        pos.x = std::clamp(pos.x, 0.0, static_cast<double>(lockedSequenceStartPage->getDisplayWidth()));
+        pos.y = std::clamp(pos.y, 0.0, static_cast<double>(lockedSequenceStartPage->getDisplayHeight()));
 
-        pos.pressure = this->filterPressure(pos, sequenceStartPage);
+        pos.pressure = this->filterPressure(pos, lockedSequenceStartPage.get());
 
-        bool result = sequenceStartPage->onMotionNotifyEvent(pos);
+        bool result = lockedSequenceStartPage->onMotionNotifyEvent(pos);
 
         this->updateLastEvent(event);  // Update the last position of the input device
         return result;
@@ -404,6 +406,8 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     XournalppCursor* cursor = xournal->view->getCursor();
     ToolHandler* toolHandler = inputContext->getToolHandler();
 
+    auto lockedSequenceStartPage = this->sequenceStartPage.lock();
+
     cursor->setMouseDown(false);
 
     bool cancelAction = isCurrentTapSelection(event);
@@ -418,13 +422,13 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
 
     if (cancelAction) {
         // Cancel the sequence and trigger the necessary action
-        XojPageView* pageUnderTap = this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
+        XojPageView* pageUnderTap = lockedSequenceStartPage ? lockedSequenceStartPage.get() : getPageAtCurrentPosition(event);
         if (pageUnderTap) {
             PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
             pageUnderTap->onSequenceCancelEvent(pos.deviceId);
             pageUnderTap->onTapEvent(pos);
         }
-        this->sequenceStartPage = nullptr;
+        this->sequenceStartPage.reset();
         this->inputRunning = false;
         this->lastActionEndTimeStamp = event.timestamp;
         return false;
@@ -437,11 +441,11 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     }
 
     // Selections and single-page elements will always work on one page so we need to handle them differently
-    if (this->sequenceStartPage && toolHandler->isSinglePageTool()) {
-        PositionInputData pos = getInputDataRelativeToCurrentPage(this->sequenceStartPage, event);
-        pos.pressure = this->filterPressure(pos, this->sequenceStartPage);
+    if (lockedSequenceStartPage && toolHandler->isSinglePageTool()) {
+        PositionInputData pos = getInputDataRelativeToCurrentPage(lockedSequenceStartPage.get(), event);
+        pos.pressure = this->filterPressure(pos, lockedSequenceStartPage.get());
 
-        this->sequenceStartPage->onButtonReleaseEvent(pos);
+        lockedSequenceStartPage->onButtonReleaseEvent(pos);
     } else {
         // Relay the event to the page
         XojPageView* currentPage = getPageAtCurrentPosition(event);
@@ -468,7 +472,7 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     // Reset the selection
     EditSelection* tmpSelection = xournal->selection;
     xournal->selection = nullptr;
-    this->sequenceStartPage = nullptr;
+    this->sequenceStartPage.reset();
 
     if (toolHandler->pointActiveToolToToolbarTool()) {
         toolHandler->fireToolChanged();

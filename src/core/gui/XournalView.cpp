@@ -624,7 +624,7 @@ auto XournalView::getCache() const -> PdfCache* { return this->cache.get(); }
 void XournalView::pageInserted(size_t page) {
     Document* doc = control->getDocument();
     doc->lock();
-    auto pageView = std::make_unique<XojPageView>(this, doc->getPage(page));
+    auto pageView = std::make_shared<XojPageView>(this, doc->getPage(page));
     doc->unlock();
 
     viewPages.insert(begin(viewPages) + as_signed(page), std::move(pageView));
@@ -791,7 +791,7 @@ void XournalView::documentChanged(DocumentChangeType type) {
     size_t pagecount = doc->getPageCount();
     viewPages.reserve(pagecount);
     for (size_t i = 0; i < pagecount; i++) {
-        viewPages.emplace_back(std::make_unique<XojPageView>(this, doc->getPage(i)));
+        viewPages.emplace_back(std::make_shared<XojPageView>(this, doc->getPage(i)));
     }
 
     doc->unlock();
@@ -844,7 +844,7 @@ auto XournalView::actionDelete() -> bool {
 
 auto XournalView::getDocument() const -> Document* { return control->getDocument(); }
 
-auto XournalView::getViewPages() const -> std::vector<std::unique_ptr<XojPageView>> const& { return viewPages; }
+auto XournalView::getViewPages() const -> std::vector<std::shared_ptr<XojPageView>> const& { return viewPages; }
 
 auto XournalView::getCursor() const -> XournalppCursor* { return control->getCursor(); }
 

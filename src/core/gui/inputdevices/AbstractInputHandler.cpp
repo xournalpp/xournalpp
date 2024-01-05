@@ -4,6 +4,7 @@
 
 #include "AbstractInputHandler.h"
 
+#include <memory>
 #include <string_view>
 
 #include <glib.h>  // for gdouble
@@ -64,6 +65,24 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) con
     int y = round_cast<int>(event.relativeY);
 
     return xournal->layout->getPageViewAt(x, y);
+}
+
+/**
+ * Get weak_ptr to page view at current position
+ *
+ * @return pointer to page view (uninitialized if none)
+ */
+auto AbstractInputHandler::getPageViewRefAtCurrentPosition(InputEvent const& event) const -> std::shared_ptr<XojPageView> {
+    if (!event) {
+        return std::shared_ptr<XojPageView>();
+    }
+
+    GtkXournal* xournal = this->inputContext->getXournal();
+
+    int x = round_cast<int>(event.relativeX);
+    int y = round_cast<int>(event.relativeY);
+
+    return xournal->layout->getPageViewRefAt(x, y);
 }
 
 /**
