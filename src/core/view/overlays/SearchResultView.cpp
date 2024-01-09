@@ -40,5 +40,8 @@ void SearchResultView::draw(cairo_t* cr) const {
 bool SearchResultView::isViewOf(const OverlayBase* overlay) const { return overlay == this->searchControl; }
 
 void SearchResultView::on(SearchResultView::SearchChangedNotification) {
-    this->parent->flagDirtyRegion(this->parent->getVisiblePart());
+    Range rg = this->parent->getVisiblePart();
+    if (!rg.empty()) {
+        this->parent->flagDirtyRegion(this->parent->getVisiblePart());
+    }
 }

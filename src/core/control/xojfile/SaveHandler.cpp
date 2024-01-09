@@ -78,7 +78,7 @@ void SaveHandler::prepareSave(Document* doc) {
 void SaveHandler::writeHeader() {
     this->root->setAttrib("creator", PROJECT_STRING);
     this->root->setAttrib("fileversion", FILE_FORMAT_VERSION);
-    this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_URL));
+    this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_HOMEPAGE_URL));
 }
 
 auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
@@ -89,9 +89,11 @@ auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
 }
 
 void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
-    /** set stroke timestamp value to the XmlPointNode */
-    xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
-    xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+    if (!audioElement->getAudioFilename().empty()) {
+        /** set stroke timestamp value to the XmlPointNode */
+        xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
+        xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+    }
 }
 
 void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {

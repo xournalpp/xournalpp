@@ -262,9 +262,8 @@ public:
     void block(const std::string& name);
     void unblock();
 
-    void renameLastAutosaveFile();
     void setLastAutosaveFile(fs::path newAutosaveFile);
-    void deleteLastAutosaveFile(fs::path newAutosaveFile);
+    void deleteLastAutosaveFile();
     void setClipboardHandlerSelection(EditSelection* selection);
 
     void addChangedDocumentListener(DocumentListener* dl);

@@ -149,7 +149,7 @@ static void crashHandler(int sig) {
 
     free(messages);
 
-    fp << "\n\nTry to get a better stracktrace...\n";
+    fp << "\n\nTry to get a better stacktrace...\n";
 
     Stacktrace::printStracktrace(fp);
 
