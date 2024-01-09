@@ -77,8 +77,8 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
     auto elements1 = getElements(doc1);
 
     SaveHandler h;
-    h.prepareSave(doc1);
     auto tmp = Util::getTmpDirSubfolder() / "save.xopp";
+    h.prepareSave(doc1, tmp);
     h.saveTo(tmp);
 
     // Create a second loader so the first one doesn't free the memory
@@ -405,7 +405,7 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
         ASSERT_TRUE(doc) << "doc with jpeg should not be null";
 
         SaveHandler saver;
-        saver.prepareSave(doc);
+        saver.prepareSave(doc, outPath);
         saver.saveTo(outPath);
     }
 
