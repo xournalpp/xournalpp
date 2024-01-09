@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>   // for size_t
+#include <memory>    // for shared_ptr, weak_ptr
 #include <mutex>     // for mutex
 #include <optional>  // for optional
 #include <vector>    // for vector
@@ -109,9 +110,19 @@ public:
     void updateVisibility();
 
     /**
-     * Return the pageview containing co-ordinates.
+     * Return the index of the page containing coordinates.
+     */
+    std::optional<size_t> getPageIndexAt(int x, int y);
+
+    /**
+     * Return the pageview containing coordinates.
      */
     XojPageView* getPageViewAt(int x, int y);
+
+    /**
+     * Return a shared reference to the pageview containing coordinates.
+     */
+    std::shared_ptr<XojPageView> getPageViewRefAt(int x, int y);
 
     /**
      * Return the page index found ( or std::nullopt if not found) at layout grid row,col

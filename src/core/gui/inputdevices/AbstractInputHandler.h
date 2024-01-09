@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "PositionInputData.h"  // for PositionInputData
 
 class InputContext;
@@ -30,6 +32,7 @@ protected:
 
 protected:
     XojPageView* getPageAtCurrentPosition(InputEvent const& event) const;
+    std::shared_ptr<XojPageView> getPageViewRefAtCurrentPosition(InputEvent const& event) const;
     PositionInputData getInputDataRelativeToCurrentPage(XojPageView* page, InputEvent const& event) const;
 
 public:
