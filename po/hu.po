@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-30 14:40+0000\n"
-"PO-Revision-Date: 2023-10-30 15:02\n"
+"POT-Creation-Date: 2023-11-22 08:35+0000\n"
+"PO-Revision-Date: 2023-11-22 08:44\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -23,39 +23,39 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "A hangmappa nincs beállítva vagy érvénytelen! A felvétel nem fog működni!\n"
 "Kérjük, állítsa be a felvétel mappáját a „Beállítások > Hangfelvétel” menüpontban"
 
-#: ../src/core/control/Control.cpp:228
+#: ../src/core/control/Control.cpp:229
 msgid "Autosave renamed from {1} to {2}"
 msgstr "Az automatikus mentés átnevezve {1}-ról {2}-ra"
 
-#: ../src/core/control/Control.cpp:239
+#: ../src/core/control/Control.cpp:240
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nem sikerült átnevezni az automatikusan mentett fájlt erről: „{1}” erre: „{2}”: {3}"
 
-#: ../src/core/control/Control.cpp:248
+#: ../src/core/control/Control.cpp:249
 msgid "Autosave failed with an error: {1}"
 msgstr "Az automatikus mentés során hiba lépett fel: {1}"
 
-#: ../src/core/control/Control.cpp:566
+#: ../src/core/control/Control.cpp:574
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Az eszköztárbeállítás \"{1}\" rögzítve van, szeretne belőle egy módosítható másolatot készíteni?"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "Yes"
 msgstr "Igen"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "No"
 msgstr "Nem"
 
-#: ../src/core/control/Control.cpp:748
+#: ../src/core/control/Control.cpp:756
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Nem érhető el több hozzáfűzhető pdf oldal. Szükséges lehet a dokumentum újbóli megnyitása."
 
-#: ../src/core/control/Control.cpp:762
+#: ../src/core/control/Control.cpp:770
 msgid "Unable to retrieve pdf page."
 msgstr "Nem sikerült a PDF-oldal lekérése."
 
-#: ../src/core/control/Control.cpp:1330
+#: ../src/core/control/Control.cpp:1336
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -63,120 +63,122 @@ msgstr "Ne nyissa meg az automatikusan mentett fájlokat. Felülíródhatnak!\n"
 "Másolja a fájlokat egy másik mappába.\n"
 "A(z) {1} mappában található fájlok nem nyithatók meg."
 
-#: ../src/core/control/Control.cpp:1344
+#: ../src/core/control/Control.cpp:1350
 msgid "file: {1}"
 msgstr "fájl: {1}"
 
-#: ../src/core/control/Control.cpp:1392
+#: ../src/core/control/Control.cpp:1398
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "A csatolt háttérfájl nem található. Lehet, hogy áthelyezték, átnevezték vagy törölték."
 
-#: ../src/core/control/Control.cpp:1395
+#: ../src/core/control/Control.cpp:1401
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "A(z) {1}-háttérfájl nem található. Lehet, hogy áthelyezték, átnevezték vagy törölték.\n"
 "Utoljára itt látták: {2}"
 
-#: ../src/core/control/Control.cpp:1405
+#: ../src/core/control/Control.cpp:1411
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Javasolt cserefájl: {1}"
 
-#: ../src/core/control/Control.cpp:1413
+#: ../src/core/control/Control.cpp:1419
 msgid "Use proposed PDF"
 msgstr "Használja a javasolt PDF-fájlt"
 
-#: ../src/core/control/Control.cpp:1415
+#: ../src/core/control/Control.cpp:1421
 msgid "Select another PDF"
 msgstr "Másik PDF kijelölése"
 
-#: ../src/core/control/Control.cpp:1416
+#: ../src/core/control/Control.cpp:1422
 msgid "Remove PDF Background"
 msgstr "PDF-háttér eltávolítása"
 
-#: ../src/core/control/Control.cpp:1417 ../src/core/control/Control.cpp:1937
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/Control.cpp:1423 ../src/core/control/Control.cpp:1946
+#: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
 msgstr "Mégse"
 
-#: ../src/core/control/Control.cpp:1448
+#: ../src/core/control/Control.cpp:1454
 msgid "Error opening file \"{1}\""
 msgstr "Hiba történt a fájl megnyitása közben: {1}"
 
-#: ../src/core/control/Control.cpp:1456
+#: ../src/core/control/Control.cpp:1462
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "A betöltendő fájl fájlformátumának verziója újabb, mint a Xournal++ jelen verziója által jelenleg támogatott, ezért előfordulhat, hogy nem töltődik be megfelelően. Megnyitás mégis?"
 
-#: ../src/core/control/Control.cpp:1618
+#: ../src/core/control/Control.cpp:1624
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Hiba történt a(z) „{1}” PDF-fájl megjegyzése közben\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr "Fájl mentése"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr "_Mégse"
 
-#: ../src/core/control/Control.cpp:1720
+#: ../src/core/control/Control.cpp:1729
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "M_entés"
 
-#: ../src/core/control/Control.cpp:1725
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
+#: ../src/core/control/Control.cpp:1734
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:63
 msgid "Xournal++ files"
 msgstr "Xournal++ fájlok"
 
-#: ../src/core/control/Control.cpp:1772
+#: ../src/core/control/Control.cpp:1781
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1787
+#: ../src/core/control/Control.cpp:1796
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
 msgid "Select color"
 msgstr "Szín kijelölése"
 
-#: ../src/core/control/Control.cpp:1809
+#: ../src/core/control/Control.cpp:1818
 msgid "Unsaved Document"
 msgstr "Nem mentett dokumentum"
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "Document file was removed."
 msgstr "A dokumentumfájl eltávolításra került."
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "This document is not saved yet."
 msgstr "Ez a dokumentum még nincs elmentve."
 
-#: ../src/core/control/Control.cpp:1929
+#: ../src/core/control/Control.cpp:1938
 msgid "Save As..."
 msgstr "Mentés másként..."
 
-#: ../src/core/control/Control.cpp:1929 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:1938 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Save"
 msgstr "Mentés"
 
-#: ../src/core/control/Control.cpp:1934
+#: ../src/core/control/Control.cpp:1943
 msgid "Discard"
 msgstr "Módosítások elvetése"
 
 #: ../src/core/control/CrashHandler.cpp:31
-msgid "Trying to emergency save the current open document…"
-msgstr "Megkíséreljük menteni az éppen megnyitott dokumentumot…"
+msgid "Trying to emergency save the current open document..."
+msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:40
+#: ../src/core/control/XournalMain.cpp:301
+#: ../src/core/control/XournalMain.cpp:307
 msgid "Error: {1}"
 msgstr "Hiba: {1}"
 
@@ -228,27 +230,27 @@ msgstr "Képfájl sikeresen létrehozva"
 msgid "PDF file successfully created"
 msgstr "PDF fájl sikeresen létrehozva"
 
-#: ../src/core/control/LatexController.cpp:77
+#: ../src/core/control/LatexController.cpp:79
 msgid "Global template file does not exist. Please check your settings."
 msgstr "A globális sablonfájl nem létezik. Kérjük, ellenőrizze a beállításokat!"
 
-#: ../src/core/control/LatexController.cpp:82
+#: ../src/core/control/LatexController.cpp:84
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Nem sikerült beolvasni a globális sablonfájlt. Kérjük, ellenőrizze a beállításokat!"
 
-#: ../src/core/control/LatexController.cpp:88
+#: ../src/core/control/LatexController.cpp:90
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "A globális sablonfájl nem szabályos. Kérjük, ellenőrizze a beállításokat! "
 
-#: ../src/core/control/LatexController.cpp:235
+#: ../src/core/control/LatexController.cpp:236
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "A LaTeX-létrehozó közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
 
-#: ../src/core/control/LatexController.cpp:301
+#: ../src/core/control/LatexController.cpp:302
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nem sikerült a LaTeX PDF-fájl betöltése: {1}"
 
-#: ../src/core/control/LatexController.cpp:306
+#: ../src/core/control/LatexController.cpp:307
 msgid "Could not load LaTeX PDF file"
 msgstr "Nem sikerült a LaTeX PDF-fájl betöltése"
 
@@ -262,7 +264,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Nincsenek PDF-oldalak, amelyek közül választhat. A művelet megszakítása.\n"
 "Kérjük, válasszon másik háttértípust: Menü „Napló” → „Oldalsablon beállítása”."
 
-#: ../src/core/control/PdfCache.cpp:123
+#: ../src/core/control/PdfCache.cpp:124
 msgid "PDF background missing"
 msgstr "PDF-háttér hiányzik"
 
@@ -270,71 +272,71 @@ msgstr "PDF-háttér hiányzik"
 msgid "Running print operation failed with {1}"
 msgstr "A nyomtatási művelet futtatása nem sikerült a következővel: {1}"
 
-#: ../src/core/control/XournalMain.cpp:147
+#: ../src/core/control/XournalMain.cpp:148
 msgid "Failed to delete file: {1}"
 msgstr "A következő fájl törlése nem sikerült: {1}"
 
-#: ../src/core/control/XournalMain.cpp:149
+#: ../src/core/control/XournalMain.cpp:150
 msgid "Please delete the file manually"
 msgstr "Kérjük, kézzel törölje a fájlt"
 
-#: ../src/core/control/XournalMain.cpp:185
+#: ../src/core/control/XournalMain.cpp:186
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Van egy nemrégiben készült hibanaplófájl a Xournal++-tól. Kérjük, küldjön egy hibajelentést, hogy a hiba kijavítható legyen."
 
-#: ../src/core/control/XournalMain.cpp:187
+#: ../src/core/control/XournalMain.cpp:188
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "A Xournal++ legújabb hibanaplófájljai vannak. Kérjük, küldjön egy hibajelentést, hogy a hiba kijavítható legyen."
 
-#: ../src/core/control/XournalMain.cpp:190
+#: ../src/core/control/XournalMain.cpp:191
 msgid "The most recent log file name: {1}"
 msgstr "A legfrissebb eseménynapló neve: {1}"
 
-#: ../src/core/control/XournalMain.cpp:192
+#: ../src/core/control/XournalMain.cpp:193
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:195
+#: ../src/core/control/XournalMain.cpp:196
 msgid "File Bug Report"
 msgstr "Hiba jelentése"
 
-#: ../src/core/control/XournalMain.cpp:196
+#: ../src/core/control/XournalMain.cpp:197
 msgid "Open Logfile"
 msgstr "Eseménynapló megnyitása"
 
-#: ../src/core/control/XournalMain.cpp:197
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Open Logfile directory"
 msgstr "Eseménynaplók helyének megnyitása"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:199
 msgid "Delete Logfile"
 msgstr "Eseménynapló fájl törlése"
 
-#: ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/XournalMain.cpp:201
 msgid "Crash log"
 msgstr "Összeomlási napló"
 
-#: ../src/core/control/XournalMain.cpp:222
+#: ../src/core/control/XournalMain.cpp:223
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "A Xournal++ legutóbb összeomlott. Szeretné visszaállítani az utoljára szerkesztett fájlt?"
 
-#: ../src/core/control/XournalMain.cpp:225
+#: ../src/core/control/XournalMain.cpp:226
 msgid "Recovery file detected"
 msgstr "Helyreállítási fájl észlelve"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Delete file"
 msgstr "Fájl törlése"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Restore file"
 msgstr "Fájlt helyreállítása"
 
-#: ../src/core/control/XournalMain.cpp:245
+#: ../src/core/control/XournalMain.cpp:246
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "A(z) „{1}” háttérfájl nem található. Lehet, hogy áthelyezték, átnevezték vagy törölték."
 
-#: ../src/core/control/XournalMain.cpp:408
+#: ../src/core/control/XournalMain.cpp:438
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -348,52 +350,56 @@ msgstr "<span foreground='red' size='x-large'>A szükséges UI fájl hiányzik:\
 "  A munkakönyvtárban nem található\n"
 "  A {2} könyvtárban nem található"
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:443
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "A program megpróbál enélkül a fájl nélkül futni."
 
-#: ../src/core/control/XournalMain.cpp:430
-#: ../src/core/control/XournalMain.cpp:523
+#: ../src/core/control/XournalMain.cpp:460
+#: ../src/core/control/XournalMain.cpp:553
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Elnézést, a Xournal++ egyszerre csak egy fájlt tud megnyitni.\n"
 "A további fájlok figyelmen kívül hagyva."
 
-#: ../src/core/control/XournalMain.cpp:441
+#: ../src/core/control/XournalMain.cpp:471
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:445
-#: ../src/core/control/XournalMain.cpp:543
+#: ../src/core/control/XournalMain.cpp:475
+#: ../src/core/control/XournalMain.cpp:573
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ugrás adott oldalra (első oldal: 1)"
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Get version of xournalpp"
 msgstr "A xournalpp verzió lehívása"
 
-#: ../src/core/control/XournalMain.cpp:664
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Disable audio for this session"
 msgstr "Hang letiltása ehhez a munkamenethez"
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:677
+#: ../src/core/control/XournalMain.cpp:703
+msgid "Save xopp-file with the background PDF specified as FILE"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:712
 msgid "Export FILE as PDF"
 msgstr "FILE exportálása PDF-fájlként"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -401,7 +407,7 @@ msgstr "FILE exportálása képfájlként (egy kép oldalanként)\n"
 "                                 Formátum meghatározása a(z) IMGFILE kiterjesztéséből\n"
 "                                 Támogatott formátumok: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:684
+#: ../src/core/control/XournalMain.cpp:719
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -409,13 +415,13 @@ msgstr "Háttér nélküli exportálás\n"
 "                                 Az exportált fájl háttere a támogatott formátumtól\n"
 "                                 függően átlátszó vagy fehér lesz\n"
 
-#: ../src/core/control/XournalMain.cpp:689
+#: ../src/core/control/XournalMain.cpp:724
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Margó nélküli exportálás\n"
 "                                 Az exportált fájl papírmargó nélküli\n"
 
-#: ../src/core/control/XournalMain.cpp:693
+#: ../src/core/control/XournalMain.cpp:728
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -427,25 +433,25 @@ msgstr "Rétegek exportálása sorredben\n"
 "                                 végighaladva az egymásra helyezett rétegeken.\n"
 "                                 Az végleges PDF így használható prezentációként.\n"
 
-#: ../src/core/control/XournalMain.cpp:700
+#: ../src/core/control/XournalMain.cpp:735
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Csak az alábbi oldalakat exportálja (pl. \"2-3,5,7-\")\n"
 "                                 Nincs hatása -p/--create-pdf vagy -i/--create-img használata nélkül"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:739
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Csak az alábbi rétegeket exportálja (pl. \"2-3,5,7-\")\n"
 "                                 Nincs hatása -p/--create-pdf vagy -i/--create-img használata nélkül"
 
-#: ../src/core/control/XournalMain.cpp:708
+#: ../src/core/control/XournalMain.cpp:743
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "DPI beállítása PNG exportokhoz. Az alapértelmezett érték 300\n"
 "                                 nincs hatása -i/--create-img=foo.png nélkül"
 
-#: ../src/core/control/XournalMain.cpp:712
+#: ../src/core/control/XournalMain.cpp:747
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -453,7 +459,7 @@ msgstr "Oldalszélesség beállítása PNG exportokhoz\n"
 "                                 Nincs hatása -i/--create-img=foo.png nélkül\n"
 "                                 Figyelmen kívül hagyva ha --export-png-dpi használatban van"
 
-#: ../src/core/control/XournalMain.cpp:718
+#: ../src/core/control/XournalMain.cpp:753
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -461,11 +467,11 @@ msgstr "Oldalmagasság beállítása PNG exportokhoz\n"
 "                                 Nincs hatása -i/--create-img=foo.png nélkül\n"
 "                                 Figyelmen kívül hagyva ha --export-png-dpi vagy --export-png-width használatban van"
 
-#: ../src/core/control/XournalMain.cpp:723
+#: ../src/core/control/XournalMain.cpp:758
 msgid "Advanced export options"
 msgstr "Haladó exportálási lehetőségek"
 
-#: ../src/core/control/XournalMain.cpp:724
+#: ../src/core/control/XournalMain.cpp:759
 msgid "Display advanced export options"
 msgstr "A haladó exportálási lehetőségek megjelenítése"
 
@@ -510,7 +516,7 @@ msgstr "Egyéni exportálás"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:48
 msgid "PDF files"
 msgstr "PDF-fájlok"
 
@@ -527,7 +533,7 @@ msgid "Xournal (Compatibility)"
 msgstr "Xournal (kompatibilitás)"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:131
-#: ../src/core/control/jobs/SaveJob.cpp:131
+#: ../src/core/control/jobs/SaveJob.cpp:130
 msgid "Save file error: {1}"
 msgstr "Hiba történt a fájl mentése közben: {1}"
 
@@ -551,7 +557,7 @@ msgstr "Hiba történt a kép mentése közben! #2"
 msgid "PDF Export"
 msgstr "PDF-export"
 
-#: ../src/core/control/jobs/SaveJob.cpp:117
+#: ../src/core/control/jobs/SaveJob.cpp:116
 msgid "Save file error, can't backup: {1}"
 msgstr "Fájl mentése hiba, nem lehet biztonsági másolatot készíteni: {1}"
 
@@ -632,71 +638,71 @@ msgstr "PDF-háttérrel"
 msgid "Image"
 msgstr "Kép"
 
-#: ../src/core/control/settings/Settings.cpp:150
+#: ../src/core/control/settings/Settings.cpp:151
 msgid "%F-Note-%H-%M"
 msgstr "%F-Jegyzet-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:152
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%{name}_annotated"
 msgstr "%{name}_jegyzetekkel_ellátva"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 msgid "Open Image"
 msgstr "Kép megnyitása"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:18
 msgid "_Open"
 msgstr "_Megnyitás…"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:22
 msgid "Images"
 msgstr "Képek"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:33
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:117
 msgid "Attach file to the journal"
 msgstr "Fájl csatolása a naplóhoz"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Open file"
 msgstr "Fájl megnyitása"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:40
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:41
 msgid "All files"
 msgstr "Minden fájl"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:56
 msgid "Xournal files"
 msgstr "Xournal fájlok"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:70
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
 msgstr "Xournal++ sablon"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:98
 msgid "Supported files"
 msgstr "Támogatott fájltípusok"
 
-#: ../src/core/control/tools/EditSelection.cpp:401
+#: ../src/core/control/tools/EditSelection.cpp:462
 msgid "Arrange"
 msgstr "Elrendezés"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:467
 msgid "Bring to front"
 msgstr "Előrehozás"
 
-#: ../src/core/control/tools/EditSelection.cpp:416
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Bring forward"
 msgstr "Előbbre hozás"
 
-#: ../src/core/control/tools/EditSelection.cpp:427
+#: ../src/core/control/tools/EditSelection.cpp:490
 msgid "Send backward"
 msgstr "Hátrébb küldés"
 
-#: ../src/core/control/tools/EditSelection.cpp:435
+#: ../src/core/control/tools/EditSelection.cpp:497
 msgid "Send to back"
 msgstr "Hátraküldés"
 
@@ -704,126 +710,126 @@ msgstr "Hátraküldés"
 msgid "Failed to load image, could not determine image size!"
 msgstr "Nem sikerült betölteni a képet, nem sikerült meghatározni a kép méretét!"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:142
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "A fájl nem érvényes .xopp fájl (hiányzó mimetípus): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:151
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "A fájl nem érvényes .xopp fájl (hibás mimetípus): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:159
+#: ../src/core/control/xojfile/LoadHandler.cpp:160
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "A fájl nem érvényes .xopp fájl (hiányzó verzió): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:173
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "A fájl nem érvényes .xopp fájl (a verzió karakterlánca sérült): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:181
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Nem sikerült megnyitni a content.xml-fájlt a zip-archívumban: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:189
+#: ../src/core/control/xojfile/LoadHandler.cpp:190
 msgid "Could not open file: \"{1}\""
 msgstr "Nem sikerült megnyitni a(z) „{1}” fájlt"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:255
+#: ../src/core/control/xojfile/LoadHandler.cpp:256
 msgid "XML Parser error: {1}"
 msgstr "XML-elemzési hiba történt: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:258
+#: ../src/core/control/xojfile/LoadHandler.cpp:259
 msgid "Unknown parser error"
 msgstr "Ismeretlen elemzési hiba történt"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:269
+#: ../src/core/control/xojfile/LoadHandler.cpp:270
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "A dokumentum nem teljes (talán a vége le lett vágva?)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:273
+#: ../src/core/control/xojfile/LoadHandler.cpp:274
 msgid "Document is corrupted (no pages found in file)"
 msgstr "A dokumentum hibás (nem találhatók oldalak a fájlban)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:318
+#: ../src/core/control/xojfile/LoadHandler.cpp:319
 msgid "Unexpected root tag: {1}"
 msgstr "Váratlan gyökércímke: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:339
+#: ../src/core/control/xojfile/LoadHandler.cpp:340
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Váratlan címke a dokumentumban: „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:387
-#: ../src/core/control/xojfile/LoadHandler.cpp:415
+#: ../src/core/control/xojfile/LoadHandler.cpp:388
+#: ../src/core/control/xojfile/LoadHandler.cpp:416
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "A kép nem olvasható: {1}. Hibaüzenet: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:425
+#: ../src/core/control/xojfile/LoadHandler.cpp:426
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "A klónozott háttérkép {1} oldalszámának olvasása sikertelen."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:433
+#: ../src/core/control/xojfile/LoadHandler.cpp:434
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Ismeretlen pixmap::domain típus: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:498
+#: ../src/core/control/xojfile/LoadHandler.cpp:479
+#: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "Hiba történt a PDF-fájl olvasásakor: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:486
 msgid "Unknown domain type: {1}"
 msgstr "Ismeretlen tartománytípus: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:530
 msgid "Unknown background type: {1}"
 msgstr "Ismeretlen háttértípus: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:553
+#: ../src/core/control/xojfile/LoadHandler.cpp:554
 msgid "Error reading width of a stroke: {1}"
 msgstr "Hiba történt a vonalvastagság olvasása során: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:621
+#: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Ismeretlen vonásírásvégtípus: „{1}”, kereket feltételezve"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:639
+#: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Ismeretlen vonásírás típusa: „{1}”, tollat feltételezve"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:807
-#: ../src/core/control/xojfile/LoadHandler.cpp:823
-#: ../src/core/control/xojfile/LoadHandler.cpp:1137
-#: ../src/core/control/xojfile/LoadHandler.cpp:1151
+#: ../src/core/control/xojfile/LoadHandler.cpp:808
+#: ../src/core/control/xojfile/LoadHandler.cpp:824
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:816
-#: ../src/core/control/xojfile/LoadHandler.cpp:1144
-#: ../src/core/control/xojfile/LoadHandler.cpp:1162
+#: ../src/core/control/xojfile/LoadHandler.cpp:817
+#: ../src/core/control/xojfile/LoadHandler.cpp:1145
+#: ../src/core/control/xojfile/LoadHandler.cpp:1163
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: A fájlméret érvénytelen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:835
+#: ../src/core/control/xojfile/LoadHandler.cpp:836
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: A fájl nem olvasható"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:844
+#: ../src/core/control/xojfile/LoadHandler.cpp:845
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: A fájl nem írható"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1031
+#: ../src/core/control/xojfile/LoadHandler.cpp:1032
 msgid "Wrong count of points ({1})"
 msgstr "Hibás pontszám ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1047
+#: ../src/core/control/xojfile/LoadHandler.cpp:1048
 msgid "xoj-File: {1}"
 msgstr "xoj-fájl: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1048
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Helytelen számú nyomásérték, {1}, várható {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1181
+#: ../src/core/control/xojfile/LoadHandler.cpp:1182
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "A(z) {1} melléklethez kért ideiglenes fájl nem található"
 
@@ -881,17 +887,17 @@ msgstr "Hiba a(z) „{1}” glade-fájl betöltése közben (próbálja meg bet�
 msgid "Unable to play audio recording {1}"
 msgstr "Nem sikerült a hangfelvétel lejátszása: {1}"
 
-#: ../src/core/gui/PageView.cpp:913
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
+#: ../src/core/gui/PageView.cpp:917
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Loading..."
 msgstr "Betöltés…"
 
-#: ../src/core/gui/PageView.cpp:976
+#: ../src/core/gui/PageView.cpp:980
 msgid "Scroll to page {1}"
 msgstr "Görgessen a(z) {1}. oldalra"
 
-#: ../src/core/gui/PageView.cpp:978
+#: ../src/core/gui/PageView.cpp:982
 msgid "Add missing page"
 msgstr "Hiányzó oldal hozzáadása"
 
@@ -1060,7 +1066,7 @@ msgstr "Koordinátarendszer rajzolása"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
+#: ../src/core/undo/RecognizerUndoAction.cpp:74
 msgid "Stroke recognizer"
 msgstr "Vonalfelismerő"
 
@@ -1074,35 +1080,35 @@ msgstr "Görbe rajzolása"
 msgid "Custom"
 msgstr "Egyéni"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "Alapértelmezett"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:66
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "Az előzőleg választott nyelv már nem elérhető el!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
 msgid "LaTeX editor theme:"
 msgstr "LaTeX-szerkesztő téma:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "A GtkSourceView le volt tiltva a Xournal++ készítésekor! Egyes kapcsolók nem lesznek elérhetők."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nem lehet megnyitni a globális sablonfájlt itt: {1}. Létezik?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
 msgstr "A LaTeX-mintafájl sikeresen létrehozva."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Hiba történt: {1}. Ellenőrizze a(z) {2} tartalmát"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Hiba történt: A(z) {1} fájl nem szabályos. Kérjük, ellenőrizze a LaTeX-sablonfájl beállításokat! "
 
@@ -1114,50 +1120,50 @@ msgstr "alapértelmezetten engedélyezve"
 msgid "default disabled"
 msgstr "alapértelmezetten tiltva"
 
-#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:61
+#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
 msgstr "Háttérszín kijelölése"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:28
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
 msgstr "Átlátszatlanság kijelölése a következőhöz: "
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
 msgstr "Kiemelő beállításai"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:34
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:38
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
 msgstr "Kitöltőszín"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
 msgstr "Toll beállításai"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:40
 msgid "PDF Text Options"
 msgstr "PDF-szövegbeállításai"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:42
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
 msgid "PDF Text Marker"
 msgstr "PDF-szövegjelölő"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:50
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:72
+#: ../src/core/gui/dialog/SettingsDialog.cpp:73
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Nem található eszköz. Ez gyanús - talán egy jelenteni való hiba?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "A beállítás módosításához engedélyezd a nyomásérzékelést vagy a nyomáskövetkeztetést!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Nyomásszűrés. A nyomást a nyomási szorzóval szorozza. Ha az eredmény kevesebb a minimális értéknél, akkor a minimális nyomást alkalmazza."
 
@@ -1177,11 +1183,11 @@ msgstr "Eszköztárak"
 msgid "New"
 msgstr "Új"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:102
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
 msgid "Show only not used pages (one unused page)"
 msgstr "Nem használt oldalak megjelenítése (egy nem használt oldal)"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:104
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Nem használt oldalak megjelenítése ({1} nem használt oldal)"
 
@@ -1258,7 +1264,7 @@ msgstr "Jelenlegi napló nem tartalmaz PDF-oldalszámot: {1}\n"
 "Szeretné beszúrni ezt az oldalt?\n\n"
 "Tipp: PDF-oldal beszúrásához válassza a Napló → Papírháttér → PDF-háttérrel lehetőséget."
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:171
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:173
 msgid "Contents"
 msgstr "Tartalom"
 
@@ -1353,8 +1359,8 @@ msgid "Cut"
 msgstr "Kivágás"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:351
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:81
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
 msgstr "Másolás"
 
@@ -1713,8 +1719,8 @@ msgstr ""
 msgid "Toolbar found: {1}"
 msgstr "Eszköztár megtalálva: {1}"
 
-#: ../src/core/model/Document.cpp:315 ../src/core/model/Document.cpp:324
-#: ../src/core/model/Document.cpp:327
+#: ../src/core/model/Document.cpp:316 ../src/core/model/Document.cpp:325
+#: ../src/core/model/Document.cpp:328
 msgid "Document not loaded! ({1}), {2}"
 msgstr "A dokumentum nincs betöltve! ({1}), {2}"
 
@@ -1722,19 +1728,19 @@ msgstr "A dokumentum nincs betöltve! ({1}), {2}"
 msgid "Background"
 msgstr "Háttér"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:173
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:216
 msgid "No pages to export!"
 msgstr "Nincs exportálandó oldal!"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:178
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:221
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Nem sikerült a PDF-Kairó felületének inicializálása"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
 msgstr "Vonásírás kiradírozása"
 
@@ -1766,10 +1772,6 @@ msgstr "szöveg"
 #: ../src/core/undo/ColorUndoAction.cpp:90
 msgid "Change color"
 msgstr "Szín változtatása"
-
-#: ../src/core/undo/CopyUndoAction.cpp:62
-msgid "Copy page"
-msgstr "Oldal másolása"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -1831,7 +1833,7 @@ msgstr "Réteg Mozgatása"
 msgid "Move"
 msgstr "Mozgatás"
 
-#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:84
+#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:85
 msgid "Page background changed"
 msgstr "Háttérkép megváltozott"
 
@@ -1847,7 +1849,7 @@ msgstr "Forgatás"
 msgid "Scale"
 msgstr "Méretezés"
 
-#: ../src/core/undo/SizeUndoAction.cpp:106
+#: ../src/core/undo/SizeUndoAction.cpp:108
 msgid "Change stroke width"
 msgstr "Vonalvastagság megváltoztatása"
 
@@ -1903,17 +1905,17 @@ msgstr "ElementRange::parse(): az elemmutatók 1-gyel kezdődnek"
 msgid "Error opening file: \"{1}\""
 msgstr "Hiba történt a fájl megnyitása közben: {1}"
 
-#: ../src/util/PathUtil.cpp:172
+#: ../src/util/PathUtil.cpp:173
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "A fájl megnyitása nem sikerült. Manuálisan kell megnyitnia:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:244
+#: ../src/util/PathUtil.cpp:245
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:254
+#: ../src/util/PathUtil.cpp:255
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "A következő mappa nem hozható létre: {1}\n"
@@ -1955,15 +1957,15 @@ msgstr "xoj-preview-extractor: a fájl \"{1}\" nem tartalmaz előnézetet"
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: nem található előnézet és oldal, talán érvénytelen a fájl?"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: nem található az ikon \"{1}\""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: a kimeneti fájl \"{1}\" megnyitása sikertelen"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:209
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: sikeresen kibontva"
 

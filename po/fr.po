@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-30 14:40+0000\n"
-"PO-Revision-Date: 2023-10-30 17:14\n"
+"POT-Creation-Date: 2023-11-22 08:35+0000\n"
+"PO-Revision-Date: 2023-12-22 14:29\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -23,39 +23,39 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Dossier audio non défini ou invalide ! L'enregistrement ne fonctionnera pas !\n"
 "Veuillez définir le dossier d'enregistrement sous \"Préférences > Enregistrement audio\""
 
-#: ../src/core/control/Control.cpp:228
+#: ../src/core/control/Control.cpp:229
 msgid "Autosave renamed from {1} to {2}"
 msgstr "Sauvegarde automatique renommée de {1} à {2}"
 
-#: ../src/core/control/Control.cpp:239
+#: ../src/core/control/Control.cpp:240
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Impossible de renommer le fichier de sauvegarde automatique de \"{1}\" à \"{2}\" : {3}"
 
-#: ../src/core/control/Control.cpp:248
+#: ../src/core/control/Control.cpp:249
 msgid "Autosave failed with an error: {1}"
 msgstr "Échec de la sauvegarde automatique avec une erreur : {1}"
 
-#: ../src/core/control/Control.cpp:566
+#: ../src/core/control/Control.cpp:574
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La configuration de l'outil \"{1}\" est prédéfinie, voulez-vous créer une copie à modifier ?"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "Yes"
 msgstr "Oui"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "No"
 msgstr "Non"
 
-#: ../src/core/control/Control.cpp:748
+#: ../src/core/control/Control.cpp:756
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Aucune page PDF de disponible à ajouter. Vous devrez peut-être rouvrir le document d'abord."
 
-#: ../src/core/control/Control.cpp:762
+#: ../src/core/control/Control.cpp:770
 msgid "Unable to retrieve pdf page."
 msgstr "Impossible de récupérer la page pdf."
 
-#: ../src/core/control/Control.cpp:1330
+#: ../src/core/control/Control.cpp:1336
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -63,120 +63,122 @@ msgstr "Ne pas ouvrir les fichiers de sauvegarde automatique. Ils peuvent être 
 "Copier les fichiers vers un autre dossier.\n"
 "Les fichiers du dossier {1} ne peuvent pas être ouverts."
 
-#: ../src/core/control/Control.cpp:1344
+#: ../src/core/control/Control.cpp:1350
 msgid "file: {1}"
 msgstr "fichier : {1}"
 
-#: ../src/core/control/Control.cpp:1392
+#: ../src/core/control/Control.cpp:1398
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Le fichier d'arrière-plan attaché est introuvable. Il a peut-être été déplacé, renommé ou supprimé."
 
-#: ../src/core/control/Control.cpp:1395
+#: ../src/core/control/Control.cpp:1401
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Le fichier d'arrière-plan \"{1}\" n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé.\n"
 "Il a été vu pour la dernière fois ici : \"{2}\""
 
-#: ../src/core/control/Control.cpp:1405
+#: ../src/core/control/Control.cpp:1411
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Fichier de remplacement proposé : \"{1}\""
 
-#: ../src/core/control/Control.cpp:1413
+#: ../src/core/control/Control.cpp:1419
 msgid "Use proposed PDF"
 msgstr "Utiliser le PDF proposé"
 
-#: ../src/core/control/Control.cpp:1415
+#: ../src/core/control/Control.cpp:1421
 msgid "Select another PDF"
 msgstr "Sélectionnez un autre PDF"
 
-#: ../src/core/control/Control.cpp:1416
+#: ../src/core/control/Control.cpp:1422
 msgid "Remove PDF Background"
 msgstr "Supprimer l'arrière-plan du PDF"
 
-#: ../src/core/control/Control.cpp:1417 ../src/core/control/Control.cpp:1937
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/Control.cpp:1423 ../src/core/control/Control.cpp:1946
+#: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
 msgstr "Annuler"
 
-#: ../src/core/control/Control.cpp:1448
+#: ../src/core/control/Control.cpp:1454
 msgid "Error opening file \"{1}\""
 msgstr "Erreur lors de l'ouverture du fichier \"{1}\""
 
-#: ../src/core/control/Control.cpp:1456
+#: ../src/core/control/Control.cpp:1462
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Le fichier en cours de chargement utilise une version du format de fichier plus récente que celle actuellement supportée par cette version de Xournal++, il pourrait par conséquent ne pas se charger correctement. L'ouvrir quand même ?"
 
-#: ../src/core/control/Control.cpp:1618
+#: ../src/core/control/Control.cpp:1624
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Erreur dans l'annotation du PDF \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr "Enregistrer le fichier"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr "_Annuler"
 
-#: ../src/core/control/Control.cpp:1720
+#: ../src/core/control/Control.cpp:1729
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "_Sauvegarder"
 
-#: ../src/core/control/Control.cpp:1725
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
+#: ../src/core/control/Control.cpp:1734
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:63
 msgid "Xournal++ files"
 msgstr "Fichiers Xournal++"
 
-#: ../src/core/control/Control.cpp:1772
+#: ../src/core/control/Control.cpp:1781
 msgid "Select font"
 msgstr "Choisir la police"
 
-#: ../src/core/control/Control.cpp:1787
+#: ../src/core/control/Control.cpp:1796
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
 msgid "Select color"
 msgstr "Choisir la couleur"
 
-#: ../src/core/control/Control.cpp:1809
+#: ../src/core/control/Control.cpp:1818
 msgid "Unsaved Document"
 msgstr "Document non enregistré"
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "Document file was removed."
 msgstr "Le fichier du document a été supprimé."
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "This document is not saved yet."
 msgstr "Ce document n'est pas encore enregistré."
 
-#: ../src/core/control/Control.cpp:1929
+#: ../src/core/control/Control.cpp:1938
 msgid "Save As..."
 msgstr "Enregistrer sous..."
 
-#: ../src/core/control/Control.cpp:1929 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:1938 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: ../src/core/control/Control.cpp:1934
+#: ../src/core/control/Control.cpp:1943
 msgid "Discard"
 msgstr "Fermer sans enregistrer"
 
 #: ../src/core/control/CrashHandler.cpp:31
-msgid "Trying to emergency save the current open document…"
-msgstr "Essai de sauvegarde d'urgence du document actuellement ouvert…"
+msgid "Trying to emergency save the current open document..."
+msgstr "Essai d'un enregistrement d'urgence du document ouvert..."
 
 #: ../src/core/control/CrashHandler.cpp:40
+#: ../src/core/control/XournalMain.cpp:301
+#: ../src/core/control/XournalMain.cpp:307
 msgid "Error: {1}"
 msgstr "Erreur : {1}"
 
@@ -228,27 +230,27 @@ msgstr "Fichier image créé avec succès"
 msgid "PDF file successfully created"
 msgstr "Fichier PDF créé avec succès"
 
-#: ../src/core/control/LatexController.cpp:77
+#: ../src/core/control/LatexController.cpp:79
 msgid "Global template file does not exist. Please check your settings."
 msgstr "Le fichier de modèle global n'existe pas. Veuillez vérifier vos paramètres."
 
-#: ../src/core/control/LatexController.cpp:82
+#: ../src/core/control/LatexController.cpp:84
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Impossible de lire le fichier de modèle global. Veuillez vérifier vos paramètres."
 
-#: ../src/core/control/LatexController.cpp:88
+#: ../src/core/control/LatexController.cpp:90
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Le fichier de modèle global n'est pas un fichier normal. Veuillez vérifier vos paramètres. "
 
-#: ../src/core/control/LatexController.cpp:235
+#: ../src/core/control/LatexController.cpp:236
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "La génération latex a rencontré une erreur : {1} (code de sortie : {2})"
 
-#: ../src/core/control/LatexController.cpp:301
+#: ../src/core/control/LatexController.cpp:302
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Impossible de charger le fichier PDF LaTeX : {1}"
 
-#: ../src/core/control/LatexController.cpp:306
+#: ../src/core/control/LatexController.cpp:307
 msgid "Could not load LaTeX PDF file"
 msgstr "Impossible de charger le fichier PDF LaTeX"
 
@@ -262,7 +264,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Vous n'avez pas de pages PDF à sélectionner. Annuler l'opération.\n"
 "Veuillez sélectionner un autre type de fond : Menu \"Journal\" → \"Configurer le modèle de page\"."
 
-#: ../src/core/control/PdfCache.cpp:123
+#: ../src/core/control/PdfCache.cpp:124
 msgid "PDF background missing"
 msgstr "Fond PDF manquant"
 
@@ -270,71 +272,71 @@ msgstr "Fond PDF manquant"
 msgid "Running print operation failed with {1}"
 msgstr "L'opération d'impression en cours a échoué avec {1}"
 
-#: ../src/core/control/XournalMain.cpp:147
+#: ../src/core/control/XournalMain.cpp:148
 msgid "Failed to delete file: {1}"
 msgstr "Impossible de supprimer le fichier : {1}"
 
-#: ../src/core/control/XournalMain.cpp:149
+#: ../src/core/control/XournalMain.cpp:150
 msgid "Please delete the file manually"
 msgstr "Veuillez supprimer le fichier manuellement"
 
-#: ../src/core/control/XournalMain.cpp:185
+#: ../src/core/control/XournalMain.cpp:186
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Il y a un journal d'erreurs récent pour Xournal++. S'il vous plaît remplissez un rapport de bogue, afin que le bogue puisse être corrigé."
 
-#: ../src/core/control/XournalMain.cpp:187
+#: ../src/core/control/XournalMain.cpp:188
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Il y a des journaux d'erreurs récents pour Xournal++. S'il vous plaît remplissez un rapport de bogue, afin que le bogue puisse être corrigé."
 
-#: ../src/core/control/XournalMain.cpp:190
+#: ../src/core/control/XournalMain.cpp:191
 msgid "The most recent log file name: {1}"
 msgstr "Le nom de fichier journal le plus récent : {1}"
 
-#: ../src/core/control/XournalMain.cpp:192
+#: ../src/core/control/XournalMain.cpp:193
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr "Pour empêcher cette popup de réapparaître, il suffit de supprimer les fichiers journaux d'erreurs."
 
-#: ../src/core/control/XournalMain.cpp:195
+#: ../src/core/control/XournalMain.cpp:196
 msgid "File Bug Report"
 msgstr "Envoyer un rapport de bug"
 
-#: ../src/core/control/XournalMain.cpp:196
+#: ../src/core/control/XournalMain.cpp:197
 msgid "Open Logfile"
 msgstr "Ouvrir un fichier journal"
 
-#: ../src/core/control/XournalMain.cpp:197
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Open Logfile directory"
 msgstr "Ouvrir le répertoire des fichiers journaux"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:199
 msgid "Delete Logfile"
 msgstr "Supprimer le fichier journal"
 
-#: ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/XournalMain.cpp:201
 msgid "Crash log"
 msgstr "Journal d'erreurs"
 
-#: ../src/core/control/XournalMain.cpp:222
+#: ../src/core/control/XournalMain.cpp:223
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ a échoué la dernière fois. Voulez-vous restaurer le dernier fichier modifié ?"
 
-#: ../src/core/control/XournalMain.cpp:225
+#: ../src/core/control/XournalMain.cpp:226
 msgid "Recovery file detected"
 msgstr "Fichier de récupération détecté"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Delete file"
 msgstr "Supprimer le fichier"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Restore file"
 msgstr "Restaurer le fichier"
 
-#: ../src/core/control/XournalMain.cpp:245
+#: ../src/core/control/XournalMain.cpp:246
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Le fichier d'arrière-plan \"{1}\" n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé."
 
-#: ../src/core/control/XournalMain.cpp:408
+#: ../src/core/control/XournalMain.cpp:438
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -348,25 +350,25 @@ msgstr "<span foreground='red' size='x-large'>Le fichier UI requis est manquant 
 "  Pas dans le chemin de travail\n"
 "  Pas dans {2}"
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:443
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Essai de démarrage sans fichier."
 
-#: ../src/core/control/XournalMain.cpp:430
-#: ../src/core/control/XournalMain.cpp:523
+#: ../src/core/control/XournalMain.cpp:460
+#: ../src/core/control/XournalMain.cpp:553
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Désolé, Xournal++ ne peut ouvrir qu'un seul fichier à la fois.\n"
 "Les autres sont ignorés."
 
-#: ../src/core/control/XournalMain.cpp:441
+#: ../src/core/control/XournalMain.cpp:471
 msgid "File {1} does not exist."
 msgstr "Le fichier {1} n’existe pas."
 
-#: ../src/core/control/XournalMain.cpp:445
-#: ../src/core/control/XournalMain.cpp:543
+#: ../src/core/control/XournalMain.cpp:475
+#: ../src/core/control/XournalMain.cpp:573
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -374,29 +376,33 @@ msgstr "Erreur de système de fichiers : {1}\n"
 "Désolé, Xournal++ ne peut pas ouvrir le fichier : {2}\n"
 "Il peut être nécessaire de copier le fichier dans un répertoire local."
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Jump to Page (first Page: 1)"
 msgstr "Aller à la page (première page : 1)"
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Get version of xournalpp"
 msgstr "Récupérer la version de xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:664
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Disable audio for this session"
 msgstr "Désactiver l'audio pour cette session"
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "Ouvrir le PDF en mode pièce jointe\n"
 "                                 Sans effets si aucun fichier PDF n'est spécifié."
 
-#: ../src/core/control/XournalMain.cpp:677
+#: ../src/core/control/XournalMain.cpp:703
+msgid "Save xopp-file with the background PDF specified as FILE"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:712
 msgid "Export FILE as PDF"
 msgstr "Exporter le FICHIER en PDF"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -404,7 +410,7 @@ msgstr "Exporter le FICHIER en tant que fichiers image (une par page)\n"
 "                                 Deviner le format de sortie à partir de l'extension de IMGFILE\n"
 "                                 formats pris en charge : .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:684
+#: ../src/core/control/XournalMain.cpp:719
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -412,13 +418,13 @@ msgstr "Exporter sans arrière-plan\n"
 "                                 Le fichier exporté a un arrière-plan transparent ou blanc,\n"
 "                                 selon ce qui est supporté par son format\n"
 
-#: ../src/core/control/XournalMain.cpp:689
+#: ../src/core/control/XournalMain.cpp:724
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exporter sans les règles\n"
 "                                 Le fichier exporté n'a aucune règle sur le papier\n"
 
-#: ../src/core/control/XournalMain.cpp:693
+#: ../src/core/control/XournalMain.cpp:728
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -430,25 +436,25 @@ msgstr "Exporter progressivement les calques\n"
 "                                 construisant progressivement la pile de calques.\n"
 "                                 Le fichier PDF généré peut être utilisé pour une présentation.\n"
 
-#: ../src/core/control/XournalMain.cpp:700
+#: ../src/core/control/XournalMain.cpp:735
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exporter uniquement les pages spécifiées par INTERVALLE (par exemple \"2-3,5,7-\")\n"
 "                                 Aucun effet sans -p/--create-pdf ou -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:739
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Lors de l'exportation, n'exporter que les couches spécifiées par RANGE (par exemple \"2-3,5,7-\")\n"
 "                                 Aucun effet sans -p/--create-pdf ou -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:708
+#: ../src/core/control/XournalMain.cpp:743
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Définir le DPI pour les exportations PNG. La valeur par défaut est 300\n"
 "                                 Pas d'effet sans -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:712
+#: ../src/core/control/XournalMain.cpp:747
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -456,7 +462,7 @@ msgstr "Définir la largeur de page pour les exports PNG\n"
 "                                 Aucun effet sans -i/--create-img=foo.png\n"
 "                                 Ignoré si --export-png-dpi est utilisé"
 
-#: ../src/core/control/XournalMain.cpp:718
+#: ../src/core/control/XournalMain.cpp:753
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -464,11 +470,11 @@ msgstr "Définir la hauteur de page pour les exports PNG\n"
 "                                 Aucun effet sans -i/--create-img=foo.png\n"
 "                                 Ignoré si --export-png-dpi ou --export-png-width est utilisé"
 
-#: ../src/core/control/XournalMain.cpp:723
+#: ../src/core/control/XournalMain.cpp:758
 msgid "Advanced export options"
 msgstr "Options d'exportation avancées"
 
-#: ../src/core/control/XournalMain.cpp:724
+#: ../src/core/control/XournalMain.cpp:759
 msgid "Display advanced export options"
 msgstr "Afficher les options d'exportation avancées"
 
@@ -514,7 +520,7 @@ msgstr "Export personnalisé"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:48
 msgid "PDF files"
 msgstr "Fichiers PDF"
 
@@ -531,7 +537,7 @@ msgid "Xournal (Compatibility)"
 msgstr "Xournal (Compatibilité)"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:131
-#: ../src/core/control/jobs/SaveJob.cpp:131
+#: ../src/core/control/jobs/SaveJob.cpp:130
 msgid "Save file error: {1}"
 msgstr "Erreur d'enregistrement du fichier : {1}"
 
@@ -555,7 +561,7 @@ msgstr "Erreur d'enregistrement de l'image #2"
 msgid "PDF Export"
 msgstr "Export PDF"
 
-#: ../src/core/control/jobs/SaveJob.cpp:117
+#: ../src/core/control/jobs/SaveJob.cpp:116
 msgid "Save file error, can't backup: {1}"
 msgstr "Erreur lors de l'enregistrement du fichier, impossible de sauvegarder : {1}"
 
@@ -636,71 +642,71 @@ msgstr "Avec fond PDF"
 msgid "Image"
 msgstr "Image"
 
-#: ../src/core/control/settings/Settings.cpp:150
+#: ../src/core/control/settings/Settings.cpp:151
 msgid "%F-Note-%H-%M"
 msgstr "%F-Note-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:152
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%{name}_annotated"
 msgstr "%{name}_annoté"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 msgid "Open Image"
 msgstr "Ouvrir une image"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:18
 msgid "_Open"
 msgstr "_Ouvrir"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:22
 msgid "Images"
 msgstr "Images"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:33
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:117
 msgid "Attach file to the journal"
 msgstr "Attacher le fichier au journal"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Open file"
 msgstr "Ouvrir un fichier"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:40
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:41
 msgid "All files"
 msgstr "Tous les fichiers"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:56
 msgid "Xournal files"
 msgstr "Fichiers Xournal"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:70
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
 msgstr "Modèle Xournal++"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:98
 msgid "Supported files"
 msgstr "Fichiers pris en charge"
 
-#: ../src/core/control/tools/EditSelection.cpp:401
+#: ../src/core/control/tools/EditSelection.cpp:462
 msgid "Arrange"
 msgstr "Classer par"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:467
 msgid "Bring to front"
 msgstr "Mettre au premier plan"
 
-#: ../src/core/control/tools/EditSelection.cpp:416
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Bring forward"
 msgstr "Mettre en avant"
 
-#: ../src/core/control/tools/EditSelection.cpp:427
+#: ../src/core/control/tools/EditSelection.cpp:490
 msgid "Send backward"
 msgstr "Mettre en arrière"
 
-#: ../src/core/control/tools/EditSelection.cpp:435
+#: ../src/core/control/tools/EditSelection.cpp:497
 msgid "Send to back"
 msgstr "Mettre en arrière-plan"
 
@@ -708,126 +714,126 @@ msgstr "Mettre en arrière-plan"
 msgid "Failed to load image, could not determine image size!"
 msgstr "Échec du chargement, impossible de déterminer la taille de l'image !"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:142
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Le fichier n'est pas un fichier .xopp valide (Mimetype manquant): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:151
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Le fichier n'est pas un fichier .xopp valide (Mimetype incorrect): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:159
+#: ../src/core/control/xojfile/LoadHandler.cpp:160
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Le fichier n'est pas un fichier .xopp valide (Version manquante): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:173
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Le fichier n'est pas un fichier .xopp valide (Version de chaîne de caractères corrompue): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:181
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Impossible d'ouvrir le fichier content.xml dans l'archive zip : \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:189
+#: ../src/core/control/xojfile/LoadHandler.cpp:190
 msgid "Could not open file: \"{1}\""
 msgstr "Impossible d'ouvrir le fichier: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:255
+#: ../src/core/control/xojfile/LoadHandler.cpp:256
 msgid "XML Parser error: {1}"
 msgstr "Erreur d'extraction XML : {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:258
+#: ../src/core/control/xojfile/LoadHandler.cpp:259
 msgid "Unknown parser error"
 msgstr "Erreur d'analyseur inconnue"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:269
+#: ../src/core/control/xojfile/LoadHandler.cpp:270
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Le document n'est pas terminé (peut-être la fin est coupée ?)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:273
+#: ../src/core/control/xojfile/LoadHandler.cpp:274
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Le document est corrompu (aucune page trouvée dans le fichier)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:318
+#: ../src/core/control/xojfile/LoadHandler.cpp:319
 msgid "Unexpected root tag: {1}"
 msgstr "Balise racine inattendue : {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:339
+#: ../src/core/control/xojfile/LoadHandler.cpp:340
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Balise inattendue dans le document: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:387
-#: ../src/core/control/xojfile/LoadHandler.cpp:415
+#: ../src/core/control/xojfile/LoadHandler.cpp:388
+#: ../src/core/control/xojfile/LoadHandler.cpp:416
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Impossible de lire l'image : {1}. Message d'erreur : {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:425
+#: ../src/core/control/xojfile/LoadHandler.cpp:426
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Impossible de lire le numéro de page pour l'image d'arrière-plan clonée : {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:433
+#: ../src/core/control/xojfile/LoadHandler.cpp:434
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Type de domaine inconnu : {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:498
+#: ../src/core/control/xojfile/LoadHandler.cpp:479
+#: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "Erreur lors de la lecture du PDF : {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:486
 msgid "Unknown domain type: {1}"
 msgstr "Type de domaine inconnu : {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:530
 msgid "Unknown background type: {1}"
 msgstr "Type de fond inconnu : {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:553
+#: ../src/core/control/xojfile/LoadHandler.cpp:554
 msgid "Error reading width of a stroke: {1}"
 msgstr "Erreur de lecture de la largeur d'un trait : {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:621
+#: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Type de terminaison de traits inconnu : \"{1}\". Utilisation de terminaisons rondes"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:639
+#: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Type de trait inconnu : \"{1}\", en supposant le stylo"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:807
-#: ../src/core/control/xojfile/LoadHandler.cpp:823
-#: ../src/core/control/xojfile/LoadHandler.cpp:1137
-#: ../src/core/control/xojfile/LoadHandler.cpp:1151
+#: ../src/core/control/xojfile/LoadHandler.cpp:808
+#: ../src/core/control/xojfile/LoadHandler.cpp:824
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:816
-#: ../src/core/control/xojfile/LoadHandler.cpp:1144
-#: ../src/core/control/xojfile/LoadHandler.cpp:1162
+#: ../src/core/control/xojfile/LoadHandler.cpp:817
+#: ../src/core/control/xojfile/LoadHandler.cpp:1145
+#: ../src/core/control/xojfile/LoadHandler.cpp:1163
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : aucune taille de fichier valide fournie"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:835
+#: ../src/core/control/xojfile/LoadHandler.cpp:836
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : impossible de lire le fichier"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:844
+#: ../src/core/control/xojfile/LoadHandler.cpp:845
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : Impossible d'écrire le fichier"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1031
+#: ../src/core/control/xojfile/LoadHandler.cpp:1032
 msgid "Wrong count of points ({1})"
 msgstr "Nombre incorrect de points ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1047
+#: ../src/core/control/xojfile/LoadHandler.cpp:1048
 msgid "xoj-File: {1}"
 msgstr "xoj-Fichier : {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1048
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Nombre de valeurs de pression incorrect, reçu {1}, attendu {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1181
+#: ../src/core/control/xojfile/LoadHandler.cpp:1182
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Le fichier temporaire demandé n'a pas été trouvé pour la pièce jointe {1}"
 
@@ -885,17 +891,17 @@ msgstr "Erreur lors du chargement du fichier glade \"{1}\" (essayez de charger \
 msgid "Unable to play audio recording {1}"
 msgstr "Impossible de lire l'enregistrement audio {1}"
 
-#: ../src/core/gui/PageView.cpp:913
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
+#: ../src/core/gui/PageView.cpp:917
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Loading..."
 msgstr "Chargement en cours..."
 
-#: ../src/core/gui/PageView.cpp:976
+#: ../src/core/gui/PageView.cpp:980
 msgid "Scroll to page {1}"
 msgstr "Défiler vers la page {1}"
 
-#: ../src/core/gui/PageView.cpp:978
+#: ../src/core/gui/PageView.cpp:982
 msgid "Add missing page"
 msgstr "Ajouter la page manquante"
 
@@ -1064,7 +1070,7 @@ msgstr "Dessiner le système de coordonnées"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
+#: ../src/core/undo/RecognizerUndoAction.cpp:74
 msgid "Stroke recognizer"
 msgstr "Identificateur de trait"
 
@@ -1078,35 +1084,35 @@ msgstr "Tracer les splines"
 msgid "Custom"
 msgstr "Personnalisé"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "Valeur par défaut du système"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:66
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "La langue sélectionnée précédemment n'est plus disponible !"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
 msgid "LaTeX editor theme:"
 msgstr "Thème de l'éditeur LaTeX :"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView a été désactivé lors de la compilation de Xournal++ ! Certaines options ne seront pas disponibles."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Impossible d'ouvrir le fichier de modèle global à {1}. Existe-t-il ?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
 msgstr "Fichier LaTeX d'exemple généré avec succès."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Erreur : {1}. Veuillez vérifier le contenu de {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Erreur : {1} n'est pas un fichier normal. Veuillez vérifier les paramètres de votre fichier de modèle LaTeX. "
 
@@ -1118,50 +1124,50 @@ msgstr "activé par défaut"
 msgid "default disabled"
 msgstr "désactivé par défaut"
 
-#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:61
+#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
 msgstr "Choisir la couleur de fond"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:28
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
 msgstr "Sélectionnez l'opacité pour : "
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
 msgstr "Options de surligneur"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:34
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:38
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
 msgstr "Couleur de remplissage"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
 msgstr "Options du stylet"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:40
 msgid "PDF Text Options"
 msgstr "Options de texte PDF"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:42
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
 msgid "PDF Text Marker"
 msgstr "Marqueur de texte PDF"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:50
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:72
+#: ../src/core/gui/dialog/SettingsDialog.cpp:73
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Aucun appareil n'a été trouvé. Cela semble erroné - peut-être convient-il de faire un rapport de panne ?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Activer la sensibilité de pression ou l'inférence de pression pour changer ce paramètre !"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtrer la pression de la saisie. Multiplier la pression par le multiplicateur de pression. Si elle est inférieure au minimum, utiliser la pression minimale."
 
@@ -1181,11 +1187,11 @@ msgstr "Barres d'outils"
 msgid "New"
 msgstr "Nouveau"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:102
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
 msgid "Show only not used pages (one unused page)"
 msgstr "Afficher uniquement les pages non utilisées (une page non utilisée)"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:104
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Afficher uniquement les pages non utilisées ({1} pages non utilisées)"
 
@@ -1262,7 +1268,7 @@ msgstr "Votre document actuel ne contient pas de page PDF n° {1}\n"
 "Voulez-vous insérer cette page ?\n\n"
 "Conseil : Vous pouvez sélectionner Journal → Arrière-plan papier → Arrière-plan PDF pour insérer une page PDF."
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:171
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:173
 msgid "Contents"
 msgstr "Contenus"
 
@@ -1357,8 +1363,8 @@ msgid "Cut"
 msgstr "Couper"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:351
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:81
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
 msgstr "Copier"
 
@@ -1717,8 +1723,8 @@ msgstr "Blanc"
 msgid "Toolbar found: {1}"
 msgstr "Barre d'outils trouvée : {1}"
 
-#: ../src/core/model/Document.cpp:315 ../src/core/model/Document.cpp:324
-#: ../src/core/model/Document.cpp:327
+#: ../src/core/model/Document.cpp:316 ../src/core/model/Document.cpp:325
+#: ../src/core/model/Document.cpp:328
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Document non chargé ! ({1}), {2}"
 
@@ -1726,19 +1732,19 @@ msgstr "Document non chargé ! ({1}), {2}"
 msgid "Background"
 msgstr "Arrière-plan"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:173
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:216
 msgid "No pages to export!"
 msgstr "Aucune page à exporter !"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:178
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:221
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Échec de l'initialisation de la surface PDF Cairo"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
 msgstr "Effacer le trait"
 
@@ -1770,10 +1776,6 @@ msgstr "texte"
 #: ../src/core/undo/ColorUndoAction.cpp:90
 msgid "Change color"
 msgstr "Modifier la couleur"
-
-#: ../src/core/undo/CopyUndoAction.cpp:62
-msgid "Copy page"
-msgstr "Copier la page"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -1835,7 +1837,7 @@ msgstr "Déplacez le calque"
 msgid "Move"
 msgstr "Déplacer"
 
-#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:84
+#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:85
 msgid "Page background changed"
 msgstr "Arrière-plan de la page modifié"
 
@@ -1851,7 +1853,7 @@ msgstr "Rotation"
 msgid "Scale"
 msgstr "Échelle"
 
-#: ../src/core/undo/SizeUndoAction.cpp:106
+#: ../src/core/undo/SizeUndoAction.cpp:108
 msgid "Change stroke width"
 msgstr "Changer la largeur du trait"
 
@@ -1907,17 +1909,17 @@ msgstr "ElementRange::parse(): les indices de l'élément commencent par 1"
 msgid "Error opening file: \"{1}\""
 msgstr "Erreur lors de l'ouverture du fichier : \"{1}\""
 
-#: ../src/util/PathUtil.cpp:172
+#: ../src/util/PathUtil.cpp:173
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Le fichier n'a pas pu être ouvert. Vous devez le faire manuellement :\n"
 "URL : {1}"
 
-#: ../src/util/PathUtil.cpp:244
+#: ../src/util/PathUtil.cpp:245
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:254
+#: ../src/util/PathUtil.cpp:255
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Impossible de créer le dossier : {1}\n"
@@ -1959,15 +1961,15 @@ msgstr "xoj-preview-extractor: le fichier \"{1}\" ne contient aucun aperçu"
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: pas de prévisualisation et ni de page trouvée, peut-être un fichier invalide?"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "icône introuvable \"{1}\""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor : l'ouverture du fichier de sortie \"{1}\" a échoué"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:209
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "extracteur-xoj-preview : extrait avec succès"
 
@@ -3754,203 +3756,203 @@ msgstr "Mode _présentation"
 
 #: ../ui/mainmenubar.xml:192
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Afficher les barres d'outils"
 
 #: ../ui/mainmenubar.xml:199
 msgid "Layout"
-msgstr ""
+msgstr "Mise en page"
 
 #: ../ui/mainmenubar.xml:202
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horizontal"
 
 #: ../ui/mainmenubar.xml:207
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertical"
 
 #: ../ui/mainmenubar.xml:214
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Gauche à Droite"
 
 #: ../ui/mainmenubar.xml:219
 msgid "_Right to Left"
-msgstr ""
+msgstr "_Droite à Gauche"
 
 #: ../ui/mainmenubar.xml:226
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "_Haut en Bas"
 
 #: ../ui/mainmenubar.xml:231
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "_Bas en Haut"
 
 #: ../ui/mainmenubar.xml:238
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Colonnes/Lignes"
 
 #: ../ui/mainmenubar.xml:241
 msgid "Set Columns"
-msgstr ""
+msgstr "Nombre de colonnes"
 
 #: ../ui/mainmenubar.xml:245
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 colonne"
 
 #: ../ui/mainmenubar.xml:250
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 colonnes"
 
 #: ../ui/mainmenubar.xml:255
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 colonnes"
 
 #: ../ui/mainmenubar.xml:260
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 colonnes"
 
 #: ../ui/mainmenubar.xml:265
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 colonnes"
 
 #: ../ui/mainmenubar.xml:270
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 colonnes"
 
 #: ../ui/mainmenubar.xml:275
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 colonnes"
 
 #: ../ui/mainmenubar.xml:280
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 colonnes"
 
 #: ../ui/mainmenubar.xml:287
 msgid "Set Rows"
-msgstr ""
+msgstr "Nombre de lignes"
 
 #: ../ui/mainmenubar.xml:291
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 ligne"
 
 #: ../ui/mainmenubar.xml:296
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 lignes"
 
 #: ../ui/mainmenubar.xml:301
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 lignes"
 
 #: ../ui/mainmenubar.xml:306
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 lignes"
 
 #: ../ui/mainmenubar.xml:311
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 lignes"
 
 #: ../ui/mainmenubar.xml:316
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 lignes"
 
 #: ../ui/mainmenubar.xml:321
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 lignes"
 
 #: ../ui/mainmenubar.xml:326
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 lignes"
 
 #: ../ui/mainmenubar.xml:337
 msgid "T_oolbars"
-msgstr ""
+msgstr "Barre d'_outils"
 
 #: ../ui/mainmenubar.xml:340
 msgid "_Manage"
-msgstr ""
+msgstr "_Gérer"
 
 #: ../ui/mainmenubar.xml:344
 msgid "_Customize"
-msgstr ""
+msgstr "_Personnaliser"
 
 #: ../ui/mainmenubar.xml:359
 msgid "Zoom In"
-msgstr ""
+msgstr "Zoom avant"
 
 #: ../ui/mainmenubar.xml:364
 msgid "Zoom Out"
-msgstr ""
+msgstr "Zoom arrière"
 
 #: ../ui/mainmenubar.xml:369
 msgid "Normal Size"
-msgstr ""
+msgstr "Taille normale"
 
 #: ../ui/mainmenubar.xml:373
 msgid "Zoom to Fit"
-msgstr ""
+msgstr "Ajuster à l'écran"
 
 #: ../ui/mainmenubar.xml:379
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navigation"
 
 #: ../ui/mainmenubar.xml:382
 msgid "_First Page"
-msgstr ""
+msgstr "P_remière page"
 
 #: ../ui/mainmenubar.xml:387
 msgid "_Previous Page"
-msgstr ""
+msgstr "Page _précédente"
 
 #: ../ui/mainmenubar.xml:392
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Aller à la page"
 
 #: ../ui/mainmenubar.xml:397
 msgid "_Next Page"
-msgstr ""
+msgstr "Page _suivante"
 
 #: ../ui/mainmenubar.xml:402
 msgid "_Last Page"
-msgstr ""
+msgstr "_Dernière page"
 
 #: ../ui/mainmenubar.xml:409
 msgid "_Previous Layer"
-msgstr ""
+msgstr "Calque pré_cédent"
 
 #: ../ui/mainmenubar.xml:414
 msgid "_Next Layer"
-msgstr ""
+msgstr "Calque sui_vant"
 
 #: ../ui/mainmenubar.xml:419
 msgid "_Top Layer"
-msgstr ""
+msgstr "Calque du _haut"
 
 #: ../ui/mainmenubar.xml:425
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Page annotée s_uivante"
 
 #: ../ui/mainmenubar.xml:430
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Page annotée p_récédente"
 
 #: ../ui/mainmenubar.xml:437
 msgid "_Journal"
-msgstr ""
+msgstr "_Journal"
 
 #: ../ui/mainmenubar.xml:440
 msgid "New Page _Before"
-msgstr ""
+msgstr "Nouvelle page A_vant"
 
 #: ../ui/mainmenubar.xml:444
 msgid "New Page _After"
-msgstr ""
+msgstr "Nouvelle page A_près"
 
 #: ../ui/mainmenubar.xml:449
 msgid "New Page at _End"
-msgstr ""
+msgstr "Nouvelle page à la _Fin"
 
 #: ../ui/mainmenubar.xml:453
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Dupliquer la page"
 
 #: ../ui/mainmenubar.xml:457
 msgid "Append New PDF Pages"
@@ -4199,7 +4201,7 @@ msgstr "com.github.xournalpp.xournalpp"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
-msgstr ""
+msgstr "Xournal++ est un logiciel de prise de notes écrit en C++ qui combine flexibilité, fonctionnalité et rapidité. Certaines parties du code, dont la reconnaissance de traits, sont basées sur le code du projet Xournal, que vous pouvez trouver sur Sourceforge. Xournal++ prend en charge GNU/Linux (Ubuntu, Debian, Arch, ou SUSE par exemple), macOS et Windows, et supporte l'entrée à partir de stylets à l'aide de périphériques tels que les tablettes Wacom."
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:17
 msgid "Xournal++ features:"
@@ -4207,7 +4209,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:21
 msgid "Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)"
-msgstr ""
+msgstr "Prise en charge des stylets sensibles à la pression et des tablettes de dessin numériques (ex : Wacom, Huion, XP Pen, etc.)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:22
 msgid "Paper backgrounds for note-taking, scratch paper, or whiteboarding"
@@ -4215,95 +4217,95 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:23
 msgid "Annotate on top of PDFs"
-msgstr ""
+msgstr "Annoter par-dessus des PDF"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:24
 msgid "Select text from the background PDF, copy, highlight or underline it or strike it through"
-msgstr ""
+msgstr "Sélectionner du texte à partir du PDF en arrière-plan, le copier, le surligner, le souligner ou le barrer"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:25
 msgid "Follow links from the background PDF"
-msgstr ""
+msgstr "Suivre des liens depuis le PDF en arrière-plan"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:26
 msgid "Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line"
-msgstr ""
+msgstr "Export vers une variété de formats, y compris SVG, PNG et PDF, à partir de l'interface graphique et de la ligne de commande"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:27
 msgid "Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)"
-msgstr ""
+msgstr "Différents outils de dessin (ex. stylo, surligneur) et styles de traits (ex. : solide, en pointillés)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:28
 msgid "Shape drawing (line, arrow, circle, rectangle, spline)"
-msgstr ""
+msgstr "Dessin de formes (lignes, flèches, cercles, rectangles, gaussiennes)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:29
 msgid "Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii"
-msgstr ""
+msgstr "Utilisez les outils rapporteur et compas pour mesurer, ou bien comme guide pour tracer des lignes droites, des arcs circulaires et des rayons"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:30
 msgid "Fill shape functionality"
-msgstr ""
+msgstr "Possibilité de remplir la forme tracée"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:31
 msgid "Shape resizing and rotation"
-msgstr ""
+msgstr "Redimensionnement et rotation de la forme sélectionnée"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:32
 msgid "Rotation and grid snapping for precise alignment of objects"
-msgstr ""
+msgstr "Rotation et aimantage à la grille pour un alignement précis des objets"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:33
 msgid "Input stabilization for smoother writing/drawing"
-msgstr ""
+msgstr "Stabilisation de l'entrée pour une écriture et un dessin plus lisses"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:34
 msgid "Text tool for adding text in different fonts, colors, and sizes"
-msgstr ""
+msgstr "Outil texte pour ajouter du texte dans différentes polices, couleurs et tailles"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:35
 msgid "Enhanced support for image insertion"
-msgstr ""
+msgstr "Support avancé pour l'insertion d'images"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:36
 msgid "Eraser with multiple configurations"
-msgstr ""
+msgstr "Effaceur avec plusieurs configurations"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:37
 msgid "LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting"
-msgstr ""
+msgstr "Support LaTeX (nécessite une installation LaTeX fonctionnelle) avec un modèle personnalisable et un éditeur redimensionnable avec coloration syntaxique"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:38
 msgid "Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)"
-msgstr ""
+msgstr "Barre latérale contenant des aperçus de page avec un tri avancé des pages, des signets PDF et des couches (peuvent être masqués individuellement/édités)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:39
 msgid "Allows mapping different tools/colors etc. to stylus/mouse buttons"
-msgstr ""
+msgstr "Permet d'associer différents outils/couleurs, etc. à des boutons du stylet/de la souris"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:40
 msgid "Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape"
-msgstr ""
+msgstr "Barre d'outils personnalisable avec plusieurs configurations (ex. : optimisée pour le mode portrait/paysage)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:41
 msgid "Custom color palette support using the .gpl format"
-msgstr ""
+msgstr "Prise en charge de palettes de couleurs personnalisées au format .gpl"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:42
 msgid "Page template definitions"
-msgstr ""
+msgstr "Définitions de modèles de page"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:43
 msgid "Bug reporting, autosave, and auto backup tools"
-msgstr ""
+msgstr "Outils facilitant les rapports de bugs, la sauvegarde et les backups automatiques"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:44
 msgid "Audio recording and playback alongside with handwritten notes"
-msgstr ""
+msgstr "Enregistrement et lecture d'audios intégrés aux notes manuscrites"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:45
 msgid "Multi language support (over 20 languages supported)"
-msgstr ""
+msgstr "Prise en charge multilingue (plus de 20 langues supportées)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:46
 msgid "Plugins using Lua scripting"

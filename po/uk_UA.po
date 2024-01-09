@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-30 14:40+0000\n"
-"PO-Revision-Date: 2023-10-30 15:01\n"
+"POT-Creation-Date: 2023-11-22 08:35+0000\n"
+"PO-Revision-Date: 2023-11-22 08:44\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -23,39 +23,39 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Тека з аудіо не задана чи не відповідна! Запис не працюватиме!\n"
 "Будь ласка, задайте теку для записів через \"Властивості > Запис аудіо\""
 
-#: ../src/core/control/Control.cpp:228
+#: ../src/core/control/Control.cpp:229
 msgid "Autosave renamed from {1} to {2}"
 msgstr "Автозбереження перейменовано з {1} в {2}"
 
-#: ../src/core/control/Control.cpp:239
+#: ../src/core/control/Control.cpp:240
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "Не вдалося перейменувати файл автозбереження з \"{1}\" на \"{2}\": {3}"
 
-#: ../src/core/control/Control.cpp:248
+#: ../src/core/control/Control.cpp:249
 msgid "Autosave failed with an error: {1}"
 msgstr "Автозбереження не вдалося з помилкою: {1}"
 
-#: ../src/core/control/Control.cpp:566
+#: ../src/core/control/Control.cpp:574
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Конфігурацію панелі інструментів \"{1}\" вже задано. Хочете створити копію для редагування?"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "Yes"
 msgstr "Так"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "No"
 msgstr "Ні"
 
-#: ../src/core/control/Control.cpp:748
+#: ../src/core/control/Control.cpp:756
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Немає сторінок pdf, доступних для додавання. Вам може знадобитися заново відкрити документ."
 
-#: ../src/core/control/Control.cpp:762
+#: ../src/core/control/Control.cpp:770
 msgid "Unable to retrieve pdf page."
 msgstr "Не вдалося виділити сторінку pdf окремо."
 
-#: ../src/core/control/Control.cpp:1330
+#: ../src/core/control/Control.cpp:1336
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -63,125 +63,128 @@ msgstr "Не відкривайте автоматично збережені ф
 "Скопіюйте файли до іншої директорії.\n"
 "Файли з директорії {1} не вдається відкрити."
 
-#: ../src/core/control/Control.cpp:1344
+#: ../src/core/control/Control.cpp:1350
 msgid "file: {1}"
 msgstr "файл: {1}"
 
-#: ../src/core/control/Control.cpp:1392
+#: ../src/core/control/Control.cpp:1398
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Прикріплений файл не знайдено. Можливо, його було переміщено, перейменовано або видалено."
 
-#: ../src/core/control/Control.cpp:1395
+#: ../src/core/control/Control.cpp:1401
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr ""
+msgstr "Файл фонового зображення \"{1}\" не знайдено. Можливо, його було переміщено, перейменовано або видалено.\n"
+"Останнє відоме його розташування: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1405
+#: ../src/core/control/Control.cpp:1411
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Запропонований файл-замінник: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1413
+#: ../src/core/control/Control.cpp:1419
 msgid "Use proposed PDF"
 msgstr "Використовувати запропонований PDF"
 
-#: ../src/core/control/Control.cpp:1415
+#: ../src/core/control/Control.cpp:1421
 msgid "Select another PDF"
 msgstr "Оберіть інший файл PDF"
 
-#: ../src/core/control/Control.cpp:1416
+#: ../src/core/control/Control.cpp:1422
 msgid "Remove PDF Background"
 msgstr "Видалити тло PDF"
 
-#: ../src/core/control/Control.cpp:1417 ../src/core/control/Control.cpp:1937
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/Control.cpp:1423 ../src/core/control/Control.cpp:1946
+#: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: ../src/core/control/Control.cpp:1448
+#: ../src/core/control/Control.cpp:1454
 msgid "Error opening file \"{1}\""
 msgstr "Помилка відкриття файлу \"{1}\""
 
-#: ../src/core/control/Control.cpp:1456
+#: ../src/core/control/Control.cpp:1462
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Файл, який завантажується, має новішу версію формату ніж та, що наразі підтримується цією версією Xournal++, так що він може не завантажитись належним чином. Все одно відкрити?"
 
-#: ../src/core/control/Control.cpp:1618
+#: ../src/core/control/Control.cpp:1624
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Помилка анотації PDF-файлу \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr "Зберегти Файл"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: ../src/core/control/Control.cpp:1720
+#: ../src/core/control/Control.cpp:1729
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "_Зберегти"
 
-#: ../src/core/control/Control.cpp:1725
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
+#: ../src/core/control/Control.cpp:1734
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:63
 msgid "Xournal++ files"
 msgstr "Xournal++ файли"
 
-#: ../src/core/control/Control.cpp:1772
+#: ../src/core/control/Control.cpp:1781
 msgid "Select font"
-msgstr ""
+msgstr "Обрати шрифт"
 
-#: ../src/core/control/Control.cpp:1787
+#: ../src/core/control/Control.cpp:1796
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
 msgid "Select color"
 msgstr "Обрати колір"
 
-#: ../src/core/control/Control.cpp:1809
+#: ../src/core/control/Control.cpp:1818
 msgid "Unsaved Document"
 msgstr "Незбережений документ"
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "Document file was removed."
 msgstr "Файл документу видалено."
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "Цей документ ще не збережено."
 
-#: ../src/core/control/Control.cpp:1929
+#: ../src/core/control/Control.cpp:1938
 msgid "Save As..."
 msgstr "Зберегти як..."
 
-#: ../src/core/control/Control.cpp:1929 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:1938 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Save"
 msgstr "Зберегти"
 
-#: ../src/core/control/Control.cpp:1934
+#: ../src/core/control/Control.cpp:1943
 msgid "Discard"
 msgstr "Відмінити"
 
 #: ../src/core/control/CrashHandler.cpp:31
-msgid "Trying to emergency save the current open document…"
-msgstr "Спроба аварійно зберегти поточний документ…"
+msgid "Trying to emergency save the current open document..."
+msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:40
+#: ../src/core/control/XournalMain.cpp:301
+#: ../src/core/control/XournalMain.cpp:307
 msgid "Error: {1}"
 msgstr "Помилка: {1}"
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "Успішно збережено документ до \"{1}\""
 
 #: ../src/core/control/DeviceListHelper.cpp:95
 msgid "mouse"
@@ -189,7 +192,7 @@ msgstr "мишка"
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "pen"
-msgstr "олівець"
+msgstr "перо"
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
@@ -227,33 +230,33 @@ msgstr "Файл зображення успішно створено"
 msgid "PDF file successfully created"
 msgstr "PDF-файл успішно створено"
 
-#: ../src/core/control/LatexController.cpp:77
+#: ../src/core/control/LatexController.cpp:79
 msgid "Global template file does not exist. Please check your settings."
 msgstr "Глобальний файл шаблону не існує. Перевірте налаштування."
 
-#: ../src/core/control/LatexController.cpp:82
+#: ../src/core/control/LatexController.cpp:84
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Не вдалося прочитати файл глобального шаблону. Будь ласка, перевірте налаштування."
 
-#: ../src/core/control/LatexController.cpp:88
+#: ../src/core/control/LatexController.cpp:90
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Глобальний шаблон не є звичним файлом. Будь ласка, перевірте налаштування. "
 
-#: ../src/core/control/LatexController.cpp:235
+#: ../src/core/control/LatexController.cpp:236
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Latex генерація зіткнулася з помилкою: {1} (код виходу: {2})"
 
-#: ../src/core/control/LatexController.cpp:301
+#: ../src/core/control/LatexController.cpp:302
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Не вдалося завантажити LaTeX PDF файл: {1}"
 
-#: ../src/core/control/LatexController.cpp:306
+#: ../src/core/control/LatexController.cpp:307
 msgid "Could not load LaTeX PDF file"
 msgstr "Не вдалося завантажити LaTeX PDF файл"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:151
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Це зображення не вдалося завантажити. Повідомлення про помилку: {1}"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:186
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
@@ -261,79 +264,79 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "PDF сторінки для вибору відсутні. Операцію скасовано.\n"
 "Будь ласка, оберіть інший тип тла: Пункт меню \"Журнал\" → \"Налаштування шаблону сторінки\"."
 
-#: ../src/core/control/PdfCache.cpp:123
+#: ../src/core/control/PdfCache.cpp:124
 msgid "PDF background missing"
 msgstr "Фон PDF відсутній"
 
 #: ../src/core/control/PrintHandler.cpp:118
 msgid "Running print operation failed with {1}"
-msgstr ""
+msgstr "Помилка під час виконання операції друку з {1}"
 
-#: ../src/core/control/XournalMain.cpp:147
+#: ../src/core/control/XournalMain.cpp:148
 msgid "Failed to delete file: {1}"
 msgstr "Не вдалося видалити файл: {1}"
 
-#: ../src/core/control/XournalMain.cpp:149
+#: ../src/core/control/XournalMain.cpp:150
 msgid "Please delete the file manually"
 msgstr "Будь ласка, видаліть файл вручну"
 
-#: ../src/core/control/XournalMain.cpp:185
+#: ../src/core/control/XournalMain.cpp:186
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Недавній файл помилок Xournal++. Будь ласка, заповніть Bugreport, щоб помилку можна було виправити."
 
-#: ../src/core/control/XournalMain.cpp:187
+#: ../src/core/control/XournalMain.cpp:188
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Недавні файли помилок Xournal++. Будь ласка, заповніть Bugreport, щоб помилку можна було виправити."
 
-#: ../src/core/control/XournalMain.cpp:190
+#: ../src/core/control/XournalMain.cpp:191
 msgid "The most recent log file name: {1}"
 msgstr "Останнє використане ім'я файлу логів: {1}"
 
-#: ../src/core/control/XournalMain.cpp:192
+#: ../src/core/control/XournalMain.cpp:193
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
-msgstr ""
+msgstr "Щоб запобігти повторній появі цього вікна, просто видаліть файли журналу помилок."
 
-#: ../src/core/control/XournalMain.cpp:195
+#: ../src/core/control/XournalMain.cpp:196
 msgid "File Bug Report"
 msgstr "Звіт про помилку"
 
-#: ../src/core/control/XournalMain.cpp:196
+#: ../src/core/control/XournalMain.cpp:197
 msgid "Open Logfile"
 msgstr "Відкрити файл логування"
 
-#: ../src/core/control/XournalMain.cpp:197
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Open Logfile directory"
 msgstr "Відкрити теку файлом логування"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:199
 msgid "Delete Logfile"
 msgstr "Видалити файл логів"
 
-#: ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/XournalMain.cpp:201
 msgid "Crash log"
 msgstr "Журнал збоїв"
 
-#: ../src/core/control/XournalMain.cpp:222
+#: ../src/core/control/XournalMain.cpp:223
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Під час останнього сеансу Xournal++ аварійно завершила роботу. Бажаєте відновити файл, що редагувався останнім?"
 
-#: ../src/core/control/XournalMain.cpp:225
+#: ../src/core/control/XournalMain.cpp:226
 msgid "Recovery file detected"
 msgstr "Виявлено файл відновлення"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Delete file"
 msgstr "Видалити файл"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Restore file"
 msgstr "Відновити файл"
 
-#: ../src/core/control/XournalMain.cpp:245
+#: ../src/core/control/XournalMain.cpp:246
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Файл фонового зображення \"{1}\" не знайдено. Можливо, його було переміщено, перейменовано або видалено."
 
-#: ../src/core/control/XournalMain.cpp:408
+#: ../src/core/control/XournalMain.cpp:438
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -347,51 +350,58 @@ msgstr "<span foreground='red' size='x-large'>Відсутній необхід�
 "  Відсутній в Робочому Каталозі\n"
 "  Відсутній в {2}"
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:443
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Спроба запустити без цього файлу."
 
-#: ../src/core/control/XournalMain.cpp:430
-#: ../src/core/control/XournalMain.cpp:523
+#: ../src/core/control/XournalMain.cpp:460
+#: ../src/core/control/XournalMain.cpp:553
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "На жаль, Xournal++ може відкрити не більше одного файлу одночасно. Усі інші ігноруються."
 
-#: ../src/core/control/XournalMain.cpp:441
+#: ../src/core/control/XournalMain.cpp:471
 msgid "File {1} does not exist."
-msgstr ""
+msgstr "Файл {1} не знайдено."
 
-#: ../src/core/control/XournalMain.cpp:445
-#: ../src/core/control/XournalMain.cpp:543
+#: ../src/core/control/XournalMain.cpp:475
+#: ../src/core/control/XournalMain.cpp:573
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
-msgstr ""
+msgstr "Помилка файлової системи: {1}\n"
+"Вибачте, Xournal++ не може відкрити файл: {2}\n"
+"Спробуйте скопіювати файл до локальної директорії."
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Jump to Page (first Page: 1)"
 msgstr "Перейти до сторінки (перша сторінка: 1)"
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Get version of xournalpp"
 msgstr "Отримати версію xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:664
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Disable audio for this session"
 msgstr "Вимкнути звук для цієї сесії"
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
+msgstr "Відкрити PDF файл у режимі додавання\n"
+"                                 Ігнорується, якщо PDF файл не вказано."
+
+#: ../src/core/control/XournalMain.cpp:703
+msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:677
+#: ../src/core/control/XournalMain.cpp:712
 msgid "Export FILE as PDF"
 msgstr "Експортувати файл в PDF"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -399,59 +409,71 @@ msgstr "Експортувати у файли зображень (по одно
 "                                 Визначити формат на основі розширення IMGFILE\n"
 "                                 Формати, що підтримуються: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:684
+#: ../src/core/control/XournalMain.cpp:719
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Експорт без фонового зображення\n"
+"                                 Експортований файл має прозоре або біле тло,\n"
+"                                 в залежності від того, що підтримує обраний формат\n"
 
-#: ../src/core/control/XournalMain.cpp:689
+#: ../src/core/control/XournalMain.cpp:724
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Експорт без лініювання\n"
+"                                 У експортованого файлу відсутнє лініювання\n"
 
-#: ../src/core/control/XournalMain.cpp:693
+#: ../src/core/control/XournalMain.cpp:728
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Експортувати шари послідовно\n"
+"                                 в PDF, Відмальовувати шари послідовно один за одним.\n"
+"                                 Це призведе до експорту N сторінок на сторінку з N шарами,\n"
+"                                 прогресивне створення стека шару.\n"
+"                                 Отриманий файл PDF можна використовувати для презентації.\n"
 
-#: ../src/core/control/XournalMain.cpp:700
+#: ../src/core/control/XournalMain.cpp:735
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Експорт тільки сторінок вказаних у проміжку (наприклад, \"2-3 5,7-\")\n"
 "                                 Немає ефекту без -p/--create-pdf або -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:739
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "При експорті експортуйте шари з указаного проміжку (напр., \"2-3,5,7-7\")\n"
 "                                 Немає ефекту без -p/--create-pdf або -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:708
+#: ../src/core/control/XournalMain.cpp:743
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Встановіть DPI для PNG експорту. За замовчуванням 300\n"
+"                                 Не матиме ефекту без -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:712
+#: ../src/core/control/XournalMain.cpp:747
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Встановити ширину сторінки для експорту PNG\n"
+"                                 Не матиме ефекту без -i/--create-img=foo.png\n"
+"                                 Ігнорується, якщо зазначено --export-png-dpi"
 
-#: ../src/core/control/XournalMain.cpp:718
+#: ../src/core/control/XournalMain.cpp:753
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Встановити висоту сторінки для експорту PNG\n"
+"                                 Не матиме ефекту без -i/--create-img=foo.png\n"
+"                                 Ігнорується, якщо зазначено --export-png-dpi або --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:723
+#: ../src/core/control/XournalMain.cpp:758
 msgid "Advanced export options"
 msgstr "Розширені параметри експорту"
 
-#: ../src/core/control/XournalMain.cpp:724
+#: ../src/core/control/XournalMain.cpp:759
 msgid "Display advanced export options"
 msgstr "Відобразити додаткові параметри експорту"
 
@@ -469,7 +491,7 @@ msgstr "Експорт PDF"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 msgid "_Export"
-msgstr ""
+msgstr "_Експорт"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -477,7 +499,7 @@ msgstr "Не перезаписуйте фоновий PDF! Це призвед�
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "Перевірка на перезапис фонового зображення не вдалась:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:53
 msgid "\n"
@@ -488,7 +510,8 @@ msgstr "\n"
 #: ../src/core/control/jobs/BaseExportJob.cpp:108
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Не вдалось визначити шлях, що спричинило наступну помилку:\n"
+"{1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:26
 msgid "Custom Export"
@@ -496,7 +519,7 @@ msgstr "Спеціальний експорт файлів"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:48
 msgid "PDF files"
 msgstr "PDF-файли"
 
@@ -513,7 +536,7 @@ msgid "Xournal (Compatibility)"
 msgstr "Xournal (Сумісність)"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:131
-#: ../src/core/control/jobs/SaveJob.cpp:131
+#: ../src/core/control/jobs/SaveJob.cpp:130
 msgid "Save file error: {1}"
 msgstr "Помилка зберігання файлу: {1}"
 
@@ -527,7 +550,7 @@ msgstr "Помилка збереження зображення #1"
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Помилка при експорті тла PDF: не вдається знайти номер сторінки в PDF "
 
 #: ../src/core/control/jobs/ImageExport.cpp:197
 msgid "Error save image #2"
@@ -537,27 +560,29 @@ msgstr "Помилка збереження зображення #2"
 msgid "PDF Export"
 msgstr "Експорт PDF"
 
-#: ../src/core/control/jobs/SaveJob.cpp:117
+#: ../src/core/control/jobs/SaveJob.cpp:116
 msgid "Save file error, can't backup: {1}"
 msgstr "Помилка збереження файлу, не можливо створити резервну копію: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:61
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "Не вдалося проаналізувати шлях генератора LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Не вдалося обробити команду генератора LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:78
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr ""
+msgstr "Не вдалося знайти програму для генератора LaTeX у PATH: {1}\n\n"
+"Оскільки установка програми відбувалася у вигляді Flatpak, вам необхідно встановити розширення Tex Live. Наприклад, виконавши команду:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Не вдалося знайти програму створення LaTeX у PATH: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:91
 msgid "Could not save .tex file: {1}"
@@ -589,7 +614,7 @@ msgstr "Лінійно з вертикальною лінією"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "Staves"
-msgstr ""
+msgstr "Нотний стан"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Graph"
@@ -616,198 +641,198 @@ msgstr "З тлом PDF"
 msgid "Image"
 msgstr "Зображення"
 
-#: ../src/core/control/settings/Settings.cpp:150
+#: ../src/core/control/settings/Settings.cpp:151
 msgid "%F-Note-%H-%M"
 msgstr "%F-Примітка -%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:152
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%{name}_annotated"
 msgstr "%{name}_анотований"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 msgid "Open Image"
 msgstr "Відкрити зображення"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:18
 msgid "_Open"
 msgstr "_Відкрити"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:22
 msgid "Images"
 msgstr "Зображення"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:33
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:117
 msgid "Attach file to the journal"
 msgstr "Прикріпити файл до журналу"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Open file"
 msgstr "Відкрити файл"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:40
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:41
 msgid "All files"
 msgstr "Усі файли"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:56
 msgid "Xournal files"
 msgstr "Xournal файли"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:70
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
 msgstr "Xournal++ шаблон"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:98
 msgid "Supported files"
 msgstr "Файли, що підтримуються"
 
-#: ../src/core/control/tools/EditSelection.cpp:401
+#: ../src/core/control/tools/EditSelection.cpp:462
 msgid "Arrange"
 msgstr "Впорядкувати"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:467
 msgid "Bring to front"
 msgstr "На передній план"
 
-#: ../src/core/control/tools/EditSelection.cpp:416
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Bring forward"
 msgstr "Перемістити вперед"
 
-#: ../src/core/control/tools/EditSelection.cpp:427
+#: ../src/core/control/tools/EditSelection.cpp:490
 msgid "Send backward"
 msgstr "Перемістити назад"
 
-#: ../src/core/control/tools/EditSelection.cpp:435
+#: ../src/core/control/tools/EditSelection.cpp:497
 msgid "Send to back"
 msgstr "На задній план"
 
 #: ../src/core/control/tools/ImageHandler.cpp:72
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Не вдалося завантажити зображення, не можливо визначити розмір зображення!"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:142
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "Некоректний .xopp файл (відсутній mimetype): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:151
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "Некоректний .xopp файл (помилковий mimetype): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:159
+#: ../src/core/control/xojfile/LoadHandler.cpp:160
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "Некоректний .xopp файл (не вказана версія): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:173
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "Некоректний .xopp файл (невірно вказана версія): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:181
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Не вдалося відкрити content.xml в zip-архіві: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:189
+#: ../src/core/control/xojfile/LoadHandler.cpp:190
 msgid "Could not open file: \"{1}\""
 msgstr "Не вдалося відкрити файл: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:255
+#: ../src/core/control/xojfile/LoadHandler.cpp:256
 msgid "XML Parser error: {1}"
 msgstr "Помилка XML парсера: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:258
+#: ../src/core/control/xojfile/LoadHandler.cpp:259
 msgid "Unknown parser error"
 msgstr "Невідома помилка парсера"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:269
+#: ../src/core/control/xojfile/LoadHandler.cpp:270
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Документ не заповнений (можливо кінець відрізано?)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:273
+#: ../src/core/control/xojfile/LoadHandler.cpp:274
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Документ пошкоджений (не знайдено сторінок у файлі)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:318
+#: ../src/core/control/xojfile/LoadHandler.cpp:319
 msgid "Unexpected root tag: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:339
+#: ../src/core/control/xojfile/LoadHandler.cpp:340
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:387
-#: ../src/core/control/xojfile/LoadHandler.cpp:415
+#: ../src/core/control/xojfile/LoadHandler.cpp:388
+#: ../src/core/control/xojfile/LoadHandler.cpp:416
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Не вдалося прочитати зображення: {1}. Повідомлення про помилку: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:425
+#: ../src/core/control/xojfile/LoadHandler.cpp:426
 msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:433
+#: ../src/core/control/xojfile/LoadHandler.cpp:434
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:498
+#: ../src/core/control/xojfile/LoadHandler.cpp:479
+#: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "Помилка читання PDF: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:486
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:530
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:553
+#: ../src/core/control/xojfile/LoadHandler.cpp:554
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:621
+#: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:639
+#: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:807
-#: ../src/core/control/xojfile/LoadHandler.cpp:823
-#: ../src/core/control/xojfile/LoadHandler.cpp:1137
-#: ../src/core/control/xojfile/LoadHandler.cpp:1151
+#: ../src/core/control/xojfile/LoadHandler.cpp:808
+#: ../src/core/control/xojfile/LoadHandler.cpp:824
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Не вдалося відкрити вкладення: {1}. Повідомлення про помилку: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:816
-#: ../src/core/control/xojfile/LoadHandler.cpp:1144
-#: ../src/core/control/xojfile/LoadHandler.cpp:1162
+#: ../src/core/control/xojfile/LoadHandler.cpp:817
+#: ../src/core/control/xojfile/LoadHandler.cpp:1145
+#: ../src/core/control/xojfile/LoadHandler.cpp:1163
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Не вдалося відкрити вкладення: {1}. Повідомлення про помилку: вказано неприпустимий розмір файлу"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:835
+#: ../src/core/control/xojfile/LoadHandler.cpp:836
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Не вдалося відкрити вкладення: {1}. Повідомлення про помилку: не вдалося прочитати файл"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:844
+#: ../src/core/control/xojfile/LoadHandler.cpp:845
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Не вдалося відкрити вкладення: {1}. Повідомлення про помилку: Не вдалося записати файл"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1031
+#: ../src/core/control/xojfile/LoadHandler.cpp:1032
 msgid "Wrong count of points ({1})"
 msgstr "Невірна кількість крапок ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1047
+#: ../src/core/control/xojfile/LoadHandler.cpp:1048
 msgid "xoj-File: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1048
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1181
+#: ../src/core/control/xojfile/LoadHandler.cpp:1182
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -865,17 +890,17 @@ msgstr "Помилка при завантаженні файлу glade \"{1}\" 
 msgid "Unable to play audio recording {1}"
 msgstr "Не вдалось відтворити аудіозапис {1}"
 
-#: ../src/core/gui/PageView.cpp:913
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
+#: ../src/core/gui/PageView.cpp:917
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Loading..."
 msgstr "Завантаження..."
 
-#: ../src/core/gui/PageView.cpp:976
+#: ../src/core/gui/PageView.cpp:980
 msgid "Scroll to page {1}"
 msgstr "Прокрутити до сторінки {1}"
 
-#: ../src/core/gui/PageView.cpp:978
+#: ../src/core/gui/PageView.cpp:982
 msgid "Add missing page"
 msgstr "Додати відсутню сторінку"
 
@@ -939,7 +964,7 @@ msgstr "Інструмент - Не змінюйте"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Pen"
-msgstr "Ручка"
+msgstr "Перо"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
@@ -975,11 +1000,11 @@ msgstr "Прямокутне виділення"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
 msgid "Select multi layer region"
-msgstr ""
+msgstr "Обрати багатошарову область"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 msgid "Select multi layer rect"
-msgstr ""
+msgstr "Обрати багатошарову прямокутну область"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
@@ -1044,7 +1069,7 @@ msgstr "Намалювати систему координат"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
+#: ../src/core/undo/RecognizerUndoAction.cpp:74
 msgid "Stroke recognizer"
 msgstr ""
 
@@ -1058,35 +1083,35 @@ msgstr "Намалювати Криву"
 msgid "Custom"
 msgstr "Користувацька"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "Системна (за замовчуванням)"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:66
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "Раніше вибрана мова більше не доступна!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
 msgid "LaTeX editor theme:"
 msgstr "Тема редактора LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView був вимкнений під час збирання Xournal++! Деякі опції не будуть доступні."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Помилка: {1}. Будь ласка, перевірте вміст {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr ""
 
@@ -1098,50 +1123,50 @@ msgstr "за замовчуванням увімкнено"
 msgid "default disabled"
 msgstr "за замовчуванням вимкнено"
 
-#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:61
+#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
 msgstr "Оберіть колір фону"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:28
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
 msgstr "Виберіть непрозорість для: "
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
 msgstr "Параметри маркера"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:34
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:38
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
 msgstr "Колір заливки"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
-msgstr "Параметри олівця"
+msgstr "Параметри пера"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:40
 msgid "PDF Text Options"
 msgstr "Параметри PDF тексту"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:42
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
 msgid "PDF Text Marker"
 msgstr "Маркер тексту PDF"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:50
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:72
+#: ../src/core/gui/dialog/SettingsDialog.cpp:73
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Пристроїв не знайдено. Здається, щось не так - можливо надіслати звіт про помилку?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Увімкніть чутливість натиску або налаштування натиску, щоб змінити це налаштування!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Фільтрувати тиск введення. Перемножте тиск на коефіцієнт тиску. Якщо менше за мінімальний, використовуйте мінімальний тиск."
 
@@ -1161,11 +1186,11 @@ msgstr "Панелі інструментів"
 msgid "New"
 msgstr "Новий"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:102
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
 msgid "Show only not used pages (one unused page)"
 msgstr "Показати лише невикористані сторінки (одна невикористана сторінка)"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:104
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Показувати тільки невикористані сторінки ({1} невикористовуваних сторінок)"
 
@@ -1242,7 +1267,7 @@ msgstr "У поточному PDF документі відсутня сторі
 "Бажаєте вставити цю сторінку?\n\n"
 "Підказка: Можна обрати пункт меню \"Журнал → Тло паперу → Тло PDF\" для додавання PDF сторінки."
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:171
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:173
 msgid "Contents"
 msgstr "Вміст"
 
@@ -1337,8 +1362,8 @@ msgid "Cut"
 msgstr "Вирізати"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:351
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:81
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
 msgstr "Копіювати"
 
@@ -1501,7 +1526,7 @@ msgstr "Компас"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Розпізнавання форм"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1575,11 +1600,11 @@ msgstr "Середній"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:523
 msgid "Thick"
-msgstr "Жирний"
+msgstr "Широкий"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:525
 msgid "Very Thick"
-msgstr "Дуже жирний"
+msgstr "Дуже широкий"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:74
 msgid "Layer Combo"
@@ -1641,64 +1666,64 @@ msgstr "Повзунок масштабу"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:109
 msgctxt "Color"
 msgid "Black"
-msgstr ""
+msgstr "Чорний"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:110
 msgctxt "Color"
 msgid "Green"
-msgstr ""
+msgstr "Зелений"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:111
 msgctxt "Color"
 msgid "Light Blue"
-msgstr ""
+msgstr "Блакитний"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:112
 msgctxt "Color"
 msgid "Light Green"
-msgstr ""
+msgstr "Салатовий"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:113
 msgctxt "Color"
 msgid "Blue"
-msgstr ""
+msgstr "Синій"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:114
 msgctxt "Color"
 msgid "Gray"
-msgstr ""
+msgstr "Сірий"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:115
 msgctxt "Color"
 msgid "Red"
-msgstr ""
+msgstr "Червоний"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:116
 msgctxt "Color"
 msgid "Magenta"
-msgstr ""
+msgstr "Пурпуровий"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:117
 msgctxt "Color"
 msgid "Orange"
-msgstr ""
+msgstr "Помаранчевий"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:118
 msgctxt "Color"
 msgid "Yellow"
-msgstr ""
+msgstr "Жовтий"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
 msgctxt "Color"
 msgid "White"
-msgstr ""
+msgstr "Білий"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
 msgstr "Панель інструментів знайдено: {1}"
 
-#: ../src/core/model/Document.cpp:315 ../src/core/model/Document.cpp:324
-#: ../src/core/model/Document.cpp:327
+#: ../src/core/model/Document.cpp:316 ../src/core/model/Document.cpp:325
+#: ../src/core/model/Document.cpp:328
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Документ не завантажений! ({1}), {2}"
 
@@ -1706,19 +1731,19 @@ msgstr "Документ не завантажений! ({1}), {2}"
 msgid "Background"
 msgstr "Тло"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:173
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:216
 msgid "No pages to export!"
 msgstr "Відсутні сторінки для експорту!"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:178
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:221
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
 msgstr "Стерти штрих"
 
@@ -1750,10 +1775,6 @@ msgstr "текст"
 #: ../src/core/undo/ColorUndoAction.cpp:90
 msgid "Change color"
 msgstr "Змінити колір"
-
-#: ../src/core/undo/CopyUndoAction.cpp:62
-msgid "Copy page"
-msgstr "Копіювати сторінку"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -1815,7 +1836,7 @@ msgstr "Перемістити шар"
 msgid "Move"
 msgstr "Перемістити"
 
-#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:84
+#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:85
 msgid "Page background changed"
 msgstr "Фон сторінки змінений"
 
@@ -1831,7 +1852,7 @@ msgstr "Поворот"
 msgid "Scale"
 msgstr "Масштаб"
 
-#: ../src/core/undo/SizeUndoAction.cpp:106
+#: ../src/core/undo/SizeUndoAction.cpp:108
 msgid "Change stroke width"
 msgstr "Змінити ширину штриха"
 
@@ -1886,17 +1907,17 @@ msgstr ""
 msgid "Error opening file: \"{1}\""
 msgstr "Помилка відкриття файлу: \"{1}\""
 
-#: ../src/util/PathUtil.cpp:172
+#: ../src/util/PathUtil.cpp:173
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Файл не вдалося відкрити. Зробіть це вручну:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:244
+#: ../src/util/PathUtil.cpp:245
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:254
+#: ../src/util/PathUtil.cpp:255
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Не вдалося створити теку: {1}\n"
@@ -1904,7 +1925,7 @@ msgstr "Не вдалося створити теку: {1}\n"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "Помилка {1} під час виконання системної команди: {2}"
 
 #: ../src/util/XojMsgBox.cpp:168
 msgid "Select another name"
@@ -1916,7 +1937,7 @@ msgstr "Замінити"
 
 #: ../src/util/XojMsgBox.cpp:187
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "Виникла помилка при відображенні допомоги: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -1938,15 +1959,15 @@ msgstr ""
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:209
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
@@ -1966,7 +1987,8 @@ msgstr ""
 #: ../ui/about.glade:186
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Частково базується на Xournal\n"
+"авторства Denis Auroux"
 
 #: ../ui/about.glade:218
 msgid "Website"
@@ -1995,7 +2017,7 @@ msgstr "Закрити"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
-msgstr ""
+msgstr "Роздільна здатність"
 
 #: ../ui/exportSettings.glade:39
 msgid "Width"
@@ -2029,11 +2051,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:114
 msgid "Image quality"
-msgstr ""
+msgstr "Якість зображення"
 
 #: ../ui/exportSettings.glade:129
 msgid "Range"
-msgstr ""
+msgstr "Діапазон"
 
 #: ../ui/exportSettings.glade:143
 msgid "All pages"
@@ -2082,7 +2104,7 @@ msgstr "Перейти на сторінку"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "Обрати зображення"
 
 #: ../ui/images.glade:73
 msgid "Load file"
@@ -2186,7 +2208,7 @@ msgstr "Шрифт: "
 
 #: ../ui/latexSettings.glade:466
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "Обрати шрифт редактора"
 
 #: ../ui/latexSettings.glade:504
 msgid "Editor settings"
@@ -2204,11 +2226,11 @@ msgstr "<b>Порожня панель</b>\n"
 
 #: ../ui/main.glade:504
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "Знайти попередній екземпляр рядка"
 
 #: ../ui/main.glade:526
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "Знайти наступний екземпляр рядка"
 
 #: ../ui/main.glade:728
 msgid "Copy selected text"
@@ -2220,11 +2242,11 @@ msgstr "Підсвічувати виділений текст"
 
 #: ../ui/main.glade:770
 msgid "Underline selected text"
-msgstr ""
+msgstr "Підкреслити виділений текст"
 
 #: ../ui/main.glade:790
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Закреслити виділений текст"
 
 #: ../ui/main.glade:810
 msgid "Toggle standard / region text selection"
@@ -2232,11 +2254,11 @@ msgstr ""
 
 #: ../ui/main.glade:838
 msgid "Insert Page Before"
-msgstr ""
+msgstr "Вставити сторінку до"
 
 #: ../ui/main.glade:846
 msgid "Insert Page After"
-msgstr ""
+msgstr "Вставити сторінку після"
 
 #: ../ui/main.glade:854 ../ui/main.glade:942
 msgid "Duplicate"
@@ -2280,7 +2302,7 @@ msgstr "Висота:"
 
 #: ../ui/pageFormat.glade:315
 msgid "Reset"
-msgstr ""
+msgstr "Reset"
 
 #: ../ui/pageTemplate.glade:27
 msgid "Configure new page template"
@@ -2300,7 +2322,7 @@ msgstr "Змінити"
 
 #: ../ui/pageTemplate.glade:109
 msgid "Select Background Color"
-msgstr ""
+msgstr "Оберіть колір тла"
 
 #: ../ui/pageTemplate.glade:119
 msgid "Copy current page background instead"
@@ -2312,7 +2334,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:179
 msgid "<b>Background Color</b>"
-msgstr "<b>Тло</b>"
+msgstr "<b>Колір тла</b>"
 
 #: ../ui/pageTemplate.glade:192
 msgid "<b>Background</b>"
@@ -2328,7 +2350,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:233
 msgid "Save to file"
-msgstr ""
+msgstr "Зберегти у файл"
 
 #: ../ui/pageTemplate.glade:247
 msgid "Load from file"
@@ -2336,7 +2358,7 @@ msgstr "Завантажити з файлу"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "Вибрати PDF сторінку"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
@@ -2364,11 +2386,11 @@ msgstr "увімкнено,"
 
 #: ../ui/renameLayerDialog.glade:17
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Перейменувати вибраний шар"
 
 #: ../ui/renameLayerDialog.glade:38
 msgid "Sample layer name"
-msgstr ""
+msgstr "Назва зразка шару"
 
 #: ../ui/selectOpacity.glade:23
 msgid "Opacity settings"
@@ -2452,11 +2474,11 @@ msgstr ""
 
 #: ../ui/settings.glade:585 ../ui/settings.glade:754
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Доступні змінні"
 
 #: ../ui/settings.glade:609
 msgid "Default Save Name"
-msgstr ""
+msgstr "Шаблон ім'я файлу при збереженні"
 
 #: ../ui/settings.glade:635
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
@@ -2488,7 +2510,31 @@ msgid "%{name}\tThe name of the exported document\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%{name}\tІм'я документу\n"
+"%a\t\t\tАбревіація дня тижня (напр. чт)\n"
+"%A\t\t\tПовна назва дня тижня (напр. четвер)\n"
+"%b\t\t\tАбревіація місяця (напр. сер)\n"
+"%B\t\t\tПовна назва місяця (напр. серпня)\n"
+"%c\t\t\tВідображення дати і часу (напр. чт, 23-сер-2001 14:55:02 +0200)\n"
+"%d\t\t\tДень місяця (01-31)\n"
+"%F\t\t\tВідображення дати (напр. 2001-08-23)\n"
+"%H\t\t\tГодини в 24h форматі (00-23)\n"
+"%I\t\t\tГодини в 12h форматі (01-12)\n"
+"%j\t\t\tНомер дня в році (001-366)\n"
+"%m\t\t\tНомер місяця (01-12)\n"
+"%M\t\t\tХвилини (00-59)\n"
+"%p\t\t\tAM або PM позначки (напр. PM)\n"
+"%S\t\t\tСекунди (00-61)\n"
+"%U\t\t\tНомер тижня, де перший тиждень розпочинається з першої неділі року (00-53)\n"
+"%w\t\t\tНомер дня тижня, де неділя дорівнює 0 (0-6)\n"
+"%W\t\t\tНомер тижня, де перший тиждень розпочинається з першого понеділка року (00-53)\n"
+"%x\t\t\tВідображення дати (напр. 23.08.01)\n"
+"%X\t\t\tВідображення часу (напр. 14:55:02 або 2:55:02 PM)\n"
+"%y\t\t\tРік, останні дві цифри (00-99)\n"
+"%Y\t\t\tРік (напр. 2001)\n"
+"%Z\t\t\tЧасова зона чи її абревіація (напр. CDT)\n"
+"%%\t\t\t%\n"
+"Неприпустимі для імені файлу символи замінюються на \"_\""
 
 #: ../ui/settings.glade:778
 msgid "Default Pdf export name"
@@ -2565,7 +2611,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1133
 msgid "Buffersize"
-msgstr ""
+msgstr "Розмір буфера"
 
 #: ../ui/settings.glade:1145
 msgid "20"
@@ -2585,7 +2631,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1193
 msgid "Drag"
-msgstr ""
+msgstr "Перетягнути"
 
 #: ../ui/settings.glade:1206
 msgid "0,4"
@@ -2613,7 +2659,7 @@ msgstr "0,50"
 
 #: ../ui/settings.glade:1290
 msgid "Preprocessor"
-msgstr ""
+msgstr "Препроцесор"
 
 #: ../ui/settings.glade:1321
 msgid "Cusp detection"
@@ -2621,39 +2667,39 @@ msgstr ""
 
 #: ../ui/settings.glade:1338
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Завершення штриха"
 
 #: ../ui/settings.glade:1343
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "Стабілізація вводу може створити розрив у кінці вашого штриха. Якщо параметр увімкнено, цей розрив буде заповнений."
 
 #: ../ui/settings.glade:1361
 msgid "Input stabilization"
-msgstr ""
+msgstr "Стабілізація введення"
 
 #: ../ui/settings.glade:1391
 msgid "Indent using spaces"
-msgstr ""
+msgstr "Відступ за допомогою пробілів"
 
 #: ../ui/settings.glade:1413
 msgid "Number of Spaces : "
-msgstr ""
+msgstr "Кількість пробілів: "
 
 #: ../ui/settings.glade:1425
 msgid "Number of spaces inserted with tab."
-msgstr ""
+msgstr "Кількість пробілів, що дорівнюються одному Tab."
 
 #: ../ui/settings.glade:1427
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../ui/settings.glade:1456
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: ../ui/settings.glade:1487
 msgid "Input System"
-msgstr ""
+msgstr "Система вводу"
 
 #: ../ui/settings.glade:1532
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
@@ -2665,7 +2711,7 @@ msgstr "Середня кнопка миші"
 
 #: ../ui/settings.glade:1597
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "Права кнопка миші"
 
 #: ../ui/settings.glade:1613
 msgid "Mouse Buttons"
@@ -2677,11 +2723,11 @@ msgstr "Мишка"
 
 #: ../ui/settings.glade:1691
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr ""
+msgstr "<i>Чутливість до натиску дозволяє малювати лінії з різними ширинами, в залежності від того, який тиск ви застосовуєте до пера. Якщо ваш планшет не підтримує цієї функції, цей параметр не матиме ефекту.</i>"
 
 #: ../ui/settings.glade:1704
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Увімкнути чутливість до натиску"
 
 #: ../ui/settings.glade:1734
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
@@ -2693,23 +2739,23 @@ msgstr "Мінімальна сила натискання:"
 
 #: ../ui/settings.glade:1767
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Мультиплікатор сили натиску: "
 
 #: ../ui/settings.glade:1826
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Налаштування чутливості"
 
 #: ../ui/settings.glade:1842
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Чутливість до натиску"
 
 #: ../ui/settings.glade:1866
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>За деяких налаштувань, перо може мати артефакти на початку штриха. Цього можна уникнути, якщо ігнорувати декілька перших подій/натискань пера.</i>"
 
 #: ../ui/settings.glade:1883
 msgid "Ignore the first"
-msgstr ""
+msgstr "Ігнорувати перші"
 
 #: ../ui/settings.glade:1901
 msgid "1"
@@ -2717,11 +2763,11 @@ msgstr "1"
 
 #: ../ui/settings.glade:1917
 msgid "events"
-msgstr "події"
+msgstr "події(-й)"
 
 #: ../ui/settings.glade:1938
 msgid "Artifact workaround"
-msgstr ""
+msgstr "Обробка артефактів"
 
 #: ../ui/settings.glade:1965
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -2778,7 +2824,7 @@ msgstr ""
 #: ../ui/settings.glade:2260 ../ui/settings.glade:2841
 #: ../ui/settingsDeviceClassConfig.glade:39
 msgid "Touchscreen"
-msgstr ""
+msgstr "Сенсорний екран"
 
 #: ../ui/settings.glade:2287
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
@@ -2931,7 +2977,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3125
 msgid "Icon Theme"
-msgstr ""
+msgstr "Тема іконок"
 
 #: ../ui/settings.glade:3140
 msgid "Color"
@@ -2951,11 +2997,11 @@ msgstr "Кольори"
 
 #: ../ui/settings.glade:3191
 msgid "Global"
-msgstr ""
+msgstr "Загальні"
 
 #: ../ui/settings.glade:3224
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Курсор для пера"
 
 #: ../ui/settings.glade:3239
 msgctxt "stylus cursor uses no icon"
@@ -2965,7 +3011,7 @@ msgstr "Немає іконки"
 #: ../ui/settings.glade:3240
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Маленька точка"
 
 #: ../ui/settings.glade:3241
 msgctxt "stylus cursor uses a big pen icon"
@@ -2983,11 +3029,11 @@ msgstr "Підсвічувати позицію курсора"
 
 #: ../ui/settings.glade:3272
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "Намалювати напівпрозоре коло навколо курсору"
 
 #: ../ui/settings.glade:3290 ../ui/settings.glade:3433
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "Оберіть колір підсвічування позиції курсора"
 
 #: ../ui/settings.glade:3304
 msgid "Circle Color"
@@ -3000,7 +3046,7 @@ msgstr "пікс."
 
 #: ../ui/settings.glade:3356
 msgid "Radius"
-msgstr ""
+msgstr "Радіус"
 
 #: ../ui/settings.glade:3392
 msgid "30"
@@ -3024,7 +3070,7 @@ msgstr "Показати бічну панель з правого боку"
 
 #: ../ui/settings.glade:3519
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "Показувати вертикальну прокрутку ліворуч"
 
 #: ../ui/settings.glade:3538
 msgid "Left / Right-Handed"
@@ -3064,7 +3110,7 @@ msgstr "Вимкнути зникнення смуги прокрутки"
 
 #: ../ui/settings.glade:3675
 msgid "Scrollbars"
-msgstr ""
+msgstr "Смуги прокрутки"
 
 #: ../ui/settings.glade:3728
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
@@ -3089,7 +3135,7 @@ msgstr ""
 #: ../ui/settings.glade:3781 ../ui/settings.glade:3855
 #: ../ui/mainmenubar.xml:352
 msgid "Show Menubar"
-msgstr ""
+msgstr "Показувати стрічку меню"
 
 #: ../ui/settings.glade:3796 ../ui/settings.glade:3870
 msgid "Show Toolbar"
@@ -3110,11 +3156,11 @@ msgstr "На повний екран"
 
 #: ../ui/settings.glade:3920
 msgid "Select toolbar:"
-msgstr ""
+msgstr "Оберіть панель інструментів:"
 
 #: ../ui/settings.glade:3953
 msgid "Presentation Mode"
-msgstr ""
+msgstr "Режим презентації"
 
 #: ../ui/settings.glade:3982
 msgid "Pre-load pages before"
@@ -3162,7 +3208,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4319
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "Одиниця виміру лінійки - см"
 
 #: ../ui/settings.glade:4340
 msgid "Display DPI Calibration"
@@ -3257,15 +3303,15 @@ msgstr ""
 
 #: ../ui/settings.glade:4890
 msgid "Resizing"
-msgstr ""
+msgstr "Зміна розміру"
 
 #: ../ui/settings.glade:4926
 msgid "Rotation snapping tolerance"
-msgstr ""
+msgstr "Допуск при фіксації повороту"
 
 #: ../ui/settings.glade:4938
 msgid "Grid snapping tolerance"
-msgstr ""
+msgstr "Допуск при прив'язці до сітки"
 
 #: ../ui/settings.glade:4980
 msgid "Grid size"
@@ -3273,7 +3319,7 @@ msgstr "Розмір сітки"
 
 #: ../ui/settings.glade:5011
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Використовувати прив'язку для розпізнаних фігур"
 
 #: ../ui/settings.glade:5015
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -3281,7 +3327,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5030
 msgid "Snapping"
-msgstr ""
+msgstr "Прив'язка"
 
 #: ../ui/settings.glade:5058
 msgid "Minimum Stroke Size"
@@ -3293,7 +3339,7 @@ msgstr "0.20"
 
 #: ../ui/settings.glade:5088
 msgid "Stroke Recognizer"
-msgstr ""
+msgstr "Розпізнавання форм"
 
 #: ../ui/settings.glade:5114
 msgid "Enable Tap action"
@@ -3305,7 +3351,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5131
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "Час ігнорування (мс)"
 
 #: ../ui/settings.glade:5143
 msgid "How short (time)  AND...\n\n"
@@ -3332,11 +3378,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5223
 msgid "Try to select object first."
-msgstr ""
+msgstr "Спочатку спробуйте вибрати об'єкт."
 
 #: ../ui/settings.glade:5228 ../ui/settings.glade:5258
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "Спробуйте спочатку вибрати об'єкт; якщо нічого не вибрано, буде показано спливаючу панель інструментів (якщо її увімкнено)."
 
 #: ../ui/settings.glade:5241
 msgid "All three conditions must be met before stroke is ignored.\n"
@@ -3345,11 +3391,11 @@ msgstr "Всі три умови повинні бути виконані, пе�
 
 #: ../ui/settings.glade:5244
 msgid "Settings:"
-msgstr ""
+msgstr "Параметри:"
 
 #: ../ui/settings.glade:5253
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Показувати плаваючу панель інструментів"
 
 #: ../ui/settings.glade:5272
 msgid "Action on Tool Tap"
@@ -3358,16 +3404,18 @@ msgstr ""
 #: ../ui/settings.glade:5300
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Перемальовувати тло PDF частіше під час зміни масштабу для більшої якості.\n"
+"<b>Примітка:</b> Це не впливає на якість друку.</i>"
 
 #: ../ui/settings.glade:5321
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "Під час збільшення масштабу PDF з високою роздільною здатністю, кожне перемалювання (рендеринг) може зайняти багато часу. Встановлення великого значення дозволить знизити частоту рендерингу.\n\n"
+"Встановіть значення 0%, щоб постійно перемальовувати при зміні масштабу."
 
 #: ../ui/settings.glade:5324
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Перемальовувати, коли масштаб сторінки збільшується більше ніж на "
 
 #: ../ui/settings.glade:5337
 msgid "0.00"
@@ -3418,7 +3466,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5680 ../ui/settings.glade:5716
 msgid "Storage Folder"
-msgstr ""
+msgstr "Місце зберігання"
 
 #: ../ui/settings.glade:5695
 msgid "Select Folder"
@@ -3431,7 +3479,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5766
 msgid "Input Device"
-msgstr ""
+msgstr "Пристрої вводу"
 
 #: ../ui/settings.glade:5788
 msgid "Output Device"
@@ -3443,19 +3491,19 @@ msgstr "Аудіо-пристрої"
 
 #: ../ui/settings.glade:5848
 msgid "Sample Rate"
-msgstr ""
+msgstr "Частота дискретизації"
 
 #: ../ui/settings.glade:5859
 msgid "Gain"
-msgstr ""
+msgstr "Підсилення"
 
 #: ../ui/settings.glade:5906
 msgid "Recording Quality"
-msgstr ""
+msgstr "Якість запису"
 
 #: ../ui/settings.glade:5932
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "Час перемотування (в секундах)"
 
 #: ../ui/settings.glade:5945
 msgid "1,00"
@@ -3463,11 +3511,11 @@ msgstr "1,00"
 
 #: ../ui/settings.glade:5964
 msgid "Playback Settings"
-msgstr ""
+msgstr "Налаштування відтворення"
 
 #: ../ui/settings.glade:5978
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
+msgstr "<i>Зміни вплинуть лише на нові записи і відтворювання.</i>"
 
 #: ../ui/settings.glade:6009
 msgid "Audio Recording"
@@ -3475,7 +3523,7 @@ msgstr "Аудіозапис"
 
 #: ../ui/settings.glade:6034
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/settings.glade:6082
 msgid "<i>Select language (requires restart)</i>"
@@ -3495,7 +3543,7 @@ msgstr "Пристрій"
 
 #: ../ui/settingsButtonConfig.glade:44
 msgid "Disable drawing for this device"
-msgstr ""
+msgstr "Вимкнути введення для цього пристрою"
 
 #: ../ui/settingsButtonConfig.glade:125
 msgid "Eraser Type - don't change"
@@ -3511,11 +3559,11 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:128
 msgid "Delete stroke"
-msgstr ""
+msgstr "Видалити лінію"
 
 #: ../ui/settingsButtonConfig.glade:143
 msgid "Stroke Type - don't change"
-msgstr ""
+msgstr "Тип штриха - не змінювати"
 
 #: ../ui/settingsButtonConfig.glade:145
 msgid "Dashed"
@@ -3523,7 +3571,7 @@ msgstr "Штрихова лінія"
 
 #: ../ui/settingsButtonConfig.glade:146
 msgid "Dash-dotted"
-msgstr ""
+msgstr "Штрих-пунктир"
 
 #: ../ui/settingsDeviceClassConfig.glade:34
 msgid "Disabled"
@@ -3575,68 +3623,68 @@ msgstr "Керування панеллю інструментів"
 
 #: ../ui/mainmenubar.xml:5
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
 #: ../ui/mainmenubar.xml:13
 msgid "Open"
-msgstr ""
+msgstr "Відкрити"
 
 #. Filled dynamically
 #: ../ui/mainmenubar.xml:19
 msgid "Recent _Documents"
-msgstr ""
+msgstr "Останні _Документи"
 
 #: ../ui/mainmenubar.xml:22
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Анотація PDF"
 
 #: ../ui/mainmenubar.xml:31
 msgid "Save As"
-msgstr ""
+msgstr "Зберегти як"
 
 #: ../ui/mainmenubar.xml:39
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Експорт в PDF"
 
 #: ../ui/mainmenubar.xml:43
 msgid "Export as..."
-msgstr ""
+msgstr "Експортувати як..."
 
 #: ../ui/mainmenubar.xml:55
 msgid "Quit"
-msgstr ""
+msgstr "Вийти"
 
 #: ../ui/mainmenubar.xml:62
 msgid "_Edit"
-msgstr ""
+msgstr "_Правка"
 
 #: ../ui/mainmenubar.xml:94
 msgid "Select All"
-msgstr ""
+msgstr "Виділити все"
 
 #: ../ui/mainmenubar.xml:101
 msgid "Find"
-msgstr ""
+msgstr "Знайти"
 
 #: ../ui/mainmenubar.xml:115
 msgid "Arrange Selection"
-msgstr ""
+msgstr "Впорядкувати виділене"
 
 #: ../ui/mainmenubar.xml:118
 msgid "Bring to Front"
-msgstr ""
+msgstr "Перемістити на передній план"
 
 #: ../ui/mainmenubar.xml:123
 msgid "Bring Forward"
-msgstr ""
+msgstr "Перемістити вперед"
 
 #: ../ui/mainmenubar.xml:128
 msgid "Send Backward"
-msgstr ""
+msgstr "Перемістити назад"
 
 #: ../ui/mainmenubar.xml:133
 msgid "Send to Back"
-msgstr ""
+msgstr "Перемістити на задній план"
 
 #: ../ui/mainmenubar.xml:142
 msgid "Move Selection Layer Up"
@@ -3648,372 +3696,372 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:162
 msgid "Preferences"
-msgstr ""
+msgstr "Параметри"
 
 #: ../ui/mainmenubar.xml:168
 msgid "_View"
-msgstr ""
+msgstr "_Вигляд"
 
 #: ../ui/mainmenubar.xml:171
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Спарені сторінки"
 
 #: ../ui/mainmenubar.xml:175
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Режим презентації"
 
 #: ../ui/mainmenubar.xml:192
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Показати панелі інструментів"
 
 #: ../ui/mainmenubar.xml:199
 msgid "Layout"
-msgstr ""
+msgstr "Макет"
 
 #: ../ui/mainmenubar.xml:202
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Горизонтальний"
 
 #: ../ui/mainmenubar.xml:207
 msgid "_Vertical"
-msgstr ""
+msgstr "_Вертикальний"
 
 #: ../ui/mainmenubar.xml:214
 msgid "_Left to Right"
-msgstr ""
+msgstr "З_ліва направо"
 
 #: ../ui/mainmenubar.xml:219
 msgid "_Right to Left"
-msgstr ""
+msgstr "С_права наліво"
 
 #: ../ui/mainmenubar.xml:226
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "Зв_ерху вниз"
 
 #: ../ui/mainmenubar.xml:231
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "З_низу вгору"
 
 #: ../ui/mainmenubar.xml:238
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Стовпчики/Рядки"
 
 #: ../ui/mainmenubar.xml:241
 msgid "Set Columns"
-msgstr ""
+msgstr "Встановити стовпці"
 
 #: ../ui/mainmenubar.xml:245
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 стовпчик"
 
 #: ../ui/mainmenubar.xml:250
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 стовпчики"
 
 #: ../ui/mainmenubar.xml:255
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 стовпчики"
 
 #: ../ui/mainmenubar.xml:260
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 стовпчики"
 
 #: ../ui/mainmenubar.xml:265
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 стовпчиків"
 
 #: ../ui/mainmenubar.xml:270
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 стовпчиків"
 
 #: ../ui/mainmenubar.xml:275
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 стовпчиків"
 
 #: ../ui/mainmenubar.xml:280
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 стовпчиків"
 
 #: ../ui/mainmenubar.xml:287
 msgid "Set Rows"
-msgstr ""
+msgstr "Встановити рядки"
 
 #: ../ui/mainmenubar.xml:291
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 рядок"
 
 #: ../ui/mainmenubar.xml:296
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 рядки"
 
 #: ../ui/mainmenubar.xml:301
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 рядки"
 
 #: ../ui/mainmenubar.xml:306
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 рядки"
 
 #: ../ui/mainmenubar.xml:311
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 рядків"
 
 #: ../ui/mainmenubar.xml:316
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 рядків"
 
 #: ../ui/mainmenubar.xml:321
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 рядків"
 
 #: ../ui/mainmenubar.xml:326
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 рядків"
 
 #: ../ui/mainmenubar.xml:337
 msgid "T_oolbars"
-msgstr ""
+msgstr "_Панелі інструментів"
 
 #: ../ui/mainmenubar.xml:340
 msgid "_Manage"
-msgstr ""
+msgstr "_Керувати"
 
 #: ../ui/mainmenubar.xml:344
 msgid "_Customize"
-msgstr ""
+msgstr "_Налаштувати"
 
 #: ../ui/mainmenubar.xml:359
 msgid "Zoom In"
-msgstr ""
+msgstr "Збільшити масштаб"
 
 #: ../ui/mainmenubar.xml:364
 msgid "Zoom Out"
-msgstr ""
+msgstr "Зменшити масштаб"
 
 #: ../ui/mainmenubar.xml:369
 msgid "Normal Size"
-msgstr ""
+msgstr "Звичайний розмір"
 
 #: ../ui/mainmenubar.xml:373
 msgid "Zoom to Fit"
-msgstr ""
+msgstr "Вмістити на екран"
 
 #: ../ui/mainmenubar.xml:379
 msgid "_Navigation"
-msgstr ""
+msgstr "_Навігація"
 
 #: ../ui/mainmenubar.xml:382
 msgid "_First Page"
-msgstr ""
+msgstr "_Перша сторінка"
 
 #: ../ui/mainmenubar.xml:387
 msgid "_Previous Page"
-msgstr ""
+msgstr "Поп_ередня сторінка"
 
 #: ../ui/mainmenubar.xml:392
 msgid "_Goto Page"
-msgstr ""
+msgstr "Перейти на _сторінку"
 
 #: ../ui/mainmenubar.xml:397
 msgid "_Next Page"
-msgstr ""
+msgstr "_Наступна сторінка"
 
 #: ../ui/mainmenubar.xml:402
 msgid "_Last Page"
-msgstr ""
+msgstr "_Остання сторінка"
 
 #: ../ui/mainmenubar.xml:409
 msgid "_Previous Layer"
-msgstr ""
+msgstr "Попере_дній шар"
 
 #: ../ui/mainmenubar.xml:414
 msgid "_Next Layer"
-msgstr ""
+msgstr "Наст_упний шар"
 
 #: ../ui/mainmenubar.xml:419
 msgid "_Top Layer"
-msgstr ""
+msgstr "_Верхній шар"
 
 #: ../ui/mainmenubar.xml:425
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Наступн_а анотована сторінка"
 
 #: ../ui/mainmenubar.xml:430
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Попередн_я анотована сторінка"
 
 #: ../ui/mainmenubar.xml:437
 msgid "_Journal"
-msgstr ""
+msgstr "_Журнал"
 
 #: ../ui/mainmenubar.xml:440
 msgid "New Page _Before"
-msgstr ""
+msgstr "Нова сторінка _до"
 
 #: ../ui/mainmenubar.xml:444
 msgid "New Page _After"
-msgstr ""
+msgstr "Нова сторінка _після"
 
 #: ../ui/mainmenubar.xml:449
 msgid "New Page at _End"
-msgstr ""
+msgstr "Нова сторінка в _кінці"
 
 #: ../ui/mainmenubar.xml:453
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Дублювати сторінку"
 
 #: ../ui/mainmenubar.xml:457
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Додати нові PDF сторінки"
 
 #: ../ui/mainmenubar.xml:461
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Налаштування шаблону сторінки"
 
 #: ../ui/mainmenubar.xml:465
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Видалити сторінку"
 
 #: ../ui/mainmenubar.xml:472
 msgid "New _Layer"
-msgstr ""
+msgstr "Новий _шар"
 
 #: ../ui/mainmenubar.xml:477
 msgid "Delete Layer"
-msgstr ""
+msgstr "Видалити шар"
 
 #: ../ui/mainmenubar.xml:482
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Об'єднати з наступним шаром"
 
 #: ../ui/mainmenubar.xml:487
 msgid "Rename Layer"
-msgstr ""
+msgstr "Перейменувати шар"
 
 #: ../ui/mainmenubar.xml:494
 msgid "Paper _Format"
-msgstr ""
+msgstr "_Формат паперу"
 
 #: ../ui/mainmenubar.xml:498
 msgid "Paper _Color"
-msgstr ""
+msgstr "_Колір паперу"
 
 #: ../ui/mainmenubar.xml:502
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "_Тло паперу"
 
 #: ../ui/mainmenubar.xml:507
 msgid "_Tools"
-msgstr ""
+msgstr "_Інструменти"
 
 #: ../ui/mainmenubar.xml:510
 msgid "_Pen"
-msgstr ""
+msgstr "_Перо"
 
 #: ../ui/mainmenubar.xml:516
 msgid "_Eraser"
-msgstr ""
+msgstr "_Гумка"
 
 #: ../ui/mainmenubar.xml:522
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Виділити текст вздовж рядка"
 
 #: ../ui/mainmenubar.xml:528
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Виділити текст всередині прямокутної області"
 
 #: ../ui/mainmenubar.xml:534
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Маркер"
 
 #: ../ui/mainmenubar.xml:540
 msgid "_Text"
-msgstr ""
+msgstr "_Текст"
 
 #: ../ui/mainmenubar.xml:546
 msgid "_Image"
-msgstr ""
+msgstr "_Зображення"
 
 #: ../ui/mainmenubar.xml:552
 msgid "_Default Tool"
-msgstr ""
+msgstr "_Інструмент за замовчуванням"
 
 #: ../ui/mainmenubar.xml:559
 msgid "Drawing Type"
-msgstr ""
+msgstr "Режим"
 
 #: ../ui/mainmenubar.xml:561
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Розпізнавання форм"
 
 #: ../ui/mainmenubar.xml:586
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Намалювати систему координат"
 
 #: ../ui/mainmenubar.xml:591
 msgid "Draw _Line"
-msgstr ""
+msgstr "Малювати _лінію"
 
 #: ../ui/mainmenubar.xml:632
 msgid "_Vertical Space"
-msgstr ""
+msgstr "_Вертикальний відступ"
 
 #: ../ui/mainmenubar.xml:644
 msgid "H_and Tool"
-msgstr ""
+msgstr "Р_ука"
 
 #: ../ui/mainmenubar.xml:660
 msgid "Pen _Options"
-msgstr ""
+msgstr "Параметри _пера"
 
 #: ../ui/mainmenubar.xml:663 ../ui/mainmenubar.xml:725
 #: ../ui/mainmenubar.xml:772
 msgid "_very fine"
-msgstr ""
+msgstr "дуже т_онкий"
 
 #: ../ui/mainmenubar.xml:668 ../ui/mainmenubar.xml:730
 #: ../ui/mainmenubar.xml:777
 msgid "_fine"
-msgstr ""
+msgstr "_тонкий"
 
 #: ../ui/mainmenubar.xml:673 ../ui/mainmenubar.xml:735
 #: ../ui/mainmenubar.xml:782
 msgid "_medium"
-msgstr ""
+msgstr "_середній"
 
 #: ../ui/mainmenubar.xml:678 ../ui/mainmenubar.xml:740
 #: ../ui/mainmenubar.xml:787
 msgid "_thick"
-msgstr ""
+msgstr "_широкий"
 
 #: ../ui/mainmenubar.xml:683 ../ui/mainmenubar.xml:745
 #: ../ui/mainmenubar.xml:792
 msgid "ver_y thick"
-msgstr ""
+msgstr "д_уже широкий"
 
 #: ../ui/mainmenubar.xml:712 ../ui/mainmenubar.xml:799
 msgid "Fi_ll"
-msgstr ""
+msgstr "Перо з заливкою"
 
 #: ../ui/mainmenubar.xml:716 ../ui/mainmenubar.xml:803
 msgid "Fill opacity"
-msgstr ""
+msgstr "Прозорість заливки"
 
 #: ../ui/mainmenubar.xml:722
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Параметри _гумки"
 
 #: ../ui/mainmenubar.xml:752
 msgid "_standard"
-msgstr ""
+msgstr "_стандартний"
 
 #: ../ui/mainmenubar.xml:757
 msgid "_whiteout"
-msgstr ""
+msgstr "_наскрізний"
 
 #: ../ui/mainmenubar.xml:762
 msgid "_delete strokes"
-msgstr ""
+msgstr "_видалення штрихів"
 
 #: ../ui/mainmenubar.xml:769
 msgid "Highlighter Opti_ons"
@@ -4021,7 +4069,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:809
 msgid "Select PDF Text Options"
-msgstr ""
+msgstr "Оберіть параметри тексту PDF"
 
 #: ../ui/mainmenubar.xml:812
 msgid "Marker Opacity"
@@ -4029,27 +4077,27 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:818
 msgid "Text Font..."
-msgstr ""
+msgstr "Шрифт тексту..."
 
 #: ../ui/mainmenubar.xml:823
 msgid "Record / Stop"
-msgstr ""
+msgstr "Запис / Стоп"
 
 #: ../ui/mainmenubar.xml:828
 msgid "Pause"
-msgstr ""
+msgstr "Пауза"
 
 #: ../ui/mainmenubar.xml:855
 msgid "_Help"
-msgstr ""
+msgstr "Д_опомога"
 
 #: ../ui/mainmenubar.xml:859
 msgid "Help"
-msgstr ""
+msgstr "Допомога"
 
 #: ../ui/mainmenubar.xml:863
 msgid "About"
-msgstr ""
+msgstr "Про програму"
 
 #: ../resources-templates/pagetemplates.ini.in:17
 msgid "Ruled with vertical line on the right"
@@ -4061,39 +4109,39 @@ msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
-msgstr ""
+msgstr "Всі інструменти"
 
 #: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
-msgstr ""
+msgstr "Книжкова"
 
 #: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
-msgstr ""
+msgstr "Панель (мінімалістична) зліва"
 
 #: ../resources-templates/toolbar.ini.in:65
 msgid "Minimal Top"
-msgstr ""
+msgstr "Панель (мінімалістична) зверху"
 
 #: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
-msgstr ""
+msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Right hand Note Taking"
-msgstr ""
+msgstr "Панель для анотування"
 
 #: ../resources-templates/toolbar.ini.in:80
 msgid "Toolbar Left"
-msgstr ""
+msgstr "Панель ліворуч"
 
 #: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Right"
-msgstr ""
+msgstr "Панель праворуч"
 
 #: ../resources-templates/toolbar.ini.in:101
 msgid "Empty Toolbar"
-msgstr ""
+msgstr "Порожня панель"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Take handwritten notes"
@@ -4105,7 +4153,7 @@ msgstr ""
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:15
 msgid "com.github.xournalpp.xournalpp"
-msgstr ""
+msgstr "com.github.xournalpp.xournalpp"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
@@ -4113,7 +4161,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:17
 msgid "Xournal++ features:"
-msgstr ""
+msgstr "Можливості Xournal++:"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:21
 msgid "Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)"
@@ -4141,15 +4189,15 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:27
 msgid "Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)"
-msgstr ""
+msgstr "Різні інструменти малювання (наприклад, перо, маркер) та стилі штриха (наприклад, суцільна, пунктирна)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:28
 msgid "Shape drawing (line, arrow, circle, rectangle, spline)"
-msgstr ""
+msgstr "Графічні фігури (лінія, стрілка, коло, прямокутник, сплайн)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:29
 msgid "Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii"
-msgstr ""
+msgstr "Скористайтеся кутником та компасом для вимірів або в ролі допоміжних інструментів для малювання прямих ліній, кругових дуг тощо"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:30
 msgid "Fill shape functionality"
@@ -4157,11 +4205,11 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:31
 msgid "Shape resizing and rotation"
-msgstr ""
+msgstr "Зміна розміру та повороту фігур"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:32
 msgid "Rotation and grid snapping for precise alignment of objects"
-msgstr ""
+msgstr "Обертання і прив'язка до сітки для точного вирівнювання об'єктів"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:33
 msgid "Input stabilization for smoother writing/drawing"
@@ -4173,11 +4221,11 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:35
 msgid "Enhanced support for image insertion"
-msgstr ""
+msgstr "Покращена підтримка вставлення зображень"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:36
 msgid "Eraser with multiple configurations"
-msgstr ""
+msgstr "Гумка з набором налаштувань"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:37
 msgid "LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting"
@@ -4209,11 +4257,11 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:44
 msgid "Audio recording and playback alongside with handwritten notes"
-msgstr ""
+msgstr "Запис звуку і відтворення в одному місці з рукописними нотатками"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:45
 msgid "Multi language support (over 20 languages supported)"
-msgstr ""
+msgstr "Багатомовна підтримка (понад 20 мовами)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:46
 msgid "Plugins using Lua scripting"

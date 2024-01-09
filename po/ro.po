@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-30 14:40+0000\n"
-"PO-Revision-Date: 2023-10-30 21:27\n"
+"POT-Creation-Date: 2023-11-22 08:35+0000\n"
+"PO-Revision-Date: 2023-11-22 11:15\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -23,39 +23,39 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Dosarul audio nu este stabilit sau e greșit! Înregistrarea nu va funcționa!\n"
 "Alege dosarul de înregistrare în „Preferințe > Înregistrare audio”"
 
-#: ../src/core/control/Control.cpp:228
+#: ../src/core/control/Control.cpp:229
 msgid "Autosave renamed from {1} to {2}"
 msgstr "Salvare automată redenumită din {1} în {2}"
 
-#: ../src/core/control/Control.cpp:239
+#: ../src/core/control/Control.cpp:240
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nu s-a putut redenumi fișierul salvat automat din „{1}” în „{2}”: {3}"
 
-#: ../src/core/control/Control.cpp:248
+#: ../src/core/control/Control.cpp:249
 msgid "Autosave failed with an error: {1}"
 msgstr "Salvarea automată a eșuat cu o eroare: {1}"
 
-#: ../src/core/control/Control.cpp:566
+#: ../src/core/control/Control.cpp:574
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Configurarea benzii cu instrumente „{1}” este predefinită. Vrei să modifici o copie?"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "Yes"
 msgstr "Da"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "No"
 msgstr "Nu"
 
-#: ../src/core/control/Control.cpp:748
+#: ../src/core/control/Control.cpp:756
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Nu există pagini PDF disponibile pentru a fi adăugate. Poate că trebuie redeschis mai întâi documentul."
 
-#: ../src/core/control/Control.cpp:762
+#: ../src/core/control/Control.cpp:770
 msgid "Unable to retrieve pdf page."
 msgstr "Nu s-a putut afișa pagina pdf."
 
-#: ../src/core/control/Control.cpp:1330
+#: ../src/core/control/Control.cpp:1336
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -63,120 +63,122 @@ msgstr "Nu deschide fișierele salvate automat. Acestea pot fi înlocuite!\n"
 "Copiază fișierele în alt dosar.\n"
 "Fișierele din dosarul {1} nu pot fi deschise."
 
-#: ../src/core/control/Control.cpp:1344
+#: ../src/core/control/Control.cpp:1350
 msgid "file: {1}"
 msgstr "fișier: {1}"
 
-#: ../src/core/control/Control.cpp:1392
+#: ../src/core/control/Control.cpp:1398
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Fișierul fondului atașat nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat."
 
-#: ../src/core/control/Control.cpp:1395
+#: ../src/core/control/Control.cpp:1401
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Fișierul fondului „{1}” nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat.\n"
 "A fost văzut ultima dată în: „{2}”"
 
-#: ../src/core/control/Control.cpp:1405
+#: ../src/core/control/Control.cpp:1411
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Fișierul de înlocuire propus: „{1}”"
 
-#: ../src/core/control/Control.cpp:1413
+#: ../src/core/control/Control.cpp:1419
 msgid "Use proposed PDF"
 msgstr "Folosește fișierul PDF propus"
 
-#: ../src/core/control/Control.cpp:1415
+#: ../src/core/control/Control.cpp:1421
 msgid "Select another PDF"
 msgstr "Alege un alt PDF"
 
-#: ../src/core/control/Control.cpp:1416
+#: ../src/core/control/Control.cpp:1422
 msgid "Remove PDF Background"
 msgstr "Elimină fondul PDF"
 
-#: ../src/core/control/Control.cpp:1417 ../src/core/control/Control.cpp:1937
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/Control.cpp:1423 ../src/core/control/Control.cpp:1946
+#: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
 msgstr "Renunță"
 
-#: ../src/core/control/Control.cpp:1448
+#: ../src/core/control/Control.cpp:1454
 msgid "Error opening file \"{1}\""
 msgstr "Eroare la deschiderea fișierului „{1}”"
 
-#: ../src/core/control/Control.cpp:1456
+#: ../src/core/control/Control.cpp:1462
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Fișierul în curs de încărcare are o versiune de format mai nouă decât cea acceptată în prezent de această versiune de Xournal++, deci este posibil să nu se încarce în mod corespunzător. Deschizi oricum?"
 
-#: ../src/core/control/Control.cpp:1618
+#: ../src/core/control/Control.cpp:1624
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Eroare la însemnarea fișierului PDF „{1}”\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr "Salvează fișierul"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr "_Renunță"
 
-#: ../src/core/control/Control.cpp:1720
+#: ../src/core/control/Control.cpp:1729
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "_Salvează"
 
-#: ../src/core/control/Control.cpp:1725
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
+#: ../src/core/control/Control.cpp:1734
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:63
 msgid "Xournal++ files"
 msgstr "Fișier Xournal++"
 
-#: ../src/core/control/Control.cpp:1772
+#: ../src/core/control/Control.cpp:1781
 msgid "Select font"
 msgstr "Alege tipul de litere"
 
-#: ../src/core/control/Control.cpp:1787
+#: ../src/core/control/Control.cpp:1796
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
 msgid "Select color"
 msgstr "Alege culoarea"
 
-#: ../src/core/control/Control.cpp:1809
+#: ../src/core/control/Control.cpp:1818
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost eliminat."
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "This document is not saved yet."
 msgstr "Acest document nu este salvat încă."
 
-#: ../src/core/control/Control.cpp:1929
+#: ../src/core/control/Control.cpp:1938
 msgid "Save As..."
 msgstr "Salvează ca..."
 
-#: ../src/core/control/Control.cpp:1929 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:1938 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Save"
 msgstr "Salvează"
 
-#: ../src/core/control/Control.cpp:1934
+#: ../src/core/control/Control.cpp:1943
 msgid "Discard"
 msgstr "Nu salva"
 
 #: ../src/core/control/CrashHandler.cpp:31
-msgid "Trying to emergency save the current open document…"
-msgstr "Se încearcă salvarea de urgență a documentului actual…"
+msgid "Trying to emergency save the current open document..."
+msgstr "Se încearcă salvarea de urgență a documentului actual..."
 
 #: ../src/core/control/CrashHandler.cpp:40
+#: ../src/core/control/XournalMain.cpp:301
+#: ../src/core/control/XournalMain.cpp:307
 msgid "Error: {1}"
 msgstr "Eroare: {1}"
 
@@ -228,27 +230,27 @@ msgstr "Fișier imagine creat cu succes"
 msgid "PDF file successfully created"
 msgstr "Fişierul PDF a fost creat cu succes"
 
-#: ../src/core/control/LatexController.cpp:77
+#: ../src/core/control/LatexController.cpp:79
 msgid "Global template file does not exist. Please check your settings."
 msgstr "Fișierul modelului global nu există. Controlează configurarea."
 
-#: ../src/core/control/LatexController.cpp:82
+#: ../src/core/control/LatexController.cpp:84
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Nu s-a putut citi fișierul modelului global. Controlează configurarea."
 
-#: ../src/core/control/LatexController.cpp:88
+#: ../src/core/control/LatexController.cpp:90
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Fișierul modelului global nu este un fișier obișnuit. Controlează configurarea. "
 
-#: ../src/core/control/LatexController.cpp:235
+#: ../src/core/control/LatexController.cpp:236
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "S-a produs o eroare la generarea LaTeX: {1} (eroare: {2})"
 
-#: ../src/core/control/LatexController.cpp:301
+#: ../src/core/control/LatexController.cpp:302
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nu s-a putut încărca fișierul PDF LaTeX:{1}"
 
-#: ../src/core/control/LatexController.cpp:306
+#: ../src/core/control/LatexController.cpp:307
 msgid "Could not load LaTeX PDF file"
 msgstr "Nu s-a putut încărca fișierul PDF LaTeX"
 
@@ -262,7 +264,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Nu ai nicio pagină PDF de ales. Anulează operațiunea.\n"
 "Alege un alt tip de fond: „Document” → „Configurează modelul de pagină”."
 
-#: ../src/core/control/PdfCache.cpp:123
+#: ../src/core/control/PdfCache.cpp:124
 msgid "PDF background missing"
 msgstr "Fond PDF lipsă"
 
@@ -270,71 +272,71 @@ msgstr "Fond PDF lipsă"
 msgid "Running print operation failed with {1}"
 msgstr "Operațiunea de tipărire a eșuat cu {1}"
 
-#: ../src/core/control/XournalMain.cpp:147
+#: ../src/core/control/XournalMain.cpp:148
 msgid "Failed to delete file: {1}"
 msgstr "Nu s-a putut elimina fișierul: {1}"
 
-#: ../src/core/control/XournalMain.cpp:149
+#: ../src/core/control/XournalMain.cpp:150
 msgid "Please delete the file manually"
 msgstr "Fișierul trebuie eliminat manual"
 
-#: ../src/core/control/XournalMain.cpp:185
+#: ../src/core/control/XournalMain.cpp:186
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Există un jurnal de erori recent de la Xournal++. Trimite un raport pentru ca eroarea să poată fi corectată."
 
-#: ../src/core/control/XournalMain.cpp:187
+#: ../src/core/control/XournalMain.cpp:188
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Există jurnale de erori de la Xournal++. Trimite un raport pentru ca eroarea să poată fi corectată."
 
-#: ../src/core/control/XournalMain.cpp:190
+#: ../src/core/control/XournalMain.cpp:191
 msgid "The most recent log file name: {1}"
 msgstr "Cel mai recent nume de fișier jurnal: {1}"
 
-#: ../src/core/control/XournalMain.cpp:192
+#: ../src/core/control/XournalMain.cpp:193
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr "Pentru a preveni reapariția acestei ferestre, trebuie doar să ștergi jurnalele de erori."
 
-#: ../src/core/control/XournalMain.cpp:195
+#: ../src/core/control/XournalMain.cpp:196
 msgid "File Bug Report"
 msgstr "Raport de eroare"
 
-#: ../src/core/control/XournalMain.cpp:196
+#: ../src/core/control/XournalMain.cpp:197
 msgid "Open Logfile"
 msgstr "Deschide jurnalul"
 
-#: ../src/core/control/XournalMain.cpp:197
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Open Logfile directory"
 msgstr "Deschide dosarul cu jurnale"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:199
 msgid "Delete Logfile"
 msgstr "Elimină jurnalul"
 
-#: ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/XournalMain.cpp:201
 msgid "Crash log"
 msgstr "Jurnal de erori"
 
-#: ../src/core/control/XournalMain.cpp:222
+#: ../src/core/control/XournalMain.cpp:223
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ s-a blocat ultima dată. Vrei să recuperezi ultimul fișier?"
 
-#: ../src/core/control/XournalMain.cpp:225
+#: ../src/core/control/XournalMain.cpp:226
 msgid "Recovery file detected"
 msgstr "Fișier de recuperare detectat"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Delete file"
 msgstr "Elimină fișierul"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Restore file"
 msgstr "Recuperează fișierul"
 
-#: ../src/core/control/XournalMain.cpp:245
+#: ../src/core/control/XournalMain.cpp:246
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Fișierul fondului „{1}” nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat."
 
-#: ../src/core/control/XournalMain.cpp:408
+#: ../src/core/control/XournalMain.cpp:438
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -348,55 +350,59 @@ msgstr "<span foreground='red' size='x-large'>Lipsește fișierul UI necesar:\n"
 "  Nici în calea de lucru\n"
 "  Nici în {2}"
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:443
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Programul va încerca să pornească fără acest fișier."
 
-#: ../src/core/control/XournalMain.cpp:430
-#: ../src/core/control/XournalMain.cpp:523
+#: ../src/core/control/XournalMain.cpp:460
+#: ../src/core/control/XournalMain.cpp:553
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xournal++ poate deschide doar un singur fișier pe rând.\n"
 "Altele sunt ignorate."
 
-#: ../src/core/control/XournalMain.cpp:441
+#: ../src/core/control/XournalMain.cpp:471
 msgid "File {1} does not exist."
 msgstr "Fișierul {1} nu există."
 
-#: ../src/core/control/XournalMain.cpp:445
-#: ../src/core/control/XournalMain.cpp:543
+#: ../src/core/control/XournalMain.cpp:475
+#: ../src/core/control/XournalMain.cpp:573
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
-msgstr "Eroare de fișier: {1}\n"
+msgstr "Eroare a fișierului de sistem: {1}\n"
 "Xournal++ nu poate deschide fișierul: {2}\n"
 "Încearcă să copiezi fișierul într-un dosar local."
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Jump to Page (first Page: 1)"
 msgstr "Salt la pagina (prima pagină: 1)"
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Get version of xournalpp"
 msgstr "Obține versiunea xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:664
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Disable audio for this session"
 msgstr "Dezactivează audio pentru această sesiune"
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "Deschide PDF-ul ca atașat\n"
 "                                 Ignorat dacă nu este specificat niciun fișier PDF."
 
-#: ../src/core/control/XournalMain.cpp:677
+#: ../src/core/control/XournalMain.cpp:703
+msgid "Save xopp-file with the background PDF specified as FILE"
+msgstr "Salvează fișierul xopp cu fondul PDF specificat ca fișier"
+
+#: ../src/core/control/XournalMain.cpp:712
 msgid "Export FILE as PDF"
 msgstr "Exportă fișierul ca PDF"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -404,7 +410,7 @@ msgstr "Exportă Fișierul ca fișiere imagine (unul pe pagină)\n"
 "                                 Ghicește formatul de ieșire din extensia IMGFILE\n"
 "                                 Formate acceptate: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:684
+#: ../src/core/control/XournalMain.cpp:719
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -412,13 +418,13 @@ msgstr "Exportă fără fond\n"
 "                                 Fișierul exportat are un fond transparent sau alb,\n"
 "                                 în funcție de formatul compatibil cu acesta\n"
 
-#: ../src/core/control/XournalMain.cpp:689
+#: ../src/core/control/XournalMain.cpp:724
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exportă fără liniere\n"
 "                                 Fișierul exportat nu are hârtia liniată\n"
 
-#: ../src/core/control/XournalMain.cpp:693
+#: ../src/core/control/XournalMain.cpp:728
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -430,25 +436,25 @@ msgstr "Exportă straturile pe rând\n"
 "                                 construind progresiv stiva de straturi.\n"
 "                                 Fișierul PDF rezultat poate fi utilizat pentru o prezentare.\n"
 
-#: ../src/core/control/XournalMain.cpp:700
+#: ../src/core/control/XournalMain.cpp:735
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportă numai paginile indicate de interval (de ex. „2-3,5,7-”)\n"
 "                                 Niciun efect fără -p/--create-pdf or -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:739
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportă numai straturile indicate de interval (de ex. „2-3,5,7-”)\n"
 "                                 Niciun efect fără -p/--create-pdf or -i/--create-img"
 
-#: ../src/core/control/XournalMain.cpp:708
+#: ../src/core/control/XournalMain.cpp:743
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Alege DPI-ul pentru exportările în PNG. Prestabilit este 300\n"
 "                                 Niciun efect fără -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:712
+#: ../src/core/control/XournalMain.cpp:747
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -456,7 +462,7 @@ msgstr "Alege lățimea paginii pentru exportările PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă --export-png-dpi este folosit"
 
-#: ../src/core/control/XournalMain.cpp:718
+#: ../src/core/control/XournalMain.cpp:753
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -464,11 +470,11 @@ msgstr "Alege înălțimea paginii pentru exportările PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă --export-png-dpi sau --export-png-width este folosit"
 
-#: ../src/core/control/XournalMain.cpp:723
+#: ../src/core/control/XournalMain.cpp:758
 msgid "Advanced export options"
 msgstr "Opțiuni avansate de exportare"
 
-#: ../src/core/control/XournalMain.cpp:724
+#: ../src/core/control/XournalMain.cpp:759
 msgid "Display advanced export options"
 msgstr "Arată opțiuni avansate de exportare"
 
@@ -514,7 +520,7 @@ msgstr "Exportare personalizată"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:48
 msgid "PDF files"
 msgstr "Fișiere PDF"
 
@@ -531,7 +537,7 @@ msgid "Xournal (Compatibility)"
 msgstr "Xournal (Compatibilitate)"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:131
-#: ../src/core/control/jobs/SaveJob.cpp:131
+#: ../src/core/control/jobs/SaveJob.cpp:130
 msgid "Save file error: {1}"
 msgstr "Eroare la salvarea fișierului: {1}"
 
@@ -555,7 +561,7 @@ msgstr "Eroare la salvarea imaginii #2"
 msgid "PDF Export"
 msgstr "Exportă PDF"
 
-#: ../src/core/control/jobs/SaveJob.cpp:117
+#: ../src/core/control/jobs/SaveJob.cpp:116
 msgid "Save file error, can't backup: {1}"
 msgstr "Eroare la salvarea fișierului, nu se poate copia: {1}"
 
@@ -636,71 +642,71 @@ msgstr "Cu fond PDF"
 msgid "Image"
 msgstr "Imagine"
 
-#: ../src/core/control/settings/Settings.cpp:150
+#: ../src/core/control/settings/Settings.cpp:151
 msgid "%F-Note-%H-%M"
 msgstr "%F-Notițe-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:152
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%{name}_annotated"
 msgstr "%{name}_adnotat"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 msgid "Open Image"
 msgstr "Deschide o imagine"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:18
 msgid "_Open"
 msgstr "_Deschide"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:22
 msgid "Images"
 msgstr "Imagini"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:33
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:117
 msgid "Attach file to the journal"
 msgstr "Atașează fișierul la document"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Open file"
 msgstr "Deschide un fișier"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:40
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:41
 msgid "All files"
 msgstr "Toate fișierele"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:56
 msgid "Xournal files"
 msgstr "Fișiere Xournal"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:70
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
 msgstr "Model Xournal++"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:98
 msgid "Supported files"
 msgstr "Fișiere acceptate"
 
-#: ../src/core/control/tools/EditSelection.cpp:401
+#: ../src/core/control/tools/EditSelection.cpp:462
 msgid "Arrange"
 msgstr "Aranjare"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:467
 msgid "Bring to front"
 msgstr "Adu în prim-plan"
 
-#: ../src/core/control/tools/EditSelection.cpp:416
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Bring forward"
 msgstr "Adu mai aproape"
 
-#: ../src/core/control/tools/EditSelection.cpp:427
+#: ../src/core/control/tools/EditSelection.cpp:490
 msgid "Send backward"
 msgstr "Trimite în plan secundar"
 
-#: ../src/core/control/tools/EditSelection.cpp:435
+#: ../src/core/control/tools/EditSelection.cpp:497
 msgid "Send to back"
 msgstr "Trimite în ultimul plan"
 
@@ -708,126 +714,126 @@ msgstr "Trimite în ultimul plan"
 msgid "Failed to load image, could not determine image size!"
 msgstr "Nu s-a putut încărca imaginea, nu s-a putut stabili mărimea imaginii!"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:142
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Acesta nu este un fișier .xopp valabil (Lipsește Mimetype): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:151
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Acesta nu este un fișier .xopp valabil (Lipsește Mimetype): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:159
+#: ../src/core/control/xojfile/LoadHandler.cpp:160
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Acesta nu este un fișier .xopp valabil (Lipsește Mimetype): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:173
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Acesta nu este un fișier .xopp valabil (Șirul versiunii este deteriorat): „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:181
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Nu s-a putut deschide content.xml în arhiva zip: „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:189
+#: ../src/core/control/xojfile/LoadHandler.cpp:190
 msgid "Could not open file: \"{1}\""
 msgstr "Nu s-a putut deschide fișierul: „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:255
+#: ../src/core/control/xojfile/LoadHandler.cpp:256
 msgid "XML Parser error: {1}"
 msgstr "Eroare la analiza XML: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:258
+#: ../src/core/control/xojfile/LoadHandler.cpp:259
 msgid "Unknown parser error"
 msgstr "Eroare necunoscută de analizare"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:269
+#: ../src/core/control/xojfile/LoadHandler.cpp:270
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Documentul nu este complet (poate finalul este tăiat)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:273
+#: ../src/core/control/xojfile/LoadHandler.cpp:274
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Documentul este deteriorat (nu s-au găsit pagini în fișier)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:318
+#: ../src/core/control/xojfile/LoadHandler.cpp:319
 msgid "Unexpected root tag: {1}"
 msgstr "Etichetă principală neașteptată: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:339
+#: ../src/core/control/xojfile/LoadHandler.cpp:340
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Etichetă neașteptată în documentul: „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:387
-#: ../src/core/control/xojfile/LoadHandler.cpp:415
+#: ../src/core/control/xojfile/LoadHandler.cpp:388
+#: ../src/core/control/xojfile/LoadHandler.cpp:416
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Imaginea nu a putut fi citită: {1}. Mesaj de eroare: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:425
+#: ../src/core/control/xojfile/LoadHandler.cpp:426
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Nu s-a putut citi numărul paginii pentru imaginea de fond clonată: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:433
+#: ../src/core/control/xojfile/LoadHandler.cpp:434
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Tip de pixmap::domain necunoscut: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:498
+#: ../src/core/control/xojfile/LoadHandler.cpp:479
+#: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "Eroare la citirea PDF: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:486
 msgid "Unknown domain type: {1}"
 msgstr "Tip de domeniu necunoscut: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:530
 msgid "Unknown background type: {1}"
 msgstr "Tip necunoscut de fond: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:553
+#: ../src/core/control/xojfile/LoadHandler.cpp:554
 msgid "Error reading width of a stroke: {1}"
 msgstr "Eroare la citirea grosimii liniei: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:621
+#: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Tip necunoscut de contur: „{1}”, se presupune a fi un cerc"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:639
+#: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi de creion"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:807
-#: ../src/core/control/xojfile/LoadHandler.cpp:823
-#: ../src/core/control/xojfile/LoadHandler.cpp:1137
-#: ../src/core/control/xojfile/LoadHandler.cpp:1151
+#: ../src/core/control/xojfile/LoadHandler.cpp:808
+#: ../src/core/control/xojfile/LoadHandler.cpp:824
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:816
-#: ../src/core/control/xojfile/LoadHandler.cpp:1144
-#: ../src/core/control/xojfile/LoadHandler.cpp:1162
+#: ../src/core/control/xojfile/LoadHandler.cpp:817
+#: ../src/core/control/xojfile/LoadHandler.cpp:1145
+#: ../src/core/control/xojfile/LoadHandler.cpp:1163
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nicio dimensiune validă a fișierului furnizată"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:835
+#: ../src/core/control/xojfile/LoadHandler.cpp:836
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut citi fișierul"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:844
+#: ../src/core/control/xojfile/LoadHandler.cpp:845
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut scrie fișierul"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1031
+#: ../src/core/control/xojfile/LoadHandler.cpp:1032
 msgid "Wrong count of points ({1})"
 msgstr "Număr greșit de puncte ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1047
+#: ../src/core/control/xojfile/LoadHandler.cpp:1048
 msgid "xoj-File: {1}"
 msgstr "xoj-Fișier: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1048
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Numărul de valori ale presiunii este greșit; date {1}, așteptate {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1181
+#: ../src/core/control/xojfile/LoadHandler.cpp:1182
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Fișierul temporar solicitat nu a fost găsit pentru atașarea {1}"
 
@@ -885,17 +891,17 @@ msgstr "Eroare la încărcarea fișierului glade „{1}” (încerc să încarc 
 msgid "Unable to play audio recording {1}"
 msgstr "Imposibil de redat înregistrarea audio {1}"
 
-#: ../src/core/gui/PageView.cpp:913
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
+#: ../src/core/gui/PageView.cpp:917
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Loading..."
 msgstr "Se încarcă..."
 
-#: ../src/core/gui/PageView.cpp:976
+#: ../src/core/gui/PageView.cpp:980
 msgid "Scroll to page {1}"
 msgstr "Du-te la pagina {1}"
 
-#: ../src/core/gui/PageView.cpp:978
+#: ../src/core/gui/PageView.cpp:982
 msgid "Add missing page"
 msgstr "Adaugă pagina lipsă"
 
@@ -1064,7 +1070,7 @@ msgstr "Desenează sistemul de coordonate"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
+#: ../src/core/undo/RecognizerUndoAction.cpp:74
 msgid "Stroke recognizer"
 msgstr "Recunoaște forma"
 
@@ -1078,35 +1084,35 @@ msgstr "Desenează curbe"
 msgid "Custom"
 msgstr "Personalizată"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "Limba sistemului"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:66
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "Limba aleasă anterior nu mai este valabilă!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
 msgid "LaTeX editor theme:"
 msgstr "Aspectul elaboratorului LaTeX:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "GtkSourceView a fost dezactivat la crearea Xournal++! Unele opțiuni nu vor fi disponibile."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Fișierul modelului global de la {1} nu poate fi deschis. Sigur există?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
 msgstr "Exemplu de fișier LaTeX generat cu succes."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Eroare: {1}. Te rugăm să verifici conținutul {2}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Eroare: {1} nu este un fișier obișnuit. Controlează configurarea modelului tău LaTeX. "
 
@@ -1118,50 +1124,50 @@ msgstr "activat în mod prestabilit"
 msgid "default disabled"
 msgstr "dezactivat în mod prestabilit"
 
-#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:61
+#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
 msgstr "Alege culoarea fondului"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:28
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
 msgstr "Alege opacitatea pentru: "
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
 msgstr "Opțiuni pentru Evidențiator"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:34
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:38
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
 msgstr "Culoarea umplerii"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
 msgstr "Opțiuni pentru Creion"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:40
 msgid "PDF Text Options"
 msgstr "Opțiuni text PDF"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:42
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
 msgid "PDF Text Marker"
 msgstr "Marcaj text PDF"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:50
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr "<b>{1}</b>\n"
 "{2}{3}"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:72
+#: ../src/core/gui/dialog/SettingsDialog.cpp:73
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Niciun dispozitiv nu a fost găsit. Poți să încarci un raport de eroare?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Activează sensibilitatea la apăsare sau estimarea forței de apăsare pentru a schimba această reglare!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtrează forța de apăsare. Înmulțește forța de apăsare cu multiplicatorul forței de apăsare. Dacă este mai mică decât valoarea minimă, se folosește apăsarea minimă."
 
@@ -1181,11 +1187,11 @@ msgstr "Benzi cu instrumente"
 msgid "New"
 msgstr "Nou"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:102
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
 msgid "Show only not used pages (one unused page)"
 msgstr "Arată numai paginile nefolosite (o pagină nefolosită)"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:104
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Arată numai paginile nefolosite ({1} pagini nefolosite)"
 
@@ -1262,7 +1268,7 @@ msgstr "Documentul tău nu conține pagina PDF nr. {1}\n"
 "Vrei să introduci această pagină?\n\n"
 "Sfat: Poți alege Document → Fondul paginii → Fond PDF pentru a introduce o pagină PDF."
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:171
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:173
 msgid "Contents"
 msgstr "Conținut"
 
@@ -1357,8 +1363,8 @@ msgid "Cut"
 msgstr "Taie"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:351
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:81
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
 msgstr "Copiază"
 
@@ -1414,7 +1420,7 @@ msgstr "Mărește"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Zoom fit to screen"
-msgstr "Zoom adaptat ferestrei"
+msgstr "Zoom Încadrare optimă"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 msgid "Zoom to 100%"
@@ -1717,8 +1723,8 @@ msgstr "Alb"
 msgid "Toolbar found: {1}"
 msgstr "Bandă cu instrumente găsită: {1}"
 
-#: ../src/core/model/Document.cpp:315 ../src/core/model/Document.cpp:324
-#: ../src/core/model/Document.cpp:327
+#: ../src/core/model/Document.cpp:316 ../src/core/model/Document.cpp:325
+#: ../src/core/model/Document.cpp:328
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Documentul nu a fost încărcat! ({1}), {2}"
 
@@ -1726,19 +1732,19 @@ msgstr "Documentul nu a fost încărcat! ({1}), {2}"
 msgid "Background"
 msgstr "Fond"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:173
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:216
 msgid "No pages to export!"
 msgstr "Nicio pagină de exportat!"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:178
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:221
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Nu s-a reușit inițializarea suprafeței PDF Cairo"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
 msgstr "Elimină linia"
 
@@ -1770,10 +1776,6 @@ msgstr "text"
 #: ../src/core/undo/ColorUndoAction.cpp:90
 msgid "Change color"
 msgstr "Schimbă culoarea"
-
-#: ../src/core/undo/CopyUndoAction.cpp:62
-msgid "Copy page"
-msgstr "Copiază pagina"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -1835,7 +1837,7 @@ msgstr "Mută stratul"
 msgid "Move"
 msgstr "Mută"
 
-#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:84
+#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:85
 msgid "Page background changed"
 msgstr "Fondul paginii a fost schimbat"
 
@@ -1851,7 +1853,7 @@ msgstr "Rotaţie"
 msgid "Scale"
 msgstr "Scală"
 
-#: ../src/core/undo/SizeUndoAction.cpp:106
+#: ../src/core/undo/SizeUndoAction.cpp:108
 msgid "Change stroke width"
 msgstr "Schimbă grosimea liniei"
 
@@ -1907,17 +1909,17 @@ msgstr "ElementRange::parse(): indicii elementului încep cu 1"
 msgid "Error opening file: \"{1}\""
 msgstr "Eroare la deschiderea fișierului: „{1}”"
 
-#: ../src/util/PathUtil.cpp:172
+#: ../src/util/PathUtil.cpp:173
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Fișierul nu a putut fi deschis. Trebuie deschis manual:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:244
+#: ../src/util/PathUtil.cpp:245
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:254
+#: ../src/util/PathUtil.cpp:255
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nu s-a putut crea dosarul: {1}\n"
@@ -1959,15 +1961,15 @@ msgstr "xoj-preview-extractor: fișierul „{1}” nu conține previzualizări"
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: nu au fost găsite nici previzualizarea, nici paginile. Poate că fișierul este greșit."
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: nu s-a putut găsi simbolul „{1}”"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: deschiderea fișierului de ieșire „{1}” a eșuat"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:209
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: extras cu succes"
 
@@ -2974,11 +2976,11 @@ msgstr "<i>Activează/Dezactivează vizibilitatea opțiunilor cu F10</i>"
 
 #: ../ui/settings.glade:2933
 msgid "Show filepath in title bar"
-msgstr "Arată calea fișierului în titlu"
+msgstr "Arată calea și numele fișierului în banda de sus"
 
 #: ../ui/settings.glade:2948
 msgid "Show page number in title bar"
-msgstr "Arată numărul paginii în bara cu titlul"
+msgstr "Arată numărul paginii în banda de sus"
 
 #: ../ui/settings.glade:2988
 msgid "Border color for current page and other selections"
@@ -3780,7 +3782,7 @@ msgstr "_De la dreapta la stânga"
 
 #: ../ui/mainmenubar.xml:226
 msgid "_Top to Bottom"
-msgstr "_De sus în jos"
+msgstr "De s_us în jos"
 
 #: ../ui/mainmenubar.xml:231
 msgid "_Bottom to Top"
@@ -3864,7 +3866,7 @@ msgstr "_8 rânduri"
 
 #: ../ui/mainmenubar.xml:337
 msgid "T_oolbars"
-msgstr "B_enzi cu instrumente"
+msgstr "_Benzi cu instrumente"
 
 #: ../ui/mainmenubar.xml:340
 msgid "_Manage"
@@ -3912,7 +3914,7 @@ msgstr "Pagina _următoare"
 
 #: ../ui/mainmenubar.xml:402
 msgid "_Last Page"
-msgstr "_Ultima pagină"
+msgstr "Ul_tima pagină"
 
 #: ../ui/mainmenubar.xml:409
 msgid "_Previous Layer"
@@ -3992,7 +3994,7 @@ msgstr "_Culoare hârtiei"
 
 #: ../ui/mainmenubar.xml:502
 msgid "Paper B_ackground"
-msgstr "_Fondul hârtiei"
+msgstr "Fo_ndul hârtiei"
 
 #: ../ui/mainmenubar.xml:507
 msgid "_Tools"
@@ -4036,7 +4038,7 @@ msgstr "Tip de desenare"
 
 #: ../ui/mainmenubar.xml:561
 msgid "_Shape Recognizer"
-msgstr "_Recunoaște forma"
+msgstr "Recunoaște _forma"
 
 #: ../ui/mainmenubar.xml:586
 msgid "Draw Coordinate System"
@@ -4081,7 +4083,7 @@ msgstr "_gros"
 #: ../ui/mainmenubar.xml:683 ../ui/mainmenubar.xml:745
 #: ../ui/mainmenubar.xml:792
 msgid "ver_y thick"
-msgstr "_foarte gros"
+msgstr "foarte g_ros"
 
 #: ../ui/mainmenubar.xml:712 ../ui/mainmenubar.xml:799
 msgid "Fi_ll"
@@ -4201,7 +4203,7 @@ msgstr "com.github.xournalpp.xournalpp"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
-msgstr ""
+msgstr "Xournal++ este un program de luat notițe scrise de mână realizat în C++ cu scopul de a fi flexibil, funcțional și rapid. Recunoașterea formei și alte părți se bazează pe codul Xournal, care se găsește la sourceforge. Este compatibil cu GNU/Linux (de exemplu: Ubuntu, Debian, Arch, SUSE), macOS și Windows. Acceptă utilizarea creionului electronic de la aparate precum tabletele Wacom."
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:17
 msgid "Xournal++ features:"
@@ -4209,11 +4211,11 @@ msgstr "Caracteristici Xournal++:"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:21
 msgid "Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)"
-msgstr ""
+msgstr "Este compatibil cu creioanele electronice sensibile la presiune și tablete (de exemplu: tablete Wacom, Huion, XP Pen etc.)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:22
 msgid "Paper backgrounds for note-taking, scratch paper, or whiteboarding"
-msgstr ""
+msgstr "Fonduri de hârtie pentru luarea de notițe, hârtie liniată sau coală albă"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:23
 msgid "Annotate on top of PDFs"
@@ -4221,102 +4223,102 @@ msgstr "Însemnări pe PDF-uri"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:24
 msgid "Select text from the background PDF, copy, highlight or underline it or strike it through"
-msgstr ""
+msgstr "Alegeți textul din fondul PDF, copiază-l, evidențiază-l, subliniază-l sau taie-l cu o linie"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:25
 msgid "Follow links from the background PDF"
-msgstr ""
+msgstr "Accesează trimiterile din fondul PDF"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:26
 msgid "Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line"
-msgstr ""
+msgstr "Exportă într-o varietate de formate, inclusiv SVG, PNG și PDF, atât din interfața grafică, cât și din linia de comandă"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:27
 msgid "Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)"
-msgstr ""
+msgstr "Diferite instrumente de desen (de exemplu, creion, evidențiator) și tipuri de linii (de exemplu: solide, punctate)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:28
 msgid "Shape drawing (line, arrow, circle, rectangle, spline)"
-msgstr ""
+msgstr "Desenarea formelor (drepte, săgeți, cercuri, dreptunghiuri, curbe)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:29
 msgid "Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii"
-msgstr ""
+msgstr "Folosește instrumentele echer și compas pentru măsurători sau ca ghid pentru trasarea liniilor drepte, a arcelor de cerc și a razelor"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:30
 msgid "Fill shape functionality"
-msgstr ""
+msgstr "Caracteristica de umplere a formei"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:31
 msgid "Shape resizing and rotation"
-msgstr ""
+msgstr "Redimensionarea și rotirea formei"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:32
 msgid "Rotation and grid snapping for precise alignment of objects"
-msgstr ""
+msgstr "Rotație și fixare la grilă pentru alinierea precisă a obiectelor"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:33
 msgid "Input stabilization for smoother writing/drawing"
-msgstr ""
+msgstr "Stabilizare pentru o scriere/desenare mai lină"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:34
 msgid "Text tool for adding text in different fonts, colors, and sizes"
-msgstr ""
+msgstr "Instrument de text pentru adăugarea de text cu diferite caractere, culori și dimensiuni"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:35
 msgid "Enhanced support for image insertion"
-msgstr ""
+msgstr "Îmbunătățire a capacității de adăugare a imaginilor"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:36
 msgid "Eraser with multiple configurations"
-msgstr ""
+msgstr "Gumă de șters cu mai multe variante"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:37
 msgid "LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting"
-msgstr ""
+msgstr "Compatibilitate cu LaTeX (necesită o instalare LaTeX funcțională) cu model personalizabil și un elaborator redimensionabil cu evidențiere a sintaxei"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:38
 msgid "Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)"
-msgstr ""
+msgstr "Panou lateral care conține previzualizări de pagini cu aranjare avansată a paginilor, marcaje PDF și straturi (pot fi ascunse/modificate individual)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:39
 msgid "Allows mapping different tools/colors etc. to stylus/mouse buttons"
-msgstr ""
+msgstr "Permite asocierea diferitelor instrumente/culori etc. cu butoanele creionului/mausului"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:40
 msgid "Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape"
-msgstr ""
+msgstr "Bandă cu instrumente personalizabilă cu mai multe configurații, de exemplu: poate fi optimizată pentru portret/peisaj"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:41
 msgid "Custom color palette support using the .gpl format"
-msgstr ""
+msgstr "Paletă de culori personalizată utilizând formatul .gpl"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:42
 msgid "Page template definitions"
-msgstr ""
+msgstr "Modele de pagină"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:43
 msgid "Bug reporting, autosave, and auto backup tools"
-msgstr ""
+msgstr "Instrumente de raportare a erorilor, salvare automată și copie de rezervă automată"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:44
 msgid "Audio recording and playback alongside with handwritten notes"
-msgstr ""
+msgstr "Înregistrare și ascultare audio împreună cu notițe scrise de mână"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:45
 msgid "Multi language support (over 20 languages supported)"
-msgstr ""
+msgstr "Mai multe limbi (peste 20 de limbi disponibile)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:46
 msgid "Plugins using Lua scripting"
-msgstr ""
+msgstr "Module care utilizează limbajul de programare Lua"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"
-msgstr ""
+msgstr "Fișier de notițe Xournal"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:8
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:12
 msgid "Xournal++ note file"
-msgstr ""
+msgstr "Fișier de notițe Xournal++"
 

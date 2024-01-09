@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-30 14:40+0000\n"
-"PO-Revision-Date: 2023-10-30 15:02\n"
+"POT-Creation-Date: 2023-11-22 08:35+0000\n"
+"PO-Revision-Date: 2023-11-22 08:44\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -22,158 +22,160 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "ഓഡിയോ ഫോൾഡർ സജ്ജമാക്കിയില്ല/അസാധുവാണ്! ആയതിനാൽ റെക്കോർഡിംഗ് പ്രവർത്തനയോഗ്യമല്ല! ദയവായി ശരിയായ റെക്കോർഡിങ് ഫോൾഡർ \"മുൻഗണനകൾ (Preferences) > ഓഡിയോ റെക്കോർഡിങ് (Audio recording)\" വഴി സജ്ജമാക്കുക"
 
-#: ../src/core/control/Control.cpp:228
+#: ../src/core/control/Control.cpp:229
 msgid "Autosave renamed from {1} to {2}"
 msgstr "ഓട്ടോസേവ് നാമം {1}-ൽ നിന്നും {2} ആയി മാറ്റിയിരിക്കുന്നു"
 
-#: ../src/core/control/Control.cpp:239
+#: ../src/core/control/Control.cpp:240
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "ഓട്ടോസേവ് ഫയൽ നാമം \"{1}\"-ൽ നിന്നും \"{2}\"-ലേക്ക് തിരുത്താൻ സാധിച്ചില്ല: {3}"
 
-#: ../src/core/control/Control.cpp:248
+#: ../src/core/control/Control.cpp:249
 msgid "Autosave failed with an error: {1}"
 msgstr "ഓട്ടോസേവ് ഒരു പിശക് മൂലം പരാജയപ്പെട്ടു: {1}"
 
-#: ../src/core/control/Control.cpp:566
+#: ../src/core/control/Control.cpp:574
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "\"{1}\" എന്ന ടൂൾബാർ ക്രമീകരണം മുൻപേ തിട്ടപ്പെടുത്തിയതാണ്, അത് പുനർക്രമീകരിക്കാൻ താങ്കൾ പുതിയൊരു പകർപ്പ് നിർമിക്കുമോ?"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "Yes"
 msgstr "അതെ"
 
-#: ../src/core/control/Control.cpp:569
+#: ../src/core/control/Control.cpp:577
 msgid "No"
 msgstr "ഇല്ല"
 
-#: ../src/core/control/Control.cpp:748
+#: ../src/core/control/Control.cpp:756
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "കൂട്ടിച്ചേർക്കാനായി പിഡിഎഫ് താളുകൾ ലഭ്യമല്ല. നിങ്ങൾ ഒരിക്കൽ കൂടി ഡോക്യുമെന്റ് തുറക്കേണ്ടതായി വരും."
 
-#: ../src/core/control/Control.cpp:762
+#: ../src/core/control/Control.cpp:770
 msgid "Unable to retrieve pdf page."
 msgstr "പിഡിഎഫ് താൾ ലഭ്യമാക്കാൻ സാധിക്കുന്നില്ല."
 
-#: ../src/core/control/Control.cpp:1330
+#: ../src/core/control/Control.cpp:1336
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr "ഓട്ടോസേവ് ചെയ്ത ഫയലുകൾ തുറക്കരുത്. അവ വീണ്ടും മാറ്റി നിര്മിക്കപ്പെട്ടേക്കും. അവ മറ്റൊരു ഫോൾഡറിലേക്ക് പകർത്തുക. ഫോൾഡർ {1}-ലുള്ള ഫയലുകൾ തുറക്കാൻ സാധിക്കുന്നില്ല."
 
-#: ../src/core/control/Control.cpp:1344
+#: ../src/core/control/Control.cpp:1350
 msgid "file: {1}"
 msgstr "ഫയൽ: {1}"
 
-#: ../src/core/control/Control.cpp:1392
+#: ../src/core/control/Control.cpp:1398
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "അറ്റാച്ച് ചെയ്ത പശ്ചാത്തല ഫയൽ കണ്ടെത്താൻ സാധിച്ചില്ല. അത് മറ്റൊരിടത്തേക്ക് മാറ്റിയതോ, പുനർനാമകരണം ചെയ്തതോ, അല്ലെങ്കിൽ നീക്കം ചെയ്തതോ ആയിരിക്കാം."
 
-#: ../src/core/control/Control.cpp:1395
+#: ../src/core/control/Control.cpp:1401
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "പശ്ചാത്തല ഫയൽ \"{1}\" കണ്ടെത്താൻ സാധിച്ചില്ല. അത് മറ്റൊരിടത്തേക്ക് മാറ്റിയതോ, പുനർനാമകരണം ചെയ്തതോ, അല്ലെങ്കിൽ നീക്കം ചെയ്തതോ ആയിരിക്കാം.\n"
 "അത് അവസാനം കണ്ട പാത: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1405
+#: ../src/core/control/Control.cpp:1411
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "പകരം ഉപയോഗിക്കേണ്ട നിർദ്ദിഷ്ട ഫൈൽ: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1413
+#: ../src/core/control/Control.cpp:1419
 msgid "Use proposed PDF"
 msgstr "മുന്നോട്ട് വച്ച പിഡിഎഫ് ഉപയോഗിക്കുക"
 
-#: ../src/core/control/Control.cpp:1415
+#: ../src/core/control/Control.cpp:1421
 msgid "Select another PDF"
 msgstr "മറ്റൊരു പിഡിഎഫ് തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/control/Control.cpp:1416
+#: ../src/core/control/Control.cpp:1422
 msgid "Remove PDF Background"
 msgstr "പിഡിഎഫ് പശ്ചാത്തലം നീക്കം ചെയ്യുക"
 
-#: ../src/core/control/Control.cpp:1417 ../src/core/control/Control.cpp:1937
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/Control.cpp:1423 ../src/core/control/Control.cpp:1946
+#: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
 msgstr "റദ്ദാക്കുക"
 
-#: ../src/core/control/Control.cpp:1448
+#: ../src/core/control/Control.cpp:1454
 msgid "Error opening file \"{1}\""
 msgstr "ഫയൽ തുറക്കാൻ പരാജയപ്പെട്ടു: {1}"
 
-#: ../src/core/control/Control.cpp:1456
+#: ../src/core/control/Control.cpp:1462
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "ഇപ്പോൾ തുറക്കാൻ ശ്രമിക്കുന്ന ഫയലിന്റെ പതിപ്പ് Xournal++ പിന്തുണയ്ക്കുന്ന പതിപ്പിനേക്കാൾ പുതുതാണ്. ആയതിനാൽ ശരിയായ വിധം ഫയൽ പ്രവർത്തിച്ചേക്കണമെന്നില്ല. എന്തുതന്നെയായാലും ഫയൽ തുറക്കണോ?"
 
-#: ../src/core/control/Control.cpp:1618
+#: ../src/core/control/Control.cpp:1624
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "പിഡിഎഫ് വ്യാഖ്യാനിക്കുന്നതിൽ പിശക് \"{1}\"\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr "ഫയൽ സേവ്"
 
-#: ../src/core/control/Control.cpp:1719
+#: ../src/core/control/Control.cpp:1728
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr "_ഉപേക്ഷിക്കുക"
 
-#: ../src/core/control/Control.cpp:1720
+#: ../src/core/control/Control.cpp:1729
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "_സേവ്"
 
-#: ../src/core/control/Control.cpp:1725
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
+#: ../src/core/control/Control.cpp:1734
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:63
 msgid "Xournal++ files"
 msgstr "Xournal++ ഫയലുകൾ"
 
-#: ../src/core/control/Control.cpp:1772
+#: ../src/core/control/Control.cpp:1781
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1787
+#: ../src/core/control/Control.cpp:1796
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
 msgid "Select color"
 msgstr "നിറം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/control/Control.cpp:1809
+#: ../src/core/control/Control.cpp:1818
 msgid "Unsaved Document"
 msgstr "സേവ് ചെയ്യാത്ത ഡോക്യുമെന്റ്"
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "Document file was removed."
 msgstr "ഡോക്യുമെന്റ് ഫയൽ നീക്കം ചെയ്യപ്പെട്ടു."
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:1937
 msgid "This document is not saved yet."
 msgstr "ഈ ഡോക്യുമെന്റ് ഇത് വരെ സേവ് ചെയ്യപ്പെട്ടിട്ടില്ല."
 
-#: ../src/core/control/Control.cpp:1929
+#: ../src/core/control/Control.cpp:1938
 msgid "Save As..."
 msgstr "സേവ് തരം..."
 
-#: ../src/core/control/Control.cpp:1929 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:1938 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Save"
 msgstr "സേവ്"
 
-#: ../src/core/control/Control.cpp:1934
+#: ../src/core/control/Control.cpp:1943
 msgid "Discard"
 msgstr "ഒഴിവാക്കുക"
 
 #: ../src/core/control/CrashHandler.cpp:31
-msgid "Trying to emergency save the current open document…"
-msgstr "അടിയന്തിരമായി ഇപ്പോൾ തുറന്നിരിക്കുന്ന ഡോക്യുമെന്റ് സേവ് ചെയ്യാൻ ശ്രമിക്കുന്നു…"
+msgid "Trying to emergency save the current open document..."
+msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:40
+#: ../src/core/control/XournalMain.cpp:301
+#: ../src/core/control/XournalMain.cpp:307
 msgid "Error: {1}"
 msgstr "തെറ്റ്: {1}"
 
@@ -225,27 +227,27 @@ msgstr "ചിത്രത്തിന്റെ ഫയൽ വിജയകരമ�
 msgid "PDF file successfully created"
 msgstr "പിഡിഎഫ് ഫയൽ വിജയകരമായി നിർമ്മിക്കപ്പെട്ടു"
 
-#: ../src/core/control/LatexController.cpp:77
+#: ../src/core/control/LatexController.cpp:79
 msgid "Global template file does not exist. Please check your settings."
 msgstr "ആഗോള ടെമ്പ്ലേറ്റ് നിലവിലില്ല. ദയവായി നിങ്ങളുടെ ക്രമീകരണങ്ങൾ പരിശോധിക്കുക."
 
-#: ../src/core/control/LatexController.cpp:82
+#: ../src/core/control/LatexController.cpp:84
 msgid "Failed to read global template file. Please check your settings."
 msgstr "ആഗോള ടെമ്പ്ലേറ്റ് ഫയൽ വായിക്കുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി നിങ്ങളുടെ ക്രമീകരണങ്ങൾ പരിശോധിക്കുക."
 
-#: ../src/core/control/LatexController.cpp:88
+#: ../src/core/control/LatexController.cpp:90
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "ആഗോള ടെമ്പ്ലേറ്റ് ഒരു സാധാരണ ഫയൽ അല്ല. ദയവായി നിങ്ങളുടെ ക്രമീകരണങ്ങൾ പരിശോധിക്കുക. "
 
-#: ../src/core/control/LatexController.cpp:235
+#: ../src/core/control/LatexController.cpp:236
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "ലാറ്റെക് (LaTeX) ഉത്‌പാദക സംവിധാനം ഒരു പിശക് നേരിട്ടു: {1} (നിർഗമന കോഡ്: {2})"
 
-#: ../src/core/control/LatexController.cpp:301
+#: ../src/core/control/LatexController.cpp:302
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "ലാറ്റെക് (LaTeX) പി. ഡി. എഫ്. (PDF) ഫയൽ തുറക്കാൻ സാധിച്ചില്ല: {1}"
 
-#: ../src/core/control/LatexController.cpp:306
+#: ../src/core/control/LatexController.cpp:307
 msgid "Could not load LaTeX PDF file"
 msgstr "ലാറ്റെക് (LaTeX) പി. ഡി. എഫ്. (PDF) ഫയൽ തുറക്കാൻ സാധിച്ചില്ല"
 
@@ -258,7 +260,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "നിങ്ങൾക്ക് തിരഞ്ഞെടുക്കുന്നതിന് വേണ്ടി പിഡിഫ് താളുകൾ ഇല്ല. പ്രവൃത്തി ഉപേക്ഷിക്കുക. മറ്റൊരു പശ്ചാത്തല തരം ദയവായി തിരഞ്ഞെടുക്കുക: മെനു \"ജേർണൽ\" → \"താൾ ടെമ്പ്ലേറ്റ് കോൺഫിഗർ ചെയ്യുക\"."
 
-#: ../src/core/control/PdfCache.cpp:123
+#: ../src/core/control/PdfCache.cpp:124
 msgid "PDF background missing"
 msgstr "പിഡിഎഫ് പശ്ചാത്തലം കാണ്മാനില്ല"
 
@@ -266,71 +268,71 @@ msgstr "പിഡിഎഫ് പശ്ചാത്തലം കാണ്മാ�
 msgid "Running print operation failed with {1}"
 msgstr "പ്രിന്റ് പ്രവർത്തനം നടപ്പിലാക്കുന്നതിൽ {1} സഹിതം പരാജയപ്പെട്ടു"
 
-#: ../src/core/control/XournalMain.cpp:147
+#: ../src/core/control/XournalMain.cpp:148
 msgid "Failed to delete file: {1}"
 msgstr "ഫയൽ നീക്കം ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു: {1}"
 
-#: ../src/core/control/XournalMain.cpp:149
+#: ../src/core/control/XournalMain.cpp:150
 msgid "Please delete the file manually"
 msgstr "ദയവായി ഈ ഫയൽ സ്വമേധയാ നീക്കം ചെയ്യുക"
 
-#: ../src/core/control/XournalMain.cpp:185
+#: ../src/core/control/XournalMain.cpp:186
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:187
+#: ../src/core/control/XournalMain.cpp:188
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:190
+#: ../src/core/control/XournalMain.cpp:191
 msgid "The most recent log file name: {1}"
 msgstr "സമീപകാലത്ത് ഉപയോഗിച്ച ലോഗ് ഫയലിന്റെ നാമം: {1}"
 
-#: ../src/core/control/XournalMain.cpp:192
+#: ../src/core/control/XournalMain.cpp:193
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:195
+#: ../src/core/control/XournalMain.cpp:196
 msgid "File Bug Report"
 msgstr "ബഗ്ഗ്‌ റിപ്പോർട്ട് സമർപ്പിക്കുക"
 
-#: ../src/core/control/XournalMain.cpp:196
+#: ../src/core/control/XournalMain.cpp:197
 msgid "Open Logfile"
 msgstr "ലോഗ്‌ഫയൽ തുറക്കുക"
 
-#: ../src/core/control/XournalMain.cpp:197
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Open Logfile directory"
 msgstr "ലോഗ്‌ഫയൽ ഡയറക്ടറി തുറക്കുക"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:199
 msgid "Delete Logfile"
 msgstr "ലോഗ്ഫയൽ നീക്കം ചെയ്യുക"
 
-#: ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/XournalMain.cpp:201
 msgid "Crash log"
 msgstr "ക്രാഷ് ലോഗ്"
 
-#: ../src/core/control/XournalMain.cpp:222
+#: ../src/core/control/XournalMain.cpp:223
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ കഴിഞ്ഞ തവണ പ്രവർത്തന രഹിതമായിരുന്നു. ഏറ്റവും അവസാനം തിരുത്തിക്കൊണ്ടിരുന്ന ഫയൽ തിരികെ കൊണ്ടുവരേണ്ടതുണ്ടോ?"
 
-#: ../src/core/control/XournalMain.cpp:225
+#: ../src/core/control/XournalMain.cpp:226
 msgid "Recovery file detected"
 msgstr "വീണ്ടെടുക്കാനുള്ള ഫയൽ കണ്ടെത്തി"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Delete file"
 msgstr "ഫയൽ നീക്കം ചെയ്യുക"
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Restore file"
 msgstr "ഫയൽ തിരികെ കൊണ്ടുവരിക"
 
-#: ../src/core/control/XournalMain.cpp:245
+#: ../src/core/control/XournalMain.cpp:246
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "പശ്ചാത്തല ഫയൽ \"{1}\" കണ്ടെത്താൻ സാധിച്ചില്ല. അത് മറ്റൊരിടത്തേക്ക് മാറ്റിയതോ, പുനർനാമകരണം ചെയ്തതോ, അല്ലെങ്കിൽ നീക്കം ചെയ്തതോ ആയിരിക്കാം."
 
-#: ../src/core/control/XournalMain.cpp:408
+#: ../src/core/control/XournalMain.cpp:438
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -343,52 +345,56 @@ msgstr "<span foreground='red' size='x-large'>ആവശ്യമുള്ള യ
 "  പ്രവർത്തന പാതയിലല്ല\n"
 "  {2}-ൽ അല്ല"
 
-#: ../src/core/control/XournalMain.cpp:413
+#: ../src/core/control/XournalMain.cpp:443
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "ഈ ഫൈൽ ഇല്ലാതെ പ്രവർത്തിക്കാൻ ഇപ്പോൾ ശ്രമിക്കും."
 
-#: ../src/core/control/XournalMain.cpp:430
-#: ../src/core/control/XournalMain.cpp:523
+#: ../src/core/control/XournalMain.cpp:460
+#: ../src/core/control/XournalMain.cpp:553
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "ക്ഷമിക്കണം, Xournal++-നു ഒരു സമയം ഒറ്റ ഫയൽ മാത്രമേ തുറക്കാൻ സാധിക്കുകയുള്ളൂ.\n"
 "മറ്റുള്ളവ തിരസ്കരിക്കപ്പെടും."
 
-#: ../src/core/control/XournalMain.cpp:441
+#: ../src/core/control/XournalMain.cpp:471
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:445
-#: ../src/core/control/XournalMain.cpp:543
+#: ../src/core/control/XournalMain.cpp:475
+#: ../src/core/control/XournalMain.cpp:573
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:691
 msgid "Jump to Page (first Page: 1)"
 msgstr "താളിലേക്ക് ചാടുക (ആദ്യത്തെ താൾ: 1)"
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:695
 msgid "Get version of xournalpp"
 msgstr "Xournalpp-യുടെ പതിപ്പ് ലഭിക്കുക"
 
-#: ../src/core/control/XournalMain.cpp:664
+#: ../src/core/control/XournalMain.cpp:697
 msgid "Disable audio for this session"
 msgstr "ഈ സെഷനിൽ ഓഡിയോ പ്രവർത്തനരഹിതമാക്കുക"
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:699
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:677
+#: ../src/core/control/XournalMain.cpp:703
+msgid "Save xopp-file with the background PDF specified as FILE"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:712
 msgid "Export FILE as PDF"
 msgstr "ഫയൽ പിഡിഎഫ് ആയി എക്സ്പോർട്ട് ചെയ്യുക"
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:714
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -396,7 +402,7 @@ msgstr "ഫയൽ ചിത്രങ്ങളുടെ ഫയലുകളായ�
 "                                 അനന്തര ഫയലിന്റെ ഫോർമാറ്റ് IMGFILE-ന്റെ എക്സ്റ്റൻഷണിന്റെ അടിസ്ഥാനത്തിൽ തീരുമാനിക്കുക\n"
 "                                 പിന്തുണയ്ക്കപ്പെട്ട ഫോർമാറ്റുകൾ: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:684
+#: ../src/core/control/XournalMain.cpp:719
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -404,13 +410,13 @@ msgstr "പശ്ചാത്തല രഹിത എക്സ്പോർട്�
 "                                 എക്സ്പോർട്ട് ചെയ്യപ്പെടുന്ന ഫയലിന് രശ്‌മീപാരകമായ/വെള്ള പശ്ചാത്തലം ഉണ്ടണ്ടാകും\n"
 "                                 അത് ഫയലിന്റെ തരത്തിന്റെ അടിസ്ഥാനത്തിലായിരിക്കും തീരുമാനിക്കുക\n"
 
-#: ../src/core/control/XournalMain.cpp:689
+#: ../src/core/control/XournalMain.cpp:724
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "റൂളിംഗ് ഇല്ലാതെ എക്സ്പോർട്ട് ചെയ്യുക\n"
 "                                 എക്സ്പോർട്ട് ചെയ്ത ഫയലിന് പേപ്പർ റൂളിംഗ് ഉണ്ടാകില്ല\n"
 
-#: ../src/core/control/XournalMain.cpp:693
+#: ../src/core/control/XournalMain.cpp:728
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -422,39 +428,39 @@ msgstr "പാളികൾ ഒന്നൊന്നായി എക്സ്പ�
 "                                 ഒന്നൊന്നായി പാളികളുടെ കൂന നിർമിക്കുന്നു\n"
 "                                 ഇങ്ങനെ ലഭിക്കുന്ന പിഡിഎഫ് ഫയൽ ഒരു പ്രസന്റേഷൻ അവതരിപ്പിക്കുന്നതിനായി ഉപയോഗിക്കാം.\n"
 
-#: ../src/core/control/XournalMain.cpp:700
+#: ../src/core/control/XournalMain.cpp:735
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:704
+#: ../src/core/control/XournalMain.cpp:739
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:708
+#: ../src/core/control/XournalMain.cpp:743
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "പിഎൻജി എക്സ്പോർട്ടിന് വേണ്ടി ഡിപിഐ തീരുമാനിക്കുക. സ്ഥിരമൂല്യം 300 ആണ്\n"
 "                                 -i/--create-img=foo.png ഉപയോഗിക്കാതെ ഒരു ഫലവും ലഭിക്കില്ല"
 
-#: ../src/core/control/XournalMain.cpp:712
+#: ../src/core/control/XournalMain.cpp:747
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:718
+#: ../src/core/control/XournalMain.cpp:753
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:723
+#: ../src/core/control/XournalMain.cpp:758
 msgid "Advanced export options"
 msgstr "വിപുലമായ എക്സ്പോർട്ട് സംവിധാനങ്ങൾ"
 
-#: ../src/core/control/XournalMain.cpp:724
+#: ../src/core/control/XournalMain.cpp:759
 msgid "Display advanced export options"
 msgstr "വിപുലമായ എക്സ്പോർട്ട് സംവിധാനങ്ങൾ കാണിക്കുക"
 
@@ -499,7 +505,7 @@ msgstr "ഇഷ്ടാനുസൃതമായി എക്സ്പോർട�
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:48
 msgid "PDF files"
 msgstr "പിഡിഎഫ് ഫയലുകൾ"
 
@@ -516,7 +522,7 @@ msgid "Xournal (Compatibility)"
 msgstr "Xournal (പൊരുത്തം)"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:131
-#: ../src/core/control/jobs/SaveJob.cpp:131
+#: ../src/core/control/jobs/SaveJob.cpp:130
 msgid "Save file error: {1}"
 msgstr "ഫയൽ സേവ് ചെയ്യുന്നതിനിടെ പിശക്: {1}"
 
@@ -540,7 +546,7 @@ msgstr "ചിത്രം സേവ് ചെയ്യുന്നതിൽ പ
 msgid "PDF Export"
 msgstr "പിഡിഎഫ് എക്സ്പോർട്ട്"
 
-#: ../src/core/control/jobs/SaveJob.cpp:117
+#: ../src/core/control/jobs/SaveJob.cpp:116
 msgid "Save file error, can't backup: {1}"
 msgstr "ഫയൽ സേവ് ചെയ്യുന്നതിനിടെ പിശക്, ബാക്കപ്പ് നിർമിക്കാൻ സാധിക്കില്ല: {1}"
 
@@ -621,71 +627,71 @@ msgstr "പിഡിഎഫ് പശ്ചാത്തലം സഹിതം"
 msgid "Image"
 msgstr "ചിത്രം"
 
-#: ../src/core/control/settings/Settings.cpp:150
+#: ../src/core/control/settings/Settings.cpp:151
 msgid "%F-Note-%H-%M"
 msgstr "%F-കുറിപ്പ്-%H-%M"
 
-#: ../src/core/control/settings/Settings.cpp:152
+#: ../src/core/control/settings/Settings.cpp:153
 msgid "%{name}_annotated"
 msgstr "%{name}_വ്യാഖ്യാനിച്ചു"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 msgid "Open Image"
 msgstr "ചിത്രം തുറക്കുക"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:18
 msgid "_Open"
 msgstr "_തുറക്കുക"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:22
 msgid "Images"
 msgstr "ചിത്രങ്ങൾ"
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:33
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:117
 msgid "Attach file to the journal"
 msgstr "ജേർണലിലേക്ക് ഫൈൽ അറ്റാച്ച് ചെയ്യുക"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Open file"
 msgstr "ഫയൽ തുറക്കുക"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:40
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:41
 msgid "All files"
 msgstr "എല്ലാ ഫയലുകളും"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:56
 msgid "Xournal files"
 msgstr "Xournal ഫയലുകൾ"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:70
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:117
 msgid "Xournal++ template"
 msgstr "Xournal++ ടെമ്പ്ലേറ്റ്"
 
-#: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
+#: ../src/core/control/stockdlg/XojOpenDlg.cpp:98
 msgid "Supported files"
 msgstr "അനുവദനീയമായ ഫയലുകൾ"
 
-#: ../src/core/control/tools/EditSelection.cpp:401
+#: ../src/core/control/tools/EditSelection.cpp:462
 msgid "Arrange"
 msgstr "ക്രമീകരിക്കുക"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:467
 msgid "Bring to front"
 msgstr "മുന്നിലേക്ക് കൊണ്ടുവരിക"
 
-#: ../src/core/control/tools/EditSelection.cpp:416
+#: ../src/core/control/tools/EditSelection.cpp:478
 msgid "Bring forward"
 msgstr "മുന്നോട്ട് കൊണ്ടുവരിക"
 
-#: ../src/core/control/tools/EditSelection.cpp:427
+#: ../src/core/control/tools/EditSelection.cpp:490
 msgid "Send backward"
 msgstr "പിന്നിലേക്ക് അയക്കുക"
 
-#: ../src/core/control/tools/EditSelection.cpp:435
+#: ../src/core/control/tools/EditSelection.cpp:497
 msgid "Send to back"
 msgstr "പിന്നോട്ടയക്കുക"
 
@@ -693,126 +699,126 @@ msgstr "പിന്നോട്ടയക്കുക"
 msgid "Failed to load image, could not determine image size!"
 msgstr "ചിത്രം തുറക്കുന്നതിൽ പരാജയപെട്ടു, അതിന്റെ വലുപ്പം തിട്ടപ്പെടുത്താൻ സാധിച്ചില്ല!"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:142
+#: ../src/core/control/xojfile/LoadHandler.cpp:143
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "ഫയൽ നേരായ വിധത്തിലുള്ള .എക്സ്ഓപിപി (.xopp) ഫയൽ അല്ല (മൈമ്ടൈപ്പ് കണ്ടെത്തിയില്ല): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:150
+#: ../src/core/control/xojfile/LoadHandler.cpp:151
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "ഫയൽ നേരായ വിധത്തിലുള്ള .എക്സ്ഓപിപി (.xopp) ഫയൽ അല്ല (മൈമ്ടൈപ്പ് തെറ്റാണ്): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:159
+#: ../src/core/control/xojfile/LoadHandler.cpp:160
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "ഫയൽ നേരായ വിധത്തിലുള്ള .എക്സ്ഓപിപി (.xopp) ഫയൽ അല്ല (പതിപ്പ് കാണ്മാനില്ല): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:172
+#: ../src/core/control/xojfile/LoadHandler.cpp:173
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "ഫയൽ നേരായ വിധത്തിലുള്ള .എക്സ്ഓപിപി (.xopp) ഫയൽ അല്ല (പതിപ്പിന്റെ സ്ട്രിംഗ് അസാധുവാണ്): \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:181
+#: ../src/core/control/xojfile/LoadHandler.cpp:182
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "സിപ് ആർകൈവിനകത്തുള്ള (zip archive) കോൺടെന്റ്.എക്സ്എംഎൽ (content.xml) തുറക്കാൻ സാധിച്ചില്ല: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:189
+#: ../src/core/control/xojfile/LoadHandler.cpp:190
 msgid "Could not open file: \"{1}\""
 msgstr "ഫയൽ തുറക്കാൻ സാധിച്ചില്ല: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:255
+#: ../src/core/control/xojfile/LoadHandler.cpp:256
 msgid "XML Parser error: {1}"
 msgstr "എക്സ്എംഎൽ വായിക്കുന്നതിൽ പിശക്: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:258
+#: ../src/core/control/xojfile/LoadHandler.cpp:259
 msgid "Unknown parser error"
 msgstr "അജ്ഞാതമായ പാഴ്സർ പിശക്"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:269
+#: ../src/core/control/xojfile/LoadHandler.cpp:270
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "ഡോക്യുമെന്റ് പൂർണമല്ല (അവസാന ഭാഗം ഒഴിവാക്കപ്പെട്ടിരിക്കാം?)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:273
+#: ../src/core/control/xojfile/LoadHandler.cpp:274
 msgid "Document is corrupted (no pages found in file)"
 msgstr "ഡോക്യുമെന്റ് അസാധുവായിരിക്കുന്നു (ഫയലിൽ ഒരു താള് പോലും കണ്ടെത്തിയില്ല)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:318
+#: ../src/core/control/xojfile/LoadHandler.cpp:319
 msgid "Unexpected root tag: {1}"
 msgstr "പ്രതീക്ഷിക്കാത്ത മൂല ടാഗ്: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:339
+#: ../src/core/control/xojfile/LoadHandler.cpp:340
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "ഡോക്യൂമെന്റിൽ അപ്രതീക്ഷിതമായ ടാഗ്: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:387
-#: ../src/core/control/xojfile/LoadHandler.cpp:415
+#: ../src/core/control/xojfile/LoadHandler.cpp:388
+#: ../src/core/control/xojfile/LoadHandler.cpp:416
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "ചിത്രം വായിക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:425
+#: ../src/core/control/xojfile/LoadHandler.cpp:426
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "ക്ലോൺ ചെയ്ത പശ്ചാത്തല ചിത്രത്തെ സംബന്ധിച്ച താളിന്റെ സംഖ്യ വായിച്ചെടുക്കാൻ സാധിച്ചില്ല: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:433
+#: ../src/core/control/xojfile/LoadHandler.cpp:434
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "അറിവില്ലാത്ത പിക്സ്മാപ്::ഡൊമൈൻ (pixmap::domain) തരം:{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:478
-#: ../src/core/control/xojfile/LoadHandler.cpp:498
+#: ../src/core/control/xojfile/LoadHandler.cpp:479
+#: ../src/core/control/xojfile/LoadHandler.cpp:499
 msgid "Error reading PDF: {1}"
 msgstr "പി. ഡി. എഫ്. (PDF) വായിക്കാൻ പരാജയപ്പെട്ടു: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:486
 msgid "Unknown domain type: {1}"
 msgstr "ഡൊമൈൻ തരം അജ്ഞാതം: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:529
+#: ../src/core/control/xojfile/LoadHandler.cpp:530
 msgid "Unknown background type: {1}"
 msgstr "അജ്ഞാതമായ പശ്ചാത്തല തരം: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:553
+#: ../src/core/control/xojfile/LoadHandler.cpp:554
 msgid "Error reading width of a stroke: {1}"
 msgstr "സ്‌ട്രോക്കിന്റെ വീതി അളക്കുന്നതിൽ പരാജയപ്പെട്ടു: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:621
+#: ../src/core/control/xojfile/LoadHandler.cpp:622
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "അജ്ഞാതമായ സ്ട്രോക്ക് ക്യാപ് തരം: \"{1}\", വട്ടത്തിലുള്ളതെന്ന് അനുമാനിക്കുന്നു"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:639
+#: ../src/core/control/xojfile/LoadHandler.cpp:640
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "അജ്ഞാതമായ സ്ട്രോക്ക് തരം: \"{1}\", പേന ആണെന്ന് അനുമാനിക്കുന്നു"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:807
-#: ../src/core/control/xojfile/LoadHandler.cpp:823
-#: ../src/core/control/xojfile/LoadHandler.cpp:1137
-#: ../src/core/control/xojfile/LoadHandler.cpp:1151
+#: ../src/core/control/xojfile/LoadHandler.cpp:808
+#: ../src/core/control/xojfile/LoadHandler.cpp:824
+#: ../src/core/control/xojfile/LoadHandler.cpp:1138
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:816
-#: ../src/core/control/xojfile/LoadHandler.cpp:1144
-#: ../src/core/control/xojfile/LoadHandler.cpp:1162
+#: ../src/core/control/xojfile/LoadHandler.cpp:817
+#: ../src/core/control/xojfile/LoadHandler.cpp:1145
+#: ../src/core/control/xojfile/LoadHandler.cpp:1163
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: ഫയലിന്റെ വലിപ്പം നൽകിയില്ല"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:835
+#: ../src/core/control/xojfile/LoadHandler.cpp:836
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശക് സംബന്ധിച്ച സന്ദേശം: ഫയൽ വായിക്കാൻ സാധിച്ചില്ല"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:844
+#: ../src/core/control/xojfile/LoadHandler.cpp:845
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "അറ്റാച്ച്മെന്റ് തുറക്കാൻ സാധിച്ചില്ല: {1}. പിശകിനെ സംബന്ധിച്ച സന്ദേശം: ഫയലിലേക്ക് എഴുതാൻ സാധിച്ചില്ല"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1031
+#: ../src/core/control/xojfile/LoadHandler.cpp:1032
 msgid "Wrong count of points ({1})"
 msgstr "തെറ്റായ പോയിന്റ്‌സിന്റെ സംഖ്യ ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1047
+#: ../src/core/control/xojfile/LoadHandler.cpp:1048
 msgid "xoj-File: {1}"
 msgstr "എക്സ്ഓജെ-ഫയൽ (xoj-File): {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1048
+#: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "തെറ്റായ സമ്മർദ്ദത്തിന്റെ മൂല്യങ്ങൾ, ലഭിച്ചത് {1}, പ്രതീക്ഷിച്ചത് {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1181
+#: ../src/core/control/xojfile/LoadHandler.cpp:1182
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "ആവശ്യപ്പെട്ട താത്കാലിക ഫയൽ അറ്റാച്മെന്റിനു വേണ്ടി കണ്ടെത്താൻ സാധിച്ചില്ല {1}"
 
@@ -870,17 +876,17 @@ msgstr "ഗ്ലേഡ് ഫയൽ \"{1}\" ലോഡ് ചെയ്യുന�
 msgid "Unable to play audio recording {1}"
 msgstr "ഓഡിയോ റെക്കോർഡിങ് പ്രവർത്തിപ്പിക്കാൻ സാധിക്കുന്നില്ല {1}"
 
-#: ../src/core/gui/PageView.cpp:913
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
+#: ../src/core/gui/PageView.cpp:917
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Loading..."
 msgstr "ലോഡ് ചെയ്യുന്നു..."
 
-#: ../src/core/gui/PageView.cpp:976
+#: ../src/core/gui/PageView.cpp:980
 msgid "Scroll to page {1}"
 msgstr "{1}-ആം താളിലേക്ക് സ്ക്രോൾ ചെയ്യുക"
 
-#: ../src/core/gui/PageView.cpp:978
+#: ../src/core/gui/PageView.cpp:982
 msgid "Add missing page"
 msgstr "കാണാതായ താൾ ചേർക്കുക"
 
@@ -1049,7 +1055,7 @@ msgstr "കോർഡിനേറ്റ് സിസ്റ്റം വരയ്�
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
+#: ../src/core/undo/RecognizerUndoAction.cpp:74
 msgid "Stroke recognizer"
 msgstr "സ്ട്രോക്ക് തിരിച്ചറിയുന്നത്"
 
@@ -1063,35 +1069,35 @@ msgstr "സ്പ്ലൈൻ വരയ്ക്കുക"
 msgid "Custom"
 msgstr "ഇഷ്ടാനുസൃതം"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
 msgstr "സിസ്റ്റം സ്ഥിരസ്ഥിതി"
 
-#: ../src/core/gui/dialog/LanguageConfigGui.cpp:66
+#: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
 msgstr "മുൻപ് തിരഞ്ഞെടുത്ത ഭാഷ ഇനി മുതൽ ലഭ്യമല്ല!"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
 msgid "LaTeX editor theme:"
 msgstr "ലാറ്റെക് (LaTeX) എഡിറ്ററിന്റെ തീം:"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
 msgstr "ജിടികെ സോഴ്സ് വ്യൂ (GtkSourceView) Xournal++ നിർമിക്കുന്ന സമയം പ്രവർത്തനരഹിതമാക്കിയിരുന്നു! അതിനാൽ ചില സംവിധാനങ്ങൾ ലഭ്യമാവില്ല."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "{1}-ലുള്ള ആഗോള ടെമ്പ്ലേറ്റ് ഫയൽ തുറക്കാൻ സാധിക്കുന്നില്ല. ആ ഫയൽ നിലവിലുണ്ടോ?"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:153
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
 msgstr "ഉദാഹരണ (ലാറ്റെക്) LaTeX ഫയൽ വിജയകരമായി ഉത്പാദിപ്പിച്ചു."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:155
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "പിശക്: {1}. ദയവായി {2}-ന്റെ ഉള്ളടക്കം പരിശോധിക്കുക"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:167
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "പിശക്: {1} ശരിയായ ഫയൽ അല്ല. ദയവായി നിങ്ങളുടെ ലാറ്റെക് (LaTeX) ടെമ്പ്ലേറ്റ് ഫയൽ ക്രമീകരങ്ങൾ പരിശോധിക്കുക. "
 
@@ -1103,49 +1109,49 @@ msgstr "സ്ഥിരസ്ഥിതി പ്രവർത്തനക്ഷ�
 msgid "default disabled"
 msgstr "സ്ഥിരസ്ഥിതി പ്രവർത്തനരഹിതം"
 
-#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:61
+#: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
 msgstr "പശ്ചാത്തല നിറം തിരഞ്ഞെടുക്കുക"
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:28
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
 msgstr ""
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
 msgstr ""
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:34
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:38
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
 msgstr ""
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
 msgstr ""
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:40
 msgid "PDF Text Options"
 msgstr ""
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:42
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
 msgid "PDF Text Marker"
 msgstr ""
 
-#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:50
+#: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:72
+#: ../src/core/gui/dialog/SettingsDialog.cpp:73
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>ഉപകരണങ്ങളൊന്നും കണ്ടെത്താൻ സാധിച്ചില്ല. ഇത് തെറ്റാണെന്ന് തോന്നുന്നു - ബഗ്ഗ്‌ റിപ്പോർട്ട് ഫയൽ ചെയ്യണോ?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "ഈ ക്രമീകരണം മാറ്റുവാൻ സമ്മർദ്ദം തിരിച്ചറിയൽ, അല്ലെങ്കിൽ സമ്മർദാനുമാനം പ്രാപ്തമാക്കുക!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "ഇൻപുട്ട് സമ്മർദ്ദം ഫിൽറ്റർ ചെയ്യുക. സമ്മർദ്ദ ഗുണിതസംഖ്യ ഉപയോഗിച്ച് സമ്മർദ്ദം ഗുണിക്കുക. മിനിമം സമ്മർദ്ദത്തെക്കാൾ കുറവെങ്കിൽ, മിനിമം അളവ് തന്നെ ഉപയോഗിക്കുക."
 
@@ -1165,11 +1171,11 @@ msgstr "ടൂൾബാറുകൾ"
 msgid "New"
 msgstr "പുതിയത്"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:102
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
 msgid "Show only not used pages (one unused page)"
 msgstr "ഉപയോഗിക്കാത്ത താളുകൾ മാത്രം കാണിക്കുക (ഒരു ഉപയോഗിക്കാത്ത താൾ)"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:104
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "ഉപയോഗിക്കാത്ത താളുകൾ മാത്രം കാണിക്കുക ({1} ഉപയോഗിക്കാത്ത താളുകൾ)"
 
@@ -1245,7 +1251,7 @@ msgid "Your current document does not contain PDF Page no {1}\n"
 msgstr "നിങ്ങളുടെ നിലവിലുള്ള ഡോക്യുമെന്റിൽ പിഡിഎഫ് താൾ സംഖ്യ {1} ഇല്ല. ഈ താൾ ഡോക്യൂമെന്റിലേക്ക് ചേർക്കേണമോ?\n\n"
 "അഭിപ്രായം: നിങ്ങൾക്ക് ജേർണൽ (Journal) → പേപ്പർ പശ്ചാത്തലം (Paper Background) → പിഡിഎഫ് പശ്ചാത്തലം (PDF Background) ഉപയോഗിച്ച് ഒരു പിഡിഎഫ് താൾ ചേർക്കാവുന്നതാണ്."
 
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:171
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:173
 msgid "Contents"
 msgstr "ഉള്ളടക്കം"
 
@@ -1338,8 +1344,8 @@ msgid "Cut"
 msgstr "കട്ട്"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:351
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:81
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:76
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
 msgstr "പകർത്തുക"
 
@@ -1698,8 +1704,8 @@ msgstr ""
 msgid "Toolbar found: {1}"
 msgstr "ടൂൾബാർ കണ്ടെത്തി: {1}"
 
-#: ../src/core/model/Document.cpp:315 ../src/core/model/Document.cpp:324
-#: ../src/core/model/Document.cpp:327
+#: ../src/core/model/Document.cpp:316 ../src/core/model/Document.cpp:325
+#: ../src/core/model/Document.cpp:328
 msgid "Document not loaded! ({1}), {2}"
 msgstr "ഡോക്യുമെന്റ് തുറക്കപ്പെട്ടില്ല! ({1}), {2}"
 
@@ -1707,19 +1713,19 @@ msgstr "ഡോക്യുമെന്റ് തുറക്കപ്പെട�
 msgid "Background"
 msgstr "പശ്ചാത്തലം"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:173
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:216
 msgid "No pages to export!"
 msgstr "എക്സ്പോർട്ട് ചെയ്യാനായി താളുകൾ ഇല്ല!"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:178
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:221
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "പിഡിഎഫ് കെയ്റോ പ്രതലം ഇനിഷ്യലൈസ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
-#: ../src/core/undo/EraseUndoAction.cpp:60
+#: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
 msgstr "സ്ട്രോക്ക് മായ്ക്കുക"
 
@@ -1751,10 +1757,6 @@ msgstr "ടെക്സ്റ്റ്"
 #: ../src/core/undo/ColorUndoAction.cpp:90
 msgid "Change color"
 msgstr "നിറം മാറ്റുക"
-
-#: ../src/core/undo/CopyUndoAction.cpp:62
-msgid "Copy page"
-msgstr "താൾ പകർത്തുക"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -1816,7 +1818,7 @@ msgstr "പാളി നീക്കുക"
 msgid "Move"
 msgstr "നീക്കുക"
 
-#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:84
+#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:85
 msgid "Page background changed"
 msgstr "താളിന്റെ പശ്ചാത്തലം മാറ്റിയിരിക്കുന്നു"
 
@@ -1832,7 +1834,7 @@ msgstr "കറക്കം"
 msgid "Scale"
 msgstr "സ്കെയിൽ"
 
-#: ../src/core/undo/SizeUndoAction.cpp:106
+#: ../src/core/undo/SizeUndoAction.cpp:108
 msgid "Change stroke width"
 msgstr "സ്ട്രോക്ക് വീതി മാറ്റുക"
 
@@ -1888,17 +1890,17 @@ msgstr "എലമെന്റ്::പാർസ്() (ElementRange::parse()): എ
 msgid "Error opening file: \"{1}\""
 msgstr "ഫയൽ തുറക്കാൻ പരാജയപ്പെട്ടു: {1}"
 
-#: ../src/util/PathUtil.cpp:172
+#: ../src/util/PathUtil.cpp:173
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "ഫയൽ തുറക്കാൻ സാധിച്ചില്ല. നിങ്ങൾക്ക് സ്വമേധയാ അത് ചെയ്യേണ്ടി വരും:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:244
+#: ../src/util/PathUtil.cpp:245
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:254
+#: ../src/util/PathUtil.cpp:255
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "ഫോൾഡർ നിർമിക്കാൻ സാധിച്ചില്ല: {1}\n"
@@ -1940,15 +1942,15 @@ msgstr "എക്സ്ഓജെ-പ്രീവ്യൂ-എക്സ്ട്�
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "എക്സ്ഓജെ-പ്രീവ്യൂ-എക്സ്ട്രാക്ടർ (xoj-preview-extractor): പ്രീവ്യൂ ഇല്ല, താളും കണ്ടെത്തിയില്ല. ഒരുപക്ഷെ അസാധുവായ ഫയൽ ആയേക്കാം?"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "എക്സ്ഓജെ-പ്രീവ്യൂ-എക്സ്ട്രാക്ടർ (xoj-preview-extractor): ചിഹ്നം കണ്ടെത്താനായില്ല \"{1}\""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "എക്സ്ഓജെ-പ്രീവ്യൂ-എക്സ്ട്രാക്ടർ (xoj-preview-extractor): ഔട്ട്പുട്ട് ഫയൽ \"{1}\" തുറക്കുന്നതിൽ പരാജയപ്പെട്ടു"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:209
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "എക്സ്ഓജെ-പ്രീവ്യൂ-എക്സ്ട്രാക്ടർ (xoj-preview-extractor): വിജയകരമായി നേടിയെടുത്തു"
 
