@@ -417,7 +417,7 @@ void ToolHandler::setButtonStrokeType(const LineStyle& lineStyle, Button button)
 auto ToolHandler::getTools() const -> std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& { return tools; }
 
 void ToolHandler::saveSettings() const {
-    SElement& s = settings->getCustomElement("tools");
+    SElement s = settings->get<SettingsElement::NESTED_TOOLS>();
     s.clear();
 
     s.setString("current", this->activeTool->getName());
@@ -476,11 +476,11 @@ void ToolHandler::saveSettings() const {
         }
     }
 
-    settings->customSettingsChanged();
+    settings->set<SettingsElement::NESTED_TOOLS>(s);
 }
 
 void ToolHandler::loadSettings() {
-    SElement& s = settings->getCustomElement("tools");
+    SElement s = settings->get<SettingsElement::NESTED_TOOLS>();
 
     std::string selectedTool;
     if (s.getString("current", selectedTool)) {

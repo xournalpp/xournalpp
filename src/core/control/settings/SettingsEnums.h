@@ -11,8 +11,8 @@
 
 #pragma once
 
+#include <optional>
 #include <string>  // for string
-
 
 /**
  * @brief Buttons that can have a configuration attached to them
@@ -182,3 +182,5 @@ StylusCursorType stylusCursorTypeFromString(const std::string& stylusCursorTypeS
 EraserVisibility eraserVisibilityFromString(const std::string& eraserVisibilityStr);
 IconTheme iconThemeFromString(const std::string& iconThemeStr);
 EmptyLastPageAppendType emptyLastPageAppendFromString(const std::string& str);
+std::optional<Button> buttonFromString(const std::string& str);
+auto scrollbarHideTypeFromString(const std::string& str) -> ScrollbarHideType;

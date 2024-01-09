@@ -268,7 +268,7 @@ void ButtonConfigGui::saveSettings() {
         cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbDisableDrawing));
     }
 
-    settings->customSettingsChanged();
+    settings->save();
 }
 
 void ButtonConfigGui::cbSelectCallback(GtkComboBox*, ButtonConfigGui* gui) { gui->enableDisableTools(); }

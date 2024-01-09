@@ -11,12 +11,16 @@
 
 #pragma once
 
+#include <array>
+#include <memory>
 #include <string>  // for string
+
+#include <libxml/tree.h>  // for xmlNodePtr
 
 #include "control/ToolEnums.h"               // for DrawingType, ToolType
 #include "control/settings/SettingsEnums.h"  // for Button
 #include "model/LineStyle.h"
-#include "util/Color.h"                      // for Color
+#include "util/Color.h"  // for Color
 
 class ToolHandler;
 
@@ -78,4 +82,7 @@ public:
 
     friend class Settings;
     friend class ButtonConfigGui;
+    friend bool importButtonConfig(xmlNodePtr node, std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& var);
+    friend xmlNodePtr exportButtonConfig(xmlNodePtr node, std::string name,
+                                         const std::array<std::shared_ptr<ButtonConfig>, BUTTON_COUNT>& value);
 };

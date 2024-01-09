@@ -1,7 +1,7 @@
 #include "SelectBackgroundColorDialog.h"
 
-#include <cstdint>    // for uint32_t
-#include <string>     // for allocator
+#include <cstdint>  // for uint32_t
+#include <string>   // for allocator
 
 #include <glib.h>  // for g_free, g_strdup_printf
 
@@ -12,31 +12,31 @@
 #include "util/safe_casts.h"            // for as_unsigned
 
 static inline std::array<GdkRGBA, 9> background1 = {
-        Util::rgb_to_GdkRGBA(Colors::xopp_lightpink),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_bisque),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_lemonchifon),  //
+        Util::rgb_to_GdkRGBA(Colors::xopp_lightpink),      //
+        Util::rgb_to_GdkRGBA(Colors::xopp_bisque),         //
+        Util::rgb_to_GdkRGBA(Colors::xopp_lemonchifon),    //
         Util::rgb_to_GdkRGBA(Colors::xopp_palegoldenrod),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_lavender),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_gainsboro03),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_antiquewhite),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_gainsboro),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_snow)   //
+        Util::rgb_to_GdkRGBA(Colors::xopp_lavender),       //
+        Util::rgb_to_GdkRGBA(Colors::xopp_gainsboro03),    //
+        Util::rgb_to_GdkRGBA(Colors::xopp_antiquewhite),   //
+        Util::rgb_to_GdkRGBA(Colors::xopp_gainsboro),      //
+        Util::rgb_to_GdkRGBA(Colors::xopp_snow)            //
 };
 
 static inline std::array<GdkRGBA, 6> backgroundXournal = {
-        Util::rgb_to_GdkRGBA(Colors::white),  //
+        Util::rgb_to_GdkRGBA(Colors::white),              //
         Util::rgb_to_GdkRGBA(Colors::xopp_paleturqoise),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_aquamarine),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_pink),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_lightsalmon),  //
-        Util::rgb_to_GdkRGBA(Colors::xopp_khaki)   //
+        Util::rgb_to_GdkRGBA(Colors::xopp_aquamarine),    //
+        Util::rgb_to_GdkRGBA(Colors::xopp_pink),          //
+        Util::rgb_to_GdkRGBA(Colors::xopp_lightsalmon),   //
+        Util::rgb_to_GdkRGBA(Colors::xopp_khaki)          //
 };
 
 SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control, std::function<void(Color)> callback):
         control(control), callback(callback) {
     lastBackgroundColors.fill(Util::rgb_to_GdkRGBA(Colors::white));
     Settings* settings = control->getSettings();
-    SElement& el = settings->getCustomElement("lastUsedPageBgColor");
+    const SElement& el = settings->get<SettingsElement::NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>();
 
     int count = 0;
     el.getInt("count", count);
@@ -99,7 +99,7 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings(GdkRGBA color) {
     }
 
     Settings* settings = control->getSettings();
-    SElement& el = settings->getCustomElement("lastUsedPageBgColor");
+    SElement el = settings->get<SettingsElement::NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>();
 
     // Move all colors one step back
     for (size_t i = LAST_BACKGROUND_COLOR_COUNT - 1; i > 0; i--) {
@@ -115,5 +115,5 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings(GdkRGBA color) {
         g_free(settingName);
     }
 
-    settings->customSettingsChanged();
+    settings->set<SettingsElement::NESTED_LAST_USED_PAGE_BACKGROUND_COLOR>(el);
 }

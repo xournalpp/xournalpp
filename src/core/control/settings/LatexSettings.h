@@ -43,4 +43,13 @@ public:
     bool useCustomEditorFont{false};
 
     bool editorWordWrap{true};
+
+    bool operator==(const LatexSettings& ls) const {
+        return (autoCheckDependencies == ls.autoCheckDependencies && defaultText == ls.defaultText &&
+                globalTemplatePath == ls.globalTemplatePath && genCmd == ls.genCmd &&
+                sourceViewThemeId == ls.sourceViewThemeId && sourceViewAutoIndent == ls.sourceViewAutoIndent &&
+                sourceViewSyntaxHighlight == ls.sourceViewSyntaxHighlight &&
+                sourceViewShowLineNumbers == ls.sourceViewShowLineNumbers && editorFont == ls.editorFont &&
+                useCustomEditorFont == ls.useCustomEditorFont && editorWordWrap == ls.editorWordWrap);
+    }
 };
