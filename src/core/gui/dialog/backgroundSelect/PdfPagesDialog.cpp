@@ -29,9 +29,6 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
         auto* pv = new PdfElementView(elements.size(), p, this);
         elements.push_back(pv);
     }
-    if (doc->getPdfPageCount() > 0) {
-        setSelected(0);
-    }
 
     for (size_t i = 0; i < doc->getPageCount(); i++) {
         PageRef p = doc->getPage(i);
@@ -44,7 +41,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
         }
     }
 
-    updateOkButton();
+    gtk_widget_set_sensitive(get("buttonOk"), false);
 
     g_signal_connect(get("cbOnlyNotUsed"), "toggled", G_CALLBACK(onlyNotUsedCallback), this);
     g_signal_connect(get("buttonOk"), "clicked", G_CALLBACK(okButtonCallback), this);
@@ -103,4 +100,12 @@ void PdfPagesDialog::show(GtkWindow* parent) {
                                                        FC(_F("Show only not used pages ({1} unused pages)") % unused)));
 
     BackgroundSelectDialogBase::show(parent);
+}
+
+void PdfPagesDialog::setSelected(int selected) {
+    BackgroundSelectDialogBase::setSelected(selected);
+
+    if (selected < this->elements.size()) {
+        gtk_widget_set_sensitive(get("buttonOk"), true);
+    }
 }

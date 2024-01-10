@@ -27,6 +27,7 @@ public:
 
 public:
     void show(GtkWindow* parent) override;
+    void setSelected(int selected) override;
     void updateOkButton();
     static double getZoom();
     int getSelectedPage();
