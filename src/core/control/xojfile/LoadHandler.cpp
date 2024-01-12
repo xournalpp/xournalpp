@@ -52,8 +52,6 @@ namespace {
 
 LoadHandler::LoadHandler():
         attachedPdfMissing(false),
-        removePdfBackgroundFlag(false),
-        pdfReplacementAttach(false),
         pdfFilenameParsed(false),
         pos(PARSER_POS_NOT_STARTED),
         fileVersion(0),
@@ -113,13 +111,6 @@ auto LoadHandler::getLastError() -> string { return this->lastError; }
 auto LoadHandler::isAttachedPdfMissing() const -> bool { return this->attachedPdfMissing; }
 
 auto LoadHandler::getMissingPdfFilename() const -> string { return this->pdfMissing; }
-
-void LoadHandler::removePdfBackground() { this->removePdfBackgroundFlag = true; }
-
-void LoadHandler::setPdfReplacement(fs::path filepath, bool attachToDocument) {
-    this->pdfReplacementFilepath = std::move(filepath);
-    this->pdfReplacementAttach = attachToDocument;
-}
 
 auto LoadHandler::openFile(fs::path const& filepath) -> bool {
     this->filepath = filepath;
@@ -462,49 +453,44 @@ void LoadHandler::parseBgPdf() {
 
     if (!this->pdfFilenameParsed) {
 
-        if (this->pdfReplacementFilepath.empty()) {
-            const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
-            {
-                const char* sFilename = LoadHandlerHelper::getAttrib("filename", false, this);
-                if (sFilename == nullptr) {
-                    error("PDF Filename missing!");
-                    return;
-                }
-                pdfFilename = fs::u8path(sFilename);
+        const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
+        {
+            const char* sFilename = LoadHandlerHelper::getAttrib("filename", false, this);
+            if (sFilename == nullptr) {
+                error("PDF Filename missing!");
+                return;
             }
+            pdfFilename = fs::u8path(sFilename);
+        }
 
-            if (!strcmp("absolute", domain))  // Absolute OR relative path
-            {
-                if (pdfFilename.is_relative()) {
-                    pdfFilename = xournalFilepath.remove_filename() / pdfFilename;
-                }
-            } else if (!strcmp("attach", domain)) {
-                attachToDocument = true;
-                // Handle old format separately
-                if (this->isGzFile) {
-                    pdfFilename = (fs::path{xournalFilepath} += ".") += pdfFilename;
-                } else {
-                    auto readResult = readZipAttachment(pdfFilename);
-                    if (!readResult) {
-                        return;
-                    }
-                    std::string& pdfBytes = readResult.value();
-                    doc.readPdf(pdfFilename, false, attachToDocument, pdfBytes.data(), pdfBytes.size());
-
-                    if (!doc.getLastErrorMsg().empty()) {
-                        error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
-                    }
-
-                    this->pdfFilenameParsed = true;
+        if (!strcmp("absolute", domain))  // Absolute OR relative path
+        {
+            if (pdfFilename.is_relative()) {
+                pdfFilename = xournalFilepath.remove_filename() / pdfFilename;
+            }
+        } else if (!strcmp("attach", domain)) {
+            attachToDocument = true;
+            // Handle old format separately
+            if (this->isGzFile) {
+                pdfFilename = (fs::path{xournalFilepath} += ".") += pdfFilename;
+            } else {
+                auto readResult = readZipAttachment(pdfFilename);
+                if (!readResult) {
                     return;
                 }
-            } else {
-                error("%s", FC(_F("Unknown domain type: {1}") % domain));
+                std::string& pdfBytes = readResult.value();
+                doc.readPdf(pdfFilename, false, attachToDocument, pdfBytes.data(), pdfBytes.size());
+
+                if (!doc.getLastErrorMsg().empty()) {
+                    error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
+                }
+
+                this->pdfFilenameParsed = true;
                 return;
             }
         } else {
-            pdfFilename = this->pdfReplacementFilepath;
-            attachToDocument = this->pdfReplacementAttach;
+            error("%s", FC(_F("Unknown domain type: {1}") % domain));
+            return;
         }
 
         this->pdfFilenameParsed = true;
@@ -514,10 +500,13 @@ void LoadHandler::parseBgPdf() {
             if (!doc.getLastErrorMsg().empty()) {
                 error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
             }
-        } else if (attachToDocument) {
-            this->attachedPdfMissing = true;
         } else {
-            this->pdfMissing = pdfFilename.u8string();
+            doc.setPdfAttributes(pdfFilename, attachToDocument);
+            if (attachToDocument) {
+                this->attachedPdfMissing = true;
+            } else {
+                this->pdfMissing = pdfFilename.u8string();
+            }
         }
     }
 }
@@ -536,12 +525,7 @@ void LoadHandler::parsePage() {
         } else if (strcmp("pixmap", type) == 0) {
             parseBgPixmap();
         } else if (strcmp("pdf", type) == 0) {
-            if (this->removePdfBackgroundFlag) {
-                this->page->setBackgroundType(PageType(PageTypeFormat::Plain));
-                this->page->setBackgroundColor(Colors::white);
-            } else {
-                parseBgPdf();
-            }
+            parseBgPdf();
         } else {
             error("%s", FC(_F("Unknown background type: {1}") % type));
         }

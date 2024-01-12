@@ -61,9 +61,6 @@ public:
     bool isAttachedPdfMissing() const;
     std::string getMissingPdfFilename() const;
 
-    void removePdfBackground();
-    void setPdfReplacement(fs::path filepath, bool attachToDocument);
-
     /** @return The version of the loaded file */
     int getFileVersion() const;
 
@@ -123,10 +120,6 @@ private:
     std::string lastError;
     std::string pdfMissing;
     bool attachedPdfMissing;
-
-    bool removePdfBackgroundFlag;
-    fs::path pdfReplacementFilepath;
-    bool pdfReplacementAttach;
 
     fs::path filepath;
 

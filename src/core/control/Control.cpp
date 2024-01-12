@@ -2278,86 +2278,6 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 
     LoadHandler loadHandler;
     Document* loadedDocument = loadHandler.loadDocument(filepath);
-    if ((loadedDocument != nullptr && loadHandler.isAttachedPdfMissing()) ||
-        !loadHandler.getMissingPdfFilename().empty()) {
-        // give the user a second chance to select a new PDF filepath, or to discard the PDF
-        const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
-
-        std::string parentFolderPath;
-        std::string filename;
-#if defined(WIN32)
-        parentFolderPath = missingFilePath.parent_path().string();
-        filename = missingFilePath.filename().string();
-#else
-        // since POSIX systems detect the whole Windows path as a filename, this checks whether missingFilePath
-        // contains a Windows path
-        std::regex regex(R"([A-Z]:\\(?:.*\\)*(.*))");
-        std::cmatch matchInfo;
-
-        if (std::regex_match(missingFilePath.filename().string().c_str(), matchInfo, regex) && matchInfo[1].matched) {
-            parentFolderPath = missingFilePath.filename().string();
-            filename = matchInfo[1].str();
-        } else {
-            parentFolderPath = missingFilePath.parent_path().string();
-            filename = missingFilePath.filename().string();
-        }
-#endif
-        std::string msg;
-        if (loadHandler.isAttachedPdfMissing()) {
-            msg = FS(_F("The attached background file could not be found. It might have been moved, "
-                        "renamed or deleted."));
-        } else {
-            msg = FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or "
-                        "deleted.\nIt was last seen at: \"{2}\"") %
-                     filename % parentFolderPath);
-        }
-
-        // try to find file in current directory
-        auto proposedPdfFilepath = filepath.parent_path() / filename;
-        bool proposePdfFile = !loadHandler.isAttachedPdfMissing() && !filename.empty() &&
-                              fs::exists(proposedPdfFilepath) && !fs::is_directory(proposedPdfFilepath);
-        if (proposePdfFile) {
-            msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
-        }
-        GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
-                                                   GTK_BUTTONS_NONE, "%s", msg.c_str());
-
-        enum dialogOptions { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
-
-        if (proposePdfFile) {
-            gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"), USE_PROPOSED);
-        }
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), SELECT_OTHER);
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), REMOVE);
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), CANCEL);
-        gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-        int res = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
-
-        switch (res) {
-            case USE_PROPOSED:
-                if (!proposedPdfFilepath.empty()) {
-                    loadHandler.setPdfReplacement(proposedPdfFilepath, false);
-                    loadedDocument = loadHandler.loadDocument(filepath);
-                }
-                break;
-            case SELECT_OTHER: {
-                bool attachToDocument = false;
-                XojOpenDlg dlg(getGtkWindow(), this->settings);
-                auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
-                if (!pdfFilename.empty()) {
-                    loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
-                    loadedDocument = loadHandler.loadDocument(filepath);
-                }
-            } break;
-            case REMOVE:
-                loadHandler.removePdfBackground();
-                loadedDocument = loadHandler.loadDocument(filepath);
-                break;
-            default:
-                break;
-        }
-    }
 
     if (!loadedDocument) {
         string msg = FS(_F("Error opening file \"{1}\"") % filepath.u8string()) + "\n" + loadHandler.getLastError();
@@ -2390,8 +2310,14 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     // not as file to load
     settings->setLastSavePath(filepath.parent_path());
 
-
     fileLoaded(scrollToPage);
+
+    if ((loadedDocument != nullptr && loadHandler.isAttachedPdfMissing()) ||
+        !loadHandler.getMissingPdfFilename().empty()) {
+        // give the user a second chance to select a new PDF filepath, or to discard the PDF
+        promptMissingPdf(loadHandler, filepath);
+    }
+
     return true;
 }
 
@@ -2462,6 +2388,85 @@ void Control::fileLoaded(int scrollToPage) {
     win->getXournal()->forceUpdatePagenumbers();
     getCursor()->updateCursor();
     updateDeletePageButton();
+}
+
+void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepath) {
+    const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
+
+    // create error message
+    std::string parentFolderPath;
+    std::string filename;
+#if defined(WIN32)
+    parentFolderPath = missingFilePath.parent_path().string();
+    filename = missingFilePath.filename().string();
+#else
+    // since POSIX systems detect the whole Windows path as a filename, this checks whether missingFilePath
+    // contains a Windows path
+    std::regex regex(R"([A-Z]:\\(?:.*\\)*(.*))");
+    std::cmatch matchInfo;
+
+    if (std::regex_match(missingFilePath.filename().string().c_str(), matchInfo, regex) && matchInfo[1].matched) {
+        parentFolderPath = missingFilePath.filename().string();
+        filename = matchInfo[1].str();
+    } else {
+        parentFolderPath = missingFilePath.parent_path().string();
+        filename = missingFilePath.filename().string();
+    }
+#endif
+    std::string msg;
+    if (loadHandler.isAttachedPdfMissing()) {
+        msg = FS(_F("The attached background file could not be found. It might have been moved, "
+                    "renamed or deleted."));
+    } else {
+        msg = FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or "
+                    "deleted.\nIt was last seen at: \"{2}\"") %
+                 filename % parentFolderPath);
+    }
+
+    // try to find file in current directory
+    auto proposedPdfFilepath = filepath.parent_path() / filename;
+    bool proposePdfFile = !loadHandler.isAttachedPdfMissing() && !filename.empty() && fs::exists(proposedPdfFilepath) &&
+                          !fs::is_directory(proposedPdfFilepath);
+    if (proposePdfFile) {
+        msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
+    }
+
+    // create the dialog
+    GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+                                               "%s", msg.c_str());
+
+    enum dialogOptions { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
+
+    if (proposePdfFile) {
+        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"), USE_PROPOSED);
+    }
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), SELECT_OTHER);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), REMOVE);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), CANCEL);
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+    int res = gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+
+    switch (res) {
+        case USE_PROPOSED:
+            if (!proposedPdfFilepath.empty()) {
+                this->pageBackgroundChangeController->changePdfPagesBackground(proposedPdfFilepath, false);
+            }
+            break;
+        case SELECT_OTHER: {
+            bool attachToDocument = false;
+            XojOpenDlg dlg(getGtkWindow(), this->settings);
+            auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
+            if (!pdfFilename.empty()) {
+                this->pageBackgroundChangeController->changePdfPagesBackground(pdfFilename, attachToDocument);
+            }
+        } break;
+        case REMOVE:
+            this->pageBackgroundChangeController->changeAllPagesBackground(PageType(PageTypeFormat::Plain));
+            break;
+        default:
+            break;
+    }
 }
 
 class MetadataCallbackData {
