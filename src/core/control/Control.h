@@ -37,6 +37,7 @@
 #include "ToolHandler.h"       // for ToolListener
 #include "filesystem.h"        // for path
 
+class LoadHandler;
 class GeometryToolController;
 class AudioController;
 class FullscreenHandler;
@@ -363,6 +364,11 @@ private:
     template <class ToolClass, class ViewClass, class ControllerClass, class InputHandlerClass, ActionType a>
     void makeGeometryTool();
     void resetGeometryTool();
+
+    /**
+     * Prompt the user that the PDF background is missing and offer solution options
+     */
+    void promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepath);
 
     /**
      * "Closes" the document, preparing the editor for a new document.

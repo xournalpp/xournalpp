@@ -84,6 +84,13 @@ auto PopplerGlibDocument::load(gpointer data, gsize length, string password, GEr
 
 auto PopplerGlibDocument::isLoaded() const -> bool { return this->document != nullptr; }
 
+void PopplerGlibDocument::reset() {
+    if (document) {
+        g_object_unref(document);
+        document = nullptr;
+    }
+}
+
 auto PopplerGlibDocument::getPage(size_t page) const -> XojPdfPageSPtr {
     if (document == nullptr) {
         return nullptr;

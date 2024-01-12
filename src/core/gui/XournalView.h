@@ -109,6 +109,11 @@ public:
     xoj::util::Rectangle<double>* getVisibleRect(const XojPageView* redrawable) const;
 
     /**
+     * Recreate the PDF cache, for example after the underlying PDF file has changed
+     */
+    void recreatePdfCache();
+
+    /**
      * A pen action was detected now, therefore ignore touch events
      * for a short time
      */

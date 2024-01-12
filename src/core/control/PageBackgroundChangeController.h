@@ -21,6 +21,8 @@
 #include "model/DocumentListener.h"         // for DocumentListener
 #include "model/PageRef.h"                  // for PageRef
 
+#include "filesystem.h"  // for path
+
 class Control;
 class UndoAction;
 class PageType;
@@ -38,6 +40,7 @@ public:
     virtual void changeCurrentPageBackground(PageType& pageType);
     void changeCurrentPageBackground(PageTypeInfo* info) override;
     void changeAllPagesBackground(const PageType& pt);
+    void changePdfPagesBackground(const fs::path& filepath, bool attachPdf);
     void insertNewPage(size_t position, bool shouldScrollToPage = true);
     GtkWidget* getMenu();
 

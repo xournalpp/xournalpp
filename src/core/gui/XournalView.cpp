@@ -509,6 +509,17 @@ auto XournalView::getVisibleRect(const XojPageView* redrawable) const -> Rectang
     return gtk_xournal_get_visible_area(this->widget, redrawable);
 }
 
+void XournalView::recreatePdfCache() {
+    this->cache.reset();
+
+    Document* doc = control->getDocument();
+    doc->lock();
+    if (doc->getPdfPageCount() != 0) {
+        this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
+    }
+    doc->unlock();
+}
+
 /**
  * @return Helper class for Touch specific fixes
  */
@@ -763,13 +774,10 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     viewPages.clear();
 
-    this->cache.reset();
+    recreatePdfCache();
 
     Document* doc = control->getDocument();
     doc->lock();
-    if (doc->getPdfPageCount() != 0) {
-        this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
-    }
 
     size_t pagecount = doc->getPageCount();
     viewPages.reserve(pagecount);
