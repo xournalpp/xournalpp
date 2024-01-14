@@ -103,7 +103,7 @@ void PdfPagesDialog::show(GtkWindow* parent) {
     BackgroundSelectDialogBase::show(parent);
 }
 
-void PdfPagesDialog::setSelected(int selected) {
+void PdfPagesDialog::setSelected(size_t selected) {
     BackgroundSelectDialogBase::setSelected(selected);
 
     if (selected < this->elements.size()) {
