@@ -266,10 +266,12 @@ auto ZoomControl::getZoom() const -> double { return this->zoom; }
 auto ZoomControl::getZoomReal() const -> double { return this->zoom / this->zoom100Value; }
 
 void ZoomControl::setZoom(double zoomI) {
+    zoomI = std::clamp(zoomI, this->zoomMin, this->zoomMax);
     if (this->zoom == zoomI) {
         return;
     }
-    this->zoom = std::clamp(zoomI, this->zoomMin, this->zoomMax);
+    this->zoom = zoomI;
+    this->control->getActionDatabase()->setActionState(Action::ZOOM, getZoomReal());
     fireZoomChanged();
 }
 

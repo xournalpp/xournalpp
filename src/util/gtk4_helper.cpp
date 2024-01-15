@@ -66,11 +66,37 @@ void gtk_drawing_area_set_draw_func(GtkDrawingArea* area, GtkDrawingAreaDrawFunc
                               gtk_widget_get_allocation(GTK_WIDGET(self), &alloc);
                               d->draw_func(self, cr, alloc.width, alloc.height, d->data);
                           }),
-                          data, GClosureNotify(+[](Data* d, GClosure*) {
-                              if (d && d->destroy) {
-                                  d->destroy(d->data);
+                          data, GClosureNotify(+[](gpointer d, GClosure*) {
+                              auto* data = static_cast<Data*>(d);
+                              if (data && data->destroy) {
+                                  data->destroy(data->data);
                               }
-                              delete d;
+                              delete data;
+                          }),
+                          GConnectFlags(0U));  // 0 = G_CONNECT_DEFAULT only introduced in GObject 2.74
+}
+
+/**** GtkScale ****/
+
+void gtk_scale_set_format_value_func(GtkScale* scale, GtkScaleFormatValueFunc func, gpointer user_data,
+                                     GDestroyNotify destroy_notify) {
+    xoj_assert(func != nullptr);
+    struct Data {
+        gpointer data;
+        GtkScaleFormatValueFunc func;
+        GDestroyNotify destroy;
+    };
+    Data* data = new Data{user_data, func, destroy_notify};
+    g_signal_connect_data(scale, "format-value", G_CALLBACK(+[](GtkScale* self, gdouble value, gpointer user_data) {
+                              auto* data = static_cast<Data*>(user_data);
+                              return data->func(self, value, data->data);
+                          }),
+                          data, GClosureNotify(+[](gpointer d, GClosure*) {
+                              auto* data = static_cast<Data*>(d);
+                              if (data && data->destroy) {
+                                  data->destroy(data->data);
+                              }
+                              delete data;
                           }),
                           GConnectFlags(0U));  // 0 = G_CONNECT_DEFAULT only introduced in GObject 2.74
 }
