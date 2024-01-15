@@ -35,22 +35,21 @@ static GtkWidget* createPopoverEntry(GSimpleAction* a, const ComboToolButton::En
 ComboToolButton::ComboToolButton(std::string id, std::string iconName, std::string description,
                                  std::vector<Entry> entries, ActionRef gAction):
         AbstractToolItem(std::move(id)),
-        entries(std::make_shared<std::vector<Entry>>(std::move(entries))),
+        entries(std::move(entries)),
         gAction(std::move(gAction)),
         iconName(std::move(iconName)),
         description(std::move(description)) {}
 
-
 /// Data structure for callbacks
-struct InstanceData {
+struct ComboToolInstanceData {
     GAction* action;
     GtkButton* btn;
     GtkPopover* popover;
-    std::shared_ptr<const std::vector<ComboToolButton::Entry>> entries;
+    const std::vector<ComboToolButton::Entry>* entries;
 };
 
 /// change the prominent icon depending on G_ACTION(a)'s state
-static void setProminentIconCallback(GObject* a, GParamSpec*, InstanceData* data) {
+static void setProminentIconCallback(GObject* a, GParamSpec*, ComboToolInstanceData* data) {
     xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(a)), xoj::util::adopt);
     auto it = std::find_if(data->entries->begin(), data->entries->end(),
                            [s = state.get()](const auto& e) { return g_variant_equal(e.target.get(), s); });
@@ -64,8 +63,8 @@ static void setProminentIconCallback(GObject* a, GParamSpec*, InstanceData* data
 
 auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
 
-    auto data = std::make_unique<InstanceData>();
-    data->entries = this->entries;
+    auto data = std::make_unique<ComboToolInstanceData>();
+    data->entries = &this->entries;
     data->action = G_ACTION(this->gAction.get());
 
     {  // Create popover
@@ -75,7 +74,7 @@ auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
         GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
         gtk_popover_set_child(data->popover, GTK_WIDGET(box));
 
-        for (const Entry& t: *this->entries) {
+        for (const Entry& t: this->entries) {
             gtk_box_append(box, createPopoverEntry(gAction.get(), t));
         }
 
@@ -83,7 +82,7 @@ auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     }
 
     {                                      // Create prominent button
-        const Entry& e = entries->front();  // Select the first entry by default
+        const Entry& e = entries.front();  // Select the first entry by default
         data->btn = GTK_BUTTON(createEmptyButton(gAction.get(), e));
         gtk_button_set_icon_name(data->btn, e.icon.c_str());
     }
@@ -110,8 +109,8 @@ auto ComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     // Disconnect the signal and destroy *data if the widget is destroyed
     g_object_weak_ref(
             G_OBJECT(item.get()),
-            +[](gpointer d, GObject*) {
-                auto* data = static_cast<InstanceData*>(d);
+            +[](gpointer d, GObject* item) {
+                auto* data = static_cast<ComboToolInstanceData*>(d);
                 g_signal_handlers_disconnect_by_data(data->action, d);
                 delete data;
             },

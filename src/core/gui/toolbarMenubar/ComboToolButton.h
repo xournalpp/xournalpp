@@ -55,7 +55,7 @@ protected:
     GtkWidget* getNewToolIcon() const override;
 
 protected:
-    std::shared_ptr<const std::vector<Entry>> entries;
+    const std::vector<Entry> entries;
     ActionRef gAction;
     std::string iconName;
     std::string description;
