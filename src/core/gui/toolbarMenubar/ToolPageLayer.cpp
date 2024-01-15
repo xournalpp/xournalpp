@@ -197,7 +197,7 @@ public:
             popoverBox(makePopoverContent()),
             popover(makePopover(popoverBox)),
             grid(nullptr) {}
-    ~InstanceData() {}
+    ~InstanceData() = default;
 
     xoj::util::WidgetSPtr makeWidget(bool horizontal) {
         xoj::util::WidgetSPtr item(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1), xoj::util::adopt);

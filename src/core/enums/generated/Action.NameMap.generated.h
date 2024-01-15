@@ -1,5 +1,5 @@
 // ** THIS FILE IS GENERATED **
-// ** use generateConvertNEW.php to update this file **
+// ** use generateConvert.php to update this file **
 
 
 #pragma once
@@ -45,6 +45,7 @@ constexpr const char* ACTION_NAMES[] = {  // Action to string conversion map
         "zoom-out",
         "zoom-100",
         "zoom-fit",
+        "zoom",
         "goto-first",
         "goto-previous",
         "goto-page",
