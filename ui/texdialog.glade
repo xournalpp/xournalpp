@@ -205,6 +205,7 @@
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="image">iconOk</property>
+                <accelerator key="Return" signal="activate" modifiers="GDK_CONTROL_MASK"/>
               </object>
               <packing>
                 <property name="expand">False</property>
