@@ -30,6 +30,9 @@
                 <property name="label-xalign">0.009999999776482582</property>
                 <child>
                   <object class="GtkCheckButton" id="latexSettingsRunCheck">
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="margin-bottom">4</property>
                     <property name="label" translatable="yes">Always check LaTeX dependencies before running</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -56,7 +59,7 @@
               <object class="GtkFrame" id="frameDefaultText">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label-xalign">0</property>
+                <property name="label-xalign">0.009999999776482582</property>
                 <child>
                   <object class="GtkEntry" id="latexDefaultEntry">
                     <property name="visible">True</property>
