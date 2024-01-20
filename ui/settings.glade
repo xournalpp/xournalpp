@@ -35,6 +35,18 @@
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentSelectPaddingMult">
+    <property name="lower">0.1</property>
+    <property name="upper">3</property>
+    <property name="step-increment">0.1</property>
+    <property name="page-increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentButtonSizeMult">
+    <property name="lower">0.1</property>
+    <property name="upper">3</property>
+    <property name="step-increment">0.1</property>
+    <property name="page-increment">1</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentHorizontalSpaceLeft">
     <property name="upper">2000</property>
     <property name="value">150</property>
@@ -1388,7 +1400,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="row-homogeneous">True</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbUseSpacesAsTab">
-                                            <property name="label" translatable="yes">Indent using spaces</property> 
+                                            <property name="label" translatable="yes">Indent using spaces</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
@@ -3764,6 +3776,89 @@ This setting can make it easier to draw with touch. </property>
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkFrame">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.009999999776482582</property>
+                                <child>
+                                  <!-- n-columns=2 n-rows=2 -->
+                                  <object class="GtkGrid">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="margin-bottom">8</property>
+                                    <child>
+                                      <object class="GtkSpinButton" id="selectPaddingMult">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="input-purpose">number</property>
+                                        <property name="adjustment">adjustmentSelectPaddingMult</property>
+                                        <property name="digits">1</property>
+                                        <property name="numeric">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="left-attach">1</property>
+                                        <property name="top-attach">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkSpinButton" id="buttonSizeMult">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="input-purpose">number</property>
+                                        <property name="adjustment">adjustmentButtonSizeMult</property>
+                                        <property name="digits">1</property>
+                                        <property name="numeric">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="left-attach">1</property>
+                                        <property name="top-attach">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="tooltip-text" translatable="yes">TODO</property>
+                                        <property name="halign">start</property>
+                                        <property name="label" translatable="yes">Padding multiplier</property>
+                                      </object>
+                                      <packing>
+                                        <property name="left-attach">0</property>
+                                        <property name="top-attach">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="tooltip-text" translatable="yes">TODO</property>
+                                        <property name="halign">start</property>
+                                        <property name="label" translatable="yes">Button size multiplier</property>
+                                      </object>
+                                      <packing>
+                                        <property name="left-attach">0</property>
+                                        <property name="top-attach">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Selection Size</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">6</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkFrame" id="sid114">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -3834,7 +3929,7 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">6</property>
+                                <property name="position">7</property>
                               </packing>
                             </child>
                             <child>
@@ -3957,7 +4052,7 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">7</property>
+                                <property name="position">8</property>
                               </packing>
                             </child>
                             <child>
@@ -4062,7 +4157,7 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">8</property>
+                                <property name="position">9</property>
                               </packing>
                             </child>
                           </object>

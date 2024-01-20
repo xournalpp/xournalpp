@@ -76,6 +76,9 @@ void Settings::loadDefault() {
     this->edgePanSpeed = 20.0;
     this->edgePanMaxMult = 5.0;
 
+    this->selectPaddingMult = 1.0;
+    this->buttonSizeMult = 1.0;
+
     this->zoomStep = 10.0;
     this->zoomStepScroll = 2.0;
 
@@ -400,6 +403,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->edgePanSpeed = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanMaxMult")) == 0) {
         this->edgePanMaxMult = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectPaddingMult")) == 0) {
+        this->selectPaddingMult = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("buttonSizeMult")) == 0) {
+        this->buttonSizeMult = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStep")) == 0) {
         this->zoomStep = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStepScroll")) == 0) {
@@ -978,6 +985,8 @@ void Settings::save() {
 
     SAVE_DOUBLE_PROP(edgePanSpeed);
     SAVE_DOUBLE_PROP(edgePanMaxMult);
+    SAVE_DOUBLE_PROP(selectPaddingMult);
+    SAVE_DOUBLE_PROP(buttonSizeMult);
     SAVE_DOUBLE_PROP(zoomStep);
     SAVE_DOUBLE_PROP(zoomStepScroll);
     SAVE_INT_PROP(displayDpi);
@@ -1925,6 +1934,26 @@ void Settings::setEdgePanMaxMult(double maxMult) {
 }
 
 auto Settings::getEdgePanMaxMult() const -> double { return this->edgePanMaxMult; }
+
+void Settings::setSelectPaddingMult(double mult) {
+    if (this->selectPaddingMult == mult) {
+        return;
+    }
+    this->selectPaddingMult = mult;
+    save();
+}
+
+auto Settings::getSelectPaddingMult() const -> double { return this->selectPaddingMult; }
+
+void Settings::setButtonSizeMult(double mult) {
+    if (this->buttonSizeMult == mult) {
+        return;
+    }
+    this->buttonSizeMult = mult;
+    save();
+}
+
+auto Settings::getButtonSizeMult() const -> double { return this->buttonSizeMult; }
 
 void Settings::setDisplayDpi(int dpi) {
     if (this->displayDpi == dpi) {
