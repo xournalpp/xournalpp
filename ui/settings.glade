@@ -347,6 +347,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -468,6 +469,7 @@ If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves&lt
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -914,6 +916,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -1117,8 +1120,8 @@ Illegal characters are replaced with "_"</property>
                                         <property name="label" translatable="yes">&lt;i&gt;Pick an input stabilization algorithm and its parameters&lt;/i&gt;</property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
-                                        <property name="width-chars">85</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="left-attach">0</property>
@@ -1533,6 +1536,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -1692,6 +1696,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -1867,6 +1872,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -1966,6 +1972,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -2229,6 +2236,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -2288,6 +2296,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -2430,6 +2439,7 @@ Illegal characters are replaced with "_"</property>
                                                     <property name="use-markup">True</property>
                                                     <property name="wrap">True</property>
                                                     <property name="max-width-chars">85</property>
+                                                    <property name="xalign">0</property>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">False</property>
@@ -2590,6 +2600,9 @@ Illegal characters are replaced with "_"</property>
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">&lt;i&gt;Use pinch gestures to zoom journal pages.&lt;/i&gt;</property>
                                         <property name="use-markup">True</property>
+                                        <property name="wrap">True</property>
+                                        <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -2719,6 +2732,7 @@ This setting can make it easier to draw with touch. </property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -2779,6 +2793,7 @@ This setting can make it easier to draw with touch. </property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -4421,6 +4436,7 @@ This setting can make it easier to draw with touch. </property>
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -5302,6 +5318,7 @@ It must be short in time and length and we can't have ignored another stroke rec
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -5453,6 +5470,7 @@ Set this to 0% to always re-render on zoom.</property>
                                         <property name="label" translatable="yes">&lt;i&gt;Select the tool and Settings if you press the Default Button.&lt;/i&gt;</property>
                                         <property name="use-markup">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -5662,6 +5680,7 @@ Disabling audio for a single session can be achieved using the &lt;tt&gt;--disab
                                         <property name="label" translatable="yes">&lt;i&gt;Audio recordings are currently stored in a separate folder and referenced from the journal.&lt;/i&gt;</property>
                                         <property name="use-markup">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -5745,6 +5764,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                         <property name="use-markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="max-width-chars">85</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -6081,6 +6101,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">&lt;i&gt;Select language (requires restart)&lt;/i&gt;</property>
                                         <property name="use-markup">True</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
