@@ -1372,7 +1372,7 @@ Illegal characters are replaced with "_"</property>
                               <object class="GtkFrame" id="tabSettingsFrame">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label-xalign">0</property>
+                                <property name="label-xalign">0.009999999776482582</property>
                                 <child>
                                   <object class="GtkAlignment" id="tabSettingsAlignment">
                                     <property name="visible">True</property>
@@ -1388,7 +1388,7 @@ Illegal characters are replaced with "_"</property>
                                         <property name="row-homogeneous">True</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbUseSpacesAsTab">
-                                            <property name="label" translatable="yes">Indent using spaces</property> 
+                                            <property name="label" translatable="yes">Indent using spaces</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
@@ -1400,7 +1400,7 @@ Illegal characters are replaced with "_"</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkBox" id ="numberOfSpacesContainer">
+                                          <object class="GtkBox" id="numberOfSpacesContainer">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
                                             <property name="spacing">14</property>
@@ -3549,7 +3549,7 @@ This setting can make it easier to draw with touch. </property>
                               <object class="GtkFrame" id="grpSidebarSettings">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label-xalign">0</property>
+                                <property name="label-xalign">0.009999999776482582</property>
                                 <child>
                                   <object class="GtkBox">
                                     <property name="visible">True</property>
@@ -3686,7 +3686,7 @@ This setting can make it easier to draw with touch. </property>
                               <object class="GtkFrame">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label-xalign">0</property>
+                                <property name="label-xalign">0.009999999776482582</property>
                                 <child>
                                   <!-- n-columns=2 n-rows=2 -->
                                   <object class="GtkGrid">
