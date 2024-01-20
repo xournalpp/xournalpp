@@ -26,8 +26,9 @@
     <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentEdgePanMaxMult">
+    <property name="lower">0.10</property>
     <property name="upper">10</property>
-    <property name="step-increment">1</property>
+    <property name="step-increment">0.5</property>
     <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentEdgePanSpeed">
@@ -3729,6 +3730,7 @@ This setting can make it easier to draw with touch. </property>
                                         <property name="can-focus">True</property>
                                         <property name="input-purpose">number</property>
                                         <property name="adjustment">adjustmentEdgePanMaxMult</property>
+                                        <property name="digits">1</property>
                                         <property name="numeric">True</property>
                                       </object>
                                       <packing>
