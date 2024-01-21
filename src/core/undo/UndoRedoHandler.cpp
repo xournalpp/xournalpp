@@ -106,10 +106,7 @@ void UndoRedoHandler::undo() {
     this->redoList.emplace_back(std::move(this->undoList.back()));
     this->undoList.pop_back();
 
-    Document* doc = control->getDocument();
-    doc->lock();
     bool undoResult = undoAction.undo(this->control);
-    doc->unlock();
 
     if (!undoResult) {
         string msg = FS(_F("Could not undo \"{1}\"\n"
@@ -135,10 +132,7 @@ void UndoRedoHandler::redo() {
     this->undoList.emplace_back(std::move(this->redoList.back()));
     this->redoList.pop_back();
 
-    Document* doc = control->getDocument();
-    doc->lock();
     bool redoResult = redoAction.redo(this->control);
-    doc->unlock();
 
     if (!redoResult) {
         string msg = FS(_F("Could not redo \"{1}\"\n"

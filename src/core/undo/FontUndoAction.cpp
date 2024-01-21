@@ -3,14 +3,14 @@
 #include <algorithm>  // for max, min
 #include <memory>     // for __shared_ptr_access, __shared_ptr_acces...
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Font.h"       // for XojFont
 #include "model/Text.h"       // for Text
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/Rectangle.h"   // for Rectangle
 #include "util/i18n.h"        // for _
-
-class Control;
 
 using xoj::util::Rectangle;
 
@@ -46,6 +46,8 @@ auto FontUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     FontUndoActionEntry* e = this->data.front();
     double x1 = e->e->getX();
     double x2 = e->e->getX() + e->e->getElementWidth();
@@ -68,6 +70,8 @@ auto FontUndoAction::undo(Control* control) -> bool {
         y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
     }
 
+    doc->unlock();
+
     Rectangle<double> rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);
 
@@ -79,6 +83,8 @@ auto FontUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     FontUndoActionEntry* e = this->data.front();
     double x1 = e->e->getX();
     double x2 = e->e->getX() + e->e->getElementWidth();
@@ -100,6 +106,8 @@ auto FontUndoAction::redo(Control* control) -> bool {
         y1 = std::min(y1, e->e->getY());
         y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
     }
+
+    doc->unlock();
 
     Rectangle<double> rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);

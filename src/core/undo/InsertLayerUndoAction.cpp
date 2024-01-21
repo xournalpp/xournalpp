@@ -29,21 +29,21 @@ InsertLayerUndoAction::~InsertLayerUndoAction() {
 auto InsertLayerUndoAction::getText() -> std::string { return _("Insert layer"); }
 
 auto InsertLayerUndoAction::undo(Control* control) -> bool {
-    // perform the same thing we did to InsertDeletePage
-    // to prevent a double lock (we're already locked here)
-    // doc->lock();
-
+    Document* doc = control->getDocument();
+    doc->lock();
     layerController->removeLayer(this->page, this->layer);
-
+    doc->unlock();
     this->undone = true;
 
     return true;
 }
 
 auto InsertLayerUndoAction::redo(Control* control) -> bool {
-    layerController->insertLayer(this->page, this->layer, layerPosition);
     Document* doc = control->getDocument();
+    doc->lock();
+    layerController->insertLayer(this->page, this->layer, layerPosition);
     auto id = doc->indexOf(this->page);
+    doc->unlock();
     control->getWindow()->getXournal()->layerChanged(id);
 
     this->undone = false;

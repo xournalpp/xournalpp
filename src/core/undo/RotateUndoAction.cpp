@@ -2,14 +2,14 @@
 
 #include <memory>  // for allocator, __shared_ptr_access, __share...
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Element.h"    // for Element
 #include "model/PageRef.h"    // for PageRef
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/Range.h"       // for Range
 #include "util/i18n.h"        // for _
-
-class Control;
 
 RotateUndoAction::RotateUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0,
                                    double rotation):
@@ -24,22 +24,23 @@ RotateUndoAction::RotateUndoAction(const PageRef& page, std::vector<Element*>* e
 RotateUndoAction::~RotateUndoAction() { this->page = nullptr; }
 
 auto RotateUndoAction::undo(Control* control) -> bool {
-    applyRotation(-this->rotation);
+    applyRotation(-this->rotation, control->getDocument());
     this->undone = true;
     return true;
 }
 
 auto RotateUndoAction::redo(Control* control) -> bool {
-    applyRotation(this->rotation);
+    applyRotation(this->rotation, control->getDocument());
     this->undone = false;
     return true;
 }
 
-void RotateUndoAction::applyRotation(double rotation) {
+void RotateUndoAction::applyRotation(double rotation, Document* doc) {
     if (this->elements.empty()) {
         return;
     }
 
+    doc->lock();
     Range r(elements.front()->getX(), elements.front()->getY());
 
     for (Element* e: this->elements) {
@@ -50,6 +51,7 @@ void RotateUndoAction::applyRotation(double rotation) {
         r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
     }
 
+    doc->unlock();
     this->page->fireRangeChanged(r);
 }
 

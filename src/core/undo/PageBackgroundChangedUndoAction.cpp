@@ -27,21 +27,25 @@ PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(const PageRef& 
 PageBackgroundChangedUndoAction::~PageBackgroundChangedUndoAction() = default;
 
 auto PageBackgroundChangedUndoAction::undo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     this->newType = this->page->getBackgroundType();
     this->newPdfPage = this->page->getPdfPageNr();
     this->newBackgroundImage = this->page->getBackgroundImage();
     this->newW = this->page->getWidth();
     this->newH = this->page->getHeight();
 
-    Document* doc = control->getDocument();
     auto pageNr = doc->indexOf(this->page);
     if (pageNr == npos) {
+        doc->unlock();
         return false;
     }
 
     if (this->newW != this->origW || this->newH != this->origH) {
         this->page->setSize(this->origW, this->origH);
+        doc->unlock();
         control->firePageSizeChanged(pageNr);
+        doc->lock();
     }
 
     this->page->setBackgroundType(this->origType);
@@ -51,6 +55,7 @@ auto PageBackgroundChangedUndoAction::undo(Control* control) -> bool {
         this->page->setBackgroundImage(this->origBackgroundImage);
     }
 
+    doc->unlock();
     control->firePageChanged(pageNr);
 
     return true;
@@ -58,16 +63,20 @@ auto PageBackgroundChangedUndoAction::undo(Control* control) -> bool {
 
 auto PageBackgroundChangedUndoAction::redo(Control* control) -> bool {
     Document* doc = control->getDocument();
+    doc->lock();
 
     auto pageNr = doc->indexOf(this->page);
 
     if (pageNr == npos) {
+        doc->unlock();
         return false;
     }
 
     if (this->newW != this->origW || this->newH != this->origH) {
         this->page->setSize(this->newW, this->newH);
+        doc->unlock();
         control->firePageSizeChanged(pageNr);
+        doc->lock();
     }
 
     this->page->setBackgroundType(this->newType);
@@ -77,6 +86,7 @@ auto PageBackgroundChangedUndoAction::redo(Control* control) -> bool {
         this->page->setBackgroundImage(this->newBackgroundImage);
     }
 
+    doc->unlock();
     control->firePageChanged(pageNr);
 
     return true;

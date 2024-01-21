@@ -3,14 +3,13 @@
 #include <algorithm>  // for max, min
 #include <memory>     // for __shared_ptr_access, __shared_ptr_acces...
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Element.h"    // for Element
-#include "model/PageRef.h"    // for PageRef
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/Rectangle.h"   // for Rectangle
 #include "util/i18n.h"        // for _
-
-class Control;
 
 using xoj::util::Rectangle;
 
@@ -40,6 +39,8 @@ auto ColorUndoAction::undo(Control* control) -> bool {
         return true;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     ColorUndoActionEntry* e = this->data.front();
     double x1 = e->e->getX();
     double x2 = e->e->getX() + e->e->getElementWidth();
@@ -55,6 +56,8 @@ auto ColorUndoAction::undo(Control* control) -> bool {
         y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
     }
 
+    doc->unlock();
+
     Rectangle rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);
 
@@ -66,6 +69,8 @@ auto ColorUndoAction::redo(Control* control) -> bool {
         return true;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     ColorUndoActionEntry* e = this->data.front();
     double x1 = e->e->getX();
     double x2 = e->e->getX() + e->e->getElementWidth();
@@ -80,6 +85,8 @@ auto ColorUndoAction::redo(Control* control) -> bool {
         y1 = std::min(y1, e->e->getY());
         y2 = std::max(y2, e->e->getY() + e->e->getElementHeight());
     }
+
+    doc->unlock();
 
     Rectangle rect(x1, y1, x2 - x1, y2 - y1);
     this->page->fireRectChanged(rect);

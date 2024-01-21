@@ -3,14 +3,14 @@
 #include <cmath>   // for isfinite
 #include <memory>  // for allocator, __shared_ptr_access, __share...
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Element.h"    // for Element
 #include "model/PageRef.h"    // for PageRef
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/Range.h"       // for Range
 #include "util/i18n.h"        // for _
-
-class Control;
 
 ScaleUndoAction::ScaleUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, double fx,
                                  double fy, double rotation, bool restoreLineWidth):
@@ -28,22 +28,23 @@ ScaleUndoAction::ScaleUndoAction(const PageRef& page, std::vector<Element*>* ele
 ScaleUndoAction::~ScaleUndoAction() { this->page = nullptr; }
 
 auto ScaleUndoAction::undo(Control* control) -> bool {
-    applyScale(1 / this->fx, 1 / this->fy, restoreLineWidth);
+    applyScale(1 / this->fx, 1 / this->fy, restoreLineWidth, control->getDocument());
     this->undone = true;
     return true;
 }
 
 auto ScaleUndoAction::redo(Control* control) -> bool {
-    applyScale(this->fx, this->fy, restoreLineWidth);
+    applyScale(this->fx, this->fy, restoreLineWidth, control->getDocument());
     this->undone = false;
     return true;
 }
 
-void ScaleUndoAction::applyScale(double fx, double fy, bool restoreLineWidth) {
+void ScaleUndoAction::applyScale(double fx, double fy, bool restoreLineWidth, Document* doc) {
     if (this->elements.empty()) {
         return;
     }
 
+    doc->lock();
     Range r(elements.front()->getX(), elements.front()->getY());
 
     for (Element* e: this->elements) {
@@ -53,6 +54,7 @@ void ScaleUndoAction::applyScale(double fx, double fy, bool restoreLineWidth) {
         r.addPoint(e->getX(), e->getY());
         r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
     }
+    doc->unlock();
 
     this->page->fireRangeChanged(r);
 }

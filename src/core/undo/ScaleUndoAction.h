@@ -19,6 +19,7 @@
 #include "UndoAction.h"  // for UndoAction
 
 class Control;
+class Document;
 class Element;
 
 class ScaleUndoAction: public UndoAction {
@@ -33,7 +34,7 @@ public:
     std::string getText() override;
 
 private:
-    void applyScale(double fx, double fy, bool restoreLineWidth);
+    void applyScale(double fx, double fy, bool restoreLineWidth, Document* doc);
 
 private:
     std::vector<Element*> elements;

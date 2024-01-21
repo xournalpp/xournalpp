@@ -3,14 +3,14 @@
 #include <memory>   // for allocator, __shared_ptr_access, __share...
 #include <utility>  // for move
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Element.h"    // for Element, ELEMENT_IMAGE, ELEMENT_STROKE
 #include "model/Layer.h"      // for Layer
 #include "model/PageRef.h"    // for PageRef
 #include "model/XojPage.h"    // for XojPage
 #include "undo/UndoAction.h"  // for UndoAction
 #include "util/i18n.h"        // for _
-
-class Control;
 
 InsertUndoAction::InsertUndoAction(const PageRef& page, Layer* layer, Element* element):
         UndoAction("InsertUndoAction"), layer(layer), element(element), elementOwn(nullptr) {
@@ -35,7 +35,10 @@ auto InsertUndoAction::getText() -> std::string {
 }
 
 auto InsertUndoAction::undo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     this->elementOwn = this->layer->removeElement(this->element).e;
+    doc->unlock();
 
     this->page->fireElementChanged(this->element);
 
@@ -45,7 +48,10 @@ auto InsertUndoAction::undo(Control* control) -> bool {
 }
 
 auto InsertUndoAction::redo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     this->layer->addElement(std::move(this->elementOwn));
+    doc->unlock();
 
     this->page->fireElementChanged(this->element);
 
@@ -65,8 +71,14 @@ auto InsertsUndoAction::getText() -> std::string { return _("Insert elements"); 
 
 auto InsertsUndoAction::undo(Control* control) -> bool {
     this->elementsOwn.reserve(this->elements.size());
+
+    Document* doc = control->getDocument();
+    doc->lock();
     for (Element* elem: this->elements) {
         this->elementsOwn.emplace_back(this->layer->removeElement(elem).e);
+    }
+    doc->unlock();
+    for (Element* elem: this->elements) {
         this->page->fireElementChanged(elem);
     }
 
@@ -76,9 +88,14 @@ auto InsertsUndoAction::undo(Control* control) -> bool {
 }
 
 auto InsertsUndoAction::redo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
+    for (auto&& elem: this->elementsOwn) {
+        this->layer->addElement(std::move(elem));
+    }
+    doc->unlock();
     for (auto&& elem: this->elementsOwn) {
         auto ptr = elem.get();
-        this->layer->addElement(std::move(elem));
         this->page->fireElementChanged(ptr);
     }
     this->elementsOwn = std::vector<ElementPtr>(0);

@@ -8,6 +8,7 @@
 #include "control/layer/LayerController.h"  // for LayerController
 #include "gui/MainWindow.h"                 // for MainWindow
 #include "gui/XournalView.h"                // for XournalView
+#include "model/Document.h"
 #include "model/Layer.h"                    // for Layer, Layer::Index
 #include "model/PageRef.h"                  // for PageRef
 #include "model/XojPage.h"                  // for XojPage
@@ -39,6 +40,8 @@ MergeLayerDownUndoAction::MergeLayerDownUndoAction(LayerController* layerControl
 auto MergeLayerDownUndoAction::getText() -> std::string { return _("Merge layer down"); }
 
 auto MergeLayerDownUndoAction::undo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     // remove all elements present in the upper layer from the lower layer again
     for (Element* elem: upperLayerElements) {
         this->upperLayer->addElement(this->lowerLayer->removeElement(elem).e);
@@ -49,6 +52,8 @@ auto MergeLayerDownUndoAction::undo(Control* control) -> bool {
     // set the selected layer back to the ID of the upper layer
     this->page->setSelectedLayerId(this->upperLayerID);
 
+    doc->unlock();
+
     this->undone = true;
 
     this->triggerUIUpdate(control);
@@ -57,6 +62,8 @@ auto MergeLayerDownUndoAction::undo(Control* control) -> bool {
 }
 
 auto MergeLayerDownUndoAction::redo(Control* control) -> bool {
+    Document* doc = control->getDocument();
+    doc->lock();
     // remove the upper layer
     layerController->removeLayer(this->page, this->upperLayer);
 
@@ -68,6 +75,8 @@ auto MergeLayerDownUndoAction::redo(Control* control) -> bool {
     }
     // set the selected layer back to the ID of the lower layer
     this->page->setSelectedLayerId(this->lowerLayerID);
+
+    doc->unlock();
 
     this->undone = false;
 
