@@ -8,6 +8,8 @@
 #include "control/settings/Settings.h"       // for Settings
 #include "gui/GladeGui.h"                    // for GladeGui
 #include "gui/GladeSearchpath.h"
+#include "gui/MainWindow.h"        // for Main...
+#include "gui/OpacityToolbox.h"    // for OpacityToolbox
 #include "gui/ToolitemDragDrop.h"  // for ToolitemDragDrop
 #include "gui/menus/popoverMenus/PageTypeSelectionPopover.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
@@ -194,7 +196,8 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
                     count++;
                     const NamedColor& namedColor = palette.getColorAt(paletteIndex);
-                    auto& item = this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor));
+                    auto& item = this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(
+                            namedColor, getControl()->getWindow()->getOpacityToolbox()));
 
                     GtkToolItem* it = item->createToolItem(horizontal);
                     gtk_widget_show_all(GTK_WIDGET(it));

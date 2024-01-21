@@ -39,6 +39,7 @@
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
 #include "gui/MainWindow.h"                                      // for Main...
+#include "gui/OpacityToolbox.h"                                  // for OpacityToolbox...
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
 #include "gui/SearchBar.h"                                       // for Sear...
@@ -432,8 +433,12 @@ void Control::selectAlpha(OpacityFeature feature) {
             Stacktrace::printStracktrace();
             break;
     }
+
+    OpacityToolbox* opacityToolbox = this->win->getOpacityToolbox();
+
     auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::SelectOpacityDialog>(
-            gladeSearchPath, alpha, feature, [&th = *toolHandler](int alpha, OpacityFeature feature) {
+            gladeSearchPath, alpha, feature,
+            [&th = *toolHandler, &opatb = *opacityToolbox](int alpha, OpacityFeature feature) {
                 switch (feature) {
                     case OPACITY_FILL_PEN:
                         th.setPenFill(alpha);
@@ -450,6 +455,7 @@ void Control::selectAlpha(OpacityFeature feature) {
                         Stacktrace::printStracktrace();
                         break;
                 }
+                opatb.update();
             });
     dlg.show(getGtkWindow());
 }
@@ -1065,6 +1071,9 @@ void Control::toolChanged() {
     }
 
     getCursor()->updateCursor();
+    if (win) {
+        win->getOpacityToolbox()->update();
+    }
 
     if (type != TOOL_TEXT) {
         if (win) {
@@ -1106,6 +1115,9 @@ void Control::toolFillChanged() {
     this->actionDB->setActionState(Action::TOOL_FILL, toolHandler->getFill() != -1);
     this->actionDB->setActionState(Action::TOOL_PEN_FILL, toolHandler->getPenFillEnabled());
     this->actionDB->setActionState(Action::TOOL_HIGHLIGHTER_FILL, toolHandler->getHighlighterFillEnabled());
+    if (win) {
+        win->getOpacityToolbox()->update();
+    }
 }
 
 void Control::toolLineStyleChanged() {
@@ -1157,6 +1169,10 @@ auto Control::getLineStyleToSelect() -> std::optional<string> const {
 void Control::toolColorChanged() {
     this->actionDB->setActionState(Action::TOOL_COLOR, getToolHandler()->getColorMaskAlpha());
     getCursor()->updateCursor();
+
+    if (this->win) {
+        getWindow()->getOpacityToolbox()->update();
+    }
 }
 
 void Control::changeColorOfSelection() {
@@ -1173,6 +1189,10 @@ void Control::changeColorOfSelection() {
             // Todo move into selection
             edit->setColor(toolHandler->getColor());
         }
+    }
+
+    if (this->win) {
+        getWindow()->getOpacityToolbox()->update();
     }
 }
 

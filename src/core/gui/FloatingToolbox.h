@@ -16,6 +16,8 @@
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkWidget, GtkOverlay
 
+#include "OpacityToolbox.h"
+
 class MainWindow;
 
 enum FloatingToolBoxState { recalcSize = 0, configuration, noChange };
@@ -62,7 +64,7 @@ private:
     /**
      * Callback to hide floating Toolbar when mouse leaves it
      */
-    static void handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self);
+    static void handleLeaveFloatingToolbox(GtkEventController* eventController, FloatingToolbox* self);
 
     /**
      * Show the Floating Toolbox
@@ -86,10 +88,16 @@ private:
     MainWindow* mainWindow;
     GtkWidget* floatingToolbox;
 
+    // For leave event on the widget
+    xoj::util::GObjectSPtr<GtkEventController> leaveController;
+
     /**
      * Communicating with getOverlayPosition callback
      * */
     int floatingToolboxX = 0;
     int floatingToolboxY = 0;
     FloatingToolBoxState floatingToolboxState = recalcSize;
+
+public:
+    friend class OpacityToolbox;
 };

@@ -25,8 +25,31 @@ void gtk_window_destroy(GtkWindow* win);
 
 /**** GtkWidget ****/
 
+struct graphene_point_t {
+    float x;
+    float y;
+};
+
 void gtk_widget_add_css_class(GtkWidget* widget, const char* css_class);
 void gtk_widget_remove_css_class(GtkWidget* widget, const char* css_class);
+int gtk_widget_get_width(GtkWidget* widget);
+int gtk_widget_get_height(GtkWidget* widget);
+gboolean gtk_widget_compute_point(GtkWidget* widget, GtkWidget* target, const graphene_point_t* point,
+                                  graphene_point_t* out_point);
+
+/**** GtkEvent ****/
+
+gboolean gdk_event_get_position(GdkEvent* event, double* x, double* y);
+
+/**** GtkEventController ****/
+
+GtkGesture* gtk_gesture_click_new(GtkWidget* widget);
+
+void gtk_widget_add_controller(GtkWidget* widget, GtkEventController* controller);
+
+GdkEvent* gtk_event_controller_get_current_event(GtkEventController* controller);
+
+gboolean gtk_event_controller_motion_contains_pointer(GtkEventControllerMotion* self);
 
 /*** GtkDrawingArea ****/
 

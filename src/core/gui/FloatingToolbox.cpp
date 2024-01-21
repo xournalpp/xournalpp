@@ -11,8 +11,10 @@
 #include "control/settings/ButtonConfig.h"   // for ButtonConfig
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for BUTTON_COUNT
+#include "util/GtkUtil.h"                    // for isEventOverWidget()
 
-#include "MainWindow.h"          // for MainWindow
+#include "MainWindow.h"  // for MainWindow
+#include "OpacityToolbox.h"
 #include "ToolbarDefinitions.h"  // for ToolbarEntryDefintion
 
 
@@ -25,8 +27,19 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
     gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, true);
+
+#if GTK_MAJOR_VERSION == 3
+    GtkEventController* controller = gtk_event_controller_motion_new(this->floatingToolbox);
     gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
-    g_signal_connect(this->floatingToolbox, "leave-notify-event", G_CALLBACK(handleLeaveFloatingToolbox), this);
+#else
+    GtkEventController* controller = gtk_event_controller_motion_new();
+    gtk_widget_add_controller(this->floatingToolbox, leaveController);
+#endif
+    gtk_event_controller_set_propagation_phase(controller, GTK_PHASE_TARGET);
+    g_signal_connect(controller, "leave", G_CALLBACK(handleLeaveFloatingToolbox), this);
+
+    this->leaveController.reset(controller, xoj::util::refsink);
+
     // position overlay widgets
     g_signal_connect(overlay, "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
 }
@@ -177,11 +190,17 @@ auto FloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget,
     return false;
 }
 
-
-void FloatingToolbox::handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self) {
-    if (floatingToolbox == self->floatingToolbox) {
+void FloatingToolbox::handleLeaveFloatingToolbox(GtkEventController* eventController, FloatingToolbox* self) {
+    if (eventController == self->leaveController.get()) {
         if (self->floatingToolboxState != configuration) {
-            self->hide();
+            // Do not hide the floating toolbox when leaving it, if the pointer is over
+            // the opacity toolbox
+            OpacityToolbox* opacityToolbox = self->mainWindow->getOpacityToolbox();
+
+            if (opacityToolbox->isHidden() ||
+                !xoj::util::gtk::isEventOverWidget(eventController, opacityToolbox->widget.get())) {
+                self->hide();
+            }
         }
     }
 }

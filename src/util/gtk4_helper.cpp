@@ -3,6 +3,8 @@
 #include <gtk/gtk.h>
 
 #include "util/Assert.h"
+#include "util/GtkUtil.h"
+#include "util/Stacktrace.h"
 
 namespace {
 void set_child(GtkContainer* c, GtkWidget* child) {
@@ -21,6 +23,10 @@ void gtk_box_append(GtkBox* box, GtkWidget* child) {
 
 void gtk_box_remove(GtkBox* box, GtkWidget* child) { gtk_container_remove(GTK_CONTAINER(box), child); }
 
+/**** GdkEvent ****/
+
+gboolean gdk_event_get_position(GdkEvent* event, double* x, double* y) { return gdk_event_get_coords(event, x, y); }
+
 /**** GtkWindow ****/
 
 void gtk_window_destroy(GtkWindow* win) { gtk_widget_destroy(GTK_WIDGET(win)); }
@@ -33,6 +39,40 @@ void gtk_widget_add_css_class(GtkWidget* widget, const char* css_class) {
 
 void gtk_widget_remove_css_class(GtkWidget* widget, const char* css_class) {
     gtk_style_context_remove_class(gtk_widget_get_style_context(widget), css_class);
+}
+
+int gtk_widget_get_width(GtkWidget* widget) { return gtk_widget_get_allocated_width(widget); }
+
+int gtk_widget_get_height(GtkWidget* widget) { return gtk_widget_get_allocated_height(widget); }
+
+gboolean gtk_widget_compute_point(GtkWidget* widget, GtkWidget* target, const graphene_point_t* point,
+                                  graphene_point_t* out_point) {
+    int offset_x, offset_y;
+
+    bool result = gtk_widget_translate_coordinates(widget, target, 0, 0, &offset_x, &offset_y);
+
+    out_point->x = point->x + static_cast<float>(offset_x);
+    out_point->y = point->y + static_cast<float>(offset_y);
+
+    return result;
+}
+
+void gtk_widget_add_controller(GtkWidget* widget, GtkEventController* eventController) {
+    // Nothing to do here
+    // In GTK3, widget is already added through the constructor.
+    // This is a placeholder for GTK4
+}
+
+/**** GtkEventController ****/
+
+GtkGesture* gtk_gesture_click_new(GtkWidget* widget) { return gtk_gesture_multi_press_new(widget); }
+
+GdkEvent* gtk_event_controller_get_current_event(GtkEventController* controller) { return gtk_get_current_event(); }
+
+gboolean gtk_event_controller_motion_contains_pointer(GtkEventControllerMotion* self) {
+    GtkEventController* controller = GTK_EVENT_CONTROLLER(self);
+    GtkWidget* widget = gtk_event_controller_get_widget(controller);
+    return xoj::util::gtk::isEventOverWidget(controller, widget);
 }
 
 /*** GtkDrawingArea ****/

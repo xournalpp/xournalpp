@@ -13,6 +13,33 @@
 #include <gtk/gtk.h>
 
 namespace xoj::util::gtk {
+
+// Margins relative to widget borders
+struct WidgetMargins {
+    double top;
+    double right;
+    double bottom;
+    double left;
+};
+
+/**
+ * @brief Returns true if event is over widget.
+ * Margins will redefine the widget area.
+ *
+ * `margins.left = -1`, the device is still over the widget when 1px left of left border.
+ *
+ * `margins.right = 0`, the device is still over the widget when exactly on the right border.
+ * `margins.right = -1`, the device is no longer over the widget when exactly on the right border.
+ *
+ * `margins.right = 1`, the device is still over the widget when 1px right of right border.
+ */
+bool isEventOverWidget(GtkEventController*, GtkWidget* widget, WidgetMargins margins);
+
+/**
+ * Same as isEventOverWidget(GtkEventController*, GtkWidget* widget, {0,0,0,0})
+ */
+bool isEventOverWidget(GtkEventController* eventController, GtkWidget* widget);
+
 /**
  * @brief if `btn` has the GtkActionable properties action-name and action-target set, and a corresponding action has
  * been added to any ascendent's GActionMap, then make the ToggleButton to never be unset when clicking on it. Only

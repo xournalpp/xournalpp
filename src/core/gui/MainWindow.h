@@ -37,6 +37,7 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 class PdfFloatingToolbox;
+class OpacityToolbox;
 class FloatingToolbox;
 class GladeSearchpath;
 
@@ -85,6 +86,7 @@ public:
     Control* getControl() const;
 
     PdfFloatingToolbox* getPdfToolbox() const;
+    OpacityToolbox* getOpacityToolbox() const;
     FloatingToolbox* getFloatingToolbox() const;
 
     void updateScrollbarSidebarPosition();
@@ -159,6 +161,7 @@ private:
     std::atomic_bool gtkTouchscreenScrollingEnabled{true};
 
     std::unique_ptr<PdfFloatingToolbox> pdfFloatingToolBox;
+    std::unique_ptr<OpacityToolbox> opacityToolBox;
     std::unique_ptr<FloatingToolbox> floatingToolbox;
 
     // Toolbars
