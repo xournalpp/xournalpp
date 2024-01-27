@@ -1256,6 +1256,7 @@ void Control::showSettings() {
                     ctrl->getCursor()->updateCursor();
                 }
 
+                ctrl->getSidebar()->saveSize();
                 ctrl->win->updateScrollbarSidebarPosition();
                 ctrl->updateWindowTitle();
 
