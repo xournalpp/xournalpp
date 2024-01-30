@@ -413,6 +413,18 @@ void MainWindow::setSidebarVisible(bool visible) {
     gtk_widget_set_visible(sidebarWidget.get(), visible);
 }
 
+/**
+ * Invert the position of the paned widget and disconnect from the signal.
+ * @param handlerId should be the ID of the signal handler that should be disconnected.
+ */
+void invertPanedPosition(GtkWidget* widget, GtkAllocation* allocation, gulong* handlerId) {
+    int newDividerPos = allocation->width - gtk_paned_get_position(GTK_PANED(widget));
+    gtk_paned_set_position(GTK_PANED(widget), newDividerPos);
+
+    // We only need to switch the position once, so disconnect the signal right away.
+    g_signal_handler_disconnect(widget, *handlerId);
+}
+
 void MainWindow::updatePanedPosition(int contentWidth) {
     if (!this->control->getSettings()->isSidebarOnRight()) {
         // Sidebar is on the left side.
@@ -436,14 +448,6 @@ void MainWindow::updatePanedPosition(int contentWidth) {
                     [](gpointer d, GClosure*) { delete reinterpret_cast<gulong*>(d); }, GConnectFlags(0));
         }
     }
-}
-
-void MainWindow::invertPanedPosition(GtkWidget* widget, GtkAllocation* allocation, gulong* handlerId) {
-    int newDividerPos = allocation->width - gtk_paned_get_position(GTK_PANED(widget));
-    gtk_paned_set_position(GTK_PANED(widget), newDividerPos);
-
-    // We only need to switch the position once, so disconnect the signal right away.
-    g_signal_handler_disconnect(widget, *handlerId);
 }
 
 void MainWindow::setToolbarVisible(bool visible) {

@@ -134,12 +134,6 @@ private:
     void updatePanedPosition(int contentWidth);
 
     /**
-     * Invert the position of the paned widget and disconnect from the signal.
-     * @param handlerId should be the ID of the signal handler that should be disconnected.
-     */
-    static void invertPanedPosition(GtkWidget* widget, GtkAllocation* allocation, gulong* handlerId);
-
-    /**
      * Window close Button is pressed
      */
     static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control);
