@@ -430,7 +430,7 @@ void MainWindow::setSidebarVisible(bool visible) {
  * Invert the position of the paned widget and disconnect from the signal.
  * @param handlerId should be the ID of the signal handler that should be disconnected.
  */
-void invertPanedPosition(GtkWidget* widget, GtkAllocation* allocation, gulong* handlerId) {
+static void invertPanedPosition(GtkWidget* widget, GtkAllocation* allocation, gulong* handlerId) {
     int newDividerPos = allocation->width - gtk_paned_get_position(GTK_PANED(widget));
     gtk_paned_set_position(GTK_PANED(widget), newDividerPos);
 
