@@ -35,6 +35,7 @@
 #include "util/Util.h"                                  // for execInUiThread, npos
 #include "util/XojMsgBox.h"                             // for XojMsgBox
 #include "util/glib_casts.h"                            // for wrap_for_once_v
+#include "util/gtk4_helper.h"                           // for gtk_widget_get_width
 #include "util/i18n.h"                                  // for FS, _F
 
 #include "GladeSearchpath.h"     // for GladeSearchpath
@@ -302,50 +303,59 @@ void MainWindow::updateScrollbarSidebarPosition() {
     }
 
     // Part 2: update sidebar position
-    GtkWidget* panedContainer = this->panedContainerWidget.get();
+    GtkPaned* paned = GTK_PANED(this->panedContainerWidget.get());
 
-    // Allocation is reset when we switch up the contained elements. Fetch it
-    // here in case we need it afterwards.
-#if GTK_MAJOR_VERSION == 3
-    int contentWidth{};
-    {
-        GtkAllocation allocation;
-        gtk_widget_get_allocation(boxContainerWidget.get(), &allocation);
-        if (allocation.width <= 1 && allocation.height <= 1) {
-            contentWidth = 0;
-        } else {
-            contentWidth = allocation.width;
-        }
-    }
-#else
-    int contentWidth = gtk_widget_get_width(boxContainerWidget.get());
-#endif
+    // Allocation is reset when we switch up the contained elements. Fetch the
+    // width here in case we need it afterwards.
+    int contentWidth = gtk_widget_get_width(this->boxContainerWidget.get());
 
     bool sidebarRight = control->getSettings()->isSidebarOnRight();
-    if (sidebarRight != (gtk_paned_get_child2(GTK_PANED(panedContainer)) == this->sidebarWidget.get())) {
+    if (sidebarRight != (gtk_paned_get_child2(paned) == this->sidebarWidget.get())) {
         // switch sidebar and main content
+        GtkWidget* sidebar = this->sidebarWidget.get();
+        GtkWidget* mainContent = this->sidebarVisible ? this->mainContentWidget.get() : nullptr;
+#if GTK_MAJOR_VERSION == 3
         if (this->sidebarVisible) {
-            gtk_container_remove(GTK_CONTAINER(panedContainer), this->sidebarWidget.get());
-            gtk_container_remove(GTK_CONTAINER(panedContainer), this->mainContentWidget.get());
+            gtk_container_remove(GTK_CONTAINER(paned), sidebar);
+            gtk_container_remove(GTK_CONTAINER(paned), mainContent);
 
             if (sidebarRight) {
-                gtk_paned_pack1(GTK_PANED(panedContainer), this->mainContentWidget.get(), true, false);
-                gtk_paned_pack2(GTK_PANED(panedContainer), this->sidebarWidget.get(), false, false);
+                gtk_paned_pack1(paned, mainContent, true, false);
+                gtk_paned_pack2(paned, sidebar, false, false);
             } else {
-                gtk_paned_pack1(GTK_PANED(panedContainer), this->sidebarWidget.get(), false, false);
-                gtk_paned_pack2(GTK_PANED(panedContainer), this->mainContentWidget.get(), true, false);
+                gtk_paned_pack1(paned, sidebar, false, false);
+                gtk_paned_pack2(paned, mainContent, true, false);
             }
         } else {
             // The sidebar is hidden. That means the paned widget only contains the
             // sidebar while the main contents are shown alone in the box container.
-            gtk_container_remove(GTK_CONTAINER(panedContainer), this->sidebarWidget.get());
+            gtk_container_remove(GTK_CONTAINER(paned), sidebar);
 
             if (sidebarRight) {
-                gtk_paned_pack2(GTK_PANED(panedContainer), this->sidebarWidget.get(), false, false);
+                gtk_paned_pack2(paned, sidebar, false, false);
             } else {
-                gtk_paned_pack1(GTK_PANED(panedContainer), this->sidebarWidget.get(), false, false);
+                gtk_paned_pack1(paned, sidebar, false, false);
             }
         }
+#else
+        gtk_paned_set_start_child(paned, nullptr);
+        gtk_paned_set_end_child(paned, nullptr);
+        if (sidebarRight) {
+            gtk_paned_set_start_child(paned, mainContent);
+            gtk_paned_set_start_resize(paned, true);
+            gtk_paned_set_start_shrink(paned, false);
+            gtk_paned_set_end_child(paned, sidebar);
+            gtk_paned_set_end_resize(paned, false);
+            gtk_paned_set_end_shrink(paned, false);
+        } else {
+            gtk_paned_set_end_child(paned, mainContent);
+            gtk_paned_set_end_resize(paned, true);
+            gtk_paned_set_end_shrink(paned, false);
+            gtk_paned_set_start_child(paned, sidebar);
+            gtk_paned_set_start_resize(paned, false);
+            gtk_paned_set_start_shrink(paned, false);
+        }
+#endif
     }
 
     if (this->sidebarVisible) {
@@ -371,39 +381,42 @@ void MainWindow::setSidebarVisible(bool visible) {
         // As such:
         if (!visible) {
             // hide sidebar
+#if GTK_MAJOR_VERSION == 3
             gtk_container_remove(GTK_CONTAINER(panedContainerWidget.get()), mainContentWidget.get());
-            gtk_container_remove(GTK_CONTAINER(boxContainerWidget.get()), panedContainerWidget.get());
-            gtk_container_add(GTK_CONTAINER(boxContainerWidget.get()), mainContentWidget.get());
+#else
+            if (control->getSettings()->isSidebarOnRight()) {
+                gtk_paned_set_start_child(GTK_PANED(panedContainerWidget.get()), nullptr);
+            } else {
+                gtk_paned_set_end_child(GTK_PANED(panedContainerWidget.get()), nullptr);
+            }
+#endif
+            gtk_box_remove(GTK_BOX(boxContainerWidget.get()), panedContainerWidget.get());
+            gtk_box_append(GTK_BOX(boxContainerWidget.get()), mainContentWidget.get());
             this->sidebarVisible = false;
         } else {
             // show sidebar
 
-            // Allocation is reset when we switch up the contained elements. Fetch it
-            // here in case we need it afterwards.
-#if GTK_MAJOR_VERSION == 3
-            int contentWidth{};
-            {
-                GtkAllocation allocation;
-                gtk_widget_get_allocation(boxContainerWidget.get(), &allocation);
-                if (allocation.width <= 1 && allocation.height <= 1) {
-                    contentWidth = 0;
-                } else {
-                    contentWidth = allocation.width;
-                }
-            }
-#else
+            // Allocation is reset when we switch up the contained elements. Fetch the
+            // width here in case we need it afterwards.
             int contentWidth = gtk_widget_get_width(boxContainerWidget.get());
-#endif
 
-            gtk_container_remove(GTK_CONTAINER(boxContainerWidget.get()), mainContentWidget.get());
+            gtk_box_remove(GTK_BOX(boxContainerWidget.get()), mainContentWidget.get());
 
+#if GTK_MAJOR_VERSION == 3
             if (control->getSettings()->isSidebarOnRight()) {
                 gtk_paned_pack1(GTK_PANED(panedContainerWidget.get()), mainContentWidget.get(), true, false);
             } else {
                 gtk_paned_pack2(GTK_PANED(panedContainerWidget.get()), mainContentWidget.get(), true, false);
             }
+#else
+            if (control->getSettings()->isSidebarOnRight()) {
+                gtk_paned_set_start_child(GTK_PANED(panedContainerWidget.get()), mainContentWidget.get());
+            } else {
+                gtk_paned_set_end_child(GTK_PANED(panedContainerWidget.get()), mainContentWidget.get());
+            }
+#endif
 
-            gtk_container_add(GTK_CONTAINER(boxContainerWidget.get()), panedContainerWidget.get());
+            gtk_box_append(GTK_BOX(boxContainerWidget.get()), panedContainerWidget.get());
             this->sidebarVisible = true;
 
             updatePanedPosition(contentWidth);
@@ -437,7 +450,7 @@ void MainWindow::updatePanedPosition(int contentWidth) {
             gtk_paned_set_position(GTK_PANED(this->panedContainerWidget.get()), dividerPos);
         } else {
             // Allocation is unkown (window hasn't been shown yet). We have to wait for the signal.
-            // Set position as if the sidebar was on the right side, and let the signal handler
+            // Set position as if the sidebar was on the left side, and let the signal handler
             // simply invert the position when the allocation is known.
             gtk_paned_set_position(GTK_PANED(this->panedContainerWidget.get()),
                                    this->control->getSettings()->getSidebarWidth());
