@@ -390,8 +390,9 @@ void LoadHandler::parseBgPixmap() {
         const std::string& imgData = *readResult;  ///< Do not remove the const qualifier - see below
 
         /**
-         * To avoid an unecessary copy, the data is still managed by the std::optional<std::string> instance. The input
-         * stream assumes the data will not be modified: do not remove the const qualifier on readResult or imgData
+         * To avoid an unecessary copy, the data is still managed by the std::unique_ptr<std::string> instance. The
+         * input stream assumes the data will not be modified: do not remove the const qualifier on readResult or
+         * imgData
          */
         xoj::util::GObjectSPtr<GInputStream> inputStream(
                 g_memory_input_stream_new_from_data(imgData.data(), static_cast<gssize>(imgData.size()), nullptr),
@@ -458,12 +459,11 @@ void LoadHandler::parseBgPdf() {
             if (this->isGzFile) {
                 pdfFilename = (fs::path{xournalFilepath} += ".") += pdfFilename;
             } else {
-                auto readResult = readZipAttachment(pdfFilename);
-                if (!readResult) {
+                auto pdfBytes = readZipAttachment(pdfFilename);
+                if (!pdfBytes) {
                     return;
                 }
-                std::string& pdfBytes = readResult.value();
-                doc.readPdf(pdfFilename, false, attachToDocument, pdfBytes.data(), pdfBytes.size());
+                doc.readPdf(pdfFilename, false, attachToDocument, std::move(pdfBytes));
 
                 if (!doc.getLastErrorMsg().empty()) {
                     error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
@@ -1119,7 +1119,7 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> Document* {
     return &this->doc;
 }
 
-auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::optional<std::string> {
+auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr<std::string> {
     zip_stat_t attachmentFileStat;
     const int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
     if (statStatus != 0) {
@@ -1142,10 +1142,10 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::optional<s
         return {};
     }
 
-    std::string data(length, 0);
+    auto data = std::make_unique<std::string>(length, 0);
     zip_uint64_t readBytes = 0;
     while (readBytes < length) {
-        const zip_int64_t read = zip_fread(attachmentFile, data.data() + readBytes, length - readBytes);
+        const zip_int64_t read = zip_fread(attachmentFile, data->data() + readBytes, length - readBytes);
         if (read == -1) {
             zip_fclose(attachmentFile);
             error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
@@ -1158,7 +1158,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::optional<s
 
     zip_fclose(attachmentFile);
 
-    return {std::move(data)};
+    return data;
 }
 
 auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
