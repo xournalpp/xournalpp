@@ -1006,7 +1006,7 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
     double zoom = xournal->getZoom();
 
     GtkWidget* popover = gtk_popover_new(this->getXournal()->getWidget());
-    gtk_container_add(GTK_CONTAINER(popover), child);
+    gtk_popover_set_child(GTK_POPOVER(popover), child);
 
     auto x = floor_cast<int>(this->getX() + rect.x1 * zoom);
     auto y = floor_cast<int>(this->getY() + rect.y1 * zoom);

@@ -27,8 +27,8 @@ void gtk_window_destroy(GtkWindow* win);
 
 void gtk_widget_add_css_class(GtkWidget* widget, const char* css_class);
 void gtk_widget_remove_css_class(GtkWidget* widget, const char* css_class);
-
 int gtk_widget_get_width(GtkWidget* widget);
+GtkClipboard* gtk_widget_get_clipboard(GtkWidget* widget);
 
 /*** GtkDrawingArea ****/
 
@@ -40,6 +40,7 @@ void gtk_drawing_area_set_draw_func(GtkDrawingArea* area, GtkDrawingAreaDrawFunc
 
 /**** GtkScrolledWindow ****/
 
+GtkWidget* gtk_scrolled_window_new();
 void gtk_scrolled_window_set_child(GtkScrolledWindow* win, GtkWidget* child);
 GtkWidget* gtk_scrolled_window_get_child(GtkScrolledWindow* win);
 
@@ -66,3 +67,6 @@ GtkWidget* gtk_popover_menu_new_from_model(GMenuModel* model);
 /**** GtkLabel ****/
 void gtk_label_set_wrap(GtkLabel* label, gboolean wrap);
 void gtk_label_set_wrap_mode(GtkLabel* label, PangoWrapMode wrap_mode);
+
+/**** GtkIMContext ****/
+void gtk_im_context_set_client_widget(GtkIMContext* context, GtkWidget* widget);

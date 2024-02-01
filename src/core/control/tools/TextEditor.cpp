@@ -23,6 +23,7 @@
 #include "util/DispatchPool.h"
 #include "util/Range.h"
 #include "util/glib_casts.h"  // for wrap_for_once_v
+#include "util/gtk4_helper.h"
 #include "util/raii/CStringWrapper.h"
 #include "util/safe_casts.h"  // for round_cast, as_unsigned
 #include "view/overlays/TextEditionView.h"
@@ -145,7 +146,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         }
     }
 
-    gtk_im_context_set_client_window(this->imContext.get(), gtk_widget_get_parent_window(this->xournalWidget));
+    gtk_im_context_set_client_widget(this->imContext.get(), this->xournalWidget);
     gtk_im_context_focus_in(this->imContext.get());
 
     g_signal_connect(this->imContext.get(), "commit", G_CALLBACK(iMCommitCallback), this);
@@ -866,12 +867,12 @@ void TextEditor::backspace() {
 }
 
 void TextEditor::copyToClipboard() const {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget, GDK_SELECTION_CLIPBOARD);
+    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
     gtk_text_buffer_copy_clipboard(this->buffer.get(), clipboard);
 }
 
 void TextEditor::cutToClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget, GDK_SELECTION_CLIPBOARD);
+    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
     gtk_text_buffer_cut_clipboard(this->buffer.get(), clipboard, true);
 
     this->contentsChanged(true);
@@ -879,7 +880,7 @@ void TextEditor::cutToClipboard() {
 }
 
 void TextEditor::pasteFromClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget, GDK_SELECTION_CLIPBOARD);
+    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
     gtk_text_buffer_paste_clipboard(this->buffer.get(), clipboard, nullptr, true);
 }
 

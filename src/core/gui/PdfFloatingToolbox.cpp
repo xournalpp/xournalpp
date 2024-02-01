@@ -4,9 +4,9 @@
 #include <cmath>      // for abs
 #include <cstddef>    // for size_t
 #include <memory>
-#include <string>     // for string
-#include <utility>    // for move
-#include <vector>     // for vector
+#include <string>   // for string
+#include <utility>  // for move
+#include <vector>   // for vector
 
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <gtk/gtk.h>
@@ -28,6 +28,7 @@
 #include "undo/UndoAction.h"        // for UndoAction
 #include "undo/UndoRedoHandler.h"   // for UndoRedoHandler
 #include "util/Assert.h"            // for xoj_assert
+#include "util/gtk4_helper.h"       // for gtk_widget_get_clipboard
 
 #include "MainWindow.h"  // for MainWindow
 
@@ -141,7 +142,7 @@ void PdfFloatingToolbox::show() {
 }
 
 void PdfFloatingToolbox::copyTextToClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow(), GDK_SELECTION_CLIPBOARD);
+    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow());
     if (std::string text = this->pdfElemSelection->getSelectedText(); !text.empty()) {
         gtk_clipboard_set_text(clipboard, text.c_str(), -1);
     }

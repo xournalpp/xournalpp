@@ -45,6 +45,10 @@ int gtk_widget_get_width(GtkWidget* widget) {
     }
 }
 
+GtkClipboard* gtk_widget_get_clipboard(GtkWidget* widget) {
+    return gtk_widget_get_clipboard(widget, GDK_SELECTION_CLIPBOARD);
+}
+
 /*** GtkDrawingArea ****/
 
 void gtk_drawing_area_set_draw_func(GtkDrawingArea* area, GtkDrawingAreaDrawFunc draw_func, gpointer user_data,
@@ -72,6 +76,7 @@ void gtk_drawing_area_set_draw_func(GtkDrawingArea* area, GtkDrawingAreaDrawFunc
 
 /**** GtkScrolledWindow ****/
 
+GtkWidget* gtk_scrolled_window_new() { return gtk_scrolled_window_new(nullptr, nullptr); }
 void gtk_scrolled_window_set_child(GtkScrolledWindow* win, GtkWidget* child) { set_child(GTK_CONTAINER(win), child); }
 GtkWidget* gtk_scrolled_window_get_child(GtkScrolledWindow* win) { return gtk_bin_get_child(GTK_BIN(win)); }
 
@@ -109,4 +114,9 @@ GtkWidget* gtk_popover_menu_new_from_model(GMenuModel* model) { return gtk_popov
 void gtk_label_set_wrap(GtkLabel* label, gboolean wrap) { gtk_label_set_line_wrap(label, wrap); }
 void gtk_label_set_wrap_mode(GtkLabel* label, PangoWrapMode wrap_mode) {
     gtk_label_set_line_wrap_mode(label, wrap_mode);
+}
+
+/**** GtkIMContext ****/
+void gtk_im_context_set_client_widget(GtkIMContext* context, GtkWidget* widget) {
+    gtk_im_context_set_client_window(context, widget ? gtk_widget_get_parent_window(widget) : nullptr);
 }
