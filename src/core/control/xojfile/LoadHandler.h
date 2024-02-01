@@ -112,7 +112,7 @@ private:
      * Returns the contents of the zip attachment with the given file name, or
      * nullopt if there is no such file.
      */
-    std::optional<std::string> readZipAttachment(fs::path const& filename);
+    std::unique_ptr<std::string> readZipAttachment(fs::path const& filename);
 
     fs::path getTempFileForPath(fs::path const& filename);
 

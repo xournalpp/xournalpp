@@ -43,8 +43,8 @@ public:
     enum DocumentType { XOPP, XOJ, PDF };
 
     void setPdfAttributes(const fs::path& filename, bool attachToDocument);
-    bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
-                 gsize length = 0);
+    bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument,
+                 std::unique_ptr<std::string> data = {});
     void resetPdf();
 
     size_t getPageCount() const;
