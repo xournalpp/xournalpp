@@ -139,18 +139,15 @@ void MainWindow::updateColorscheme() {
 }
 
 void MainWindow::initXournalWidget() {
-    GtkWidget* boxContents = get("boxContents");
-
-
-    winXournal = gtk_scrolled_window_new(nullptr, nullptr);
+    winXournal = gtk_scrolled_window_new();
 
     setGtkTouchscreenScrollingForDeviceMapping();
 
-    gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
+    gtk_box_append(GTK_BOX(get("boxContents")), winXournal);
 
     GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
 
-    gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(winXournal), vpXournal);
 
     scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLABLE(vpXournal));
 
