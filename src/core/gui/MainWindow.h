@@ -69,8 +69,6 @@ public:
 
     void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
 
-    void saveSidebarSize();
-
     void setMaximized(bool maximized);
     bool isMaximized() const;
 
@@ -127,6 +125,13 @@ private:
     void initXournalWidget();
 
     void createToolbar();
+
+    /**
+     * Update the position of the separator in the paned container, adjusting it to the saved sidebar width.
+     * @param contentWidth should be the width of the paned container. The caller should retrieve the width
+     * of the container before any modifications to it, as that will reset its allocation.
+     */
+    void updatePanedPosition(int contentWidth);
 
     /**
      * Window close Button is pressed

@@ -35,6 +35,16 @@ void gtk_widget_remove_css_class(GtkWidget* widget, const char* css_class) {
     gtk_style_context_remove_class(gtk_widget_get_style_context(widget), css_class);
 }
 
+int gtk_widget_get_width(GtkWidget* widget) {
+    GtkAllocation allocation;
+    gtk_widget_get_allocation(widget, &allocation);
+    if (allocation.width <= 1 && allocation.height <= 1) {
+        return 0;
+    } else {
+        return allocation.width;
+    }
+}
+
 /*** GtkDrawingArea ****/
 
 void gtk_drawing_area_set_draw_func(GtkDrawingArea* area, GtkDrawingAreaDrawFunc draw_func, gpointer user_data,

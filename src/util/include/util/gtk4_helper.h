@@ -28,6 +28,8 @@ void gtk_window_destroy(GtkWindow* win);
 void gtk_widget_add_css_class(GtkWidget* widget, const char* css_class);
 void gtk_widget_remove_css_class(GtkWidget* widget, const char* css_class);
 
+int gtk_widget_get_width(GtkWidget* widget);
+
 /*** GtkDrawingArea ****/
 
 typedef void (*GtkDrawingAreaDrawFunc)(GtkDrawingArea* drawing_area, cairo_t* cr, int width, int height,
