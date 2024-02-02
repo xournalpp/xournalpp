@@ -221,11 +221,12 @@ Control::~Control() {
 
 void Control::setLastAutosaveFile(fs::path newAutosaveFile) {
     try {
-        if (!fs::equivalent(newAutosaveFile, this->lastAutosaveFilename) && fs::exists(newAutosaveFile)) {
+        if (!this->lastAutosaveFilename.empty() && !fs::equivalent(newAutosaveFile, this->lastAutosaveFilename) &&
+            fs::exists(newAutosaveFile)) {
             deleteLastAutosaveFile();
         }
     } catch (const fs::filesystem_error& e) {
-        auto fmtstr = FS(_F("Filesystem error: {2}") % e.what());
+        auto fmtstr = FS(_F("Filesystem error: {1}") % e.what());
         Util::execInUiThread([fmtstr, win = getGtkWindow()]() { XojMsgBox::showErrorToUser(win, fmtstr); });
     }
     this->lastAutosaveFilename = std::move(newAutosaveFile);
