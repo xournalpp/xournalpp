@@ -16,9 +16,9 @@ PdfExportJob::PdfExportJob(Control* control): BaseExportJob(control, _("PDF Expo
 
 PdfExportJob::~PdfExportJob() = default;
 
-void PdfExportJob::addFilterToDialog() { addFileFilterToDialog(_("PDF files"), "*.pdf"); }
+void PdfExportJob::addFilterToDialog(GtkFileChooser* dialog) { addFileFilterToDialog(dialog, _("PDF files"), "*.pdf"); }
 
-auto PdfExportJob::testAndSetFilepath(const fs::path& file) -> bool {
+auto PdfExportJob::testAndSetFilepath(const fs::path& file, const char* /*filterName*/) -> bool {
     if (!BaseExportJob::testAndSetFilepath(file)) {
         return false;
     }

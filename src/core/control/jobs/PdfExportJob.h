@@ -27,8 +27,8 @@ public:
     void run() override;
 
 protected:
-    void addFilterToDialog() override;
-    bool testAndSetFilepath(const fs::path& file) override;
+    void addFilterToDialog(GtkFileChooser* dialog) override;
+    bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr) override;
 
 private:
 };

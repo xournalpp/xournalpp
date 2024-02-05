@@ -21,11 +21,16 @@ GtkWindow* defaultWindow = nullptr;
 
 XojMsgBox::XojMsgBox(GtkDialog* dialog, std::function<void(int)> callback):
         window(reinterpret_cast<GtkWindow*>(dialog)), callback(std::move(callback)) {
-    g_signal_connect(dialog, "response", G_CALLBACK(+[](GtkDialog* dialog, int response, gpointer self) {
-                         reinterpret_cast<XojMsgBox*>(self)->callback(response);
-                         gtk_window_close(reinterpret_cast<GtkWindow*>(dialog));
-                     }),
-                     this);
+    this->signalId =
+            g_signal_connect(dialog, "response", G_CALLBACK(+[](GtkDialog* dialog, int response, gpointer data) {
+                                 auto* self = static_cast<XojMsgBox*>(data);
+                                 self->callback(response);
+
+                                 // Closing the window causes another "response" signal, which we want to ignore
+                                 g_signal_handler_disconnect(dialog, self->signalId);
+                                 gtk_window_close(reinterpret_cast<GtkWindow*>(dialog));
+                             }),
+                             this);
 }
 
 
