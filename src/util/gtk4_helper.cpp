@@ -120,3 +120,8 @@ void gtk_label_set_wrap_mode(GtkLabel* label, PangoWrapMode wrap_mode) {
 void gtk_im_context_set_client_widget(GtkIMContext* context, GtkWidget* widget) {
     gtk_im_context_set_client_window(context, widget ? gtk_widget_get_parent_window(widget) : nullptr);
 }
+
+/**** GtkFileChooserDialog ****/
+gboolean gtk_file_chooser_set_current_folder(GtkFileChooser* chooser, GFile* file, GError** error) {
+    return gtk_file_chooser_set_current_folder_file(chooser, file, error);
+}

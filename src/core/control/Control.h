@@ -94,7 +94,6 @@ public:
     void print();
     void exportAsPdf();
     void exportAs();
-    void exportBase(BaseExportJob* job);
     void quit(bool allowCancel = true);
 
     /**

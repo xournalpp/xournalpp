@@ -1837,24 +1837,24 @@ void Control::updateWindowTitle() {
 
 void Control::exportAsPdf() {
     this->clearSelectionEndText();
-    exportBase(new PdfExportJob(this));
+
+    auto* job = new PdfExportJob(this);
+    job->showFileChooser(
+            [ctrl = this, job]() {
+                ctrl->scheduler->addJob(job, JOB_PRIORITY_NONE);
+                job->unref();
+            },
+            [ctrl = this, job]() {
+                // The job blocked, so we have to unblock, because the job unblocks only after
+                ctrl->unblock();
+                job->unref();
+            });
 }
 
 void Control::exportAs() {
     this->clearSelectionEndText();
-    CustomExportJob* job = new CustomExportJob(this);
-    job->showFilechooser();
-    job->unref();
-}
-
-void Control::exportBase(BaseExportJob* job) {
-    if (job->showFilechooser()) {
-        this->scheduler->addJob(job, JOB_PRIORITY_NONE);
-    } else {
-        // The job blocked, so we have to unblock, because the job unblocks only after run
-        unblock();
-    }
-    job->unref();
+    auto* job = new CustomExportJob(this);
+    job->showDialogAndRun();
 }
 
 auto Control::saveAs() -> bool {

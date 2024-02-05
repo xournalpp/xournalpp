@@ -30,6 +30,7 @@ public:
 private:
     xoj::util::GtkWindowUPtr window;
     std::function<void(int)> callback;  ///< The parameter is the dialog's response ID
+    gulong signalId;
 
 public:
     struct Button {
