@@ -42,6 +42,8 @@ auto XojPdfDocument::load(gpointer data, gsize length, std::string password, GEr
 
 auto XojPdfDocument::isLoaded() const -> bool { return doc->isLoaded(); }
 
+void XojPdfDocument::reset() { doc->reset(); }
+
 auto XojPdfDocument::getPage(size_t page) const -> XojPdfPageSPtr { return doc->getPage(page); }
 
 auto XojPdfDocument::getPageCount() const -> size_t { return doc->getPageCount(); }

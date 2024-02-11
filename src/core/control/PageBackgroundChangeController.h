@@ -18,7 +18,9 @@
 #include "model/DocumentChangeType.h"       // for DocumentChangeType
 #include "model/DocumentListener.h"         // for DocumentListener
 #include "model/PageRef.h"                  // for PageRef
-#include "model/PageType.h"
+#include "model/PageType.h"                 // for PageType
+
+#include "filesystem.h"  // for path
 
 class Control;
 class UndoAction;
@@ -39,6 +41,7 @@ public:
     void setPageTypeForNewPages(const std::optional<PageType>& pageType);
     void applyCurrentPageBackgroundToAll();
     void applyBackgroundToAllPages(const PageType& pt);
+    void changePdfPagesBackground(const fs::path& filepath, bool attachPdf);
     void insertNewPage(size_t position, bool shouldScrollToPage = true);
 
     // DocumentListener

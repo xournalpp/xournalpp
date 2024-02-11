@@ -16,9 +16,7 @@ PdfExportJob::PdfExportJob(Control* control): BaseExportJob(control, _("PDF Expo
 
 PdfExportJob::~PdfExportJob() = default;
 
-void PdfExportJob::addFilterToDialog() {
-     addFileFilterToDialog(_("PDF files"), ".pdf");
-}
+void PdfExportJob::addFilterToDialog() { addFileFilterToDialog(_("PDF files"), "*.pdf"); }
 
 auto PdfExportJob::testAndSetFilepath(const fs::path& file) -> bool {
     if (!BaseExportJob::testAndSetFilepath(file)) {

@@ -39,6 +39,7 @@ public:
     bool load(fs::path const& filepath, std::string password, GError** error) override;
     bool load(gpointer data, gsize length, std::string password, GError** error) override;
     bool isLoaded() const override;
+    void reset() override;
 
     XojPdfPageSPtr getPage(size_t page) const override;
     size_t getPageCount() const override;

@@ -305,6 +305,11 @@ void Document::updateIndexPageNumbers() {
     }
 }
 
+void Document::setPdfAttributes(const fs::path& filename, bool attachToDocument) {
+    this->pdfFilepath = filename;
+    this->attachPdf = attachToDocument;
+}
+
 auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
         -> bool {
     GError* popplerError = nullptr;
@@ -359,6 +364,8 @@ auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDo
 
     return true;
 }
+
+void Document::resetPdf() { pdfDocument.reset(); }
 
 void Document::setPageSize(PageRef p, double width, double height) { p->setSize(width, height); }
 
