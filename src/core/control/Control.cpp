@@ -1455,6 +1455,12 @@ void Control::fileLoaded(int scrollToPage) {
     updateDeletePageButton();
 }
 
+enum class MissingPdfDialogOptions : gint { useProposed, selectOther, remove, cancel };
+struct MissingPdfCallbackData {
+    Control* ctrl;
+    const fs::path proposedPdfFilepath;
+};
+
 void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepath) {
     const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
 
@@ -1500,38 +1506,49 @@ void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepat
     GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
                                                "%s", msg.c_str());
 
-    enum dialogOptions { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
-
     if (proposePdfFile) {
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"), USE_PROPOSED);
+        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"),
+                              static_cast<gint>(MissingPdfDialogOptions::useProposed));
     }
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), SELECT_OTHER);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), REMOVE);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), CANCEL);
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"),
+                          static_cast<gint>(MissingPdfDialogOptions::selectOther));
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"),
+                          static_cast<gint>(MissingPdfDialogOptions::remove));
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), static_cast<gint>(MissingPdfDialogOptions::cancel));
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getGtkWindow()));
+    g_signal_connect_data(
+            dialog, "response", xoj::util::wrap_for_g_callback_v<missingPdfDialogResponseHandler>,
+            new MissingPdfCallbackData{this, std::move(proposedPdfFilepath)},
+            +[](gpointer d, GClosure*) { delete reinterpret_cast<MissingPdfCallbackData*>(d); }, GConnectFlags(0));
 
-    switch (res) {
-        case USE_PROPOSED:
-            if (!proposedPdfFilepath.empty()) {
-                this->pageBackgroundChangeController->changePdfPagesBackground(proposedPdfFilepath, false);
+    gtk_widget_show(dialog);
+}
+
+void Control::missingPdfDialogResponseHandler(GtkDialog* dialog, gint responseId, gpointer d) {
+    MissingPdfCallbackData* data = reinterpret_cast<MissingPdfCallbackData*>(d);
+
+    switch (static_cast<MissingPdfDialogOptions>(responseId)) {
+        case MissingPdfDialogOptions::useProposed:
+            if (!data->proposedPdfFilepath.empty()) {
+                data->ctrl->pageBackgroundChangeController->changePdfPagesBackground(data->proposedPdfFilepath, false);
             }
             break;
-        case SELECT_OTHER: {
+        case MissingPdfDialogOptions::selectOther: {
             bool attachToDocument = false;
-            XojOpenDlg dlg(getGtkWindow(), this->settings);
+            XojOpenDlg dlg(data->ctrl->getGtkWindow(), data->ctrl->settings);
             auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
             if (!pdfFilename.empty()) {
-                this->pageBackgroundChangeController->changePdfPagesBackground(pdfFilename, attachToDocument);
+                data->ctrl->pageBackgroundChangeController->changePdfPagesBackground(pdfFilename, attachToDocument);
             }
         } break;
-        case REMOVE:
-            this->pageBackgroundChangeController->applyBackgroundToAllPages(PageType(PageTypeFormat::Plain));
+        case MissingPdfDialogOptions::remove:
+            data->ctrl->pageBackgroundChangeController->applyBackgroundToAllPages(PageType(PageTypeFormat::Plain));
             break;
         default:
             break;
     }
+
+    gtk_widget_destroy(GTK_WIDGET(dialog));
 }
 
 class MetadataCallbackData {
