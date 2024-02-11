@@ -37,8 +37,8 @@ public:
 
 private:
     Layer* layer;
-    Element* recognized;
     Element* original;
-    std::unique_ptr<Element> recognizedOwned;
     std::unique_ptr<Element> originalOwned;
+    Element* recognized;
+    std::unique_ptr<Element> recognizedOwned;
 };
