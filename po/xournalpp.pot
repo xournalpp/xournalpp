@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.2+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 04:47+0000\n"
+"POT-Creation-Date: 2024-02-13 12:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -783,15 +783,15 @@ msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:379
-#: ../src/core/control/xojfile/LoadHandler.cpp:407
+#: ../src/core/control/xojfile/LoadHandler.cpp:408
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:417
+#: ../src/core/control/xojfile/LoadHandler.cpp:418
 msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:425
+#: ../src/core/control/xojfile/LoadHandler.cpp:426
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
@@ -1748,8 +1748,8 @@ msgstr ""
 msgid "Toolbar found: {1}"
 msgstr ""
 
-#: ../src/core/model/Document.cpp:321 ../src/core/model/Document.cpp:330
-#: ../src/core/model/Document.cpp:333
+#: ../src/core/model/Document.cpp:322 ../src/core/model/Document.cpp:331
+#: ../src/core/model/Document.cpp:334
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
