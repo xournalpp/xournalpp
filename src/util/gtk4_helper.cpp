@@ -3,6 +3,7 @@
 #include <gtk/gtk.h>
 
 #include "util/Assert.h"
+#include "util/raii/CStringWrapper.h"
 
 namespace {
 void set_child(GtkContainer* c, GtkWidget* child) {
@@ -122,6 +123,10 @@ void gtk_im_context_set_client_widget(GtkIMContext* context, GtkWidget* widget) 
 }
 
 /**** GtkFileChooserDialog ****/
+gboolean gtk_file_chooser_add_shortcut_folder(GtkFileChooser* chooser, GFile* file, GError** error) {
+    auto uri = xoj::util::OwnedCString::assumeOwnership(g_file_get_uri(file));
+    return gtk_file_chooser_add_shortcut_folder(chooser, uri.get(), error);
+}
 gboolean gtk_file_chooser_set_current_folder(GtkFileChooser* chooser, GFile* file, GError** error) {
     return gtk_file_chooser_set_current_folder_file(chooser, file, error);
 }

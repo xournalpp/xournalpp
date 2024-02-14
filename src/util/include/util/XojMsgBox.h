@@ -19,6 +19,8 @@
 
 #include "util/raii/GtkWindowUPtr.h"
 
+#include "filesystem.h"
+
 class XojMsgBox final {
 public:
     XojMsgBox(
@@ -69,4 +71,7 @@ public:
             bool error = false);
     static int replaceFileQuestion(GtkWindow* win, const std::string& msg);
     static void showHelp(GtkWindow* win);
+
+    static void replaceFileQuestion(GtkWindow* win, const fs::path& file, std::function<void()> overwrite,
+                                    std::function<void()> pickOtherPath);
 };

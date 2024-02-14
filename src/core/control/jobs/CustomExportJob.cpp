@@ -75,7 +75,9 @@ void CustomExportJob::showDialogAndRun() {
         }
 
         Util::execInUiThread([job]() {
-            // We wait for the first dialog to be closed before showing the second one
+            // We must wait for the FileChooser dialog to be closed before showing the next one, otherwise the
+            // FileChooser dialog stays on
+            // Todo(post-gtk4): try out without the execInUiThread
             xoj::popup::PopupWindowWrapper<xoj::popup::ExportDialog> popup(
                     job->control->getGladeSearchPath(), job->format, job->control->getCurrentPageNo() + 1,
                     job->control->getDocument()->getPageCount(), [job](const xoj::popup::ExportDialog& dialog) {
