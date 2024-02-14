@@ -12,16 +12,12 @@
 #include "util/PathUtil.h"              // for toGFilename, clearExtensions
 #include "util/PopupWindowWrapper.h"    // for PopupWindowWrapper
 #include "util/XojMsgBox.h"             // for XojMsgBox
+#include "util/glib_casts.h"            // for wrap_for_g_callback_v
 #include "util/i18n.h"                  // for _, FS, _F
 
 BaseExportJob::BaseExportJob(Control* control, const std::string& name): BlockingJob(control, name) {}
 
 BaseExportJob::~BaseExportJob() = default;
-
-static GtkWidget* initDialog(GtkWindow* win) {
-    return gtk_file_chooser_dialog_new(_("Export PDF"), win, GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"),
-                                       GTK_RESPONSE_CANCEL, _("_Export"), GTK_RESPONSE_OK, nullptr);
-}
 
 void BaseExportJob::addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mime) {
     GtkFileFilter* filter = gtk_file_filter_new();
@@ -54,7 +50,9 @@ auto BaseExportJob::checkOverwriteBackgroundPDF(fs::path const& file) const -> b
 }
 
 void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::function<void()> onCancel) {
-    auto* dialog = initDialog(control->getGtkWindow());
+    auto* dialog =
+            gtk_file_chooser_dialog_new(_("Export"), control->getGtkWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Export"), GTK_RESPONSE_OK, nullptr);
     addFilterToDialog(GTK_FILE_CHOOSER(dialog));
 
     Settings* settings = control->getSettings();
@@ -76,8 +74,8 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
                 onFileSelected(std::move(onFileSelected)),
                 onCancel(std::move(onCancel)) {
             this->signalId = g_signal_connect(
-                    dialog, "response", G_CALLBACK(+[](GtkDialog* dialog, int response, gpointer data) {
-                        auto* self = static_cast<FileDlg*>(data);
+                    dialog, "response", G_CALLBACK((+[](GtkDialog* dialog, int response, gpointer data) {
+                        FileDlg* self = static_cast<FileDlg*>(data);
                         auto* job = self->job;
                         if (response == GTK_RESPONSE_OK) {
                             auto file = Util::fromGFile(
@@ -90,13 +88,21 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
                             const char* filterName =
                                     gtk_file_filter_get_name(gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog)));
                             ;
-                            if (job->testAndSetFilepath(std::move(file), filterName) &&
-                                job->control->askToReplace(job->filepath)) {
-                                job->control->getSettings()->setLastSavePath(job->filepath.parent_path());
-                                self->onFileSelected();
-                                // Closing the window causes another "response" signal, which we want to ignore
-                                g_signal_handler_disconnect(dialog, self->signalId);
-                                gtk_window_close(GTK_WINDOW(dialog));  // Deletes self, don't do anything after this
+                            if (job->testAndSetFilepath(std::move(file), filterName)) {
+                                auto doExport = [self, dialog]() {
+                                    // Closing the window causes another "response" signal, which we want to ignore
+                                    g_signal_handler_disconnect(dialog, self->signalId);
+                                    gtk_window_close(GTK_WINDOW(dialog));
+                                    self->job->control->getSettings()->setLastSavePath(
+                                            self->job->filepath.parent_path());
+                                    self->onFileSelected();
+                                };
+                                if (!fs::exists(job->filepath)) {
+                                    doExport();
+                                } else {
+                                    XojMsgBox::replaceFileQuestion(GTK_WINDOW(dialog), job->filepath,
+                                                                   std::move(doExport), []() {});
+                                }
                             }  // else the dialog stays on until a suitable destination is found or cancel is hit.
                         } else {
                             self->onCancel();
@@ -104,7 +110,7 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
                             g_signal_handler_disconnect(dialog, self->signalId);
                             gtk_window_close(GTK_WINDOW(dialog));  // Deletes self, don't do anything after this
                         }
-                    }),
+                    })),
                     this);
         }
         ~FileDlg() = default;

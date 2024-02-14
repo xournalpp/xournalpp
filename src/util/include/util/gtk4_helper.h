@@ -72,4 +72,5 @@ void gtk_label_set_wrap_mode(GtkLabel* label, PangoWrapMode wrap_mode);
 void gtk_im_context_set_client_widget(GtkIMContext* context, GtkWidget* widget);
 
 /**** GtkFileChooserDialog ****/
+gboolean gtk_file_chooser_add_shortcut_folder(GtkFileChooser* chooser, GFile* file, GError** error);
 gboolean gtk_file_chooser_set_current_folder(GtkFileChooser* chooser, GFile* file, GError** error);
