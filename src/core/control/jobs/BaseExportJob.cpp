@@ -23,10 +23,10 @@ static GtkWidget* initDialog(GtkWindow* win) {
                                        GTK_RESPONSE_CANCEL, _("_Export"), GTK_RESPONSE_OK, nullptr);
 }
 
-void BaseExportJob::addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& pattern) {
+void BaseExportJob::addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mime) {
     GtkFileFilter* filter = gtk_file_filter_new();
     gtk_file_filter_set_name(filter, name.c_str());
-    gtk_file_filter_add_pattern(filter, pattern.c_str());
+    gtk_file_filter_add_mime_type(filter, mime.c_str());
     gtk_file_chooser_add_filter(dialog, filter);
 }
 

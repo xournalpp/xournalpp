@@ -43,7 +43,7 @@ public:
 
 protected:
     virtual void addFilterToDialog(GtkFileChooser* dialog) = 0;
-    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& pattern);
+    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mimetype);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
     virtual bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr);
 
@@ -59,7 +59,8 @@ protected:
     class ExportType {
     public:
         std::string extension;
+        std::string mimeType;
 
-        ExportType(std::string ext): extension(std::move(ext)) {}
+        ExportType(std::string ext, std::string mime): extension(std::move(ext)), mimeType(std::move(mime)) {}
     };
 };
