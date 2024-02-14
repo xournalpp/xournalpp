@@ -392,7 +392,7 @@ private:
     /**
      * "Closes" the document, preparing the editor for a new document.
      */
-    void closeDocument();
+    void closeDocument(bool destroy = true);
 
     /**
      * @brief Get the pen line style to select in the toolbar
