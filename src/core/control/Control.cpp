@@ -1455,7 +1455,7 @@ void Control::fileLoaded(int scrollToPage) {
     updateDeletePageButton();
 }
 
-enum class MissingPdfDialogOptions : gint { useProposed, selectOther, remove, cancel };
+enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
 struct MissingPdfCallbackData {
     Control* ctrl;
     const fs::path proposedPdfFilepath;
@@ -1508,13 +1508,13 @@ void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepat
 
     if (proposePdfFile) {
         gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"),
-                              static_cast<gint>(MissingPdfDialogOptions::useProposed));
+                              static_cast<gint>(MissingPdfDialogOptions::USE_PROPOSED));
     }
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"),
-                          static_cast<gint>(MissingPdfDialogOptions::selectOther));
+                          static_cast<gint>(MissingPdfDialogOptions::SELECT_OTHER));
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"),
-                          static_cast<gint>(MissingPdfDialogOptions::remove));
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), static_cast<gint>(MissingPdfDialogOptions::cancel));
+                          static_cast<gint>(MissingPdfDialogOptions::REMOVE));
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), static_cast<gint>(MissingPdfDialogOptions::CANCEL));
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getGtkWindow()));
     g_signal_connect_data(
             dialog, "response", xoj::util::wrap_for_g_callback_v<missingPdfDialogResponseHandler>,
@@ -1528,12 +1528,12 @@ void Control::missingPdfDialogResponseHandler(GtkDialog* dialog, gint responseId
     MissingPdfCallbackData* data = reinterpret_cast<MissingPdfCallbackData*>(d);
 
     switch (static_cast<MissingPdfDialogOptions>(responseId)) {
-        case MissingPdfDialogOptions::useProposed:
+        case MissingPdfDialogOptions::USE_PROPOSED:
             if (!data->proposedPdfFilepath.empty()) {
                 data->ctrl->pageBackgroundChangeController->changePdfPagesBackground(data->proposedPdfFilepath, false);
             }
             break;
-        case MissingPdfDialogOptions::selectOther: {
+        case MissingPdfDialogOptions::SELECT_OTHER: {
             bool attachToDocument = false;
             XojOpenDlg dlg(data->ctrl->getGtkWindow(), data->ctrl->settings);
             auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
@@ -1541,7 +1541,7 @@ void Control::missingPdfDialogResponseHandler(GtkDialog* dialog, gint responseId
                 data->ctrl->pageBackgroundChangeController->changePdfPagesBackground(pdfFilename, attachToDocument);
             }
         } break;
-        case MissingPdfDialogOptions::remove:
+        case MissingPdfDialogOptions::REMOVE:
             data->ctrl->pageBackgroundChangeController->applyBackgroundToAllPages(PageType(PageTypeFormat::Plain));
             break;
         default:
