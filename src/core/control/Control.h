@@ -392,7 +392,7 @@ private:
     /**
      * Handle the response from the missing PDF dialog
      */
-    static void missingPdfDialogResponseHandler(GtkDialog* dialog, gint responseId, gpointer d);
+    void missingPdfDialogResponseHandler(const fs::path& proposedPdfFilepath, int responseId);
 
     /**
      * "Closes" the document, preparing the editor for a new document.
