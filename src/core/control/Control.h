@@ -390,6 +390,11 @@ private:
     void promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepath);
 
     /**
+     * Handle the response from the missing PDF dialog
+     */
+    void missingPdfDialogResponseHandler(const fs::path& proposedPdfFilepath, int responseId);
+
+    /**
      * "Closes" the document, preparing the editor for a new document.
      */
     void closeDocument();

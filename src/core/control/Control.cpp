@@ -1,8 +1,9 @@
 #include "Control.h"
 
-#include <algorithm>  // for max
-#include <cstdlib>    // for size_t
-#include <exception>  // for exce...
+#include <algorithm>   // for max
+#include <cstdlib>     // for size_t
+#include <exception>   // for exce...
+#include <functional>  // for bind
 #include <iterator>   // for end
 #include <locale>
 #include <memory>    // for make...
@@ -1455,6 +1456,8 @@ void Control::fileLoaded(int scrollToPage) {
     updateDeletePageButton();
 }
 
+enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
+
 void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepath) {
     const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
 
@@ -1496,37 +1499,36 @@ void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepat
         msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
     }
 
-    // create the dialog
-    GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-                                               "%s", msg.c_str());
-
-    enum dialogOptions { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
-
+    // show the dialog
+    std::vector<XojMsgBox::Button> buttons = {
+            {_("Select another PDF"), static_cast<int>(MissingPdfDialogOptions::SELECT_OTHER)},
+            {_("Remove PDF Background"), static_cast<int>(MissingPdfDialogOptions::REMOVE)},
+            {_("Cancel"), static_cast<int>(MissingPdfDialogOptions::CANCEL)}};
     if (proposePdfFile) {
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"), USE_PROPOSED);
+        buttons.insert(buttons.begin(),
+                       {_("Use proposed PDF"), static_cast<int>(MissingPdfDialogOptions::USE_PROPOSED)});
     }
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), SELECT_OTHER);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), REMOVE);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), CANCEL);
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    XojMsgBox::askQuestion(
+            this->getGtkWindow(), _("Missing PDF background file"), msg, buttons,
+            std::bind(&Control::missingPdfDialogResponseHandler, this, proposedPdfFilepath, std::placeholders::_1));
+}
 
-    switch (res) {
-        case USE_PROPOSED:
+void Control::missingPdfDialogResponseHandler(const fs::path& proposedPdfFilepath, int responseId) {
+    switch (static_cast<MissingPdfDialogOptions>(responseId)) {
+        case MissingPdfDialogOptions::USE_PROPOSED:
             if (!proposedPdfFilepath.empty()) {
                 this->pageBackgroundChangeController->changePdfPagesBackground(proposedPdfFilepath, false);
             }
             break;
-        case SELECT_OTHER: {
+        case MissingPdfDialogOptions::SELECT_OTHER: {
             bool attachToDocument = false;
-            XojOpenDlg dlg(getGtkWindow(), this->settings);
+            XojOpenDlg dlg(this->getGtkWindow(), this->settings);
             auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
             if (!pdfFilename.empty()) {
                 this->pageBackgroundChangeController->changePdfPagesBackground(pdfFilename, attachToDocument);
             }
         } break;
-        case REMOVE:
+        case MissingPdfDialogOptions::REMOVE:
             this->pageBackgroundChangeController->applyBackgroundToAllPages(PageType(PageTypeFormat::Plain));
             break;
         default:
