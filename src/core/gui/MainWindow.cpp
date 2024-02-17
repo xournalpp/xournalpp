@@ -493,9 +493,9 @@ auto MainWindow::windowMaximizedCallback(GObject* window, GParamSpec*, MainWindo
 }
 
 void MainWindow::toolbarSelected(const std::string& id) {
-    const auto& toolbars = *toolbar->getModel()->getToolbars();
-    auto it = std::find_if(toolbars.begin(), toolbars.end(), [&](const ToolbarData* d) { return d->getId() == id; });
-    toolbarSelected(it == toolbars.end() ? nullptr : *it);
+    const auto& toolbars = toolbar->getModel()->getToolbars();
+    auto it = std::find_if(toolbars.begin(), toolbars.end(), [&](const auto& d) { return d->getId() == id; });
+    toolbarSelected(it == toolbars.end() ? nullptr : it->get());
 }
 
 void MainWindow::toolbarSelected(ToolbarData* d) {
@@ -510,7 +510,7 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
     this->loadToolbar(d);
 }
 
-auto MainWindow::clearToolbar() -> ToolbarData* {
+auto MainWindow::clearToolbar() -> const ToolbarData* {
     if (this->selectedToolbar != nullptr) {
         for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
             ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i].get());
@@ -518,12 +518,7 @@ auto MainWindow::clearToolbar() -> ToolbarData* {
 
         this->toolbar->freeDynamicToolbarItems();
     }
-
-    ToolbarData* oldData = this->selectedToolbar;
-
-    this->selectedToolbar = nullptr;
-
-    return oldData;
+    return std::exchange(this->selectedToolbar, nullptr);
 }
 
 void MainWindow::loadToolbar(ToolbarData* d) {

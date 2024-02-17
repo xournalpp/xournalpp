@@ -65,7 +65,7 @@ public:
      * @param toolbarName toolbarName which should be read from the file
      * @param horizontal whether the toolbar is horizontal
      */
-    void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
+    void load(const ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
 
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);

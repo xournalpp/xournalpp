@@ -64,17 +64,16 @@ void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
     initToolItems();
 
     auto file = gladeSearchPath->findFile("", "toolbar.ini");
-    if (!tbModel->parse(file, true)) {
-
-        string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
-                           "No Toolbars will be available") %
-                        file.u8string());
+    if (!tbModel->parse(file, true, this->control->getSettings()->getColorPalette())) {
+        std::string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
+                                "No Toolbars will be available") %
+                             file.u8string());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
     }
 
     file = Util::getConfigFile(TOOLBAR_CONFIG);
     if (fs::exists(file)) {
-        if (!tbModel->parse(file, false)) {
+        if (!tbModel->parse(file, false, this->control->getSettings()->getColorPalette())) {
             string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
                                "Toolbars will not be available") %
                             file.u8string());
@@ -96,41 +95,15 @@ void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
     gtk_widget_hide(toolbar);
 }
 
-void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal) {
+void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal) {
     int count = 0;
 
     const Palette& palette = this->control->getSettings()->getColorPalette();
-    size_t colorIndex{};
 
-    for (ToolbarEntry* e: d->contents) {
-        if (e->getName() == toolbarName) {
-            for (ToolbarItem* dataItem: e->getItems()) {
-                string name = dataItem->getName();
-
-                // recognize previous name, V1.07 (Jan 2019) and earlier.
-                if (name == "TWO_PAGES") {
-                    name = "PAIRED_PAGES";
-                }
-
-                // recognize previous name, V1.08 (Feb 2019) and earlier.
-                if (name == "RECSTOP") {
-                    name = "AUDIO_RECORDING";
-                }
-
-                // recognize previous name, V1.0.19 (Dec 2020) and earlier
-                if (name == "HILIGHTER") {
-                    name = "HIGHLIGHTER";
-                }
-
-                // recognize previous name, V1.1.0+dev (Jan 2021) and earlier
-                if (name == "DRAW_CIRCLE") {
-                    name = "DRAW_ELLIPSE";
-                }
-
-                // recognize previous name, V1.1.0+dev (Nov 2022) and earlier
-                if (name == "PEN_FILL_OPACITY") {
-                    name = "FILL_OPACITY";
-                }
+    for (const ToolbarEntry& e: d->contents) {
+        if (e.getName() == toolbarName) {
+            for (const ToolbarItem& dataItem: e.getItems()) {
+                std::string name = dataItem.getName();
 
                 if (!this->control->getAudioController() &&
                     (name == "AUDIO_RECORDING" || name == "AUDIO_SEEK_BACKWARDS" || name == "AUDIO_PAUSE_PLAYBACK" ||
@@ -143,7 +116,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     gtk_widget_show(GTK_WIDGET(it));
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), TOOL_ITEM_SEPARATOR);
+                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem.getId(), TOOL_ITEM_SEPARATOR);
 
                     continue;
                 }
@@ -155,37 +128,19 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     gtk_widget_show(GTK_WIDGET(toolItem));
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
 
-                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem->getId(), TOOL_ITEM_SPACER);
+                    ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem.getId(), TOOL_ITEM_SPACER);
 
                     continue;
                 }
                 if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
-                    string arg = name.substr(6, name.length() - 7);
-                    /*
-                     * namedColor needs to be a pointer to enable attachMetadataColor to reference to the
-                     * non local scoped namedColor instance
-                     */
+                    std::string arg = name.substr(6, name.length() - 7);
 
                     size_t paletteIndex{};
-
-                    // check for old color format of toolbar.ini
-                    if (StringUtils::startsWith(arg, "0x")) {
-                        // use tmpColor only to get Index
-                        NamedColor tmpColor = palette.getColorAt(colorIndex);
-                        paletteIndex = tmpColor.getIndex();
-
-                        // set new COLOR Toolbar entry
-                        std::ostringstream newColor("");
-                        newColor << "COLOR(" << paletteIndex << ")";
-                        dataItem->setName(newColor.str());
-                        colorIndex++;
-                    } else {
-                        std::istringstream colorStream(arg);
-                        colorStream >> paletteIndex;
-                        if (!colorStream.eof() || colorStream.fail()) {
-                            g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", arg.c_str());
-                            continue;
-                        }
+                    std::istringstream colorStream(arg);
+                    colorStream >> paletteIndex;
+                    if (!colorStream.eof() || colorStream.fail()) {
+                        g_warning("Toolbar:COLOR(N) has wrong format: %s", arg.c_str());
+                        continue;
                     }
 
                     count++;
@@ -195,7 +150,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     auto it = item->createToolItem(horizontal);
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
 
-                    ToolitemDragDrop::attachMetadataColor(it.get(), dataItem->getId(), &namedColor, item.get());
+                    ToolitemDragDrop::attachMetadataColor(it.get(), dataItem.getId(), &namedColor, item.get());
 
                     continue;
                 }
@@ -207,7 +162,7 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                         auto it = item->createToolItem(horizontal);
                         gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
 
-                        ToolitemDragDrop::attachMetadata(it.get(), dataItem->getId(), item.get());
+                        ToolitemDragDrop::attachMetadata(it.get(), dataItem.getId(), item.get());
 
                         found = true;
                         break;
