@@ -77,12 +77,10 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
     g_signal_connect(deleteButton, "clicked", G_CALLBACK(buttonDeleteCallback), this);
     g_signal_connect(copyButton, "clicked", G_CALLBACK(buttonCopyCallback), this);
 
-    g_signal_connect_swapped(builder.get("btClose"), "clicked", G_CALLBACK(+[](ToolbarManageDialog* self) {
-                                 self->callback();
-                                 gtk_window_close(self->window.get());
-                             }),
-                             this);
+    g_signal_connect_swapped(builder.get("btClose"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
 }
+
+ToolbarManageDialog::~ToolbarManageDialog() { this->callback(); }
 
 void ToolbarManageDialog::buttonNewCallback(GtkButton* button, ToolbarManageDialog* dlg) {
     auto* data = new ToolbarData(false);
