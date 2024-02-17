@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.2+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-13 12:54+0000\n"
+"POT-Creation-Date: 2024-02-17 21:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,108 +23,112 @@ msgid ""
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:218
+#: ../src/core/control/Control.cpp:219
 msgid "Filesystem error: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:230
+#: ../src/core/control/Control.cpp:231
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:547
+#: ../src/core/control/Control.cpp:548
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:550
+#: ../src/core/control/Control.cpp:551
 msgid "Yes"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:550
+#: ../src/core/control/Control.cpp:551
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:729
+#: ../src/core/control/Control.cpp:730
 msgid ""
 "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:743
+#: ../src/core/control/Control.cpp:744
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1310
+#: ../src/core/control/Control.cpp:1311
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1324
+#: ../src/core/control/Control.cpp:1325
 msgid "file: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1348
+#: ../src/core/control/Control.cpp:1349
 msgid "Error opening file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1356
+#: ../src/core/control/Control.cpp:1357
 msgid ""
 "The file being loaded has a file format version newer than the one currently "
 "supported by this version of Xournal++, so it may not load properly. Open "
 "anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1483
+#: ../src/core/control/Control.cpp:1486
 msgid ""
 "The attached background file could not be found. It might have been moved, "
 "renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1489
 msgid ""
 "The background file \"{1}\" could not be found. It might have been moved, "
 "renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1496
+#: ../src/core/control/Control.cpp:1499
 msgid ""
 "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1506
-msgid "Use proposed PDF"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:1508
+#: ../src/core/control/Control.cpp:1504
 msgid "Select another PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1509
+#: ../src/core/control/Control.cpp:1505
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1510 ../src/core/control/Control.cpp:1925
+#: ../src/core/control/Control.cpp:1506 ../src/core/control/Control.cpp:1927
 #: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1603
+#: ../src/core/control/Control.cpp:1509
+msgid "Use proposed PDF"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1512
+msgid "Missing PDF background file"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1605
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1707
+#: ../src/core/control/Control.cpp:1709
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1707
+#: ../src/core/control/Control.cpp:1709
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
@@ -132,47 +136,47 @@ msgstr ""
 msgid "_Cancel"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1708
+#: ../src/core/control/Control.cpp:1710
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1713
+#: ../src/core/control/Control.cpp:1715
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:63
 msgid "Xournal++ files"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1760
+#: ../src/core/control/Control.cpp:1762
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1775
+#: ../src/core/control/Control.cpp:1777
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
 msgid "Select color"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1797
+#: ../src/core/control/Control.cpp:1799
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1916
+#: ../src/core/control/Control.cpp:1918
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1916
+#: ../src/core/control/Control.cpp:1918
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1917
+#: ../src/core/control/Control.cpp:1919
 msgid "Save As..."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1917 ../src/core/control/jobs/SaveJob.cpp:24
+#: ../src/core/control/Control.cpp:1919 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1922
+#: ../src/core/control/Control.cpp:1924
 msgid "Discard"
 msgstr ""
 
