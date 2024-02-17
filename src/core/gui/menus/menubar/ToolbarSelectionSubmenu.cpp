@@ -100,16 +100,16 @@ void ToolbarSelectionSubmenu::addToMenubar(MainWindow* win) {
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(parent), this->menuItem.get());
 }
 
-void ToolbarSelectionSubmenu::update(ToolMenuHandler* toolbarHandler, const ToolbarData* selectedToolbar) {
+void ToolbarSelectionSubmenu::update(ToolMenuHandler* toolbarHandler, const ToolbarData* tb) {
     const auto& toolbars = *toolbarHandler->getModel()->getToolbars();
     // The first half stockConfigurationsSection of the menu has already been generated: fast forward to the first
     // custom config
     auto it =
             std::find_if_not(toolbars.begin(), toolbars.end(), [](const ToolbarData* d) { return d->isPredefined(); });
-    this->customConfigurationsSection.reset(g_menu_new(), xoj::util::adopt);
+    g_menu_remove_all(this->customConfigurationsSection.get());
     for (; it != toolbars.end(); ++it) {
         g_menu_append_item(this->customConfigurationsSection.get(), createToolbarSelectionMenuItem(*it).get());
     }
     // Does not fire a "change-state" signal
-    g_simple_action_set_state(gAction.get(), g_variant_new_string(selectedToolbar->getId().c_str()));
+    g_simple_action_set_state(gAction.get(), g_variant_new_string(tb ? tb->getId().c_str() : ""));
 }
