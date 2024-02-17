@@ -530,22 +530,24 @@ auto Control::firePageSelected(const PageRef& page) -> size_t {
 void Control::firePageSelected(size_t page) { DocumentHandler::firePageSelected(page); }
 
 void Control::manageToolbars() {
-    xoj::popup::PopupWindowWrapper<ToolbarManageDialog> dlg(this->gladeSearchPath, this->win->getToolbarModel(),
-                                                            [win = this->win]() {
-                                                                win->updateToolbarMenu();
-                                                                auto filepath = Util::getConfigFile(TOOLBAR_CONFIG);
-                                                                win->getToolbarModel()->save(filepath);
-                                                            });
-    dlg.show(GTK_WINDOW(this->win->getWindow()));
+    xoj::popup::PopupWindowWrapper<ToolbarManageDialog> dlg(
+            this->gladeSearchPath, this->win->getToolbarModel(), [win = this->win]() {
+                if (const auto& tbs = win->getToolbarModel()->getToolbars();
+                    std::none_of(tbs.begin(), tbs.end(),
+                                 [tb = win->getSelectedToolbar()](const auto& t) { return t.get() == tb; })) {
+                    // The active toolbar has been deleted!
+                    xoj_assert(!tbs.empty());
+                    win->toolbarSelected(tbs.front().get());
+                    XojMsgBox::showErrorToUser(
+                            GTK_WINDOW(win->getWindow()),
+                            _("You deleted the active toolbar. Falling back to the default toolbar."));
+                }
 
-    if (auto tbs = this->win->getToolbarModel()->getToolbars();
-        std::find(tbs->begin(), tbs->end(), this->win->getSelectedToolbar()) == tbs->end()) {
-        // The active toolbar has been deleted!
-        xoj_assert(!tbs->empty());
-        this->win->toolbarSelected(tbs->front());
-        XojMsgBox::showErrorToUser(GTK_WINDOW(this->win->getWindow()),
-                                   _("You deleted the active toolbar. Falling back to the default toolbar."));
-    }
+                win->updateToolbarMenu();
+                auto filepath = Util::getConfigFile(TOOLBAR_CONFIG);
+                win->getToolbarModel()->save(filepath);
+            });
+    dlg.show(GTK_WINDOW(this->win->getWindow()));
 
     this->win->updateToolbarMenu();
     auto filepath = Util::getConfigFile(TOOLBAR_CONFIG);
