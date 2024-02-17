@@ -563,11 +563,10 @@ void Control::customizeToolbars() {
                                   this->win->getSelectedToolbar()->getName()),
                                std::string(), {{_("Yes"), YES}, {_("No"), NO}}, [ctrl = this](int response) {
                                    if (response == YES) {
-                                       auto* data = new ToolbarData(*ctrl->win->getSelectedToolbar());
+                                       auto data = std::make_unique<ToolbarData>(*ctrl->win->getSelectedToolbar());
                                        ToolbarModel* model = ctrl->win->getToolbarModel();
-                                       model->initCopyNameId(data);
-                                       model->add(data);
-                                       ctrl->win->toolbarSelected(data);
+                                       model->initCopyNameId(data.get());
+                                       ctrl->win->toolbarSelected(model->add(std::move(data)));
                                        ctrl->win->updateToolbarMenu();
 
                                        xoj_assert(!ctrl->win->getSelectedToolbar()->isPredefined());

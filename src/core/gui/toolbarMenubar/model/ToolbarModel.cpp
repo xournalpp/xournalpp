@@ -9,40 +9,34 @@
 #include "ToolbarData.h"  // for ToolbarData
 #include "filesystem.h"   // for path
 
-using std::string;
-
 ToolbarModel::ToolbarModel() = default;
+ToolbarModel::~ToolbarModel() = default;
 
-ToolbarModel::~ToolbarModel() {
-    for (ToolbarData* data: this->toolbars) { delete data; }
-    this->toolbars.clear();
-}
+auto ToolbarModel::getToolbars() const -> const std::vector<std::unique_ptr<ToolbarData>>& { return this->toolbars; }
 
-auto ToolbarModel::getToolbars() -> std::vector<ToolbarData*>* { return &this->toolbars; }
-
-void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefined) {
-    auto* data = new ToolbarData(predefined);
+void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefined, const Palette& colorPalette) {
+    auto data = std::make_unique<ToolbarData>(predefined);
 
     data->name = (predefined ? "predef_" : "custom_");
     data->id = group;
 
-    data->load(config, group);
+    data->load(config, group, colorPalette);
 
-    add(data);
+    add(std::move(data));
 }
 
 void ToolbarModel::remove(ToolbarData* data) {
-    for (auto it = this->toolbars.begin(); it != this->toolbars.end(); it++) {
-        if (*it == data) {
-            this->toolbars.erase(it);
-            break;
-        }
+    auto it = std::find_if(toolbars.begin(), toolbars.end(), [data](const auto& tb) { return tb.get() == data; });
+    if (it != this->toolbars.end()) {
+        this->toolbars.erase(it);
     }
 }
 
-void ToolbarModel::add(ToolbarData* data) { this->toolbars.push_back(data); }
+auto ToolbarModel::add(std::unique_ptr<ToolbarData> data) -> ToolbarData* {
+    return this->toolbars.emplace_back(std::move(data)).get();
+}
 
-auto ToolbarModel::parse(fs::path const& filepath, bool predefined) -> bool {
+auto ToolbarModel::parse(fs::path const& filepath, bool predefined, const Palette& colorPalette) -> bool {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
     if (!g_key_file_load_from_file(config, filepath.u8string().c_str(), G_KEY_FILE_NONE, nullptr)) {
@@ -53,7 +47,9 @@ auto ToolbarModel::parse(fs::path const& filepath, bool predefined) -> bool {
     gsize length = 0;
     gchar** groups = g_key_file_get_groups(config, &length);
 
-    for (gsize i = 0; i < length; i++) { parseGroup(config, groups[i], predefined); }
+    for (gsize i = 0; i < length; i++) {
+        parseGroup(config, groups[i], predefined, colorPalette);
+    }
 
     g_strfreev(groups);
     g_key_file_free(config);
@@ -61,41 +57,37 @@ auto ToolbarModel::parse(fs::path const& filepath, bool predefined) -> bool {
 }
 
 void ToolbarModel::initCopyNameId(ToolbarData* data) {
+    if (!existsId(data->getId())) {
+        return;
+    }
     for (int i = 0; i < 100; i++) {
-        string id = data->getId() + " Copy";
+        std::string id = data->getId() + " Copy";
 
-        if (i != 0) {
+        if (i > 0) {
             id += " ";
             id += std::to_string(i);
         }
 
         if (!existsId(id)) {
-            if (i != 0) {
-                string filename = data->getName();
-                filename += " ";
-                filename += _("Copy");
+            std::string filename = data->getName();
+            filename += " ";
+            filename += C_("as a noun: a copy of", "Copy");
+
+            if (i > 0) {
                 filename += " ";
                 filename += std::to_string(i);
-
-                data->setName(filename);
-            } else {
-                data->setName(data->getName() + " " + _("Copy"));
             }
+
+            data->setName(filename);
             data->setId(id);
-            break;
+            return;
         }
     }
 }
 
-auto ToolbarModel::existsId(const string& id) -> bool {
-    for (ToolbarData* data: this->toolbars) {
-        if (data->getId() == id) {
-            return true;
-        }
-    }
-    return false;
+auto ToolbarModel::existsId(const std::string& id) const -> bool {
+    return std::any_of(toolbars.begin(), toolbars.end(), [&id](const auto& d) { return d->getId() == id; });
 }
-
 
 const char* TOOLBAR_INI_HEADER =
         "# Xournal++ Toolbar configuration\n"
@@ -140,13 +132,13 @@ const char* TOOLBAR_INI_HEADER =
         " Item separation: SEPARATOR,SPACER\n"
         "\n";
 
-void ToolbarModel::save(fs::path const& filepath) {
+void ToolbarModel::save(fs::path const& filepath) const {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
 
     g_key_file_set_comment(config, nullptr, nullptr, TOOLBAR_INI_HEADER, nullptr);
 
-    for (ToolbarData* data: this->toolbars) {
+    for (const auto& data: this->toolbars) {
         if (!data->isPredefined()) {
             data->saveToKeyFile(config);
         }

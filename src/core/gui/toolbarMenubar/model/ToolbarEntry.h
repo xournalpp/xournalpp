@@ -16,7 +16,7 @@
 
 class ToolbarItem;
 
-typedef std::vector<ToolbarItem*> ToolbarItemVector;
+typedef std::vector<ToolbarItem> ToolbarItemVector;
 
 class ToolbarEntry {
 public:
@@ -29,9 +29,7 @@ public:
     ToolbarEntry& operator=(ToolbarEntry&& e);
 
 public:
-    void clearList();
-
-    std::string getName();
+    std::string getName() const;
     void setName(std::string name);
 
     /**

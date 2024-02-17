@@ -27,11 +27,11 @@ static xoj::util::GObjectSPtr<GtkListStore> createModel(ToolbarModel* tb) {
     gtk_list_store_set(model, &iter, COLUMN_STRING, _("Predefined"), COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER,
                        nullptr, COLUMN_EDITABLE, false, -1);
 
-    for (ToolbarData* data: *tb->getToolbars()) {
+    for (const auto& data: tb->getToolbars()) {
         if (data->isPredefined()) {
             gtk_list_store_append(model, &iter);
             gtk_list_store_set(model, &iter, COLUMN_STRING, data->getName().c_str(), COLUMN_BOLD, PANGO_WEIGHT_NORMAL,
-                               COLUMN_POINTER, data, COLUMN_EDITABLE, false, -1);
+                               COLUMN_POINTER, data.get(), COLUMN_EDITABLE, false, -1);
         }
     }
 
@@ -39,11 +39,11 @@ static xoj::util::GObjectSPtr<GtkListStore> createModel(ToolbarModel* tb) {
     gtk_list_store_set(model, &iter, COLUMN_STRING, _("Customized"), COLUMN_BOLD, PANGO_WEIGHT_BOLD, COLUMN_POINTER,
                        nullptr, COLUMN_EDITABLE, false, -1);
 
-    for (ToolbarData* data: *tb->getToolbars()) {
+    for (const auto& data: tb->getToolbars()) {
         if (!data->isPredefined()) {
             gtk_list_store_append(model, &iter);
             gtk_list_store_set(model, &iter, COLUMN_STRING, data->getName().c_str(), COLUMN_BOLD, PANGO_WEIGHT_NORMAL,
-                               COLUMN_POINTER, data, COLUMN_EDITABLE, true, -1);
+                               COLUMN_POINTER, data.get(), COLUMN_EDITABLE, true, -1);
         }
     }
     return xoj::util::GObjectSPtr<GtkListStore>(model, xoj::util::adopt);
@@ -83,11 +83,11 @@ ToolbarManageDialog::ToolbarManageDialog(GladeSearchpath* gladeSearchPath, Toolb
 ToolbarManageDialog::~ToolbarManageDialog() { this->callback(); }
 
 void ToolbarManageDialog::buttonNewCallback(GtkButton* button, ToolbarManageDialog* dlg) {
-    auto* data = new ToolbarData(false);
+    auto data = std::make_unique<ToolbarData>(false);
     data->setName(_("New"));
     data->setId("custom");
-    dlg->tbModel->initCopyNameId(data);
-    dlg->addToolbarData(data);
+    dlg->tbModel->initCopyNameId(data.get());
+    dlg->addToolbarData(std::move(data));
 }
 
 void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageDialog* dlg) {
@@ -96,7 +96,6 @@ void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageD
         return;
     }
 
-    dlg->tbModel->remove(selected);
     GtkTreeModel* model = GTK_TREE_MODEL(dlg->model.get());
     GtkTreeIter iter;
     if (gtk_tree_model_get_iter_first(model, &iter)) {
@@ -111,8 +110,8 @@ void ToolbarManageDialog::buttonDeleteCallback(GtkButton* button, ToolbarManageD
         } while (gtk_tree_model_iter_next(model, &iter));
     }
 
+    dlg->tbModel->remove(selected);
     dlg->updateSelectionData();
-    delete selected;
 }
 
 void ToolbarManageDialog::buttonCopyCallback(GtkButton* button, ToolbarManageDialog* dlg) {
@@ -121,13 +120,14 @@ void ToolbarManageDialog::buttonCopyCallback(GtkButton* button, ToolbarManageDia
         return;
     }
 
-    auto* data = new ToolbarData(*selected);
-    dlg->tbModel->initCopyNameId(data);
-    dlg->addToolbarData(data);
+    auto data = std::make_unique<ToolbarData>(*selected);
+    dlg->tbModel->initCopyNameId(data.get());
+    dlg->addToolbarData(std::move(data));
 }
 
-void ToolbarManageDialog::addToolbarData(ToolbarData* data) {
-    this->tbModel->add(data);
+void ToolbarManageDialog::addToolbarData(std::unique_ptr<ToolbarData> tbd) {
+    auto* data = this->tbModel->add(std::move(tbd));
+
     GtkTreeIter iter;
     gtk_list_store_append(this->model.get(), &iter);
     gtk_list_store_set(this->model.get(), &iter, COLUMN_STRING, data->getName().c_str(), COLUMN_BOLD,
