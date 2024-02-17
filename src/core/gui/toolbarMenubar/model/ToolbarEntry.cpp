@@ -1,10 +1,12 @@
 #include "ToolbarEntry.h"
 
+#include <algorithm>
 #include <utility>  // for move
 
-#include "gui/toolbarMenubar/model/ToolbarItem.h"  // for ToolbarItem
+#include <glib.h>
 
-using std::string;
+#include "gui/toolbarMenubar/model/ToolbarItem.h"  // for ToolbarItem
+#include "util/Assert.h"
 
 ToolbarEntry::ToolbarEntry() = default;
 
@@ -13,57 +15,41 @@ ToolbarEntry::ToolbarEntry(ToolbarEntry&& e) { *this = std::move(e); }
 
 ToolbarEntry& ToolbarEntry::operator=(const ToolbarEntry& e) {
     this->name = e.name;
-    std::vector<ToolbarItem*> entries;
-    for (ToolbarItem* item: e.entries) { entries.push_back(new ToolbarItem(*item)); }
-    clearList();
-    this->entries = std::move(entries);
+    this->entries = e.entries;
     return *this;
 }
 
 ToolbarEntry& ToolbarEntry::operator=(ToolbarEntry&& e) {
     this->name = std::move(e.name);
-    std::swap(this->entries, e.entries);
+    this->entries = std::move(e.entries);
     return *this;
 }
 
-ToolbarEntry::~ToolbarEntry() { clearList(); }
+ToolbarEntry::~ToolbarEntry() = default;
 
-void ToolbarEntry::clearList() {
-    for (ToolbarItem* item: entries) { delete item; }
-    entries.clear();
-}
+auto ToolbarEntry::getName() const -> std::string { return this->name; }
 
-auto ToolbarEntry::getName() -> string { return this->name; }
+void ToolbarEntry::setName(std::string name) { this->name = std::move(name); }
 
-void ToolbarEntry::setName(string name) { this->name = std::move(name); }
-
-auto ToolbarEntry::addItem(string item) -> int {
-    auto* it = new ToolbarItem(std::move(item));
-    entries.push_back(it);
-
-    return it->getId();
-}
+auto ToolbarEntry::addItem(std::string item) -> int { return entries.emplace_back(std::move(item)).getId(); }
 
 auto ToolbarEntry::removeItemById(int id) -> bool {
-    for (auto it = this->entries.begin(); it != this->entries.end(); it++) {
-        if ((*it)->getId() == id) {
-            delete *it;
-            this->entries.erase(it);
-            return true;
-        }
+    auto it = std::find_if(entries.begin(), entries.end(), [id](const auto& it) { return it.getId() == id; });
+    if (it != entries.end()) {
+        entries.erase(it);
+        return true;
     }
+    g_warning("ToolbarEntry::removeItemById: Tried to remove inexistant ID");
     return false;
 }
 
-auto ToolbarEntry::insertItem(string item, int position) -> int {
-    auto* it = new ToolbarItem(std::move(item));
+auto ToolbarEntry::insertItem(std::string item, int position) -> int {
+    xoj_assert(position >= 0);
     if (position >= static_cast<int>(entries.size())) {
-        entries.push_back(it);
-        return it->getId();
+        return entries.emplace_back(std::move(item)).getId();
     }
 
-    entries.insert(entries.begin() + position, it);
-    return it->getId();
+    return entries.emplace(std::next(entries.begin(), position), std::move(item))->getId();
 }
 
 auto ToolbarEntry::getItems() const -> const ToolbarItemVector& { return entries; }
