@@ -26,6 +26,7 @@ class GladeSearchpath;
 class ToolbarManageDialog {
 public:
     ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model, std::function<void()> callback);
+    ~ToolbarManageDialog();
 
 public:
     inline GtkWindow* getWindow() const { return window.get(); }
