@@ -69,16 +69,13 @@ auto EraseUndoAction::undo(Control* control) -> bool {
     for (auto const& entry: edited) {
         entry.elementOwn = entry.layer->removeElement(entry.element).e;
     }
-    doc->unlock();
-    for (auto const& entry: edited) {
-        this->page->fireElementChanged(entry.element);
-    }
-
-    doc->lock();
     for (auto const& entry: original) {
         entry.layer->insertElement(std::move(entry.elementOwn), entry.pos);
     }
     doc->unlock();
+    for (auto const& entry: edited) {
+        this->page->fireElementChanged(entry.element);
+    }
     for (auto const& entry: original) {
         this->page->fireElementChanged(entry.element);
     }
@@ -93,16 +90,13 @@ auto EraseUndoAction::redo(Control* control) -> bool {
     for (auto const& entry: original) {
         entry.elementOwn = entry.layer->removeElement(entry.element).e;
     }
-    doc->unlock();
-    for (auto const& entry: original) {
-        this->page->fireElementChanged(entry.element);
-    }
-
-    doc->lock();
     for (auto const& entry: edited) {
         entry.layer->insertElement(std::move(entry.elementOwn), entry.pos);
     }
     doc->unlock();
+    for (auto const& entry: original) {
+        this->page->fireElementChanged(entry.element);
+    }
     for (auto const& entry: edited) {
         this->page->fireElementChanged(entry.element);
     }

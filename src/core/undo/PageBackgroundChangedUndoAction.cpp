@@ -41,11 +41,9 @@ auto PageBackgroundChangedUndoAction::undo(Control* control) -> bool {
         return false;
     }
 
-    if (this->newW != this->origW || this->newH != this->origH) {
+    bool pageSizeChanged = this->newW != this->origW || this->newH != this->origH;
+    if (pageSizeChanged) {
         this->page->setSize(this->origW, this->origH);
-        doc->unlock();
-        control->firePageSizeChanged(pageNr);
-        doc->lock();
     }
 
     this->page->setBackgroundType(this->origType);
@@ -56,6 +54,9 @@ auto PageBackgroundChangedUndoAction::undo(Control* control) -> bool {
     }
 
     doc->unlock();
+    if (pageSizeChanged) {
+        control->firePageSizeChanged(pageNr);
+    }
     control->firePageChanged(pageNr);
 
     return true;
@@ -72,11 +73,9 @@ auto PageBackgroundChangedUndoAction::redo(Control* control) -> bool {
         return false;
     }
 
-    if (this->newW != this->origW || this->newH != this->origH) {
+    bool pageSizeChanged = this->newW != this->origW || this->newH != this->origH;
+    if (pageSizeChanged) {
         this->page->setSize(this->newW, this->newH);
-        doc->unlock();
-        control->firePageSizeChanged(pageNr);
-        doc->lock();
     }
 
     this->page->setBackgroundType(this->newType);
@@ -87,6 +86,9 @@ auto PageBackgroundChangedUndoAction::redo(Control* control) -> bool {
     }
 
     doc->unlock();
+    if (pageSizeChanged) {
+        control->firePageSizeChanged(pageNr);
+    }
     control->firePageChanged(pageNr);
 
     return true;
