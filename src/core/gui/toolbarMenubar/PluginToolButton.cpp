@@ -11,7 +11,8 @@
 #include "util/gtk4_helper.h"
 
 
-PluginToolButton::PluginToolButton(ToolbarButtonEntry* t): AbstractToolItem(std::move(t->toolbarId)), t(t) {}
+PluginToolButton::PluginToolButton(ToolbarButtonEntry* t):
+        AbstractToolItem(std::move(t->toolbarId), Category::PLUGINS), t(t) {}
 
 PluginToolButton::~PluginToolButton() = default;
 

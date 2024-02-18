@@ -293,7 +293,9 @@ private:
 
 
 ToolPageLayer::ToolPageLayer(std::string id, LayerController* lc, IconNameHelper iconNameHelper):
-        AbstractToolItem(std::move(id)), lc(lc), iconName(iconNameHelper.iconName("combo-layer")) {}
+        AbstractToolItem(std::move(id), Category::NAVIGATION),
+        lc(lc),
+        iconName(iconNameHelper.iconName("combo-layer")) {}
 
 ToolPageLayer::~ToolPageLayer() = default;
 

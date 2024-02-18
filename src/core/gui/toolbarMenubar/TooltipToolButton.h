@@ -25,7 +25,7 @@
 /// ToolButton with dynamic tooltip description (overrides the GtkWidget::query-tooltip signal handler)
 class TooltipToolButton: public ToolButton {
 public:
-    TooltipToolButton(std::string id, Action action, std::string iconName, std::string description,
+    TooltipToolButton(std::string id, Category cat, Action action, std::string iconName, std::string description,
                       std::function<std::string()> fetchTooltip);
     ~TooltipToolButton() override = default;
 

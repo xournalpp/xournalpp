@@ -21,8 +21,8 @@
 
 #include "util/raii/GtkWindowUPtr.h"
 
-struct Palette;
 class AbstractToolItem;
+struct Palette;
 class MainWindow;
 class ToolbarDragDropHandler;
 class GladeSearchpath;
@@ -45,7 +45,7 @@ private:
     std::vector<ToolItemDragData> buildToolDataVector(const std::vector<std::unique_ptr<AbstractToolItem>>& tools);
     std::vector<ColorToolItemDragData> buildColorDataVector(const Palette& palette);
 
-    void rebuildIconview();
+    // void rebuildIconview();
 
 
 private:
@@ -71,7 +71,7 @@ private:
     static void toolitemDragDataGetSeparator(GtkWidget* widget, GdkDragContext* context,
                                              GtkSelectionData* selection_data, guint info, guint time, void* unused);
 
-    void freeIconview();
+    // void freeIconview();
 
 private:
     /**
@@ -87,6 +87,5 @@ private:
     static std::array<SeparatorData, 2> separators;
 
     xoj::util::GtkWindowUPtr window;
-    GtkGrid* toolTable;
-    GtkGrid* colorTable;
+    GtkNotebook* notebook;
 };

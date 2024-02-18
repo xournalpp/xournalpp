@@ -12,15 +12,17 @@
 #include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 
 
-ToolButton::ToolButton(std::string id, Action action, std::string iconName, std::string description, bool toggle):
-        AbstractToolItem(std::move(id)),
+ToolButton::ToolButton(std::string id, Category cat, Action action, std::string iconName, std::string description,
+                       bool toggle):
+        AbstractToolItem(std::move(id), cat),
         iconName(std::move(iconName)),
         description(std::move(description)),
         action(action),
         toggle(toggle) {}
 
-ToolButton::ToolButton(std::string id, Action action, GVariant* target, std::string iconName, std::string description):
-        AbstractToolItem(std::move(id)),
+ToolButton::ToolButton(std::string id, Category cat, Action action, GVariant* target, std::string iconName,
+                       std::string description):
+        AbstractToolItem(std::move(id), cat),
         iconName(std::move(iconName)),
         description(std::move(description)),
         action(action),

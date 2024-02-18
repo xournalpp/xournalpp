@@ -11,7 +11,7 @@
 constexpr int ICON_SIZE = 22;
 
 ColorSelectorToolItem::ColorSelectorToolItem(ActionDatabase& db):
-        AbstractToolItem("COLOR_SELECT"), gAction(db.getAction(Action::TOOL_COLOR)) {}
+        AbstractToolItem("COLOR_SELECT", Category::COLORS), gAction(db.getAction(Action::TOOL_COLOR)) {}
 
 auto ColorSelectorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
     GtkWidget* btn = gtk_button_new();

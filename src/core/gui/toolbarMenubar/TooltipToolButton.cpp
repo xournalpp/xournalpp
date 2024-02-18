@@ -8,9 +8,9 @@
 #include "util/glib_casts.h"
 #include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 
-TooltipToolButton::TooltipToolButton(std::string id, Action action, std::string iconName, std::string description,
-                                     std::function<std::string()> fetchTooltip):
-        ToolButton(std::move(id), action, std::move(iconName), std::move(description), false),
+TooltipToolButton::TooltipToolButton(std::string id, Category cat, Action action, std::string iconName,
+                                     std::string description, std::function<std::string()> fetchTooltip):
+        ToolButton(std::move(id), cat, action, std::move(iconName), std::move(description), false),
         fetchTooltip(std::move(fetchTooltip)) {}
 
 auto TooltipToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {

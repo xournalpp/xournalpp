@@ -52,7 +52,7 @@ DrawingTypeComboToolButton::Entry::Entry(std::string name, std::string icon, con
         fullActionName(std::string("win.") + g_action_get_name(G_ACTION(gAction.get()))) {}
 
 DrawingTypeComboToolButton::DrawingTypeComboToolButton(std::string id, IconNameHelper& icons, const ActionDatabase& db):
-        AbstractToolItem(std::move(id)),
+        AbstractToolItem(std::move(id), Category::TOOLS),
         entries(makeEntries(icons, db)),
         iconName(icons.iconName("combo-drawing-type")),
         description(_("Drawing Type Combo")) {}

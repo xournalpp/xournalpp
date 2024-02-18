@@ -22,7 +22,7 @@ constexpr auto SLIDER_RANGE =
         AbstractSliderItem::SliderRange{DEFAULT_ZOOM_MIN, DEFAULT_ZOOM_MAX, FINE_STEP_COUNT, COARSE_STEP_COUNT};
 
 ToolZoomSlider::ToolZoomSlider(std::string id, ZoomControl* zoom, IconNameHelper iconNameHelper, ActionDatabase& db):
-        AbstractSliderItem{std::move(id), SLIDER_RANGE, db.getAction(Action::ZOOM)},
+        AbstractSliderItem{std::move(id), Category::NAVIGATION, SLIDER_RANGE, db.getAction(Action::ZOOM)},
         iconName(iconNameHelper.iconName("zoom-slider")),
         zoomCtrl(zoom) {}
 

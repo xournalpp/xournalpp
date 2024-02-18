@@ -17,7 +17,7 @@
 
 
 FontButton::FontButton(std::string id, ActionDatabase& db):
-        AbstractToolItem(std::move(id)), gAction(db.getAction(Action::FONT)) {}
+        AbstractToolItem(std::move(id), Category::TOOLS), gAction(db.getAction(Action::FONT)) {}
 
 static GtkWidget* makeChild(const char* desc) {
     XojFont font(desc);
