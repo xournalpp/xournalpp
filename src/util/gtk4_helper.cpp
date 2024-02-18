@@ -156,3 +156,8 @@ gboolean gtk_file_chooser_add_shortcut_folder(GtkFileChooser* chooser, GFile* fi
 gboolean gtk_file_chooser_set_current_folder(GtkFileChooser* chooser, GFile* file, GError** error) {
     return gtk_file_chooser_set_current_folder_file(chooser, file, error);
 }
+
+/**** GtkListBox ****/
+void gtk_list_box_append(GtkListBox* box, GtkWidget* widget) { gtk_container_add(GTK_CONTAINER(box), widget); }
+void gtk_list_box_row_set_child(GtkListBoxRow* row, GtkWidget* w) { set_child(GTK_CONTAINER(row), w); }
+GtkWidget* gtk_list_box_row_get_child(GtkListBoxRow* row) { return gtk_bin_get_child(GTK_BIN(row)); }

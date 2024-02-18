@@ -20,7 +20,7 @@
 #include "filesystem.h"
 
 class ToolbarData;
-class Palette;
+struct Palette;
 
 class ToolbarModel {
 public:

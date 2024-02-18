@@ -41,8 +41,8 @@ public:
      * @param description Description used in the toolbar customization dialog to explain this combo button.
      * @param entries Entries of the combo menu.
      */
-    ComboToolButton(std::string id, std::string iconName, std::string description, std::vector<Entry> entries,
-                    ActionRef gAction);
+    ComboToolButton(std::string id, Category cat, std::string iconName, std::string description,
+                    std::vector<Entry> entries, ActionRef gAction);
 
     ~ComboToolButton() override = default;
 

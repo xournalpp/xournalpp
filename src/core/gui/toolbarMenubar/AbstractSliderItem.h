@@ -38,7 +38,7 @@ public:
      * @param range The minimum/maximum/step in internal units. {@see #scaleFunc}.
      * @param gAction A GAction whose (double) state is synced with the slider's value
      */
-    AbstractSliderItem(std::string id, SliderRange range, ActionRef gAction);
+    AbstractSliderItem(std::string id, Category cat, SliderRange range, ActionRef gAction);
     ~AbstractSliderItem() override = default;
 
 protected:

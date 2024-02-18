@@ -22,7 +22,21 @@
 
 class AbstractToolItem {
 public:
-    AbstractToolItem(std::string id);
+    // If you add a category, don't forget to give it a label in ToolbarCustomizeDialog.cpp.
+    // Keep the enum contiguous
+    enum class Category : unsigned char {
+        FILES,
+        TOOLS,
+        COLORS,
+        NAVIGATION,
+        MISC,
+        SELECTION,
+        AUDIO,
+        SEPARATORS,
+        PLUGINS,
+        ENUMERATOR_COUNT  // Keep last
+    };
+    AbstractToolItem(std::string id, Category cat);
     virtual ~AbstractToolItem();
 
     AbstractToolItem(AbstractToolItem const&) = delete;
@@ -36,6 +50,7 @@ public:
     xoj::util::WidgetSPtr createToolItem(bool horizontal);
 
     const std::string& getId() const;
+    Category getCategory() const;
     virtual std::string getToolDisplayName() const = 0;
 
     /**
@@ -45,5 +60,5 @@ public:
 
 protected:
     std::string id;
-    std::vector<xoj::util::WidgetSPtr> instances;  // useful?
+    const Category category;
 };

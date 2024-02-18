@@ -92,7 +92,7 @@ private:
 };
 
 ToolPageSpinner::ToolPageSpinner(std::string id, IconNameHelper iconNameHelper, SpinPageListener* listener):
-        AbstractToolItem(std::move(id)), iconNameHelper(iconNameHelper), listener(listener) {}
+        AbstractToolItem(std::move(id), Category::NAVIGATION), iconNameHelper(iconNameHelper), listener(listener) {}
 
 ToolPageSpinner::~ToolPageSpinner() {
     for (auto* i: instances) {

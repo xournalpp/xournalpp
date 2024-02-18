@@ -8,7 +8,7 @@
 #include "util/gtk4_helper.h"                   // for gtk_button_set_child
 
 ColorToolItem::ColorToolItem(NamedColor namedColor):
-        AbstractToolItem(std::string("COLOR(") + std::to_string(namedColor.getIndex()) + ")"),
+        AbstractToolItem(std::string("COLOR(") + std::to_string(namedColor.getIndex()) + ")", Category::COLORS),
         namedColor(std::move(namedColor)),
         target(xoj::util::makeGVariantSPtr(namedColor.getColor())) {}
 

@@ -25,5 +25,5 @@ static std::vector<ComboToolButton::Entry> makeEntries(IconNameHelper& icons, bo
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(std::string id, IconNameHelper& icons, const ActionDatabase& db,
                                                bool hideAudio):
-        ComboToolButton(std::move(id), icons.iconName("combo-selection"), _("Selection dropdown menu"),
+        ComboToolButton(std::move(id), Category::TOOLS, icons.iconName("combo-selection"), _("Selection dropdown menu"),
                         makeEntries(icons, hideAudio), db.getAction(Action::SELECT_TOOL)) {}
