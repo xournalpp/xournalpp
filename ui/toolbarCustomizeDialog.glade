@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk+" version="3.16"/>
+  <requires lib="gtk+" version="3.24"/>
   <object class="GtkImage" id="iconClose">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -36,196 +36,30 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="scrolledwindow1">
-            <property name="name">scrolledwindow1</property>
+          <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="shadow-type">in</property>
+            <property name="can-focus">False</property>
+            <property name="margin-top">8</property>
+            <property name="tab-pos">left</property>
+            <property name="scrollable">True</property>
+            <property name="enable-popup">True</property>
             <child>
-              <object class="GtkViewport" id="viewport1">
-                <property name="name">viewport1</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <child>
-                  <object class="GtkBox" id="vbox2">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="margin-start">4</property>
-                    <property name="margin-end">4</property>
-                    <property name="margin-top">4</property>
-                    <property name="margin-bottom">4</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkLabel" id="label2">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Default Tools&lt;/b&gt;</property>
-                        <property name="use-markup">True</property>
-                        <property name="xalign">0</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <!-- n-columns=3 n-rows=3 -->
-                      <object class="GtkGrid" id="tbDefaultTools">
-                        <property name="name">tbDefaultTools</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="row-spacing">5</property>
-                        <property name="column-spacing">5</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label3">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Color&lt;/b&gt;</property>
-                        <property name="use-markup">True</property>
-                        <property name="xalign">0</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <!-- n-columns=3 n-rows=3 -->
-                      <object class="GtkGrid" id="tbColor">
-                        <property name="name">tbColor</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="row-spacing">5</property>
-                        <property name="column-spacing">5</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label4">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Separators&lt;/b&gt;</property>
-                        <property name="use-markup">True</property>
-                        <property name="xalign">0</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <!-- n-columns=3 n-rows=3 -->
-                      <object class="GtkGrid" id="tbSeparator">
-                        <property name="name">tbSeparator</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="row-spacing">5</property>
-                        <property name="column-spacing">5</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">5</property>
-                      </packing>
-                    </child>
-                  </object>
-                </child>
-              </object>
+              <placeholder/>
+            </child>
+            <child type="tab">
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child type="tab">
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child type="tab">
+              <placeholder/>
             </child>
           </object>
           <packing>

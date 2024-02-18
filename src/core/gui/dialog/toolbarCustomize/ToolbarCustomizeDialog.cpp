@@ -20,8 +20,9 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"          // for Palette
 #include "util/Assert.h"                                    // for xoj_assert
 #include "util/Color.h"                                     // for Color
-#include "util/GListView.h"                                 // for GListView
-#include "util/NamedColor.h"                                // for NamedColor
+#include "util/EnumIndexedArray.h"
+#include "util/GListView.h"   // for GListView
+#include "util/NamedColor.h"  // for NamedColor
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _
 #include "util/raii/GObjectSPtr.h"
@@ -52,14 +53,13 @@ struct ToolbarCustomizeDialog::ColorToolItemDragData {
 // Separator and spacer
 struct ToolbarCustomizeDialog::SeparatorData {
     ToolItemType type;
-    int pos;
     SeparatorType separator;
     const char* label;
 };
 
 std::array<ToolbarCustomizeDialog::SeparatorData, 2> ToolbarCustomizeDialog::separators = {
-        ToolbarCustomizeDialog::SeparatorData{TOOL_ITEM_SEPARATOR, 0, SeparatorType::SEPARATOR, _("Separator")},
-        ToolbarCustomizeDialog::SeparatorData{TOOL_ITEM_SPACER, 1, SeparatorType::SPACER, _("Spacer")}};
+        ToolbarCustomizeDialog::SeparatorData{TOOL_ITEM_SEPARATOR, SeparatorType::SEPARATOR, _("Separator")},
+        ToolbarCustomizeDialog::SeparatorData{TOOL_ITEM_SPACER, SeparatorType::SPACER, _("Spacer")}};
 
 
 constexpr auto UI_FILE = "toolbarCustomizeDialog.glade";
@@ -71,26 +71,47 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
         colorItemData(buildColorDataVector(handler->getControl()->getSettings()->getColorPalette())) {
     Builder builder(gladeSearchPath, UI_FILE);
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
-    toolTable = GTK_GRID(builder.get("tbDefaultTools"));
-    colorTable = GTK_GRID(builder.get("tbColor"));
+    notebook = GTK_NOTEBOOK(builder.get("notebook"));
 
-    rebuildIconview();
+    using Cat = AbstractToolItem::Category;
+    EnumIndexedArray<std::string, Cat> labels;
+    labels[Cat::AUDIO] = C_("Item category in toolbar customization dialog", "Audio");
+    labels[Cat::COLORS] = C_("Item category in toolbar customization dialog", "Colors");
+    labels[Cat::FILES] = C_("Item category in toolbar customization dialog", "Files");
+    labels[Cat::MISC] = C_("Item category in toolbar customization dialog", "Miscellaneous");
+    labels[Cat::NAVIGATION] = C_("Item category in toolbar customization dialog", "Navigation");
+    labels[Cat::SELECTION] = C_("Item category in toolbar customization dialog", "Selection");
+    labels[Cat::TOOLS] = C_("Item category in toolbar customization dialog", "Tools");
+    labels[Cat::SEPARATORS] = C_("Item category in toolbar customization dialog", "Separators");
+    labels[Cat::PLUGINS] = C_("Item category in toolbar customization dialog", "Plugins");
+    EnumIndexedArray<GtkWidget*, Cat> tabs;
 
-    int i = 0;
+    for (std::underlying_type_t<Cat> n = 0; n < xoj::to_underlying(Cat::ENUMERATOR_COUNT); n++) {
+        Cat c = static_cast<Cat>(n);
+        tabs[c] = gtk_list_box_new();
+        GtkWidget* w = gtk_scrolled_window_new();
+        gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(w), tabs[c]);
+        gtk_notebook_append_page(notebook, w, gtk_label_new(labels[c].c_str()));
+    }
+
+    auto addEntry = [&tabs](GtkWidget* w, Cat c) {
+        GtkWidget* row = gtk_list_box_row_new();
+        gtk_list_box_row_set_child(GTK_LIST_BOX_ROW(row), w);
+        gtk_list_box_row_set_selectable(GTK_LIST_BOX_ROW(row), false);
+        gtk_list_box_append(GTK_LIST_BOX(tabs[c]), row);
+    };
+
+    for (auto& data: itemData) {
+        addEntry(data.ebox.get(), data.item->getCategory());
+    }
+
     for (auto& data: colorItemData) {
-        // In the dialog 5 colors are shown per row
-        const int x = i % 5;
-        const int y = i / 5;
-
-        gtk_grid_attach(colorTable, data.ebox.get(), x, y, 1, 1);
-        i++;
+        addEntry(data.ebox.get(), Cat::COLORS);
     }
 
     // init separator and spacer
-    GtkWidget* tbSeparators = builder.get("tbSeparator");
-
     for (SeparatorData& data: separators) {
-        GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2));
+        GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2));
         gtk_box_append(box, ToolbarSeparatorImage::newImage(data.separator));
         gtk_box_append(box, gtk_label_new(data.label));
 
@@ -105,10 +126,11 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
         g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemDragBeginSeparator), &data);
         g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemDragEndSeparator), &data);
         g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGetSeparator), &data);
-        gtk_grid_attach(GTK_GRID(tbSeparators), ebox, data.pos, 0, 1, 1);
+
+        addEntry(ebox, Cat::SEPARATORS);
     }
 
-    GtkWidget* target = builder.get("viewport1");
+    GtkWidget* target = GTK_WIDGET(notebook);  // builder.get("viewport1");
     // prepare drag & drop
     gtk_drag_dest_set(target, GTK_DEST_DEFAULT_ALL, nullptr, 0, GDK_ACTION_MOVE);
     ToolbarDragDropHelper::dragDestAddToolbar(target);
@@ -153,7 +175,6 @@ void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget* widget, GdkDragContext
     if (data->icon) {
         ToolbarDragDropHelper::gdk_context_set_icon_from_image(context, data->icon);
     }
-    gtk_widget_hide(data->ebox.get());
 }
 
 /**
@@ -161,7 +182,6 @@ void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget* widget, GdkDragContext
  */
 void ToolbarCustomizeDialog::toolitemDragEnd(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data) {
     ToolItemDragCurrentData::clearData();
-    gtk_widget_show(data->ebox.get());
 }
 
 void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context,
@@ -174,8 +194,6 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
 
     gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
                            reinterpret_cast<const guchar*>(it.get()), sizeof(ToolItemDragDropData));
-
-    data->dlg->rebuildIconview();
 }
 
 /**
@@ -228,17 +246,6 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget* widget, GdkDragContext*
 }
 
 /**
- * clear the icon list
- */
-void ToolbarCustomizeDialog::freeIconview() {
-    GList* children = gtk_container_get_children(GTK_CONTAINER(toolTable));
-    for (auto& w: GListView<GtkWidget>(children)) {
-        gtk_container_remove(GTK_CONTAINER(toolTable), &w);
-    }
-    g_list_free(children);
-}
-
-/**
  * builds up the icon list
  */
 auto ToolbarCustomizeDialog::buildToolDataVector(const std::vector<std::unique_ptr<AbstractToolItem>>& tools)
@@ -251,7 +258,7 @@ auto ToolbarCustomizeDialog::buildToolDataVector(const std::vector<std::unique_p
         GtkWidget* icon = item->getNewToolIcon(); /* floating */
         xoj_assert(icon);
 
-        GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 3));
+        GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2));
         gtk_box_append(box, icon);
         gtk_box_append(box, gtk_label_new(name.c_str()));
 
@@ -276,18 +283,6 @@ auto ToolbarCustomizeDialog::buildToolDataVector(const std::vector<std::unique_p
     return database;
 }
 
-void ToolbarCustomizeDialog::rebuildIconview() {
-    freeIconview();
-    int i = 0;
-    for (auto& data: itemData) {
-        const int x = i % 3;
-        const int y = i / 3;
-        gtk_grid_attach(toolTable, data.ebox.get(), x, y, 1, 1);
-
-        i++;
-    }
-}
-
 auto ToolbarCustomizeDialog::buildColorDataVector(const Palette& palette) -> std::vector<ColorToolItemDragData> {
     // By reserving, we ensure no reallocation is done, so the pointer `&data` used below is not invalidated
     std::vector<ColorToolItemDragData> database;
@@ -296,7 +291,7 @@ auto ToolbarCustomizeDialog::buildColorDataVector(const Palette& palette) -> std
         // namedColor needs to be a pointer to pass it into a ColorToolItemDragData
         const NamedColor* namedColor = &(palette.getColorAt(i));
 
-        GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 3));
+        GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2));
         gtk_box_append(box, ColorIcon::newGtkImage(namedColor->getColor(), 16, true));
         gtk_box_append(box, gtk_label_new(namedColor->getName().c_str()));
 

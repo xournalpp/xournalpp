@@ -17,7 +17,7 @@
 #include <glib.h>  // for GKeyFile
 
 class ToolbarEntry;
-class Palette;
+struct Palette;
 
 class ToolbarData {
 public:
