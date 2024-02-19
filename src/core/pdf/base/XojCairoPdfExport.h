@@ -42,19 +42,17 @@ public:
     void setExportBackground(ExportBackgroundType exportBackground) override;
 
 private:
-    bool startPdf(const fs::path& file);
+    bool startPdf(const fs::path& file, bool exportOutline);
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
     /**
      * Populate the outline of the generated PDF using the outline of the
      * background PDF.
      *
      * This requires features available only in cairo 1.16 or newer.
-     *
-     * @param tocModel The Document's content model. Does nothing if set to null.
      */
-    void populatePdfOutline(GtkTreeModel* tocModel);
+    void populatePdfOutline();
 #endif
-    void endPdf();
+    bool endPdf();
     void exportPage(size_t page);
     /**
      * Export as a PDF document where each additional layer creates a
