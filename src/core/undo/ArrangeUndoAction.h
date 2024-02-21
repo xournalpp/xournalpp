@@ -37,7 +37,7 @@ public:
     std::string getText() override;
 
 private:
-    void applyRearrange();
+    void applyRearrange(Control* control);
 
 private:
     Layer* layer;

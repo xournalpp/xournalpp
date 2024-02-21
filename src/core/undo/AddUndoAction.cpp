@@ -4,16 +4,13 @@
 
 #include <glib.h>  // for g_warning
 
+#include "control/Control.h"
+#include "model/Document.h"
 #include "model/Element.h"           // for Element, ELEMENT_IMAGE, ELEMENT_...
 #include "model/Layer.h"             // for Layer
-#include "model/PageRef.h"           // for PageRef
 #include "model/XojPage.h"           // for XojPage
-#include "undo/PageLayerPosEntry.h"  // for PageLayerPosEntry, operator<
 #include "undo/UndoAction.h"         // for UndoAction
 #include "util/i18n.h"               // for _
-
-class Control;
-
 
 AddUndoAction::AddUndoAction(const PageRef& page, bool eraser): UndoAction("AddUndoAction") {
     this->page = page;
@@ -22,7 +19,7 @@ AddUndoAction::AddUndoAction(const PageRef& page, bool eraser): UndoAction("AddU
 
 void AddUndoAction::addElement(Layer* layer, Element* e, Element::Index pos) { elements.emplace(layer, e, pos); }
 
-auto AddUndoAction::redo(Control*) -> bool {
+auto AddUndoAction::redo(Control* control) -> bool {
     if (elements.empty()) {
         g_warning("Could not undo AddUndoAction, there is nothing to undo");
 
@@ -30,8 +27,13 @@ auto AddUndoAction::redo(Control*) -> bool {
         return false;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     for (const auto& elem: elements) {
         elem.layer->insertElement(std::move(elem.elementOwn), elem.pos);
+    }
+    doc->unlock();
+    for (const auto& elem: elements) {
         this->page->fireElementChanged(elem.element);
     }
 
@@ -39,7 +41,7 @@ auto AddUndoAction::redo(Control*) -> bool {
     return true;
 }
 
-auto AddUndoAction::undo(Control*) -> bool {
+auto AddUndoAction::undo(Control* control) -> bool {
     if (elements.empty()) {
         g_warning("Could not redo AddUndoAction, there is nothing to redo");
 
@@ -47,11 +49,15 @@ auto AddUndoAction::undo(Control*) -> bool {
         return false;
     }
 
+    Document* doc = control->getDocument();
+    doc->lock();
     for (const auto& elem: elements) {
         elem.elementOwn = elem.layer->removeElement(elem.element).e;
+    }
+    doc->unlock();
+    for (const auto& elem: elements) {
         this->page->fireElementChanged(elem.element);
     }
-
     this->undone = false;
 
     return true;

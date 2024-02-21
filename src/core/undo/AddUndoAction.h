@@ -28,8 +28,8 @@ public:
     AddUndoAction(const PageRef& page, bool eraser);
 
 public:
-    bool undo(Control*) override;
-    bool redo(Control*) override;
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
 
     void addElement(Layer* layer, Element* e, Element::Index pos);
 

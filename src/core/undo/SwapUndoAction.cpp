@@ -37,7 +37,7 @@ auto SwapUndoAction::redo(Control* control) -> bool {
 void SwapUndoAction::swap(Control* control) {
     Document* doc = control->getDocument();
 
-    doc->unlock();
+    doc->lock();
 
     size_t insertPos = this->pageNr;
     size_t deletePos = this->pageNr + 1;
@@ -48,14 +48,13 @@ void SwapUndoAction::swap(Control* control) {
 
     doc->deletePage(deletePos);
     doc->insertPage(this->swappedPage, insertPos);
+    doc->unlock();
 
     control->firePageDeleted(deletePos);
     control->firePageInserted(insertPos);
     control->firePageSelected(insertPos);
 
     control->getScrollHandler()->scrollToPage(insertPos);
-
-    doc->lock();
 }
 
 auto SwapUndoAction::getPages() -> std::vector<PageRef> {

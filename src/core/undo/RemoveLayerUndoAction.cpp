@@ -27,9 +27,11 @@ RemoveLayerUndoAction::~RemoveLayerUndoAction() {
 auto RemoveLayerUndoAction::getText() -> std::string { return _("Delete layer"); }
 
 auto RemoveLayerUndoAction::undo(Control* control) -> bool {
-    layerController->insertLayer(this->page, this->layer, this->layerPos);
     Document* doc = control->getDocument();
+    doc->lock();
+    layerController->insertLayer(this->page, this->layer, this->layerPos);
     auto id = doc->indexOf(this->page);
+    doc->unlock();
     control->getWindow()->getXournal()->layerChanged(id);
     this->undone = true;
 
@@ -38,8 +40,10 @@ auto RemoveLayerUndoAction::undo(Control* control) -> bool {
 
 auto RemoveLayerUndoAction::redo(Control* control) -> bool {
     Document* doc = control->getDocument();
+    doc->lock();
     layerController->removeLayer(page, layer);
     auto id = doc->indexOf(this->page);
+    doc->unlock();
     control->getWindow()->getXournal()->layerChanged(id);
 
     this->undone = false;
