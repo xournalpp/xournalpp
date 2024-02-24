@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.2+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-21 23:17+0000\n"
+"POT-Creation-Date: 2024-02-24 17:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,7 +103,7 @@ msgstr ""
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1506 ../src/core/control/Control.cpp:1927
+#: ../src/core/control/Control.cpp:1506 ../src/core/control/Control.cpp:1923
 #: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
@@ -129,7 +129,7 @@ msgid "Save File"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:1709
-#: ../src/core/control/jobs/BaseExportJob.cpp:24
+#: ../src/core/control/jobs/BaseExportJob.cpp:55
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
@@ -141,42 +141,42 @@ msgstr ""
 msgid "_Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1715
+#: ../src/core/control/Control.cpp:1713
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:63
 msgid "Xournal++ files"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1762
+#: ../src/core/control/Control.cpp:1758
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1777
+#: ../src/core/control/Control.cpp:1773
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
 msgid "Select color"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1799
+#: ../src/core/control/Control.cpp:1795
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1918
+#: ../src/core/control/Control.cpp:1914
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1918
+#: ../src/core/control/Control.cpp:1914
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1919
+#: ../src/core/control/Control.cpp:1915
 msgid "Save As..."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1919 ../src/core/control/jobs/SaveJob.cpp:24
+#: ../src/core/control/Control.cpp:1915 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1924
+#: ../src/core/control/Control.cpp:1920
 msgid "Discard"
 msgstr ""
 
@@ -511,57 +511,57 @@ msgstr ""
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:23
-msgid "Export PDF"
-msgstr ""
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:24
-msgid "_Export"
-msgstr ""
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:46
+#: ../src/core/control/jobs/BaseExportJob.cpp:39
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:52
+#: ../src/core/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:53
+#: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid ""
 "\n"
 " Do you want to continue?"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:108
+#: ../src/core/control/jobs/BaseExportJob.cpp:54
+msgid "Export"
+msgstr ""
+
+#: ../src/core/control/jobs/BaseExportJob.cpp:55
+msgid "_Export"
+msgstr ""
+
+#: ../src/core/control/jobs/BaseExportJob.cpp:140
 msgid ""
 "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:26
+#: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "Custom Export"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:28
-#: ../src/core/control/jobs/PdfExportJob.cpp:19
+#: ../src/core/control/jobs/CustomExportJob.cpp:29
+#: ../src/core/control/jobs/PdfExportJob.cpp:20
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:48
 msgid "PDF files"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:29
+#: ../src/core/control/jobs/CustomExportJob.cpp:30
 msgid "PNG graphics"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:30
+#: ../src/core/control/jobs/CustomExportJob.cpp:31
 msgid "SVG graphics"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:31
+#: ../src/core/control/jobs/CustomExportJob.cpp:32
 msgid "Xournal (Compatibility)"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:131
+#: ../src/core/control/jobs/CustomExportJob.cpp:137
 #: ../src/core/control/jobs/SaveJob.cpp:130
 msgid "Save file error: {1}"
 msgstr ""
@@ -1979,15 +1979,15 @@ msgstr ""
 msgid "Error {1} executing system command: {2}"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:168
+#: ../src/util/XojMsgBox.cpp:174 ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:169
+#: ../src/util/XojMsgBox.cpp:175 ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:187
+#: ../src/util/XojMsgBox.cpp:219
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
@@ -2092,10 +2092,6 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:59
 msgid "All"
-msgstr ""
-
-#: ../ui/exportSettings.glade:65
-msgid "Export"
 msgstr ""
 
 #: ../ui/exportSettings.glade:91
