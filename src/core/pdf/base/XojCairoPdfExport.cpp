@@ -54,6 +54,12 @@ auto XojCairoPdfExport::startPdf(const fs::path& file) -> bool {
     this->populatePdfOutline(tocModel);
 #endif
 
+    // Turn on font hint metrics, for consistency with text display in the app
+    cairo_font_options_t* fontOptions = cairo_font_options_create();
+    cairo_font_options_set_hint_metrics(fontOptions, CAIRO_HINT_METRICS_ON);
+    cairo_set_font_options(cr, fontOptions);
+    cairo_font_options_destroy(fontOptions);
+
     return cairo_surface_status(this->surface) == CAIRO_STATUS_SUCCESS;
 }
 
