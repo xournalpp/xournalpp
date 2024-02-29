@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.3~dev (Unreleased)
+## 1.2.3
 
 Bugfixes from various community contributors.
 
