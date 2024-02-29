@@ -110,6 +110,11 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
         gtk_window_unmaximize(GTK_WINDOW(this->window));
     }
 
+    Util::execInUiThread([=]() {
+        // Execute after the window is visible, else the check won't work
+        control->setShowMenubar(control->getSettings()->isMenubarVisible());
+    });
+
     // Drag and Drop
     g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
 
