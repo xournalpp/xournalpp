@@ -630,14 +630,6 @@ void Control::setShowToolbar(bool enabled) {
 void Control::setShowMenubar(bool enabled) {
     win->setMenubarVisible(enabled);
     actionDB->setActionState(Action::SHOW_MENUBAR, enabled);
-
-    if (settings->isMenubarVisible() != enabled &&
-        settings->getActiveViewMode() == PresetViewModeIds::VIEW_MODE_DEFAULT) {
-        settings->setMenubarVisible(enabled);
-        ViewMode viewMode = settings->getViewModes()[PresetViewModeIds::VIEW_MODE_DEFAULT];
-        viewMode.showMenubar = enabled;
-        settings->setViewMode(PresetViewModeIds::VIEW_MODE_DEFAULT, viewMode);
-    }
 }
 
 void Control::disableSidebarTmp(bool disabled) { this->sidebar->setTmpDisabled(disabled); }
