@@ -212,17 +212,17 @@ auto addElementsFromActiveLayer(Control* ctrl, EditSelection* base, const Insert
 EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& page, Layer* layer, XojPageView* view,
                              const Range& bounds, const Range& snappingBounds):
         snappedBounds(snappingBounds),
-        btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
+        btnWidth(std::max(10, static_cast<int>(ctrl->getSettings()->getButtonSizeMult() * ctrl->getSettings()->getDisplayDpi() / 8))),
         sourcePage(page),
         sourceLayer(layer),
         view(view),
         undo(ctrl->getUndoRedoHandler()),
         snappingHandler(ctrl->getSettings()) {
     // make the visible bounding box large enough so that anchors do not collapse even for horizontal/vertical strokes
-    x = bounds.minX - 1.5 * this->btnWidth;
-    y = bounds.minY - 1.5 * this->btnWidth;
-    width = bounds.getWidth() + 3 * this->btnWidth;
-    height = bounds.getHeight() + 3 * this->btnWidth;
+    x = bounds.minX - ctrl->getSettings()->getSelectPaddingMult() * 1.5 * this->btnWidth;
+    y = bounds.minY - ctrl->getSettings()->getSelectPaddingMult() * 1.5 * this->btnWidth;
+    width = bounds.getWidth() + ctrl->getSettings()->getSelectPaddingMult() * 3 * this->btnWidth;
+    height = bounds.getHeight() + ctrl->getSettings()->getSelectPaddingMult() * 3 * this->btnWidth;
 
     this->contents = std::make_unique<EditSelectionContents>(this->getRect(), this->snappedBounds, this->sourcePage,
                                                              this->sourceLayer, this->view);
@@ -242,7 +242,7 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
 
 EditSelection::EditSelection(Control* ctrl, const PageRef& page, Layer* layer, XojPageView* view):
         snappedBounds(Rectangle<double>{}),
-        btnWidth(std::max(10, ctrl->getSettings()->getDisplayDpi() / 8)),
+        btnWidth(std::max(10, static_cast<int>(ctrl->getSettings()->getButtonSizeMult() * ctrl->getSettings()->getDisplayDpi() / 8))),
         sourcePage(page),
         sourceLayer(layer),
         view(view),
@@ -866,6 +866,7 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         double mult = 0.0;
 
         // Calculate bonus scroll amount due to proportion of selection out of view.
+            // maybe introduce factor also here (since the selection side depends on multipliers...)
         const double maxMult = settings->getEdgePanMaxMult();
         int panDir = 0;
         if (aboveMax) {

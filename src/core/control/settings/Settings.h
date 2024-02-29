@@ -164,6 +164,12 @@ public:
     void setEdgePanMaxMult(double mult);
     double getEdgePanMaxMult() const;
 
+    void setSelectPaddingMult(double mult);
+    double getSelectPaddingMult() const;
+
+    void setButtonSizeMult(double mult);
+    double getButtonSizeMult() const;
+
     /**
      * Set the Zoomstep for one step in percent
      */
@@ -774,6 +780,9 @@ private:
      * of view
      */
     double edgePanMaxMult{};
+
+    double selectPaddingMult{};
+    double buttonSizeMult{};
 
     /**
      * Zoomstep for one step
