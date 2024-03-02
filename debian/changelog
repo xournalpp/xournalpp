@@ -1,8 +1,18 @@
-xournalpp (1.2.2+dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.3+dev-1) UNRELEASED; urgency=medium
 
   *
 
- -- Benjamin Hennion <benjamin.hennion@wanadoo.fr>  Sun, 08 Oct 2023 15:53:47 +0200
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 29 Feb 2024 13:22:42 +0100
+
+xournalpp (1.2.3-1) unstable; urgency=medium
+
+  * Fixed background color and truncated text in LaTeX tool
+  * Fixed zoom jumping and zoom steps
+  * Fixed various segfaults and rendering issues
+  * Fixed pressure values and project URL when saving documents
+  * Enabled font hint metrics in PDF export to improve text alignment
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 29 Feb 2024 13:22:42 +0100
 
 xournalpp (1.2.2-1) unstable; urgency=medium
 

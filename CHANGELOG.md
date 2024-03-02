@@ -1,6 +1,37 @@
 # Changelog
 
-## 1.2.2+dev (Unreleased)
+## 1.2.3+dev (Unreleased)
+
+## 1.2.3
+
+Bugfixes from various community contributors.
+
+* Fixed spline live segment display (#5240, #5237)
+* Allowed pulling spline tangents outside of page (#5298, #5277)
+* Fixed redundant negative pressure values (#5241, #5238)
+* Fixed asymmetrical fill of arrow shapes (#5258)
+* Fixed zoom jumping and zoom steps (#5108, #4678)
+* Fixed touchpad+trackpad combo (#5288, #5287)
+* Fixed long text being truncated in LaTeX tool (#5264, #3293)
+* Fixed background color in the LaTeX editor (#5307)
+* Fixed window maximize state saving (#5302, #5245)
+* Fixed project homepage url not being written into xopp-file (#5322)
+* Improved backtrace that now prints source files and line numbers (#5312)
+* Made .deb packages being built using the RelWithDebInfo build type (#5344)
+* Fixed a bugs with empty repaint regions during PDF text selection, text search
+  and while using the vertical tool (#5348, #5343, #5393)
+* Fixed stroke replacement preventing a crash while the app is hanging (#5366, #5362)
+* Fixed wrongly sized loading pages (#5399, #5102)
+* Improved error checks for saving operations avoiding corrupt autosave files (#5361, #4934)
+* Fixed OK button sensitivity in the PDF page selecction dialog (#5441)
+* Added undo handler for missing PDF replacement (#5443, #5435)
+* Fixed a filesystem error on MacOS when a document is autosaved the first time (#5485)
+* Fixed the PDF filter in the Export as PDF dialog (#5490)
+* Fixed toolbar management segfault and out of date menu (#5510)
+* Fixed a bug with corrupt PDF exports when exporting only part of a document with an 
+  outline (#5512)
+* Enabled font hint metrics in PDF export to improve text alignment (#5454, #5405)
+* Added IME support to AppImage (#5520, #5493)
 
 ## 1.2.2
 

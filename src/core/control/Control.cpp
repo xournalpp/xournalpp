@@ -537,6 +537,19 @@ void Control::manageToolbars() {
                                                                 win->getToolbarModel()->save(filepath);
                                                             });
     dlg.show(GTK_WINDOW(this->win->getWindow()));
+
+    if (auto tbs = this->win->getToolbarModel()->getToolbars();
+        std::find(tbs->begin(), tbs->end(), this->win->getSelectedToolbar()) == tbs->end()) {
+        // The active toolbar has been deleted!
+        xoj_assert(!tbs->empty());
+        this->win->toolbarSelected(tbs->front());
+        XojMsgBox::showErrorToUser(GTK_WINDOW(this->win->getWindow()),
+                                   _("You deleted the active toolbar. Falling back to the default toolbar."));
+    }
+
+    this->win->updateToolbarMenu();
+    auto filepath = Util::getConfigFile(TOOLBAR_CONFIG);
+    this->win->getToolbarModel()->save(filepath);
 }
 
 void Control::customizeToolbars() {
