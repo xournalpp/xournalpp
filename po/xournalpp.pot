@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xournalpp 1.2.2+dev\n"
+"Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-24 17:09+0000\n"
+"POT-Creation-Date: 2024-03-02 13:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,104 +31,108 @@ msgstr ""
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:548
+#: ../src/core/control/Control.cpp:547
+msgid "You deleted the active toolbar. Falling back to the default toolbar."
+msgstr ""
+
+#: ../src/core/control/Control.cpp:561
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:551
+#: ../src/core/control/Control.cpp:564
 msgid "Yes"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:551
+#: ../src/core/control/Control.cpp:564
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:730
+#: ../src/core/control/Control.cpp:743
 msgid ""
 "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:744
+#: ../src/core/control/Control.cpp:757
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1311
+#: ../src/core/control/Control.cpp:1324
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1325
+#: ../src/core/control/Control.cpp:1338
 msgid "file: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1349
+#: ../src/core/control/Control.cpp:1362
 msgid "Error opening file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1357
+#: ../src/core/control/Control.cpp:1370
 msgid ""
 "The file being loaded has a file format version newer than the one currently "
 "supported by this version of Xournal++, so it may not load properly. Open "
 "anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1499
 msgid ""
 "The attached background file could not be found. It might have been moved, "
 "renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1489
+#: ../src/core/control/Control.cpp:1502
 msgid ""
 "The background file \"{1}\" could not be found. It might have been moved, "
 "renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1499
+#: ../src/core/control/Control.cpp:1512
 msgid ""
 "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1504
+#: ../src/core/control/Control.cpp:1517
 msgid "Select another PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1505
+#: ../src/core/control/Control.cpp:1518
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1506 ../src/core/control/Control.cpp:1923
+#: ../src/core/control/Control.cpp:1519 ../src/core/control/Control.cpp:1936
 #: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1509
+#: ../src/core/control/Control.cpp:1522
 msgid "Use proposed PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1512
+#: ../src/core/control/Control.cpp:1525
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1605
+#: ../src/core/control/Control.cpp:1618
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1709
+#: ../src/core/control/Control.cpp:1722
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1709
+#: ../src/core/control/Control.cpp:1722
 #: ../src/core/control/jobs/BaseExportJob.cpp:55
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
@@ -136,47 +140,47 @@ msgstr ""
 msgid "_Cancel"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1710
+#: ../src/core/control/Control.cpp:1723
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1713
+#: ../src/core/control/Control.cpp:1726
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:63
 msgid "Xournal++ files"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1758
+#: ../src/core/control/Control.cpp:1771
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1773
+#: ../src/core/control/Control.cpp:1786
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
 msgid "Select color"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1795
+#: ../src/core/control/Control.cpp:1808
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1914
+#: ../src/core/control/Control.cpp:1927
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1914
+#: ../src/core/control/Control.cpp:1927
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1915
+#: ../src/core/control/Control.cpp:1928
 msgid "Save As..."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1915 ../src/core/control/jobs/SaveJob.cpp:24
+#: ../src/core/control/Control.cpp:1928 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1920
+#: ../src/core/control/Control.cpp:1933
 msgid "Discard"
 msgstr ""
 
@@ -1761,13 +1765,17 @@ msgstr ""
 msgid "Background"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:173
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:216
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:123
+msgid "Error while finalizing the PDF Cairo surface"
+msgstr ""
+
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:189
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:235
 msgid "No pages to export!"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:178
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:221
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:240
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
