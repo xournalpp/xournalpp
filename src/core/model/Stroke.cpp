@@ -3,11 +3,13 @@
 #include <algorithm>  // for min, max, copy
 #include <cmath>      // for abs, hypot, sqrt
 #include <cstdint>    // for uint64_t
+#include <istream>    // for istream
 #include <iterator>   // for back_insert_iterator
 #include <limits>     // for numeric_limits
 #include <memory>
 #include <numeric>    // for accumulate
 #include <optional>   // for optional, nullopt
+#include <ostream>    // for ostream
 #include <string>     // for to_string, operator<<
 
 #include <cairo.h>  // for cairo_matrix_translate
@@ -868,4 +870,79 @@ void Stroke::debugPrint() const {
     }
 
     g_message("\n");
+}
+
+
+// stream operator overloads for StrokeTool
+
+auto operator<<(std::ostream& stream, const StrokeTool tool) -> std::ostream& {
+    switch (tool) {
+        case StrokeTool::PEN:
+            stream << "pen";
+            break;
+        case StrokeTool::ERASER:
+            stream << "eraser";
+            break;
+        case StrokeTool::HIGHLIGHTER:
+            stream << "highlighter";
+            break;
+        default:
+            // invalid tool
+            stream.setstate(std::ios::failbit);
+            break;
+    }
+    return stream;
+}
+
+auto operator>>(std::istream& stream, StrokeTool& tool) -> std::istream& {
+    std::string str;
+    stream >> str;
+    if (str == "pen") {
+        tool = StrokeTool::PEN;
+    } else if (str == "eraser") {
+        tool = StrokeTool::ERASER;
+    } else if (str == "highlighter") {
+        tool = StrokeTool::HIGHLIGHTER;
+    } else {
+        // invalid input
+        stream.setstate(std::ios::failbit);
+    }
+    return stream;
+}
+
+// stream operator overloads for StrokeCapStyle
+
+auto operator<<(std::ostream& stream, const StrokeCapStyle style) -> std::ostream& {
+    switch (style) {
+        case StrokeCapStyle::ROUND:
+            stream << "round";
+            break;
+        case StrokeCapStyle::BUTT:
+            stream << "butt";
+            break;
+        case StrokeCapStyle::SQUARE:
+            stream << "square";
+            break;
+        default:
+            // invalid cap style
+            stream.setstate(std::ios::failbit);
+            break;
+    }
+    return stream;
+}
+
+auto operator>>(std::istream& stream, StrokeCapStyle& style) -> std::istream& {
+    std::string str;
+    stream >> str;
+    if (str == "round") {
+        style = StrokeCapStyle::ROUND;
+    } else if (str == "butt") {
+        style = StrokeCapStyle::BUTT;
+    } else if (str == "square") {
+        style = StrokeCapStyle::SQUARE;
+    } else {
+        // invalid input
+        stream.setstate(std::ios::failbit);
+    }
+    return stream;
 }

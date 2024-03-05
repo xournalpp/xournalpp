@@ -14,9 +14,12 @@
 #include <cstdlib>     // size_t
 #include <functional>  // for function
 #include <limits>      // for numeric_limits
+#include <string>      // for string
+#include <typeinfo>    // for typeid
 #include <utility>
 
 #include <cairo.h>    // for cairo_t
+#include <cxxabi.h>   // for __cxa_demangle
 #include <glib.h>     // for G_PRIORITY_DEFAULT_IDLE, gboolean, gchar, gint
 #include <gtk/gtk.h>  // for GtkWidget
 
@@ -84,6 +87,22 @@ extern void writeCoordinateString(OutputStream* out, double xVal, double yVal);
 constexpr const gchar* PRECISION_FORMAT_STRING = "%.8g";
 
 constexpr const auto DPI_NORMALIZATION_FACTOR = 72.0;
+
+/**
+ * Get the demangled name string of type T
+ */
+template <typename T>
+std::string demangledTypeName(T var) {
+    const char* mangledName = typeid(var).name();
+    char* demangledName = abi::__cxa_demangle(mangledName, nullptr, nullptr, nullptr);
+    if (demangledName) {
+        auto nameStr = std::string(demangledName);
+        std::free(demangledName);
+        return nameStr;
+    } else {
+        return std::string(mangledName) + " (demangling failed)";
+    }
+}
 
 }  // namespace Util
 

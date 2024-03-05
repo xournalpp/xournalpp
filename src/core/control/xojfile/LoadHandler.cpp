@@ -1,39 +1,53 @@
 #include "LoadHandler.h"
 
-#include <algorithm>    // for copy
-#include <cmath>        // for isnan
-#include <cstdlib>      // for atoi, size_t
-#include <cstring>      // for strcmp, strlen
-#include <iterator>     // for back_inserter
-#include <memory>       // for __shared_ptr_access
-#include <regex>        // for regex_search, smatch
-#include <type_traits>  // for remove_reference<>::type
-#include <utility>      // for move
+#include <algorithm>      // for copy
+#include <cmath>          // for isnan
+#include <cstdlib>        // for atoi, size_t
+#include <cstring>        // for strcmp, strlen
+#include <ctime>          // for clock
+#include <exception>      // for exception
+#include <iterator>       // for back_inserter
+#include <memory>         // for make_unique, make_shared...
+#include <optional>       // for optional
+#include <regex>          // for regex_search, smatch
+#include <string>         // for string
+#include <unordered_map>  // for unordered_map
+#include <utility>        // for move, forward
+#include <vector>         // for vector
 
 #include <gio/gio.h>      // for g_file_get_path, g_fil...
-#include <glib-object.h>  // for g_object_unref
+#include <glib.h>         // for g_message...
+#include <glibconfig.h>   // for gssize...
+#include <zip.h>          // for zip_file_t, zip_fopen,...
+#include <zipconf.h>      // for zip_int64_t, zip_uint64_t
 
-#include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
-#include "model/BackgroundImage.h"             // for BackgroundImage
-#include "model/Font.h"                        // for XojFont
-#include "model/Image.h"                       // for Image
-#include "model/Layer.h"                       // for Layer
-#include "model/PageType.h"                    // for PageType, PageTypeFormat
-#include "model/Point.h"                       // for Point
-#include "model/Stroke.h"                      // for Stroke, StrokeCapStyle
-#include "model/StrokeStyle.h"                 // for StrokeStyle
-#include "model/TexImage.h"                    // for TexImage
-#include "model/Text.h"                        // for Text
-#include "model/XojPage.h"                     // for XojPage
-#include "util/Assert.h"                       // for xoj_assert
-#include "util/GzUtil.h"                       // for GzUtil
+#include "control/pagetype/PageTypeHandler.h"   // for PageTypeHandler
+#include "control/xojfile/GzInputStream.h"      // for GzInputStream
+#include "control/xojfile/LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
+#include "control/xojfile/XmlParser.h"          // for XmlParser
+#include "model/BackgroundImage.h"              // for BackgroundImage
+#include "model/Document.h"                     // for Document
+#include "model/Font.h"                         // for XojFont
+#include "model/Image.h"                        // for Image
+#include "model/Layer.h"                        // for Layer
+#include "model/PageType.h"                     // for PageType, PageTypeFormat
+#include "model/Point.h"                        // for Point
+#include "model/Stroke.h"                       // for Stroke, StrokeCapStyle
+#include "model/StrokeStyle.h"                  // for StrokeStyle
+#include "model/TexImage.h"                     // for TexImage
+#include "model/Text.h"                         // for Text
+#include "model/XojPage.h"                      // for XojPage
+#include "util/Assert.h"                        // for xoj_assert
+#include "util/Color.h"                         // for Color
+#include "util/GzUtil.h"                        // for GzUtil
 #include "util/LoopUtil.h"
-#include "util/PlaceholderString.h"  // for PlaceholderString
-#include "util/i18n.h"               // for _F, FC, FS, _
+#include "util/PlaceholderString.h"    // for PlaceholderString
+#include "util/i18n.h"                 // for _F, FC, FS, _
+#include "util/raii/CLibrariesSPtr.h"  // for adopt
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed, as_unsigned
 
-#include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
+#include "filesystem.h"  // for path
 
 using std::string;
 
@@ -61,25 +75,14 @@ LoadHandler::LoadHandler():
         zipFp(nullptr),
         zipContentFile(nullptr),
         gzFp(nullptr),
-        layer(nullptr),
-        stroke(nullptr),
-        text(nullptr),
-        image(nullptr),
-        teximage(nullptr),
         attributeNames(nullptr),
         attributeValues(nullptr),
         elementName(nullptr),
         loadedTimeStamp(0) {
     this->error = nullptr;
-
-    initAttributes();
 }
 
-LoadHandler::~LoadHandler() {
-    if (this->audioFiles) {
-        g_hash_table_unref(this->audioFiles);
-    }
-}
+LoadHandler::~LoadHandler() = default;
 
 void LoadHandler::initAttributes() {
     this->zipFp = nullptr;
@@ -93,18 +96,15 @@ void LoadHandler::initAttributes() {
     this->pdfFilenameParsed = false;
     this->attachedPdfMissing = false;
 
-    this->page = nullptr;
-    this->layer = nullptr;
-    this->stroke = nullptr;
-    this->image = nullptr;
-    this->teximage = nullptr;
-    this->text = nullptr;
-    this->pages.clear();
+    this->page.reset();
+    this->layer.reset();
+    this->stroke.reset();
+    this->image.reset();
+    this->teximage.reset();
+    this->text.reset();
 
-    if (this->audioFiles) {
-        g_hash_table_unref(this->audioFiles);
-    }
-    this->audioFiles = g_hash_table_new(g_str_hash, g_str_equal);
+    this->pages.clear();
+    this->audioFiles.clear();
 }
 
 auto LoadHandler::getLastError() -> string { return this->lastError; }
@@ -112,6 +112,394 @@ auto LoadHandler::getLastError() -> string { return this->lastError; }
 auto LoadHandler::isAttachedPdfMissing() const -> bool { return this->attachedPdfMissing; }
 
 auto LoadHandler::getMissingPdfFilename() const -> string { return this->pdfMissing; }
+
+
+void LoadHandler::addXournal(const std::string& creator, int fileversion) {
+    this->creator = creator;
+    this->fileVersion = fileversion;
+}
+
+void LoadHandler::addMrWriter(const std::string& creator) {
+    this->creator = creator;
+    this->fileVersion = 1;
+}
+
+void LoadHandler::finalizeDocument() {
+    this->doc->addPages(this->pages.begin(), this->pages.end());
+    this->pages.clear();
+}
+
+void LoadHandler::addPage(double width, double height) {
+    this->page = std::make_shared<XojPage>(width, height, /*suppressLayerCreation*/ true);
+    this->pages.emplace_back(this->page);
+}
+
+void LoadHandler::finalizePage() {
+    // handle unnecessary layer insertion in case of existing layers in file
+    if (this->page->getLayerCount() == 0) {
+        this->page->addLayer(new Layer());
+    }
+    // this->pages already holds a reference to the page
+    this->page.reset();
+}
+
+void LoadHandler::addAudioAttachment(const fs::path& filename) {
+    // Verify if attachment exists and is valid
+    zip_stat_t attachmentFileStat;
+    const int statStatus = zip_stat(this->zipFp, filename.string().c_str(), 0, &attachmentFileStat);
+    if (statStatus != 0) {
+        g_warning("Could not open attachment: %s. Error message: %s", filename.string().c_str(),
+                  zip_error_strerror(zip_get_error(this->zipFp)));
+        return;
+    }
+
+    gsize length = 0;
+    if (attachmentFileStat.valid & ZIP_STAT_SIZE) {
+        length = attachmentFileStat.size;
+    } else {
+        g_warning("Could not open attachment: %s. Error message: No valid file size provided",
+                  filename.string().c_str());
+        return;
+    }
+
+    zip_file_t* attachmentFile = zip_fopen(this->zipFp, filename.string().c_str(), 0);
+
+    if (!attachmentFile) {
+        g_warning("Could not open attachment: %s. Error message: %s", filename.string().c_str(),
+                  zip_error_strerror(zip_get_error(this->zipFp)));
+        return;
+    }
+
+    // Extract audio to temporary file
+    GFileIOStream* fileStream = nullptr;
+    const xoj::util::GObjectSPtr<GFile> tmpFile(g_file_new_tmp("xournal_audio_XXXXXX.tmp", &fileStream, nullptr),
+                                                xoj::util::adopt);
+    if (!tmpFile) {
+        g_warning("Unable to create temporary file for audio attachment.");
+        return;
+    }
+
+    GOutputStream* outputStream = g_io_stream_get_output_stream(G_IO_STREAM(fileStream));
+
+    gpointer data = g_malloc(1024);
+    zip_uint64_t readBytes = 0;
+    while (readBytes < length) {
+        const zip_int64_t read = zip_fread(attachmentFile, data, 1024);
+        if (read == -1) {
+            g_free(data);
+            zip_fclose(attachmentFile);
+            g_warning("Could not open attachment: %s. Error message: Could not read file", filename.string().c_str());
+            return;
+        }
+
+        const gboolean writeSuccessful =
+                g_output_stream_write_all(outputStream, data, static_cast<gsize>(read), nullptr, nullptr, nullptr);
+        if (!writeSuccessful) {
+            g_free(data);
+            zip_fclose(attachmentFile);
+            g_warning("Could not open attachment: %s. Error message: Could not write temporary file",
+                      filename.string().c_str());
+            return;
+        }
+
+        readBytes += static_cast<zip_uint64_t>(read);
+    }
+    g_free(data);
+    zip_fclose(attachmentFile);
+
+    // Map the filename to the extracted temporary filepath
+    char* tmpPath = g_file_get_path(tmpFile.get());
+    // fs::path does not have a std::hash specialization on all compilers
+    this->audioFiles[filename.string()] = tmpPath;
+    g_free(tmpPath);
+}
+
+void LoadHandler::addBackground(const std::optional<std::string>& name) {
+    if (name) {
+        this->page->setBackgroundName(*name);
+    }
+}
+
+void LoadHandler::setBgSolid(const PageType& bg, const Color& color) {
+    this->page->setBackgroundType(bg);
+    this->page->setBackgroundColor(color);
+}
+
+void LoadHandler::setBgPixmap(bool attach, const fs::path& filename) {
+    BackgroundImage img;
+
+    if (!attach || (attach && this->isGzFile)) {
+        fs::path fileToLoad;
+        if (attach) {
+            fileToLoad = this->filepath;
+            fileToLoad += ".";
+            fileToLoad += filename;
+        } else {
+            fileToLoad = filename;
+        }
+
+        GError* error = nullptr;
+        img.loadFile(fileToLoad, &error);
+
+        if (error) {
+            g_warning("Could not read image: %s. Error message: %s", fileToLoad.string().c_str(), error->message);
+            g_error_free(error);
+        }
+    } else {
+        // This is the zip file attach domain
+        const auto readResult = readZipAttachment(filename);  ///< Do not remove the const qualifier - see below
+        if (!readResult) {
+            return;
+        }
+        const std::string& imgData = *readResult;  ///< Do not remove the const qualifier - see below
+
+        /**
+         * To avoid an unecessary copy, the data is still managed by the std::unique_ptr<std::string> instance. The
+         * input stream assumes the data will not be modified: do not remove the const qualifier on readResult or
+         * imgData
+         */
+        const xoj::util::GObjectSPtr<GInputStream> inputStream(
+                g_memory_input_stream_new_from_data(imgData.data(), static_cast<gssize>(imgData.size()), nullptr),
+                xoj::util::adopt);
+
+        GError* error = nullptr;
+        img.loadFile(inputStream.get(), filename, &error);
+
+        g_input_stream_close(inputStream.get(), nullptr, nullptr);
+
+        if (error) {
+            g_warning("Could not read image: %s. Error message: %s", filename.string().c_str(), error->message);
+            g_error_free(error);
+        }
+    }
+    this->page->setBackgroundImage(img);
+    this->page->setBackgroundType(PageType(PageTypeFormat::Image));
+}
+
+void LoadHandler::setBgPixmapCloned(size_t pageNr) {
+    if (pageNr >= this->doc->getPageCount()) {
+        g_warning("Cloned pixmap page background on page %ld references inexistent page %ld. Skipping",
+                  this->doc->getPageCount(), pageNr);
+        return;
+    }
+
+    auto p = this->doc->getPage(pageNr);
+    if (p) {
+        this->page->setBackgroundImage(p->getBackgroundImage());
+    }
+    this->page->setBackgroundType(PageType(PageTypeFormat::Image));
+}
+
+void LoadHandler::setBgPdf(size_t pageno) { this->page->setBackgroundPdfPageNr(pageno); }
+
+void LoadHandler::loadBgPdf(bool attach, const fs::path& filename) {
+    if (this->isGzFile || !attach) {
+        // Resolve correct file path
+        fs::path pdfFilepath;
+        if (attach) {
+            // For a file xyz.xopp, the PDF background is saved in the same
+            // directory as xyz.xopp.[filename]
+            pdfFilepath = (fs::path(this->xournalFilepath) += ".") += (filename);
+        } else {
+            // domain = "absolute" doesn't forcefully mean an absolute path
+            if (filename.is_relative()) {
+                // The path is relative to the .xopp file's location
+                pdfFilepath = fs::path(this->xournalFilepath).remove_filename() / filename;
+            } else {
+                pdfFilepath = filename;
+            }
+        }
+
+        // pdfFilepath should point to the background PDF file
+        if (fs::is_regular_file(pdfFilepath)) {
+            doc->readPdf(pdfFilepath, false, attach);
+
+            if (!doc->getLastErrorMsg().empty()) {
+                g_warning("Error reading PDF: %s", doc->getLastErrorMsg().c_str());
+            }
+        } else {
+            // Even if loading the PDF failed, tell the document what should
+            // have been loaded so the background is not silently removed on save
+            doc->setPdfAttributes(pdfFilepath, attach);
+            if (attach) {
+                this->attachedPdfMissing = true;
+            } else {
+                this->pdfMissing = pdfFilepath.u8string();
+            }
+        }
+    } else {
+        // filename should point to an attachment inside the zip archive
+        auto pdfBytes = readZipAttachment(filename);
+        if (pdfBytes) {
+            doc->readPdf(filename, false, attach, std::move(pdfBytes));
+
+            if (!doc->getLastErrorMsg().empty()) {
+                g_warning("Error reading PDF: %s", doc->getLastErrorMsg().c_str());
+            }
+        } else {
+            doc->setPdfAttributes(filename, true);
+            this->attachedPdfMissing = true;
+        }
+    }
+    this->pdfFilenameParsed = true;
+}
+
+void LoadHandler::addLayer(const std::optional<std::string>& name) {
+    xoj_assert(!this->layer);
+    this->layer = std::make_unique<Layer>();
+
+    if (name) {
+        this->layer->setName(*name);
+    }
+}
+
+void LoadHandler::finalizeLayer() {
+    xoj_assert(this->layer);
+    this->page->addLayer(this->layer.release());
+}
+
+void LoadHandler::addStroke(StrokeTool tool, const Color& color, double width, int fill, StrokeCapStyle capStyle,
+                            const std::optional<LineStyle>& lineStyle, const fs::path& filename, size_t timestamp) {
+    xoj_assert(!this->stroke);
+    this->stroke = std::make_unique<Stroke>();
+
+    this->stroke->setToolType(tool);
+    this->stroke->setColor(color);
+    this->stroke->setWidth(width);
+    this->stroke->setFill(fill);
+    this->stroke->setStrokeCapStyle(capStyle);
+
+    if (lineStyle) {
+        this->stroke->setLineStyle(*lineStyle);
+    }
+
+    setAudioAttributes(*this->stroke, filename, timestamp);
+}
+
+void LoadHandler::setStrokePoints(std::vector<Point>&& pointVector, std::vector<double> pressures) {
+    xoj_assert(this->stroke);
+
+    if (pointVector.size() < 2) {
+        g_warning("LoadHandler: Ignoring stroke with less than two points");
+        return;
+    }
+    this->stroke->setPointVector(std::move(pointVector));
+
+    if (!pressures.empty()) {
+        if (pressures.size() + 1 >= this->stroke->getPointCount()) {
+            if (!std::all_of(pressures.begin(), pressures.end(), [](double pressure) { return pressure > 0; })) {
+                // Warning: this may delete this->stroke if no positive pressure values are provided
+                // Do not dereference this->stroke after that
+                fixNullPressureValues(std::move(pressures));
+            } else {
+                this->stroke->setPressure(pressures);
+            }
+        } else {
+            g_warning("LoadHandler: Wrong number of pressure values: got %ld, expected %ld", pressures.size(),
+                      (this->stroke->getPointCount() - 1));
+        }
+    }
+}
+
+void LoadHandler::finalizeStroke() {
+    // fixNullPressureValues() may have deleted the stroke. Check if it still
+    // exists before accessing it.
+    if (this->stroke) {
+        this->layer->addElement(std::move(this->stroke));
+    }
+}
+
+void LoadHandler::addText(const std::string& font, double size, double x, double y, const Color& color,
+                          const fs::path& filename, size_t timestamp) {
+    xoj_assert(!this->text);
+    this->text = std::make_unique<Text>();
+
+    XojFont& f = this->text->getFont();
+    f.setName(font);
+    f.setSize(size);
+    this->text->setX(x);
+    this->text->setY(y);
+    this->text->setColor(color);
+
+    setAudioAttributes(*this->text, filename, timestamp);
+}
+
+void LoadHandler::setTextContents(const std::string& contents) {
+    xoj_assert(this->text);
+
+    this->text->setText(contents);
+}
+
+void LoadHandler::finalizeText() {
+    xoj_assert(this->text);
+
+    this->layer->addElement(std::move(this->text));
+}
+
+void LoadHandler::addImage(double left, double top, double right, double bottom) {
+    xoj_assert(!this->image);
+    this->image = std::make_unique<Image>();
+
+    this->image->setX(left);
+    this->image->setY(top);
+    this->image->setWidth(right - left);
+    this->image->setHeight(bottom - top);
+}
+
+void LoadHandler::setImageData(std::string&& data) {
+    xoj_assert(this->image);
+
+    this->image->setImage(std::move(data));
+}
+
+void LoadHandler::setImageAttachment(const fs::path& filename) {
+    xoj_assert(this->image);
+
+    auto imageData = readZipAttachment(filename);
+    if (imageData) {
+        this->image->setImage(std::move(*imageData));
+    }
+}
+
+void LoadHandler::finalizeImage() {
+    xoj_assert(this->image);
+
+    this->layer->addElement(std::move(this->image));
+}
+
+void LoadHandler::addTexImage(double left, double top, double right, double bottom, const std::string& text) {
+    xoj_assert(!this->teximage);
+    this->teximage = std::make_unique<TexImage>();
+
+    this->teximage->setX(left);
+    this->teximage->setY(top);
+    this->teximage->setWidth(right - left);
+    this->teximage->setHeight(bottom - top);
+
+    this->teximage->setText(text);
+}
+
+void LoadHandler::setTexImageData(std::string&& data) {
+    xoj_assert(this->teximage);
+
+    this->teximage->loadData(std::move(data));
+}
+
+void LoadHandler::finalizeTexImage() {
+    xoj_assert(this->teximage);
+
+    this->layer->addElement(std::move(this->teximage));
+}
+
+void LoadHandler::setTexImageAttachment(const fs::path& filename) {
+    xoj_assert(this->teximage);
+
+    auto imageData = readZipAttachment(filename);
+    if (imageData) {
+        this->teximage->loadData(std::move(*imageData));
+    }
+}
+
 
 auto LoadHandler::openFile(fs::path const& filepath) -> bool {
     this->filepath = filepath;
@@ -122,6 +510,19 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
     if (!this->zipFp && zipError == ZIP_ER_NOZIP) {
         this->gzFp = GzUtil::openPath(filepath, "r");
         this->isGzFile = true;
+
+        // Trying out the new XML parser
+        try {
+            GzInputStream input(filepath);
+            const auto start = clock();
+            XmlParser parser(input, this);
+            parser.parse();
+            const auto stop = clock();
+            g_message("Time taken by new parser: %ld clocks", (stop - start));
+            this->pages.clear();
+        } catch (const std::exception& e) {
+            g_error("An error occured during file parsing: %s", e.what());
+        }
     }
 
     if (this->zipFp && !this->isGzFile) {
@@ -517,21 +918,17 @@ void LoadHandler::parsePage() {
         }
     } else if (!strcmp(elementName, "layer")) {
         this->pos = PARSER_POS_IN_LAYER;
-        this->layer = new Layer();
+        this->layer = std::make_unique<Layer>();
 
         const char* name = LoadHandlerHelper::getAttrib("name", true, this);
         if (name != nullptr) {
             this->layer->setName(name);
         }
-
-        this->page->addLayer(this->layer);
     }
 }
 
 void LoadHandler::parseStroke() {
-    auto strokeOwn = std::make_unique<Stroke>();
-    this->stroke = strokeOwn.get();
-    this->layer->addElement(std::move(strokeOwn));
+    this->stroke = std::make_unique<Stroke>();
 
     const char* width = LoadHandlerHelper::getAttrib("width", false, this);
 
@@ -641,9 +1038,7 @@ void LoadHandler::parseStroke() {
 }
 
 void LoadHandler::parseText() {
-    auto textOwn = std::make_unique<Text>();
-    this->text = textOwn.get();
-    this->layer->addElement(std::move(textOwn));
+    this->text = std::make_unique<Text>();
 
     const char* sFont = LoadHandlerHelper::getAttrib("font", false, this);
     double fontSize = LoadHandlerHelper::getAttribDouble("size", this);
@@ -686,9 +1081,7 @@ void LoadHandler::parseImage() {
     double bottom = LoadHandlerHelper::getAttribDouble("bottom", this);
 
     xoj_assert(this->image == nullptr);
-    auto imageOwn = std::make_unique<Image>();
-    this->image = imageOwn.get();
-    this->layer->addElement(std::move(imageOwn));
+    this->image = std::make_unique<Image>();
     this->image->setX(left);
     this->image->setY(top);
     this->image->setWidth(right - left);
@@ -708,9 +1101,7 @@ void LoadHandler::parseTexImage() {
         imTextLen = LoadHandlerHelper::getAttribSizeT("texlength", this);
     }
 
-    auto teximageOwn = std::make_unique<TexImage>();
-    this->teximage = teximageOwn.get();
-    this->layer->addElement(std::move(teximageOwn));
+    this->teximage = std::make_unique<TexImage>();
     this->teximage->setX(left);
     this->teximage->setY(top);
     this->teximage->setWidth(right - left);
@@ -841,7 +1232,9 @@ void LoadHandler::parseAudio() {
     g_free(data);
     zip_fclose(attachmentFile);
 
-    g_hash_table_insert(this->audioFiles, g_strdup(filename), g_file_get_path(tmpFile.get()));
+    char* tmpPath = g_file_get_path(tmpFile.get());
+    this->audioFiles[filename] = tmpPath;
+    g_free(tmpPath);
 }
 
 void LoadHandler::parserStartElement(GMarkupParseContext* context, const gchar* elementName,
@@ -892,31 +1285,35 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
             handler->page->addLayer(new Layer());
         }
         handler->pos = PARSER_POS_STARTED;
-        handler->page = nullptr;
+        // A handle to the page is still held by handler->pages
+        handler->page.reset();
     } else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(elementName, "layer") == 0) {
         handler->pos = PARSER_POS_IN_PAGE;
-        handler->layer = nullptr;
+        handler->page->addLayer(handler->layer.release());
     } else if (handler->pos == PARSER_POS_IN_LAYER && strcmp(elementName, "timestamp") == 0) {
         /** Used for backwards compatibility against xoj files with timestamps) */
         handler->pos = PARSER_POS_IN_LAYER;
-        handler->stroke = nullptr;
     } else if (handler->pos == PARSER_POS_IN_STROKE && strcmp(elementName, "stroke") == 0) {
         handler->pos = PARSER_POS_IN_LAYER;
-        handler->stroke = nullptr;
+        if (handler->stroke) {
+            // fixNullPressureValues() may have deleted the stroke. Check if it
+            // still exists before accessing it.
+            handler->layer->addElement(std::move(handler->stroke));
+        }
     } else if (handler->pos == PARSER_POS_IN_TEXT && strcmp(elementName, "text") == 0) {
         handler->pos = PARSER_POS_IN_LAYER;
-        handler->text = nullptr;
+        handler->layer->addElement(std::move(handler->text));
     } else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(elementName, "image") == 0) {
         xoj_assert_message(handler->image->getImage() != nullptr, "image can't be rendered");
         handler->pos = PARSER_POS_IN_LAYER;
-        handler->image = nullptr;
+        handler->layer->addElement(std::move(handler->image));
     } else if (handler->pos == PARSER_POS_IN_TEXIMAGE && strcmp(elementName, "teximage") == 0) {
         handler->pos = PARSER_POS_IN_LAYER;
-        handler->teximage = nullptr;
+        handler->layer->addElement(std::move(handler->teximage));
     }
 }
 
-void LoadHandler::fixNullPressureValues() {
+void LoadHandler::fixNullPressureValues(std::vector<double> pressures) {
     /*
      * Due to various bugs (see e.g. https://github.com/xournalpp/xournalpp/issues/3643), old files may contain strokes
      * with non-positive pressure values.
@@ -930,57 +1327,56 @@ void LoadHandler::fixNullPressureValues() {
      *  3- entirely deleting strokes without any valid pressure value
      */
     auto& pts = stroke->getPointVector();
-    if (pressureBuffer.size() >= pts.size()) {
+    if (pressures.size() >= pts.size()) {
         // Too many pressure values. Drop the last ones
         xoj_assert(pts.size() >= 2);  // An error has already been returned otherwise
-        pressureBuffer.resize(pts.size() - 1);
+        pressures.resize(pts.size() - 1);
     }
 
-    auto nextPositive = std::find_if(pressureBuffer.begin(), pressureBuffer.end(), [](double v) { return v > 0; });
+    auto nextPositive = std::find_if(pressures.begin(), pressures.end(), [](double v) { return v > 0; });
 
     std::vector<std::vector<Point>> strokePortions;
-    while (nextPositive != pressureBuffer.end()) {
+    while (nextPositive != pressures.end()) {
         auto nextNonPositive =
-                std::find_if(nextPositive, pressureBuffer.end(), [](double v) { return v <= 0 || std::isnan(v); });
+                std::find_if(nextPositive, pressures.end(), [](double v) { return v <= 0 || std::isnan(v); });
         size_t nValidPressureValues = static_cast<size_t>(std::distance(nextPositive, nextNonPositive));
 
         std::vector<Point> ps;
         ps.reserve(nValidPressureValues + 1);
 
         std::transform(nextPositive, nextNonPositive,
-                       std::next(pts.begin(), std::distance(pressureBuffer.begin(), nextPositive)),
-                       std::back_inserter(ps), [](double v, const Point& p) { return Point(p.x, p.y, v); });
+                       std::next(pts.begin(), std::distance(pressures.begin(), nextPositive)), std::back_inserter(ps),
+                       [](double v, const Point& p) { return Point(p.x, p.y, v); });
 
-        // pts.size() == pressureBuffer.size() + 1 so the following iterator is always dereferencable, even if
-        // nextNonPositive == pressureBuffer.end()
-        ps.emplace_back(*std::next(pts.begin(), std::distance(pressureBuffer.begin(), nextNonPositive)));
+        // pts.size() == pressures.size() + 1 so the following iterator is always dereferencable, even if
+        // nextNonPositive == pressures.end()
+        ps.emplace_back(*std::next(pts.begin(), std::distance(pressures.begin(), nextNonPositive)));
 
         xoj_assert(ps.size() == nValidPressureValues + 1);
         strokePortions.emplace_back(std::move(ps));
 
-        if (nextNonPositive == pressureBuffer.end()) {
+        if (nextNonPositive == pressures.end()) {
             break;
         }
-        nextPositive = std::find_if(nextNonPositive, pressureBuffer.end(), [](double v) { return v > 0; });
+        nextPositive = std::find_if(nextNonPositive, pressures.end(), [](double v) { return v > 0; });
     }
 
     if (strokePortions.empty()) {
         // There was no valid pressure values! Delete the stroke entirely
         g_warning("Found a stroke with only non-positive pressure values! Removing this invisible stroke.");
-        std::ignore = layer->removeElement(stroke);
-        stroke = nullptr;
+        this->stroke.reset();
         return;
     }
 
     g_warning("Found a stroke with some non-positive pressure values. Removing the affected points.");
     for_first_then_each(
-            strokePortions, [&](std::vector<Point>& points) { stroke->setPointVector(std::move(points)); },
+            strokePortions, [&](std::vector<Point>& points) { this->stroke->setPointVector(std::move(points)); },
             [&](std::vector<Point>& points) {
-                auto strokeOwn = std::make_unique<Stroke>();
-                strokeOwn->applyStyleFrom(stroke);
-                strokeOwn->setPointVector(std::move(points));
-                stroke = strokeOwn.get();
-                layer->addElement(std::move(strokeOwn));
+                auto newStroke = std::make_unique<Stroke>();
+                newStroke->applyStyleFrom(this->stroke.get());
+                newStroke->setPointVector(std::move(points));
+                this->layer->addElement(std::move(this->stroke));
+                this->stroke = std::move(newStroke);
             });
 }
 
@@ -1030,7 +1426,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
                 if (firstNonPositive != handler->pressureBuffer.end()) {
                     // Warning: this may delete handler->stroke if no positive pressure values are provided
                     // Do not dereference handler->stroke after that
-                    handler->fixNullPressureValues();
+                    handler->fixNullPressureValues(std::move(handler->pressureBuffer));
                 } else {
                     handler->stroke->setPressure(handler->pressureBuffer);
                 }
@@ -1093,6 +1489,9 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Docu
         return nullptr;
     }
 
+    const auto start = clock();
+
+
     xournalFilepath = filepath;
 
     this->pdfFilenameParsed = false;
@@ -1102,6 +1501,10 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Docu
         this->doc.reset();
         return nullptr;
     }
+
+    const auto stop = clock();
+    g_message("Time taken by old parser: %ld clocks", stop - start);
+
 
     if (fileVersion == 1) {
         // This is a Xournal document, not a Xournal++
@@ -1162,14 +1565,33 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     return data;
 }
 
-auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
-    gpointer tmpFilename = g_hash_table_lookup(this->audioFiles, filename.u8string().c_str());
-    if (tmpFilename) {
-        return string(static_cast<char*>(tmpFilename));
-    }
+void LoadHandler::setAudioAttributes(AudioElement& elem, const fs::path& filename, size_t timestamp) {
+    if (!filename.empty()) {
+        if (this->isGzFile) {
+            this->text->setAudioFilename(filename);
+        } else {
+            const auto tempFile = getTempFileForPath(filename);
+            if (!tempFile.empty()) {
+                this->text->setAudioFilename(tempFile);
+            }
+        }
 
-    error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename.u8string()));
-    return "";
+        if (this->fileVersion < 4) {
+            timestamp *= 1000;
+        }
+        elem.setTimestamp(timestamp);
+    }
+}
+
+auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
+    auto it = this->audioFiles.find(filename.string());
+
+    if (it == this->audioFiles.end()) {
+        error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename.u8string()));
+        return {};
+    } else {
+        return it->second;
+    }
 }
 
 auto LoadHandler::getFileVersion() const -> int { return this->fileVersion; }

@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include <cstddef>   // for size_t
-#include <memory>    // for unique_ptr
-#include <optional>  // for optional
-#include <string>    // for string
-#include <vector>    // for vector
+#include <cstddef>        // for size_t
+#include <memory>         // for unique_ptr
+#include <optional>       // for optional
+#include <string>         // for string
+#include <unordered_map>  // for unordered_map
+#include <vector>         // for vector
 
 #include <glib.h>     // for gchar, GError, gsize, GMarkupPars...
 #include <zip.h>      // for zip_file_t, zip_t
@@ -25,6 +26,8 @@
 #include "model/Document.h"         // for Document
 #include "model/DocumentHandler.h"  // for DocumentHandler
 #include "model/PageRef.h"          // for PageRef
+#include "model/PageType.h"         // for PageType
+#include "model/Stroke.h"           // for Stroke, StrokeTool,...
 #include "util/Color.h"             // for Color
 
 #include "LoadHandlerHelper.h"
@@ -32,7 +35,8 @@
 
 class Image;
 class Layer;
-class Stroke;
+class LineStyle;
+class Point;
 class TexImage;
 class Text;
 
@@ -65,6 +69,39 @@ public:
     /** @return The version of the loaded file */
     int getFileVersion() const;
 
+public:
+    // interface for XmlParser
+    void addXournal(const std::string& creator, int fileversion);
+    void addMrWriter(const std::string& creator);
+    void finalizeDocument();
+    void addPage(double width, double height);
+    void finalizePage();
+    void addAudioAttachment(const fs::path& filename);
+    void addBackground(const std::optional<std::string>& name);
+    void setBgSolid(const PageType& bg, const Color& color);
+    void setBgPixmap(bool attach, const fs::path& filename);
+    void setBgPixmapCloned(size_t pageNr);
+    void setBgPdf(size_t pageno);
+    void loadBgPdf(bool attach, const fs::path& filename);
+    void addLayer(const std::optional<std::string>& name);
+    void finalizeLayer();
+    void addStroke(StrokeTool tool, const Color& color, double width, int fill, StrokeCapStyle capStyle,
+                   const std::optional<LineStyle>& lineStyle, const fs::path& filename, size_t timestamp);
+    void setStrokePoints(std::vector<Point>&& pointVector, std::vector<double> pressures);
+    void finalizeStroke();
+    void addText(const std::string& font, double size, double x, double y, const Color& color, const fs::path& filename,
+                 size_t timestamp);
+    void setTextContents(const std::string& contents);
+    void finalizeText();
+    void addImage(double left, double top, double right, double bottom);
+    void setImageData(std::string&& data);
+    void setImageAttachment(const fs::path& filename);
+    void finalizeImage();
+    void addTexImage(double left, double top, double right, double bottom, const std::string& text);
+    void setTexImageData(std::string&& data);
+    void setTexImageAttachment(const fs::path& filename);
+    void finalizeTexImage();
+
 private:
     void parseStart();
     void parseContents();
@@ -86,7 +123,7 @@ private:
     bool openFile(fs::path const& filepath);
     bool parseXml();
 
-    void fixNullPressureValues();
+    void fixNullPressureValues(std::vector<double> pressures);
     static void parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,
                            GError** error);
     static void parserEndElement(GMarkupParseContext* context, const gchar* elementName, gpointer userdata,
@@ -115,6 +152,7 @@ private:
      */
     std::unique_ptr<std::string> readZipAttachment(fs::path const& filename);
 
+    void setAudioAttributes(AudioElement& elem, const fs::path& filename, size_t timestamp);
     fs::path getTempFileForPath(fs::path const& filename);
 
 private:
@@ -141,12 +179,12 @@ private:
 
     std::vector<PageRef> pages;
     PageRef page;
-    Layer* layer;
-    Stroke* stroke;
-    Text* text;
-    Image* image;
-    TexImage* teximage;
-    GHashTable* audioFiles = nullptr;
+    std::unique_ptr<Layer> layer;
+    std::unique_ptr<Stroke> stroke;
+    std::unique_ptr<Text> text;
+    std::unique_ptr<Image> image;
+    std::unique_ptr<TexImage> teximage;
+    std::unordered_map<std::string, fs::path> audioFiles;
 
     const char* endRootTag = "xournal";
 
