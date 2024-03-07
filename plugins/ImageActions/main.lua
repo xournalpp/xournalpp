@@ -1,14 +1,27 @@
+local Mode = {
+  INVERT = 1,
+  DOWNSCALE = 2,
+  FLIP_H = 3,
+  FLIP_V = 4,
+  ROTATE_CW = 5,
+  ROTATE_CCW = 6,
+  TRANSPARENT = 7,
+  TRIM = 8,
+  SPLIT_V = 9,
+  SPLIT_H = 10,
+}
+
 function initUi()
-  app.registerUi({ ["menu"] = "Invert selected images", ["callback"] = "cb", ["mode"] = 1 })
-  app.registerUi({ ["menu"] = "Downscale resolution of selected images by factor 0.5", ["callback"] = "cb", ["mode"] = 2 })
-  app.registerUi({ ["menu"] = "Flip selected images horizontally", ["callback"] = "cb", ["mode"] = 3 })
-  app.registerUi({ ["menu"] = "Flip selected images vertically", ["callback"] = "cb", ["mode"] = 4 })
-  app.registerUi({ ["menu"] = "Rotate selected images 90 degree clockwise", ["callback"] = "cb", ["mode"] = 5 })
-  app.registerUi({ ["menu"] = "Rotate selected images 90 degree counterclockwise", ["callback"] = "cb", ["mode"] = 6 })
-  app.registerUi({ ["menu"] = "Make white pixels transparent", ["callback"] = "cb", ["mode"] = 7 })
-  app.registerUi({ ["menu"] = "Trim selected images", ["callback"] = "cb", ["mode"] = 8 })
-  app.registerUi({ ["menu"] = "Split images vertically by largest white block", ["callback"] = "cb", ["mode"] = 9 })
-  app.registerUi({ ["menu"] = "Split images horizontally by largest white block", ["callback"] = "cb", ["mode"] = 10 })
+  app.registerUi({ ["menu"] = "Invert selected images", ["callback"] = "cb", ["mode"] = Mode.INVERT })
+  app.registerUi({ ["menu"] = "Downscale resolution of selected images by factor 0.5", ["callback"] = "cb", ["mode"] = Mode.DOWNSCALE })
+  app.registerUi({ ["menu"] = "Flip selected images horizontally", ["callback"] = "cb", ["mode"] = Mode.FLIP_H })
+  app.registerUi({ ["menu"] = "Flip selected images vertically", ["callback"] = "cb", ["mode"] = Mode.FLIP_V })
+  app.registerUi({ ["menu"] = "Rotate selected images 90 degree clockwise", ["callback"] = "cb", ["mode"] = Mode.ROTATE_CW })
+  app.registerUi({ ["menu"] = "Rotate selected images 90 degree counterclockwise", ["callback"] = "cb", ["mode"] = Mode.ROTATE_CCW })
+  app.registerUi({ ["menu"] = "Make white pixels transparent", ["callback"] = "cb", ["mode"] = Mode.TRANSPARENT })
+  app.registerUi({ ["menu"] = "Trim selected images", ["callback"] = "cb", ["mode"] = Mode.TRIM })
+  app.registerUi({ ["menu"] = "Split images vertically by largest white block", ["callback"] = "cb", ["mode"] = Mode.SPLIT_V })
+  app.registerUi({ ["menu"] = "Split images horizontally by largest white block", ["callback"] = "cb", ["mode"] = Mode.SPLIT_H })
 end
 
 function cb(mode)
@@ -26,28 +39,28 @@ function cb(mode)
     local im = images[i]
     local image = vips.Image.new_from_buffer(im["data"])
     local x, y, maxWidth, maxHeight = im["x"], im["y"], math.ceil(im["width"]), math.ceil(im["height"])
-    if mode == 1 then
+    if mode == Mode.INVERT then
       image = image:invert()
-    elseif mode == 2 then
+    elseif mode == Mode.DOWNSCALE then
       image = image:resize(0.5)
-    elseif mode == 3 then
+    elseif mode == Mode.FLIP_H then
       image = image:flip("horizontal")
-    elseif mode == 4 then
+    elseif mode == Mode.FLIP_V then
       image = image:flip("vertical")
-    elseif mode == 5 then
+    elseif mode == Mode.ROTATE_CW then
       image = image:rot("d90")
       maxWidth, maxHeight = maxHeight, maxWidth
-    elseif mode == 6 then
+    elseif mode == Mode.ROTATE_CCW then
       image = image:rot("d270")
       maxWidth, maxHeight = maxHeight, maxWidth
-    elseif mode == 7 then
+    elseif mode == Mode.TRANSPARENT then
       if image:bands() < 4 then
         image = image:bandjoin(255)    -- add alpha channel
       end
       local white = { 240, 240, 240, 0 } -- pixels are considered white, if its r,g,b values are >=240 and alpha is arbitrary
       local transparent = { 0, 0, 0, 0 }
       image = image:more(white):bandand():ifthenelse(transparent, image)
-    elseif mode == 8 then
+    elseif mode == Mode.TRIM then
       local width = image:width()
       local height = image:height()
       image = image:crop(image:find_trim())
@@ -56,11 +69,11 @@ function cb(mode)
       maxWidth, maxHeight = maxWidth * newWidth // width, maxHeight * newHeight // height
     end
 
-    if mode ~= 9 and mode ~= 10 then
+    if mode ~= Mode.SPLIT_V and mode ~= Mode.SPLIT_H then
       table.insert(imdata, { data = image:write_to_buffer(".png"), x = x, y = y, maxWidth = maxWidth, maxHeight =
       maxHeight })
     else
-      local vertical = mode == 9
+      local vertical = mode == Mode.SPLIT_V
       -- find largest sequence of white or transparent pixel rows/columns
       local filter = image:colourspace("b-w"):extract_band(0):more(240)
       local width = filter:width()
