@@ -20,7 +20,12 @@ const char* TAG_PAGE_NAME = "page";
 const int TAG_PAGE_NAME_LEN = strlen(TAG_PAGE_NAME);
 const char* TAG_PREVIEW_END_NAME = "/preview";
 const int TAG_PREVIEW_END_NAME_LEN = strlen(TAG_PREVIEW_END_NAME);
-constexpr auto BUF_SIZE = 8192;
+// max png size is: (1.02*(3*128+1)*128)+68 approx 50334
+// see https://stackoverflow.com/a/22507715/2907484
+// max base64-overhead is ceil(50334/3)*4 = 67112
+// see https://stackoverflow.com/a/4715480/2907484
+// round it up a bit
+constexpr auto BUF_SIZE = 68000;
 
 XojPreviewExtractor::XojPreviewExtractor() = default;
 
@@ -113,7 +118,6 @@ auto XojPreviewExtractor::readFile(const fs::path& file) -> PreviewExtractResult
         }
 
         // The <preview> Tag is within the first 179 Bytes
-        // The Preview should end within the first 8k
 
         std::array<char, BUF_SIZE> buffer{};
         int readLen = gzread(fp, buffer.data(), BUF_SIZE);
