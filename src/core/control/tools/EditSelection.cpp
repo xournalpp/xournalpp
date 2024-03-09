@@ -219,10 +219,11 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
         undo(ctrl->getUndoRedoHandler()),
         snappingHandler(ctrl->getSettings()) {
     // make the visible bounding box large enough so that anchors do not collapse even for horizontal/vertical strokes
-    x = bounds.minX - 1.5 * this->btnWidth;
-    y = bounds.minY - 1.5 * this->btnWidth;
-    width = bounds.getWidth() + 3 * this->btnWidth;
-    height = bounds.getHeight() + 3 * this->btnWidth;
+    const double PADDING = 12.;
+    x = bounds.minX - PADDING;
+    y = bounds.minY - PADDING;
+    width = bounds.getWidth() + 2 * PADDING;
+    height = bounds.getHeight() + 2 * PADDING;
 
     this->contents = std::make_unique<EditSelectionContents>(this->getRect(), this->snappedBounds, this->sourcePage,
                                                              this->sourceLayer, this->view);
