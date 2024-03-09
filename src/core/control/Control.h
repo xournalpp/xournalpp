@@ -118,9 +118,12 @@ public:
      */
     bool close(bool allowDestroy = false, bool allowCancel = true);
 
-    // Asks user to replace an existing file when saving / exporting, since we add the extension
-    // after the OK, we need to check manually
-    bool askToReplace(fs::path const& filepath) const;
+    /**
+     * @brief Asks user to replace an existing file when saving / exporting, since we add the extension
+     *        after the OK, we need to check manually
+     * @param parent the dialog which wants to override something
+     */
+    bool askToReplace(fs::path const& filepath, GtkWindow* parent) const;
 
     // Menu edit
     void showSettings();

@@ -81,6 +81,7 @@ auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const string& msg) -> int {
             gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
     if (win != nullptr) {
         gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+        gtk_window_set_modal(GTK_WINDOW(dialog), true);
     }
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another name"), GTK_RESPONSE_CANCEL);
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), GTK_RESPONSE_OK);
