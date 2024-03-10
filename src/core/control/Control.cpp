@@ -1490,7 +1490,8 @@ void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<vo
     std::unique_ptr<Document> doc(loadHandler.loadDocument(filepath));
 
     if (!doc) {
-        string msg = FS(_F("Error opening file \"{1}\"") % filepath.u8string()) + "\n" + loadHandler.getLastError();
+        std::string msg = FS(_F("Error opening file \"{1}\". Error message:{2}") % filepath.u8string() %
+                             loadHandler.getErrorMessages());
         XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
         callback(false);
         return;
@@ -1529,6 +1530,14 @@ void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<vo
     } else {
         afterOpen();
         callback(true);
+    }
+
+    if (loadHandler.hasErrorMessages()) {
+        std::string msg = FS(_F("There were some errors while loading the file. Some information might have been lost. "
+                                "Do not overwrite your old file unless you are sure everything you need was loaded "
+                                "correctly.\nError messages:{1}") %
+                             loadHandler.getErrorMessages());
+        XojMsgBox::showMessageToUser(getGtkWindow(), msg, GTK_MESSAGE_WARNING);
     }
 }
 
