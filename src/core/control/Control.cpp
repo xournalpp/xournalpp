@@ -1359,7 +1359,8 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     Document* loadedDocument = loadHandler.loadDocument(filepath);
 
     if (!loadedDocument) {
-        string msg = FS(_F("Error opening file \"{1}\"") % filepath.u8string()) + "\n" + loadHandler.getLastError();
+        std::string msg = FS(_F("Error opening file \"{1}\". Error message:{2}") % filepath.u8string() %
+                             loadHandler.getErrorMessages());
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 
         fileLoaded(scrollToPage);
@@ -1375,6 +1376,14 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
             loadedDocument->clearDocument();
             return false;
         }
+    }
+
+    if (loadHandler.hasErrorMessages()) {
+        std::string msg = FS(_F("There were some errors while loading the file. Some information might have been lost. "
+                                "Do not overwrite your old file unless you are sure everything you need was loaded "
+                                "correctly.\nError messages:{1}") %
+                             loadHandler.getErrorMessages());
+        XojMsgBox::showMessageToUser(getGtkWindow(), msg, GTK_MESSAGE_WARNING);
     }
 
     this->closeDocument();
@@ -1472,7 +1481,7 @@ void Control::fileLoaded(int scrollToPage) {
 enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
 
 void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepath) {
-    const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
+    const fs::path missingFilePath = loadHandler.getMissingPdfFilename();
 
     // create error message
     std::string parentFolderPath;
