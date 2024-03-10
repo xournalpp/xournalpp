@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-02 13:31+0000\n"
+"POT-Creation-Date: 2024-03-10 20:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -722,19 +722,19 @@ msgstr ""
 msgid "Supported files"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:455
+#: ../src/core/control/tools/EditSelection.cpp:456
 msgid "Arrange"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:470
+#: ../src/core/control/tools/EditSelection.cpp:471
 msgid "Bring forward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:481
+#: ../src/core/control/tools/EditSelection.cpp:482
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:488
+#: ../src/core/control/tools/EditSelection.cpp:489
 msgid "Send to back"
 msgstr ""
 
