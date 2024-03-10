@@ -1,8 +1,6 @@
 #include "control/xojfile/XmlParser.h"
 
 #include <functional>     // for function
-#include <ios>            // for std::ios
-#include <sstream>        // for istringstream
 #include <stdexcept>      // for runtime_error
 #include <string>         // for stod, string
 #include <unordered_map>  // for unordered_map
@@ -26,7 +24,6 @@
 #include "util/Color.h"                        // for Color
 #include "util/i18n.h"                         // for FS, _F
 #include "util/safe_casts.h"                   // for as_unsigned
-#include "util/serdesstream.h"                 // for serdes_stream
 
 #include "config-debug.h"  // for DEBUG_XML_PARSER
 #include "filesystem.h"    // for path
@@ -537,26 +534,29 @@ void XmlParser::parseStrokeTag() {
 
     // width
     auto widthStr = XmlParserHelper::getAttribMandatory<std::string>("width", attributeMap, "1");
-    auto inputStream = serdes_stream<std::istringstream>();
-    inputStream.rdbuf()->pubsetbuf(widthStr.data(), as_signed(widthStr.size()));  // avoid copying the string
-    double width = 1;
-    if (!(inputStream >> width)) {
-        g_warning("XML parser: Beginning of attribute \"width\" could not be parsed as double, the value is \"%s\"\n"
-                  "Using default value %f",
-                  widthStr.c_str(), width);
-    }
+    // Use g_ascii_strtod instead of streams beacuse it is about twice as fast
+    const char* itPtr = widthStr.c_str();
+    char* endPtr = nullptr;
+    const double width = g_ascii_strtod(itPtr, &endPtr);
 
     // pressures
     auto pressureStr = XmlParserHelper::getAttrib<std::string>("pressures", attributeMap);
     if (pressureStr) {
         // MrWriter writes pressures in a separate field
-        // Xournal and Xournal++ use the width field. inputStream already points to widthStr
-        inputStream.rdbuf()->pubsetbuf(pressureStr->data(), as_signed(pressureStr->size()));
+        itPtr = pressureStr->c_str();
+    } else {
+        // Xournal and Xournal++ use the width field
+        itPtr = endPtr;
     }
-    while (!inputStream.eof() && !inputStream.fail()) {
-        double pressure{};
-        inputStream >> pressure;
+    while (*itPtr != 0) {
+        const double pressure = g_ascii_strtod(itPtr, &endPtr);
+        if (endPtr == itPtr) {
+            // Parsing failed
+            g_warning("XML parser: A pressure point could not be parsed as double. Remaining points: \"%s\"", itPtr);
+            break;
+        }
         this->pressureBuffer.emplace_back(pressure);
+        itPtr = endPtr;
     }
 
     // fill
@@ -588,29 +588,25 @@ void XmlParser::parseStrokeTag() {
 }
 
 void XmlParser::parseStrokeText() {
-    auto stream =
-            serdes_stream<std::istringstream>(reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader)));
-    // Jump out of the loop below before adding a point in case of a failed read
-    stream.exceptions(std::ios::failbit);
-
     std::vector<Point> pointVector;
     pointVector.reserve(this->pressureBuffer.size());
-    try {
-        while (!stream.eof() && !stream.fail()) {
-            double x{}, y{};
-            stream >> x >> y;
-            pointVector.emplace_back(x, y);
+
+    // Use g_ascii_strtod instead of streams beacuse it is about twice as fast
+    const char* itPtr = reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader));
+    char* endPtr = nullptr;
+    while (*itPtr != 0) {
+        const double x = g_ascii_strtod(itPtr, &endPtr);
+        itPtr = endPtr;
+        // Note: should the first call to g_ascii_strtod have failed, the second one will be given the same input
+        //       and fail in the same way. We only need to check for an error once.
+        const double y = g_ascii_strtod(itPtr, &endPtr);
+        if (endPtr == itPtr) {
+            // Parsing failed
+            g_warning("XML parser: A stroke coordinate could not be parsed as double. Remaining data: \"%s\"", itPtr);
+            break;
         }
-    } catch (const std::ios::failure&) {
-        if (stream.eof()) {
-            // The failbit was set after eof was reached: this means we tried to
-            // read past the end of the string.
-            g_warning("XML parser: Found odd number of values in stroke data. Discarding last value. Data: \"%s\"",
-                      stream.str().c_str());
-        } else {
-            // Another error occured before reaching eof
-            g_warning("XML parser: An error occured while parsing stroke points. Data: \"%s\"", stream.str().c_str());
-        }
+        pointVector.emplace_back(x, y);
+        itPtr = endPtr;
     }
 
     this->handler->setStrokePoints(std::move(pointVector), std::move(this->pressureBuffer));
