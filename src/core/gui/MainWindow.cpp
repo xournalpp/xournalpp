@@ -120,7 +120,6 @@ void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
     createToolbar();
 
     setToolbarVisible(control->getSettings()->isToolbarVisible());
-    getSpinPageNo()->addListener(this->control->getScrollHandler());
 }
 
 GMenuModel* MainWindow::getMenuModel() const { return menubar->getModel(); }
@@ -494,9 +493,9 @@ auto MainWindow::windowMaximizedCallback(GObject* window, GParamSpec*, MainWindo
 }
 
 void MainWindow::toolbarSelected(const std::string& id) {
-    const auto& toolbars = *toolbar->getModel()->getToolbars();
-    auto it = std::find_if(toolbars.begin(), toolbars.end(), [&](const ToolbarData* d) { return d->getId() == id; });
-    toolbarSelected(it == toolbars.end() ? nullptr : *it);
+    const auto& toolbars = toolbar->getModel()->getToolbars();
+    auto it = std::find_if(toolbars.begin(), toolbars.end(), [&](const auto& d) { return d->getId() == id; });
+    toolbarSelected(it == toolbars.end() ? nullptr : it->get());
 }
 
 void MainWindow::toolbarSelected(ToolbarData* d) {
@@ -511,7 +510,7 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
     this->loadToolbar(d);
 }
 
-auto MainWindow::clearToolbar() -> ToolbarData* {
+auto MainWindow::clearToolbar() -> const ToolbarData* {
     if (this->selectedToolbar != nullptr) {
         for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
             ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i].get());
@@ -519,12 +518,7 @@ auto MainWindow::clearToolbar() -> ToolbarData* {
 
         this->toolbar->freeDynamicToolbarItems();
     }
-
-    ToolbarData* oldData = this->selectedToolbar;
-
-    this->selectedToolbar = nullptr;
-
-    return oldData;
+    return std::exchange(this->selectedToolbar, nullptr);
 }
 
 void MainWindow::loadToolbar(ToolbarData* d) {
@@ -565,48 +559,16 @@ void MainWindow::createToolbar() {
 }
 
 void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage) {
-    SpinPageAdapter* spinPageNo = getSpinPageNo();
-    if (!spinPageNo) {
-        // Toolbar is not yet setup
-        return;
-    }
-
-    size_t min = 0;
-    size_t max = pagecount;
-
-    if (pagecount == 0) {
-        min = 0;
-        page = 0;
-    } else {
-        min = 1;
-        page++;
-    }
-
-    spinPageNo->setMinMaxPage(min, max);
-    spinPageNo->setPage(page);
-
-    if (pdfpage != npos) {
-        toolbar->setPageInfo(pagecount, pdfpage + 1);
-    } else {
-        toolbar->setPageInfo(pagecount);
-    }
+    toolbar->setPageInfo(page, pagecount, pdfpage);
 }
 
 auto MainWindow::getMenubar() const -> Menubar* { return menubar.get(); }
 
 void MainWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
 
-void MainWindow::setUndoDescription(const string& description) {
-    toolbar->setUndoDescription(description);
-    menubar->setUndoDescription(description);
-}
+void MainWindow::setUndoDescription(const string& description) { menubar->setUndoDescription(description); }
 
-void MainWindow::setRedoDescription(const string& description) {
-    toolbar->setRedoDescription(description);
-    menubar->setRedoDescription(description);
-}
-
-auto MainWindow::getSpinPageNo() const -> SpinPageAdapter* { return toolbar->getPageSpinner(); }
+void MainWindow::setRedoDescription(const string& description) { menubar->setRedoDescription(description); }
 
 auto MainWindow::getToolbarModel() const -> ToolbarModel* { return this->toolbar->getModel(); }
 

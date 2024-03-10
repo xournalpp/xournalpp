@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 
 #include <gio/gio.h>
@@ -56,7 +57,7 @@ public:
     };
 
 protected:
-    GtkWidget* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
     GtkWidget* getNewToolIcon() const override;
 
@@ -65,9 +66,7 @@ private:
     static void setProminentIconCallback(GObject* action, GParamSpec*, DrawingTypeComboToolButton* self);
 
 protected:
-    xoj::util::WidgetSPtr popover;
-    xoj::util::WidgetSPtr button;
-    EnumIndexedArray<Entry, Type> entries;
+    std::shared_ptr<const EnumIndexedArray<Entry, Type>> entries;
     std::string iconName;
     std::string description;
 };

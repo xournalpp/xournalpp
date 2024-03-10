@@ -38,6 +38,13 @@ typedef void (*GtkDrawingAreaDrawFunc)(GtkDrawingArea* drawing_area, cairo_t* cr
 void gtk_drawing_area_set_draw_func(GtkDrawingArea* area, GtkDrawingAreaDrawFunc draw_func, gpointer user_data,
                                     GDestroyNotify destroy);
 
+/**** GtkScale ****/
+
+typedef char* (*GtkScaleFormatValueFunc)(GtkScale* scale, double value, gpointer user_data);
+/// WARNING: unsetting (via func = nullptr) or replacing the function is not implemented here.
+void gtk_scale_set_format_value_func(GtkScale* scale, GtkScaleFormatValueFunc func, gpointer user_data,
+                                     GDestroyNotify destroy_notify);
+
 /**** GtkScrolledWindow ****/
 
 GtkWidget* gtk_scrolled_window_new();
@@ -74,3 +81,8 @@ void gtk_im_context_set_client_widget(GtkIMContext* context, GtkWidget* widget);
 /**** GtkFileChooserDialog ****/
 gboolean gtk_file_chooser_add_shortcut_folder(GtkFileChooser* chooser, GFile* file, GError** error);
 gboolean gtk_file_chooser_set_current_folder(GtkFileChooser* chooser, GFile* file, GError** error);
+
+/**** GtkListBox ****/
+void gtk_list_box_append(GtkListBox* box, GtkWidget* widget);
+void gtk_list_box_row_set_child(GtkListBoxRow* row, GtkWidget* w);
+GtkWidget* gtk_list_box_row_get_child(GtkListBoxRow* row);

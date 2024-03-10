@@ -162,6 +162,19 @@
      <attribute name="label" translatable="yes">Preferences</attribute>
      <attribute name="action">win.settings</attribute>
     </item>
+    <submenu id="menuViewToolbar">
+     <attribute name="label" translatable="yes">T_oolbars</attribute>
+     <section>
+      <item>
+       <attribute name="label" translatable="yes">_Manage</attribute>
+       <attribute name="action">win.manage-toolbar</attribute>
+      </item>
+      <item>
+       <attribute name="label" translatable="yes">_Customize</attribute>
+       <attribute name="action">win.customize-toolbar</attribute>
+      </item>
+     </section>
+    </submenu>
    </section>
   </submenu>
   <submenu>
@@ -181,17 +194,22 @@
      <attribute name="action">win.fullscreen</attribute>
      <attribute name="accel">F11</attribute>
     </item>
-    <item>
-     <attribute name="label" translatable="yes">Show Sidebar</attribute>
-     <attribute name="action">win.show-sidebar</attribute>
-     <attribute name="accel">F12</attribute>
-    </item>
    </section>
    <section>
     <item>
      <attribute name="label" translatable="yes">Show Toolbars</attribute>
      <attribute name="action">win.show-toolbar</attribute>
      <attribute name="accel">F9</attribute>
+    </item>
+    <item>
+     <attribute name="label" translatable="yes">Show Menubar</attribute>
+     <attribute name="action">win.show-menubar</attribute>
+     <attribute name="accel">F10</attribute>
+    </item>
+    <item>
+     <attribute name="label" translatable="yes">Show Sidebar</attribute>
+     <attribute name="action">win.show-sidebar</attribute>
+     <attribute name="accel">F12</attribute>
     </item>
    </section>
    <section>
@@ -331,28 +349,6 @@
       </submenu>
      </section>
     </submenu>
-   </section>
-   <section>
-    <submenu id="menuViewToolbar">
-     <attribute name="label" translatable="yes">T_oolbars</attribute>
-     <section>
-      <item>
-       <attribute name="label" translatable="yes">_Manage</attribute>
-       <attribute name="action">win.manage-toolbar</attribute>
-      </item>
-      <item>
-       <attribute name="label" translatable="yes">_Customize</attribute>
-       <attribute name="action">win.customize-toolbar</attribute>
-      </item>
-     </section>
-    </submenu>
-   </section>
-   <section>
-    <item>
-     <attribute name="label" translatable="yes">Show Menubar</attribute>
-     <attribute name="action">win.show-menubar</attribute>
-     <attribute name="accel">F10</attribute>
-    </item>
    </section>
    <section>
     <item>

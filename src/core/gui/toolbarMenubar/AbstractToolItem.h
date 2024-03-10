@@ -12,6 +12,7 @@
 #pragma once
 
 #include <string>  // for string
+#include <vector>
 
 #include <gtk/gtk.h>  // for GtkWidget
 
@@ -21,7 +22,21 @@
 
 class AbstractToolItem {
 public:
-    AbstractToolItem(std::string id);
+    // If you add a category, don't forget to give it a label in ToolbarCustomizeDialog.cpp.
+    // Keep the enum contiguous
+    enum class Category : unsigned char {
+        FILES,
+        TOOLS,
+        COLORS,
+        NAVIGATION,
+        MISC,
+        SELECTION,
+        AUDIO,
+        SEPARATORS,
+        PLUGINS,
+        ENUMERATOR_COUNT  // Keep last
+    };
+    AbstractToolItem(std::string id, Category cat);
     virtual ~AbstractToolItem();
 
     AbstractToolItem(AbstractToolItem const&) = delete;
@@ -30,18 +45,12 @@ public:
     auto operator=(AbstractToolItem&&) -> AbstractToolItem& = delete;  // Implement if desired
 
 public:
-    virtual GtkWidget* createItem(bool horizontal) = 0;
+    virtual xoj::util::WidgetSPtr createItem(bool horizontal) = 0;
 
-    GtkToolItem* createToolItem(bool horizontal);
-
-    bool isUsed() const;
-    /**
-     * May be used to clean up data in derived class when an item is no longer used
-     * Derived implementations should call AbstractToolItem::setUsed()
-     */
-    virtual void setUsed(bool used);
+    xoj::util::WidgetSPtr createToolItem(bool horizontal);
 
     const std::string& getId() const;
+    Category getCategory() const;
     virtual std::string getToolDisplayName() const = 0;
 
     /**
@@ -49,14 +58,7 @@ public:
      */
     virtual GtkWidget* getNewToolIcon() const = 0;
 
-    GtkWidget* getItem() const;
-
 protected:
     std::string id;
-    xoj::util::WidgetSPtr item;
-
-    /**
-     * This item is already somewhere in the toolbar
-     */
-    bool used = false;
+    const Category category;
 };

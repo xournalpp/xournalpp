@@ -47,16 +47,16 @@ ToolbarSelectionSubmenu::ToolbarSelectionSubmenu(MainWindow* win, Settings* sett
         gAction(g_simple_action_new_stateful(G_ACTION_NAME, G_VARIANT_TYPE_STRING,
                                              g_variant_new_string(settings->getSelectedToolbar().c_str())),
                 xoj::util::adopt) {
-    const auto& toolbars = *toolbar->getModel()->getToolbars();
+    const auto& toolbars = toolbar->getModel()->getToolbars();
 
     auto it = toolbars.begin();
     this->stockConfigurationsSection.reset(g_menu_new(), xoj::util::adopt);
     for (; it != toolbars.end() && (*it)->isPredefined(); ++it) {
-        g_menu_append_item(this->stockConfigurationsSection.get(), createToolbarSelectionMenuItem(*it).get());
+        g_menu_append_item(this->stockConfigurationsSection.get(), createToolbarSelectionMenuItem(it->get()).get());
     }
     this->customConfigurationsSection.reset(g_menu_new(), xoj::util::adopt);
     for (; it != toolbars.end(); ++it) {
-        g_menu_append_item(this->customConfigurationsSection.get(), createToolbarSelectionMenuItem(*it).get());
+        g_menu_append_item(this->customConfigurationsSection.get(), createToolbarSelectionMenuItem(it->get()).get());
     }
 
     g_signal_connect(G_OBJECT(gAction.get()), "change-state", G_CALLBACK(toolbarSelectionMenuChangeStateCallback), win);
@@ -75,14 +75,13 @@ void ToolbarSelectionSubmenu::addToMenubar(Menubar& menubar) {
 }
 
 void ToolbarSelectionSubmenu::update(ToolMenuHandler* toolbarHandler, const ToolbarData* tb) {
-    const auto& toolbars = *toolbarHandler->getModel()->getToolbars();
+    const auto& toolbars = toolbarHandler->getModel()->getToolbars();
     // The first half stockConfigurationsSection of the menu has already been generated: fast forward to the first
     // custom config
-    auto it =
-            std::find_if_not(toolbars.begin(), toolbars.end(), [](const ToolbarData* d) { return d->isPredefined(); });
+    auto it = std::find_if_not(toolbars.begin(), toolbars.end(), [](const auto& d) { return d->isPredefined(); });
     g_menu_remove_all(this->customConfigurationsSection.get());
     for (; it != toolbars.end(); ++it) {
-        g_menu_append_item(this->customConfigurationsSection.get(), createToolbarSelectionMenuItem(*it).get());
+        g_menu_append_item(this->customConfigurationsSection.get(), createToolbarSelectionMenuItem(it->get()).get());
     }
     // Does not fire a "change-state" signal
     g_simple_action_set_state(gAction.get(), g_variant_new_string(tb ? tb->getId().c_str() : ""));

@@ -26,6 +26,7 @@ class GladeSearchpath;
 class ToolbarManageDialog {
 public:
     ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model, std::function<void()> callback);
+    ~ToolbarManageDialog();
 
 public:
     inline GtkWindow* getWindow() const { return window.get(); }
@@ -39,7 +40,7 @@ private:
     static void buttonDeleteCallback(GtkButton* button, ToolbarManageDialog* dlg);
     static void buttonCopyCallback(GtkButton* button, ToolbarManageDialog* dlg);
 
-    void addToolbarData(ToolbarData* data);
+    void addToolbarData(std::unique_ptr<ToolbarData> tbd);
     void entrySelected(ToolbarData* data);
 
     void updateSelectionData();

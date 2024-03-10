@@ -75,6 +75,7 @@ enum class Action : size_t {
     ZOOM_OUT,
     ZOOM_100,
     ZOOM_FIT,
+    ZOOM,  ///< Action whose state is the current zoom value
 
     // Menu navigation
     GOTO_FIRST,

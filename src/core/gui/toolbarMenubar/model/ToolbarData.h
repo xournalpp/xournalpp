@@ -17,7 +17,7 @@
 #include <glib.h>  // for GKeyFile
 
 class ToolbarEntry;
-
+struct Palette;
 
 class ToolbarData {
 public:
@@ -34,8 +34,8 @@ public:
     void setId(std::string id);
     bool isPredefined() const;
 
-    void load(GKeyFile* config, const char* group);
-    void saveToKeyFile(GKeyFile* config);
+    void load(GKeyFile* config, const char* group, const Palette& colorPalette);
+    void saveToKeyFile(GKeyFile* config) const;
 
     // Editing API
     int insertItem(const std::string& toolbar, const std::string& item, int position);
@@ -44,7 +44,7 @@ public:
 private:
     std::string id;
     std::string name;
-    std::vector<ToolbarEntry*> contents;
+    std::vector<ToolbarEntry> contents;
 
     bool predefined = false;
 

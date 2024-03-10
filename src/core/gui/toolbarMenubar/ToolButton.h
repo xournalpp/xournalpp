@@ -25,17 +25,17 @@
 
 class ToolButton: public AbstractToolItem {
 public:
-    ToolButton(std::string id, Action action, std::string iconName, std::string description, bool toggle);
-    ToolButton(std::string id, Action action, GVariant* target, std::string iconName, std::string description);
+    ToolButton(std::string id, Category cat, Action action, std::string iconName, std::string description, bool toggle);
+    ToolButton(std::string id, Category cat, Action action, GVariant* target, std::string iconName,
+               std::string description);
     ~ToolButton() override = default;
 
 public:
-    void updateDescription(const std::string& description);
     std::string getToolDisplayName() const override;
     void setPopoverFactory(const PopoverFactory* factory);
 
 protected:
-    GtkWidget* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
     GtkWidget* getNewToolIcon() const override;
 

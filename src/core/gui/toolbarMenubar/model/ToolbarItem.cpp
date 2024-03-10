@@ -13,11 +13,6 @@ ToolbarItem::ToolbarItem(std::string name) {
     }
 }
 
-ToolbarItem::ToolbarItem() {
-    this->name = "";
-    this->id = -100;
-}
-
 auto ToolbarItem::getName() const -> std::string { return this->name; }
 
 void ToolbarItem::setName(std::string name) { this->name = std::move(name); }

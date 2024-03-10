@@ -60,13 +60,11 @@ public:
     void toolbarSelected(ToolbarData* d);
     ToolbarData* getSelectedToolbar() const;
 
-    /**
-     * These methods are only used internally and for toolbar configuration
-     */
-    ToolbarData* clearToolbar();
+private:
+    const ToolbarData* clearToolbar();
     void loadToolbar(ToolbarData* d);
 
-
+public:
     void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
 
     void setMaximized(bool maximized);
@@ -90,7 +88,6 @@ public:
     void setUndoDescription(const std::string& description);
     void setRedoDescription(const std::string& description);
 
-    SpinPageAdapter* getSpinPageNo() const;
     ToolbarModel* getToolbarModel() const;
     ToolMenuHandler* getToolMenuHandler() const;
 

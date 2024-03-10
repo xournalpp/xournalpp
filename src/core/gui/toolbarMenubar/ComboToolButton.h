@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -40,8 +41,8 @@ public:
      * @param description Description used in the toolbar customization dialog to explain this combo button.
      * @param entries Entries of the combo menu.
      */
-    ComboToolButton(std::string id, std::string iconName, std::string description, std::vector<Entry> entries,
-                    ActionRef gAction);
+    ComboToolButton(std::string id, Category cat, std::string iconName, std::string description,
+                    std::vector<Entry> entries, ActionRef gAction);
 
     ~ComboToolButton() override = default;
 
@@ -49,14 +50,12 @@ public:
     std::string getToolDisplayName() const override;
 
 protected:
-    GtkWidget* createItem(bool horizontal) override;
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
     GtkWidget* getNewToolIcon() const override;
 
 protected:
-    xoj::util::WidgetSPtr popover;
-    xoj::util::WidgetSPtr button;
-    std::vector<Entry> entries;
+    const std::vector<Entry> entries;
     ActionRef gAction;
     std::string iconName;
     std::string description;

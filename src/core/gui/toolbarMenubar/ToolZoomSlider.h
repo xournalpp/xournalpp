@@ -20,37 +20,42 @@
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
 #include "gui/IconNameHelper.h"         // for IconNameHelper
 
-#include "AbstractSliderItem.h"  // for AbstractSliderItem
+#include "AbstractSliderItem.h"  // for NewAbstractSliderItem
 
 class ZoomControl;
 class ActionDatabase;
 
-class ToolZoomSlider: public AbstractSliderItem, public ZoomListener {
+class ToolZoomSlider: public AbstractSliderItem {
 public:
     ToolZoomSlider(std::string id, ZoomControl* zoom, IconNameHelper iconNameHelper, ActionDatabase& db);
-    ~ToolZoomSlider() override;
+    ~ToolZoomSlider() override = default;
+
+    xoj::util::WidgetSPtr createItem(bool horizontal) override;
 
 protected:
-    void onSliderChanged(double value) override;
-    void onSliderButtonPress() override;
-    void onSliderButtonRelease() override;
-    void onSliderHoverScroll() override;
-    std::string formatSliderValue(double value) const override;
-    void configure(GtkRange* slider, bool isHorizontal) const override;
-
-    void zoomChanged() override;
-    void zoomRangeValuesChanged() override;
+    static constexpr bool DISPLAY_VALUE = true;
+    static std::string formatSliderValue(double value);
 
     std::string getToolDisplayName() const override;
 
 protected:
     GtkWidget* getNewToolIcon() const override;
 
-    double scaleFunc(double x) const override;
-    double scaleFuncInv(double x) const override;
+protected:
+    /**
+     * @brief Function to convert from the GAction's state value to the slider's position. (e.g. for log scaling)
+     */
+    static double scaleFunction(double x);
 
-private:
-    class Impl;
+    /**
+     * @brief Function to convert from the slider's position to the GAction's state value. (e.g. for log scaling)
+     */
+    static double scaleInverseFunction(double x);
 
-    std::unique_ptr<Impl> pImpl;
+protected:
+    std::string iconName;
+    ZoomControl* zoomCtrl;
+
+    template <class FinalSliderType>
+    friend class SliderItemCreationHelper;
 };
