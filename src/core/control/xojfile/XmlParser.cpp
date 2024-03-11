@@ -16,6 +16,7 @@
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "control/xojfile/InputStream.h"       // for InputStream
 #include "control/xojfile/LoadHandler.h"       // for LoadHandler
+#include "control/xojfile/XmlNames.h"          // for XmlAttrs
 #include "control/xojfile/XmlParserHelper.h"   // for getAttrib...
 #include "model/PageType.h"                    // for PageType
 #include "model/Point.h"                       // for Point
@@ -376,12 +377,12 @@ void XmlParser::parseXournalTag() {
     const auto attributeMap = getAttributeMap();
 
     std::string creator;
-    const auto optCreator = XmlParserHelper::getAttrib<std::string>("creator", attributeMap);
+    const auto optCreator = XmlParserHelper::getAttrib<std::string>(XmlAttrs::CREATOR_STR, attributeMap);
     if (optCreator) {
         creator = *optCreator;
     } else {
         // Compatibility: the creator attribute exists since 7017b71. Before that, only a version string was written
-        const auto optVersion = XmlParserHelper::getAttrib<std::string>("version", attributeMap);
+        const auto optVersion = XmlParserHelper::getAttrib<std::string>(XmlAttrs::VERSION_STR, attributeMap);
         if (optVersion) {
             creator = "Xournal " + *optVersion;
         } else {
@@ -389,7 +390,7 @@ void XmlParser::parseXournalTag() {
         }
     }
 
-    const auto fileversion = XmlParserHelper::getAttribMandatory<int>("fileversion", attributeMap, 1);
+    const auto fileversion = XmlParserHelper::getAttribMandatory<int>(XmlAttrs::FILEVERSION_STR, attributeMap, 1);
 
     this->handler->addXournal(creator, fileversion);
 }
@@ -398,7 +399,7 @@ void XmlParser::parseMrWriterTag() {
     const auto attributeMap = getAttributeMap();
 
     std::string creator;
-    auto optVersion = XmlParserHelper::getAttrib<std::string>("verison", attributeMap);
+    auto optVersion = XmlParserHelper::getAttrib<std::string>(XmlAttrs::VERSION_STR, attributeMap);
     if (optVersion) {
         creator = "MrWriter " + *optVersion;
     } else {
@@ -411,8 +412,8 @@ void XmlParser::parseMrWriterTag() {
 void XmlParser::parsePageTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto width = XmlParserHelper::getAttribMandatory<double>("width", attributeMap);
-    const auto height = XmlParserHelper::getAttribMandatory<double>("height", attributeMap);
+    const auto width = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::WIDTH_STR, attributeMap);
+    const auto height = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::HEIGHT_STR, attributeMap);
 
     this->handler->addPage(width, height);
 }
@@ -420,7 +421,7 @@ void XmlParser::parsePageTag() {
 void XmlParser::parseAudioTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto filename = XmlParserHelper::getAttribMandatory<fs::path>("fn", attributeMap);
+    const auto filename = XmlParserHelper::getAttribMandatory<fs::path>(XmlAttrs::FN_STR, attributeMap);
 
     this->handler->addAudioAttachment(filename);
 }
@@ -428,8 +429,8 @@ void XmlParser::parseAudioTag() {
 void XmlParser::parseBackgroundTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto name = XmlParserHelper::getAttrib<std::string>("name", attributeMap);
-    const auto optType = XmlParserHelper::getAttrib<std::string>("type", attributeMap);
+    const auto name = XmlParserHelper::getAttrib<std::string>(XmlAttrs::NAME_STR, attributeMap);
+    const auto optType = XmlParserHelper::getAttrib<std::string>(XmlAttrs::TYPE_STR, attributeMap);
 
     this->handler->addBackground(name);
     if (optType) {
@@ -450,8 +451,8 @@ void XmlParser::parseBackgroundTag() {
 }
 
 void XmlParser::parseBgSolid(const XmlParserHelper::AttributeMap& attributeMap) {
-    const auto optStyle = XmlParserHelper::getAttrib<std::string>("style", attributeMap);
-    const auto config = XmlParserHelper::getAttribMandatory<std::string>("config", attributeMap, "", false);
+    const auto optStyle = XmlParserHelper::getAttrib<std::string>(XmlAttrs::STYLE_STR, attributeMap);
+    const auto config = XmlParserHelper::getAttribMandatory<std::string>(XmlAttrs::CONFIG_STR, attributeMap, "", false);
     PageType bg;
     if (optStyle) {
         bg.format = PageTypeHandler::getPageTypeFormatForString(*optStyle);
@@ -464,30 +465,32 @@ void XmlParser::parseBgSolid(const XmlParserHelper::AttributeMap& attributeMap) 
 }
 
 void XmlParser::parseBgPixmap(const XmlParserHelper::AttributeMap& attributeMap) {
-    const auto domain = XmlParserHelper::getAttribMandatory<XmlParserHelper::Domain>("domain", attributeMap,
+    const auto domain = XmlParserHelper::getAttribMandatory<XmlParserHelper::Domain>(XmlAttrs::DOMAIN_STR, attributeMap,
                                                                                      XmlParserHelper::Domain::ABOSLUTE);
 
     if (domain != XmlParserHelper::Domain::CLONE) {
-        const fs::path filename = XmlParserHelper::getAttribMandatory<std::string>("filename", attributeMap);
+        const fs::path filename =
+                XmlParserHelper::getAttribMandatory<std::string>(XmlAttrs::FILENAME_STR, attributeMap);
         this->handler->setBgPixmap(domain == XmlParserHelper::Domain::ATTACH, filename);
     } else {
         // In case of a cloned background image, filename contains the page
         // number from which the image is cloned.
-        const auto pageNr = XmlParserHelper::getAttribMandatory<size_t>("filename", attributeMap);
+        const auto pageNr = XmlParserHelper::getAttribMandatory<size_t>(XmlAttrs::FILENAME_STR, attributeMap);
         this->handler->setBgPixmapCloned(pageNr);
     }
 }
 
 void XmlParser::parseBgPdf(const XmlParserHelper::AttributeMap& attributeMap) {
     if (!this->pdfFilenameParsed) {
-        auto domain = XmlParserHelper::getAttribMandatory<XmlParserHelper::Domain>("domain", attributeMap,
+        auto domain = XmlParserHelper::getAttribMandatory<XmlParserHelper::Domain>(XmlAttrs::DOMAIN_STR, attributeMap,
                                                                                    XmlParserHelper::Domain::ABOSLUTE);
         if (domain == XmlParserHelper::Domain::CLONE) {
             g_warning("XML parser: Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead");
             domain = XmlParserHelper::Domain::ABOSLUTE;
         }
 
-        const fs::path filename = XmlParserHelper::getAttribMandatory<std::string>("filename", attributeMap);
+        const fs::path filename =
+                XmlParserHelper::getAttribMandatory<std::string>(XmlAttrs::FILENAME_STR, attributeMap);
 
         if (!filename.empty()) {
             this->pdfFilenameParsed = true;
@@ -497,7 +500,7 @@ void XmlParser::parseBgPdf(const XmlParserHelper::AttributeMap& attributeMap) {
         }
     }
 
-    const auto pageno = XmlParserHelper::getAttribMandatory<size_t>("pageno", attributeMap, 1) - 1;
+    const auto pageno = XmlParserHelper::getAttribMandatory<size_t>(XmlAttrs::PAGENO_STR, attributeMap, 1) - 1;
 
     this->handler->setBgPdf(pageno);
 }
@@ -505,7 +508,7 @@ void XmlParser::parseBgPdf(const XmlParserHelper::AttributeMap& attributeMap) {
 void XmlParser::parseLayerTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto name = XmlParserHelper::getAttrib<std::string>("name", attributeMap);
+    const auto name = XmlParserHelper::getAttrib<std::string>(XmlAttrs::NAME_STR, attributeMap);
 
     this->handler->addLayer(name);
 }
@@ -520,27 +523,28 @@ void XmlParser::parseTimestampTag() {
                   this->tempFilename.u8string().c_str());
     }
 
-    this->tempFilename = XmlParserHelper::getAttribMandatory<std::string>("fn", attributeMap);
-    this->tempTimestamp = XmlParserHelper::getAttribMandatory<size_t>("ts", attributeMap);
+    this->tempFilename = XmlParserHelper::getAttribMandatory<std::string>(XmlAttrs::FN_STR, attributeMap);
+    this->tempTimestamp = XmlParserHelper::getAttribMandatory<size_t>(XmlAttrs::TS_STR, attributeMap);
 }
 
 void XmlParser::parseStrokeTag() {
     const auto attributeMap = getAttributeMap();
 
     // tool
-    const auto tool = XmlParserHelper::getAttribMandatory<StrokeTool>("tool", attributeMap, StrokeTool::PEN);
+    const auto tool =
+            XmlParserHelper::getAttribMandatory<StrokeTool>(XmlAttrs::TOOL_STR, attributeMap, StrokeTool::PEN);
     // color
     const auto color = XmlParserHelper::getAttribColorMandatory(attributeMap, Colors::black);
 
     // width
-    auto widthStr = XmlParserHelper::getAttribMandatory<std::string>("width", attributeMap, "1");
+    auto widthStr = XmlParserHelper::getAttribMandatory<std::string>(XmlAttrs::WIDTH_STR, attributeMap, "1");
     // Use g_ascii_strtod instead of streams beacuse it is about twice as fast
     const char* itPtr = widthStr.c_str();
     char* endPtr = nullptr;
     const double width = g_ascii_strtod(itPtr, &endPtr);
 
     // pressures
-    auto pressureStr = XmlParserHelper::getAttrib<std::string>("pressures", attributeMap);
+    auto pressureStr = XmlParserHelper::getAttrib<std::string>(XmlAttrs::PRESSURES_STR, attributeMap);
     if (pressureStr) {
         // MrWriter writes pressures in a separate field
         itPtr = pressureStr->c_str();
@@ -560,23 +564,23 @@ void XmlParser::parseStrokeTag() {
     }
 
     // fill
-    const auto fill = XmlParserHelper::getAttribMandatory<int>("fill", attributeMap, -1, false);
+    const auto fill = XmlParserHelper::getAttribMandatory<int>(XmlAttrs::FILL_STR, attributeMap, -1, false);
 
     // cap stype
-    const auto capStyle =
-            XmlParserHelper::getAttribMandatory<StrokeCapStyle>("capStyle", attributeMap, StrokeCapStyle::ROUND, false);
+    const auto capStyle = XmlParserHelper::getAttribMandatory<StrokeCapStyle>(XmlAttrs::CAPSTYLE_STR, attributeMap,
+                                                                              StrokeCapStyle::ROUND, false);
 
     // line style
-    const auto lineStyle = XmlParserHelper::getAttrib<LineStyle>("style", attributeMap);
+    const auto lineStyle = XmlParserHelper::getAttrib<LineStyle>(XmlAttrs::STYLE_STR, attributeMap);
 
     // audio filename and timestamp
-    const auto optFilename = XmlParserHelper::getAttrib<std::string>("fn", attributeMap);
+    const auto optFilename = XmlParserHelper::getAttrib<std::string>(XmlAttrs::FN_STR, attributeMap);
     if (optFilename && !optFilename->empty()) {
         if (!this->tempFilename.empty()) {
             g_warning("XML parser: Discarding audio timestamp element, because stroke tag contains \"fn\" attribute");
         }
         this->tempFilename = *optFilename;
-        this->tempTimestamp = XmlParserHelper::getAttribMandatory("ts", attributeMap, 0UL);
+        this->tempTimestamp = XmlParserHelper::getAttribMandatory<size_t>(XmlAttrs::TS_STR, attributeMap, 0UL);
     }
 
     // forward data to handler
@@ -615,20 +619,20 @@ void XmlParser::parseStrokeText() {
 void XmlParser::parseTextTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto font = XmlParserHelper::getAttribMandatory<std::string>("font", attributeMap, "Sans");
-    const auto size = XmlParserHelper::getAttribMandatory<double>("size", attributeMap, 12);
-    const auto x = XmlParserHelper::getAttribMandatory<double>("x", attributeMap);
-    const auto y = XmlParserHelper::getAttribMandatory<double>("y", attributeMap);
+    const auto font = XmlParserHelper::getAttribMandatory<std::string>(XmlAttrs::FONT_STR, attributeMap, "Sans");
+    const auto size = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::SIZE_STR, attributeMap, 12);
+    const auto x = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::X_STR, attributeMap);
+    const auto y = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::Y_STR, attributeMap);
     const auto color = XmlParserHelper::getAttribColorMandatory(attributeMap, Colors::black);
 
     // audio filename and timestamp
-    const auto optFilename = XmlParserHelper::getAttrib<std::string>("fn", attributeMap);
+    const auto optFilename = XmlParserHelper::getAttrib<std::string>(XmlAttrs::FN_STR, attributeMap);
     if (optFilename && !optFilename->empty()) {
         if (!this->tempFilename.empty()) {
             g_warning("XML parser: Discarding audio timestamp element, because text tag contains \"fn\" attribute");
         }
         this->tempFilename = *optFilename;
-        this->tempTimestamp = XmlParserHelper::getAttribMandatory("ts", attributeMap, 0UL);
+        this->tempTimestamp = XmlParserHelper::getAttribMandatory<size_t>(XmlAttrs::TS_STR, attributeMap, 0UL);
     }
 
     this->handler->addText(font, size, x, y, color, tempFilename, tempTimestamp);
@@ -645,10 +649,10 @@ void XmlParser::parseTextText() {
 void XmlParser::parseImageTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto left = XmlParserHelper::getAttribMandatory<double>("left", attributeMap);
-    const auto top = XmlParserHelper::getAttribMandatory<double>("top", attributeMap);
-    const auto right = XmlParserHelper::getAttribMandatory<double>("right", attributeMap);
-    const auto bottom = XmlParserHelper::getAttribMandatory<double>("bottom", attributeMap);
+    const auto left = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::LEFT_STR, attributeMap);
+    const auto top = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::TOP_STR, attributeMap);
+    const auto right = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::RIGHT_STR, attributeMap);
+    const auto bottom = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::BOTTOM_STR, attributeMap);
 
     this->handler->addImage(left, top, right, bottom);
 }
@@ -662,12 +666,12 @@ void XmlParser::parseImageText() {
 void XmlParser::parseTexImageTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto left = XmlParserHelper::getAttribMandatory<double>("left", attributeMap);
-    const auto top = XmlParserHelper::getAttribMandatory<double>("top", attributeMap);
-    const auto right = XmlParserHelper::getAttribMandatory<double>("right", attributeMap);
-    const auto bottom = XmlParserHelper::getAttribMandatory<double>("bottom", attributeMap);
+    const auto left = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::LEFT_STR, attributeMap);
+    const auto top = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::TOP_STR, attributeMap);
+    const auto right = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::RIGHT_STR, attributeMap);
+    const auto bottom = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::BOTTOM_STR, attributeMap);
 
-    auto text = XmlParserHelper::getAttribMandatory<std::string>("text", attributeMap);
+    auto text = XmlParserHelper::getAttribMandatory<std::string>(XmlAttrs::TEXT_STR, attributeMap);
 
     // Attribute "texlength" found in eralier parsers was a workaround from 098a67b to bdd0ec2
 
@@ -683,7 +687,7 @@ void XmlParser::parseTexImageText() {
 void XmlParser::parseAttachment() {
     const auto attributeMap = getAttributeMap();
 
-    const auto path = XmlParserHelper::getAttribMandatory<fs::path>("path", attributeMap);
+    const auto path = XmlParserHelper::getAttribMandatory<fs::path>(XmlAttrs::PATH_STR, attributeMap);
 
     switch (this->hierarchy.top()) {
         case TagType::IMAGE:
