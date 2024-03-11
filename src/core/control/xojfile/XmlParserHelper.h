@@ -39,6 +39,12 @@ std::optional<T> getAttrib(const std::string& name, const AttributeMap& attribut
 template <typename T>
 T getAttribMandatory(const std::string& name, const AttributeMap& attributeMap, const T& defaultValue = {},
                      bool warn = true);
+// specializations
+template <>
+std::optional<std::string> getAttrib<std::string>(const std::string& name, const AttributeMap& attributeMap);
+template <>
+std::string getAttribMandatory<std::string>(const std::string& name, const AttributeMap& attributeMap,
+                                            const std::string& defaultValue, bool warn);
 
 // "color" attribute
 Color getAttribColorMandatory(const AttributeMap& attributeMap, const Color& defaultValue, bool bg = false);
