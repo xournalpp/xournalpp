@@ -6,6 +6,7 @@
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "control/xml/XmlNode.h"               // for XmlNode
 #include "control/xml/XmlTextNode.h"           // for XmlTextNode
+#include "control/xojfile/XmlNames.h"          // for XmlAttrs
 #include "model/PageType.h"                    // for PageTypeFormat, PageType
 #include "model/XojPage.h"                     // for XojPage
 
@@ -29,16 +30,16 @@ void XojExportHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
 }
 
 void XojExportHandler::writeHeader() {
-    this->root->setAttrib("creator", PROJECT_STRING);
+    this->root->setAttrib(XmlAttrs::CREATOR_STR, PROJECT_STRING);
     // Keep this version on 2, as this is anyway not read by Xournal
-    this->root->setAttrib("fileversion", "2");
+    this->root->setAttrib(XmlAttrs::FILEVERSION_STR, "2");
     this->root->addChild(
             new XmlTextNode("title", std::string{"Xournal document (Compatibility) - see "} + PROJECT_HOMEPAGE_URL));
 }
 
 void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p) {
-    background->setAttrib("type", "solid");
-    background->setAttrib("color", getColorStr(p->getBackgroundColor()));
+    background->setAttrib(XmlAttrs::TYPE_STR, "solid");
+    background->setAttrib(XmlAttrs::COLOR_STR, getColorStr(p->getBackgroundColor()));
 
     PageTypeFormat bgFormat = p->getBackgroundType().format;
     std::string format;
@@ -49,7 +50,7 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p) {
         format = "plain";
     }
 
-    background->setAttrib("style", format);
+    background->setAttrib(XmlAttrs::STYLE_STR, format);
 }
 
 void XojExportHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
