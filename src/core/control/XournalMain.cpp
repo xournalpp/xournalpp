@@ -244,7 +244,7 @@ void exitOnMissingPdfFileName(const LoadHandler& loader) {
     if (!loader.getMissingPdfFilename().empty()) {
         auto msg =
                 FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.") %
-                   loader.getMissingPdfFilename());
+                   loader.getMissingPdfFilename().u8string());
         std::cerr << msg << std::endl;
         exit(-2);
     }
@@ -274,7 +274,7 @@ auto exportImg(const char* input, const char* output, const char* range, const c
     LoadHandler loader;
     Document* doc = loader.loadDocument(input);
     if (doc == nullptr) {
-        g_error("%s", loader.getLastError().c_str());
+        g_error("Document was not loaded");
     }
 
     exitOnMissingPdfFileName(loader);
@@ -328,7 +328,7 @@ auto exportPdf(const char* input, const char* output, const char* range, const c
     LoadHandler loader;
     Document* doc = loader.loadDocument(input);
     if (doc == nullptr) {
-        g_error("%s", loader.getLastError().c_str());
+        g_error("Document was not loaded");
     }
 
     exitOnMissingPdfFileName(loader);
