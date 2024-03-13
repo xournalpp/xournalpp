@@ -82,18 +82,22 @@ function cb(mode)
       image = image:rot("d270")
       maxWidth, maxHeight = maxHeight, maxWidth
     elseif mode == Mode.TRANSPARENT then
-      if image:bands() < 4 then
-        image = image:bandjoin(255)      -- add alpha channel
+      if image:bands() == 3 then
+        image = image:bandjoin(255)       -- add alpha channel
       end
-      local white = { 240, 240, 240, 0 } -- pixels are considered white, if its r,g,b values are >=240 and alpha is arbitrary
+      local white = { 240, 240, 240, -1 } -- pixels are considered white enough, if its r,g,b values are >240
       local transparent = { 0, 0, 0, 0 }
-      image = image:more(white):bandand():ifthenelse(transparent, image)
+      local filter = image:more(white)    -- make pixels white if they are white enough, and black otherwise
+          :bandand()                      -- joins bands with bitwise and into a single band, so values are
+      -- 255 (true) for white enough pixels,
+      -- 0 (false) otherwise
+      image = filter:ifthenelse(transparent, image) -- now white enough pixels become transparent, other are taken from image
     elseif mode == Mode.TRIM then
       local width = image:width()
       local height = image:height()
       image = image:crop(image:find_trim())
-      local newWidth = image:width()
-      local newHeight = image:height()
+      local newWidth = image:width()   -- now newWidth / width is the factor by which the pixbuf got smaller
+      local newHeight = image:height() -- and newHeight / height is the factor by which the pixbuf height got smaller
       maxWidth, maxHeight = maxWidth * newWidth // width, maxHeight * newHeight // height
     end
     table.insert(imdata, {
@@ -109,6 +113,8 @@ function cb(mode)
 end
 
 function split(mode)
+  PADDING = 15 -- margin between image parts
+
   local ffi = require "ffi"
   local vips = checkVips()
   if not vips then return end
@@ -173,23 +179,27 @@ function split(mode)
       end
     end
     if vertical then
-      local image1 = image:extract_area(0, 0, width, endIndex - maxBlockLength // 2)
-      local image2 = image:extract_area(0, endIndex - maxBlockLength // 2, width, height - endIndex + maxBlockLength // 2)
+      local height1 = endIndex - maxBlockLength // 2 -- white block is split equally
+      local height2 = height - height1
+      local image1 = image:extract_area(0, 0, width, height1)
+      local image2 = image:extract_area(0, height1, width, height2)
       table.insert(imdata, { data = image1:write_to_buffer(".png"), x = x, y = y, maxWidth = maxWidth })
       table.insert(imdata, {
         data = image2:write_to_buffer(".png"),
         maxWidth = maxWidth,
         x = x,
-        y = y + endIndex * maxHeight / height,
+        y = y + height1 * maxHeight // height + PADDING, -- maxHeight / height scales from pixbuf height to height in document
       })
     else
-      local image1 = image:extract_area(0, 0, endIndex - maxBlockLength // 2, height)
-      local image2 = image:extract_area(endIndex - maxBlockLength // 2, 0, width - endIndex + maxBlockLength // 2, height)
+      local width1 = endIndex - maxBlockLength // 2 -- white block is split equally
+      local width2 = width - width1
+      local image1 = image:extract_area(0, 0, width1, height)
+      local image2 = image:extract_area(width1, 0, width2, height)
       table.insert(imdata, { data = image1:write_to_buffer(".png"), x = x, y = y, maxHeight = maxHeight })
       table.insert(imdata, {
         data = image2:write_to_buffer(".png"),
         maxHeight = maxHeight,
-        x = x + endIndex * maxWidth / width,
+        x = x + width1 * maxWidth // width + PADDING, -- maxWidth / width scales from pixbuf width to width in document
         y = y,
       })
     end
