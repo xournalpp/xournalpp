@@ -109,6 +109,7 @@ function cb(mode)
 end
 
 function split(mode)
+  local ffi = require "ffi"
   local vips = checkVips()
   if not vips then return end
 
@@ -120,33 +121,24 @@ function split(mode)
     local image = vips.Image.new_from_buffer(im["data"])
     local x, y, maxWidth, maxHeight = im["x"], im["y"], math.ceil(im["width"]), math.ceil(im["height"])
     -- find largest sequence of white or transparent pixel rows/columns
-    local filter = image:colourspace("b-w"):extract_band(0):more(240)
+    local filter = image:colourspace("b-w") -- convert image to grayscale colour space
+        :extract_band(0)                    -- ignore alpha channel if it exists
+        :cast("uint")                       -- cast from double to uint data type
+        :more(240)                          -- replace value by 255 if it is > 240 (whiteish), 0 otherwise
     local width, height = filter:width(), filter:height()
     local last = vertical and height or width
-    local isWhite = {}
+    local colSums, rowSums = filter:project() -- width x 1 column sums, 1 x height row sums
 
-    for i = 0, last - 1 do
-      if vertical then
-        isWhite[i + 1] = filter:extract_area(0, i, width, 1):avg() > 254
-      else
-        isWhite[i + 1] = filter:extract_area(i, 0, 1, height):avg() > 254
-      end
-    end
-
-    if #isWhite == 0 then
-      local word = vertical and "rows" or "columns"
-      print("There are no completely white " .. word .. " in this image. Skipping.")
-      table.insert(imdata, { data = im["data"], x = x, y = y, maxHeight = maxHeight, maxWidth = maxWidth })
-      goto continue
-    end
-
+    -- now cast rowSums (or colSums) into an array for fast access
+    local sum = ffi.cast(ffi.typeof("unsigned int*"), vertical and rowSums:write_to_memory() or colSums:write_to_memory())
+    local maxSum = vertical and 255 * width or 255 * height
     local whiteEnds = {}
     local whiteLengths = {}
     local firstAfter = false
     local currentLength = 0
     local n = 0
     for i = 1, last do
-      if isWhite[i] then
+      if sum[i] == maxSum then -- completely white row (or column)
         if currentLength > 0 then
           currentLength = currentLength + 1
         else
