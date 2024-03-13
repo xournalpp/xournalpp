@@ -164,32 +164,32 @@ function split(mode)
       goto continue
     end
 
-    local maxLength = 0
-    local index = 0
+    local maxBlockLength = 0
+    local endIndex = 0
     for i = 1, #whiteEnds do
-      if whiteLengths[i] > maxLength then
-        maxLength = whiteLengths[i]
-        index = whiteEnds[i]
+      if whiteLengths[i] > maxBlockLength then
+        maxBlockLength = whiteLengths[i]
+        endIndex = whiteEnds[i]
       end
     end
     if vertical then
-      local image1 = image:extract_area(0, 0, width, index - maxLength // 2)
-      local image2 = image:extract_area(0, index - maxLength // 2, width, height - index + maxLength // 2)
+      local image1 = image:extract_area(0, 0, width, endIndex - maxBlockLength // 2)
+      local image2 = image:extract_area(0, endIndex - maxBlockLength // 2, width, height - endIndex + maxBlockLength // 2)
       table.insert(imdata, { data = image1:write_to_buffer(".png"), x = x, y = y, maxWidth = maxWidth })
       table.insert(imdata, {
         data = image2:write_to_buffer(".png"),
         maxWidth = maxWidth,
         x = x,
-        y = y + index * maxHeight / height,
+        y = y + endIndex * maxHeight / height,
       })
     else
-      local image1 = image:extract_area(0, 0, index - maxLength // 2, height)
-      local image2 = image:extract_area(index - maxLength // 2, 0, width - index + maxLength // 2, height)
+      local image1 = image:extract_area(0, 0, endIndex - maxBlockLength // 2, height)
+      local image2 = image:extract_area(endIndex - maxBlockLength // 2, 0, width - endIndex + maxBlockLength // 2, height)
       table.insert(imdata, { data = image1:write_to_buffer(".png"), x = x, y = y, maxHeight = maxHeight })
       table.insert(imdata, {
         data = image2:write_to_buffer(".png"),
         maxHeight = maxHeight,
-        x = x + index * maxWidth / width,
+        x = x + endIndex * maxWidth / width,
         y = y,
       })
     end
