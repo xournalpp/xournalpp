@@ -3,7 +3,8 @@ function initUi()
   app.registerUi({["menu"] = "Migrate font sizes with factor displayDPI / 72", ["callback"] = "migrate"});
   app.registerUi({["menu"] = "Show font size migration dialog", ["callback"] = "showDialog"});
 
-  sourcePath = debug.getinfo(1).source:match("@?(.*/)")
+  local sep = package.config:sub(1, 1) -- path separator depends on OS
+  sourcePath = debug.getinfo(1).source:match("@?(.*" .. sep .. ")")
 end
 
 function migrate()
