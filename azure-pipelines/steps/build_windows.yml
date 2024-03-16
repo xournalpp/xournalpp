@@ -11,12 +11,32 @@ steps:
       pacman --noconfirm -S mingw-w64-x86_64-imagemagick mingw-w64-x86_64-ninja mingw-w64-x86_64-poppler
       pacman --noconfirm -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
       pacman --noconfirm -S mingw-w64-x86_64-lua mingw-w64-x86_64-portaudio mingw-w64-x86_64-gtksourceview4
+      pacman --noconfirm -S mingw-w64-x86_64-lua-luarocks mingw-w64-x86_64-gobject-introspection
     env:
       MSYS2_ARCH: x86_64
       MSYSTEM: MINGW64
       CHERE_INVOKING: yes
     displayName: 'Install dependencies on Windows'
   # End msys setup
+  - script: |
+      set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+      C:\msys64\usr\bin\bash -lc "luarocks config --scope system lua_version 5.4"
+      C:\msys64\usr\bin\bash -lc "luarocks"
+      git clone https://github.com/lgi-devs/lgi.git
+      pushd lgi
+      C:\msys64\usr\bin\bash -lc "luarocks --tree $HOME/.luarocks make"
+      popd
+      C:\msys64\usr\bin\bash -lc "luarocks --tree $HOME/.luarocks install luaffi-tkl"
+      popd
+      git clone https://github.com/libvips/lua-vips.git
+      pushd lua-vips
+      C:\msys64\usr\bin\bash -lc "luarocks --tree $HOME/.luarocks make"
+      popd
+    env:
+      MSYS2_ARCH: x86_64
+      MSYSTEM: MINGW64
+      CHERE_INVOKING: yes
+    displayName: 'Make and install Lua modules'
   - script: |
       set PATH="C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%"
       C:\msys64\usr\bin\bash -lc "mkdir build"
