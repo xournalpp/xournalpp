@@ -91,6 +91,7 @@ public:
     size_t getRows() const;
 
     bool isPairedPages() const;
+    LayoutSettings::Orientation getOrientation() const;
 
 private:
     void precalculateMappers();

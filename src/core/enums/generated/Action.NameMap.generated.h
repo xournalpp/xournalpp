@@ -1,5 +1,5 @@
 // ** THIS FILE IS GENERATED **
-// ** use generateConvertNEW.php to update this file **
+// ** use generateConvert.php to update this file **
 
 
 #pragma once
@@ -34,6 +34,7 @@ constexpr const char* ACTION_NAMES[] = {  // Action to string conversion map
         "fullscreen",
         "show-sidebar",
         "show-toolbar",
+        "set-layout-type",
         "set-layout-vertical",
         "set-layout-right-to-left",
         "set-layout-bottom-to-top",
