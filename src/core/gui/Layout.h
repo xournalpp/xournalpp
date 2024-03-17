@@ -164,6 +164,11 @@ private:
      */
     int getPaddingLeftOfAll() const;
 
+    /**
+     * Get the grid position of the page at coordinates
+     */
+    GridPosition getGridPositionAt(int x, int y);
+
     void maybeAddLastPage(Layout* layout);
 
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
@@ -191,6 +196,17 @@ private:
     mutable LayoutMapper mapper;
     mutable PreCalculated pc{};
     LayoutType layoutType;
-    mutable std::vector<unsigned> colXStart;
-    mutable std::vector<unsigned> rowYStart;
+
+    /**
+     * If in grid mode or the layout orientation is horizontal, the end x-coordinate of each layout column.
+     * If in constant padding mode and orientation is vertical, the end x-coordinate of each grid cell for all rows
+     * and columns, since they could all be different. Stored in row-major order.
+     */
+    std::vector<unsigned int> colXEnd;
+    /**
+     * If in grid mode or the layout orientation is vertical, the end y-coordinate of each layout row.
+     * If in constant padding mode and orientation is horizontal, the end y-coordinate of each grid cell for all rows
+     * and columns, since they could all be different. Stored in column-major order.
+     */
+    std::vector<unsigned int> rowYEnd;
 };
