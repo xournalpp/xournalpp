@@ -65,7 +65,7 @@ void Settings::loadDefault() {
     this->numRows = 1;
     this->viewFixedRows = false;
 
-    this->layoutType = LAYOUT_TYPE_CONST_PADDING;
+    this->layoutType = LAYOUT_TYPE_GRID;
     this->layoutVertical = false;
     this->layoutRightToLeft = false;
     this->layoutBottomToTop = false;
