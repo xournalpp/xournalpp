@@ -796,8 +796,8 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     const double zoom = self->view->getXournal()->getZoom();
 
     // Helper function to compute scroll amount for a single dimension, based on visible region and selection bbox
-    const auto computeScrollAmt = [&](double visMin, double visLen, double bboxMin, double bboxLen,
-                                      double layoutSize, double relMousePos) -> double {
+    const auto computeScrollAmt = [&](double visMin, double visLen, double bboxMin, double bboxLen, double layoutSize,
+                                      double relMousePos) -> double {
         const bool belowMin = bboxMin < visMin;
         const bool aboveMax = bboxMin + bboxLen > visMin + visLen;
         const double visMax = visMin + visLen;
@@ -813,8 +813,8 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         const double maxMult = settings->getEdgePanMaxMult();
         int panDir = 0;
 
-        // If the selection is larger than the view, scroll based on mouse position relative to the center of the visible view
-        // Otherwise calculate bonus scroll amount due to proportion of selection out of view.
+        // If the selection is larger than the view, scroll based on mouse position relative to the center of the
+        // visible view Otherwise calculate bonus scroll amount due to proportion of selection out of view.
         if (isLargeSelection) {
             mult = maxMult * std::abs(mouseDiff) / (visLen);
             if (mouseDiff > 0.1 * visLen / 2.0) {
@@ -822,8 +822,7 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
             } else if (mouseDiff < -0.1 * visLen / 2.0) {
                 panDir = -1;
             }
-        }
-        else {
+        } else {
             if (aboveMax) {
                 panDir = 1;
                 mult = maxMult * std::min(bboxLen, bboxMax - visMax) / bboxLen;
@@ -854,8 +853,10 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     const int layoutHeight = layout->getMinimalHeight();
     const auto visRect = layout->getVisibleRect();
     const auto bbox = self->getBoundingBoxInView();
-    const auto layoutScrollX = computeScrollAmt(visRect.x, visRect.width, bbox.x, bbox.width, layoutWidth, self->relMousePosX);
-    const auto layoutScrollY = computeScrollAmt(visRect.y, visRect.height, bbox.y, bbox.height, layoutHeight, self->relMousePosY);
+    const auto layoutScrollX =
+            computeScrollAmt(visRect.x, visRect.width, bbox.x, bbox.width, layoutWidth, self->relMousePosX);
+    const auto layoutScrollY =
+            computeScrollAmt(visRect.y, visRect.height, bbox.y, bbox.height, layoutHeight, self->relMousePosY);
     const auto translateX = layoutScrollX / zoom;
     const auto translateY = layoutScrollY / zoom;
 
