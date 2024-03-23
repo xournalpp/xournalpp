@@ -64,7 +64,10 @@ public:
     static void showMessageToUser(GtkWindow* win, const std::string& title, const std::string& msg,
                                   GtkMessageType type);
     static void showErrorToUser(GtkWindow* win, const std::string& msg);
-    static void showErrorAndQuit(std::string& msg, int exitCode);
+
+    /// @brief This should be used for fatal errors, typically in early GUI startup (missing UI main file or so).
+    [[noreturn]] static void showErrorAndQuit(std::string& msg, int exitCode);
+
     static void showPluginMessage(const std::string& pluginName, const std::string& msg, bool error = false);
     [[deprecated("Will be removed when porting to gtk4")]] static int askPluginQuestion(
             const std::string& pluginName, const std::string& msg, const std::vector<Button>& buttons,
