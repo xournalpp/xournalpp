@@ -243,7 +243,8 @@ void MainWindow::updateColorscheme() {
         gtk_style_context_remove_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", false, nullptr);
     }
-    assert([&]() {
+
+    {
         gchar* name = nullptr;
         g_object_get(gtk_widget_get_settings(this->window), "gtk-theme-name", &name, nullptr);
         g_message("Theme name: %s", name);
@@ -251,8 +252,8 @@ void MainWindow::updateColorscheme() {
         gboolean gtkdark = true;
         g_object_get(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", &gtkdark, nullptr);
         g_message("Theme variant: %s", gtkdark ? "dark" : "light");
-        return true;
-    }());
+        g_message("Icon theme: %s", iconThemeToString(control->getSettings()->getIconTheme()));
+    }
 }
 
 void MainWindow::initXournalWidget() {

@@ -3199,18 +3199,6 @@ This setting can make it easier to draw with touch. </property>
                                                             <property name="position">1</property>
                                                           </packing>
                                                         </child>
-                                                        <child>
-                                                          <object class="GtkLabel">
-                                                            <property name="visible">True</property>
-                                                            <property name="can-focus">False</property>
-                                                            <property name="label" translatable="yes">(requires restart)</property>
-                                                          </object>
-                                                          <packing>
-                                                            <property name="expand">False</property>
-                                                            <property name="fill">True</property>
-                                                            <property name="position">2</property>
-                                                          </packing>
-                                                        </child>
                                                       </object>
                                                       <packing>
                                                         <property name="left-attach">0</property>
@@ -3259,7 +3247,7 @@ This setting can make it easier to draw with touch. </property>
                                                           <object class="GtkLabel">
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">False</property>
-                                                            <property name="label" translatable="yes">(requires restart)</property>
+                                                            <property name="label" translatable="yes">(this may not work, depending on your system theme)</property>
                                                           </object>
                                                           <packing>
                                                             <property name="expand">False</property>
