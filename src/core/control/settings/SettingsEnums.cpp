@@ -47,6 +47,20 @@ auto iconThemeFromString(const std::string& iconThemeStr) -> IconTheme {
     return ICON_THEME_COLOR;
 }
 
+auto themeVariantFromString(const std::string& themeVariantStr) -> ThemeVariant {
+    if (themeVariantStr == "useSystem") {
+        return THEME_VARIANT_USE_SYSTEM;
+    }
+    if (themeVariantStr == "forceLight") {
+        return THEME_VARIANT_FORCE_LIGHT;
+    }
+    if (themeVariantStr == "forceDark") {
+        return THEME_VARIANT_FORCE_DARK;
+    }
+    g_warning("Settings::Unknown theme variant: %s\n", themeVariantStr.c_str());
+    return THEME_VARIANT_USE_SYSTEM;
+}
+
 auto emptyLastPageAppendFromString(const std::string& str) -> EmptyLastPageAppendType {
     if (str == "disabled") {
         return EmptyLastPageAppendType::Disabled;

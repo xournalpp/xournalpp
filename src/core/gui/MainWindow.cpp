@@ -1,6 +1,5 @@
 #include "MainWindow.h"
 
-#include <config-dev.h>             // for TOOLBAR_CONFIG
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_fr...
 #include <gdk/gdk.h>                // for gdk_screen_get_de...
 #include <gio/gio.h>                // for g_cancellable_is_...
@@ -39,6 +38,7 @@
 #include "GladeSearchpath.h"     // for GladeSearchpath
 #include "ToolbarDefinitions.h"  // for TOOLBAR_DEFINITIO...
 #include "XournalView.h"         // for XournalView
+#include "config-dev.h"          // for TOOLBAR_CONFIG
 #include "filesystem.h"          // for path, exists
 
 using std::string;
@@ -58,9 +58,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     boxContainerWidget.reset(get("mainContentContainer"), xoj::util::ref);
     mainContentWidget.reset(get("boxContents"), xoj::util::ref);
     sidebarWidget.reset(get("sidebar"), xoj::util::ref);
-
-    GtkSettings* appSettings = gtk_settings_get_default();
-    g_object_set(appSettings, "gtk-application-prefer-dark-theme", control->getSettings()->isDarkTheme(), NULL);
 
     loadMainCSS(gladeSearchPath, "xournalpp.css");
 
@@ -198,14 +195,64 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
 }
 
 void MainWindow::updateColorscheme() {
-    bool darkMode = control->getSettings()->isDarkTheme();
+    if (control->getSettings()->getThemeVariant() == THEME_VARIANT_USE_SYSTEM) {
+        gtk_settings_reset_property(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme");
+    }
+
+    bool darkMode = isDarkTheme();
+
+    // Set up icons
+    {
+        const auto uiPath = this->getGladeSearchPath()->getFirstSearchPath();
+        const auto lightColorIcons = (uiPath / "iconsColor-light").u8string();
+        const auto darkColorIcons = (uiPath / "iconsColor-dark").u8string();
+        const auto lightLucideIcons = (uiPath / "iconsLucide-light").u8string();
+        const auto darkLucideIcons = (uiPath / "iconsLucide-dark").u8string();
+
+        // icon load order from lowest priority to highest priority
+        std::vector<std::string> iconLoadOrder = {};
+        const auto chosenTheme = control->getSettings()->getIconTheme();
+        switch (chosenTheme) {
+            case ICON_THEME_COLOR:
+                iconLoadOrder = {darkLucideIcons, lightLucideIcons, darkColorIcons, lightColorIcons};
+                break;
+            case ICON_THEME_LUCIDE:
+                iconLoadOrder = {darkColorIcons, lightColorIcons, darkLucideIcons, lightLucideIcons};
+                break;
+            default:
+                g_message("Unknown icon theme!");
+        }
+
+        if (darkMode) {
+            for (size_t i = 0; 2 * i + 1 < iconLoadOrder.size(); ++i) {
+                std::swap(iconLoadOrder[2 * i], iconLoadOrder[2 * i + 1]);
+            }
+        }
+
+        for (auto& p: iconLoadOrder) {
+            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str());
+        }
+    }
+
     GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(this->window));
 
     if (darkMode) {
         gtk_style_context_add_class(context, "darkMode");
+        g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", true, nullptr);
     } else {
         gtk_style_context_remove_class(context, "darkMode");
+        g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", false, nullptr);
     }
+    assert([&]() {
+        gchar* name = nullptr;
+        g_object_get(gtk_widget_get_settings(this->window), "gtk-theme-name", &name, nullptr);
+        g_message("Theme name: %s", name);
+        g_free(name);
+        gboolean gtkdark = true;
+        g_object_get(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", &gtkdark, nullptr);
+        g_message("Theme variant: %s", gtkdark ? "dark" : "light");
+        return true;
+    }());
 }
 
 void MainWindow::initXournalWidget() {
@@ -537,6 +584,23 @@ void MainWindow::saveSidebarSize() {
 void MainWindow::setMaximized(bool maximized) { this->maximized = maximized; }
 
 auto MainWindow::isMaximized() const -> bool { return this->maximized; }
+
+auto MainWindow::isDarkTheme() const -> bool {
+    switch (control->getSettings()->getThemeVariant()) {
+        case THEME_VARIANT_USE_SYSTEM: {
+            gboolean dark = false;
+            g_object_get(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", &dark, nullptr);
+            return dark;
+        }
+        case THEME_VARIANT_FORCE_LIGHT:
+            return false;
+        case THEME_VARIANT_FORCE_DARK:
+            return true;
+        default:
+            g_warning("ThemeVariant out of bounds: %d", control->getSettings()->getThemeVariant());
+            return false;
+    }
+}
 
 auto MainWindow::getXournal() const -> XournalView* { return xournal.get(); }
 

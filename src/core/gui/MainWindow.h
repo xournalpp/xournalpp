@@ -79,6 +79,8 @@ public:
     void setMaximized(bool maximized);
     bool isMaximized() const;
 
+    bool isDarkTheme() const;
+
     XournalView* getXournal() const;
 
     void setMenubarVisible(bool visible);
