@@ -87,22 +87,15 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
                             // files
                             const char* filterName =
                                     gtk_file_filter_get_name(gtk_file_chooser_get_filter(GTK_FILE_CHOOSER(dialog)));
-                            ;
                             if (job->testAndSetFilepath(std::move(file), filterName)) {
-                                auto doExport = [self, dialog]() {
+                                auto doExport = [self, dialog](const fs::path& file) {
                                     // Closing the window causes another "response" signal, which we want to ignore
                                     g_signal_handler_disconnect(dialog, self->signalId);
                                     gtk_window_close(GTK_WINDOW(dialog));
-                                    self->job->control->getSettings()->setLastSavePath(
-                                            self->job->filepath.parent_path());
+                                    self->job->control->getSettings()->setLastSavePath(file.parent_path());
                                     self->onFileSelected();
                                 };
-                                if (!fs::exists(job->filepath)) {
-                                    doExport();
-                                } else {
-                                    XojMsgBox::replaceFileQuestion(GTK_WINDOW(dialog), job->filepath,
-                                                                   std::move(doExport), []() {});
-                                }
+                                XojMsgBox::replaceFileQuestion(GTK_WINDOW(dialog), job->filepath, std::move(doExport));
                             }  // else the dialog stays on until a suitable destination is found or cancel is hit.
                         } else {
                             self->onCancel();
