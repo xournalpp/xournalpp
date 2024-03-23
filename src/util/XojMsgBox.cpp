@@ -178,8 +178,12 @@ auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const std::string& msg) -> i
     return res;
 }
 
-void XojMsgBox::replaceFileQuestion(GtkWindow* win, const fs::path& file, std::function<void()> overwrite,
-                                    std::function<void()> pickOtherPath) {
+void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file, std::function<void(const fs::path&)> writeTofile) {
+    if (!fs::exists(file)) {
+        writeTofile(file);
+        return;
+    }
+
     GtkWidget* dialog = gtk_message_dialog_new(
             win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
             FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % file.filename().u8string())
@@ -191,14 +195,10 @@ void XojMsgBox::replaceFileQuestion(GtkWindow* win, const fs::path& file, std::f
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), GTK_RESPONSE_OK);
 
     xoj::popup::PopupWindowWrapper<XojMsgBox> popup(
-            GTK_DIALOG(dialog),
-            [overwrite = std::move(overwrite), pickOtherPath = std::move(pickOtherPath)](int response) {
+            GTK_DIALOG(dialog), [overwrite = std::move(writeTofile), file = std::move(file)](int response) {
                 if (response == GTK_RESPONSE_OK) {
                     // Wait for the message dialog to close before executing the response
-                    Util::execInUiThread(std::move(overwrite));
-                } else {
-                    // Wait for the message dialog to close before executing the response
-                    Util::execInUiThread(std::move(pickOtherPath));
+                    Util::execInUiThread([write = std::move(overwrite), file = std::move(file)]() { write(file); });
                 }
             });
     popup.show(win);

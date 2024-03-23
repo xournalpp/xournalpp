@@ -72,6 +72,9 @@ public:
     static int replaceFileQuestion(GtkWindow* win, const std::string& msg);
     static void showHelp(GtkWindow* win);
 
-    static void replaceFileQuestion(GtkWindow* win, const fs::path& file, std::function<void()> overwrite,
-                                    std::function<void()> pickOtherPath);
+    /**
+     * @brief Calls writeToFile(file) if either file is not already present in the filesystem, or is the user answers
+     * "Overwrite" to a popup dialog.
+     */
+    static void replaceFileQuestion(GtkWindow* win, fs::path file, std::function<void(const fs::path&)> writeToFile);
 };

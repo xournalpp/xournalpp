@@ -9,7 +9,7 @@
 		<glob pattern="*.xopp"/>
 	</mime-type>
 	<mime-type type="application/x-xopt">
-		<comment>Xournal++ note file</comment>
+		<comment>Xournal++ page template file</comment>
 		<glob pattern="*.xopt"/>
 	</mime-type>
 </mime-info>
