@@ -4,7 +4,7 @@
 #include <cstdlib>     // for size_t
 #include <exception>   // for exce...
 #include <functional>  // for bind
-#include <iterator>   // for end
+#include <iterator>    // for end
 #include <locale>
 #include <memory>    // for make...
 #include <numeric>   // for accu...
@@ -53,6 +53,7 @@
 #include "gui/dialog/SelectOpacityDialog.h"                      // for Opac...
 #include "gui/dialog/SettingsDialog.h"                           // for Sett...
 #include "gui/dialog/ToolbarManageDialog.h"                      // for Tool...
+#include "gui/dialog/XojOpenDlg.h"                               // for XojO...
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"  // for Tool...
 #include "gui/inputdevices/CompassInputHandler.h"                // for Comp...
 #include "gui/inputdevices/GeometryToolInputHandler.h"           // for Geom...
@@ -81,7 +82,6 @@
 #include "model/XojPage.h"                                       // for XojPage
 #include "pdf/base/XojPdfPage.h"                                 // for XojP...
 #include "plugin/PluginController.h"                             // for Plug...
-#include "stockdlg/XojOpenDlg.h"                                 // for XojO...
 #include "undo/AddUndoAction.h"                                  // for AddU...
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
@@ -1330,14 +1330,16 @@ auto Control::shouldFileOpen(fs::path const& filepath) const -> bool {
     return !isChild;
 }
 
-auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> bool {
-    if (filepath.empty()) {
-        bool attachPdf = false;
-        XojOpenDlg dlg(getGtkWindow(), this->settings);
-        filepath = dlg.showOpenDialog(false, attachPdf);
-        g_message("%s", (_F("file: {1}") % filepath.string()).c_str());
-    }
+void Control::askToOpenFile() {
+    XojOpenDlg::showOpenFileDialog(this->getGtkWindow(), this->settings, [this](fs::path path) {
+        g_message("%s", (_F("file: {1}") % path.string()).c_str());
+        if (!path.empty()) {
+            openFile(std::move(path));
+        }
+    });
+}
 
+auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> bool {
     if (filepath.empty() || (!forceOpen && !shouldFileOpen(filepath))) {
         return false;
     }
@@ -1533,14 +1535,13 @@ void Control::missingPdfDialogResponseHandler(const fs::path& proposedPdfFilepat
                 this->pageBackgroundChangeController->changePdfPagesBackground(proposedPdfFilepath, false);
             }
             break;
-        case MissingPdfDialogOptions::SELECT_OTHER: {
-            bool attachToDocument = false;
-            XojOpenDlg dlg(this->getGtkWindow(), this->settings);
-            auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
-            if (!pdfFilename.empty()) {
-                this->pageBackgroundChangeController->changePdfPagesBackground(pdfFilename, attachToDocument);
-            }
-        } break;
+        case MissingPdfDialogOptions::SELECT_OTHER:
+            XojOpenDlg::showAnnotatePdfDialog(getGtkWindow(), settings, [this](fs::path path, bool attachPdf) {
+                if (!path.empty()) {
+                    this->pageBackgroundChangeController->changePdfPagesBackground(path, attachPdf);
+                }
+            });
+            break;
         case MissingPdfDialogOptions::REMOVE:
             this->pageBackgroundChangeController->applyBackgroundToAllPages(PageType(PageTypeFormat::Plain));
             break;
@@ -1586,18 +1587,18 @@ void Control::loadMetadata(MetadataEntry md) {
                     &xoj::util::destroy_cb<MetadataCallbackData>);
 }
 
+void Control::askToAnnotatePdf() {
+    XojOpenDlg::showAnnotatePdfDialog(getGtkWindow(), settings,
+                                      [this](fs::path path, bool attachPdf) { annotatePdf(path, attachPdf); });
+}
+
 auto Control::annotatePdf(fs::path filepath, bool attachToDocument) -> bool {
-    if (!this->close(false)) {
+    if (filepath.empty()) {
         return false;
     }
 
-    // Prompt the user for a path if none is provided.
-    if (filepath.empty()) {
-        XojOpenDlg dlg(getGtkWindow(), this->settings);
-        filepath = dlg.showOpenDialog(true, attachToDocument);
-        if (filepath.empty()) {
-            return false;
-        }
+    if (!this->close(false)) {
+        return false;
     }
 
     // First, we create a dummy document and load the PDF into it.
