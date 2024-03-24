@@ -1732,10 +1732,10 @@ auto Control::showSaveDialog() -> bool {
     auto suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
     this->doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(suggested_folder), nullptr);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(suggested_folder).get(), nullptr);
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_name).c_str());
-    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(this->settings->getLastOpenPath()),
-                                         nullptr);
+    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog),
+                                         Util::toGFile(this->settings->getLastOpenPath()).get(), nullptr);
 
     while (true) {
         if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {

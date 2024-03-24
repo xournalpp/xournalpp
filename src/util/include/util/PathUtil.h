@@ -18,6 +18,7 @@
 #include <gio/gio.h>  // for GFile
 #include <glib.h>     // for g_free, GError, g_error_free, g_filename_fro...
 
+#include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed
 
 #include "filesystem.h"  // for path, u8path
@@ -66,7 +67,7 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 
 
 [[maybe_unused]] [[nodiscard]] fs::path fromGFile(GFile* file);
-[[maybe_unused]] [[nodiscard]] GFile* toGFile(fs::path const& path);
+[[maybe_unused]] [[nodiscard]] xoj::util::GObjectSPtr<GFile> toGFile(fs::path const& path);
 
 [[maybe_unused]] [[nodiscard]] inline fs::path fromGFilename(char* path, bool owned = true) {
     auto deleter = [path, owned]() {
