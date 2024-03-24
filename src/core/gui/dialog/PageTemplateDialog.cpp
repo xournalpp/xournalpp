@@ -12,8 +12,8 @@
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo, PageType...
 #include "control/settings/Settings.h"         // for Settings
-#include "control/stockdlg/XojOpenDlg.h"       // for XojOpenDlg
 #include "gui/Builder.h"                       // for Builder
+#include "gui/dialog/XojOpenDlg.h"             // for XojOpenDlg
 #include "gui/menus/popoverMenus/PageTypeSelectionPopoverGridOnly.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "model/FormatDefinitions.h"  // for FormatUnits, XOJ_UNITS
@@ -175,16 +175,15 @@ void PageTemplateDialog::saveToFile() {
 }
 
 void PageTemplateDialog::loadFromFile() {
-    XojOpenDlg dlg(this->getWindow(), this->settings);
-    fs::path file = dlg.showOpenTemplateDialog();
+    XojOpenDlg::showOpenTemplateDialog(this->getWindow(), settings, [this](fs::path path) {
+        auto contents = Util::readString(path);
+        if (!contents.has_value()) {
+            return;
+        }
+        model.parse(*contents);
 
-    auto contents = Util::readString(file);
-    if (!contents.has_value()) {
-        return;
-    }
-    model.parse(*contents);
-
-    updateDataFromModel();
+        updateDataFromModel();
+    });
 }
 
 void PageTemplateDialog::updatePageSize() {

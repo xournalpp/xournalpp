@@ -87,9 +87,15 @@ public:
     void initWindow(MainWindow* win);
 
 public:
-    // Menu File
     bool newFile(std::string pageTemplate = "", fs::path filepath = {});
-    bool openFile(fs::path filepath = "", int scrollToPage = -1, bool forceOpen = false);
+
+    /// Shows an open file dialog and opens the selected file
+    void askToOpenFile();
+    /// Opens the provided path. Returns true on success.
+    bool openFile(fs::path filepath, int scrollToPage = -1, bool forceOpen = false);
+    /// Shows an open file dialog and opens the selected file
+    void askToAnnotatePdf();
+    /// Opens the provided path. Returns true on success.
     bool annotatePdf(fs::path filepath, bool attachToDocument);
     void print();
     void exportAsPdf();
