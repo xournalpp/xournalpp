@@ -62,7 +62,7 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
     fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName(), settings->getDefaultPdfExportName());
     doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(folder), nullptr);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(folder).get(), nullptr);
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(name).c_str());
 
     class FileDlg final {
