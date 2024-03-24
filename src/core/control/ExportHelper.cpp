@@ -34,8 +34,9 @@ namespace ExportHelper {
  *
  * @return 0 on success, -3 on export failure
  */
-auto exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
-               int pngHeight, ExportBackgroundType exportBackground) -> int {
+auto exportImg(Document* doc, const char* output, const char* range, const char* layerRange,
+               std::optional<unsigned int> pngDpi, std::optional<unsigned int> pngWidth,
+               std::optional<unsigned int> pngHeight, ExportBackgroundType exportBackground) -> int {
 
     fs::path const path(output);
 
@@ -57,12 +58,12 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
     ImageExport imgExport(doc, path, format, exportBackground, exportRange);
 
     if (format == EXPORT_GRAPHICS_PNG) {
-        if (pngDpi > 0) {
-            imgExport.setQualityParameter(EXPORT_QUALITY_DPI, pngDpi);
-        } else if (pngWidth > 0) {
-            imgExport.setQualityParameter(EXPORT_QUALITY_WIDTH, pngWidth);
-        } else if (pngHeight > 0) {
-            imgExport.setQualityParameter(EXPORT_QUALITY_HEIGHT, pngHeight);
+        if (pngDpi) {
+            imgExport.setQualityParameter(EXPORT_QUALITY_DPI, pngDpi.value());
+        } else if (pngWidth) {
+            imgExport.setQualityParameter(EXPORT_QUALITY_WIDTH, pngWidth.value());
+        } else if (pngHeight) {
+            imgExport.setQualityParameter(EXPORT_QUALITY_HEIGHT, pngHeight.value());
         }
     }
 
