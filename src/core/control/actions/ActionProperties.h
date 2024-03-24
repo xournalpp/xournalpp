@@ -81,14 +81,14 @@ struct ActionProperties<Action::NEW_FILE> {
 
 template <>
 struct ActionProperties<Action::OPEN> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->openFile(); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->askToOpenFile(); }
 };
 
 template <>
 struct ActionProperties<Action::ANNOTATE_PDF> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->clearSelectionEndText();
-        ctrl->annotatePdf("", false);
+        ctrl->askToAnnotatePdf();
     }
 };
 
