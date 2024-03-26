@@ -4,13 +4,12 @@
 #include <string>
 
 #include "control/Control.h"                // for Control
+#include "control/tools/TextEditor.h"       // for TextEditor
 #include "gui/GladeSearchpath.h"            // for GladeSearchPath
 #include "gui/PageView.h"                   // for PageView
 #include "model/Font.h"                     // for XojFont
 #include "model/Text.h"                     // for Text
 #include "view/overlays/TextEditionView.h"  // for TextEditionView
-
-#include "TextEditor.h"  // for TextEditor
 
 static void changeFontInternal(GtkFontButton* src, TextEditorContextMenu* tecm) { tecm->changeFont(); }
 static void changeBgColorInternal(GtkColorButton* src, TextEditorContextMenu* tecm) { tecm->changeBgColor(); }

@@ -15,10 +15,11 @@
 #include "control/zoom/ZoomControl.h"  // for ZoomControl
 #include "gui/GladeSearchpath.h"       // for GladeSearchPath
 #include "gui/PageView.h"
-#include "gui/XournalppCursor.h"  // for XournalppCursor
-#include "model/Font.h"           // for XojFont
-#include "model/Text.h"           // for Text
-#include "model/XojPage.h"        // for XojPage
+#include "gui/XournalppCursor.h"              // for XournalppCursor
+#include "gui/menus/TextEditorContextMenu.h"  // for TextEditorContextMenu
+#include "model/Font.h"                       // for XojFont
+#include "model/Text.h"                       // for Text
+#include "model/XojPage.h"                    // for XojPage
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
@@ -32,8 +33,7 @@
 #include "util/safe_casts.h"                // for round_cast, as_unsigned
 #include "view/overlays/TextEditionView.h"  // for TextEditionView
 
-#include "TextEditorContextMenu.h"  // for TextEditorContextMenu
-#include "TextEditorWidget.h"       // for gtk_xoj_int_txt_new
+#include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
 
 class UndoAction;
 
