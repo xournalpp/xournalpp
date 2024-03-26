@@ -181,6 +181,14 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
 
             PangoAttrList* attrlist = t->getAttributeListCopy();
             std::string attributes = pango_attr_list_to_string(attrlist);
+
+            // This check is only required, because an StringAttribute must not be of length 0.
+            // Otherwise the assertion len != 0 at GzOutputStream::write will fail and terminate
+            if (attributes.length() == 0) {
+                attributes = " ";
+            }
+
+
             pango_attr_list_unref(attrlist);
 
             text->setAttrib("font", f.getName().c_str());
