@@ -102,23 +102,22 @@ void XojMsgBox::askQuestionWithMarkup(GtkWindow* win, std::string_view maintext,
 }
 
 void XojMsgBox::showErrorAndQuit(std::string& msg, int exitCode) {
-    /*
-     * This should be used for fatal errors, typically in early GUI startup (missing UI main file or so).
-     *
-     * Todo(gtk4): Figure out how to use a non-blocking dialog that would survive past the `exit` call.
-     * Putting the `exit()` in a callback is no good, as normal execution would continue in the background, most likely
-     * leading to a SegFault: that would again kill the dialog.
-     */
     GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
                                                            GTK_BUTTONS_OK, nullptr);
 
-    auto formattedMsg = xoj::util::OwnedCString::assumeOwnership(g_markup_escape_text(msg.c_str(), -1));
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), formattedMsg.get());
-    if (defaultWindow != nullptr) {
-        gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);
+    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), msg.c_str());
+
+    // We use a hack to ensure the app does not exit until the user has read the error message and closed the popup
+    bool done = false;
+
+    xoj::popup::PopupWindowWrapper<XojMsgBox> popup(GTK_DIALOG(dialog), [&done](int) { done = true; });
+
+    popup.show(defaultWindow);
+
+    while (!done) {
+        // Let the main loop run so the popup pops up and can be interacted with
+        g_main_context_iteration(g_main_context_default(), true);
     }
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
 
     exit(exitCode);
 }
@@ -178,8 +177,12 @@ auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const std::string& msg) -> i
     return res;
 }
 
-void XojMsgBox::replaceFileQuestion(GtkWindow* win, const fs::path& file, std::function<void()> overwrite,
-                                    std::function<void()> pickOtherPath) {
+void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file, std::function<void(const fs::path&)> writeTofile) {
+    if (!fs::exists(file)) {
+        writeTofile(file);
+        return;
+    }
+
     GtkWidget* dialog = gtk_message_dialog_new(
             win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
             FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % file.filename().u8string())
@@ -191,14 +194,10 @@ void XojMsgBox::replaceFileQuestion(GtkWindow* win, const fs::path& file, std::f
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), GTK_RESPONSE_OK);
 
     xoj::popup::PopupWindowWrapper<XojMsgBox> popup(
-            GTK_DIALOG(dialog),
-            [overwrite = std::move(overwrite), pickOtherPath = std::move(pickOtherPath)](int response) {
+            GTK_DIALOG(dialog), [overwrite = std::move(writeTofile), file = std::move(file)](int response) {
                 if (response == GTK_RESPONSE_OK) {
                     // Wait for the message dialog to close before executing the response
-                    Util::execInUiThread(std::move(overwrite));
-                } else {
-                    // Wait for the message dialog to close before executing the response
-                    Util::execInUiThread(std::move(pickOtherPath));
+                    Util::execInUiThread([write = std::move(overwrite), file = std::move(file)]() { write(file); });
                 }
             });
     popup.show(win);
