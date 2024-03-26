@@ -36,6 +36,7 @@
 #include "util/XojMsgBox.h"                             // for XojMsgBox
 #include "util/glib_casts.h"                            // for wrap_for_once_v
 #include "util/i18n.h"                                  // for FS, _F
+#include "util/raii/CStringWrapper.h"                   // for OwnedCString
 
 #include "GladeSearchpath.h"     // for GladeSearchpath
 #include "ToolbarDefinitions.h"  // for TOOLBAR_DEFINITIO...
@@ -198,33 +199,26 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
 
 struct ThemeProperties {
     bool dark;
-    std::string name;
     std::string rootname;  ///< Name without any putative -dark suffix
-    std::string darkSuffix;
 };
 static ThemeProperties getThemeProperties(GtkWidget* w) {
-    ThemeProperties props;
-    {
-        gchar* name = nullptr;
-        g_object_get(gtk_widget_get_settings(w), "gtk-theme-name", &name, nullptr);
-        props.name = name;
-        g_free(name);
-    }
+    xoj::util::OwnedCString name;
+    g_object_get(gtk_widget_get_settings(w), "gtk-theme-name", name.contentReplacer(), nullptr);
 
     // Try to figure out if the theme is dark or light
     // Some themes handle their dark variant via "gtk-application-prefer-dark-theme" while other just append "-dark"
     const std::regex nameparser("([a-zA-Z-]+?)(-[dD]ark)?");
-    std::smatch sm;
-    std::regex_match(props.name, sm, nameparser);
+    std::cmatch sm;
+    std::regex_match(name.get(), sm, nameparser);
 
+    ThemeProperties props;
     if (sm.size() < 3) {
-        g_warning("Fails to extract theme root name from: \"%s\"", props.name.c_str());
+        g_warning("Fails to extract theme root name from: \"%s\"", name.get());
+        props.rootname = name.get();
         props.dark = false;
-        props.darkSuffix = "";
     } else {
         props.rootname = sm[1];
-        props.darkSuffix = sm[2];
-        props.dark = !props.darkSuffix.empty();
+        props.dark = sm[2].length() > 0;
     }
     gboolean dark = false;
     g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
