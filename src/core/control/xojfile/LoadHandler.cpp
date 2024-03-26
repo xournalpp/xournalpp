@@ -10,8 +10,9 @@
 #include <type_traits>  // for remove_reference<>::type
 #include <utility>      // for move
 
-#include <gio/gio.h>      // for g_file_get_path, g_fil...
-#include <glib-object.h>  // for g_object_unref
+#include <gio/gio.h>                 // for g_file_get_path, g_fil...
+#include <glib-object.h>             // for g_object_unref
+#include <pango/pango-attributes.h>  // for pango_attr_list_from_string
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "model/BackgroundImage.h"             // for BackgroundImage
@@ -647,6 +648,15 @@ void LoadHandler::parseText() {
     double fontSize = LoadHandlerHelper::getAttribDouble("size", this);
     double x = LoadHandlerHelper::getAttribDouble("x", this);
     double y = LoadHandlerHelper::getAttribDouble("y", this);
+    const char* attributes = LoadHandlerHelper::getAttrib("attributes", true, this);
+
+    if (attributes != nullptr) {
+        std::string attrs = g_uri_unescape_string(attributes, NULL);
+        PangoAttrList* attrlist = pango_attr_list_from_string(attrs.c_str());
+        this->text->replaceAttributes(attrlist);
+        pango_attr_list_unref(attrlist);
+    }
+
 
     this->text->setX(x);
     this->text->setY(y);

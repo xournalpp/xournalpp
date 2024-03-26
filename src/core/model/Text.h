@@ -11,8 +11,9 @@
 
 #pragma once
 
+#include <list>    // for list
 #include <string>  // for string
-#include <vector>
+#include <vector>  // for vector
 
 #include <pango/pango.h>
 
@@ -26,6 +27,8 @@ class Element;
 class ObjectInputStream;
 class ObjectOutputStream;
 class XojPdfRectangle;
+
+enum class TextAlignment { LEFT = 0, CENTER = 1, RIGHT = 2 };
 
 class Text: public AudioElement {
 public:
@@ -55,6 +58,21 @@ public:
 
     bool rescaleOnlyAspectRatio() override;
 
+    void setAlignment(TextAlignment align);
+    TextAlignment getAlignment() const;
+
+    PangoAttrList* getAttributeListCopy() const;
+    void addAttribute(PangoAttribute* attrib);
+    void clearAttributes();
+    void updateTextAttributesPosition(int pos, int del, int add);
+
+    /**
+     * Replaces the current attribute list with a copy of the given one
+     * Important: Does not take ownership of the new attribute list,
+     * Object has to be freed by the calling function
+     */
+    void replaceAttributes(PangoAttrList* attributes);
+
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;
 
@@ -77,6 +95,9 @@ private:
     XojFont font;
 
     std::string text;
+
+    TextAlignment alignment = TextAlignment::LEFT;
+    PangoAttrList* attributes = nullptr;
 
     bool inEditing = false;
 };

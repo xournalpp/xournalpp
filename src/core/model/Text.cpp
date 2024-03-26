@@ -22,6 +22,7 @@ using xoj::util::Rectangle;
 Text::Text(): AudioElement(ELEMENT_TEXT) {
     this->font.setName("Sans");
     this->font.setSize(12);
+    this->attributes = pango_attr_list_new();
 }
 
 Text::~Text() = default;
@@ -39,6 +40,8 @@ auto Text::cloneText() const -> std::unique_ptr<Text> {
     text->snappedBounds = this->snappedBounds;
     text->sizeCalculated = this->sizeCalculated;
     text->inEditing = this->inEditing;
+    text->alignment = this->alignment;
+    text->attributes = pango_attr_list_copy(this->attributes);
 
     return text;
 }
@@ -103,6 +106,11 @@ void Text::updatePangoFont(PangoLayout* layout) const {
 
     pango_layout_set_font_description(layout, desc);
     pango_font_description_free(desc);
+
+    pango_layout_set_attributes(layout, pango_attr_list_copy(this->attributes));
+
+    PangoAlignment alignment = static_cast<PangoAlignment>(this->alignment);
+    pango_layout_set_alignment(layout, alignment);
 }
 
 void Text::scale(double x0, double y0, double fx, double fy, double rotation,
@@ -204,4 +212,32 @@ auto Text::findText(const std::string& search) const -> std::vector<XojPdfRectan
     }
 
     return list;
+}
+
+void Text::setAlignment(TextAlignment align) { this->alignment = align; }
+
+TextAlignment Text::getAlignment() const { return this->alignment; }
+
+PangoAttrList* Text::getAttributeListCopy() const { return pango_attr_list_copy(this->attributes); };
+
+void Text::addAttribute(PangoAttribute* attrib) {
+    pango_attr_list_change(this->attributes, attrib);
+    this->calcSize();
+}
+
+void Text::clearAttributes() {
+    pango_attr_list_unref(this->attributes);
+    this->attributes = pango_attr_list_new();
+    this->calcSize();
+}
+
+void Text::updateTextAttributesPosition(int pos, int del, int add) {
+    pango_attr_list_update(this->attributes, pos, del, add);
+    this->calcSize();
+}
+
+void Text::replaceAttributes(PangoAttrList* attributes) {
+    pango_attr_list_unref(this->attributes);
+    this->attributes = pango_attr_list_copy(attributes);
+    this->calcSize();
 }

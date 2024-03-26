@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.38.2 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkImage" id="imgAlignCenter">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">format-justify-center</property>
+  </object>
+  <object class="GtkImage" id="imgAlignLeft">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="tooltip-text" translatable="yes">Align Left</property>
+    <property name="icon-name">format-justify-left</property>
+  </object>
+  <object class="GtkImage" id="imgAlignRight">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">format-justify-right</property>
+  </object>
+  <object class="GtkImage" id="imgBgColor">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-tool-highlighter</property>
+  </object>
+  <object class="GtkImage" id="imgBold">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-bold</property>
+  </object>
+  <object class="GtkImage" id="imgClear">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-trash</property>
+  </object>
+  <object class="GtkImage" id="imgCollapse">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">go-up</property>
+  </object>
+  <object class="GtkImage" id="imgExpand">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">go-down</property>
+  </object>
+  <object class="GtkImage" id="imgFtColor">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-tool-pencil</property>
+  </object>
+  <object class="GtkImage" id="imgItalic">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-italic</property>
+  </object>
+  <object class="GtkImage" id="imgOverlineSingle">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-overline</property>
+  </object>
+  <object class="GtkImage" id="imgStrikethrough">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-strikethrough</property>
+  </object>
+  <object class="GtkImage" id="imgStyleItalic">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-italic</property>
+  </object>
+  <object class="GtkImage" id="imgStyleOblique">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-oblique</property>
+  </object>
+  <object class="GtkImage" id="imgSubscript">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-subscript</property>
+  </object>
+  <object class="GtkImage" id="imgSuperscript">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-superscript</property>
+  </object>
+  <object class="GtkImage" id="imgUnderline">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-underline</property>
+  </object>
+  <object class="GtkImage" id="imgUnderlineDouble">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-underline-double</property>
+  </object>
+  <object class="GtkImage" id="imgUnderlineError">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-underline-error</property>
+  </object>
+  <object class="GtkImage" id="imgUnderlineSingle">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-underline</property>
+  </object>
+  <object class="GtkImage" id="imgWeightBold">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-bold</property>
+  </object>
+  <object class="GtkImage" id="imgWeightBook">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-normal</property>
+  </object>
+  <object class="GtkImage" id="imgWeightThin">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">xopp-thin</property>
+  </object>
+  <object class="GtkPopover" id="textEditorContextMenu">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="modal">False</property>
+    <property name="constrain-to">none</property>
+    <child>
+      <object class="GtkBox" id="mainLayout">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox" id="mainToolbar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-start">5</property>
+            <property name="margin-end">5</property>
+            <property name="margin-top">5</property>
+            <property name="margin-bottom">5</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkFontButton" id="btnFontChooser">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="tooltip-text" translatable="yes">Font Family</property>
+                <property name="font">Sans 12</property>
+                <property name="language">c</property>
+                <property name="preview-text"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="textDecoLayout">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkToggleButton" id="btnDecoBold">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Bold</property>
+                    <property name="image">imgBold</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnDecoItalic">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Italic</property>
+                    <property name="image">imgItalic</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnDecoUnderline">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Underline</property>
+                    <property name="image">imgUnderline</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnDecoExpand">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Expand / Collapse</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <style>
+                  <class name="linked"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="colorLayout">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkButton" id="btnFontColor">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font Color</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnBgColor">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Background Color</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <style>
+                  <class name="linked"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="alignmentLayout">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkToggleButton" id="btnAlignLeft">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Align Left</property>
+                    <property name="image">imgAlignLeft</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnAlignCenter">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Align Center</property>
+                    <property name="image">imgAlignCenter</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnAlignRight">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Align Right</property>
+                    <property name="image">imgAlignRight</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <style>
+                  <class name="linked"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="secondaryToolbar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-start">5</property>
+            <property name="margin-end">5</property>
+            <property name="margin-bottom">5</property>
+            <property name="spacing">4</property>
+            <child>
+              <object class="GtkBox" id="fontWeightLayout">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkToggleButton" id="btnWeightThin">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font weight: Thin</property>
+                    <property name="image">imgWeightThin</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnWeightBook">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font weight: Book</property>
+                    <property name="image">imgWeightBook</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnWeightBold">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font weight: Bold</property>
+                    <property name="image">imgWeightBold</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <style>
+                  <class name="linked"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="fontStyleLayout">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkToggleButton" id="btnStyleItalic">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font style: Italic</property>
+                    <property name="image">imgStyleItalic</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnStyleOblique">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Font style: Oblique</property>
+                    <property name="image">imgStyleOblique</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <style>
+                  <class name="linked"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="lineLayout">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkToggleButton" id="btnUnderlineSingle">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Underline Single</property>
+                    <property name="image">imgUnderlineSingle</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnUnderlineError">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Underline Squiggle</property>
+                    <property name="image">imgUnderlineError</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnUnderlineDouble">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Underline Double</property>
+                    <property name="image">imgUnderlineDouble</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnStrikethrough">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Strikethrough</property>
+                    <property name="image">imgStrikethrough</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnOverlineSingle">
+                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Overline
+Disabled due to Pango Bug</property>
+                    <property name="image">imgOverlineSingle</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <style>
+                  <class name="linked"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="scriptLayout">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkToggleButton" id="btnSuperscript">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Superscript</property>
+                    <property name="image">imgSuperscript</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btnSubscript">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes">Subscript</property>
+                    <property name="image">imgSubscript</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <style>
+                  <class name="linked"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnRemoveStyle">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="tooltip-text" translatable="yes">Remove all styling</property>
+                <property name="image">imgClear</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -11,13 +11,15 @@
 
 #pragma once
 
-#include <string>  // for string
+#include <optional>  // for optional
+#include <string>    // for string
 
 #include <gdk/gdk.h>      // for GdkEventKey
 #include <glib.h>         // for gint, gboolean, gchar
 #include <gtk/gtk.h>      // for GtkIMContext, GtkTextIter, GtkWidget
 #include <pango/pango.h>  // for PangoAttrList, PangoLayout
 
+#include "control/zoom/ZoomListener.h"  // for ZoomListener
 #include "model/OverlayBase.h"
 #include "model/PageRef.h"  // for PageRef
 #include "util/Color.h"     // for Color
@@ -30,6 +32,9 @@ class Text;
 class XojFont;
 class Control;
 class TextEditorCallbacks;
+class XojPageView;
+class TextEditorContextMenu;
+enum class TextAlignment;
 
 namespace xoj::util {
 template <class T>
@@ -40,9 +45,9 @@ namespace xoj::view {
 class TextEditionView;
 };
 
-class TextEditor: public OverlayBase {
+class TextEditor: public OverlayBase, public ZoomListener {
 public:
-    TextEditor(Control* control, const PageRef& page, GtkWidget* xournalWidget, double x, double y);
+    TextEditor(Control* control, XojPageView* pageView, GtkWidget* xournalWidget, double x, double y);
     virtual ~TextEditor();
 
     /** Represents the different kinds of text selection */
@@ -53,6 +58,8 @@ public:
     void mousePressed(double x, double y);
     void mouseMoved(double x, double y);
     void mouseReleased();
+
+    void zoomChanged() override;
 
     /**
      * @brief Returns a pointer to the edited Text element.
@@ -83,6 +90,18 @@ public:
     void pasteFromClipboard();
     void selectAtCursor(TextEditor::SelectType ty);
 
+    void changeFontColorTemp(GtkButton* src);
+
+    void setTextAlignment(TextAlignment align);
+    void setFontInline(PangoFontDescription* font);
+    void setFontColorInline(GdkRGBA color);
+    void setBackgroundColorInline(GdkRGBA color);
+    void addTextAttributeInline(PangoAttribute* attrib);
+    void clearAttributes();
+
+    std::optional<std::tuple<int, int>> getCurrentSelection() const;
+    bool hasSelection() const;
+
 private:
     void toggleOverwrite();
     void toggleBoldFace();
@@ -90,12 +109,15 @@ private:
     void decreaseFontSize();
     void moveCursor(GtkMovementStep step, int count, bool extendSelection);
     void backspace();
+    bool deleteSelection();
 
     void afterFontChange();
     void replaceBufferContent(const std::string& text);
 
     void finalizeEdition();
     void initializeEditionAt(double x, double y);
+
+    void updateTextAttributesPos(int pos, int del, int add);
 
 private:
     /**
@@ -105,7 +127,13 @@ private:
      */
     void setTextToPangoLayout(PangoLayout* pl) const;
 
-    void setSelectionAttributesToPangoLayout(PangoLayout* pl) const;
+    /**
+     * @brief Add the pango attributes to the provided pango layout
+     * The full attribute list is stored in the text element (this->textElement)
+     *
+     * Special case: This function additionally sets a pango background attribute for the current selection
+     */
+    void setAttributesToPangoLayout(PangoLayout* pl) const;
 
     Range computeBoundingBox() const;
     void repaintEditor(bool sizeChanged = true);
@@ -145,11 +173,18 @@ private:
 private:
     Control* control;
     PageRef page;
+    XojPageView* pageView;
 
     /**
      * @brief Pointer to the main window's widget. Used for fetching settings and clipboards, and ringing the bell.
      */
     GtkWidget* xournalWidget;
+
+    /**
+     * @brief Pointer to the context menu displayed above the text editor
+     */
+    std::unique_ptr<TextEditorContextMenu> contextMenu;
+    std::tuple<int, int> previousSelection = std::make_tuple(0, 0);
 
     /**
      * @brief Text element under edition, clone of the original Text element (if any)
