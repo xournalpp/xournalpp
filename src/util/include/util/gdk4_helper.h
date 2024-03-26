@@ -14,4 +14,9 @@
 
 #include <gdk/gdk.h>
 
+/*** GdkEvent ***/
 GdkModifierType gdk_event_get_modifier_state(GdkEvent* event);
+
+/*** GdkKeyEvent ***/
+GdkModifierType gdk_key_event_get_consumed_modifiers(GdkEvent* event);
+guint gdk_key_event_get_keyval(GdkEvent* event);

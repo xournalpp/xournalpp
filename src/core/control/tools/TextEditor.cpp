@@ -28,7 +28,7 @@
 #include "util/safe_casts.h"  // for round_cast, as_unsigned
 #include "view/overlays/TextEditionView.h"
 
-#include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
+#include "TextEditorKeyBindings.h"
 
 class UndoAction;
 
@@ -124,7 +124,6 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         control(control),
         page(page),
         xournalWidget(xournalWidget),
-        textWidget(gtk_xoj_int_txt_new(this), xoj::util::adopt),
         imContext(gtk_im_multicontext_new(), xoj::util::adopt),
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::TextEditionView>>()) {
@@ -299,77 +298,23 @@ auto TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
 }
 
 auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
-    bool retval = false;
-    bool obscure = false;
-
-    GdkModifierType modifiers = gtk_accelerator_get_default_mod_mask();
-    auto keymap = gdk_keymap_get_for_display(gdk_display_get_default());
-    GdkModifierType consumed;
-    /*
-    According to https://docs.gtk.org/gdk3/method.Keymap.translate_keyboard_state.html
-    consumed modifiers should be masked out. For instance, on a US keyboard, the plus symbol is shifted, so when
-    comparing a key press to a <Control>plus accelerator <Shift> should be masked out.
-    */
-    gdk_keymap_translate_keyboard_state(keymap, event->hardware_keycode, static_cast<GdkModifierType>(event->state),
-                                        event->group, nullptr, nullptr, nullptr, &consumed);
-
-    GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
-    bool canInsert = gtk_text_iter_can_insert(&iter, true);
 
     // IME needs to handle the input first so the candidate window works correctly
     if (gtk_im_context_filter_keypress(this->imContext.get(), event)) {
         this->needImReset = true;
-        if (!canInsert) {
+
+        GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
+        bool canInsert = gtk_text_iter_can_insert(&iter, true);
+
+        if (canInsert) {
+            control->getCursor()->setInvisible(true);
+        } else {
             this->resetImContext();
         }
-        obscure = canInsert;
-        retval = true;
-    } else if (gtk_bindings_activate_event(G_OBJECT(this->textWidget.get()), event)) {
         return true;
-    } else if ((event->state & ~consumed & modifiers) == GDK_CONTROL_MASK) {
-        if (event->keyval == GDK_KEY_b || event->keyval == GDK_KEY_B) {
-            toggleBoldFace();
-            return true;
-        }
-        if (event->keyval == GDK_KEY_plus || event->keyval == GDK_KEY_KP_Add) {
-            increaseFontSize();
-            return true;
-        }
-        if (event->keyval == GDK_KEY_minus || event->keyval == GDK_KEY_KP_Subtract) {
-            decreaseFontSize();
-            return true;
-        }
-    } else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter ||
-               event->keyval == GDK_KEY_KP_Enter) {
-        this->resetImContext();
-        iMCommitCallback(nullptr, "\n", this);
-
-        obscure = true;
-        retval = true;
-    }
-    // Pass through Tab as literal tab, unless Control is held down
-    else if ((event->keyval == GDK_KEY_Tab || event->keyval == GDK_KEY_KP_Tab ||
-              event->keyval == GDK_KEY_ISO_Left_Tab) &&
-             !(event->state & GDK_CONTROL_MASK)) {
-        resetImContext();
-        Settings* settings = control->getSettings();
-        if (!settings->getUseSpacesAsTab()) {
-            iMCommitCallback(nullptr, "\t", this);
-        } else {
-            std::string indent(static_cast<size_t>(settings->getNumberOfSpacesForTab()), ' ');
-            iMCommitCallback(nullptr, indent.c_str(), this);
-        }
-        obscure = true;
-        retval = true;
-    } else {
-        retval = false;
     }
 
-    if (obscure) {
-        control->getCursor()->setInvisible(true);
-    }
-
-    return retval;
+    return keyBindings.processEvent(this, (GdkEvent*)event);
 }
 
 auto TextEditor::onKeyReleaseEvent(GdkEventKey* event) -> bool {
@@ -579,7 +524,7 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
     }
 
     // call moveCursor() even if the cursor hasn't moved, since it cancels the selection
-    moveCursor(&newplace, extendSelection);
+    moveCursorIterator(&newplace, extendSelection);
 
     if (updateVirtualCursor) {
         computeVirtualCursorPosition();
@@ -618,7 +563,7 @@ void TextEditor::markPos(double x, double y, bool extendSelection) {
     findPos(&newplace, x, y);
 
     // call moveCursor() even if the cursor hasn't moved, since it cancels the selection
-    moveCursor(&newplace, extendSelection);
+    moveCursorIterator(&newplace, extendSelection);
     computeVirtualCursorPosition();
 }
 
@@ -667,7 +612,7 @@ void TextEditor::computeVirtualCursorPosition() {
     this->virtualCursorAbscissa = rect.x;
 }
 
-void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelection) {
+void TextEditor::moveCursorIterator(const GtkTextIter* newLocation, gboolean extendSelection) {
     bool selectionChanged = true;
     if (extendSelection) {
         if (auto oldLoc = getIteratorAtCursor(this->buffer.get()); gtk_text_iter_equal(newLocation, &oldLoc)) {
@@ -865,6 +810,27 @@ void TextEditor::backspace() {
         gtk_widget_error_bell(this->xournalWidget);
     }
 }
+
+void TextEditor::linebreak() {
+    this->resetImContext();
+    iMCommitCallback(nullptr, "\n", this);
+
+    control->getCursor()->setInvisible(true);
+}
+
+void TextEditor::tabulation() {
+    resetImContext();
+    Settings* settings = control->getSettings();
+    if (!settings->getUseSpacesAsTab()) {
+        iMCommitCallback(nullptr, "\t", this);
+    } else {
+        std::string indent(static_cast<size_t>(settings->getNumberOfSpacesForTab()), ' ');
+        iMCommitCallback(nullptr, indent.c_str(), this);
+    }
+
+    control->getCursor()->setInvisible(true);
+}
+
 
 void TextEditor::copyToClipboard() const {
     GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
