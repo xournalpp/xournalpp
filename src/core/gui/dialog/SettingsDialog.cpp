@@ -366,7 +366,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());
     loadCheckbox("cbSnapRecognizedShapesEnabled", settings->getSnapRecognizedShapesEnabled());
     loadCheckbox("cbRestoreLineWidthEnabled", settings->getRestoreLineWidthEnabled());
-    loadCheckbox("cbDarkTheme", settings->isDarkTheme());
     loadCheckbox("cbStockIcons", settings->areStockIconsUsed());
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
@@ -548,6 +547,19 @@ void SettingsDialog::load() {
             break;
     }
 
+    switch (settings->getThemeVariant()) {
+        case THEME_VARIANT_FORCE_LIGHT:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbThemeVariant")), 1);
+            break;
+        case THEME_VARIANT_FORCE_DARK:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbThemeVariant")), 2);
+            break;
+        case THEME_VARIANT_USE_SYSTEM:
+        default:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbThemeVariant")), 0);
+            break;
+    }
+
     auto viewMode = settings->getViewModes().at(PresetViewModeIds::VIEW_MODE_FULLSCREEN);
     bool showFullscreenMenubar = viewMode.showMenubar;
     bool showFullscreenToolbar = viewMode.showToolbar;
@@ -689,7 +701,6 @@ void SettingsDialog::save() {
     settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
     settings->setSnapRecognizedShapesEnabled(getCheckbox("cbSnapRecognizedShapesEnabled"));
     settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
-    settings->setDarkTheme(getCheckbox("cbDarkTheme"));
     settings->setAreStockIconsUsed(getCheckbox("cbStockIcons"));
     settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
     settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
@@ -786,6 +797,19 @@ void SettingsDialog::save() {
         case 0:
         default:
             settings->setIconTheme(ICON_THEME_COLOR);
+            break;
+    }
+
+    switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbThemeVariant")))) {
+        case 1:
+            settings->setThemeVariant(THEME_VARIANT_FORCE_LIGHT);
+            break;
+        case 2:
+            settings->setThemeVariant(THEME_VARIANT_FORCE_DARK);
+            break;
+        case 0:
+        default:
+            settings->setThemeVariant(THEME_VARIANT_USE_SYSTEM);
             break;
     }
 

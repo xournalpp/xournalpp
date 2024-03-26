@@ -107,12 +107,12 @@ void Settings::loadDefault() {
     this->stylusCursorType = STYLUS_CURSOR_DOT;
     this->eraserVisibility = ERASER_VISIBILITY_ALWAYS;
     this->iconTheme = ICON_THEME_COLOR;
+    this->themeVariant = THEME_VARIANT_USE_SYSTEM;
     this->highlightPosition = false;
     this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
     this->cursorHighlightRadius = 30.0;
     this->cursorHighlightBorderColor = 0x800000FF;  // Blue with 50% opacity
     this->cursorHighlightBorderWidth = 0.0;
-    this->darkTheme = false;
     this->useStockIcons = false;
     this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
     this->disableScrollbarFadeout = false;
@@ -450,6 +450,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->eraserVisibility = eraserVisibilityFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("iconTheme")) == 0) {
         this->iconTheme = iconThemeFromString(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("themeVariant")) == 0) {
+        this->themeVariant = themeVariantFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("highlightPosition")) == 0) {
         this->highlightPosition = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightColor")) == 0) {
@@ -460,8 +462,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->cursorHighlightBorderColor = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightBorderWidth")) == 0) {
         this->cursorHighlightBorderWidth = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("darkTheme")) == 0) {
-        this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useStockIcons")) == 0) {
         this->useStockIcons = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
@@ -972,12 +972,14 @@ void Settings::save() {
     xmlNode = saveProperty("iconTheme", iconThemeToString(this->iconTheme), root);
     ATTACH_COMMENT("The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"");
 
+    xmlNode = saveProperty("themeVariant", themeVariantToString(this->themeVariant), root);
+    ATTACH_COMMENT("Dark/light mode, allowed values are \"useSystem\", \"forceLight\", \"forceDark\"");
+
     SAVE_BOOL_PROP(highlightPosition);
     xmlNode = savePropertyUnsigned("cursorHighlightColor", uint32_t(cursorHighlightColor), root);
     xmlNode = savePropertyUnsigned("cursorHighlightBorderColor", uint32_t(cursorHighlightBorderColor), root);
     SAVE_DOUBLE_PROP(cursorHighlightRadius);
     SAVE_DOUBLE_PROP(cursorHighlightBorderWidth);
-    SAVE_BOOL_PROP(darkTheme);
     SAVE_BOOL_PROP(useStockIcons);
 
     SAVE_BOOL_PROP(disableScrollbarFadeout);
@@ -1348,6 +1350,16 @@ void Settings::setIconTheme(IconTheme iconTheme) {
 
     this->iconTheme = iconTheme;
 
+    save();
+}
+
+auto Settings::getThemeVariant() const -> ThemeVariant { return this->themeVariant; }
+
+void Settings::setThemeVariant(ThemeVariant theme) {
+    if (this->themeVariant == theme) {
+        return;
+    }
+    this->themeVariant = theme;
     save();
 }
 
@@ -1831,16 +1843,6 @@ void Settings::setDisplayDpi(int dpi) {
 }
 
 auto Settings::getDisplayDpi() const -> int { return this->displayDpi; }
-
-void Settings::setDarkTheme(bool dark) {
-    if (this->darkTheme == dark) {
-        return;
-    }
-    this->darkTheme = dark;
-    save();
-}
-
-auto Settings::isDarkTheme() const -> bool { return this->darkTheme; }
 
 void Settings::setAreStockIconsUsed(bool use) {
     if (this->useStockIcons == use) {

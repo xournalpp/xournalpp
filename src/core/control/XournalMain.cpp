@@ -457,39 +457,6 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
-    // Set up icons
-    {
-        const auto uiPath = app_data->gladePath->getFirstSearchPath();
-        const auto lightColorIcons = (uiPath / "iconsColor-light").u8string();
-        const auto darkColorIcons = (uiPath / "iconsColor-dark").u8string();
-        const auto lightLucideIcons = (uiPath / "iconsLucide-light").u8string();
-        const auto darkLucideIcons = (uiPath / "iconsLucide-dark").u8string();
-
-        // icon load order from lowest priority to highest priority
-        std::vector<std::string> iconLoadOrder = {};
-        const auto chosenTheme = app_data->control->getSettings()->getIconTheme();
-        switch (chosenTheme) {
-            case ICON_THEME_COLOR:
-                iconLoadOrder = {darkLucideIcons, lightLucideIcons, darkColorIcons, lightColorIcons};
-                break;
-            case ICON_THEME_LUCIDE:
-                iconLoadOrder = {darkColorIcons, lightColorIcons, darkLucideIcons, lightLucideIcons};
-                break;
-            default:
-                g_message("Unknown icon theme!");
-        }
-        const auto darkTheme = app_data->control->getSettings()->isDarkTheme();
-        if (darkTheme) {
-            for (size_t i = 0; 2 * i + 1 < iconLoadOrder.size(); ++i) {
-                std::swap(iconLoadOrder[2 * i], iconLoadOrder[2 * i + 1]);
-            }
-        }
-
-        for (auto& p: iconLoadOrder) {
-            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str());
-        }
-    }
-
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
     if (globalLatexTemplatePath.empty()) {
         globalLatexTemplatePath = findResourcePath("resources/") / "default_template.tex";
