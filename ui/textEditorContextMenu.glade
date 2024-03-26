@@ -21,7 +21,7 @@
   <object class="GtkImage" id="imgBgColor">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">fill-color</property>
+    <property name="icon-name">xopp-tool-highlighter</property>
   </object>
   <object class="GtkImage" id="imgBold">
     <property name="visible">True</property>
@@ -36,17 +36,17 @@
   <object class="GtkImage" id="imgCollapse">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">collapse</property>
+    <property name="icon-name">go-up</property>
   </object>
   <object class="GtkImage" id="imgExpand">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">expand</property>
+    <property name="icon-name">go-down</property>
   </object>
   <object class="GtkImage" id="imgFtColor">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">font</property>
+    <property name="icon-name">xopp-tool-pencil</property>
   </object>
   <object class="GtkImage" id="imgItalic">
     <property name="visible">True</property>
