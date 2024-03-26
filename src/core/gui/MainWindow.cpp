@@ -1,5 +1,7 @@
 #include "MainWindow.h"
 
+#include <regex>
+
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_fr...
 #include <gdk/gdk.h>                // for gdk_screen_get_de...
 #include <gio/gio.h>                // for g_cancellable_is_...
@@ -194,12 +196,52 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
     }
 }
 
-void MainWindow::updateColorscheme() {
-    if (control->getSettings()->getThemeVariant() == THEME_VARIANT_USE_SYSTEM) {
-        gtk_settings_reset_property(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme");
+struct ThemeProperties {
+    bool dark;
+    std::string name;
+    std::string rootname;  ///< Name without any putative -dark suffix
+    std::string darkSuffix;
+};
+static ThemeProperties getThemeProperties(GtkWidget* w) {
+    ThemeProperties props;
+    {
+        gchar* name = nullptr;
+        g_object_get(gtk_widget_get_settings(w), "gtk-theme-name", &name, nullptr);
+        props.name = name;
+        g_free(name);
     }
 
-    bool darkMode = isDarkTheme();
+    // Try to figure out if the theme is dark or light
+    // Some themes handle their dark variant via "gtk-application-prefer-dark-theme" while other just append "-dark"
+    const std::regex nameparser("([a-zA-Z-]+?)(-[dD]ark)?");
+    std::smatch sm;
+    std::regex_match(props.name, sm, nameparser);
+
+    if (sm.size() < 3) {
+        g_warning("Fails to extract theme root name from: \"%s\"", props.name.c_str());
+        props.dark = false;
+        props.darkSuffix = "";
+    } else {
+        props.rootname = sm[1];
+        props.darkSuffix = sm[2];
+        props.dark = !props.darkSuffix.empty();
+    }
+    gboolean dark = false;
+    g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
+    props.dark = props.dark || dark;  // Some themes handle their dark variant via this setting
+
+    return props;
+}
+
+void MainWindow::updateColorscheme() {
+    auto variant = control->getSettings()->getThemeVariant();
+    if (variant == THEME_VARIANT_USE_SYSTEM) {
+        gtk_settings_reset_property(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme");
+        gtk_settings_reset_property(gtk_widget_get_settings(this->window), "gtk-theme-name");
+    }
+    auto props = getThemeProperties(this->window);
+
+    this->darkMode = (props.dark && variant != THEME_VARIANT_FORCE_LIGHT) || variant == THEME_VARIANT_FORCE_DARK;
 
     // Set up icons
     {
@@ -223,7 +265,7 @@ void MainWindow::updateColorscheme() {
                 g_message("Unknown icon theme!");
         }
 
-        if (darkMode) {
+        if (this->darkMode) {
             for (size_t i = 0; 2 * i + 1 < iconLoadOrder.size(); ++i) {
                 std::swap(iconLoadOrder[2 * i], iconLoadOrder[2 * i + 1]);
             }
@@ -236,12 +278,15 @@ void MainWindow::updateColorscheme() {
 
     GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(this->window));
 
-    if (darkMode) {
+    if (this->darkMode) {
         gtk_style_context_add_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", true, nullptr);
     } else {
         gtk_style_context_remove_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", false, nullptr);
+        if (props.dark) {  // The active theme is all dark. Remove the trailing "-dark"
+            g_object_set(gtk_widget_get_settings(this->window), "gtk-theme-name", props.rootname.c_str(), nullptr);
+        }
     }
 
     {
@@ -586,22 +631,7 @@ void MainWindow::setMaximized(bool maximized) { this->maximized = maximized; }
 
 auto MainWindow::isMaximized() const -> bool { return this->maximized; }
 
-auto MainWindow::isDarkTheme() const -> bool {
-    switch (control->getSettings()->getThemeVariant()) {
-        case THEME_VARIANT_USE_SYSTEM: {
-            gboolean dark = false;
-            g_object_get(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", &dark, nullptr);
-            return dark;
-        }
-        case THEME_VARIANT_FORCE_LIGHT:
-            return false;
-        case THEME_VARIANT_FORCE_DARK:
-            return true;
-        default:
-            g_warning("ThemeVariant out of bounds: %d", control->getSettings()->getThemeVariant());
-            return false;
-    }
-}
+auto MainWindow::isDarkTheme() const -> bool { return this->darkMode; }
 
 auto MainWindow::getXournal() const -> XournalView* { return xournal.get(); }
 

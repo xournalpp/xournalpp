@@ -201,6 +201,7 @@ private:
     std::unique_ptr<Menubar> menubar;
 
     bool maximized = false;
+    bool darkMode = false;
 
     ToolbarWidgetArray toolbarWidgets;
 
