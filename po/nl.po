@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-22 08:35+0000\n"
-"PO-Revision-Date: 2023-11-22 08:44\n"
+"POT-Creation-Date: 2024-03-02 13:31+0000\n"
+"PO-Revision-Date: 2024-03-02 13:52\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -22,39 +22,39 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:229
-msgid "Autosave renamed from {1} to {2}"
-msgstr "Automatisch bestand hernoemd van {1} in {2}"
+#: ../src/core/control/Control.cpp:219
+msgid "Filesystem error: {1}"
+msgstr ""
 
-#: ../src/core/control/Control.cpp:240
-msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "Kan automatisch bestand niet hernoemen van '{1}' in '{2}': {3}"
+#: ../src/core/control/Control.cpp:231
+msgid "Could not remove old autosave file \"{1}\": {2}"
+msgstr ""
 
-#: ../src/core/control/Control.cpp:249
-msgid "Autosave failed with an error: {1}"
-msgstr "Automatisch opslaan mislukt; foutmelding: {1}"
+#: ../src/core/control/Control.cpp:547
+msgid "You deleted the active toolbar. Falling back to the default toolbar."
+msgstr ""
 
-#: ../src/core/control/Control.cpp:574
+#: ../src/core/control/Control.cpp:561
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "De werkbalkconfiguratie '{1}' is vooringesteld. Wil je een kopie maken die kunt aanpassen?"
 
-#: ../src/core/control/Control.cpp:577
+#: ../src/core/control/Control.cpp:564
 msgid "Yes"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:577
+#: ../src/core/control/Control.cpp:564
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:756
+#: ../src/core/control/Control.cpp:743
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Geen pdf pagina's beschikbaar om toe te voegen. Mogelijk moet u het document eerst heropenen."
 
-#: ../src/core/control/Control.cpp:770
+#: ../src/core/control/Control.cpp:757
 msgid "Unable to retrieve pdf page."
 msgstr "Kan de pdf-pagina niet ophalen."
 
-#: ../src/core/control/Control.cpp:1336
+#: ../src/core/control/Control.cpp:1324
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -62,110 +62,114 @@ msgstr "Open geen automatisch opgeslagen bestanden; deze worden overschreven!\n"
 "Kopieer de bestanden naar een andere map.\n"
 "Bestanden uit de map '{1}' kunnen niet worden geopend."
 
-#: ../src/core/control/Control.cpp:1350
+#: ../src/core/control/Control.cpp:1338
 msgid "file: {1}"
 msgstr "bestand: {1}"
 
-#: ../src/core/control/Control.cpp:1398
+#: ../src/core/control/Control.cpp:1362
+msgid "Error opening file \"{1}\""
+msgstr "Kan bestand '{1}' niet openen"
+
+#: ../src/core/control/Control.cpp:1370
+msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1499
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1401
+#: ../src/core/control/Control.cpp:1502
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1411
+#: ../src/core/control/Control.cpp:1512
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1419
-msgid "Use proposed PDF"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:1421
+#: ../src/core/control/Control.cpp:1517
 msgid "Select another PDF"
 msgstr "Ander PDF-bestand kiezen"
 
-#: ../src/core/control/Control.cpp:1422
+#: ../src/core/control/Control.cpp:1518
 msgid "Remove PDF Background"
 msgstr "PDF-achtergrond verwijderen"
 
-#: ../src/core/control/Control.cpp:1423 ../src/core/control/Control.cpp:1946
+#: ../src/core/control/Control.cpp:1519 ../src/core/control/Control.cpp:1936
 #: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: ../src/core/control/Control.cpp:1454
-msgid "Error opening file \"{1}\""
-msgstr "Kan bestand '{1}' niet openen"
-
-#: ../src/core/control/Control.cpp:1462
-msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
+#: ../src/core/control/Control.cpp:1522
+msgid "Use proposed PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1624
+#: ../src/core/control/Control.cpp:1525
+msgid "Missing PDF background file"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1618
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Kan PDF-bestand niet '{1}' voorzien van aantekeningen\n"
 "{2}"
 
-#: ../src/core/control/Control.cpp:1728
+#: ../src/core/control/Control.cpp:1722
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "Save File"
 msgstr "Bestand opslaan"
 
-#: ../src/core/control/Control.cpp:1728
-#: ../src/core/control/jobs/BaseExportJob.cpp:24
+#: ../src/core/control/Control.cpp:1722
+#: ../src/core/control/jobs/BaseExportJob.cpp:55
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:111
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: ../src/core/control/Control.cpp:1729
+#: ../src/core/control/Control.cpp:1723
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "_Save"
 msgstr "Op_slaan"
 
-#: ../src/core/control/Control.cpp:1734
+#: ../src/core/control/Control.cpp:1726
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:63
 msgid "Xournal++ files"
 msgstr "Xournal++-bestanden"
 
-#: ../src/core/control/Control.cpp:1781
+#: ../src/core/control/Control.cpp:1771
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1796
+#: ../src/core/control/Control.cpp:1786
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
 msgid "Select color"
 msgstr "Kleur kiezen"
 
-#: ../src/core/control/Control.cpp:1818
+#: ../src/core/control/Control.cpp:1808
 msgid "Unsaved Document"
 msgstr "Niet-opgeslagen document"
 
-#: ../src/core/control/Control.cpp:1937
+#: ../src/core/control/Control.cpp:1927
 msgid "Document file was removed."
 msgstr "Het documentbestand is verwijderd."
 
-#: ../src/core/control/Control.cpp:1937
+#: ../src/core/control/Control.cpp:1927
 msgid "This document is not saved yet."
 msgstr "Dit document is nog niet opgeslagen."
 
-#: ../src/core/control/Control.cpp:1938
+#: ../src/core/control/Control.cpp:1928
 msgid "Save As..."
 msgstr "Opslaan als..."
 
-#: ../src/core/control/Control.cpp:1938 ../src/core/control/jobs/SaveJob.cpp:24
+#: ../src/core/control/Control.cpp:1928 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Save"
 msgstr "Opslaan"
 
-#: ../src/core/control/Control.cpp:1943
+#: ../src/core/control/Control.cpp:1933
 msgid "Discard"
 msgstr "Verwerpen"
 
@@ -251,11 +255,17 @@ msgstr "Kan LaTeX PDF-bestand niet openen: {1}"
 msgid "Could not load LaTeX PDF file"
 msgstr "Kan LaTeX PDF-bestand niet openen"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:151
+#: ../src/core/control/PageBackgroundChangeController.cpp:75
+#: ../src/core/control/xojfile/LoadHandler.cpp:469
+#: ../src/core/control/xojfile/LoadHandler.cpp:485
+msgid "Error reading PDF: {1}"
+msgstr "Kan PDF niet uitlezen: {1}"
+
+#: ../src/core/control/PageBackgroundChangeController.cpp:177
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "Deze afbeelding kan niet worden geladen. Foutmelding: {1}"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:186
+#: ../src/core/control/PageBackgroundChangeController.cpp:212
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "De actie is afgebroken: je hebt geen PDF-pagina's om uit te kiezen.\n"
@@ -472,61 +482,65 @@ msgstr "Toon geavanceerde exportopties"
 msgid "Error while autosaving: {1}"
 msgstr "Fout tijdens automatisch opslaan: {1}"
 
-#: ../src/core/control/jobs/AutosaveJob.cpp:47
+#: ../src/core/control/jobs/AutosaveJob.cpp:45
 msgid "Autosaving to {1}"
 msgstr "Wordt automatisch opgeslagen naar {1}"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:23
-msgid "Export PDF"
-msgstr "PDF-bestand exporteren"
+#: ../src/core/control/jobs/AutosaveJob.cpp:68
+msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
+msgstr "Kan automatisch bestand niet hernoemen van '{1}' in '{2}': {3}"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:24
-msgid "_Export"
-msgstr ""
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:46
+#: ../src/core/control/jobs/BaseExportJob.cpp:39
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Overschrijf de achtergrond-pdf niet: dit veroorzaakt fouten!"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:52
+#: ../src/core/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:53
+#: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "\n"
 " Do you want to continue?"
 msgstr "\n"
 "Wilt u doorgaan?"
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:108
+#: ../src/core/control/jobs/BaseExportJob.cpp:54
+msgid "Export"
+msgstr "Exporteren"
+
+#: ../src/core/control/jobs/BaseExportJob.cpp:55
+msgid "_Export"
+msgstr ""
+
+#: ../src/core/control/jobs/BaseExportJob.cpp:140
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr "Fout bij het oplossen van het pad met de volgende fout:\n"
 "{1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:26
+#: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "Custom Export"
 msgstr "Aangepaste export"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:28
+#: ../src/core/control/jobs/CustomExportJob.cpp:29
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:48
 msgid "PDF files"
 msgstr "PDF-bestanden"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:29
+#: ../src/core/control/jobs/CustomExportJob.cpp:30
 msgid "PNG graphics"
 msgstr "PNG-afbeeldingen"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:30
+#: ../src/core/control/jobs/CustomExportJob.cpp:31
 msgid "SVG graphics"
 msgstr "SVG-afbeeldingen"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:31
+#: ../src/core/control/jobs/CustomExportJob.cpp:32
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (comptabiliteit)"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:131
+#: ../src/core/control/jobs/CustomExportJob.cpp:137
 #: ../src/core/control/jobs/SaveJob.cpp:130
 msgid "Save file error: {1}"
 msgstr "Fout tijdens opslaan: {1}"
@@ -555,29 +569,29 @@ msgstr "PDF-bestand exporteren"
 msgid "Save file error, can't backup: {1}"
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:54
 msgid "Failed to parse LaTeX generator path: {1}"
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:72
+#: ../src/core/control/latex/LatexGenerator.cpp:65
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Fout bij het parsen van LaTeX generator commando: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:78
+#: ../src/core/control/latex/LatexGenerator.cpp:71
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:83
+#: ../src/core/control/latex/LatexGenerator.cpp:76
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Kan LaTeX generator programma niet vinden in PATH: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:91
+#: ../src/core/control/latex/LatexGenerator.cpp:84
 msgid "Could not save .tex file: {1}"
 msgstr "Kan .tex-bestand niet opslaan: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:105
+#: ../src/core/control/latex/LatexGenerator.cpp:98
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Kan niet starten {1}: {2} (afsluitcode: {3})"
 
@@ -678,150 +692,141 @@ msgstr "Xournal++-sjabloon"
 msgid "Supported files"
 msgstr "Ondersteunde bestanden"
 
-#: ../src/core/control/tools/EditSelection.cpp:462
+#: ../src/core/control/tools/EditSelection.cpp:455
 msgid "Arrange"
 msgstr "Ordenen"
 
-#: ../src/core/control/tools/EditSelection.cpp:467
-msgid "Bring to front"
-msgstr "Naar voorgrond brengen"
-
-#: ../src/core/control/tools/EditSelection.cpp:478
+#: ../src/core/control/tools/EditSelection.cpp:470
 msgid "Bring forward"
 msgstr "Naar voren brengen"
 
-#: ../src/core/control/tools/EditSelection.cpp:490
+#: ../src/core/control/tools/EditSelection.cpp:481
 msgid "Send backward"
 msgstr "Naar achter sturen"
 
-#: ../src/core/control/tools/EditSelection.cpp:497
+#: ../src/core/control/tools/EditSelection.cpp:488
 msgid "Send to back"
 msgstr "Naar achtergrond sturen"
 
-#: ../src/core/control/tools/ImageHandler.cpp:72
+#: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:143
+#: ../src/core/control/xojfile/LoadHandler.cpp:134
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (mimetype ontbreekt): '{1}'"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:151
+#: ../src/core/control/xojfile/LoadHandler.cpp:142
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (onjuist mimetype): '{1}'"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:160
+#: ../src/core/control/xojfile/LoadHandler.cpp:151
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (versie ontbreekt): '{1}'"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:173
+#: ../src/core/control/xojfile/LoadHandler.cpp:164
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (versie is beschadigd): '{1}'"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:182
+#: ../src/core/control/xojfile/LoadHandler.cpp:173
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:190
+#: ../src/core/control/xojfile/LoadHandler.cpp:181
 msgid "Could not open file: \"{1}\""
 msgstr "Kan bestand niet openen: '{1}'"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:256
+#: ../src/core/control/xojfile/LoadHandler.cpp:247
 msgid "XML Parser error: {1}"
 msgstr "XML-verwerkfout: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:259
+#: ../src/core/control/xojfile/LoadHandler.cpp:250
 msgid "Unknown parser error"
 msgstr "Onbekende verwerkfout"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:270
+#: ../src/core/control/xojfile/LoadHandler.cpp:261
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Het document is onvolledig (is het einde afgesneden?)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:274
+#: ../src/core/control/xojfile/LoadHandler.cpp:265
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Document is beschadigd (geen pagina's gevonden in bestand)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:319
+#: ../src/core/control/xojfile/LoadHandler.cpp:310
 msgid "Unexpected root tag: {1}"
 msgstr "Onverwacht rootlabel: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:340
+#: ../src/core/control/xojfile/LoadHandler.cpp:331
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Onverwacht label in document: '{1}'"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:388
-#: ../src/core/control/xojfile/LoadHandler.cpp:416
+#: ../src/core/control/xojfile/LoadHandler.cpp:379
+#: ../src/core/control/xojfile/LoadHandler.cpp:408
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Kan afbeelding niet uitlezen: {1}. Foutmelding: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:426
+#: ../src/core/control/xojfile/LoadHandler.cpp:418
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Het paginanummer kan niet gelezen worden van de gekloonde achtergrond: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:434
+#: ../src/core/control/xojfile/LoadHandler.cpp:426
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Onbekend pixmap::domein: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:479
-#: ../src/core/control/xojfile/LoadHandler.cpp:499
-msgid "Error reading PDF: {1}"
-msgstr "Kan PDF niet uitlezen: {1}"
-
-#: ../src/core/control/xojfile/LoadHandler.cpp:486
+#: ../src/core/control/xojfile/LoadHandler.cpp:476
 msgid "Unknown domain type: {1}"
 msgstr "Onbekend domein: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:530
+#: ../src/core/control/xojfile/LoadHandler.cpp:514
 msgid "Unknown background type: {1}"
 msgstr "Onbekende achtergrond: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:554
+#: ../src/core/control/xojfile/LoadHandler.cpp:539
 msgid "Error reading width of a stroke: {1}"
 msgstr "Kan breedte van penseelstreek niet uitlezen: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:622
+#: ../src/core/control/xojfile/LoadHandler.cpp:607
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:640
+#: ../src/core/control/xojfile/LoadHandler.cpp:625
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Onbekende penseelsoort: '{1}' - aangenomen wordt dat het een pen is"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:808
-#: ../src/core/control/xojfile/LoadHandler.cpp:824
-#: ../src/core/control/xojfile/LoadHandler.cpp:1138
-#: ../src/core/control/xojfile/LoadHandler.cpp:1152
+#: ../src/core/control/xojfile/LoadHandler.cpp:796
+#: ../src/core/control/xojfile/LoadHandler.cpp:812
+#: ../src/core/control/xojfile/LoadHandler.cpp:1126
+#: ../src/core/control/xojfile/LoadHandler.cpp:1140
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:817
-#: ../src/core/control/xojfile/LoadHandler.cpp:1145
-#: ../src/core/control/xojfile/LoadHandler.cpp:1163
+#: ../src/core/control/xojfile/LoadHandler.cpp:805
+#: ../src/core/control/xojfile/LoadHandler.cpp:1133
+#: ../src/core/control/xojfile/LoadHandler.cpp:1151
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: geen geldige grootte opgegeven"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:836
+#: ../src/core/control/xojfile/LoadHandler.cpp:824
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet uitlezen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:845
+#: ../src/core/control/xojfile/LoadHandler.cpp:833
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet wegschrijven"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1032
+#: ../src/core/control/xojfile/LoadHandler.cpp:1020
 msgid "Wrong count of points ({1})"
 msgstr "Onjuiste puntentelling ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1048
+#: ../src/core/control/xojfile/LoadHandler.cpp:1036
 msgid "xoj-File: {1}"
 msgstr "xoj-bestand: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1049
+#: ../src/core/control/xojfile/LoadHandler.cpp:1037
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1182
+#: ../src/core/control/xojfile/LoadHandler.cpp:1170
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Het opgevraagde tijdelijke bestand van bijlage {1} is niet aangetroffen"
 
@@ -863,11 +868,11 @@ msgstr "Het attribuut \"{1}\" kan niet als size_t worden verwerkt, de waarde is 
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Het attribuut '{1}' kan niet worden verwerkt als size_t; de waarde is '{2}'"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:249
+#: ../src/core/control/xojfile/SaveHandler.cpp:251
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Kan achtergrond '{1}' niet wegschrijven; {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:346
+#: ../src/core/control/xojfile/SaveHandler.cpp:348
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Kan achtergrond '{1}' niet wegschrijven. Er wordt tóch doorgegaan."
 
@@ -885,11 +890,11 @@ msgstr "Kan audio-opname {1} niet afspelen"
 msgid "Loading..."
 msgstr "Bezig met laden..."
 
-#: ../src/core/gui/PageView.cpp:980
+#: ../src/core/gui/PageView.cpp:974
 msgid "Scroll to page {1}"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:982
+#: ../src/core/gui/PageView.cpp:976
 msgid "Add missing page"
 msgstr ""
 
@@ -971,7 +976,7 @@ msgid "Text"
 msgstr "Tekst"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/undo/InsertUndoAction.cpp:37
+#: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Insert image"
 msgstr "Afbeelding invoegen"
 
@@ -1058,7 +1063,7 @@ msgstr "Coördinaatsysteem tekenen"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/undo/RecognizerUndoAction.cpp:74
+#: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Stroke recognizer"
 msgstr "Penseelherkenning"
 
@@ -1174,11 +1179,11 @@ msgstr "Werkbalken"
 msgid "New"
 msgstr "Nieuw"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:100
 msgid "Show only not used pages (one unused page)"
 msgstr "Alleen ongebruikte pagina's tonen (één ongebruikte pagina)"
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:104
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:101
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Alleen ongebruikte pagina's tonen ({1} ongebruikte pagina's)"
 
@@ -1336,12 +1341,12 @@ msgid "Print"
 msgstr "Afdrukken"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
-#: ../src/core/undo/UndoRedoHandler.cpp:183
+#: ../src/core/undo/UndoRedoHandler.cpp:177
 msgid "Undo"
 msgstr "Ongedaan maken"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
-#: ../src/core/undo/UndoRedoHandler.cpp:195
+#: ../src/core/undo/UndoRedoHandler.cpp:189
 msgid "Redo"
 msgstr "Opnieuw uitvoeren"
 
@@ -1356,7 +1361,7 @@ msgid "Copy"
 msgstr "Kopiëren"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:352
-#: ../src/core/undo/AddUndoAction.cpp:66
+#: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
 msgstr "Plakken"
 
@@ -1365,7 +1370,7 @@ msgid "Search"
 msgstr "Zoeken"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:356
-#: ../src/core/undo/DeleteUndoAction.cpp:64
+#: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -1710,8 +1715,8 @@ msgstr ""
 msgid "Toolbar found: {1}"
 msgstr "Werkbalk aangetroffen: {1}"
 
-#: ../src/core/model/Document.cpp:316 ../src/core/model/Document.cpp:325
-#: ../src/core/model/Document.cpp:328
+#: ../src/core/model/Document.cpp:322 ../src/core/model/Document.cpp:331
+#: ../src/core/model/Document.cpp:334
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Het document is niet geladen! ({1}); {2}"
 
@@ -1719,48 +1724,52 @@ msgstr "Het document is niet geladen! ({1}); {2}"
 msgid "Background"
 msgstr "Achtergrond"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:173
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:216
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:123
+msgid "Error while finalizing the PDF Cairo surface"
+msgstr ""
+
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:189
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:235
 msgid "No pages to export!"
 msgstr "Geen te exporteren pagina's!"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:178
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:221
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:240
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Kan PDF Cairo oppervlak niet initialiseren"
 
-#: ../src/core/undo/AddUndoAction.cpp:64
-#: ../src/core/undo/DeleteUndoAction.cpp:61
+#: ../src/core/undo/AddUndoAction.cpp:70
+#: ../src/core/undo/DeleteUndoAction.cpp:71
 #: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
 msgstr "Penseelstreek verwijderen"
 
-#: ../src/core/undo/AddUndoAction.cpp:74
-#: ../src/core/undo/DeleteUndoAction.cpp:72
+#: ../src/core/undo/AddUndoAction.cpp:80
+#: ../src/core/undo/DeleteUndoAction.cpp:82
 msgid "elements"
 msgstr "elementen"
 
-#: ../src/core/undo/AddUndoAction.cpp:82
-#: ../src/core/undo/DeleteUndoAction.cpp:80
+#: ../src/core/undo/AddUndoAction.cpp:88
+#: ../src/core/undo/DeleteUndoAction.cpp:90
 msgid "stroke"
 msgstr "penseelstreek"
 
-#: ../src/core/undo/AddUndoAction.cpp:85
-#: ../src/core/undo/DeleteUndoAction.cpp:83
+#: ../src/core/undo/AddUndoAction.cpp:91
+#: ../src/core/undo/DeleteUndoAction.cpp:93
 msgid "image"
 msgstr "afbeelding"
 
-#: ../src/core/undo/AddUndoAction.cpp:88
-#: ../src/core/undo/DeleteUndoAction.cpp:86
+#: ../src/core/undo/AddUndoAction.cpp:94
+#: ../src/core/undo/DeleteUndoAction.cpp:96
 msgid "latex"
 msgstr "latex"
 
-#: ../src/core/undo/AddUndoAction.cpp:91
-#: ../src/core/undo/DeleteUndoAction.cpp:89
+#: ../src/core/undo/AddUndoAction.cpp:97
+#: ../src/core/undo/DeleteUndoAction.cpp:99
 msgid "text"
 msgstr "tekst"
 
-#: ../src/core/undo/ColorUndoAction.cpp:90
+#: ../src/core/undo/ColorUndoAction.cpp:97
 msgid "Change color"
 msgstr "Kleur wijzigen"
 
@@ -1768,19 +1777,19 @@ msgstr "Kleur wijzigen"
 msgid "Emergency saved document"
 msgstr "Opgeslagen document voor noodgevallen"
 
-#: ../src/core/undo/FillUndoAction.cpp:81
+#: ../src/core/undo/FillUndoAction.cpp:88
 msgid "Change stroke fill"
 msgstr "Penseelopvulling"
 
-#: ../src/core/undo/FontUndoAction.cpp:110
+#: ../src/core/undo/FontUndoAction.cpp:118
 msgid "Change font"
 msgstr "Lettertype aanpassen"
 
-#: ../src/core/undo/InsertDeletePageUndoAction.cpp:96
+#: ../src/core/undo/InsertDeletePageUndoAction.cpp:86
 msgid "Page inserted"
 msgstr "Pagina ingevoegd"
 
-#: ../src/core/undo/InsertDeletePageUndoAction.cpp:100
+#: ../src/core/undo/InsertDeletePageUndoAction.cpp:90
 msgid "Page deleted"
 msgstr "Pagina verwijderd"
 
@@ -1788,19 +1797,19 @@ msgstr "Pagina verwijderd"
 msgid "Insert layer"
 msgstr "Laag invoegen"
 
-#: ../src/core/undo/InsertUndoAction.cpp:33
+#: ../src/core/undo/InsertUndoAction.cpp:25
 msgid "Draw stroke"
 msgstr "Met penseel tekenen"
 
-#: ../src/core/undo/InsertUndoAction.cpp:35
+#: ../src/core/undo/InsertUndoAction.cpp:27
 msgid "Write text"
 msgstr "Tekst opstellen"
 
-#: ../src/core/undo/InsertUndoAction.cpp:39
+#: ../src/core/undo/InsertUndoAction.cpp:31
 msgid "Insert latex"
 msgstr "LaTeX invoegen"
 
-#: ../src/core/undo/InsertUndoAction.cpp:82
+#: ../src/core/undo/InsertUndoAction.cpp:70
 msgid "Insert elements"
 msgstr "Elementen invoegen"
 
@@ -1808,23 +1817,27 @@ msgstr "Elementen invoegen"
 msgid "Rename layer"
 msgstr "Laag hernoemen"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:78
+#: ../src/core/undo/LineStyleUndoAction.cpp:86
 msgid "Change line style"
 msgstr "Wijzig lijn stijl"
 
-#: ../src/core/undo/MergeLayerDownUndoAction.cpp:32
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
 msgid "Merge layer down"
 msgstr ""
 
-#: ../src/core/undo/MoveLayerUndoAction.cpp:26
+#: ../src/core/undo/MissingPdfUndoAction.cpp:66
+msgid "Replace missing PDF"
+msgstr ""
+
+#: ../src/core/undo/MoveLayerUndoAction.cpp:28
 msgid "Move layer"
 msgstr "Laag verplaatsen"
 
-#: ../src/core/undo/MoveUndoAction.cpp:19
+#: ../src/core/undo/MoveUndoAction.cpp:20
 msgid "Move"
 msgstr "Verplaatsen"
 
-#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:85
+#: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:97
 msgid "Page background changed"
 msgstr "Pagina-achtergrond gewijzigd"
 
@@ -1832,47 +1845,47 @@ msgstr "Pagina-achtergrond gewijzigd"
 msgid "Delete layer"
 msgstr "Laag verwijderen"
 
-#: ../src/core/undo/RotateUndoAction.cpp:56
+#: ../src/core/undo/RotateUndoAction.cpp:58
 msgid "Rotation"
 msgstr "Draaien"
 
-#: ../src/core/undo/ScaleUndoAction.cpp:60
+#: ../src/core/undo/ScaleUndoAction.cpp:62
 msgid "Scale"
 msgstr "Schaal"
 
-#: ../src/core/undo/SizeUndoAction.cpp:108
+#: ../src/core/undo/SizeUndoAction.cpp:118
 msgid "Change stroke width"
 msgstr "Penseelbreedte aanpassen"
 
-#: ../src/core/undo/SwapUndoAction.cpp:68
+#: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page upwards"
 msgstr "Pagina omhoog verplaatsen"
 
-#: ../src/core/undo/SwapUndoAction.cpp:68
+#: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page downwards"
 msgstr "Pagina omlaag verplaatsen"
 
-#: ../src/core/undo/TextBoxUndoAction.cpp:43
+#: ../src/core/undo/TextBoxUndoAction.cpp:26
 msgid "Edit text"
 msgstr "Tekst bewerken"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:115
+#: ../src/core/undo/UndoRedoHandler.cpp:112
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Kan '{1}' niet ongedaan maken\n"
 "Er is iets misgegaan; stel een bugmelding op."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:144
+#: ../src/core/undo/UndoRedoHandler.cpp:138
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Kan '{1}' niet opnieuw uitvoeren\n"
 "Er is iets misgegaan; stel een bugmelding op."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:178
+#: ../src/core/undo/UndoRedoHandler.cpp:172
 msgid "Undo: "
 msgstr "Ongedaan maken: "
 
-#: ../src/core/undo/UndoRedoHandler.cpp:190
+#: ../src/core/undo/UndoRedoHandler.cpp:184
 msgid "Redo: "
 msgstr "Opnieuw uitvoeren: "
 
@@ -1892,9 +1905,25 @@ msgstr ""
 msgid "ElementRange::parse(): element indices start with 1"
 msgstr ""
 
-#: ../src/util/OutputStream.cpp:24
+#: ../src/util/OutputStream.cpp:27
 msgid "Error opening file: \"{1}\""
 msgstr "Kan bestand niet openen: '{1}'"
+
+#: ../src/util/OutputStream.cpp:48
+msgid "Error writing data to file: \"{1}\""
+msgstr ""
+
+#: ../src/util/OutputStream.cpp:49
+msgid "Error code {1}. Message:"
+msgstr ""
+
+#: ../src/util/OutputStream.cpp:69
+msgid "Error occurred while closing file: \"{1}\""
+msgstr ""
+
+#: ../src/util/OutputStream.cpp:70
+msgid "Error code {1}"
+msgstr ""
 
 #: ../src/util/PathUtil.cpp:173
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -1916,15 +1945,15 @@ msgstr "Kon map niet aanmaken: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Fout {1} die volgende systeemcommando uitvoert: {2}"
 
-#: ../src/util/XojMsgBox.cpp:168
+#: ../src/util/XojMsgBox.cpp:174 ../src/util/XojMsgBox.cpp:190
 msgid "Select another name"
 msgstr "Andere naam opgeven"
 
-#: ../src/util/XojMsgBox.cpp:169
+#: ../src/util/XojMsgBox.cpp:175 ../src/util/XojMsgBox.cpp:191
 msgid "Replace"
 msgstr "Vervangen"
 
-#: ../src/util/XojMsgBox.cpp:187
+#: ../src/util/XojMsgBox.cpp:219
 msgid "There was an error displaying help: {1}"
 msgstr "Er is een fout opgetreden tijdens het openen van het hulpscherm: {1}"
 
@@ -2017,8 +2046,8 @@ msgstr ""
 msgid "Height"
 msgstr ""
 
-#: ../ui/exportSettings.glade:53 ../ui/settings.glade:253
-#: ../ui/settings.glade:270 ../ui/settings.glade:3578
+#: ../ui/exportSettings.glade:53 ../ui/settings.glade:254
+#: ../ui/settings.glade:271 ../ui/settings.glade:3594
 msgid "None"
 msgstr ""
 
@@ -2029,10 +2058,6 @@ msgstr ""
 #: ../ui/exportSettings.glade:59
 msgid "All"
 msgstr "Alle"
-
-#: ../ui/exportSettings.glade:65
-msgid "Export"
-msgstr "Exporteren"
 
 #: ../ui/exportSettings.glade:91
 msgid "<b>Document export settings</b>\n"
@@ -2084,7 +2109,7 @@ msgstr ""
 #: ../ui/exportSettings.glade:425 ../ui/goto.glade:108
 #: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
 #: ../ui/plugin.glade:113 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6198
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6221
 #: ../ui/texdialog.glade:203
 msgid "Ok"
 msgstr ""
@@ -2105,103 +2130,103 @@ msgstr "Bestand laden"
 msgid "<b>... or select already used Image:</b>"
 msgstr "<b>... of kies een reeds gebruikte afbeelding:</b>"
 
-#: ../ui/latexSettings.glade:33
+#: ../ui/latexSettings.glade:36
 msgid "Always check LaTeX dependencies before running"
 msgstr "Altijd LaTeX dependencies controleren alvorens uit te uitvoeren"
 
-#: ../ui/latexSettings.glade:37
+#: ../ui/latexSettings.glade:40
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
 msgstr ""
 
-#: ../ui/latexSettings.glade:45
+#: ../ui/latexSettings.glade:48
 msgid "General LaTeX tool settings"
 msgstr ""
 
-#: ../ui/latexSettings.glade:73
+#: ../ui/latexSettings.glade:76
 msgid "Default LaTeX Text"
 msgstr ""
 
-#: ../ui/latexSettings.glade:102
+#: ../ui/latexSettings.glade:105
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr ""
 
-#: ../ui/latexSettings.glade:104
+#: ../ui/latexSettings.glade:107
 msgid "Global template file path"
 msgstr ""
 
-#: ../ui/latexSettings.glade:116
+#: ../ui/latexSettings.glade:119
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr ""
 
-#: ../ui/latexSettings.glade:130
+#: ../ui/latexSettings.glade:133
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
-#: ../ui/latexSettings.glade:142
+#: ../ui/latexSettings.glade:145
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr ""
 
-#: ../ui/latexSettings.glade:155
+#: ../ui/latexSettings.glade:158
 msgid "Choose a global LaTeX template file"
 msgstr ""
 
-#: ../ui/latexSettings.glade:167
+#: ../ui/latexSettings.glade:170
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr ""
 
-#: ../ui/latexSettings.glade:179
+#: ../ui/latexSettings.glade:182
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr ""
 
-#: ../ui/latexSettings.glade:192
+#: ../ui/latexSettings.glade:195
 msgid "Template file settings"
 msgstr ""
 
-#: ../ui/latexSettings.glade:221
+#: ../ui/latexSettings.glade:224
 msgid "LaTeX generation command"
 msgstr ""
 
-#: ../ui/latexSettings.glade:242
+#: ../ui/latexSettings.glade:245
 msgid "Test configuration"
 msgstr ""
 
-#: ../ui/latexSettings.glade:246
+#: ../ui/latexSettings.glade:249
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/latexSettings.glade:262
+#: ../ui/latexSettings.glade:265
 msgid "LaTeX executable settings"
 msgstr ""
 
-#: ../ui/latexSettings.glade:337
+#: ../ui/latexSettings.glade:340
 msgid "Line numbers"
 msgstr ""
 
-#: ../ui/latexSettings.glade:351
+#: ../ui/latexSettings.glade:354
 msgid "Auto-indent"
 msgstr ""
 
-#: ../ui/latexSettings.glade:365
+#: ../ui/latexSettings.glade:368
 msgid "Syntax highlighting"
 msgstr ""
 
-#: ../ui/latexSettings.glade:397
+#: ../ui/latexSettings.glade:400
 msgid "Wrap text"
 msgstr ""
 
-#: ../ui/latexSettings.glade:431
+#: ../ui/latexSettings.glade:434
 msgid "Use font from system theme."
 msgstr ""
 
-#: ../ui/latexSettings.glade:451
+#: ../ui/latexSettings.glade:454
 msgid "Font: "
 msgstr ""
 
-#: ../ui/latexSettings.glade:466
+#: ../ui/latexSettings.glade:469
 msgid "Pick the Editor's Font"
 msgstr ""
 
-#: ../ui/latexSettings.glade:504
+#: ../ui/latexSettings.glade:507
 msgid "Editor settings"
 msgstr ""
 
@@ -2214,59 +2239,59 @@ msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
 msgstr ""
 
-#: ../ui/main.glade:504
+#: ../ui/main.glade:505
 msgid "Find previous occurrence of the search string"
 msgstr "Naar vorige vermelding van zoekterm"
 
-#: ../ui/main.glade:526
+#: ../ui/main.glade:527
 msgid "Find next occurrence of the search string"
 msgstr "Naar volgende vermelding van zoekterm"
 
-#: ../ui/main.glade:728
+#: ../ui/main.glade:729
 msgid "Copy selected text"
 msgstr ""
 
-#: ../ui/main.glade:750
+#: ../ui/main.glade:751
 msgid "Highlight selected text"
 msgstr ""
 
-#: ../ui/main.glade:770
+#: ../ui/main.glade:771
 msgid "Underline selected text"
 msgstr ""
 
-#: ../ui/main.glade:790
+#: ../ui/main.glade:791
 msgid "Strikethrough selected text"
 msgstr ""
 
-#: ../ui/main.glade:810
+#: ../ui/main.glade:811
 msgid "Toggle standard / region text selection"
 msgstr ""
 
-#: ../ui/main.glade:838
+#: ../ui/main.glade:839
 msgid "Insert Page Before"
 msgstr "Nieuwe pagina invoegen vóór"
 
-#: ../ui/main.glade:846
+#: ../ui/main.glade:847
 msgid "Insert Page After"
 msgstr "Nieuwe pagina invoegen na"
 
-#: ../ui/main.glade:854 ../ui/main.glade:942
+#: ../ui/main.glade:855 ../ui/main.glade:943
 msgid "Duplicate"
 msgstr "Klonen"
 
-#: ../ui/main.glade:868 ../ui/main.glade:918
+#: ../ui/main.glade:869 ../ui/main.glade:919
 msgid "Move Up"
 msgstr "Omhoog verplaatsen"
 
-#: ../ui/main.glade:876 ../ui/main.glade:926
+#: ../ui/main.glade:877 ../ui/main.glade:927
 msgid "Move Down"
 msgstr "Omlaag verplaatsen"
 
-#: ../ui/main.glade:891
+#: ../ui/main.glade:892
 msgid "Edit (not implemented yet)"
 msgstr "Bewerken (nog niet geïmplementeerd)"
 
-#: ../ui/main.glade:934
+#: ../ui/main.glade:935
 msgid "Merge Down"
 msgstr ""
 
@@ -2386,56 +2411,56 @@ msgstr ""
 msgid "Opacity settings"
 msgstr ""
 
-#: ../ui/settings.glade:256
+#: ../ui/settings.glade:257
 msgid "Arithmetic mean"
 msgstr "Rekenkundig gemiddelde"
 
-#: ../ui/settings.glade:259
+#: ../ui/settings.glade:260
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/settings.glade:273
+#: ../ui/settings.glade:274
 msgid "Deadzone"
 msgstr ""
 
-#: ../ui/settings.glade:276
+#: ../ui/settings.glade:277
 msgid "Inertia"
 msgstr ""
 
-#: ../ui/settings.glade:284
+#: ../ui/settings.glade:285
 msgid "Xournal++ Preferences"
 msgstr "Xournal++-voorkeuren"
 
-#: ../ui/settings.glade:345
+#: ../ui/settings.glade:346
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xopp\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
 msgstr ""
 
-#: ../ui/settings.glade:363
+#: ../ui/settings.glade:365
 msgid "Enable Autosaving"
 msgstr "Automatisch opslaan"
 
-#: ../ui/settings.glade:386
+#: ../ui/settings.glade:388
 msgid "every"
 msgstr "elke"
 
-#: ../ui/settings.glade:413
+#: ../ui/settings.glade:415
 msgid "minutes"
 msgstr "minuten"
 
-#: ../ui/settings.glade:441
+#: ../ui/settings.glade:443
 msgid "Autosaving"
 msgstr "Automatisch opslaan"
 
-#: ../ui/settings.glade:467
+#: ../ui/settings.glade:469
 msgid "<i>This name will be proposed if you save a new document.</i>"
 msgstr "<i>De naam die wordt voorgesteld als je een nieuw document opslaat.</i>"
 
-#: ../ui/settings.glade:499 ../ui/settings.glade:668
+#: ../ui/settings.glade:502 ../ui/settings.glade:671
 msgid "Default name: "
 msgstr "Standaardnaam: "
 
-#: ../ui/settings.glade:538
+#: ../ui/settings.glade:541
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\tFull weekday name (e.g. Thursday)\n"
 "%b\t\tAbbreviated month name (e.g. Aug)\n"
@@ -2462,19 +2487,19 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "Illegal characters are replaced with \"_\""
 msgstr ""
 
-#: ../ui/settings.glade:585 ../ui/settings.glade:754
+#: ../ui/settings.glade:588 ../ui/settings.glade:757
 msgid "Available Placeholders"
 msgstr "Beschikbare plaatshouders"
 
-#: ../ui/settings.glade:609
+#: ../ui/settings.glade:612
 msgid "Default Save Name"
 msgstr "Standaardnaam bij opslaan"
 
-#: ../ui/settings.glade:635
+#: ../ui/settings.glade:638
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:706
+#: ../ui/settings.glade:709
 msgid "%{name}\tThe name of the exported document\n"
 "%a\t\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\t\tFull weekday name (e.g. Thursday)\n"
@@ -2502,753 +2527,753 @@ msgid "%{name}\tThe name of the exported document\n"
 "Illegal characters are replaced with \"_\""
 msgstr ""
 
-#: ../ui/settings.glade:778
+#: ../ui/settings.glade:781
 msgid "Default Pdf export name"
 msgstr ""
 
-#: ../ui/settings.glade:803
+#: ../ui/settings.glade:806
 msgid "Enable Autoloading of Journals"
 msgstr "Automatisch documenten laden"
 
-#: ../ui/settings.glade:808
+#: ../ui/settings.glade:811
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr ""
 
-#: ../ui/settings.glade:819
+#: ../ui/settings.glade:822
 msgid "Enable autoloading of most recent file on application startup"
 msgstr ""
 
-#: ../ui/settings.glade:824
+#: ../ui/settings.glade:827
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
 msgstr ""
 
-#: ../ui/settings.glade:839
+#: ../ui/settings.glade:842
 msgid "Autoloading"
 msgstr ""
 
-#: ../ui/settings.glade:867
+#: ../ui/settings.glade:870
 msgid "Load / Save"
 msgstr "Laden/Opslaan"
 
-#: ../ui/settings.glade:913
+#: ../ui/settings.glade:916
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr "<i>Wijs apparaatklassen toe aan elk invoerapparaat dat aanwezig is op je systeem. Pas deze waarden alleen aan als de apparaten niet goed overeenkomen (bijv. als je stylus wordt herkend als touchscreen).</i>"
 
-#: ../ui/settings.glade:946
+#: ../ui/settings.glade:950
 msgid "Input Devices"
 msgstr "Invoerapparaten"
 
-#: ../ui/settings.glade:980
+#: ../ui/settings.glade:984
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
 msgstr "Tekenen buiten venster toestaan <i>(niet stoppen met tekenen als de vensterrand geraakt wordt)</i>"
 
-#: ../ui/settings.glade:998
+#: ../ui/settings.glade:1002
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1009
+#: ../ui/settings.glade:1013
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1028
+#: ../ui/settings.glade:1032
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1036
+#: ../ui/settings.glade:1040
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1054
+#: ../ui/settings.glade:1058
 msgid "Options"
 msgstr "Opties"
 
-#: ../ui/settings.glade:1084
+#: ../ui/settings.glade:1088
 msgid "Averaging method"
 msgstr ""
 
-#: ../ui/settings.glade:1117
+#: ../ui/settings.glade:1121
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1133
+#: ../ui/settings.glade:1137
 msgid "Buffersize"
 msgstr ""
 
-#: ../ui/settings.glade:1145
+#: ../ui/settings.glade:1149
 msgid "20"
 msgstr "20"
 
-#: ../ui/settings.glade:1162
+#: ../ui/settings.glade:1166
 msgid "Deadzone radius"
 msgstr ""
 
-#: ../ui/settings.glade:1174
+#: ../ui/settings.glade:1178
 msgid "1,30"
 msgstr "1,30"
 
-#: ../ui/settings.glade:1192 ../ui/settings.glade:1204
+#: ../ui/settings.glade:1196 ../ui/settings.glade:1208
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
-#: ../ui/settings.glade:1193
+#: ../ui/settings.glade:1197
 msgid "Drag"
 msgstr ""
 
-#: ../ui/settings.glade:1206
+#: ../ui/settings.glade:1210
 msgid "0,4"
 msgstr "0,4"
 
-#: ../ui/settings.glade:1224 ../ui/settings.glade:1236
+#: ../ui/settings.glade:1228 ../ui/settings.glade:1240
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr ""
 
-#: ../ui/settings.glade:1225
+#: ../ui/settings.glade:1229
 msgid "Mass"
 msgstr ""
 
-#: ../ui/settings.glade:1238
+#: ../ui/settings.glade:1242
 msgid "5"
 msgstr ""
 
-#: ../ui/settings.glade:1256 ../ui/settings.glade:1276
+#: ../ui/settings.glade:1260 ../ui/settings.glade:1280
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr ""
 
-#: ../ui/settings.glade:1258
+#: ../ui/settings.glade:1262
 msgid "0,50"
 msgstr "0,50"
 
-#: ../ui/settings.glade:1290
+#: ../ui/settings.glade:1294
 msgid "Preprocessor"
 msgstr ""
 
-#: ../ui/settings.glade:1321
+#: ../ui/settings.glade:1325
 msgid "Cusp detection"
 msgstr ""
 
-#: ../ui/settings.glade:1338
+#: ../ui/settings.glade:1342
 msgid "Finalize the stroke"
 msgstr ""
 
-#: ../ui/settings.glade:1343
+#: ../ui/settings.glade:1347
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
 msgstr ""
 
-#: ../ui/settings.glade:1361
+#: ../ui/settings.glade:1365
 msgid "Input stabilization"
 msgstr ""
 
-#: ../ui/settings.glade:1391
+#: ../ui/settings.glade:1395
 msgid "Indent using spaces"
 msgstr ""
 
-#: ../ui/settings.glade:1413
+#: ../ui/settings.glade:1417
 msgid "Number of Spaces : "
 msgstr ""
 
-#: ../ui/settings.glade:1425
+#: ../ui/settings.glade:1429
 msgid "Number of spaces inserted with tab."
 msgstr ""
 
-#: ../ui/settings.glade:1427
+#: ../ui/settings.glade:1431
 msgid "4"
 msgstr ""
 
-#: ../ui/settings.glade:1456
+#: ../ui/settings.glade:1460
 msgid "Tab"
 msgstr ""
 
-#: ../ui/settings.glade:1487
+#: ../ui/settings.glade:1491
 msgid "Input System"
 msgstr "Invoermethode"
 
-#: ../ui/settings.glade:1532
+#: ../ui/settings.glade:1536
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
 msgstr "<i>Geef op welk gereedschap moet worden gekozen als je een muisknop indrukt. Na het loslaten van de knop wordt het daarvoor gebruikte gereedschap gekozen.</i>"
 
-#: ../ui/settings.glade:1565
+#: ../ui/settings.glade:1570
 msgid "Middle Mouse Button"
 msgstr "Middelste muisknop"
 
-#: ../ui/settings.glade:1597
+#: ../ui/settings.glade:1602
 msgid "Right Mouse Button"
 msgstr "Rechtermuisknop"
 
-#: ../ui/settings.glade:1613
+#: ../ui/settings.glade:1618
 msgid "Mouse Buttons"
 msgstr "Muisknoppen"
 
-#: ../ui/settings.glade:1644 ../ui/settingsDeviceClassConfig.glade:35
+#: ../ui/settings.glade:1649 ../ui/settingsDeviceClassConfig.glade:35
 msgid "Mouse"
 msgstr "Muis"
 
-#: ../ui/settings.glade:1691
+#: ../ui/settings.glade:1696
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr "<i>Drukgevoeligheid stelt je in staat lijnen te tekenen met verschillende afmetingen, afhankelijk van hoeveel druk je toepast op de pen. Als je tablet dit niet ondersteunt, dan wordt deze instelling genegeerd.</i>"
 
-#: ../ui/settings.glade:1704
+#: ../ui/settings.glade:1710
 msgid "Enable Pressure Sensitivity"
 msgstr "Drukgevoeligheid inschakelen"
 
-#: ../ui/settings.glade:1734
+#: ../ui/settings.glade:1740
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1756
+#: ../ui/settings.glade:1762
 msgid "Minimum Pressure:"
 msgstr ""
 
-#: ../ui/settings.glade:1767
+#: ../ui/settings.glade:1773
 msgid "Pressure Multiplier: "
 msgstr ""
 
-#: ../ui/settings.glade:1826
+#: ../ui/settings.glade:1832
 msgid "Sensitivity Scale"
 msgstr ""
 
-#: ../ui/settings.glade:1842
+#: ../ui/settings.glade:1848
 msgid "Pressure Sensitivity"
 msgstr "Drukgevoeligheid"
 
-#: ../ui/settings.glade:1866
+#: ../ui/settings.glade:1872
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1883
+#: ../ui/settings.glade:1890
 msgid "Ignore the first"
 msgstr ""
 
-#: ../ui/settings.glade:1901
+#: ../ui/settings.glade:1908
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:1917
+#: ../ui/settings.glade:1924
 msgid "events"
 msgstr ""
 
-#: ../ui/settings.glade:1938
+#: ../ui/settings.glade:1945
 msgid "Artifact workaround"
 msgstr ""
 
-#: ../ui/settings.glade:1965
+#: ../ui/settings.glade:1972
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr "<i>Stel in welke gereedschap moet worden gekozen als je een knop op een pen (stylus) indrukt of als je begint met gummen. Als je de knop loslaat, wordt het vorige gereedschap hersteld.</i>"
 
-#: ../ui/settings.glade:1998
+#: ../ui/settings.glade:2006
 msgid "Button 1"
 msgstr "Knop 1"
 
-#: ../ui/settings.glade:2030
+#: ../ui/settings.glade:2038
 msgid "Button 2"
 msgstr "Knop 2"
 
-#: ../ui/settings.glade:2078
+#: ../ui/settings.glade:2086
 msgid "Stylus Buttons"
 msgstr "Stylusknoppen"
 
-#: ../ui/settings.glade:2110
+#: ../ui/settings.glade:2118
 msgid "Stylus-based eraser is visible"
 msgstr ""
 
-#: ../ui/settings.glade:2125
+#: ../ui/settings.glade:2133
 msgctxt "eraser is never visible"
 msgid "Never"
 msgstr ""
 
-#: ../ui/settings.glade:2126
+#: ../ui/settings.glade:2134
 msgctxt "eraser is always visible"
 msgid "Always"
 msgstr ""
 
-#: ../ui/settings.glade:2127
+#: ../ui/settings.glade:2135
 msgctxt "eraser is only visible when floating"
 msgid "When floating"
 msgstr ""
 
-#: ../ui/settings.glade:2128
+#: ../ui/settings.glade:2136
 msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr ""
 
-#: ../ui/settings.glade:2150
+#: ../ui/settings.glade:2158
 msgid "Eraser visibility"
 msgstr ""
 
-#: ../ui/settings.glade:2181
+#: ../ui/settings.glade:2189
 msgid "Stylus"
 msgstr "Stylus"
 
-#: ../ui/settings.glade:2228
+#: ../ui/settings.glade:2236
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>Je kunt apparaten instellen als touchscreen die niet als zodanig door GTK+ worden herkend.</i>"
 
-#: ../ui/settings.glade:2260 ../ui/settings.glade:2841
+#: ../ui/settings.glade:2269 ../ui/settings.glade:2857
 #: ../ui/settingsDeviceClassConfig.glade:39
 msgid "Touchscreen"
 msgstr "Aanraakscherm"
 
-#: ../ui/settings.glade:2287
+#: ../ui/settings.glade:2296
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr "<i>Als je hardware geen ondersteuning biedt voor handpalmherkenning, dan kan Xournal++ je touchscreen uitschakelen zodra je pen nabij het scherm is.</i>"
 
-#: ../ui/settings.glade:2300
+#: ../ui/settings.glade:2310
 msgid "Enable internal Hand Recognition"
 msgstr "Interne handpalmherkenning inschakelen"
 
-#: ../ui/settings.glade:2330
+#: ../ui/settings.glade:2340
 msgid "Disabling Method"
 msgstr "Uitschakelmethode"
 
-#: ../ui/settings.glade:2341
+#: ../ui/settings.glade:2351
 msgid "Timeout"
 msgstr "Time-out"
 
-#: ../ui/settings.glade:2355
+#: ../ui/settings.glade:2365
 msgid "Autodetect"
 msgstr "Automatisch detecteren"
 
-#: ../ui/settings.glade:2384
+#: ../ui/settings.glade:2394
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(waarna het touchscreen weer wordt ingeschakeld)</i>"
 
-#: ../ui/settings.glade:2429
+#: ../ui/settings.glade:2439
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>Geef opdrachten op die moeten worden uitgevoerd als handpalmherkenning wordt gestart. Deze worden uitgevoerd in het toepassingsproces, dus zorg ervoor dat ze niks in de weg zitten!</i>"
 
-#: ../ui/settings.glade:2451
+#: ../ui/settings.glade:2462
 msgid "Enable"
 msgstr "Inschakelen"
 
-#: ../ui/settings.glade:2462
+#: ../ui/settings.glade:2473
 msgid "Disable"
 msgstr "Uitschakelen"
 
-#: ../ui/settings.glade:2495 ../ui/settings.glade:2508
+#: ../ui/settings.glade:2506 ../ui/settings.glade:2519
 msgid "Test"
 msgstr "Testen"
 
-#: ../ui/settings.glade:2541
+#: ../ui/settings.glade:2552
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Eigen opdrachten (voor de methode 'Aangepast')"
 
-#: ../ui/settings.glade:2564
+#: ../ui/settings.glade:2575
 msgid "Hand Recognition"
 msgstr "Handpalmherkenning"
 
-#: ../ui/settings.glade:2591
+#: ../ui/settings.glade:2602
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>Gebruik knijpgebaren om in en uit te zoomen op documentpagina's.</i>"
 
-#: ../ui/settings.glade:2602
+#: ../ui/settings.glade:2616
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Zoomgebaren inschakelen (herstart vereist)"
 
-#: ../ui/settings.glade:2620
+#: ../ui/settings.glade:2634
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
 "This setting can make it easier to draw with touch. "
 msgstr ""
 
-#: ../ui/settings.glade:2626
+#: ../ui/settings.glade:2640
 msgid "Start zooming after a distance "
 msgstr ""
 
-#: ../ui/settings.glade:2638
+#: ../ui/settings.glade:2652
 msgid "1.0"
 msgstr "1,0"
 
-#: ../ui/settings.glade:2653
+#: ../ui/settings.glade:2667
 msgid "% greater than the initial distance between the two touches."
 msgstr "% is groter dan de originele afstand tussen de twee aanraakpunten."
 
-#: ../ui/settings.glade:2691
+#: ../ui/settings.glade:2705
 msgid "Zoom Gestures"
 msgstr "Zoomgebaren"
 
-#: ../ui/settings.glade:2718
+#: ../ui/settings.glade:2732
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2731
+#: ../ui/settings.glade:2746
 msgid "Enable touch drawing"
 msgstr ""
 
-#: ../ui/settings.glade:2736
+#: ../ui/settings.glade:2751
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr "Gebruik twee vingers voor pan/zoom en één vinger om de geselecteerde tool te gebruiken."
 
-#: ../ui/settings.glade:2751
+#: ../ui/settings.glade:2766
 msgid "Touch Drawing"
 msgstr ""
 
-#: ../ui/settings.glade:2778
+#: ../ui/settings.glade:2793
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
 msgstr "<i>Het uitschakelen van GTK's ingebouwd touchscreen scrollen kan op sommige platformen helpen met scroll problemen. Overweeg deze instelling te wijzigen als je plotselinge veranderingen ondervindt in de scrollpositie wanneer je probeert te scrollen met een touchscreen.</i>"
 
-#: ../ui/settings.glade:2791
+#: ../ui/settings.glade:2807
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
 msgstr ""
 
-#: ../ui/settings.glade:2810
+#: ../ui/settings.glade:2826
 msgid "Touch Scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:2897
+#: ../ui/settings.glade:2913
 msgid "Show Menubar on Startup"
 msgstr "Menubalk tonen na opstarten"
 
-#: ../ui/settings.glade:2915
+#: ../ui/settings.glade:2931
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr "<i>Toon/Verberg de menubalk door op F10 te drukken</i>"
 
-#: ../ui/settings.glade:2933
+#: ../ui/settings.glade:2949
 msgid "Show filepath in title bar"
 msgstr ""
 
-#: ../ui/settings.glade:2948
+#: ../ui/settings.glade:2964
 msgid "Show page number in title bar"
 msgstr ""
 
-#: ../ui/settings.glade:2988
+#: ../ui/settings.glade:3004
 msgid "Border color for current page and other selections"
 msgstr "Randkleur van huidige pagina en overige selecties"
 
-#: ../ui/settings.glade:3002
+#: ../ui/settings.glade:3018
 msgid "Border color"
 msgstr "Randkleur"
 
-#: ../ui/settings.glade:3015
+#: ../ui/settings.glade:3031
 msgid "Background color between pages"
 msgstr "Achtergrondkleur tussen pagina's"
 
-#: ../ui/settings.glade:3041
+#: ../ui/settings.glade:3057
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Selectiekleur (tekst, streekselectie, etc.)"
 
-#: ../ui/settings.glade:3067
+#: ../ui/settings.glade:3083
 msgid "Active Selection Color (Search Results etc.)"
 msgstr ""
 
-#: ../ui/settings.glade:3089
+#: ../ui/settings.glade:3105
 msgid "Dark Theme (requires restart)"
 msgstr "Donker thema (herstart vereist)"
 
-#: ../ui/settings.glade:3104
+#: ../ui/settings.glade:3120
 msgid "Use available Stock Icons (requires restart)"
 msgstr ""
 
-#: ../ui/settings.glade:3125
+#: ../ui/settings.glade:3141
 msgid "Icon Theme"
 msgstr ""
 
-#: ../ui/settings.glade:3140
+#: ../ui/settings.glade:3156
 msgid "Color"
 msgstr ""
 
-#: ../ui/settings.glade:3141
+#: ../ui/settings.glade:3157
 msgid "Lucide"
 msgstr ""
 
-#: ../ui/settings.glade:3154
+#: ../ui/settings.glade:3170
 msgid "(requires restart)"
 msgstr ""
 
-#: ../ui/settings.glade:3175
+#: ../ui/settings.glade:3191
 msgid "Colors"
 msgstr "Kleuren"
 
-#: ../ui/settings.glade:3191
+#: ../ui/settings.glade:3207
 msgid "Global"
 msgstr "Algemeen"
 
-#: ../ui/settings.glade:3224
+#: ../ui/settings.glade:3240
 msgid "Cursor icon for pen"
 msgstr ""
 
-#: ../ui/settings.glade:3239
+#: ../ui/settings.glade:3255
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr ""
 
-#: ../ui/settings.glade:3240
+#: ../ui/settings.glade:3256
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr ""
 
-#: ../ui/settings.glade:3241
+#: ../ui/settings.glade:3257
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr ""
 
-#: ../ui/settings.glade:3242
+#: ../ui/settings.glade:3258
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr ""
 
-#: ../ui/settings.glade:3267
+#: ../ui/settings.glade:3283
 msgid "Highlight cursor position"
 msgstr "Cursorpositie markeren"
 
-#: ../ui/settings.glade:3272
+#: ../ui/settings.glade:3288
 msgid "Draw a transparent circle around the cursor"
 msgstr "Teken een transparante cirkel rond de cursor"
 
-#: ../ui/settings.glade:3290 ../ui/settings.glade:3433
+#: ../ui/settings.glade:3306 ../ui/settings.glade:3449
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr "Kies de kleur om te gebruiken voor \"Markeer cursorpositie\""
 
-#: ../ui/settings.glade:3304
+#: ../ui/settings.glade:3320
 msgid "Circle Color"
 msgstr "Cirkelkleur"
 
-#: ../ui/settings.glade:3328 ../ui/settings.glade:3379
-#: ../ui/settings.glade:4843
+#: ../ui/settings.glade:3344 ../ui/settings.glade:3395
+#: ../ui/settings.glade:4861
 msgid "pixels"
 msgstr "pixels"
 
-#: ../ui/settings.glade:3356
+#: ../ui/settings.glade:3372
 msgid "Radius"
 msgstr "Straal"
 
-#: ../ui/settings.glade:3392
+#: ../ui/settings.glade:3408
 msgid "30"
 msgstr "30"
 
-#: ../ui/settings.glade:3408
+#: ../ui/settings.glade:3424
 msgid "Border Width"
 msgstr "Randdikte"
 
-#: ../ui/settings.glade:3447
+#: ../ui/settings.glade:3463
 msgid "Border Color"
 msgstr "Randkleur"
 
-#: ../ui/settings.glade:3479
+#: ../ui/settings.glade:3495
 msgid "Cursor"
 msgstr "Cursor"
 
-#: ../ui/settings.glade:3504
+#: ../ui/settings.glade:3520
 msgid "Show sidebar on the right side"
 msgstr "Zijbalk aan rechterkant van scherm tonen"
 
-#: ../ui/settings.glade:3519
+#: ../ui/settings.glade:3535
 msgid "Show vertical scrollbar on the left side"
 msgstr "Verticale schuifbalk aan linkerkant van scherm tonen"
 
-#: ../ui/settings.glade:3538
+#: ../ui/settings.glade:3554
 msgid "Left / Right-Handed"
 msgstr "Links-/Rechtshandig"
 
-#: ../ui/settings.glade:3563
+#: ../ui/settings.glade:3579
 msgid "Page numbering  "
 msgstr ""
 
-#: ../ui/settings.glade:3579
+#: ../ui/settings.glade:3595
 msgid "Below preview"
 msgstr ""
 
-#: ../ui/settings.glade:3580
+#: ../ui/settings.glade:3596
 msgid "Circle background"
 msgstr ""
 
-#: ../ui/settings.glade:3581
+#: ../ui/settings.glade:3597
 msgid "Square background"
 msgstr ""
 
-#: ../ui/settings.glade:3601
+#: ../ui/settings.glade:3617
 msgid "Sidebar"
 msgstr ""
 
-#: ../ui/settings.glade:3627
+#: ../ui/settings.glade:3643
 msgid "Hide the horizontal scrollbar"
 msgstr "Horizontale schuifbalk verbergen"
 
-#: ../ui/settings.glade:3642
+#: ../ui/settings.glade:3658
 msgid "Hide the vertical scrollbar"
 msgstr "Verticale schuifbalk verbergen"
 
-#: ../ui/settings.glade:3657
+#: ../ui/settings.glade:3673
 msgid "Disable scrollbar fade out"
 msgstr "Schuifbalk vervagen uitschakelen"
 
-#: ../ui/settings.glade:3675
+#: ../ui/settings.glade:3691
 msgid "Scrollbars"
 msgstr "Schuifbalken"
 
-#: ../ui/settings.glade:3728
+#: ../ui/settings.glade:3745
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
 msgstr ""
 
-#: ../ui/settings.glade:3730
+#: ../ui/settings.glade:3747
 msgid "Base speed"
 msgstr ""
 
-#: ../ui/settings.glade:3741
+#: ../ui/settings.glade:3758
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr ""
 
-#: ../ui/settings.glade:3743
+#: ../ui/settings.glade:3760
 msgid "Max multiplier"
 msgstr ""
 
-#: ../ui/settings.glade:3756
+#: ../ui/settings.glade:3773
 msgid "Selection Edge Panning"
 msgstr ""
 
-#: ../ui/settings.glade:3781 ../ui/settings.glade:3855
+#: ../ui/settings.glade:3798 ../ui/settings.glade:3872
 #: ../ui/mainmenubar.xml:352
 msgid "Show Menubar"
 msgstr ""
 
-#: ../ui/settings.glade:3796 ../ui/settings.glade:3870
+#: ../ui/settings.glade:3813 ../ui/settings.glade:3887
 msgid "Show Toolbar"
 msgstr ""
 
-#: ../ui/settings.glade:3811 ../ui/settings.glade:3900
+#: ../ui/settings.glade:3828 ../ui/settings.glade:3917
 #: ../ui/mainmenubar.xml:185
 msgid "Show Sidebar"
 msgstr ""
 
-#: ../ui/settings.glade:3830 ../ui/mainmenubar.xml:180
+#: ../ui/settings.glade:3847 ../ui/mainmenubar.xml:180
 msgid "Fullscreen"
 msgstr "Beeldvullend"
 
-#: ../ui/settings.glade:3885
+#: ../ui/settings.glade:3902
 msgid "Go Fullscreen"
 msgstr ""
 
-#: ../ui/settings.glade:3920
+#: ../ui/settings.glade:3937
 msgid "Select toolbar:"
 msgstr "Werkbalk kiezen:"
 
-#: ../ui/settings.glade:3953
+#: ../ui/settings.glade:3970
 msgid "Presentation Mode"
 msgstr "Presentatiemodus"
 
-#: ../ui/settings.glade:3982
+#: ../ui/settings.glade:3999
 msgid "Pre-load pages before"
 msgstr ""
 
-#: ../ui/settings.glade:3994
+#: ../ui/settings.glade:4011
 msgid "Pre-load pages after"
 msgstr ""
 
-#: ../ui/settings.glade:4031
+#: ../ui/settings.glade:4048
 msgid "Clear cached paged while scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:4058
+#: ../ui/settings.glade:4075
 msgid "Performance"
 msgstr ""
 
-#: ../ui/settings.glade:4089
+#: ../ui/settings.glade:4106
 msgid "View"
 msgstr "Weergave"
 
-#: ../ui/settings.glade:4138
+#: ../ui/settings.glade:4155
 msgid "Speed for Ctrl + Scroll"
 msgstr "Snelheid van Ctrl + scrollen"
 
-#: ../ui/settings.glade:4165
+#: ../ui/settings.glade:4182
 msgid "Speed for a Zoomstep"
 msgstr "Snelheid van zoomniveau"
 
-#: ../ui/settings.glade:4192 ../ui/settings.glade:4203
+#: ../ui/settings.glade:4209 ../ui/settings.glade:4220
 msgid "%"
 msgstr "%"
 
-#: ../ui/settings.glade:4225
+#: ../ui/settings.glade:4242
 msgid "Zoom Speed"
 msgstr "Zoomsnelheid"
 
-#: ../ui/settings.glade:4252
+#: ../ui/settings.glade:4269
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
 msgstr "<i>Dit zorgt ervoor dat de elementgrootte correct is bij 100% zoom. (herstart vereist)</i>"
 
-#: ../ui/settings.glade:4272
+#: ../ui/settings.glade:4289
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Plaats een liniaal op je scherm en verplaats de schuifknop totdat beide linialen gelijkliggen.</i>"
 
-#: ../ui/settings.glade:4319
+#: ../ui/settings.glade:4336
 msgid "The unit of the ruler is cm"
 msgstr "De eenheid van de liniaal is cm"
 
-#: ../ui/settings.glade:4340
+#: ../ui/settings.glade:4357
 msgid "Display DPI Calibration"
 msgstr "DPI-calibratie"
 
-#: ../ui/settings.glade:4371
+#: ../ui/settings.glade:4388
 msgid "Zoom"
 msgstr "Zoomen"
 
-#: ../ui/settings.glade:4420
+#: ../ui/settings.glade:4437
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Als je extra ruimte nodig hebt naast de pagina's, dan kun je het schermgebied kiezen waarop je wilt werken.</i>"
 
-#: ../ui/settings.glade:4542
+#: ../ui/settings.glade:4560
 msgid "Add additional horizontal space"
 msgstr ""
 
-#: ../ui/settings.glade:4558
+#: ../ui/settings.glade:4576
 msgid "Add additional vertical space"
 msgstr ""
 
-#: ../ui/settings.glade:4576
+#: ../ui/settings.glade:4594
 msgid "<i>or</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4588
+#: ../ui/settings.glade:4606
 msgid "Unlimited scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:4612
+#: ../ui/settings.glade:4630
 msgid "<i>The amount is specified in pixels.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4644
+#: ../ui/settings.glade:4662
 msgid "Scrolling outside the page"
 msgstr "Buiten de pagina scrollen"
 
-#: ../ui/settings.glade:4671
+#: ../ui/settings.glade:4689
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Compensatie voor eerste pagina voor zoveel pagina's als <b>Pagina's koppelen</b> ingeschakeld is"
 
-#: ../ui/settings.glade:4672
+#: ../ui/settings.glade:4690
 msgid "First Page Offset "
 msgstr "Compensatie van eerste pagina "
 
-#: ../ui/settings.glade:4685
+#: ../ui/settings.glade:4703
 msgid "Usually 0 or 1"
 msgstr "Meestal 0 of 1"
 
-#: ../ui/settings.glade:4704
+#: ../ui/settings.glade:4722
 msgid "Paired Pages"
 msgstr "Gekoppelde pagina's"
 
-#: ../ui/settings.glade:4730
+#: ../ui/settings.glade:4748
 msgid "when scrolling to end of last page"
 msgstr ""
 
-#: ../ui/settings.glade:4745
+#: ../ui/settings.glade:4763
 msgid "when drawing on last page"
 msgstr ""
 
-#: ../ui/settings.glade:4760
+#: ../ui/settings.glade:4778
 msgid "disabled"
 msgstr ""
 
-#: ../ui/settings.glade:4778
+#: ../ui/settings.glade:4796
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
 msgstr ""
 
-#: ../ui/settings.glade:4802
+#: ../ui/settings.glade:4820
 msgid "Enable  with determination radius of "
 msgstr "Inschakelen met straalbepaling van "
 
-#: ../ui/settings.glade:4807
+#: ../ui/settings.glade:4825
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -3258,253 +3283,253 @@ msgstr "Naar links verslepen vanaf het startpunt is gelijk aan het ingedrukt hou
 "Straalbepaling: de straal waarin samensteltoetsen vergrendeld worden tot het tekenen is afgerond.\n\n"
 "<i>Dit is handig als je zonder toetsenbord werkt.</i>"
 
-#: ../ui/settings.glade:4857
+#: ../ui/settings.glade:4875
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Tekengereedschap - samensteltoetsen instellen per richting (experimenteel)"
 
-#: ../ui/settings.glade:4874
+#: ../ui/settings.glade:4892
 msgid "Preserve line width"
 msgstr ""
 
-#: ../ui/settings.glade:4879
+#: ../ui/settings.glade:4897
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "Alle lijnbreedtes blijven dezelfde na het aanpassen van de selectiegrootte. "
 
-#: ../ui/settings.glade:4890
+#: ../ui/settings.glade:4908
 msgid "Resizing"
 msgstr ""
 
-#: ../ui/settings.glade:4926
+#: ../ui/settings.glade:4944
 msgid "Rotation snapping tolerance"
 msgstr "Tolerantie van vastklikken bij draaien"
 
-#: ../ui/settings.glade:4938
+#: ../ui/settings.glade:4956
 msgid "Grid snapping tolerance"
 msgstr "Tolerantie van vastklikken aan raster"
 
-#: ../ui/settings.glade:4980
+#: ../ui/settings.glade:4998
 msgid "Grid size"
 msgstr ""
 
-#: ../ui/settings.glade:5011
+#: ../ui/settings.glade:5029
 msgid "Use snapping for recognized shapes"
 msgstr ""
 
-#: ../ui/settings.glade:5015
+#: ../ui/settings.glade:5033
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr ""
 
-#: ../ui/settings.glade:5030
+#: ../ui/settings.glade:5048
 msgid "Snapping"
 msgstr "Vastklikken"
 
-#: ../ui/settings.glade:5058
+#: ../ui/settings.glade:5076
 msgid "Minimum Stroke Size"
 msgstr ""
 
-#: ../ui/settings.glade:5071
+#: ../ui/settings.glade:5089
 msgid "0.20"
 msgstr ""
 
-#: ../ui/settings.glade:5088
+#: ../ui/settings.glade:5106
 msgid "Stroke Recognizer"
 msgstr ""
 
-#: ../ui/settings.glade:5114
+#: ../ui/settings.glade:5132
 msgid "Enable Tap action"
 msgstr "Drukactie inschakelen"
 
-#: ../ui/settings.glade:5119
+#: ../ui/settings.glade:5137
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Teken invoer op als deze van korte duur en afstand is. Toon, in plaats daarvan, de zwevende gereedschapsbalk."
 
-#: ../ui/settings.glade:5131
+#: ../ui/settings.glade:5149
 msgid "Ignore Time (ms)"
 msgstr "Tijd (ms) negeren"
 
-#: ../ui/settings.glade:5143
+#: ../ui/settings.glade:5161
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr "Hoe kort (tijd) EN...\n\n"
 "<i>Aanbevolen: 150ms)</i>"
 
-#: ../ui/settings.glade:5163
+#: ../ui/settings.glade:5181
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr "Hoe kort (scherm mm) de penseelstreek is EN...\n\n"
 "<i>Aanbevolen: 1 mm)</i>"
 
-#: ../ui/settings.glade:5183
+#: ../ui/settings.glade:5201
 msgid "Max Length (mm)"
 msgstr "Max. lengte (mm)"
 
-#: ../ui/settings.glade:5194
+#: ../ui/settings.glade:5212
 msgid "Successive (ms)"
 msgstr "Achtereenvolgens (ms)"
 
-#: ../ui/settings.glade:5206
+#: ../ui/settings.glade:5224
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr "... EN hoeveel tijd er verstreken moet zijn sinds de laatste streek.\n\n"
 "<i>Aanbevolen: 500 ms</i>"
 
-#: ../ui/settings.glade:5223
+#: ../ui/settings.glade:5241
 msgid "Try to select object first."
 msgstr "Kies eerst een object."
 
-#: ../ui/settings.glade:5228 ../ui/settings.glade:5258
+#: ../ui/settings.glade:5246 ../ui/settings.glade:5276
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Kies eerst een object. Als je niks kiest, dan wordt de zwevende gereedschapsbalk getoond."
 
-#: ../ui/settings.glade:5241
+#: ../ui/settings.glade:5259
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "Er moet aan alle drie de voorwaarden worden voldaan voordat de streek genegeerd wordt.\n"
 "Het moet van korte duur en afstand zijn en er moet niet recentelijk al een streek zijn genegeerd."
 
-#: ../ui/settings.glade:5244
+#: ../ui/settings.glade:5262
 msgid "Settings:"
 msgstr "Instellingen:"
 
-#: ../ui/settings.glade:5253
+#: ../ui/settings.glade:5271
 msgid "Show Floating Toolbox"
 msgstr "Zwevende gereedschapsbalk tonen"
 
-#: ../ui/settings.glade:5272
+#: ../ui/settings.glade:5290
 msgid "Action on Tool Tap"
 msgstr "Actie bij drukken op gereedschap"
 
-#: ../ui/settings.glade:5300
+#: ../ui/settings.glade:5318
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5321
+#: ../ui/settings.glade:5340
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
 
-#: ../ui/settings.glade:5324
+#: ../ui/settings.glade:5343
 msgid "Re-render when the page's zoom changes by more than "
 msgstr ""
 
-#: ../ui/settings.glade:5337
+#: ../ui/settings.glade:5356
 msgid "0.00"
 msgstr "0,00"
 
-#: ../ui/settings.glade:5354
+#: ../ui/settings.glade:5373
 msgid "%."
 msgstr ""
 
-#: ../ui/settings.glade:5375
+#: ../ui/settings.glade:5394
 msgid "PDF Cache"
 msgstr ""
 
-#: ../ui/settings.glade:5406
+#: ../ui/settings.glade:5425
 msgid "Drawing Area"
 msgstr "Tekengebied"
 
-#: ../ui/settings.glade:5453
+#: ../ui/settings.glade:5472
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Kiest het gereedschap en bijbehorende instellingen als je op de standaardknop drukt.</i>"
 
-#: ../ui/settings.glade:5504
+#: ../ui/settings.glade:5524
 msgid "<b>Default</b>"
 msgstr "<b>Standaard</b>"
 
-#: ../ui/settings.glade:5544
+#: ../ui/settings.glade:5564
 msgid "Defaults"
 msgstr "Standaardwaarden"
 
-#: ../ui/settings.glade:5597
+#: ../ui/settings.glade:5617
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5613
+#: ../ui/settings.glade:5633
 msgid "Disable Audio"
 msgstr ""
 
-#: ../ui/settings.glade:5635
+#: ../ui/settings.glade:5655
 msgid "Enable or Disable Audio"
 msgstr ""
 
-#: ../ui/settings.glade:5662
+#: ../ui/settings.glade:5682
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>Audio-opnames worden momenteel opgeslagen in een aparte map; documenten verwijzen hiernaar.</i>"
 
-#: ../ui/settings.glade:5680 ../ui/settings.glade:5716
+#: ../ui/settings.glade:5701 ../ui/settings.glade:5737
 msgid "Storage Folder"
 msgstr "Opslagmap"
 
-#: ../ui/settings.glade:5695
+#: ../ui/settings.glade:5716
 msgid "Select Folder"
 msgstr "Map kiezen"
 
-#: ../ui/settings.glade:5743
+#: ../ui/settings.glade:5764
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5766
+#: ../ui/settings.glade:5788
 msgid "Input Device"
 msgstr "Invoerapparaat"
 
-#: ../ui/settings.glade:5788
+#: ../ui/settings.glade:5810
 msgid "Output Device"
 msgstr "Uitvoerapparaat"
 
-#: ../ui/settings.glade:5819
+#: ../ui/settings.glade:5841
 msgid "Audio Devices"
 msgstr "Audio-apparaten"
 
-#: ../ui/settings.glade:5848
+#: ../ui/settings.glade:5870
 msgid "Sample Rate"
 msgstr "Samplesnelheid"
 
-#: ../ui/settings.glade:5859
+#: ../ui/settings.glade:5881
 msgid "Gain"
 msgstr "Toename"
 
-#: ../ui/settings.glade:5906
+#: ../ui/settings.glade:5928
 msgid "Recording Quality"
 msgstr "Opnamekwaliteit"
 
-#: ../ui/settings.glade:5932
+#: ../ui/settings.glade:5954
 msgid "Default Seek Time (in seconds)"
 msgstr "Standaard zoektijd (in seconden)"
 
-#: ../ui/settings.glade:5945
+#: ../ui/settings.glade:5967
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:5964
+#: ../ui/settings.glade:5986
 msgid "Playback Settings"
 msgstr "Playback settings"
 
-#: ../ui/settings.glade:5978
+#: ../ui/settings.glade:6000
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>De wijzigingen worden alleen toegepast op nieuwe opnames en afspeelmomenten.</i>"
 
-#: ../ui/settings.glade:6009
+#: ../ui/settings.glade:6031
 msgid "Audio Recording"
 msgstr "Audio-opname"
 
-#: ../ui/settings.glade:6034
+#: ../ui/settings.glade:6056
 msgid "LaTeX"
 msgstr ""
 
-#: ../ui/settings.glade:6082
+#: ../ui/settings.glade:6104
 msgid "<i>Select language (requires restart)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6113 ../ui/settings.glade:6159
+#: ../ui/settings.glade:6136 ../ui/settings.glade:6182
 msgid "Language"
 msgstr ""
 
-#: ../ui/settings.glade:6129
+#: ../ui/settings.glade:6152
 msgid "Language Settings"
 msgstr ""
 
