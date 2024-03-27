@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-02 13:31+0000\n"
-"PO-Revision-Date: 2024-03-02 13:52\n"
+"POT-Creation-Date: 2024-03-10 20:59+0000\n"
+"PO-Revision-Date: 2024-03-27 00:53\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -40,11 +40,11 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:564
 msgid "Yes"
-msgstr ""
+msgstr "हाँ"
 
 #: ../src/core/control/Control.cpp:564
 msgid "No"
-msgstr ""
+msgstr "नहीं"
 
 #: ../src/core/control/Control.cpp:743
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -140,7 +140,7 @@ msgstr "Xournal++ फ़ाइलें"
 
 #: ../src/core/control/Control.cpp:1771
 msgid "Select font"
-msgstr ""
+msgstr "फॉन्ट चुनें"
 
 #: ../src/core/control/Control.cpp:1786
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:59
@@ -683,19 +683,19 @@ msgstr "Xournal++ टेम्पलेट"
 msgid "Supported files"
 msgstr "सभी समर्थित फाइलें"
 
-#: ../src/core/control/tools/EditSelection.cpp:455
+#: ../src/core/control/tools/EditSelection.cpp:456
 msgid "Arrange"
 msgstr "व्यवस्थित करें"
 
-#: ../src/core/control/tools/EditSelection.cpp:470
+#: ../src/core/control/tools/EditSelection.cpp:471
 msgid "Bring forward"
 msgstr "सामने लाएं"
 
-#: ../src/core/control/tools/EditSelection.cpp:481
+#: ../src/core/control/tools/EditSelection.cpp:482
 msgid "Send backward"
 msgstr "पीचे भीजे"
 
-#: ../src/core/control/tools/EditSelection.cpp:488
+#: ../src/core/control/tools/EditSelection.cpp:489
 msgid "Send to back"
 msgstr "पीछे भेजें"
 
