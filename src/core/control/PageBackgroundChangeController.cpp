@@ -60,6 +60,23 @@ void PageBackgroundChangeController::applyBackgroundToAllPages(const PageType& p
     control->getWindow()->getMenubar()->getPageTypeSubmenu().setSelected(pt);
 }
 
+void PageBackgroundChangeController::applyPageSizeToAllPages(const PaperSize& paperSize) {
+    control->clearSelectionEndText();
+
+    Document* doc = control->getDocument();
+
+    auto groupUndoAction = std::make_unique<GroupUndoAction>();
+
+    for (size_t p = 0; p < doc->getPageCount(); p++) {
+        auto undoAction = commitPageSizeChange(p, paperSize);
+        if (undoAction) {
+            groupUndoAction->addAction(std::move(undoAction));
+        }
+    }
+
+    control->getUndoRedoHandler()->addUndoAction(std::move(groupUndoAction));
+}
+
 void PageBackgroundChangeController::applyCurrentPageBackgroundToAll() {
     PageType pt = control->getCurrentPage()->getBackgroundType();
     applyBackgroundToAllPages(pt);
@@ -108,8 +125,20 @@ void PageBackgroundChangeController::changeCurrentPageBackground(const PageType&
     control->getWindow()->getMenubar()->getPageTypeSubmenu().setSelected(pageType);
 }
 
+void PageBackgroundChangeController::changeCurrentPageSize(const PaperSize& pageSize) {
+    control->clearSelectionEndText();
+
+    auto undoAction = commitPageSizeChange(control->getCurrentPageNo(), pageSize);
+    if (undoAction) {
+        control->getUndoRedoHandler()->addUndoAction(std::move(undoAction));
+    }
+}
+
 void PageBackgroundChangeController::setPageTypeForNewPages(const std::optional<PageType>& pt) {
     this->pageTypeForNewPages = pt;
+}
+void PageBackgroundChangeController::setPaperSizeForNewPages(const std::optional<PaperSize>& ps) {
+    this->paperSizeForNewPages = ps;
 }
 
 auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, const PageType& pageType)
@@ -135,6 +164,30 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
 
     control->firePageChanged(pageNr);
     control->updateBackgroundSizeButton();
+    return std::make_unique<PageBackgroundChangedUndoAction>(page, origType, origPdfPage, origBackgroundImage, origW,
+                                                             origH);
+}
+auto PageBackgroundChangeController::commitPageSizeChange(const size_t pageNum, const PaperSize& pageSize)
+        -> std::unique_ptr<UndoAction> {
+    PageRef page = control->getDocument()->getPage(pageNum);
+    if (!page) {
+        return {};
+    }
+
+    Document* doc = control->getDocument();
+    const size_t pageNr = doc->indexOf(page);
+    xoj_assert(pageNr != npos);
+
+    // Get values for Undo / Redo
+    const double origW = page->getWidth();
+    const double origH = page->getHeight();
+    BackgroundImage origBackgroundImage = page->getBackgroundImage();
+    const size_t origPdfPage = page->getPdfPageNr();
+    PageType origType = page->getBackgroundType();
+
+    page->setSize(pageSize.width, pageSize.height);
+
+    control->firePageSizeChanged(pageNr);
     return std::make_unique<PageBackgroundChangedUndoAction>(page, origType, origPdfPage, origBackgroundImage, origW,
                                                              origH);
 }
@@ -255,10 +308,7 @@ auto PageBackgroundChangeController::applyPageBackground(PageRef page, const Pag
 /**
  * Copy the background from source to target
  */
-void PageBackgroundChangeController::copyBackgroundFromOtherPage(PageRef target, PageRef source) {
-    // Copy page size
-    target->setSize(source->getWidth(), source->getHeight());
-
+void PageBackgroundChangeController::copyBackgroundTypeFromOtherPage(PageRef target, PageRef source) {
     // Copy page background type
     PageType bg = source->getBackgroundType();
     target->setBackgroundType(bg);
@@ -286,12 +336,21 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
     PageTemplateSettings model;
     model.parse(control->getSettings()->getPageTemplate());
 
-    auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
     PageRef current = control->getCurrentPage();
+    double width, height;
+    if (paperSizeForNewPages) {
+        width = paperSizeForNewPages->width;
+        height = paperSizeForNewPages->height;
+    } else {
+        xoj_assert(current);
+        width = current->getWidth();
+        height = current->getHeight();
+    }
+    auto page = std::make_shared<XojPage>(width, height);
 
     if (!pageTypeForNewPages) {
         xoj_assert(current);
-        copyBackgroundFromOtherPage(page, current);
+        copyBackgroundTypeFromOtherPage(page, current);
     } else {
         // Create a new page from template
         if (!applyPageBackground(page, pageTypeForNewPages.value())) {
@@ -301,11 +360,6 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
 
         // Set background Color
         page->setBackgroundColor(model.getBackgroundColor());
-
-        if (model.isCopyLastPageSize()) {
-            xoj_assert(current);
-            page->setSize(current->getWidth(), current->getHeight());
-        }
     }
 
     control->insertPage(page, position, shouldScrollToPage);
