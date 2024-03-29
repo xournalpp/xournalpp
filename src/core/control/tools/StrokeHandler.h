@@ -61,7 +61,8 @@ public:
     void onButtonReleaseEvent(const PositionInputData& pos, double zoom) override;
     void onButtonPressEvent(const PositionInputData& pos, double zoom) override;
     void onButtonDoublePressEvent(const PositionInputData& pos, double zoom) override;
-    bool onKeyEvent(GdkEventKey* event) override;
+    bool onKeyPressEvent(const KeyEvent& event) override;
+    bool onKeyReleaseEvent(const KeyEvent& event) override;
 
     /**
      * @brief Add a straight line to the stroke (if the movement is valid).

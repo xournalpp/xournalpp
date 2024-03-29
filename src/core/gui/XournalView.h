@@ -22,11 +22,12 @@
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkWidget, GtkAllocation
 
-#include "control/zoom/ZoomListener.h"  // for ZoomListener
-#include "model/DocumentChangeType.h"   // for DocumentChangeType
-#include "model/DocumentListener.h"     // for DocumentListener
-#include "pdf/base/XojPdfPage.h"        // for XojPdfRectangle
-#include "util/Util.h"                  // for npos
+#include "control/zoom/ZoomListener.h"     // for ZoomListener
+#include "gui/inputdevices/InputEvents.h"  // for KeyEvent
+#include "model/DocumentChangeType.h"      // for DocumentChangeType
+#include "model/DocumentListener.h"        // for DocumentListener
+#include "pdf/base/XojPdfPage.h"           // for XojPdfRectangle
+#include "util/Util.h"                     // for npos
 
 class Control;
 class XournalppCursor;
@@ -147,8 +148,8 @@ public:
     void documentChanged(DocumentChangeType type) override;
 
 public:
-    bool onKeyPressEvent(GdkEventKey* event);
-    bool onKeyReleaseEvent(GdkEventKey* event);
+    bool onKeyPressEvent(const KeyEvent& event);
+    bool onKeyReleaseEvent(const KeyEvent& event);
 
     static void onRealized(GtkWidget* widget, XournalView* view);
 

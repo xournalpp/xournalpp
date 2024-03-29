@@ -297,10 +297,11 @@ auto TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
     return true;
 }
 
-auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
+auto TextEditor::onKeyPressEvent(const KeyEvent& event) -> bool {
 
     // IME needs to handle the input first so the candidate window works correctly
-    if (gtk_im_context_filter_keypress(this->imContext.get(), event)) {
+    auto* e = (GdkEventKey*)(static_cast<GdkEvent*>(event.sourceEvent));
+    if (gtk_im_context_filter_keypress(this->imContext.get(), e)) {
         this->needImReset = true;
 
         GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
@@ -314,13 +315,14 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    return keyBindings.processEvent(this, (GdkEvent*)event);
+    return keyBindings.processEvent(this, event);
 }
 
-auto TextEditor::onKeyReleaseEvent(GdkEventKey* event) -> bool {
+auto TextEditor::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
 
-    if (gtk_text_iter_can_insert(&iter, true) && gtk_im_context_filter_keypress(this->imContext.get(), event)) {
+    auto* e = (GdkEventKey*)(static_cast<GdkEvent*>(event.sourceEvent));
+    if (gtk_text_iter_can_insert(&iter, true) && gtk_im_context_filter_keypress(this->imContext.get(), e)) {
         this->needImReset = true;
         return true;
     }

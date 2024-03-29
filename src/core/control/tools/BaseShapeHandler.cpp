@@ -49,31 +49,29 @@ void BaseShapeHandler::cancelStroke() {
     this->lastSnappingRange = Range();
 }
 
-auto BaseShapeHandler::onKeyEvent(GdkEventKey* event) -> bool {
-    if (event->is_modifier) {
-        GdkModifierType state;
-        if (event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R) {
-            // event->state contains the modifiers' states BEFORE the current event
-            // We need a XOR to handler both keypress and keyrelease at once
-            state = static_cast<GdkModifierType>(event->state ^ GDK_SHIFT_MASK);
-        } else if (event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R) {
-            state = static_cast<GdkModifierType>(event->state ^ GDK_CONTROL_MASK);
-        } else if (event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R) {
-            state = static_cast<GdkModifierType>(event->state ^ GDK_MOD1_MASK);
-        } else {
-            return false;
-        }
-
-        bool isAltDown = state & GDK_MOD1_MASK;
-        bool isShiftDown = state & GDK_SHIFT_MASK;
-        bool isControlDown = state & GDK_CONTROL_MASK;
-
-        this->updateShape(isAltDown, isShiftDown, isControlDown);
-
-        return true;
+auto BaseShapeHandler::onKeyEvent(const KeyEvent& event, bool pressed) -> bool {
+    bool isAltDown = event.state & GDK_MOD1_MASK;
+    bool isShiftDown = event.state & GDK_SHIFT_MASK;
+    bool isControlDown = event.state & GDK_CONTROL_MASK;
+    // event->state contains the modifiers' states BEFORE the current event
+    if (event.keyval == GDK_KEY_Shift_L || event.keyval == GDK_KEY_Shift_R) {
+        isShiftDown = pressed;
+    } else if (event.keyval == GDK_KEY_Control_L || event.keyval == GDK_KEY_Control_R) {
+        isControlDown = pressed;
+    } else if (event.keyval == GDK_KEY_Alt_L || event.keyval == GDK_KEY_Alt_R) {
+        isAltDown = pressed;
+    } else {
+        return false;
     }
-    return false;
+    this->updateShape(isAltDown, isShiftDown, isControlDown);
+
+    return true;
 }
+
+auto BaseShapeHandler::onKeyPressEvent(const KeyEvent& event) -> bool { return onKeyEvent(event, true); }
+
+auto BaseShapeHandler::onKeyReleaseEvent(const KeyEvent& event) -> bool { return onKeyEvent(event, false); }
+
 
 auto BaseShapeHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
     Point newPoint(pos.x / zoom, pos.y / zoom);

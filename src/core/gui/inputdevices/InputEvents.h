@@ -93,6 +93,13 @@ struct InputEvent final {
     DeviceId deviceId;
 };
 
+struct KeyEvent final {
+    guint keyval{0};
+    GdkModifierType state{};  ///< Consumed modifiers have been masked out
+
+    GdkEventGuard sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
+};
+
 class InputEvents {
 
     static InputEventType translateEventType(GdkEventType type);

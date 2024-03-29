@@ -738,13 +738,13 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     return false;
 }
 
-auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
+auto XojPageView::onKeyPressEvent(const KeyEvent& event) -> bool {
     if (this->textEditor) {
         if (this->textEditor->onKeyPressEvent(event)) {
             return true;
         }
     } else if (this->inputHandler) {
-        if (this->inputHandler->onKeyEvent(event)) {
+        if (this->inputHandler->onKeyPressEvent(event)) {
             return true;
         }
     } else if (this->verticalSpace) {
@@ -754,7 +754,7 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     // Esc leaves text edition
-    if (event->keyval == GDK_KEY_Escape) {
+    if (event.keyval == GDK_KEY_Escape) {
         if (this->textEditor) {
             endText();
             return true;
@@ -766,12 +766,12 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
     return false;
 }
 
-auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
+auto XojPageView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     if (this->textEditor && this->textEditor->onKeyReleaseEvent(event)) {
         return true;
     }
 
-    if (this->inputHandler && this->inputHandler->onKeyEvent(event)) {
+    if (this->inputHandler && this->inputHandler->onKeyReleaseEvent(event)) {
         DrawingType drawingType = this->xournal->getControl()->getToolHandler()->getDrawingType();
         if (drawingType == DRAWING_TYPE_SPLINE) {  // Spline drawing has been finalized
             if (this->inputHandler) {

@@ -11,16 +11,17 @@
 
 #pragma once
 
-#include "AbstractInputHandler.h"  // for AbstractInputHandler
-
 class InputContext;
-struct InputEvent;
+struct KeyEvent;
 
-
-class KeyboardInputHandler: public AbstractInputHandler {
+class KeyboardInputHandler final {
 private:
 public:
     explicit KeyboardInputHandler(InputContext* inputContext);
-    ~KeyboardInputHandler() override;
-    bool handleImpl(InputEvent const& event) override;
+    ~KeyboardInputHandler();
+    bool keyPressed(KeyEvent e) const;
+    bool keyReleased(KeyEvent e) const;
+
+private:
+    InputContext* inputContext;
 };

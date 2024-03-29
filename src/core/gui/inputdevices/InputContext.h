@@ -33,7 +33,7 @@ class TouchDrawingInputHandler;
 class TouchInputHandler;
 class XournalView;
 
-class InputContext {
+class InputContext final {
 
 private:
     gulong signal_id{0};
@@ -97,6 +97,7 @@ public:
     Settings* getSettings();
     ScrollHandling* getScrollHandling();
     void setGeometryToolInputHandler(std::unique_ptr<GeometryToolInputHandler> handler);
+    GeometryToolInputHandler* getGeometryToolInputHandler() const;
     void resetGeometryToolInputHandler();
 
     GdkModifierType getModifierState();

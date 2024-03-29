@@ -87,3 +87,6 @@ gboolean gtk_file_chooser_set_current_folder(GtkFileChooser* chooser, GFile* fil
 void gtk_list_box_append(GtkListBox* box, GtkWidget* widget);
 void gtk_list_box_row_set_child(GtkListBoxRow* row, GtkWidget* w);
 GtkWidget* gtk_list_box_row_get_child(GtkListBoxRow* row);
+
+/**** GtkEventController ****/
+GdkEvent* gtk_event_controller_get_current_event(GtkEventController*);

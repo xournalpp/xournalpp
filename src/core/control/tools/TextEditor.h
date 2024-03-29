@@ -30,6 +30,7 @@ class Text;
 class XojFont;
 class Control;
 class TextEditorCallbacks;
+struct KeyEvent;
 
 namespace xoj::util {
 template <class T>
@@ -48,8 +49,8 @@ public:
     /** Represents the different kinds of text selection */
     enum class SelectType { WORD, PARAGRAPH, ALL };
 
-    bool onKeyPressEvent(GdkEventKey* event);
-    bool onKeyReleaseEvent(GdkEventKey* event);
+    bool onKeyPressEvent(const KeyEvent& event);
+    bool onKeyReleaseEvent(const KeyEvent& event);
     void mousePressed(double x, double y);
     void mouseMoved(double x, double y);
     void mouseReleased();

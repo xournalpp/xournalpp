@@ -16,6 +16,7 @@
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "control/zoom/ZoomControl.h"
 #include "gui/XournalppCursor.h"                 // for XournalppCursor
+#include "gui/inputdevices/InputEvents.h"        // for KeyEvent
 #include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
 #include "model/Document.h"                      // for Document
 #include "model/Layer.h"                         // for Layer
@@ -48,21 +49,15 @@ constexpr double SCALE_AMOUNT = 1.05;
 constexpr double MAX_TANGENT_LENGTH = 2000.0;
 constexpr double MIN_TANGENT_LENGTH = 1.0;
 
-auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
-    if (!stroke || ((event->type != GDK_KEY_PRESS) ==
-                    (event->keyval != GDK_KEY_Escape))) {  // except for escape key only act on key
-                                                           // press event, not on key release event
+auto SplineHandler::onKeyPressEvent(const KeyEvent& event) -> bool {
+    if (!stroke) {
         return false;
     }
 
     xoj_assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
     Range rg = this->computeLastSegmentRepaintRange();
 
-    switch (event->keyval) {
-        case GDK_KEY_Escape: {
-            this->finalizeSpline();
-            return true;
-        }
+    switch (event.keyval) {
         case GDK_KEY_BackSpace: {
             if (this->knots.size() == 1) {
                 return true;
@@ -96,7 +91,7 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
         }
         case GDK_KEY_r:
         case GDK_KEY_R: {  // r like "rotate"
-            double angle = (event->state & GDK_SHIFT_MASK) ? -ROTATE_AMOUNT : ROTATE_AMOUNT;
+            double angle = (event.keyval == GDK_KEY_R) ? -ROTATE_AMOUNT : ROTATE_AMOUNT;
             double xOld = this->tangents.back().x;
             double yOld = this->tangents.back().y;
             double xNew = cos(angle * M_PI / 180) * xOld + sin(angle * M_PI / 180) * yOld;
@@ -111,9 +106,11 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
             double yOld = this->tangents.back().y;
             double length = 2 * sqrt(pow(xOld, 2) + pow(yOld, 2));
             double factor = 1;
-            if ((event->state & GDK_SHIFT_MASK) && length >= MIN_TANGENT_LENGTH) {
-                factor = 1 / SCALE_AMOUNT;
-            } else if (!(event->state & GDK_SHIFT_MASK) && length <= MAX_TANGENT_LENGTH) {
+            if (event.keyval == GDK_KEY_S) {
+                if (length >= MIN_TANGENT_LENGTH) {
+                    factor = 1 / SCALE_AMOUNT;
+                }
+            } else if (length <= MAX_TANGENT_LENGTH) {
                 factor = SCALE_AMOUNT;
             }
             double xNew = xOld * factor;
@@ -128,6 +125,14 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
 
     this->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
     return true;
+}
+
+bool SplineHandler::onKeyReleaseEvent(const KeyEvent& event) {
+    if (event.keyval == GDK_KEY_Escape) {
+        this->finalizeSpline();
+        return true;
+    }
+    return false;
 }
 
 auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
