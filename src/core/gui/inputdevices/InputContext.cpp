@@ -21,7 +21,9 @@
 #include "gui/inputdevices/TouchDrawingInputHandler.h"  // for TouchDrawingI...
 #include "gui/inputdevices/TouchInputHandler.h"         // for TouchInputHan...
 #include "util/Assert.h"                                // for xoj_assert
-#include "util/glib_casts.h"                            // for wrap_for_g_callback
+#include "util/gdk4_helper.h"
+#include "util/glib_casts.h"  // for wrap_for_g_callback
+#include "util/gtk4_helper.h"
 
 #include "InputEvents.h"   // for InputEvent
 #include "config-debug.h"  // for DEBUG_INPUT
@@ -42,6 +44,17 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
     for (const InputDevice& savedDevices: this->view->getControl()->getSettings()->getKnownInputDevices()) {
         this->knownDevices.insert(savedDevices.getName());
     }
+}
+
+template <bool (KeyboardInputHandler::*handler)(KeyEvent) const>
+static gboolean keyboardCallback(GtkEventControllerKey* self, guint keyval, guint, GdkModifierType state, gpointer d) {
+    auto* gdkEvent = gtk_event_controller_get_current_event(GTK_EVENT_CONTROLLER(self));
+    KeyEvent e;
+    e.keyval = keyval;
+    e.state = static_cast<GdkModifierType>(state & gtk_accelerator_get_default_mod_mask() &
+                                           ~gdk_key_event_get_consumed_modifiers(gdkEvent));
+    e.sourceEvent = gdkEvent;
+    return (static_cast<KeyboardInputHandler*>(d)->*handler)(e);
 }
 
 InputContext::~InputContext() {
@@ -65,14 +78,23 @@ InputContext::~InputContext() {
 }
 
 void InputContext::connect(GtkWidget* pWidget) {
-    xoj_assert(!this->widget);
+    xoj_assert(!this->widget && pWidget);
     this->widget = pWidget;
     gtk_widget_set_support_multidevice(widget, true);
 
-    int mask =
-            // Key handling
-            GDK_KEY_PRESS_MASK |
+#if GTK_MAJOR_VERSION == 3
+    auto* keyCtrl = gtk_event_controller_key_new(widget);
+#else
+    auto* keyCtrl = gtk_event_controller_key_new();
+    gtk_widget_add_controller(keyCtrl);
+#endif
 
+    g_signal_connect(keyCtrl, "key-pressed", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyPressed>),
+                     keyboardHandler);
+    g_signal_connect(keyCtrl, "key-released", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyReleased>),
+                     keyboardHandler);
+
+    int mask =
             // Allow scrolling
             GDK_SCROLL_MASK |
 
@@ -82,6 +104,7 @@ void InputContext::connect(GtkWidget* pWidget) {
             GDK_PROXIMITY_OUT_MASK;
 
     gtk_widget_add_events(pWidget, mask);
+
 
     signal_id = g_signal_connect(pWidget, "event", xoj::util::wrap_for_g_callback_v<eventCallback>, this);
 }
@@ -136,12 +159,8 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
         return this->stylusHandler->handle(event);
     }
 
-    if (event.deviceClass == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) {
-        return this->mouseHandler->handle(event) || this->keyboardHandler->handle(event);
-    }
-
     // handle mouse devices
-    if (event.deviceClass == INPUT_DEVICE_MOUSE) {
+    if (event.deviceClass == INPUT_DEVICE_MOUSE || event.deviceClass == INPUT_DEVICE_MOUSE_KEYBOARD_COMBO) {
         return this->mouseHandler->handle(event);
     }
 
@@ -157,17 +176,14 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
         return this->touchHandler->handle(event);
     }
 
-    // handle keyboard
-    if (event.deviceClass == INPUT_DEVICE_KEYBOARD) {
-        return this->keyboardHandler->handle(event);
-    }
-
     if (event.deviceClass == INPUT_DEVICE_IGNORE) {
         return true;
     }
 
 #ifdef DEBUG_INPUT
-    g_message("We received an event we do not have a handler for");
+    if (event.deviceClass != INPUT_DEVICE_KEYBOARD) {  // Keyboard event are handled via the GtkEventControllerKey
+        g_message("We received an event we do not have a handler for");
+    }
 #endif
     return false;
 }
@@ -184,6 +200,10 @@ auto InputContext::getScrollHandling() -> ScrollHandling* { return this->scrollH
 
 void InputContext::setGeometryToolInputHandler(std::unique_ptr<GeometryToolInputHandler> handler) {
     this->geometryToolInputHandler = std::move(handler);
+}
+
+auto InputContext::getGeometryToolInputHandler() const -> GeometryToolInputHandler* {
+    return geometryToolInputHandler.get();
 }
 
 void InputContext::resetGeometryToolInputHandler() { this->geometryToolInputHandler.reset(); }

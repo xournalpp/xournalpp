@@ -52,14 +52,13 @@ auto GeometryToolInputHandler::handle(InputEvent const& event) -> bool {
 
     switch (device) {
         case INPUT_DEVICE_KEYBOARD:
-            return this->handleKeyboard(event);
+            return false;  // Handled via GtkEventControllerKey in InputContext
         case INPUT_DEVICE_TOUCHSCREEN:
             return this->handleTouchscreen(event);
         case INPUT_DEVICE_PEN:
         case INPUT_DEVICE_MOUSE:
-            return this->handlePointer(event);
         case INPUT_DEVICE_MOUSE_KEYBOARD_COMBO:
-            return this->handlePointer(event) || this->handleKeyboard(event);
+            return this->handlePointer(event);
         default:
             g_warning("Device class %d not handled by geometry tool", event.deviceClass);
             return false;
@@ -132,78 +131,71 @@ auto GeometryToolInputHandler::handleTouchscreen(InputEvent const& event) -> boo
     return false;
 }
 
-auto GeometryToolInputHandler::handleKeyboard(InputEvent const& event) -> bool {
-    GdkEvent* gdkEvent = event.sourceEvent;
-    if (gdk_event_get_event_type(gdkEvent) == GDK_KEY_PRESS) {
-        double xdir = 0;
-        double ydir = 0;
-        double angle = 0.0;
-        double scale = 1.0;
-        guint key;
-        if (!gdk_event_get_keyval(gdkEvent, &key)) {
-            return false;
+auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
+    double xdir = 0;
+    double ydir = 0;
+    double angle = 0.0;
+    double scale = 1.0;
+    switch (event.keyval) {
+        case GDK_KEY_Left:
+            xdir = -1;
+            break;
+        case GDK_KEY_Up:
+            ydir = -1;
+            break;
+        case GDK_KEY_Right:
+            xdir = 1;
+            break;
+        case GDK_KEY_Down:
+            ydir = 1;
+            break;
+        case GDK_KEY_r:
+        case GDK_KEY_R: {  // r like "rotate"
+            angle = (event.state & GDK_MOD1_MASK) ? ROTATE_AMOUNT_SMALL : ROTATE_AMOUNT;
+            angle = (event.state & GDK_SHIFT_MASK) ? angle : -angle;
+            break;
         }
-        switch (key) {
-            case GDK_KEY_Left:
-                xdir = -1;
-                break;
-            case GDK_KEY_Up:
-                ydir = -1;
-                break;
-            case GDK_KEY_Right:
-                xdir = 1;
-                break;
-            case GDK_KEY_Down:
-                ydir = 1;
-                break;
-            case GDK_KEY_r:
-            case GDK_KEY_R: {  // r like "rotate"
-                angle = (event.state & GDK_MOD1_MASK) ? ROTATE_AMOUNT_SMALL : ROTATE_AMOUNT;
-                angle = (event.state & GDK_SHIFT_MASK) ? angle : -angle;
-                break;
+        case GDK_KEY_s:
+        case GDK_KEY_S: {
+            scale = (event.state & GDK_MOD1_MASK) ? SCALE_AMOUNT_SMALL : SCALE_AMOUNT;
+            scale = (event.state & GDK_SHIFT_MASK) ? 1.0 / scale : scale;
+            const double h = height * scale;
+            if (h > getMaxHeight() || h < getMinHeight()) {
+                scale = 1.0;
             }
-            case GDK_KEY_s:
-            case GDK_KEY_S: {
-                scale = (event.state & GDK_MOD1_MASK) ? SCALE_AMOUNT_SMALL : SCALE_AMOUNT;
-                scale = (event.state & GDK_SHIFT_MASK) ? 1.0 / scale : scale;
-                const double h = height * scale;
-                if (h > getMaxHeight() || h < getMinHeight()) {
-                    scale = 1.0;
-                }
-                break;
-            }
-            case GDK_KEY_m: {
-                controller->markPoint(translationX, translationY);
-                return true;
-            }
+            break;
         }
+        case GDK_KEY_m: {
+            controller->markPoint(translationX, translationY);
+            return true;
+        }
+    }
 
-        if (xdir != 0 || ydir != 0) {
-            const double c = std::cos(rotation);
-            const double s = std::sin(rotation);
-            double xshift{0.0};
-            double yshift{0.0};
-            const double amount = (event.state & GDK_MOD1_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
-            if (event.state & GDK_SHIFT_MASK) {
-                xshift = amount * (c * xdir - s * ydir);
-                yshift = amount * (s * xdir + c * ydir);
-            } else {
-                xshift = amount * xdir;
-                yshift = amount * ydir;
-            }
-            controller->translate(xshift, yshift);
-            return true;
+    if (xdir != 0 || ydir != 0) {
+        const double c = std::cos(rotation);
+        const double s = std::sin(rotation);
+        double xshift{0.0};
+        double yshift{0.0};
+        const double amount = (event.state & GDK_MOD1_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
+        if (event.state & GDK_SHIFT_MASK) {
+            xshift = amount * (c * xdir - s * ydir);
+            yshift = amount * (s * xdir + c * ydir);
+        } else {
+            xshift = amount * xdir;
+            yshift = amount * ydir;
         }
+        controller->translate(xshift, yshift);
+        return true;
+    }
 
-        auto p = xoj::util::Point(translationX, translationY);
-        if (angle != 0) {
-            controller->rotate(angle, p.x, p.y);
-            return true;
-        }
-        if (scale != 1.0) {
-            controller->scale(scale, p.x, p.y);
-            return true;
-        }
+    auto p = xoj::util::Point(translationX, translationY);
+    if (angle != 0) {
+        controller->rotate(angle, p.x, p.y);
+        return true;
+    }
+    if (scale != 1.0) {
+        controller->scale(scale, p.x, p.y);
+        return true;
     }
     return false;
 }

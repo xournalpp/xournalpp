@@ -48,7 +48,8 @@ StrokeHandler::StrokeHandler(Control* control, const PageRef& page):
 
 StrokeHandler::~StrokeHandler() = default;
 
-auto StrokeHandler::onKeyEvent(GdkEventKey* event) -> bool { return false; }
+auto StrokeHandler::onKeyPressEvent(const KeyEvent&) -> bool { return false; }
+auto StrokeHandler::onKeyReleaseEvent(const KeyEvent&) -> bool { return false; }
 
 auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
     if (!stroke) {

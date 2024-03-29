@@ -124,7 +124,7 @@ auto XournalView::getCurrentPage() const -> size_t { return currentPage; }
 
 const int scrollKeySize = 30;
 
-auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
+auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
     size_t p = getCurrentPage();
     if (p != npos && p < this->viewPages.size()) {
         auto& v = this->viewPages[p];
@@ -133,20 +133,8 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     }
 
-    /*
-    According to https://docs.gtk.org/gdk3/method.Keymap.translate_keyboard_state.html
-    consumed modifiers should be masked out. For instance, on a US keyboard, the plus symbol is shifted, so when
-    comparing a key press to a <Control>plus accelerator <Shift> should be masked out.
-    */
-    GdkModifierType consumed;
-    gdk_keymap_translate_keyboard_state(gdk_keymap_get_for_display(gdk_display_get_default()), event->hardware_keycode,
-                                        static_cast<GdkModifierType>(event->state), event->group, nullptr, nullptr,
-                                        nullptr, &consumed);
-
-    // Todo(gtk4) there is no GdkEventKey. Use a GdkEventControllerKey and connect to its key-pressed signal
-    guint keyval = event->keyval;
-    auto state = static_cast<GdkModifierType>(event->state & gtk_accelerator_get_default_mod_mask() & ~consumed);
-
+    auto keyval = event.keyval;
+    auto state = event.state;
     if (auto* tool = getControl()->getWindow()->getPdfToolbox(); tool->hasSelection()) {
         if (keyval == GDK_KEY_c && state == GDK_CONTROL_MASK) {
             // Shortcut to get selected PDF text.
@@ -324,7 +312,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
 
 auto XournalView::getRepaintHandler() const -> RepaintHandler* { return this->repaintHandler.get(); }
 
-auto XournalView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
+auto XournalView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     size_t p = getCurrentPage();
     if (p != npos && p < this->viewPages.size()) {
         auto& v = this->viewPages[p];

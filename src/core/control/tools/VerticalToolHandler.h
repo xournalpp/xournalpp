@@ -14,8 +14,7 @@
 #include <memory>    // for unique_ptr
 #include <vector>    // for vector
 
-#include <cairo.h>    // for cairo_surface_t, cairo_t
-#include <gdk/gdk.h>  // for GdkEventKey, GdkWindow
+#include <cairo.h>  // for cairo_surface_t, cairo_t
 
 #include "model/ElementContainer.h"  // for ElementContainer
 #include "model/OverlayBase.h"
@@ -29,6 +28,7 @@ class Layer;
 class MoveUndoAction;
 class Settings;
 class ZoomControl;
+struct KeyEvent;
 
 using ElementPtr = std::unique_ptr<Element>;
 
@@ -59,13 +59,11 @@ public:
     VerticalToolHandler(VerticalToolHandler&&) = delete;
     VerticalToolHandler&& operator=(VerticalToolHandler&&) = delete;
 
-    void paint(cairo_t* cr);
-
     /** Update the tool state with the new spacing position */
     void currentPos(double x, double y);
 
-    bool onKeyPressEvent(GdkEventKey* event);
-    bool onKeyReleaseEvent(GdkEventKey* event);
+    bool onKeyPressEvent(const KeyEvent& event);
+    bool onKeyReleaseEvent(const KeyEvent& event);
 
     std::unique_ptr<MoveUndoAction> finalize();
 
@@ -114,7 +112,7 @@ private:
     Layer* layer;
     std::vector<ElementPtr> elements;
     /**
-     * @brief Stores the smallest box containing all the adopted elements. 
+     * @brief Stores the smallest box containing all the adopted elements.
      *     Used to only refresh the part of the screen that needs refreshing.
      */
     Range ownedElementsOriginalBoundingBox;

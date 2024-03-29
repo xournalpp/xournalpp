@@ -22,6 +22,7 @@ class Control;
 class Point;
 class Stroke;
 class PositionInputData;
+struct KeyEvent;
 
 namespace xoj::view {
 class OverlayView;
@@ -55,7 +56,8 @@ public:
      * It is used to update internal data structures and queue
      * repaints of the XojPageView if necessary.
      */
-    virtual bool onKeyEvent(GdkEventKey* event) = 0;
+    virtual bool onKeyPressEvent(const KeyEvent& event) = 0;
+    virtual bool onKeyReleaseEvent(const KeyEvent& event) = 0;
 
     /**
      * The current input device for stroken, do not react on other devices (linke mices)

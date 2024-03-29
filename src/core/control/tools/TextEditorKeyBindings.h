@@ -17,6 +17,7 @@
 #include <gdk/gdkevents.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "gui/inputdevices/InputEvents.h"
 #include "util/gdk4_helper.h"
 
 #include "TextEditor.h"
@@ -35,7 +36,8 @@ constexpr PressedModifier SHIFT(GDK_SHIFT_MASK);
 
 struct TextEditor::KeyBindings {
     using hash_type = uint64_t;
-    using keyval_type = decltype(gdk_key_event_get_keyval(nullptr));
+    using keyval_type = std::invoke_result_t<decltype(gdk_key_event_get_keyval), GdkEvent*>;
+    static_assert(std::is_same<keyval_type, guint>::value);
     using mapped_type = void (*)(TextEditor*);
     using value_type = std::pair<const hash_type, mapped_type>;
     static_assert(sizeof(PressedModifier) + sizeof(keyval_type) == sizeof(hash_type));
@@ -46,15 +48,10 @@ struct TextEditor::KeyBindings {
         return (static_cast<hash_type>(keyval) | (static_cast<hash_type>(mod.mod) << 32));
     }
 
-    static hash_type hash(GdkEvent* e) {
-        GdkModifierType consumed = gdk_key_event_get_consumed_modifiers(e);
-        GdkModifierType modifiers = gtk_accelerator_get_default_mod_mask();
-        return hash(PressedModifier(GdkModifierType(gdk_event_get_modifier_state(e) & ~consumed & modifiers)),
-                    gdk_key_event_get_keyval(e));
-    }
+    static hash_type hash(const KeyEvent& e) { return hash(PressedModifier(e.state), e.keyval); }
     std::unordered_map<hash_type, mapped_type> table;
 
-    bool processEvent(TextEditor* te, GdkEvent* e) const {
+    bool processEvent(TextEditor* te, const KeyEvent& e) const {
         auto it = table.find(hash(e));
         if (it == table.end()) {
             return false;

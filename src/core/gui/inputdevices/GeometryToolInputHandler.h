@@ -24,6 +24,7 @@
 class Stroke;
 class GeometryToolController;
 struct InputEvent;
+struct KeyEvent;
 
 /**
  * @brief Input handler for the geometry tool
@@ -142,11 +143,6 @@ protected:
     bool handleTouchscreen(InputEvent const& event);
 
     /**
-     * @brief handles input from the keyboard for the geometry tool
-     */
-    bool handleKeyboard(InputEvent const& event);
-
-    /**
      * @brief handles input from mouse and stylus for the geometry tool
      */
     virtual bool handlePointer(InputEvent const& event) = 0;
@@ -168,6 +164,9 @@ public:
     bool handle(InputEvent const& event);
     void blockDevice(InputContext::DeviceType deviceType);
     void unblockDevice(InputContext::DeviceType deviceType);
+
+    bool keyPressed(KeyEvent const& event);
+    // bool keyReleased(KeyEvent const& event); // Implement if needed
 
     /**
      * Listener interface

@@ -6,6 +6,7 @@
 
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
+#include "util/gdk4_helper.h"
 
 auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
     switch (type) {
@@ -102,9 +103,9 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> I
         // As we only handle single finger events we can set the button statically to 1
         targetEvent.button = 1;
     }
-    gdk_event_get_state(sourceEvent, &targetEvent.state);
+    targetEvent.state = gdk_event_get_modifier_state(sourceEvent);
     if (targetEvent.deviceClass == INPUT_DEVICE_KEYBOARD) {
-        gdk_event_get_keyval(sourceEvent, &targetEvent.button);
+        targetEvent.button = gdk_key_event_get_keyval(sourceEvent);
     }
 
 

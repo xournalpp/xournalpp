@@ -51,7 +51,8 @@ public:
     void onButtonReleaseEvent(const PositionInputData& pos, double zoom) override;
     void onButtonPressEvent(const PositionInputData& pos, double zoom) override;
     void onButtonDoublePressEvent(const PositionInputData& pos, double zoom) override;
-    bool onKeyEvent(GdkEventKey* event) override;
+    bool onKeyPressEvent(const KeyEvent& event) override;
+    bool onKeyReleaseEvent(const KeyEvent& event) override;
 
     std::unique_ptr<xoj::view::OverlayView> createView(xoj::view::Repaintable* parent) const override;
 
@@ -80,6 +81,8 @@ private:
      * @brief Cancel the current shape creation: clears all data and wipes any drawing made
      */
     void cancelStroke();
+
+    bool onKeyEvent(const KeyEvent& event, bool pressed);
 
 protected:
     /**

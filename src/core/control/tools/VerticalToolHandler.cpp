@@ -8,6 +8,7 @@
 
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "gui/LegacyRedrawable.h"                  // for Redrawable
+#include "gui/inputdevices/InputEvents.h"          // for KeyEvent
 #include "model/Element.h"                         // for Element
 #include "model/Layer.h"                           // for Layer
 #include "model/XojPage.h"                         // for XojPage
@@ -66,9 +67,8 @@ void VerticalToolHandler::currentPos(double x, double y) {
     this->viewPool->dispatch(xoj::view::VerticalToolView::SET_VERTICAL_SHIFT_REQUEST, ySnapped);
 }
 
-bool VerticalToolHandler::onKeyPressEvent(GdkEventKey* event) {
-    if ((event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R) &&
-        this->spacingSide == Side::Below) {
+bool VerticalToolHandler::onKeyPressEvent(const KeyEvent& event) {
+    if ((event.keyval == GDK_KEY_Control_L || event.keyval == GDK_KEY_Control_R) && this->spacingSide == Side::Below) {
         this->adoptElements(Side::Above);
         this->viewPool->dispatch(xoj::view::VerticalToolView::SWITCH_DIRECTION_REQUEST);
         return true;
@@ -76,9 +76,8 @@ bool VerticalToolHandler::onKeyPressEvent(GdkEventKey* event) {
     return false;
 }
 
-bool VerticalToolHandler::onKeyReleaseEvent(GdkEventKey* event) {
-    if ((event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R) &&
-        this->spacingSide == Side::Above) {
+bool VerticalToolHandler::onKeyReleaseEvent(const KeyEvent& event) {
+    if ((event.keyval == GDK_KEY_Control_L || event.keyval == GDK_KEY_Control_R) && this->spacingSide == Side::Above) {
         this->adoptElements(Side::Below);
         this->viewPool->dispatch(xoj::view::VerticalToolView::SWITCH_DIRECTION_REQUEST);
         return true;
