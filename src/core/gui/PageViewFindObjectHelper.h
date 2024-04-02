@@ -154,7 +154,7 @@ protected:
         if (e->getType() == ELEMENT_STROKE) {
             Stroke* s = (Stroke*)e;
             double tmpGap = 0;
-            if ((s->intersects(x, y, 5, &tmpGap)) && (gap > tmpGap)) {
+            if ((s->intersects({x, y}, 5, &tmpGap)) && (gap > tmpGap)) {
                 gap = tmpGap;
                 strokeMatch = s;
                 matchIndex = pos;
@@ -200,7 +200,7 @@ protected:
 
         AudioElement* s = (AudioElement*)e;
         double tmpGap = 0;
-        if ((s->intersects(x, y, 15, &tmpGap))) {
+        if ((s->intersects({x, y}, 15, &tmpGap))) {
             size_t ts = s->getTimestamp();
 
             if (auto fn = s->getAudioFilename(); !fn.empty()) {

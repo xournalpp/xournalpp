@@ -3,7 +3,8 @@
 #include <algorithm>  // for min
 #include <array>      // for array
 #include <memory>
-#include <utility>    // for move, pair
+#include <tuple>
+#include <utility>  // for move, pair
 
 #include <cairo.h>    // for cairo_surface_destroy
 #include <gdk/gdk.h>  // for gdk_cairo_set_sourc...
@@ -35,28 +36,12 @@ Image::~Image() {
 auto Image::clone() const -> ElementPtr {
     auto img = std::make_unique<Image>();
 
-    img->x = this->x;
-    img->y = this->y;
     img->setColor(this->getColor());
-    img->width = this->width;
-    img->height = this->height;
     img->data = this->data;
 
     img->image = cairo_surface_reference(this->image);
-    img->snappedBounds = this->snappedBounds;
-    img->sizeCalculated = this->sizeCalculated;
-
+    img->imageSize = this->imageSize;
     return img;
-}
-
-void Image::setWidth(double width) {
-    this->width = width;
-    this->calcSize();
-}
-
-void Image::setHeight(double height) {
-    this->height = height;
-    this->calcSize();
 }
 
 void Image::setImage(std::string_view data) { setImage(std::string(data)); }
@@ -127,6 +112,7 @@ void Image::setImage(cairo_surface_t* image) {
     cairo_surface_write_to_png_stream(image, writeFunc, &closure_);
 
     data = std::move(closure_.buffer);
+    this->imageSize = {cairo_image_surface_get_width(image), cairo_image_surface_get_height(image)};
 }
 
 auto Image::getImage() const -> cairo_surface_t* {
@@ -160,29 +146,14 @@ auto Image::getImage() const -> cairo_surface_t* {
     return this->image;
 }
 
-void Image::scale(double x0, double y0, double fx, double fy, double rotation,
-                  bool) {  // line width scaling option is not used
-    this->x -= x0;
-    this->x *= fx;
-    this->x += x0;
-    this->y -= y0;
-    this->y *= fy;
-    this->y += y0;
-
-    this->width *= fx;
-    this->height *= fy;
-    this->calcSize();
-}
-
-void Image::rotate(double x0, double y0, double th) {}
-
 void Image::serialize(ObjectOutputStream& out) const {
     out.writeObject("Image");
 
     this->Element::serialize(out);
+    auto bounds = this->boundingRect();
 
-    out.writeDouble(this->width);
-    out.writeDouble(this->height);
+    out.writeDouble(bounds.width);   // Todo:
+    out.writeDouble(bounds.height);  // Todo:
 
     out.writeImage(this->data);
 
@@ -194,8 +165,9 @@ void Image::readSerialized(ObjectInputStream& in) {
 
     this->Element::readSerialized(in);
 
-    this->width = in.readDouble();
-    this->height = in.readDouble();
+
+    imageSize.first = in.readDouble();   // Todo:
+    imageSize.second = in.readDouble();  // Todo:
 
     if (this->image) {
         cairo_surface_destroy(this->image);
@@ -205,20 +177,23 @@ void Image::readSerialized(ObjectInputStream& in) {
     this->data = in.readImage();
 
     in.endObject();
-    this->calcSize();
+    this->internalUpdateBounds();
 }
 
-void Image::calcSize() const {
-    this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
-    this->sizeCalculated = true;
+auto Image::internalUpdateBounds() const -> std::pair<xoj::util::Rectangle<double>, xoj::util::Rectangle<double>> {
+    auto sizes = getImageSize();
+    auto rect = Rectangle<double>(0, 0, sizes.first, sizes.second);
+    return {rect, rect};
 }
 
-bool Image::hasData() const { return !this->data.empty(); }
+auto Image::hasData() const -> bool { return !this->data.empty(); }
 
-const unsigned char* Image::getRawData() const { return reinterpret_cast<const unsigned char*>(this->data.data()); }
+auto Image::getRawData() const -> const unsigned char* {
+    return reinterpret_cast<const unsigned char*>(this->data.data());
+}
 
-size_t Image::getRawDataLength() const { return this->data.size(); }
+auto Image::getRawDataLength() const -> size_t { return this->data.size(); }
 
-std::pair<int, int> Image::getImageSize() const { return this->imageSize; }
+auto Image::getImageSize() const -> std::pair<int, int> { return this->imageSize; }
 
-GdkPixbufFormat* Image::getImageFormat() const { return this->format; }
+auto Image::getImageFormat() const -> GdkPixbufFormat* { return this->format; }

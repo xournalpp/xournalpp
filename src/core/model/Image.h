@@ -25,19 +25,16 @@ class ObjectInputStream;
 class ObjectOutputStream;
 
 
-class Image: public Element {
+class Image final: public Element {
 public:
     Image();
-    Image(const Image&) = delete;
-    Image& operator=(const Image&) = delete;
     Image(Image&&) = delete;
-    Image& operator=(Image&&) = delete;
-    virtual ~Image();
+    Image(Image const&) = delete;
+    auto operator=(Image&&) -> Image& = delete;
+    auto operator=(Image const&) -> Image& = delete;
+    ~Image() override;
 
 public:
-    void setWidth(double width);
-    void setHeight(double height);
-
     /// Set the image data by copying the data from the provided string_view.
     void setImage(std::string_view data);
 
@@ -54,25 +51,22 @@ public:
     /// Returns the internal surface that contains the rendered image data.
     ///
     /// Note that the image is rendered lazily by default; call this method to render it.
-    cairo_surface_t* getImage() const;
-
-    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
-    void rotate(double x0, double y0, double th) override;
+    auto getImage() const -> cairo_surface_t*;
 
     auto clone() const -> ElementPtr override;
 
-    bool hasData() const;
+    auto hasData() const -> bool;
 
     /// Return a pointer to the raw data. Note that the pointer will be invalidated if the data is changed.
-    const unsigned char* getRawData() const;
+    auto getRawData() const -> const unsigned char*;
 
     /// Return the length of the raw data.
-    size_t getRawDataLength() const;
+    auto getRawDataLength() const -> size_t;
 
     /// Return the size of the raw image, or (-1, -1) if the image has not been rendered yet.
-    std::pair<int, int> getImageSize() const;
+    auto getImageSize() const -> std::pair<int, int>;
 
-    [[maybe_unused]] GdkPixbufFormat* getImageFormat() const;
+    [[maybe_unused]] auto getImageFormat() const -> GdkPixbufFormat*;
 
     static constexpr std::pair<int, int> NOSIZE = std::make_pair(-1, -1);
 
@@ -82,9 +76,9 @@ public:
     void readSerialized(ObjectInputStream& in) override;
 
 private:
-    void calcSize() const override;
+    auto internalUpdateBounds() const -> std::pair<xoj::util::Rectangle<double>, xoj::util::Rectangle<double>> override;
 
-    static cairo_status_t cairoReadFunction(const Image* image, unsigned char* data, unsigned int length);
+    static auto cairoReadFunction(const Image* image, unsigned char* data, unsigned int length) -> cairo_status_t;
 
 private:
     /// Set the image data by rendering the surface to PNG and copying the PNG data.
@@ -99,7 +93,7 @@ private:
 
     /// Image format information.
     mutable GdkPixbufFormat* format = nullptr;
-    mutable std::pair<int, int> imageSize = {-1, -1};
+    mutable std::pair<int, int> imageSize = {0, 0};
 
     std::string data;
 };

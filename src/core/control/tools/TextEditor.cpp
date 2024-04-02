@@ -204,7 +204,6 @@ void TextEditor::setFont(XojFont font) {
 }
 
 void TextEditor::afterFontChange() {
-    this->textElement->updatePangoFont(this->layout.get());
     this->computeVirtualCursorPosition();
     this->repaintEditor();
 }
@@ -1113,7 +1112,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
         text->setInEditing(true);
         this->page->fireElementChanged(text);
     }
-    this->layout = this->textElement->createPangoLayout();
+    this->layout = this->textElement->getPangoLayout();
     this->previousBoundingBox = Range(this->textElement->boundingRect());
     this->replaceBufferContent(this->textElement->getText());
 }

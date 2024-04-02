@@ -58,22 +58,22 @@ void ErasableStroke::OverlapTree::Populator::populate(const SubSection& section,
             return;
         }
         if (section.min.t == 0.0) {
-            this->populateNode(root, section.min.index, section.max.index, this->stroke.getPointVector());
+            this->populateNode(root, section.min.index, section.max.index, this->stroke.getPointVectorReviewPls());
             return;
         }
         this->populateNode(root, this->stroke.getPoint(section.min), section.min.index + 1, section.max.index,
-                           this->stroke.getPointVector());
+                           this->stroke.getPointVectorReviewPls());
         return;
     }
 
     if (section.min.t == 0.0) {
         this->populateNode(root, section.min.index, section.max.index, this->stroke.getPoint(section.max),
-                           this->stroke.getPointVector());
+                           this->stroke.getPointVectorReviewPls());
         return;
     }
 
     this->populateNode(root, this->stroke.getPoint(section.min), section.min.index + 1, section.max.index,
-                       this->stroke.getPoint(section.max), this->stroke.getPointVector());
+                       this->stroke.getPoint(section.max), this->stroke.getPointVectorReviewPls());
 }
 
 auto ErasableStroke::OverlapTree::Populator::getNextFreeSlot() -> std::pair<Node, Node>* {

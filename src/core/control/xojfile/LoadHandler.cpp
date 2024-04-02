@@ -708,13 +708,12 @@ void LoadHandler::parseTexImage() {
 
     auto teximageOwn = std::make_unique<TexImage>();
     this->teximage = teximageOwn.get();
-    this->layer->addElement(std::move(teximageOwn));
-    this->teximage->setX(left);
-    this->teximage->setY(top);
-    this->teximage->setWidth(right - left);
-    this->teximage->setHeight(bottom - top);
-
     this->teximage->setText(string(imText, imTextLen));
+    // Todo: Find solution: this->teximage->setX(left);
+    // Todo: Find solution: this->teximage->setY(top);
+    // Todo: Find solution: this->teximage->setWidth(right - left);
+    // Todo: Find solution: this->teximage->setHeight(bottom - top);
+    this->layer->addElement(std::move(teximageOwn));
 }
 
 void LoadHandler::parseAttachment() {
@@ -975,11 +974,17 @@ void LoadHandler::fixNullPressureValues() {
             strokePortions, [&](std::vector<Point>& points) { stroke->setPointVector(std::move(points)); },
             [&](std::vector<Point>& points) {
                 auto strokeOwn = std::make_unique<Stroke>();
+                strokeOwn->setTransformation(stroke->getTransformation());
                 strokeOwn->applyStyleFrom(stroke);
                 strokeOwn->setPointVector(std::move(points));
-                stroke = strokeOwn.get();
+                // stroke = strokeOwn.get(); // Removed: Either all or none of the strokes should be handled after this
+                // point
                 layer->addElement(std::move(strokeOwn));
             });
+
+    // stroke = nullptr;
+    // Ensure tailcall into the next iteration otherwise the last stroke portion will not be handled
+    // This function must be called at last, when handling a stroke
 }
 
 void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gsize textLen, gpointer userdata,

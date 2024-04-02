@@ -316,65 +316,7 @@ void Settings::parseData(xmlNodePtr cur, SElement& elem) {
     }
 }
 
-void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
-    // Parse data map
-    if (!xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data"))) {
-        xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
-        if (name == nullptr) {
-            g_warning("Settings::%s:No name property!\n", cur->name);
-            return;
-        }
-
-        parseData(cur, data[reinterpret_cast<const char*>(name)]);
-
-        xmlFree(name);
-        return;
-    }
-
-    if (cur->type == XML_COMMENT_NODE) {
-        return;
-    }
-
-    if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("property"))) {
-        g_warning("Settings::Unknown XML node: %s\n", cur->name);
-        return;
-    }
-
-    xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
-    if (name == nullptr) {
-        g_warning("Settings::%s:No name property!\n", cur->name);
-        return;
-    }
-
-    if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("font")) == 0) {
-        xmlFree(name);
-        xmlChar* font = nullptr;
-        xmlChar* size = nullptr;
-
-        font = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("font"));
-        if (font) {
-            this->font.setName(reinterpret_cast<const char*>(font));
-            xmlFree(font);
-        }
-
-        size = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("size"));
-        if (size) {
-            double dSize = DEFAULT_FONT_SIZE;
-            if (sscanf(reinterpret_cast<const char*>(size), "%lf", &dSize) == 1) {
-                this->font.setSize(dSize);
-            }
-            xmlFree(size);
-        }
-        return;
-    }
-
-    xmlChar* value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("value"));
-    if (value == nullptr) {
-        xmlFree(name);
-        g_warning("Settings::No value property!\n");
-        return;
-    }
-
+void Settings::parseItem1(xmlChar* name, xmlChar* value) {
     // TODO(fabian): remove this typo fix in 2-3 release cycles
     if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presureSensitivity")) == 0) {
         this->pressureSensitivity = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
@@ -598,7 +540,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->audioInputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioOutputDevice")) == 0) {
         this->audioOutputDevice = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numIgnoredStylusEvents")) == 0) {
+    }
+}
+
+void Settings::parseItem2(xmlChar* name, xmlChar* value) {
+    if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numIgnoredStylusEvents")) == 0) {
         this->numIgnoredStylusEvents =
                 std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 0);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemTPCButton")) == 0) {
@@ -677,6 +623,70 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->stabilizerFinalizeStroke = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     }
     /**/
+}
+
+void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
+    // Parse data map
+    if (!xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("data"))) {
+        xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
+        if (name == nullptr) {
+            g_warning("Settings::%s:No name property!\n", cur->name);
+            return;
+        }
+
+        parseData(cur, data[reinterpret_cast<const char*>(name)]);
+
+        xmlFree(name);
+        return;
+    }
+
+    if (cur->type == XML_COMMENT_NODE) {
+        return;
+    }
+
+    if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("property"))) {
+        g_warning("Settings::Unknown XML node: %s\n", cur->name);
+        return;
+    }
+
+    xmlChar* name = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("name"));
+    if (name == nullptr) {
+        g_warning("Settings::%s:No name property!\n", cur->name);
+        return;
+    }
+
+    if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("font")) == 0) {
+        xmlFree(name);
+        xmlChar* font = nullptr;
+        xmlChar* size = nullptr;
+
+        font = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("font"));
+        if (font) {
+            this->font.setName(reinterpret_cast<const char*>(font));
+            xmlFree(font);
+        }
+
+        size = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("size"));
+        if (size) {
+            double dSize = DEFAULT_FONT_SIZE;
+            if (sscanf(reinterpret_cast<const char*>(size), "%lf", &dSize) == 1) {
+                this->font.setSize(dSize);
+            }
+            xmlFree(size);
+        }
+        return;
+    }
+
+    xmlChar* value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("value"));
+    if (value == nullptr) {
+        xmlFree(name);
+        g_warning("Settings::No value property!\n");
+        return;
+    }
+
+
+    parseItem1(name, value);
+    parseItem2(name, value);
 
     xmlFree(name);
     xmlFree(value);

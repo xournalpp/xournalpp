@@ -82,7 +82,7 @@ protected:
      */
     guint32 lastActionEndTimeStamp = 0U;
     guint32 lastActionStartTimeStamp = 0U;
-    utl::Point<double> sequenceStartPosition;
+    xoj::util::Point<double> sequenceStartPosition;
 
 public:
     explicit PenInputHandler(InputContext* inputContext);

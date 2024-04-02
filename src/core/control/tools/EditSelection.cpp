@@ -236,7 +236,7 @@ EditSelection::EditSelection(Control* ctrl, InsertionOrder elts, const PageRef& 
     for (auto&& e: contents->getElements()) {
         this->preserveAspectRatio = this->preserveAspectRatio || e->rescaleOnlyAspectRatio();
         this->supportMirroring = this->supportMirroring && e->rescaleWithMirror();
-        this->supportRotation = this->supportRotation && e->getType() == ELEMENT_STROKE;
+        this->supportRotation = true /* this->supportRotation && e->getType() == ELEMENT_STROKE */;
     }
 }
 

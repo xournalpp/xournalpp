@@ -103,7 +103,7 @@ void TouchInputHandler::sequenceStart(InputEvent const& event) {
 void TouchInputHandler::scrollMotion(InputEvent const& event) {
     // Will only be called if there is a single sequence (zooming handles two sequences)
     auto offset = [&]() {
-        auto absolutePoint = utl::Point{event.absoluteX, event.absoluteY};
+        auto absolutePoint = xoj::util::Point{event.absoluteX, event.absoluteY};
         if (event.sequence == this->primarySequence) {
             auto offset = absolutePoint - this->priLastAbs;
             this->priLastAbs = absolutePoint;

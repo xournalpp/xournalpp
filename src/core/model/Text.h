@@ -17,6 +17,8 @@
 #include <pango/pango.h>
 
 #include "model/Element.h"
+#include "util/Point.h"
+#include "util/Rectangle.h"
 #include "util/raii/GObjectSPtr.h"
 
 #include "AudioElement.h"  // for AudioElement
@@ -34,32 +36,30 @@ public:
 
 public:
     void setFont(const XojFont& font);
-    XojFont& getFont();
-    double getFontSize() const;       // same result as getFont()->getSize(), but const
-    std::string getFontName() const;  // same result as getFont()->getName(), but const
+    auto getFont() -> XojFont&;
+    auto getFontSize() const -> double;       // same result as getFont()->getSize(), but const
+    auto getFontName() const -> std::string;  // same result as getFont()->getName(), but const
 
-    const std::string& getText() const;
+    auto getText() const -> const std::string&;
     void setText(std::string text);
 
     void setWidth(double width);
     void setHeight(double height);
 
     void setInEditing(bool inEditing);
-    bool isInEditing() const;
+    auto isInEditing() const -> bool;
 
-    xoj::util::GObjectSPtr<PangoLayout> createPangoLayout() const;
-    void updatePangoFont(PangoLayout* layout) const;
+    auto getPangoLayout() const -> xoj::util::GObjectSPtr<PangoLayout>;
 
-    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
-    void rotate(double x0, double y0, double th) override;
+    void scale(xoj::util::Point<double> base, double fx, double fy, bool restoreLineWidth) override;
 
-    bool rescaleOnlyAspectRatio() override;
+    auto rescaleOnlyAspectRatio() -> bool override;
 
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;
 
-    bool intersects(double x, double y, double halfEraserSize) const override;
-    bool intersects(double x, double y, double halfEraserSize, double* gap) const override;
+    auto intersects(xoj::util::Point<double> pos, double halfEraserSize) const -> bool override;
+    auto intersects(xoj::util::Point<double> pos, double halfEraserSize, double* gap) const -> bool override;
 
 public:
     // Serialize interface
@@ -67,16 +67,20 @@ public:
     void readSerialized(ObjectInputStream& in) override;
 
 protected:
-    void calcSize() const override;
+    auto internalUpdateBounds() const -> std::pair<xoj::util::Rectangle<double>, xoj::util::Rectangle<double>> override;
     void updateSnapping() const;
 
 public:
-    std::vector<XojPdfRectangle> findText(const std::string& search) const;
+    auto findText(const std::string& search) const -> std::vector<XojPdfRectangle>;
 
 private:
-    XojFont font;
-
+    // cache:
+    xoj::util::GObjectSPtr<PangoLayout> layout;
+    // data:
     std::string text;
+    std::pair<double, double> sizes{0, 0};
+
+    XojFont font{"Sans", 12};
 
     bool inEditing = false;
 };

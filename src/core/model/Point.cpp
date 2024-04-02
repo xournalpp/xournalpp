@@ -2,6 +2,7 @@
 
 #include <cmath>  // for hypot
 
+#include "util/Matrix.h"
 #include "util/Rectangle.h"  // for Rectangle
 
 Point::Point(double x, double y): x(x), y(y) {}
@@ -20,4 +21,8 @@ auto Point::equalsPos(const Point& p) const -> bool { return this->x == p.x && t
 
 auto Point::isInside(const xoj::util::Rectangle<double>& rect) const -> bool {
     return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height;
+}
+
+auto operator*(xoj::util::Matrix const& matrix, Point const& pt) -> Point {
+    return {matrix.a * pt.x + matrix.b * pt.y + matrix.tx, matrix.c * pt.x + matrix.d * pt.y + matrix.ty, pt.z};
 }

@@ -65,7 +65,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& r
     ErasableStroke* erasable = s->getErasable();
     if (!erasable) {
         if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
-            if (!s->intersects(x, y, halfEraserSize)) {
+            if (!s->intersects({x, y}, halfEraserSize)) {
                 // The stroke does not intersect the eraser square
                 return;
             }

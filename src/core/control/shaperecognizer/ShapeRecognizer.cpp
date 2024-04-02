@@ -327,6 +327,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke, double strokeMinSize) ->
             }
 
             auto s = std::make_unique<Stroke>();
+            s->setTransformation(stroke->getTransformation());
             s->applyStyleFrom(this->stroke);
 
             if (aligned) {

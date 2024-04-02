@@ -12,6 +12,7 @@
 #pragma once
 
 #include <algorithm>
+#include <iosfwd>
 #include <optional>
 
 #include "util/Range.h"
@@ -21,10 +22,14 @@ namespace xoj::util {  // Rectangle is already defined in windows.h
 template <class T>
 class Rectangle final {
 public:
-    Rectangle() = default;
-    Rectangle(T x, T y, T width, T height): x(x), y(y), width(width), height(height) {}
+    constexpr Rectangle() = default;
+    constexpr Rectangle(T x, T y, T width, T height): x(x), y(y), width(width), height(height) {}
     explicit Rectangle(const Range& rect):
             x(rect.getX()), y(rect.getY()), width(rect.getWidth()), height(rect.getHeight()) {}
+
+    constexpr auto operator==(const Rectangle& other) const -> bool {
+        return x == other.x && y == other.y && width == other.width && height == other.height;
+    }
 
     /**
      * Returns whether this rectangle intersects another and the intersection
@@ -76,10 +81,16 @@ public:
      */
     T area() const { return width * height; }
 
+    friend auto operator<<(std::ostream& os, Rectangle const& r) -> std::ostream&;
+
     T x{};
     T y{};
     T width{};
     T height{};
 };
+
+
+struct Matrix;
+auto operator*(const Matrix& matrix, const Rectangle<double>& rect) -> Rectangle<double>;
 
 }  // namespace xoj::util

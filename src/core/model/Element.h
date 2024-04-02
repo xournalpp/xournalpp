@@ -17,7 +17,9 @@
 
 #include <gdk/gdk.h>  // for GdkRectangle
 
-#include "util/Color.h"                     // for Color
+#include "util/Color.h"  // for Color
+#include "util/Matrix.h"
+#include "util/Point.h"
 #include "util/Rectangle.h"                 // for Rectangle
 #include "util/serializing/Serializable.h"  // for Serializable
 
@@ -51,30 +53,37 @@ public:
 
     void setX(double x);
     void setY(double y);
-    double getX() const;
-    double getY() const;
+    auto getX() const -> double;
+    auto getY() const -> double;
+    void setWidth(double width);
+    void setHeight(double height);
 
-    virtual void move(double dx, double dy);
-    virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) = 0;
-    virtual void rotate(double x0, double y0, double th) = 0;
+    void move(double dx, double dy);
+    virtual void scale(xoj::util::Point<double> base, double fx, double fy, bool restoreLineWidth);
+    void rotate(xoj::util::Point<double> base, double th);
 
     void setColor(Color color);
-    Color getColor() const;
+    auto getColor() const -> Color;
 
-    double getElementWidth() const;
-    double getElementHeight() const;
+    auto getElementWidth() const -> double;
+    auto getElementHeight() const -> double;
 
-    xoj::util::Rectangle<double> getSnappedBounds() const;
+    auto getSnappedBounds() const -> xoj::util::Rectangle<double>;
+    auto boundingRect() const -> xoj::util::Rectangle<double>;
 
-    xoj::util::Rectangle<double> boundingRect() const;
+    auto getTransformation() const -> xoj::util::Matrix;
+    void setTransformation(xoj::util::Matrix const& mtx);
 
-    virtual bool intersectsArea(const GdkRectangle* src) const;
-    virtual bool intersectsArea(double x, double y, double width, double height) const;
+    [[deprecated("use xoj::util::Rectangle<double> instead")]]
+    virtual auto intersectsArea(const GdkRectangle* src) const -> bool;
+    [[deprecated("use xoj::util::Rectangle<double> instead")]]
+    virtual auto intersectsArea(double x, double y, double width, double height) const -> bool;
+    virtual auto intersectsArea(xoj::util::Rectangle<double> rect) const -> bool;
 
-    virtual bool isInSelection(ShapeContainer* container) const;
+    virtual auto isInSelection(ShapeContainer* container) const -> bool;
 
-    virtual bool rescaleOnlyAspectRatio();
-    virtual bool rescaleWithMirror();
+    virtual auto rescaleOnlyAspectRatio() -> bool;
+    virtual auto rescaleWithMirror() -> bool;
 
     /**
      * Take 1:1 copy of this element
@@ -85,24 +94,23 @@ public:
     void readSerialized(ObjectInputStream& in) override;
 
 private:
-protected:
-    virtual void calcSize() const = 0;
+    auto updateBounds() const -> std::pair<xoj::util::Rectangle<double>, xoj::util::Rectangle<double>>;
 
 protected:
-    // If the size has been calculated
-    mutable bool sizeCalculated = false;
+    [[nodiscard]]
+    virtual auto internalUpdateBounds() const
+            -> std::pair<xoj::util::Rectangle<double>, xoj::util::Rectangle<double>> = 0;
 
-    mutable double width = 0;
-    mutable double height = 0;
-
-    // The position on the screen
-    mutable double x = 0;
-    mutable double y = 0;
-
-    // The position and dimensions on the screen used for snapping
-    mutable xoj::util::Rectangle<double> snappedBounds{};
-
+protected:
 private:
+    // // === cache ===
+    // mutable bool sizeCalculated = false;
+    // mutable xoj::util::Rectangle<double> bounds{};
+    // mutable xoj::util::Rectangle<double> snappedBounds{}; ///< The position and dimensions on the screen used for
+    // snapping
+
+    // === data ===
+    xoj::util::Matrix transformation{};
     /**
      * Type of this element
      */

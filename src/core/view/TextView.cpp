@@ -1,16 +1,11 @@
 #include "TextView.h"
 
-#include <algorithm>  // for max
-#include <cstddef>    // for size_t
-
-#include "model/Text.h"           // for Text
-#include "util/Color.h"           // for cairo_set_source_rgbi
-#include "util/StringUtils.h"     // for StringUtils
+#include "model/Text.h"  // for Text
+#include "util/Color.h"  // for cairo_set_source_rgbi
 #include "util/raii/CairoWrappers.h"
 #include "util/raii/GObjectSPtr.h"
-#include "view/View.h"            // for Context, OPACITY_NO_AUDIO, view
+#include "view/View.h"  // for Context, OPACITY_NO_AUDIO, view
 
-#include "filesystem.h"  // for path
 
 using namespace xoj::view;
 
@@ -19,7 +14,7 @@ TextView::TextView(const Text* text): text(text) {}
 TextView::~TextView() = default;
 
 auto TextView::initPango(cairo_t* cr, const Text* t) -> xoj::util::GObjectSPtr<PangoLayout> {
-    auto layout = t->createPangoLayout();
+    auto layout = t->getPangoLayout();
     pango_cairo_update_layout(cr, layout.get());
     pango_context_set_matrix(pango_layout_get_context(layout.get()), nullptr);
 
@@ -33,6 +28,8 @@ void TextView::draw(const Context& ctx) const {
     }
 
     xoj::util::CairoSaveGuard saveGuard(ctx.cr);
+    applyTransform(ctx.cr, text);
+
 
     // make elements without audio translucent when highlighting elements with audio
     if (ctx.fadeOutNonAudio && text->getAudioFilename().empty()) {
@@ -42,8 +39,6 @@ void TextView::draw(const Context& ctx) const {
         cairo_set_operator(ctx.cr, CAIRO_OPERATOR_SOURCE);
         Util::cairo_set_source_rgbi(ctx.cr, text->getColor());
     }
-
-    cairo_translate(ctx.cr, text->getX(), text->getY());
 
     auto layout = initPango(ctx.cr, text);
     const std::string& content = text->getText();

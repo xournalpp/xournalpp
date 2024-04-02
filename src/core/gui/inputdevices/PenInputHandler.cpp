@@ -184,7 +184,7 @@ double PenInputHandler::inferPressureValue(PositionInputData const& pos, XojPage
     PositionInputData lastPos = getInputDataRelativeToCurrentPage(page, this->lastEvent);
 
     double dt = (pos.timestamp - lastPos.timestamp) / 10.0;
-    double distance = utl::Point<double>(pos.x, pos.y).distance(utl::Point<double>(lastPos.x, lastPos.y));
+    double distance = xoj::util::Point<double>(pos.x, pos.y).distance(xoj::util::Point<double>(lastPos.x, lastPos.y));
     double inverseSpeed = dt / (distance + 0.001);
 
     // This doesn't have to be exact. Arctan is used here for its sigmoid-like shape,

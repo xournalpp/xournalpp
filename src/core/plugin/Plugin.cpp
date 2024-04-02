@@ -1,27 +1,24 @@
+#ifdef ENABLE_PLUGINS
+
 #include "Plugin.h"
 
 #include <algorithm>  // for max
 #include <array>      // for array
+#include <utility>    // for move, pair
 
 #include <gdk/gdk.h>      // for GdkModifierType
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <glib.h>         // for g_key_file_free, g_warning, g_free
 
-#include "util/Assert.h"     // for xoj_assert
-#include "util/PathUtil.h"   // for toGFilename
-#include "util/XojMsgBox.h"  // for XojMsgBox
-
-#include "config-features.h"  // for ENABLE_PLUGINS
-
-#ifdef ENABLE_PLUGINS
-
-#include <utility>  // for move, pair
-
 #include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
+#include "util/Assert.h"                         // for xoj_assert
+#include "util/PathUtil.h"                       // for toGFilename
+#include "util/XojMsgBox.h"                      // for XojMsgBox
 #include "util/i18n.h"                           // for _
 #include "util/raii/GObjectSPtr.h"
 
-#include "config.h"  // for PROJECT_VERSION
+#include "config-features.h"  // for ENABLE_PLUGINS
+#include "config.h"           // for PROJECT_VERSION
 
 extern "C" {
 #include <lauxlib.h>  // for luaL_Reg, luaL_newstate, luaL_requiref
@@ -250,7 +247,8 @@ void Plugin::loadScript() {
         XojMsgBox::showPluginMessage(name, errMsg, true);
 
         // Error out if file can't be read
-        g_warning("Could not load plugin Lua file. Error: \"%s\", error code: %d (syntax error: %s)", errMsg, status, status == LUA_ERRSYNTAX ? "true" : "false");
+        g_warning("Could not load plugin Lua file. Error: \"%s\", error code: %d (syntax error: %s)", errMsg, status,
+                  status == LUA_ERRSYNTAX ? "true" : "false");
         this->valid = false;
         return;
     }

@@ -100,3 +100,8 @@ public:
 
     static constexpr double NO_PRESSURE = -1;
 };
+
+namespace xoj::util {
+struct Matrix;
+}
+auto operator*(xoj::util::Matrix const& matrix, Point const& pt) -> Point;

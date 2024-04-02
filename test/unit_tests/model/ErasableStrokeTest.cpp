@@ -27,7 +27,7 @@ TEST(ErasableStroke, testOverlapTree) {
     // clang format on
 
     Stroke stroke;
-    std::vector<Point>& strokePoints = const_cast<std::vector<Point>&>(stroke.getPointVector());
+    std::vector<Point>& strokePoints = const_cast<std::vector<Point>&>(stroke.getPointVectorReviewPls());
     strokePoints.swap(testPath);
 
     stroke.setWidth(2);

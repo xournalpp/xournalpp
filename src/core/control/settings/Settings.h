@@ -19,9 +19,10 @@
 #include <utility>  // for pair
 #include <vector>   // for vector
 
-#include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
-#include <glib.h>                         // for gchar, gboolean, gint
-#include <libxml/tree.h>                  // for xmlNodePtr, xmlDocPtr
+#include <gdk/gdk.h>      // for GdkInputSource, GdkD...
+#include <glib.h>         // for gchar, gboolean, gint
+#include <libxml/tree.h>  // for xmlNodePtr, xmlDocPtr
+#include <libxml/xmlstring.h>
 #include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
 
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
@@ -109,6 +110,8 @@ public:
 private:
     void loadDefault();
     void parseItem(xmlDocPtr doc, xmlNodePtr cur);
+    void parseItem1(xmlChar* name, xmlChar* value);
+    void parseItem2(xmlChar* name, xmlChar* value);
 
     static xmlNodePtr savePropertyDouble(const gchar* key, double value, xmlNodePtr parent);
     static xmlNodePtr saveProperty(const gchar* key, int value, xmlNodePtr parent);

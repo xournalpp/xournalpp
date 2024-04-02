@@ -50,7 +50,7 @@ void ScaleUndoAction::applyScale(double fx, double fy, bool restoreLineWidth, Do
     for (Element* e: this->elements) {
         r.addPoint(e->getX(), e->getY());
         r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
-        e->scale(this->x0, this->y0, fx, fy, this->rotation, restoreLineWidth);
+        e->scale({this->x0, this->y0}, fx, fy, restoreLineWidth);
         r.addPoint(e->getX(), e->getY());
         r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
     }

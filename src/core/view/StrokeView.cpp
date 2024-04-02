@@ -76,6 +76,13 @@ void StrokeView::draw(const Context& ctx) const {
         cr = mask.get();
     }
 
+    auto transform = s->getTransformation();
+    cairo_matrix_t mtx;
+    cairo_get_matrix(cr, &mtx);
+    cairo_matrix_t cairo_transform = {transform.a, transform.c, transform.b, transform.d, transform.tx, transform.ty};
+    cairo_matrix_multiply(&cairo_transform, &cairo_transform, &mtx);
+    cairo_set_matrix(cr, &cairo_transform);
+
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
     cairo_set_line_cap(cr, CAIRO_LINE_CAP[s->getStrokeCapStyle()]);
 
@@ -133,9 +140,9 @@ void StrokeView::draw(const Context& ctx) const {
         ErasableStrokeView erasableStrokeView(*erasable);
         erasableStrokeView.draw(cr);
     } else if (s->hasPressure() && !highlighter) {
-        StrokeViewHelper::drawWithPressure(cr, s->getPointVector(), s->getLineStyle());
+        StrokeViewHelper::drawWithPressure(cr, s->getPointVectorTodo(), s->getLineStyle());
     } else {
-        StrokeViewHelper::drawNoPressure(cr, s->getPointVector(), s->getWidth(), s->getLineStyle());
+        StrokeViewHelper::drawNoPressure(cr, s->getPointVectorTodo(), s->getWidth(), s->getLineStyle());
     }
 
     if (useMask) {

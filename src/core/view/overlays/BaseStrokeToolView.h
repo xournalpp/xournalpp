@@ -15,6 +15,7 @@
 
 #include "model/LineStyle.h"
 #include "util/Color.h"
+#include "util/Matrix.h"
 #include "view/overlays/OverlayView.h"
 
 class Stroke;
@@ -43,7 +44,9 @@ protected:
     /**
      * @brief All that's required to draw a stroke in cairo
      */
+
     const cairo_operator_t cairoOp;
+    const util::Matrix matrix;
     const Color strokeColor;
     const LineStyle lineStyle;
     double strokeWidth;

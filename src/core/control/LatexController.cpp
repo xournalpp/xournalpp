@@ -1,6 +1,5 @@
 #include "LatexController.h"
 
-#include <cstdlib>   // for free
 #include <fstream>   // for ifstream, basic_istream
 #include <iterator>  // for istreambuf_iterator, ope...
 #include <limits>    // for numeric_limits
@@ -40,6 +39,7 @@
 #include "util/Util.h"                       // for npos
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for FS, _, _F, N_
+#include "util/raii/GLibGuards.h"
 #include "util/safe_casts.h"                 // for round_cast
 
 #include "Control.h"  // for Control
@@ -219,7 +219,7 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
         // If we have stdout, store it.
         if (procStdout_ptr != nullptr) {
             self->texProcessOutput = procStdout_ptr;
-            free(procStdout_ptr);
+            g_free(procStdout_ptr);
         } else {
             g_warning("latex command: no stdout stream");
         }
@@ -295,30 +295,25 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
     }
 
     auto img = std::make_unique<TexImage>();
-    GError* err{};
-    bool loaded = img->loadData(std::move(*contents), &err);
+    xoj::util::GErrorGuard err;
+    bool loaded = img->loadData(std::move(*contents), xoj::util::out_ptr(err));
 
     if (err != nullptr) {
         string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
         XojMsgBox::showErrorToUser(control->getGtkWindow(), message);
-        g_error_free(err);
         return nullptr;
     } else if (!loaded || !img->getPdf()) {
         XojMsgBox::showErrorToUser(control->getGtkWindow(), FS(_F("Could not load LaTeX PDF file")));
         return nullptr;
     }
 
+    img->setText(std::move(renderedTex));
     img->setX(posx);
     img->setY(posy);
-    img->setText(std::move(renderedTex));
-    if (std::abs(imgheight) > 1024 * std::numeric_limits<double>::epsilon()) {
+
+    if (imgheight > 1024 * std::numeric_limits<double>::epsilon()) {
         double ratio = img->getElementWidth() / img->getElementHeight();
-        if (ratio == 0) {
-            img->setWidth(imgwidth == 0 ? 10 : imgwidth);
-        } else {
-            img->setWidth(imgheight * ratio);
-        }
-        img->setHeight(imgheight);
+        img->scale({posx, posy}, ratio, ratio, true);
     }
 
     return img;

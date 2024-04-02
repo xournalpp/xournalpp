@@ -16,6 +16,8 @@
 #include <vector>   // for vector
 
 #include "model/Element.h"
+#include "util/Matrix.h"
+#include "util/Point.h"
 
 #include "AudioElement.h"  // for AudioElement
 #include "LineStyle.h"     // for LineStyle
@@ -31,8 +33,8 @@ public:
     enum Value { PEN, ERASER, HIGHLIGHTER };
     StrokeTool(Value v): value(v) {}
 
-    [[nodiscard]] bool isPressureSensitive() const { return value == PEN; }
-    [[nodiscard]] bool hasLineStyle() const { return value == PEN; }
+    [[nodiscard]] auto isPressureSensitive() const -> bool { return value == PEN; }
+    [[nodiscard]] auto hasLineStyle() const -> bool { return value == PEN; }
     operator const Value&() const { return value; }
     operator Value&() { return value; }
 
@@ -55,14 +57,13 @@ class SmallVector;
 
 using IntersectionParametersContainer = SmallVector<PathParameter, 4>;
 
-class Stroke: public AudioElement {
+class Stroke final: public AudioElement {
 public:
     Stroke();
     Stroke(Stroke const&) = default;
     Stroke(Stroke&&) = default;
-
-    Stroke& operator=(Stroke const&) = default;
-    Stroke& operator=(Stroke&&) = default;
+    auto operator=(Stroke const&) -> Stroke& = default;
+    auto operator=(Stroke&&) -> Stroke& = default;
     ~Stroke() override;
 
 public:
@@ -73,15 +74,16 @@ public:
      * @brief Create a partial clone whose points are those of parameters between lowerBound and upperBound
      * Assumes both lowerBound and upperBound are valid parameters of the stroke, and lowerBound <= upperBound
      */
-    std::unique_ptr<Stroke> cloneSection(const PathParameter& lowerBound, const PathParameter& upperBound) const;
+    auto cloneSection(const PathParameter& lowerBound, const PathParameter& upperBound) const
+            -> std::unique_ptr<Stroke>;
 
     /**
      * @brief Create a partial clone of a closed stroke (i.e. points.front() == points.back()) with points
      *     getPoint(startParam) -- ... -- points.back() == points.front() -- ... -- getPoint(endParam)
      * Assumes both startParam and endParam are valid parameters of the stroke, and endParam.index < startParam.index
      */
-    std::unique_ptr<Stroke> cloneCircularSectionOfClosedStroke(const PathParameter& startParam,
-                                                               const PathParameter& endParam) const;
+    auto cloneCircularSectionOfClosedStroke(const PathParameter& startParam, const PathParameter& endParam) const
+            -> std::unique_ptr<Stroke>;
 
     /**
      * Clone style attributes, but not the data (position, width etc.)
@@ -89,7 +91,7 @@ public:
     void applyStyleFrom(const Stroke* other);
 
     void setWidth(double width);
-    double getWidth() const;
+    auto getWidth() const -> double;
 
     /**
      * Option to fill the shape:
@@ -98,7 +100,7 @@ public:
      * ...
      *   1: The shape is nearly fully transparent filled
      */
-    int getFill() const;
+    auto getFill() const -> int;
 
     /**
      * Option to fill the shape:
@@ -110,12 +112,21 @@ public:
     void setFill(int fill);
 
     void addPoint(const Point& p);
-    size_t getPointCount() const;
+    auto getPointCount() const -> size_t;
     void freeUnusedPointItems();
-    std::vector<Point> const& getPointVector() const;
-    Point getPoint(size_t index) const;
-    Point getPoint(PathParameter parameter) const;
-    const Point* getPoints() const;
+    /// Function should be used with caution, mostly the transformation matrix is required
+    /// Returns original untranslated points
+    auto getPointVector() const -> std::vector<Point> const&;
+    // auto getPointVectorFail() const -> std::pair<xoj::util::Matrix, std::vector<Point> const&>;
+    /// Function should be used with caution, mostly the transformation matrix is required
+    /// Curious, if this is still correct, pls review ALL occurences
+    auto getPointVectorReviewPls() const -> std::vector<Point> const& { return getPointVector(); }
+    /// Known to be an issue, but not fixed yet !!!Todo!!!
+    auto getPointVectorTodo() const -> std::vector<Point> const& { return getPointVector(); }
+
+    auto getPoint(size_t index) const -> Point;
+    auto getPoint(PathParameter parameter) const -> Point;
+    auto getPoints() const -> const Point*;
 
     /**
      * @brief Replace the stroke's points by the ones in the provided vector (they will be copied).
@@ -127,20 +138,17 @@ public:
     void setPointVector(const std::vector<Point>& other, const Range* const snappingBox = nullptr);
     void setPointVector(std::vector<Point>&& other, const Range* const snappingBox = nullptr);
 
-private:
-    void setPointVectorInternal(const Range* const snappingBox);
-
 public:
     void deletePointsFrom(size_t index);
 
     void setToolType(StrokeTool type);
-    StrokeTool getToolType() const;
+    auto getToolType() const -> StrokeTool;
 
-    const LineStyle& getLineStyle() const;
+    auto getLineStyle() const -> const LineStyle&;
     void setLineStyle(const LineStyle& style);
 
-    bool intersects(double x, double y, double halfEraserSize) const override;
-    bool intersects(double x, double y, double halfEraserSize, double* gap) const override;
+    auto intersects(xoj::util::Point<double> pos, double halfEraserSize) const -> bool override;
+    auto intersects(xoj::util::Point<double> pos, double halfEraserSize, double* gap) const -> bool override;
 
     /**
      * @brief Find the parameters within a certain interval corresponding to the points where the stroke crosses in
@@ -154,10 +162,10 @@ public:
      * Warning: this function does not test if the box intersects the stroke's bounding box.
      * For optimization purposes, this test should be performed beforehand by the caller.
      */
-    IntersectionParametersContainer intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex,
-                                                           size_t lastIndex) const;
+    auto intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex, size_t lastIndex) const
+            -> IntersectionParametersContainer;
 
-    IntersectionParametersContainer intersectWithPaddedBox(const PaddedBox& box) const;
+    auto intersectWithPaddedBox(const PaddedBox& box) const -> IntersectionParametersContainer;
 
     void setPressure(const std::vector<double>& pressure);
     void setLastPressure(double pressure);
@@ -165,24 +173,17 @@ public:
     void clearPressure();
     void scalePressure(double factor);
 
-    /**
-     * @brief Update the stroke's bounding box using the second-to-last point's pressure value and the last two points.
-     */
-    void updateBoundsLastTwoPressures();
+    auto hasPressure() const -> bool;
+    auto getAvgPressure() const -> double;
 
-    bool hasPressure() const;
-    double getAvgPressure() const;
+    void scale(xoj::util::Point<double> base, double fx, double fy, bool restoreLineWidth) override;
 
-    void move(double dx, double dy) override;
-    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
-    void rotate(double x0, double y0, double th) override;
+    auto isInSelection(ShapeContainer* container) const -> bool override;
 
-    bool isInSelection(ShapeContainer* container) const override;
-
-    ErasableStroke* getErasable() const;
+    auto getErasable() const -> ErasableStroke*;
     void setErasable(ErasableStroke* erasable);
 
-    StrokeCapStyle getStrokeCapStyle() const;
+    auto getStrokeCapStyle() const -> StrokeCapStyle;
     void setStrokeCapStyle(const StrokeCapStyle capStyle);
 
     [[maybe_unused]] void debugPrint() const;
@@ -192,34 +193,25 @@ public:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
-    bool rescaleWithMirror() override;
+    auto rescaleWithMirror() -> bool override;
 
 protected:
-    void calcSize() const override;
+    auto internalUpdateBounds() const -> std::pair<xoj::util::Rectangle<double>, xoj::util::Rectangle<double>> override;
 
 private:
-    // The stroke width cannot be inherited from Element
-    double width = 0;
-    StrokeTool toolType = StrokeTool::PEN;
+    // cache
+    mutable xoj::util::Rectangle<double> bounds{};
+    mutable xoj::util::Rectangle<double> snappedBounds{};
 
-    // The array with the points
-    std::vector<Point> points{};
-
-    /**
-     * Dashed line
-     */
-    LineStyle lineStyle;
-
+    // data
     ErasableStroke* erasable = nullptr;
 
-    /**
-     * Option to fill the shape:
-     *  -1: The shape is not filled
-     * 255: The shape is fully opaque filled
-     * ...
-     *   1: The shape is nearly fully transparent filled
-     */
-    int fill = -1;
+    std::vector<Point> points{};  ///< The array with the points
+    double width = 0;             ///< The width of the stroke if not pressure sensitive
+    int fill = -1;                ///< The fill value of the stroke -1(off), alpha [0, 255]
 
-    StrokeCapStyle capStyle = StrokeCapStyle::ROUND;
+    LineStyle lineStyle;                              ///< The line style of the stroke, e.g dashed line
+    StrokeCapStyle capStyle = StrokeCapStyle::ROUND;  ///< The cap style of the stroke (conection of lines)
+
+    StrokeTool toolType = StrokeTool::PEN;
 };

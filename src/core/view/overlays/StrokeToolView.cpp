@@ -10,6 +10,7 @@
 #include "util/Assert.h"
 #include "util/Color.h"
 #include "util/PairView.h"
+#include "util/Point.h"
 #include "util/Range.h"
 #include "util/raii/CairoWrappers.h"  // for CairoSaveGuard
 #include "view/Repaintable.h"
@@ -18,7 +19,9 @@
 using namespace xoj::view;
 
 StrokeToolView::StrokeToolView(const StrokeHandler* strokeHandler, const Stroke& stroke, Repaintable* parent):
-        BaseStrokeToolView(parent, stroke), strokeHandler(strokeHandler), pointBuffer(stroke.getPointVector()) {
+        BaseStrokeToolView(parent, stroke),
+        strokeHandler(strokeHandler),
+        pointBuffer(stroke.getPointVectorReviewPls()) {
     this->registerToPool(strokeHandler->getViewPool());
     parent->flagDirtyRegion(Range(stroke.boundingRect()));
 }
@@ -81,9 +84,9 @@ void StrokeToolView::draw(cairo_t* cr) const {
 void StrokeToolView::on(StrokeToolView::AddPointRequest, const Point& p) {
     this->singleDot = false;
     xoj_assert(!this->pointBuffer.empty());  // front() is the last point we painted on the mask (see flushBuffer())
-    Point lastPoint = this->pointBuffer.back();
+    Point lastPoint = matrix * this->pointBuffer.back();
     this->pointBuffer.emplace_back(p);
-    this->parent->flagDirtyRegion(this->getRepaintRange(lastPoint, p));
+    this->parent->flagDirtyRegion(this->getRepaintRange(lastPoint, matrix * p));
 }
 
 void StrokeToolView::on(StrokeToolView::ThickenFirstPointRequest, double newWidth) {
@@ -92,7 +95,8 @@ void StrokeToolView::on(StrokeToolView::ThickenFirstPointRequest, double newWidt
     Point& p = this->pointBuffer.back();
     xoj_assert(p.z <= newWidth);  // Thicken means thicken
     p.z = newWidth;
-    Range rg = Range(p.x, p.y);
+    auto pt = matrix * p;
+    Range rg = Range(pt.x, pt.y);
     rg.addPadding(0.5 * newWidth);
     this->parent->flagDirtyRegion(rg);
 }
@@ -110,6 +114,7 @@ void StrokeToolView::on(StrokeToolView::StrokeReplacementRequest, const Stroke& 
     this->pointBuffer = newStroke.getPointVector();
     this->dashOffset = 0;
     this->strokeWidth = newStroke.getWidth();
+    xoj_assert(this->matrix == newStroke.getTransformation());
     xoj_assert(this->strokeColor == strokeColorWithAlpha(newStroke));
     xoj_assert(this->lineStyle == newStroke.getLineStyle());
     xoj_assert(this->cairoOp ==

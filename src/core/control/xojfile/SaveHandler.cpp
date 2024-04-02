@@ -116,7 +116,7 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 
     stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
 
-    const auto& pts = s->getPointVector();
+    const auto& pts = s->getPointVectorTodo();
 
     stroke->setPoints(pts);
 

@@ -11,6 +11,7 @@
 #include "model/Point.h"            // for Point
 #include "model/Stroke.h"           // for Stroke, IntersectionParameter...
 #include "util/Assert.h"            // for xoj_assert
+#include "util/Point.h"
 #include "util/Range.h"             // for Range
 #include "util/SmallVector.h"       // for SmallVector
 #include "util/UnionOfIntervals.h"  // for UnionOfIntervals
@@ -63,15 +64,16 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
         if (filled) {
             if (subsections.size() == 1) {
                 // We erased the stroke from its ends. Simply add the end points to ensure the filling is rerendered
-                const Point& p1 = this->stroke.getPointVector().front();
+                auto transformation = this->stroke.getTransformation();
+                const Point& p1 = transformation * this->stroke.getPointVector().front();
+                const Point& p2 = transformation * this->stroke.getPointVector().back();
                 range.addPoint(p1.x, p1.y);
-                const Point& p2 = this->stroke.getPointVector().back();
                 range.addPoint(p2.x, p2.y);
             } else {
                 // The stroke was split in two or more (and possibly shrank). Need to rerender its entire box.
-                range.addPoint(this->stroke.getX(), this->stroke.getY());
-                range.addPoint(this->stroke.getX() + this->stroke.getElementWidth(),
-                               this->stroke.getY() + this->stroke.getElementHeight());
+                auto bounds = this->stroke.boundingRect();
+                range.addPoint(bounds.x, bounds.y);
+                range.addPoint(bounds.x + bounds.width, bounds.y + bounds.height);
             }
         } else if (subsections.size() > 1) {
             /**
@@ -293,17 +295,19 @@ auto ErasableStroke::computeSubSectionBoundingBox(const SubSection& section) con
 
     const bool hasPressure = this->stroke.hasPressure();
     const double halfWidth = 0.5 * this->stroke.getWidth();
+    auto transformation = this->stroke.getTransformation();
     double lastPressure = 0;
 
     auto pointRange = [&](const Point& p) {
+        auto tp = transformation * xoj::util::Point<double>{p.x, p.y};
         const double padding = hasPressure ? 0.5 * std::max(lastPressure, p.z) : halfWidth;
         lastPressure = p.z;
-        return Range(p.x - padding, p.y - padding, p.x + padding, p.y + padding);
+        return Range(tp.x - padding, tp.y - padding, tp.x + padding, tp.y + padding);
     };
 
     Range rg = pointRange(this->stroke.getPoint(section.min));
 
-    auto data = this->stroke.getPointVector();
+    auto data = this->stroke.getPointVectorReviewPls();
     auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)section.max.index + 1);
     for (auto ptIt = std::next(data.cbegin(), (std::ptrdiff_t)section.min.index + 1); ptIt != endIt; ++ptIt) {
         rg = rg.unite(pointRange(*ptIt));

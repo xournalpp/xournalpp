@@ -13,6 +13,8 @@
 
 #include <cstddef>  // for size_t
 
+#include "util/Point.h"
+
 #include "Element.h"     // for Element, ElementType
 #include "filesystem.h"  // for path
 
@@ -28,13 +30,13 @@ public:
     ~AudioElement() override;
 
     void setTimestamp(size_t timestamp);
-    size_t getTimestamp() const;
+    auto getTimestamp() const -> size_t;
 
     void setAudioFilename(fs::path fn);
     auto getAudioFilename() const -> fs::path const&;
 
-    virtual bool intersects(double x, double y, double halfSize) const = 0;
-    virtual bool intersects(double x, double y, double halfSize, double* gap) const = 0;
+    virtual auto intersects(xoj::util::Point<double> pos, double halfSize) const -> bool = 0;
+    virtual auto intersects(xoj::util::Point<double> pos, double halfSize, double* gap) const -> bool = 0;
 
 protected:
     void serialize(ObjectOutputStream& out) const override;

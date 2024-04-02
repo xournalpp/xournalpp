@@ -49,7 +49,7 @@ public:
      * @param x the x-coordinate of the point (in document coordinates)
      * @param y the y-coordinate of the point (in document coordinates)
      */
-    utl::Point<double> posRelToSide(Leg leg, double x, double y) const;
+    xoj::util::Point<double> posRelToSide(Leg leg, double x, double y) const;
 
     /**
      * @brief checks whether a point with given coordinates lies in the setsquare with an additional border enlarging
@@ -64,7 +64,7 @@ public:
      * @brief the point (in document coordinates) for a given position on the longest side of the setsquare
      * @param x the x-coordinate of the point on the longest side of the setsquare (when unrotated and untranslated)
      */
-    utl::Point<double> getPointForPos(double x) const;
+    xoj::util::Point<double> getPointForPos(double x) const;
 
     /**
      * @brief creates a stroke starting at the given position of the longest side of the setsquare
