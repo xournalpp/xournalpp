@@ -89,4 +89,8 @@ public:
     T height{};
 };
 
+
+struct Matrix;
+auto operator*(const Matrix& matrix, const Rectangle<double>& rect) -> Rectangle<double>;
+
 }  // namespace xoj::util
