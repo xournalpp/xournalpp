@@ -1,6 +1,8 @@
 #include "LatexGenerator.h"
 
-#include <regex>  // for smatch, sregex_iterator
+#include <regex>        // for smatch, sregex_iterator
+#include <sstream>      // for ostringstream
+#include <string_view>  // for string_view
 
 #include <glib.h>     // for GError, gchar, g_error_free
 #include <poppler.h>  // for g_object_unref
@@ -45,8 +47,7 @@ auto LatexGenerator::templateSub(const std::string& input, const std::string& te
 
 auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFileContents) -> Result {
     std::string cmd = this->settings.genCmd;
-    GError* err = nullptr;
-    GErrorGuard guard{&err};
+    GErrorGuard err{};
     std::string texFilePathOSEncoding;
     try {
         texFilePathOSEncoding = (Util::getLongPath(texDir) / "tex.tex").string();
@@ -59,41 +60,41 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
     }
     // Todo (rolandlo): is this a todo?
     // Windows note: g_shell_parse_argv assumes POSIX paths, so Windows paths need to be escaped.
-    gchar** argv = nullptr;
-    GStrvGuard guard2{&argv};
-    if (!g_shell_parse_argv(cmd.c_str(), nullptr, &argv, &err)) {
+    GStrvGuard argv{};
+    if (!g_shell_parse_argv(cmd.c_str(), nullptr, out_ptr(argv), out_ptr(err))) {
         return GenError{FS(_F("Failed to parse LaTeX generator command: {1}") % err->message)};
     }
-    gchar* prog = argv[0];
+    gchar* prog = argv.get()[0];
     if (!prog || !(prog = g_find_program_in_path(prog))) {
         if (Util::isFlatpakInstallation()) {
             return GenError{
                     FS(_F("Failed to find LaTeX generator program in PATH: {1}\n\nSince installation is detected "
                           "within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For "
                           "example, by running:\n\n$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive") %
-                       argv[0])};
+                       argv.get()[0])};
         } else {
-            return GenError{FS(_F("Failed to find LaTeX generator program in PATH: {1}") % argv[0])};
+            return GenError{FS(_F("Failed to find LaTeX generator program in PATH: {1}") % argv.get()[0])};
         }
     }
-    g_free(argv[0]);
-    argv[0] = prog;
+    g_free(argv.get()[0]);
+    argv.get()[0] = prog;
 
     if (!g_file_set_contents(texFilePathOSEncoding.c_str(), texFileContents.c_str(), as_signed(texFileContents.size()),
-                             &err)) {
+                             out_ptr(err))) {
         return GenError({FS(_F("Could not save .tex file: {1}") % err->message)});
     }
 
     auto flags = static_cast<GSubprocessFlags>(G_SUBPROCESS_FLAGS_STDOUT_PIPE | G_SUBPROCESS_FLAGS_STDERR_MERGE);
     xoj::util::GObjectSPtr<GSubprocessLauncher> launcher(g_subprocess_launcher_new(flags), xoj::util::adopt);
     g_subprocess_launcher_set_cwd(launcher.get(), texDir.u8string().c_str());
-    auto* proc = g_subprocess_launcher_spawnv(launcher.get(), argv, &err);
-
-    std::string progName(prog);
+    auto* proc = g_subprocess_launcher_spawnv(launcher.get(), argv.get(), out_ptr(err));
 
     if (proc) {
         return {proc};
     }
-    return GenError(
-            {FS(_F("Could not start {1}: {2} (exit code: {3})") % progName.c_str() % err->message % err->code)});
+    std::ostringstream ss;
+    for (char** iter = argv.get(); iter != nullptr && *iter != nullptr; ++iter) {
+        ss << std::string_view(*iter) << ", ";
+    }
+    return GenError({FS(_F("Could not start {1}: {2} (exit code: {3})") % ss.str() % err->message % err->code)});
 }
