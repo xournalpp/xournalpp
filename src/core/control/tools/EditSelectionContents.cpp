@@ -383,11 +383,12 @@ InsertionOrder EditSelectionContents::makeMoveEffective(const xoj::util::Rectang
             e->move(mx, my);
         }
         if (scale) {
-            e->scale(bounds.x, bounds.y, fx, fy, 0, this->restoreLineWidth);
+            e->scale({bounds.x, bounds.y}, fx, fy, this->restoreLineWidth);
         }
         if (rotate) {
-            e->rotate(snappedBounds.x + this->lastSnappedBounds.width / 2,
-                      snappedBounds.y + this->lastSnappedBounds.height / 2, this->rotation);
+            e->rotate({snappedBounds.x + this->lastSnappedBounds.width / 2,
+                       snappedBounds.y + this->lastSnappedBounds.height / 2},
+                      this->rotation);
         }
     }
     this->selected.clear();

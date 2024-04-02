@@ -18,6 +18,7 @@
 #include <glib.h>     // for GError
 #include <poppler.h>  // for PopplerDocument
 
+#include "util/Range.h"
 #include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
 
 #include "Element.h"  // for Element
@@ -36,28 +37,17 @@ public:
     ~TexImage() override;
 
 public:
-    void setWidth(double width);
-    void setHeight(double height);
-
     /**
      * Returns the binary data (PDF or PNG (deprecated)).
      */
-    const std::string& getBinaryData() const;
-
-    /**
-     * @return The image, if render source is PNG. Note: this is deprecated.
-     */
-    cairo_surface_t* getImage() const;
+    auto getBinaryData() const -> const std::string&;
 
     /**
      * @return The PDF Document, if rendered as a PDF.
      *
      * The document needs to be referenced, if it will be hold somewhere
      */
-    PopplerDocument* getPdf() const;
-
-    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
-    void rotate(double x0, double y0, double th) override;
+    auto getPdf() const -> PopplerDocument*;
 
     // text tag to alow latex
     void setText(std::string text);
@@ -77,9 +67,7 @@ public:
     void readSerialized(ObjectInputStream& in) override;
 
 private:
-    void calcSize() const override;
-
-    static cairo_status_t cairoReadFunction(TexImage* image, unsigned char* data, unsigned int length);
+    auto internalUpdateBounds() const -> std::pair<xoj::util::Rectangle<double>, xoj::util::Rectangle<double>> override;
 
     /**
      * Free image and PDF
@@ -87,28 +75,11 @@ private:
     void freeImageAndPdf();
 
 private:
-    /**
-     * Tex PDF Document, if rendered as PDF
-     */
-    xoj::util::GObjectSPtr<PopplerDocument> pdf;
+    // cache:
+    xoj::util::Rectangle<double> bounds{};
+    std::string binaryData;  ///< PDF Documents binary data, must stay alive as long as the PDF is used
+    xoj::util::GObjectSPtr<PopplerDocument> pdf;  ///<
 
-    /**
-     * Tex image, if rendered as image. Note: this is deprecated and subject to removal in a later version.
-     */
-    cairo_surface_t* image = nullptr;
-
-    /**
-     * PNG Image / PDF Document
-     */
-    std::string binaryData;
-
-    /**
-     * Read position for PNG binaryData (deprecated).
-     */
-    std::string::size_type read = 0;
-
-    /**
-     * Tex String
-     */
-    std::string text;
+    // data:
+    std::string text;  ///< tex expression
 };

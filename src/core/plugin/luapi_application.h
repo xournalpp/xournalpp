@@ -1300,7 +1300,7 @@ static int applib_getStrokes(lua_State* L) {
             // -1 = current stroke
 
             lua_newtable(L);  // create table of x-coordinates
-            for (auto p: s->getPointVector()) {
+            for (auto p: s->getPointVectorReviewPls()) {
                 lua_pushinteger(L, ++currPointNo);  // key
                 lua_pushnumber(L, p.x);             // value
                 lua_settable(L, -3);                // insert
@@ -1309,7 +1309,7 @@ static int applib_getStrokes(lua_State* L) {
             currPointNo = 0;
 
             lua_newtable(L);  // create table for y-coordinates
-            for (auto p: s->getPointVector()) {
+            for (auto p: s->getPointVectorReviewPls()) {
                 lua_pushinteger(L, ++currPointNo);  // key
                 lua_pushnumber(L, p.y);             // value
                 lua_settable(L, -3);                // insert
@@ -1319,7 +1319,7 @@ static int applib_getStrokes(lua_State* L) {
 
             if (s->hasPressure()) {
                 lua_newtable(L);  // create table for pressures
-                for (auto p: s->getPointVector()) {
+                for (auto p: s->getPointVectorReviewPls()) {
                     lua_pushinteger(L, ++currPointNo);  // key
                     lua_pushnumber(L, p.z);             // value
                     lua_settable(L, -3);                // insert
@@ -2267,7 +2267,7 @@ static int applib_scaleTextElements(lua_State* L) {
     for (auto const& e: elements) {
         if (e->getType() == ELEMENT_TEXT) {
             Text* t = static_cast<Text*>(e.get());
-            t->scale(t->getX(), t->getY(), f, f, 0.0, false);
+            t->scale({t->getX(), t->getY()}, f, f, false);
         }
     }
 

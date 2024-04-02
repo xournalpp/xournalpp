@@ -5,6 +5,7 @@
 #include <cairo.h>
 
 #include "model/Stroke.h"
+#include "util/Matrix.h"
 #include "util/Range.h"
 #include "view/Mask.h"
 #include "view/Repaintable.h"
@@ -15,6 +16,7 @@ using namespace xoj::view;
 BaseStrokeToolView::BaseStrokeToolView(Repaintable* parent, const Stroke& stroke):
         ToolView(parent),
         cairoOp(stroke.getToolType() == StrokeTool::HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER),
+        matrix(stroke.getTransformation()),
         strokeColor(strokeColorWithAlpha(stroke)),
         lineStyle(stroke.getLineStyle()),
         strokeWidth(stroke.getWidth()) {}

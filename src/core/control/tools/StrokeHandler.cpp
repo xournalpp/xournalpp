@@ -117,7 +117,8 @@ void StrokeHandler::paintTo(Point point) {
 void StrokeHandler::drawSegmentTo(const Point& point) {
 
     this->stroke->addPoint(this->hasPressure ? point : Point(point.x, point.y));
-    this->viewPool->dispatch(xoj::view::StrokeToolView::ADD_POINT_REQUEST, this->stroke->getPointVector().back());
+    this->viewPool->dispatch(xoj::view::StrokeToolView::ADD_POINT_REQUEST,
+                             this->stroke->getPointVectorReviewPls().back());
     return;
 }
 
@@ -143,7 +144,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     // Backward compatibility and also easier to handle for me;-)
     // I cannot draw a line with one point, to draw a visible line I need two points,
     // twice the same Point is also OK
-    if (auto const& pv = stroke->getPointVector(); pv.size() == 1) {
+    if (auto const& pv = stroke->getPointVectorReviewPls(); pv.size() == 1) {
         const Point pt = pv.front();  // Make a copy, otherwise stroke->addPoint(pt); in UB
         if (this->hasPressure) {
             // Pressure inference provides a pressure value to the last event. Most devices set this value to 0.
@@ -224,7 +225,7 @@ void StrokeHandler::strokeRecognizerDetected(std::unique_ptr<Stroke> recognized,
         double fy = (std::abs(snappedBounds.height) > std::numeric_limits<double>::epsilon()) ?
                             (belowRightSnapped.y - topLeftSnapped.y) / snappedBounds.height :
                             1;
-        recognized->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
+        recognized->scale({topLeftSnapped.x, topLeftSnapped.y}, fx, fy, false);
     }
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();

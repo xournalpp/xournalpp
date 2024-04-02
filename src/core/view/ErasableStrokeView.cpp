@@ -6,6 +6,8 @@
 #include <memory>    // for allocator_traits<>::value_type
 #include <vector>    // for vector
 
+#include <cairo.h>
+
 #include "model/LineStyle.h"              // for LineStyle
 #include "model/PathParameter.h"          // for PathParameter
 #include "model/Point.h"                  // for Point
@@ -37,9 +39,15 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
 
     const auto& dashes = stroke.getLineStyle().getDashes();
 
-    const std::vector<Point>& data = stroke.getPointVector();
+    const std::vector<Point>& data = stroke.getPointVectorReviewPls();
+    const auto tm = stroke.getTransformation();
 
     xoj::util::CairoSaveGuard guard(cr);
+    cairo_matrix_t matrix2{tm.a, tm.b, tm.c, tm.d, tm.tx, tm.ty};
+    cairo_matrix_t matrix;
+    cairo_get_matrix(cr, &matrix);
+    cairo_matrix_multiply(&matrix, &matrix, &matrix2);
+    cairo_set_matrix(cr, &matrix);
 
     if (stroke.hasPressure()) {
         double dashOffset = 0;
@@ -71,7 +79,7 @@ void ErasableStrokeView::draw(cairo_t* cr) const {
             cairo_line_to(cr, q.x, q.y);
             cairo_stroke(cr);
         }
-    } else {
+    } else {  // Todo: pressure is still scaled by the transformation matrix
         cairo_set_line_width(cr, stroke.getWidth());
         Util::cairo_set_dash_from_vector(cr, dashes, 0);
 
@@ -147,7 +155,7 @@ void ErasableStrokeView::drawFilling(cairo_t* cr) const {
     }
 
     const Stroke& stroke = this->erasableStroke.stroke;
-    const std::vector<Point>& data = stroke.getPointVector();
+    const std::vector<Point>& data = stroke.getPointVectorTodo();
 
     bool mergeFirstAndLast = this->erasableStroke.isClosedStroke() && sections.size() >= 2 &&
                              sections.front().min == PathParameter(0, 0.0) &&
@@ -222,7 +230,7 @@ void ErasableStrokeView::paintFilledHighlighter(cairo_t* cr) const {
     cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
     Util::cairo_set_source_rgbi(cr, stroke.getColor(), static_cast<double>(stroke.getFill()) / 255.0);
 
-    const std::vector<Point>& data = stroke.getPointVector();
+    const std::vector<Point>& data = stroke.getPointVectorTodo();
 
     bool mergeFirstAndLast = erasableStroke.isClosedStroke() && sections.size() >= 2 &&
                              sections.front().min == PathParameter(0, 0.0) &&

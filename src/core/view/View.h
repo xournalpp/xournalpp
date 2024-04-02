@@ -13,6 +13,7 @@
 
 #include <memory>
 
+#include <cairo.h>
 #include <gtk/gtk.h>
 
 class Element;
@@ -40,6 +41,7 @@ public:
     virtual ~ElementView() = default;
     virtual void draw(const Context& ctx) const = 0;
     static std::unique_ptr<ElementView> createFromElement(const Element* e);
+    static void applyTransform(cairo_t* ptr, const Element* e);
 };
 
 class TexImageView;

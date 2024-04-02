@@ -35,9 +35,6 @@ public:
     ~Image() override;
 
 public:
-    void setWidth(double width);
-    void setHeight(double height);
-
     /// Set the image data by copying the data from the provided string_view.
     void setImage(std::string_view data);
 
@@ -54,10 +51,7 @@ public:
     /// Returns the internal surface that contains the rendered image data.
     ///
     /// Note that the image is rendered lazily by default; call this method to render it.
-    cairo_surface_t* getImage() const;
-
-    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
-    void rotate(double x0, double y0, double th) override;
+    auto getImage() const -> cairo_surface_t*;
 
     auto clone() const -> ElementPtr override;
 
@@ -82,7 +76,7 @@ public:
     void readSerialized(ObjectInputStream& in) override;
 
 private:
-    void calcSize() const override;
+    auto internalUpdateBounds() const -> std::pair<xoj::util::Rectangle<double>, xoj::util::Rectangle<double>> override;
 
     static auto cairoReadFunction(const Image* image, unsigned char* data, unsigned int length) -> cairo_status_t;
 
@@ -99,7 +93,7 @@ private:
 
     /// Image format information.
     mutable GdkPixbufFormat* format = nullptr;
-    mutable std::pair<int, int> imageSize = {-1, -1};
+    mutable std::pair<int, int> imageSize = {0, 0};
 
     std::string data;
 };
