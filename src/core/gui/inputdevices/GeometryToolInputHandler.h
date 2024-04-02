@@ -76,13 +76,13 @@ protected:
     /**
      * @brief the previous mid point between the two fingers in a zoom sequence
      */
-    utl::Point<double> lastZoomScrollCenter{};
+    xoj::util::Point<double> lastZoomScrollCenter{};
 
     /**
      * @brief The current positions of the first (primary) finger and second (secondary) finger in page coordinates
      */
-    utl::Point<double> priLastPageRel{-1.0, -1.0};
-    utl::Point<double> secLastPageRel{-1.0, -1.0};
+    xoj::util::Point<double> priLastPageRel{-1.0, -1.0};
+    xoj::util::Point<double> secLastPageRel{-1.0, -1.0};
 
     /**
      * @brief The previous angle between the line through the positions of the two fingers and the x-axis
@@ -155,7 +155,7 @@ protected:
      * @brief the document coordinates derived from an input event
      * @param event an input event
      */
-    utl::Point<double> getCoords(InputEvent const& event);
+    xoj::util::Point<double> getCoords(InputEvent const& event);
 
     virtual double getMinHeight() const = 0;
     virtual double getMaxHeight() const = 0;

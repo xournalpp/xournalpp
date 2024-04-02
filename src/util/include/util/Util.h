@@ -73,7 +73,7 @@ void cairo_set_dash_from_vector(cairo_t* cr, const std::vector<double>& dashes, 
  * Transform absolute coordinates into coordinates local to the specified widget.
  * The top left corner of `widget` will have coordinates (0, 0).
  */
-utl::Point<double> toWidgetCoords(GtkWidget* widget, utl::Point<double> absolute_coords);
+xoj::util::Point<double> toWidgetCoords(GtkWidget* widget, xoj::util::Point<double> absolute_coords);
 
 /**
  * Format coordinates to use 8 digits of precision https://m.xkcd.com/2170/
