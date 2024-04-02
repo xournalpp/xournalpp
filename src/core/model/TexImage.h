@@ -30,9 +30,9 @@ class TexImage: public Element {
 public:
     TexImage();
     TexImage(const TexImage&) = delete;
-    TexImage& operator=(const TexImage&) = delete;
     TexImage(const TexImage&&) = delete;
-    TexImage&& operator=(const TexImage&&) = delete;
+    auto operator=(const TexImage&) -> TexImage& = delete;
+    auto operator=(const TexImage&&) -> TexImage&& = delete;
     ~TexImage() override;
 
 public:
@@ -61,7 +61,7 @@ public:
 
     // text tag to alow latex
     void setText(std::string text);
-    std::string getText() const;
+    auto getText() const -> std::string;
 
     auto cloneTexImage() const -> std::unique_ptr<TexImage>;
     auto clone() const -> ElementPtr override;
@@ -69,7 +69,7 @@ public:
     /**
      * @return true if the binary data (PNG or PDF) was loaded successfully.
      */
-    bool loadData(std::string&& bytes, GError** err = nullptr);
+    auto loadData(std::string&& bytes, GError** err = nullptr) -> bool;
 
 public:
     // Serialize interface

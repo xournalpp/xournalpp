@@ -51,30 +51,30 @@ public:
 
     void setX(double x);
     void setY(double y);
-    double getX() const;
-    double getY() const;
+    auto getX() const -> double;
+    auto getY() const -> double;
 
     virtual void move(double dx, double dy);
     virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) = 0;
     virtual void rotate(double x0, double y0, double th) = 0;
 
     void setColor(Color color);
-    Color getColor() const;
+    auto getColor() const -> Color;
 
-    double getElementWidth() const;
-    double getElementHeight() const;
+    auto getElementWidth() const -> double;
+    auto getElementHeight() const -> double;
 
-    xoj::util::Rectangle<double> getSnappedBounds() const;
+    auto getSnappedBounds() const -> xoj::util::Rectangle<double>;
+    auto boundingRect() const -> xoj::util::Rectangle<double>;
 
-    xoj::util::Rectangle<double> boundingRect() const;
 
     virtual bool intersectsArea(const GdkRectangle* src) const;
     virtual bool intersectsArea(double x, double y, double width, double height) const;
 
-    virtual bool isInSelection(ShapeContainer* container) const;
+    virtual auto isInSelection(ShapeContainer* container) const -> bool;
 
-    virtual bool rescaleOnlyAspectRatio();
-    virtual bool rescaleWithMirror();
+    virtual auto rescaleOnlyAspectRatio() -> bool;
+    virtual auto rescaleWithMirror() -> bool;
 
     /**
      * Take 1:1 copy of this element

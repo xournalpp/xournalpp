@@ -31,8 +31,8 @@ public:
     enum Value { PEN, ERASER, HIGHLIGHTER };
     StrokeTool(Value v): value(v) {}
 
-    [[nodiscard]] bool isPressureSensitive() const { return value == PEN; }
-    [[nodiscard]] bool hasLineStyle() const { return value == PEN; }
+    [[nodiscard]] auto isPressureSensitive() const -> bool { return value == PEN; }
+    [[nodiscard]] auto hasLineStyle() const -> bool { return value == PEN; }
     operator const Value&() const { return value; }
     operator Value&() { return value; }
 
@@ -55,14 +55,14 @@ class SmallVector;
 
 using IntersectionParametersContainer = SmallVector<PathParameter, 4>;
 
-class Stroke: public AudioElement {
+class Stroke final: public AudioElement {
 public:
     Stroke();
     Stroke(Stroke const&) = default;
     Stroke(Stroke&&) = default;
 
-    Stroke& operator=(Stroke const&) = default;
-    Stroke& operator=(Stroke&&) = default;
+    auto operator=(Stroke const&) -> Stroke& = default;
+    auto operator=(Stroke&&) -> Stroke& = default;
     ~Stroke() override;
 
 public:
@@ -73,15 +73,16 @@ public:
      * @brief Create a partial clone whose points are those of parameters between lowerBound and upperBound
      * Assumes both lowerBound and upperBound are valid parameters of the stroke, and lowerBound <= upperBound
      */
-    std::unique_ptr<Stroke> cloneSection(const PathParameter& lowerBound, const PathParameter& upperBound) const;
+    auto cloneSection(const PathParameter& lowerBound, const PathParameter& upperBound) const
+            -> std::unique_ptr<Stroke>;
 
     /**
      * @brief Create a partial clone of a closed stroke (i.e. points.front() == points.back()) with points
      *     getPoint(startParam) -- ... -- points.back() == points.front() -- ... -- getPoint(endParam)
      * Assumes both startParam and endParam are valid parameters of the stroke, and endParam.index < startParam.index
      */
-    std::unique_ptr<Stroke> cloneCircularSectionOfClosedStroke(const PathParameter& startParam,
-                                                               const PathParameter& endParam) const;
+    auto cloneCircularSectionOfClosedStroke(const PathParameter& startParam, const PathParameter& endParam) const
+            -> std::unique_ptr<Stroke>;
 
     /**
      * Clone style attributes, but not the data (position, width etc.)
@@ -89,7 +90,7 @@ public:
     void applyStyleFrom(const Stroke* other);
 
     void setWidth(double width);
-    double getWidth() const;
+    auto getWidth() const -> double;
 
     /**
      * Option to fill the shape:
@@ -98,7 +99,7 @@ public:
      * ...
      *   1: The shape is nearly fully transparent filled
      */
-    int getFill() const;
+    auto getFill() const -> int;
 
     /**
      * Option to fill the shape:
@@ -110,12 +111,15 @@ public:
     void setFill(int fill);
 
     void addPoint(const Point& p);
-    size_t getPointCount() const;
+    auto getPointCount() const -> size_t;
     void freeUnusedPointItems();
     std::vector<Point> const& getPointVector() const;
     Point getPoint(size_t index) const;
     Point getPoint(PathParameter parameter) const;
     const Point* getPoints() const;
+    auto getPoint(size_t index) const -> Point;
+    auto getPoint(PathParameter parameter) const -> Point;
+    auto getPoints() const -> const Point*;
 
     /**
      * @brief Replace the stroke's points by the ones in the provided vector (they will be copied).
@@ -134,13 +138,13 @@ public:
     void deletePointsFrom(size_t index);
 
     void setToolType(StrokeTool type);
-    StrokeTool getToolType() const;
+    auto getToolType() const -> StrokeTool;
 
-    const LineStyle& getLineStyle() const;
+    auto getLineStyle() const -> const LineStyle&;
     void setLineStyle(const LineStyle& style);
 
-    bool intersects(double x, double y, double halfEraserSize) const override;
-    bool intersects(double x, double y, double halfEraserSize, double* gap) const override;
+    auto intersects(xoj::util::Point<double> pos, double halfEraserSize) const -> bool override;
+    auto intersects(xoj::util::Point<double> pos, double halfEraserSize, double* gap) const -> bool override;
 
     /**
      * @brief Find the parameters within a certain interval corresponding to the points where the stroke crosses in
@@ -154,10 +158,10 @@ public:
      * Warning: this function does not test if the box intersects the stroke's bounding box.
      * For optimization purposes, this test should be performed beforehand by the caller.
      */
-    IntersectionParametersContainer intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex,
-                                                           size_t lastIndex) const;
+    auto intersectWithPaddedBox(const PaddedBox& box, size_t firstIndex, size_t lastIndex) const
+            -> IntersectionParametersContainer;
 
-    IntersectionParametersContainer intersectWithPaddedBox(const PaddedBox& box) const;
+    auto intersectWithPaddedBox(const PaddedBox& box) const -> IntersectionParametersContainer;
 
     void setPressure(const std::vector<double>& pressure);
     void setLastPressure(double pressure);
@@ -179,10 +183,10 @@ public:
 
     bool isInSelection(ShapeContainer* container) const override;
 
-    ErasableStroke* getErasable() const;
+    auto getErasable() const -> ErasableStroke*;
     void setErasable(ErasableStroke* erasable);
 
-    StrokeCapStyle getStrokeCapStyle() const;
+    auto getStrokeCapStyle() const -> StrokeCapStyle;
     void setStrokeCapStyle(const StrokeCapStyle capStyle);
 
     [[maybe_unused]] void debugPrint() const;
@@ -192,7 +196,7 @@ public:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
-    bool rescaleWithMirror() override;
+    auto rescaleWithMirror() -> bool override;
 
 protected:
     void calcSize() const override;

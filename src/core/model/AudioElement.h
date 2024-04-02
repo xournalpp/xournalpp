@@ -28,7 +28,7 @@ public:
     ~AudioElement() override;
 
     void setTimestamp(size_t timestamp);
-    size_t getTimestamp() const;
+    auto getTimestamp() const -> size_t;
 
     void setAudioFilename(fs::path fn);
     auto getAudioFilename() const -> fs::path const&;

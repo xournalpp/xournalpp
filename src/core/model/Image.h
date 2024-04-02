@@ -25,14 +25,14 @@ class ObjectInputStream;
 class ObjectOutputStream;
 
 
-class Image: public Element {
+class Image final: public Element {
 public:
     Image();
-    Image(const Image&) = delete;
-    Image& operator=(const Image&) = delete;
     Image(Image&&) = delete;
-    Image& operator=(Image&&) = delete;
-    virtual ~Image();
+    Image(Image const&) = delete;
+    auto operator=(Image&&) -> Image& = delete;
+    auto operator=(Image const&) -> Image& = delete;
+    ~Image() override;
 
 public:
     void setWidth(double width);
@@ -61,18 +61,18 @@ public:
 
     auto clone() const -> ElementPtr override;
 
-    bool hasData() const;
+    auto hasData() const -> bool;
 
     /// Return a pointer to the raw data. Note that the pointer will be invalidated if the data is changed.
-    const unsigned char* getRawData() const;
+    auto getRawData() const -> const unsigned char*;
 
     /// Return the length of the raw data.
-    size_t getRawDataLength() const;
+    auto getRawDataLength() const -> size_t;
 
     /// Return the size of the raw image, or (-1, -1) if the image has not been rendered yet.
-    std::pair<int, int> getImageSize() const;
+    auto getImageSize() const -> std::pair<int, int>;
 
-    [[maybe_unused]] GdkPixbufFormat* getImageFormat() const;
+    [[maybe_unused]] auto getImageFormat() const -> GdkPixbufFormat*;
 
     static constexpr std::pair<int, int> NOSIZE = std::make_pair(-1, -1);
 
@@ -84,7 +84,7 @@ public:
 private:
     void calcSize() const override;
 
-    static cairo_status_t cairoReadFunction(const Image* image, unsigned char* data, unsigned int length);
+    static auto cairoReadFunction(const Image* image, unsigned char* data, unsigned int length) -> cairo_status_t;
 
 private:
     /// Set the image data by rendering the surface to PNG and copying the PNG data.
