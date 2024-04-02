@@ -35,7 +35,7 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
                         ZOOM_IN :
                         ZOOM_OUT;
         // translate absolute window coordinates to the widget-local coordinates and start zooming
-        zoom->zoomScroll(direction, Util::toWidgetCoords(widget, utl::Point{event->x_root, event->y_root}));
+        zoom->zoomScroll(direction, Util::toWidgetCoords(widget, xoj::util::Point{event->x_root, event->y_root}));
         return true;
     }
 
@@ -51,7 +51,7 @@ auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomC
                     zoom->setZoomFitMode(false);
                 }
                 // translate absolute window coordinates to the widget-local coordinates and start zooming
-                zoom->startZoomSequence(Util::toWidgetCoords(widget, utl::Point{event->x_root, event->y_root}));
+                zoom->startZoomSequence(Util::toWidgetCoords(widget, xoj::util::Point{event->x_root, event->y_root}));
                 break;
             case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
                 zoom->zoomSequenceChange(event->scale, true);
@@ -104,7 +104,7 @@ auto ZoomControl::withZoomStep(ZoomDirection direction, double zoomStep) const -
     return newZoom;
 }
 
-void ZoomControl::zoomOneStep(ZoomDirection direction, utl::Point<double> zoomCenter) {
+void ZoomControl::zoomOneStep(ZoomDirection direction, xoj::util::Point<double> zoomCenter) {
     if (this->zoomPresentationMode) {
         return;
     }
@@ -123,7 +123,7 @@ void ZoomControl::zoomOneStep(ZoomDirection direction) {
 }
 
 
-void ZoomControl::zoomScroll(ZoomDirection direction, utl::Point<double> zoomCenter) {
+void ZoomControl::zoomScroll(ZoomDirection direction, xoj::util::Point<double> zoomCenter) {
     if (this->zoomPresentationMode) {
         return;
     }
@@ -143,7 +143,7 @@ void ZoomControl::startZoomSequence() {
     startZoomSequence({rect.width / 2.0, rect.height / 2.0});
 }
 
-void ZoomControl::startZoomSequence(utl::Point<double> zoomCenter) {
+void ZoomControl::startZoomSequence(xoj::util::Point<double> zoomCenter) {
     // * set zoom center and zoom startlevel
     this->zoomWidgetPos = zoomCenter;  // widget space coordinates of the zoomCenter!
     this->zoomSequenceStart = this->zoom;
@@ -164,7 +164,7 @@ void ZoomControl::startZoomSequence(utl::Point<double> zoomCenter) {
 
     // * set initial scrollPosition value
     auto const& rect = getVisibleRect();
-    auto const& view_pos = utl::Point{rect.x, rect.y};
+    auto const& view_pos = xoj::util::Point{rect.x, rect.y};
 
     // Use this->zoomWidgetPos to zoom into a location other than the top-left (e.g. where
     // the user pinched).
@@ -183,7 +183,7 @@ void ZoomControl::zoomSequenceChange(double zoom, bool relative) {
     setZoom(zoom);
 }
 
-void ZoomControl::zoomSequenceChange(double zoom, bool relative, utl::Point<double> scrollVector) {
+void ZoomControl::zoomSequenceChange(double zoom, bool relative, xoj::util::Point<double> scrollVector) {
     if (relative) {
         if (isZoomSequenceActive()) {
             zoom *= zoomSequenceStart;
@@ -218,7 +218,7 @@ auto ZoomControl::getVisibleRect() -> Rectangle<double> {
     return layout->getVisibleRect();
 }
 
-auto ZoomControl::getScrollPositionAfterZoom() const -> utl::Point<double> {
+auto ZoomControl::getScrollPositionAfterZoom() const -> xoj::util::Point<double> {
     //  If we aren't in a zoomSequence, `unscaledPixels`, `scrollPosition`, and `zoomWidgetPos
     // can't be used to determine the scroll position! Return now.
     // NOTE: this case should never happen currently.

@@ -54,7 +54,7 @@ using CairoRegionSPtr = CLibrariesSPtr<cairo_region_t, raii::specialization::Cai
 class CairoSaveGuard {
 public:
     CairoSaveGuard() = delete;
-    CairoSaveGuard(cairo_t* cr): cr(cr) { cairo_save(cr); }
+    [[nodiscard]] CairoSaveGuard(cairo_t* cr): cr(cr) { cairo_save(cr); }
     ~CairoSaveGuard() { cairo_restore(cr); }
 
     CairoSaveGuard(const CairoSaveGuard&) = delete;

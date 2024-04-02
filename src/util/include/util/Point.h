@@ -14,13 +14,13 @@
 #include <cmath>
 #include <tuple>
 
-namespace utl {
+namespace xoj::util {
 
 template <typename T>
 struct Point {
 
-    Point() = default;
-    Point(T x, T y): x(x), y(y) {}
+    constexpr Point() = default;
+    constexpr Point(T x, T y): x(x), y(y) {}
 
     [[maybe_unused]] double distance(Point p) const { return std::hypot(p.x - this->x, p.y - this->y); }
 
@@ -45,4 +45,4 @@ struct Point {
     T x{};
     T y{};
 };
-}  // namespace utl
+}  // namespace xoj::util

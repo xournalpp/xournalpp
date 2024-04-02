@@ -43,7 +43,7 @@ protected:
         FillingData(double alpha, const Point& p): alpha(alpha), firstPoint(p.x, p.y), contour{p} {}
 
         const double alpha;
-        utl::Point<double> firstPoint;  // Store a copy for safe concurrent access
+        xoj::util::Point<double> firstPoint;  // Store a copy for safe concurrent access
 
 
         void appendSegments(const std::vector<Point>& pts);

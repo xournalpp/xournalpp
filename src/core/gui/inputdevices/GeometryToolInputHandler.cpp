@@ -82,7 +82,7 @@ auto GeometryToolInputHandler::handleTouchscreen(InputEvent const& event) -> boo
     if (event.type == BUTTON_PRESS_EVENT) {
         // Start scrolling when a sequence starts and we currently have none other
         if (this->primarySequence == nullptr && this->secondarySequence == nullptr) {
-            const utl::Point<double> coords = getCoords(event);
+            const xoj::util::Point<double> coords = getCoords(event);
 
             if (controller->isInsideGeometryTool(coords.x, coords.y, 0)) {
                 // Set sequence data
@@ -195,7 +195,7 @@ auto GeometryToolInputHandler::handleKeyboard(InputEvent const& event) -> bool {
             return true;
         }
 
-        auto p = utl::Point(translationX, translationY);
+        auto p = xoj::util::Point(translationX, translationY);
         if (angle != 0) {
             controller->rotate(angle, p.x, p.y);
             return true;
@@ -236,13 +236,13 @@ void GeometryToolInputHandler::sequenceStart(InputEvent const& event) {
 void GeometryToolInputHandler::scrollMotion(InputEvent const& event) {
     // Will only be called if there is a single sequence (rotation/zooming handles two sequences)
     auto offset = [&]() {
-        utl::Point<double> coords = this->getCoords(event);
+        xoj::util::Point<double> coords = this->getCoords(event);
         if (event.sequence == this->primarySequence) {
-            const utl::Point<double> offset = coords - this->priLastPageRel;
+            const xoj::util::Point<double> offset = coords - this->priLastPageRel;
             this->priLastPageRel = coords;
             return offset;
         } else {
-            const utl::Point<double> offset = coords - this->secLastPageRel;
+            const xoj::util::Point<double> offset = coords - this->secLastPageRel;
             this->secLastPageRel = coords;
             return offset;
         }
@@ -275,7 +275,7 @@ void GeometryToolInputHandler::rotateAndZoomStart() {
     this->canBlockZoom = true;
 
     this->lastZoomScrollCenter = (this->priLastPageRel + this->secLastPageRel) / 2.0;
-    const utl::Point<double> shift = this->secLastPageRel - this->priLastPageRel;
+    const xoj::util::Point<double> shift = this->secLastPageRel - this->priLastPageRel;
     this->lastAngle = atan2(shift.y, shift.x);
     this->lastDist = this->startZoomDistance;
 }
@@ -298,14 +298,14 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
         this->canBlockZoom = false;
     }
 
-    const utl::Point<double> center = (this->priLastPageRel + this->secLastPageRel) / 2;
-    const utl::Point<double> shift = this->secLastPageRel - this->priLastPageRel;
+    const xoj::util::Point<double> center = (this->priLastPageRel + this->secLastPageRel) / 2;
+    const xoj::util::Point<double> shift = this->secLastPageRel - this->priLastPageRel;
     const double angle = atan2(shift.y, shift.x);
 
-    const utl::Point<double> offset = center - lastZoomScrollCenter;
+    const xoj::util::Point<double> offset = center - lastZoomScrollCenter;
     controller->translate(offset.x, offset.y);
     const double angleIncrease = angle - lastAngle;
-    const utl::Point<double> centerRel = (this->priLastPageRel + this->secLastPageRel) / 2.0;
+    const xoj::util::Point<double> centerRel = (this->priLastPageRel + this->secLastPageRel) / 2.0;
     if (controller->isInsideGeometryTool(secLastPageRel.x, secLastPageRel.y, 0.0)) {
         controller->rotate(angleIncrease, centerRel.x, centerRel.y);
     }  // allow moving without accidental rotation
@@ -321,12 +321,12 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
     this->lastDist = dist;
 }
 
-auto GeometryToolInputHandler::getCoords(InputEvent const& event) -> utl::Point<double> {
+auto GeometryToolInputHandler::getCoords(InputEvent const& event) -> xoj::util::Point<double> {
     const double zoom = xournal->getZoom();
     const auto view = controller->getView();
     const double posX = event.relativeX - static_cast<double>(view->getX());
     const double posY = event.relativeY - static_cast<double>(view->getY());
-    return utl::Point<double>(posX / zoom, posY / zoom);
+    return xoj::util::Point<double>(posX / zoom, posY / zoom);
 }
 
 void GeometryToolInputHandler::blockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = true; }
