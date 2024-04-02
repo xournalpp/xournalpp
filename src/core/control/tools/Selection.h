@@ -29,7 +29,7 @@ public:
     Selection(bool multiLayer);
     ~Selection() override;
 
-    using BoundaryPoint = utl::Point<double>;
+    using BoundaryPoint = xoj::util::Point<double>;
 
 public:
     /**

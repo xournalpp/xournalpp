@@ -50,7 +50,7 @@ void StrokeToolFilledView::on(StrokeToolView::StrokeReplacementRequest, const St
     this->filling.contour = this->pointBuffer;
     if (!this->pointBuffer.empty()) {
         const Point& fp = this->pointBuffer.front();
-        this->filling.firstPoint = utl::Point<double>(fp.x, fp.y);
+        this->filling.firstPoint = xoj::util::Point<double>(fp.x, fp.y);
     }
 }
 

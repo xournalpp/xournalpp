@@ -38,7 +38,7 @@
 
 #include "StrokeStabilizer.h"  // for Base, get
 
-using namespace xoj::util;
+using xoj::util::Rectangle;
 
 StrokeHandler::StrokeHandler(Control* control, const PageRef& page):
         InputHandler(control, page),
