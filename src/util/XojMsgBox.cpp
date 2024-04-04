@@ -1,6 +1,6 @@
 #include "util/XojMsgBox.h"
 
-#include <utility>  // for pair
+#include <utility>  // for move
 
 #include <glib-object.h>  // for g_object_set_property, g_value_init, g_valu...
 #include <glib.h>         // for g_free, g_markup_escape_text, g_error_free
@@ -20,16 +20,21 @@
 
 GtkWindow* defaultWindow = nullptr;
 
-XojMsgBox::XojMsgBox(GtkDialog* dialog, std::function<void(int)> callback):
+XojMsgBox::XojMsgBox(GtkDialog* dialog, xoj::util::move_only_function<void(int)> callback):
         window(reinterpret_cast<GtkWindow*>(dialog)), callback(std::move(callback)) {
     this->signalId =
             g_signal_connect(dialog, "response", G_CALLBACK(+[](GtkDialog* dialog, int response, gpointer data) {
                                  auto* self = static_cast<XojMsgBox*>(data);
-                                 self->callback(response);
+
+                                 // We need to call gtk_window_close() before invoking the callback, because if the
+                                 // callback pops up another dialog, the first one won't close...
+                                 // But since gtk_window_close() triggers the destruction of *self, we first move the
+                                 // callback
+                                 Util::execInUiThread([cb = std::move(self->callback), response]() { cb(response); });
 
                                  // Closing the window causes another "response" signal, which we want to ignore
                                  g_signal_handler_disconnect(dialog, self->signalId);
-                                 gtk_window_close(reinterpret_cast<GtkWindow*>(dialog));
+                                 gtk_window_close(self->getWindow());  // Destroys *self. Beware!
                              }),
                              this);
 }
@@ -74,14 +79,15 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, const std::string& msg) {
 }
 
 void XojMsgBox::askQuestion(GtkWindow* win, const std::string& maintext, const std::string& secondarytext,
-                            const std::vector<Button>& buttons, std::function<void(int)> callback) {
+                            const std::vector<Button>& buttons, xoj::util::move_only_function<void(int)> callback) {
 
     auto formattedMsg = xoj::util::OwnedCString::assumeOwnership(g_markup_escape_text(maintext.c_str(), -1));
     askQuestionWithMarkup(win, std::string_view(formattedMsg), secondarytext, buttons, std::move(callback));
 }
 
 void XojMsgBox::askQuestionWithMarkup(GtkWindow* win, std::string_view maintext, const std::string& secondarytext,
-                                      const std::vector<Button>& buttons, std::function<void(int)> callback) {
+                                      const std::vector<Button>& buttons,
+                                      xoj::util::move_only_function<void(int)> callback) {
     if (win == nullptr) {
         win = defaultWindow;
     }
@@ -178,7 +184,8 @@ auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const std::string& msg) -> i
     return res;
 }
 
-void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file, std::function<void(const fs::path&)> writeTofile) {
+void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
+                                    xoj::util::move_only_function<void(const fs::path&)> writeTofile) {
     if (!fs::exists(file)) {
         writeTofile(file);
         return;
@@ -195,10 +202,9 @@ void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file, std::function
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), GTK_RESPONSE_OK);
 
     xoj::popup::PopupWindowWrapper<XojMsgBox> popup(
-            GTK_DIALOG(dialog), [overwrite = std::move(writeTofile), file = std::move(file)](int response) {
+            GTK_DIALOG(dialog), [overwrite = std::move(writeTofile), file = std::move(file)](int response) mutable {
                 if (response == GTK_RESPONSE_OK) {
-                    // Wait for the message dialog to close before executing the response
-                    Util::execInUiThread([write = std::move(overwrite), file = std::move(file)]() { write(file); });
+                    overwrite(file);
                 }
             });
     popup.show(win);

@@ -69,8 +69,7 @@ LoadHandler::LoadHandler():
         attributeNames(nullptr),
         attributeValues(nullptr),
         elementName(nullptr),
-        loadedTimeStamp(0),
-        doc(&dHanlder) {
+        loadedTimeStamp(0) {
     this->error = nullptr;
 
     initAttributes();
@@ -213,6 +212,7 @@ auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
 }
 
 auto LoadHandler::parseXml() -> bool {
+    xoj_assert(this->doc);
     const GMarkupParser parser = {LoadHandler::parserStartElement, LoadHandler::parserEndElement,
                                   LoadHandler::parserText, nullptr, nullptr};
     this->error = nullptr;
@@ -255,18 +255,18 @@ auto LoadHandler::parseXml() -> bool {
     g_markup_parse_context_free(context);
 
     // Add all parsed pages to the document
-    this->doc.addPages(pages.begin(), pages.end());
+    this->doc->addPages(pages.begin(), pages.end());
 
     if (this->pos != PASER_POS_FINISHED && this->lastError.empty()) {
         lastError = _("Document is not complete (maybe the end is cut off?)");
         return false;
     }
-    if (this->pos == PASER_POS_FINISHED && this->doc.getPageCount() == 0) {
+    if (this->pos == PASER_POS_FINISHED && this->doc->getPageCount() == 0) {
         lastError = _("Document is corrupted (no pages found in file)");
         return false;
     }
 
-    doc.setCreateBackupOnSave(true);
+    doc->setCreateBackupOnSave(true);
 
     return valid;
 }
@@ -430,6 +430,7 @@ void LoadHandler::parseBgPixmap() {
 }
 
 void LoadHandler::parseBgPdf() {
+    xoj_assert(this->doc);
     int pageno = LoadHandlerHelper::getAttribInt("pageno", this);
     bool attachToDocument = false;
     fs::path pdfFilename;
@@ -463,10 +464,10 @@ void LoadHandler::parseBgPdf() {
                 if (!pdfBytes) {
                     return;
                 }
-                doc.readPdf(pdfFilename, false, attachToDocument, std::move(pdfBytes));
+                doc->readPdf(pdfFilename, false, attachToDocument, std::move(pdfBytes));
 
-                if (!doc.getLastErrorMsg().empty()) {
-                    error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
+                if (!doc->getLastErrorMsg().empty()) {
+                    error("%s", FC(_F("Error reading PDF: {1}") % doc->getLastErrorMsg()));
                 }
 
                 this->pdfFilenameParsed = true;
@@ -480,12 +481,12 @@ void LoadHandler::parseBgPdf() {
         this->pdfFilenameParsed = true;
 
         if (fs::is_regular_file(pdfFilename)) {
-            doc.readPdf(pdfFilename, false, attachToDocument);
-            if (!doc.getLastErrorMsg().empty()) {
-                error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
+            doc->readPdf(pdfFilename, false, attachToDocument);
+            if (!doc->getLastErrorMsg().empty()) {
+                error("%s", FC(_F("Error reading PDF: {1}") % doc->getLastErrorMsg()));
             }
         } else {
-            doc.setPdfAttributes(pdfFilename, attachToDocument);
+            doc->setPdfAttributes(pdfFilename, attachToDocument);
             if (attachToDocument) {
                 this->attachedPdfMissing = true;
             } else {
@@ -1082,14 +1083,12 @@ void LoadHandler::readTexImage(const gchar* base64string, gsize base64stringLen)
     this->teximage->loadData(parseBase64(const_cast<char*>(base64string), base64stringLen));
 }
 
-/**
- * Document should not be freed, it will be freed with LoadHandler!
- */
-auto LoadHandler::loadDocument(fs::path const& filepath) -> Document* {
+auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Document> {
     initAttributes();
-    doc.clearDocument();
+    this->doc = std::make_unique<Document>(&dHanlder);
 
     if (!openFile(filepath)) {
+        this->doc.reset();
         return nullptr;
     }
 
@@ -1099,6 +1098,7 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> Document* {
 
     if (!parseXml()) {
         closeFile();
+        this->doc.reset();
         return nullptr;
     }
 
@@ -1109,14 +1109,14 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> Document* {
         // Force the user to save is a bad idea, this will annoy the user
         // Rename files is also not that user friendly.
 
-        doc.setFilepath("");
+        doc->setFilepath("");
     } else {
-        doc.setFilepath(filepath);
+        doc->setFilepath(filepath);
     }
 
     closeFile();
 
-    return &this->doc;
+    return std::move(this->doc);
 }
 
 auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr<std::string> {

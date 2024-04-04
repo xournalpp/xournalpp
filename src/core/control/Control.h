@@ -87,16 +87,30 @@ public:
     void initWindow(MainWindow* win);
 
 public:
-    bool newFile(std::string pageTemplate = "", fs::path filepath = {});
+    /// Asymchronously closes the current document and replaces it by a new file
+    void newFile(fs::path filepath = {});
 
-    /// Shows an open file dialog and opens the selected file
+    /// @brief Shows an open file dialog and opens the selected file after closing the previously opened file
     void askToOpenFile();
-    /// Opens the provided path. Returns true on success.
-    bool openFile(fs::path filepath, int scrollToPage = -1, bool forceOpen = false);
+    /**
+     * @brief Asynchronously opens the provided path, safely closes the current opened document and replaces it with the
+     * newly parsed file. Calls callback afterwards, with boolean parameter true on success. Does nothing to this->doc
+     * in case of failure at any point.
+     */
+    void openFile(
+            fs::path filepath, std::function<void(bool)> callback = [](bool) {}, int scrollToPage = -1,
+            bool forceOpen = false);
     /// Shows an open file dialog and opens the selected file
     void askToAnnotatePdf();
-    /// Opens the provided path. Returns true on success.
-    bool annotatePdf(fs::path filepath, bool attachToDocument);
+
+    /**
+     * (Potentially asynchronously) Opens the given file without saving any previously opened Document. Calls callback
+     * afterwards, with boolean parameter true if success. WARNING: may lead to data loss if the current Document has
+     * not been saved yet.
+     */
+    void openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool attachToDocument, int scrollToPage,
+                                                 std::function<void(bool)> callback);
+
     void print();
     void exportAsPdf();
     void exportAs();
@@ -108,7 +122,7 @@ public:
      * @param synchron Whether the save should be run synchronously or asynchronously.
      */
     bool save(bool synchron = false);
-    bool saveAs();
+    bool saveAs(bool synchron = false);
 
     /**
      * Marks the current document as saved if it is currently marked as unsaved.
@@ -122,7 +136,17 @@ public:
      * @param allowCancel Whether the user should be able to cancel closing the document.
      * @return true if the user closed the document, otherwise false.
      */
-    bool close(bool allowDestroy = false, bool allowCancel = true);
+    // bool close(bool allowDestroy = false, bool allowCancel = true);
+
+    /**
+     * Close the current document, prompting to save unsaved changes.
+     *
+     * @param callback Called after trying to close the document, with param true in case of success, false otherwise.
+     * @param allowDestroy Whether clicking "Discard" should destroy the current document.
+     * @param allowCancel Whether the user should be able to cancel closing the document.
+     * @return true if the user closed the document, otherwise false.
+     */
+    void close(std::function<void(bool)> callback, bool allowDestroy = false, bool allowCancel = true);
 
     /**
      * @brief Asks user to replace an existing file when saving / exporting, since we add the extension
@@ -218,7 +242,7 @@ public:
     size_t firePageSelected(const PageRef& page);
     void firePageSelected(size_t page);
 
-    void addDefaultPage(std::string pageTemplate);
+    void addDefaultPage(const std::optional<std::string>& pageTemplate, Document* doc = nullptr);
     void duplicatePage();
     void insertNewPage(size_t position, bool shouldScrollToPage = true);
     void appendNewPdfPages();
@@ -371,11 +395,6 @@ protected:
 
     static bool loadMetadataCallback(MetadataCallbackData* data);
 
-    /**
-     * Check if this is an autosave file, return false in this case and display a user instruction
-     */
-    bool shouldFileOpen(fs::path const& filepath) const;
-
     bool loadXoptTemplate(fs::path const& filepath);
     bool loadPdf(fs::path const& filepath, int scrollToPage);
 
@@ -400,10 +419,11 @@ private:
      */
     bool toggleSetsquare();
 
+    struct MissingPdfData;
     /**
      * Prompt the user that the PDF background is missing and offer solution options
      */
-    void promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepath);
+    void promptMissingPdf(MissingPdfData& missingPdf, const fs::path& filepath);
 
     /**
      * Handle the response from the missing PDF dialog
@@ -414,6 +434,38 @@ private:
      * "Closes" the document, preparing the editor for a new document.
      */
     void closeDocument();
+
+    /**
+     * Forcibly replaces the opened document.
+     * WARNING: Be sure the active document has been saved (or discarded) before calling replaceDocument()
+     */
+    void replaceDocument(std::unique_ptr<Document> doc, int scrollToPage);
+
+    /**
+     * Asynchronously opens the provided path and parse it as a .xopp or .xoj file. Then forcibly replaces the currently
+     * opened document with the new one. Asks the user in case of doubts (e.g. wrong file version) and aborts if the
+     * document was not correctly and entirely parsed. Calls callback afterwards, with boolean parameter true on
+     * success. WARNING: Be sure the active document has been saved (or discarded) before calling openXoppFile()
+     */
+    void openXoppFile(fs::path filepath, int scrollToPage, std::function<void(bool)> callback);
+
+    /**
+     * Opens the provided path and parse it as a PDF file. Then forcibly replaces the currently opened document with a
+     * new one based on the PDF. WARNING: Be sure the active document has been saved (or discarded) before calling
+     * openPdfFile()
+     *
+     * @return true on success
+     */
+    bool openPdfFile(fs::path filepath, bool attachToDocument, int scrollToPage);
+
+    /**
+     * Opens the provided path and parse it as a .xopt template  file. Then forcibly replaces the currently opened
+     * document with a new one based on the template. WARNING: Be sure the active document has been saved (or discarded)
+     * before calling openXoptFile()
+     *
+     * @return true on success
+     */
+    bool openXoptFile(fs::path filepath);
 
     /**
      * @brief Get the pen line style to select in the toolbar

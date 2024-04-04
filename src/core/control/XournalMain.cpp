@@ -223,20 +223,22 @@ void checkForEmergencySave(Control* control) {
     const std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
     enum { DELETE_FILE = 1, RESTORE_FILE };
-    XojMsgBox::askQuestion(nullptr, _("Recovery file detected"), msg,
-                           {{_("Delete file"), DELETE_FILE}, {_("Restore file"), RESTORE_FILE}},
-                           [file = std::move(file), ctrl = control](int response) {
-                               if (response == DELETE_FILE) {
-                                   deleteFile(file);
-                               } else if (response == RESTORE_FILE && ctrl->openFile(file, -1, true)) {
-                                   ctrl->getDocument()->setFilepath("");
+    XojMsgBox::askQuestion(
+            nullptr, _("Recovery file detected"), msg,
+            {{_("Delete file"), DELETE_FILE}, {_("Restore file"), RESTORE_FILE}},
+            [file = std::move(file), ctrl = control](int response) mutable {
+                if (response == DELETE_FILE) {
+                    deleteFile(file);
+                } else if (response == RESTORE_FILE) {
+                    ctrl->openFileWithoutSavingTheCurrentDocument(file, false, -1, [ctrl, file](bool) {
+                        ctrl->getDocument()->setFilepath("");
 
-                                   // Make sure the document is changed, there is a question to ask for save
-                                   ctrl->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
-                                   ctrl->updateWindowTitle();
-                                   deleteFile(file);
-                               }
-                           });
+                        // Todo Make sure the document is changed + ask for saving
+                        ctrl->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
+                        deleteFile(file);
+                    });
+                }
+            });
 }
 
 namespace {
@@ -272,14 +274,14 @@ void exitOnMissingPdfFileName(const LoadHandler& loader) {
 auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
                int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
     LoadHandler loader;
-    Document* doc = loader.loadDocument(input);
+    auto doc = loader.loadDocument(input);
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
 
     exitOnMissingPdfFileName(loader);
 
-    return ExportHelper::exportImg(doc, output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
+    return ExportHelper::exportImg(doc.get(), output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
 }
 
 /**
@@ -326,14 +328,14 @@ auto saveDoc(const char* input, const char* output) -> int {
 auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode) -> int {
     LoadHandler loader;
-    Document* doc = loader.loadDocument(input);
+    auto doc = loader.loadDocument(input);
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
 
     exitOnMissingPdfFileName(loader);
 
-    return ExportHelper::exportPdf(doc, output, range, layerRange, exportBackground, progressiveMode);
+    return ExportHelper::exportPdf(doc.get(), output, range, layerRange, exportBackground, progressiveMode);
 }
 
 struct XournalMainPrivate {
@@ -514,7 +516,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     app_data->win->show(nullptr);
 
-    bool opened = false;
+    fs::path p;
     if (app_data->optFilename) {
         if (g_strv_length(app_data->optFilename) != 1) {
             const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
@@ -522,50 +524,28 @@ void on_startup(GApplication* application, XMPtr app_data) {
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
         }
 
-        const fs::path p = Util::fromGFilename(app_data->optFilename[0], false);
-
-        try {
-            if (fs::exists(p)) {
-                if (app_data->attachMode && Util::hasPdfFileExt(p)) {
-                    opened = app_data->control->annotatePdf(p, true);
-                } else {
-                    opened = app_data->control->openFile(
-                            p,
-                            app_data->openAtPageNumber - 1);  // First page for user is page 1
-                }
-            } else {
-                opened = app_data->control->newFile("", p);
-            }
-        } catch (const fs::filesystem_error& e) {
-            const std::string msg = FS(_F("Filesystem error: {1}\n"
-                                          "Sorry, Xournal++ cannot open the file: {2}\n"
-                                          "Consider copying the file to a local directory.") %
-                                       e.what() % p.u8string());
-            XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
-            opened = app_data->control->newFile("", p);
-        }
+        p = Util::fromGFilename(app_data->optFilename[0], false);
     } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
         auto most_recent = RecentManager::getMostRecent();
         if (most_recent) {
-            if (auto p = Util::fromUri(gtk_recent_info_get_uri(most_recent.get()))) {
-                opened = app_data->control->openFile(*p);
+            if (auto opt = Util::fromUri(gtk_recent_info_get_uri(most_recent.get()))) {
+                p = opt.value();
             }
         }
     }
+    app_data->control->openFileWithoutSavingTheCurrentDocument(
+            std::move(p), app_data->attachMode, app_data->openAtPageNumber - 1,
+            [ctrl = app_data->control.get(), app = GTK_APPLICATION(application)](bool) {
+                ctrl->getScheduler()->start();
 
-    app_data->control->getScheduler()->start();
+                checkForErrorlog();
+                checkForEmergencySave(ctrl);
 
-    if (!opened) {
-        app_data->control->newFile();
-    }
-
-    checkForErrorlog();
-    checkForEmergencySave(app_data->control.get());
-
-    // There is a timing issue with the layout
-    // This fixes it, see #405
-    Util::execInUiThread([=]() { app_data->control->getWindow()->getXournal()->layoutPages(); });
-    gtk_application_add_window(GTK_APPLICATION(application), GTK_WINDOW(app_data->win->getWindow()));
+                // There is a timing issue with the layout
+                // This fixes it, see #405
+                Util::execInUiThread([=]() { ctrl->getWindow()->getXournal()->layoutPages(); });
+                gtk_application_add_window(app, ctrl->getGtkWindow());
+            });
 }
 
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
