@@ -47,6 +47,17 @@ auto iconThemeFromString(const std::string& iconThemeStr) -> IconTheme {
     return ICON_THEME_COLOR;
 }
 
+auto layoutTypeFromString(const std::string& layoutTypeStr) -> LayoutType {
+    if (layoutTypeStr == "grid") {
+        return LAYOUT_TYPE_GRID;
+    }
+    if (layoutTypeStr == "constantPadding") {
+        return LAYOUT_TYPE_CONST_PADDING;
+    }
+    g_warning("Settings::Unknown layout type: %s\n", layoutTypeStr.c_str());
+    return LAYOUT_TYPE_GRID;
+}
+
 auto emptyLastPageAppendFromString(const std::string& str) -> EmptyLastPageAppendType {
     if (str == "disabled") {
         return EmptyLastPageAppendType::Disabled;
