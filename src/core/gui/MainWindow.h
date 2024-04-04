@@ -202,6 +202,7 @@ private:
 
     bool maximized = false;
     bool darkMode = false;
+    bool modifiedGtkSettingsTheme = false;
 
     ToolbarWidgetArray toolbarWidgets;
 

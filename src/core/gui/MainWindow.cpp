@@ -46,6 +46,9 @@
 
 using std::string;
 
+
+static void themeCallback(GObject*, GParamSpec*, gpointer data) { static_cast<MainWindow*>(data)->updateColorscheme(); }
+
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent):
         GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
         control(control),
@@ -135,6 +138,12 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     gtk_drag_dest_add_text_targets(this->window);
 
     LayerCtrlListener::registerListener(control->getLayerController());
+
+    g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-theme-name", G_CALLBACK(themeCallback), this);
+    g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-application-prefer-dark-theme",
+                     G_CALLBACK(themeCallback), this);
+
+    updateColorscheme();
 }
 
 gboolean MainWindow::isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data) { return closure == data; }
@@ -199,6 +208,7 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
 
 struct ThemeProperties {
     bool dark;
+    bool darkSuffix;
     std::string rootname;  ///< Name without any putative -dark suffix
 };
 static ThemeProperties getThemeProperties(GtkWidget* w) {
@@ -207,7 +217,7 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
 
     // Try to figure out if the theme is dark or light
     // Some themes handle their dark variant via "gtk-application-prefer-dark-theme" while other just append "-dark"
-    const std::regex nameparser("([a-zA-Z-]+?)(-[dD]ark)?");
+    const std::regex nameparser("([a-zA-Z-]+?)([:-][dD]ark)?");
     std::cmatch sm;
     std::regex_match(name.get(), sm, nameparser);
 
@@ -215,23 +225,33 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
     if (sm.size() < 3) {
         g_warning("Fails to extract theme root name from: \"%s\"", name.get());
         props.rootname = name.get();
-        props.dark = false;
+        props.darkSuffix = false;
     } else {
         props.rootname = sm[1];
-        props.dark = sm[2].length() > 0;
+        props.darkSuffix = sm[2].length() > 0;
     }
     gboolean dark = false;
     g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
-    props.dark = props.dark || dark;  // Some themes handle their dark variant via this setting
+
+    g_message("Extracted theme info: Name = %s, rootname = %s, dark = %s", name.get(), props.rootname.c_str(),
+              dark ? "true" : "false");
+
+    props.dark = props.darkSuffix || dark;  // Some themes handle their dark variant via this setting
 
     return props;
 }
 
 void MainWindow::updateColorscheme() {
+    g_signal_handlers_block_by_func(gtk_widget_get_settings(this->window),
+                                    reinterpret_cast<gpointer>(G_CALLBACK(themeCallback)), this);
     auto variant = control->getSettings()->getThemeVariant();
     if (variant == THEME_VARIANT_USE_SYSTEM) {
         gtk_settings_reset_property(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme");
-        gtk_settings_reset_property(gtk_widget_get_settings(this->window), "gtk-theme-name");
+        if (modifiedGtkSettingsTheme) {
+            // Some bug in Gtk makes an infinite loop despite us blocking the signals
+            gtk_settings_reset_property(gtk_widget_get_settings(this->window), "gtk-theme-name");
+            modifiedGtkSettingsTheme = false;
+        }
     }
     auto props = getThemeProperties(this->window);
 
@@ -278,8 +298,9 @@ void MainWindow::updateColorscheme() {
     } else {
         gtk_style_context_remove_class(context, "darkMode");
         g_object_set(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", false, nullptr);
-        if (props.dark) {  // The active theme is all dark. Remove the trailing "-dark"
+        if (props.darkSuffix) {  // The active theme is all dark. Remove the trailing "-dark"
             g_object_set(gtk_widget_get_settings(this->window), "gtk-theme-name", props.rootname.c_str(), nullptr);
+            modifiedGtkSettingsTheme = true;
         }
     }
 
@@ -287,12 +308,15 @@ void MainWindow::updateColorscheme() {
         gchar* name = nullptr;
         g_object_get(gtk_widget_get_settings(this->window), "gtk-theme-name", &name, nullptr);
         g_message("Theme name: %s", name);
+        g_message("Modified in GtkSettings: %s", modifiedGtkSettingsTheme ? "true" : "false");
         g_free(name);
         gboolean gtkdark = true;
         g_object_get(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", &gtkdark, nullptr);
         g_message("Theme variant: %s", gtkdark ? "dark" : "light");
         g_message("Icon theme: %s", iconThemeToString(control->getSettings()->getIconTheme()));
     }
+    g_signal_handlers_unblock_by_func(gtk_widget_get_settings(this->window), reinterpret_cast<gpointer>(themeCallback),
+                                      this);
 }
 
 void MainWindow::initXournalWidget() {
@@ -318,8 +342,6 @@ void MainWindow::initXournalWidget() {
 
     Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
     scrollHandling->init(this->xournal->getWidget(), layout);
-
-    updateColorscheme();
 }
 
 void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
