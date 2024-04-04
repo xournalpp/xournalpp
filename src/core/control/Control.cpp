@@ -210,6 +210,11 @@ Control::~Control() {
     this->layerController = nullptr;
 }
 
+struct Control::MissingPdfData {
+    bool wasPdfAttached;
+    std::string missingFileName;
+};
+
 void Control::setLastAutosaveFile(fs::path newAutosaveFile) {
     try {
         if (!this->lastAutosaveFilename.empty() && !fs::equivalent(newAutosaveFile, this->lastAutosaveFilename) &&
@@ -635,21 +640,23 @@ void Control::setShowMenubar(bool enabled) {
 
 void Control::disableSidebarTmp(bool disabled) { this->sidebar->setTmpDisabled(disabled); }
 
-void Control::addDefaultPage(string pageTemplate) {
-    if (pageTemplate.empty()) {
-        pageTemplate = settings->getPageTemplate();
-    }
-
+void Control::addDefaultPage(const std::optional<std::string>& pageTemplate, Document* doc) {
+    const std::string& templ = pageTemplate.value_or(settings->getPageTemplate());
     PageTemplateSettings model;
-    model.parse(pageTemplate);
+    model.parse(templ);
 
     auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
     page->setBackgroundColor(model.getBackgroundColor());
     page->setBackgroundType(model.getBackgroundType());
 
-    this->doc->lock();
-    this->doc->addPage(std::move(page));
-    this->doc->unlock();
+    if (doc == nullptr || doc == this->doc) {
+        // Apply to the curent document
+        this->doc->lock();
+        this->doc->addPage(std::move(page));
+        this->doc->unlock();
+    } else {
+        doc->addPage(std::move(page));
+    }
 }
 
 void Control::updatePageActions() {
@@ -1386,33 +1393,30 @@ void Control::showSettings() {
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 }
 
-auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {
-    if (!this->close(true)) {
-        return false;
-    }
-
-    Document newDoc(this);
-
-    this->doc->lock();
-    *doc = newDoc;
+static std::unique_ptr<Document> createNewDocument(Control* ctrl, fs::path filepath,
+                                                   const std::optional<std::string>& pageTemplate) {
+    auto newDoc = std::make_unique<Document>(ctrl);
     if (!filepath.empty()) {
-        this->doc->setFilepath(std::move(filepath));
+        newDoc->setFilepath(std::move(filepath));
     }
-    this->doc->unlock();
+    ctrl->addDefaultPage(pageTemplate, newDoc.get());
+    return newDoc;
+}
 
-    addDefaultPage(std::move(pageTemplate));
-
-    fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-
-    fileLoaded();
-
-    return true;
+void Control::newFile(fs::path filepath) {
+    this->close(
+            [ctrl = this, filepath = std::move(filepath)](bool closed) {
+                if (closed) {
+                    ctrl->replaceDocument(createNewDocument(ctrl, std::move(filepath), std::nullopt), -1);
+                }
+            },
+            true);
 }
 
 /**
  * Check if this is an autosave file, return false in this case and display a user instruction
  */
-auto Control::shouldFileOpen(fs::path const& filepath) const -> bool {
+static auto shouldFileOpen(fs::path const& filepath, GtkWindow* win) -> bool {
     auto basePath = Util::getCacheSubfolder("");
     auto isChild = Util::isChildOrEquivalent(filepath, basePath);
     if (isChild) {
@@ -1420,121 +1424,166 @@ auto Control::shouldFileOpen(fs::path const& filepath) const -> bool {
                            "Copy the files to another folder.\n"
                            "Files from Folder {1} cannot be opened.") %
                         basePath.u8string());
-        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        XojMsgBox::showErrorToUser(win, msg);
     }
     return !isChild;
 }
 
 void Control::askToOpenFile() {
-    XojOpenDlg::showOpenFileDialog(this->getGtkWindow(), this->settings, [this](fs::path path) {
-        g_message("%s", (_F("file: {1}") % path.string()).c_str());
-        if (!path.empty()) {
-            openFile(std::move(path));
+    /**
+     * Question: in case the current file has not been saved yet, do we want:
+     *      1. First ask to save it, save it or discard it and then show the FileChooserDialog to open a new file
+     *      2. First show the FileChooserDialog, and if a valid file has been selected and successfully opened, ask to
+     *         save or discard the current file
+     * For now, this implements option 1.
+     */
+    this->close([ctrl = this](bool closed) {
+        if (closed) {
+            xoj::OpenDlg::showOpenFileDialog(ctrl->getGtkWindow(), ctrl->settings, [ctrl](fs::path path) {
+                g_message("%s", (_F("file: {1}") % path.string()).c_str());
+                ctrl->openFileWithoutSavingTheCurrentDocument(std::move(path), false, -1, [](bool) {});
+            });
         }
     });
 }
 
-auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> bool {
-    if (filepath.empty() || (!forceOpen && !shouldFileOpen(filepath))) {
-        return false;
-    }
-
-    if (!this->close(false)) {
-        return false;
-    }
-
-    // Read template file
-    if (filepath.extension() == ".xopt") {
-        return loadXoptTemplate(filepath);
-    }
-
-    if (Util::hasPdfFileExt(filepath)) {
-        return loadPdf(filepath, scrollToPage);
-    }
-
-    LoadHandler loadHandler;
-    Document* loadedDocument = loadHandler.loadDocument(filepath);
-
-    if (!loadedDocument) {
-        string msg = FS(_F("Error opening file \"{1}\"") % filepath.u8string()) + "\n" + loadHandler.getLastError();
-        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
-
-        fileLoaded(scrollToPage);
-        return false;
-    } else if (loadHandler.getFileVersion() > FILE_FORMAT_VERSION) {
-        GtkWidget* dialog = gtk_message_dialog_new(
-                getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO, "%s",
-                _("The file being loaded has a file format version newer than the one currently supported by this "
-                  "version of Xournal++, so it may not load properly. Open anyways?"));
-        int response = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
-        if (response != GTK_RESPONSE_YES) {
-            loadedDocument->clearDocument();
-            return false;
-        }
-    }
-
+void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     this->closeDocument();
 
+    fs::path filepath = doc->getFilepath();
+
     this->doc->lock();
-    this->doc->clearDocument();
-    *this->doc = *loadedDocument;
+    *this->doc = *doc;
     this->doc->unlock();
 
     // Set folder as last save path, so the next save will be at the current document location
     // This is important because of the new .xopp format, where Xournal .xoj handled as import,
     // not as file to load
-    settings->setLastSavePath(filepath.parent_path());
-
-    fileLoaded(scrollToPage);
-
-    if ((loadedDocument != nullptr && loadHandler.isAttachedPdfMissing()) ||
-        !loadHandler.getMissingPdfFilename().empty()) {
-        // give the user a second chance to select a new PDF filepath, or to discard the PDF
-        promptMissingPdf(loadHandler, filepath);
+    if (!filepath.empty()) {
+        settings->setLastSavePath(filepath.parent_path());
     }
 
-    return true;
+    fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
+    fileLoaded(scrollToPage);
 }
 
-auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
+void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<void(bool)> callback) {
     LoadHandler loadHandler;
+    std::unique_ptr<Document> doc(loadHandler.loadDocument(filepath));
 
-    if (settings->isAutoloadPdfXoj()) {
-        Document* tmp;
-        const std::vector<std::string> exts = {".xopp", ".xoj", ".pdf.xopp", ".pdf.xoj"};
-        for (const std::string& ext: exts) {
-            fs::path f = filepath;
-            Util::clearExtensions(f, ".pdf");
-            f += ext;
-            tmp = loadHandler.loadDocument(f);
-            if (tmp)
-                break;
-        }
-        if (tmp) {
-            this->doc->lock();
-            this->doc->clearDocument();
-            *this->doc = *tmp;
-            this->doc->unlock();
-
-            fileLoaded(scrollToPage);
-            return true;
-        }
+    if (!doc) {
+        string msg = FS(_F("Error opening file \"{1}\"") % filepath.u8string()) + "\n" + loadHandler.getLastError();
+        XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
+        callback(false);
+        return;
     }
 
-    bool an = annotatePdf(filepath, false);
-    fileLoaded(scrollToPage);
-    return an;
+    std::optional<MissingPdfData> missingPdf;
+    if (!loadHandler.getMissingPdfFilename().empty() || loadHandler.isAttachedPdfMissing()) {
+        missingPdf = {loadHandler.isAttachedPdfMissing(), loadHandler.getMissingPdfFilename()};
+    }
+
+    auto afterOpen = [ctrl = this, missingPdf = std::move(missingPdf), doc = std::move(doc), filepath,
+                      scrollToPage]() mutable {
+        ctrl->replaceDocument(std::move(doc), scrollToPage);
+
+        if (missingPdf && (missingPdf->wasPdfAttached || !missingPdf->missingFileName.empty())) {
+            // give the user a second chance to select a new PDF filepath, or to discard the PDF
+            ctrl->promptMissingPdf(missingPdf.value(), filepath);
+        }
+    };
+
+    if (loadHandler.getFileVersion() > FILE_FORMAT_VERSION) {
+        enum { YES = 1, NO };
+        std::vector<XojMsgBox::Button> buttons = {{_("Yes"), YES}, {_("No"), NO}};
+        XojMsgBox::askQuestion(
+                this->getGtkWindow(), _("File version mismatch"),
+                _("The file being loaded has a file format version newer than the one currently supported by this "
+                  "version of Xournal++, so it may not load properly. Open anyways?"),
+                buttons, [afterOpen = std::move(afterOpen), callback = std::move(callback)](int response) mutable {
+                    if (response == YES) {
+                        afterOpen();
+                        callback(true);
+                    } else {
+                        callback(false);
+                    }
+                });
+    } else {
+        afterOpen();
+        callback(true);
+    }
 }
 
-auto Control::loadXoptTemplate(fs::path const& filepath) -> bool {
-    auto contents = Util::readString(filepath);
-    if (!contents.has_value()) {
+bool Control::openPdfFile(fs::path filepath, bool attachToDocument, int scrollToPage) {
+    this->getCursor()->setCursorBusy(true);
+    auto doc = std::make_unique<Document>(this);
+    bool success = doc->readPdf(filepath, /*initPages=*/true, attachToDocument);
+    if (success) {
+        this->replaceDocument(std::move(doc), scrollToPage);
+    } else {
+        std::string msg = FS(_F("Error reading PDF file \"{1}\"\n{2}") % filepath.u8string() % doc->getLastErrorMsg());
+        XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
+    }
+    this->getCursor()->setCursorBusy(false);
+    return success;
+}
+
+bool Control::openXoptFile(fs::path filepath) {
+    auto pageTemplate = Util::readString(filepath);
+    if (!pageTemplate) {
+        // Unable to read the template from the file
         return false;
     }
-
-    newFile(*contents);
+    this->replaceDocument(createNewDocument(this, std::move(filepath), pageTemplate), -1);
     return true;
+}
+
+void Control::openFileWithoutSavingTheCurrentDocument(fs::path filepath, bool attachToDocument, int scrollToPage,
+                                                      std::function<void(bool)> callback) {
+    if (filepath.empty() || !fs::exists(filepath)) {
+        this->replaceDocument(createNewDocument(this, std::move(filepath), std::nullopt), -1);
+        callback(true);
+        return;
+    }
+
+    if (filepath.extension() == ".xopt") {
+        this->openXoptFile(std::move(filepath));
+        callback(true);
+        return;
+    }
+
+    if (Util::hasPdfFileExt(filepath)) {
+        if (!attachToDocument && this->settings->isAutoloadPdfXoj()) {
+            const std::vector<std::string> exts = {".xopp", ".xoj", ".pdf.xopp", ".pdf.xoj"};
+            fs::path root = filepath;
+            Util::clearExtensions(root, ".pdf");
+            for (const std::string& ext: exts) {
+                fs::path f = root;
+                f += ext;
+                if (fs::exists(f)) {
+                    this->openXoppFile(std::move(f), scrollToPage, std::move(callback));
+                    return;
+                }
+            }
+        }
+        callback(this->openPdfFile(std::move(filepath), attachToDocument, scrollToPage));
+        return;
+    }
+
+    this->openXoppFile(std::move(filepath), scrollToPage, std::move(callback));
+}
+
+void Control::openFile(fs::path filepath, std::function<void(bool)> callback, int scrollToPage, bool forceOpen) {
+    if (filepath.empty() || (!forceOpen && !shouldFileOpen(filepath, getGtkWindow()))) {
+        return;
+    }
+
+    this->close([ctrl = this, filepath = std::move(filepath), cb = std::move(callback),
+                 scrollToPage](bool closed) mutable {
+        if (closed) {
+            ctrl->openFileWithoutSavingTheCurrentDocument(std::move(filepath), false, scrollToPage, std::move(cb));
+        }
+    });
 }
 
 void Control::fileLoaded(int scrollToPage) {
@@ -1568,8 +1617,8 @@ void Control::fileLoaded(int scrollToPage) {
 
 enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
 
-void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepath) {
-    const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
+void Control::promptMissingPdf(Control::MissingPdfData& missingPdf, const fs::path& filepath) {
+    const fs::path missingFilePath = fs::path(missingPdf.missingFileName);
 
     // create error message
     std::string parentFolderPath;
@@ -1592,7 +1641,7 @@ void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepat
     }
 #endif
     std::string msg;
-    if (loadHandler.isAttachedPdfMissing()) {
+    if (missingPdf.wasPdfAttached) {
         msg = FS(_F("The attached background file could not be found. It might have been moved, "
                     "renamed or deleted."));
     } else {
@@ -1603,7 +1652,7 @@ void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepat
 
     // try to find file in current directory
     auto proposedPdfFilepath = filepath.parent_path() / filename;
-    bool proposePdfFile = !loadHandler.isAttachedPdfMissing() && !filename.empty() && fs::exists(proposedPdfFilepath) &&
+    bool proposePdfFile = !missingPdf.wasPdfAttached && !filename.empty() && fs::exists(proposedPdfFilepath) &&
                           !fs::is_directory(proposedPdfFilepath);
     if (proposePdfFile) {
         msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
@@ -1632,7 +1681,7 @@ void Control::missingPdfDialogResponseHandler(fs::path proposedPdfFilepath, int 
             break;
         case MissingPdfDialogOptions::SELECT_OTHER:
             Util::execInUiThread([this]() {
-                XojOpenDlg::showAnnotatePdfDialog(getGtkWindow(), settings, [this](fs::path path, bool attachPdf) {
+                xoj::OpenDlg::showAnnotatePdfDialog(getGtkWindow(), settings, [this](fs::path path, bool attachPdf) {
                     if (!path.empty()) {
                         this->pageBackgroundChangeController->changePdfPagesBackground(path, attachPdf);
                     }
@@ -1685,54 +1734,16 @@ void Control::loadMetadata(MetadataEntry md) {
 }
 
 void Control::askToAnnotatePdf() {
-    XojOpenDlg::showAnnotatePdfDialog(getGtkWindow(), settings,
-                                      [this](fs::path path, bool attachPdf) { annotatePdf(path, attachPdf); });
-}
-
-auto Control::annotatePdf(fs::path filepath, bool attachToDocument) -> bool {
-    if (filepath.empty()) {
-        return false;
-    }
-
-    if (!this->close(false)) {
-        return false;
-    }
-
-    // First, we create a dummy document and load the PDF into it.
-    // We do NOT reset the current document yet because loading could fail.
-    getCursor()->setCursorBusy(true);
-    auto newDoc = std::make_unique<Document>(this);
-    newDoc->setFilepath("");
-
-    const bool res = newDoc->readPdf(filepath, /*initPages=*/true, attachToDocument);
-    getCursor()->setCursorBusy(false);
-
-    if (!res) {
-        // Loading failed, so display the error to the user.
-        newDoc->lock();
-        std::string errMsg = newDoc->getLastErrorMsg();
-        newDoc->unlock();
-
-        std::string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filepath.u8string() % errMsg);
-        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
-        return false;
-    }
-
-    // Success, so we can close the current document.
-    this->closeDocument();
-    // Then we overwrite the global document with the new document.
-    // FIXME: there could potentially be a data race if a job requires the old document but runs after it is closed
-    {
-        std::lock_guard<Document> lg(*doc);
-        // TODO: allow Document to be moved
-        *doc = *newDoc;
-    }
-
-    // Trigger callbacks and update UI
-    fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-    fileLoaded();
-
-    return true;
+    this->close([ctrl = this](bool closed) {
+        if (closed) {
+            xoj::OpenDlg::showAnnotatePdfDialog(ctrl->getGtkWindow(), ctrl->settings,
+                                                [ctrl](fs::path path, bool attachPdf) {
+                                                    if (!path.empty()) {
+                                                        ctrl->openPdfFile(std::move(path), attachPdf, -1);
+                                                    }
+                                                });
+        }
+    });
 }
 
 void Control::print() {
@@ -1964,7 +1975,7 @@ void Control::exportAs() {
     job->showDialogAndRun();
 }
 
-auto Control::saveAs() -> bool {
+auto Control::saveAs(bool synchron) -> bool {
     if (!showSaveDialog()) {
         return false;
     }
@@ -1978,7 +1989,7 @@ auto Control::saveAs() -> bool {
 
     // no lock needed, this is an uncritical operation
     this->doc->setCreateBackupOnSave(false);
-    return save();
+    return save(synchron);
 }
 
 void Control::resetSavedStatus() {
@@ -1992,80 +2003,76 @@ void Control::resetSavedStatus() {
 }
 
 void Control::quit(bool allowCancel) {
-    if (!this->close(false, allowCancel)) {
-        if (!allowCancel) {
-            // Cancel is not allowed, and the user close or did not save
-            // This is probably called from macOS, where the Application
-            // now will be killed - therefore do an emergency save.
-            emergencySave();
+    auto afterClosed = [this, allowCancel](bool closed) {
+        if (!closed) {
+            if (!allowCancel) {
+                // Cancel is not allowed, and the user close or did not save
+                // This is probably called from macOS, where the Application
+                // now will be killed - therefore do an emergency save.
+                emergencySave();
+            }
+        } else {
+            if (audioController) {
+                audioController->stopRecording();
+            }
+            this->scheduler->lock();
+            this->scheduler->removeAllJobs();
+            this->scheduler->unlock();
+            this->scheduler->stop();  // Finish current task. Must be called to finish pending saves.
+            this->closeDocument();    // Must be done after all jobs has finished (Segfault on save/export)
+            settings->save();
+            g_application_quit(G_APPLICATION(gtkApp));
         }
+    };
 
-        return;
-    }
-
-    if (audioController) {
-        audioController->stopRecording();
-    }
-    this->scheduler->lock();
-    this->scheduler->removeAllJobs();
-    this->scheduler->unlock();
-    this->scheduler->stop();  // Finish current task. Must be called to finish pending saves.
-    this->closeDocument();    // Must be done after all jobs has finished (Segfault on save/export)
-    settings->save();
-    g_application_quit(G_APPLICATION(gtkApp));
+    this->close(std::move(afterClosed), true, allowCancel);
 }
 
-auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
+void Control::close(std::function<void(bool)> callback, const bool allowDestroy, const bool allowCancel) {
     clearSelectionEndText();
     metadata->documentChanged();
+    resetGeometryTool();
 
-    bool discard = false;
-    const bool fileRemoved = !doc->getFilepath().empty() && !fs::exists(this->doc->getFilepath());
-    if (undoRedo->isChanged()) {
+    bool safeToClose = !undoRedo->isChanged();
+    if (!safeToClose) {
+        const bool fileRemoved = !doc->getFilepath().empty() && !fs::exists(this->doc->getFilepath());
         const auto message = fileRemoved ? _("Document file was removed.") : _("This document is not saved yet.");
         const auto saveLabel = fileRemoved ? _("Save As...") : _("Save");
-        GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING,
-                                                   GTK_BUTTONS_NONE, "%s", message);
 
-        gtk_dialog_add_button(GTK_DIALOG(dialog), saveLabel, GTK_RESPONSE_ACCEPT);
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Discard"), GTK_RESPONSE_REJECT);
-
+        enum { SAVE = 1, DISCARD, CANCEL };
+        std::vector<XojMsgBox::Button> buttons = {{saveLabel, SAVE}, {_("Discard"), DISCARD}};
         if (allowCancel) {
-            gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), GTK_RESPONSE_CANCEL);
+            buttons.emplace_back(_("Cancel"), CANCEL);
         }
+        XojMsgBox::askQuestion(getGtkWindow(), message, std::string(), std::move(buttons),
+                               [ctrl = this, fileRemoved, allowDestroy, callback = std::move(callback)](int response) {
+                                   bool safeToClose = true;
+                                   if (response == SAVE) {
+                                       safeToClose = fileRemoved ? ctrl->saveAs(true) : ctrl->save(true);
+                                   } else if (response == DISCARD) {
+                                       safeToClose = true;
+                                   } else {
+                                       safeToClose = false;
+                                   }
 
-        gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-        const auto dialogResponse = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
-
-        switch (dialogResponse) {
-            case GTK_RESPONSE_ACCEPT:
-                if (fileRemoved) {
-                    return this->saveAs();
-                } else {
-                    return this->save(true);
-                }
-                break;
-            case GTK_RESPONSE_REJECT:
-                discard = true;
-                break;
-            default:
-                return false;
-                break;
+                                   if (safeToClose && allowDestroy) {
+                                       ctrl->closeDocument();
+                                   }
+                                   callback(safeToClose);
+                               });
+    } else {
+        if (allowDestroy) {
+            this->closeDocument();
         }
+        callback(true);
     }
-
-    if (allowDestroy && discard) {
-        this->closeDocument();
-    }
-    resetGeometryTool();
-    return true;
 }
 
 void Control::closeDocument() {
     this->undoRedo->clearContents();
 
     this->doc->lock();
+    // FIXME: there could potentially be a data race if a job requires the old document but runs after it is closed
     this->doc->clearDocument(true);
     this->doc->unlock();
 

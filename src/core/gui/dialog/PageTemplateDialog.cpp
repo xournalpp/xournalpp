@@ -175,7 +175,7 @@ void PageTemplateDialog::saveToFile() {
 }
 
 void PageTemplateDialog::loadFromFile() {
-    XojOpenDlg::showOpenTemplateDialog(this->getWindow(), settings, [this](fs::path path) {
+    xoj::OpenDlg::showOpenTemplateDialog(this->getWindow(), settings, [this](fs::path path) {
         auto contents = Util::readString(path);
         if (!contents.has_value()) {
             return;

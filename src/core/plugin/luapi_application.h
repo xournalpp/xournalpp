@@ -2508,8 +2508,9 @@ static int applib_openFile(lua_State* L) {
         forceOpen = lua_toboolean(L, 3);
     }
 
-    const bool success = control->openFile(fs::path(filename), scrollToPage - 1, forceOpen);
-    lua_pushboolean(L, success);
+    control->openFile(
+            fs::path(filename), [](bool) {}, scrollToPage - 1, forceOpen);
+    lua_pushboolean(L, true);  // Todo replace with callback
     return 1;
 }
 

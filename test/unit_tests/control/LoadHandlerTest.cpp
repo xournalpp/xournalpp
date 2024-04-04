@@ -74,18 +74,18 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
         return elements;
     };
     LoadHandler handler;
-    Document* doc1 = handler.loadDocument(filepath);
-    auto elements1 = getElements(doc1);
+    auto doc1 = handler.loadDocument(filepath);
+    auto elements1 = getElements(doc1.get());
 
     SaveHandler h;
-    h.prepareSave(doc1);
+    h.prepareSave(doc1.get());
     auto tmp = Util::getTmpDirSubfolder() / "save.xopp";
     h.saveTo(tmp);
 
     // Create a second loader so the first one doesn't free the memory
     LoadHandler handler2;
-    Document* doc2 = handler2.loadDocument(tmp);
-    auto elements2 = getElements(doc2);
+    auto doc2 = handler2.loadDocument(tmp);
+    auto elements2 = getElements(doc2.get());
 
     // Check that the coordinates from both files don't differ more than the precision they were saved with
     auto coordEq = [tol](double a, double b) { return std::abs(a - b) <= tol; };
@@ -161,7 +161,7 @@ void checkLayer(PageRef page, size_t layerIndex, string expectedText) {
 
 TEST(ControlLoadHandler, testLoad) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("test1.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE("test1.xoj"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -179,7 +179,7 @@ TEST(ControlLoadHandler, testLoad) {
 
 TEST(ControlLoadHandler, testLoadZipped) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/test.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/test.xopp"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -197,7 +197,7 @@ TEST(ControlLoadHandler, testLoadZipped) {
 
 TEST(ControlLoadHandler, testLoadUnzipped) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("test1.unzipped.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE("test1.unzipped.xoj"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -215,14 +215,14 @@ TEST(ControlLoadHandler, testLoadUnzipped) {
 
 TEST(ControlLoadHandler, testPages) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
 }
 
 TEST(ControlLoadHandler, testPagesZipped) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
 }
@@ -230,43 +230,43 @@ TEST(ControlLoadHandler, testPagesZipped) {
 
 TEST(ControlLoadHandler, testPageType) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE("load/pages.xoj"));
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
-    checkPageType(doc, 0, "p1", PageType(PageTypeFormat::Plain));
-    checkPageType(doc, 1, "p2", PageType(PageTypeFormat::Ruled));
-    checkPageType(doc, 2, "p3", PageType(PageTypeFormat::Lined));
-    checkPageType(doc, 3, "p4", PageType(PageTypeFormat::Staves));
-    checkPageType(doc, 4, "p5", PageType(PageTypeFormat::Graph));
-    checkPageType(doc, 5, "p6", PageType(PageTypeFormat::Image));
+    checkPageType(doc.get(), 0, "p1", PageType(PageTypeFormat::Plain));
+    checkPageType(doc.get(), 1, "p2", PageType(PageTypeFormat::Ruled));
+    checkPageType(doc.get(), 2, "p3", PageType(PageTypeFormat::Lined));
+    checkPageType(doc.get(), 3, "p4", PageType(PageTypeFormat::Staves));
+    checkPageType(doc.get(), 4, "p5", PageType(PageTypeFormat::Graph));
+    checkPageType(doc.get(), 5, "p6", PageType(PageTypeFormat::Image));
 }
 
 TEST(ControlLoadHandler, testPageTypeZipped) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/pages.xopp"));
 
     EXPECT_EQ((size_t)6, doc->getPageCount());
-    checkPageType(doc, 0, "p1", PageType(PageTypeFormat::Plain));
-    checkPageType(doc, 1, "p2", PageType(PageTypeFormat::Ruled));
-    checkPageType(doc, 2, "p3", PageType(PageTypeFormat::Lined));
-    checkPageType(doc, 3, "p4", PageType(PageTypeFormat::Staves));
-    checkPageType(doc, 4, "p5", PageType(PageTypeFormat::Graph));
-    checkPageType(doc, 5, "p6", PageType(PageTypeFormat::Image));
+    checkPageType(doc.get(), 0, "p1", PageType(PageTypeFormat::Plain));
+    checkPageType(doc.get(), 1, "p2", PageType(PageTypeFormat::Ruled));
+    checkPageType(doc.get(), 2, "p3", PageType(PageTypeFormat::Lined));
+    checkPageType(doc.get(), 3, "p4", PageType(PageTypeFormat::Staves));
+    checkPageType(doc.get(), 4, "p5", PageType(PageTypeFormat::Graph));
+    checkPageType(doc.get(), 5, "p6", PageType(PageTypeFormat::Image));
 }
 
 TEST(ControlLoadHandler, testPageTypeFormatCopyFix) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("pageTypeFormatCopy.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE("pageTypeFormatCopy.xopp"));
 
     EXPECT_EQ((size_t)3, doc->getPageCount());
-    checkPageType(doc, 0, "p1", PageType(PageTypeFormat::Lined));
-    checkPageType(doc, 1, "p2", PageType(PageTypeFormat::Plain));  // PageTypeFormat::Copy in the file
-    checkPageType(doc, 2, "p3", PageType(PageTypeFormat::Plain));  // PageTypeFormat::Plain in the file
+    checkPageType(doc.get(), 0, "p1", PageType(PageTypeFormat::Lined));
+    checkPageType(doc.get(), 1, "p2", PageType(PageTypeFormat::Plain));  // PageTypeFormat::Copy in the file
+    checkPageType(doc.get(), 2, "p3", PageType(PageTypeFormat::Plain));  // PageTypeFormat::Plain in the file
 }
 
 TEST(ControlLoadHandler, testLayer) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("load/layer.xoj"));
+    auto doc = handler.loadDocument(GET_TESTFILE("load/layer.xoj"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -279,7 +279,7 @@ TEST(ControlLoadHandler, testLayer) {
 
 TEST(ControlLoadHandler, testLayerZipped) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/layer.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/layer.xopp"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -292,7 +292,7 @@ TEST(ControlLoadHandler, testLayerZipped) {
 
 TEST(ControlLoadHandler, testText) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("load/text.xml"));
+    auto doc = handler.loadDocument(GET_TESTFILE("load/text.xml"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -320,7 +320,7 @@ TEST(ControlLoadHandler, testText) {
 
 TEST(ControlLoadHandler, testTextZipped) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/text.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/text.xopp"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -348,7 +348,7 @@ TEST(ControlLoadHandler, testTextZipped) {
 
 TEST(ControlLoadHandler, testImageZipped) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/new.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/new.xopp"));
 
     EXPECT_EQ(1U, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -377,7 +377,7 @@ void checkImageFormat(Image* img, const char* formatName) {
 TEST(ControlLoadHandler, imageLoadJpeg) {
     // check loading of arbitrary image format (up to whatever is supported by GdkPixbuf)
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
     ASSERT_TRUE(doc) << "doc should not be null";
     ASSERT_EQ(1U, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -402,17 +402,17 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
     // save journal containing JPEG image
     {
         LoadHandler handler;
-        Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+        auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
         ASSERT_TRUE(doc) << "doc with jpeg should not be null";
 
         SaveHandler saver;
-        saver.prepareSave(doc);
+        saver.prepareSave(doc.get());
         saver.saveTo(outPath);
     }
 
     // check that the image is saved as PNG
     LoadHandler handler;
-    Document* doc = handler.loadDocument(outPath);
+    auto doc = handler.loadDocument(outPath);
     ASSERT_TRUE(doc) << "saved doc should not be null";
     ASSERT_EQ(1U, doc->getPageCount());
     PageRef page = doc->getPage(0);
@@ -459,7 +459,7 @@ TEST(ControlLoadHandler, testLoadStoreLoadFloatBwCompat) {
 
 TEST(ControlLoadHandler, testStrokeWidthRecovery) {
     LoadHandler handler;
-    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/stroke/width_recovery.xopp"));
+    auto doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/stroke/width_recovery.xopp"));
 
     EXPECT_EQ((size_t)1, doc->getPageCount());
     PageRef page = doc->getPage(0);
