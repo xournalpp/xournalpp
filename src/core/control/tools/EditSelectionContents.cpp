@@ -323,13 +323,8 @@ auto EditSelectionContents::setColor(Color color) -> UndoActionPtr {
 void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo) {
     Layer* layer = this->sourceLayer;
 
-    // Always insert the elements on top
-    // Because the elements are already removed
-    // and owned by the selection, therefore the layer
-    // doesn't know the index anymore
-    Element::Index index = as_signed(layer->getElements().size());
-    for (auto& [e, _]: this->insertionOrder) {
-        undo->addElement(layer, std::move(e), index);
+    for (auto& [e, pos]: this->insertionOrder) {
+        undo->addElement(layer, std::move(e), pos);
     }
 
     this->selected.clear();
