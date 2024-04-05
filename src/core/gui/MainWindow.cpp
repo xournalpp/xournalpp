@@ -213,7 +213,13 @@ struct ThemeProperties {
 };
 static ThemeProperties getThemeProperties(GtkWidget* w) {
     xoj::util::OwnedCString name;
-    g_object_get(gtk_widget_get_settings(w), "gtk-theme-name", name.contentReplacer(), nullptr);
+    // Gtk prioritizes GTK_THEME over GtkSettings content
+    // cf https://gitlab.gnome.org/GNOME/gtk/blob/90d84a2af8b367bd5a5312b3fa3b67563462c0ef/gtk/gtksettings.c#L1567-L1622
+    if (auto* p = g_getenv("GTK_THEME")) {
+        *(name.contentReplacer()) = g_strdup(p);
+    } else {
+        g_object_get(gtk_widget_get_settings(w), "gtk-theme-name", name.contentReplacer(), nullptr);
+    }
 
     // Try to figure out if the theme is dark or light
     // Some themes handle their dark variant via "gtk-application-prefer-dark-theme" while other just append "-dark"
