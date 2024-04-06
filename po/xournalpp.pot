@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-06 07:26+0000\n"
+"POT-Creation-Date: 2024-04-06 09:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1795,7 +1795,7 @@ msgctxt "Color"
 msgid "White"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:74
+#: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
 msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr ""
