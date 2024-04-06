@@ -11,13 +11,14 @@
 
 #pragma once
 
-#include <array>    // for array
-#include <cstddef>  // for size_t
-#include <map>      // for map
-#include <memory>   // for make_shared, shared_ptr
-#include <string>   // for string, basic_string
-#include <utility>  // for pair
-#include <vector>   // for vector
+#include <array>     // for array
+#include <cstddef>   // for size_t
+#include <map>       // for map
+#include <memory>    // for make_shared, shared_ptr
+#include <optional>  // for optional (retrieving keyboard shortcuts)
+#include <string>    // for string, basic_string
+#include <utility>   // for pair
+#include <vector>    // for vector
 
 #include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
 #include <glib.h>                         // for gchar, gboolean, gint
@@ -576,6 +577,41 @@ public:
 
     void setUseSpacesAsTab(bool useSpaces);
     bool getUseSpacesAsTab() const;
+
+    /**
+     * @brief Set custom keyboard shortcut
+     *
+     * @param name shortcut name, e.g. pen
+     * @param shortcut accelerator according to gtk syntax
+     * @returns true if accelerator is valid and can the shortcut can be set
+     */
+    bool setKeyboardShortcut(const std::string& name, const std::string& shortcut) {
+        // FIXME: (keyboard shortcuts) parse and verify shortcut
+        customKeyboardShortcuts[name] = shortcut;
+        g_message("[Keyboard shortcuts] Set shortcut [%s] => '%s'", name.c_str(), shortcut.c_str());
+
+        // false if parsing failed
+        return true;
+    }
+
+    /**
+     * @brief Get custom keyboard shortcut accelerator, if exists
+     *
+     * @param name shortcut name, e.g. pen
+     * @return std::optional<const char> shortcut accel as cstring (to feed gtk), if exists, otherwise std::nullopt
+     */
+    std::optional<const char*> getKeyboardShortcut(const std::string& name) {
+        auto result = customKeyboardShortcuts.find(name);
+
+        if (result != customKeyboardShortcuts.end()) {
+            g_message("[Keyboard shortcuts] Get shortcut [%s] => '%s'", name.c_str(), result->second.c_str());
+            return result->second.c_str();
+        }
+
+        g_warning("[Keyboard shortcuts] Could not get shortcut '%s'", name.c_str());
+        return std::nullopt;
+    }
+
 
 public:
     // Custom settings
@@ -1163,4 +1199,9 @@ private:
      */
     bool useSpacesForTab{};
     unsigned int numberOfSpacesForTab{};
+
+    /**
+     * Custom keyboard shortcuts hashmap
+     */
+    std::unordered_map<std::string, std::string> customKeyboardShortcuts{};
 };
