@@ -1,5 +1,6 @@
 #include "ToolbarModel.h"
 
+#include <algorithm>  // for find_if
 #include <cstddef>  // for size_t
 
 #include "util/XojMsgBox.h"   // for XojMsgBox
