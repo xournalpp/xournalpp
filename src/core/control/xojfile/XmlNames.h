@@ -32,11 +32,11 @@ constexpr auto CONFIG_STR = "config";
 constexpr auto COLOR_STR = "color";  // also in stroke and text
 constexpr auto DOMAIN_STR = "domain";
 constexpr auto FILENAME_STR = "filename";
-constexpr auto PAGENO_STR = "pageno";
+constexpr auto PAGE_NUMBER_STR = "pageno";
 
 // timestamp
-constexpr auto FN_STR = "fn";  // also in stroke, text and audio
-constexpr auto TS_STR = "ts";  // also in stroke and text
+constexpr auto AUDIO_FILENAME_STR = "fn";  // also in stroke, text and audio
+constexpr auto TIMESTAMP_STR = "ts";       // also in stroke and text
 
 // stroke
 constexpr auto TOOL_STR = "tool";
@@ -47,14 +47,14 @@ constexpr auto CAPSTYLE_STR = "capStyle";
 // text
 constexpr auto FONT_STR = "font";
 constexpr auto SIZE_STR = "size";
-constexpr auto X_STR = "x";
-constexpr auto Y_STR = "y";
+constexpr auto X_COORD_STR = "x";
+constexpr auto Y_COORD_STR = "y";
 
 // image
-constexpr auto LEFT_STR = "left";      // also in teximage
-constexpr auto TOP_STR = "top";        // also in teximage
-constexpr auto RIGHT_STR = "right";    // also in teximage
-constexpr auto BOTTOM_STR = "bottom";  // also in teximage
+constexpr auto LEFT_POS_STR = "left";      // also in teximage
+constexpr auto TOP_POS_STR = "top";        // also in teximage
+constexpr auto RIGHT_POS_STR = "right";    // also in teximage
+constexpr auto BOTTOM_POS_STR = "bottom";  // also in teximage
 
 // teximage
 constexpr auto TEXT_STR = "text";

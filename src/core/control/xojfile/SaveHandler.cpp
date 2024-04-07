@@ -92,8 +92,8 @@ auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
 void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
     if (!audioElement->getAudioFilename().empty()) {
         /** set stroke timestamp value to the XmlPointNode */
-        xmlAudioNode->setAttrib(XmlAttrs::TS_STR, audioElement->getTimestamp());
-        xmlAudioNode->setAttrib(XmlAttrs::FN_STR, audioElement->getAudioFilename().u8string());
+        xmlAudioNode->setAttrib(XmlAttrs::TIMESTAMP_STR, audioElement->getTimestamp());
+        xmlAudioNode->setAttrib(XmlAttrs::AUDIO_FILENAME_STR, audioElement->getAudioFilename().u8string());
     }
 }
 
@@ -181,8 +181,8 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
 
             text->setAttrib(XmlAttrs::FONT_STR, f.getName().c_str());
             text->setAttrib(XmlAttrs::SIZE_STR, f.getSize());
-            text->setAttrib(XmlAttrs::X_STR, t->getX());
-            text->setAttrib(XmlAttrs::Y_STR, t->getY());
+            text->setAttrib(XmlAttrs::X_COORD_STR, t->getX());
+            text->setAttrib(XmlAttrs::Y_COORD_STR, t->getY());
             text->setAttrib(XmlAttrs::COLOR_STR, getColorStr(t->getColor()).c_str());
 
             writeTimestamp(t, text);
@@ -193,20 +193,20 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
 
             image->setImage(i->getImage());
 
-            image->setAttrib(XmlAttrs::LEFT_STR, i->getX());
-            image->setAttrib(XmlAttrs::TOP_STR, i->getY());
-            image->setAttrib(XmlAttrs::RIGHT_STR, i->getX() + i->getElementWidth());
-            image->setAttrib(XmlAttrs::BOTTOM_STR, i->getY() + i->getElementHeight());
+            image->setAttrib(XmlAttrs::LEFT_POS_STR, i->getX());
+            image->setAttrib(XmlAttrs::TOP_POS_STR, i->getY());
+            image->setAttrib(XmlAttrs::RIGHT_POS_STR, i->getX() + i->getElementWidth());
+            image->setAttrib(XmlAttrs::BOTTOM_POS_STR, i->getY() + i->getElementHeight());
         } else if (e->getType() == ELEMENT_TEXIMAGE) {
             auto* i = dynamic_cast<TexImage*>(e.get());
             auto* image = new XmlTexNode("teximage", std::string(i->getBinaryData()));
             layer->addChild(image);
 
             image->setAttrib(XmlAttrs::TEXT_STR, i->getText().c_str());
-            image->setAttrib(XmlAttrs::LEFT_STR, i->getX());
-            image->setAttrib(XmlAttrs::TOP_STR, i->getY());
-            image->setAttrib(XmlAttrs::RIGHT_STR, i->getX() + i->getElementWidth());
-            image->setAttrib(XmlAttrs::BOTTOM_STR, i->getY() + i->getElementHeight());
+            image->setAttrib(XmlAttrs::LEFT_POS_STR, i->getX());
+            image->setAttrib(XmlAttrs::TOP_POS_STR, i->getY());
+            image->setAttrib(XmlAttrs::RIGHT_POS_STR, i->getX() + i->getElementWidth());
+            image->setAttrib(XmlAttrs::BOTTOM_POS_STR, i->getY() + i->getElementHeight());
         }
     }
 }
@@ -258,7 +258,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                 background->setAttrib(XmlAttrs::FILENAME_STR, doc->getPdfFilepath().u8string());
             }
         }
-        background->setAttrib(XmlAttrs::PAGENO_STR, p->getPdfPageNr() + 1);
+        background->setAttrib(XmlAttrs::PAGE_NUMBER_STR, p->getPdfPageNr() + 1);
     } else if (p->getBackgroundType().isImagePage()) {
         background->setAttrib(XmlAttrs::TYPE_STR, "pixmap");
 
