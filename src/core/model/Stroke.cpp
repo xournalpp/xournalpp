@@ -876,33 +876,17 @@ void Stroke::debugPrint() const {
 // stream operator overloads for StrokeTool
 
 auto operator<<(std::ostream& stream, const StrokeTool tool) -> std::ostream& {
-    switch (tool) {
-        case StrokeTool::PEN:
-            stream << "pen";
-            break;
-        case StrokeTool::ERASER:
-            stream << "eraser";
-            break;
-        case StrokeTool::HIGHLIGHTER:
-            stream << "highlighter";
-            break;
-        default:
-            // invalid tool
-            stream.setstate(std::ios::failbit);
-            break;
-    }
+    stream << StrokeTool::NAMES[static_cast<size_t>(tool)];
     return stream;
 }
 
 auto operator>>(std::istream& stream, StrokeTool& tool) -> std::istream& {
     std::string str;
     stream >> str;
-    if (str == "pen") {
-        tool = StrokeTool::PEN;
-    } else if (str == "eraser") {
-        tool = StrokeTool::ERASER;
-    } else if (str == "highlighter") {
-        tool = StrokeTool::HIGHLIGHTER;
+
+    const auto it = std::find(StrokeTool::NAMES.begin(), StrokeTool::NAMES.end(), str);
+    if (it != StrokeTool::NAMES.end()) {
+        tool = static_cast<StrokeTool::Value>(std::distance(StrokeTool::NAMES.begin(), it));
     } else {
         // invalid input
         stream.setstate(std::ios::failbit);
@@ -913,33 +897,17 @@ auto operator>>(std::istream& stream, StrokeTool& tool) -> std::istream& {
 // stream operator overloads for StrokeCapStyle
 
 auto operator<<(std::ostream& stream, const StrokeCapStyle style) -> std::ostream& {
-    switch (style) {
-        case StrokeCapStyle::ROUND:
-            stream << "round";
-            break;
-        case StrokeCapStyle::BUTT:
-            stream << "butt";
-            break;
-        case StrokeCapStyle::SQUARE:
-            stream << "square";
-            break;
-        default:
-            // invalid cap style
-            stream.setstate(std::ios::failbit);
-            break;
-    }
+    stream << STROKE_CAP_STYLE_NAMES[static_cast<size_t>(style)];
     return stream;
 }
 
 auto operator>>(std::istream& stream, StrokeCapStyle& style) -> std::istream& {
     std::string str;
     stream >> str;
-    if (str == "round") {
-        style = StrokeCapStyle::ROUND;
-    } else if (str == "butt") {
-        style = StrokeCapStyle::BUTT;
-    } else if (str == "square") {
-        style = StrokeCapStyle::SQUARE;
+
+    const auto it = std::find(STROKE_CAP_STYLE_NAMES.begin(), STROKE_CAP_STYLE_NAMES.end(), str);
+    if (it != StrokeTool::NAMES.end()) {
+        style = static_cast<StrokeCapStyle>(std::distance(STROKE_CAP_STYLE_NAMES.begin(), it));
     } else {
         // invalid input
         stream.setstate(std::ios::failbit);
