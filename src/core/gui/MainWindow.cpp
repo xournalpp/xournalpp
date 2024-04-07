@@ -44,6 +44,13 @@
 #include "config-dev.h"          // for TOOLBAR_CONFIG
 #include "filesystem.h"          // for path, exists
 
+#ifdef __APPLE__
+// the following header file contains a definition of struct Point that conflicts with model/Point.h
+#define Point Point_CF
+#include <CoreFoundation/CoreFoundation.h>
+#undef Point
+#endif
+
 using std::string;
 
 
@@ -237,7 +244,22 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
         props.darkSuffix = sm[2].length() > 0;
     }
     gboolean dark = false;
+
+#ifdef __APPLE__
+    CFStringRef interfaceStyle =
+            (CFStringRef)CFPreferencesCopyAppValue(CFSTR("AppleInterfaceStyle"), kCFPreferencesCurrentApplication);
+    if (interfaceStyle) {
+        char buffer[128];
+        if (CFStringGetCString(interfaceStyle, buffer, sizeof(buffer), kCFStringEncodingUTF8)) {
+            std::string style = buffer;
+            if (auto pos = style.find("Dark"); pos != std::string::npos) {
+                dark = true;
+            }
+        }
+    }
+#else
     g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
+#endif
 
     g_message("Extracted theme info: Name = %s, rootname = %s, dark = %s", name.get(), props.rootname.c_str(),
               dark ? "true" : "false");
