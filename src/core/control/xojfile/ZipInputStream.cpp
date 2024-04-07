@@ -5,7 +5,8 @@
 
 #include <zip.h>
 
-#include "util/i18n.h"  // for FS, _F
+#include "util/Assert.h"  // for xoj_assert
+#include "util/i18n.h"    // for FS, _F
 
 #include "filesystem.h"  // for path
 
@@ -26,6 +27,7 @@ auto ZipInputStream::read(char* buffer, unsigned int len) noexcept -> int {
 }
 
 void ZipInputStream::open(zip_t* archive, const fs::path& filepath) {
+    xoj_assert(!this->file);
     this->file = zip_fopen(archive, filepath.string().c_str(), 0);
 
     if (!this->file) {
