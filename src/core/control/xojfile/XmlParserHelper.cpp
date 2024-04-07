@@ -11,7 +11,7 @@
 
 #include <glib.h>
 
-#include "control/xojfile/XmlNames.h"
+#include "control/xojfile/XmlAttrs.h"
 #include "model/LineStyle.h"
 #include "model/StrokeStyle.h"
 #include "util/Color.h"

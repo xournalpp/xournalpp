@@ -6,7 +6,7 @@
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "control/xml/XmlNode.h"               // for XmlNode
 #include "control/xml/XmlTextNode.h"           // for XmlTextNode
-#include "control/xojfile/XmlNames.h"          // for XmlAttrs
+#include "control/xojfile/XmlAttrs.h"          // for XmlAttrs
 #include "model/PageType.h"                    // for PageTypeFormat, PageType
 #include "model/XojPage.h"                     // for XojPage
 

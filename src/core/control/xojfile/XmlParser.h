@@ -21,6 +21,7 @@
 
 #include "control/xojfile/InputStream.h"
 #include "control/xojfile/XmlParserHelper.h"
+#include "control/xojfile/XmlTags.h"
 
 #include "config-debug.h"
 #include "filesystem.h"
@@ -55,25 +56,6 @@ public:
     int parse(const std::function<int(XmlParser*)>& processNodeFunction = &XmlParser::processRootNode);
 
 private:
-    enum class TagType : size_t {
-        UNKNOWN,
-        XOURNAL,
-        MRWRITER,
-        TITLE,
-        PREVIEW,
-        PAGE,
-        AUDIO,
-        BACKGROUND,
-        LAYER,
-        TIMESTAMP,
-        STROKE,
-        TEXT,
-        IMAGE,
-        TEXIMAGE,
-        ATTACHMENT
-    };
-
-
     int processRootNode();
     int processDocumentChildNode();
     int processPageChildNode();
@@ -106,19 +88,18 @@ private:
     /**
      * Add the current node's tag to the hierarchy stack and return it
      */
-    TagType openTag();
+    XmlTags::Type openTag();
     /**
      * Remove the specified tag from the hierarchy stack. This function also
      * checks the document integrity together with `openTag()`: each opening
      * tag matches exactly one closing tag of the same name. It may throw an
      * exception if the document structure is not sound.
      */
-    void closeTag(TagType type);
+    void closeTag(XmlTags::Type type);
 
-    const std::string& tagTypeToName(TagType type) const;
-    TagType tagNameToType(const std::string& name) const;
+    XmlTags::Type tagNameToType(const std::string& name) const;
     const char* currentName();
-    TagType currentTagType();
+    XmlTags::Type currentTagType();
 
 #ifdef DEBUG_XML_PARSER
     void debugPrintNode();
@@ -129,7 +110,7 @@ private:
     xmlTextReaderPtr reader;
     LoadHandler* handler;
 
-    std::stack<TagType> hierarchy;
+    std::stack<XmlTags::Type> hierarchy;
 
     bool pdfFilenameParsed;
 
