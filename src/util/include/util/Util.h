@@ -19,9 +19,15 @@
 #include <utility>
 
 #include <cairo.h>    // for cairo_t
-#include <cxxabi.h>   // for __cxa_demangle
 #include <glib.h>     // for G_PRIORITY_DEFAULT_IDLE, gboolean, gchar, gint
 #include <gtk/gtk.h>  // for GtkWidget
+
+#ifdef __has_include
+#if __has_include(<cxxabi.h>)
+#include <cxxabi.h>  // for __cxa_demangle
+#define XOJ_USE_CXXABI
+#endif
+#endif
 
 #include "util/glib_casts.h"
 
@@ -93,15 +99,20 @@ constexpr const auto DPI_NORMALIZATION_FACTOR = 72.0;
  */
 template <typename T>
 std::string demangledTypeName(T var) {
-    const char* mangledName = typeid(var).name();
-    char* demangledName = abi::__cxa_demangle(mangledName, nullptr, nullptr, nullptr);
+    const char* name = typeid(var).name();
+#ifdef XOJ_USE_CXXABI
+    char* demangledName = abi::__cxa_demangle(name, nullptr, nullptr, nullptr);
     if (demangledName) {
         auto nameStr = std::string(demangledName);
         std::free(demangledName);
         return nameStr;
     } else {
-        return std::string(mangledName) + " (demangling failed)";
+        return std::string(name) + " (demangling failed)";
     }
+#else
+    // We don't know how to demangle the name, or it might not be mangled at all
+    return name;
+#endif
 }
 
 }  // namespace Util
