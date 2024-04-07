@@ -108,17 +108,17 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 
     unsigned char alpha = 0xff;
 
+    if (t >= StrokeTool::NAMES.size()) {
+        g_warning("Unknown StrokeTool::Value: %d", static_cast<unsigned int>(t));
+        t = StrokeTool::PEN;
+    }
+
+    stroke->setAttrib(XmlAttrs::TOOL_STR, StrokeTool::NAMES[t]);
+
     if (t == StrokeTool::PEN) {
-        stroke->setAttrib(XmlAttrs::TOOL_STR, "pen");
         writeTimestamp(s, stroke);
-    } else if (t == StrokeTool::ERASER) {
-        stroke->setAttrib(XmlAttrs::TOOL_STR, "eraser");
     } else if (t == StrokeTool::HIGHLIGHTER) {
-        stroke->setAttrib(XmlAttrs::TOOL_STR, "highlighter");
         alpha = 0x7f;
-    } else {
-        g_warning("Unknown StrokeTool::Value");
-        stroke->setAttrib(XmlAttrs::TOOL_STR, "pen");
     }
 
     stroke->setAttrib(XmlAttrs::COLOR_STR, getColorStr(s->getColor(), alpha).c_str());
@@ -148,17 +148,14 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
         stroke->setAttrib(XmlAttrs::FILL_STR, s->getFill());
     }
 
-    const StrokeCapStyle capStyle = s->getStrokeCapStyle();
-    if (capStyle == StrokeCapStyle::BUTT) {
-        stroke->setAttrib(XmlAttrs::CAPSTYLE_STR, "butt");
-    } else if (capStyle == StrokeCapStyle::ROUND) {
-        stroke->setAttrib(XmlAttrs::CAPSTYLE_STR, "round");
-    } else if (capStyle == StrokeCapStyle::SQUARE) {
-        stroke->setAttrib(XmlAttrs::CAPSTYLE_STR, "square");
-    } else {
-        g_warning("Unknown stroke cap type: %i", capStyle);
-        stroke->setAttrib(XmlAttrs::CAPSTYLE_STR, "round");
+    StrokeCapStyle capStyle = s->getStrokeCapStyle();
+
+    if (capStyle >= STROKE_CAP_STYLE_NAMES.size()) {
+        g_warning("Unknown stroke cap type: %d", capStyle);
+        capStyle = StrokeCapStyle::ROUND;
     }
+
+    stroke->setAttrib(XmlAttrs::CAPSTYLE_STR, STROKE_CAP_STYLE_NAMES[capStyle]);
 
     if (s->getLineStyle().hasDashes()) {
         stroke->setAttrib(XmlAttrs::STYLE_STR, StrokeStyle::formatStyle(s->getLineStyle()));
