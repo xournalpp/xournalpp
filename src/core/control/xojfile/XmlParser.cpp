@@ -16,13 +16,15 @@
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "control/xojfile/InputStream.h"       // for InputStream
 #include "control/xojfile/LoadHandler.h"       // for LoadHandler
-#include "control/xojfile/XmlNames.h"          // for XmlAttrs
+#include "control/xojfile/XmlAttrs.h"          // for XmlAttrs
 #include "control/xojfile/XmlParserHelper.h"   // for getAttrib...
+#include "control/xojfile/XmlTags.h"           // for XmlTags
 #include "model/PageType.h"                    // for PageType
 #include "model/Point.h"                       // for Point
 #include "model/Stroke.h"                      // for StrokeTool, StrokeCapStyle
 #include "util/Assert.h"                       // for xoj_assert
 #include "util/Color.h"                        // for Color
+#include "util/EnumIndexedArray.h"             // for EnumIndexedArray
 #include "util/i18n.h"                         // for FS, _F
 #include "util/safe_casts.h"                   // for as_unsigned
 
@@ -37,6 +39,9 @@
 #define DEBUG_PARSER(f)
 #endif
 
+
+static constexpr auto& TAG_NAMES = XmlTags::NAMES;
+using TagType = XmlTags::Type;
 
 static auto readCallback(void* context, char* buffer, int len) -> int {
     auto* input = reinterpret_cast<InputStream*>(context);
@@ -185,8 +190,7 @@ auto XmlParser::processDocumentChildNode() -> int {
         case XML_TEXT_NODE: {
             // ignore text from tags above (title or preview), print a warning otherwise
             if (this->hierarchy.top() != TagType::TITLE && this->hierarchy.top() != TagType::PREVIEW) {
-                g_warning("XML parser: Ignoring unexpected text under tag \"%s\"",
-                          tagTypeToName(this->hierarchy.top()).c_str());
+                g_warning("XML parser: Ignoring unexpected text under tag \"%s\"", TAG_NAMES[this->hierarchy.top()]);
             }
             return xmlTextReaderRead(this->reader);
         }
@@ -311,7 +315,7 @@ auto XmlParser::processLayerChildNode() -> int {
                     break;
                 default:
                     g_warning("XML parser: Ignoring unexpected text under tag \"%s\"",
-                              tagTypeToName(this->hierarchy.top()).c_str());
+                              TAG_NAMES[this->hierarchy.top()]);
                     break;
             }
             return xmlTextReaderRead(this->reader);
@@ -730,30 +734,16 @@ void XmlParser::closeTag(TagType type) {
     // Check that the document structure is not messed up
     if (this->hierarchy.empty()) {
         throw std::runtime_error(
-                FS(_F("Error parsing XML file: found closing tag \"{1}\" at document root") % tagTypeToName(type)));
+                FS(_F("Error parsing XML file: found closing tag \"{1}\" at document root") % TAG_NAMES[type]));
     }
     if (this->hierarchy.top() != type) {
         throw std::runtime_error(
                 FS(_F("Error parsing XML file: closing tag \"{1}\" does not correspond to last open element \"{2}\"") %
-                   tagTypeToName(type) % tagTypeToName(this->hierarchy.top())));
+                   TAG_NAMES[type] % TAG_NAMES[this->hierarchy.top()]));
     }
 
     // Go up one level in the hierarchy
     this->hierarchy.pop();
-}
-
-auto XmlParser::tagTypeToName(TagType type) const -> const std::string& {
-    static const std::unordered_map<TagType, std::string> nameMap = {
-            {TagType::UNKNOWN, "[unknown]"},    {TagType::XOURNAL, "xournal"},
-            {TagType::MRWRITER, "MrWriter"},    {TagType::TITLE, "title"},
-            {TagType::PREVIEW, "preview"},      {TagType::PAGE, "page"},
-            {TagType::AUDIO, "audio"},          {TagType::BACKGROUND, "background"},
-            {TagType::LAYER, "layer"},          {TagType::TIMESTAMP, "timestamp"},
-            {TagType::STROKE, "stroke"},        {TagType::TEXT, "text"},
-            {TagType::IMAGE, "image"},          {TagType::TEXIMAGE, "teximage"},
-            {TagType::ATTACHMENT, "attachment"}};
-
-    return nameMap.at(type);
 }
 
 auto XmlParser::tagNameToType(const std::string& name) const -> TagType {
