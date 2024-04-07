@@ -7,6 +7,7 @@
 
 #include <zlib.h>  // for gzclose, gzread, gzeof, gzerror
 
+#include "util/Assert.h"  // for xoj_assert
 #include "util/GzUtil.h"  // for GzUtil
 #include "util/i18n.h"    // for FS, _F
 
@@ -35,6 +36,7 @@ auto GzInputStream::read(char* buffer, unsigned int len) noexcept -> int {
 }
 
 void GzInputStream::open(const fs::path& filepath) {
+    xoj_assert(!this->file);
     this->file = GzUtil::openPath(filepath, "r");
 
     if (!this->file) {
