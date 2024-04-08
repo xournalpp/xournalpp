@@ -4,6 +4,7 @@
 
 #include "control/Control.h"
 #include "control/settings/Settings.h"
+#include "gui/MainWindow.h"
 #include "util/raii/CairoWrappers.h"
 
 void PagePreviewDecoration::drawDecoration(cairo_t* cr, SidebarPreviewPageEntry* pageEntry, Control* control) {
@@ -27,7 +28,7 @@ void PagePreviewDecoration::drawPageNumberBelowPreview(cairo_t* cr, SidebarPrevi
     xoj::util::CairoSaveGuard saveGuard(cr);
     cairo_text_extents_t extents;
     std::string pageNumber = std::to_string(pageEntry->getIndex() + 1);
-    Color color = control->getSettings()->isDarkTheme() ? Colors::white : Colors::xopp_darkslategray;
+    Color color = control->getWindow()->isDarkTheme() ? Colors::white : Colors::xopp_darkslategray;
     if (pageEntry->isSelected()) {
         color = control->getSettings()->getBorderColor();
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk+" version="3.18"/>
+  <requires lib="gtk+" version="3.24"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
     <property name="upper">10</property>
     <property name="value">1</property>
@@ -3148,22 +3148,6 @@ This setting can make it easier to draw with touch. </property>
                                                       </packing>
                                                     </child>
                                                     <child>
-                                                      <object class="GtkCheckButton" id="cbDarkTheme">
-                                                        <property name="label" translatable="yes">Dark Theme (requires restart)</property>
-                                                        <property name="name">cbDarkTheme</property>
-                                                        <property name="visible">True</property>
-                                                        <property name="can-focus">True</property>
-                                                        <property name="receives-default">False</property>
-                                                        <property name="xalign">0</property>
-                                                        <property name="draw-indicator">True</property>
-                                                      </object>
-                                                      <packing>
-                                                        <property name="left-attach">0</property>
-                                                        <property name="top-attach">4</property>
-                                                        <property name="width">2</property>
-                                                      </packing>
-                                                    </child>
-                                                    <child>
                                                       <object class="GtkCheckButton" id="cbStockIcons">
                                                         <property name="label" translatable="yes">Use available Stock Icons (requires restart)</property>
                                                         <property name="name">cbStockIcons</property>
@@ -3187,7 +3171,7 @@ This setting can make it easier to draw with touch. </property>
                                                           <object class="GtkLabel">
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">False</property>
-                                                            <property name="label" translatable="yes">Icon Theme</property>
+                                                            <property name="label" translatable="yes">Icon Theme:</property>
                                                             <property name="xalign">0</property>
                                                           </object>
                                                           <packing>
@@ -3201,6 +3185,8 @@ This setting can make it easier to draw with touch. </property>
                                                             <property name="name">cbIconTheme</property>
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">False</property>
+                                                            <property name="margin-start">6</property>
+                                                            <property name="margin-end">6</property>
                                                             <property name="active">0</property>
                                                             <items>
                                                             <item id="iconsColor" translatable="yes">Color</item>
@@ -3213,11 +3199,55 @@ This setting can make it easier to draw with touch. </property>
                                                             <property name="position">1</property>
                                                           </packing>
                                                         </child>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">3</property>
+                                                        <property name="width">2</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkBox">
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">False</property>
                                                         <child>
                                                           <object class="GtkLabel">
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">False</property>
-                                                            <property name="label" translatable="yes">(requires restart)</property>
+                                                            <property name="label" translatable="yes">Theme Variant:</property>
+                                                            <property name="xalign">0</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">0</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkComboBoxText" id="cbThemeVariant">
+                                                            <property name="name">cbIconTheme</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="margin-start">6</property>
+                                                            <property name="margin-end">6</property>
+                                                            <property name="active">0</property>
+                                                            <items>
+                                                            <item id="themeVariantUseSystem" translatable="yes">Use system default</item>
+                                                            <item id="themeVariantForceLight" translatable="yes">Force light theme</item>
+                                                            <item id="themeVariantForceDark" translatable="yes">Force dark theme</item>
+                                                            </items>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">1</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkLabel">
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="label" translatable="yes">(this may not work, depending on your system theme)</property>
                                                           </object>
                                                           <packing>
                                                             <property name="expand">False</property>
@@ -3228,7 +3258,7 @@ This setting can make it easier to draw with touch. </property>
                                                       </object>
                                                       <packing>
                                                         <property name="left-attach">0</property>
-                                                        <property name="top-attach">3</property>
+                                                        <property name="top-attach">4</property>
                                                         <property name="width">2</property>
                                                       </packing>
                                                     </child>
