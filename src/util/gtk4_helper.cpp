@@ -5,6 +5,8 @@
 #include "util/Assert.h"
 #include "util/raii/CStringWrapper.h"
 
+#if GTK_MAJOR_VERSION == 3
+
 namespace {
 void set_child(GtkContainer* c, GtkWidget* child) {
     gtk_container_foreach(
@@ -172,3 +174,10 @@ GtkWidget* gtk_list_box_row_get_child(GtkListBoxRow* row) { return gtk_bin_get_c
 
 /**** GtkEventController ****/
 GdkEvent* gtk_event_controller_get_current_event(GtkEventController*) { return gtk_get_current_event(); }
+
+/**** Gtk ****/
+void gtk_show_uri(GtkWindow* parent, const char* uri, guint32 timestamp) {
+    gtk_show_uri_on_window(parent, uri, timestamp, nullptr);
+}
+
+#endif

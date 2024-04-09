@@ -9,8 +9,8 @@ steps:
   - bash: |
       sudo apt-get update
       sudo apt-get install -y librsvg2-dev gcc-${{ parameters.gcc_version }} g++-${{ parameters.gcc_version }} cmake ninja-build \
-        libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-        ibus-gtk3 fcitx-frontend-gtk3 fcitx5-frontend-gtk3 uim-gtk3-immodule gcin-gtk3-immodule \
+        libgtk-4-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
+        ibus-gtk4 fcitx5-frontend-gtk4 \
         liblua5.3-dev libzip-dev gettext help2man libgtest-dev libgtksourceview-4-dev
       g++ --version
     displayName: 'Install dependencies'
