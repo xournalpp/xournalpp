@@ -211,7 +211,7 @@ private:
                 g_source_remove(id);
             }
         }
-        static bool callback(TextEditor* te);
+        static void callback(TextEditor* te);
 
     private:
         unsigned int id = 0;  // handler id
