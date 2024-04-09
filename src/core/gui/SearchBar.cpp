@@ -23,33 +23,42 @@ SearchBar::SearchBar(Control* control): control(control) {
 
     GtkWidget* next = win->get("btSearchForward");
     GtkWidget* previous = win->get("btSearchBack");
-    g_signal_connect(next, "clicked", G_CALLBACK(+[](GtkButton* button, SearchBar* self) { self->searchNext(); }),
-                     this);
+    g_signal_connect(next, "clicked",
+                     G_CALLBACK(+[](GtkButton*, gpointer d) { static_cast<SearchBar*>(d)->searchNext(); }), this);
     g_signal_connect(previous, "clicked",
-                     G_CALLBACK(+[](GtkButton* button, SearchBar* self) { self->searchPrevious(); }), this);
+                     G_CALLBACK(+[](GtkButton*, gpointer d) { static_cast<SearchBar*>(d)->searchPrevious(); }), this);
 
-    // TODO(fabian): When keybindings are implemented, handle previous search keybinding properly
     GtkWidget* searchTextField = win->get("searchTextField");
     g_signal_connect(searchTextField, "search-changed", G_CALLBACK(searchTextChangedCallback), this);
-    // Enable next/previous search when pressing Enter / Shift+Enter
-    g_signal_connect(searchTextField, "key-press-event",
-                     G_CALLBACK(+[](GtkWidget* entry, GdkEventKey* event, SearchBar* self) {
-                         if (event->keyval == GDK_KEY_Return) {
-                             if (event->state & GDK_SHIFT_MASK) {
-                                 self->searchPrevious();
-                             } else {
-                                 self->searchNext();
-                             }
-                             // Grab focus again since searching will take away focus
-                             gtk_widget_grab_focus(entry);
-                             return true;
-                         } else if (event->keyval == GDK_KEY_Escape) {
-                             self->showSearchBar(false);
-                             return true;
-                         }
-                         return false;
+    g_signal_connect(searchTextField, "stop-search",
+                     G_CALLBACK(+[](GtkSearchEntry*, gpointer d) { static_cast<SearchBar*>(d)->showSearchBar(false); }),
+                     this);
+    g_signal_connect(searchTextField, "next-match", G_CALLBACK(+[](GtkSearchEntry* e, gpointer d) {
+                         static_cast<SearchBar*>(d)->searchNext();
+                         // Grab focus again since searching will take away focus
+                         gtk_widget_grab_focus(GTK_WIDGET(e));
                      }),
                      this);
+    g_signal_connect(searchTextField, "previous-match", G_CALLBACK(+[](GtkSearchEntry* e, gpointer d) {
+                         static_cast<SearchBar*>(d)->searchPrevious();
+                         // Grab focus again since searching will take away focus
+                         gtk_widget_grab_focus(GTK_WIDGET(e));
+                     }),
+                     this);
+#if GTK_MAJOR_VERSION == 3
+    GtkBindingSet* bindingSet = gtk_binding_set_by_class(GTK_SEARCH_ENTRY_GET_CLASS(searchTextField));
+    gtk_binding_entry_add_signal(bindingSet, GDK_KEY_Return, GdkModifierType(0), "next-match", 0);
+    gtk_binding_entry_add_signal(bindingSet, GDK_KEY_Return, GDK_SHIFT_MASK, "previous-match", 0);
+#else
+    GtkEventController* ctrl = gtk_shortcut_controller_new();
+    gtk_shortcut_controller_add_shortcut(GTK_SHORTCUT_CONTROLLER(ctrl),
+                                         gtk_shortcut_new(gtk_keyval_trigger_new(GDK_KEY_Return, GdkModifierType(0)),
+                                                          gtk_signal_action_new("next-match")));
+    gtk_shortcut_controller_add_shortcut(GTK_SHORTCUT_CONTROLLER(ctrl),
+                                         gtk_shortcut_new(gtk_keyval_trigger_new(GDK_KEY_Return, GDK_SHIFT_MASK),
+                                                          gtk_signal_action_new("previous-match")));
+    gtk_widget_add_controller(searchTextField, ctrl);
+#endif
 
     cssTextFild = gtk_css_provider_new();
     gtk_style_context_add_provider(gtk_widget_get_style_context(win->get("searchTextField")),
@@ -99,7 +108,7 @@ void SearchBar::search(const char* text) {
 }
 
 void SearchBar::searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar) {
-    const char* text = gtk_entry_get_text(entry);
+    const char* text = gtk_entry_buffer_get_text(gtk_entry_get_buffer(entry));
     searchBar->search(text);
 }
 
@@ -110,7 +119,7 @@ void SearchBar::search(Fun next) {
 
     MainWindow* win = control->getWindow();
     GtkWidget* searchTextField = win->get("searchTextField");
-    const char* text = gtk_entry_get_text(GTK_ENTRY(searchTextField));
+    const char* text = gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(searchTextField)));
     GtkWidget* lbSearchState = win->get("lbSearchState");
     if (*text == 0) {
         return;
