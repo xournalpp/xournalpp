@@ -867,17 +867,14 @@ void TextEditor::resetImContext() {
 /*
  * Blink!
  */
-auto TextEditor::BlinkTimer::callback(TextEditor* te) -> bool {
+void TextEditor::BlinkTimer::callback(TextEditor* te) {
     te->cursorVisible = !te->cursorVisible;
-    auto time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
-    te->blinkTimer = gdk_threads_add_timeout(time, xoj::util::wrap_for_once_v<callback>, te);
+    guint time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
+    te->blinkTimer = g_timeout_add(time, xoj::util::wrap_for_once_v<callback>, te);
 
     Range dirtyRange = te->cursorBox;
     dirtyRange.translate(te->textElement->getX(), te->textElement->getY());
     te->viewPool->dispatch(xoj::view::TextEditionView::FLAG_DIRTY_REGION, dirtyRange);
-
-    // Remove ourselves
-    return false;
 }
 
 void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
