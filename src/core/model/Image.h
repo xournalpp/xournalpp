@@ -49,7 +49,7 @@ public:
     /// \deprecated Pass the raw image data instead.
     ///
     /// FIXME: remove this method. Currently, it is used by Control::clipboardPasteImage.
-    [[deprecated]] void setImage(GdkPixbuf* img);
+    // [[deprecated]] void setImage(GdkPixbuf* img);
 
     /// Returns the internal surface that contains the rendered image data.
     ///

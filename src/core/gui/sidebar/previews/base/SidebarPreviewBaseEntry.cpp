@@ -20,9 +20,9 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, co
         sidebar(sidebar), page(page), button(gtk_button_new(), xoj::util::adopt) {
 
     updateSize();
-    gtk_widget_set_events(this->button.get(), GDK_EXPOSURE_MASK);
+    // gtk_widget_set_events(this->button.get(), GDK_EXPOSURE_MASK);
 
-    g_signal_connect(this->button.get(), "draw", G_CALLBACK(drawCallback), this);
+    // g_signal_connect(this->button.get(), "draw", G_CALLBACK(drawCallback), this);
 
     g_signal_connect(this->button.get(), "clicked", G_CALLBACK(+[](GtkButton*, gpointer self) {
                          static_cast<SidebarPreviewBaseEntry*>(self)->mouseButtonPressCallback();
@@ -30,19 +30,19 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, co
                      }),
                      this);
 
-    const auto clickCallback = G_CALLBACK(+[](GtkWidget*, GdkEvent* event, SidebarPreviewBaseEntry* self) {
-        // Open context menu on right mouse click
-        if (event->type == GDK_BUTTON_PRESS) {
-            auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
-            if (mouseEvent->button == 3) {
-                self->mouseButtonPressCallback();
-                self->sidebar->openPreviewContextMenu(event);
-                return true;
-            }
-        }
-        return false;
-    });
-    g_signal_connect_after(this->button.get(), "button-press-event", clickCallback, this);
+    // const auto clickCallback = G_CALLBACK(+[](GtkWidget*, GdkEvent* event, SidebarPreviewBaseEntry* self) {
+    //     // Open context menu on right mouse click
+    //     if (event->type == GDK_BUTTON_PRESS) {
+    //         auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
+    //         if (mouseEvent->button == 3) {
+    //             self->mouseButtonPressCallback();
+    //             self->sidebar->openPreviewContextMenu(event);
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // });
+    // g_signal_connect_after(this->button.get(), "button-press-event", clickCallback, this);
 }
 
 SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry() {

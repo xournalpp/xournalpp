@@ -28,49 +28,49 @@ public:
     ~ToolbarAdapter();
 
 private:
-    void cleanupToolbars();
-    void prepareToolItems();
-    void cleanToolItem(GtkToolItem* it);
-    void prepareToolItem(GtkToolItem* it);
-    void showToolbar();
+    // void cleanupToolbars();
+    // void prepareToolItems();
+    // void cleanToolItem(GtkToolItem* it);
+    // void prepareToolItem(GtkToolItem* it);
+    // void showToolbar();
 
 private:
-    /**
-     * Drag a Toolitem from toolbar
-     */
-    static void toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, void* unused);
-
-    /**
-     * Drag a Toolitem from toolbar STOPPED
-     */
-    static void toolitemDragEnd(GtkWidget* widget, GdkDragContext* context, void* unused);
-
-    /**
-     * Remove a toolbar item from the tool where it was
-     */
-    void removeFromToolbar(AbstractToolItem* item, const std::string& toolbarName, int id);
-    static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
-                                    guint info, guint time, ToolbarAdapter* adapter);
-
-    /**
-     * A tool item was dragged to the toolbar
-     */
-    static bool toolbarDragMotionCb(GtkWidget* toolbar, GdkDragContext* context, gint x, gint y, guint time,
-                                    ToolbarAdapter* adapter);
-    static void toolbarDragLeafeCb(GtkWidget* toolbar, GdkDragContext* context, guint time, ToolbarAdapter* adapter);
-    static void toolbarDragDataReceivedCb(GtkWidget* toolbar, GdkDragContext* context, gint x, gint y,
-                                          GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter);
-
-    /**
-     * @brief Wrapper around gtk_toolbar_get_drop index with coorect coordinate handling
-     *
-     * @param toolbar the corresponding toolbar for the drop index
-     * @param x coordinate in toolbar coordinate system
-     * @param y coordinate in toolbar coordinate system
-     * @param horizontal denotes whether the toolbar is horizontal
-     * @return gint position at which drop item should be inserted
-     */
-    static gint toolbarGetDropIndex(GtkWidget* toolbar, gint x, gint y, bool horizontal);
+    // /**
+    //  * Drag a Toolitem from toolbar
+    //  */
+    // static void toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, void* unused);
+    //
+    // /**
+    //  * Drag a Toolitem from toolbar STOPPED
+    //  */
+    // static void toolitemDragEnd(GtkWidget* widget, GdkDragContext* context, void* unused);
+    //
+    // /**
+    //  * Remove a toolbar item from the tool where it was
+    //  */
+    // void removeFromToolbar(AbstractToolItem* item, const std::string& toolbarName, int id);
+    // static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
+    //                                 guint info, guint time, ToolbarAdapter* adapter);
+    //
+    // /**
+    //  * A tool item was dragged to the toolbar
+    //  */
+    // static bool toolbarDragMotionCb(GtkWidget* toolbar, GdkDragContext* context, gint x, gint y, guint time,
+    //                                 ToolbarAdapter* adapter);
+    // static void toolbarDragLeafeCb(GtkWidget* toolbar, GdkDragContext* context, guint time, ToolbarAdapter* adapter);
+    // static void toolbarDragDataReceivedCb(GtkWidget* toolbar, GdkDragContext* context, gint x, gint y,
+    //                                       GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter);
+    //
+    // /**
+    //  * @brief Wrapper around gtk_toolbar_get_drop index with coorect coordinate handling
+    //  *
+    //  * @param toolbar the corresponding toolbar for the drop index
+    //  * @param x coordinate in toolbar coordinate system
+    //  * @param y coordinate in toolbar coordinate system
+    //  * @param horizontal denotes whether the toolbar is horizontal
+    //  * @return gint position at which drop item should be inserted
+    //  */
+    // static gint toolbarGetDropIndex(GtkWidget* toolbar, gint x, gint y, bool horizontal);
 
 private:
     GtkWidget* w;

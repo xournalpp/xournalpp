@@ -150,16 +150,16 @@ auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
             ydir = 1;
             break;
         case GDK_KEY_r:
-            angle = (event.state & GDK_MOD1_MASK) ? -ROTATE_AMOUNT_SMALL : -ROTATE_AMOUNT;
+            angle = (event.state & GDK_ALT_MASK) ? -ROTATE_AMOUNT_SMALL : -ROTATE_AMOUNT;
             break;
         case GDK_KEY_R:  // r like "rotate"
-            angle = (event.state & GDK_MOD1_MASK) ? ROTATE_AMOUNT_SMALL : ROTATE_AMOUNT;
+            angle = (event.state & GDK_ALT_MASK) ? ROTATE_AMOUNT_SMALL : ROTATE_AMOUNT;
             break;
         case GDK_KEY_s:
-            scale = (event.state & GDK_MOD1_MASK) ? SCALE_AMOUNT_SMALL : SCALE_AMOUNT;
+            scale = (event.state & GDK_ALT_MASK) ? SCALE_AMOUNT_SMALL : SCALE_AMOUNT;
             break;
         case GDK_KEY_S:
-            scale = (event.state & GDK_MOD1_MASK) ? 1. / SCALE_AMOUNT_SMALL : 1. / SCALE_AMOUNT;
+            scale = (event.state & GDK_ALT_MASK) ? 1. / SCALE_AMOUNT_SMALL : 1. / SCALE_AMOUNT;
             break;
         case GDK_KEY_m:
             controller->markPoint(translationX, translationY);
@@ -171,7 +171,7 @@ auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
         const double s = std::sin(rotation);
         double xshift{0.0};
         double yshift{0.0};
-        const double amount = (event.state & GDK_MOD1_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
+        const double amount = (event.state & GDK_ALT_MASK) ? MOVE_AMOUNT_SMALL : MOVE_AMOUNT;
         if (event.state & GDK_SHIFT_MASK) {
             xshift = amount * (c * xdir - s * ydir);
             yshift = amount * (s * xdir + c * ydir);

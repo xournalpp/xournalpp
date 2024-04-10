@@ -49,27 +49,30 @@ private:
 
 
 private:
-    static void dragDataReceived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data,
-                                 guint info, guint time, ToolbarCustomizeDialog* dlg);
-    static void toolbarDragLeafeCb(GtkToolbar* toolbar, GdkDragContext* context, guint time,
-                                   ToolbarCustomizeDialog* dlg);
-    static void toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y,
-                                          GtkSelectionData* data, guint info, guint time, ToolbarCustomizeDialog* dlg);
-
-    static void toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data);
-    static void toolitemDragEnd(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data);
-    static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
-                                    guint info, guint time, ToolItemDragData* data);
-
-    static void toolitemColorDragBegin(GtkWidget* widget, GdkDragContext* context, ColorToolItemDragData* data);
-    static void toolitemColorDragEnd(GtkWidget* widget, GdkDragContext* context, ColorToolItemDragData* data);
-    static void toolitemColorDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
-                                         guint info, guint time, ColorToolItemDragData* data);
-
-    static void toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* unused);
-    static void toolitemDragEndSeparator(GtkWidget* widget, GdkDragContext* context, void* unused);
-    static void toolitemDragDataGetSeparator(GtkWidget* widget, GdkDragContext* context,
-                                             GtkSelectionData* selection_data, guint info, guint time, void* unused);
+    // static void dragDataReceived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData*
+    // data,
+    //                              guint info, guint time, ToolbarCustomizeDialog* dlg);
+    // static void toolbarDragLeafeCb(GtkToolbar* toolbar, GdkDragContext* context, guint time,
+    //                                ToolbarCustomizeDialog* dlg);
+    // static void toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y,
+    //                                       GtkSelectionData* data, guint info, guint time, ToolbarCustomizeDialog*
+    //                                       dlg);
+    //
+    // static void toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data);
+    // static void toolitemDragEnd(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data);
+    // static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
+    //                                 guint info, guint time, ToolItemDragData* data);
+    //
+    // static void toolitemColorDragBegin(GtkWidget* widget, GdkDragContext* context, ColorToolItemDragData* data);
+    // static void toolitemColorDragEnd(GtkWidget* widget, GdkDragContext* context, ColorToolItemDragData* data);
+    // static void toolitemColorDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData*
+    // selection_data,
+    //                                      guint info, guint time, ColorToolItemDragData* data);
+    //
+    // static void toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* unused);
+    // static void toolitemDragEndSeparator(GtkWidget* widget, GdkDragContext* context, void* unused);
+    // static void toolitemDragDataGetSeparator(GtkWidget* widget, GdkDragContext* context,
+    //                                          GtkSelectionData* selection_data, guint info, guint time, void* unused);
 
     // void freeIconview();
 

@@ -31,9 +31,6 @@ private:
     xoj::util::Point<double> priLastAbs{-1.0, -1.0};
     xoj::util::Point<double> secLastAbs{-1.0, -1.0};
 
-    xoj::util::Point<double> priLastRel{-1.0, -1.0};
-    xoj::util::Point<double> secLastRel{-1.0, -1.0};
-
     // True, if a zoom sequence may be started by a motion event.
     bool startZoomReady{false};
 

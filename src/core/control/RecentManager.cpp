@@ -15,9 +15,10 @@
 template <template <class> class Comp>
 inline auto compareGtkRecentInfo(GtkRecentInfo const& a, GtkRecentInfo const& b) -> bool {
     auto deconstify = [](auto&& ref) { return const_cast<GtkRecentInfo*>(&ref); };  // NOLINT
-    auto a_time = gtk_recent_info_get_modified(deconstify(a));                      // actually const
-    auto b_time = gtk_recent_info_get_modified(deconstify(b));
-    return Comp<time_t>{}(a_time, b_time);
+    const GDateTime* a_time = gtk_recent_info_get_modified(deconstify(a));          // actually const
+    const GDateTime* b_time = gtk_recent_info_get_modified(deconstify(b));
+    xoj_assert(a_time && b_time);
+    return Comp<int>{}(g_date_time_compare(a_time, b_time), 0);
 }
 
 inline auto operator<(GtkRecentInfo const& a, GtkRecentInfo const& b) -> bool {
@@ -106,10 +107,6 @@ auto RecentManager::getMostRecent() -> GtkRecentInfoSPtr {
     }
     GtkRecentInfo* mostRecent = static_cast<GtkRecentInfo*>(recent_items->data);
     for (auto& recent: GListView<GtkRecentInfo>(recent_items->next)) {
-        auto time = gtk_recent_info_get_modified(&recent);
-        if (as_signed(time) < 0) {
-            continue;
-        }
         if (getFileType(recent) != XOURNAL_FILE_TYPE) {
             continue;
         }

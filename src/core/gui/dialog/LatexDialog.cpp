@@ -22,6 +22,7 @@
 #include <poppler-document.h>  // for poppler_document_get_n_p...
 #include <poppler-page.h>      // for poppler_page_get_size
 
+#undef USE_GTK_SOURCEVIEW
 #ifdef USE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for GTK_SOURCE_VIEW, gtk_sou...
 #endif
@@ -139,7 +140,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<Latex
         texBoxCssBuilder << "  font-family: '" << fontName << "';";
         texBoxCssBuilder << " } ";
 
-        gtk_css_provider_load_from_data(this->cssProvider.get(), texBoxCssBuilder.str().c_str(), -1, nullptr);
+        gtk_css_provider_load_from_data(this->cssProvider.get(), texBoxCssBuilder.str().c_str(), -1);
 
         // Apply the CSS to both the texBox and the drawing area.
         gtk_style_context_add_provider(gtk_widget_get_style_context(GTK_WIDGET(this->previewDrawingArea)),

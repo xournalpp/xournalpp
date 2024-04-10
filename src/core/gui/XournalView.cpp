@@ -60,7 +60,7 @@ std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t max
     return {lower, upper};
 }
 
-XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
+XournalView::XournalView(GtkViewport* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
     Document* doc = control->getDocument();
     doc->lock();
@@ -72,33 +72,26 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
     registerListener(control);
 
     InputContext* inputContext = new InputContext(this, scrollHandling);
-    this->widget = gtk_xournal_new(this, inputContext);
-    g_object_ref_sink(this->widget);  // take ownership without increasing the ref count
+    this->widget.reset(gtk_xournal_new(this, inputContext), xoj::util::adopt);
 
-    gtk_container_add(GTK_CONTAINER(parent), this->widget);
-    gtk_widget_show(this->widget);
+    gtk_viewport_set_child(parent, this->widget.get());
+    // gtk_widget_show(this->widget);
 
     g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
     this->repaintHandler = std::make_unique<RepaintHandler>(this);
-    this->handRecognition = std::make_unique<HandRecognition>(this->widget, inputContext, control->getSettings());
+    this->handRecognition = std::make_unique<HandRecognition>(this->widget.get(), inputContext, control->getSettings());
 
     control->getZoomControl()->addZoomListener(this);
 
-    gtk_widget_set_can_default(this->widget, true);
-    gtk_widget_grab_default(this->widget);
-
-    gtk_widget_grab_focus(this->widget);
+    gtk_window_set_default_widget(GTK_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(parent), GTK_TYPE_WINDOW)),
+                                  this->widget.get());
+    gtk_widget_grab_focus(this->widget.get());
 
     this->cleanupTimeout = g_timeout_add_seconds(5, xoj::util::wrap_v<clearMemoryTimer>, this);
 }
 
-XournalView::~XournalView() {
-    g_source_remove(this->cleanupTimeout);
-
-    gtk_widget_destroy(this->widget);
-    this->widget = nullptr;
-}
+XournalView::~XournalView() { g_source_remove(this->cleanupTimeout); }
 
 
 auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
@@ -150,7 +143,7 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
         }
 
         int d = REGULAR_MOVE_AMOUNT;
-        if (state == GDK_MOD1_MASK) {
+        if (state == GDK_ALT_MASK) {
             d = SMALL_MOVE_AMOUNT;
         } else if (state == GDK_SHIFT_MASK) {
             d = LARGE_MOVE_AMOUNT;
@@ -174,7 +167,7 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
         }
     }
 
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = gtk_xournal_get_layout(this->widget.get());
 
     if (!state) {
         if (keyval == GDK_KEY_Page_Down || keyval == GDK_KEY_KP_Page_Down) {
@@ -189,7 +182,7 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
 
     if (keyval == GDK_KEY_space) {
         GtkAllocation alloc = {0};
-        gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
+        gtk_widget_get_allocation(gtk_widget_get_parent(this->widget.get()), &alloc);
         int windowHeight = alloc.height - scrollKeySize;
 
         if (!state) {
@@ -327,7 +320,8 @@ auto XournalView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
 void XournalView::onRealized(GtkWidget* widget, XournalView* view) {
     // Disable event compression
     if (gtk_widget_get_realized(view->getWidget())) {
-        gdk_window_set_event_compression(gtk_widget_get_window(view->getWidget()), false);
+        g_warning("Find replacement for gdk_window_set_event_compression()");
+        // gdk_window_set_event_compression(gtk_widget_get_window(view->getWidget()), false);
     } else {
         g_warning("could not disable event compression");
     }
@@ -340,7 +334,7 @@ void XournalView::onSettingsChanged() {
 }
 
 // send the focus back to the appropriate widget
-void XournalView::requestFocus() { gtk_widget_grab_focus(this->widget); }
+void XournalView::requestFocus() { gtk_widget_grab_focus(this->widget.get()); }
 
 auto XournalView::searchTextOnPage(const std::string& text, size_t pageNumber, size_t index, size_t* occurrences,
                                    XojPdfRectangle* matchRect) -> bool {
@@ -427,7 +421,7 @@ void XournalView::scrollTo(size_t pageNo, XojPdfRectangle rect) {
     auto& v = this->viewPages[pageNo];
 
     // Make sure it is visible
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = gtk_xournal_get_layout(this->widget.get());
 
     int x = v->getX() + round_cast<int>(rect.x1 * zoom);
     int y = v->getY() + round_cast<int>(rect.y1 * zoom);
@@ -455,7 +449,7 @@ void XournalView::pageRelativeXY(int offCol, int offRow) {
     int row = view->getMappedRow();
     int col = view->getMappedCol();
 
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = gtk_xournal_get_layout(this->widget.get());
     auto optionalPageIndex = layout->getPageIndexAtGridMap(as_unsigned(row + offRow), as_unsigned(col + offCol));
     if (optionalPageIndex) {
         this->scrollTo(*optionalPageIndex);
@@ -513,7 +507,7 @@ auto XournalView::getVisibleRect(size_t page) const -> Rectangle<double>* {
 }
 
 auto XournalView::getVisibleRect(const XojPageView* redrawable) const -> Rectangle<double>* {
-    return gtk_xournal_get_visible_area(this->widget, redrawable);
+    return gtk_xournal_get_visible_area(this->widget.get(), redrawable);
 }
 
 void XournalView::recreatePdfCache() {
@@ -537,10 +531,10 @@ auto XournalView::getHandRecognition() const -> HandRecognition* { return handRe
  */
 auto XournalView::getScrollHandling() const -> ScrollHandling* { return scrollHandling; }
 
-auto XournalView::getWidget() const -> GtkWidget* { return widget; }
+auto XournalView::getWidget() const -> GtkWidget* { return widget.get(); }
 
 void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = gtk_xournal_get_layout(this->widget.get());
     layout->ensureRectIsVisible(x, y, width, height);
 }
 
@@ -561,7 +555,7 @@ void XournalView::zoomChanged() {
         scrollTo(currentPage);
     } else if (zoom->isZoomSequenceActive()) {
         auto pos = zoom->getScrollPositionAfterZoom();
-        Layout* layout = gtk_xournal_get_layout(this->widget);
+        Layout* layout = gtk_xournal_get_layout(this->widget.get());
         layout->scrollAbs(pos.x, pos.y);
     }
 
@@ -631,17 +625,17 @@ void XournalView::pageInserted(size_t page) {
 
     layoutPages();
     // check which pages are visible and select the most visible page
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = gtk_xournal_get_layout(this->widget.get());
     layout->updateVisibility();
 }
 
 auto XournalView::getZoom() const -> double { return control->getZoomControl()->getZoom(); }
 
-auto XournalView::getDpiScaleFactor() const -> int { return gtk_widget_get_scale_factor(widget); }
+auto XournalView::getDpiScaleFactor() const -> int { return gtk_widget_get_scale_factor(widget.get()); }
 
 void XournalView::clearSelection() {
-    EditSelection* sel = GTK_XOURNAL(widget)->selection;
-    GTK_XOURNAL(widget)->selection = nullptr;
+    EditSelection* sel = GTK_XOURNAL(widget.get())->selection;
+    GTK_XOURNAL(widget.get())->selection = nullptr;
     delete sel;
 
     control->setClipboardHandlerSelection(getSelection());
@@ -668,7 +662,7 @@ void XournalView::deleteSelection(EditSelection* sel) {
 
 void XournalView::setSelection(EditSelection* selection) {
     clearSelection();
-    GTK_XOURNAL(this->widget)->selection = selection;
+    GTK_XOURNAL(this->widget.get())->selection = selection;
 
     control->setClipboardHandlerSelection(getSelection());
 
@@ -714,7 +708,7 @@ void XournalView::setSelection(EditSelection* selection) {
 
 void XournalView::repaintSelection(bool evenWithoutSelection) {
     if (evenWithoutSelection) {
-        gtk_widget_queue_draw(this->widget);
+        gtk_widget_queue_draw(this->widget.get());
         return;
     }
 
@@ -724,11 +718,11 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     }
 
     // repaint always the whole widget
-    gtk_widget_queue_draw(this->widget);
+    gtk_widget_queue_draw(this->widget.get());
 }
 
 void XournalView::layoutPages() {
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+    Layout* layout = gtk_xournal_get_layout(this->widget.get());
     layout->recalculate();
 
     // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be
@@ -740,13 +734,13 @@ void XournalView::layoutPages() {
 
 auto XournalView::getDisplayHeight() const -> int {
     GtkAllocation allocation = {0};
-    gtk_widget_get_allocation(this->widget, &allocation);
+    gtk_widget_get_allocation(this->widget.get(), &allocation);
     return allocation.height;
 }
 
 auto XournalView::getDisplayWidth() const -> int {
     GtkAllocation allocation = {0};
-    gtk_widget_get_allocation(this->widget, &allocation);
+    gtk_widget_get_allocation(this->widget.get(), &allocation);
     return allocation.width;
 }
 
@@ -846,8 +840,8 @@ auto XournalView::getViewPages() const -> std::vector<std::unique_ptr<XojPageVie
 auto XournalView::getCursor() const -> XournalppCursor* { return control->getCursor(); }
 
 auto XournalView::getSelection() const -> EditSelection* {
-    g_return_val_if_fail(this->widget != nullptr, nullptr);
-    g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), nullptr);
+    g_return_val_if_fail(this->widget.get() != nullptr, nullptr);
+    g_return_val_if_fail(GTK_IS_XOURNAL(this->widget.get()), nullptr);
 
-    return GTK_XOURNAL(this->widget)->selection;
+    return GTK_XOURNAL(this->widget.get())->selection;
 }

@@ -185,8 +185,6 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                      const_cast<PageTypeSelectionPopover*>(this));
     gtk_box_append(box, button);
 
-    gtk_widget_show_all(GTK_WIDGET(box));
-
     return popover;
 }
 

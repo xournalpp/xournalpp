@@ -57,14 +57,14 @@ void PenInputHandler::handleScrollEvent(InputEvent const& event) {
 
     // GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK
     // combinations.
-    if (std::abs((this->scrollStartX - event.absoluteX)) < 0.1 &&
-        std::abs((this->scrollStartY - event.absoluteY)) < 0.1) {
+    if (std::abs((this->scrollStartX - event.relativeX)) < 0.1 &&
+        std::abs((this->scrollStartY - event.relativeY)) < 0.1) {
         return;
     }
 
     if (this->scrollOffsetX == 0 && this->scrollOffsetY == 0) {
-        this->scrollOffsetX = this->scrollStartX - event.absoluteX;
-        this->scrollOffsetY = this->scrollStartY - event.absoluteY;
+        this->scrollOffsetX = this->scrollStartX - event.relativeX;
+        this->scrollOffsetY = this->scrollStartY - event.relativeY;
 
         Util::execInUiThread([&]() {
             this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetX, this->scrollOffsetY);
@@ -75,8 +75,8 @@ void PenInputHandler::handleScrollEvent(InputEvent const& event) {
         });
 
         // Update the reference for the scroll-offset
-        this->scrollStartX = event.absoluteX;
-        this->scrollStartY = event.absoluteY;
+        this->scrollStartX = event.relativeX;
+        this->scrollStartY = event.relativeY;
     }
 }
 
@@ -84,7 +84,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->inputContext->focusWidget();
 
     this->lastActionStartTimeStamp = event.timestamp;
-    this->sequenceStartPosition = {event.absoluteX, event.absoluteY};
+    this->sequenceStartPosition = {event.relativeX, event.relativeY};
 
     XojPageView* currentPage = this->getPageAtCurrentPosition(event);
     // set reference data for handling of entering/leaving page
@@ -118,8 +118,8 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
 
     // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
     if (toolType == TOOL_HAND) {
-        this->scrollStartX = event.absoluteX;
-        this->scrollStartY = event.absoluteY;
+        this->scrollStartX = event.relativeX;
+        this->scrollStartY = event.relativeY;
     }
 
     this->sequenceStartPage = currentPage;
@@ -251,8 +251,8 @@ bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
     settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
 
     const double dpmm = settings->getDisplayDpi() / 25.4;
-    const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
-                                   this->sequenceStartPosition.y - event.absoluteY);
+    const double dist = std::hypot(this->sequenceStartPosition.x - event.relativeX,
+                                   this->sequenceStartPosition.y - event.relativeY);
 
     const bool noMovement = dist < tapMaxDistance * dpmm;
     const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < as_unsigned(tapMaxDuration);

@@ -148,11 +148,6 @@ private:
     // static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData*
     // data, guint info, guint time, MainWindow* win);
 
-    /**
-     * Load Overall CSS file with custom icons, other styling and potentially, user changes
-     */
-    static void loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename);
-
 private:
     Control* control;
 

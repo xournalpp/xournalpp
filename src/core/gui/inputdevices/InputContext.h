@@ -71,7 +71,7 @@ private:
      * @param self A pointer to our handler
      * @return Whether the event was handled
      */
-    static bool eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self);
+    static bool eventCallback(GtkEventControllerLegacy* widget, GdkEvent* event, InputContext* self);
 
     /**
      * Handle the events

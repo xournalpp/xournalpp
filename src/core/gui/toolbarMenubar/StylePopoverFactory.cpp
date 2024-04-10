@@ -30,11 +30,12 @@ GtkWidget* StylePopoverFactory::createPopover() const {
                                 popover, GConnectFlags(0));
 #else
     GtkCheckButton* group = nullptr;
-    std::string actionName = std::string("win.") + Action_toString(Action::TOOL_PEN_LINE_STYLE);
-    auto appendLineStyleItem = [&](const char* label, const char* target, const char* icon) {
-        GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
+    std::string actionName = std::string("win.") + Action_toString(styleAction);
+    g_warning("TODO: check is grouping necessary StylePopoverFactory::createPopover()");
+    auto appendItem = [&](const StylePopoverFactory::Entry& e) {
+        GtkWidget* btn = gtk_check_button_new();
         // Is grouping necessary here? The GTK4 doc is unclear
-        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn));
+        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn)));
         gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
         g_signal_connect_object(btn, "toggled", G_CALLBACK(+[](GtkCheckButton*, gpointer popover){
             gtk_popover_popdown(GTK_POPOVER(popover));}), popover, GConnectFlags(0));
@@ -42,7 +43,7 @@ GtkWidget* StylePopoverFactory::createPopover() const {
         gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), e.target.get());
         if (!e.icon.empty()) {
             GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-            gtk_box_append(GTK_BOX(hbox), gtk_image_new_from_icon_name(e.icon.c_str(), GTK_ICON_SIZE_LARGE_TOOLBAR));
+            gtk_box_append(GTK_BOX(hbox), gtk_image_new_from_icon_name(e.icon.c_str()));
             gtk_box_append(GTK_BOX(hbox), gtk_label_new(e.name.c_str()));
             gtk_button_set_child(GTK_BUTTON(btn), hbox);
         } else {
@@ -55,6 +56,5 @@ GtkWidget* StylePopoverFactory::createPopover() const {
         appendItem(e);
     }
 
-    gtk_widget_show_all(box);
     return popover;
 }
