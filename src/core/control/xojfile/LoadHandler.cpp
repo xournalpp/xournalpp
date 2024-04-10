@@ -32,7 +32,8 @@
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/i18n.h"               // for _F, FC, FS, _
 #include "util/raii/GObjectSPtr.h"
-#include "util/safe_casts.h"  // for as_signed, as_unsigned
+#include "util/raii/PangoSPtr.h"  // for PangoAttrListSPtr
+#include "util/safe_casts.h"      // for as_signed, as_unsigned
 
 #include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
@@ -652,9 +653,9 @@ void LoadHandler::parseText() {
 
     if (attributes != nullptr) {
         std::string attrs = g_uri_unescape_string(attributes, NULL);
-        PangoAttrList* attrlist = pango_attr_list_from_string(attrs.c_str());
+        xoj::util::PangoAttrListSPtr attrlist =
+                xoj::util::PangoAttrListSPtr(pango_attr_list_from_string(attrs.c_str()), xoj::util::adopt);
         this->text->replaceAttributes(attrlist);
-        pango_attr_list_unref(attrlist);
     }
 
 

@@ -49,7 +49,7 @@ void TextView::draw(const Context& ctx) const {
     const std::string& content = text->getText();
     pango_layout_set_text(layout.get(), content.c_str(), static_cast<int>(content.length()));
 
-    pango_layout_set_attributes(layout.get(), text->getAttributeListCopy());
+    pango_layout_set_attributes(layout.get(), text->getAttributeList().get());
 
     PangoAlignment alignment = static_cast<PangoAlignment>(text->getAlignment());
     pango_layout_set_alignment(layout.get(), alignment);

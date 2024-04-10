@@ -19,6 +19,7 @@
 
 #include "model/Element.h"
 #include "util/raii/GObjectSPtr.h"
+#include "util/raii/PangoSPtr.h"  // for PangoAttrListSPtr
 
 #include "AudioElement.h"  // for AudioElement
 #include "Font.h"          // for XojFont
@@ -61,7 +62,7 @@ public:
     void setAlignment(TextAlignment align);
     TextAlignment getAlignment() const;
 
-    PangoAttrList* getAttributeListCopy() const;
+    xoj::util::PangoAttrListSPtr getAttributeList() const;
     void addAttribute(PangoAttribute* attrib);
     void clearAttributes();
     void updateTextAttributesPosition(int pos, int del, int add);
@@ -71,7 +72,7 @@ public:
      * Important: Does not take ownership of the new attribute list,
      * Object has to be freed by the calling function
      */
-    void replaceAttributes(PangoAttrList* attributes);
+    void replaceAttributes(xoj::util::PangoAttrListSPtr attributes);
 
     auto cloneText() const -> std::unique_ptr<Text>;
     auto clone() const -> ElementPtr override;
@@ -97,7 +98,7 @@ private:
     std::string text;
 
     TextAlignment alignment = TextAlignment::LEFT;
-    PangoAttrList* attributes = nullptr;
+    xoj::util::PangoAttrListSPtr attributes = nullptr;
 
     bool inEditing = false;
 };

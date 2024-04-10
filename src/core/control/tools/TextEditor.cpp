@@ -1025,7 +1025,7 @@ void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
 Color TextEditor::getSelectionColor() const { return this->control->getSettings()->getSelectionColor(); }
 
 void TextEditor::setAttributesToPangoLayout(PangoLayout* pl) const {
-    xoj::util::PangoAttrListSPtr attrlist(this->textElement->getAttributeListCopy(), xoj::util::adopt);
+    xoj::util::PangoAttrListSPtr attrlist = this->textElement->getAttributeList();
 
     /*GtkTextIter start;
     GtkTextIter end;

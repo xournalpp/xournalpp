@@ -179,17 +179,14 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
 
             XojFont& f = t->getFont();
 
-            PangoAttrList* attrlist = t->getAttributeListCopy();
-            std::string attributes = pango_attr_list_to_string(attrlist);
+            xoj::util::PangoAttrListSPtr attrlist = t->getAttributeList();
+            std::string attributes = pango_attr_list_to_string(attrlist.get());
 
             // This check is only required, because an StringAttribute must not be of length 0.
             // Otherwise the assertion len != 0 at GzOutputStream::write will fail and terminate
             if (attributes.length() == 0) {
                 attributes = " ";
             }
-
-
-            pango_attr_list_unref(attrlist);
 
             text->setAttrib("font", f.getName().c_str());
             text->setAttrib("size", f.getSize());
