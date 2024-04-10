@@ -157,77 +157,77 @@ void TextEditorContextMenu::create() {
     gtk_widget_set_can_focus(GTK_WIDGET(this->contextMenu), false);
     gtk_widget_hide(GTK_WIDGET(this->contextMenu));
 
-    this->fontBtn = builder.get<GtkFontButton>("btnFontChooser");
+    this->fontBtn = GTK_FONT_BUTTON(builder.get("btnFontChooser"));
     g_signal_connect(this->fontBtn, "font-set", G_CALLBACK(changeFontInternal), this);
 
 
-    this->tglBoldBtn = builder.get<GtkToggleButton>("btnDecoBold");
-    this->tglItalicBtn = builder.get<GtkToggleButton>("btnDecoItalic");
-    this->tglUnderlineBtn = builder.get<GtkToggleButton>("btnDecoUnderline");
+    this->tglBoldBtn = GTK_TOGGLE_BUTTON(builder.get("btnDecoBold"));
+    this->tglItalicBtn = GTK_TOGGLE_BUTTON(builder.get("btnDecoItalic"));
+    this->tglUnderlineBtn = GTK_TOGGLE_BUTTON(builder.get("btnDecoUnderline"));
     g_signal_connect(tglBoldBtn, "released", G_CALLBACK(tglBoldStyle), this);
     g_signal_connect(tglItalicBtn, "released", G_CALLBACK(tglItalicStyle), this);
     g_signal_connect(tglUnderlineBtn, "released", G_CALLBACK(tglUnderlineStyle), this);
 
-    this->expandTextDecoration = builder.get<GtkButton>("btnDecoExpand");
+    this->expandTextDecoration = GTK_BUTTON(builder.get("btnDecoExpand"));
     gtk_button_set_image(this->expandTextDecoration, gtk_image_new_from_icon_name("go-down", GTK_ICON_SIZE_BUTTON));
     g_signal_connect(expandTextDecoration, "clicked", G_CALLBACK(tglSecToolbar), this);
 
 
-    this->ftColorBtn = builder.get<GtkButton>("btnFontColor");
-    this->bgColorBtn = builder.get<GtkButton>("btnBgColor");
+    this->ftColorBtn = GTK_BUTTON(builder.get("btnFontColor"));
+    this->bgColorBtn = GTK_BUTTON(builder.get("btnBgColor"));
     g_signal_connect(this->ftColorBtn, "clicked", G_CALLBACK(changeFtColorInternal), this);
     g_signal_connect(this->bgColorBtn, "clicked", G_CALLBACK(changeBgColorInternal), this);
 
-    this->ftColorIcon = builder.get<GtkWidget>("imgFtColor");
+    this->ftColorIcon = GTK_WIDGET(builder.get("imgFtColor"));
     g_signal_connect(this->ftColorIcon, "draw", G_CALLBACK(drawFtColorIconInternal), this);
     gtk_button_set_image(GTK_BUTTON(this->ftColorBtn), this->ftColorIcon);
 
-    this->bgColorIcon = builder.get<GtkWidget>("imgBgColor");
+    this->bgColorIcon = GTK_WIDGET(builder.get("imgBgColor"));
     g_signal_connect(this->bgColorIcon, "draw", G_CALLBACK(drawBgColorIconInternal), this);
     gtk_button_set_image(GTK_BUTTON(this->bgColorBtn), this->bgColorIcon);
 
-    this->alignLeftTgl = builder.get<GtkToggleButton>("btnAlignLeft");
-    this->alignCenterTgl = builder.get<GtkToggleButton>("btnAlignCenter");
-    this->alignRightTgl = builder.get<GtkToggleButton>("btnAlignRight");
+    this->alignLeftTgl = GTK_TOGGLE_BUTTON(builder.get("btnAlignLeft"));
+    this->alignCenterTgl = GTK_TOGGLE_BUTTON(builder.get("btnAlignCenter"));
+    this->alignRightTgl = GTK_TOGGLE_BUTTON(builder.get("btnAlignRight"));
     g_signal_connect(this->alignLeftTgl, "released", G_CALLBACK(toggleAlignLeft), this);
     g_signal_connect(this->alignCenterTgl, "released", G_CALLBACK(toggleAlignCenter), this);
     g_signal_connect(this->alignRightTgl, "released", G_CALLBACK(toggleAlignRight), this);
 
-    this->textDecoLayout = builder.get<GtkWidget>("textDecoLayout");
-    this->colorLayout = builder.get<GtkWidget>("colorLayout");
-    this->alignmentLayout = builder.get<GtkWidget>("alignmentLayout");
-    this->secondaryToolbar = builder.get<GtkWidget>("secondaryToolbar");
+    this->textDecoLayout = GTK_WIDGET(builder.get("textDecoLayout"));
+    this->colorLayout = GTK_WIDGET(builder.get("colorLayout"));
+    this->alignmentLayout = GTK_WIDGET(builder.get("alignmentLayout"));
+    this->secondaryToolbar = GTK_WIDGET(builder.get("secondaryToolbar"));
 
 
-    tglWeightThin = builder.get<GtkToggleButton>("btnWeightThin");
-    tglWeightBook = builder.get<GtkToggleButton>("btnWeightBook");
-    tglWeightBold = builder.get<GtkToggleButton>("btnWeightBold");
+    tglWeightThin = GTK_TOGGLE_BUTTON(builder.get("btnWeightThin"));
+    tglWeightBook = GTK_TOGGLE_BUTTON(builder.get("btnWeightBook"));
+    tglWeightBold = GTK_TOGGLE_BUTTON(builder.get("btnWeightBold"));
     g_signal_connect(this->tglWeightThin, "released", G_CALLBACK(toggleWeightThinClb), this);
     g_signal_connect(this->tglWeightBook, "released", G_CALLBACK(toggleWeightBookClb), this);
     g_signal_connect(this->tglWeightBold, "released", G_CALLBACK(toggleWeightBoldClb), this);
 
-    tglStyleItalic = builder.get<GtkToggleButton>("btnStyleItalic");
-    tglStyleOblique = builder.get<GtkToggleButton>("btnStyleOblique");
+    tglStyleItalic = GTK_TOGGLE_BUTTON(builder.get("btnStyleItalic"));
+    tglStyleOblique = GTK_TOGGLE_BUTTON(builder.get("btnStyleOblique"));
     g_signal_connect(this->tglStyleItalic, "released", G_CALLBACK(toggleStyleItalicClb), this);
     g_signal_connect(this->tglStyleOblique, "released", G_CALLBACK(toggleStyleObliqueClb), this);
 
-    tglUnderlineSingle = builder.get<GtkToggleButton>("btnUnderlineSingle");
-    tglUnderlineSquiggle = builder.get<GtkToggleButton>("btnUnderlineError");
-    tglUnderlineDouble = builder.get<GtkToggleButton>("btnUnderlineDouble");
-    tglStrikethrough = builder.get<GtkToggleButton>("btnStrikethrough");
-    tglOverlineSingle = builder.get<GtkToggleButton>("btnOverlineSingle");
+    tglUnderlineSingle = GTK_TOGGLE_BUTTON(builder.get("btnUnderlineSingle"));
+    tglUnderlineSquiggle = GTK_TOGGLE_BUTTON(builder.get("btnUnderlineError"));
+    tglUnderlineDouble = GTK_TOGGLE_BUTTON(builder.get("btnUnderlineDouble"));
+    tglStrikethrough = GTK_TOGGLE_BUTTON(builder.get("btnStrikethrough"));
+    tglOverlineSingle = GTK_TOGGLE_BUTTON(builder.get("btnOverlineSingle"));
     g_signal_connect(this->tglUnderlineSingle, "released", G_CALLBACK(toggleUnderlineSingleClb), this);
     g_signal_connect(this->tglUnderlineSquiggle, "released", G_CALLBACK(toggleUnderlineSquiggleClb), this);
     g_signal_connect(this->tglUnderlineDouble, "released", G_CALLBACK(toggleUnderlineDoubleClb), this);
     g_signal_connect(this->tglStrikethrough, "released", G_CALLBACK(toggleStrikethroughClb), this);
     g_signal_connect(this->tglOverlineSingle, "released", G_CALLBACK(toggleOverlineSingleClb), this);
 
-    tglSuperScript = builder.get<GtkToggleButton>("btnSuperscript");
-    tglSubScript = builder.get<GtkToggleButton>("btnSubscript");
+    tglSuperScript = GTK_TOGGLE_BUTTON(builder.get("btnSuperscript"));
+    tglSubScript = GTK_TOGGLE_BUTTON(builder.get("btnSubscript"));
     g_signal_connect(this->tglSuperScript, "released", G_CALLBACK(toggleSuperScriptClb), this);
     g_signal_connect(this->tglSubScript, "released", G_CALLBACK(toggleSubScriptClb), this);
 
-    removeStyles = builder.get<GtkButton>("btnRemoveStyle");
+    removeStyles = GTK_BUTTON(builder.get("btnRemoveStyle"));
     g_signal_connect(this->removeStyles, "clicked", G_CALLBACK(toggleRemoveStyles), this);
 }
 
