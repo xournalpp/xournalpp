@@ -101,47 +101,47 @@ private:
     /**
      * UI Elements
      */
-    GtkPopover* contextMenu;
+    GtkPopover* contextMenu = nullptr;
 
-    xoj::util::GObjectSPtr<GtkFontButton> fontBtn;
+    GtkFontButton* fontBtn = nullptr;
 
-    xoj::util::GObjectSPtr<GtkToggleButton> tglBoldBtn;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglItalicBtn;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglUnderlineBtn;
+    GtkToggleButton* tglBoldBtn = nullptr;
+    GtkToggleButton* tglItalicBtn = nullptr;
+    GtkToggleButton* tglUnderlineBtn = nullptr;
 
-    xoj::util::GObjectSPtr<GtkButton> expandTextDecoration;
+    GtkButton* expandTextDecoration = nullptr;
 
-    xoj::util::GObjectSPtr<GtkButton> ftColorBtn;
-    xoj::util::GObjectSPtr<GtkWidget> ftColorIcon;
-    xoj::util::GObjectSPtr<GtkButton> bgColorBtn;
-    xoj::util::GObjectSPtr<GtkWidget> bgColorIcon;
+    GtkButton* ftColorBtn = nullptr;
+    GtkWidget* ftColorIcon = nullptr;
+    GtkButton* bgColorBtn = nullptr;
+    GtkWidget* bgColorIcon = nullptr;
 
-    xoj::util::GObjectSPtr<GtkToggleButton> alignLeftTgl;
-    xoj::util::GObjectSPtr<GtkToggleButton> alignCenterTgl;
-    xoj::util::GObjectSPtr<GtkToggleButton> alignRightTgl;
+    GtkToggleButton* alignLeftTgl = nullptr;
+    GtkToggleButton* alignCenterTgl = nullptr;
+    GtkToggleButton* alignRightTgl = nullptr;
 
-    xoj::util::GObjectSPtr<GtkWidget> textDecoLayout;
-    xoj::util::GObjectSPtr<GtkWidget> colorLayout;
-    xoj::util::GObjectSPtr<GtkWidget> alignmentLayout;
-    xoj::util::GObjectSPtr<GtkWidget> secondaryToolbar;
+    GtkWidget* textDecoLayout = nullptr;
+    GtkWidget* colorLayout = nullptr;
+    GtkWidget* alignmentLayout = nullptr;
+    GtkWidget* secondaryToolbar = nullptr;
 
-    xoj::util::GObjectSPtr<GtkToggleButton> tglWeightThin;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglWeightBook;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglWeightBold;
+    GtkToggleButton* tglWeightThin = nullptr;
+    GtkToggleButton* tglWeightBook = nullptr;
+    GtkToggleButton* tglWeightBold = nullptr;
 
-    xoj::util::GObjectSPtr<GtkToggleButton> tglStyleItalic;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglStyleOblique;
+    GtkToggleButton* tglStyleItalic = nullptr;
+    GtkToggleButton* tglStyleOblique = nullptr;
 
-    xoj::util::GObjectSPtr<GtkToggleButton> tglUnderlineSingle;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglUnderlineSquiggle;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglUnderlineDouble;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglStrikethrough;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglOverlineSingle;
+    GtkToggleButton* tglUnderlineSingle = nullptr;
+    GtkToggleButton* tglUnderlineSquiggle = nullptr;
+    GtkToggleButton* tglUnderlineDouble = nullptr;
+    GtkToggleButton* tglStrikethrough = nullptr;
+    GtkToggleButton* tglOverlineSingle = nullptr;
 
-    xoj::util::GObjectSPtr<GtkToggleButton> tglSuperScript;
-    xoj::util::GObjectSPtr<GtkToggleButton> tglSubScript;
+    GtkToggleButton* tglSuperScript = nullptr;
+    GtkToggleButton* tglSubScript = nullptr;
 
-    xoj::util::GObjectSPtr<GtkButton> removeStyles;
+    GtkButton* removeStyles = nullptr;
 
 
 public:

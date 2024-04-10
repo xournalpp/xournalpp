@@ -5,6 +5,7 @@
 
 #include "control/Control.h"                // for Control
 #include "control/tools/TextEditor.h"       // for TextEditor
+#include "gui/Builder.h"                    // for Builder
 #include "gui/GladeSearchpath.h"            // for GladeSearchPath
 #include "gui/PageView.h"                   // for PageView
 #include "model/Font.h"                     // for XojFont
@@ -109,19 +110,19 @@ void TextEditorContextMenu::hide() {
 }
 
 void TextEditorContextMenu::showReducedMenu() {
-    gtk_widget_set_visible(GTK_WIDGET(this->fontBtn.get()), false);
-    gtk_widget_set_visible(this->textDecoLayout.get(), false);
-    gtk_widget_set_visible(this->colorLayout.get(), false);
-    gtk_widget_set_visible(this->alignmentLayout.get(), true);
-    gtk_widget_set_visible(this->secondaryToolbar.get(), false);
+    gtk_widget_set_visible(GTK_WIDGET(this->fontBtn), false);
+    gtk_widget_set_visible(this->textDecoLayout, false);
+    gtk_widget_set_visible(this->colorLayout, false);
+    gtk_widget_set_visible(this->alignmentLayout, true);
+    gtk_widget_set_visible(this->secondaryToolbar, false);
 }
 
 void TextEditorContextMenu::showFullMenu() {
-    gtk_widget_set_visible(GTK_WIDGET(this->fontBtn.get()), true);
-    gtk_widget_set_visible(this->textDecoLayout.get(), true);
-    gtk_widget_set_visible(this->colorLayout.get(), true);
-    gtk_widget_set_visible(this->alignmentLayout.get(), true);
-    gtk_widget_set_visible(this->secondaryToolbar.get(), false);
+    gtk_widget_set_visible(GTK_WIDGET(this->fontBtn), true);
+    gtk_widget_set_visible(this->textDecoLayout, true);
+    gtk_widget_set_visible(this->colorLayout, true);
+    gtk_widget_set_visible(this->alignmentLayout, true);
+    gtk_widget_set_visible(this->secondaryToolbar, false);
 }
 
 void TextEditorContextMenu::reposition() {
@@ -134,142 +135,104 @@ void TextEditorContextMenu::reposition() {
 }
 
 void TextEditorContextMenu::toggleSecondaryToolbar() {
-    if (gtk_widget_is_visible(this->secondaryToolbar.get())) {
+    if (gtk_widget_is_visible(this->secondaryToolbar)) {
         std::cout << "Show secondary toolbar!" << std::endl;
-        gtk_button_set_image(this->expandTextDecoration.get(),
-                             gtk_image_new_from_icon_name("go-down", GTK_ICON_SIZE_BUTTON));
-        gtk_widget_set_visible(this->secondaryToolbar.get(), false);
+        gtk_button_set_image(this->expandTextDecoration, gtk_image_new_from_icon_name("go-down", GTK_ICON_SIZE_BUTTON));
+        gtk_widget_set_visible(this->secondaryToolbar, false);
     } else {
         std::cout << "Hide secondary toolbar!" << std::endl;
-        gtk_button_set_image(this->expandTextDecoration.get(),
-                             gtk_image_new_from_icon_name("go-up", GTK_ICON_SIZE_BUTTON));
-        gtk_widget_set_visible(this->secondaryToolbar.get(), true);
+        gtk_button_set_image(this->expandTextDecoration, gtk_image_new_from_icon_name("go-up", GTK_ICON_SIZE_BUTTON));
+        gtk_widget_set_visible(this->secondaryToolbar, true);
     }
 }
 
 void TextEditorContextMenu::create() {
-    auto filepath = this->control->getGladeSearchPath()->findFile("", "textEditorContextMenu.glade");
 
-    xoj::util::GObjectSPtr<GtkBuilder> builder(gtk_builder_new(), xoj::util::adopt);
+    Builder builder(this->control->getGladeSearchPath(), "textEditorContextMenu.glade");
 
-    GError* err = NULL;
-    if (gtk_builder_add_from_file(builder.get(), filepath.u8string().c_str(), &err) == 0) {
-        std::cout << err->message << std::endl;
-    }
-
-    this->contextMenu = GTK_POPOVER(gtk_builder_get_object(builder.get(), "textEditorContextMenu"));
+    this->contextMenu = GTK_POPOVER(builder.get("textEditorContextMenu"));
     gtk_popover_set_relative_to(this->contextMenu, this->xournalWidget);
     gtk_popover_set_constrain_to(this->contextMenu, GTK_POPOVER_CONSTRAINT_WINDOW);
     gtk_popover_set_modal(this->contextMenu, false);
     gtk_widget_set_can_focus(GTK_WIDGET(this->contextMenu), false);
     gtk_widget_hide(GTK_WIDGET(this->contextMenu));
 
-    this->fontBtn = xoj::util::GObjectSPtr<GtkFontButton>(
-            GTK_FONT_BUTTON(gtk_builder_get_object(builder.get(), "btnFontChooser")), xoj::util::adopt);
-    g_signal_connect(this->fontBtn.get(), "font-set", G_CALLBACK(changeFontInternal), this);
+    this->fontBtn = builder.get<GtkFontButton>("btnFontChooser");
+    g_signal_connect(this->fontBtn, "font-set", G_CALLBACK(changeFontInternal), this);
 
 
-    this->tglBoldBtn = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnDecoBold")), xoj::util::adopt);
-    this->tglItalicBtn = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnDecoItalic")), xoj::util::adopt);
-    this->tglUnderlineBtn = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnDecoUnderline")), xoj::util::adopt);
-    g_signal_connect(tglBoldBtn.get(), "released", G_CALLBACK(tglBoldStyle), this);
-    g_signal_connect(tglItalicBtn.get(), "released", G_CALLBACK(tglItalicStyle), this);
-    g_signal_connect(tglUnderlineBtn.get(), "released", G_CALLBACK(tglUnderlineStyle), this);
+    this->tglBoldBtn = builder.get<GtkToggleButton*>("btnDecoBold");
+    this->tglItalicBtn = builder.get<GtkToggleButton>("btnDecoItalic");
+    this->tglUnderlineBtn = builder.get<GtkToggleButton>("btnDecoUnderline");
+    g_signal_connect(tglBoldBtn, "released", G_CALLBACK(tglBoldStyle), this);
+    g_signal_connect(tglItalicBtn, "released", G_CALLBACK(tglItalicStyle), this);
+    g_signal_connect(tglUnderlineBtn, "released", G_CALLBACK(tglUnderlineStyle), this);
 
-    this->expandTextDecoration = xoj::util::GObjectSPtr<GtkButton>(
-            GTK_BUTTON(gtk_builder_get_object(builder.get(), "btnDecoExpand")), xoj::util::adopt);
-    gtk_button_set_image(this->expandTextDecoration.get(),
-                         gtk_image_new_from_icon_name("go-down", GTK_ICON_SIZE_BUTTON));
-    g_signal_connect(expandTextDecoration.get(), "clicked", G_CALLBACK(tglSecToolbar), this);
+    this->expandTextDecoration = builder.get<GtkButton>("btnDecoExpand");
+    gtk_button_set_image(this->expandTextDecoration, gtk_image_new_from_icon_name("go-down", GTK_ICON_SIZE_BUTTON));
+    g_signal_connect(expandTextDecoration, "clicked", G_CALLBACK(tglSecToolbar), this);
 
 
-    this->ftColorBtn = xoj::util::GObjectSPtr<GtkButton>(
-            GTK_BUTTON(gtk_builder_get_object(builder.get(), "btnFontColor")), xoj::util::adopt);
-    this->bgColorBtn = xoj::util::GObjectSPtr<GtkButton>(
-            GTK_BUTTON(gtk_builder_get_object(builder.get(), "btnBgColor")), xoj::util::adopt);
-    g_signal_connect(this->ftColorBtn.get(), "clicked", G_CALLBACK(changeFtColorInternal), this);
-    g_signal_connect(this->bgColorBtn.get(), "clicked", G_CALLBACK(changeBgColorInternal), this);
+    this->ftColorBtn = builder.get<GtkButton>("btnFontColor");
+    this->bgColorBtn = builder.get<GtkButton>("btnBgColor");
+    g_signal_connect(this->ftColorBtn, "clicked", G_CALLBACK(changeFtColorInternal), this);
+    g_signal_connect(this->bgColorBtn, "clicked", G_CALLBACK(changeBgColorInternal), this);
 
-    this->ftColorIcon = xoj::util::GObjectSPtr<GtkWidget>(
-            GTK_WIDGET(gtk_builder_get_object(builder.get(), "imgFtColor")), xoj::util::adopt);
-    g_signal_connect(this->ftColorIcon.get(), "draw", G_CALLBACK(drawFtColorIconInternal), this);
-    gtk_button_set_image(GTK_BUTTON(this->ftColorBtn.get()), this->ftColorIcon.get());
+    this->ftColorIcon = builder.get<GtkWidget>("imgFtColor");
+    g_signal_connect(this->ftColorIcon, "draw", G_CALLBACK(drawFtColorIconInternal), this);
+    gtk_button_set_image(GTK_BUTTON(this->ftColorBtn), this->ftColorIcon);
 
-    this->bgColorIcon = xoj::util::GObjectSPtr<GtkWidget>(
-            GTK_WIDGET(gtk_builder_get_object(builder.get(), "imgBgColor")), xoj::util::adopt);
-    g_signal_connect(this->bgColorIcon.get(), "draw", G_CALLBACK(drawBgColorIconInternal), this);
-    gtk_button_set_image(GTK_BUTTON(this->bgColorBtn.get()), this->bgColorIcon.get());
+    this->bgColorIcon = builder.get<GtkWidget>("imgBgColor");
+    g_signal_connect(this->bgColorIcon, "draw", G_CALLBACK(drawBgColorIconInternal), this);
+    gtk_button_set_image(GTK_BUTTON(this->bgColorBtn), this->bgColorIcon);
 
-    this->alignLeftTgl = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnAlignLeft")), xoj::util::adopt);
-    this->alignCenterTgl = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnAlignCenter")), xoj::util::adopt);
-    this->alignRightTgl = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnAlignRight")), xoj::util::adopt);
-    g_signal_connect(this->alignLeftTgl.get(), "released", G_CALLBACK(toggleAlignLeft), this);
-    g_signal_connect(this->alignCenterTgl.get(), "released", G_CALLBACK(toggleAlignCenter), this);
-    g_signal_connect(this->alignRightTgl.get(), "released", G_CALLBACK(toggleAlignRight), this);
+    this->alignLeftTgl = builder.get<GtkToggleButton>("btnAlignLeft");
+    this->alignCenterTgl = builder.get<GtkToggleButton>("btnAlignCenter");
+    this->alignRightTgl = builder.get<GtkToggleButton>("btnAlignRight");
+    g_signal_connect(this->alignLeftTgl, "released", G_CALLBACK(toggleAlignLeft), this);
+    g_signal_connect(this->alignCenterTgl, "released", G_CALLBACK(toggleAlignCenter), this);
+    g_signal_connect(this->alignRightTgl, "released", G_CALLBACK(toggleAlignRight), this);
 
-    this->textDecoLayout = xoj::util::GObjectSPtr<GtkWidget>(
-            GTK_WIDGET(gtk_builder_get_object(builder.get(), "textDecoLayout")), xoj::util::adopt);
-    this->colorLayout = xoj::util::GObjectSPtr<GtkWidget>(
-            GTK_WIDGET(gtk_builder_get_object(builder.get(), "colorLayout")), xoj::util::adopt);
-    this->alignmentLayout = xoj::util::GObjectSPtr<GtkWidget>(
-            GTK_WIDGET(gtk_builder_get_object(builder.get(), "alignmentLayout")), xoj::util::adopt);
-    this->secondaryToolbar = xoj::util::GObjectSPtr<GtkWidget>(
-            GTK_WIDGET(gtk_builder_get_object(builder.get(), "secondaryToolbar")), xoj::util::adopt);
+    this->textDecoLayout = builder.get<GtkWidget>("textDecoLayout");
+    this->colorLayout = builder.get<GtkWidget>("colorLayout");
+    this->alignmentLayout = builder.get<GtkWidget>("alignmentLayout");
+    this->secondaryToolbar = builder.get<GtkWidget>("secondaryToolbar");
 
 
-    tglWeightThin = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnWeightThin")), xoj::util::adopt);
-    tglWeightBook = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnWeightBook")), xoj::util::adopt);
-    tglWeightBold = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnWeightBold")), xoj::util::adopt);
-    g_signal_connect(this->tglWeightThin.get(), "released", G_CALLBACK(toggleWeightThinClb), this);
-    g_signal_connect(this->tglWeightBook.get(), "released", G_CALLBACK(toggleWeightBookClb), this);
-    g_signal_connect(this->tglWeightBold.get(), "released", G_CALLBACK(toggleWeightBoldClb), this);
+    tglWeightThin = builder.get<GtkToggleButton>("btnWeightThin");
+    tglWeightBook = builder.get<GtkToggleButton>("btnWeightBook");
+    tglWeightBold = builder.get<GtkToggleButton>("btnWeightBold");
+    g_signal_connect(this->tglWeightThin, "released", G_CALLBACK(toggleWeightThinClb), this);
+    g_signal_connect(this->tglWeightBook, "released", G_CALLBACK(toggleWeightBookClb), this);
+    g_signal_connect(this->tglWeightBold, "released", G_CALLBACK(toggleWeightBoldClb), this);
 
-    tglStyleItalic = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnStyleItalic")), xoj::util::adopt);
-    tglStyleOblique = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnStyleOblique")), xoj::util::adopt);
-    g_signal_connect(this->tglStyleItalic.get(), "released", G_CALLBACK(toggleStyleItalicClb), this);
-    g_signal_connect(this->tglStyleOblique.get(), "released", G_CALLBACK(toggleStyleObliqueClb), this);
+    tglStyleItalic = builder.get<GtkToggleButton>("btnStyleItalic");
+    tglStyleOblique = builder.get<GtkToggleButton>("btnStyleOblique");
+    g_signal_connect(this->tglStyleItalic, "released", G_CALLBACK(toggleStyleItalicClb), this);
+    g_signal_connect(this->tglStyleOblique, "released", G_CALLBACK(toggleStyleObliqueClb), this);
 
-    tglUnderlineSingle = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnUnderlineSingle")), xoj::util::adopt);
-    tglUnderlineSquiggle = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnUnderlineError")), xoj::util::adopt);
-    tglUnderlineDouble = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnUnderlineDouble")), xoj::util::adopt);
-    tglStrikethrough = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnStrikethrough")), xoj::util::adopt);
-    tglOverlineSingle = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnOverlineSingle")), xoj::util::adopt);
-    g_signal_connect(this->tglUnderlineSingle.get(), "released", G_CALLBACK(toggleUnderlineSingleClb), this);
-    g_signal_connect(this->tglUnderlineSquiggle.get(), "released", G_CALLBACK(toggleUnderlineSquiggleClb), this);
-    g_signal_connect(this->tglUnderlineDouble.get(), "released", G_CALLBACK(toggleUnderlineDoubleClb), this);
-    g_signal_connect(this->tglStrikethrough.get(), "released", G_CALLBACK(toggleStrikethroughClb), this);
-    g_signal_connect(this->tglOverlineSingle.get(), "released", G_CALLBACK(toggleOverlineSingleClb), this);
+    tglUnderlineSingle = builder.get<GtkToggleButton>("btnUnderlineSingle");
+    tglUnderlineSquiggle = builder.get<GtkToggleButton>("btnUnderlineError");
+    tglUnderlineDouble = builder.get<GtkToggleButton>("btnUnderlineDouble");
+    tglStrikethrough = builder.get<GtkToggleButton>("btnStrikethrough");
+    tglOverlineSingle = builder.get<GtkToggleButton>("btnOverlineSingle");
+    g_signal_connect(this->tglUnderlineSingle, "released", G_CALLBACK(toggleUnderlineSingleClb), this);
+    g_signal_connect(this->tglUnderlineSquiggle, "released", G_CALLBACK(toggleUnderlineSquiggleClb), this);
+    g_signal_connect(this->tglUnderlineDouble, "released", G_CALLBACK(toggleUnderlineDoubleClb), this);
+    g_signal_connect(this->tglStrikethrough, "released", G_CALLBACK(toggleStrikethroughClb), this);
+    g_signal_connect(this->tglOverlineSingle, "released", G_CALLBACK(toggleOverlineSingleClb), this);
 
-    tglSuperScript = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnSuperscript")), xoj::util::adopt);
-    tglSubScript = xoj::util::GObjectSPtr<GtkToggleButton>(
-            GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder.get(), "btnSubscript")), xoj::util::adopt);
-    g_signal_connect(this->tglSuperScript.get(), "released", G_CALLBACK(toggleSuperScriptClb), this);
-    g_signal_connect(this->tglSubScript.get(), "released", G_CALLBACK(toggleSubScriptClb), this);
+    tglSuperScript = builder.get<GtkToggleButton>("btnSuperscript");
+    tglSubScript = builder.get<GtkToggleButton>("btnSubscript");
+    g_signal_connect(this->tglSuperScript, "released", G_CALLBACK(toggleSuperScriptClb), this);
+    g_signal_connect(this->tglSubScript, "released", G_CALLBACK(toggleSubScriptClb), this);
 
-    removeStyles = xoj::util::GObjectSPtr<GtkButton>(
-            GTK_BUTTON(gtk_builder_get_object(builder.get(), "btnRemoveStyle")), xoj::util::adopt);
-    g_signal_connect(this->removeStyles.get(), "clicked", G_CALLBACK(toggleRemoveStyles), this);
+    removeStyles = builder.get<GtkButton>("btnRemoveStyle");
+    g_signal_connect(this->removeStyles, "clicked", G_CALLBACK(toggleRemoveStyles), this);
 }
 
 void TextEditorContextMenu::changeFont() {
-    PangoFontDescription* desc = gtk_font_chooser_get_font_desc(GTK_FONT_CHOOSER(this->fontBtn.get()));
+    PangoFontDescription* desc = gtk_font_chooser_get_font_desc(GTK_FONT_CHOOSER(this->fontBtn));
     std::string fontDesc(pango_font_description_to_string(desc));
     this->editor->setFontInline(desc);
     pango_font_description_free(desc);
@@ -438,7 +401,7 @@ void TextEditorContextMenu::applyAttributes() {
         switch (p->klass->type) {
             case PANGO_ATTR_FONT_DESC: {
                 PangoAttrFontDesc* desc = pango_attribute_as_font_desc(p);
-                gtk_font_chooser_set_font_desc(GTK_FONT_CHOOSER(this->fontBtn.get()), desc->desc);
+                gtk_font_chooser_set_font_desc(GTK_FONT_CHOOSER(this->fontBtn), desc->desc);
                 break;
             }
             case PANGO_ATTR_FOREGROUND: {
@@ -496,20 +459,20 @@ void TextEditorContextMenu::switchStyleButtons(PangoStyle styleValue) {
     this->style = styleValue;
     switch (styleValue) {
         case PANGO_STYLE_ITALIC:
-            gtk_toggle_button_set_active(this->tglItalicBtn.get(), true);
-            gtk_toggle_button_set_active(this->tglStyleItalic.get(), true);
-            gtk_toggle_button_set_active(this->tglStyleOblique.get(), false);
+            gtk_toggle_button_set_active(this->tglItalicBtn, true);
+            gtk_toggle_button_set_active(this->tglStyleItalic, true);
+            gtk_toggle_button_set_active(this->tglStyleOblique, false);
             break;
         case PANGO_STYLE_OBLIQUE:
-            gtk_toggle_button_set_active(this->tglItalicBtn.get(), false);
-            gtk_toggle_button_set_active(this->tglStyleItalic.get(), false);
-            gtk_toggle_button_set_active(this->tglStyleOblique.get(), true);
+            gtk_toggle_button_set_active(this->tglItalicBtn, false);
+            gtk_toggle_button_set_active(this->tglStyleItalic, false);
+            gtk_toggle_button_set_active(this->tglStyleOblique, true);
             break;
         case PANGO_STYLE_NORMAL:
         default:
-            gtk_toggle_button_set_active(this->tglItalicBtn.get(), false);
-            gtk_toggle_button_set_active(this->tglStyleItalic.get(), false);
-            gtk_toggle_button_set_active(this->tglStyleOblique.get(), false);
+            gtk_toggle_button_set_active(this->tglItalicBtn, false);
+            gtk_toggle_button_set_active(this->tglStyleItalic, false);
+            gtk_toggle_button_set_active(this->tglStyleOblique, false);
             break;
     }
 }
@@ -518,29 +481,29 @@ void TextEditorContextMenu::switchWeightButtons(PangoWeight weightValue) {
     this->weight = weightValue;
     switch (weightValue) {
         case PANGO_WEIGHT_THIN:
-            gtk_toggle_button_set_active(this->tglBoldBtn.get(), false);
-            gtk_toggle_button_set_active(this->tglWeightThin.get(), true);
-            gtk_toggle_button_set_active(this->tglWeightBook.get(), false);
-            gtk_toggle_button_set_active(this->tglWeightBold.get(), false);
+            gtk_toggle_button_set_active(this->tglBoldBtn, false);
+            gtk_toggle_button_set_active(this->tglWeightThin, true);
+            gtk_toggle_button_set_active(this->tglWeightBook, false);
+            gtk_toggle_button_set_active(this->tglWeightBold, false);
             break;
         case PANGO_WEIGHT_BOOK:
-            gtk_toggle_button_set_active(this->tglBoldBtn.get(), false);
-            gtk_toggle_button_set_active(this->tglWeightThin.get(), false);
-            gtk_toggle_button_set_active(this->tglWeightBook.get(), true);
-            gtk_toggle_button_set_active(this->tglWeightBold.get(), false);
+            gtk_toggle_button_set_active(this->tglBoldBtn, false);
+            gtk_toggle_button_set_active(this->tglWeightThin, false);
+            gtk_toggle_button_set_active(this->tglWeightBook, true);
+            gtk_toggle_button_set_active(this->tglWeightBold, false);
             break;
         case PANGO_WEIGHT_BOLD:
-            gtk_toggle_button_set_active(this->tglBoldBtn.get(), true);
-            gtk_toggle_button_set_active(this->tglWeightThin.get(), false);
-            gtk_toggle_button_set_active(this->tglWeightBook.get(), false);
-            gtk_toggle_button_set_active(this->tglWeightBold.get(), true);
+            gtk_toggle_button_set_active(this->tglBoldBtn, true);
+            gtk_toggle_button_set_active(this->tglWeightThin, false);
+            gtk_toggle_button_set_active(this->tglWeightBook, false);
+            gtk_toggle_button_set_active(this->tglWeightBold, true);
             break;
         case PANGO_WEIGHT_NORMAL:
         default:
-            gtk_toggle_button_set_active(this->tglBoldBtn.get(), false);
-            gtk_toggle_button_set_active(this->tglWeightThin.get(), false);
-            gtk_toggle_button_set_active(this->tglWeightBook.get(), false);
-            gtk_toggle_button_set_active(this->tglWeightBold.get(), false);
+            gtk_toggle_button_set_active(this->tglBoldBtn, false);
+            gtk_toggle_button_set_active(this->tglWeightThin, false);
+            gtk_toggle_button_set_active(this->tglWeightBook, false);
+            gtk_toggle_button_set_active(this->tglWeightBold, false);
             break;
     }
 }
@@ -549,29 +512,29 @@ void TextEditorContextMenu::switchUnderlineButtons(PangoUnderline underlineValue
     this->underline = underlineValue;
     switch (underlineValue) {
         case PANGO_UNDERLINE_SINGLE:
-            gtk_toggle_button_set_active(this->tglUnderlineBtn.get(), true);
-            gtk_toggle_button_set_active(this->tglUnderlineSingle.get(), true);
-            gtk_toggle_button_set_active(this->tglUnderlineSquiggle.get(), false);
-            gtk_toggle_button_set_active(this->tglUnderlineDouble.get(), false);
+            gtk_toggle_button_set_active(this->tglUnderlineBtn, true);
+            gtk_toggle_button_set_active(this->tglUnderlineSingle, true);
+            gtk_toggle_button_set_active(this->tglUnderlineSquiggle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineDouble, false);
             break;
         case PANGO_UNDERLINE_ERROR:
-            gtk_toggle_button_set_active(this->tglUnderlineBtn.get(), false);
-            gtk_toggle_button_set_active(this->tglUnderlineSingle.get(), false);
-            gtk_toggle_button_set_active(this->tglUnderlineSquiggle.get(), true);
-            gtk_toggle_button_set_active(this->tglUnderlineDouble.get(), false);
+            gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSingle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSquiggle, true);
+            gtk_toggle_button_set_active(this->tglUnderlineDouble, false);
             break;
         case PANGO_UNDERLINE_DOUBLE:
-            gtk_toggle_button_set_active(this->tglUnderlineBtn.get(), false);
-            gtk_toggle_button_set_active(this->tglUnderlineSingle.get(), false);
-            gtk_toggle_button_set_active(this->tglUnderlineSquiggle.get(), false);
-            gtk_toggle_button_set_active(this->tglUnderlineDouble.get(), true);
+            gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSingle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSquiggle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineDouble, true);
             break;
         case PANGO_UNDERLINE_NONE:
         default:
-            gtk_toggle_button_set_active(this->tglUnderlineBtn.get(), false);
-            gtk_toggle_button_set_active(this->tglUnderlineSingle.get(), false);
-            gtk_toggle_button_set_active(this->tglUnderlineSquiggle.get(), false);
-            gtk_toggle_button_set_active(this->tglUnderlineDouble.get(), false);
+            gtk_toggle_button_set_active(this->tglUnderlineBtn, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSingle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineSquiggle, false);
+            gtk_toggle_button_set_active(this->tglUnderlineDouble, false);
             break;
     }
 }
@@ -580,13 +543,13 @@ void TextEditorContextMenu::switchStrikethroughButtons(int stValue) {
     this->strikethrough = stValue;
     switch (stValue) {
         case TRUE:
-            gtk_toggle_button_set_active(this->tglStrikethrough.get(), true);
+            gtk_toggle_button_set_active(this->tglStrikethrough, true);
             break;
         case FALSE:
-            gtk_toggle_button_set_active(this->tglStrikethrough.get(), false);
+            gtk_toggle_button_set_active(this->tglStrikethrough, false);
             break;
         default:
-            gtk_toggle_button_set_active(this->tglStrikethrough.get(), false);
+            gtk_toggle_button_set_active(this->tglStrikethrough, false);
             break;
     }
 }
@@ -595,11 +558,11 @@ void TextEditorContextMenu::switchOverlineButtons(PangoOverline overlineValue) {
     this->overline = overlineValue;
     switch (overlineValue) {
         case PANGO_OVERLINE_SINGLE:
-            gtk_toggle_button_set_active(this->tglOverlineSingle.get(), true);
+            gtk_toggle_button_set_active(this->tglOverlineSingle, true);
             break;
         case PANGO_OVERLINE_NONE:
         default:
-            gtk_toggle_button_set_active(this->tglOverlineSingle.get(), false);
+            gtk_toggle_button_set_active(this->tglOverlineSingle, false);
             break;
     }
 }
@@ -607,11 +570,11 @@ void TextEditorContextMenu::switchOverlineButtons(PangoOverline overlineValue) {
 void TextEditorContextMenu::resetContextMenuState() {
     PangoFontDescription* desc = pango_font_description_from_string(editor->getTextElement()->getFontName().c_str());
     pango_font_description_set_size(desc, editor->getTextElement()->getFontSize() * PANGO_SCALE);
-    gtk_font_chooser_set_font_desc(GTK_FONT_CHOOSER(this->fontBtn.get()), desc);
+    gtk_font_chooser_set_font_desc(GTK_FONT_CHOOSER(this->fontBtn), desc);
     ftColor = {0.0, 0.0, 0.0, 1.0};
     bgColor = {1.0, 1.0, 1.0, 0.0};
-    gtk_widget_queue_draw(GTK_WIDGET(this->ftColorBtn.get()));
-    gtk_widget_queue_draw(GTK_WIDGET(this->bgColorBtn.get()));
+    gtk_widget_queue_draw(GTK_WIDGET(this->ftColorBtn));
+    gtk_widget_queue_draw(GTK_WIDGET(this->bgColorBtn));
     this->switchWeightButtons(PANGO_WEIGHT_NORMAL);
     this->switchStyleButtons(PANGO_STYLE_NORMAL);
     this->switchUnderlineButtons(PANGO_UNDERLINE_NONE);
@@ -622,24 +585,24 @@ void TextEditorContextMenu::resetContextMenuState() {
 void TextEditorContextMenu::switchAlignmentButtons(TextAlignment alignment) {
     switch (alignment) {
         case TextAlignment::LEFT:
-            gtk_toggle_button_set_active(this->alignLeftTgl.get(), true);
-            gtk_toggle_button_set_active(this->alignCenterTgl.get(), false);
-            gtk_toggle_button_set_active(this->alignRightTgl.get(), false);
+            gtk_toggle_button_set_active(this->alignLeftTgl, true);
+            gtk_toggle_button_set_active(this->alignCenterTgl, false);
+            gtk_toggle_button_set_active(this->alignRightTgl, false);
             break;
         case TextAlignment::CENTER:
-            gtk_toggle_button_set_active(this->alignLeftTgl.get(), false);
-            gtk_toggle_button_set_active(this->alignCenterTgl.get(), true);
-            gtk_toggle_button_set_active(this->alignRightTgl.get(), false);
+            gtk_toggle_button_set_active(this->alignLeftTgl, false);
+            gtk_toggle_button_set_active(this->alignCenterTgl, true);
+            gtk_toggle_button_set_active(this->alignRightTgl, false);
             break;
         case TextAlignment::RIGHT:
-            gtk_toggle_button_set_active(this->alignLeftTgl.get(), false);
-            gtk_toggle_button_set_active(this->alignCenterTgl.get(), false);
-            gtk_toggle_button_set_active(this->alignRightTgl.get(), true);
+            gtk_toggle_button_set_active(this->alignLeftTgl, false);
+            gtk_toggle_button_set_active(this->alignCenterTgl, false);
+            gtk_toggle_button_set_active(this->alignRightTgl, true);
             break;
         default:
-            gtk_toggle_button_set_active(this->alignLeftTgl.get(), false);
-            gtk_toggle_button_set_active(this->alignCenterTgl.get(), false);
-            gtk_toggle_button_set_active(this->alignRightTgl.get(), false);
+            gtk_toggle_button_set_active(this->alignLeftTgl, false);
+            gtk_toggle_button_set_active(this->alignCenterTgl, false);
+            gtk_toggle_button_set_active(this->alignRightTgl, false);
             break;
     }
 }
@@ -647,14 +610,14 @@ void TextEditorContextMenu::switchAlignmentButtons(TextAlignment alignment) {
 void TextEditorContextMenu::switchRiseButtons(int riseValue) {
     this->rise = riseValue;
     if (riseValue > 0) {
-        gtk_toggle_button_set_active(this->tglSuperScript.get(), true);
-        gtk_toggle_button_set_active(this->tglSubScript.get(), false);
+        gtk_toggle_button_set_active(this->tglSuperScript, true);
+        gtk_toggle_button_set_active(this->tglSubScript, false);
     } else if (riseValue < 0) {
-        gtk_toggle_button_set_active(this->tglSuperScript.get(), false);
-        gtk_toggle_button_set_active(this->tglSubScript.get(), true);
+        gtk_toggle_button_set_active(this->tglSuperScript, false);
+        gtk_toggle_button_set_active(this->tglSubScript, true);
     } else {
-        gtk_toggle_button_set_active(this->tglSuperScript.get(), false);
-        gtk_toggle_button_set_active(this->tglSubScript.get(), false);
+        gtk_toggle_button_set_active(this->tglSuperScript, false);
+        gtk_toggle_button_set_active(this->tglSubScript, false);
     }
 }
 
