@@ -86,6 +86,35 @@ TextEditorContextMenu::TextEditorContextMenu(Control* control, TextEditor* edito
 }
 
 TextEditorContextMenu::~TextEditorContextMenu() {
+    gtk_widget_destroy(GTK_WIDGET(this->fontBtn));
+    gtk_widget_destroy(GTK_WIDGET(this->tglBoldBtn));
+    gtk_widget_destroy(GTK_WIDGET(this->tglItalicBtn));
+    gtk_widget_destroy(GTK_WIDGET(this->tglUnderlineBtn));
+    gtk_widget_destroy(GTK_WIDGET(this->expandTextDecoration));
+    gtk_widget_destroy(GTK_WIDGET(this->ftColorIcon));
+    gtk_widget_destroy(GTK_WIDGET(this->ftColorBtn));
+    gtk_widget_destroy(GTK_WIDGET(this->bgColorIcon));
+    gtk_widget_destroy(GTK_WIDGET(this->bgColorBtn));
+    gtk_widget_destroy(GTK_WIDGET(this->alignLeftTgl));
+    gtk_widget_destroy(GTK_WIDGET(this->alignCenterTgl));
+    gtk_widget_destroy(GTK_WIDGET(this->alignRightTgl));
+    gtk_widget_destroy(GTK_WIDGET(this->textDecoLayout));
+    gtk_widget_destroy(GTK_WIDGET(this->colorLayout));
+    gtk_widget_destroy(GTK_WIDGET(this->alignmentLayout));
+    gtk_widget_destroy(GTK_WIDGET(this->tglWeightThin));
+    gtk_widget_destroy(GTK_WIDGET(this->tglWeightBook));
+    gtk_widget_destroy(GTK_WIDGET(this->tglWeightBold));
+    gtk_widget_destroy(GTK_WIDGET(this->tglStyleItalic));
+    gtk_widget_destroy(GTK_WIDGET(this->tglStyleOblique));
+    gtk_widget_destroy(GTK_WIDGET(this->tglUnderlineSingle));
+    gtk_widget_destroy(GTK_WIDGET(this->tglUnderlineSquiggle));
+    gtk_widget_destroy(GTK_WIDGET(this->tglUnderlineDouble));
+    gtk_widget_destroy(GTK_WIDGET(this->tglStrikethrough));
+    gtk_widget_destroy(GTK_WIDGET(this->tglOverlineSingle));
+    gtk_widget_destroy(GTK_WIDGET(this->tglSuperScript));
+    gtk_widget_destroy(GTK_WIDGET(this->tglSubScript));
+    gtk_widget_destroy(GTK_WIDGET(this->removeStyles));
+    gtk_widget_destroy(GTK_WIDGET(this->secondaryToolbar));
     gtk_popover_set_relative_to(this->contextMenu, NULL);
     std::cout << "TextEditorContextMenu destroyed!" << std::endl;
 }
