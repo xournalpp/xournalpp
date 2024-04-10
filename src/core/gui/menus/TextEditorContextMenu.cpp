@@ -161,7 +161,7 @@ void TextEditorContextMenu::create() {
     g_signal_connect(this->fontBtn, "font-set", G_CALLBACK(changeFontInternal), this);
 
 
-    this->tglBoldBtn = builder.get<GtkToggleButton*>("btnDecoBold");
+    this->tglBoldBtn = builder.get<GtkToggleButton>("btnDecoBold");
     this->tglItalicBtn = builder.get<GtkToggleButton>("btnDecoItalic");
     this->tglUnderlineBtn = builder.get<GtkToggleButton>("btnDecoUnderline");
     g_signal_connect(tglBoldBtn, "released", G_CALLBACK(tglBoldStyle), this);
