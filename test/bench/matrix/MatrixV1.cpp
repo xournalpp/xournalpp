@@ -1,7 +1,9 @@
 
 
-#include <cmath>
 #include "MatrixV1.h"
+
+#include <cmath>
+
 #include "MatrixConst.h"
 
 namespace xoj::util::v1 {

@@ -45,13 +45,13 @@ struct Matrix {
                 (this->b * this->tx - this->a * this->ty) / det};
     }
 
-    [[nodiscard]] constexpr auto operator*(Matrix const& rhs) const -> Matrix{
-            return {this->a * rhs.a + this->b * rhs.c,
-            this->a * rhs.b + this->b * rhs.d,
-            this->c * rhs.a + this->d * rhs.c,
-            this->c * rhs.b + this->d * rhs.d,
-            this->a * rhs.tx + this->b * rhs.ty + this->tx,
-            this->c * rhs.tx + this->d * rhs.ty + this->ty};
+    [[nodiscard]] constexpr auto operator*(Matrix const& rhs) const -> Matrix {
+        return {this->a * rhs.a + this->b * rhs.c,
+                this->a * rhs.b + this->b * rhs.d,
+                this->c * rhs.a + this->d * rhs.c,
+                this->c * rhs.b + this->d * rhs.d,
+                this->a * rhs.tx + this->b * rhs.ty + this->tx,
+                this->c * rhs.tx + this->d * rhs.ty + this->ty};
     }
 
     constexpr auto operator*=(Matrix const& rhs) -> Matrix& {

@@ -33,4 +33,4 @@ constexpr auto test_scale = Matrix{2, 0, 0, 2, 0, 0};
 constexpr auto test_rot = Matrix{0, -1, 1, 0, 0, 0};
 constexpr auto test_all = Matrix{2, -1, 1, 2, 10, 10};
 
-} // namespace xoj::util::v1
+}  // namespace xoj::util::v1
