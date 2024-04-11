@@ -83,8 +83,6 @@ public:
      */
     constexpr auto area() const -> T { return width * height; }
 
-    friend auto operator<<(std::ostream& os, Rectangle const& r) -> std::ostream&;
-
     T x{};
     T y{};
     T width{};
