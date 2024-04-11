@@ -265,8 +265,8 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
     g_object_get(gtk_widget_get_settings(w), "gtk-application-prefer-dark-theme", &dark, nullptr);
 #endif
 
-    g_message("Extracted theme info: Name = %s, rootname = %s, dark = %s", name.get(), props.rootname.c_str(),
-              dark ? "true" : "false");
+    g_debug("Extracted theme info: Name = %s, rootname = %s, dark = %s", name.get(), props.rootname.c_str(),
+            dark ? "true" : "false");
 
     props.dark = props.darkSuffix || dark;  // Some themes handle their dark variant via this setting
 
@@ -339,13 +339,13 @@ void MainWindow::updateColorscheme() {
     {
         gchar* name = nullptr;
         g_object_get(gtk_widget_get_settings(this->window), "gtk-theme-name", &name, nullptr);
-        g_message("Theme name: %s", name);
-        g_message("Modified in GtkSettings: %s", modifiedGtkSettingsTheme ? "true" : "false");
+        g_debug("Theme name: %s", name);
+        g_debug("Modified in GtkSettings: %s", modifiedGtkSettingsTheme ? "true" : "false");
         g_free(name);
         gboolean gtkdark = true;
         g_object_get(gtk_widget_get_settings(this->window), "gtk-application-prefer-dark-theme", &gtkdark, nullptr);
-        g_message("Theme variant: %s", gtkdark ? "dark" : "light");
-        g_message("Icon theme: %s", iconThemeToString(control->getSettings()->getIconTheme()));
+        g_debug("Theme variant: %s", gtkdark ? "dark" : "light");
+        g_debug("Icon theme: %s", iconThemeToString(control->getSettings()->getIconTheme()));
     }
     g_signal_handlers_unblock_by_func(gtk_widget_get_settings(this->window), reinterpret_cast<gpointer>(themeCallback),
                                       this);

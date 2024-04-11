@@ -188,8 +188,7 @@ auto Util::getGettextFilepath(const char* localeDir) -> fs::path {
         }
     }
     const char* dir = (gettextEnv) ? directories.c_str() : localeDir;
-    g_message("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnv, localeDir,
-              dir);
+    g_debug("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnv, localeDir, dir);
     return fs::path(dir);
 }
 
