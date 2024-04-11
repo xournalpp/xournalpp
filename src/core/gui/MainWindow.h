@@ -72,6 +72,8 @@ public:
 
     void setFullscreen(bool enabled) const;
 
+    bool isDarkTheme() const;
+
     XournalView* getXournal() const;
 
     void setMenubarVisible(bool visible);
@@ -170,6 +172,8 @@ private:
     std::unique_ptr<Menubar> menubar;
 
     bool maximized = false;
+    bool darkMode = false;
+    bool modifiedGtkSettingsTheme = false;
 
     ToolbarWidgetArray toolbarWidgets;
 

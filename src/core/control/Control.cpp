@@ -1752,7 +1752,7 @@ auto Control::showSaveDialog() -> bool {
         Util::clearExtensions(fileTmp);
         fileTmp += ".xopp";
         // Since we add the extension after the OK button, we have to check manually on existing files
-        if (askToReplace(fileTmp)) {
+        if (askToReplace(fileTmp, GTK_WINDOW(dialog))) {
             break;
         }
     }
@@ -1987,11 +1987,11 @@ void Control::initButtonTool() {
     }
 }
 
-auto Control::askToReplace(fs::path const& filepath) const -> bool {
+auto Control::askToReplace(fs::path const& filepath, GtkWindow* parent) const -> bool {
     if (fs::exists(filepath)) {
         std::string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") %
                              filepath.filename().u8string());
-        int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
+        int res = XojMsgBox::replaceFileQuestion(parent, msg);
         return res == GTK_RESPONSE_OK;
     }
     return true;

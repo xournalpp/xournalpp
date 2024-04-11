@@ -182,12 +182,6 @@ public:
     void setDisplayDpi(int dpi);
     int getDisplayDpi() const;
 
-    /**
-     * Dark theme for white-coloured icons
-     */
-    void setDarkTheme(bool dark);
-    bool isDarkTheme() const;
-
     void setAreStockIconsUsed(bool use);
     bool areStockIconsUsed() const;
 
@@ -333,6 +327,9 @@ public:
 
     IconTheme getIconTheme() const;
     void setIconTheme(IconTheme iconTheme);
+
+    void setThemeVariant(ThemeVariant theme);
+    ThemeVariant getThemeVariant() const;
 
     SidebarNumberingStyle getSidebarNumberingStyle() const;
     void setSidebarNumberingStyle(SidebarNumberingStyle numberingStyle);
@@ -667,6 +664,11 @@ private:
     IconTheme iconTheme;
 
     /**
+     * Follow system's default theme variant or force one or the other
+     */
+    ThemeVariant themeVariant;
+
+    /**
      * Sidebar page number style
      */
     SidebarNumberingStyle sidebarNumberingStyle;
@@ -696,12 +698,6 @@ private:
      * Width of cursor highlight border, in pixels.
      */
     double cursorHighlightBorderWidth{};
-
-    /**
-     * If the user uses a dark-themed DE, he should enable this
-     * (white icons)
-     */
-    bool darkTheme{};
 
     /**
      * If stock icons are used instead of Xournal++ icons when available
