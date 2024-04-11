@@ -58,7 +58,7 @@ static auto closeCallback(void* context) -> int {
 
 XmlParser::XmlParser(InputStream& input, LoadHandler* handler):
         reader(xmlReaderForIO(readCallback, closeCallback, &input, nullptr, nullptr,
-                              XML_PARSE_RECOVER | XML_PARSE_NOBLANKS)),
+                              XML_PARSE_RECOVER | XML_PARSE_NOBLANKS | XML_PARSE_HUGE)),
         handler(handler),
         pdfFilenameParsed(false),
         tempTimestamp(0) {
