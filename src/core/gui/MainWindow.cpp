@@ -220,10 +220,12 @@ struct ThemeProperties {
 };
 static ThemeProperties getThemeProperties(GtkWidget* w) {
     xoj::util::OwnedCString name;
+    [[maybe_unused]] bool useEnv = false;
     // Gtk prioritizes GTK_THEME over GtkSettings content
     // cf https://gitlab.gnome.org/GNOME/gtk/blob/90d84a2af8b367bd5a5312b3fa3b67563462c0ef/gtk/gtksettings.c#L1567-L1622
     if (auto* p = g_getenv("GTK_THEME")) {
         *(name.contentReplacer()) = g_strdup(p);
+        useEnv = true;
     } else {
         g_object_get(gtk_widget_get_settings(w), "gtk-theme-name", name.contentReplacer(), nullptr);
     }
@@ -246,14 +248,16 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
     gboolean dark = false;
 
 #ifdef __APPLE__
-    CFStringRef interfaceStyle =
-            (CFStringRef)CFPreferencesCopyAppValue(CFSTR("AppleInterfaceStyle"), kCFPreferencesCurrentApplication);
-    if (interfaceStyle) {
-        char buffer[128];
-        if (CFStringGetCString(interfaceStyle, buffer, sizeof(buffer), kCFStringEncodingUTF8)) {
-            std::string style = buffer;
-            if (auto pos = style.find("Dark"); pos != std::string::npos) {
-                dark = true;
+    if (!useEnv) {
+        CFStringRef interfaceStyle =
+                (CFStringRef)CFPreferencesCopyAppValue(CFSTR("AppleInterfaceStyle"), kCFPreferencesCurrentApplication);
+        if (interfaceStyle) {
+            char buffer[128];
+            if (CFStringGetCString(interfaceStyle, buffer, sizeof(buffer), kCFStringEncodingUTF8)) {
+                std::string style = buffer;
+                if (auto pos = style.find("Dark"); pos != std::string::npos) {
+                    dark = true;
+                }
             }
         }
     }
