@@ -314,8 +314,8 @@ void GeometryToolInputHandler::rotateAndZoomMotion(InputEvent const& event) {
 auto GeometryToolInputHandler::getCoords(InputEvent const& event) -> xoj::util::Point<double> {
     const double zoom = xournal->getZoom();
     const auto view = controller->getView();
-    const double posX = event.relativeX - static_cast<double>(view->getX());
-    const double posY = event.relativeY - static_cast<double>(view->getY());
+    const double posX = event.relative.x - static_cast<double>(view->getX());
+    const double posY = event.relative.y - static_cast<double>(view->getY());
     return xoj::util::Point<double>(posX / zoom, posY / zoom);
 }
 

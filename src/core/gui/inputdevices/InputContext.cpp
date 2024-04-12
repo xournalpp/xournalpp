@@ -59,7 +59,8 @@ static gboolean keyboardCallback(GtkEventControllerKey* self, guint keyval, guin
 
 InputContext::~InputContext() {
     // Destructor is called in xournal_widget_dispose, so it can still accept events
-    g_signal_handler_disconnect(this->widget, signal_id);
+    gtk_widget_remove_controller(this->widget, std::exchange(legCtrl, nullptr));
+    gtk_widget_remove_controller(this->widget, std::exchange(keyCtrl, nullptr));
 
     delete this->stylusHandler;
     this->stylusHandler = nullptr;
@@ -81,14 +82,14 @@ void InputContext::connect(GtkWidget* pWidget) {
     xoj_assert(!this->widget && pWidget);
     this->widget = pWidget;
 
-    auto* legCtrl = gtk_event_controller_legacy_new();
-    signal_id = g_signal_connect(legCtrl, "event", xoj::util::wrap_for_g_callback_v<eventCallback>, this);
+    this->legCtrl = gtk_event_controller_legacy_new();
+    g_signal_connect(legCtrl, "event", xoj::util::wrap_for_g_callback_v<eventCallback>, this);
     gtk_event_controller_set_propagation_phase(legCtrl, GTK_PHASE_TARGET);
     gtk_widget_add_controller(widget, legCtrl);
 
     // The last added GtkEventController gets called first: the GtkeventControllerKey gets a chance to grab the events,
     // avoiding unnecessary calls of the GtkEventControllerLegacy
-    auto* keyCtrl = gtk_event_controller_key_new();
+    this->keyCtrl = gtk_event_controller_key_new();
     gtk_widget_add_controller(widget, keyCtrl);
     gtk_event_controller_set_propagation_phase(keyCtrl, GTK_PHASE_TARGET);
 
@@ -105,12 +106,17 @@ auto InputContext::eventCallback(GtkEventControllerLegacy*, GdkEvent* event, Inp
 auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     printDebug(sourceEvent);
 
+    if (auto type = gdk_event_get_event_type(sourceEvent); type == GDK_KEY_PRESS || type == GDK_KEY_RELEASE) {
+        // Key event are handled by the GtkEventControllerKey
+        return false;
+    }
+
     GdkDevice* sourceDevice = gdk_event_get_device(sourceEvent);
     if (sourceDevice == NULL) {
         return false;
     }
 
-    InputEvent event = InputEvents::translateEvent(sourceEvent, this->getSettings());
+    InputEvent event = InputEvents::translateEvent(sourceEvent, this->getSettings(), widget);
 
     // Add the device to the list of known devices if it is currently unknown
     GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
@@ -170,9 +176,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     }
 
 #ifdef DEBUG_INPUT
-    if (event.deviceClass != INPUT_DEVICE_KEYBOARD) {  // Keyboard event are handled via the GtkEventControllerKey
-        g_message("We received an event we do not have a handler for");
-    }
+    g_message("We received an event we do not have a handler for");
 #endif
     return false;
 }
