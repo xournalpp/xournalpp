@@ -75,7 +75,6 @@ XournalView::XournalView(GtkViewport* parent, Control* control, ScrollHandling* 
     this->widget.reset(gtk_xournal_new(this, inputContext), xoj::util::adopt);
 
     gtk_viewport_set_child(parent, this->widget.get());
-    // gtk_widget_show(this->widget);
 
     g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
@@ -86,7 +85,8 @@ XournalView::XournalView(GtkViewport* parent, Control* control, ScrollHandling* 
 
     gtk_window_set_default_widget(GTK_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(parent), GTK_TYPE_WINDOW)),
                                   this->widget.get());
-    gtk_widget_grab_focus(this->widget.get());
+    [[maybe_unused]] auto r = gtk_widget_grab_focus(this->widget.get());
+    xoj_assert_message(r, "Main widget must be able to grab focus (all its ancestors must have can-focus==true)");
 
     this->cleanupTimeout = g_timeout_add_seconds(5, xoj::util::wrap_v<clearMemoryTimer>, this);
 }

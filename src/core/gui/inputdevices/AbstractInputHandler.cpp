@@ -73,8 +73,8 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
         -> PositionInputData {
     xoj_assert(page != nullptr);
 
-    gdouble eventX = event.relativeX;
-    gdouble eventY = event.relativeY;
+    double eventX = event.relativeX;
+    double eventY = event.relativeY;
 
     PositionInputData pos = {};
     pos.x = eventX - static_cast<double>(page->getX());
