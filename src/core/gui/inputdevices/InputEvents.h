@@ -16,8 +16,9 @@
 
 #include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
 #include <glib.h>     // for gdouble, gchar, guint, guint32
+#include <gtk/gtk.h>
 
-#include "model/Point.h"  // for Point, Point::NO_PRESSURE
+#include "model/Point.h"  // for Point::NO_PRESSURE
 #include "util/Point.h"
 #include "util/raii/CLibrariesSPtr.h"
 #include "util/raii/IdentityFunction.h"
@@ -65,7 +66,7 @@ struct InputEvent final {
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
     const gchar* deviceName{};
 
-    xoj::util::Point<double> absolute;  ///< In XournalWidget coordinates
+    xoj::util::Point<double> absolute;  ///< In GdkSurface coordinates
     xoj::util::Point<double> relative;  ///< In XournalWidget coordinates
 
     guint button{0};
@@ -89,5 +90,5 @@ struct InputEvents {
     static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
     static InputDeviceClass translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings);
 
-    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings);
+    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings, GtkWidget* referenceWidget);
 };
