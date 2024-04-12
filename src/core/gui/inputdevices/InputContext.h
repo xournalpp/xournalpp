@@ -36,7 +36,6 @@ class XournalView;
 class InputContext final {
 
 private:
-    gulong signal_id{0};
     StylusInputHandler* stylusHandler;
     MouseInputHandler* mouseHandler;
     TouchDrawingInputHandler* touchDrawingHandler;
@@ -45,6 +44,10 @@ private:
     std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
 
     GtkWidget* widget = nullptr;
+    /// Event controllers added to the main widget. Used to remove them on ~InputContext() to stop signals
+    GtkEventController* keyCtrl = nullptr;
+    GtkEventController* legCtrl = nullptr;
+
     XournalView* view;
     ScrollHandling* scrollHandling;
 
