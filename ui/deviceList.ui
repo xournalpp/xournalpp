@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="deviceListDialog">
+    <property name="title" translatable="1">Known devices</property>
+    <property name="modal">1</property>
+    <property name="destroy-with-parent">1</property>
+    <property name="child">
+      <object class="GtkBox">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="vexpand">1</property>
+            <property name="focusable">1</property>
+            <property name="min-content-width">400</property>
+            <property name="min-content-height">300</property>
+            <property name="overlay-scrolling">0</property>
+            <property name="propagate-natural-width">1</property>
+            <property name="propagate-natural-height">1</property>
+            <property name="child">
+              <object class="GtkViewport">
+                <property name="child">
+                  <object class="GtkBox" id="contentBox">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">4</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="1">&lt;i&gt;Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)&lt;/i&gt;</property>
+                        <property name="use-markup">1</property>
+                        <property name="wrap">1</property>
+                        <property name="max-width-chars">40</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="label" translatable="1">Cancel</property>
+                <property name="focusable">1</property>
+                <property name="can-default">True</property>
+                <property name="receives-default">1</property>
+                <property name="image">iconCancel</property>
+                <accelerator key="Escape" signal="clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="label" translatable="1">Ok</property>
+                <property name="focusable">1</property>
+                <property name="can-default">True</property>
+                <property name="has-default">1</property>
+                <property name="receives-default">1</property>
+                <property name="image">iconOk</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+  <object class="GtkImage" id="iconCancel">
+    <property name="icon-name">dialog-cancel</property>
+  </object>
+  <object class="GtkImage" id="iconOk">
+    <property name="icon-name">dialog-ok</property>
+  </object>
+</interface>

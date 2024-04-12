@@ -137,15 +137,13 @@ private:
 
     /**
      * Update the position of the separator in the paned container, adjusting it to the saved sidebar width.
-     * @param contentWidth should be the width of the paned container. The caller should retrieve the width
-     * of the container before any modifications to it, as that will reset its allocation.
      */
-    void updatePanedPosition(int contentWidth);
+    void updatePanedPosition();
 
     /**
      * Window close Button is pressed
      */
-    static bool deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control* control);
+    static bool closeRequestCallback(GtkWidget* widget, Control* control);
 
     /**
      * Window is maximized/minimized
@@ -187,8 +185,6 @@ private:
     /// The last monitor the window has been moved to -- used for setting dpi
     GdkMonitor* lastMonitor = nullptr;
 
-    xoj::util::WidgetSPtr boxContainerWidget;
     xoj::util::WidgetSPtr panedContainerWidget;
-    xoj::util::WidgetSPtr mainContentWidget;
     xoj::util::WidgetSPtr sidebarWidget;
 };

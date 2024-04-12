@@ -4,7 +4,6 @@
 
 #include "enums/Action.enum.h"                  // for Action
 #include "gui/toolbarMenubar/icon/ColorIcon.h"  // for ColorIcon
-#include "util/GtkUtil.h"                       // for setToggleButtonUnreleasable
 #include "util/gtk4_helper.h"                   // for gtk_button_set_child
 
 ColorToolItem::ColorToolItem(NamedColor namedColor, const std::optional<Recolor>& recolor):
@@ -27,7 +26,6 @@ auto ColorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
     auto actionName = std::string("win.") + Action_toString(Action::TOOL_COLOR);
     gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.data());
     gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), target.get());
-    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(btn));
 
     gtk_widget_set_tooltip_text(btn, this->namedColor.getName().c_str());
     gtk_button_set_child(GTK_BUTTON(btn), getNewToolIcon());
