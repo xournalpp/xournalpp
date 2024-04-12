@@ -190,10 +190,6 @@ notebook frame>label {
     font-weight: bold;
 }
 
-menubar, toolbar {
-    -GtkWidget-window-dragging: false
-}
-
 label.setting-button-indicator {
     border: 1px solid gray;
     border-radius: 3px;

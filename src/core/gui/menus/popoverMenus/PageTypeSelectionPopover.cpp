@@ -14,7 +14,6 @@
 #include "gui/menus/StaticAssertActionNamespace.h"
 #include "model/XojPage.h"
 #include "util/Assert.h"
-#include "util/GtkUtil.h"
 #include "util/PopupWindowWrapper.h"
 #include "util/Util.h"
 #include "util/gtk4_helper.h"  // for gtk_box_append
@@ -43,7 +42,6 @@ GtkWidget* createEntryWithoutPreview(const char* label, size_t entryNb, const st
     gtk_button_set_child(GTK_BUTTON(button), labelWidget);
     gtk_actionable_set_action_name(GTK_ACTIONABLE(button), prefixedActionName.data());
     gtk_actionable_set_action_target_value(GTK_ACTIONABLE(button), xoj::util::makeGVariantSPtr(entryNb).get());
-    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(button));
     return button;
 }
 
@@ -93,11 +91,11 @@ GtkWidget* createEntryWithPreview(const PageTypeInfo* pti, size_t entryNb, const
     // gtk_button_set_child(GTK_BUTTON(button), label);
 
     GtkWidget* preview = xoj::helper::createPreviewImage(pti->page);
+    gtk_widget_set_size_request(preview, xoj::helper::PREVIEW_WIDTH, xoj::helper::PREVIEW_HEIGHT);
     gtk_widget_set_tooltip_text(preview, pti->name.c_str());
     gtk_button_set_child(GTK_BUTTON(button), preview);  // takes ownership of preview
     gtk_actionable_set_action_name(GTK_ACTIONABLE(button), prefixedActionName.data());
     gtk_actionable_set_action_target_value(GTK_ACTIONABLE(button), xoj::util::makeGVariantSPtr(entryNb).get());
-    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(button));
     return button;
 }
 

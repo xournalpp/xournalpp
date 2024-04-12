@@ -155,11 +155,7 @@ auto gtk_xournal_get_layout(GtkWidget* widget) -> Layout* {
     return xournal->layout;
 }
 
-static void gtk_xournal_init(GtkXournal* xournal) {
-    GtkWidget* widget = GTK_WIDGET(xournal);
-
-    gtk_widget_set_can_focus(widget, true);
-}
+static void gtk_xournal_init(GtkXournal* xournal) { gtk_widget_set_focusable(GTK_WIDGET(xournal), true); }
 
 static void gtk_xournal_size_allocate(GtkWidget* widget, int width, int height, int baseline) {
     GtkXournal* xournal = GTK_XOURNAL(widget);
@@ -176,9 +172,6 @@ static void gtk_xournal_measure(GtkWidget* widget, GtkOrientation orientation, i
         *minimum = *natural = GTK_XOURNAL(widget)->layout->getMinimalPixelHeight();
     }
 }
-
-// TODO PUT THAT SOMEWHERE
-// gtk_xournal_get_layout(widget)->recomputeCenteringPadding(allocation->width, allocation->height);
 
 static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, int top, int width, int height,
                                     bool selected) {
@@ -244,7 +237,11 @@ static void gtk_xournal_snapshot(GtkWidget* widget, GtkSnapshot* sn) {
 
     GtkXournal* xournal = GTK_XOURNAL(widget);
 
-    xoj::util::CairoSPtr crsafe(gtk_snapshot_append_cairo(sn, nullptr), xoj::util::adopt);
+    auto rect = GRAPHENE_RECT_INIT_ZERO;
+    rect.size.width = static_cast<float>(gtk_widget_get_allocated_width(widget));
+    rect.size.height = static_cast<float>(gtk_widget_get_allocated_height(widget));
+
+    xoj::util::CairoSPtr crsafe(gtk_snapshot_append_cairo(sn, &rect), xoj::util::adopt);
     cairo_t* cr = crsafe.get();
     cairo_translate(cr, -gtk_adjustment_get_value(xournal->hadjustment),
                     -gtk_adjustment_get_value(xournal->vadjustment));

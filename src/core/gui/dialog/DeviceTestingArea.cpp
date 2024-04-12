@@ -28,7 +28,7 @@
 #include "DeviceListDialog.h"
 #include "filesystem.h"
 
-constexpr auto UI_FILE_NAME = "deviceTestingArea.glade";
+constexpr auto UI_FILE_NAME = "deviceTestingArea.ui";
 constexpr auto UI_MAIN_ID = "mainBox";
 
 static constexpr double PRESSURE_FACTOR = 20;
