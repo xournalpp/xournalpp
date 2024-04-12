@@ -89,6 +89,8 @@ public:
     T height{};
 };
 
+auto operator<<(std::ostream& os, Rectangle<double> const& r) -> std::ostream&;
+
 struct Matrix;
 auto constexpr operator*(const Matrix& matrix, const Rectangle<double>& rect) -> Rectangle<double>;
 
