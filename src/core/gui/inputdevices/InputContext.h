@@ -48,6 +48,10 @@ private:
     std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
 
     GtkWidget* widget = nullptr;
+    /// Event controllers added to the main widget. Used to remove them on ~InputContext() to stop signals
+    GtkEventController* keyCtrl = nullptr;
+    GtkEventController* legCtrl = nullptr;
+
 
     std::set<std::string> knownDevices;
 
