@@ -146,7 +146,7 @@ IntEdLatexDialog::IntEdLatexDialog(GladeSearchpath* gladeSearchPath, std::unique
                      }),
                      texCtrl.get());
 
-    g_signal_connect(this->getWindow(), "delete-event", G_CALLBACK(+[](GtkWidget*, GdkEvent*, gpointer d) -> gboolean {
+    g_signal_connect(this->getWindow(), "close-request", G_CALLBACK(+[](GtkWidget*, gpointer d) -> gboolean {
                          auto self = static_cast<IntEdLatexDialog*>(d);
                          /**
                           * dlg->getTextBuffer() may survive the dialog. When copying all of its content, the
