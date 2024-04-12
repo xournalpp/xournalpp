@@ -91,6 +91,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             primarySequence = std::exchange(secondarySequence, nullptr);
 
             this->priLastAbs = this->secLastAbs;
+            this->priLastRel = this->secLastRel;
         } else if (event.sequence == secondarySequence) {
             secondarySequence = nullptr;
         } else {
@@ -105,9 +106,11 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
 
 void TouchInputHandler::sequenceStart(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
-        this->priLastAbs = event.relative;
+        this->priLastAbs = event.absolute;
+        this->priLastRel = event.relative;
     } else {
-        this->secLastAbs = event.relative;
+        this->secLastAbs = event.absolute;
+        this->secLastRel = event.relative;
     }
 }
 
@@ -115,12 +118,12 @@ void TouchInputHandler::scrollMotion(InputEvent const& event) {
     // Will only be called if there is a single sequence (zooming handles two sequences)
     auto offset = [&]() {
         if (event.sequence == this->primarySequence) {
-            auto offset = event.relative - this->priLastAbs;
-            this->priLastAbs = event.relative;
+            auto offset = event.absolute - this->priLastAbs;
+            this->priLastAbs = event.absolute;
             return offset;
         } else {
-            auto offset = event.relative - this->secLastAbs;
-            this->secLastAbs = event.relative;
+            auto offset = event.absolute - this->secLastAbs;
+            this->secLastAbs = event.absolute;
             return offset;
         }
     }();
@@ -165,9 +168,9 @@ void TouchInputHandler::zoomStart() {
 
 void TouchInputHandler::zoomMotion(InputEvent const& event) {
     if (event.sequence == this->primarySequence) {
-        this->priLastAbs = event.relative;
+        this->priLastAbs = event.absolute;
     } else {
-        this->secLastAbs = event.relative;
+        this->secLastAbs = event.absolute;
     }
 
     double distance = this->priLastAbs.distance(this->secLastAbs);
@@ -213,4 +216,6 @@ void TouchInputHandler::onUnblock() {
 
     priLastAbs = {-1.0, -1.0};
     secLastAbs = {-1.0, -1.0};
+    priLastRel = {-1.0, -1.0};
+    secLastRel = {-1.0, -1.0};
 }
