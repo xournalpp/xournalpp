@@ -11,7 +11,6 @@
 #include "gui/dialog/PageTemplateDialog.h"
 #include "model/PageType.h"  // for PageType
 #include "util/Assert.h"
-#include "util/GtkUtil.h"
 #include "util/raii/GVariantSPtr.h"
 
 namespace {
@@ -54,7 +53,6 @@ GtkWidget* createEntryWithPreview(const PageTypeInfo* pti, size_t entryNb, const
     gtk_button_set_child(GTK_BUTTON(button), preview);  // takes ownership of preview
     gtk_actionable_set_action_name(GTK_ACTIONABLE(button), prefixedActionName.data());
     gtk_actionable_set_action_target_value(GTK_ACTIONABLE(button), xoj::util::makeGVariantSPtr(entryNb).get());
-    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(button));
     return button;
 }
 
