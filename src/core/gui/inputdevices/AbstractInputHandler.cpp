@@ -60,8 +60,8 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) con
 
     GtkXournal* xournal = this->inputContext->getXournal();
 
-    int x = round_cast<int>(event.relativeX);
-    int y = round_cast<int>(event.relativeY);
+    int x = round_cast<int>(event.relative.x);
+    int y = round_cast<int>(event.relative.y);
 
     return xournal->layout->getPageViewAt(x, y);
 }
@@ -73,8 +73,8 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
         -> PositionInputData {
     xoj_assert(page != nullptr);
 
-    double eventX = event.relativeX;
-    double eventY = event.relativeY;
+    double eventX = event.relative.x;
+    double eventY = event.relative.y;
 
     PositionInputData pos = {};
     pos.x = eventX - static_cast<double>(page->getX());
