@@ -107,8 +107,8 @@ void SearchBar::search(const char* text) {
     }
 }
 
-void SearchBar::searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar) {
-    const char* text = gtk_entry_buffer_get_text(gtk_entry_get_buffer(entry));
+void SearchBar::searchTextChangedCallback(GtkSearchEntry* entry, SearchBar* searchBar) {
+    const char* text = gtk_editable_get_text(GTK_EDITABLE(entry));
     searchBar->search(text);
 }
 
@@ -119,7 +119,7 @@ void SearchBar::search(Fun next) {
 
     MainWindow* win = control->getWindow();
     GtkWidget* searchTextField = win->get("searchTextField");
-    const char* text = gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(searchTextField)));
+    const char* text = gtk_editable_get_text(GTK_EDITABLE(searchTextField));
     GtkWidget* lbSearchState = win->get("lbSearchState");
     if (*text == 0) {
         return;

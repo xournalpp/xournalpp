@@ -80,6 +80,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     g_signal_connect(builder.get("zoomCallibSlider"), "change-value",
                      G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, SettingsDialog* self) {
                          self->setDpi(round_cast<int>(value));
+                         return false;  // Let the default callback run
                      }),
                      this);
 
@@ -864,13 +865,13 @@ void SettingsDialog::save() {
 
     settings->setDefaultSaveName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName"))));
     settings->setDefaultPdfExportName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName"))));
-    // Todo(fabian): use Util::fromGFilename!
-    auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
-    auto path = Util::fromGFile(file);
-    g_object_unref(file);
-    if (fs::is_directory(path)) {
-        settings->setAudioFolder(path);
-    }
+    // auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
+    // auto path = Util::fromGFile(file);
+    // g_object_unref(file);
+    // if (fs::is_directory(path)) {
+    //     settings->setAudioFolder(path);
+    // }
+    g_warning("Implement gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get(\"fcAudioPath\")))");
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     int autosaveTimeout = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout)));

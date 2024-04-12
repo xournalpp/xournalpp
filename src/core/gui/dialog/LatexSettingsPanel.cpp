@@ -38,7 +38,7 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
         panel(GTK_SCROLLED_WINDOW(builder.get(UI_PANEL_NAME))),
         cbAutoDepCheck(GTK_CHECK_BUTTON(builder.get("latexSettingsRunCheck"))),
         // Todo(gtk4): replace this GtkFileChooserButton (by what?)
-        globalTemplateChooser(GTK_FILE_CHOOSER(builder.get("latexSettingsTemplateFile"))),
+        // globalTemplateChooser(GTK_FILE_CHOOSER(builder.get("latexSettingsTemplateFile"))),
         cbUseSystemFont(GTK_CHECK_BUTTON(builder.get("cbUseSystemFont"))) {
 
     g_signal_connect_swapped(builder.get("latexSettingsTestBtn"), "clicked",
@@ -70,8 +70,8 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_check_button_set_active(this->cbAutoDepCheck, settings.autoCheckDependencies);
     gtk_editable_set_text(GTK_EDITABLE(builder.get("latexDefaultEntry")), settings.defaultText.c_str());
     if (!settings.globalTemplatePath.empty()) {
-        gtk_file_chooser_set_file(this->globalTemplateChooser, Util::toGFile(settings.globalTemplatePath).get(),
-                                  nullptr);
+        // gtk_file_chooser_set_file(this->globalTemplateChooser, Util::toGFile(settings.globalTemplatePath).get(),
+        //                           nullptr);
     }
     gtk_editable_set_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")), settings.genCmd.c_str());
 
@@ -107,9 +107,10 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_check_button_get_active(this->cbAutoDepCheck);
     settings.defaultText = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexDefaultEntry")));
-    settings.globalTemplatePath = Util::fromGFile(
-            xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(this->globalTemplateChooser), xoj::util::adopt)
-                    .get());
+    // settings.globalTemplatePath = Util::fromGFile(
+    //         xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(this->globalTemplateChooser), xoj::util::adopt)
+    //                 .get());
+    g_warning("Implement gtk_file_chooser_get_file(this->globalTemplateChooser)");
     settings.genCmd = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")));
 
 #ifdef USE_GTK_SOURCEVIEW
