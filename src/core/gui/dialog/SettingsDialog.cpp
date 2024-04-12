@@ -41,7 +41,7 @@ class GladeSearchpath;
 using std::string;
 using std::vector;
 
-constexpr auto UI_FILE = "settings.glade";
+constexpr auto UI_FILE = "settings.ui";
 constexpr auto UI_DIALOG_NAME = "settingsDialog";
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
@@ -1042,12 +1042,13 @@ void SettingsDialog::save() {
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spStrokeRecognizerMinSize")))));
 
 #ifdef ENABLE_AUDIO
-    auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
-    auto path = Util::fromGFile(file);
-    g_object_unref(file);
-    if (fs::is_directory(path)) {
-        settings->setAudioFolder(path);
-    }
+    // auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
+    // auto path = Util::fromGFile(file);
+    // g_object_unref(file);
+    // if (fs::is_directory(path)) {
+    //     settings->setAudioFolder(path);
+    // }
+    g_warning("Implement gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get(\"fcAudioPath\")))");
 
     size_t selectedInputDeviceIndex =
             static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(builder.get("cbAudioInputDevice"))));
