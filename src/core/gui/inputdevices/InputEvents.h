@@ -16,8 +16,9 @@
 
 #include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
 #include <glib.h>     // for gdouble, gchar, guint, guint32
+#include <gtk/gtk.h>
 
-#include "model/Point.h"  // for Point, Point::NO_PRESSURE
+#include "model/Point.h"  // for Point::NO_PRESSURE
 #include "util/Point.h"
 #include "util/raii/CLibrariesSPtr.h"
 #include "util/raii/IdentityFunction.h"
@@ -90,5 +91,5 @@ struct InputEvents {
     static InputDeviceClass translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings);
 
     static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings,
-                                     const xoj::util::Point<double>& relativeOffset);
+                                     const xoj::util::Point<double>& relativeOffset, GtkWidget* referenceWidget);
 };
