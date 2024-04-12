@@ -68,9 +68,6 @@ struct MigrateResult {
 
 auto migrateSettings() -> MigrateResult;
 
-void checkForErrorlog();
-void checkForEmergencySave(Control* control);
-
 void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound = true);
 
 void initCAndCoutLocales() {
@@ -116,18 +113,18 @@ auto migrateSettings() -> MigrateResult {
     return {MigrateStatus::NotNeeded, ""};
 }
 
-static void deleteFile(const fs::path& file) {
+static void deleteFile(const fs::path& file, GtkWindow* win) {
     std::error_code error;
     if (!fs::remove(file, error)) {
         std::stringstream msg;
         msg << FS(_F("Failed to delete file: {1}") % file.u8string()) << std::endl;
         msg << error << std::endl << error.message() << std::endl;
         msg << FS(_F("Please delete the file manually"));
-        XojMsgBox::showErrorToUser(nullptr, msg.str());
+        XojMsgBox::showErrorToUser(win, msg.str());
     }
 }
 
-void checkForErrorlog() {
+void checkForErrorlog(GtkWindow* win) {
     std::vector<fs::path> errorList;
 
     try {
@@ -173,19 +170,18 @@ void checkForErrorlog() {
                                               {_("Open Logfile directory"), OPEN_DIR},
                                               {_("Delete Logfile"), DELETE_FILE},
                                               {_("Cancel"), CANCEL}};
-    XojMsgBox::askQuestion(nullptr, _("Crash log"), msg, buttons,
-                           [errorlogPath = fs::path(errorList.front())](int response) {
-                               if (response == FILE_REPORT) {
-                                   Util::openFileWithDefaultApplication(PROJECT_BUGREPORT);
-                                   Util::openFileWithDefaultApplication(errorlogPath);
-                               } else if (response == OPEN_FILE) {
-                                   Util::openFileWithDefaultApplication(errorlogPath);
-                               } else if (response == OPEN_DIR) {
-                                   Util::openFileWithDefaultApplication(errorlogPath.parent_path());
-                               } else if (response == DELETE_FILE) {
-                                   deleteFile(errorlogPath);
-                               }
-                           });
+    XojMsgBox::askQuestion(win, _("Crash log"), msg, buttons, [errorlogPath = errorList.front(), win](int response) {
+        if (response == FILE_REPORT) {
+            Util::openFileWithDefaultApplication(PROJECT_BUGREPORT);
+            Util::openFileWithDefaultApplication(errorlogPath);
+        } else if (response == OPEN_FILE) {
+            Util::openFileWithDefaultApplication(errorlogPath);
+        } else if (response == OPEN_DIR) {
+            Util::openFileWithDefaultApplication(errorlogPath.parent_path());
+        } else if (response == DELETE_FILE) {
+            deleteFile(errorlogPath, win);
+        }
+    });
 }
 
 void checkForEmergencySave(Control* control) {
@@ -196,21 +192,20 @@ void checkForEmergencySave(Control* control) {
     }
 
     const std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
-
     enum { DELETE_FILE = 1, RESTORE_FILE };
     XojMsgBox::askQuestion(
-            nullptr, _("Recovery file detected"), msg,
+            control->getGtkWindow(), _("Recovery file detected"), msg,
             {{_("Delete file"), DELETE_FILE}, {_("Restore file"), RESTORE_FILE}},
             [file = std::move(file), ctrl = control](int response) mutable {
                 if (response == DELETE_FILE) {
-                    deleteFile(file);
+                    deleteFile(file, ctrl->getGtkWindow());
                 } else if (response == RESTORE_FILE) {
                     ctrl->openFileWithoutSavingTheCurrentDocument(file, false, -1, [ctrl, file](bool) {
                         ctrl->getDocument()->setFilepath("");
 
                         // Todo Make sure the document is changed + ask for saving
                         ctrl->getUndoRedoHandler()->addUndoAction(std::make_unique<EmergencySaveRestore>());
-                        deleteFile(file);
+                        deleteFile(file, ctrl->getGtkWindow());
                     });
                 }
             });
@@ -488,6 +483,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
     // Do we want stuff in gtk_application_set_app_menu?
+    gtk_application_window_set_show_menubar(GTK_APPLICATION_WINDOW(app_data->win->getWindow()), true);
 
     app_data->win->show(nullptr);
 
@@ -513,7 +509,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
             [ctrl = app_data->control.get(), app = GTK_APPLICATION(application)](bool) {
                 ctrl->getScheduler()->start();
 
-                checkForErrorlog();
+                checkForErrorlog(ctrl->getGtkWindow());
                 checkForEmergencySave(ctrl);
 
                 // There is a timing issue with the layout

@@ -189,7 +189,3 @@ notebook frame>label {
     color: #666;
     font-weight: bold;
 }
-
-menubar, toolbar {
-    -GtkWidget-window-dragging: false
-}
