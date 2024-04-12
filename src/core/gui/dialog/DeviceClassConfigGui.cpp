@@ -13,7 +13,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "settingsDeviceClassConfig.glade";
+constexpr auto UI_FILE = "settingsDeviceClassConfig.ui";
 constexpr auto UI_WIDGET_NAME = "deviceClassBox";
 
 DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings,

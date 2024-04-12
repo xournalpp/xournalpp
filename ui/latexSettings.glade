@@ -32,8 +32,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes">If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool.</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
+                                      </object>
                 </child>
                 <child type="label">
                   <object class="GtkLabel">
@@ -43,11 +42,6 @@
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkFrame" id="frameDefaultText">
@@ -71,11 +65,6 @@
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child>
               <object class="GtkFrame" id="frameTemplateFileSettings">
@@ -100,10 +89,6 @@
                         <property name="halign">start</property>
                         <property name="label" translatable="yes">Global template file path</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -113,11 +98,6 @@
                         <property name="label" translatable="yes">The following strings will be substituted in the global template file when running the LaTeX tool:</property>
                         <property name="wrap">True</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">1</property>
-                        <property name="width">2</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -126,10 +106,6 @@
                         <property name="halign">start</property>
                         <property name="label" translatable="yes">%%XPP_TOOL_INPUT%%</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">2</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -138,10 +114,6 @@
                         <property name="halign">start</property>
                         <property name="label" translatable="yes">The math mode formula typed in the LaTeX tool.</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">2</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkButton" id="latexSettingsTemplateFile">
@@ -149,10 +121,6 @@
                         <property name="can-focus">False</property>
                         <property name="hexpand">True</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -161,10 +129,6 @@
                         <property name="halign">start</property>
                         <property name="label" translatable="yes">%%XPP_TEXT_COLOR%%</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">3</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -173,10 +137,6 @@
                         <property name="halign">start</property>
                         <property name="label" translatable="yes">The current color of the Text Tool, in hex RGB format.</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">3</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -212,11 +172,6 @@
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
             </child>
             <child>
               <object class="GtkFrame" id="frameExecutableSettings">
@@ -239,10 +194,6 @@
                         <property name="margin-end">6</property>
                         <property name="label" translatable="yes">LaTeX generation command</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkEntry" id="latexSettingsGenCmd">
@@ -251,10 +202,6 @@
                         <property name="hexpand">True</property>
                         <property name="input-purpose">terminal</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkButton" id="latexSettingsTestBtn">
@@ -266,11 +213,6 @@
                         <property name="halign">end</property>
                         <property name="margin-top">2</property>
                       </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">1</property>
-                        <property name="width">2</property>
-                      </packing>
                     </child>
                   </object>
                 </child>
@@ -282,11 +224,6 @@
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
-              </packing>
             </child>
             <child>
               <object class="GtkFrame" id="frameSourceViewSettings">
@@ -315,13 +252,8 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="xpad">5</property>
+                                <property name="margin-start">5</property>
                               </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
                             </child>
                             <child>
                               <object class="GtkBox" id="bxThemeSelectionContainer">
@@ -332,24 +264,14 @@
                                   <placeholder/>
                                 </child>
                               </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
                             </child>
                           </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
                         </child>
                         <child>
                           <object class="GtkBox" id="bxGtkSourceviewMainSettings">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="no-show-all">True</property>
+              <!--              <property name="no-show-all">True</property> -->
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkCheckButton" id="cbShowLineNumbers">
@@ -357,13 +279,7 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">False</property>
-                                <property name="draw-indicator">True</property>
                               </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="cbAutoIndent">
@@ -371,13 +287,7 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">False</property>
-                                <property name="draw-indicator">True</property>
                               </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="cbSyntaxHighlight">
@@ -385,27 +295,11 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">False</property>
-                                <property name="draw-indicator">True</property>
                               </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">2</property>
-                              </packing>
                             </child>
                           </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
                         </child>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkBox" id="bxEditorWordWrapSetting">
@@ -417,20 +311,9 @@
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
-                            <property name="draw-indicator">True</property>
                           </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
                         </child>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkFrame" id="frameEditorFontSettings">
@@ -451,13 +334,7 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">False</property>
-                                <property name="draw-indicator">True</property>
                               </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
                             </child>
                             <child>
                               <object class="GtkBox" id="boxCustomFontOptions">
@@ -469,11 +346,6 @@
                                     <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">Font: </property>
                                   </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
-                                  </packing>
                                 </child>
                                 <child>
                                   <object class="GtkFontButton" id="selBtnEditorFont">
@@ -483,20 +355,9 @@
                                     <property name="font">Sans 12</property>
                                     <property name="preview-text"/>
                                     <property name="title" translatable="yes">Pick the Editor's Font</property>
-                                    <property name="show-style">False</property>
                                   </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
                                 </child>
                               </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
                             </child>
                           </object>
                         </child>
@@ -508,11 +369,6 @@
                           </object>
                         </child>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkFrame" id="frameExternalEditorSettings">
@@ -658,11 +514,6 @@
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">4</property>
-              </packing>
             </child>
           </object>
         </child>
