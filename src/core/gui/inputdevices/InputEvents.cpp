@@ -6,8 +6,8 @@
 
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
-#include "util/Point.h"
-#include "util/gdk4_helper.h"
+#include "util/Assert.h"
+#include "util/GtkUtil.h"
 
 static auto translateEventType(GdkEventType type) -> InputEventType {
     switch (type) {
@@ -69,7 +69,8 @@ auto InputEvents::translateDeviceType(GdkDevice* device, Settings* settings) -> 
 }
 
 auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings,
-                                 const xoj::util::Point<double>& relativeOffset) -> InputEvent {
+                                 const xoj::util::Point<double>& relativeOffset, GtkWidget* referenceWidget)
+        -> InputEvent {
     InputEvent targetEvent{};
 
     // Map the event type to our internal ones
@@ -83,8 +84,12 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings,
     targetEvent.deviceId = DeviceId(targetEvent.device);
 
     // Copy both coordinates of the event
-    gdk_event_get_position(sourceEvent, &targetEvent.absolute.x, &targetEvent.absolute.y);
-    targetEvent.relative = targetEvent.absolute + relativeOffset;
+    if (xoj::util::Point<double> surfCoord; gdk_event_get_position(sourceEvent, &surfCoord.x, &surfCoord.y)) {
+        targetEvent.absolute = xoj::util::gtk::gdkSurfaceToWidgetCoordinates(surfCoord, referenceWidget);
+        targetEvent.relative = targetEvent.absolute + relativeOffset;
+    } else {
+        g_warning("InputEvents::translateEvent() but GdkEvent has no position");
+    }
 
     // Copy the event button if there is any
     if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
