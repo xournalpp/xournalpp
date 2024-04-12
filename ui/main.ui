@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkRevealer" id="floatingToolbox">
+    <property name="name">floatingToolbox</property>
+    <property name="visible">0</property>
+    <property name="can-focus">0</property>
+    <property name="transition-type">crossfade</property>
+    <property name="reveal-child">1</property>
+    <property name="child">
+      <object class="GtkBox" id="floatingvbox">
+        <property name="name">floatingvbox</property>
+        <property name="can-focus">0</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="labelFloatingToolbox">
+            <property name="name">labelFloatingToolbox</property>
+            <property name="can-focus">0</property>
+            <property name="label" translatable="1"> = Floating Toolbox (experimental) =</property>
+            <attributes>
+              <attribute name="weight" value="bold"></attribute>
+              <attribute name="foreground" value="#eeeeeeeeecec"></attribute>
+              <attribute name="background" value="#2e2e34343636"></attribute>
+            </attributes>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="can-focus">0</property>
+            <property name="vscrollbar-policy">2</property>
+            <child>
+              <object class="GtkBox" id="tbFloat1">
+                <style>
+                  <class name="toolbar"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="can-focus">0</property>
+            <property name="vscrollbar-policy">2</property>
+            <child>
+              <object class="GtkBox" id="tbFloat2">
+                <style>
+                  <class name="toolbar"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="can-focus">0</property>
+            <property name="vscrollbar-policy">2</property>
+            <child>
+              <object class="GtkBox" id="tbFloat3">
+                <style>
+                  <class name="toolbar"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="can-focus">0</property>
+            <property name="vscrollbar-policy">2</property>
+            <child>
+              <object class="GtkBox" id="tbFloat4">
+                <style>
+                  <class name="toolbar"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="showIfEmpty">
+            <property name="name">showIfEmpty</property>
+            <property name="can-focus">0</property>
+            <property name="margin-bottom">30</property>
+            <property name="label" translatable="1">&lt;b&gt;Empty Toolbox&lt;/b&gt;
+              &lt;i&gt;Menu: View/Toolbars&lt;/i&gt;</property>
+            <property name="use-markup">1</property>
+            <property name="justify">center</property>
+          </object>
+        </child>
+        <style>
+          <class name="tbCss"/>
+        </style>
+      </object>
+    </property>
+  </object>
+  <object class="GtkApplicationWindow" id="mainWindow">
+    <property name="name">mainWindow</property>
+    <property name="icon-name">com-github-xournalpp-xournalpp</property>
+    <child>
+      <object class="GtkOverlay" id="mainOverlay">
+        <property name="name">mainOverlay</property>
+        <property name="child">
+          <object class="GtkBox" id="mainBox">
+            <property name="name">mainBox</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="can-focus">0</property>
+                <property name="vscrollbar-policy">2</property>
+                <child>
+                  <object class="GtkBox" id="tbTop1">
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="can-focus">0</property>
+                <property name="vscrollbar-policy">2</property>
+                <child>
+                  <object class="GtkBox" id="tbTop2">
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="mainContainerBox">
+                <property name="name">mainContainerBox</property>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="can-focus">0</property>
+                    <property name="hscrollbar-policy">2</property>
+                    <child>
+                      <object class="GtkBox" id="tbLeft1">
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="toolbar"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="can-focus">0</property>
+                    <property name="hscrollbar-policy">2</property>
+                    <child>
+                      <object class="GtkBox" id="tbLeft2">
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="toolbar"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkPaned" id="panedMainContents">
+                    <property name="name">panedMainContents</property>
+                    <property name="shrink-end-child">0</property>
+                    <property name="resize-start-child">0</property>
+                    <property name="shrink-start-child">0</property>
+                    <property name="start-child">
+                      <object class="GtkBox" id="sidebar">
+                        <property name="name">sidebar</property>
+                        <property name="can-focus">0</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkBox" id="bxSidebarTopActions">
+                                <style>
+                                  <class name="linked"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSeparator">
+                                <property name="hexpand">true</property>
+                                <property name="orientation">vertical</property>
+                                <style>
+                                  <class name="spacer"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="buttonCloseSidebar">
+                                <property name="name">buttonCloseSidebar</property>
+                                <property name="action-name">win.show-sidebar</property>
+                                <property name="icon-name">window-close</property>
+                                <style>
+                                  <class name="raised"/>
+                                </style>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="inline-toolbar"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="sidebarContents">
+                            <property name="name">sidebarContents</property>
+                            <property name="orientation">vertical</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="can-focus">0</property>
+                    <property name="hscrollbar-policy">2</property>
+                    <child>
+                      <object class="GtkBox" id="tbRight1">
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="toolbar"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="can-focus">0</property>
+                    <property name="hscrollbar-policy">2</property>
+                    <child>
+                      <object class="GtkBox" id="tbRight2">
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="toolbar"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="searchBar">
+                <property name="name">searchBar</property>
+                <property name="visible">0</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkSeparator" id="separator1">
+                    <property name="name">separator1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box3">
+                    <child>
+                      <object class="GtkSearchEntry" id="searchTextField">
+                        <property name="name">searchTextField</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btSearchBack">
+                        <property name="name">btSearchBack</property>
+                        <property name="receives-default">1</property>
+                        <property name="tooltip-text" translatable="1">Find previous occurrence of the search string</property>
+                        <property name="icon-name">go-up</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btSearchForward">
+                        <property name="name">btSearchForward</property>
+                        <property name="receives-default">1</property>
+                        <property name="tooltip-text" translatable="1">Find next occurrence of the search string</property>
+                        <property name="icon-name">go-down</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbSearchState">
+                        <property name="name">lbSearchState</property>
+                        <property name="hexpand">1</property>
+                        <property name="ellipsize">end</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="buttonCloseSearch">
+                        <property name="name">buttonCloseSearch</property>
+                        <property name="icon-name">window-close</property>
+                        <style>
+                          <class name="raised"/>
+                        </style>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="linked"/>
+                      <class name="raised"/>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="can-focus">0</property>
+                <property name="vscrollbar-policy">2</property>
+                <child>
+                  <object class="GtkBox" id="tbBottom1">
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="can-focus">0</property>
+                <property name="vscrollbar-policy">2</property>
+                <child>
+                  <object class="GtkBox" id="tbBottom2">
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="statusbar">
+                <property name="name">statusbar</property>
+                <property name="visible">0</property>
+                <property name="can-focus">0</property>
+                <child>
+                  <object class="GtkLabel" id="lbState">
+                    <property name="name">lbState</property>
+                    <property name="label">State PLACEHOLDER</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkProgressBar" id="pgState">
+                    <property name="name">pgState</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkStatusbar" id="statusbar1">
+                    <property name="name">statusbar1</property>
+                    <property name="margin-start">10</property>
+                    <property name="margin-end">10</property>
+                    <property name="margin-top">6</property>
+                    <property name="margin-bottom">6</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+  </object>
+  <object class="GtkRevealer" id="pdfFloatingToolbox">
+    <property name="name">pdfFloatingTool</property>
+    <property name="can-focus">0</property>
+    <property name="transition-type">none</property>
+    <property name="reveal-child">1</property>
+    <property name="child">
+      <object class="GtkBox">
+        <property name="name">pdfFloatingToolGrid</property>
+        <property name="orientation">horizontal</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkButton" id="pdfTbCopyText">
+            <property name="receives-default">1</property>
+            <property name="tooltip-text" translatable="1">Copy selected text</property>
+            <property name="icon-name">edit-copy</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="pdfTbHighlight">
+            <property name="receives-default">1</property>
+            <property name="tooltip-text" translatable="1">Highlight selected text</property>
+            <property name="icon-name">xopp-tool-highlighter</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="pdfTbUnderline">
+            <property name="receives-default">1</property>
+            <property name="tooltip-text" translatable="1">Underline selected text</property>
+            <property name="icon-name">format-text-underline</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="pdfTbStrikethrough">
+            <property name="receives-default">1</property>
+            <property name="tooltip-text" translatable="1">Strikethrough selected text</property>
+            <property name="icon-name">format-text-strikethrough</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="pdfTbChangeType">
+            <property name="receives-default">1</property>
+            <property name="tooltip-text" translatable="1">Toggle standard / region text selection</property>
+            <property name="icon-name">format-justify-center</property>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>
