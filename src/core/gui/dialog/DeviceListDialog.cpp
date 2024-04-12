@@ -6,7 +6,7 @@
 
 #include "DeviceClassConfigGui.h"
 
-constexpr auto UI_FILE_NAME = "deviceList.glade";
+constexpr auto UI_FILE_NAME = "deviceList.ui";
 constexpr auto UI_MAIN_ID = "deviceListDialog";
 constexpr auto UI_CONTENT_BOX = "contentBox";
 
