@@ -41,7 +41,7 @@ class GladeSearchpath;
 using std::string;
 using std::vector;
 
-constexpr auto UI_FILE = "settings.glade";
+constexpr auto UI_FILE = "settings.ui";
 constexpr auto UI_DIALOG_NAME = "settingsDialog";
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
@@ -925,12 +925,13 @@ void SettingsDialog::save() {
     settings->setDefaultSaveName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName"))));
     settings->setDefaultPdfExportName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName"))));
 
-    auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
-    auto path = Util::fromGFile(file);
-    g_object_unref(file);
-    if (fs::is_directory(path)) {
-        settings->setAudioFolder(path);
-    }
+    // auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
+    // auto path = Util::fromGFile(file);
+    // g_object_unref(file);
+    // if (fs::is_directory(path)) {
+    //     settings->setAudioFolder(path);
+    // }
+    g_warning("Implement gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get(\"fcAudioPath\")))");
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     int autosaveTimeout = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout)));

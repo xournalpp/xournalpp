@@ -92,9 +92,11 @@ auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* z
         layout->recalculate();
     });
 
-    GdkWindow* gdkWindow = gtk_widget_get_window(widget);
-    GdkDisplay* display = gdkWindow ? gdk_window_get_display(gdkWindow) : nullptr;
-    GdkMonitor* monitor = display ? gdk_display_get_monitor_at_window(display, gdkWindow) : nullptr;
+
+    GtkNative* nat = gtk_widget_get_native(widget);
+    GdkDisplay* disp = gtk_widget_get_display(widget);
+    GdkSurface* surf = nat ? gtk_native_get_surface(nat) : nullptr;
+    GdkMonitor* monitor = surf && disp ? gdk_display_get_monitor_at_surface(disp, surf) : nullptr;
     if (monitor && monitor != zoom->lastMonitor) {
         zoom->lastMonitor = monitor;
         const char* monitorName = gdk_monitor_get_model(monitor);

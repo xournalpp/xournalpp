@@ -82,7 +82,6 @@ auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget
 static void gtk_xournal_class_init(GtkXournalClass* cptr) {
     auto* widget_class = reinterpret_cast<GtkWidgetClass*>(cptr);
 
-    // widget_class->realize = gtk_xournal_realize;
     widget_class->measure = gtk_xournal_measure;
     widget_class->snapshot = gtk_xournal_snapshot;
 
@@ -138,11 +137,7 @@ auto gtk_xournal_get_layout(GtkWidget* widget) -> Layout* {
     return xournal->layout;
 }
 
-static void gtk_xournal_init(GtkXournal* xournal) {
-    GtkWidget* widget = GTK_WIDGET(xournal);
-
-    gtk_widget_set_can_focus(widget, true);
-}
+static void gtk_xournal_init(GtkXournal* xournal) { gtk_widget_set_focusable(GTK_WIDGET(xournal), true); }
 
 static void gtk_xournal_measure(GtkWidget* widget, GtkOrientation orientation, int for_size, int* minimum, int* natural,
                                 int* minimum_baseline, int* natural_baseline) {
@@ -193,11 +188,19 @@ static void gtk_xournal_snapshot(GtkWidget* widget, GtkSnapshot* sn) {
 
     GtkXournal* xournal = GTK_XOURNAL(widget);
 
-    double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
+    GtkAdjustment* vadj = xournal->scrollHandling->getVertical();
+    GtkAdjustment* hadj = xournal->scrollHandling->getHorizontal();
 
-    xoj::util::CairoSPtr crsafe(gtk_snapshot_append_cairo(sn, nullptr), xoj::util::adopt);
+    auto rect = GRAPHENE_RECT_INIT_ZERO;
+    rect.origin.x = static_cast<float>(gtk_adjustment_get_value(hadj));
+    rect.origin.y = static_cast<float>(gtk_adjustment_get_value(vadj));
+    rect.size.width = static_cast<float>(gtk_adjustment_get_page_size(hadj));
+    rect.size.height = static_cast<float>(gtk_adjustment_get_page_size(vadj));
+
+    xoj::util::CairoSPtr crsafe(gtk_snapshot_append_cairo(sn, &rect), xoj::util::adopt);
     cairo_t* cr = crsafe.get();
 
+    double x1 = NAN, x2 = NAN, y1 = NAN, y2 = NAN;
     cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
 
     // Draw background
