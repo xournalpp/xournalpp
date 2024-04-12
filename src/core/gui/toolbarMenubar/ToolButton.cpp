@@ -7,7 +7,6 @@
 
 #include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
 #include "util/GVariantTemplate.h"
-#include "util/GtkUtil.h"
 #include "util/gtk4_helper.h"
 #include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 
@@ -36,7 +35,6 @@ auto ToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), (std::string("win.") + Action_toString(action)).c_str());
     if (target) {
         gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), target.get());
-        xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(btn));
     }
 
     xoj::util::WidgetSPtr item;
