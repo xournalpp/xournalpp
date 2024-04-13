@@ -26,6 +26,8 @@ GtkWidget* StylePopoverFactory::createPopover() const {
                                 }),
                                 popover, GConnectFlags(0));
         gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), e.target.get());
+#if GTK_CHECK_VERSION(4, 8, 0)
+        // gtk_check_button_set_child was added in gtk 4.8.0
         if (!e.icon.empty()) {
             GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
             gtk_box_append(GTK_BOX(hbox), gtk_image_new_from_icon_name(e.icon.c_str()));
@@ -34,6 +36,9 @@ GtkWidget* StylePopoverFactory::createPopover() const {
         } else {
             gtk_check_button_set_label(GTK_CHECK_BUTTON(btn), e.name.c_str());
         }
+#else
+        gtk_check_button_set_label(GTK_CHECK_BUTTON(btn), e.name.c_str());
+#endif
         gtk_box_append(GTK_BOX(box), btn);
     };
 
