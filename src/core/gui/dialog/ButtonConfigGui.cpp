@@ -211,7 +211,7 @@ void ButtonConfigGui::loadSettings() {
             ++i;
         }
 
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cbDisableDrawing), cfg->disableDrawing);
+        gtk_check_button_set_active(GTK_CHECK_BUTTON(cbDisableDrawing), cfg->disableDrawing);
     }
 }
 
@@ -257,7 +257,7 @@ void ButtonConfigGui::saveSettings() {
     if (this->withDevice) {
         size_t dev = static_cast<size_t>(gtk_combo_box_get_active(GTK_COMBO_BOX(cbDevice)) - 1);
         cfg->device = (dev < 0 || this->deviceList.size() <= dev) ? "" : this->deviceList[dev].getName();
-        cfg->disableDrawing = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbDisableDrawing));
+        cfg->disableDrawing = gtk_check_button_get_active(GTK_CHECK_BUTTON(cbDisableDrawing));
     }
 
     settings->customSettingsChanged();
