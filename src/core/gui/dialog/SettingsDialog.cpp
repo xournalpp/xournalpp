@@ -38,7 +38,7 @@ class GladeSearchpath;
 using std::string;
 using std::vector;
 
-constexpr auto UI_FILE = "settings.glade";
+constexpr auto UI_FILE = "settings.ui";
 constexpr auto UI_DIALOG_NAME = "settingsDialog";
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
