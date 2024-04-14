@@ -50,8 +50,6 @@ public:
             gtk_widget_set_size_request(GTK_WIDGET(slider), 16, 120);
         }
 
-        gtk_widget_set_can_focus(GTK_WIDGET(slider), false);  // todo(gtk4) not necessary anymore
-
         // gAction does not own the return GVariant and it is not floating either!
         xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(self->gAction.get())), xoj::util::adopt);
         gtk_range_set_value(slider, FinalSliderType::scaleFunction(getGVariantValue<double>(state.get())));
