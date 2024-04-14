@@ -14,7 +14,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "pageFormat.glade";
+constexpr auto UI_FILE = "pageFormat.ui";
 constexpr auto UI_DIALOG_NAME = "pageFormatDialog";
 
 using namespace xoj::popup;
