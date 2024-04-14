@@ -18,7 +18,6 @@ PluginToolButton::~PluginToolButton() = default;
 
 auto PluginToolButton::createItem(bool) -> xoj::util::WidgetSPtr {
     GtkWidget* btn = gtk_button_new();
-    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
 
     gtk_button_set_icon_name(GTK_BUTTON(btn), t->iconName.c_str());
     gtk_widget_set_tooltip_text(btn, t->description.c_str());
