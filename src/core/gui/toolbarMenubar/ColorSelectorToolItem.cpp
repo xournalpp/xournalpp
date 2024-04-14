@@ -15,7 +15,6 @@ ColorSelectorToolItem::ColorSelectorToolItem(ActionDatabase& db):
 
 auto ColorSelectorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
     GtkWidget* btn = gtk_button_new();
-    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
     xoj::util::GVariantSPtr v(g_action_get_state(G_ACTION(gAction.get())), xoj::util::adopt);
     Color initialColor = getGVariantValue<Color>(v.get());
     gtk_button_set_child(GTK_BUTTON(btn), ColorIcon::newGtkImage(initialColor, ICON_SIZE, false));

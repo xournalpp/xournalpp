@@ -14,7 +14,6 @@
 /// Returns a floating ref
 static GtkWidget* createPopoverEntry(const DrawingTypeComboToolButton::Entry& e) {
     GtkWidget* entry = gtk_toggle_button_new();
-    gtk_widget_set_can_focus(entry, false);  // todo(gtk4) not necessary anymore
     auto actionName = std::string("win.") + g_action_get_name(G_ACTION(e.gAction.get()));
     gtk_actionable_set_action_name(GTK_ACTIONABLE(entry), actionName.data());
     GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6));
@@ -98,8 +97,6 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
         GtkWidget* btn = gtk_toggle_button_new();
         data->button = GTK_BUTTON(btn);
 
-        gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
-
         auto it = std::find_if(entries->begin(), entries->end(), [](auto& e) {
             xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(e.gAction.get())), xoj::util::adopt);
             return getGVariantValue<bool>(state.get());
@@ -112,7 +109,6 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
 
     // Create item
     GtkMenuButton* menubutton = GTK_MENU_BUTTON(gtk_menu_button_new());
-    gtk_widget_set_can_focus(GTK_WIDGET(menubutton), false);  // todo(gtk4) not necessary anymore
     gtk_menu_button_set_popover(menubutton, GTK_WIDGET(data->popover));
     gtk_menu_button_set_direction(menubutton,
                                   horizontal ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);  // TODO: fix directions
