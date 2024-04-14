@@ -37,7 +37,6 @@ static GtkWidget* makeChild(const char* desc) {
 
 auto FontButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     GtkWidget* btn = gtk_button_new();
-    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
     xoj::util::GVariantSPtr font(g_action_get_state(G_ACTION(gAction.get())), xoj::util::adopt);
     const char* desc = g_variant_get_string(font.get(), nullptr);
     gtk_button_set_child(GTK_BUTTON(btn), makeChild(desc));
