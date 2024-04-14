@@ -32,7 +32,6 @@ public:
 };
 
 ShowLayerEntry::ShowLayerEntry(LayerController* lc, Layer::Index id) noexcept: checkButton(gtk_check_button_new()) {
-    gtk_widget_set_can_focus(checkButton, false);  // todo(gtk4) not necessary anymore
     struct Data {
         LayerController* lc;
         Layer::Index id;
@@ -61,47 +60,10 @@ ShowLayerEntry::~ShowLayerEntry() noexcept = default;
 static std::tuple<GtkWidget*, std::vector<ShowLayerEntry>, std::vector<std::pair<GtkWidget*, gulong>>> createGrid(
         LayerController* lc, GtkPopover* popover) {
 
-#if GTK_MAJOR_VERSION == 3
-    GtkRadioButton* group = nullptr;
-    auto createLayerRadioButton = [&group, popover](const std::string& layerName,
-                                                    Layer::Index id) -> std::pair<GtkWidget*, gulong> {
-        GtkWidget* btn = gtk_radio_button_new_with_label_from_widget(group, layerName.c_str());
-        gtk_widget_set_can_focus(btn, false);
-        group = GTK_RADIO_BUTTON(btn);
-
-        gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(id).get());
-        /**
-         * RadioButton's and GAction don't work as expected in GTK3
-         * To circumvent this, we have our own GAction/RadioButton interactions
-         */
-        xoj::util::gtk::setRadioButtonActionName(GTK_RADIO_BUTTON(btn), "win", Action_toString(Action::LAYER_ACTIVE));
-
-        // Callback to hide the popover when a new layer is selected
-        auto sig = g_signal_connect_object(btn, "toggled", G_CALLBACK(+[](GtkToggleButton*, gpointer popover) {
-                                               gtk_popover_popdown(GTK_POPOVER(popover));
-                                           }),
-                                           popover, GConnectFlags(0));
-        // Block this callback for now, otherwise it is called when the grid is added to the popover
-        g_signal_handler_block(btn, sig);
-
-        return {btn, sig};
-    };
-
-    auto createBackgroundRadioButton = [](LayerController* lc) {
-        GtkWidget* btn = gtk_radio_button_new_with_label(nullptr, lc->getLayerNameById(0U).c_str());
-        gtk_widget_set_can_focus(btn, false);
-        gtk_widget_add_css_class(btn, "invisible");
-        gtk_widget_set_hexpand(btn, true);
-        return btn;
-    };
-#else  // GTK4
     std::string actionName = std::string("win.") + Action_toString(Action::LAYER_ACTIVE);  // Todo(cpp20) constexpr
-    GtkCheckButton* group = nullptr;
-    auto createLayerRadioButton = [&actionName, &group, popover](const std::string& layerName,
-                                                                 Layer::Index id) -> std::pair<GtkWidget*, gulong> {
+    auto createLayerRadioButton = [&actionName, popover](const std::string& layerName,
+                                                         Layer::Index id) -> std::pair<GtkWidget*, gulong> {
         GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
-        // Is grouping necessary here? The GTK4 doc is unclear
-        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn)));
         gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
         gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(id).get());
         // Callback to hide the popover when a new layer is selected
@@ -114,12 +76,10 @@ static std::tuple<GtkWidget*, std::vector<ShowLayerEntry>, std::vector<std::pair
     };
     auto createBackgroundRadioButton = [](LayerController* lc) {
         GtkWidget* btn = gtk_check_button_new_with_label(lc->getLayerNameById(0U).c_str());
-        // Todo(gtk4): adapt the css class
         gtk_widget_add_css_class(btn, "invisible");
         gtk_widget_set_hexpand(btn, true);
         return btn;
     };
-#endif
 
     GtkGrid* grid = GTK_GRID(gtk_grid_new());
 
@@ -154,7 +114,6 @@ static GtkLabel* makeLabel() {
 /// @brief Appends to `box` a button with bold label `name` activating the Action `action`
 static void addSpecialButton(GtkBox* box, const std::string& name, Action action) {
     GtkWidget* btn = gtk_button_new();
-    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
     GtkWidget* lb = gtk_label_new(name.c_str());
     gtk_widget_set_halign(lb, GTK_ALIGN_START);
 
