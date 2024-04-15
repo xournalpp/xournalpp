@@ -41,6 +41,7 @@
 #include "util/VersionInfo.h"                // for getVersionInfo
 #include "util/XojMsgBox.h"                  // for XojMsgBox
 #include "util/i18n.h"                       // for _, FS, _F
+#include "util/StringUtils.h"  // for ...
 
 #include "Control.h"       // for Control
 #include "ExportHelper.h"  // for exportImg, exportPdf

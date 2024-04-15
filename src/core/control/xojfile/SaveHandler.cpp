@@ -34,6 +34,7 @@
 #include "util/OutputStream.h"                 // for GzOutputStream, Output...
 #include "util/PathUtil.h"                     // for clearExtensions, normalizeAssetPath
 #include "util/PlaceholderString.h"            // for PlaceholderString
+#include "util/StringUtils.h"
 #include "util/i18n.h"                         // for FS, _F
 
 #include "config.h"  // for FILE_FORMAT_VERSION
@@ -92,7 +93,9 @@ void SaveHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement*
     if (!audioElement->getAudioFilename().empty()) {
         /** set stroke timestamp value to the XmlPointNode */
         xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
-        xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+        auto audioFilename = audioElement->getAudioFilename().u8string();
+        auto casted = char_cast(audioFilename);
+        xmlAudioNode->setAttrib("fn", std::string{casted.begin(), casted.end()});
     }
 }
 
@@ -361,7 +364,7 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
     for (const BackgroundImage& img: backgroundImages) {
         auto tmpfn = (fs::path(filepath) += ".") += img.getFilepath();
         // Are we certain that does not modify the GdkPixbuf?
-        if (!gdk_pixbuf_save(const_cast<GdkPixbuf*>(img.getPixbuf()), tmpfn.u8string().c_str(), "png", nullptr,
+        if (!gdk_pixbuf_save(const_cast<GdkPixbuf*>(img.getPixbuf()), char_cast(tmpfn.u8string().c_str()), "png", nullptr,
                              nullptr)) {
             if (!this->errorMessage.empty()) {
                 this->errorMessage += "\n";

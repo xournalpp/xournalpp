@@ -11,9 +11,10 @@ set(xournalpp_include_dirs "${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_library(xournalpp-core STATIC ${xournalpp_sources})
 target_compile_features(xournalpp-core PUBLIC ${PROJECT_CXX_FEATURES})
+target_compile_features(xournalpp-core PUBLIC cxx_std_20)
 target_link_libraries(xournalpp-core
         PRIVATE xoj::util ${xournalpp_LDFLAGS}
-        PUBLIC xoj::defaults xoj::external_modules std::filesystem cxx17
+        PUBLIC xoj::defaults xoj::external_modules
         )
 target_include_directories(xournalpp-core PUBLIC ${xournalpp_include_dirs})
 add_library(xoj::core ALIAS xournalpp-core)

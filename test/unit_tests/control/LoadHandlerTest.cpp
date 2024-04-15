@@ -12,6 +12,7 @@
 #include <cmath>
 #include <filesystem>
 #include <iostream>
+#include <string_view>
 
 #include <config-test.h>
 #include <gtest/gtest.h>
@@ -26,6 +27,7 @@
 #include "model/Text.h"
 #include "model/XojPage.h"
 #include "util/PathUtil.h"
+#include "util/StringUtils.h"
 
 #include "filesystem.h"
 
@@ -546,7 +548,7 @@ TEST(ControlLoadHandler, testLoadStoreCJK) {
     auto doc = handler.loadDocument(fs::u8path(filepath));
     ASSERT_NE(doc.get(), nullptr);
 
-    EXPECT_STREQ(doc->getPdfFilepath().filename().u8string().c_str(), u8"测试.pdf");
+    EXPECT_EQ(doc->getPdfFilepath().filename().u8string(), std::u8string_view{u8"测试.pdf"});
 
     EXPECT_EQ((size_t)2, doc->getPageCount());
     ConstPageRef page = doc->getPage(0);
@@ -557,11 +559,11 @@ TEST(ControlLoadHandler, testLoadStoreCJK) {
     auto elements = layer->getElementsView();
     ASSERT_EQ((size_t)3, layer->getElementsView().size());
 
-    auto check_element = [&](size_t i, const char* answer) {
+    auto check_element = [&](size_t i, const auto* answer) {
         EXPECT_EQ(ELEMENT_TEXT, elements[i]->getType());
         auto* text = dynamic_cast<const Text*>(elements[i]);
         ASSERT_NE(text, nullptr);
-        EXPECT_STREQ(text->getText().c_str(), answer);
+        EXPECT_STREQ(text->getText().c_str(), char_cast(answer));
     };
 
     check_element(0, u8"Test");

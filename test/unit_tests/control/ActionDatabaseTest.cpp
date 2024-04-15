@@ -18,6 +18,7 @@
 #include "control/actions/ActionProperties.h"
 #include "gui/menus/menubar/Menubar.h"
 #include "util/EnumIndexedArray.h"
+#include "util/StringUtils.h"
 #include "util/raii/GObjectSPtr.h"
 #include "util/raii/GVariantSPtr.h"
 #include "util/safe_casts.h"  // for to_underlying Todo(cpp20) replace with <utility>
@@ -93,9 +94,9 @@ TEST(ActionDatabaseTest, testActionTargetMatch) {
     GError* error = nullptr;
     auto filepath = fs::path(GET_UI_FOLDER) / MENU_XML_FILE;
 
-    if (!gtk_builder_add_from_file(builder.get(), filepath.u8string().c_str(), &error)) {
+    if (!gtk_builder_add_from_file(builder.get(), char_cast(filepath.u8string().c_str()), &error)) {
         std::string msg = "Error loading menubar XML file ";
-        msg += filepath.u8string();
+        msg.append(char_cast(filepath.u8string()));
 
         if (error != nullptr) {
             msg += "\n";

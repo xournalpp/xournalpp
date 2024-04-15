@@ -23,7 +23,7 @@ PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearc
     gtk_label_set_text(GTK_LABEL(builder.get("lbAuthor")), plugin->getAuthor().c_str());
     gtk_label_set_text(GTK_LABEL(builder.get("lbVersion")), plugin->getVersion().c_str());
     gtk_label_set_text(GTK_LABEL(builder.get("lbDescription")), plugin->getDescription().c_str());
-    gtk_label_set_text(GTK_LABEL(builder.get("lbPath")), plugin->getPath().u8string().c_str());
+    gtk_label_set_text(GTK_LABEL(builder.get("lbPath")), char_cast(plugin->getPath().u8string().c_str()));
     gtk_label_set_text(GTK_LABEL(builder.get("lbDefaultText")),
                        plugin->isDefaultEnabled() ? _("default enabled") : _("default disabled"));
     gtk_check_button_set_active(stateButton, plugin->isEnabled());
@@ -40,12 +40,12 @@ void PluginDialogEntry::saveSettings(std::string& pluginEnabled, std::string& pl
         if (!pluginEnabled.empty()) {
             pluginEnabled += ",";
         }
-        pluginEnabled += plugin->getPath().u8string();
+        pluginEnabled.append(char_cast(plugin->getPath().u8string()));
     } else {
         if (!pluginDisabled.empty()) {
             pluginDisabled += ",";
         }
-        pluginDisabled += plugin->getPath().u8string();
+        pluginDisabled.append(char_cast(plugin->getPath().u8string()));
     }
 }
 

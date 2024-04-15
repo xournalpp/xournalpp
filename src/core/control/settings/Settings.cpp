@@ -37,7 +37,7 @@ constexpr auto DEFAULT_FONT_SIZE = 12;
 constexpr auto DEFAULT_TOOLBAR = "Portrait";
 
 #define SAVE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
-#define SAVE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
+#define SAVE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).data(), root)
 #define SAVE_FONT_PROP(var) xmlNode = saveProperty((const char*)#var, var.asString().c_str(), root)
 #define SAVE_INT_PROP(var) xmlNode = saveProperty((const char*)#var, var, root)
 #define SAVE_UINT_PROP(var) xmlNode = savePropertyUnsigned((const char*)#var, var, root)
@@ -830,7 +830,7 @@ auto Settings::load() -> bool {
         save();
     }
 
-    xmlDocPtr doc = xmlParseFile(filepath.u8string().c_str());
+    xmlDocPtr doc = xmlParseFile(char_cast(filepath.u8string().c_str()));
 
     if (doc == nullptr) {
         g_warning("Settings::load:: doc == null, could not load Settings!\n");
@@ -1007,9 +1007,9 @@ void Settings::save() {
 
     SAVE_STRING_PROP(selectedToolbar);
 
-    auto lastSavePath = this->lastSavePath.u8string();
-    auto lastOpenPath = this->lastOpenPath.u8string();
-    auto lastImagePath = this->lastImagePath.u8string();
+    auto lastSavePath = char_cast(this->lastSavePath.u8string());
+    auto lastOpenPath = char_cast(this->lastOpenPath.u8string());
+    auto lastImagePath = char_cast(this->lastImagePath.u8string());
     SAVE_STRING_PROP(lastSavePath);
     SAVE_STRING_PROP(lastOpenPath);
     SAVE_STRING_PROP(lastImagePath);
@@ -1151,7 +1151,7 @@ void Settings::save() {
 
 #ifdef ENABLE_AUDIO
     {
-        auto audioFolder = this->audioFolder.u8string();
+        auto audioFolder = char_cast(this->audioFolder.u8string());
         SAVE_STRING_PROP(audioFolder);
     }
     SAVE_INT_PROP(audioInputDevice);
@@ -1211,7 +1211,7 @@ void Settings::save() {
     // breaks on Windows due to the native character representation being
     // wchar_t instead of char
     fs::path& p = latexSettings.globalTemplatePath;
-    xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : p.u8string().c_str(), root);
+    xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : char_cast(p.u8string().c_str()), root);
     SAVE_STRING_PROP(latexSettings.genCmd);
     SAVE_STRING_PROP(latexSettings.sourceViewThemeId);
     SAVE_FONT_PROP(latexSettings.editorFont);
@@ -1242,7 +1242,7 @@ void Settings::save() {
         saveData(root, p.first, p.second);
     }
 
-    xmlSaveFormatFileEnc(filepath.u8string().c_str(), doc, "UTF-8", 1);
+    xmlSaveFormatFileEnc(char_cast(filepath.u8string().c_str()), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
 }
 

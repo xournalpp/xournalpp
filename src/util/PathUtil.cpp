@@ -199,9 +199,9 @@ auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
     GError* error{};
     char* uri = [&] {
         if (isAbsolute(path)) {
-            return g_filename_to_uri(path.u8string().c_str(), nullptr, &error);
+            return g_filename_to_uri(char_cast(path.u8string().c_str()), nullptr, &error);
         }
-        return g_filename_to_uri(fs::absolute(path).u8string().c_str(), nullptr, &error);
+        return g_filename_to_uri(char_cast(fs::absolute(path).u8string().c_str()), nullptr, &error);
     }();
 
     if (error != nullptr) {
@@ -228,7 +228,7 @@ auto Util::fromGFile(GFile* file) -> fs::path {
 }
 
 auto Util::toGFile(fs::path const& path) -> xoj::util::GObjectSPtr<GFile> {
-    return xoj::util::GObjectSPtr<GFile>(g_file_new_for_path(path.u8string().c_str()), xoj::util::adopt);
+    return xoj::util::GObjectSPtr<GFile>(g_file_new_for_path(char_cast(path.u8string().c_str())), xoj::util::adopt);
 }
 
 auto Util::fromGFilename(const char* path) -> fs::path {
