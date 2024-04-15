@@ -6,6 +6,7 @@
 #include <glib.h>         // for g_error_free, GError, g_warning
 
 #include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/StringUtils.h"
 #include "util/XojMsgBox.h"          // for XojMsgBox
 #include "util/i18n.h"               // for FS, _F
 
@@ -20,9 +21,9 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const std::string& glade, c
     GError* error = nullptr;
     builder.reset(gtk_builder_new(), xoj::util::adopt);
 
-    if (!gtk_builder_add_from_file(builder.get(), filepath.u8string().c_str(), &error)) {
-        std::string msg =
-                FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filepath.u8string());
+    if (!gtk_builder_add_from_file(builder.get(), char_cast(filepath.u8string().c_str()), &error)) {
+        std::string msg = FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade %
+                             char_cast(filepath.u8string()));
 
         if (error != nullptr) {
             msg += "\n";

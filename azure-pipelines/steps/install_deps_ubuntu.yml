@@ -3,7 +3,7 @@
 
 parameters:
   build_type: 'Debug'
-  gcc_version: '10'
+  gcc_version: '12'
 
 steps:
   - bash: |

@@ -22,11 +22,9 @@ add_executable (xournalpp-thumbnailer
         "${PROJECT_SOURCE_DIR}/src/util/XojPreviewExtractor.cpp"
         )
 
-add_dependencies(xournalpp-thumbnailer std::filesystem)
-
+target_compile_features (xournalpp-thumbnailer PRIVATE cxx_std_20)
 target_link_libraries (xournalpp-thumbnailer
   util
-  std::filesystem
   ${ZLIB_LIBRARIES}
   ${librsvg_LDFLAGS}
   ${Glib_LDFLAGS}

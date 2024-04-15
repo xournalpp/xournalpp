@@ -1,6 +1,8 @@
 #include "util/PlaceholderString.h"
 
+#include <charconv>
 #include <exception>  // for exception
+#include <string>
 
 #include <glib.h>  // for g_error
 
@@ -10,9 +12,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-PlaceholderString::PlaceholderString(std::string text): text(std::move(text)) {}
+PlaceholderString::PlaceholderString(std::string_view text): text(text) {}
 
-auto PlaceholderString::formatPart(std::string format) const -> std::string {
+auto PlaceholderString::formatPart(std::string_view format) const -> std::string {
     std::string formatDef;
 
     std::size_t comma = format.find(',');
@@ -22,10 +24,10 @@ auto PlaceholderString::formatPart(std::string format) const -> std::string {
     }
 
     int index = 0;
-    try {
-        index = std::stoi(format);
-    } catch (const std::exception& e) {
-        g_error("Could not parse \"%s\" as int, error: %s", format.c_str(), e.what());
+
+    auto res = std::from_chars(format.data(), format.data() + format.size(), index);
+    if (res.ec != std::errc()) {
+        g_error("Could not parse \"%s\" as int, error: %i", format.data(), int(res.ec));
     }
 
     // Placeholder index starting at 1, vector at 0

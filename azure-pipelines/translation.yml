@@ -9,7 +9,7 @@ stages:
   jobs:
   - job: 'Linux'
     pool:
-      vmImage: 'ubuntu-20.04'
+      vmImage: 'ubuntu-22.04'
     displayName: 'Update translation template'
     steps:
     - bash: |
@@ -22,8 +22,8 @@ stages:
         mkdir build
       displayName: 'Create build directory'
     - bash: |
-        export CXX=g++-10
-        export CC=gcc-10
+        export CXX=g++-12
+        export CC=gcc-12
         cmake ..
         cmake --build . --target pot
       workingDirectory: ./build

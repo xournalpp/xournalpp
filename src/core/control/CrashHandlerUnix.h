@@ -19,6 +19,7 @@
 
 #include "util/PathUtil.h"
 #include "util/Stacktrace.h"
+#include "util/i18n.h"
 
 #include "config-dev.h"
 #include "config-git.h"

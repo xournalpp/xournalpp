@@ -38,9 +38,10 @@
 #include "util/PathUtil.h"                   // for getConfigFolder, openFil...
 #include "util/PlaceholderString.h"          // for PlaceholderString
 #include "util/Stacktrace.h"                 // for Stacktrace
-#include "util/Util.h"                       // for execInUiThread
-#include "util/XojMsgBox.h"                  // for XojMsgBox
-#include "util/i18n.h"                       // for _, FS, _F
+#include "util/StringUtils.h"
+#include "util/Util.h"       // for execInUiThread
+#include "util/XojMsgBox.h"  // for XojMsgBox
+#include "util/i18n.h"       // for _, FS, _F
 
 #include "Control.h"       // for Control
 #include "ExportHelper.h"  // for exportImg, exportPdf
@@ -90,7 +91,7 @@ void initLocalisation() {
 #ifdef _WIN32
     wbindtextdomain(GETTEXT_PACKAGE, localeDir.wstring().c_str());
 #else
-    bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
+    bindtextdomain(GETTEXT_PACKAGE, char_cast(localeDir.u8string().c_str()));
 #endif
 
     textdomain(GETTEXT_PACKAGE);
@@ -180,7 +181,7 @@ void checkForErrorlog() {
         g_warning("Filesystem error while looking for crash logs:\n"
                   "   %s\n"
                   "   %s\n",
-                  e.path1().u8string().c_str(), e.what());
+                  char_cast(e.path1().u8string().c_str()), e.what());
         return;
     }
 

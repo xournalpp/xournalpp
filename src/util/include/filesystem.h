@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <@CXX_FILESYSTEM_HEADER@>
+#include <filesystem>  // IWYU pragma: export
 
 // enable fs
-namespace fs = @CXX_FILESYSTEM_NAMESPACE@;
+namespace fs = std::filesystem;  // NOLINT(misc-unused-alias-decls)

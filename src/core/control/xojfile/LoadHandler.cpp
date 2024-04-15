@@ -29,6 +29,7 @@
 #include "util/GzUtil.h"                       // for GzUtil
 #include "util/LoopUtil.h"
 #include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/StringUtils.h"
 #include "util/i18n.h"               // for _F, FC, FS, _
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed, as_unsigned
@@ -116,7 +117,7 @@ auto LoadHandler::getMissingPdfFilename() const -> string { return this->pdfMiss
 auto LoadHandler::openFile(fs::path const& filepath) -> bool {
     this->filepath = filepath;
     int zipError = 0;
-    this->zipFp = zip_open(filepath.u8string().c_str(), ZIP_RDONLY, &zipError);
+    this->zipFp = zip_open(char_cast(filepath.u8string().c_str()), ZIP_RDONLY, &zipError);
 
     // Check if the file is actually an old XOPP-File and open it
     if (!this->zipFp && zipError == ZIP_ER_NOZIP) {
@@ -414,8 +415,8 @@ void LoadHandler::parseBgPixmap() {
     } else if (!strcmp(domain, "clone")) {
         gchar* endptr = nullptr;
         auto const& filename = filepath.u8string();
-        auto nr = static_cast<size_t>(g_ascii_strtoull(filename.c_str(), &endptr, 10));
-        if (endptr == filename.c_str()) {
+        auto nr = static_cast<size_t>(g_ascii_strtoull(char_cast(filename.c_str()), &endptr, 10));
+        if (endptr == char_cast(filename.c_str())) {
             error("%s", FC(_F("Could not read page number for cloned background image: {1}.") % filepath.string()));
         }
         PageRef p = pages[nr];
@@ -491,7 +492,7 @@ void LoadHandler::parseBgPdf() {
             if (attachToDocument) {
                 this->attachedPdfMissing = true;
             } else {
-                this->pdfMissing = pdfFilename.u8string();
+                this->pdfMissing = char_cast(pdfFilename.u8string());
             }
         }
     }
@@ -1122,7 +1123,7 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Docu
 
 auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr<std::string> {
     zip_stat_t attachmentFileStat;
-    const int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
+    const int statStatus = zip_stat(this->zipFp, char_cast(filename.u8string().c_str()), 0, &attachmentFileStat);
     if (statStatus != 0) {
         error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.string() %
                        zip_error_strerror(zip_get_error(this->zipFp))));
@@ -1136,7 +1137,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     }
     const zip_uint64_t length = attachmentFileStat.size;
 
-    zip_file_t* attachmentFile = zip_fopen(this->zipFp, filename.u8string().c_str(), 0);
+    zip_file_t* attachmentFile = zip_fopen(this->zipFp, char_cast(filename.u8string().c_str()), 0);
     if (!attachmentFile) {
         error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.string() %
                        zip_error_strerror(zip_get_error(this->zipFp))));

@@ -31,7 +31,9 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
         fs::path baseLocaleDir = Util::getGettextFilepath(Util::getLocalePath());
         for (auto const& d: fs::directory_iterator(baseLocaleDir)) {
             if (auto mofile = (d.path() / "LC_MESSAGES" / GETTEXT_PACKAGE) += ".mo"; fs::exists(mofile)) {
-                availableLocales.push_back(d.path().filename().u8string());
+                auto u8path = d.path().filename().u8string();
+                auto casted = char_cast(u8path);
+                availableLocales.emplace_back(casted.begin(), casted.end());
             }
         }
     } catch (const fs::filesystem_error& e) {

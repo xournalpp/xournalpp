@@ -35,6 +35,7 @@
 #include "util/OutputStream.h"                 // for GzOutputStream, Output...
 #include "util/PathUtil.h"                     // for clearExtensions
 #include "util/PlaceholderString.h"            // for PlaceholderString
+#include "util/StringUtils.h"
 #include "util/i18n.h"                         // for FS, _F
 
 #include "config.h"  // for FILE_FORMAT_VERSION
@@ -92,7 +93,9 @@ void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAu
     if (!audioElement->getAudioFilename().empty()) {
         /** set stroke timestamp value to the XmlPointNode */
         xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
-        xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+        auto audioFilename = audioElement->getAudioFilename().u8string();
+        auto casted = char_cast(audioFilename);
+        xmlAudioNode->setAttrib("fn", std::string{casted.begin(), casted.end()});
     }
 }
 
@@ -254,7 +257,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                 }
             } else {
                 background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilepath().u8string());
+                background->setAttrib("filename", std::string(char_cast(doc->getPdfFilepath().u8string())));
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -279,7 +282,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
             p->getBackgroundImage().setCloneId(id);
         } else {
             background->setAttrib("domain", "absolute");
-            background->setAttrib("filename", p->getBackgroundImage().getFilepath().u8string());
+            background->setAttrib("filename", std::string(char_cast(p->getBackgroundImage().getFilepath().u8string())));
             p->getBackgroundImage().setCloneId(id);
         }
     } else {
@@ -340,7 +343,7 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
 
     for (BackgroundImage const& img: backgroundImages) {
         auto tmpfn = (fs::path(filepath) += ".") += img.getFilepath();
-        if (!gdk_pixbuf_save(img.getPixbuf(), tmpfn.u8string().c_str(), "png", nullptr, nullptr)) {
+        if (!gdk_pixbuf_save(img.getPixbuf(), char_cast(tmpfn.u8string().c_str()), "png", nullptr, nullptr)) {
             if (!this->errorMessage.empty()) {
                 this->errorMessage += "\n";
             }

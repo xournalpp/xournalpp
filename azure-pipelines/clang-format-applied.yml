@@ -18,7 +18,7 @@ stages:
   jobs:
   - job: 'Build_Test'
     pool:
-      vmImage: 'ubuntu-20.04'
+      vmImage: 'ubuntu-22.04'
     displayName: 'Test for correct Clang formatting'
     variables:
     - name: CLANG_FORMAT_VERSIONS
