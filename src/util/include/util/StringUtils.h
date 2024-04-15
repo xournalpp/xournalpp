@@ -30,3 +30,9 @@ public:
     static bool iequals(const std::string& a, const std::string& b);
     static bool isNumber(const std::string& input);
 };
+
+inline auto char_cast(std::u8string_view str) -> std::string_view {
+    return {reinterpret_cast<const char*>(str.data()), str.size()};
+}
+
+inline auto char_cast(char8_t const* str) -> char const* { return reinterpret_cast<const char*>(str); }

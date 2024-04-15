@@ -92,7 +92,9 @@ void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAu
     if (!audioElement->getAudioFilename().empty()) {
         /** set stroke timestamp value to the XmlPointNode */
         xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
-        xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+        auto audioFilename = audioElement->getAudioFilename().u8string();
+        auto casted = char_cast(audioFilename);
+        xmlAudioNode->setAttrib("fn", std::string{casted.begin(), casted.end()});
     }
 }
 
@@ -340,7 +342,7 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
 
     for (BackgroundImage const& img: backgroundImages) {
         auto tmpfn = (fs::path(filepath) += ".") += img.getFilepath();
-        if (!gdk_pixbuf_save(img.getPixbuf(), tmpfn.u8string().c_str(), "png", nullptr, nullptr)) {
+        if (!gdk_pixbuf_save(img.getPixbuf(), char_cast(tmpfn.u8string().c_str()), "png", nullptr, nullptr)) {
             if (!this->errorMessage.empty()) {
                 this->errorMessage += "\n";
             }
