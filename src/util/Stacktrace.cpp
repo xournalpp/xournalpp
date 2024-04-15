@@ -2,8 +2,10 @@
 
 #include <algorithm>  // for max
 #include <array>      // for array
+#include <cerrno>     // for errno
 #include <cstdint>    // for uintptr_t
 #include <cstdio>     // for fgets, pclose, popen, snprintf, FILE
+#include <cstring>    // for strerror
 #include <iostream>   // for operator<<, basic_ostream, basic_ostream::...
 #include <string>     // for string
 
@@ -109,10 +111,14 @@ void Stacktrace::printStracktrace(std::ostream& stream) {
                  info.dli_fname);
 
         FILE* fProc = popen(syscom.data(), "r");
-        while (fgets(buff.data(), buff.size(), fProc) != nullptr) {
-            stream << buff.data();
+        if (fProc != nullptr) {
+            while (fgets(buff.data(), buff.size(), fProc) != nullptr) {
+                stream << buff.data();
+            }
+            pclose(fProc);
+        } else {
+            stream << "failed to invoke addr2line: " << std::strerror(errno);
         }
-        pclose(fProc);
     }
 
     free(messages);
