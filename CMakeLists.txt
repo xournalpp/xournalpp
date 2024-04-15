@@ -35,7 +35,7 @@ set(PROJECT_CONTACT "core.xournalpp@github.com")
 
 ## CMAKE_Variables
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find" "${PROJECT_SOURCE_DIR}/cmake/include")
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # enable clang tidy to use correct includes
@@ -100,8 +100,8 @@ include(GitRepo)
 ##############################
 # c++17 support
 ##############################
-find_package(CXX17 REQUIRED COMPONENTS optional)
-find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
+#find_package(CXX17 REQUIRED COMPONENTS optional)
+#find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Release")
     include(FetchContent)
@@ -258,10 +258,6 @@ configure_file(
         src/config-features.h.in
         src/config-features.h
         ESCAPE_QUOTES @ONLY
-)
-configure_file(
-        src/filesystem.h.in
-        src/filesystem.h
 )
 
 ## Configuration headers and development options ##

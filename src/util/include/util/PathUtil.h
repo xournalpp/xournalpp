@@ -19,6 +19,7 @@
 #include <gio/gio.h>  // for GFile
 #include <glib.h>     // for g_free, GError, g_error_free, g_filename_fro...
 
+#include "util/StringUtils.h"
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed
 
@@ -85,6 +86,7 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 
 [[maybe_unused]] [[nodiscard]] fs::path fromGFilename(const char* path);
 [[maybe_unused]] [[nodiscard]] std::string toGFilename(fs::path const& path);
+
 
 void openFileWithDefaultApplication(const fs::path& filename);
 

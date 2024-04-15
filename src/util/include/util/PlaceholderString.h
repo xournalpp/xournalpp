@@ -19,10 +19,28 @@
 #include <memory>   // for unique_ptr
 #include <ostream>  // for ostream
 #include <string>   // for string
+#include <string_view>
+#include <type_traits>
 #include <utility>  // for move
 #include <vector>   // for vector
 
 #include <glib.h>  // for g_error
+
+#include "util/StringUtils.h"
+
+template <typename C>
+concept Character = std::is_same_v<char, std::remove_cv_t<C>> ||      //
+                    std::is_same_v<wchar_t, std::remove_cv_t<C>> ||   //
+                    std::is_same_v<char8_t, std::remove_cv_t<C>> ||   //
+                    std::is_same_v<char16_t, std::remove_cv_t<C>> ||  //
+                    std::is_same_v<char32_t, std::remove_cv_t<C>>;
+
+template <typename StringType>
+concept StringLike = requires(StringType s) {
+    { s.c_str() };
+    { s.size() };
+};
+
 
 /**
  * Base class for Formatting
@@ -35,7 +53,7 @@ public:
     PlaceholderElement(PlaceholderElement&& p) = default;
     PlaceholderElement& operator=(PlaceholderElement const&) = default;
     PlaceholderElement& operator=(PlaceholderElement&&) = default;
-    virtual auto format(std::string format) const -> std::string = 0;
+    virtual auto format(std::string_view format) const -> std::string = 0;
 };
 
 
@@ -46,10 +64,10 @@ class PlaceholderElementString: public PlaceholderElement {
 public:
     explicit PlaceholderElementString(std::string_view text): text(text) {}
 
-    auto format(std::string format) const -> std::string override { return text; }
+    auto format(std::string_view format) const -> std::string override { return {text.begin(), text.end()}; }
 
 private:
-    std::string text;
+    std::string_view text;
 };
 
 /**
@@ -60,7 +78,7 @@ class PlaceholderElementInt: public PlaceholderElement {
 public:
     explicit PlaceholderElementInt(T value): value(value) {}
 
-    auto format(std::string format) const -> std::string override { return std::to_string(value); }
+    auto format(std::string_view format) const -> std::string override { return std::to_string(value); }
 
 private:
     T value;
@@ -72,25 +90,30 @@ private:
  * {1}, {2} etc. Use {{ for {
  */
 struct PlaceholderString {
-    PlaceholderString(std::string text);
+
+    explicit PlaceholderString(std::string_view text);
 
     // Placeholder methods
     template <typename T>
-    auto operator%(T value) -> PlaceholderString& {
+    auto operator%(T const& value) -> PlaceholderString& {
         if constexpr (std::is_integral_v<T>) {
             data.emplace_back(std::make_unique<PlaceholderElementInt<T>>(value));
+        } else if constexpr (std::is_same_v<std::u8string, T> || std::is_same_v<std::u8string_view, T>) {
+            data.emplace_back(std::make_unique<PlaceholderElementString>(char_cast(value)));
+        } else if constexpr (std::is_same_v<char const&, T>) {
+            data.emplace_back(std::make_unique<PlaceholderElementString>(std::string_view(&value, 1)));
         } else {
-            data.emplace_back(std::make_unique<PlaceholderElementString>(std::move(value)));
+            data.emplace_back(std::make_unique<PlaceholderElementString>(value));
         }
         return *this;
     }
 
     // Process Method
-    std::string str() const;
-    const char* c_str() const;  // NOLINT(readability-identifier-naming)
+    auto str() const -> std::string;
+    auto c_str() const -> char const*;  // NOLINT(readability-identifier-naming)
 
 private:
-    std::string formatPart(std::string format) const;
+    auto formatPart(std::string_view format) const -> std::string;
     void process() const;
 
     /**
@@ -101,7 +124,7 @@ private:
     /**
      * Input text
      */
-    std::string text;
+    std::string_view text;
 
     /**
      * Processed String
@@ -109,4 +132,9 @@ private:
     mutable std::string processed;
 };
 
-std::ostream& operator<<(std::ostream& os, PlaceholderString& ps);
+template <class String>
+static auto makePlaceholderString(String&& val) {
+    return PlaceholderString(std::forward<String>(val));
+}
+
+auto operator<<(std::ostream& os, PlaceholderString& ps) -> std::ostream&;
