@@ -29,4 +29,6 @@ void showOpenTemplateDialog(GtkWindow* parent, Settings* settings, std::function
 void showOpenImageDialog(GtkWindow* parent, Settings* settings, std::function<void(fs::path, bool)> callback);
 
 void showMultiFormatDialog(GtkWindow* parent, std::vector<std::string> formats, std::function<void(fs::path)> callback);
+
+void showOpenTexDialog(GtkWindow* parent, const fs::path& preset, std::function<void(fs::path)> callback);
 };  // namespace xoj::OpenDlg
