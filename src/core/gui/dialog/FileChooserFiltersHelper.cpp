@@ -41,4 +41,12 @@ void addFilterImages(GtkFileChooser* fc) {
     gtk_file_filter_add_pixbuf_formats(filter);
     gtk_file_chooser_add_filter(fc, filter);
 }
+
+void addFilterTex(GtkFileChooser* fc) {
+    GtkFileFilter* filter = gtk_file_filter_new();
+    gtk_file_filter_set_name(filter, _("Latex files"));
+    gtk_file_filter_add_mime_type(filter, "application/x-latex");
+    gtk_file_filter_add_mime_type(filter, "text/x-tex");
+    gtk_file_chooser_add_filter(fc, filter);
+}
 };  // namespace xoj
