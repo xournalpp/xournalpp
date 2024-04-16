@@ -61,6 +61,8 @@ std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t max
     return {lower, upper};
 }
 
+static void redraw(GtkAdjustment*, gpointer d) { gtk_widget_queue_draw(GTK_WIDGET(d)); }
+
 XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
     Document* doc = control->getDocument();
@@ -76,6 +78,7 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHand
     this->widget.reset(gtk_xournal_new(this, inputContext), xoj::util::adopt);
 
     gtk_scrolled_window_set_child(parent, this->widget.get());
+    gtk_viewport_set_scroll_to_focus(GTK_VIEWPORT(gtk_scrolled_window_get_child(parent)), false);
 
 
     g_signal_connect(getWidget(), "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer) {
@@ -88,6 +91,15 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHand
                          }
                      }),
                      nullptr);
+
+    // Repaint when scrolling
+    auto* hadj = gtk_scrolled_window_get_hadjustment(parent);
+    g_signal_connect_object(hadj, "changed", G_CALLBACK(redraw), this->widget.get(), GConnectFlags(0));
+    g_signal_connect_object(hadj, "value-changed", G_CALLBACK(redraw), this->widget.get(), GConnectFlags(0));
+    auto* vadj = gtk_scrolled_window_get_vadjustment(parent);
+    g_signal_connect_object(vadj, "changed", G_CALLBACK(redraw), this->widget.get(), GConnectFlags(0));
+    g_signal_connect_object(vadj, "value-changed", G_CALLBACK(redraw), this->widget.get(), GConnectFlags(0));
+
 
     this->repaintHandler = std::make_unique<RepaintHandler>(this);
 
