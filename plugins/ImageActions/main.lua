@@ -48,8 +48,8 @@ local function checkVips()
   local hasVips, vips = pcall(require, "vips")
   if not hasVips then
     app.openDialog(
-      "You need to have lua-vips and luaffifb installed and included in your Lua package path in order to use this plugin. \n" ..
-      "See https://github.com/rolandlo/lua-vips/tree/fix-lua-5.3#installation for installation instructions.\n\n",
+      "You need to have lua-vips installed and included in your Lua package path in order to use this plugin. \n" ..
+      "Use luarocks install lua-vips and see https://github.com/libvips/lua-vips for further information.\n\n",
       { "OK" },
       "", true)
     return nil
