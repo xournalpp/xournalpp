@@ -271,3 +271,7 @@ label.setting-touch-indicator.pressed {
   margin-top:4px;
 }
 
+/* Icon in About dialog */
+#XournalIcon {
+  -gtk-icon-size: 120px;
+}
