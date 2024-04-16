@@ -250,3 +250,7 @@ notebook frame>label {
   margin-top:4px;
 }
 
+/* Icon in About dialog */
+#XournalIcon {
+  -gtk-icon-size: 120px;
+}
