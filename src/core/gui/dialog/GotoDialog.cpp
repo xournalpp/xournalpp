@@ -7,7 +7,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "goto.glade";
+constexpr auto UI_FILE = "goto.ui";
 constexpr auto UI_DIALOG_NAME = "gotoDialog";
 
 using namespace xoj::popup;
