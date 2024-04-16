@@ -152,7 +152,7 @@ static void crashHandler(int sig) {
 
     fp << "\n\nTry to get a better stacktrace...\n";
 
-    Stacktrace::printStracktrace(fp);
+    Stacktrace::printStacktrace(fp);
 
     fp << "\n\nExecution log:\n\n";
     fp << getCrashHandlerLogBuffer()->str();

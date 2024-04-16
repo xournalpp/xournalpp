@@ -27,7 +27,7 @@ auto Layer::clone() const -> Layer* {
 void Layer::addElement(Element* e) {
     if (e == nullptr) {
         g_warning("addElement(nullptr)!");
-        Stacktrace::printStracktrace();
+        Stacktrace::printStacktrace();
         return;
     }
 
@@ -44,14 +44,14 @@ void Layer::addElement(Element* e) {
 void Layer::insertElement(Element* e, Element::Index pos) {
     if (e == nullptr) {
         g_warning("insertElement(nullptr)!");
-        Stacktrace::printStracktrace();
+        Stacktrace::printStacktrace();
         return;
     }
 
     for (Element* elem2: this->elements) {
         if (e == elem2) {
             g_warning("Layer::insertElement() try to add an element twice!");
-            Stacktrace::printStracktrace();
+            Stacktrace::printStacktrace();
             return;
         }
     }
@@ -93,7 +93,7 @@ auto Layer::removeElement(Element* e, bool free) -> Element::Index {
     }
 
     g_warning("Could not remove element from layer, it's not on the layer!");
-    Stacktrace::printStracktrace();
+    Stacktrace::printStacktrace();
     return Element::InvalidIndex;
 }
 

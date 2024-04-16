@@ -47,8 +47,8 @@ fs::path Stacktrace::getExePath() {
 
     return fs::path{szFileName};
 }
-void Stacktrace::printStracktrace(std::ostream& stream) {
-    // Stracktrace is currently not implemented for Windows
+void Stacktrace::printStacktrace(std::ostream& stream) {
+    // Stacktrace is currently not implemented for Windows
     // Currently this is only needed for developing, so this is no issue
 }
 #else
@@ -89,7 +89,7 @@ auto Stacktrace::getExePath() -> fs::path {
 }
 #endif
 
-void Stacktrace::printStracktrace(std::ostream& stream) {
+void Stacktrace::printStacktrace(std::ostream& stream) {
     std::array<void*, 32> trace{};
     std::array<char, 2048> buff{};
 
@@ -125,4 +125,4 @@ void Stacktrace::printStracktrace(std::ostream& stream) {
 }
 #endif
 
-void Stacktrace::printStracktrace() { printStracktrace(std::cerr); }
+void Stacktrace::printStacktrace() { printStacktrace(std::cerr); }

@@ -36,7 +36,7 @@ void RecognizerUndoAction::addSourceElement(Stroke* s) {
     for (Stroke* s2: this->original) {
         if (s2 == s) {
             g_warning("RecognizerUndoAction::addSourceElement() twice the same\n");
-            Stacktrace::printStracktrace();
+            Stacktrace::printStacktrace();
             return;
         }
     }
