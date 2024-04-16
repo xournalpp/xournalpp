@@ -283,3 +283,7 @@ image.flying-icon.TR {
   margin-top:4px;
 }
 
+/* Icon in About dialog */
+#XournalIcon {
+  -gtk-icon-size: 120px;
+}

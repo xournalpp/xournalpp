@@ -4,7 +4,6 @@
 
 #include "gui/Builder.h"
 #include "util/PlaceholderString.h"  // for PlaceholderString
-#include "util/gtk4_helper.h"        // for gtk_box_append
 #include "util/i18n.h"               // for _
 
 #include "config-git.h"  // for GIT_COMMIT_ID
@@ -12,7 +11,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "about.glade";
+constexpr auto UI_FILE = "about.ui";
 constexpr auto UI_DIALOG_NAME = "aboutDialog";
 constexpr auto GIT_REPO = "https://github.com/xournalpp/xournalpp";
 constexpr auto WEBSITE = "https://xournalpp.github.io";
@@ -64,10 +63,6 @@ static GtkWindow* constructWindow(GladeSearchpath* gladeSearchPath) {
 
     g_signal_connect_swapped(GTK_BUTTON(builder.get("closebutton")), "clicked", G_CALLBACK(gtk_window_close), window);
 
-#if GTK_MAJOR_VERSION == 3
-    // Widgets are visible by default in gtk4
-    gtk_widget_show_all(builder.get("dialog-main-box"));
-#endif
     return window;
 }
 
