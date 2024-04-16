@@ -14,11 +14,7 @@
 static void addlastSavePathShortcut(GtkFileChooser* fc, Settings* settings) {
     auto lastSavePath = settings->getLastSavePath();
     if (!lastSavePath.empty()) {
-#if GTK_MAJOR_VERSION == 3
-        gtk_file_chooser_add_shortcut_folder(fc, lastSavePath.u8string().c_str(), nullptr);
-#else
         gtk_file_chooser_add_shortcut_folder(fc, Util::toGFile(lastSavePath.u8string()).get(), nullptr);
-#endif
     }
 }
 
@@ -206,6 +202,19 @@ void xoj::OpenDlg::showMultiFormatDialog(GtkWindow* parent, std::vector<std::str
         }
         gtk_file_chooser_add_filter(fc, filterSupported);
     }
+
+    popup.show(parent);
+}
+
+void xoj::OpenDlg::showOpenTexDialog(GtkWindow* parent, const fs::path& preset,
+                                     std::function<void(fs::path)> callback) {
+    auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Choose Latex template file"), std::move(callback));
+
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
+    xoj::addFilterTex(fc);
+    xoj::addFilterAllFiles(fc);
+
+    gtk_file_chooser_set_current_folder(fc, Util::toGFile(preset.parent_path()).get(), nullptr);
 
     popup.show(parent);
 }
