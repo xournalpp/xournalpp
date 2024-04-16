@@ -459,7 +459,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     const MigrateResult migrateResult = migrateSettings();
 
     app_data->gladePath = std::make_unique<GladeSearchpath>();
-    initResourcePath(app_data->gladePath.get(), "ui/about.glade");
+    initResourcePath(app_data->gladePath.get(), "ui/about.ui");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
