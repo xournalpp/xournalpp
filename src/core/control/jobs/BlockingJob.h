@@ -30,7 +30,5 @@ public:
     JobType getType() override;
 
 protected:
-    static auto finished(Control* control) -> bool;
-
     Control* control;
 };

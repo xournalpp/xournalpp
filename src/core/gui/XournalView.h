@@ -48,7 +48,7 @@ class Rectangle;
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:
-    XournalView(GtkViewport* parent, Control* control, ScrollHandling* scrollHandling);
+    XournalView(GtkScrolledWindow* parent, Control* control, ScrollHandling* scrollHandling);
     ~XournalView() override;
 
 public:
