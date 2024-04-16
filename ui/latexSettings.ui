@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkScrolledWindow" id="latexSettingsPanel">
+    <property name="focusable">1</property>
+    <property name="min-content-width">500</property>
+    <property name="min-content-height">450</property>
+    <property name="child">
+      <object class="GtkViewport">
+        <property name="child">
+          <object class="GtkBox">
+            <property name="vexpand">1</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkFrame" id="frameToolSettings">
+                <property name="label-xalign">0.01</property>
+                <property name="child">
+                  <object class="GtkCheckButton" id="latexSettingsRunCheck">
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="margin-bottom">4</property>
+                    <property name="label" translatable="1">Always check LaTeX dependencies before running</property>
+                    <property name="focusable">1</property>
+                    <property name="tooltip-text" translatable="1">If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool.</property>
+                  </object>
+                </property>
+                <child type="label">
+                  <object class="GtkLabel">
+                    <property name="label" translatable="1">General LaTeX tool settings</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame" id="frameDefaultText">
+                <property name="label-xalign">0.01</property>
+                <property name="child">
+                  <object class="GtkEntry" id="latexDefaultEntry">
+                    <property name="focusable">1</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="margin-bottom">4</property>
+                  </object>
+                </property>
+                <child type="label">
+                  <object class="GtkLabel">
+                    <property name="label" translatable="1">Default LaTeX Text</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame" id="frameTemplateFileSettings">
+                <property name="label-xalign">0.01</property>
+                <property name="child">
+                  <object class="GtkGrid">
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="margin-bottom">8</property>
+                    <property name="row-spacing">5</property>
+                    <property name="column-spacing">20</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="tooltip-text" translatable="1">The LaTeX file to use as a template for the LaTeX tool.</property>
+                        <property name="halign">start</property>
+                        <property name="label" translatable="1">Global template file path</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="label" translatable="1">The following strings will be substituted in the global template file when running the LaTeX tool:</property>
+                        <property name="wrap">1</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="label" translatable="1">%%XPP_TOOL_INPUT%%</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="label" translatable="1">The math mode formula typed in the LaTeX tool.</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="latexSettingsTemplateFile">
+                        <property name="hexpand">True</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="label" translatable="1">%%XPP_TEXT_COLOR%%</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="label" translatable="1">The current color of the Text Tool, in hex RGB format.</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">3</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+                <child type="label">
+                  <object class="GtkLabel">
+                    <property name="label" translatable="1">Template file settings</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame" id="frameExecutableSettings">
+                <property name="label-xalign">0.01</property>
+                <property name="child">
+                  <object class="GtkGrid">
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="margin-bottom">8</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="halign">start</property>
+                        <property name="margin-end">6</property>
+                        <property name="label" translatable="1">LaTeX generation command</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="latexSettingsGenCmd">
+                        <property name="focusable">1</property>
+                        <property name="hexpand">1</property>
+                        <property name="input-purpose">terminal</property>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="latexSettingsTestBtn">
+                        <property name="label" translatable="1">Test configuration</property>
+                        <property name="focusable">1</property>
+                        <property name="receives-default">1</property>
+                        <property name="tooltip-text" translatable="1">Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula.</property>
+                        <property name="halign">end</property>
+                        <property name="margin-top">2</property>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                          <property name="column-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+                <child type="label">
+                  <object class="GtkLabel">
+                    <property name="label" translatable="1">LaTeX executable settings</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame" id="frameSourceViewSettings">
+                <property name="label-xalign">0.01</property>
+                <property name="child">
+                  <object class="GtkBox" id="bxSourceViewSettingsRootContainer">
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="margin-bottom">8</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkBox" id="bxGtkSourceviewSettings">
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkBox" id="bxGtkSourceviewDescription">
+                            <child>
+                              <object class="GtkLabel" id="lbSourceviewSettingsDescription">
+                                <property name="halign">start</property>
+                                <property name="margin-start">5</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkBox" id="bxThemeSelectionContainer">
+                                <property name="orientation">vertical</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="bxGtkSourceviewMainSettings">
+                            <property name="visible">0</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkCheckButton" id="cbShowLineNumbers">
+                                <property name="label" translatable="1">Line numbers</property>
+                                <property name="focusable">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="cbAutoIndent">
+                                <property name="label" translatable="1">Auto-indent</property>
+                                <property name="focusable">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="cbSyntaxHighlight">
+                                <property name="label" translatable="1">Syntax highlighting</property>
+                                <property name="focusable">1</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="bxEditorWordWrapSetting">
+                        <child>
+                          <object class="GtkCheckButton" id="cbWordWrap">
+                            <property name="label" translatable="1">Wrap text</property>
+                            <property name="focusable">1</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkFrame" id="frameEditorFontSettings">
+                        <property name="label-xalign">0.01</property>
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <property name="margin-bottom">4</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkCheckButton" id="cbUseSystemFont">
+                                <property name="label" translatable="1">Use font from system theme.</property>
+                                <property name="focusable">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkBox" id="boxCustomFontOptions">
+                                <child>
+                                  <object class="GtkLabel" id="lbFontLabel">
+                                    <property name="label" translatable="1">Font: </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkFontButton" id="selBtnEditorFont">
+                                    <property name="focusable">1</property>
+                                    <property name="receives-default">1</property>
+                                    <property name="font">Sans 12</property>
+                                    <property name="preview-text"></property>
+                                    <property name="title" translatable="1">Pick the Editor&apos;s Font</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                        <child type="label">
+                          <object class="GtkLabel">
+                            <property name="label" translatable="1">Font</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+                <child type="label">
+                  <object class="GtkLabel" id="lbSourceViewHeader">
+                    <property name="label" translatable="1">Editor settings</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </object>
+</interface>
