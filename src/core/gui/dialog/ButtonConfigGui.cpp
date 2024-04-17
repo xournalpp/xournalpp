@@ -43,16 +43,6 @@ std::string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
     }
 }
 
-void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, ToolType action) {
-    GtkTreeIter iter;
-
-    gtk_list_store_append(typeModel, &iter);
-    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24,
-                                                 static_cast<GtkIconLookupFlags>(0), nullptr);
-    gtk_list_store_set(typeModel, &iter, 0, pixbuf, -1);
-    gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
-}
-
 ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, Settings* settings, unsigned int button,
                                  bool withDevice):
         settings(settings), button(button), withDevice(withDevice), iconNameHelper(settings) {
@@ -77,10 +67,12 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, 
         gtk_widget_hide(this->cbDisableDrawing);
     }
 
-    GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);  // NOLINT
+    GtkListStore* typeModel = gtk_list_store_new(3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
 
     auto addTypeCB = [=](const char* icon, const char* name, ToolType action) {
-        addToolToList(typeModel, iconNameHelper.iconName(icon).c_str(), name, action);
+        GtkTreeIter iter;
+        gtk_list_store_append(typeModel, &iter);
+        gtk_list_store_set(typeModel, &iter, 0, iconNameHelper.iconName(icon).c_str(), 1, name, 2, action, -1);
     };
 
     addTypeCB("transparent", _("Tool - don't change"), TOOL_NONE);
@@ -96,7 +88,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, 
     addTypeCB("select-multilayer-rect", _("Select multi layer rect"), TOOL_SELECT_MULTILAYER_RECT);
     addTypeCB("hand", _("Hand"), TOOL_HAND);
     addTypeCB("floating-toolbox", _("Floating Toolbox (experimental)"), TOOL_FLOATING_TOOLBOX);
-    addTypeCB("select-pdf-text-head-tail", _("Select Text from pdf"), TOOL_SELECT_PDF_TEXT_LINEAR);
+    addTypeCB("select-pdf-text-ht", _("Select Text from pdf"), TOOL_SELECT_PDF_TEXT_LINEAR);
     addTypeCB("select-pdf-text-area", _("Select Area Text from pdf"), TOOL_SELECT_PDF_TEXT_RECT);
 
     this->cbTool = builder.get("cbTool");
@@ -105,7 +97,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, 
 
     GtkCellRenderer* renderer = gtk_cell_renderer_pixbuf_new();
     gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, false);
-    gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "pixbuf", 0, nullptr);
+    gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "icon-name", 0, nullptr);
 
     renderer = gtk_cell_renderer_text_new();
     gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->cbTool), renderer, true);
