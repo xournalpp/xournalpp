@@ -512,10 +512,6 @@ void on_startup(GApplication* application, XMPtr app_data) {
                 [=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
     }
 
-    gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
-    // Do we want stuff in gtk_application_set_app_menu?
-    gtk_application_window_set_show_menubar(GTK_APPLICATION_WINDOW(app_data->win->getWindow()), true);
-
     app_data->win->show(nullptr);
 
     fs::path p;

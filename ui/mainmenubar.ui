@@ -850,7 +850,6 @@
   </submenu>
   <submenu>
    <attribute name="label" translatable="yes">_Help</attribute>
-   <attribute name="accel">&lt;Ctrl&gt;h</attribute>
    <section id="menu3">
     <item>
      <attribute name="label" translatable="yes">Help</attribute>
