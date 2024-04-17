@@ -79,6 +79,10 @@ private:
     void showStabilizerAvMethodOptions(StrokeStabilizer::AveragingMethod method);
     void showStabilizerPreprocessorOptions(StrokeStabilizer::Preprocessor preprocessor);
 
+#ifdef ENABLE_AUDIO
+    void setAudioRecordingFolder(fs::path folder);
+#endif
+
 private:
     Settings* settings = nullptr;
     Control* control = nullptr;
@@ -86,6 +90,7 @@ private:
     int dpi = 72;
 
 #ifdef ENABLE_AUDIO
+    fs::path audioRecordingsFolder;
     std::vector<DeviceInfo> audioInputDevices;
     std::vector<DeviceInfo> audioOutputDevices;
 #endif
