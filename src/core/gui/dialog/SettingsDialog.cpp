@@ -31,6 +31,7 @@
 #include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
 #include "LanguageConfigGui.h"     // for LanguageConfigGui
 #include "LatexSettingsPanel.h"    // for LatexSettingsPanel
+#include "XojOpenDlg.h"            // for showSelectFolderDialog
 #include "filesystem.h"            // for is_directory
 
 class GladeSearchpath;
@@ -198,6 +199,15 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     g_signal_connect(builder.get("cbUseSpacesAsTab"), "toggled",
                      G_CALLBACK(+[](GtkCheckButton* checkBox, SettingsDialog* self) {
                          self->enableWithCheckbox("cbUseSpacesAsTab", "numberOfSpacesContainer");
+                     }),
+                     this);
+
+    g_signal_connect(builder.get("fcAudioPath"), "clicked", G_CALLBACK(+[](GtkButton* btn, gpointer d) {
+                         auto* self = static_cast<SettingsDialog*>(d);
+                         xoj::OpenDlg::showSelectFolderDialog(
+                                 GTK_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(btn), GTK_TYPE_WINDOW)),
+                                 _("Select folder for audio recordings"), self->audioRecordingsFolder,
+                                 [self](fs::path p) { self->setAudioRecordingFolder(std::move(p)); });
                      }),
                      this);
 
@@ -407,8 +417,7 @@ void SettingsDialog::load() {
     GtkWidget* txtDefaultPdfName = builder.get("txtDefaultPdfName");
     gtk_editable_set_text(GTK_EDITABLE(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
 
-    // gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
-    //                                     Util::toGFilename(settings->getAudioFolder()).c_str());
+    setAudioRecordingFolder(settings->getAudioFolder());
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
@@ -865,13 +874,8 @@ void SettingsDialog::save() {
 
     settings->setDefaultSaveName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName"))));
     settings->setDefaultPdfExportName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName"))));
-    // auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
-    // auto path = Util::fromGFile(file);
-    // g_object_unref(file);
-    // if (fs::is_directory(path)) {
-    //     settings->setAudioFolder(path);
-    // }
-    g_warning("Implement gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get(\"fcAudioPath\")))");
+
+    settings->setAudioFolder(audioRecordingsFolder);
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     int autosaveTimeout = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout)));
@@ -1041,4 +1045,14 @@ void SettingsDialog::save() {
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
+}
+
+void SettingsDialog::setAudioRecordingFolder(fs::path folder) {
+    if (!fs::is_directory(folder)) {
+        g_warning("SettingsDialog::setAudioRecordingFolder(): provided path is not a directory: %s",
+                  folder.u8string().c_str());
+        return;
+    }
+    gtk_button_set_label(GTK_BUTTON(builder.get("fcAudioPath")), folder.u8string().c_str());
+    audioRecordingsFolder = std::move(folder);
 }
