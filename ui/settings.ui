@@ -3883,14 +3883,11 @@ Disabling audio for a single session can be achieved using the &lt;tt&gt;--disab
                                               </object>
                                             </child>
                                             <child>
-                                    <!---      <object class="GtkFileChooserButton" id="fcAudioPath">
+                                              <object class="GtkButton" id="fcAudioPath">
                                                 <property name="name">fcAudioPath</property>
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
                                                 <property name="hexpand">True</property>
-                                                <property name="action">select-folder</property>
-                                                <property name="title" translatable="1">Select Folder</property>
-                                                </object> -->
+                                                <property name="margin-start">4</property>
+                                              </object>
                                             </child>
                                           </object>
                                         </child>
