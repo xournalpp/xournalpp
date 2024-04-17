@@ -6,6 +6,7 @@
 #include "util/Assert.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
+#include "util/raii/CStringWrapper.h"
 #include "util/raii/GVariantSPtr.h"
 
 #include "PageTypeSubmenu.h"
@@ -14,7 +15,7 @@
 #include "ToolbarSelectionSubmenu.h"
 #include "config-features.h"  // for ENABLE_PLUGINS
 
-constexpr auto MENU_XML_FILE = "mainmenubar.xml";
+constexpr auto MENU_XML_FILE = "mainmenubar.ui";
 constexpr auto MENU_ID = "menubar";
 constexpr auto UNDO_REDO_SECTION_ID = "sectionUndoRedo";
 
@@ -39,6 +40,43 @@ static void removeItemsWithClass(GMenu* menu, const char* classname) {
                 if (sub && G_IS_MENU(sub.get())) {
                     removeItemsWithClass(G_MENU(sub.get()), classname);
                 }
+            }
+        }
+    }
+}
+
+static void setupAccels(GMenu* menu, GtkApplication* app) {
+    auto getAttr = [&](int itemNb, const char* attr, const GVariantType* type) {
+        return xoj::util::GVariantSPtr(g_menu_model_get_item_attribute_value(G_MENU_MODEL(menu), itemNb, attr, type),
+                                       xoj::util::adopt);
+    };
+
+    int N = g_menu_model_get_n_items(G_MENU_MODEL(menu));
+    for (int n = 0; n < N; ++n) {
+        auto acc = getAttr(n, "accel", G_VARIANT_TYPE_STRING);
+        if (acc) {
+            auto act = getAttr(n, "action", G_VARIANT_TYPE_STRING);
+            xoj_assert_message(act,
+                               std::string("Menu entry without linked action: ") +
+                                       g_variant_get_string(getAttr(n, "label", G_VARIANT_TYPE_STRING).get(), nullptr));
+
+            const char* a[2] = {g_variant_get_string(acc.get(), nullptr), nullptr};
+
+            if (auto tgt = getAttr(n, "target", nullptr)) {
+                auto tgtstr = xoj::util::OwnedCString::assumeOwnership(g_variant_print(tgt.get(), true));
+                auto fullActionName = std::string(g_variant_get_string(act.get(), nullptr)) + "(" + tgtstr.get() + ")";
+                gtk_application_set_accels_for_action(app, fullActionName.c_str(), a);
+            } else {
+                gtk_application_set_accels_for_action(app, g_variant_get_string(act.get(), nullptr), a);
+            }
+        }
+
+        xoj::util::GObjectSPtr<GMenuLinkIter> it(g_menu_model_iterate_item_links(G_MENU_MODEL(menu), n),
+                                                 xoj::util::adopt);
+        while (g_menu_link_iter_next(it.get())) {
+            xoj::util::GObjectSPtr<GMenuModel> sub(g_menu_link_iter_get_value(it.get()), xoj::util::adopt);
+            if (sub && G_IS_MENU(sub.get())) {
+                setupAccels(G_MENU(sub.get()), app);
             }
         }
     }
@@ -83,6 +121,32 @@ void Menubar::populate(const GladeSearchpath* gladeSearchPath, MainWindow* win) 
     }
 
     undoRedoSection = G_MENU(gtk_builder_get_object(builder.get(), UNDO_REDO_SECTION_ID));
+
+    gtk_application_set_menubar(gtk_window_get_application(GTK_WINDOW(win->getWindow())), menu);
+    gtk_window_set_handle_menubar_accel(GTK_WINDOW(win->getWindow()), false);  // Disable GTK handling F10.
+
+    /*
+     * Due to a bug in gtk4 see https://gitlab.gnome.org/GNOME/gtk/-/issues/4574
+     *                          https://gitlab.gnome.org/GNOME/gtk/-/issues/4607
+     * The accelerators from the menu ui file are not set up correctly by gtk_application_set_menubar()
+     *      (in fact, they work when the corresponding menu is shown...)
+     * Set them up by hand here.
+     */
+    setupAccels(G_MENU(menu), gtk_window_get_application(GTK_WINDOW(win->getWindow())));
+    gtk_application_window_set_show_menubar(GTK_APPLICATION_WINDOW(win->getWindow()), true);
+
+    /**** Debug info ****/
+    // char** act = gtk_application_list_action_descriptions(gtk_window_get_application(GTK_WINDOW(win->getWindow())));
+    // for (char** it = act; *it != nullptr; it++) {
+    //     printf("%s : ", *it);
+    //     char** acc = gtk_application_get_accels_for_action(gtk_window_get_application(GTK_WINDOW(win->getWindow())),
+    //     *it); for (char** it = acc; *it != nullptr; it++) {
+    //         printf("%s ", *it);
+    //     }
+    //     g_strfreev(acc);
+    //     printf("\n");
+    // }
+    // g_strfreev(act);
 }
 
 void Menubar::setUndoDescription(const std::string& description) {
