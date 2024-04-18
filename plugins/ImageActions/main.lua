@@ -144,7 +144,7 @@ function Split(mode)
     local currentLength = 0
     local n = 0
     for i = 1, last do
-      if sum[i] == maxSum then -- completely white row (or column)
+      if sum[i - 1] == maxSum then -- completely white row (or column)
         if currentLength > 0 then
           currentLength = currentLength + 1
         else
