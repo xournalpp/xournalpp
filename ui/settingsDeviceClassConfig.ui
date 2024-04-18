@@ -16,7 +16,6 @@
       <object class="GtkComboBoxText" id="cbDeviceClass">
         <property name="name">cbDeviceClass</property>
         <property name="halign">end</property>
-        <property name="active">0</property>
         <property name="has-entry">1</property>
         <items>
           <item id="0" translatable="yes">Disabled</item>
@@ -25,11 +24,7 @@
           <item id="3" translatable="yes">Eraser</item>
           <item id="4" translatable="yes">Touchscreen</item>
         </items>
-        <property name="child">
-          <object class="GtkEntry">
-            <property name="visible">0</property>
-          </object>
-        </property>
+        <property name="active">0</property>
       </object>
     </child>
     <child>
