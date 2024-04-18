@@ -17,7 +17,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "settingsButtonConfig.glade";
+constexpr auto UI_FILE = "settingsButtonConfig.ui";
 constexpr auto UI_WIDGET_NAME = "mainBox";
 
 ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},
