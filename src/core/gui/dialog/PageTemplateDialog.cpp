@@ -29,7 +29,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "pageTemplate.glade";
+constexpr auto UI_FILE = "pageTemplate.ui";
 constexpr auto UI_DIALOG_NAME = "templateDialog";
 
 using namespace xoj::popup;
@@ -50,8 +50,8 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
     pageSizeLabel = GTK_LABEL(builder.get("lbPageSize"));
     backgroundTypeLabel = GTK_LABEL(builder.get("lbBackgroundType"));
     backgroundColorChooser = GTK_COLOR_CHOOSER(builder.get("cbBackgroundButton"));
-    copyLastPageButton = GTK_TOGGLE_BUTTON(builder.get("cbCopyLastPage"));
-    copyLastPageSizeButton = GTK_TOGGLE_BUTTON(builder.get("cbCopyLastPageSize"));
+    copyLastPageButton = GTK_CHECK_BUTTON(builder.get("cbCopyLastPage"));
+    copyLastPageSizeButton = GTK_CHECK_BUTTON(builder.get("cbCopyLastPageSize"));
 
 
     g_signal_connect_swapped(builder.get("btChangePaperSize"), "clicked",
@@ -89,8 +89,8 @@ void PageTemplateDialog::updateDataFromModel() {
     pageTypeSelectionMenu->setSelectedPT(model.getBackgroundType());
     changeCurrentPageBackground(types->getInfoOn(model.getBackgroundType()));
 
-    gtk_toggle_button_set_active(copyLastPageButton, model.isCopyLastPageSettings());
-    gtk_toggle_button_set_active(copyLastPageSizeButton, model.isCopyLastPageSize());
+    gtk_check_button_set_active(copyLastPageButton, model.isCopyLastPageSettings());
+    gtk_check_button_set_active(copyLastPageSizeButton, model.isCopyLastPageSize());
 }
 
 void PageTemplateDialog::changeCurrentPageBackground(const PageTypeInfo* info) {
@@ -100,8 +100,8 @@ void PageTemplateDialog::changeCurrentPageBackground(const PageTypeInfo* info) {
 }
 
 void PageTemplateDialog::saveToModel() {
-    model.setCopyLastPageSettings(gtk_toggle_button_get_active(copyLastPageButton));
-    model.setCopyLastPageSize(gtk_toggle_button_get_active(copyLastPageSizeButton));
+    model.setCopyLastPageSettings(gtk_check_button_get_active(copyLastPageButton));
+    model.setCopyLastPageSize(gtk_check_button_get_active(copyLastPageSizeButton));
 
     GdkRGBA color;
     gtk_color_chooser_get_rgba(backgroundColorChooser, &color);
