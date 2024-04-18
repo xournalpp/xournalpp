@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkWindow" id="renameLayerDialog">
+    <property name="title" translatable="1">Rename selected layer</property>
+    <property name="modal">1</property>
+    <property name="default-widget">btOk</property>
+    <property name="focus-widget">layerNameEntry</property>
+    <property name="destroy-with-parent">1</property>
+    <property name="child">
+      <object class="GtkBox" id="dialog-main-box">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">4</property>
+        <child>
+          <object class="GtkEntry" id="layerNameEntry">
+            <property name="focusable">1</property>
+            <property name="activates-default">1</property>
+            <property name="text" translatable="1">Sample layer name</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="hexpand">1</property>
+                <property name="label" translatable="1">Cancel</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class='GtkShortcutController'>
+                    <property name='scope'>managed</property>
+                    <child>
+                      <object class='GtkShortcut'>
+                        <property name='trigger'>Escape</property>
+                        <property name='action'>activate</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="hexpand">1</property>
+                <property name="label" translatable="1">Ok</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>
