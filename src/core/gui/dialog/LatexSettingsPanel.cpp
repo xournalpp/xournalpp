@@ -109,10 +109,7 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_check_button_get_active(this->cbAutoDepCheck);
     settings.defaultText = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexDefaultEntry")));
-    // settings.globalTemplatePath = Util::fromGFile(
-    //         xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(this->globalTemplateChooser), xoj::util::adopt)
-    //                 .get());
-    g_warning("Implement gtk_file_chooser_get_file(this->globalTemplateChooser)");
+    settings.globalTemplatePath = latexTemplateFile;
     settings.genCmd = gtk_editable_get_text(GTK_EDITABLE(builder.get("latexSettingsGenCmd")));
 
 #ifdef USE_GTK_SOURCEVIEW
