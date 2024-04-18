@@ -1,9 +1,8 @@
 #include "Control.h"
 
-#include <algorithm>  // for max
-#include <cstdlib>    // for size_t
-#include <exception>  // for exce...
-#include <format>
+#include <algorithm>   // for max
+#include <cstdlib>     // for size_t
+#include <exception>   // for exce...
 #include <functional>  // for bind
 #include <iterator>    // for end
 #include <memory>      // for make...
@@ -114,6 +113,7 @@
 #include "UndoRedoController.h"              // for Undo...
 #include "config-dev.h"                      // for SETT...
 #include "config.h"                          // for PROJ...
+#include "format.h"                          // for fmt::format
 
 using std::string;
 
@@ -1842,14 +1842,14 @@ void Control::updateWindowTitle() {
             title = _("Unsaved Document");
         } else {
             if (settings->isPageNumberInTitlebarShown()) {
-                title += std::format("[{}/{}]  ", getCurrentPageNo() + 1, doc->getPageCount());
+                title += fmt::format("[{}/{}]  ", getCurrentPageNo() + 1, doc->getPageCount());
             }
             if (undoRedo->isChanged()) {
                 title += "*";
             }
 
             if (settings->isFilepathInTitlebarShown()) {
-                title += std::format("[{}] - {}", char_cast(doc->getPdfFilepath().parent_path().u8string()),
+                title += fmt::format("[{}] - {}", char_cast(doc->getPdfFilepath().parent_path().u8string()),
                                      char_cast(doc->getPdfFilepath().filename().u8string()));
             } else {
                 title += char_cast(doc->getPdfFilepath().filename().u8string());
@@ -1857,14 +1857,14 @@ void Control::updateWindowTitle() {
         }
     } else {
         if (settings->isPageNumberInTitlebarShown()) {
-            title += ("[" + std::to_string(getCurrentPageNo() + 1) + "/" + std::to_string(doc->getPageCount()) + "]  ");
+            title += fmt::format("[{}/{}]  ", getCurrentPageNo() + 1, doc->getPageCount());
         }
         if (undoRedo->isChanged()) {
             title += "*";
         }
 
         if (settings->isFilepathInTitlebarShown()) {
-            title += (std::format("[{}] - {}", char_cast(doc->getFilepath().parent_path().u8string()),
+            title += (fmt::format("[{}] - {}", char_cast(doc->getFilepath().parent_path().u8string()),
                                   char_cast(doc->getFilepath().filename().u8string())));
         } else {
             title += char_cast(doc->getFilepath().filename().u8string());
