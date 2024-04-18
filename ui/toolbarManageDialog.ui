@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="manageToolbarsDialog">
+    <property name="name">DialogManageToolbar</property>
+    <property name="title" translatable="1">Manage Toolbar</property>
+    <property name="modal">1</property>
+    <property name="destroy-with-parent">1</property>
+    <property name="focus-widget">toolbarList</property>
+    <property name="child">
+      <object class="GtkBox">
+        <property name="name">dialog-main-box</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">4</property>
+        <child>
+          <object class="GtkBox" id="hbox1">
+            <property name="vexpand">1</property>
+            <child>
+              <object class="GtkTreeView" id="toolbarList">
+                <property name="hexpand">1</property>
+                <property name="name">toolbarList</property>
+                <property name="focusable">1</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="vbox2">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkButton" id="btCopy">
+                    <property name="sensitive">0</property>
+                    <property name="focusable">1</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">4</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">edit-copy</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="1">Copy</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btDelete">
+                    <property name="sensitive">0</property>
+                    <property name="focusable">1</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">4</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">edit-delete</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="1">Delete</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btNew">
+                    <property name="focusable">1</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">4</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">document-new</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="1">New</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btClose">
+            <property name="valign">center</property>
+            <property name="label" translatable="1">Close</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <property name="halign">end</property>
+            <child>
+              <object class='GtkShortcutController'>
+                <property name='scope'>managed</property>
+                <child>
+                  <object class='GtkShortcut'>
+                    <property name='trigger'>Escape</property>
+                    <property name='action'>activate</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>
