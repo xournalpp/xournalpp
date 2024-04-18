@@ -74,7 +74,7 @@ private:
     GtkLabel* pageSizeLabel;
     GtkLabel* backgroundTypeLabel;
     GtkColorChooser* backgroundColorChooser;
-    GtkToggleButton* copyLastPageButton;
-    GtkToggleButton* copyLastPageSizeButton;
+    GtkCheckButton* copyLastPageButton;
+    GtkCheckButton* copyLastPageSizeButton;
 };
 };  // namespace xoj::popup
