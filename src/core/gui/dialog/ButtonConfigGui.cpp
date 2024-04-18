@@ -17,7 +17,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "settingsButtonConfig.glade";
+constexpr auto UI_FILE = "settingsButtonConfig.ui";
 constexpr auto UI_WIDGET_NAME = "mainBox";
 
 ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},
@@ -27,17 +27,17 @@ ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_
 std::string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
     switch (size) {
         case TOOL_SIZE_NONE:
-            return "Thickness - don't change";
+            return _("Thickness - don't change");
         case TOOL_SIZE_VERY_FINE:
-            return "Very thin";
+            return _("Very thin");
         case TOOL_SIZE_FINE:
-            return "Thin";
+            return _("Thin");
         case TOOL_SIZE_MEDIUM:
-            return "Medium";
+            return _("Medium");
         case TOOL_SIZE_THICK:
-            return "Thick";
+            return _("Thick");
         case TOOL_SIZE_VERY_THICK:
-            return "Very thick";
+            return _("Very thick");
         default:
             return "";
     }
