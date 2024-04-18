@@ -1,4 +1,4 @@
-local Mode = {
+local m = {
   INVERT = 1,
   DOWNSCALE = 2,
   FLIP_H = 3,
@@ -12,35 +12,35 @@ local Mode = {
 }
 
 function initUi()
-  app.registerUi({ ["menu"] = "Invert selected images", ["callback"] = "cb", ["mode"] = Mode.INVERT })
+  app.registerUi({ ["menu"] = "Invert selected images", ["callback"] = "cb", ["mode"] = m.INVERT })
   app.registerUi({
     ["menu"] = "Downscale resolution of selected images by factor 0.5",
     ["callback"] = "cb",
-    ["mode"] = Mode.DOWNSCALE
+    ["mode"] = m.DOWNSCALE
   })
-  app.registerUi({ ["menu"] = "Flip selected images horizontally", ["callback"] = "cb", ["mode"] = Mode.FLIP_H })
-  app.registerUi({ ["menu"] = "Flip selected images vertically", ["callback"] = "cb", ["mode"] = Mode.FLIP_V })
+  app.registerUi({ ["menu"] = "Flip selected images horizontally", ["callback"] = "cb", ["mode"] = m.FLIP_H })
+  app.registerUi({ ["menu"] = "Flip selected images vertically", ["callback"] = "cb", ["mode"] = m.FLIP_V })
   app.registerUi({
     ["menu"] = "Rotate selected images 90 degree clockwise",
     ["callback"] = "cb",
-    ["mode"] = Mode.ROTATE_CW
+    ["mode"] = m.ROTATE_CW
   })
   app.registerUi({
     ["menu"] = "Rotate selected images 90 degree counterclockwise",
     ["callback"] = "cb",
-    ["mode"] = Mode.ROTATE_CCW
+    ["mode"] = m.ROTATE_CCW
   })
-  app.registerUi({ ["menu"] = "Make white pixels transparent", ["callback"] = "cb", ["mode"] = Mode.TRANSPARENT })
-  app.registerUi({ ["menu"] = "Trim selected images", ["callback"] = "cb", ["mode"] = Mode.TRIM })
+  app.registerUi({ ["menu"] = "Make white pixels transparent", ["callback"] = "cb", ["mode"] = m.TRANSPARENT })
+  app.registerUi({ ["menu"] = "Trim selected images", ["callback"] = "cb", ["mode"] = m.TRIM })
   app.registerUi({
     ["menu"] = "Split images vertically by largest white block",
     ["callback"] = "split",
-    ["mode"] = Mode.SPLIT_V
+    ["mode"] = m.SPLIT_V
   })
   app.registerUi({
     ["menu"] = "Split images horizontally by largest white block",
     ["callback"] = "split",
-    ["mode"] = Mode.SPLIT_H
+    ["mode"] = m.SPLIT_H
   })
 end
 
@@ -67,21 +67,21 @@ function cb(mode)
     local im = images[i]
     local image = vips.Image.new_from_buffer(im["data"])
     local x, y, maxWidth, maxHeight = im["x"], im["y"], math.ceil(im["width"]), math.ceil(im["height"])
-    if mode == Mode.INVERT then
+    if mode == m.INVERT then
       image = image:invert()
-    elseif mode == Mode.DOWNSCALE then
+    elseif mode == m.DOWNSCALE then
       image = image:resize(0.5)
-    elseif mode == Mode.FLIP_H then
+    elseif mode == m.FLIP_H then
       image = image:flip("horizontal")
-    elseif mode == Mode.FLIP_V then
+    elseif mode == m.FLIP_V then
       image = image:flip("vertical")
-    elseif mode == Mode.ROTATE_CW then
+    elseif mode == m.ROTATE_CW then
       image = image:rot("d90")
       maxWidth, maxHeight = maxHeight, maxWidth
-    elseif mode == Mode.ROTATE_CCW then
+    elseif mode == m.ROTATE_CCW then
       image = image:rot("d270")
       maxWidth, maxHeight = maxHeight, maxWidth
-    elseif mode == Mode.TRANSPARENT then
+    elseif mode == m.TRANSPARENT then
       if image:bands() == 3 then
         image = image:bandjoin(255)       -- add alpha channel
       end
@@ -92,7 +92,7 @@ function cb(mode)
       -- 255 (true) for white enough pixels,
       -- 0 (false) otherwise
       image = filter:ifthenelse(transparent, image) -- now white enough pixels become transparent, other are taken from image
-    elseif mode == Mode.TRIM then
+    elseif mode == m.TRIM then
       local width = image:width()
       local height = image:height()
       image = image:crop(image:find_trim())
@@ -119,7 +119,7 @@ function split(mode)
   local vips = checkVips()
   if not vips then return end
 
-  local vertical = mode == Mode.SPLIT_V
+  local vertical = mode == m.SPLIT_V
   local images = app.getImages("selection")
   local imdata = {}
   for i = 1, #images do
