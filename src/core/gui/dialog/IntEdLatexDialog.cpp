@@ -36,7 +36,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE_NAME = "intEdTexDialog.glade";
+constexpr auto UI_FILE_NAME = "intEdTexDialog.ui";
 constexpr auto UI_DIALOG_ID = "intEdTexDialog";
 
 constexpr auto TEX_BOX_WIDGET_NAME = "texBox";
@@ -69,11 +69,6 @@ IntEdLatexDialog::IntEdLatexDialog(GladeSearchpath* gladeSearchPath, std::unique
     } else {
         gtk_text_buffer_set_text(this->textBuffer, texCtrl->initialTex.c_str(), -1);
     }
-
-#if GTK_MAJOR_VERSION == 3
-    // Widgets are visible by default in gtk4
-    gtk_widget_show_all(GTK_WIDGET(texBox));
-#endif
 
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(builder.get("texBoxContainer")), this->texBox);
 
