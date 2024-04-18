@@ -32,7 +32,7 @@ private:
 
 private:
     xoj::util::GtkWindowUPtr window;
-    GtkImage* previewImage;
+    GtkPicture* previewImage;
     GtkRange* alphaRange;
 
     OpacityFeature opacityFeature;
