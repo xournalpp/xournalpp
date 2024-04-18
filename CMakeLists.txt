@@ -75,10 +75,10 @@ include(GitRepo)
 
 ## Libraries ##
 ##############################
-# c++17 support
+# c++20 support
 ##############################
-#find_package(CXX17 REQUIRED COMPONENTS optional)
-#find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
+
+find_package(format)
 
 find_package(Backtrace)
 if (Backtrace_FOUND)
@@ -197,6 +197,7 @@ target_link_libraries(external_modules INTERFACE
         $<$<TARGET_EXISTS:X11::Xi>:X11::Xi>
         $<$<TARGET_EXISTS:X11::X11>:X11::X11>
         $<$<TARGET_EXISTS:Backtrace::backtrace>:Backtrace::backtrace>
+        $<$<TARGET_EXISTS:fmt::fmt>:fmt::fmt>
         ZLIB::ZLIB
         Threads::Threads
         )
@@ -372,7 +373,8 @@ Configuration:
     X11 support enabled:        ${X11_FOUND}
     GTEST enabled:              ${ENABLE_GTEST}
     GCOV enabled:               ${DEV_ENABLE_GCOV}
-    Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
+    Filesystem library:         std::filesystem
+    Format library:             ${FORMAT_LIB}
     Profiling enabled:          ${ENABLE_PROFILING}
 ")
 
