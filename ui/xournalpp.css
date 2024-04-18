@@ -154,29 +154,11 @@ separator.spacer {
   box-shadow:none;
 }
 
-/*  If you want to change the size of toolbar buttons try these:
-*   All toolbars:
-*/
-
-/*
-toolbar button
-{
-	padding: 2
+/* Grid in AddPage popover or PageTemplateDialog popover */
+grid.page-type-grid button {
+  padding:8px;
+  border-style:none;
 }
-*/
-
-
-
-/* Or for individual toolbars: tbLeft1 tbLeft2 tbTop1 tbTop2 tbBottom1 tbFloat4 etc:
- */
-
-/*
-#tbLeft2 button
-{
-	padding: 2
-}
-*/
-
 
 /*
 Labels for subsections of the Settings dialog
