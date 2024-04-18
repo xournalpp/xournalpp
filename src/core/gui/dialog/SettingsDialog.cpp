@@ -52,7 +52,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         callib(zoomcallib_new()),
         builder(gladeSearchPath, UI_FILE),
         window(GTK_WINDOW(builder.get(UI_DIALOG_NAME))),
-        languageConfig(gladeSearchPath, builder.get("hboxLanguageSelect"), settings),
+        languageConfig(GTK_BOX(builder.get("hboxLanguageSelect")), settings),
         latexPanel(gladeSearchPath),
         paletteTab(gladeSearchPath, paletteDirectories),
         callback(callback) {
