@@ -1,110 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk+" version="3.16"/>
+  <requires lib="gtk" version="4.0"/>
   <object class="GtkBox" id="mainBox">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox" id="box1">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="hexpand">True</property>
+        <property name="hexpand">1</property>
         <child>
           <object class="GtkLabel" id="lbDevice">
             <property name="name">lbDevice</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
-            <property name="label" translatable="yes">Device</property>
+            <property name="hexpand">1</property>
+            <property name="label" translatable="1">Device</property>
             <property name="xalign">0</property>
           </object>
         </child>
         <child>
           <object class="GtkComboBoxText" id="labelDevice">
             <property name="name">labelDevice</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
+            <property name="hexpand">1</property>
           </object>
         </child>
         <child>
           <object class="GtkCheckButton" id="cbDisableDrawing">
-            <property name="label" translatable="yes">Disable drawing for this device</property>
+            <property name="label" translatable="1">Disable drawing for this device</property>
             <property name="name">cbDisableDrawing</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">False</property>
-            <property name="hexpand">True</property>
+            <property name="focusable">1</property>
+            <property name="hexpand">1</property>
           </object>
         </child>
       </object>
     </child>
     <child>
-      <!-- n-columns=3 n-rows=2 -->
       <object class="GtkGrid" id="grid2">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
         <child>
           <object class="GtkComboBox" id="cbTool">
             <property name="name">cbTool</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
+            <property name="hexpand">1</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+            </layout>
           </object>
         </child>
         <child>
           <object class="GtkComboBoxText" id="cbThickness">
             <property name="name">cbThickness</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
+            <property name="hexpand">1</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">0</property>
+            </layout>
           </object>
         </child>
         <child>
           <object class="GtkColorButton" id="colorButton">
             <property name="name">colorButton</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <layout>
+              <property name="column">2</property>
+              <property name="row">0</property>
+            </layout>
           </object>
         </child>
         <child>
           <object class="GtkComboBoxText" id="cbDrawingType">
             <property name="name">cbDrawingType</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
+            <property name="hexpand">1</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">1</property>
+            </layout>
           </object>
         </child>
         <child>
           <object class="GtkComboBoxText" id="cbEraserType">
             <property name="name">cbEraserType</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
+            <property name="hexpand">1</property>
             <items>
-              <item translatable="yes">Eraser Type - don't change</item>
+              <item translatable="yes">Eraser Type - don&apos;t change</item>
               <item translatable="yes">Standard</item>
               <item translatable="yes">Whiteout</item>
               <item translatable="yes">Delete stroke</item>
             </items>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">1</property>
+            </layout>
           </object>
         </child>
         <child>
           <object class="GtkComboBoxText" id="cbStrokeType">
             <property name="name">cbStrokeType</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
+            <property name="hexpand">1</property>
             <items>
-              <item translatable="yes">Stroke Type - don't change</item>
+              <item translatable="yes">Stroke Type - don&apos;t change</item>
               <item translatable="yes">Standard</item>
               <item translatable="yes">Dashed</item>
               <item translatable="yes">Dash-dotted</item>
               <item translatable="yes">Dotted</item>
             </items>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">2</property>
+            </layout>
           </object>
         </child>
       </object>
