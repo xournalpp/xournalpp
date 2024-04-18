@@ -12,34 +12,34 @@ local m = {
 }
 
 function initUi()
-  app.registerUi({ ["menu"] = "Invert selected images", ["callback"] = "cb", ["mode"] = m.INVERT })
+  app.registerUi({ ["menu"] = "Invert selected images", ["callback"] = "Cb", ["mode"] = m.INVERT })
   app.registerUi({
     ["menu"] = "Downscale resolution of selected images by factor 0.5",
-    ["callback"] = "cb",
+    ["callback"] = "Cb",
     ["mode"] = m.DOWNSCALE
   })
-  app.registerUi({ ["menu"] = "Flip selected images horizontally", ["callback"] = "cb", ["mode"] = m.FLIP_H })
-  app.registerUi({ ["menu"] = "Flip selected images vertically", ["callback"] = "cb", ["mode"] = m.FLIP_V })
+  app.registerUi({ ["menu"] = "Flip selected images horizontally", ["callback"] = "Cb", ["mode"] = m.FLIP_H })
+  app.registerUi({ ["menu"] = "Flip selected images vertically", ["callback"] = "Cb", ["mode"] = m.FLIP_V })
   app.registerUi({
     ["menu"] = "Rotate selected images 90 degree clockwise",
-    ["callback"] = "cb",
+    ["callback"] = "Cb",
     ["mode"] = m.ROTATE_CW
   })
   app.registerUi({
     ["menu"] = "Rotate selected images 90 degree counterclockwise",
-    ["callback"] = "cb",
+    ["callback"] = "Cb",
     ["mode"] = m.ROTATE_CCW
   })
-  app.registerUi({ ["menu"] = "Make white pixels transparent", ["callback"] = "cb", ["mode"] = m.TRANSPARENT })
-  app.registerUi({ ["menu"] = "Trim selected images", ["callback"] = "cb", ["mode"] = m.TRIM })
+  app.registerUi({ ["menu"] = "Make white pixels transparent", ["callback"] = "Cb", ["mode"] = m.TRANSPARENT })
+  app.registerUi({ ["menu"] = "Trim selected images", ["callback"] = "Cb", ["mode"] = m.TRIM })
   app.registerUi({
     ["menu"] = "Split images vertically by largest white block",
-    ["callback"] = "split",
+    ["callback"] = "Split",
     ["mode"] = m.SPLIT_V
   })
   app.registerUi({
     ["menu"] = "Split images horizontally by largest white block",
-    ["callback"] = "split",
+    ["callback"] = "Split",
     ["mode"] = m.SPLIT_H
   })
 end
@@ -57,7 +57,7 @@ local function checkVips()
   return vips
 end
 
-function cb(mode)
+function Cb(mode)
   local vips = checkVips()
   if not vips then return end
 
@@ -112,7 +112,7 @@ function cb(mode)
   app.addImages({ images = imdata, allowUndoRedoAction = "grouped" })
 end
 
-function split(mode)
+function Split(mode)
   PADDING = 15 -- margin between image parts
 
   local ffi = require "ffi"
