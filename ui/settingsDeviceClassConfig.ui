@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk+" version="3.16"/>
+  <requires lib="gtk" version="4.0"/>
   <object class="GtkBox" id="deviceClassBox">
     <property name="name">deviceClassGrid</property>
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
     <property name="valign">start</property>
-    <property name="hexpand">True</property>
+    <property name="hexpand">1</property>
     <child>
       <object class="GtkLabel" id="labelDevice">
         <property name="name">labelDevice</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="hexpand">True</property>
+        <property name="hexpand">1</property>
         <property name="xalign">0</property>
       </object>
     </child>
     <child>
       <object class="GtkComboBoxText" id="cbDeviceClass">
         <property name="name">cbDeviceClass</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
         <property name="halign">end</property>
         <property name="active">0</property>
-        <property name="has-entry">True</property>
+        <property name="has-entry">1</property>
         <items>
           <item id="0" translatable="yes">Disabled</item>
           <item id="1" translatable="yes">Mouse</item>
