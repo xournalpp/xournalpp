@@ -43,7 +43,7 @@ using std::string;
 
 void initLocalisation() {
 #ifdef ENABLE_NLS
-    bindtextdomain(GETTEXT_PACKAGE, Util::getLocalePath().u8string().c_str());
+    bindtextdomain(GETTEXT_PACKAGE, char_cast(Util::getLocalePath().u8string().c_str()));
     textdomain(GETTEXT_PACKAGE);
 #endif  // ENABLE_NLS
 

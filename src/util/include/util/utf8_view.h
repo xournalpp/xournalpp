@@ -39,15 +39,15 @@ struct utf8_view: std::ranges::view_interface<utf8_view<InputIterator, InputSent
 
         constexpr auto operator==(Iterator const& other) const -> bool { return it == other.it; }
 
-        constexpr auto operator!=(Iterator const& other) const -> bool { return it != other.it; }
+        // constexpr auto operator!=(Iterator const& other) const -> bool { return it != other.it; }
 
         friend constexpr auto operator==(Iterator const& lhs, SentinelImpl const& other) -> bool {
             return lhs.it == other.it;
         }
 
-        friend constexpr auto operator!=(Iterator const& lhs, SentinelImpl const& other) -> bool {
-            return lhs.it != other.it;
-        }
+        // friend constexpr auto operator!=(Iterator const& lhs, SentinelImpl const& other) -> bool {
+        //     return lhs.it != other.it;
+        // }
 
         InputIterator it{};
     };

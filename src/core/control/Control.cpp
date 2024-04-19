@@ -8,8 +8,8 @@
 #include <memory>      // for make...
 #include <optional>    // for opti...
 #include <regex>       // for regex
-#include <string>
-#include <utility>  // for move
+#include <string>      // for string
+#include <utility>     // for move
 
 #include "control/AudioController.h"                             // for Audi...
 #include "control/ClipboardHandler.h"                            // for Clip...
@@ -1794,7 +1794,7 @@ void Control::unblock() {
 void Control::setMaximumState(size_t max) { this->maxState = max; }
 
 void Control::setCurrentState(size_t state) {
-    Util::execInUiThread([=]() {
+    Util::execInUiThread([state, this]() {
         gtk_progress_bar_set_fraction(this->pgState,
                                       static_cast<gdouble>(state) / static_cast<gdouble>(this->maxState));
     });
