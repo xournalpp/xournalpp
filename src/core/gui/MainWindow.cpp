@@ -102,23 +102,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     g_signal_connect(this->window, "notify::maximized", xoj::util::wrap_for_g_callback_v<windowMaximizedCallback>,
                      this);
 
-    g_signal_connect(
-            this->window, "configure-event", G_CALLBACK(+[](GtkWidget* widget, GdkEvent*, gpointer self) -> gboolean {
-                auto win = static_cast<MainWindow*>(self);
-                GtkNative* nat = gtk_widget_get_native(widget);
-                GdkDisplay* disp = gtk_widget_get_display(widget);
-                GdkSurface* surf = nat ? gtk_native_get_surface(nat) : nullptr;
-                GdkMonitor* monitor = surf && disp ? gdk_display_get_monitor_at_surface(disp, surf) : nullptr;
-                if (monitor && monitor != win->lastMonitor) {
-                    win->lastMonitor = monitor;
-                    const char* monitorName = gdk_monitor_get_model(monitor);
-                    g_debug("Window moved to monitor \"%s\"", monitorName);
-                    win->setDPI();
-                }
-                return false;
-            }),
-            this);
-
     updateScrollbarSidebarPosition();
 
     gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(),
@@ -319,9 +302,27 @@ void MainWindow::initXournalWidget() {
 
     this->xournal = std::make_unique<XournalView>(GTK_SCROLLED_WINDOW(winXournal), control, scrollHandling.get());
 
-    control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
+    control->getZoomControl()->initZoomHandler(GTK_SCROLLED_WINDOW(winXournal), xournal.get(), control);
 
     scrollHandling->init(this->xournal->getWidget(), this->xournal->getLayout());
+
+    // Automated DPI detection
+    g_signal_connect(winXournal, "realize", G_CALLBACK(+[](GtkWidget* w, gpointer d) {
+                    GdkSurface* surf = gtk_native_get_surface(gtk_widget_get_native(w));
+                    xoj_assert(surf);
+                    g_signal_connect(surf, "enter-monitor",
+                                    G_CALLBACK(+[](GdkSurface*, GdkMonitor* monitor, gpointer d) {
+                                        auto* self = static_cast<MainWindow*>(d);
+                                        if (monitor && monitor != self->lastMonitor) {
+                                            self->lastMonitor = monitor;
+                                            const char* monitorName = gdk_monitor_get_model(monitor);
+                                            g_debug("Window moved to monitor \"%s\"", monitorName);
+                                            self->setDPI();
+                                        }
+                                    }),
+                                    d);
+                }),
+                this);
 }
 
 void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
@@ -340,10 +341,6 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 }
 
 auto MainWindow::getLayout() const -> Layout* { return this->xournal->getLayout(); }
-
-auto MainWindow::getNegativeXournalWidgetPos() const -> xoj::util::Point<double> {
-    return Util::toWidgetCoords(this->winXournal, xoj::util::Point{0.0, 0.0});
-}
 
 auto cancellable_cancel(GCancellable* cancel) -> bool {
     g_cancellable_cancel(cancel);
