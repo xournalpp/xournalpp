@@ -91,21 +91,22 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings,
         g_warning("InputEvents::translateEvent() but GdkEvent has no position");
     }
 
-    // Copy the event button if there is any
-    if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
-        targetEvent.button = gdk_button_event_get_button(sourceEvent);
-    }
     if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_END || sourceEventType == GDK_TOUCH_CANCEL) {
         // As we only handle single finger events we can set the button statically to 1
         targetEvent.button = 1;
+    } else if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
+        targetEvent.button = gdk_button_event_get_button(sourceEvent);
     }
+
     targetEvent.state = gdk_event_get_modifier_state(sourceEvent);
 
     // Copy the timestamp
     targetEvent.timestamp = gdk_event_get_time(sourceEvent);
 
     // Copy the pressure data
-    gdk_event_get_axis(sourceEvent, GDK_AXIS_PRESSURE, &targetEvent.pressure);
+    if (!gdk_event_get_axis(sourceEvent, GDK_AXIS_PRESSURE, &targetEvent.pressure)) {
+        targetEvent.pressure = Point::NO_PRESSURE;
+    }
 
     // Copy the event sequence if there is any, and report no pressure
     if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_UPDATE || sourceEventType == GDK_TOUCH_END ||
