@@ -15,36 +15,14 @@
 #include "gui/widgets/XournalWidget.h"  // for gtk_xournal_get_layout
 #include "util/Assert.h"                // for xoj_assert
 #include "util/Util.h"                  // for execInUiThread
-#include "util/gdk4_helper.h"           // for gdk_event_get_modifier_state
 #include "util/glib_casts.h"            // for wrap_for_g_callback
 
 using xoj::util::Rectangle;
 
-// auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom) -> bool {
-//     auto state =
-//             gdk_event_get_modifier_state(reinterpret_cast<GdkEvent*>(event)) &
-//             gtk_accelerator_get_default_mod_mask();
-//
-//     // do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
-//     if (state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
-//         return true;
-//     }
-//
-//     if (state & GDK_CONTROL_MASK) {
-//         auto direction =
-//                 (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
-//                 ?
-//                         ZOOM_IN :
-//                         ZOOM_OUT;
-//         // translate absolute window coordinates to the widget-local coordinates and start zooming
-//         zoom->zoomScroll(direction, Util::toWidgetCoords(widget, xoj::util::Point{event->x_root, event->y_root}));
-//         return true;
-//     }
-//
-//     // TODO(unknown): Disabling scroll here is maybe a bit hacky find a better way
-//     return zoom->isZoomPresentationMode();
-// }
-//
+/*
+ *  GTK3 code for handling touchpad pinch event
+ *  Todo: Figure out how to handle this in GTK4, probably using a GtkGestureZoom instance
+ */
 // auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
 //     if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
 //         switch (event->phase) {
@@ -69,29 +47,6 @@ using xoj::util::Rectangle;
 //     }
 //     return false;
 // }
-
-
-// Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to align/layout
-//       the pages manually, but it only works with the top Widget (GtkWindow) for now this works "fine"
-//       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
-auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom) -> bool {
-    xoj_assert(widget != zoom->view->getWidget());
-    auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
-    // Todo (fabian): The following code is a hack.
-    //    Problem size-allocate:
-    //    when using the size-allocate signal, we cant use layout->recalculate() directly.
-    //    But using the xournal-widgets allocation is wrong, since the calculation is skipped already.
-    //    using size-allocate's allocation is wrong, since it is the alloc of the toplevel.
-    //    Problem expose-event:
-    //    when using the expose-event signal, the new Allocation is not known yet; calculation must be deferred.
-    //    (minimize / maximize wont work)
-    Util::execInUiThread([layout, zoom]() {
-        zoom->updateZoomPresentationValue();
-        zoom->updateZoomFitValue();
-        layout->recalculate();
-    });
-    return false;
-}
 
 auto ZoomControl::withZoomStep(ZoomDirection direction, double zoomStep) const -> double {
     double multiplier = 1.0 + zoomStep;
@@ -125,7 +80,7 @@ void ZoomControl::zoomOneStep(ZoomDirection direction) {
 }
 
 
-void ZoomControl::zoomScroll(ZoomDirection direction, xoj::util::Point<double> zoomCenter) {
+void ZoomControl::zoomScroll(double step, xoj::util::Point<double> zoomCenter) {
     if (this->zoomPresentationMode) {
         return;
     }
@@ -134,7 +89,7 @@ void ZoomControl::zoomScroll(ZoomDirection direction, xoj::util::Point<double> z
         this->setZoomFitMode(false);
     }
 
-    double newZoom = this->withZoomStep(direction, this->zoomStepScroll);
+    double newZoom = this->withZoomStep(step < 0 ? ZOOM_IN : ZOOM_OUT, std::abs(step));
     startZoomSequence(zoomCenter);
     this->zoomSequenceChange(newZoom, false);
     endZoomSequence();
@@ -168,8 +123,7 @@ void ZoomControl::startZoomSequence(xoj::util::Point<double> zoomCenter) {
     auto const& rect = getVisibleRect();
     auto const& view_pos = xoj::util::Point{rect.x, rect.y};
 
-    // Use this->zoomWidgetPos to zoom into a location other than the top-left (e.g. where
-    // the user pinched).
+    // Use this->zoomWidgetPos to zoom into a location other than the top-left (e.g. where the user pinched).
     this->scrollPosition = (view_pos + this->zoomWidgetPos - this->unscaledPixels) / this->zoom;
 }
 
@@ -185,17 +139,16 @@ void ZoomControl::zoomSequenceChange(double zoom, bool relative) {
     setZoom(zoom);
 }
 
-void ZoomControl::zoomSequenceChange(double zoom, bool relative, xoj::util::Point<double> scrollVector) {
-    if (relative) {
-        if (isZoomSequenceActive()) {
-            zoom *= zoomSequenceStart;
-        } else {
-            zoom *= this->zoom;
-        }
+void ZoomControl::zoomSequenceChange(double zoom, xoj::util::Point<double> newZoomCenter) {
+    if (isZoomSequenceActive()) {
+        zoom *= zoomSequenceStart;
+    } else {
+        zoom *= this->zoom;
+        xoj_assert_message(false, "ZoomControl::zoomSequenceChange() called without active zoom sequence");
     }
 
     // scroll update
-    this->zoomWidgetPos += scrollVector;
+    this->zoomWidgetPos = newZoomCenter;
 
     setZoom(zoom);
 }
@@ -241,14 +194,67 @@ void ZoomControl::removeZoomListener(ZoomListener* l) {
     }
 }
 
-void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c) {
+void ZoomControl::initZoomHandler(GtkScrolledWindow* scrolledWindow, XournalView* v, Control* c) {
     this->control = c;
     this->view = v;
-    g_warning("Implement ZoomHandler");
-    // gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
-    // g_signal_connect(widget, "scroll-event", xoj::util::wrap_for_g_callback_v<onScrolledwindowMainScrollEvent>,
-    // this); g_signal_connect(widget, "event", xoj::util::wrap_for_g_callback_v<onTouchpadPinchEvent>, this);
-    g_signal_connect(window, "configure-event", xoj::util::wrap_for_g_callback_v<onWindowSizeChangedEvent>, this);
+    g_warning("Implement ZoomHandler touchpad pinch");
+    // GTK3 code for handling touchpad pinch zoom. See top of file comment
+    // g_signal_connect(widget, "event", xoj::util::wrap_for_g_callback_v<onTouchpadPinchEvent>, this);
+
+
+    /*** Setup `Ctrl + vertical scroll` for zooming in or out ***/
+    // GtkEventControllerScroll has no easy access to the pointer's position:
+    //   * gdk_event_get_position() returns nans
+    //   * gdk_surface_get_device_position() segfaults
+    // So we track the pointer's location using a GtkEventControllerMotion
+    auto* motion = gtk_event_controller_motion_new();
+    gtk_widget_add_controller(GTK_WIDGET(scrolledWindow), motion);
+    gtk_event_controller_set_propagation_phase(motion, GTK_PHASE_CAPTURE);  // Record the motion before anyone grabs it
+    g_signal_connect(motion, "motion", G_CALLBACK((+[](GtkEventControllerMotion*, double x, double y, gpointer d) {
+                         static_cast<ZoomControl*>(d)->pointerWidgetPosition = {x, y};
+                         return false;  // Let other callbacks do their deed
+                     })),
+                     this);
+    // We use GTK_EVENT_CONTROLLER_SCROLL_BOTH_AXES so that horizontal scroll are ignored if Ctrl is pressed
+    auto* ctrl = gtk_event_controller_scroll_new(GTK_EVENT_CONTROLLER_SCROLL_BOTH_AXES);
+    gtk_widget_add_controller(GTK_WIDGET(scrolledWindow), ctrl);
+    gtk_event_controller_set_propagation_phase(ctrl, GTK_PHASE_CAPTURE);  // Take the scroll event before anyone else
+    g_signal_connect(ctrl, "scroll", G_CALLBACK(+[](GtkEventControllerScroll* ctrl, double dx, double dy, gpointer d) {
+                         auto* self = static_cast<ZoomControl*>(d);
+                         GdkEvent* ev = gtk_event_controller_get_current_event(GTK_EVENT_CONTROLLER(ctrl));
+                         auto state = gdk_event_get_modifier_state(ev);
+#ifdef __APPLE__
+                         if (state == GDK_META_MASK) {
+#else
+                         if (state == GDK_CONTROL_MASK) {
+#endif
+#if GTK_CHECK_VERSION(4, 8, 0)
+                             static constexpr double SCROLL_PX_FACTOR = 0.1;
+                             // Depending on the source of the scroll event, the unit of dy is either 1 mouse wheel
+                             // click or 1 pixel
+                             double step = gtk_event_controller_scroll_get_unit(ctrl) == GDK_SCROLL_UNIT_WHEEL ?
+                                                   dy * self->zoomStepScroll :
+                                                   dy * self->zoomStepScroll * SCROLL_PX_FACTOR;
+#else
+                             double step = self->zoomStepScroll;
+#endif
+                             self->zoomScroll(step, self->pointerWidgetPosition);
+                             return true;
+                         }
+                         return false;
+                     }),
+                     this);
+
+    GtkAdjustment* adj = gtk_scrolled_window_get_hadjustment(scrolledWindow);
+    g_signal_connect(adj, "notify::page-size", G_CALLBACK(+[](GObject*, GParamSpec*, gpointer d) {
+                         auto* self = static_cast<ZoomControl*>(d);
+                         auto layout = gtk_xournal_get_layout(self->view->getWidget());
+                         self->updateZoomPresentationValue();
+                         self->updateZoomFitValue();
+                         layout->recalculate();
+                     }),
+                     this);
+
     registerListener(this->control);
 }
 

@@ -111,6 +111,11 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
         return false;
     }
 
+    if (gdk_event_get_event_type(sourceEvent) == GDK_SCROLL) {
+        // Hand over to standard GTK Scroll and in ZoomControl's GtkEventControllerScroll
+        return false;
+    }
+
     GdkDevice* sourceDevice = gdk_event_get_device(sourceEvent);
     if (sourceDevice == NULL) {
         return false;
@@ -129,12 +134,6 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
                 this->getSettings()->getDeviceClassForDevice(std::string(event.deviceName), inputSource);
         this->getSettings()->setDeviceClassForDevice(sourceDevice, deviceClassOption);
         this->getSettings()->transactionEnd();
-    }
-
-    // We do not handle scroll events manually but let GTK do it for us
-    if (event.type == SCROLL_EVENT) {
-        // Hand over to standard GTK Scroll / Zoom handling
-        return false;
     }
 
     // Deactivate touchscreen when a pen event occurs

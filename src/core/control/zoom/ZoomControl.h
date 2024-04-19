@@ -52,7 +52,7 @@ public:
      * @param direction to zoom in or out
      * @param zoomCenter position of zoom focus
      */
-    void zoomScroll(ZoomDirection direction, xoj::util::Point<double> zoomCenter);
+    void zoomScroll(double delta, xoj::util::Point<double> zoomCenter);
 
     /**
      * Zoom so that the page fits the current size of the window
@@ -120,14 +120,13 @@ public:
     void addZoomListener(ZoomListener* listener);
     void removeZoomListener(ZoomListener* listener);
 
-    void initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c);
+    void initZoomHandler(GtkScrolledWindow* scrolledWindow, XournalView* v, Control* c);
 
     /**
      * Call this before any zoom is done, it saves the current page and position
      *
-     * @param zoomCenter position of zoom focus in widget pixel coordinates. That
-     * is, absolute coordinates (not scaling with the document) translated to the
-     * top left corner of the drawing area.
+     * @param zoomCenter position of zoom focus in GtkScrolledWindow's pixel coordinates. That is, absolute coordinates
+     * (not scaling with the document) translated to the top left corner of the drawing area.
      */
     void startZoomSequence(xoj::util::Point<double> zoomCenter);
 
@@ -140,8 +139,8 @@ public:
     /**
      * Change the zoom within a Zoom sequence (startZoomSequence() / endZoomSequence())
      *
-     * @param zoom Current zoom value
-     * @param relative If the zoom is relative to the start value (for Gesture)
+     * @param zoom Zoom value
+     * @param relative If true, multiplies the current zoom value by `zoom`. Otherwise replaces it with `zoom`.
      */
     void zoomSequenceChange(double zoom, bool relative);
 
@@ -149,11 +148,10 @@ public:
      * Change the zoom and zoomCenter within a Zoom sequence (startZoomSequence() / endZoomSequence())
      * Used while touch pinch event
      *
-     * @param zoom Current zoom value
-     * @param relative If the zoom is relative to the start value (for Gesture)
-     * @param scrollVector relative zoom center movement in pixels since last call
+     * @param relativeZoom Multiplies the current zoom value by this value
+     * @param newZoomCenter New center in absolute coordinate (e.g. GtkScrolledWindow's coordinates)
      */
-    void zoomSequenceChange(double zoom, bool relative, xoj::util::Point<double> scrollVector);
+    void zoomSequenceChange(double relativeZoom, xoj::util::Point<double> newZoomCenter);
 
     /// Clear all stored data from startZoomSequence()
     void endZoomSequence();
@@ -197,10 +195,6 @@ private:
      */
     double withZoomStep(ZoomDirection direction, double stepSize) const;
 
-    friend bool onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom);
-    // friend bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
-    // friend bool onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom);
-
 private:
     XournalView* view = nullptr;
     Control* control = nullptr;
@@ -219,17 +213,20 @@ private:
     double zoomFitValue = 1.0;
     double zoomPresentationValue = 1.0;
 
+    /// Position of the pointer in absolute coordinates (i.e. GtkScrolledWindow's coordinates)
+    ///  -- Automatically updated by callback
+    xoj::util::Point<double> pointerWidgetPosition;
+
     /// Base zoom on start, for relative zoom (Gesture)
     double zoomSequenceStart = -1;
 
-    /// Zoom center position in widget coordinate space, will not be zoomed!
+    /// Zoom center position in ScrolledWindow coordinate space
     xoj::util::Point<double> zoomWidgetPos;
 
-    /// Scroll position (top left corner of view) to scale
+    /// Scroll position (weird value in unknown coordinate system) Todo: Settle this
     xoj::util::Point<double> scrollPosition;
 
-    /// Size {x, y} of the pixels before the current page that
-    /// do not scale.
+    /// Size {x, y} of the pixels before the current page that do not scale.
     xoj::util::Point<double> unscaledPixels;
 
     /**
