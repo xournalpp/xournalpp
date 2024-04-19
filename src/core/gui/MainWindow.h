@@ -113,14 +113,6 @@ public:
     [[maybe_unused]] Menubar* getMenubar() const;
 
     /**
-     * Get the position of the top left corner of screen (X11) or the window (Wayland)
-     * relative to the Xournal Widget top left corner
-     *
-     * @see Util::toWidgetCoords()
-     */
-    xoj::util::Point<double> getNegativeXournalWidgetPos() const;
-
-    /**
      * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input
      * device class. This is required so the GtkScrolledWindow does not swallow all the events.
      */
