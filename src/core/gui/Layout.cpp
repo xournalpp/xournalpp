@@ -235,14 +235,14 @@ void Layout::layoutPages(int width, int height) {
     // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
     auto v_padding = XOURNAL_PADDING;
     if (settings->getUnlimitedScrolling()) {
-        v_padding += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+        v_padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
     } else if (settings->getAddVerticalSpace()) {
         v_padding += settings->getAddVerticalSpaceAmountAbove();
     }
 
     auto h_padding = XOURNAL_PADDING;
     if (settings->getUnlimitedScrolling()) {
-        h_padding += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
+        h_padding += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
     } else if (settings->getAddHorizontalSpace()) {
         h_padding += settings->getAddHorizontalSpaceAmountLeft();
     }
@@ -333,15 +333,14 @@ auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
     // User-configured padding above all pages.
     auto paddingAbove = XOURNAL_PADDING;
     if (settings->getUnlimitedScrolling()) {
-        paddingAbove += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
+        paddingAbove += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getVertical()));
     } else if (settings->getAddVerticalSpace()) {
         paddingAbove += settings->getAddVerticalSpaceAmountAbove();
     }
 
-    // (x, y) coordinate pair gives grid indicies. This handles paired pages
-    // and different page layouts for us.
-    auto pageYLocation = this->mapper.at(pageIndex).row;
-    return strict_cast<int>(as_signed(pageYLocation) * XOURNAL_PADDING_BETWEEN + as_signed(paddingAbove));
+    // (x, y) coordinate pair gives grid indices. This handles paired pages and different page layouts for us.
+    auto pageYLocation = strict_cast<int>(this->mapper.at(pageIndex).row);
+    return pageYLocation * XOURNAL_PADDING_BETWEEN + paddingAbove;
 }
 
 
@@ -351,25 +350,22 @@ auto Layout::getPaddingLeftOfPage(size_t pageIndex) const -> int {
 
     auto paddingBefore = XOURNAL_PADDING;
     if (settings->getUnlimitedScrolling()) {
-        paddingBefore += static_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
+        paddingBefore += ceil_cast<int>(gtk_adjustment_get_page_size(scrollHandling->getHorizontal()));
     } else if (settings->getAddHorizontalSpace()) {
         paddingBefore += settings->getAddHorizontalSpaceAmountLeft();
     }
 
-    auto const pageXLocation = as_signed(this->mapper.at(pageIndex).col);
+    auto const pageXLocation = strict_cast<int>(this->mapper.at(pageIndex).col);
 
-    // No page pairing or we haven't rendered enough pages in the row for
-    // page pairing to have an effect,
+    // No page pairing or we haven't rendered enough pages in the row for page pairing to have an effect,
     if (!isPairedPages) {
-        return strict_cast<int>(pageXLocation * XOURNAL_PADDING_BETWEEN + XOURNAL_PADDING_BETWEEN / 2 +
-                                as_signed(paddingBefore));
+        return pageXLocation * XOURNAL_PADDING_BETWEEN + XOURNAL_PADDING_BETWEEN / 2 + paddingBefore;
     } else {
-        auto columnPadding =
-                XOURNAL_PADDING_BETWEEN + strict_cast<int>(pageXLocation / 2) * (XOURNAL_PADDING_BETWEEN * 2);
+        auto columnPadding = XOURNAL_PADDING_BETWEEN + pageXLocation * XOURNAL_PADDING_BETWEEN;
         if (pageXLocation % 2 == 0) {
-            return strict_cast<int>(columnPadding - XOURNAL_ROOM_FOR_SHADOW + paddingBefore);
+            return columnPadding - XOURNAL_ROOM_FOR_SHADOW + paddingBefore;
         } else {
-            return strict_cast<int>(columnPadding + XOURNAL_ROOM_FOR_SHADOW + paddingBefore);
+            return columnPadding + XOURNAL_ROOM_FOR_SHADOW + paddingBefore;
         }
     }
 }
