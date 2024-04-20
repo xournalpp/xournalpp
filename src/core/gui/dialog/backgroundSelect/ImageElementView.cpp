@@ -9,6 +9,8 @@
 
 class BackgroundSelectDialogBase;
 
+constexpr int MINIATURE_PIXEL_SIZE = 128;
+
 ImageElementView::ImageElementView(size_t id, BackgroundSelectDialogBase* dlg): BaseElementView(id, dlg) {}
 
 ImageElementView::~ImageElementView() = default;
@@ -20,12 +22,14 @@ void ImageElementView::calcSize() {
         this->height = gdk_pixbuf_get_height(p);
 
         if (this->width < this->height) {
-            zoom = 128.0 / this->height;
+            zoom = static_cast<double>(MINIATURE_PIXEL_SIZE) / this->height;
+            this->height = MINIATURE_PIXEL_SIZE;
+            this->width = floor_cast<int>(this->width * zoom);
         } else {
-            zoom = 128.0 / this->width;
+            zoom = static_cast<double>(MINIATURE_PIXEL_SIZE) / this->width;
+            this->width = MINIATURE_PIXEL_SIZE;
+            this->height = floor_cast<int>(this->height * zoom);
         }
-        this->width = ceil_cast<int>(this->width * zoom);
-        this->height = ceil_cast<int>(this->height * zoom);
     }
 }
 
@@ -33,7 +37,7 @@ void ImageElementView::paintContents(cairo_t* cr) {
     cairo_scale(cr, this->zoom, this->zoom);
 
     GdkPixbuf* p = this->backgroundImage.getPixbuf();
-    gdk_cairo_set_source_pixbuf(cr, p, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
+    gdk_cairo_set_source_pixbuf(cr, p, 0, 0);
     cairo_paint(cr);
 }
 

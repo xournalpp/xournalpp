@@ -12,13 +12,16 @@
 #pragma once
 
 #include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr
+#include <functional>
+#include <memory>  // for unique_ptr
 #include <optional>
+#include <variant>
 
-#include "model/DocumentChangeType.h"       // for DocumentChangeType
-#include "model/DocumentListener.h"         // for DocumentListener
-#include "model/PageRef.h"                  // for PageRef
-#include "model/PageType.h"                 // for PageType
+#include "model/BackgroundImage.h"
+#include "model/DocumentChangeType.h"  // for DocumentChangeType
+#include "model/DocumentListener.h"    // for DocumentListener
+#include "model/PageRef.h"             // for PageRef
+#include "model/PageType.h"            // for PageType
 
 #include "filesystem.h"  // for path
 
@@ -59,31 +62,21 @@ private:
      */
     static void copyBackgroundFromOtherPage(PageRef target, PageRef source);
 
-    /**
-     * Apply the background to the page, asks for PDF Page or Image, if needed
-     *
-     * @return true on success, false if the user cancels
-     */
-    bool applyPageBackground(PageRef page, const PageType& pt);
+    /// Asks the user to choose a pdf page, and calls callback
+    void askForPdfBackground(std::function<void(size_t)> callback);
 
-    /**
-     * Apply a new PDF Background, asks the user which page should be selected
-     *
-     * @return true on success, false if the user cancels
-     */
-    bool applyPdfBackground(PageRef page);
+    /// Asks the user to choose an image background, and calls callback
+    void askForImageBackground(std::function<void(BackgroundImage)> callback);
 
+    /// Nothing, a BackgroundImage or the number of a pdf page
+    using CommitParameter = std::variant<std::nullopt_t, BackgroundImage, size_t>;
     /**
-     * Apply a new Image Background, asks the user which image should be inserted
-     *
-     * @return true on success, false if the user cancels
+     * Applies pageType to page number pageNum.
+     *      If pageType.isImage(), a BackgroundImage must be provided
+     *      If pageType.isPdf(), a pdf page number must be provided in the std::variant
      */
-    bool applyImageBackground(PageRef page);
-
-    /**
-     * Perform the page type change.
-     */
-    auto commitPageTypeChange(size_t pageNum, const PageType& pageType) -> std::unique_ptr<UndoAction>;
+    auto commitPageTypeChange(size_t pageNum, const PageType& pageType, CommitParameter param = std::nullopt)
+            -> std::unique_ptr<UndoAction>;
 
 private:
     Control* control = nullptr;

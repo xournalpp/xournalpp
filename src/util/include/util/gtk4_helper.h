@@ -17,6 +17,7 @@
 /**** GtkBox ****/
 
 void gtk_box_append(GtkBox* box, GtkWidget* child);
+void gtk_box_prepend(GtkBox* box, GtkWidget* child);
 void gtk_box_remove(GtkBox* box, GtkWidget* child);
 
 /**** GtkWindow ****/
