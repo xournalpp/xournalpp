@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <functional>
 #include <string>  // for string
 
 #include "BlockingJob.h"  // for BlockingJob
@@ -20,7 +21,8 @@ class Control;
 
 class SaveJob: public BlockingJob {
 public:
-    SaveJob(Control* control);
+    SaveJob(
+            Control* control, std::function<void(bool)> = [](bool) {});
 
 protected:
     ~SaveJob() override;
@@ -37,4 +39,6 @@ protected:
 
 private:
     std::string lastError;
+    /// Called after saving, with boolean parameter true on success, false on failure (error)
+    std::function<void(bool)> callback;
 };

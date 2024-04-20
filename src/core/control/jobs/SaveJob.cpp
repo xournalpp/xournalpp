@@ -21,7 +21,8 @@
 #include "filesystem.h"  // for path, filesystem_error, remove
 
 
-SaveJob::SaveJob(Control* control): BlockingJob(control, _("Save")) {}
+SaveJob::SaveJob(Control* control, std::function<void(bool)> callback):
+        BlockingJob(control, _("Save")), callback(std::move(callback)) {}
 
 SaveJob::~SaveJob() = default;
 
@@ -36,8 +37,10 @@ void SaveJob::run() {
 void SaveJob::afterRun() {
     if (!this->lastError.empty()) {
         XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);
+        callback(false);
     } else {
         this->control->resetSavedStatus();
+        callback(true);
     }
 }
 

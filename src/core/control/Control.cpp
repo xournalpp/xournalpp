@@ -54,6 +54,7 @@
 #include "gui/dialog/SettingsDialog.h"                           // for Sett...
 #include "gui/dialog/ToolbarManageDialog.h"                      // for Tool...
 #include "gui/dialog/XojOpenDlg.h"                               // for XojO...
+#include "gui/dialog/XojSaveDlg.h"                               // for XojS...
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"  // for Tool...
 #include "gui/inputdevices/CompassInputHandler.h"                // for Comp...
 #include "gui/inputdevices/GeometryToolInputHandler.h"           // for Geom...
@@ -1798,83 +1799,6 @@ void Control::setCurrentState(size_t state) {
     });
 }
 
-auto Control::save(bool synchron) -> bool {
-    // clear selection before saving
-    clearSelectionEndText();
-
-    this->doc->lock();
-    fs::path filepath = this->doc->getFilepath();
-    this->doc->unlock();
-
-    if (filepath.empty()) {
-        if (!showSaveDialog()) {
-            return false;
-        }
-    }
-
-    auto* job = new SaveJob(this);
-    bool result = true;
-    if (synchron) {
-        result = job->save();
-        unblock();
-        this->resetSavedStatus();
-    } else {
-        this->scheduler->addJob(job, JOB_PRIORITY_URGENT);
-    }
-    job->unref();
-
-    return result;
-}
-
-auto Control::showSaveDialog() -> bool {
-    GtkWidget* dialog =
-            gtk_file_chooser_dialog_new(_("Save File"), getGtkWindow(), GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"),
-                                        GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
-
-    GtkFileFilter* filterXoj = gtk_file_filter_new();
-    gtk_file_filter_set_name(filterXoj, _("Xournal++ files"));
-    gtk_file_filter_add_mime_type(filterXoj, "application/x-xopp");
-    gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
-
-    this->doc->lock();
-    auto suggested_folder = this->doc->createSaveFolder(this->settings->getLastSavePath());
-    auto suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
-    this->doc->unlock();
-
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(suggested_folder).get(), nullptr);
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_name).c_str());
-    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog),
-                                         Util::toGFile(this->settings->getLastOpenPath()).get(), nullptr);
-
-    while (true) {
-        if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-            gtk_widget_destroy(dialog);
-            return false;
-        }
-
-        auto fileTmp = Util::fromGFile(
-                xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog)), xoj::util::adopt)
-                        .get());
-        Util::clearExtensions(fileTmp);
-        fileTmp += ".xopp";
-        // Since we add the extension after the OK button, we have to check manually on existing files
-        if (askToReplace(fileTmp, GTK_WINDOW(dialog))) {
-            break;
-        }
-    }
-
-    auto file = Util::fromGFile(
-            xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog)), xoj::util::adopt).get());
-    settings->setLastSavePath(file.parent_path());
-    gtk_widget_destroy(dialog);
-
-    this->doc->lock();
-    this->doc->setFilepath(file);
-    this->doc->unlock();
-
-    return true;
-}
-
 void Control::showFontDialog() {
     this->actionDB->enableAction(Action::SELECT_FONT, false);  // Only one dialog
     auto* dlg = gtk_font_chooser_dialog_new(_("Select font"), GTK_WINDOW(this->win->getWindow()));
@@ -1975,21 +1899,47 @@ void Control::exportAs() {
     job->showDialogAndRun();
 }
 
-auto Control::saveAs(bool synchron) -> bool {
-    if (!showSaveDialog()) {
-        return false;
-    }
+void Control::save(std::function<void(bool)> callback) { saveImpl(false, std::move(callback)); }
+
+void Control::saveAs(std::function<void(bool)> callback) { saveImpl(true, std::move(callback)); }
+
+void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
+    // clear selection before saving
+    clearSelectionEndText();
+
     this->doc->lock();
-    auto filepath = doc->getFilepath();
+    fs::path filepath = this->doc->getFilepath();
     this->doc->unlock();
 
-    if (filepath.empty()) {
-        return false;
-    }
+    auto doSave = [ctrl = this, cb = std::move(callback)]() {
+        // clear selection before saving
+        ctrl->clearSelectionEndText();
 
-    // no lock needed, this is an uncritical operation
-    this->doc->setCreateBackupOnSave(false);
-    return save(synchron);
+        auto* job = new SaveJob(ctrl, std::move(cb));
+        ctrl->scheduler->addJob(job, JOB_PRIORITY_URGENT);
+        job->unref();
+    };
+
+    if (saveAs || filepath.empty()) {
+        // No need to backup the old saved file, as there is none
+        this->doc->lock();
+        this->doc->setCreateBackupOnSave(false);
+        auto suggestedPath = this->doc->createSaveFolder(this->settings->getLastSavePath());
+        suggestedPath /= this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
+        this->doc->unlock();
+        xoj::SaveExportDialog::showSaveFileDialog(getGtkWindow(), settings, std::move(suggestedPath),
+                                                  [doSave = std::move(doSave), ctrl = this](std::optional<fs::path> p) {
+                                                      if (p && !p->empty()) {
+                                                          ctrl->settings->setLastSavePath(p->parent_path());
+                                                          ctrl->doc->lock();
+                                                          ctrl->doc->setFilepath(std::move(p.value()));
+                                                          ctrl->doc->unlock();
+                                                          doSave();
+                                                      }
+                                                  });
+    } else {
+        doSave();
+    }
 }
 
 void Control::resetSavedStatus() {
@@ -2035,9 +1985,11 @@ void Control::close(std::function<void(bool)> callback, const bool allowDestroy,
 
     bool safeToClose = !undoRedo->isChanged();
     if (!safeToClose) {
-        const bool fileRemoved = !doc->getFilepath().empty() && !fs::exists(this->doc->getFilepath());
+        fs::path path = doc->getFilepath();
+        const bool fileRemoved = !path.empty() && !fs::exists(path);
         const auto message = fileRemoved ? _("Document file was removed.") : _("This document is not saved yet.");
-        const auto saveLabel = fileRemoved ? _("Save As...") : _("Save");
+        const bool saveAs = fileRemoved || path.empty();
+        const auto saveLabel = saveAs ? _("Save As...") : _("Save");
 
         enum { SAVE = 1, DISCARD, CANCEL };
         std::vector<XojMsgBox::Button> buttons = {{saveLabel, SAVE}, {_("Discard"), DISCARD}};
@@ -2045,20 +1997,19 @@ void Control::close(std::function<void(bool)> callback, const bool allowDestroy,
             buttons.emplace_back(_("Cancel"), CANCEL);
         }
         XojMsgBox::askQuestion(getGtkWindow(), message, std::string(), std::move(buttons),
-                               [ctrl = this, fileRemoved, allowDestroy, callback = std::move(callback)](int response) {
-                                   bool safeToClose = true;
+                               [ctrl = this, saveAs, allowDestroy, callback = std::move(callback)](int response) {
+                                   auto execAfter = [allowDestroy, ctrl, cb = std::move(callback)](bool saved) {
+                                       if (saved && allowDestroy) {
+                                           ctrl->closeDocument();
+                                       }
+                                       cb(saved);
+                                   };
                                    if (response == SAVE) {
-                                       safeToClose = fileRemoved ? ctrl->saveAs(true) : ctrl->save(true);
-                                   } else if (response == DISCARD) {
-                                       safeToClose = true;
-                                   } else {
-                                       safeToClose = false;
+                                       ctrl->saveImpl(saveAs, std::move(execAfter));
+                                       return;
                                    }
-
-                                   if (safeToClose && allowDestroy) {
-                                       ctrl->closeDocument();
-                                   }
-                                   callback(safeToClose);
+                                   bool safeToClose = response == DISCARD;
+                                   execAfter(safeToClose);
                                });
     } else {
         if (allowDestroy) {
@@ -2087,16 +2038,6 @@ void Control::initButtonTool() {
         cfg = settings->getButtonConfig(b);
         cfg->initButton(this->toolHandler, b);
     }
-}
-
-auto Control::askToReplace(fs::path const& filepath, GtkWindow* parent) const -> bool {
-    if (fs::exists(filepath)) {
-        std::string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") %
-                             filepath.filename().u8string());
-        int res = XojMsgBox::replaceFileQuestion(parent, msg);
-        return res == GTK_RESPONSE_OK;
-    }
-    return true;
 }
 
 void Control::showAbout() {
