@@ -170,20 +170,6 @@ auto XojMsgBox::askPluginQuestion(const std::string& pluginName, const std::stri
     return res;
 }
 
-auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const std::string& msg) -> int {
-    GtkWidget* dialog =
-            gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
-    if (win != nullptr) {
-        gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
-        gtk_window_set_modal(GTK_WINDOW(dialog), true);
-    }
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another name"), GTK_RESPONSE_CANCEL);
-    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), GTK_RESPONSE_OK);
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-    return res;
-}
-
 void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
                                     xoj::util::move_only_function<void(const fs::path&)> writeTofile) {
     if (!fs::exists(file)) {

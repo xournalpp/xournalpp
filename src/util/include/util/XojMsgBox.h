@@ -46,8 +46,6 @@ public:
      */
     static void setDefaultWindow(GtkWindow* win);
 
-    // static void askQuestion(GtkWindow* win, const std::string& maintext, const std::string& secondarytext,
-    // const std::vector<Button>& buttons, std::function<void(int)> callback);
     static void askQuestion(GtkWindow* win, const std::string& maintext, const std::string& secondarytext,
                             const std::vector<Button>& buttons, xoj::util::move_only_function<void(int)> callback);
     /**
@@ -75,7 +73,6 @@ public:
     [[deprecated("Will be removed when porting to gtk4")]] static int askPluginQuestion(
             const std::string& pluginName, const std::string& msg, const std::vector<Button>& buttons,
             bool error = false);
-    static int replaceFileQuestion(GtkWindow* win, const std::string& msg);
     static void showHelp(GtkWindow* win);
 
     /**

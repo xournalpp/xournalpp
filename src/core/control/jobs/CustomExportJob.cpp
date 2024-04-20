@@ -57,6 +57,7 @@ auto CustomExportJob::testAndSetFilepath(const fs::path& file, const char* filte
 }
 
 void CustomExportJob::showDialogAndRun() {
+
     auto onFileSelected = [job = this]() {
         if (job->filepath.extension() == ".xoj") {
             job->exportTypeXoj = true;
@@ -74,32 +75,27 @@ void CustomExportJob::showDialogAndRun() {
             g_warning("Unknown extension");
         }
 
-        Util::execInUiThread([job]() {
-            // We must wait for the FileChooser dialog to be closed before showing the next one, otherwise the
-            // FileChooser dialog stays on
-            // Todo(post-gtk4): try out without the execInUiThread
-            xoj::popup::PopupWindowWrapper<xoj::popup::ExportDialog> popup(
-                    job->control->getGladeSearchPath(), job->format, job->control->getCurrentPageNo() + 1,
-                    job->control->getDocument()->getPageCount(), [job](const xoj::popup::ExportDialog& dialog) {
-                        if (dialog.isConfirmed()) {
-                            job->exportRange = dialog.getRange();
-                            job->progressiveMode = dialog.progressiveModeSelected();
-                            job->exportBackground = dialog.getBackgroundType();
+        xoj::popup::PopupWindowWrapper<xoj::popup::ExportDialog> popup(
+                job->control->getGladeSearchPath(), job->format, job->control->getCurrentPageNo() + 1,
+                job->control->getDocument()->getPageCount(), [job](const xoj::popup::ExportDialog& dialog) {
+                    if (dialog.isConfirmed()) {
+                        job->exportRange = dialog.getRange();
+                        job->progressiveMode = dialog.progressiveModeSelected();
+                        job->exportBackground = dialog.getBackgroundType();
 
-                            if (job->format == EXPORT_GRAPHICS_PNG) {
-                                job->pngQualityParameter = dialog.getPngQualityParameter();
-                            }
-
-                            job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
-                        } else {
-                            // The job blocked, so we have to unblock, because the job
-                            // unblocks only after run
-                            job->control->unblock();
+                        if (job->format == EXPORT_GRAPHICS_PNG) {
+                            job->pngQualityParameter = dialog.getPngQualityParameter();
                         }
-                        job->unref();
-                    });
-            popup.show(GTK_WINDOW(job->control->getWindow()->getWindow()));
-        });
+
+                        job->control->getScheduler()->addJob(job, JOB_PRIORITY_NONE);
+                    } else {
+                        // The job blocked, so we have to unblock, because the job
+                        // unblocks only after run
+                        job->control->unblock();
+                    }
+                    job->unref();
+                });
+        popup.show(GTK_WINDOW(job->control->getWindow()->getWindow()));
     };
 
     auto onCancel = [job = this]() {
