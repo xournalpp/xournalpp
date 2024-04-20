@@ -43,7 +43,7 @@ protected:
 public:
     bool isUsed() const;
     void setUsed(bool used);
-    void setHideUnused();
+    void setHideIfUsed(bool hideIfUsed);
 
 private:
     XojPdfPageSPtr page;

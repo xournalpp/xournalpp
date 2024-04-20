@@ -20,6 +20,11 @@ void gtk_box_append(GtkBox* box, GtkWidget* child) {
     gtk_box_pack_start(GTK_BOX(box), child, default_expand, true, 0);
 }
 
+void gtk_box_prepend(GtkBox* box, GtkWidget* child) {
+    gtk_box_append(box, child);
+    gtk_box_reorder_child(box, child, 0);
+}
+
 void gtk_box_remove(GtkBox* box, GtkWidget* child) { gtk_container_remove(GTK_CONTAINER(box), child); }
 
 /**** GtkWindow ****/

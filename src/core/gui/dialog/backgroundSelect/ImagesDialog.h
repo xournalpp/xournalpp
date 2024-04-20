@@ -20,15 +20,11 @@ class Document;
 class GladeSearchpath;
 class Settings;
 
-class ImagesDialog: public BackgroundSelectDialogBase {
+class ImagesDialog final: public BackgroundSelectDialogBase {
 public:
-    ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);
-    ~ImagesDialog() override;
-
-public:
-    BackgroundImage getSelectedImage();
-    bool shouldShowFilechooser();
-    void show(GtkWindow* parent) override;
+    ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings,
+                 std::function<void(BackgroundImage)> callback);
+    ~ImagesDialog();
 
 private:
     /**
@@ -45,4 +41,7 @@ private:
     static void filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg);
 
 private:
+    GtkButton* fileChooserButton = nullptr;
+
+    std::function<void(BackgroundImage)> callback;
 };

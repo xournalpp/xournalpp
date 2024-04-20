@@ -5,16 +5,42 @@
 #include "control/settings/Settings.h"  // for Settings
 #include "gui/Shadow.h"                 // for Shadow
 #include "util/Color.h"                 // for cairo_set_source_rgbi
+#include "util/gtk4_helper.h"
 
 #include "BackgroundSelectDialogBase.h"  // for BackgroundSelectDialogBase
 
+constexpr int BORDER_WIDTH = 2;
+
 BaseElementView::BaseElementView(size_t id, BackgroundSelectDialogBase* dlg): dlg(dlg), id(id) {
     this->widget = gtk_drawing_area_new();
-    gtk_widget_show(this->widget);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(widget),
+                                   GtkDrawingAreaDrawFunc(+[](GtkWidget*, cairo_t* cr, int, int, gpointer element) {
+                                       static_cast<BaseElementView*>(element)->paint(cr);
+                                   }),
+                                   this, nullptr);
 
-    gtk_widget_set_events(widget, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
-    g_signal_connect(this->widget, "draw", G_CALLBACK(drawCallback), this);
-    g_signal_connect(this->widget, "button-press-event", G_CALLBACK(mouseButtonPressCallback), this);
+#if GTK_MAJOR_VERSION == 3
+    gtk_widget_show(this->widget);
+    gtk_widget_add_events(widget, GDK_BUTTON_PRESS_MASK);
+    g_signal_connect(this->widget, "button-press-event", G_CALLBACK(+[](GtkWidget*, GdkEventButton*, gpointer d) {
+                         auto* element = static_cast<BaseElementView*>(d);
+                         element->dlg->setSelected(element->id);
+                         return true;
+                     }),
+                     this);
+#else
+    auto* ctrl = gtk_gesture_click_new();
+    gtk_widget_add_controller(widget, GTK_EVENT_CONTROLLER(ctrl));
+    gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(ctrl), GDK_BUTTON_PRIMARY);
+    g_signal_connect(ctrl, "pressed",
+                     G_CALLBACK(+[](GtkGestureClick* g, gint n_press, gdouble x, gdouble y, gpointer d) {
+                         if (n_press == 1) {
+                             auto* element = static_cast<BaseElementView*>(d);
+                             element->dlg->setSelected(element->id);
+                         }
+                     }),
+                     this);
+#endif
 }
 
 BaseElementView::~BaseElementView() {
@@ -25,18 +51,6 @@ BaseElementView::~BaseElementView() {
         this->crBuffer = nullptr;
     }
 }
-
-auto BaseElementView::drawCallback(GtkWidget* widget, cairo_t* cr, BaseElementView* element) -> gboolean {
-    element->paint(cr);
-    return true;
-}
-
-auto BaseElementView::mouseButtonPressCallback(GtkWidget* widget, GdkEventButton* event, BaseElementView* element)
-        -> gboolean {
-    element->dlg->setSelected(element->id);
-    return true;
-}
-
 
 void BaseElementView::setSelected(bool selected) {
     if (this->selected == selected) {
@@ -67,45 +81,38 @@ void BaseElementView::paint(cairo_t* cr) {
 
         cairo_t* cr2 = cairo_create(this->crBuffer);
 
-        cairo_set_source_rgb(cr2, 1, 1, 1);
-        cairo_rectangle(cr2, 0, 0, alloc.width, alloc.height);
-        cairo_fill(cr2);
-
-        cairo_matrix_t defaultMatrix = {0};
-        cairo_get_matrix(cr2, &defaultMatrix);
-
-        cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
-
+        cairo_save(cr2);
+        cairo_translate(cr2, Shadow::getShadowTopLeftSize() + BORDER_WIDTH,
+                        Shadow::getShadowTopLeftSize() + BORDER_WIDTH);
         paintContents(cr2);
+        cairo_restore(cr2);
 
-        cairo_set_operator(cr2, CAIRO_OPERATOR_SOURCE);
-
-        cairo_set_matrix(cr2, &defaultMatrix);
-
-        cairo_set_operator(cr2, CAIRO_OPERATOR_ATOP);
+        cairo_set_operator(cr2, CAIRO_OPERATOR_OVER);
 
         if (this->selected) {
             // Draw border
             Util::cairo_set_source_rgbi(cr2, dlg->getSettings()->getBorderColor());
-            cairo_set_line_width(cr2, 2);
+            cairo_set_line_width(cr2, BORDER_WIDTH);
             cairo_set_line_cap(cr2, CAIRO_LINE_CAP_BUTT);
             cairo_set_line_join(cr2, CAIRO_LINE_JOIN_BEVEL);
 
-            cairo_rectangle(cr2, Shadow::getShadowTopLeftSize() + 1.5, Shadow::getShadowTopLeftSize() + 1.5, width + 2,
-                            height + 2);
+            cairo_rectangle(cr2, Shadow::getShadowTopLeftSize() + BORDER_WIDTH / 2,
+                            Shadow::getShadowTopLeftSize() + BORDER_WIDTH / 2, width + BORDER_WIDTH,
+                            height + BORDER_WIDTH);
 
             cairo_stroke(cr2);
 
-            Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(), width + 4,
-                               height + 4);
+            Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize(), Shadow::getShadowTopLeftSize(),
+                               width + 2 * BORDER_WIDTH, height + 2 * BORDER_WIDTH);
         } else {
-            Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width,
-                               height);
+            Shadow::drawShadow(cr2, Shadow::getShadowTopLeftSize() + BORDER_WIDTH,
+                               Shadow::getShadowTopLeftSize() + BORDER_WIDTH, width, height);
         }
 
         cairo_destroy(cr2);
     }
 
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
     cairo_set_source_surface(cr, this->crBuffer, 0, 0);
     cairo_paint(cr);
 }
@@ -117,12 +124,12 @@ auto BaseElementView::getWidget() -> GtkWidget* {
 
 auto BaseElementView::getWidth() -> int {
     calcSize();
-    return getContentWidth() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+    return getContentWidth() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 2 * BORDER_WIDTH;
 }
 
 auto BaseElementView::getHeight() -> int {
     calcSize();
-    return getContentHeight() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 4;
+    return getContentHeight() + Shadow::getShadowBottomRightSize() + Shadow::getShadowTopLeftSize() + 2 * BORDER_WIDTH;
 }
 
 void BaseElementView::calcSize() {
