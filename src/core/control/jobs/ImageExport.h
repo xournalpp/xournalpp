@@ -29,7 +29,7 @@ enum ExportGraphicsFormat { EXPORT_GRAPHICS_UNDEFINED, EXPORT_GRAPHICS_PDF, EXPO
 
 /**
  * @brief List of available criterion for determining a PNG export quality.
- * The order must agree with the corresponding listAvailableCriterion in ui/exportSettings.glade
+ * The order must agree with the corresponding listAvailableCriterion in ui/exportSettings.ui
  */
 enum ExportQualityCriterion { EXPORT_QUALITY_DPI, EXPORT_QUALITY_WIDTH, EXPORT_QUALITY_HEIGHT };
 
