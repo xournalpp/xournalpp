@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkAdjustment" id="adjustmentDpi">
+    <property name="lower">72</property>
+    <property name="upper">1200</property>
+    <property name="value">300</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentHeightWidth">
+    <property name="lower">100</property>
+    <property name="upper">10000</property>
+    <property name="value">1000</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">1000</property>
+  </object>
+  <object class="GtkListStore" id="listAvailableCriterion">
+    <columns>
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Resolution</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Width</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Height</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="listBackgroundType">
+    <columns>
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">None</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">No ruling</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">All</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkWindow" id="exportDialog">
+    <property name="title" translatable="1">Export</property>
+    <property name="resizable">0</property>
+    <property name="modal">1</property>
+    <property name="destroy-with-parent">1</property>
+    <property name="child">
+      <object class="GtkBox" id="dialog-main-box">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">4</property>
+        <child>
+          <object class="GtkBox" id="vbox">
+            <property name="vexpand">1</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="label" translatable="1">&lt;b&gt;Document export settings&lt;/b&gt;
+Set export parameters</property>
+                <property name="use-markup">1</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkGrid" id="grid">
+                <property name="row-spacing">10</property>
+                <property name="column-spacing">10</property>
+                <child>
+                  <object class="GtkLabel" id="lbQuality">
+                    <property name="name">lbResolution</property>
+                    <property name="label" translatable="1">Image quality</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"></attribute>
+                    </attributes>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label4">
+                    <property name="label" translatable="1">Range</property>
+                    <property name="ellipsize">middle</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"></attribute>
+                    </attributes>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="rdRangeAll">
+                    <property name="label" translatable="1">All pages</property>
+                    <property name="name">rdRangeAll</property>
+                    <property name="halign">start</property>
+                    <property name="active">1</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="rdRangeCurrent">
+                    <property name="label" translatable="1">Current page</property>
+                    <property name="name">rdRangeCurrent</property>
+                    <property name="halign">start</property>
+                    <property name="group">rdRangeAll</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="rdRangePages">
+                    <property name="label" translatable="1">Pages:</property>
+                    <property name="name">rdRangePages</property>
+                    <property name="halign">start</property>
+                    <property name="group">rdRangeAll</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="txtPages">
+                    <property name="name">txtPages</property>
+                    <property name="sensitive">0</property>
+                    <property name="focusable">1</property>
+                    <property name="hexpand">1</property>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="row">4</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label5">
+                    <property name="label" translatable="1">&lt;i&gt;Example:&lt;/i&gt; 1-3 or 1,3,5-7 etc.</property>
+                    <property name="use-markup">1</property>
+                    <property name="xalign">0</property>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="row">5</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lbAllPagesInfo">
+                    <property name="name">lbAllPagesInfo</property>
+                    <property name="label">PLACEHOLDER</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="style" value="italic"></attribute>
+                    </attributes>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="row">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lbCurrentPage">
+                    <property name="name">lbCurrentPage</property>
+                    <property name="label">PLACEHOLDER</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="style" value="italic"></attribute>
+                    </attributes>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="row">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox" id="boxQuality">
+                    <property name="spacing">5</property>
+                    <child>
+                      <object class="GtkSpinButton" id="sbQualityValue">
+                        <property name="name">spDpi</property>
+                        <property name="focusable">1</property>
+                        <property name="hexpand">1</property>
+                        <property name="text">300</property>
+                        <property name="adjustment">adjustmentDpi</property>
+                        <property name="value">300</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbQualityUnit">
+                        <property name="name">lbDpi</property>
+                        <property name="label" translatable="1">dpi</property>
+                        <property name="ellipsize">middle</property>
+                        <property name="width-chars">4</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="row">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkComboBox" id="cbQuality">
+                    <property name="model">listAvailableCriterion</property>
+                    <property name="active">0</property>
+                    <property name="id-column">0</property>
+                    <property name="active-id">0</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cbQualityCell"/>
+                      <attributes>
+                        <attribute name="markup">0</attribute>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label2">
+                    <property name="tooltip-text" translatable="1" comments="Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.">Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All).</property>
+                    <property name="label" translatable="1">Background</property>
+                    <property name="ellipsize">middle</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"></attribute>
+                    </attributes>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="cbProgressiveMode">
+                    <property name="label" translatable="1">Export layers progressively</property>
+                    <property name="focusable">1</property>
+                    <property name="tooltip-text" translatable="1">If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation.</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
+                      <property name="column-span">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkComboBox" id="cbBackgroundType">
+                    <property name="model">listBackgroundType</property>
+                    <property name="active">2</property>
+                    <property name="id-column">0</property>
+                    <property name="active-id">0</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cbBackgroundTypeCell"/>
+                      <attributes>
+                        <attribute name="markup">0</attribute>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">1</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="label" translatable="1">Cancel</property>
+                <property name="name">btCancel</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class='GtkShortcutController'>
+                    <property name='scope'>managed</property>
+                    <child>
+                      <object class='GtkShortcut'>
+                        <property name='trigger'>Escape</property>
+                        <property name='action'>activate</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="label" translatable="1">Ok</property>
+                <property name="name">btOk</property>
+                <property name="focusable">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>
