@@ -134,7 +134,7 @@ popover.toolbar button:not(:checked):not(:active):not(:hover){
   background-image:none;
 }
 
-radiobutton.invisible radio {
+checkbutton.invisible check {
   color:transparent;
   background-color:transparent;
   background-image:none;
