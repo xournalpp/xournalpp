@@ -47,7 +47,7 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, const char* menuId, con
             this);
 
     Builder builder(control->getGladeSearchPath(), XML_FILE);
-    GMenuModel* menu = G_MENU_MODEL(builder.get<GObject>(menuId));
+    GMenuModel* menu = G_MENU_MODEL(builder.getObject(menuId));
     contextMenu.reset(GTK_POPOVER(gtk_popover_menu_new_from_model(menu)), xoj::util::adopt);
     gtk_widget_set_parent(GTK_WIDGET(contextMenu.get()), GTK_WIDGET(miniaturesContainer.get()));
 
