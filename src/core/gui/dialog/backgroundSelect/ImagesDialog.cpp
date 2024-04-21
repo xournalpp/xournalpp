@@ -7,7 +7,7 @@
 
 #include <glib-object.h>
 
-#include "control/stockdlg/ImageOpenDlg.h"
+#include "gui/dialog/XojOpenDlg.h"  // for showOpenImageDialog
 #include "gui/dialog/backgroundSelect/BackgroundSelectDialogBase.h"
 #include "gui/dialog/backgroundSelect/BaseElementView.h"
 #include "model/BackgroundImage.h"
@@ -96,32 +96,25 @@ auto ImagesDialog::isImageAlreadyInTheList(BackgroundImage& image) -> bool {
     return false;
 }
 
-void ImagesDialog::filechooserButtonCallback(GtkButton* button, ImagesDialog* dlg) {
-    bool attach = false;
-    GFile* file = ImageOpenDlg::show(dlg->window.get(), dlg->settings, true, &attach);
-    if (file == nullptr) {
-        // The user canceled
-        return;
-    }
+void ImagesDialog::filechooserButtonCallback(GtkButton*, ImagesDialog* dlg) {
+    xoj::OpenDlg::showOpenImageDialog(dlg->window.get(), dlg->settings, [dlg](fs::path p, bool attach) {
+        BackgroundImage img;
+        GError* err = nullptr;
+        img.loadFile(p, &err);
+        img.setAttach(attach);
+        if (err) {
+            XojMsgBox::showErrorToUser(dlg->window.get(),
+                                       FS(_F("This image could not be loaded. Error message: {1}") % err->message));
+            g_error_free(err);
+            return;
+        }
 
-    auto filepath = Util::fromGFile(file);
+        if (img.isEmpty()) {
+            XojMsgBox::showErrorToUser(dlg->window.get(), _("This image could not be loaded."));
+            return;
+        }
 
-    BackgroundImage img;
-    GError* err = nullptr;
-    img.loadFile(filepath, &err);
-    img.setAttach(attach);
-    if (err) {
-        XojMsgBox::showErrorToUser(dlg->window.get(),
-                                   FS(_F("This image could not be loaded. Error message: {1}") % err->message));
-        g_error_free(err);
-        return;
-    }
-
-    if (img.isEmpty()) {
-        XojMsgBox::showErrorToUser(dlg->window.get(), _("This image could not be loaded."));
-        return;
-    }
-
-    dlg->callback(std::move(img));
-    gtk_window_close(dlg->window.get());
+        dlg->callback(std::move(img));
+        gtk_window_close(dlg->window.get());
+    });
 }

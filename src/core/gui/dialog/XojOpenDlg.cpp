@@ -44,6 +44,12 @@ static std::function<void(fs::path, Args...)> addSetLastSavePathToCallback(
 }
 
 
+constexpr auto ATTACH_CHOICE_ID = "attachPdfChoice";
+static void addAttachChoice(GtkFileChooser* fc) {
+    gtk_file_chooser_add_choice(fc, ATTACH_CHOICE_ID, _("Attach file to the journal"), nullptr, nullptr);
+    gtk_file_chooser_set_choice(fc, ATTACH_CHOICE_ID, "false");
+}
+
 // Helper class, for a single open dialog
 class FileDlg {
 public:
@@ -67,7 +73,6 @@ private:
     std::function<void(fs::path, bool)> callback;
     gulong signalId{};
 };
-constexpr auto ATTACH_PDF_CHOICE_ID = "attachPdfChoice";
 
 static GtkWindow* makeWindow(const char* title) {
     // Todo(maybe)
@@ -89,17 +94,17 @@ FileDlg::FileDlg(const char* title, std::function<void(fs::path, bool)> callback
                                                     gtk_file_chooser_get_file(GTK_FILE_CHOOSER(win)), xoj::util::adopt)
                                                     .get());
 
-                    bool attachPdf = false;
-                    if (const char* choice = gtk_file_chooser_get_choice(GTK_FILE_CHOOSER(win), ATTACH_PDF_CHOICE_ID);
+                    bool attach = false;
+                    if (const char* choice = gtk_file_chooser_get_choice(GTK_FILE_CHOOSER(win), ATTACH_CHOICE_ID);
                         choice) {
-                        attachPdf = std::strcmp(choice, "true") == 0;
+                        attach = std::strcmp(choice, "true") == 0;
                     }
 
                     // We need to call gtk_window_close() before invoking the callback, because if the callback pops up
                     // another dialog, the first one won't close...
                     // So we postpone the callback
-                    Util::execInUiThread([cb = std::move(self->callback), path = std::move(path), attachPdf]() {
-                        cb(std::move(path), attachPdf);
+                    Util::execInUiThread([cb = std::move(self->callback), path = std::move(path), attach]() {
+                        cb(std::move(path), attach);
                     });
                 }
                 // Closing the window causes another "response" signal, which we want to ignore
@@ -158,8 +163,31 @@ void xoj::OpenDlg::showAnnotatePdfDialog(GtkWindow* parent, Settings* settings,
     addlastSavePathShortcut(fc, settings);
     setCurrentFolderToLastOpenPath(fc, settings);
 
-    gtk_file_chooser_add_choice(fc, ATTACH_PDF_CHOICE_ID, _("Attach file to the journal"), nullptr, nullptr);
-    gtk_file_chooser_set_choice(fc, ATTACH_PDF_CHOICE_ID, "false");
+    addAttachChoice(fc);
+
+    popup.show(parent);
+}
+
+void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings,
+                                       std::function<void(fs::path, bool)> callback) {
+    auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Choose image file"),
+                                                         [cb = std::move(callback), settings](fs::path p, bool attach) {
+                                                             if (auto folder = p.parent_path(); !folder.empty()) {
+                                                                 settings->setLastImagePath(folder);
+                                                             }
+                                                             cb(std::move(p), attach);
+                                                         });
+
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
+
+    xoj::addFilterImages(fc);
+    xoj::addFilterAllFiles(fc);
+
+    if (!settings->getLastImagePath().empty()) {
+        gtk_file_chooser_set_current_folder(fc, Util::toGFile(settings->getLastImagePath()).get(), nullptr);
+    }
+
+    addAttachChoice(fc);
 
     popup.show(parent);
 }

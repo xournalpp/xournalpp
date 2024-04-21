@@ -39,6 +39,7 @@
 #include "model/Document.h"
 #include "model/Element.h"
 #include "model/Font.h"
+#include "model/Image.h"
 #include "model/SplineSegment.h"
 #include "model/Stroke.h"
 #include "model/StrokeStyle.h"
@@ -2638,19 +2639,15 @@ static int applib_addImages(lua_State* L) {
         }
 
         std::unique_ptr<Image> img;
-        int width;
-        int height;
-        XojPageView* pv = control->getWindow()->getXournal()->getViewFor(control->getCurrentPageNo());
-        ImageHandler imgHandler(control, pv);
         if (path) {
-            xoj::util::GObjectSPtr<GFile> file(g_file_new_for_path(path), xoj::util::adopt);
-            if (!g_file_query_exists(file.get(), NULL)) {
+            fs::path p(path);
+            if (p.empty() || !fs::exists(p)) {
                 lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
                 lua_pushfstring(L, "Error: file '%s' does not exist.", path);  // soft error
                 continue;
             }
 
-            std::tie(img, width, height) = imgHandler.createImageFromFile(file.get(), x, y);
+            img = ImageHandler::createImageFromFile(p);
             if (!img) {
                 lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
                 lua_pushfstring(L, "Error: creating the image (%s) failed.", path);  // soft error
@@ -2660,10 +2657,11 @@ static int applib_addImages(lua_State* L) {
             img = std::make_unique<Image>();
             img->setImage(std::string(data, dataLen));
             img->getImage();  // render image first to get the proper width and height
-            std::tie(width, height) = img->getImageSize();
-            img->setX(x);
-            img->setY(y);
         }
+
+        auto [width, height] = img->getImageSize();
+        img->setX(x);
+        img->setY(y);
 
         // apply width/height parameter
         if (maxWidthParam != -1 && maxHeightParam != -1) {
@@ -2697,17 +2695,19 @@ static int applib_addImages(lua_State* L) {
         width = round_cast<int>(width * scale);
         height = round_cast<int>(height * scale);
 
+        PageRef page = control->getCurrentPage();
+
         // scale down keeping the current aspect ratio after the manual scaling to fit the image on the page
         // if the image already fits on the screen, no other scaling is applied here
         // already sets width/height in the image
-        imgHandler.automaticScaling(img.get(), x, y, width, height);
+        ImageHandler::automaticScaling(*img, page);
 
         // store the image to later build the undo/redo action chain
         images.push_back(img.get());
 
         lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
 
-        bool succ = imgHandler.addImageToDocument(std::move(img), false);
+        bool succ = ImageHandler::addImageToDocument(std::move(img), page, control, false);
         if (!succ) {
             lua_pushfstring(L, "Error: Inserting the image (%s) failed.", path);  // soft error
         }

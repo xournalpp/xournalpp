@@ -34,4 +34,11 @@ void addFilterXopp(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ file
 void addFilterXopt(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ template"), "application/x-xopt"); }
 void addFilterSvg(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("SVG graphics"), "image/svg+xml"); }
 void addFilterPng(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PNG graphics"), "image/png"); }
+
+void addFilterImages(GtkFileChooser* fc) {
+    GtkFileFilter* filter = gtk_file_filter_new();
+    gtk_file_filter_set_name(filter, _("Image files"));
+    gtk_file_filter_add_pixbuf_formats(filter);
+    gtk_file_chooser_add_filter(fc, filter);
+}
 };  // namespace xoj
