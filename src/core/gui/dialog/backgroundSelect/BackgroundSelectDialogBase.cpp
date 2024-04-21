@@ -16,7 +16,7 @@
 class GladeSearchpath;
 
 
-constexpr auto UI_FILE = "backgroundSelection.glade";
+constexpr auto UI_FILE = "backgroundSelection.ui";
 constexpr auto UI_DIALOG_NAME = "Dialog";
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,
