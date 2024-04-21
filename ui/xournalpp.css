@@ -189,3 +189,55 @@ notebook frame>label {
     color: #666;
     font-weight: bold;
 }
+
+
+/** Sidebar miniature widgetry **/
+@define-color SidebarSelectedMiniature red;
+@define-color SidebarUnselectedMiniature grey;
+
+#sidebarContents button.miniature {
+  border-style: solid;
+  outline-style: none;
+  box-shadow: none;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 8px;
+  border-spacing: 0px;
+  border-color: @SidebarUnselectedMiniature;
+  border-width: 2px;
+}
+
+#sidebarContents button.miniature picture {
+  border-style: none;
+  outline-style: none;
+  border-radius: 6px;
+  box-shadow: none;
+  padding: 0px;
+  margin: 0px;
+  border-spacing: 0px;
+}
+
+#sidebarContents button.miniature.page-selected {
+  border-color: @SidebarSelectedMiniature;
+}
+
+#sidebarContents label.page-number-square {
+  margin:0;
+  background-color: @SidebarUnselectedMiniature;
+  min-width:24px;
+}
+
+#sidebarContents label.page-number-circular {
+  margin:4px;
+  background-color: @SidebarUnselectedMiniature;
+  min-width:24px;
+  border-radius:100px; /* this value is clamped to min(width, height)/2 */
+}
+
+#sidebarContents overlay > button.miniature.page-selected ~ label {
+  background-color: @SidebarSelectedMiniature;
+}
+
+#sidebarContents box > button.miniature.page-selected ~ label.page-number-below {
+  color: @SidebarSelectedMiniature;
+}
