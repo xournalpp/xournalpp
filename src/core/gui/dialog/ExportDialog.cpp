@@ -13,7 +13,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "exportSettings.glade";
+constexpr auto UI_FILE = "exportSettings.ui";
 constexpr auto UI_DIALOG_NAME = "exportDialog";
 
 using namespace xoj::popup;
@@ -26,10 +26,6 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
     gtk_label_set_text(GTK_LABEL(builder.get("lbAllPagesInfo")), ("1 - " + std::to_string(pageCount)).c_str());
     gtk_label_set_text(GTK_LABEL(builder.get("lbCurrentPage")), std::to_string(currentPage).c_str());
 
-#if GTK_MAJOR_VERSION == 3
-    // Widgets are visible by default in gtk4
-    gtk_widget_show_all(builder.get("dialog-main-box"));
-#endif
 
     auto removeQualitySetting = [&builder = this->builder]() {
         gtk_widget_hide(builder.get("lbQuality"));
