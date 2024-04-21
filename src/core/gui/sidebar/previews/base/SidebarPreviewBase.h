@@ -85,7 +85,7 @@ public:
     /**
      * Opens a context menu, at the current cursor position.
      */
-    void openPreviewContextMenu(GdkEvent* currentEvent);
+    void openPreviewContextMenu(double x, double y, GtkWidget* entry);
 
 private:
     /**

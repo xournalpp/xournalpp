@@ -12,7 +12,6 @@
 #include "model/Document.h"    // for Document
 #include "util/Util.h"         // for npos
 #include "util/glib_casts.h"   // for wrap_for_once_v
-#include "util/gtk4_helper.h"
 
 #include "SidebarLayout.h"            // for SidebarLayout
 #include "SidebarPreviewBaseEntry.h"  // for SidebarPreviewBaseEntry
@@ -50,7 +49,7 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, const char* menuId, con
     Builder builder(control->getGladeSearchPath(), XML_FILE);
     GMenuModel* menu = G_MENU_MODEL(builder.get<GObject>(menuId));
     contextMenu.reset(GTK_POPOVER(gtk_popover_menu_new_from_model(menu)), xoj::util::adopt);
-    gtk_widget_set_parent(GTK_WIDGET(contextMenu.get()), mainBox.get());
+    gtk_widget_set_parent(GTK_WIDGET(contextMenu.get()), GTK_WIDGET(miniaturesContainer.get()));
 
     gtk_box_append(GTK_BOX(mainBox.get()), builder.get(toolbarId));
 }
@@ -135,6 +134,10 @@ void SidebarPreviewBase::pageDeleted(size_t page) {}
 
 void SidebarPreviewBase::pageInserted(size_t page) {}
 
-void SidebarPreviewBase::openPreviewContextMenu(GdkEvent* currentEvent) {
-    // gtk_menu_popup_at_pointer(contextMenu.get(), currentEvent);
+void SidebarPreviewBase::openPreviewContextMenu(double x, double y, GtkWidget* entry) {
+    double newX, newY;
+    gtk_widget_translate_coordinates(entry, GTK_WIDGET(miniaturesContainer.get()), x, y, &newX, &newY);
+    GdkRectangle r = {round_cast<int>(newX), round_cast<int>(newY), 0, 0};
+    gtk_popover_set_pointing_to(this->contextMenu.get(), &r);
+    gtk_popover_popup(this->contextMenu.get());
 }
