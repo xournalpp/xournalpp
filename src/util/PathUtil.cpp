@@ -292,10 +292,8 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
     try {
         fs::create_directories(p);
     } catch (const fs::filesystem_error& fe) {
-        Util::execInUiThread([=]() {
-            std::string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
-            XojMsgBox::showErrorToUser(nullptr, msg);
-        });
+        std::string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
+        Util::execInUiThread([msg = std::move(msg)]() { XojMsgBox::showErrorToUser(nullptr, msg); });
     }
     return p;
 }
