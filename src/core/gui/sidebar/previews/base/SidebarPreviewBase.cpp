@@ -12,7 +12,6 @@
 #include "model/Document.h"    // for Document
 #include "util/Util.h"         // for npos
 #include "util/glib_casts.h"   // for wrap_for_once_v
-#include "util/gtk4_helper.h"
 
 #include "SidebarLayout.h"            // for SidebarLayout
 #include "SidebarPreviewBaseEntry.h"  // for SidebarPreviewBaseEntry
@@ -47,15 +46,34 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, const char* menuId, con
             }),
             this);
 
+    // Ensure visible miniatures have been generated at least once -- they will be kept up to date.
+    auto verticalChangeCallback =
+            +[](GtkAdjustment*, gpointer d) { static_cast<SidebarPreviewBase*>(d)->ensureVisibleAreRendered(); };
+    g_signal_connect(gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrollableBox.get())), "changed",
+                     G_CALLBACK(verticalChangeCallback), this);
+    g_signal_connect(gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrollableBox.get())), "value-changed",
+                     G_CALLBACK(verticalChangeCallback), this);
+
     Builder builder(control->getGladeSearchPath(), XML_FILE);
     GMenuModel* menu = G_MENU_MODEL(builder.get<GObject>(menuId));
     contextMenu.reset(GTK_POPOVER(gtk_popover_menu_new_from_model(menu)), xoj::util::adopt);
-    gtk_widget_set_parent(GTK_WIDGET(contextMenu.get()), mainBox.get());
+    gtk_widget_set_parent(GTK_WIDGET(contextMenu.get()), GTK_WIDGET(miniaturesContainer.get()));
 
     gtk_box_append(GTK_BOX(mainBox.get()), builder.get(toolbarId));
 }
 
 SidebarPreviewBase::~SidebarPreviewBase() { this->control->removeChangedDocumentListener(this); }
+
+void SidebarPreviewBase::ensureVisibleAreRendered() {
+    auto* adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrollableBox.get()));
+    Interval<int> previewInterval = {floor_cast<int>(gtk_adjustment_get_value(adj)),
+                                     ceil_cast<int>(gtk_adjustment_get_value(adj) + gtk_adjustment_get_page_size(adj))};
+    for (auto&& p: this->previews) {
+        if (p->getVerticalPosition().intersect(previewInterval)) {
+            p->ensureRendered();
+        }
+    }
+}
 
 void SidebarPreviewBase::enableSidebar() { enabled = true; }
 
@@ -135,6 +153,10 @@ void SidebarPreviewBase::pageDeleted(size_t page) {}
 
 void SidebarPreviewBase::pageInserted(size_t page) {}
 
-void SidebarPreviewBase::openPreviewContextMenu(GdkEvent* currentEvent) {
-    // gtk_menu_popup_at_pointer(contextMenu.get(), currentEvent);
+void SidebarPreviewBase::openPreviewContextMenu(double x, double y, GtkWidget* entry) {
+    double newX, newY;
+    gtk_widget_translate_coordinates(entry, GTK_WIDGET(miniaturesContainer.get()), x, y, &newX, &newY);
+    GdkRectangle r = {round_cast<int>(newX), round_cast<int>(newY), 0, 0};
+    gtk_popover_set_pointing_to(this->contextMenu.get(), &r);
+    gtk_popover_popup(this->contextMenu.get());
 }

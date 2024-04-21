@@ -13,12 +13,15 @@
 
 #pragma once
 
+#include <optional>
+
 #include "control/jobs/Job.h"  // for JobType
 
 #include "Scheduler.h"  // for JobPriority, Scheduler
 
 class SidebarPreviewBaseEntry;
 class XojPageView;
+class Recolor;
 
 class XournalScheduler: public Scheduler {
 public:
@@ -38,7 +41,7 @@ public:
      */
     void removeAllJobs();
 
-    void addRepaintSidebar(SidebarPreviewBaseEntry* preview);
+    void addRepaintSidebar(SidebarPreviewBaseEntry* preview, std::optional<Recolor> recolor);
     void addRerenderPage(XojPageView* view);
 
     /**
