@@ -9,7 +9,6 @@
 #include <glib-object.h>  // for g_object_unref, g_object...
 #include <glib.h>         // for g_error_free, GError
 
-#undef USE_GTK_SOURCEVIEW
 #ifdef USE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for gtk_source_style_scheme_...
 #endif

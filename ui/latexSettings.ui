@@ -223,7 +223,6 @@
                         </child>
                         <child>
                           <object class="GtkBox" id="bxGtkSourceviewMainSettings">
-                            <property name="visible">0</property>
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkCheckButton" id="cbShowLineNumbers">

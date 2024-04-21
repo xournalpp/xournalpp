@@ -22,7 +22,6 @@
 #include <poppler-document.h>  // for poppler_document_get_n_p...
 #include <poppler-page.h>      // for poppler_page_get_size
 
-#undef USE_GTK_SOURCEVIEW
 #ifdef USE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>  // for GTK_SOURCE_VIEW, gtk_sou...
 #endif
