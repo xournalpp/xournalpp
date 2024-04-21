@@ -126,13 +126,13 @@ void ExportDialog::selectQualityCriterion(GtkComboBox* comboBox, ExportDialog* s
         case EXPORT_QUALITY_DPI:
             gtk_label_set_text(GTK_LABEL(self->builder.get("lbQualityUnit")), "dpi");
             gtk_spin_button_set_adjustment(GTK_SPIN_BUTTON(self->builder.get("sbQualityValue")),
-                                           GTK_ADJUSTMENT(self->builder.get<GObject>("adjustmentDpi")));
+                                           GTK_ADJUSTMENT(self->builder.getObject("adjustmentDpi")));
             break;
         case EXPORT_QUALITY_WIDTH:
         case EXPORT_QUALITY_HEIGHT:
             gtk_label_set_text(GTK_LABEL(self->builder.get("lbQualityUnit")), "px");
             gtk_spin_button_set_adjustment(GTK_SPIN_BUTTON(self->builder.get("sbQualityValue")),
-                                           GTK_ADJUSTMENT(self->builder.get<GObject>("adjustmentHeightWidth")));
+                                           GTK_ADJUSTMENT(self->builder.getObject("adjustmentHeightWidth")));
             break;
     }
 }
