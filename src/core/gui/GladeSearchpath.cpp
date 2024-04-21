@@ -11,6 +11,8 @@
 
 #include "GladeSearchpath.h"
 
+#include <glib.h>
+
 GladeSearchpath::GladeSearchpath() = default;
 
 GladeSearchpath::~GladeSearchpath() { directories.clear(); }
@@ -31,6 +33,8 @@ auto GladeSearchpath::findFile(fs::path const& subdir, fs::path const& file) con
             return pathname;
         }
     }
+
+    g_warning("GladeSearchpath::findFile() could not locate %s", filepath.string().c_str());
 
     return fs::path{};
 }
