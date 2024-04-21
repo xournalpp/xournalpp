@@ -112,6 +112,7 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
     gtk_menu_button_set_popover(menubutton, GTK_WIDGET(data->popover));
     gtk_menu_button_set_direction(menubutton,
                                   horizontal ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);  // TODO: fix directions
+    gtk_menu_button_set_always_show_arrow(menubutton, true);
 
     GtkBox* box = GTK_BOX(gtk_box_new(horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL, 0));
     gtk_box_append(box, GTK_WIDGET(data->button));
