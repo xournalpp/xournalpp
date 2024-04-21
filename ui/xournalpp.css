@@ -123,6 +123,7 @@ box.toolbar button,
 popover.toolbar button {
   padding:3px;
   border-style:none;
+  -gtk-icon-size:25px;
 }
 
 box.toolbar button:not(:checked):not(:active):not(:hover),
