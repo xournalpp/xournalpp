@@ -14,7 +14,6 @@
 #include "gui/XournalView.h"            // for XournalView
 #include "gui/widgets/XournalWidget.h"  // for gtk_xournal_get_layout
 #include "util/Assert.h"                // for xoj_assert
-#include "util/Util.h"                  // for execInUiThread
 #include "util/glib_casts.h"            // for wrap_for_g_callback
 
 using xoj::util::Rectangle;

@@ -30,7 +30,7 @@ XojMsgBox::XojMsgBox(GtkDialog* dialog, xoj::util::move_only_function<void(int)>
                                  // callback pops up another dialog, the first one won't close...
                                  // But since gtk_window_close() triggers the destruction of *self, we first move the
                                  // callback
-                                 Util::execInUiThread([cb = std::move(self->callback), response]() { cb(response); });
+                                 Util::execWhenIdle([cb = std::move(self->callback), response]() { cb(response); });
 
                                  // Closing the window causes another "response" signal, which we want to ignore
                                  g_signal_handler_disconnect(dialog, self->signalId);
