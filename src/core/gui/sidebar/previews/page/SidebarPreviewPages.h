@@ -52,6 +52,9 @@ public:
      */
     void updatePreviews() override;
 
+    /// Update the way the numbers are displayed depending on the value in Settings.
+    void updatePageNumberingStyle();
+
 public:
     // DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
     void pageSizeChanged(size_t page) override;

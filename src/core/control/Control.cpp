@@ -679,7 +679,9 @@ void Control::addDefaultPage(const std::optional<PageTemplateSettings>& pageTemp
         this->doc->addPage(std::move(page));
         this->doc->unlock();
     } else {
+        this->doc->lock();
         doc->addPage(std::move(page));
+        this->doc->unlock();
     }
 }
 
@@ -1452,7 +1454,7 @@ void Control::showSettings() {
                 ctrl->win->setDPI();
 
                 if (settingsBeforeDialog.sidebarStyle != settings->getSidebarNumberingStyle()) {
-                    ctrl->getSidebar()->layout();
+                    ctrl->getSidebar()->updatePageNumberingStyle();
                 }
 
                 xournal->getHandRecognition()->reload();
