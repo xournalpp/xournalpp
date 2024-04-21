@@ -103,7 +103,7 @@ FileDlg::FileDlg(const char* title, std::function<void(fs::path, bool)> callback
                     // We need to call gtk_window_close() before invoking the callback, because if the callback pops up
                     // another dialog, the first one won't close...
                     // So we postpone the callback
-                    Util::execInUiThread([cb = std::move(self->callback), path = std::move(path), attach]() {
+                    Util::execWhenIdle([cb = std::move(self->callback), path = std::move(path), attach]() {
                         cb(std::move(path), attach);
                     });
                 }

@@ -65,6 +65,12 @@ void execInUiThread(Fun&& callback, gint priority = G_PRIORITY_DEFAULT_IDLE) {
     }
 }
 
+/// Execute later, once the current events have been treated (in the main thread's loop)
+template <typename Fun>
+inline void execWhenIdle(Fun&& callback) {
+    execInUiThread(std::move(callback));
+}
+
 gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
 
 void cairo_set_dash_from_vector(cairo_t* cr, const std::vector<double>& dashes, double offset);
