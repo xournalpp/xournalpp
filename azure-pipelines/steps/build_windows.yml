@@ -10,7 +10,7 @@ steps:
       set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
       pacman --noconfirm -S mingw-w64-x86_64-imagemagick mingw-w64-x86_64-ninja mingw-w64-x86_64-poppler
       pacman --noconfirm -S mingw-w64-x86_64-gtk4 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
-      pacman --noconfirm -S mingw-w64-x86_64-lua mingw-w64-x86_64-portaudio mingw-w64-x86_64-gtksourceview4
+      pacman --noconfirm -S mingw-w64-x86_64-lua mingw-w64-x86_64-portaudio mingw-w64-x86_64-gtksourceview5
     env:
       MSYS2_ARCH: x86_64
       MSYSTEM: MINGW64

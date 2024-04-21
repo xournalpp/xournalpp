@@ -82,7 +82,7 @@
   </data>
 
   <data>
-    ${prefix}/share/gtksourceview-4
+    ${prefix}/share/gtksourceview-5
   </data>
 
   <data dest="${bundle}/Contents/Resources/plugins">

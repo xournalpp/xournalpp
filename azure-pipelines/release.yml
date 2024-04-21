@@ -64,7 +64,7 @@ stages:
                   ninja-build libgtk-4-dev libpoppler-glib-dev libxml2-dev \
                   portaudio19-dev libsndfile-dev liblua5.3-dev \
                   libzip-dev gettext lsb-release librsvg2-dev help2man \
-                  libgtest-dev libgtksourceview-4-dev
+                  libgtest-dev libgtksourceview-5-dev
             displayName: 'Install dependencies'
           - template: steps/build_linux.yml
             parameters:

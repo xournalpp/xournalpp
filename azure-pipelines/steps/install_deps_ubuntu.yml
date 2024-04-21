@@ -11,6 +11,6 @@ steps:
       sudo apt-get install -y librsvg2-dev gcc-${{ parameters.gcc_version }} g++-${{ parameters.gcc_version }} cmake ninja-build \
         libgtk-4-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
         ibus-gtk4 fcitx5-frontend-gtk4 \
-        liblua5.3-dev libzip-dev gettext help2man libgtest-dev libgtksourceview-4-dev
+        liblua5.3-dev libzip-dev gettext help2man libgtest-dev libgtksourceview-5-dev
       g++ --version
     displayName: 'Install dependencies'

@@ -110,7 +110,7 @@ list(APPEND pkg-module-spec "portaudiocpp >= 12")
 list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
 
-#pkg_check_modules(GtkSourceView IMPORTED_TARGET "gtksourceview-4 >= 4.0.0")
+pkg_check_modules(GtkSourceView IMPORTED_TARGET "gtksourceview-5 >= 5.0.0")
 
 # Profiling
 option (ENABLE_PROFILING "Link with gperftools" OFF)

@@ -21,7 +21,7 @@ steps:
     pacman --noconfirm -Syuu
     pacman --noconfirm -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-ninja patch
     pacman --noconfirm -S mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk4 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
-    pacman --noconfirm -S mingw-w64-x86_64-portaudio mingw-w64-x86_64-lua mingw-w64-x86_64-gtksourceview4
+    pacman --noconfirm -S mingw-w64-x86_64-portaudio mingw-w64-x86_64-lua mingw-w64-x86_64-gtksourceview5
     pacman --noconfirm -Scc
   env:
     MSYS2_ARCH: x86_64
