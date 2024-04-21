@@ -123,6 +123,7 @@ box.toolbar button,
 popover.toolbar button {
   padding:3px;
   border-style:none;
+  -gtk-icon-size:25px;
 }
 
 .orientationFormatBox > button > widget > box > image {
