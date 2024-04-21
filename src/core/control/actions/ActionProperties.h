@@ -406,7 +406,7 @@ struct ActionProperties<Action::ZOOM_IN> {
     static constexpr const char* accelerators[] = {"<Ctrl>plus", "<Ctrl>KP_Add", "<Ctrl>equal", nullptr};
 #endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
-        Util::execInUiThread([zoom = ctrl->getZoomControl()]() { zoom->zoomOneStep(ZOOM_IN); });
+        Util::execWhenIdle([zoom = ctrl->getZoomControl()]() { zoom->zoomOneStep(ZOOM_IN); });
     }
 };
 
@@ -418,14 +418,14 @@ struct ActionProperties<Action::ZOOM_OUT> {
     static constexpr const char* accelerators[] = {"<Ctrl>minus", "<Ctrl>KP_Subtract", nullptr};
 #endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
-        Util::execInUiThread([zoom = ctrl->getZoomControl()]() { zoom->zoomOneStep(ZOOM_OUT); });
+        Util::execWhenIdle([zoom = ctrl->getZoomControl()]() { zoom->zoomOneStep(ZOOM_OUT); });
     }
 };
 
 template <>
 struct ActionProperties<Action::ZOOM_100> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
-        Util::execInUiThread([zoom = ctrl->getZoomControl()]() { zoom->zoom100(); });
+        Util::execWhenIdle([zoom = ctrl->getZoomControl()]() { zoom->zoom100(); });
     }
 };
 
@@ -436,7 +436,7 @@ struct ActionProperties<Action::ZOOM_FIT> {
     static void callback(GSimpleAction* ga, GVariant* p, Control* ctrl) {
         g_simple_action_set_state(ga, p);
         bool enabled = g_variant_get_boolean(p);
-        Util::execInUiThread([enabled, zoom = ctrl->getZoomControl()]() {
+        Util::execWhenIdle([enabled, zoom = ctrl->getZoomControl()]() {
             if (enabled) {
                 zoom->updateZoomFitValue();
             }
@@ -454,7 +454,7 @@ struct ActionProperties<Action::ZOOM> {
         g_simple_action_set_state(ga, p);
         double scale = g_variant_get_double(p);
         xoj_assert(scale >= DEFAULT_ZOOM_MIN && scale <= DEFAULT_ZOOM_MAX);
-        Util::execInUiThread([scale, zoomctrl = ctrl->getZoomControl()]() {
+        Util::execWhenIdle([scale, zoomctrl = ctrl->getZoomControl()]() {
             double newZoom = zoomctrl->getZoom100Value() * scale;
             zoomctrl->setZoomFitMode(false);
             zoomctrl->startZoomSequence();
@@ -849,7 +849,7 @@ struct ActionProperties<Action::AUDIO_RECORD> {
             g_simple_action_set_state(ga, p);
         } else {
             g_simple_action_set_state(ga, g_variant_new_boolean(!enabled));
-            Util::execInUiThread([win = ctrl->getGtkWindow()]() {
+            Util::execWhenIdle([win = ctrl->getGtkWindow()]() {
                 XojMsgBox::showErrorToUser(win, _("Recorder could not be started."));
             });
         }
