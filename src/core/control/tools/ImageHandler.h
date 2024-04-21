@@ -11,47 +11,42 @@
 
 #pragma once
 
+#include <functional>
 #include <memory>
-#include <tuple>  // for tuple
 
-#include <gio/gio.h>  // for GFile
+#include "model/PageRef.h"
+#include "util/Rectangle.h"
 
-#include "model/Image.h"  // for Image
+#include "filesystem.h"
 
 class Control;
-class XojPageView;
+class Image;
 
-class ImageHandler {
+class ImageHandler final {
 public:
-    ImageHandler(Control* control, XojPageView* view);
-    virtual ~ImageHandler();
+    ImageHandler(Control* control);
+    ~ImageHandler();
 
 public:
     /**
      * inserts an image scaled to the given size
      */
-    auto insertImageWithSize(const xoj::util::Rectangle<double>& space) -> bool;
+    void insertImageWithSize(PageRef page, const xoj::util::Rectangle<double>& space);
 
-    /**
-     * creates the image from the given file
-     */
-    auto createImageFromFile(GFile* file, double x, double y) -> std::tuple<std::unique_ptr<Image>, int, int>;
+    /// Creates the image from the given file
+    [[nodiscard]] static auto createImageFromFile(const fs::path& path) -> std::unique_ptr<Image>;
 
-    auto addImageToDocument(std::unique_ptr<Image> img, bool addUndoAction) -> bool;
+    static bool addImageToDocument(std::unique_ptr<Image> img, PageRef page, Control* ctrl, bool addUndoAction);
 
     /**
      * scale down (only if necessary) the image so that it then fits on the page
      * applies (potentially adjusted) width/height to the image
      */
-    void automaticScaling(Image* img, double x, double y, int width, int height);
+    static void automaticScaling(Image& img, PageRef page);
 
-private:
-    /**
-     * lets the user choose an image file and then creates the image
-     */
-    auto chooseAndCreateImage(double x, double y) -> std::tuple<std::unique_ptr<Image>, int, int>;
+    /// lets the user choose an image file, creates the image and calls the callback
+    void chooseAndCreateImage(std::function<void(std::unique_ptr<Image>)> callback);
 
 private:
     Control* control;
-    XojPageView* view;
 };

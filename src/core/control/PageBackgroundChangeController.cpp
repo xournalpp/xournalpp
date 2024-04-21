@@ -10,7 +10,6 @@
 
 #include "control/settings/PageTemplateSettings.h"       // for PageTemplate...
 #include "control/settings/Settings.h"                   // for Settings
-#include "control/stockdlg/ImageOpenDlg.h"               // for ImageOpenDlg
 #include "gui/MainWindow.h"                              // for MainWindow
 #include "gui/XournalView.h"                             // for XournalView
 #include "gui/dialog/backgroundSelect/ImagesDialog.h"    // for ImagesDialog
