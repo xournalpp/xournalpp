@@ -34,17 +34,16 @@ public:
         g_action_change_state(G_ACTION(gAction), makeGVariant(state));
     }
 
-    static xoj::util::WidgetSPtr createItem(AbstractSliderItem* self, bool horizontal) {
-        GtkOrientation orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
+    static xoj::util::WidgetSPtr createItem(AbstractSliderItem* self, ToolbarSide side) {
         const double min = FinalSliderType::scaleFunction(self->range.min);
         const double max = FinalSliderType::scaleFunction(self->range.max);
         const double fineStepSize = (max - min) / self->range.nbFineSteps;
         const double coarseStepSize = (max - min) / self->range.nbCoarseSteps;
 
-        GtkRange* slider = GTK_RANGE(gtk_scale_new_with_range(orientation, min, max, fineStepSize));
+        GtkRange* slider = GTK_RANGE(gtk_scale_new_with_range(to_Orientation(side), min, max, fineStepSize));
         gtk_range_set_increments(slider, fineStepSize, coarseStepSize);
 
-        if (horizontal) {
+        if (to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL) {
             gtk_widget_set_size_request(GTK_WIDGET(slider), 120, 16);
         } else {
             gtk_widget_set_size_request(GTK_WIDGET(slider), 16, 120);
