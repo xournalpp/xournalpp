@@ -14,6 +14,10 @@ StylePopoverFactory::StylePopoverFactory(Action styleAction, std::vector<Entry> 
 
 GtkWidget* StylePopoverFactory::createPopover() const {
     GtkWidget* popover = gtk_popover_new();
+    gtk_popover_set_has_arrow(GTK_POPOVER(popover), false);
+    gtk_widget_set_halign(popover, GTK_ALIGN_START);
+    gtk_widget_set_valign(popover, GTK_ALIGN_START);
+
     GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_popover_set_child(GTK_POPOVER(popover), box);
 
