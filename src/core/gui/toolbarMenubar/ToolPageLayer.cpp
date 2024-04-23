@@ -145,6 +145,10 @@ static GtkBox* makePopoverContent() {
 static GtkPopover* makePopover(GtkBox* content) {
     auto popover = GTK_POPOVER(gtk_popover_new());
     gtk_widget_add_css_class(GTK_WIDGET(popover), "toolbar");
+    gtk_popover_set_has_arrow(popover, false);
+    gtk_widget_set_halign(GTK_WIDGET(popover), GTK_ALIGN_START);
+    gtk_widget_set_valign(GTK_WIDGET(popover), GTK_ALIGN_START);
+
     gtk_popover_set_child(popover, GTK_WIDGET(content));
     return popover;
 }
@@ -159,9 +163,8 @@ public:
             grid(nullptr) {}
     ~InstanceData() = default;
 
-    xoj::util::WidgetSPtr makeWidget(bool horizontal) {
-        xoj::util::WidgetSPtr item(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1), xoj::util::adopt);
-        GtkBox* hbox = GTK_BOX(item.get());
+    xoj::util::WidgetSPtr makeWidget(ToolbarSide side) {
+        GtkBox* hbox = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1));
         GtkWidget* lbl = gtk_label_new(_("Layer"));
         gtk_widget_set_margin_start(lbl, 7);
         gtk_widget_set_margin_end(lbl, 7);
@@ -172,8 +175,7 @@ public:
         gtk_menu_button_set_always_show_arrow(GTK_MENU_BUTTON(menuButton), true);
         gtk_box_append(hbox, menuButton);
 
-        // TODO: fix orientation
-        gtk_menu_button_set_direction(GTK_MENU_BUTTON(menuButton), horizontal ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);
+        setMenuButtonDirection(GTK_MENU_BUTTON(menuButton), side);
         gtk_menu_button_set_popover(GTK_MENU_BUTTON(menuButton), GTK_WIDGET(this->popover));
 
         LayerCtrlListener::registerListener(lc);
@@ -184,7 +186,7 @@ public:
 
         updateSelectedLayer();
 
-        return item;
+        return xoj::util::WidgetSPtr(GTK_WIDGET(hbox), xoj::util::adopt);
     }
 
     static void popoverShown(GtkWidget*, InstanceData* data) {
@@ -257,13 +259,13 @@ auto ToolPageLayer::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name(this->iconName.c_str());
 }
 
-auto ToolPageLayer::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
+auto ToolPageLayer::createItem(ToolbarSide side) -> Widgetry {
     auto data = std::make_unique<InstanceData>(lc);
-    auto item = data->makeWidget(horizontal);
+    auto item = data->makeWidget(side);
 
     // Destroy *data if the widget is destroyed
     g_object_weak_ref(
             G_OBJECT(item.get()), +[](gpointer d, GObject*) { delete static_cast<InstanceData*>(d); }, data.release());
 
-    return item;
+    return {std::move(item), nullptr};
 }

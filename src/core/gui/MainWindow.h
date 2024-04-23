@@ -39,10 +39,11 @@ class XournalView;
 class PdfFloatingToolbox;
 class FloatingToolbox;
 class GladeSearchpath;
+class ToolbarBox;
 
 class Menubar;
 
-typedef std::array<xoj::util::WidgetSPtr, TOOLBAR_DEFINITIONS_LEN> ToolbarWidgetArray;
+typedef std::array<std::unique_ptr<ToolbarBox>, TOOLBAR_DEFINITIONS_LEN> ToolbarArray;
 
 class MainWindow: public GladeGui {
 public:
@@ -105,7 +106,6 @@ public:
     void updateToolbarMenu();
     void updateColorscheme();
 
-    const ToolbarWidgetArray& getToolbarWidgets() const;
     const char* getToolbarName(GtkWidget* toolbar) const;
 
     Layout* getLayout() const;
@@ -167,7 +167,7 @@ private:
     bool darkMode = false;
     bool modifiedGtkSettingsTheme = false;
 
-    ToolbarWidgetArray toolbarWidgets;
+    ToolbarArray toolbars;
 
     bool sidebarVisible = true;
 

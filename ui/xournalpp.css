@@ -111,19 +111,12 @@ toolbar.editing {
  * Note: in glade files, property with name="name". i.e. <property name="name">floatingToolbox</property>
  */
 
-
-toolitem > box > label+label+button
-{
-	border-width:0;
-	box-shadow:none;
-	background-image:none;
-}
-
-box.toolbar button,
-popover.toolbar button {
+/*** Toolbar business ***/
+box.toolbar button:not(.model),
+popover.toolbar button:not(.model) {
   padding:3px;
   border-style:none;
-  -gtk-icon-size:25px;
+  -gtk-icon-size:24px;
 }
 
 .orientationFormatBox > button > widget > box > image {
@@ -132,8 +125,19 @@ popover.toolbar button {
 }
 
 box.toolbar button:not(:checked):not(:active):not(:hover),
-popover.toolbar button:not(:checked):not(:active):not(:hover){
-  border-color:transparent;
+popover.toolbar button:not(:checked):not(:active):not(:hover) {
+  border-style:none;
+  box-shadow:none;
+  background-color:transparent;
+  background-image:none;
+}
+
+box.toolbar button.model {
+  padding:3px;
+  border-style:none;
+}
+
+box.toolbar button.model:not(:checked):not(:active):not(:hover) {
   border-style:none;
   box-shadow:none;
   background-color:transparent;
