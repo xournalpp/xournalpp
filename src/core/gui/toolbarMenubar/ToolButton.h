@@ -35,7 +35,7 @@ public:
     void setPopoverFactory(const PopoverFactory* factory);
 
 protected:
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
     GtkWidget* getNewToolIcon() const override;
 

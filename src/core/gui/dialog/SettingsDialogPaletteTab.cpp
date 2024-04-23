@@ -195,8 +195,7 @@ auto SettingsDialogPaletteTab::newPaletteColorIconsBox(const Palette& palette) -
     GtkWidget* colors = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
     for (unsigned long i = 0; i < palette.size(); i++) {
         const NamedColor& namedColor = palette.getColorAt(i);
-        const Color c = namedColor.getColor();
-        GtkWidget* icon = ColorIcon::newGtkImage(c, 16, true);
+        GtkWidget* icon = ColorIcon::newGtkImage(namedColor.getColor());
         gtk_box_append(GTK_BOX(colors), icon);
     }
     gtk_widget_set_halign(colors, GTK_ALIGN_END);
