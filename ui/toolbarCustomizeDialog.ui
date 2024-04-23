@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="DialogCustomizeToolbar">
+    <property name="title" translatable="1">Customize Toolbars</property>
+    <property name="destroy-with-parent">1</property>
+    <property name="child">
+      <object class="GtkBox" id="vbox1">
+        <property name="height-request">500</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="label1">
+            <property name="label" translatable="1">Drag and drop Components from here to the toolbars and back.</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkNotebook" id="notebook">
+            <property name="vexpand">1</property>
+            <property name="margin-top">8</property>
+            <property name="tab-pos">left</property>
+            <property name="scrollable">1</property>
+            <property name="enable-popup">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="btClose">
+            <property name="valign">center</property>
+            <property name="label" translatable="1">Close</property>
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <property name="halign">end</property>
+            <property name="margin-top">4</property>
+            <child>
+              <object class='GtkShortcutController'>
+                <property name='scope'>managed</property>
+                <child>
+                  <object class='GtkShortcut'>
+                    <property name='trigger'>Escape</property>
+                    <property name='action'>activate</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>

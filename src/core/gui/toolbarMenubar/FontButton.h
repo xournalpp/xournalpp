@@ -17,20 +17,20 @@
 
 #include "control/actions/ActionRef.h"
 
-#include "AbstractToolItem.h"
+#include "ItemWithNamedIcon.h"
 
 class ActionDatabase;
 
-class FontButton: public AbstractToolItem {
+class FontButton: public ItemWithNamedIcon {
 public:
     FontButton(std::string id, ActionDatabase& db);
     ~FontButton() override = default;
 
 public:
-    GtkWidget* getNewToolIcon() const override;
+    const char* getIconName() const override;
     std::string getToolDisplayName() const override;
 
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
 private:
     ActionRef gAction;  ///< Points to the GAction corresponding to Action::FONT
