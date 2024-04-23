@@ -17,6 +17,7 @@
 #include <gtk/gtk.h>  // for GtkWidget
 
 #include "enums/Action.enum.h"
+#include "gui/toolbarMenubar/ToolbarSide.h"
 #include "util/raii/GObjectSPtr.h"
 #include "util/raii/GVariantSPtr.h"
 
@@ -45,7 +46,11 @@ public:
     auto operator=(AbstractToolItem&&) -> AbstractToolItem& = delete;  // Implement if desired
 
 public:
-    virtual xoj::util::WidgetSPtr createItem(bool horizontal) = 0;
+    struct Widgetry {
+        xoj::util::WidgetSPtr item;
+        xoj::util::WidgetSPtr proxy;
+    };
+    virtual Widgetry createItem(ToolbarSide s) = 0;
 
     const std::string& getId() const;
     Category getCategory() const;

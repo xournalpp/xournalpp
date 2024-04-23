@@ -30,7 +30,7 @@ public:
     ToolZoomSlider(std::string id, ZoomControl* zoom, IconNameHelper iconNameHelper, ActionDatabase& db);
     ~ToolZoomSlider() override = default;
 
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
 protected:
     static constexpr bool DISPLAY_VALUE = true;

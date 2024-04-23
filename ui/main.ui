@@ -25,55 +25,31 @@
           </object>
         </child>
         <child>
-          <object class="GtkScrolledWindow">
-            <property name="can-focus">0</property>
-            <property name="vscrollbar-policy">2</property>
-            <child>
-              <object class="GtkBox" id="tbFloat1">
-                <style>
-                  <class name="toolbar"/>
-                </style>
-              </object>
-            </child>
+          <object class="GtkMenuButton" id="tbFloat1">
+            <property name="direction">up</property>
+            <property name="label">Placeholder for toolbar</property>
+            <property name="hexpand">1</property>
           </object>
         </child>
         <child>
-          <object class="GtkScrolledWindow">
-            <property name="can-focus">0</property>
-            <property name="vscrollbar-policy">2</property>
-            <child>
-              <object class="GtkBox" id="tbFloat2">
-                <style>
-                  <class name="toolbar"/>
-                </style>
-              </object>
-            </child>
+          <object class="GtkMenuButton" id="tbFloat2">
+            <property name="direction">up</property>
+            <property name="label">Placeholder for toolbar</property>
+            <property name="hexpand">1</property>
           </object>
         </child>
         <child>
-          <object class="GtkScrolledWindow">
-            <property name="can-focus">0</property>
-            <property name="vscrollbar-policy">2</property>
-            <child>
-              <object class="GtkBox" id="tbFloat3">
-                <style>
-                  <class name="toolbar"/>
-                </style>
-              </object>
-            </child>
+          <object class="GtkMenuButton" id="tbFloat3">
+            <property name="direction">down</property>
+            <property name="label">Placeholder for toolbar</property>
+            <property name="hexpand">1</property>
           </object>
         </child>
         <child>
-          <object class="GtkScrolledWindow">
-            <property name="can-focus">0</property>
-            <property name="vscrollbar-policy">2</property>
-            <child>
-              <object class="GtkBox" id="tbFloat4">
-                <style>
-                  <class name="toolbar"/>
-                </style>
-              </object>
-            </child>
+          <object class="GtkMenuButton" id="tbFloat4">
+            <property name="direction">down</property>
+            <property name="label">Placeholder for toolbar</property>
+            <property name="hexpand">1</property>
           </object>
         </child>
         <child>
@@ -104,60 +80,34 @@
             <property name="name">mainBox</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkScrolledWindow">
-                <property name="can-focus">0</property>
-                <property name="vscrollbar-policy">2</property>
-                <child>
-                  <object class="GtkBox" id="tbTop1">
-                    <style>
-                      <class name="toolbar"/>
-                    </style>
-                  </object>
-                </child>
+              <object class="GtkMenuButton" id="tbTop1">
+                <property name="direction">down</property>
+                <property name="label">Placeholder for toolbar</property>
+                <property name="hexpand">1</property>
               </object>
             </child>
             <child>
-              <object class="GtkScrolledWindow">
-                <property name="can-focus">0</property>
-                <property name="vscrollbar-policy">2</property>
-                <child>
-                  <object class="GtkBox" id="tbTop2">
-                    <style>
-                      <class name="toolbar"/>
-                    </style>
-                  </object>
-                </child>
+              <object class="GtkMenuButton" id="tbTop2">
+                <property name="direction">down</property>
+                <property name="label">Placeholder for toolbar</property>
+                <property name="hexpand">1</property>
               </object>
             </child>
             <child>
               <object class="GtkBox" id="mainContainerBox">
                 <property name="name">mainContainerBox</property>
                 <child>
-                  <object class="GtkScrolledWindow">
-                    <property name="can-focus">0</property>
-                    <property name="hscrollbar-policy">2</property>
-                    <child>
-                      <object class="GtkBox" id="tbLeft1">
-                        <property name="orientation">vertical</property>
-                        <style>
-                          <class name="toolbar"/>
-                        </style>
-                      </object>
-                    </child>
+                  <object class="GtkMenuButton" id="tbLeft1">
+                    <property name="direction">right</property>
+                    <property name="label">Placeholder for toolbar</property>
+                    <property name="vexpand">1</property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkScrolledWindow">
-                    <property name="can-focus">0</property>
-                    <property name="hscrollbar-policy">2</property>
-                    <child>
-                      <object class="GtkBox" id="tbLeft2">
-                        <property name="orientation">vertical</property>
-                        <style>
-                          <class name="toolbar"/>
-                        </style>
-                      </object>
-                    </child>
+                  <object class="GtkMenuButton" id="tbLeft2">
+                    <property name="direction">right</property>
+                    <property name="label">Placeholder for toolbar</property>
+                    <property name="vexpand">1</property>
                   </object>
                 </child>
                 <child>
@@ -215,31 +165,17 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkScrolledWindow">
-                    <property name="can-focus">0</property>
-                    <property name="hscrollbar-policy">2</property>
-                    <child>
-                      <object class="GtkBox" id="tbRight1">
-                        <property name="orientation">vertical</property>
-                        <style>
-                          <class name="toolbar"/>
-                        </style>
-                      </object>
-                    </child>
+                  <object class="GtkMenuButton" id="tbRight1">
+                    <property name="direction">left</property>
+                    <property name="label">Placeholder for toolbar</property>
+                    <property name="vexpand">1</property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkScrolledWindow">
-                    <property name="can-focus">0</property>
-                    <property name="hscrollbar-policy">2</property>
-                    <child>
-                      <object class="GtkBox" id="tbRight2">
-                        <property name="orientation">vertical</property>
-                        <style>
-                          <class name="toolbar"/>
-                        </style>
-                      </object>
-                    </child>
+                  <object class="GtkMenuButton" id="tbRight2">
+                    <property name="direction">left</property>
+                    <property name="label">Placeholder for toolbar</property>
+                    <property name="vexpand">1</property>
                   </object>
                 </child>
               </object>
@@ -303,29 +239,17 @@
               </object>
             </child>
             <child>
-              <object class="GtkScrolledWindow">
-                <property name="can-focus">0</property>
-                <property name="vscrollbar-policy">2</property>
-                <child>
-                  <object class="GtkBox" id="tbBottom1">
-                    <style>
-                      <class name="toolbar"/>
-                    </style>
-                  </object>
-                </child>
+              <object class="GtkMenuButton" id="tbBottom1">
+                <property name="direction">up</property>
+                <property name="label">Placeholder for toolbar</property>
+                <property name="hexpand">1</property>
               </object>
             </child>
             <child>
-              <object class="GtkScrolledWindow">
-                <property name="can-focus">0</property>
-                <property name="vscrollbar-policy">2</property>
-                <child>
-                  <object class="GtkBox" id="tbBottom2">
-                    <style>
-                      <class name="toolbar"/>
-                    </style>
-                  </object>
-                </child>
+              <object class="GtkMenuButton" id="tbBottom2">
+                <property name="direction">up</property>
+                <property name="label">Placeholder for toolbar</property>
+                <property name="hexpand">1</property>
               </object>
             </child>
             <child>

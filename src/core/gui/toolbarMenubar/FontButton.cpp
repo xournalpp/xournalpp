@@ -35,7 +35,7 @@ static GtkWidget* makeChild(const char* desc) {
     return box;
 }
 
-auto FontButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
+auto FontButton::createItem(ToolbarSide side) -> Widgetry {
     GtkWidget* btn = gtk_button_new();
     xoj::util::GVariantSPtr font(g_action_get_state(G_ACTION(gAction.get())), xoj::util::adopt);
     const char* desc = g_variant_get_string(font.get(), nullptr);
@@ -51,7 +51,19 @@ auto FontButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
                             }),
                             btn, GConnectFlags(0));
 
-    return xoj::util::WidgetSPtr(btn, xoj::util::adopt);
+    auto createProxy = [this]() {
+        GtkWidget* proxy = gtk_button_new();
+        auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+        gtk_button_set_child(GTK_BUTTON(proxy), box);
+        gtk_box_append(GTK_BOX(box), getNewToolIcon());
+        gtk_box_append(GTK_BOX(box), gtk_label_new(getToolDisplayName().c_str()));
+        gtk_actionable_set_action_name(GTK_ACTIONABLE(proxy),
+                                       (std::string("win.") + Action_toString(Action::SELECT_FONT)).c_str());
+        return proxy;
+    };
+
+
+    return {xoj::util::WidgetSPtr(btn, xoj::util::adopt), xoj::util::WidgetSPtr(createProxy(), xoj::util::adopt)};
 }
 
 auto FontButton::getToolDisplayName() const -> std::string { return _("Font"); }

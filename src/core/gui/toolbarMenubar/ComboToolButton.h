@@ -51,7 +51,7 @@ public:
     std::string getToolDisplayName() const override;
 
 protected:
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
     GtkWidget* getNewToolIcon() const override;
 

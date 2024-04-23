@@ -78,7 +78,7 @@ struct Data {
     }
 };
 
-auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
+auto DrawingTypeComboToolButton::createItem(ToolbarSide side) -> Widgetry {
     auto data = std::make_unique<Data>();
     data->entries = this->entries;
 
@@ -87,6 +87,9 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
         GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
         gtk_popover_set_child(data->popover, GTK_WIDGET(box));
         gtk_widget_add_css_class(GTK_WIDGET(data->popover), "toolbar");
+        gtk_popover_set_has_arrow(data->popover, false);
+        gtk_widget_set_halign(GTK_WIDGET(data->popover), GTK_ALIGN_START);
+        gtk_widget_set_valign(GTK_WIDGET(data->popover), GTK_ALIGN_START);
 
         for (const Entry& t: *this->entries) {
             gtk_box_append(box, createPopoverEntry(t));
@@ -110,11 +113,10 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
     // Create item
     GtkMenuButton* menubutton = GTK_MENU_BUTTON(gtk_menu_button_new());
     gtk_menu_button_set_popover(menubutton, GTK_WIDGET(data->popover));
-    gtk_menu_button_set_direction(menubutton,
-                                  horizontal ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);  // TODO: fix directions
+    setMenuButtonDirection(menubutton, side);
     gtk_menu_button_set_always_show_arrow(menubutton, true);
 
-    GtkBox* box = GTK_BOX(gtk_box_new(horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL, 0));
+    GtkBox* box = GTK_BOX(gtk_box_new(to_Orientation(side), 0));
     gtk_box_append(box, GTK_WIDGET(data->button));
     gtk_box_append(box, GTK_WIDGET(menubutton));
 
@@ -157,7 +159,7 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
             },
             data.release());
 
-    return item;
+    return {std::move(item), nullptr};
 }
 
 auto DrawingTypeComboToolButton::getToolDisplayName() const -> std::string { return this->description; }

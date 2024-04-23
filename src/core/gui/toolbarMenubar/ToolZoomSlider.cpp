@@ -33,8 +33,8 @@ auto ToolZoomSlider::formatSliderValue(double value) -> std::string {
     return out.str();
 }
 
-auto ToolZoomSlider::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
-    auto item = SliderItemCreationHelper<ToolZoomSlider>::createItem(this, horizontal);
+auto ToolZoomSlider::createItem(ToolbarSide side) -> Widgetry {
+    auto item = SliderItemCreationHelper<ToolZoomSlider>::createItem(this, side);
 
     class Listener: public ZoomListener {
     public:
@@ -64,7 +64,7 @@ auto ToolZoomSlider::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     g_object_weak_ref(
             G_OBJECT(item.get()), +[](gpointer d, GObject*) { delete static_cast<Listener*>(d); }, data.release());
 
-    return item;
+    return {std::move(item), nullptr};
 }
 
 auto ToolZoomSlider::getToolDisplayName() const -> std::string { return _("Zoom Slider"); }

@@ -23,10 +23,11 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop() {
 
     this->toolbars.clear();
 
-    for (auto w: win->getToolbarWidgets()) {
-        this->toolbars.emplace_back(std::make_unique<ToolbarAdapter>(w.get(), win->getToolbarName(w.get()),
-                                                                     control->getWindow()->getToolMenuHandler(), win));
-    }
+    // for (auto w: win->getToolbarWidgets()) {
+    //     this->toolbars.emplace_back(std::make_unique<ToolbarAdapter>(w.get(), win->getToolbarName(w.get()),
+    //                                                                  control->getWindow()->getToolMenuHandler(),
+    //                                                                  win));
+    // }
 }
 
 void ToolbarDragDropHandler::clearToolbarsFromDragAndDrop() { this->toolbars.clear(); }
