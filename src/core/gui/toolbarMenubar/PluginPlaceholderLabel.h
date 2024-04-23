@@ -36,7 +36,7 @@ public:
 
 protected:
     /// Creates a label widget for the placeholder; stores and tracks it
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
     /// Returns a theme-supported icon for the placeholder tool
     GtkWidget* getNewToolIcon() const override;

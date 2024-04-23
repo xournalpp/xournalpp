@@ -34,7 +34,7 @@ public:
     /// Propagates the info to all instances of the Page Spinner
     void setPageInfo(size_t currentPage, size_t pageCount, size_t pdfPage);
     std::string getToolDisplayName() const override;
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
     inline SpinPageListener* getListener() const { return listener; }
 
