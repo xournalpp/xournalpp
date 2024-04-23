@@ -1,5 +1,7 @@
 #include "TextEditionView.h"
 
+#include <tuple>
+
 #include "control/tools/TextEditor.h"
 #include "model/Text.h"
 #include "util/Color.h"
@@ -52,7 +54,6 @@ void TextEditionView::drawWithoutDrawingAids(cairo_t* cr) const {
     xoj::util::CairoSaveGuard saveGuard(cr);
 
     const Text* textElement = this->textEditor->getTextElement();
-    Util::cairo_set_source_rgbi(cr, textElement->getColor());
 
     // From now on, coordinates are in textElement coordinates
     cairo_translate(cr, textElement->getX(), textElement->getY());
@@ -65,7 +66,22 @@ void TextEditionView::drawWithoutDrawingAids(cairo_t* cr) const {
 
     pango_context_set_matrix(pango_layout_get_context(layout), nullptr);
 
+    Util::cairo_set_source_rgbi(cr, textElement->getColor());
     pango_cairo_show_layout(cr, layout);
+
+    auto selection_opt = this->textEditor->getCurrentSelection();
+    if (selection_opt.has_value()) {
+        PangoRectangle rect;
+        auto color = this->textEditor->getSelectionColor();
+        auto selection = selection_opt.value();
+        for (int i = std::get<0>(selection); i < std::get<1>(selection); i++) {
+            pango_layout_index_to_pos(layout, i, &rect);
+            Util::cairo_set_source_rgbi(cr, color, 0.6);
+            cairo_rectangle(cr, double(rect.x) / PANGO_SCALE, double(rect.y) / PANGO_SCALE,
+                            double(rect.width) / PANGO_SCALE, double(rect.height) / PANGO_SCALE);
+            cairo_fill(cr);
+        }
+    }
 }
 
 bool TextEditionView::isViewOf(const OverlayBase* overlay) const { return overlay == this->textEditor; }

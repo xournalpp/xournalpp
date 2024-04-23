@@ -5,9 +5,10 @@
 #include <cstdio>      // for sprintf, size_t
 #include <filesystem>  // for exists
 
-#include <cairo.h>                  // for cairo_surface_t
-#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
-#include <glib.h>                   // for g_free, g_strdup_printf
+#include <cairo.h>                   // for cairo_surface_t
+#include <gdk-pixbuf/gdk-pixbuf.h>   // for gdk_pixbuf_save
+#include <glib.h>                    // for g_free, g_strdup_printf
+#include <pango/pango-attributes.h>  // for pango_attr_list_to_string
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "control/xml/XmlAudioNode.h"          // for XmlAudioNode
@@ -178,11 +179,21 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
 
             XojFont& f = t->getFont();
 
+            xoj::util::PangoAttrListSPtr attrlist = t->getAttributeList();
+            std::string attributes = pango_attr_list_to_string(attrlist.get());
+
+            // This check is only required, because an StringAttribute must not be of length 0.
+            // Otherwise the assertion len != 0 at GzOutputStream::write will fail and terminate
+            if (attributes.length() == 0) {
+                attributes = " ";
+            }
+
             text->setAttrib("font", f.getName().c_str());
             text->setAttrib("size", f.getSize());
             text->setAttrib("x", t->getX());
             text->setAttrib("y", t->getY());
             text->setAttrib("color", getColorStr(t->getColor()).c_str());
+            text->setAttrib("attributes", g_uri_escape_string(attributes.c_str(), NULL, false));
 
             writeTimestamp(t, text);
         } else if (e->getType() == ELEMENT_IMAGE) {

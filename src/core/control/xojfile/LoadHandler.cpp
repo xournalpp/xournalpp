@@ -10,8 +10,9 @@
 #include <type_traits>  // for remove_reference<>::type
 #include <utility>      // for move
 
-#include <gio/gio.h>      // for g_file_get_path, g_fil...
-#include <glib-object.h>  // for g_object_unref
+#include <gio/gio.h>                 // for g_file_get_path, g_fil...
+#include <glib-object.h>             // for g_object_unref
+#include <pango/pango-attributes.h>  // for pango_attr_list_from_string
 
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 #include "model/BackgroundImage.h"             // for BackgroundImage
@@ -31,7 +32,8 @@
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/i18n.h"               // for _F, FC, FS, _
 #include "util/raii/GObjectSPtr.h"
-#include "util/safe_casts.h"  // for as_signed, as_unsigned
+#include "util/raii/PangoSPtr.h"  // for PangoAttrListSPtr
+#include "util/safe_casts.h"      // for as_signed, as_unsigned
 
 #include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
@@ -647,6 +649,15 @@ void LoadHandler::parseText() {
     double fontSize = LoadHandlerHelper::getAttribDouble("size", this);
     double x = LoadHandlerHelper::getAttribDouble("x", this);
     double y = LoadHandlerHelper::getAttribDouble("y", this);
+    const char* attributes = LoadHandlerHelper::getAttrib("attributes", true, this);
+
+    if (attributes != nullptr) {
+        std::string attrs = g_uri_unescape_string(attributes, NULL);
+        xoj::util::PangoAttrListSPtr attrlist =
+                xoj::util::PangoAttrListSPtr(pango_attr_list_from_string(attrs.c_str()), xoj::util::adopt);
+        this->text->replaceAttributes(attrlist);
+    }
+
 
     this->text->setX(x);
     this->text->setY(y);

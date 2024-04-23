@@ -14,6 +14,7 @@
 #include "util/Stacktrace.h"      // for Stacktrace
 #include "util/StringUtils.h"
 #include "util/raii/GObjectSPtr.h"
+#include "util/raii/PangoSPtr.h"                  // for PangoAttrListSPtr
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
 #include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
@@ -22,6 +23,7 @@ using xoj::util::Rectangle;
 Text::Text(): AudioElement(ELEMENT_TEXT) {
     this->font.setName("Sans");
     this->font.setSize(12);
+    this->attributes = xoj::util::PangoAttrListSPtr(pango_attr_list_new(), xoj::util::adopt);
 }
 
 Text::~Text() = default;
@@ -39,6 +41,8 @@ auto Text::cloneText() const -> std::unique_ptr<Text> {
     text->snappedBounds = this->snappedBounds;
     text->sizeCalculated = this->sizeCalculated;
     text->inEditing = this->inEditing;
+    text->alignment = this->alignment;
+    text->attributes = this->attributes;
 
     return text;
 }
@@ -103,6 +107,11 @@ void Text::updatePangoFont(PangoLayout* layout) const {
 
     pango_layout_set_font_description(layout, desc);
     pango_font_description_free(desc);
+
+    pango_layout_set_attributes(layout, this->attributes.get());
+
+    PangoAlignment alignment = static_cast<PangoAlignment>(this->alignment);
+    pango_layout_set_alignment(layout, alignment);
 }
 
 void Text::scale(double x0, double y0, double fx, double fy, double rotation,
@@ -204,4 +213,30 @@ auto Text::findText(const std::string& search) const -> std::vector<XojPdfRectan
     }
 
     return list;
+}
+
+void Text::setAlignment(TextAlignment align) { this->alignment = align; }
+
+TextAlignment Text::getAlignment() const { return this->alignment; }
+
+xoj::util::PangoAttrListSPtr Text::getAttributeList() const { return this->attributes; };
+
+void Text::addAttribute(PangoAttribute* attrib) {
+    pango_attr_list_change(this->attributes.get(), attrib);
+    this->calcSize();
+}
+
+void Text::clearAttributes() {
+    this->attributes = xoj::util::PangoAttrListSPtr(pango_attr_list_new(), xoj::util::adopt);
+    this->calcSize();
+}
+
+void Text::updateTextAttributesPosition(int pos, int del, int add) {
+    pango_attr_list_update(this->attributes.get(), pos, del, add);
+    this->calcSize();
+}
+
+void Text::replaceAttributes(xoj::util::PangoAttrListSPtr newAttributes) {
+    this->attributes = newAttributes;
+    this->calcSize();
 }
