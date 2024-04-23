@@ -19,6 +19,7 @@
 class ToolbarEntry;
 struct Palette;
 
+/// Corresponds to one configuration, containing all the various ToolbarBoxes (around the document or floating)
 class ToolbarData {
 public:
     ToolbarData(bool predefined);
@@ -34,12 +35,11 @@ public:
     void setId(std::string id);
     bool isPredefined() const;
 
+    /// Adds the ToolbarEntry to the configuration. Overrides any preexisting entry with the same name.
+    void setEntry(ToolbarEntry e);
+
     void load(GKeyFile* config, const char* group, const Palette& colorPalette);
     void saveToKeyFile(GKeyFile* config) const;
-
-    // Editing API
-    int insertItem(const std::string& toolbar, const std::string& item, int position);
-    bool removeItemByID(const std::string& toolbar, int id);
 
 private:
     std::string id;
