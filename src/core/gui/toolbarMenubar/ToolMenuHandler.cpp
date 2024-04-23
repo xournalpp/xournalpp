@@ -16,8 +16,9 @@
 #include "gui/toolbarMenubar/model/ToolbarEntry.h"  // for ToolbarEntry
 #include "gui/toolbarMenubar/model/ToolbarItem.h"   // for ToolbarItem
 #include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
-#include "plugin/Plugin.h"                          // for ToolbarButtonEntr<
-#include "util/GVariantTemplate.h"                  // for gVariantType
+#include "gui/widgets/ToolbarBox.h"
+#include "plugin/Plugin.h"          // for ToolbarButtonEntr<
+#include "util/GVariantTemplate.h"  // for gVariantType
 #include "util/GtkUtil.h"
 #include "util/NamedColor.h"  // for NamedColor
 #include "util/PathUtil.h"
@@ -86,18 +87,16 @@ ToolMenuHandler::~ToolMenuHandler() = default;
 
 void ToolMenuHandler::freeDynamicToolbarItems() { this->toolbarColorItems.clear(); }
 
-void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
-    g_warning("Implement ToolMenuHandler::unloadToolbar");
-    // gtk_container_foreach(
-    //         GTK_CONTAINER(toolbar),
-    //         +[](GtkWidget* child, gpointer c) { gtk_container_remove(GTK_CONTAINER(c), child); }, toolbar);
-    gtk_widget_hide(toolbar);
+void ToolMenuHandler::unloadToolbar(ToolbarBox* toolbar) {
+    toolbar->clear();
+    gtk_widget_hide(toolbar->getWidget());
 }
 
-void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal) {
+void ToolMenuHandler::load(const ToolbarData* d, ToolbarBox* toolbar, const char* toolbarName) {
     int count = 0;
 
     const Palette& palette = this->control->getSettings()->getColorPalette();
+    ToolbarSide side = toolbar->getSide();
 
     for (const ToolbarEntry& e: d->contents) {
         if (e.getName() == toolbarName) {
@@ -111,8 +110,12 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                 }
 
                 if (name == "SEPARATOR") {
-                    auto* it = gtk_separator_new(horizontal ? GTK_ORIENTATION_VERTICAL : GTK_ORIENTATION_HORIZONTAL);
-                    gtk_box_append(GTK_BOX(toolbar), it);
+                    auto* it = gtk_separator_new(to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL ?
+                                                         GTK_ORIENTATION_VERTICAL :
+                                                         GTK_ORIENTATION_HORIZONTAL);
+                    auto* proxy = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+                    gtk_widget_add_css_class(proxy, "model");
+                    toolbar->append(it, proxy);
 
                     ToolitemDragDrop::attachMetadata(it, dataItem.getId(), TOOL_ITEM_SEPARATOR);
 
@@ -120,14 +123,16 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                 }
 
                 if (name == "SPACER") {
-                    // Todo Find a better way to get an invisible widget (separator with CSS?)
-                    auto* it = gtk_label_new("");
-                    if (horizontal) {
+                    GtkWidget* it;
+                    if (to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL) {
+                        it = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
                         gtk_widget_set_hexpand(it, true);
                     } else {
+                        it = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
                         gtk_widget_set_vexpand(it, true);
                     }
-                    gtk_box_append(GTK_BOX(toolbar), it);
+                    gtk_widget_add_css_class(it, "spacer");
+                    toolbar->append(it, nullptr);
 
                     ToolitemDragDrop::attachMetadata(it, dataItem.getId(), TOOL_ITEM_SPACER);
 
@@ -148,10 +153,10 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                     const NamedColor& namedColor = palette.getColorAt(paletteIndex);
                     auto& item = this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor));
 
-                    auto it = item->createItem(horizontal);
-                    gtk_box_append(GTK_BOX(toolbar), it.get());
+                    auto it = item->createItem(side);
+                    toolbar->append(it.item.get(), it.proxy.get());
 
-                    ToolitemDragDrop::attachMetadataColor(it.get(), dataItem.getId(), &namedColor, item.get());
+                    ToolitemDragDrop::attachMetadataColor(it.item.get(), dataItem.getId(), &namedColor, item.get());
                     continue;
                 }
 
@@ -159,10 +164,10 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                 for (auto& item: this->toolItems) {
                     if (name == item->getId()) {
                         count++;
-                        auto it = item->createItem(horizontal);
-                        gtk_box_append(GTK_BOX(toolbar), it.get());
+                        auto it = item->createItem(side);
+                        toolbar->append(it.item.get(), it.proxy.get());
 
-                        ToolitemDragDrop::attachMetadata(it.get(), dataItem.getId(), item.get());
+                        ToolitemDragDrop::attachMetadata(it.item.get(), dataItem.getId(), item.get());
 
                         found = true;
                         break;
@@ -177,11 +182,7 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
         }
     }
 
-    if (count == 0) {
-        gtk_widget_hide(GTK_WIDGET(toolbar));
-    } else {
-        gtk_widget_show(GTK_WIDGET(toolbar));
-    }
+    gtk_widget_set_visible(toolbar->getWidget(), count != 0);
 }
 
 void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it) {

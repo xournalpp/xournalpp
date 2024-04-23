@@ -44,6 +44,7 @@ struct ToolbarButtonEntry;
 class PageTypeSelectionPopover;
 class PageType;
 class StylePopoverFactory;
+class ToolbarBox;
 
 class ToolMenuHandler {
 public:
@@ -54,7 +55,7 @@ public:
 
 public:
     void freeDynamicToolbarItems();
-    static void unloadToolbar(GtkWidget* toolbar);
+    static void unloadToolbar(ToolbarBox* toolbar);
 
     /**
      * @brief Load the toolbar.ini file
@@ -63,9 +64,8 @@ public:
      * @param d Data Object representing the selected toolbars (e.g Portrait)
      * @param toolbar reference to the widget representing the toolbar
      * @param toolbarName toolbarName which should be read from the file
-     * @param horizontal whether the toolbar is horizontal
      */
-    void load(const ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
+    void load(const ToolbarData* d, ToolbarBox* toolbar, const char* toolbarName);
 
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);

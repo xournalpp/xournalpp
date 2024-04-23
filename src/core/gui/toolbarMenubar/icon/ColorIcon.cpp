@@ -1,46 +1,42 @@
 #include "ColorIcon.h"
 
 #include <cmath>  // for M_PI
+#include <iomanip>
+#include <sstream>
 
 #include "util/raii/CairoWrappers.h"
 #include "util/raii/GObjectSPtr.h"
+#include "util/serdesstream.h"
 
 namespace ColorIcon {
 /**
  * Create a new GtkImage with preview color
  */
-auto newGtkImage(Color color, int size, bool circle) -> GtkWidget* {
-    xoj::util::GObjectSPtr<GdkPixbuf> img(newGdkPixbuf(color, size, circle));
+auto newGtkImage(Color color, bool circle) -> GtkWidget* {
+    xoj::util::GObjectSPtr<GdkPixbuf> img(newGdkPixbuf(color, circle));
     GtkWidget* w = gtk_image_new_from_pixbuf(img.get());
-    gtk_widget_show(w);
     return w;
 }
 
 /**
  * Create a new GdkPixbuf* with preview color
  */
-auto newGdkPixbuf(Color color, int size, bool circle) -> xoj::util::GObjectSPtr<GdkPixbuf> {
-    xoj::util::CairoSurfaceSPtr buf(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, size, size), xoj::util::adopt);
-    xoj::util::CairoSPtr cr(cairo_create(buf.get()), xoj::util::adopt);
-
-    Util::cairo_set_source_rgbi(cr.get(), color, 1);
-
-    constexpr double PADDING = 1;
-
+auto newGdkPixbuf(Color color, bool circle) -> xoj::util::GObjectSPtr<GdkPixbuf> {
+    auto stream = serdes_stream<std::stringstream>();
+    stream << "<svg width=\"240\" height=\"240\" stroke-width=\"20\" stroke-linecap=\"round\" "
+              "stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\">";
     if (circle) {
-        const double mid = .5 * size;
-        const double radius = mid - PADDING;
-        cairo_arc(cr.get(), mid, mid, radius, 0, 2 * M_PI);
+        stream << "<circle cx=\"120\" cy=\"120\" r=\"100\" ";
     } else {
-        cairo_rectangle(cr.get(), PADDING, PADDING, size - 2 * PADDING, size - 2 * PADDING);
+        stream << "<rect width=\"200\" height=\"200\" x=\"20\" y=\"20\" rx=\"10\" ry=\"10\" ";
     }
-    cairo_fill_preserve(cr.get());
+    stream << "style=\"stroke:#000000;stroke-opacity:1;fill:#" << std::hex << std::setw(6) << std::setfill('0')
+           << (uint32_t(color) & 0x00ffffff) << "\"/></svg>";
 
-    cairo_set_source_rgba(cr.get(), 0, 0, 0, 1);
-    cairo_set_line_width(cr.get(), 1);
-    cairo_stroke(cr.get());
+    std::string str = stream.str();  // Keep this alive as long as gstream is
+    xoj::util::GObjectSPtr<GInputStream> gstream(g_memory_input_stream_new_from_data(str.c_str(), -1, nullptr),
+                                                 xoj::util::adopt);
 
-    return xoj::util::GObjectSPtr<GdkPixbuf>(gdk_pixbuf_get_from_surface(buf.get(), 0, 0, size, size),
-                                             xoj::util::adopt);
+    return xoj::util::GObjectSPtr<GdkPixbuf>(gdk_pixbuf_new_from_stream(gstream.get(), NULL, NULL), xoj::util::adopt);
 }
 };  // namespace ColorIcon
