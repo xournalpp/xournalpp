@@ -16,7 +16,7 @@ PluginToolButton::PluginToolButton(ToolbarButtonEntry* t):
 
 PluginToolButton::~PluginToolButton() = default;
 
-auto PluginToolButton::createItem(bool) -> xoj::util::WidgetSPtr {
+auto PluginToolButton::createItem(ToolbarSide) -> Widgetry {
     xoj::util::WidgetSPtr item(gtk_button_new(), xoj::util::adopt);
 
     GtkButton* btn = GTK_BUTTON(item.get());
@@ -30,7 +30,7 @@ auto PluginToolButton::createItem(bool) -> xoj::util::WidgetSPtr {
                      }),
                      this->t);
 
-    return item;
+    return {std::move(item), nullptr};
 }
 
 auto PluginToolButton::getToolDisplayName() const -> std::string { return this->t->description; }
