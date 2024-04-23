@@ -12,18 +12,17 @@
 
 #include <gtk/gtk.h>  // for GtkWidget
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "ItemWithNamedIcon.h"
 
-class SpacerItem: public AbstractToolItem {
+class SpacerItem: public ItemWithNamedIcon {
 public:
     SpacerItem(const char* id);
     ~SpacerItem() override = default;
 
 public:
+    const char* getIconName() const override;
     std::string getToolDisplayName() const override;
 
 protected:
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
-
-    GtkWidget* getNewToolIcon() const override;
+    Widgetry createItem(ToolbarSide side) override;
 };
