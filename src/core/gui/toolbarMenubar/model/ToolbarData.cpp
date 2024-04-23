@@ -1,5 +1,6 @@
 #include "ToolbarData.h"
 
+#include <algorithm>
 #include <cstring>  // for strcmp, strncmp
 #include <utility>  // for move
 
@@ -131,33 +132,19 @@ void ToolbarData::saveToKeyFile(GKeyFile* config) const {
     g_key_file_set_string(config, group.c_str(), "name", this->name.c_str());
 }
 
-auto ToolbarData::insertItem(const std::string& toolbar, const std::string& item, int position) -> int {
-    g_message("ToolbarData::insertItem(%s, %s, %d);", toolbar.data(), item.data(), position);
-
-    g_return_val_if_fail(isPredefined() == false, -1);
-
-    for (ToolbarEntry& e: this->contents) {
-        if (e.getName() == toolbar) {
-            g_message("    | Toolbar %s found -- Inserting element", toolbar.c_str());
-            return e.insertItem(item, position);
+void ToolbarData::setEntry(ToolbarEntry entry) {
+    auto it = std::find_if(contents.begin(), contents.end(), [&](auto&& e) { return e.getName() == entry.getName(); });
+    if (it == contents.end()) {
+        // Empty toolbars don't need an entry
+        if (!entry.getItems().empty()) {
+            contents.emplace_back(std::move(entry));
+        }
+    } else {
+        if (entry.getItems().empty()) {
+            // Empty toolbars don't need an entry
+            contents.erase(it);
+        } else {
+            *it = std::move(entry);
         }
     }
-
-    // No toolbar named toolbar. Adding a new one
-    g_message("    | Toolbar %s not found -- Creating a new one", toolbar.c_str());
-    auto& newEntry = contents.emplace_back();
-    newEntry.setName(toolbar);
-    return newEntry.addItem(item);
-}
-
-auto ToolbarData::removeItemByID(const string& toolbar, int id) -> bool {
-    g_return_val_if_fail(isPredefined() == false, false);
-
-    for (ToolbarEntry& e: contents) {
-        if (e.getName() == toolbar) {
-            return e.removeItemById(id);
-        }
-    }
-
-    return false;
 }
