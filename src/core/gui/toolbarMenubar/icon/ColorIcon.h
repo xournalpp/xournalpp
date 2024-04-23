@@ -24,12 +24,11 @@ namespace ColorIcon {
  * @brief Create a new GtkImage with preview color
  * @return The pointer is a floating ref
  */
-GtkWidget* newGtkImage(Color color, int size = 22, bool circle = true,
-                       std::optional<Color> secondaryColor = std::nullopt);
+GtkWidget* newGtkImage(Color color, bool circle = true, std::optional<Color> secondaryColor = std::nullopt);
 
 /**
  * @brief Create a new GdkPixbuf* with preview color
  */
-xoj::util::GObjectSPtr<GdkPixbuf> newGdkPixbuf(Color color, int size = 22, bool circle = true,
+xoj::util::GObjectSPtr<GdkPixbuf> newGdkPixbuf(Color color, bool circle = true,
                                                std::optional<Color> secondaryColor = std::nullopt);
 };  // namespace ColorIcon

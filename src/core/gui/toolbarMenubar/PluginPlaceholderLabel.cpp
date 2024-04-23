@@ -39,7 +39,7 @@ auto PluginPlaceholderLabel::getDisplayText() const -> std::string {
     return sanitizeText(text);
 }
 
-auto PluginPlaceholderLabel::createItem(bool) -> xoj::util::WidgetSPtr {
+auto PluginPlaceholderLabel::createItem(ToolbarSide) -> Widgetry {
     const std::string labelText = getDisplayText();
 
     xoj::util::WidgetSPtr item(gtk_label_new(labelText.c_str()), xoj::util::adopt);
@@ -56,7 +56,7 @@ auto PluginPlaceholderLabel::createItem(bool) -> xoj::util::WidgetSPtr {
                          widgets.erase(std::remove(widgets.begin(), widgets.end(), widget), widgets.end());
                      }),
                      this);
-    return item;
+    return {std::move(item), nullptr};
 }
 
 void PluginPlaceholderLabel::setText(std::string text) {
@@ -74,7 +74,7 @@ void PluginPlaceholderLabel::setText(std::string text) {
 auto PluginPlaceholderLabel::getToolDisplayName() const -> std::string { return this->t->description; }
 
 auto PluginPlaceholderLabel::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name("dialog-information", GTK_ICON_SIZE_LARGE_TOOLBAR);
+    return gtk_image_new_from_icon_name("dialog-information");
 }
 
 #endif /* ENABLE_PLUGINS */

@@ -30,6 +30,7 @@
 #include "gui/toolbarMenubar/model/ToolbarData.h"       // for ToolbarData
 #include "gui/toolbarMenubar/model/ToolbarModel.h"      // for ToolbarModel
 #include "gui/widgets/SpinPageAdapter.h"                // for SpinPageAdapter
+#include "gui/widgets/ToolbarBox.h"                     // for ToolbarBox
 #include "gui/widgets/XournalWidget.h"                  // for gtk_xournal_get_l...
 #include "util/GListView.h"                             // for GListView, GListV...
 #include "util/GtkUtil.h"                               // for getWidgetDPI
@@ -88,10 +89,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     this->pdfFloatingToolBox = std::make_unique<PdfFloatingToolbox>(this, overlay);
     this->floatingToolbox = std::make_unique<FloatingToolbox>(this, overlay);
 
-    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        this->toolbarWidgets[i].reset(get(TOOLBAR_DEFINITIONS[i].guiName), xoj::util::ref);
-    }
-
     initXournalWidget();
 
     setSidebarVisible(control->getSettings()->isSidebarVisible());
@@ -136,7 +133,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 }
 
 void MainWindow::populate(GladeSearchpath* gladeSearchPath) {
-
     toolbar->populate(gladeSearchPath);
     menubar->populate(gladeSearchPath, this);
 
@@ -482,9 +478,9 @@ void MainWindow::setToolbarVisible(bool visible) {
     Settings* settings = control->getSettings();
 
     settings->setToolbarVisible(visible);
-    for (auto& w: this->toolbarWidgets) {
-        if (!visible) {  // || (gtk_toolbar_get_n_items(GTK_TOOLBAR(w.get())) != 0)) {
-            gtk_widget_set_visible(w.get(), visible);
+    for (auto& tb: this->toolbars) {
+        if (!visible || !tb->empty()) {
+            gtk_widget_set_visible(tb->getWidget(), visible);
         }
     }
 }
@@ -534,7 +530,7 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
 auto MainWindow::clearToolbar() -> const ToolbarData* {
     if (this->selectedToolbar != nullptr) {
         for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-            ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i].get());
+            ToolMenuHandler::unloadToolbar(this->toolbars[i].get());
         }
 
         this->toolbar->freeDynamicToolbarItems();
@@ -546,8 +542,7 @@ void MainWindow::loadToolbar(ToolbarData* d) {
     this->selectedToolbar = d;
 
     for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        this->toolbar->load(d, this->toolbarWidgets[i].get(), TOOLBAR_DEFINITIONS[i].propName,
-                            TOOLBAR_DEFINITIONS[i].horizontal);
+        this->toolbar->load(d, this->toolbars[i].get(), TOOLBAR_DEFINITIONS[i].propName);
     }
 
     this->floatingToolbox->flagRecalculateSizeRequired();
@@ -561,11 +556,9 @@ void MainWindow::reloadToolbars() {
 
 auto MainWindow::getSelectedToolbar() const -> ToolbarData* { return this->selectedToolbar; }
 
-auto MainWindow::getToolbarWidgets() const -> const ToolbarWidgetArray& { return toolbarWidgets; }
-
 auto MainWindow::getToolbarName(GtkWidget* toolbar) const -> const char* {
     for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        if (this->toolbarWidgets[i].get() == toolbar) {
+        if (this->toolbars[i]->getWidget() == toolbar) {
             return TOOLBAR_DEFINITIONS[i].propName;
         }
     }
@@ -580,6 +573,10 @@ void MainWindow::updateToolbarMenu() {
 }
 
 void MainWindow::createToolbar() {
+    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+        this->toolbars[i] = std::make_unique<ToolbarBox>(get(TOOLBAR_DEFINITIONS[i].guiName));
+    }
+
     toolbarSelected(control->getSettings()->getSelectedToolbar());
 
     this->control->getScheduler()->unblockRerenderZoom();

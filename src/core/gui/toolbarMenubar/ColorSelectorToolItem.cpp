@@ -8,16 +8,14 @@
 #include "util/gtk4_helper.h"                   // for gtk_button_set_child
 #include "util/i18n.h"                          // for _
 
-constexpr int ICON_SIZE = 22;
-
 ColorSelectorToolItem::ColorSelectorToolItem(ActionDatabase& db):
         AbstractToolItem("COLOR_SELECT", Category::COLORS), gAction(db.getAction(Action::TOOL_COLOR)) {}
 
-auto ColorSelectorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
+auto ColorSelectorToolItem::createItem(ToolbarSide) -> Widgetry {
     GtkWidget* btn = gtk_button_new();
     xoj::util::GVariantSPtr v(g_action_get_state(G_ACTION(gAction.get())), xoj::util::adopt);
     Color initialColor = getGVariantValue<Color>(v.get());
-    gtk_button_set_child(GTK_BUTTON(btn), ColorIcon::newGtkImage(initialColor, ICON_SIZE, false));
+    gtk_button_set_child(GTK_BUTTON(btn), ColorIcon::newGtkImage(initialColor, false));
 
     gtk_widget_set_tooltip_text(btn, this->getToolDisplayName().c_str());
     gtk_widget_set_sensitive(btn, g_action_get_enabled(G_ACTION(gAction.get())));
@@ -29,14 +27,25 @@ auto ColorSelectorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
     g_signal_connect_object(gAction.get(), "notify::state", G_CALLBACK(+[](GObject* a, GParamSpec*, gpointer btn) {
                                 xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(a)), xoj::util::adopt);
                                 auto c = getGVariantValue<Color>(state.get());
-                                gtk_button_set_child(GTK_BUTTON(btn), ColorIcon::newGtkImage(c, ICON_SIZE, false));
+                                gtk_button_set_child(GTK_BUTTON(btn), ColorIcon::newGtkImage(c, false));
                             }),
                             btn, GConnectFlags(0));
-    return xoj::util::WidgetSPtr(btn, xoj::util::adopt);
+
+    /// Makes a proxy item for the toolbar's overflow menu
+    auto createProxy = [&]() {
+        GtkWidget* proxy = gtk_button_new();
+        auto* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+        gtk_button_set_child(GTK_BUTTON(proxy), box);
+        gtk_box_append(GTK_BOX(box), ColorIcon::newGtkImage(Colors::gray, false));
+        gtk_box_append(GTK_BOX(box), gtk_label_new(getToolDisplayName().c_str()));
+        gtk_actionable_set_action_name(GTK_ACTIONABLE(proxy),
+                                       (std::string("win.") + Action_toString(Action::SELECT_COLOR)).c_str());
+        gtk_widget_add_css_class(proxy, "model");
+        return proxy;
+    };
+    return {xoj::util::WidgetSPtr(btn, xoj::util::adopt), xoj::util::WidgetSPtr(createProxy(), xoj::util::adopt)};
 }
 
 auto ColorSelectorToolItem::getToolDisplayName() const -> std::string { return _("Select color"); }
 
-auto ColorSelectorToolItem::getNewToolIcon() const -> GtkWidget* {
-    return ColorIcon::newGtkImage(Colors::gray, ICON_SIZE, false);
-}
+auto ColorSelectorToolItem::getNewToolIcon() const -> GtkWidget* { return ColorIcon::newGtkImage(Colors::gray, false); }

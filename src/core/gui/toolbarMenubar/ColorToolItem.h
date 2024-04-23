@@ -54,7 +54,7 @@ public:
      */
     void updateSecondaryColor(const std::optional<Recolor>& recolor);
 
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
 private:
     NamedColor namedColor;
