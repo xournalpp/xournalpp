@@ -198,7 +198,7 @@ DeviceTestingArea::DeviceTestingArea(GladeSearchpath* gladeSearchPath, GtkBox* p
                               auto* dd = static_cast<D*>(d);
                               gtk_text_buffer_set_text(dd->view, dd->log->str().c_str(), -1);
                           }),
-                          new D{&data->ellipsizedLog, GTK_TEXT_BUFFER(builder.get<GObject>("logbuffer"))},
+                          new D{&data->ellipsizedLog, GTK_TEXT_BUFFER(builder.getObject("logbuffer"))},
                           xoj::util::closure_notify_cb<D>, GConnectFlags(0));
 
     auto* cbEmulateTipContactOnButtonPress = builder.get("cbEmulateTipContactOnButtonPress");
