@@ -38,9 +38,9 @@ public:
     }
     ~PopupWindowWrapper() { delete popup; }
 
-    void show(GtkWindow* parent) {
+    void show(GtkWindow* parent, bool modal = true) {
         gtk_window_set_transient_for(popup->getWindow(), parent);
-        gtk_window_set_modal(popup->getWindow(), true);
+        gtk_window_set_modal(popup->getWindow(), modal);
 
 #if GTK_MAJOR_VERSION == 3
         gtk_window_set_position(popup->getWindow(), GTK_WIN_POS_CENTER_ON_PARENT);

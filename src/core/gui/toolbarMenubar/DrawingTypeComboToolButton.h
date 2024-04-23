@@ -22,12 +22,12 @@
 #include "util/EnumIndexedArray.h"
 #include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "ItemWithNamedIcon.h"  // for ItemWithNamedIcon
 
 class ActionDatabase;
 class IconNameHelper;
 
-class DrawingTypeComboToolButton: public AbstractToolItem {
+class DrawingTypeComboToolButton: public ItemWithNamedIcon {
 public:
     struct Entry {
         Entry() = default;
@@ -57,9 +57,9 @@ public:
     };
 
 protected:
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
-    GtkWidget* getNewToolIcon() const override;
+    const char* getIconName() const override;
 
 private:
     template <Type s>
