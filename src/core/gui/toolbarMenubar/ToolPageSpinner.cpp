@@ -9,7 +9,6 @@
 #include "gui/widgets/SpinPageAdapter.h"          // for SpinPageAdapter
 #include "util/Assert.h"                          // for xoj_assert
 #include "util/Util.h"
-#include "util/gtk4_helper.h"  // for gtk_box_append
 #include "util/i18n.h"         // for FS, _, _F, C_F
 
 class ToolPageSpinner::Instance final {

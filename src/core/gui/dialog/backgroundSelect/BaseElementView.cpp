@@ -5,7 +5,6 @@
 #include "control/settings/Settings.h"  // for Settings
 #include "gui/Shadow.h"                 // for Shadow
 #include "util/Color.h"                 // for cairo_set_source_rgbi
-#include "util/gtk4_helper.h"
 
 #include "BackgroundSelectDialogBase.h"  // for BackgroundSelectDialogBase
 

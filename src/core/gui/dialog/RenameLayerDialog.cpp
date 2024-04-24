@@ -9,7 +9,6 @@
 #include "gui/Builder.h"
 #include "undo/LayerRenameUndoAction.h"  // for LayerRenameUndoAction
 #include "undo/UndoRedoHandler.h"        // for UndoRedoHandler
-#include "util/gtk4_helper.h"
 
 class GladeSearchpath;
 class Layer;

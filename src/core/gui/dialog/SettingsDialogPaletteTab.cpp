@@ -2,7 +2,6 @@
 
 #include "gui/toolbarMenubar/icon/ColorIcon.h"
 #include "util/PathUtil.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"
 
 static const char* const G_OBJECT_PALETTE_PATH = "xournalpp.palettePath";
