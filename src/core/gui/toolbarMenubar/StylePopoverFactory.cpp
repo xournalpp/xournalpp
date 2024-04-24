@@ -6,7 +6,6 @@
 #include <gtk/gtk.h>
 
 #include "util/GtkUtil.h"
-#include "util/gtk4_helper.h"
 
 
 StylePopoverFactory::StylePopoverFactory(Action styleAction, std::vector<Entry> entries):

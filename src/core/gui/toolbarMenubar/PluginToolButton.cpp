@@ -8,7 +8,6 @@
 
 #include "plugin/Plugin.h"  // for ToolbarButtonEntry
 #include "util/glib_casts.h"
-#include "util/gtk4_helper.h"
 
 
 PluginToolButton::PluginToolButton(ToolbarButtonEntry* t):

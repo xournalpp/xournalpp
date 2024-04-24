@@ -4,7 +4,6 @@
 
 #include "plugin/Plugin.h"  // for ToolbarPlaceholderEntry
 #include "util/glib_casts.h"
-#include "util/gtk4_helper.h"  // for gtk_popover_new
 
 #include "config-features.h"
 

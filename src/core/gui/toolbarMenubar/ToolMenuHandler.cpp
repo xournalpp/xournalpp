@@ -26,7 +26,6 @@
 #include "util/StringUtils.h"  // for StringUtils
 #include "util/Util.h"         // for npos
 #include "util/XojMsgBox.h"
-#include "util/glib_casts.h"
 #include "util/i18n.h"  // for _
 
 #include "AbstractToolItem.h"            // for AbstractToolItem
