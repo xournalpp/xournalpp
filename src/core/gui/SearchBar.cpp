@@ -45,11 +45,7 @@ SearchBar::SearchBar(Control* control): control(control) {
                          gtk_widget_grab_focus(GTK_WIDGET(e));
                      }),
                      this);
-#if GTK_MAJOR_VERSION == 3
-    GtkBindingSet* bindingSet = gtk_binding_set_by_class(GTK_SEARCH_ENTRY_GET_CLASS(searchTextField));
-    gtk_binding_entry_add_signal(bindingSet, GDK_KEY_Return, GdkModifierType(0), "next-match", 0);
-    gtk_binding_entry_add_signal(bindingSet, GDK_KEY_Return, GDK_SHIFT_MASK, "previous-match", 0);
-#else
+
     GtkEventController* ctrl = gtk_shortcut_controller_new();
     gtk_shortcut_controller_add_shortcut(GTK_SHORTCUT_CONTROLLER(ctrl),
                                          gtk_shortcut_new(gtk_keyval_trigger_new(GDK_KEY_Return, GdkModifierType(0)),
@@ -58,7 +54,6 @@ SearchBar::SearchBar(Control* control): control(control) {
                                          gtk_shortcut_new(gtk_keyval_trigger_new(GDK_KEY_Return, GDK_SHIFT_MASK),
                                                           gtk_signal_action_new("previous-match")));
     gtk_widget_add_controller(searchTextField, ctrl);
-#endif
 
     cssTextFild = gtk_css_provider_new();
     gtk_style_context_add_provider(gtk_widget_get_style_context(win->get("searchTextField")),
