@@ -20,14 +20,7 @@
 #include "util/Color.h"                                     // for Color
 #include "util/EnumIndexedArray.h"
 #include "util/NamedColor.h"  // for NamedColor
-<<<<<<< HEAD
-#include "util/gtk4_helper.h"
-#include "util/i18n.h"  // for _
-||||||| parent of 43567e6cd (Working Toolbar customization)
-#include "util/i18n.h"  // for _
-=======
 #include "util/i18n.h"        // for _
->>>>>>> 43567e6cd (Working Toolbar customization)
 #include "util/raii/GObjectSPtr.h"
 
 #include "ToolItemGType.h"
