@@ -21,9 +21,7 @@
 #include "gui/inputdevices/TouchDrawingInputHandler.h"  // for TouchDrawingI...
 #include "gui/inputdevices/TouchInputHandler.h"         // for TouchInputHan...
 #include "util/Assert.h"                                // for xoj_assert
-#include "util/gdk4_helper.h"
-#include "util/glib_casts.h"  // for wrap_for_g_callback
-#include "util/gtk4_helper.h"
+#include "util/glib_casts.h"                            // for wrap_for_g_callback
 
 #include "InputEvents.h"   // for InputEvent
 #include "config-debug.h"  // for DEBUG_INPUT

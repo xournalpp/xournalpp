@@ -4,7 +4,6 @@
 
 #include "enums/Action.enum.h"                  // for Action
 #include "gui/toolbarMenubar/icon/ColorIcon.h"  // for ColorIcon
-#include "util/gtk4_helper.h"                   // for gtk_button_set_child
 
 ColorToolItem::ColorToolItem(NamedColor namedColor):
         AbstractToolItem(std::string("COLOR(") + std::to_string(namedColor.getIndex()) + ")", Category::COLORS),

@@ -71,7 +71,6 @@
 #include "util/Rectangle.h"                         // for Rectangle
 #include "util/Util.h"                              // for npos
 #include "util/XojMsgBox.h"                         // for XojMsgBox
-#include "util/gtk4_helper.h"                       // for gtk_box_append
 #include "util/i18n.h"                              // for _F, FC, FS, _
 #include "util/raii/CLibrariesSPtr.h"               // for adopt
 #include "util/safe_casts.h"                        // for ceil_cast, floor_cast, round_cast
