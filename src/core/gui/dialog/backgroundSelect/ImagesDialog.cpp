@@ -37,10 +37,6 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Sett
     fileChooserButton = GTK_BUTTON(gtk_button_new_with_label(_("Load file")));
     gtk_box_prepend(vbox, GTK_WIDGET(fileChooserButton));
 
-#if GTK_MAJOR_VERSION == 3
-    gtk_widget_show_all(GTK_WIDGET(vbox));
-#endif
-
     g_signal_connect(fileChooserButton, "clicked", G_CALLBACK(filechooserButtonCallback), this);
 
     g_signal_connect_swapped(

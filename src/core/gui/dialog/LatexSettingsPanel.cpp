@@ -23,7 +23,6 @@
 #include "util/PathUtil.h"           // for fromGFile, getTmpDir...
 #include "util/PlaceholderString.h"  // for PlaceholderString
 #include "util/XojMsgBox.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for FS, _F, _
 #include "util/raii/CStringWrapper.h"
 #include "util/raii/GObjectSPtr.h"
