@@ -15,7 +15,6 @@
 
 #include <gtk/gtk.h>
 
-#include "util/gtk4_helper.h"
 
 namespace xoj::util {
 

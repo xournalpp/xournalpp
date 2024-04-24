@@ -55,8 +55,6 @@ SidebarIndexPage::SidebarIndexPage(Control* control):
     this->selectHandler = g_signal_connect(treeViewBookmarks, "cursor-changed", G_CALLBACK(treeBookmarkSelected), this);
     xoj_assert(this->selectHandler != 0);
 
-    gtk_widget_show(this->treeViewBookmarks);
-
     registerListener(control);
 }
 

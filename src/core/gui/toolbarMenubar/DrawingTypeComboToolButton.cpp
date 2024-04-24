@@ -8,7 +8,6 @@
 #include "control/actions/ActionDatabase.h"
 #include "gui/IconNameHelper.h"
 #include "util/glib_casts.h"
-#include "util/gtk4_helper.h"  // for gtk_popover_new
 #include "util/i18n.h"
 
 /// Returns a floating ref
