@@ -77,11 +77,6 @@ xoj::popup::SelectOpacityDialog::SelectOpacityDialog(GladeSearchpath* gladeSearc
                          gtk_window_close(self->window.get());
                      }),
                      this);
-
-#if GTK_MAJOR_VERSION == 3
-    // Widgets are visible by default in gtk4
-    gtk_widget_show_all(builder.get("dialog-main-box"));
-#endif
 }
 
 xoj::popup::SelectOpacityDialog::~SelectOpacityDialog() = default;

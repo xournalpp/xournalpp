@@ -5,7 +5,6 @@
 #include "control/actions/ActionDatabase.h"
 #include "gui/toolbarMenubar/icon/ColorIcon.h"  // for ColorIcon
 #include "util/GtkUtil.h"                       // for fixActionableInitialSensitivity
-#include "util/gtk4_helper.h"                   // for gtk_button_set_child
 #include "util/i18n.h"                          // for _
 
 ColorSelectorToolItem::ColorSelectorToolItem(ActionDatabase& db):

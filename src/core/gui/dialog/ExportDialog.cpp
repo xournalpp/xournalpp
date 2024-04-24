@@ -10,7 +10,6 @@
 #include "control/jobs/ExportParameters.h"
 #include "gui/Builder.h"
 #include "util/ElementRange.h"  // for parse, PageRangeVector
-#include "util/gtk4_helper.h"
 
 class GladeSearchpath;
 
@@ -123,15 +122,6 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, size_t currentPage,
     /**
      * The callback returns `false` so that the PopupWindowManager callback deleting `this` gets called as well.
      */
-#if GTK_MAJOR_VERSION == 3
-    g_signal_connect_swapped(window.get(), "delete-event", G_CALLBACK(+[](ExportDialog* self) {
-                                 if (self->confirmed && self->parameters) {
-                                     self->callbackFun(std::move(self->parameters));
-                                 }
-                                 return false;
-                             }),
-                             this);
-#else
     g_signal_connect_swapped(window.get(), "close-request", G_CALLBACK(+[](ExportDialog* self) {
                                  if (self->confirmed && self->parameters) {
                                      self->callbackFun(std::move(self->parameters));
@@ -139,7 +129,6 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, size_t currentPage,
                                  return false;
                              }),
                              this);
-#endif
 }
 
 ExportDialog::~ExportDialog() = default;

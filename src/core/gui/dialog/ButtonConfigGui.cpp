@@ -12,7 +12,6 @@
 #include "control/settings/Settings.h"      // for Settings
 #include "gui/Builder.h"
 #include "util/Color.h"  // for GdkRGBA_to_argb, rgb_to_G...
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _
 
 class GladeSearchpath;
