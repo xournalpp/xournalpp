@@ -16,7 +16,6 @@
 #include "util/Assert.h"                               // for xoj_assert
 #include "util/NamedColor.h"                           // for NamedColor
 #include "util/PlaceholderString.h"                    // for PlaceholderString
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"
 
 #include "ToolItemDragCurrentData.h"  // for ToolItemDragCu...

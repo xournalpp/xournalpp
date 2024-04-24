@@ -10,7 +10,6 @@
 #include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
 #include "model/Font.h"                           // for Font
 #include "util/GtkUtil.h"                         // for fixActionableInitialSensitivity
-#include "util/gtk4_helper.h"                     // for gtk_button_set_child
 #include "util/i18n.h"                            // for _
 #include "util/raii/GVariantSPtr.h"
 #include "util/serdesstream.h"

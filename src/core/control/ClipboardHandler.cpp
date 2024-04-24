@@ -12,7 +12,6 @@
 #include "model/Element.h"                        // for Element, ELEMENT_TEXT
 #include "model/Text.h"                           // for Text
 #include "util/Util.h"                            // for DPI_NORMALIZATION_F...
-#include "util/gtk4_helper.h"                     // for gtk_widget_get_clipboard
 #include "util/safe_casts.h"                      // for as_unsigned
 #include "util/serializing/BinObjectEncoding.h"   // for BinObjectEncoding
 #include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
