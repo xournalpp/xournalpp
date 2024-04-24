@@ -18,7 +18,6 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "gui/inputdevices/InputEvents.h"
-#include "util/gdk4_helper.h"
 
 #include "TextEditor.h"
 

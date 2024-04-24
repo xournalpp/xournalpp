@@ -19,7 +19,6 @@
 #include "util/GVariantTemplate.h"  // for makeGVariant
 #include "util/GtkUtil.h"           // for setWidgetFollowActionEnabled
 #include "util/glib_casts.h"        // for wrap_for_g_callback_v
-#include "util/gtk4_helper.h"       // for gtk_scale_set_format_value_func
 
 #include "AbstractSliderItem.h"
 
