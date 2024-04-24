@@ -23,7 +23,6 @@
 #include "util/EnumIndexedArray.h"
 #include "util/GListView.h"   // for GListView
 #include "util/NamedColor.h"  // for NamedColor
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _
 #include "util/raii/GObjectSPtr.h"
 

@@ -24,7 +24,6 @@
 #include "util/PathUtil.h"
 #include "util/StringUtils.h"  // for StringUtils
 #include "util/XojMsgBox.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _
 
 #include "AbstractToolItem.h"            // for AbstractToolItem

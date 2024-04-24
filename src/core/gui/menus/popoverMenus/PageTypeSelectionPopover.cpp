@@ -14,7 +14,6 @@
 #include "util/Assert.h"
 #include "util/GListView.h"
 #include "util/Util.h"
-#include "util/gtk4_helper.h"  // for gtk_box_append
 #include "util/i18n.h"         // for _
 #include "util/raii/GObjectSPtr.h"
 #include "util/raii/GVariantSPtr.h"

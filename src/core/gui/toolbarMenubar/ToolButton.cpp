@@ -7,7 +7,6 @@
 
 #include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
 #include "util/GVariantTemplate.h"
-#include "util/gtk4_helper.h"
 #include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 
 
