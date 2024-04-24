@@ -20,9 +20,6 @@
 LanguageConfigGui::LanguageConfigGui(GtkBox* parent, Settings* settings):
         comboBox(gtk_combo_box_text_new(), xoj::util::adopt), settings(settings) {
     gtk_box_append(parent, comboBox.get());
-#if GTK_MAJOR_VERSION == 3
-    gtk_widget_show_all(comboBox.get());
-#endif
 
     // Fetch available locales
     try {

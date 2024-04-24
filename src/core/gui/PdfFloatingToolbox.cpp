@@ -28,7 +28,6 @@
 #include "undo/UndoAction.h"        // for UndoAction
 #include "undo/UndoRedoHandler.h"   // for UndoRedoHandler
 #include "util/Assert.h"            // for xoj_assert
-#include "util/gtk4_helper.h"       // for gtk_widget_get_clipboard
 
 #include "MainWindow.h"  // for MainWindow
 

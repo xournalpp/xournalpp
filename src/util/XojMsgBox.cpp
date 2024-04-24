@@ -7,7 +7,6 @@
 
 #include "util/PopupWindowWrapper.h"
 #include "util/Util.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _, FS, _F
 #include "util/raii/CStringWrapper.h"
 

@@ -4,7 +4,6 @@
 
 #include "gui/Builder.h"
 #include "plugin/Plugin.h"
-#include "util/gtk4_helper.h"
 #include "util/i18n.h"
 
 #include "filesystem.h"  // for path

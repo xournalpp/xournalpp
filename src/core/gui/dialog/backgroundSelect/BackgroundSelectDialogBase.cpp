@@ -7,8 +7,7 @@
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
 #include "gui/Builder.h"
-#include "util/Util.h"  // for paintBackgroundWhite
-#include "util/gtk4_helper.h"
+#include "util/Util.h"        // for paintBackgroundWhite
 #include "util/safe_casts.h"  // for round_cast
 
 #include "BaseElementView.h"  // for BaseElementView
