@@ -9,7 +9,6 @@
 
 #include "gui/Builder.h"
 #include "util/ElementRange.h"  // for parse, PageRangeVector
-#include "util/gtk4_helper.h"
 
 class GladeSearchpath;
 
@@ -99,19 +98,11 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
      *
      * The callback returns `false` so that the PopupWindowManager callback deleting `this` gets called as well.
      */
-#if GTK_MAJOR_VERSION == 3
-    g_signal_connect_swapped(window.get(), "delete-event", G_CALLBACK(+[](ExportDialog* self) {
-                                 self->callbackFun(*self);
-                                 return false;
-                             }),
-                             this);
-#else
     g_signal_connect_swapped(window.get(), "close-request", G_CALLBACK(+[](ExportDialog* self) {
                                  self->callbackFun(*self);
                                  return false;
                              }),
                              this);
-#endif
 }
 
 ExportDialog::~ExportDialog() = default;

@@ -33,7 +33,6 @@
 #include "model/TexImage.h"
 #include "util/Range.h"
 #include "util/StringUtils.h"  // for replace_pair, StringUtils
-#include "util/gtk4_helper.h"
 #include "util/raii/CStringWrapper.h"
 
 class GladeSearchpath;

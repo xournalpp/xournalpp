@@ -24,7 +24,6 @@
 #include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
 #include "util/PathUtil.h"                          // for fromGFile
 #include "util/Util.h"                              // for systemWithMessage
-#include "util/gtk4_helper.h"                       //
 #include "util/i18n.h"                              // for _
 #include "util/raii/CStringWrapper.h"               // for OwnedCString
 #include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
@@ -58,11 +57,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         callback(callback) {
 
     gtk_box_append(GTK_BOX(builder.get("zoomVBox")), callib);
-    gtk_widget_show(callib);
 
     GtkWidget* preview = xoj::helper::createPreviewImage(PageType{PageTypeFormat::Lined});
     gtk_box_append(GTK_BOX(builder.get("pagePreviewImage")), preview);
-    gtk_widget_show(preview);
 
     initMouseButtonEvents(gladeSearchPath);
 
@@ -77,7 +74,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         gtk_label_set_markup(GTK_LABEL(label),
                              _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
         gtk_box_append(GTK_BOX(container), label);
-        gtk_widget_show(label);
     }
 
     gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.getPanel());
