@@ -27,7 +27,7 @@ public:
     virtual void clipboardCutCopyEnabled(bool enabled) = 0;
     virtual void clipboardPasteEnabled(bool enabled) = 0;
     virtual void clipboardPasteText(std::string text) = 0;
-    virtual void clipboardPasteImage(GdkPixbuf* img) = 0;
+    virtual void clipboardPasteImage(GdkPixbuf* img) = 0;  ///< Data is owned by the caller
     virtual void clipboardPasteXournal(ObjectInputStream& in) = 0;
     virtual void deleteSelection() = 0;
 
@@ -49,24 +49,16 @@ public:
     void setCopyCutEnabled(bool enabled);
 
 private:
-    void clipboardUpdated();
-    // static void receivedClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
-    //                                       ClipboardHandler* handler);
-    //
-    // static void pasteClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
-    //                                    ClipboardHandler* handler);
-    // static void pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf, ClipboardHandler* handler);
-    //
-    // static void pasteClipboardText(GtkClipboard* clipboard, const gchar* text, ClipboardHandler* handler);
+    void checkFormats();
 
 private:
     ClipboardListener* listener = nullptr;
     GdkClipboard* clipboard = nullptr;
-    gulong handlerId = std::numeric_limits<gulong>::max();
+    gulong handlerId = 0;
 
     EditSelection* selection = nullptr;
 
     bool containsText = false;
-    bool containsXournal = false;
+    bool containsXopp = false;
     bool containsImage = false;
 };
