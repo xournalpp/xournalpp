@@ -19,7 +19,7 @@ template <typename T>
 std::string serializeDataVector(const std::vector<T>& data) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeData(data);
-    auto outStr = outStream.getStr();
+    auto outStr = outStream.stealData();
     auto resStr = std::string{outStr->str, outStr->len};
     g_string_free(outStr, true);
     return resStr;
@@ -29,7 +29,7 @@ std::string serializeImage(cairo_surface_t* surf) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     std::string data{reinterpret_cast<char*>(cairo_image_surface_get_data(surf))};
     outStream.writeImage(data);
-    auto outStr = outStream.getStr();
+    auto outStr = outStream.stealData();
     auto resStr = std::string{outStr->str, outStr->len};
     g_string_free(outStr, true);
     return resStr;
@@ -38,7 +38,7 @@ std::string serializeImage(cairo_surface_t* surf) {
 std::string serializeString(const std::string& str) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeString(str);
-    auto outStr = outStream.getStr();
+    auto outStr = outStream.stealData();
     auto resStr = std::string{outStr->str, outStr->len};
     g_string_free(outStr, true);
     return resStr;
@@ -47,7 +47,7 @@ std::string serializeString(const std::string& str) {
 std::string serializeSizeT(size_t x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeSizeT(x);
-    auto outStr = outStream.getStr();
+    auto outStr = outStream.stealData();
     auto resStr = std::string{outStr->str, outStr->len};
     g_string_free(outStr, true);
     return resStr;
@@ -56,7 +56,7 @@ std::string serializeSizeT(size_t x) {
 std::string serializeDouble(double x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeDouble(x);
-    auto outStr = outStream.getStr();
+    auto outStr = outStream.stealData();
     auto resStr = std::string{outStr->str, outStr->len};
     g_string_free(outStr, true);
     return resStr;
@@ -65,7 +65,7 @@ std::string serializeDouble(double x) {
 std::string serializeInt(int x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeInt(x);
-    auto outStr = outStream.getStr();
+    auto outStr = outStream.stealData();
     auto resStr = std::string{outStr->str, outStr->len};
     g_string_free(outStr, true);
     return resStr;
@@ -74,7 +74,7 @@ std::string serializeInt(int x) {
 std::string serializeUInt(uint32_t x) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     outStream.writeUInt(x);
-    auto outStr = outStream.getStr();
+    auto outStr = outStream.stealData();
     auto resStr = std::string{outStr->str, outStr->len};
     g_string_free(outStr, true);
     return resStr;
@@ -83,7 +83,7 @@ std::string serializeUInt(uint32_t x) {
 std::string serializeStroke(Stroke& stroke) {
     ObjectOutputStream outStream(new BinObjectEncoding);
     stroke.serialize(outStream);
-    auto outStr = outStream.getStr();
+    auto outStr = outStream.stealData();
     auto resStr = std::string{outStr->str, outStr->len};
     g_string_free(outStr, true);
     return resStr;
@@ -284,7 +284,7 @@ TEST(UtilObjectIOStream, testReadComplexObject) {
             outStream.writeDouble(-d);
             outStream.endObject();
 
-            auto gstr = outStream.getStr();
+            auto gstr = outStream.stealData();
             std::string str(gstr->str, gstr->len);
             g_string_free(gstr, true);
 

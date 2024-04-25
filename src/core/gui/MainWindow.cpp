@@ -2,10 +2,7 @@
 
 #include <regex>
 
-#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_fr...
-#include <gdk/gdk.h>                // for gdk_screen_get_de...
-#include <gio/gio.h>                // for g_cancellable_is_...
-#include <gtk/gtkcssprovider.h>     // for gtk_css_provider_...
+#include <gtk/gtk.h>
 
 #include "control/AudioController.h"                    // for AudioController
 #include "control/Control.h"                            // for Control
@@ -111,16 +108,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
         // Execute after the window is visible, else the check won't work
         control->setShowMenubar(control->getSettings()->isMenubarVisible());
     });
-
-    // TODO
-    g_warning("Implement Drag'n'drop");
-    // // Drag and Drop
-    // g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
-    //
-    // gtk_drag_dest_set(this->window, GTK_DEST_DEFAULT_ALL, nullptr, 0, GDK_ACTION_COPY);
-    // gtk_drag_dest_add_uri_targets(this->window);
-    // gtk_drag_dest_add_image_targets(this->window);
-    // gtk_drag_dest_add_text_targets(this->window);
 
     g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-theme-name", G_CALLBACK(themeCallback), this);
     g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-application-prefer-dark-theme",
@@ -330,86 +317,6 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 }
 
 auto MainWindow::getLayout() const -> Layout* { return gtk_xournal_get_layout(this->xournal->getWidget()); }
-
-auto cancellable_cancel(GCancellable* cancel) -> bool {
-    g_cancellable_cancel(cancel);
-
-    g_warning("Timeout... Cancel loading URL");
-
-    return false;
-}
-/*
-void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data,
-                                 guint info, guint time, MainWindow* win) {
-    GtkWidget* source = gtk_drag_get_source_widget(dragContext);
-    if (source && widget == gtk_widget_get_toplevel(source)) {
-        gtk_drag_finish(dragContext, false, false, time);
-        return;
-    }
-
-    guchar* text = gtk_selection_data_get_text(data);
-    if (text) {
-        win->control->clipboardPasteText(reinterpret_cast<const char*>(text));
-
-        g_free(text);
-        gtk_drag_finish(dragContext, true, false, time);
-        return;
-    }
-
-    xoj::util::GObjectSPtr<GdkPixbuf> image(gtk_selection_data_get_pixbuf(data), xoj::util::adopt);
-    if (image) {
-        win->control->clipboardPasteImage(image.get());
-
-        gtk_drag_finish(dragContext, true, false, time);
-        return;
-    }
-
-    gchar** uris = gtk_selection_data_get_uris(data);
-    if (uris) {
-        for (int i = 0; uris[i] != nullptr && i < 3; i++) {
-            const char* uri = uris[i];
-
-            GCancellable* cancel = g_cancellable_new();
-            auto cancelTimeout = g_timeout_add(3000, xoj::util::wrap_for_once_v<cancellable_cancel>, cancel);
-
-            xoj::util::GObjectSPtr<GFile> file(g_file_new_for_uri(uri), xoj::util::adopt);
-            GError* err = nullptr;
-            GFileInputStream* in = g_file_read(file.get(), cancel, &err);
-            if (g_cancellable_is_cancelled(cancel)) {
-                continue;
-            }
-
-            if (err == nullptr) {
-                xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(
-                        gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, nullptr), xoj::util::adopt);
-                if (g_cancellable_is_cancelled(cancel)) {
-                    continue;
-                }
-                g_input_stream_close(G_INPUT_STREAM(in), cancel, nullptr);
-                if (g_cancellable_is_cancelled(cancel)) {
-                    continue;
-                }
-
-                if (pixbuf) {
-                    win->control->clipboardPasteImage(pixbuf.get());
-                }
-            } else {
-                g_error_free(err);
-            }
-
-            if (!g_cancellable_is_cancelled(cancel)) {
-                g_source_remove(cancelTimeout);
-            }
-            g_object_unref(cancel);
-        }
-
-        gtk_drag_finish(dragContext, true, false, time);
-
-        g_strfreev(uris);
-    }
-
-    gtk_drag_finish(dragContext, false, false, time);
-}*/
 
 auto MainWindow::getControl() const -> Control* { return control; }
 

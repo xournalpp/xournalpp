@@ -139,12 +139,6 @@ private:
      */
     static void windowMaximizedCallback(GObject* window, GParamSpec*, MainWindow* win);
 
-    /**
-     * Callback for drag & drop files
-     */
-    // static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData*
-    // data, guint info, guint time, MainWindow* win);
-
 private:
     Control* control;
 

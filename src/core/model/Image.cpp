@@ -104,22 +104,24 @@ void Image::setImage(std::string&& data) {
     this->format = gdk_pixbuf_format_copy(this->format);
 }
 
-// void Image::setImage(GdkPixbuf* img) {
-// #pragma GCC diagnostic push
-// #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-//     setImage(gdk_cairo_surface_create_from_pixbuf(img, 0, nullptr));
-// #pragma GCC diagnostic pop
-// }
-
-void Image::setImage(cairo_surface_t* image) {
+void Image::setImage(GdkPixbuf* img) {
     if (this->image) {
         cairo_surface_destroy(this->image);
         this->image = nullptr;
     }
+    this->imageSize = {gdk_pixbuf_get_width(img), gdk_pixbuf_get_height(img)};
+
+    this->image = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->imageSize.first, this->imageSize.second);
+    xoj_assert(this->image != nullptr);
+
+    // Paint the pixbuf on to the surface
+    cairo_t* cr = cairo_create(this->image);
+    gdk_cairo_set_source_pixbuf(cr, img, 0, 0);
+    cairo_paint(cr);
+    cairo_destroy(cr);
 
     struct {
         std::string buffer;
-        std::string readbuf;
     } closure_;
     const cairo_write_func_t writeFunc = [](void* closurePtr, const unsigned char* data,
                                             unsigned int length) -> cairo_status_t {

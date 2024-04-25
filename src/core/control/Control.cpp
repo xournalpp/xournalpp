@@ -2168,7 +2168,7 @@ void Control::clipboardPasteEnabled(bool enabled) { this->actionDB->enableAction
 
 void Control::clipboardPasteText(string text) {
     auto t = std::make_unique<Text>();
-    t->setText(text);
+    t->setText(std::move(text));
     t->setFont(settings->getFont());
     t->setColor(toolHandler->getTool(TOOL_TEXT).getColor());
 
@@ -2176,47 +2176,46 @@ void Control::clipboardPasteText(string text) {
 }
 
 void Control::clipboardPasteImage(GdkPixbuf* img) {
-    // auto image = std::make_unique<Image>();
-    // image->setImage(img);
-    //
-    // auto width =
-    //         static_cast<double>(gdk_pixbuf_get_width(img)) / settings->getDisplayDpi() *
-    //         Util::DPI_NORMALIZATION_FACTOR;
-    // auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() *
-    //               Util::DPI_NORMALIZATION_FACTOR;
-    //
-    // auto pageNr = getCurrentPageNo();
-    // if (pageNr == npos) {
-    //     return;
-    // }
-    //
-    // this->doc->lock();
-    // PageRef page = this->doc->getPage(pageNr);
-    // auto pageWidth = page->getWidth();
-    // auto pageHeight = page->getHeight();
-    // this->doc->unlock();
-    //
-    // // Size: 3/4 of the page size
-    // pageWidth = pageWidth * 3.0 / 4.0;
-    // pageHeight = pageHeight * 3.0 / 4.0;
-    //
-    // auto scaledWidth = width;
-    // auto scaledHeight = height;
-    //
-    // if (width > pageWidth) {
-    //     scaledWidth = pageWidth;
-    //     scaledHeight = (scaledWidth * height) / width;
-    // }
-    //
-    // if (scaledHeight > pageHeight) {
-    //     scaledHeight = pageHeight;
-    //     scaledWidth = (scaledHeight * width) / height;
-    // }
-    //
-    // image->setWidth(scaledWidth);
-    // image->setHeight(scaledHeight);
-    //
-    // clipboardPaste(std::move(image));
+    auto image = std::make_unique<Image>();
+    image->setImage(img);
+
+    auto width =
+            static_cast<double>(gdk_pixbuf_get_width(img)) / settings->getDisplayDpi() * Util::DPI_NORMALIZATION_FACTOR;
+    auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() *
+                  Util::DPI_NORMALIZATION_FACTOR;
+
+    auto pageNr = getCurrentPageNo();
+    if (pageNr == npos) {
+        return;
+    }
+
+    this->doc->lock();
+    PageRef page = this->doc->getPage(pageNr);
+    auto pageWidth = page->getWidth();
+    auto pageHeight = page->getHeight();
+    this->doc->unlock();
+
+    // Size: 3/4 of the page size
+    pageWidth = pageWidth * 3.0 / 4.0;
+    pageHeight = pageHeight * 3.0 / 4.0;
+
+    auto scaledWidth = width;
+    auto scaledHeight = height;
+
+    if (width > pageWidth) {
+        scaledWidth = pageWidth;
+        scaledHeight = (scaledWidth * height) / width;
+    }
+
+    if (scaledHeight > pageHeight) {
+        scaledHeight = pageHeight;
+        scaledWidth = (scaledHeight * width) / height;
+    }
+
+    image->setWidth(scaledWidth);
+    image->setHeight(scaledHeight);
+
+    clipboardPaste(std::move(image));
 }
 
 void Control::clipboardPaste(ElementPtr e) {

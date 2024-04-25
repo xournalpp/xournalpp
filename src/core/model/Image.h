@@ -50,7 +50,8 @@ public:
     /// \deprecated Pass the raw image data instead.
     ///
     /// FIXME: remove this method. Currently, it is used by Control::clipboardPasteImage.
-    // [[deprecated]] void setImage(GdkPixbuf* img);
+    [[deprecated]] void setImage(GdkPixbuf* img);
+
 
     /// The image is rendered lazily by default; call this method to render it.
     /// Returns std::nullopt on success, an error message on failure
@@ -87,16 +88,7 @@ public:
 private:
     void calcSize() const override;
 
-    static cairo_status_t cairoReadFunction(const Image* image, unsigned char* data, unsigned int length);
-
 private:
-    /// Set the image data by rendering the surface to PNG and copying the PNG data.
-    ///
-    /// \deprecated Pass the raw image data instead.
-    ///
-    /// FIXME: remove this when setImage(GdkPixbuf*) is removed.
-    [[deprecated]] void setImage(cairo_surface_t* image);
-
     /// Temporary surface used as a render buffer.
     mutable cairo_surface_t* image = nullptr;
 
