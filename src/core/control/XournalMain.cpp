@@ -84,7 +84,7 @@ void initCAndCoutLocales() {
 
 void initLocalisation() {
 #ifdef ENABLE_NLS
-    fs::path localeDir = Util::getGettextFilepath(Util::getLocalePath().u8string().c_str());
+    fs::path localeDir = Util::getGettextFilepath(Util::getLocalePath());
     bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
     textdomain(GETTEXT_PACKAGE);
 
