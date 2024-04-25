@@ -2347,47 +2347,47 @@ void Control::clipboardPasteText(string text) {
 }
 
 void Control::clipboardPasteImage(GdkPixbuf* img) {
-    // auto image = std::make_unique<Image>();
-    // xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(gdk_pixbuf_apply_embedded_orientation(img), xoj::util::adopt);
+    auto image = std::make_unique<Image>();
+    xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(gdk_pixbuf_apply_embedded_orientation(img), xoj::util::adopt);
 
-    // image->setImage(pixbuf.get());
+    image->setImage(pixbuf.get());
 
-    // auto zoom100 = this->getZoomControl()->getZoom100Value();
+    auto zoom100 = this->getZoomControl()->getZoom100Value();
 
-    // auto width = static_cast<double>(gdk_pixbuf_get_width(pixbuf.get())) / zoom100;
-    // auto height = static_cast<double>(gdk_pixbuf_get_height(pixbuf.get())) / zoom100;
+    auto width = static_cast<double>(gdk_pixbuf_get_width(pixbuf.get())) / zoom100;
+    auto height = static_cast<double>(gdk_pixbuf_get_height(pixbuf.get())) / zoom100;
 
-    // auto pageNr = getCurrentPageNo();
-    // if (pageNr == npos) {
-    //     return;
-    // }
+    auto pageNr = getCurrentPageNo();
+    if (pageNr == npos) {
+        return;
+    }
 
-    // this->doc->lock_shared();
-    // PageRef page = this->doc->getPage(pageNr);
-    // auto pageWidth = page->getWidth();
-    // auto pageHeight = page->getHeight();
-    // page.reset();  // No need to hold a ref to the page anymore
-    // this->doc->unlock_shared();
+    this->doc->lock_shared();
+    PageRef page = this->doc->getPage(pageNr);
+    auto pageWidth = page->getWidth();
+    auto pageHeight = page->getHeight();
+    page.reset();  // No need to hold a ref to the page anymore
+    this->doc->unlock_shared();
 
-    // // Size: 3/4 of the page size
-    // pageWidth = pageWidth * 3.0 / 4.0;
-    // pageHeight = pageHeight * 3.0 / 4.0;
+    // Size: 3/4 of the page size
+    pageWidth = pageWidth * 3.0 / 4.0;
+    pageHeight = pageHeight * 3.0 / 4.0;
 
 
-    // double scaling = 1;
+    double scaling = 1;
 
-    // if (width > pageWidth) {
-    //     scaling = pageWidth / width;
-    // }
-    // if (height > pageHeight) {
-    //     scaling = std::min(scaling, pageHeight / height);
-    // }
+    if (width > pageWidth) {
+        scaling = pageWidth / width;
+    }
+    if (height > pageHeight) {
+        scaling = std::min(scaling, pageHeight / height);
+    }
 
-    // scaling /= zoom100;
+    scaling /= zoom100;
 
-    // image->setTransformation(xoj::util::Matrix::SCALING(scaling, scaling));
+    image->setTransformation(xoj::util::Matrix::SCALING(scaling, scaling));
 
-    // clipboardPaste(std::move(image));
+    clipboardPaste(std::move(image));
 }
 
 void Control::clipboardPaste(ElementPtr e) {
