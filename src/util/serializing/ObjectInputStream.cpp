@@ -10,14 +10,22 @@
 #include "util/serializing/InputStreamException.h"  // for InputStreamException
 #include "util/serializing/Serializable.h"          // for XML_VERSION_STR
 
+static size_t getSize(std::stringstream& s) {
+    auto pos = s.tellg();
+    s.seekg(0, std::ios::end);
+    auto size = s.tellg() - pos;
+    s.seekg(pos);
+    return as_unsigned(size);
+}
+
 template size_t ObjectInputStream::readType<size_t>();
 
 // This function requires that T is read from its binary representation to work (e.g. integer type)
 template <typename T>
 T ObjectInputStream::readType() {
-    if (istream.str().size() < sizeof(T)) {
+    if (getSize(istream) < sizeof(T)) {
         std::ostringstream oss;
-        oss << "End reached: trying to read " << sizeof(T) << " bytes while only " << istream.str().size()
+        oss << "End reached: trying to read " << sizeof(T) << " bytes while only " << getSize(istream)
             << " bytes available";
         throw InputStreamException(oss.str(), __FILE__, __LINE__);
     }
@@ -31,10 +39,12 @@ T ObjectInputStream::readType() {
 size_t ObjectInputStream::pos() { return static_cast<size_t>(istream.tellg()); }
 
 auto ObjectInputStream::read(const char* data, size_t data_len) -> bool {
-    istream.clear();
-    len = data_len;
-    std::string dataStr = std::string(data, len);
-    istream.str(dataStr);
+    return read(std::stringstream(std::string(data, data_len)), data_len);
+}
+
+auto ObjectInputStream::read(std::stringstream stream, size_t length) -> bool {
+    this->istream = std::move(stream);
+    this->len = length;
 
     try {
         std::string version = readString();
@@ -100,7 +110,7 @@ auto ObjectInputStream::readString() -> std::string {
 
     size_t lenString = readType<size_t>();
 
-    if (istream.str().size() < len) {
+    if (getSize(istream) < lenString) {
         throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
     }
 
@@ -115,12 +125,12 @@ auto ObjectInputStream::readString() -> std::string {
 auto ObjectInputStream::readImage() -> std::string {
     checkType('m');
 
-    if (istream.str().size() < sizeof(size_t)) {
+    if (getSize(istream) < sizeof(size_t)) {
         throw InputStreamException("End reached, but try to read an image's data's length", __FILE__, __LINE__);
     }
 
     const size_t len = readType<size_t>();
-    if (istream.str().size() < len) {
+    if (getSize(istream) < len) {
         throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
     }
     std::string data;
@@ -131,7 +141,7 @@ auto ObjectInputStream::readImage() -> std::string {
 }
 
 void ObjectInputStream::checkType(char type) {
-    if (istream.str().size() < 2) {
+    if (getSize(istream) < 2) {
         throw InputStreamException(
                 FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}") % getType(type) % pos() % len),
                 __FILE__, __LINE__);
