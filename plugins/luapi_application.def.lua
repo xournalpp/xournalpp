@@ -102,7 +102,7 @@ function app.uiAction(opts) end
 --- @param action string the desired action
 --- 
 --- Example: app.sidebarAction("MOVE_DOWN")
---- moves down the current page
+--- moves down the current page or layer, depending on which sidebar tab is selected
 function app.sidebarAction(action) end
 
 --- Get the index of the currently active sidebar-page.
