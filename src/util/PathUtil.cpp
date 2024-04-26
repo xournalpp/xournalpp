@@ -334,3 +334,74 @@ auto Util::getLocalePath() -> fs::path {
     return getDataPath() / ".." / "locale";
 #endif
 }
+
+float Util::as_grayscale_color(Color color) {
+    GdkRGBA components = rgb_to_GdkRGBA(color);
+    float componentAvg = static_cast<float>(components.red + components.green + components.blue) / 3.0f;
+
+    return componentAvg;
+}
+
+float Util::get_color_contrast(Color color1, Color color2) {
+    float grayscale1 = as_grayscale_color(color1);
+    float grayscale2 = as_grayscale_color(color2);
+
+    return std::max(grayscale1, grayscale2) - std::min(grayscale1, grayscale2);
+}
+auto Util::rgb_to_hex_string(Color rgb) -> std::string {
+    auto s = serdes_stream<std::ostringstream>();
+    auto tmp_color = rgb;
+    tmp_color.alpha = 0;
+    s << "#" << std::hex << std::setfill('0') << std::setw(6) << std::right << tmp_color;
+
+    return s.str();
+}
+
+// Function to convert RGB color to HSL format
+void Util::rgb_to_hsl(Color rgb, float& hue, float& saturation, float& lightness) {
+    float r = rgb.red / 255.0f;
+    float g = rgb.green / 255.0f;
+    float b = rgb.blue / 255.0f;
+
+    float cmax = std::max({r, g, b});
+    float cmin = std::min({r, g, b});
+    float delta = cmax - cmin;
+
+    // Calculate hue
+    if (delta == 0)
+        hue = 0;
+    else if (cmax == r)
+        hue = 60 * (((g - b) / delta) + 6);
+    else if (cmax == g)
+        hue = 60 * (((b - r) / delta) + 2);
+    else
+        hue = 60 * (((r - g) / delta) + 4);
+
+    // Normalize hue
+    if (hue < 0)
+        hue += 360;
+
+    // Calculate lightness
+    lightness = (cmax + cmin) / 2;
+
+    // Calculate saturation
+    saturation = (delta == 0) ? 0 : delta / (1 - std::abs(2 * lightness - 1));
+}
+
+// Function to convert RGB color to CMYK format
+void Util::rgb_to_cmyk(Color rgb, float& cyan, float& magenta, float& yellow, float& black) {
+    float r = rgb.red / 255.0f;
+    float g = rgb.green / 255.0f;
+    float b = rgb.blue / 255.0f;
+
+    black = 1 - std::max({r, g, b});
+    cyan = (1 - r - black) / (1 - black);
+    magenta = (1 - g - black) / (1 - black);
+    yellow = (1 - b - black) / (1 - black);
+
+    // Normalize CMYK values
+    cyan = std::min(1.0f, std::max(0.0f, cyan));
+    magenta = std::min(1.0f, std::max(0.0f, magenta));
+    yellow = std::min(1.0f, std::max(0.0f, yellow));
+    black = std::min(1.0f, std::max(0.0f, black));
+}
