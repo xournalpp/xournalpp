@@ -23,16 +23,17 @@
 #include "control/PageBackgroundChangeController.h"
 #include "control/ScrollHandler.h"
 #include "control/Tool.h"
+#include "control/actions/ActionDatabase.h"  // for ActionDatabase
 #include "control/layer/LayerController.h"
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/ImageHandler.h"
+#include "enums/Action.enum.h"
 #include "gui/Layout.h"
 #include "gui/MainWindow.h"
 #include "gui/XournalView.h"
 #include "gui/sidebar/Sidebar.h"
-#include "gui/sidebar/previews/base/SidebarToolbar.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/widgets/XournalWidget.h"
 #include "model/Document.h"
@@ -437,29 +438,45 @@ static int applib_uiAction(lua_State* L) {
  * @param action string the desired action
  *
  * Example: app.sidebarAction("MOVE_DOWN")
- * moves down the current page
+ * moves down the current page or layer, depending on which sidebar tab is selected
  */
 static int applib_sidebarAction(lua_State* L) {
     // Connect the context menu actions
-    const std::map<std::string, SidebarActions> actionMap = {
-            {"COPY", SIDEBAR_ACTION_COPY},
-            {"DELETE", SIDEBAR_ACTION_DELETE},
-            {"MOVE_UP", SIDEBAR_ACTION_MOVE_UP},
-            {"MOVE_DOWN", SIDEBAR_ACTION_MOVE_DOWN},
-            {"NEW_BEFORE", SIDEBAR_ACTION_NEW_BEFORE},
-            {"NEW_AFTER", SIDEBAR_ACTION_NEW_AFTER},
+    const std::map<std::string, Action> actionMapPage = {
+            {"COPY", Action::DUPLICATE_PAGE},
+            {"DELETE", Action::DELETE_PAGE},
+            {"MOVE_UP", Action::MOVE_PAGE_TOWARDS_BEGINNING},
+            {"MOVE_DOWN", Action::MOVE_PAGE_TOWARDS_END},
+            {"NEW_BEFORE", Action::NEW_PAGE_BEFORE},
+            {"NEW_AFTER", Action::NEW_PAGE_AFTER},
+    };
+    const std::map<std::string, Action> actionMapLayer = {
+            {"COPY", Action::LAYER_COPY},
+            {"DELETE", Action::LAYER_DELETE},
+            {"MOVE_UP", Action::LAYER_MOVE_UP},
+            {"MOVE_DOWN", Action::LAYER_MOVE_DOWN},
+            {"MERGE_DOWN", Action::LAYER_MERGE_DOWN},
     };
     const char* actionStr = luaL_checkstring(L, 1);
     if (actionStr == nullptr) {
         return luaL_error(L, "Missing action!");
     }
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    size_t tab = control->getSidebar()->getSelectedTab();
+
+    if (tab == 0) {
+        return luaL_error(L, "Currently selected sidebar tab does not have any actions");
+    }
+
+    const auto actionMap = (tab == 1) ? actionMapPage : actionMapLayer;
     auto pos = actionMap.find(actionStr);
     if (pos == actionMap.end()) {
         return luaL_error(L, "Unknown action: %s", actionStr);
     }
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-    SidebarToolbar* toolbar = plugin->getControl()->getSidebar()->getToolbar();
-    toolbar->runAction(pos->second);
+
+    auto* actionDB = control->getActionDatabase();
+    actionDB->fireActivateAction(pos->second);
 
     return 0;
 }
@@ -474,7 +491,7 @@ static int applib_sidebarAction(lua_State* L) {
 static int applib_getSidebarPageNo(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Sidebar* sidebar = plugin->getControl()->getSidebar();
-    lua_pushinteger(L, as_signed(sidebar->getSelectedPage()) + 1);
+    lua_pushinteger(L, as_signed(sidebar->getSelectedTab()) + 1);
     return 1;
 }
 
@@ -504,13 +521,13 @@ static int applib_setSidebarPageNo(lua_State* L) {
         lua_pushfstring(L, "Invalid pageNo (%d) provided!", page);
         return 2;
     }
-    if (as_unsigned(page) > sidebar->getNumberOfPages()) {
+    if (as_unsigned(page) > sidebar->getNumberOfTabs()) {
         lua_pushnil(L);
-        lua_pushfstring(L, "Invalid pageNo (%d >= %d) provided!", page, sidebar->getNumberOfPages());
+        lua_pushfstring(L, "Invalid pageNo (%d >= %d) provided!", page, sidebar->getNumberOfTabs());
         return 2;
     }
 
-    sidebar->setSelectedPage(as_unsigned(page) - 1);
+    sidebar->setSelectedTab(as_unsigned(page) - 1);
     return 0;
 }
 
