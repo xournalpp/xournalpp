@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkBox" id="pluginMainBox">
+    <property name="name">pluginMainBox</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel" id="pluginName">
+        <property name="name">pluginName</property>
+        <property name="label">pluginName</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="lbDescription">
+        <property name="name">lbDescription</property>
+        <property name="margin-bottom">10</property>
+        <property name="label">Description</property>
+        <property name="wrap">true</property>
+        <property name="selectable">1</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="valign">center</property>
+        <property name="halign">center</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="1">Author: </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lbAuthor">
+            <property name="name">lbAuthor</property>
+            <property name="label">Author</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="valign">center</property>
+        <property name="halign">center</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="1">Path: </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lbPath">
+            <property name="name">lbPath</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="valign">center</property>
+        <property name="halign">center</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="1">Version: </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lbVersion">
+            <property name="name">lbVersion</property>
+            <property name="label">1.2.3</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="valign">center</property>
+        <property name="halign">center</property>
+        <child>
+          <object class="GtkCheckButton" id="cbEnabled">
+            <property name="label" translatable="1">enabled,</property>
+            <property name="name">cbEnabled</property>
+            <property name="focusable">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lbDefaultText">
+            <property name="name">lbDefaultText</property>
+            <property name="label">default enabled / disabled</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparator"/>
+    </child>
+  </object>
+</interface>
