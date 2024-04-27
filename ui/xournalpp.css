@@ -158,6 +158,29 @@ separator.spacer {
   box-shadow:none;
 }
 
+box.toolbar scale.horizontal {
+  margin-top:0;
+  margin-bottom:0;
+  margin-left:3px;
+  margin-right:3px;
+  padding:0;
+}
+
+box.toolbar scale.vertical {
+  margin-top:3px;
+  margin-bottom:3px;
+  margin-left:0;
+  margin-right:0;
+  padding:0;
+}
+
+box.toolbar scale.model {
+  margin-top:3px;
+  margin-bottom:6px;
+  margin-left:3px;
+  margin-right:0;
+}
+
 /* Grid in AddPage popover or PageTemplateDialog popover */
 grid.page-type-grid button {
   padding:8px;
