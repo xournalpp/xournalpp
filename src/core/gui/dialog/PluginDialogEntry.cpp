@@ -10,7 +10,7 @@
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "pluginEntry.glade";
+constexpr auto UI_FILE = "pluginEntry.ui";
 constexpr auto UI_WIDGET_NAME = "pluginMainBox";
 
 PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkBox* box): plugin(plugin) {
