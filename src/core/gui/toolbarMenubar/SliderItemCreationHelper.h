@@ -44,9 +44,11 @@ public:
         gtk_range_set_increments(slider, fineStepSize, coarseStepSize);
 
         if (to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL) {
-            gtk_widget_set_size_request(GTK_WIDGET(slider), 120, 16);
+            gtk_widget_set_size_request(GTK_WIDGET(slider), 150, 16);
+            gtk_scale_set_value_pos(GTK_SCALE(slider), GTK_POS_RIGHT);
         } else {
-            gtk_widget_set_size_request(GTK_WIDGET(slider), 16, 120);
+            gtk_widget_set_size_request(GTK_WIDGET(slider), 16, 130);
+            // gtk_scale_set_value_pos(GTK_SCALE(slider), GTK_POS_TOP); // Not needed, this is the default value
         }
 
         // gAction does not own the return GVariant and it is not floating either!
