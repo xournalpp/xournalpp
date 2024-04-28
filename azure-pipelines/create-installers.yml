@@ -52,12 +52,12 @@ stages:
         pool:
           vmImage: 'ubuntu-20.04'
         container:
-          image: xournalpp/debian-latest-sudo:latest
+          image: ghcr.io/xournalpp/debian-latest-sudo:master
         displayName: 'Build for Debian'
         steps:
           - bash: |
               sudo apt-get update
-              sudo apt-get install -y build-essential gcc-10 g++-10 cmake \
+              sudo apt-get install -y build-essential gcc g++ cmake \
                   ninja-build libgtk-3-dev libpoppler-glib-dev libxml2-dev \
                   portaudio19-dev libsndfile-dev liblua5.3-dev \
                   libzip-dev gettext lsb-release librsvg2-dev help2man \
@@ -68,7 +68,7 @@ stages:
               build_type: 'RelWithDebInfo'
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=/usr -DCPACK_GENERATOR="TGZ;DEB"'
               cmake_commands: '--target package'
-              gcc_version: '10'
+              gcc_version: '12'
           - task: PublishPipelineArtifact@1
             inputs:
               artifactName: 'linux-debian-packages'
