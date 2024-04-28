@@ -501,6 +501,15 @@ struct ActionProperties<Action::DUPLICATE_PAGE> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->duplicatePage(); }
 };
 template <>
+struct ActionProperties<Action::MOVE_PAGE_TOWARDS_BEGINNING> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->movePageTowardsBeginning(); }
+};
+template <>
+struct ActionProperties<Action::MOVE_PAGE_TOWARDS_END> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->movePageTowardsEnd(); }
+};
+
+template <>
 struct ActionProperties<Action::APPEND_NEW_PDF_PAGES> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->appendNewPdfPages(); }
 };
@@ -930,6 +939,26 @@ template <>
 struct ActionProperties<Action::LAYER_NEW> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->addNewLayer(); }
 };
+
+template <>
+struct ActionProperties<Action::LAYER_COPY> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->copyCurrentLayer(); }
+};
+
+template <>
+struct ActionProperties<Action::LAYER_MOVE_UP> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
+        ctrl->getLayerController()->moveCurrentLayer(true);
+    }
+};
+
+template <>
+struct ActionProperties<Action::LAYER_MOVE_DOWN> {
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
+        ctrl->getLayerController()->moveCurrentLayer(false);
+    }
+};
+
 template <>
 struct ActionProperties<Action::LAYER_DELETE> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getLayerController()->deleteCurrentLayer(); }

@@ -162,6 +162,9 @@ gboolean gtk_file_chooser_set_current_folder(GtkFileChooser* chooser, GFile* fil
     return gtk_file_chooser_set_current_folder_file(chooser, file, error);
 }
 
+/**** GtkFixed ****/
+void gtk_fixed_remove(GtkFixed* fixed, GtkWidget* child) { gtk_container_remove(GTK_CONTAINER(fixed), child); }
+
 /**** GtkListBox ****/
 void gtk_list_box_append(GtkListBox* box, GtkWidget* widget) { gtk_container_add(GTK_CONTAINER(box), widget); }
 void gtk_list_box_row_set_child(GtkListBoxRow* row, GtkWidget* w) { set_child(GTK_CONTAINER(row), w); }

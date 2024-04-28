@@ -50,7 +50,6 @@ auto InsertDeletePageUndoAction::insertPage(Control* control) -> bool {
     control->firePageInserted(this->pagePos);
     control->getCursor()->updateCursor();
     control->getScrollHandler()->scrollToPage(this->pagePos);
-    control->updateDeletePageButton();
 
     return true;
 }
@@ -75,8 +74,6 @@ auto InsertDeletePageUndoAction::deletePage(Control* control) -> bool {
     control->firePageDeleted(pNr);
     doc->lock();
     doc->deletePage(pNr);
-
-    control->updateDeletePageButton();
     doc->unlock();
     return true;
 }
