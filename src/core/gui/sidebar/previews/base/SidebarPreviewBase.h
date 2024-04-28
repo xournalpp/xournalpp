@@ -25,13 +25,11 @@
 class PdfCache;
 class SidebarLayout;
 class SidebarPreviewBaseEntry;
-class SidebarToolbar;
 class Control;
-class GladeGui;
 
 class SidebarPreviewBase: public AbstractSidebarPage {
 public:
-    SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
+    SidebarPreviewBase(Control* control, const char* menuId, const char* toolbarId);
     ~SidebarPreviewBase() override;
 
 public:
@@ -80,51 +78,51 @@ protected:
      */
     static bool scrollToPreview(SidebarPreviewBase* sidebar);
 
-    /**
-     * The size of the sidebar has chnaged
-     */
-    static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviewBase* sidebar);
+    /// The width of the sidebar has changed
+    void newWidth(double width);
 
 public:
     /**
      * Opens a context menu, at the current cursor position.
      */
-    virtual void openPreviewContextMenu() = 0;
+    void openPreviewContextMenu(GdkEvent* currentEvent);
 
 private:
-    /**
-     * The scrollbar with the icons
-     */
-    xoj::util::WidgetSPtr scrollPreview;
-
     /**
      * The Zoom of the previews
      */
     double zoom = 0.15;
+
+    /// last recorded width of the sidebar
+    double lastWidth = -1;
 
     /**
      * For preview rendering
      */
     std::unique_ptr<PdfCache> cache;
 
-    /**
-     * The layouting class for the prviews
-     */
-    SidebarLayout* layoutmanager = nullptr;
-
-
-    // Members also used by subclasses
 protected:
+    /// The scrollable area with the miniatures
+    xoj::util::WidgetSPtr scrollableBox;
+
+    /// Main box, containing the scrollable area and the toolbar.
+    xoj::util::WidgetSPtr mainBox;
+
+    /// The widget within the scrollable area with the page miniatures
+    xoj::util::GObjectSPtr<GtkFixed> miniaturesContainer;
+
+    /**
+     * The context menu to display when a miniature is right-clicked.
+     * This must be populated by the derived classes constructors.
+     * It must be a GtkPopover parented (gtk_widget_set_parent()) by this->miniaturesContainer
+     */
+    xoj::util::GObjectSPtr<GtkMenu> contextMenu;
+
     /**
      * The currently selected entry in the sidebar, starting from 0
      * -1 means no valid selection
      */
     size_t selectedEntry = npos;
-
-    /**
-     * The widget within the scrollarea with the page icons
-     */
-    xoj::util::WidgetSPtr iconViewPreview;
 
     /**
      * The previews

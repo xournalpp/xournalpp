@@ -86,6 +86,7 @@
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
 #include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
+#include "undo/SwapUndoAction.h"                                 // for SwapUndoAction
 #include "undo/UndoAction.h"                                     // for Undo...
 #include "util/Assert.h"                                         // for xoj_assert
 #include "util/Color.h"                                          // for oper...
@@ -523,7 +524,7 @@ auto Control::firePageSelected(const PageRef& page) -> size_t {
         return npos;
     }
 
-    DocumentHandler::firePageSelected(pageId);
+    firePageSelected(pageId);
     return pageId;
 }
 
@@ -649,12 +650,14 @@ void Control::addDefaultPage(string pageTemplate) {
     this->doc->lock();
     this->doc->addPage(std::move(page));
     this->doc->unlock();
-
-    updateDeletePageButton();
 }
 
-void Control::updateDeletePageButton() {
-    this->actionDB->enableAction(Action::DELETE_PAGE, this->doc->getPageCount() > 1);
+void Control::updatePageActions() {
+    auto currentPage = getCurrentPageNo();
+    auto nbPages = this->doc->getPageCount();
+    this->actionDB->enableAction(Action::DELETE_PAGE, nbPages > 1);
+    this->actionDB->enableAction(Action::MOVE_PAGE_TOWARDS_BEGINNING, currentPage != 0);
+    this->actionDB->enableAction(Action::MOVE_PAGE_TOWARDS_END, currentPage < nbPages - 1);
 }
 
 void Control::deletePage() {
@@ -692,7 +695,6 @@ void Control::deletePage() {
     doc->deletePage(pNr);
     this->doc->unlock();
 
-    updateDeletePageButton();
     this->undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, pNr, false));
 
     if (pNr >= this->doc->getPageCount()) {
@@ -711,6 +713,106 @@ void Control::duplicatePage() {
     auto pageCopy = std::make_shared<XojPage>(*page);
 
     insertPage(pageCopy, getCurrentPageNo() + 1);
+}
+
+void Control::movePageTowardsBeginning() {
+    auto currentPageNo = this->getCurrentPageNo();
+    if (currentPageNo < 1) {
+        g_warning("Control::movePageTowardsBeginning() called on the first page");
+        return;
+    }
+    if (currentPageNo == npos) {
+        g_warning("Control::movePageTowardsBeginning() called with current page selected");
+        return;
+    }
+
+    auto lock = std::unique_lock(*this->doc);
+    PageRef page = this->doc->getPage(currentPageNo);
+    PageRef otherPage = doc->getPage(currentPageNo - 1);
+    if (!page || !otherPage) {
+        g_warning("Control::movePageTowardsBeginning() called but no page %zu or %zu", currentPageNo,
+                  currentPageNo - 1);
+        return;
+    }
+
+    doc->deletePage(currentPageNo);
+    doc->insertPage(page, currentPageNo - 1);
+    lock.unlock();
+
+    UndoRedoHandler* undo = this->getUndoRedoHandler();
+    undo->addUndoAction(std::make_unique<SwapUndoAction>(currentPageNo - 1, true, page, otherPage));
+
+    this->firePageDeleted(currentPageNo);
+    this->firePageInserted(currentPageNo - 1);
+    this->firePageSelected(currentPageNo - 1);
+
+    this->getScrollHandler()->scrollToPage(currentPageNo - 1);
+}
+
+
+void Control::movePageTowardsEnd() {
+    auto currentPageNo = this->getCurrentPageNo();
+    if (currentPageNo == npos) {
+        g_warning("Control::movePageTowardsEnd() called with current page selected");
+        return;
+    }
+
+    auto lock = std::unique_lock(*this->doc);
+    auto nbPage = this->doc->getPageCount();
+    if (currentPageNo >= nbPage - 1) {
+        g_warning("Control::movePageTowardsEnd() called on last page");
+        return;
+    }
+
+    PageRef page = this->doc->getPage(currentPageNo);
+    PageRef otherPage = doc->getPage(currentPageNo + 1);
+    if (!page || !otherPage) {
+        g_warning("Control::movePageTowardsEnd() called but no page %zu or %zu", currentPageNo, currentPageNo + 1);
+        return;
+    }
+
+    doc->deletePage(currentPageNo);
+    doc->insertPage(page, currentPageNo + 1);
+    lock.unlock();
+
+    this->undoRedo->addUndoAction(std::make_unique<SwapUndoAction>(currentPageNo, false, page, otherPage));
+
+    this->firePageDeleted(currentPageNo);
+    this->firePageInserted(currentPageNo + 1);
+    this->firePageSelected(currentPageNo + 1);
+
+    this->getScrollHandler()->scrollToPage(currentPageNo + 1);
+}
+
+void Control::askInsertPdfPage(size_t pdfPage) {
+    using Responses = enum { CANCEL = 1, AFTER = 2, END = 3 };
+    std::vector<XojMsgBox::Button> buttons = {{_("Cancel"), Responses::CANCEL},
+                                              {_("Insert after current page"), Responses::AFTER},
+                                              {_("Insert at end"), Responses::END}};
+
+    XojMsgBox::askQuestion(this->getGtkWindow(),
+                           FC(_F("Your current document does not contain PDF Page no {1}\n"
+                                 "Would you like to insert this page?\n\n"
+                                 "Tip: You can select Journal → Paper Background → PDF Background "
+                                 "to insert a PDF page.") %
+                              static_cast<int64_t>(pdfPage + 1)),
+                           "", buttons, [ctrl = this, pdfPage](int response) {
+                               if (response == Responses::AFTER || response == Responses::END) {
+                                   Document* doc = ctrl->getDocument();
+
+                                   doc->lock();
+                                   size_t position = response == Responses::AFTER ? ctrl->getCurrentPageNo() + 1 :
+                                                                                    doc->getPageCount();
+                                   XojPdfPageSPtr pdf = doc->getPdfPage(pdfPage);
+                                   doc->unlock();
+
+                                   if (pdf) {
+                                       auto page = std::make_shared<XojPage>(pdf->getWidth(), pdf->getHeight());
+                                       page->setBackgroundPdfPageNr(pdfPage);
+                                       ctrl->insertPage(page, position);
+                                   }
+                               }
+                           });
 }
 
 void Control::insertNewPage(size_t position, bool shouldScrollToPage) {
@@ -771,8 +873,7 @@ void Control::insertPage(const PageRef& page, size_t position, bool shouldScroll
         firePageSelected(position);
     }
 
-
-    updateDeletePageButton();
+    updatePageActions();
     undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, position, true));
 }
 
@@ -1462,7 +1563,7 @@ void Control::fileLoaded(int scrollToPage) {
     updateWindowTitle();
     win->getXournal()->forceUpdatePagenumbers();
     getCursor()->updateCursor();
-    updateDeletePageButton();
+    updatePageActions();
 }
 
 enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };

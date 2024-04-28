@@ -224,11 +224,19 @@ public:
     void appendNewPdfPages();
     void insertPage(const PageRef& page, size_t position, bool shouldScrollToPage = true);
     void deletePage();
+    void movePageTowardsBeginning();
+    void movePageTowardsEnd();
 
     /**
-     * Disable / enable delete page button
+     * Ask the user whether a page with the given id
+     * should be added to the document.
      */
-    void updateDeletePageButton();
+    void askInsertPdfPage(size_t pdfPage);
+
+    /**
+     * Disable / enable page action buttons
+     */
+    void updatePageActions();
 
     // selection handling
     void clearSelection();

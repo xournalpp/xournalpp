@@ -141,6 +141,16 @@ radiobutton.invisible radio {
   box-shadow:none;
 }
 
+/* A spacer is a transparent separator with expand == true */
+separator.spacer {
+  color:transparent;
+  background-color:transparent;
+  background-image:none;
+  outline-style:none;
+  border-style:none;
+  box-shadow:none;
+}
+
 /*  If you want to change the size of toolbar buttons try these:
 *   All toolbars:
 */
@@ -171,18 +181,6 @@ Labels for subsections of the Settings dialog
 notebook frame>label {
     color: #666;
     font-weight: bold;
-}
-
-
-/*
-  Sidebar (page select, layer select, etc)
- */
-#sidebarContents {
-	background-color: white;
-}
-
-window.darkMode #sidebarContents {
-	background-color: #222;
 }
 
 menubar, toolbar {

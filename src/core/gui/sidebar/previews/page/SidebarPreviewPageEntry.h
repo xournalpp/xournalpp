@@ -22,11 +22,9 @@ public:
     ~SidebarPreviewPageEntry() override;
 
 public:
-    /**
-     * @return What should be rendered
-     * @override
-     */
-    PreviewRenderType getRenderType() override;
+    int getHeight() const override;
+
+    PreviewRenderType getRenderType() const override;
 
     void setIndex(size_t index);
     size_t getIndex() const;
@@ -38,7 +36,6 @@ protected:
     SidebarPreviewPages* sidebar;
     void mouseButtonPressCallback() override;
     void paint(cairo_t* cr) override;
-    int getWidgetHeight() override;
 
 private:
     size_t index;

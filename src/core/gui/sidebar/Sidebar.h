@@ -17,30 +17,22 @@
 
 #include <gtk/gtk.h>  // for GtkWidget, Gtk...
 
-#include "gui/sidebar/previews/base/SidebarToolbar.h"  // for SidebarActions
 #include "model/DocumentChangeType.h"                  // for DocumentChange...
 #include "model/DocumentListener.h"                    // for DocumentListener
 
 class AbstractSidebarPage;
 class Control;
 class GladeGui;
-class SidebarPageButton;
+class SidebarTabButton;
 
-class Sidebar: public DocumentListener, public SidebarToolbarActionListener {
+class Sidebar: public DocumentListener {
 public:
     Sidebar(GladeGui* gui, Control* control);
     ~Sidebar() override;
 
 private:
-    void initPages(GtkWidget* sidebarContents, GladeGui* gui);
-    void addPage(std::unique_ptr<AbstractSidebarPage> page);
-
-    // SidebarToolbarActionListener
-public:
-    /**
-     * Called when an action is performed
-     */
-    void actionPerformed(SidebarActions action) override;
+    void initTabs(GtkWidget* sidebarContents);
+    void addTab(std::unique_ptr<AbstractSidebarPage> tab);
 
 public:
     /**
@@ -56,16 +48,6 @@ public:
     Control* getControl();
 
     /**
-     * Sets the current selected page
-     */
-    void setSelectedPage(size_t page);
-
-    /**
-     * Show/hide tabs based on whether they have content. Select first active tab (page).
-     */
-    void updateVisibleTabs();
-
-    /**
      * Temporary disable Sidebar (e.g. while saving)
      */
     void setTmpDisabled(bool disabled);
@@ -76,25 +58,25 @@ public:
     void saveSize();
 
     /**
-     * Gets the sidebar toolbar
-     */
-    SidebarToolbar* getToolbar();
-
-    /**
-     * Ask the user whether a page with the given id
-     * should be added to the document.
-     */
-    void askInsertPdfPage(size_t pdfPage);
-
-    /**
      * Get how many pages are contained in this sidebar
+     *
+     * Todo: it makes no sense to expose this, as the caller has no way of knowing what those pages correspond to
      */
-    size_t getNumberOfPages();
+    [[deprecated]] size_t getNumberOfTabs() const;
 
     /**
      * Get index of the currently selected page
+     *
+     * Todo: it makes no sense to expose this, as the caller has no way of knowing what this number corresponds to
      */
-    size_t getSelectedPage();
+    [[deprecated]] size_t getSelectedTab() const;
+
+    /**
+     * Sets the current selected tab
+     *
+     * Todo: this should be private
+     */
+    void setSelectedTab(size_t tab);
 
 public:
     // DocumentListener interface
@@ -104,22 +86,26 @@ private:
     /**
      * Page selected
      */
-    static void buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData);
+    static void buttonClicked(GtkButton* button, SidebarTabButton* buttonData);
+
+    /**
+     * Show/hide tabs based on whether they have content. Select first active tab (page).
+     */
+    void updateVisibleTabs();
+
 
 private:
     Control* control = nullptr;
 
-    GladeGui* gui = nullptr;
-
     /**
      * The sidebar pages
      */
-    std::vector<std::unique_ptr<AbstractSidebarPage>> pages;
+    std::vector<std::unique_ptr<AbstractSidebarPage>> tabs;
 
     /**
-     * The Toolbar with the pages
+     * The bar with the tab selection
      */
-    GtkToolbar* tbSelectPage = nullptr;
+    GtkBox* tbSelectTab = nullptr;
 
     /**
      * The close button of the sidebar
@@ -129,27 +115,22 @@ private:
     /**
      * The current visible page in the sidebar
      */
-    GtkWidget* visiblePage = nullptr;
+    GtkWidget* visibleTab = nullptr;
 
     /**
      * Current active page
      */
-    size_t currentPageIdx{0};
+    size_t currentTabIdx{0};
 
     /**
      * The sidebarContents widget
      */
     GtkWidget* sidebarContents = nullptr;
-
-    /**
-     * Sidebar toolbar
-     */
-    SidebarToolbar toolbar;
 };
 
-class SidebarPageButton {
+class SidebarTabButton {
 public:
-    SidebarPageButton(Sidebar* sidebar, size_t index, AbstractSidebarPage* page);
+    SidebarTabButton(Sidebar* sidebar, size_t index, AbstractSidebarPage* page);
 
 public:
     Sidebar* sidebar = nullptr;

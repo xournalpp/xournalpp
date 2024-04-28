@@ -13,6 +13,8 @@
 
 #include <cairo.h>  // for cairo_surface_t, cairo_t
 
+#include "util/raii/CairoWrappers.h"
+
 #include "Job.h"  // for Job, JobType
 
 class SidebarPreviewBaseEntry;
@@ -38,7 +40,6 @@ public:
 private:
     void initGraphics();
     void clipToPage();
-    void drawBorder();
     void finishPaint();
     void drawPage();
 
@@ -46,12 +47,12 @@ private:
     /**
      * Graphics buffer
      */
-    cairo_surface_t* crBuffer = nullptr;
+    xoj::util::CairoSurfaceSPtr buffer;
 
     /**
      * Graphics drawing
      */
-    cairo_t* cr2 = nullptr;
+    xoj::util::CairoSPtr cr;
 
     /**
      * Zoom factor

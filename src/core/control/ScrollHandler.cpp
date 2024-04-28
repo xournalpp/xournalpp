@@ -68,7 +68,6 @@ void ScrollHandler::scrollToPage(size_t page, XojPdfRectangle rect) {
 
 void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
     size_t pdfPage = dest.getPdfPage();
-    Sidebar* sidebar = control->getSidebar();
 
     if (pdfPage != npos) {
         Document* doc = control->getDocument();
@@ -77,7 +76,7 @@ void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
         doc->unlock();
 
         if (page == npos) {
-            sidebar->askInsertPdfPage(pdfPage);
+            control->askInsertPdfPage(pdfPage);
         } else {
             if (dest.shouldChangeTop()) {
                 control->getScrollHandler()->scrollToPage(page, {dest.getLeft(), dest.getTop(), -1, -1});

@@ -214,19 +214,39 @@
                             <property name="can-focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkBox" id="bxSidebarTopActions">
+                              <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <style>
+                                  <class name="inline-toolbar"/>
+                                </style>
                                 <child>
-                                  <object class="GtkToolbar" id="tbSelectSidebarPage">
-                                    <property name="name">tbSelectSidebarPage</property>
+                                  <object class="GtkBox" id="bxSidebarTopActions">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
+                                    <style>
+                                      <class name="linked"/>
+                                    </style>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkSeparator">
+                                    <property name="visible">true</property>
+                                    <property name="hexpand">true</property>
+                                    <property name="orientation">vertical</property>
+                                    <style>
+                                      <class name="spacer"/>
+                                    </style>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
                                     <property name="fill">True</property>
-                                    <property name="position">0</property>
+                                    <property name="position">1</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -251,14 +271,9 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="pack-type">end</property>
-                                    <property name="position">1</property>
+                                    <property name="position">2</property>
                                   </packing>
                                 </child>
-                                <style>
-                                  <class name="linked"/>
-                                  <class name="inline-toolbar"/>
-                                </style>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -272,110 +287,11 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="orientation">vertical</property>
-                                <child>
-                                  <placeholder/>
-                                </child>
                               </object>
                               <packing>
                                 <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkBox" id="box2">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <child>
-                                  <object class="GtkButton" id="btUp">
-                                    <property name="name">btUp</property>
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="receives-default">True</property>
-                                    <child>
-                                      <object class="GtkImage" id="image1">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="icon-name">go-up</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkButton" id="btDown">
-                                    <property name="name">btDown</property>
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="receives-default">True</property>
-                                    <child>
-                                      <object class="GtkImage" id="image5">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="icon-name">go-down</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">2</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkButton" id="btCopy">
-                                    <property name="name">btCopy</property>
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="receives-default">True</property>
-                                    <child>
-                                      <object class="GtkImage" id="image6">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="icon-name">edit-copy</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">3</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkButton" id="btDelete">
-                                    <property name="name">btDelete</property>
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="receives-default">True</property>
-                                    <child>
-                                      <object class="GtkImage" id="image7">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="icon-name">edit-delete</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">4</property>
-                                  </packing>
-                                </child>
-                                <style>
-                                  <class name="linked"/>
-                                  <class name="raised"/>
-                                </style>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="padding">2</property>
-                                <property name="position">3</property>
                               </packing>
                             </child>
                           </object>
@@ -824,131 +740,6 @@
             <property name="width">2</property>
           </packing>
         </child>
-      </object>
-    </child>
-  </object>
-  <object class="GtkMenu" id="sidebarPreviewContextMenu">
-    <property name="name">sidebarPreviewContextMenu</property>
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewNewBefore">
-        <property name="name">sidebarPreviewNewBefore</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Insert Page Before</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewNewAfter">
-        <property name="name">sidebarPreviewNewAfter</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Insert Page After</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewDuplicate">
-        <property name="name">sidebarPreviewDuplicate</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Duplicate</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewMoveUp">
-        <property name="name">sidebarPreviewMoveUp</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Move Up</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewMoveDown">
-        <property name="name">sidebarPreviewMoveDown</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Move Down</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewEdit">
-        <property name="name">sidebarPreviewEdit</property>
-        <property name="visible">True</property>
-        <property name="sensitive">False</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Edit (not implemented yet)</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewDelete">
-        <property name="name">sidebarPreviewDelete</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Delete</property>
-      </object>
-    </child>
-  </object>
-  <object class="GtkMenu" id="sidebarPreviewLayersContextMenu">
-    <property name="name">sidebarPreviewLayersContextMenu</property>
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewLayerMoveUp">
-        <property name="name">sidebarPreviewLayerMoveUp</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Move Up</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewLayerMoveDown">
-        <property name="name">sidebarPreviewLayerMoveDown</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Move Down</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewMergeDown">
-        <property name="name">sidebarPreviewMergeDown</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Merge Down</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewLayerDuplicate">
-        <property name="name">sidebarPreviewLayerDuplicate</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Duplicate</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="sidebarPreviewLayerDelete">
-        <property name="name">sidebarPreviewLayerDelete</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Delete</property>
       </object>
     </child>
   </object>
