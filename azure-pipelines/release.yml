@@ -60,7 +60,7 @@ stages:
         pool:
           vmImage: 'ubuntu-20.04'
         container:
-          image: xournalpp/debian-latest-sudo:latest
+          image: ghcr.io/xournalpp/debian-latest-sudo:master
         displayName: 'Build for Debian'
         steps:
           - bash: |
