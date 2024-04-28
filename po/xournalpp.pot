@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-11 12:49+0000\n"
+"POT-Creation-Date: 2024-04-28 13:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,17 +267,13 @@ msgstr ""
 msgid "Could not load LaTeX PDF file"
 msgstr ""
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:75
+#: ../src/core/control/PageBackgroundChangeController.cpp:94
 #: ../src/core/control/xojfile/LoadHandler.cpp:469
 #: ../src/core/control/xojfile/LoadHandler.cpp:485
 msgid "Error reading PDF: {1}"
 msgstr ""
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:177
-msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
-
-#: ../src/core/control/PageBackgroundChangeController.cpp:212
+#: ../src/core/control/PageBackgroundChangeController.cpp:220
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page "
@@ -1219,11 +1215,35 @@ msgstr ""
 msgid "Open file"
 msgstr ""
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:100
+#: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
+msgid "Select Image"
+msgstr ""
+
+#: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:33
+msgid "<b>... or select already used Image:</b>"
+msgstr ""
+
+#: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:37
+msgid "Load file"
+msgstr ""
+
+#: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:115
+msgid "This image could not be loaded. Error message: {1}"
+msgstr ""
+
+#: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:121
+msgid "This image could not be loaded."
+msgstr ""
+
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
+msgid "Select PDF Page"
+msgstr ""
+
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:56
 msgid "Show only not used pages (one unused page)"
 msgstr ""
 
-#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:101
+#: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:57
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
@@ -2121,6 +2141,14 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
+#: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:425
+#: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
+#: ../ui/plugin.glade:113 ../ui/renameLayerDialog.glade:71
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6264
+#: ../ui/texdialog.glade:203
+msgid "Ok"
+msgstr ""
+
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
 msgstr ""
@@ -2197,28 +2225,8 @@ msgid ""
 "PDF file can be used for a presentation."
 msgstr ""
 
-#: ../ui/exportSettings.glade:425 ../ui/goto.glade:108
-#: ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
-#: ../ui/plugin.glade:113 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6264
-#: ../ui/texdialog.glade:203
-msgid "Ok"
-msgstr ""
-
 #: ../ui/goto.glade:23
 msgid "Go to Page"
-msgstr ""
-
-#: ../ui/images.glade:8
-msgid "Select Image"
-msgstr ""
-
-#: ../ui/images.glade:73
-msgid "Load file"
-msgstr ""
-
-#: ../ui/images.glade:88
-msgid "<b>... or select already used Image:</b>"
 msgstr ""
 
 #: ../ui/latexSettings.glade:36
@@ -2469,10 +2477,6 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:247
 msgid "Load from file"
-msgstr ""
-
-#: ../ui/pdfpages.glade:8
-msgid "Select PDF Page"
 msgstr ""
 
 #: ../ui/plugin.glade:22
