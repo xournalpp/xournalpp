@@ -98,6 +98,11 @@ static std::tuple<std::optional<std::string>, std::vector<Element*>> getElements
  * Renames file 'from' to file 'to' in the file system.
  * Overwrites 'to' if it already exists.
  *
+ * @param from string
+ * @param to string
+ * @return number|nil Returns 1 on success, and (nil, message) on failure.
+ * @return string
+ *
  * Example:
  *   assert(app.glib_rename("path/to/foo", "other/bar"))
  *
@@ -129,6 +134,9 @@ static int applib_glib_rename(lua_State* L) {
 /**
  * Create a 'Save As' native dialog and return as a string
  * the filepath of the location the user chose to save.
+ *
+ * @param filename string suggestion for a filename, defaults to "untitlted"
+ * @return string path of the selected location
  *
  * Examples:
  *   local filename = app.saveAs() -- defaults to suggestion "Untitled"
@@ -169,6 +177,9 @@ static int applib_saveAs(lua_State* L) {
 /**
  * Create a 'Open File' native dialog and return as a string
  * the filepath the user chose to open.
+ *
+ * @param types string[] array of the different allowed extensions e.g. {'\*.bmp', '\*.png'}
+ * @returns string path of the selected location
  *
  * Examples:
  *   path = app.getFilePath()
@@ -221,6 +232,7 @@ static int applib_getFilePath(lua_State* L) {
 /**
  * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_openDialog() instead.
  *
+ * @deprecated
  * Example: local result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"})
  * Pops up a message box with two buttons "Yes" and "No" and returns 1 for yes, 2 for no
  */
@@ -251,6 +263,13 @@ static int applib_msgbox(lua_State* L) {
 }
 
 /**
+ * Open a dialog with arbitrary text and buttons (with callbacks)
+ *
+ * @param message string
+ * @param options table<integer, string> integer to button texts
+ * @param cb string name of the callback function(button:integer) to call on user interaction
+ * @param error boolean is this message an error (optional)
+ *
  * Example 1: app.openDialog("Test123", {[1] = "Yes", [2] = "No"}, "cb", false)
  *   or       app.openDialog("Test123", {"Yes", "No"}, "cb")
  * Pops up a message box with two buttons "Yes" and "No" and executed function "cb" whose single parameter is the number
@@ -300,6 +319,10 @@ static int applib_openDialog(lua_State* L) {
 
 /**
  * Allow to register menupoints and toolbar buttons. This needs to be called from initUi
+ *
+ * @param opts {menu: string, callback: string, toolbarID: string, mode:integer, accelerator:string} options (`mode`,
+ `toolbarID` and `accelerator` are optional)
+ * @return {menuId:integer}
  *
  * Example 1: app.registerUi({["menu"] = "HelloWorld", callback="printMessage", mode=1, accelerator="<Control>a"})
  * registers a menupoint with name "HelloWorld" executing a function named "printMessage", in mode 1,
@@ -374,6 +397,8 @@ static int applib_registerUi(lua_State* L) {
  * The key "group" is currently only used for debugging purpose and can safely be omitted.
  * The key "enabled" is true by default.
  *
+ * @param opts {action: string, enabled:boolean} options (`enabled` is `true` by default)
+ *
  * Example 1: app.uiAction({["action"] = "ACTION_PASTE"})
  * pastes the clipboard content into the document
  *
@@ -409,6 +434,8 @@ static int applib_uiAction(lua_State* L) {
 /**
  * Execute action from sidebar menu
  *
+ * @param action string the desired action
+ *
  * Example: app.sidebarAction("MOVE_DOWN")
  * moves down the current page
  */
@@ -437,12 +464,13 @@ static int applib_sidebarAction(lua_State* L) {
     return 0;
 }
 
-/*
+/**
  * Get the index of the currently active sidebar-page.
+ *
+ * @return integer pageNr pageNr of the sidebar page
  *
  * Example: app.getSidebarPageNo() -- returns e.g. 1
  */
-
 static int applib_getSidebarPageNo(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Sidebar* sidebar = plugin->getControl()->getSidebar();
@@ -450,8 +478,10 @@ static int applib_getSidebarPageNo(lua_State* L) {
     return 1;
 }
 
-/*
+/**
  * Set the currently active sidebar-page by its index.
+ *
+ * @param pageNr integer pageNr of the sidebar page
  *
  * Look at src/core/gui/sidebar/Sidebar.cpp to find out which index corresponds to which page (e.g. currently 1 is the
  * page with the TOC/index if available). Note that indexing the sidebar-pages starts at 1 (as usual in lua).
@@ -486,6 +516,8 @@ static int applib_setSidebarPageNo(lua_State* L) {
 
 /**
  * Execute action from layer controller
+ *
+ * @param action string the desired action
  *
  * Example: app.layerAction("ACTION_DELETE_LAYER")
  * deletes the current layer
@@ -644,6 +676,9 @@ static void addStrokeHelper(lua_State* L, std::unique_ptr<Stroke> stroke) {
  * Given a table containing a series of splines, draws a batch of strokes on the canvas.
  * Expects a table of tables containing eight coordinate pairs, along with attributes of the stroke.
  *
+ * @param opts {splines:{coordinates:number[], tool:string, width:number, color:integer, fill:number,
+ * linestyle:string}[], allowUndoRedoAction:string}
+ *
  * Required Arguments: splines
  * Optional Arguments: pressure, tool, width, color, fill, lineStyle
  *
@@ -683,7 +718,6 @@ static void addStrokeHelper(lua_State* L, std::unique_ptr<Stroke> stroke) {
  * "individual" or "none")
  *        })
  */
-
 static int applib_addSplines(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* ctrl = plugin->getControl();
@@ -777,6 +811,9 @@ static int applib_addSplines(lua_State* L) {
  * Expects three tables of equal length: one for X, one for Y, and one for
  * stroke pressure, along with attributes of the stroke. Each stroke has
  * attributes handled individually.
+ *
+ * @param opts {strokes:{X:number[], Y:number[], pressure:number[], tool:string, width:number, color:integer,
+ * fill:number, linestyle:string}[], allowUndoRedoAction:string}
  *
  * Required Arguments: X, Y
  * Optional Arguments: pressure, tool, width, color, fill, lineStyle
@@ -970,6 +1007,9 @@ static int applib_addStrokes(lua_State* L) {
  *   - allowUndoRedoAction string: Decides how the change gets introduced into the undoRedo action list "individual",
  * "grouped" or "none"
  *
+ * @param opts {texts:{text:string, font:{name:string, size:number}, color:integer, x:number, y:number}[],
+ * allowUndoRedoAction:string}
+ *
  * Parameters per textbox:
  *   - text string: content of the textbox (required)
  *   - font table {name string, size number} (default: currently configured font/size from the settings)
@@ -996,7 +1036,6 @@ static int applib_addStrokes(lua_State* L) {
  *   },
  * }
  */
-
 static int applib_addTexts(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
@@ -1121,9 +1160,13 @@ static int applib_addTexts(lua_State* L) {
     return 0;
 }
 
-/*
+/**
  * Returns a list of lua table of the texts (from current selection / current layer).
  * Is mostly inverse to app.addTexts (except getTexts will also retrieve the width/height of the textbox)
+ *
+ * @param type string "selection" or "layer"
+ * @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, width:number,
+ * height:number}[] texts
  *
  * Required argument: type ("selection" or "layer")
  *
@@ -1158,7 +1201,6 @@ static int applib_addTexts(lua_State* L) {
  * }
  *
  */
-
 static int applib_getTexts(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     std::string type = luaL_checkstring(L, 1);
@@ -1226,6 +1268,10 @@ static int applib_getTexts(lua_State* L) {
 /**
  * Puts a Lua Table of the Strokes (from the selection tool / selected layer) onto the stack.
  * Is inverse to app.addStrokes
+ *
+ * @param type string "selection" or "layer"
+ * @return {x:number[], y:number[], pressure:number[], tool:string, width:number, color:integer, fill:number,
+ * linestyle:string}[] strokes
  *
  * Required argument: type ("selection" or "layer")
  *
@@ -1385,6 +1431,8 @@ static int applib_refreshPage(lua_State* L) {
 /**
  * Change page background of current page
  *
+ * @param background string backgroundType (e.g. "graph")
+ *
  * Example: app.changeCurrentPageBackground("graph")
  * changes the page background of the current page to graph paper
  */
@@ -1403,6 +1451,8 @@ static int applib_changeCurrentPageBackground(lua_State* L) {
 
 /**
  * Query all colors of the current palette.
+ *
+ * @return {color: integer, name: string}[] options
  *
  * Example: palette = app.getColorPalette()
  * possible return value:
@@ -1440,6 +1490,9 @@ static int applib_getColorPalette(lua_State* L) {
 
 /**
  * Change color of a specified tool or of the current tool
+ *
+ * @param opts {color: integer, tool: string, selection: boolean} options (`selection=true` -> new color applies to
+ * active selection as well, `tool=nil` (unset) -> currently active tool is being used)
  *
  * Example 1: app.changeToolColor({["color"] = 0xff00ff, ["tool"] = "PEN"})
  * changes the color of the pen tool to violet without applying this change to the current selection
@@ -1519,10 +1572,13 @@ static int applib_changeToolColor(lua_State* L) {
     return 0;
 }
 
-/*
+/**
  * Select Background Pdf Page for Current Page
  * First argument is an integer (page number) and the second argument is a boolean (isRelative)
  * specifying whether the page number is relative to the current pdf page or absolute
+ *
+ * @param pageNr integer page-nunmber
+ * @param relative boolean should `pageNr` be interpreted relative?
  *
  * Example 1: app.changeBackgroundPdfPageNr(1, true)
  * changes the pdf page to the next one (relative mode)
@@ -1587,9 +1643,14 @@ static void pushRectangleHelper(lua_State* L, xoj::util::Rectangle<double> rect)
     lua_pushnumber(L, rect.y);
     lua_setfield(L, -2, "y");
 }
-/*
- * Returns a table encoding all info on the chosen tool (active, pen, highlighter, eraser or text)
- * in a Lua table of one of the following shapes
+
+/**
+ * Returns a table encoding all info on the chosen tool (active, pen, highlighter, eraser or text) in a Lua table.
+ *
+ * @param tool string tool to get the information for
+ * @return {} info varies a lot depending on the tool
+ *
+ * The Lua table will be of one of the following shapes
  *
  * for pen:
  * {
@@ -1707,7 +1768,6 @@ static void pushRectangleHelper(lua_State* L, xoj::util::Rectangle<double> rect)
  *            local boundingX = selectionInfo["boundingBox"]["x"]
  *            local snappedBoundsWidth = selectionInfo["snappedBounds"]["width"]
  */
-
 static int applib_getToolInfo(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
@@ -1896,8 +1956,15 @@ static int applib_getToolInfo(lua_State* L) {
     return 1;
 }
 
-/*
- * Returns a table encoding the document structure in a Lua table of the shape
+/**
+ * Returns a table encoding the document structure in a Lua table.
+ *
+ * @return {pages:{pageWidth:number, pageHeight:number, isAnnotated:boolean, pageTypeFormat:string,
+ * pageTypeConfig:string, backgroundColor:integer, pdfBackgroundPageNo:integer, layers:{isVisible:boolean,
+ * isAnnotated:boolean}[], currentLayer:integer}[], currentPage:integer, pdfBackgroundFilename:string,
+ * xoppFilename:string}
+ *
+ * The shape of the returned Lua table will be:
  * {
  *   "pages" = {
  *     {
@@ -2029,6 +2096,9 @@ static int applib_getDocumentStructure(lua_State* L) {
  * Scrolls to the page specified relatively or absolutely (by default)
  * The page number is clamped to the range between the first and last page
  *
+ * @param page integer (automatically clamped)
+ * @param relative boolean
+ *
  * Example 1: app.scrollToPage(1, true)
  * scrolls to the next page (relative mode)
  *
@@ -2055,6 +2125,10 @@ static int applib_scrollToPage(lua_State* L) {
 
 /**
  * Scrolls to the position on the selected page specified relatively (by default) or absolutely
+ *
+ * @param x number
+ * @param y number
+ * @param relative boolean
  *
  * Example 1: app.scrollToPos(20,10)
  * scrolls 20pt right and 10pt down (relative mode)
@@ -2087,6 +2161,8 @@ static int applib_scrollToPos(lua_State* L) {
  * Sets the current page as indicated (without scrolling)
  * The page number passed is clamped to the range between first page and last page
  *
+ * @param pageNr integer (automatically clamped)
+ *
  * Example: app.setCurrentPage(1)
  * makes the first page the new current page
  **/
@@ -2103,6 +2179,10 @@ static int applib_setCurrentPage(lua_State* L) {
 
 /**
  * Sets the width and height of the current page in pt = 1/72 inch either relatively or absolutely (by default)
+ *
+ * @param width number
+ * @param height number
+ * @param relative boolean
  *
  * Example 1: app.setPageSize(595.275591, 841.889764)
  * makes the current page have standard (A4 paper) width and height (absolute mode)
@@ -2151,6 +2231,9 @@ static int applib_setPageSize(lua_State* L) {
  * Sets the current layer of the current page as indicated and updates visibility if specified (by default it does not)
  * Displays an error message, if the selected layer does not exist
  *
+ * @param layerNr integer number of the (non-background) layer
+ * @param change_visibility boolean true -> makes all layers up to the selected one visible, all others invisible
+ *
  * Example 1: app.setCurrentLayer(2, true)
  * makes the second (non-background) layer the current layer and makes layers 1, 2 and the background layer visible, the
  *others hidden
@@ -2184,8 +2267,10 @@ static int applib_setCurrentLayer(lua_State* L) {
     return 0;
 }
 
-/*
+/**
  * Sets the visibility of the current layer
+ *
+ * @param visible boolean
  *
  * Example: app.setLayerVisibility(true)
  * makes the current layer visible
@@ -2207,6 +2292,8 @@ static int applib_setLayerVisibility(lua_State* L) {
 /**
  * Sets currently selected layer's name.
  *
+ * @param name string
+ *
  * Example: app.setCurrentLayerName("Custom name 1")
  * Changes current layer name to "Custom name 1"
  **/
@@ -2224,6 +2311,8 @@ static int applib_setCurrentLayerName(lua_State* L) {
 
 /**
  * Sets background name.
+ *
+ * @param name string
  *
  * Example: app.setBackgroundName("Custom name 1")
  * Changes background name to "Custom name 1"
@@ -2251,6 +2340,8 @@ static int applib_setBackgroundName(lua_State* L) {
  * This means the font sizes get scaled, wheras the position of the left upper corner
  * of the bounding box remains unchanged
  *
+ * @param factor number
+ *
  * Example: app.scaleTextElements(2.3)
  * scales all text elements on the current layer with factor 2.3
  **/
@@ -2277,6 +2368,9 @@ static int applib_scaleTextElements(lua_State* L) {
 
 /**
  * Gets the display DPI.
+ *
+ * @return integer displayDpi dpi of the display
+ *
  * Example: app.getDisplayDpi()
  **/
 static int applib_getDisplayDpi(lua_State* L) {
@@ -2291,7 +2385,9 @@ static int applib_getDisplayDpi(lua_State* L) {
 
 /**
  * Exports the current document as a pdf or as a svg or png image
-
+ *
+ * @param opts {outputFile:string, range:string, background:string, progressiveMode: boolean}
+ *
  * Example 1:
  * app.export({["outputFile"] = "Test.pdf", ["range"] = "2-5; 7", ["background"] = "none", ["progressiveMode"] = true})
  * uses progressiveMode, so for each page of the document, instead of rendering one PDF page, the page layers are
@@ -2368,13 +2464,17 @@ static int applib_export(lua_State* L) {
  * Opens a file and by default asks the user what to do with the old document.
  * Returns true when successful, false otherwise.
  *
+ * @param path string
+ * @param pageNr integer scroll to this page (defaults to 1)
+ * @param oldDocument boolean don't ask weather to save the old document? (defaults to false)
+ * @return boolean success
+ *
  * Example 1: local success = app.openFile("home/username/bg.pdf")
  *            asks what to do with the old document and loads the file afterwards, scrolls to top
  *
  * Example 2: local sucess = app.openFile("home/username/paintings.xopp", 3, true)
  *            opens the file, scrolls to the 3rd page and does not ask to save the old document
  */
-
 static int applib_openFile(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
@@ -2396,8 +2496,11 @@ static int applib_openFile(lua_State* L) {
     return 1;
 }
 
-/*
+/**
  * Adds images from the provided paths or the provided image data on the current page on the current layer.
+ *
+ * @param opts {images:{path:string, data:string, x:number, y:number, maxHeight:number, maxWidth:number,
+ * aspectRatio:boolean}[], allowUndoRedoAction:string}
  *
  * Global parameters:
  *  - images table: array of image-parameter-tables
@@ -2607,6 +2710,10 @@ static int applib_addImages(lua_State* L) {
  * Puts a Lua Table of the Images (from the selection tool / selected layer) onto the stack.
  * Is inverse to app.addImages
  *
+ * @param type string "selection" or "layer"
+ * @return {x:number, y:number, width:number, height:number, data:string, format:string, imageWidth:number,
+ * imageHeight:number}[] images
+ *
  * Required argument: type ("selection" or "layer")
  *
  * Example: local images = app.getImages("selection")
@@ -2629,7 +2736,6 @@ static int applib_addImages(lua_State* L) {
  *     ...
  * }
  */
-
 static int applib_getImages(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     std::string type = luaL_checkstring(L, 1);
