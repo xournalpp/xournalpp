@@ -1,5 +1,5 @@
 macos_instance:
-  image: ghcr.io/cirruslabs/macos-ventura-base:latest
+  image: ghcr.io/cirruslabs/macos-runner:sonoma
 
 # Need to override the user HOME so we can cache the jhbuild stuff.
 env:
@@ -32,7 +32,7 @@ build_binary_blob_task:
   upload_caches:
     - binary_blob
   upload_binary_blob_artifacts:
-    path: blobdir
+    path: "blobdir/*"
 
 build_xournalpp_task:
   << : *UNINSTALL_HOMEBREW
