@@ -6,6 +6,8 @@ set -o pipefail
 ### Step 1: install jhbuild
 
 LOCKFILE="$(dirname "$0")"/jhbuild-version.lock
+MODULEFILE="$(dirname "$0")"/xournalpp.modules
+
 get_lockfile_entry() {
     local key="$1"
     # Print the value corresponding to the provided lockfile key to stdout
@@ -51,7 +53,7 @@ setup_custom_modulesets() {
     (cd ~/gtk-osx-custom && git checkout "$gtk_osx_commit")
 
     # Set osx deployment target
-    sed -i '' -e 's/^setup_sdk()/setup_sdk(target="10.15")/' ~/.config/jhbuildrc-custom
+    sed -i '' -e 's/^setup_sdk()/setup_sdk(target="11.7")/' ~/.config/jhbuildrc-custom
 
     # Enable custom jhbuild configuration
     cat <<EOF >> ~/.config/jhbuildrc-custom
@@ -86,6 +88,7 @@ setup_custom_modulesets
 build_gtk() {
     jhbuild bootstrap-gtk-osx
     jhbuild build meta-gtk-osx-gtk3 gtksourceview3
+    echo "Finished building gtk"
 }
 
 build_gtk
@@ -93,7 +96,7 @@ build_gtk
 ### Step 4: build xournalpp deps
 
 build_xournalpp_deps() {
-    jhbuild -m xournalpp.modules build meta-xournalpp-deps
+    jhbuild -m "$MODULEFILE" build meta-xournalpp-deps
 }
 
 build_xournalpp_deps
