@@ -63,6 +63,6 @@
     <key>NSHighResolutionCapable</key>
     <true />
     <key>NSRequiresAquaSystemAppearance</key>
-    <true />
+    <false />
   </dict>
 </plist>
