@@ -509,3 +509,32 @@ TEST(ControlLoadHandler, testStrokeWidthRecovery) {
 
     testPressureValues(8, {0.25, 0.30, 0.40, Point::NO_PRESSURE});
 }
+
+TEST(ControlLoadHandler, testLoadStoreCJK) {
+    LoadHandler handler;
+    auto filepath = string(GET_TESTFILE("cjk/测试.xopp"));
+    Document* doc = handler.loadDocument(fs::u8path(filepath));
+    ASSERT_NE(doc, nullptr);
+
+    EXPECT_STREQ(doc->getPdfFilepath().filename().u8string().c_str(), u8"测试.pdf");
+
+    EXPECT_EQ((size_t)2, doc->getPageCount());
+    const auto page = doc->getPage(0);
+
+    EXPECT_EQ((size_t)1, page->getLayerCount());
+    const auto* layer = (*page->getLayers())[0];
+
+    const auto& elements = layer->getElements();
+    ASSERT_EQ((size_t)3, layer->getElements().size());
+
+    auto check_element = [&](int i, const char* answer) {
+        EXPECT_EQ(ELEMENT_TEXT, elements[i]->getType());
+        auto* text = dynamic_cast<Text*>(elements[i]);
+        ASSERT_NE(text, nullptr);
+        EXPECT_STREQ(text->getText().c_str(), answer);
+    };
+
+    check_element(0, u8"Test");
+    check_element(1, u8"测试");
+    check_element(2, u8"テスト");
+}
