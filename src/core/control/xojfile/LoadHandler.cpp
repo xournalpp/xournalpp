@@ -46,9 +46,9 @@ using std::string;
     }
 
 namespace {
-    constexpr size_t MAX_VERSION_LENGTH = 50;
-    constexpr size_t MAX_MIMETYPE_LENGTH = 25;
-}
+constexpr size_t MAX_VERSION_LENGTH = 50;
+constexpr size_t MAX_MIMETYPE_LENGTH = 25;
+}  // namespace
 
 LoadHandler::LoadHandler():
         attachedPdfMissing(false),
@@ -316,7 +316,7 @@ void LoadHandler::parseContents() {
         double width = LoadHandlerHelper::getAttribDouble("width", this);
         double height = LoadHandlerHelper::getAttribDouble("height", this);
 
-        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/true);
+        this->page = std::make_unique<XojPage>(width, height, /*suppressLayer*/ true);
 
         pages.push_back(this->page);
     } else if (strcmp(elementName, "audio") == 0) {
@@ -373,7 +373,7 @@ void LoadHandler::parseBgSolid() {
 
 void LoadHandler::parseBgPixmap() {
     const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
-    const fs::path filepath(LoadHandlerHelper::getAttrib("filename", false, this));
+    const fs::path filepath = fs::u8path(LoadHandlerHelper::getAttrib("filename", false, this));
     // in case of a cloned background image, filename is a string representation of the page number from which the image
     // is cloned
 
@@ -392,7 +392,8 @@ void LoadHandler::parseBgPixmap() {
         img.loadFile(fileToLoad, &error);
 
         if (error) {
-            error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % fileToLoad.string() % error->message));
+            error("%s",
+                  FC(_F("Could not read image: {1}. Error message: {2}") % fileToLoad.u8string() % error->message));
             g_error_free(error);
         }
 
@@ -427,8 +428,8 @@ void LoadHandler::parseBgPixmap() {
         this->page->setBackgroundImage(img);
     } else if (!strcmp(domain, "clone")) {
         gchar* endptr = nullptr;
-        auto const& filename = filepath.string();
-        size_t nr = static_cast<size_t>(g_ascii_strtoull(filename.c_str(), &endptr, 10));
+        auto const& filename = filepath.u8string();
+        auto nr = static_cast<size_t>(g_ascii_strtoull(filename.c_str(), &endptr, 10));
         if (endptr == filename.c_str()) {
             error("%s", FC(_F("Could not read page number for cloned background image: {1}.") % filepath.string()));
         }
@@ -583,11 +584,11 @@ void LoadHandler::parseStroke() {
     const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
     if (fn != nullptr && strlen(fn) > 0) {
         if (this->isGzFile) {
-            stroke->setAudioFilename(fn);
+            stroke->setAudioFilename(fs::u8path(fn));
         } else {
             auto tempFile = getTempFileForPath(fn);
             if (!tempFile.empty()) {
-                stroke->setAudioFilename(tempFile.string());
+                stroke->setAudioFilename(tempFile);
             }
         }
     }
@@ -676,11 +677,11 @@ void LoadHandler::parseText() {
     const char* fn = LoadHandlerHelper::getAttrib("fn", true, this);
     if (fn != nullptr && strlen(fn) > 0) {
         if (this->isGzFile) {
-            text->setAudioFilename(fn);
+            text->setAudioFilename(fs::u8path(fn));
         } else {
             auto tempFile = getTempFileForPath(fn);
             if (!tempFile.empty()) {
-                text->setAudioFilename(tempFile.string());
+                text->setAudioFilename(tempFile);
             }
         }
     }
@@ -1045,7 +1046,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
                     handler->stroke->setPressure(handler->pressureBuffer);
                 }
             } else {
-                g_warning("%s", FC(_F("xoj-File: {1}") % handler->filepath.string().c_str()));
+                g_warning("%s", FC(_F("xoj-File: {1}") % handler->filepath.u8string()));
                 g_warning("%s", FC(_F("Wrong number of pressure values, got {1}, expected {2}") %
                                    handler->pressureBuffer.size() % (handler->stroke->getPointCount() - 1)));
             }
@@ -1161,7 +1162,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::optional<s
         if (read == -1) {
             zip_fclose(attachmentFile);
             error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
-                           filename.string()));
+                           filename.u8string()));
             return {};
         }
 
@@ -1179,7 +1180,7 @@ auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
         return string(static_cast<char*>(tmpFilename));
     }
 
-    error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename.string()));
+    error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename.u8string()));
     return "";
 }
 

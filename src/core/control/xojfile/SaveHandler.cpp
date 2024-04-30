@@ -254,7 +254,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                 }
             } else {
                 background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilepath().string());
+                background->setAttrib("filename", doc->getPdfFilepath().u8string());
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -279,7 +279,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
             p->getBackgroundImage().setCloneId(id);
         } else {
             background->setAttrib("domain", "absolute");
-            background->setAttrib("filename", p->getBackgroundImage().getFilepath().string());
+            background->setAttrib("filename", p->getBackgroundImage().getFilepath().u8string());
             p->getBackgroundImage().setCloneId(id);
         }
     } else {
