@@ -12,6 +12,7 @@
 #pragma once
 
 #include <string>  // for string
+#include <vector>
 
 #include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
 #include <glib.h>     // for gdouble, gchar, guint, guint32
@@ -89,6 +90,6 @@ struct InputEvents {
     static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
     static InputDeviceClass translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings);
 
-    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings,
-                                     const xoj::util::Point<double>& relativeOffset, GtkWidget* referenceWidget);
+    static std::vector<InputEvent> translateEvent(GdkEvent* sourceEvent, Settings* settings, GtkWidget* referenceWidget,
+                                                  int nbPress);
 };
