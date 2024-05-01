@@ -65,7 +65,6 @@ void PluginPlaceholderLabel::setText(std::string text) {
     for (auto* label: labelWidgets) {
         if (GTK_IS_WIDGET(label)) {
             gtk_label_set_text(GTK_LABEL(label), displayText.c_str());
-            gtk_widget_queue_draw(label);
         }
     }
 }
