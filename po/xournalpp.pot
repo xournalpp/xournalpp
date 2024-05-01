@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-28 13:55+0000\n"
+"POT-Creation-Date: 2024-05-01 00:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,90 +49,90 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:744
+#: ../src/core/control/Control.cpp:736
 msgid ""
 "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:758
+#: ../src/core/control/Control.cpp:750
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1326
+#: ../src/core/control/Control.cpp:1318
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1337
+#: ../src/core/control/Control.cpp:1329
 msgid "file: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1366
+#: ../src/core/control/Control.cpp:1358
 msgid "Error opening file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1374
+#: ../src/core/control/Control.cpp:1366
 msgid ""
 "The file being loaded has a file format version newer than the one currently "
 "supported by this version of Xournal++, so it may not load properly. Open "
 "anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1503
+#: ../src/core/control/Control.cpp:1495
 msgid ""
 "The attached background file could not be found. It might have been moved, "
 "renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1506
+#: ../src/core/control/Control.cpp:1498
 msgid ""
 "The background file \"{1}\" could not be found. It might have been moved, "
 "renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1516
+#: ../src/core/control/Control.cpp:1508
 msgid ""
 "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1521
+#: ../src/core/control/Control.cpp:1513
 msgid "Select another PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1522
+#: ../src/core/control/Control.cpp:1514
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1523 ../src/core/control/Control.cpp:1939
+#: ../src/core/control/Control.cpp:1515 ../src/core/control/Control.cpp:1931
 #: ../src/core/control/XournalMain.cpp:200
 #: ../src/core/gui/sidebar/Sidebar.cpp:87
 msgid "Cancel"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1526
+#: ../src/core/control/Control.cpp:1518
 msgid "Use proposed PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1529
+#: ../src/core/control/Control.cpp:1521
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1621
+#: ../src/core/control/Control.cpp:1613
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1725
+#: ../src/core/control/Control.cpp:1717
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "Save File"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1725
+#: ../src/core/control/Control.cpp:1717
 #: ../src/core/control/jobs/BaseExportJob.cpp:55
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
@@ -140,47 +140,47 @@ msgstr ""
 msgid "_Cancel"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1726
+#: ../src/core/control/Control.cpp:1718
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:113
 msgid "_Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1729
+#: ../src/core/control/Control.cpp:1721
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:46
 msgid "Xournal++ files"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1774
+#: ../src/core/control/Control.cpp:1766
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1789
+#: ../src/core/control/Control.cpp:1781
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1811
+#: ../src/core/control/Control.cpp:1803
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1930
+#: ../src/core/control/Control.cpp:1922
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1930
+#: ../src/core/control/Control.cpp:1922
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1931
+#: ../src/core/control/Control.cpp:1923
 msgid "Save As..."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1931 ../src/core/control/jobs/SaveJob.cpp:24
+#: ../src/core/control/Control.cpp:1923 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
 msgid "Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1936
+#: ../src/core/control/Control.cpp:1928
 msgid "Discard"
 msgstr ""
 
