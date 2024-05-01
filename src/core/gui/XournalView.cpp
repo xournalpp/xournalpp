@@ -80,18 +80,6 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHand
     gtk_scrolled_window_set_child(parent, this->widget.get());
     gtk_viewport_set_scroll_to_focus(GTK_VIEWPORT(gtk_scrolled_window_get_child(parent)), false);
 
-
-    g_signal_connect(getWidget(), "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer) {
-                         // Disable event compression
-                         if (gtk_widget_get_realized(widget)) {
-                             g_warning("Find replacement for gdk_window_set_event_compression()");
-                             // gdk_window_set_event_compression(gtk_widget_get_window(view->getWidget()), false);
-                         } else {
-                             g_warning("could not disable event compression");
-                         }
-                     }),
-                     nullptr);
-
     // Repaint when scrolling
     auto* hadj = gtk_scrolled_window_get_hadjustment(parent);
     g_signal_connect_object(hadj, "changed", G_CALLBACK(redraw), this->widget.get(), GConnectFlags(0));
