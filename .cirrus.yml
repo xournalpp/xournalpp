@@ -4,6 +4,7 @@ macos_instance:
 # Need to override the user HOME so we can cache the jhbuild stuff.
 env:
   HOME: /opt/devroot
+  GITHUB_TOKEN: ENCRYPTED[!a7eb9968bbfc1f1d79496117893528174c24e70046095d5f9096ecfe3bc19a8cadd675c0d91afb3e2d9707de131abdaf!]
 
 # Define a template that is reused for both binary blob task & build task.
 binary_blob_cache_template: &BINARY_BLOB_CACHE_TEMPLATE
@@ -67,3 +68,8 @@ build_xournalpp_task:
     (cd mac-setup && bash build-app.sh ~/gtk && bash build-dmg.sh Xournal++.app Xournal++.dmg)
   xournalpp_artifacts:
     path: mac-setup/Xournal++.dmg
+
+upload_task:
+  xournalpp_upload_script: |
+    bash mac-setup/upload-release.sh 
+  only_if: $BRANCH =~ 'release-*' && "$CIRRUS_RELEASE" != ""
