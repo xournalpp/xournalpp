@@ -15,6 +15,7 @@
 #include <memory>  // for unique_ptr
 #include <set>     // for set
 #include <string>  // for string
+#include <vector>
 
 #include <gdk/gdk.h>  // for GdkEvent, GdkModifierType
 #include <glib.h>     // for gulong
@@ -33,23 +34,24 @@ class TouchDrawingInputHandler;
 class TouchInputHandler;
 class XournalView;
 
+struct InputEvent;
+
 class InputContext final {
 
 private:
-    StylusInputHandler* stylusHandler;
-    MouseInputHandler* mouseHandler;
-    TouchDrawingInputHandler* touchDrawingHandler;
-    KeyboardInputHandler* keyboardHandler;
-    TouchInputHandler* touchHandler;
+    XournalView* view;
+    ScrollHandling* scrollHandling;
+
+    std::unique_ptr<StylusInputHandler> stylusHandler;
+    std::unique_ptr<MouseInputHandler> mouseHandler;
+    std::unique_ptr<TouchDrawingInputHandler> touchDrawingHandler;
+    std::unique_ptr<KeyboardInputHandler> keyboardHandler;
+    std::unique_ptr<TouchInputHandler> touchHandler;
     std::unique_ptr<GeometryToolInputHandler> geometryToolInputHandler;
 
     GtkWidget* widget = nullptr;
     /// Event controllers added to the main widget. Used to remove them on ~InputContext() to stop signals
-    GtkEventController* keyCtrl = nullptr;
-    GtkEventController* legCtrl = nullptr;
-
-    XournalView* view;
-    ScrollHandling* scrollHandling;
+    std::vector<GtkEventController*> eventControllers;
 
     GdkModifierType modifierState = (GdkModifierType)0;
 
@@ -81,12 +83,12 @@ private:
      * @param event The event to handle
      * @return Whether the event was handled
      */
-    bool handle(GdkEvent* event);
+    bool handle(InputEvent event);
 
     /**
      * Print debug output
      */
-    void printDebug(GdkEvent* event);
+    void printDebug(const InputEvent& event);
 
 public:
     /**

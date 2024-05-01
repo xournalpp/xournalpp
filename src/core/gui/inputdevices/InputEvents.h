@@ -64,7 +64,7 @@ public:
 struct InputEvent final {
     /*explicit(false)*/ explicit operator bool() const { return sourceEvent; }
 
-    xoj::util::CLibrariesSPtr<GdkEvent, GdkEventHandler> sourceEvent;
+    xoj::util::CLibrariesSPtr<GdkEvent, GdkEventHandler> sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
 
     InputEventType type{UNKNOWN};
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};

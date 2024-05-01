@@ -18,11 +18,6 @@ auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
         case GDK_BUTTON_PRESS:
         case GDK_TOUCH_BEGIN:
             return BUTTON_PRESS_EVENT;
-        // TODO
-        // case GDK_2BUTTON_PRESS:
-        // return BUTTON_2_PRESS_EVENT;
-        // case GDK_3BUTTON_PRESS:
-        // return BUTTON_3_PRESS_EVENT;
         case GDK_BUTTON_RELEASE:
         case GDK_TOUCH_END:
         case GDK_TOUCH_CANCEL:
@@ -99,7 +94,7 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings, GtkW
         targetEvent.relative = xoj::util::gtk::gdkSurfaceToWidgetCoordinates(surfCoord, referenceWidget);
         targetEvent.absolute = xoj::util::gtk::gdkSurfaceToWidgetCoordinates(
                 surfCoord, gtk_widget_get_ancestor(referenceWidget, GTK_TYPE_SCROLLED_WINDOW));
-    } else {
+    } else if (targetEvent.type != GRAB_BROKEN_EVENT) {
         g_warning("InputEvents::translateEvent() but GdkEvent has no position");
     }
 
@@ -111,11 +106,11 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings, GtkW
     }
 
     targetEvent.state = gdk_event_get_modifier_state(sourceEvent);
-    if (targetEvent.deviceClass == INPUT_DEVICE_KEYBOARD) {
-        g_warning("Unhandled keyboard event");
-        targetEvent.button = gdk_key_event_get_keyval(sourceEvent);
-    }
 
+    if (targetEvent.type == KEY_PRESS_EVENT || targetEvent.type == KEY_RELEASE_EVENT) {
+        targetEvent.button = gdk_key_event_get_keyval(sourceEvent);
+        g_warning("Unhandled keyboard event: %d", targetEvent.button);
+    }
 
     // Copy the timestamp
     targetEvent.timestamp = gdk_event_get_time(sourceEvent);
