@@ -13,6 +13,7 @@
 
 #include <memory>  // for shared_ptr
 #include <string>  // for string
+#include <vector>
 
 #include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
 #include <glib.h>     // for gdouble, gchar, guint, guint32
@@ -62,9 +63,9 @@ public:
 };
 
 struct InputEvent final {
-    /*explicit(false)*/ explicit operator bool() const { return sourceEvent; }
+    /*explicit(false)*/ explicit operator bool() const { return device; }
 
-    xoj::util::CLibrariesSPtr<GdkEvent, GdkEventHandler> sourceEvent;
+    GdkDevice* device{nullptr};  ///< Source device. Avoid using if possible.
 
     InputEventType type{UNKNOWN};
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
@@ -90,13 +91,10 @@ struct KeyEvent final {
     xoj::util::CLibrariesSPtr<GdkEvent, GdkEventHandler> sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
 };
 
-class InputEvents {
-
-    static InputEventType translateEventType(GdkEventType type);
-
-public:
+struct InputEvents {
     static InputDeviceClass translateDeviceType(GdkDevice* device, Settings* settings);
     static InputDeviceClass translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings);
 
-    static InputEvent translateEvent(GdkEvent* sourceEvent, Settings* settings, GtkWidget* referenceWidget);
+    static std::vector<InputEvent> translateEvent(GdkEvent* sourceEvent, Settings* settings, GtkWidget* referenceWidget,
+                                                  int nbPress);
 };
