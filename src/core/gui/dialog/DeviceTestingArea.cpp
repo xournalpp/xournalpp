@@ -20,7 +20,6 @@
 #include "util/PopupWindowWrapper.h"
 #include "util/VersionInfo.h"
 #include "util/glib_casts.h"
-#include "util/gtk4_helper.h"  // for gtk_box_append, ...
 #include "util/i18n.h"
 #include "util/raii/GtkWindowUPtr.h"
 

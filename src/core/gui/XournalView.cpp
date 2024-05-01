@@ -81,18 +81,6 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHand
 
     gtk_scrolled_window_set_child(parent, this->widget.get());
 
-
-    g_signal_connect(getWidget(), "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer) {
-                         // Disable event compression
-                         if (gtk_widget_get_realized(widget)) {
-                             g_warning("Find replacement for gdk_window_set_event_compression()");
-                             // gdk_window_set_event_compression(gtk_widget_get_window(view->getWidget()), false);
-                         } else {
-                             g_warning("could not disable event compression");
-                         }
-                     }),
-                     nullptr);
-
     this->repaintHandler = std::make_unique<RepaintHandler>(this);
 
     control->getZoomControl()->addZoomListener(this);
