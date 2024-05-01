@@ -53,8 +53,7 @@ void xoj::input::printEvent(std::ostream& str, const InputEvent& e, guint32 refe
                                                              "GRAB_BROKEN_EVENT"};
 
     static constexpr const char* gdkInputSources[] = {
-            "GDK_SOURCE_MOUSE",    "GDK_SOURCE_PEN",        "GDK_SOURCE_ERASER",
-            "GDK_SOURCE_CURSOR",   "GDK_SOURCE_KEYBOARD",   "GDK_SOURCE_TOUCHSCREEN",
+            "GDK_SOURCE_MOUSE",    "GDK_SOURCE_PEN",        "GDK_SOURCE_KEYBOARD",  "GDK_SOURCE_TOUCHSCREEN",
             "GDK_SOURCE_TOUCHPAD", "GDK_SOURCE_TRACKPOINT", "GDK_SOURCE_TABLET_PAD"};
 
     str << "Device " << e.device << ": " << deviceClassToString[e.deviceClass] << " - Name: " << e.deviceName << "\n";
@@ -69,74 +68,60 @@ void xoj::input::printEvent(std::ostream& str, const InputEvent& e, guint32 refe
 
 void xoj::input::printGdkEvent(std::ostream& str, GdkEvent* e, guint32 referenceTime) {
     static constexpr const char* gdkInputSources[] = {
-            "GDK_SOURCE_MOUSE      ", "GDK_SOURCE_PEN        ", "GDK_SOURCE_ERASER     ",
-            "GDK_SOURCE_CURSOR     ", "GDK_SOURCE_KEYBOARD   ", "GDK_SOURCE_TOUCHSCREEN",
-            "GDK_SOURCE_TOUCHPAD   ", "GDK_SOURCE_TRACKPOINT ", "GDK_SOURCE_TABLET_PAD "};
+            "GDK_SOURCE_MOUSE",    "GDK_SOURCE_PEN",        "GDK_SOURCE_KEYBOARD",  "GDK_SOURCE_TOUCHSCREEN",
+            "GDK_SOURCE_TOUCHPAD", "GDK_SOURCE_TRACKPOINT", "GDK_SOURCE_TABLET_PAD"};
 
-    /// Indexes are shifted by 1 because GDK_NOTHING == -1
-    static constexpr const char* gdkEventTypeWithIndexShiftedByOne[] = {"GDK_NOTHING",
-                                                                        "GDK_DELETE",
-                                                                        "GDK_DESTROY",
-                                                                        "GDK_EXPOSE",
-                                                                        "GDK_MOTION_NOTIFY",
-                                                                        "GDK_BUTTON_PRESS",
-                                                                        "GDK_DOUBLE_BUTTON_PRESS",
-                                                                        "GDK_TRIPLE_BUTTON_PRESS",
-                                                                        "GDK_BUTTON_RELEASE",
-                                                                        "GDK_KEY_PRESS",
-                                                                        "GDK_KEY_RELEASE",
-                                                                        "GDK_ENTER_NOTIFY",
-                                                                        "GDK_LEAVE_NOTIFY",
-                                                                        "GDK_FOCUS_CHANGE",
-                                                                        "GDK_CONFIGURE",
-                                                                        "GDK_MAP",
-                                                                        "GDK_UNMAP",
-                                                                        "GDK_PROPERTY_NOTIFY",
-                                                                        "GDK_SELECTION_CLEAR",
-                                                                        "GDK_SELECTION_REQUEST",
-                                                                        "GDK_SELECTION_NOTIFY",
-                                                                        "GDK_PROXIMITY_IN",
-                                                                        "GDK_PROXIMITY_OUT",
-                                                                        "GDK_DRAG_ENTER",
-                                                                        "GDK_DRAG_LEAVE",
-                                                                        "GDK_DRAG_MOTION",
-                                                                        "GDK_DRAG_STATUS",
-                                                                        "GDK_DROP_START",
-                                                                        "GDK_DROP_FINISHED",
-                                                                        "GDK_CLIENT_EVENT",
-                                                                        "GDK_VISIBILITY_NOTIFY",
-                                                                        "UNKNOWN_GAP_IN_GDK_EVENT_TYPE_ENUM",
-                                                                        "GDK_SCROLL",
-                                                                        "GDK_WINDOW_STATE",
-                                                                        "GDK_SETTING",
-                                                                        "GDK_OWNER_CHANGE",
-                                                                        "GDK_GRAB_BROKEN",
-                                                                        "GDK_DAMAGE",
-                                                                        "GDK_TOUCH_BEGIN",
-                                                                        "GDK_TOUCH_UPDATE",
-                                                                        "GDK_TOUCH_END",
-                                                                        "GDK_TOUCH_CANCEL",
-                                                                        "GDK_TOUCHPAD_SWIPE",
-                                                                        "GDK_TOUCHPAD_PINCH",
-                                                                        "GDK_PAD_BUTTON_PRESS",
-                                                                        "GDK_PAD_BUTTON_RELEASE",
-                                                                        "GDK_PAD_RING",
-                                                                        "GDK_PAD_STRIP",
-                                                                        "GDK_PAD_GROUP_MODE"};
+    static constexpr const char* gdkEventTypes[] = {
+            "GDK_DELETE",
+            "GDK_MOTION_NOTIFY",
+            "GDK_BUTTON_PRESS",
+            "GDK_BUTTON_RELEASE",
+            "GDK_KEY_PRESS",
+            "GDK_KEY_RELEASE",
+            "GDK_ENTER_NOTIFY",
+            "GDK_LEAVE_NOTIFY",
+            "GDK_FOCUS_CHANGE",
+            "GDK_PROXIMITY_IN",
+            "GDK_PROXIMITY_OUT",
+            "GDK_DRAG_ENTER",
+            "GDK_DRAG_LEAVE",
+            "GDK_DRAG_MOTION",
+            "GDK_DROP_START",
+            "GDK_SCROLL",
+            "GDK_GRAB_BROKEN",
+            "GDK_TOUCH_BEGIN",
+            "GDK_TOUCH_UPDATE",
+            "GDK_TOUCH_END",
+            "GDK_TOUCH_CANCEL",
+            "GDK_TOUCHPAD_SWIPE",
+            "GDK_TOUCHPAD_PINCH",
+            "GDK_PAD_BUTTON_PRESS",
+            "GDK_PAD_BUTTON_RELEASE",
+            "GDK_PAD_RING",
+            "GDK_PAD_STRIP",
+            "GDK_PAD_GROUP_MODE",
+#ifdef GDK_VERSION_4_6
+            "GDK_TOUCHPAD_HOLD",
+#endif
+#ifdef GDK_VERSION_4_20
+            "GDK_PAD_DIAL",
+#endif
+    };
+    static_assert(GDK_EVENT_LAST == G_N_ELEMENTS(gdkEventTypes));
 
     static constexpr const char* gdkScrollDirection[] = {
             "GDK_SCROLL_UP", "GDK_SCROLL_DOWN", "GDK_SCROLL_LEFT", "GDK_SCROLL_RIGHT", "GDK_SCROLL_SMOOTH",
     };
+    static constexpr const char* gdkAxisUses[] = {
+            "GDK_AXIS_IGNORE  ", "GDK_AXIS_X       ", "GDK_AXIS_Y       ", "GDK_AXIS_DELTA_X ", "GDK_AXIS_DELTA_Y ",
+            "GDK_AXIS_PRESSURE", "GDK_AXIS_XTILT   ", "GDK_AXIS_YTILT   ", "GDK_AXIS_WHEEL   ", "GDK_AXIS_DISTANCE",
+            "GDK_AXIS_ROTATION", "GDK_AXIS_SLIDER  ", "GDK_AXIS_LAST    "};
 
     str << "Event:          " << e << "\n";
     str << "   Timestamp:   " << TimeToReadable{gdk_event_get_time(e), referenceTime} << "\n";
-    str << "   Type:        " << gdkEventTypeWithIndexShiftedByOne[gdk_event_get_event_type(e) + 1] << "\n";
+    str << "   Type:        " << gdkEventTypes[gdk_event_get_event_type(e)] << "\n";
     if (GdkDevice* d = gdk_event_get_device(e); d) {
         str << "   Device:      " << d << " : " << gdkInputSources[gdk_device_get_source(d)] << " -- "
-            << gdk_device_get_name(d) << "\n";
-    }
-    if (GdkDevice* d = gdk_event_get_device(e); d) {
-        str << "   Source dev:  " << d << " : " << gdkInputSources[gdk_device_get_source(d)] << " -- "
             << gdk_device_get_name(d) << "\n";
     }
     if (GdkDeviceTool* t = gdk_event_get_device_tool(e); t) {
@@ -155,6 +140,22 @@ void xoj::input::printGdkEvent(std::ostream& str, GdkEvent* e, guint32 reference
         str << "   Sequence:    " << seq << "\n";
     }
     str << "   State:       " << std::bitset<8 * sizeof(GdkModifierType)>(gdk_event_get_modifier_state(e)) << std::endl;
+
+
+    GValue v = G_VALUE_INIT;
+    g_object_get_property(G_OBJECT(gdk_event_get_device(const_cast<GdkEvent*>(e))), "n_axes", &v);
+    str << "   Axes:   " << g_value_get_uint(&v) << " axes supported:";
+
+    double p;
+    for (int i = 1; i < GDK_AXIS_LAST; i++) {
+        str << "\n   |       " << gdkAxisUses[i] << ": ";
+        if (gdk_event_get_axis(const_cast<GdkEvent*>(e), (GdkAxisUse)i, &p)) {
+            str << "true    value: " << p;
+        } else {
+            str << "false";
+        }
+    }
+
     if (double x, y; gdk_event_get_position(e, &x, &y)) {
         str << "   Coords:      " << x << "   " << y << "\n";
     }
