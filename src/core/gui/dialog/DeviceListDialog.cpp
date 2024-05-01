@@ -2,7 +2,6 @@
 
 #include "control/settings/Settings.h"
 #include "gui/Builder.h"
-#include "util/gtk4_helper.h"  // for gtk_box_append, ...
 
 #include "DeviceClassConfigGui.h"
 
