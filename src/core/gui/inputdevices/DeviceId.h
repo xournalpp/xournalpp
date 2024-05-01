@@ -20,7 +20,15 @@ struct DeviceId {
     bool operator==(const DeviceId& o) const;
     bool operator!=(const DeviceId& o) const;
 
+    template <typename Stream>
+    friend Stream& operator<<(Stream& s, const DeviceId& id);
+
 private:
     const void* id = nullptr;
     bool trackpointOrTouchpad = false;
 };
+
+template <typename Stream>
+Stream& operator<<(Stream& s, const DeviceId& id) {
+    return s << id.id << "    trackpointOrTouchpad: " << (id.trackpointOrTouchpad ? "true" : "false");
+}
