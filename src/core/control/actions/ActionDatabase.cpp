@@ -16,7 +16,6 @@
 #define START_ROW "   * " << std::left << std::setw(30) << std::boolalpha << Action_toString(a)
 #endif
 
-namespace {
 template <Action a, class U = void>
 struct InitiallyEnabled {
     static inline void setup(ActionDatabase* db, Control*) { db->enableAction(a, true); }
@@ -27,9 +26,27 @@ struct InitiallyEnabled<a, std::void_t<decltype(&ActionProperties<a>::initiallyE
         db->enableAction(a, ActionProperties<a>::initiallyEnabled(ctrl));
     }
 };
-};  // namespace
+
 
 class ActionDatabase::Populator {
+    /// Choose the right action namespace
+    template <Action a, class U = void>
+    struct ActionNamespace {
+        static constexpr auto ACTION_NAMESPACE = "win.";
+        static void addToActionMap(ActionDatabase* db) {
+            g_action_map_add_action(G_ACTION_MAP(db->win), G_ACTION(db->gActions[a].get()));
+        }
+    };
+    template <Action a>
+    struct ActionNamespace<
+            a, std::enable_if_t<std::is_same_v<typename ActionProperties<a>::app_namespace, std::true_type>, void>> {
+        static constexpr auto ACTION_NAMESPACE = "app.";
+        static void addToActionMap(ActionDatabase* db) {
+            g_action_map_add_action(G_ACTION_MAP(gtk_window_get_application(GTK_WINDOW(db->win))),
+                                    G_ACTION(db->gActions[a].get()));
+        }
+    };
+
     /**
      * Accelerators<a>::setup(ctrl); will setup the accelerators listed in ActionProperties<a>::accelerators (if any)
      */
@@ -49,11 +66,10 @@ class ActionDatabase::Populator {
 
         static inline void setup(Control* ctrl) {
             // Todo(cpp20) constexpr this concatenation
-            std::string fullActionName = "win.";
+            std::string fullActionName = ActionNamespace<a>::ACTION_NAMESPACE;
             fullActionName += Action_toString(a);
-            gtk_application_set_accels_for_action(
-                    GTK_APPLICATION(gtk_window_get_application(GTK_WINDOW(ctrl->getWindow()->getWindow()))),
-                    fullActionName.c_str(), ActionProperties<a>::accelerators);
+            gtk_application_set_accels_for_action(GTK_APPLICATION(gtk_window_get_application(ctrl->getGtkWindow())),
+                                                  fullActionName.c_str(), ActionProperties<a>::accelerators);
         }
     };
 
@@ -61,7 +77,8 @@ class ActionDatabase::Populator {
     static inline void finishSetup(ActionDatabase* db, const char* signal) {
         db->signalIds[a] = g_signal_connect(G_OBJECT(db->gActions[a].get()), signal,
                                             G_CALLBACK(ActionProperties<a>::callback), db->control);
-        g_action_map_add_action(G_ACTION_MAP(db->win), G_ACTION(db->gActions[a].get()));
+        ActionNamespace<a>::addToActionMap(db);
+        // g_action_map_add_action(G_ACTION_MAP(db->win), G_ACTION(db->gActions[a].get()));
         Accelerators<a>::setup(db->control);
         InitiallyEnabled<a>::setup(db, db->control);
     }

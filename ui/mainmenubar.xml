@@ -53,8 +53,8 @@
     </item>
     <item>
      <attribute name="label" translatable="yes">Quit</attribute>
-     <attribute name="action">win.quit</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;q</attribute>
+     <attribute name="action">app.quit</attribute>
+     <attribute name="hidden-when">macos-menubar</attribute>
     </item>
    </section>
   </submenu>
@@ -160,7 +160,8 @@
    <section>
     <item>
      <attribute name="label" translatable="yes">Preferences</attribute>
-     <attribute name="action">win.settings</attribute>
+     <attribute name="action">app.preferences</attribute>
+     <attribute name="hidden-when">macos-menubar</attribute>
     </item>
     <submenu id="menuViewToolbar">
      <attribute name="label" translatable="yes">T_oolbars</attribute>
@@ -857,7 +858,8 @@
     </item>
     <item>
      <attribute name="label" translatable="yes">About</attribute>
-     <attribute name="action">win.about</attribute>
+     <attribute name="action">app.about</attribute>
+     <attribute name="hidden-when">macos-menubar</attribute>
     </item>
    </section>
   </submenu>

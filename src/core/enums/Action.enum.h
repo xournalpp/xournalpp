@@ -55,7 +55,7 @@ enum class Action : size_t {
     MOVE_SELECTION_LAYER_DOWN,
     ROTATION_SNAPPING,
     GRID_SNAPPING,
-    SETTINGS,
+    PREFERENCES,
 
     // Menu View
     PAIRED_PAGES_MODE,

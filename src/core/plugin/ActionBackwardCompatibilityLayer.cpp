@@ -31,7 +31,7 @@ static const std::map<std::string_view, Action> STATELESS_ACTION_MAP = {
         {"ACTION_SEARCH"sv, Action::SEARCH},
         {"ACTION_SELECT_ALL"sv, Action::SELECT_ALL},
         {"ACTION_DELETE"sv, Action::DELETE},
-        {"ACTION_SETTINGS"sv, Action::SETTINGS},
+        {"ACTION_SETTINGS"sv, Action::PREFERENCES},
         {"ACTION_GOTO_FIRST"sv, Action::GOTO_FIRST},
         {"ACTION_GOTO_BACK"sv, Action::GOTO_PREVIOUS},
         {"ACTION_GOTO_PAGE"sv, Action::GOTO_PAGE},

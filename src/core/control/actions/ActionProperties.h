@@ -45,6 +45,8 @@
  *      * (optional) a static member function
  *              static bool initiallyEnabled(Control*);
  *          Defaults to [](Control*){return true;}
+ *      * (optional) a member type app_namespace = std::true_type if the action should be added to the app. namespace
+ *          Otherwise, it is added to the win. namespace
  *
  * Note that both state_type and parameter_type must be convertible to GVariant. See util/GVariantTemplate.h
  */
@@ -117,6 +119,12 @@ struct ActionProperties<Action::PRINT> {
 };
 template <>
 struct ActionProperties<Action::QUIT> {
+    using app_namespace = std::true_type;
+#ifdef __APPLE__
+    static constexpr const char* accelerators[] = {"<Meta>Q", nullptr};
+#else
+    static constexpr const char* accelerators[] = {"<Ctrl>Q", nullptr};
+#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->quit(); }
 };
 
@@ -231,7 +239,8 @@ struct ActionProperties<Action::GRID_SNAPPING> {
 };
 
 template <>
-struct ActionProperties<Action::SETTINGS> {
+struct ActionProperties<Action::PREFERENCES> {
+    using app_namespace = std::true_type;
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->showSettings(); }
 };
 
@@ -834,6 +843,7 @@ struct ActionProperties<Action::HELP> {
 };
 template <>
 struct ActionProperties<Action::ABOUT> {
+    using app_namespace = std::true_type;
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->showAbout(); }
 };
 
