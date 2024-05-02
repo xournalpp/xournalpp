@@ -24,7 +24,7 @@ struct utf8_view: std::ranges::view_interface<utf8_view<InputIterator, InputSent
         constexpr Iterator() = default;
         constexpr Iterator(InputIterator it): it(it) {}
 
-        constexpr auto operator*() const -> reference { return *it; }
+        constexpr auto operator*() const -> reference { return static_cast<reference>(*it); }
 
         constexpr auto operator++() -> Iterator& {
             ++it;

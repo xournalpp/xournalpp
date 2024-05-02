@@ -79,7 +79,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkBox* box, 
 
     GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);  // NOLINT
 
-    auto addTypeCB = [=](const char* icon, const char* name, ToolType action) {
+    auto addTypeCB = [typeModel, this](const char* icon, const char* name, ToolType action) {
         addToolToList(typeModel, iconNameHelper.iconName(icon).c_str(), name, action);
     };
 
