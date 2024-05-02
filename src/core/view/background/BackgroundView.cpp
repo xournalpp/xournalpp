@@ -60,7 +60,7 @@ auto BackgroundView::createForPage(PageRef page, BackgroundFlags bgFlags, PdfCac
         -> std::unique_ptr<BackgroundView> {
     const double width = page->getWidth();
     const double height = page->getHeight();
-    if (!page->isLayerVisible(0)) {
+    if (!bgFlags.forceVisible && !page->isLayerVisible(0)) {
         return std::make_unique<TransparentCheckerboardBackgroundView>(width, height);
     }
 
@@ -86,6 +86,6 @@ auto BackgroundView::createForPage(PageRef page, BackgroundFlags bgFlags, PdfCac
             return createRuled(width, height, page->getBackgroundColor(), pt);
         }
     }
-    // In case the flags tell us to hide the background, create a dummy view.
-    return std::make_unique<BackgroundView>(width, height);
+    // Only colorize the page
+    return std::make_unique<PlainBackgroundView>(width, height, page->getBackgroundColor());
 }

@@ -78,8 +78,11 @@ void PreviewJob::drawPage() {
             // render single layer
             view.initDrawing(page, cr.get(), true);
             if (layer == 0) {
-                view.drawBackground(xoj::view::BACKGROUND_SHOW_ALL);
+                auto flags = xoj::view::BACKGROUND_SHOW_ALL;
+                flags.forceVisible = xoj::view::FORCE_VISIBLE;
+                view.drawBackground(flags);
             } else {
+                view.drawBackground(xoj::view::BACKGROUND_SHOW_ONLY_BACKGROUND_COLOR);
                 Layer* drawLayer = (*page->getLayers())[layer - 1];
                 xoj::view::LayerView layerView(drawLayer);
                 layerView.draw(context);
@@ -87,10 +90,12 @@ void PreviewJob::drawPage() {
             view.finializeDrawing();
             break;
 
-        case RENDER_TYPE_PAGE_LAYERSTACK:
+        case RENDER_TYPE_PAGE_LAYERSTACK: {
             // render all layers up to layer
             view.initDrawing(page, cr.get(), true);
-            view.drawBackground(xoj::view::BACKGROUND_SHOW_ALL);
+            auto flags = xoj::view::BACKGROUND_SHOW_ALL;
+            flags.forceVisible = xoj::view::FORCE_VISIBLE;
+            view.drawBackground(flags);
             for (Layer::Index i = 0; i < layer; i++) {
                 Layer* drawLayer = (*page->getLayers())[i];
                 xoj::view::LayerView layerView(drawLayer);
@@ -98,7 +103,7 @@ void PreviewJob::drawPage() {
             }
             view.finializeDrawing();
             break;
-
+        }
         default:
             // unknown type
             break;
