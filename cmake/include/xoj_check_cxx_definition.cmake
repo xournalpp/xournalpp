@@ -8,13 +8,11 @@ function(xoj_check_cxx_definition definition header variable)
                 ${SOURCE_FILE}
                 CXX_STANDARD 20
                 CXX_STANDARD_REQUIRED TRUE
-                OUTPUT_VARIABLE _OUT_ERROR
                 )
     if(${variable})
         message(STATUS "${header} defines ${definition}")
     else()
         message(STATUS "${header} does not define ${definition}")
-        message(STATUS "${_OUT_ERROR}")
     endif()
     file(REMOVE ${SOURCE_FILE})
 endfunction()
