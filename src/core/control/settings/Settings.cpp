@@ -969,12 +969,9 @@ void Settings::save() {
 
     SAVE_STRING_PROP(selectedToolbar);
 
-    auto lastSavePath = char_cast(this->lastSavePath.u8string());
-    auto lastOpenPath = char_cast(this->lastOpenPath.u8string());
-    auto lastImagePath = char_cast(this->lastImagePath.u8string());
-    SAVE_STRING_PROP(lastSavePath);
-    SAVE_STRING_PROP(lastOpenPath);
-    SAVE_STRING_PROP(lastImagePath);
+    saveProperty("lastSavePath", char_cast(this->lastSavePath.u8string().c_str()), root);
+    saveProperty("lastOpenPath", char_cast(this->lastOpenPath.u8string().c_str()), root);
+    saveProperty("lastImagePath", char_cast(this->lastImagePath.u8string().c_str()), root);
 
     SAVE_DOUBLE_PROP(edgePanSpeed);
     SAVE_DOUBLE_PROP(edgePanMaxMult);
@@ -1105,10 +1102,7 @@ void Settings::save() {
     ATTACH_COMMENT("Config for new pages");
 
     SAVE_STRING_PROP(sizeUnit);
-    {
-        auto audioFolder = char_cast(this->audioFolder.u8string());
-        SAVE_STRING_PROP(audioFolder);
-    }
+    saveProperty("audioFolder", char_cast(this->audioFolder.u8string().c_str()), root);
     SAVE_INT_PROP(audioInputDevice);
     SAVE_INT_PROP(audioOutputDevice);
     SAVE_DOUBLE_PROP(audioSampleRate);
