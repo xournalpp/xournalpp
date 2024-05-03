@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-01 00:23+0000\n"
+"POT-Creation-Date: 2024-05-03 17:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3313,7 +3313,7 @@ msgid "Selection Edge Panning"
 msgstr ""
 
 #: ../ui/settings.glade:3841 ../ui/settings.glade:3915
-#: ../ui/mainmenubar.xml:205
+#: ../ui/mainmenubar.xml:206
 msgid "Show Menubar"
 msgstr ""
 
@@ -3322,11 +3322,11 @@ msgid "Show Toolbar"
 msgstr ""
 
 #: ../ui/settings.glade:3871 ../ui/settings.glade:3960
-#: ../ui/mainmenubar.xml:210
+#: ../ui/mainmenubar.xml:211
 msgid "Show Sidebar"
 msgstr ""
 
-#: ../ui/settings.glade:3890 ../ui/mainmenubar.xml:193
+#: ../ui/settings.glade:3890 ../ui/mainmenubar.xml:194
 msgid "Fullscreen"
 msgstr ""
 
@@ -3905,404 +3905,404 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:166
+#: ../ui/mainmenubar.xml:167
 msgid "T_oolbars"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:169
+#: ../ui/mainmenubar.xml:170
 msgid "_Manage"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:173
+#: ../ui/mainmenubar.xml:174
 msgid "_Customize"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:181
+#: ../ui/mainmenubar.xml:182
 msgid "_View"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:184
+#: ../ui/mainmenubar.xml:185
 msgid "_Pair Pages"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:188
+#: ../ui/mainmenubar.xml:189
 msgid "_Presentation Mode"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:200
+#: ../ui/mainmenubar.xml:201
 msgid "Show Toolbars"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:217
+#: ../ui/mainmenubar.xml:218
 msgid "Layout"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:220
+#: ../ui/mainmenubar.xml:221
 msgid "_Horizontal"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:225
+#: ../ui/mainmenubar.xml:226
 msgid "_Vertical"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:232
+#: ../ui/mainmenubar.xml:233
 msgid "_Left to Right"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:237
+#: ../ui/mainmenubar.xml:238
 msgid "_Right to Left"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:244
+#: ../ui/mainmenubar.xml:245
 msgid "_Top to Bottom"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:249
+#: ../ui/mainmenubar.xml:250
 msgid "_Bottom to Top"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:256
+#: ../ui/mainmenubar.xml:257
 msgid "_Cols/Rows"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:259
+#: ../ui/mainmenubar.xml:260
 msgid "Set Columns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:263
+#: ../ui/mainmenubar.xml:264
 msgid "_1 Column"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:268
+#: ../ui/mainmenubar.xml:269
 msgid "_2 Columns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:273
+#: ../ui/mainmenubar.xml:274
 msgid "_3 Columns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:278
+#: ../ui/mainmenubar.xml:279
 msgid "_4 Columns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:283
+#: ../ui/mainmenubar.xml:284
 msgid "_5 Columns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:288
+#: ../ui/mainmenubar.xml:289
 msgid "_6 Columns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:293
+#: ../ui/mainmenubar.xml:294
 msgid "_7 Columns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:298
+#: ../ui/mainmenubar.xml:299
 msgid "_8 Columns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:305
+#: ../ui/mainmenubar.xml:306
 msgid "Set Rows"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:309
+#: ../ui/mainmenubar.xml:310
 msgid "_1 Row"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:314
+#: ../ui/mainmenubar.xml:315
 msgid "_2 Rows"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:319
+#: ../ui/mainmenubar.xml:320
 msgid "_3 Rows"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:324
+#: ../ui/mainmenubar.xml:325
 msgid "_4 Rows"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:329
+#: ../ui/mainmenubar.xml:330
 msgid "_5 Rows"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:334
+#: ../ui/mainmenubar.xml:335
 msgid "_6 Rows"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:339
+#: ../ui/mainmenubar.xml:340
 msgid "_7 Rows"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:344
+#: ../ui/mainmenubar.xml:345
 msgid "_8 Rows"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:355
+#: ../ui/mainmenubar.xml:356
 msgid "Zoom In"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:360
+#: ../ui/mainmenubar.xml:361
 msgid "Zoom Out"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:365
+#: ../ui/mainmenubar.xml:366
 msgid "Normal Size"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:369
+#: ../ui/mainmenubar.xml:370
 msgid "Zoom to Fit"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:375
+#: ../ui/mainmenubar.xml:376
 msgid "_Navigation"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:378
+#: ../ui/mainmenubar.xml:379
 msgid "_First Page"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:383
+#: ../ui/mainmenubar.xml:384
 msgid "_Previous Page"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:388
+#: ../ui/mainmenubar.xml:389
 msgid "_Goto Page"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:393
+#: ../ui/mainmenubar.xml:394
 msgid "_Next Page"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:398
+#: ../ui/mainmenubar.xml:399
 msgid "_Last Page"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:405
+#: ../ui/mainmenubar.xml:406
 msgid "_Previous Layer"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:410
+#: ../ui/mainmenubar.xml:411
 msgid "_Next Layer"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:415
+#: ../ui/mainmenubar.xml:416
 msgid "_Top Layer"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:421
+#: ../ui/mainmenubar.xml:422
 msgid "N_ext Annotated Page"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:426
+#: ../ui/mainmenubar.xml:427
 msgid "P_revious Annotated Page"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:433
+#: ../ui/mainmenubar.xml:434
 msgid "_Journal"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:436
+#: ../ui/mainmenubar.xml:437
 msgid "New Page _Before"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:440
+#: ../ui/mainmenubar.xml:441
 msgid "New Page _After"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:445
+#: ../ui/mainmenubar.xml:446
 msgid "New Page at _End"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:449
+#: ../ui/mainmenubar.xml:450
 msgid "Duplicate Page"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:453
+#: ../ui/mainmenubar.xml:454
 msgid "Append New PDF Pages"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:457
+#: ../ui/mainmenubar.xml:458
 msgid "Configure Page Template"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:461
+#: ../ui/mainmenubar.xml:462
 msgid "_Delete Page"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:468
+#: ../ui/mainmenubar.xml:469
 msgid "New _Layer"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:473
+#: ../ui/mainmenubar.xml:474
 msgid "Delete Layer"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:478
+#: ../ui/mainmenubar.xml:479
 msgid "Merge Layer Down"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:483
+#: ../ui/mainmenubar.xml:484
 msgid "Rename Layer"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:490
+#: ../ui/mainmenubar.xml:491
 msgid "Paper _Format"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:494
+#: ../ui/mainmenubar.xml:495
 msgid "Paper _Color"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:498
+#: ../ui/mainmenubar.xml:499
 msgid "Paper B_ackground"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:503
+#: ../ui/mainmenubar.xml:504
 msgid "_Tools"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:506
+#: ../ui/mainmenubar.xml:507
 msgid "_Pen"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:512
+#: ../ui/mainmenubar.xml:513
 msgid "_Eraser"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:518
+#: ../ui/mainmenubar.xml:519
 msgid "Select Linear Text"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:524
+#: ../ui/mainmenubar.xml:525
 msgid "Select Text In Rectangle"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:530
+#: ../ui/mainmenubar.xml:531
 msgid "_Highlighter"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:536
+#: ../ui/mainmenubar.xml:537
 msgid "_Text"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:542
+#: ../ui/mainmenubar.xml:543
 msgid "_Image"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:548
+#: ../ui/mainmenubar.xml:549
 msgid "_Default Tool"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:555
+#: ../ui/mainmenubar.xml:556
 msgid "Drawing Type"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:557
+#: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:582
+#: ../ui/mainmenubar.xml:583
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:587
+#: ../ui/mainmenubar.xml:588
 msgid "Draw _Line"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:628
+#: ../ui/mainmenubar.xml:629
 msgid "_Vertical Space"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:640
+#: ../ui/mainmenubar.xml:641
 msgid "H_and Tool"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:656
+#: ../ui/mainmenubar.xml:657
 msgid "Pen _Options"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:659 ../ui/mainmenubar.xml:721
-#: ../ui/mainmenubar.xml:768
+#: ../ui/mainmenubar.xml:660 ../ui/mainmenubar.xml:722
+#: ../ui/mainmenubar.xml:769
 msgid "_very fine"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:664 ../ui/mainmenubar.xml:726
-#: ../ui/mainmenubar.xml:773
+#: ../ui/mainmenubar.xml:665 ../ui/mainmenubar.xml:727
+#: ../ui/mainmenubar.xml:774
 msgid "_fine"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:669 ../ui/mainmenubar.xml:731
-#: ../ui/mainmenubar.xml:778
+#: ../ui/mainmenubar.xml:670 ../ui/mainmenubar.xml:732
+#: ../ui/mainmenubar.xml:779
 msgid "_medium"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:674 ../ui/mainmenubar.xml:736
-#: ../ui/mainmenubar.xml:783
+#: ../ui/mainmenubar.xml:675 ../ui/mainmenubar.xml:737
+#: ../ui/mainmenubar.xml:784
 msgid "_thick"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:679 ../ui/mainmenubar.xml:741
-#: ../ui/mainmenubar.xml:788
+#: ../ui/mainmenubar.xml:680 ../ui/mainmenubar.xml:742
+#: ../ui/mainmenubar.xml:789
 msgid "ver_y thick"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:708 ../ui/mainmenubar.xml:795
+#: ../ui/mainmenubar.xml:709 ../ui/mainmenubar.xml:796
 msgid "Fi_ll"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:712 ../ui/mainmenubar.xml:799
+#: ../ui/mainmenubar.xml:713 ../ui/mainmenubar.xml:800
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:718
+#: ../ui/mainmenubar.xml:719
 msgid "Eraser Optio_ns"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:748
+#: ../ui/mainmenubar.xml:749
 msgid "_standard"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:753
+#: ../ui/mainmenubar.xml:754
 msgid "_whiteout"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:758
+#: ../ui/mainmenubar.xml:759
 msgid "_delete strokes"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:765
+#: ../ui/mainmenubar.xml:766
 msgid "Highlighter Opti_ons"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:805
+#: ../ui/mainmenubar.xml:806
 msgid "Select PDF Text Options"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:808
+#: ../ui/mainmenubar.xml:809
 msgid "Marker Opacity"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:814
+#: ../ui/mainmenubar.xml:815
 msgid "Text Font..."
 msgstr ""
 
-#: ../ui/mainmenubar.xml:819
+#: ../ui/mainmenubar.xml:820
 msgid "Record / Stop"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:824
+#: ../ui/mainmenubar.xml:825
 msgid "Pause"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:851
+#: ../ui/mainmenubar.xml:852
 msgid "_Help"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:855
+#: ../ui/mainmenubar.xml:856
 msgid "Help"
 msgstr ""
 
-#: ../ui/mainmenubar.xml:859
+#: ../ui/mainmenubar.xml:860
 msgid "About"
 msgstr ""
 
