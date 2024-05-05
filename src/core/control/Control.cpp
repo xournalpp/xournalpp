@@ -1623,7 +1623,7 @@ void Control::promptMissingPdf(LoadHandler& loadHandler, const fs::path& filepat
             std::bind(&Control::missingPdfDialogResponseHandler, this, proposedPdfFilepath, std::placeholders::_1));
 }
 
-void Control::missingPdfDialogResponseHandler(const fs::path& proposedPdfFilepath, int responseId) {
+void Control::missingPdfDialogResponseHandler(fs::path proposedPdfFilepath, int responseId) {
     switch (static_cast<MissingPdfDialogOptions>(responseId)) {
         case MissingPdfDialogOptions::USE_PROPOSED:
             if (!proposedPdfFilepath.empty()) {
@@ -1631,10 +1631,12 @@ void Control::missingPdfDialogResponseHandler(const fs::path& proposedPdfFilepat
             }
             break;
         case MissingPdfDialogOptions::SELECT_OTHER:
-            XojOpenDlg::showAnnotatePdfDialog(getGtkWindow(), settings, [this](fs::path path, bool attachPdf) {
-                if (!path.empty()) {
-                    this->pageBackgroundChangeController->changePdfPagesBackground(path, attachPdf);
-                }
+            Util::execInUiThread([this]() {
+                XojOpenDlg::showAnnotatePdfDialog(getGtkWindow(), settings, [this](fs::path path, bool attachPdf) {
+                    if (!path.empty()) {
+                        this->pageBackgroundChangeController->changePdfPagesBackground(path, attachPdf);
+                    }
+                });
             });
             break;
         case MissingPdfDialogOptions::REMOVE:
