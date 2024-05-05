@@ -97,11 +97,7 @@ void PageBackgroundChangeController::changePdfPagesBackground(const fs::path& fi
     }
     this->control->getWindow()->getXournal()->recreatePdfCache();
 
-    for (size_t p = 0; p < doc->getPageCount(); p++) {
-        if (doc->getPage(p)->getBackgroundType().format == PageTypeFormat::Pdf) {
-            this->control->firePageSizeChanged(p);
-        }
-    }
+    this->control->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
 
     auto undoAction = std::make_unique<MissingPdfUndoAction>(oldFilepath, oldAttachPdf);
     this->control->getUndoRedoHandler()->addUndoAction(std::move(undoAction));
