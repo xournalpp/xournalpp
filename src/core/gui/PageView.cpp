@@ -765,7 +765,11 @@ void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg)
         v->isViewOf(this->textEditor.get())) {
         // Draw the inputHandler's view onto the page buffer.
         std::lock_guard lock(this->drawingMutex);
-        v->drawWithoutDrawingAids(buffer.get());
+        if (auto cr = buffer.get(); cr) {
+            v->drawWithoutDrawingAids(cr);
+        } else {
+            rerenderPage();
+        }
     }
     this->deleteOverlayView(v, rg);
 }

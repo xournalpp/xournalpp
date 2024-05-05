@@ -96,7 +96,7 @@ private:
     /// The PDF selection tool used for the selection.
     ToolType toolType;
 
-    long unsigned int selectionPageNr = npos;
+    size_t selectionPageNr = npos;
 
     /// The selection bounds. Note that this does not necessarily correspond to
     /// a rectangle--it may also indicate start and end positions of a linear
