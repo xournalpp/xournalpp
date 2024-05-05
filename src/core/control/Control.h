@@ -408,7 +408,7 @@ private:
     /**
      * Handle the response from the missing PDF dialog
      */
-    void missingPdfDialogResponseHandler(const fs::path& proposedPdfFilepath, int responseId);
+    void missingPdfDialogResponseHandler(fs::path proposedPdfFilepath, int responseId);
 
     /**
      * "Closes" the document, preparing the editor for a new document.
