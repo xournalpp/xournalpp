@@ -198,7 +198,7 @@ auto PageBackgroundChangeController::commitPageTypeChange(size_t pageNum, const 
     } else if (std::holds_alternative<size_t>(param)) {  // PDF background
         setPagePdfBackground(page, std::get<size_t>(param), doc);
     } else {
-        page->setBackgroundType(pageTypeForNewPages.value());
+        page->setBackgroundType(pageType);
     }
 
     return std::make_unique<PageBackgroundChangedUndoAction>(page, origType, origPdfPage, origBackgroundImage, origW,
