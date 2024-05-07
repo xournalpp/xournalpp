@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-03 17:10+0000\n"
+"POT-Creation-Date: 2024-05-07 15:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,116 +23,132 @@ msgid ""
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:219
+#: ../src/core/control/Control.cpp:220
 msgid "Filesystem error: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:231
+#: ../src/core/control/Control.cpp:232
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:543
+#: ../src/core/control/Control.cpp:544
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:563
+#: ../src/core/control/Control.cpp:564
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:566
+#: ../src/core/control/Control.cpp:567
 msgid "Yes"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:566
+#: ../src/core/control/Control.cpp:567
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:736
+#: ../src/core/control/Control.cpp:789 ../src/core/control/Control.cpp:1616
+#: ../src/core/control/Control.cpp:2034 ../src/core/control/XournalMain.cpp:200
+msgid "Cancel"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:790
+msgid "Insert after current page"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:791
+msgid "Insert at end"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:794
+msgid ""
+"Your current document does not contain PDF Page no {1}\n"
+"Would you like to insert this page?\n"
+"\n"
+"Tip: You can select Journal → Paper Background → PDF Background to insert a "
+"PDF page."
+msgstr ""
+
+#: ../src/core/control/Control.cpp:838
 msgid ""
 "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:750
+#: ../src/core/control/Control.cpp:852
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1318
+#: ../src/core/control/Control.cpp:1419
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1329
+#: ../src/core/control/Control.cpp:1430
 msgid "file: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1358
+#: ../src/core/control/Control.cpp:1459
 msgid "Error opening file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1366
+#: ../src/core/control/Control.cpp:1467
 msgid ""
 "The file being loaded has a file format version newer than the one currently "
 "supported by this version of Xournal++, so it may not load properly. Open "
 "anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1495
+#: ../src/core/control/Control.cpp:1596
 msgid ""
 "The attached background file could not be found. It might have been moved, "
 "renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1498
+#: ../src/core/control/Control.cpp:1599
 msgid ""
 "The background file \"{1}\" could not be found. It might have been moved, "
 "renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1508
+#: ../src/core/control/Control.cpp:1609
 msgid ""
 "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1513
+#: ../src/core/control/Control.cpp:1614
 msgid "Select another PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1514
+#: ../src/core/control/Control.cpp:1615
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1515 ../src/core/control/Control.cpp:1931
-#: ../src/core/control/XournalMain.cpp:200
-#: ../src/core/gui/sidebar/Sidebar.cpp:87
-msgid "Cancel"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:1518
+#: ../src/core/control/Control.cpp:1619
 msgid "Use proposed PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1521
+#: ../src/core/control/Control.cpp:1622
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1613
+#: ../src/core/control/Control.cpp:1716
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1717
+#: ../src/core/control/Control.cpp:1820
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 msgid "Save File"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1717
+#: ../src/core/control/Control.cpp:1820
 #: ../src/core/control/jobs/BaseExportJob.cpp:55
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
@@ -140,47 +156,47 @@ msgstr ""
 msgid "_Cancel"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1718
+#: ../src/core/control/Control.cpp:1821
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:113
 msgid "_Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1721
+#: ../src/core/control/Control.cpp:1824
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:46
 msgid "Xournal++ files"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1766
+#: ../src/core/control/Control.cpp:1869
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1781
+#: ../src/core/control/Control.cpp:1884
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1803
+#: ../src/core/control/Control.cpp:1906
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1922
+#: ../src/core/control/Control.cpp:2025
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1922
+#: ../src/core/control/Control.cpp:2025
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1923
+#: ../src/core/control/Control.cpp:2026
 msgid "Save As..."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1923 ../src/core/control/jobs/SaveJob.cpp:24
+#: ../src/core/control/Control.cpp:2026 ../src/core/control/jobs/SaveJob.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
 msgid "Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1928
+#: ../src/core/control/Control.cpp:2031
 msgid "Discard"
 msgstr ""
 
@@ -273,7 +289,7 @@ msgstr ""
 msgid "Error reading PDF: {1}"
 msgstr ""
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:220
+#: ../src/core/control/PageBackgroundChangeController.cpp:216
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page "
@@ -890,7 +906,7 @@ msgid "Unable to play audio recording {1}"
 msgstr ""
 
 #: ../src/core/gui/PageView.cpp:917
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:96
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr ""
@@ -1349,68 +1365,19 @@ msgstr ""
 msgid "Apply to current page"
 msgstr ""
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:88
-msgid "Insert after current page"
-msgstr ""
-
-#: ../src/core/gui/sidebar/Sidebar.cpp:89
-msgid "Insert at end"
-msgstr ""
-
-#: ../src/core/gui/sidebar/Sidebar.cpp:92
-msgid ""
-"Your current document does not contain PDF Page no {1}\n"
-"Would you like to insert this page?\n"
-"\n"
-"Tip: You can select Journal → Paper Background → PDF Background to insert a "
-"PDF page."
-msgstr ""
-
-#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:173
+#: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
 msgid "Contents"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
-msgid "Swap the current layer with the one above"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
-msgid "Swap the current layer with the one below"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
-msgid "Insert a copy of the current layer below"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
-msgid "Delete this layer"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layer Preview"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
-msgid "Swap the current page with the one above"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
-msgid "Swap the current page with the one below"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:82
-msgid "Insert a copy of the current page below"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:82
-msgid "Delete this page"
-msgstr ""
-
-#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:86
+#: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:36
 msgid "Page Preview"
 msgstr ""
 
@@ -1890,11 +1857,11 @@ msgstr ""
 msgid "Change font"
 msgstr ""
 
-#: ../src/core/undo/InsertDeletePageUndoAction.cpp:86
+#: ../src/core/undo/InsertDeletePageUndoAction.cpp:83
 msgid "Page inserted"
 msgstr ""
 
-#: ../src/core/undo/InsertDeletePageUndoAction.cpp:90
+#: ../src/core/undo/InsertDeletePageUndoAction.cpp:87
 msgid "Page deleted"
 msgstr ""
 
@@ -2345,60 +2312,32 @@ msgid ""
 "            <i>Menu: View/Toolbars</i>"
 msgstr ""
 
-#: ../ui/main.glade:505
+#: ../ui/main.glade:421
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:527
+#: ../ui/main.glade:443
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:729
+#: ../ui/main.glade:645
 msgid "Copy selected text"
 msgstr ""
 
-#: ../ui/main.glade:751
+#: ../ui/main.glade:667
 msgid "Highlight selected text"
 msgstr ""
 
-#: ../ui/main.glade:771
+#: ../ui/main.glade:687
 msgid "Underline selected text"
 msgstr ""
 
-#: ../ui/main.glade:791
+#: ../ui/main.glade:707
 msgid "Strikethrough selected text"
 msgstr ""
 
-#: ../ui/main.glade:811
+#: ../ui/main.glade:727
 msgid "Toggle standard / region text selection"
-msgstr ""
-
-#: ../ui/main.glade:839
-msgid "Insert Page Before"
-msgstr ""
-
-#: ../ui/main.glade:847
-msgid "Insert Page After"
-msgstr ""
-
-#: ../ui/main.glade:855 ../ui/main.glade:943
-msgid "Duplicate"
-msgstr ""
-
-#: ../ui/main.glade:869 ../ui/main.glade:919
-msgid "Move Up"
-msgstr ""
-
-#: ../ui/main.glade:877 ../ui/main.glade:927
-msgid "Move Down"
-msgstr ""
-
-#: ../ui/main.glade:892
-msgid "Edit (not implemented yet)"
-msgstr ""
-
-#: ../ui/main.glade:935
-msgid "Merge Down"
 msgstr ""
 
 #: ../ui/pageFormat.glade:28
