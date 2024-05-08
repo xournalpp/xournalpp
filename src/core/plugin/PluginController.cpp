@@ -65,6 +65,9 @@ auto load_available_plugins_from(fs::path const& path, Control* control) -> std:
     std::vector<std::unique_ptr<Plugin>> returner;
     try {
         for (auto const& f: fs::directory_iterator(path)) {
+            if (!f.is_directory()) {
+                continue;
+            }
             const auto& pluginPath = f.path();
             try {
                 auto plugin = std::make_unique<Plugin>(control, pluginPath.filename().string(), pluginPath);
