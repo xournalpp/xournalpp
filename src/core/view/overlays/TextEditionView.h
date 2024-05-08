@@ -57,6 +57,11 @@ public:
 private:
     const TextEditor* textEditor;
 
+    /**
+     * @brief Pointer to the context menu displayed above the text editor
+     */
+    std::unique_ptr<TextEditorContextMenu> contextMenu;
+
 public:
     // Padding between the text logical box and the frame
     static constexpr int PADDING_IN_PIXELS = 5;

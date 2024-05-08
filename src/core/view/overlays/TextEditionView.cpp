@@ -14,6 +14,7 @@ TextEditionView::TextEditionView(const TextEditor* textEditor, Repaintable* pare
         ToolView(parent), textEditor(textEditor) {
     this->registerToPool(textEditor->getViewPool());
     this->on(FLAG_DIRTY_REGION, textEditor->getContentBoundingBox());
+    this->contextMenu = std::make_unique<TextEditorContextMenu>(textEditor);
 }
 
 TextEditionView::~TextEditionView() noexcept { this->unregisterFromPool(); }

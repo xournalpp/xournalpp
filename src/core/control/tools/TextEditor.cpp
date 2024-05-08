@@ -135,8 +135,6 @@ TextEditor::TextEditor(Control* control, XojPageView* pageView, GtkWidget* xourn
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::TextEditionView>>()) {
 
-    this->contextMenu = std::make_unique<TextEditorContextMenu>(control, this, pageView, xournalWidget);
-
     this->pageView->getZoomControl()->addZoomListener(this);
 
     this->initializeEditionAt(x, y);
@@ -631,7 +629,6 @@ void TextEditor::contentsChanged(bool forceCreateUndoAction) {
     // Todo: Reinstate text edition undo stack
     this->layoutStatus = LayoutStatus::NEEDS_COMPLETE_UPDATE;
     this->computeVirtualCursorPosition();
-    this->contextMenu->reposition();
 }
 
 void TextEditor::markPos(double x, double y, bool extendSelection) {
