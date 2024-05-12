@@ -18,30 +18,13 @@
 #include "model/PageRef.h"  // for PageRef
 #include "util/Color.h"     // for Color
 
+#include "BackgroundFlags.h"
+
 class PdfCache;
 class PageType;
 
 namespace xoj {
 namespace view {
-
-enum PDFBackgroundTreatment : bool { SHOW_PDF_BACKGROUND = true, HIDE_PDF_BACKGROUND = false };
-enum ImageBackgroundTreatment : bool { SHOW_IMAGE_BACKGROUND = true, HIDE_IMAGE_BACKGROUND = false };
-enum RulingBackgroundTreatment : bool { SHOW_RULING_BACKGROUND = true, HIDE_RULING_BACKGROUND = false };
-enum VisibilityTreatment : bool { FORCE_VISIBLE = true, USE_DOCUMENT_VISIBILITY = false };
-
-struct BackgroundFlags {
-    PDFBackgroundTreatment showPDF;
-    ImageBackgroundTreatment showImage;
-    RulingBackgroundTreatment showRuling;
-    VisibilityTreatment forceVisible = USE_DOCUMENT_VISIBILITY;
-};
-
-static constexpr BackgroundFlags BACKGROUND_SHOW_ALL = {SHOW_PDF_BACKGROUND, SHOW_IMAGE_BACKGROUND,
-                                                        SHOW_RULING_BACKGROUND};
-
-static constexpr BackgroundFlags BACKGROUND_SHOW_ONLY_BACKGROUND_COLOR = {HIDE_PDF_BACKGROUND, HIDE_IMAGE_BACKGROUND,
-                                                                          HIDE_RULING_BACKGROUND, FORCE_VISIBLE};
-
 class BackgroundView {
 public:
     BackgroundView(double pageWidth, double pageHeight): pageWidth(pageWidth), pageHeight(pageHeight) {}

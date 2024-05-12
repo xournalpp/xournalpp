@@ -183,13 +183,17 @@ void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, Ex
         }
     }
 
+    xoj::view::BackgroundFlags flags;
+    flags.showPDF = xoj::view::HIDE_PDF_BACKGROUND;  // Already exported (if any)
+    flags.showImage = exportBackground == EXPORT_BACKGROUND_NONE ? xoj::view::HIDE_IMAGE_BACKGROUND :
+                                                                   xoj::view::SHOW_IMAGE_BACKGROUND;
+    flags.showRuling = exportBackground <= EXPORT_BACKGROUND_UNRULED ? xoj::view::HIDE_RULING_BACKGROUND :
+                                                                       xoj::view::SHOW_RULING_BACKGROUND;
+
     if (layerRange) {
-        view.drawLayersOfPage(*layerRange, page, this->cr, true /* dont render eraseable */,
-                              true /* don't rerender the pdf background */, exportBackground == EXPORT_BACKGROUND_NONE,
-                              exportBackground <= EXPORT_BACKGROUND_UNRULED);
+        view.drawLayersOfPage(*layerRange, page, this->cr, true /* dont render eraseable */, flags);
     } else {
-        view.drawPage(page, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
-                      exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
+        view.drawPage(page, this->cr, true /* dont render eraseable */, flags);
     }
 
     if (!freeSurface(id)) {
