@@ -86,6 +86,10 @@ auto BackgroundView::createForPage(PageRef page, BackgroundFlags bgFlags, PdfCac
             return createRuled(width, height, page->getBackgroundColor(), pt);
         }
     }
-    // Only colorize the page
-    return std::make_unique<PlainBackgroundView>(width, height, page->getBackgroundColor());
+
+    if (bgFlags.forceBackgroundColor) {
+        return std::make_unique<PlainBackgroundView>(width, height, page->getBackgroundColor());
+    } else {
+        return std::make_unique<BackgroundView>(width, height);  // Dummy no-op view
+    }
 }

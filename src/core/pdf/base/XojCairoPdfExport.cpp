@@ -148,13 +148,17 @@ void XojCairoPdfExport::exportPage(size_t page) {
         popplerPage->renderForPrinting(cr);
     }
 
+    xoj::view::BackgroundFlags flags;
+    flags.showPDF = xoj::view::HIDE_PDF_BACKGROUND;  // Already exported (if any)
+    flags.showImage = exportBackground == EXPORT_BACKGROUND_NONE ? xoj::view::HIDE_IMAGE_BACKGROUND :
+                                                                   xoj::view::SHOW_IMAGE_BACKGROUND;
+    flags.showRuling = exportBackground <= EXPORT_BACKGROUND_UNRULED ? xoj::view::HIDE_RULING_BACKGROUND :
+                                                                       xoj::view::SHOW_RULING_BACKGROUND;
+
     if (layerRange) {
-        view.drawLayersOfPage(*layerRange, p, this->cr, true /* dont render eraseable */,
-                              true /* don't rerender the pdf background */, exportBackground == EXPORT_BACKGROUND_NONE,
-                              exportBackground <= EXPORT_BACKGROUND_UNRULED);
+        view.drawLayersOfPage(*layerRange, p, this->cr, true /* dont render eraseable */, flags);
     } else {
-        view.drawPage(p, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
-                      exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
+        view.drawPage(p, this->cr, true /* dont render eraseable */, flags);
     }
 
     // next page

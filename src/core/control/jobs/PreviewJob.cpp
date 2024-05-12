@@ -21,7 +21,7 @@
 #include "view/DocumentView.h"                                    // for Doc...
 #include "view/LayerView.h"                                       // for Lay...
 #include "view/View.h"                                            // for Con...
-#include "view/background/BackgroundView.h"                       // for BAC...
+#include "view/background/BackgroundFlags.h"                      // for BAC...
 
 PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar): sidebarPreview(sidebar) {}
 
@@ -82,7 +82,7 @@ void PreviewJob::drawPage() {
                 flags.forceVisible = xoj::view::FORCE_VISIBLE;
                 view.drawBackground(flags);
             } else {
-                view.drawBackground(xoj::view::BACKGROUND_SHOW_ONLY_BACKGROUND_COLOR);
+                view.drawBackground(xoj::view::BACKGROUND_FORCE_PAINT_BACKGROUND_COLOR_ONLY);
                 Layer* drawLayer = (*page->getLayers())[layer - 1];
                 xoj::view::LayerView layerView(drawLayer);
                 layerView.draw(context);
