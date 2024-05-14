@@ -150,25 +150,20 @@ auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
             ydir = 1;
             break;
         case GDK_KEY_r:
-        case GDK_KEY_R: {  // r like "rotate"
+            angle = (event.state & GDK_MOD1_MASK) ? -ROTATE_AMOUNT_SMALL : -ROTATE_AMOUNT;
+            break;
+        case GDK_KEY_R:  // r like "rotate"
             angle = (event.state & GDK_MOD1_MASK) ? ROTATE_AMOUNT_SMALL : ROTATE_AMOUNT;
-            angle = (event.state & GDK_SHIFT_MASK) ? angle : -angle;
             break;
-        }
         case GDK_KEY_s:
-        case GDK_KEY_S: {
             scale = (event.state & GDK_MOD1_MASK) ? SCALE_AMOUNT_SMALL : SCALE_AMOUNT;
-            scale = (event.state & GDK_SHIFT_MASK) ? 1.0 / scale : scale;
-            const double h = height * scale;
-            if (h > getMaxHeight() || h < getMinHeight()) {
-                scale = 1.0;
-            }
             break;
-        }
-        case GDK_KEY_m: {
+        case GDK_KEY_S:
+            scale = (event.state & GDK_MOD1_MASK) ? 1. / SCALE_AMOUNT_SMALL : 1. / SCALE_AMOUNT;
+            break;
+        case GDK_KEY_m:
             controller->markPoint(translationX, translationY);
             return true;
-        }
     }
 
     if (xdir != 0 || ydir != 0) {
@@ -194,8 +189,11 @@ auto GeometryToolInputHandler::keyPressed(KeyEvent const& event) -> bool {
         return true;
     }
     if (scale != 1.0) {
-        controller->scale(scale, p.x, p.y);
-        return true;
+        const double h = height * scale;
+        if (h <= getMaxHeight() && h >= getMinHeight()) {
+            controller->scale(scale, p.x, p.y);
+            return true;
+        }
     }
     return false;
 }
