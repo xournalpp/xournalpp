@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-07 15:11+0000\n"
+"POT-Creation-Date: 2024-05-15 12:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -300,7 +300,7 @@ msgstr ""
 msgid "PDF background missing"
 msgstr ""
 
-#: ../src/core/control/PrintHandler.cpp:118
+#: ../src/core/control/PrintHandler.cpp:121
 msgid "Running print operation failed with {1}"
 msgstr ""
 
@@ -578,7 +578,7 @@ msgid "Xournal (Compatibility)"
 msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:137
-#: ../src/core/control/jobs/SaveJob.cpp:130
+#: ../src/core/control/jobs/SaveJob.cpp:135
 msgid "Save file error: {1}"
 msgstr ""
 
@@ -595,7 +595,7 @@ msgid ""
 "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr ""
 
-#: ../src/core/control/jobs/ImageExport.cpp:197
+#: ../src/core/control/jobs/ImageExport.cpp:201
 msgid "Error save image #2"
 msgstr ""
 
@@ -603,7 +603,7 @@ msgstr ""
 msgid "PDF Export"
 msgstr ""
 
-#: ../src/core/control/jobs/SaveJob.cpp:116
+#: ../src/core/control/jobs/SaveJob.cpp:121
 msgid "Save file error, can't backup: {1}"
 msgstr ""
 
@@ -1800,13 +1800,13 @@ msgstr ""
 msgid "Error while finalizing the PDF Cairo surface"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:189
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:235
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:239
 msgid "No pages to export!"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:240
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:202
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
