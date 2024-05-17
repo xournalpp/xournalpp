@@ -36,11 +36,5 @@ void setWidgetFollowActionEnabled(GtkWidget* w, GAction* a);
  * To circumvent this, we make our own GAction/RadioButton interactions. Don't forget to group the buttons together.
  */
 void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, const char* actionName);
-
-/**
- * @brief some Gtk3 GtkActionable implementations (e.g. GtkMEnuItem) do not set their sensitivity properly on startup
- * Fixes that
- */
-void fixActionableInitialSensitivity(GtkActionable* w);
 #endif
 };  // namespace xoj::util::gtk
