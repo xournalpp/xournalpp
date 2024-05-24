@@ -1794,7 +1794,7 @@ auto Control::save(bool synchron) -> bool {
 
     auto v = win->getXournal()->getViewFor(getCurrentPageNo());
     auto edit = v->getTextEditor();
-    if(edit) {
+    if (edit) {
         PositionInputData pos = {};
         pos.x = edit->getTextElement()->getX() + edit->getCursorBox().getX();
         pos.y = edit->getTextElement()->getY() + edit->getCursorBox().getY() + edit->getCursorBox().getHeight();
