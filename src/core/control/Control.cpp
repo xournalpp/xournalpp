@@ -58,6 +58,7 @@
 #include "gui/inputdevices/CompassInputHandler.h"                // for Comp...
 #include "gui/inputdevices/GeometryToolInputHandler.h"           // for Geom...
 #include "gui/inputdevices/HandRecognition.h"                    // for Hand...
+#include "gui/inputdevices/PositionInputData.h"
 #include "gui/inputdevices/SetsquareInputHandler.h"              // for Sets...
 #include "gui/menus/menubar/Menubar.h"                           // for Menubar
 #include "gui/sidebar/Sidebar.h"                                 // for Sidebar
@@ -1789,7 +1790,20 @@ void Control::setCurrentState(size_t state) {
 
 auto Control::save(bool synchron) -> bool {
     // clear selection before saving
-    clearSelectionEndText();
+    clearSelection();
+
+    auto v = win->getXournal()->getViewFor(getCurrentPageNo());
+    auto edit = v->getTextEditor();
+    if(edit) {
+        PositionInputData pos = {};
+        pos.x = edit->getTextElement()->getX() + edit->getCursorBox().getX();
+        pos.y = edit->getTextElement()->getY() + edit->getCursorBox().getY() + edit->getCursorBox().getHeight();
+
+        v->endText();
+
+        v->onButtonPressEvent(pos);
+        v->onButtonReleaseEvent(pos);
+    }
 
     this->doc->lock();
     fs::path filepath = this->doc->getFilepath();
