@@ -36,6 +36,7 @@ public:
 
 public:
     void changeCurrentPageBackground(const PageType& pageType);
+    void changeCurrentPageSize(const PaperSize& pageSize);
     /**
      * @brief (Un)set the page type for newly created pages
      * @param pageType The new page type.
@@ -85,6 +86,14 @@ private:
      */
     auto commitPageTypeChange(size_t pageNum, const PageType& pageType, CommitParameter param = std::nullopt)
             -> std::unique_ptr<UndoAction>;
+
+    /**
+     * Perform page size change.
+     * @param pageNum Index of the page whose size will be changed
+     * @param pageSize New page size
+     * @return Undo action of the page size change
+     */
+    auto commitPageSizeChange(size_t pageNum, const PaperSize& pageSize) -> std::unique_ptr<UndoAction>;
 
 private:
     Control* control = nullptr;

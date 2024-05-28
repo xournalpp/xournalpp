@@ -137,6 +137,15 @@ void PageBackgroundChangeController::changeCurrentPageBackground(const PageType&
     }
 }
 
+void PageBackgroundChangeController::changeCurrentPageSize(const PaperSize& pageSize) {
+    control->clearSelectionEndText();
+
+    auto undoAction = commitPageSizeChange(control->getCurrentPageNo(), pageSize);
+    if (undoAction) {
+        control->getUndoRedoHandler()->addUndoAction(std::move(undoAction));
+    }
+}
+
 void PageBackgroundChangeController::setPageTypeForNewPages(const std::optional<PageType>& pt) {
     this->pageTypeForNewPages = pt;
 }
@@ -200,6 +209,30 @@ auto PageBackgroundChangeController::commitPageTypeChange(size_t pageNum, const 
         page->setBackgroundType(pageType);
     }
 
+    return std::make_unique<PageBackgroundChangedUndoAction>(page, origType, origPdfPage, origBackgroundImage, origW,
+                                                             origH);
+}
+auto PageBackgroundChangeController::commitPageSizeChange(const size_t pageNum, const PaperSize& pageSize)
+        -> std::unique_ptr<UndoAction> {
+    PageRef page = control->getDocument()->getPage(pageNum);
+    if (!page) {
+        return {};
+    }
+
+    Document* doc = control->getDocument();
+    const size_t pageNr = doc->indexOf(page);
+    xoj_assert(pageNr != npos);
+
+    // Get values for Undo / Redo
+    const double origW = page->getWidth();
+    const double origH = page->getHeight();
+    BackgroundImage origBackgroundImage = page->getBackgroundImage();
+    const size_t origPdfPage = page->getPdfPageNr();
+    PageType origType = page->getBackgroundType();
+
+    page->setSize(pageSize.width, pageSize.height);
+
+    control->firePageSizeChanged(pageNr);
     return std::make_unique<PageBackgroundChangedUndoAction>(page, origType, origPdfPage, origBackgroundImage, origW,
                                                              origH);
 }
