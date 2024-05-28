@@ -16,7 +16,7 @@
 #include <gtk/gtk.h>
 
 #include "control/settings/PageTemplateSettings.h"
-#include "util/PaperFormatUtils.h"
+#include "gui/PaperFormatUtils.h"
 
 #pragma once
 
