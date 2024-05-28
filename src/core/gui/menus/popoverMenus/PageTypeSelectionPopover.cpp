@@ -129,6 +129,17 @@ GtkWidget* createPreviewGrid(const std::vector<std::unique_ptr<PageTypeInfo>>& p
     }
     return GTK_WIDGET(grid);
 }
+
+/**
+ * @brief Create a separator with custom margins
+ */
+GtkWidget* createSeparator() {
+    GtkWidget* separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+    gtk_widget_set_margin_start(separator, 7);
+    gtk_widget_set_margin_end(separator, 7);
+    return separator;
+}
+
 };  // namespace
 
 PageTypeSelectionPopover::PageTypeSelectionPopover(Control* control, Settings* settings, GtkApplicationWindow* win):
@@ -218,33 +229,41 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
     gtk_popover_set_child(GTK_POPOVER(popover), GTK_WIDGET(box));
 
-    gtk_box_append(box, createPreviewGrid(types->getPageTypes(), prefixedPageTypeActionName));
-    gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
+    GtkWidget* previewGrid = createPreviewGrid(types->getPageTypes(), prefixedPageTypeActionName);
+    gtk_widget_set_margin_bottom(previewGrid, 5);
+    gtk_box_append(box, previewGrid);
 
-    GtkGrid* grid = createEmptyGrid();
+    gtk_box_append(box, createSeparator());
+
+    GtkGrid* specialTypesGrid = createEmptyGrid();
+    gtk_widget_set_margin_top(GTK_WIDGET(specialTypesGrid), 5);
+    gtk_widget_set_margin_bottom(GTK_WIDGET(specialTypesGrid), 5);
+
     int gridX = 0;
     // Create a special entry for copying the current page's background
     // It has index == npos
-    gtk_grid_attach(grid, createEntryWithoutPreview(_("Copy current background"), npos, prefixedPageTypeActionName),
-                    gridX++, 0, 1, 1);
+    gtk_grid_attach(specialTypesGrid,
+                    createEntryWithoutPreview(_("Copy current background"), npos, prefixedPageTypeActionName), gridX++,
+                    0, 1, 1);
 
     // The indices of special page types start after the normal page types'
     size_t n = types->getPageTypes().size();
     for (const auto& pageInfo: types->getSpecialPageTypes()) {
-        gtk_grid_attach(grid, createEntryWithoutPreview(pageInfo->name.c_str(), n++, prefixedPageTypeActionName),
-                        gridX++, 0, 1, 1);
+        gtk_grid_attach(specialTypesGrid,
+                        createEntryWithoutPreview(pageInfo->name.c_str(), n++, prefixedPageTypeActionName), gridX++, 0,
+                        1, 1);
     }
 
     while (gridX < PAGE_TYPES_PER_ROW) {
         // Add empty cells to the grid so the buttons don't get extended
-        gtk_grid_attach(grid, gtk_label_new(""), gridX++, 0, 1, 1);
+        gtk_grid_attach(specialTypesGrid, gtk_label_new(""), gridX++, 0, 1, 1);
     }
 
-    GtkBox* pageFormatBox = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10));
-    gtk_widget_set_margin_start(GTK_WIDGET(pageFormatBox), 20);
-    gtk_widget_set_margin_end(GTK_WIDGET(pageFormatBox), 20);
-    gtk_widget_set_margin_top(GTK_WIDGET(pageFormatBox), 20);
-    gtk_widget_set_margin_bottom(GTK_WIDGET(pageFormatBox), 6);
+    GtkBox* pageFormatBox = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0));
+    gtk_widget_set_margin_start(GTK_WIDGET(pageFormatBox), 10);
+    gtk_widget_set_margin_end(GTK_WIDGET(pageFormatBox), 10);
+    gtk_widget_set_margin_top(GTK_WIDGET(pageFormatBox), 7);
+    gtk_widget_set_margin_bottom(GTK_WIDGET(pageFormatBox), 10);
 
     GtkBox* orientationFormatBox = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0));
     GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(orientationFormatBox));
@@ -259,16 +278,17 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     gtk_box_append(orientationFormatBox, orientationButtons[GTK_ORIENTATION_VERTICAL]);
     gtk_box_append(orientationFormatBox, orientationButtons[GTK_ORIENTATION_HORIZONTAL]);
 
-    gtk_box_append(pageFormatBox, GTK_WIDGET(orientationFormatBox));
+    gtk_box_pack_start(pageFormatBox, GTK_WIDGET(orientationFormatBox), true, true, 0);
 
-    GtkComboBox* pageFormatComboBox = PaperFormatUtils::createPaperFormatDropDown(paperSizeMenuOptions);
+    GtkWidget* pageFormatComboBox = GTK_WIDGET(PaperFormatUtils::createPaperFormatDropDown(paperSizeMenuOptions));
+    gtk_widget_set_halign(pageFormatComboBox, GTK_ALIGN_END);
     gtk_combo_box_set_active(GTK_COMBO_BOX(pageFormatComboBox), getComboBoxIndexForPaperSize(selectedPageSize));
     g_signal_connect(pageFormatComboBox, "changed", G_CALLBACK(changedPaperFormatTemplateCb),
                      const_cast<PageTypeSelectionPopover*>(this));
-    gtk_box_append(pageFormatBox, GTK_WIDGET(pageFormatComboBox));
+    gtk_box_pack_start(pageFormatBox, pageFormatComboBox, true, true, 0);
 
-    gtk_box_append(box, GTK_WIDGET(grid));
-    gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
+    gtk_box_append(box, GTK_WIDGET(specialTypesGrid));
+    gtk_box_append(box, createSeparator());
     gtk_box_append(box, GTK_WIDGET(pageFormatBox));
 
     GtkWidget* applyToCurrentPageButton = gtk_button_new_with_label(_("Apply to current page"));
@@ -280,6 +300,9 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                 }
             }),
             const_cast<PageTypeSelectionPopover*>(this));
+    gtk_widget_set_margin_start(applyToCurrentPageButton, 10);
+    gtk_widget_set_margin_end(applyToCurrentPageButton, 10);
+    gtk_widget_set_margin_bottom(applyToCurrentPageButton, 3);
     gtk_box_append(box, applyToCurrentPageButton);
 
     // We cannot "Apply to current page" if no page type is selected...
@@ -326,8 +349,8 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                             }),
                             pageFormatComboBox, GConnectFlags(0));
 
-    GtkWidget* button = gtk_button_new_with_label(_("Apply to all pages"));
-    g_signal_connect(button, "clicked", G_CALLBACK(+[](GtkWidget*, gpointer d) {
+    GtkWidget* applyToAllPagesButton = gtk_button_new_with_label(_("Apply to all pages"));
+    g_signal_connect(applyToAllPagesButton, "clicked", G_CALLBACK(+[](GtkWidget*, gpointer d) {
                          auto self = static_cast<const PageTypeSelectionPopover*>(d);
                          if (self->selectedPT) {
                              self->controller->applyBackgroundToAllPages(self->selectedPT.value());
@@ -336,7 +359,11 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                          }
                      }),
                      const_cast<PageTypeSelectionPopover*>(this));
-    gtk_box_append(box, button);
+    gtk_widget_set_margin_start(applyToAllPagesButton, 10);
+    gtk_widget_set_margin_end(applyToAllPagesButton, 10);
+    gtk_widget_set_margin_top(applyToAllPagesButton, 3);
+    gtk_widget_set_margin_bottom(applyToAllPagesButton, 10);
+    gtk_box_append(box, applyToAllPagesButton);
 
     gtk_widget_show_all(GTK_WIDGET(box));
 
