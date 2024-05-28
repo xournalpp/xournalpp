@@ -510,7 +510,7 @@ auto ToolMenuHandler::getColorToolItems() const -> const std::vector<std::unique
 auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNameHelper.iconName(icon); }
 
 void ToolMenuHandler::setDefaultNewPageType(const std::optional<PageType>& pt) {
-    this->pageTypeSelectionPopup->setSelected(pt);
+    this->pageTypeSelectionPopup->setSelectedPT(pt);
 }
 void ToolMenuHandler::setDefaultNewPaperSize(const std::optional<PaperSize>& paperSize) {
     this->pageTypeSelectionPopup->setSelectedPaperSize(paperSize);

@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Paper size type
+ * Paper size type and paper orientation enum
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -20,10 +20,9 @@
 
 #pragma once
 
-class PaperSize {
-private:
-    static bool areDoublesEqual(double x, double y);
+enum class PaperOrientation : bool { HORIZONTAL = false, VERTICAL = true };
 
+class PaperSize {
 public:
     /*
      * Width of the paper stored in the standard unit "points"
@@ -54,10 +53,10 @@ public:
      * @brief Swapping width and height, effectively reversing orientation
      */
     void swapWidthHeight();
-    auto orientation() const -> GtkOrientation;
+    [[nodiscard]] auto orientation() const -> PaperOrientation;
 
     // Constructors
-    explicit PaperSize(const PaperFormatUtils::GtkPaperSizeUniquePtr_t& gtkPaperSize);
+    explicit PaperSize(const xoj::util::GtkPaperSizeUPtr& gtkPaperSize);
     explicit PaperSize(const PageTemplateSettings& model);
     PaperSize(double width, double height);
 };
