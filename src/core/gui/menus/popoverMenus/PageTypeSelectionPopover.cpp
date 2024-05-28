@@ -13,6 +13,7 @@
 #include "gui/dialog/FormatDialog.h"
 #include "gui/menus/StaticAssertActionNamespace.h"
 #include "model/PageType.h"  // for PageType
+#include "model/XojPage.h"
 #include "util/Assert.h"
 #include "util/GListView.h"
 #include "util/GtkUtil.h"
@@ -362,6 +363,13 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                              self->controller->applyBackgroundToAllPages(self->selectedPT.value());
                          } else {
                              self->controller->applyCurrentPageBackgroundToAll();
+                         }
+
+                         if (self->selectedPageSize) {
+                             self->controller->applyPageSizeToAllPages(self->selectedPageSize.value());
+                         } else {
+                             const PageRef page = self->control->getCurrentPage();
+                             self->controller->applyPageSizeToAllPages(PaperSize(page->getWidth(), page->getHeight()));
                          }
                      }),
                      const_cast<PageTypeSelectionPopover*>(this));
