@@ -18,7 +18,7 @@
 #include <gtk/gtk.h>  // for gtk_paper_size_free, GtkComboBox, GtkToggl...
 
 #include "gui/Builder.h"
-#include "util/PaperFormatUtils.h"  // for PaperFormatMenuOptionVector
+#include "gui/PaperFormatUtils.h"  // for PaperFormatMenuOptionVector
 #include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
