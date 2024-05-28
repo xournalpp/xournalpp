@@ -79,6 +79,23 @@ void PageBackgroundChangeController::applyBackgroundToAllPages(const PageType& p
     }
 }
 
+void PageBackgroundChangeController::applyPageSizeToAllPages(const PaperSize& paperSize) {
+    control->clearSelectionEndText();
+
+    Document* doc = control->getDocument();
+
+    auto groupUndoAction = std::make_unique<GroupUndoAction>();
+
+    for (size_t p = 0; p < doc->getPageCount(); p++) {
+        auto undoAction = commitPageSizeChange(p, paperSize);
+        if (undoAction) {
+            groupUndoAction->addAction(std::move(undoAction));
+        }
+    }
+
+    control->getUndoRedoHandler()->addUndoAction(std::move(groupUndoAction));
+}
+
 void PageBackgroundChangeController::applyCurrentPageBackgroundToAll() {
     PageType pt = control->getCurrentPage()->getBackgroundType();
     applyBackgroundToAllPages(pt);
