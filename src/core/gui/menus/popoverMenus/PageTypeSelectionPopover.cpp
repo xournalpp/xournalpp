@@ -301,6 +301,9 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                 if (self->selectedPT) {
                     self->controller->changeCurrentPageBackground(self->selectedPT.value());
                 }
+                if (self->selectedPageSize && (!self->selectedPT.has_value() || !self->selectedPT->isSpecial())) {
+                    self->controller->changeCurrentPageSize(self->selectedPageSize.value());
+                }
             }),
             const_cast<PageTypeSelectionPopover*>(this));
     gtk_widget_set_margin_start(applyToCurrentPageButton, 10);
