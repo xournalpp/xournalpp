@@ -299,17 +299,21 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     gtk_box_append(box, GTK_WIDGET(pageFormatBox));
 
     GtkWidget* applyToCurrentPageButton = gtk_button_new_with_label(_("Apply to current page"));
-    g_signal_connect(
-            applyToCurrentPageButton, "clicked", G_CALLBACK(+[](GtkWidget*, gpointer d) {
-                auto self = static_cast<const PageTypeSelectionPopover*>(d);
+    g_signal_connect_data(
+            applyToCurrentPageButton, "clicked", G_CALLBACK((+[](GtkWidget*, gpointer pointerTuple) {
+                auto [self, popover] =
+                        *static_cast<std::tuple<const PageTypeSelectionPopover*, GtkPopover*>*>(pointerTuple);
                 if (self->selectedPT) {
                     self->controller->changeCurrentPageBackground(self->selectedPT.value());
                 }
                 if (self->selectedPageSize && (!self->selectedPT.has_value() || !self->selectedPT->isSpecial())) {
+                    gtk_popover_set_modal(popover, false);
                     self->controller->changeCurrentPageSize(self->selectedPageSize.value());
+                    gtk_popover_set_modal(popover, true);
                 }
-            }),
-            const_cast<PageTypeSelectionPopover*>(this));
+            })),
+            new std::tuple<const PageTypeSelectionPopover*, GtkPopover*>(this, GTK_POPOVER(popover)),
+            (GClosureNotify)free, GConnectFlags(0));
     gtk_widget_set_margin_start(applyToCurrentPageButton, 10);
     gtk_widget_set_margin_end(applyToCurrentPageButton, 10);
     gtk_widget_set_margin_bottom(applyToCurrentPageButton, 3);
@@ -359,22 +363,27 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                             pageFormatComboBox, GConnectFlags(0));
 
     GtkWidget* applyToAllPagesButton = gtk_button_new_with_label(_("Apply to all pages"));
-    g_signal_connect(applyToAllPagesButton, "clicked", G_CALLBACK(+[](GtkWidget*, gpointer d) {
-                         auto self = static_cast<const PageTypeSelectionPopover*>(d);
-                         if (self->selectedPT) {
-                             self->controller->applyBackgroundToAllPages(self->selectedPT.value());
-                         } else {
-                             self->controller->applyCurrentPageBackgroundToAll();
-                         }
+    g_signal_connect_data(
+            applyToAllPagesButton, "clicked", G_CALLBACK((+[](GtkWidget*, gpointer pointerTuple) {
+                auto [self, popover] =
+                        *static_cast<std::tuple<const PageTypeSelectionPopover*, GtkPopover*>*>(pointerTuple);
+                if (self->selectedPT) {
+                    self->controller->applyBackgroundToAllPages(self->selectedPT.value());
+                } else {
+                    self->controller->applyCurrentPageBackgroundToAll();
+                }
 
-                         if (self->selectedPageSize) {
-                             self->controller->applyPageSizeToAllPages(self->selectedPageSize.value());
-                         } else {
-                             const PageRef page = self->control->getCurrentPage();
-                             self->controller->applyPageSizeToAllPages(PaperSize(page->getWidth(), page->getHeight()));
-                         }
-                     }),
-                     const_cast<PageTypeSelectionPopover*>(this));
+                gtk_popover_set_modal(popover, false);
+                if (self->selectedPageSize) {
+                    self->controller->applyPageSizeToAllPages(self->selectedPageSize.value());
+                } else {
+                    const PageRef page = self->control->getCurrentPage();
+                    self->controller->applyPageSizeToAllPages(PaperSize(page->getWidth(), page->getHeight()));
+                }
+                gtk_popover_set_modal(popover, true);
+            })),
+            new std::tuple<const PageTypeSelectionPopover*, GtkPopover*>(this, GTK_POPOVER(popover)),
+            (GClosureNotify)free, GConnectFlags(0));
     gtk_widget_set_margin_start(applyToAllPagesButton, 10);
     gtk_widget_set_margin_end(applyToAllPagesButton, 10);
     gtk_widget_set_margin_top(applyToAllPagesButton, 3);
