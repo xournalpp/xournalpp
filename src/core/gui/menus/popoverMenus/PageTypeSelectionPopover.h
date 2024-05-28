@@ -18,10 +18,10 @@
 
 #include "control/Control.h"
 #include "control/settings/PageTemplateSettings.h"
+#include "gui/PaperFormatUtils.h"
 #include "gui/PopoverFactory.h"
 #include "gui/menus/PageTypeSelectionMenuBase.h"
 #include "model/PaperSize.h"
-#include "util/PaperFormatUtils.h"
 #include "util/raii/GObjectSPtr.h"
 
 class PageBackgroundChangeController;

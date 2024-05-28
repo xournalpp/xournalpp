@@ -6,9 +6,9 @@
 #include <glib.h>         // for g_list_free, GList
 
 #include "control/settings/Settings.h"  // for Settings
+#include "gui/PaperFormatUtils.h"       // for PaperFormatUtils
 #include "model/FormatDefinitions.h"    // for FormatUnits, XOJ_UNITS, XOJ_U...
 #include "util/GListView.h"             // for GListView, GListView<>::GList...
-#include "util/PaperFormatUtils.h"      // for PaperFormatUtils
 #include "util/StringUtils.h"           // for StringUtils
 #include "util/i18n.h"                  // for _
 

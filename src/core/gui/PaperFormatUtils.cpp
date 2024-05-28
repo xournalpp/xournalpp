@@ -1,4 +1,4 @@
-#include "util/PaperFormatUtils.h"
+#include "PaperFormatUtils.h"
 
 #include "util/GListView.h"
 #include "util/StringUtils.h"
@@ -13,9 +13,9 @@ void PaperFormatUtils::loadDefaultPaperSizes(PaperFormatMenuOptionVector& paperS
         if (name == GTK_PAPER_NAME_A3 || name == GTK_PAPER_NAME_A4 || name == GTK_PAPER_NAME_A5 ||
             name == GTK_PAPER_NAME_LETTER || name == GTK_PAPER_NAME_LEGAL) {
             paperSizes.emplace_back(GtkPaperSizeUPtr(&s));
-            continue;
+        } else {
+            gtk_paper_size_free(&s);
         }
-        gtk_paper_size_free(&s);
     }
     g_list_free(default_sizes);
 

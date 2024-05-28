@@ -14,7 +14,8 @@
 #include <vector>
 
 #include <gtk/gtk.h>
-#include <util/raii/GtkPaperSizeUPtr.h>
+
+#include "util/raii/GtkPaperSizeUPtr.h"
 
 #pragma once
 
