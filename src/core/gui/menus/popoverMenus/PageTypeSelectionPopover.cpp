@@ -203,6 +203,10 @@ void PageTypeSelectionPopover::setSelectedPaperSize(const std::optional<PaperSiz
         controller->setPaperSizeForNewPages(selectedPageSize);
     }
 }
+// Explicit instantiation of the two possible bool values to avoid having to put the function template into header
+template void PageTypeSelectionPopover::setSelectedPaperSize<true>(const std::optional<PaperSize>& newPageSize);
+template void PageTypeSelectionPopover::setSelectedPaperSize<false>(const std::optional<PaperSize>& newPageSize);
+
 unsigned int PageTypeSelectionPopover::getComboBoxIndexForPaperSize(const std::optional<PaperSize>& paperSize) const {
     if (!paperSize) {
         return copyCurrentPaperSizeIndex;
