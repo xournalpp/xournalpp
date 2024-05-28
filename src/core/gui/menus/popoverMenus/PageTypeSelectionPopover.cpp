@@ -24,7 +24,7 @@
 namespace {
 static constexpr auto PAGE_TYPES_PER_ROW = 4;
 static constexpr auto G_ACTION_NAMESPACE = "win.";
-static constexpr auto SELECTION_ACTION_NAME = "select-page-type-of-new-page";
+static constexpr auto PAGETYPE_SELECTION_ACTION_NAME = "select-page-type-of-new-page";
 
 GtkWidget* createEntryWithoutPreview(const char* label, size_t entryNb, const std::string_view& prefixedActionName) {
     GtkWidget* button = gtk_toggle_button_new();
@@ -110,7 +110,7 @@ GtkWidget* createPreviewGrid(const std::vector<std::unique_ptr<PageTypeInfo>>& p
 PageTypeSelectionPopover::PageTypeSelectionPopover(PageTypeHandler* typesHandler,
                                                    PageBackgroundChangeController* controller, const Settings* settings,
                                                    GtkApplicationWindow* win):
-        PageTypeSelectionMenuBase(typesHandler, settings, SELECTION_ACTION_NAME), controller(controller) {
+        PageTypeSelectionMenuBase(typesHandler, settings, PAGETYPE_SELECTION_ACTION_NAME), controller(controller) {
     static_assert(is_action_namespace_match<decltype(win)>(G_ACTION_NAMESPACE));
 
     g_action_map_add_action(G_ACTION_MAP(win), G_ACTION(typeSelectionAction.get()));
@@ -122,27 +122,27 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     GtkWidget* popover = gtk_popover_new();
 
     // Todo(cpp20): constexpr this
-    std::string prefixedActionName = G_ACTION_NAMESPACE;
-    prefixedActionName += SELECTION_ACTION_NAME;
+    std::string prefixedPageTypeActionName = G_ACTION_NAMESPACE;
+    prefixedPageTypeActionName += PAGETYPE_SELECTION_ACTION_NAME;
 
     GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
     gtk_popover_set_child(GTK_POPOVER(popover), GTK_WIDGET(box));
 
-    gtk_box_append(box, createPreviewGrid(types->getPageTypes(), prefixedActionName));
+    gtk_box_append(box, createPreviewGrid(types->getPageTypes(), prefixedPageTypeActionName));
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
 
     GtkGrid* grid = createEmptyGrid();
     int gridX = 0;
     // Create a special entry for copying the current page's background
     // It has index == npos
-    gtk_grid_attach(grid, createEntryWithoutPreview(_("Copy current background"), npos, prefixedActionName), gridX++, 0,
-                    1, 1);
+    gtk_grid_attach(grid, createEntryWithoutPreview(_("Copy current background"), npos, prefixedPageTypeActionName),
+                    gridX++, 0, 1, 1);
 
     // The indices of special page types start after the normal page types'
     size_t n = types->getPageTypes().size();
     for (const auto& pageInfo: types->getSpecialPageTypes()) {
-        gtk_grid_attach(grid, createEntryWithoutPreview(pageInfo->name.c_str(), n++, prefixedActionName), gridX++, 0, 1,
-                        1);
+        gtk_grid_attach(grid, createEntryWithoutPreview(pageInfo->name.c_str(), n++, prefixedPageTypeActionName),
+                        gridX++, 0, 1, 1);
     }
 
     while (gridX < PAGE_TYPES_PER_ROW) {
