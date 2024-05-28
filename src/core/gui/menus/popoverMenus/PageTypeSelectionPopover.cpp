@@ -10,11 +10,13 @@
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo
 #include "control/settings/Settings.h"
 #include "gui/CreatePreviewImage.h"
+#include "gui/dialog/FormatDialog.h"
 #include "gui/menus/StaticAssertActionNamespace.h"
 #include "model/PageType.h"  // for PageType
 #include "util/Assert.h"
 #include "util/GListView.h"
 #include "util/GtkUtil.h"
+#include "util/PopupWindowWrapper.h"
 #include "util/Util.h"
 #include "util/gtk4_helper.h"  // for gtk_box_append
 #include "util/i18n.h"         // for _
@@ -129,11 +131,10 @@ GtkWidget* createPreviewGrid(const std::vector<std::unique_ptr<PageTypeInfo>>& p
 }
 };  // namespace
 
-PageTypeSelectionPopover::PageTypeSelectionPopover(PageTypeHandler* typesHandler,
-                                                   PageBackgroundChangeController* controller, const Settings* settings,
-                                                   GtkApplicationWindow* win):
-        PageTypeSelectionMenuBase(typesHandler, settings, PAGETYPE_SELECTION_ACTION_NAME),
-        controller(controller),
+PageTypeSelectionPopover::PageTypeSelectionPopover(Control* control, Settings* settings, GtkApplicationWindow* win):
+        PageTypeSelectionMenuBase(control->getPageTypes(), settings, PAGETYPE_SELECTION_ACTION_NAME),
+        control(control),
+        controller(control->getPageBackgroundChangeController()),
         settings(settings),
         selectedPageSize(getInitiallySelectedPaperSize(settings)),
         selectedOrientation(selectedPageSize->orientation()) {
@@ -164,8 +165,10 @@ template <bool changeComboBoxSelection>
 void PageTypeSelectionPopover::setSelectedPaperSize(const std::optional<PaperSize>& newPageSize) {
     if (newPageSize != selectedPageSize) {
         if constexpr (changeComboBoxSelection) {
+            ignoreComboBoxSelectionChange = true;
             g_action_activate(G_ACTION(comboBoxChangeSelectionAction.get()),
                               g_variant_new_uint32(getComboBoxIndexForPaperSize(newPageSize)));
+            ignoreComboBoxSelectionChange = false;
         }
 
         selectedPageSize = newPageSize;
@@ -258,6 +261,8 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
 
     GtkComboBox* pageFormatComboBox = PaperFormatUtils::createPaperFormatDropDown(paperSizeMenuOptions);
     gtk_combo_box_set_active(GTK_COMBO_BOX(pageFormatComboBox), getComboBoxIndexForPaperSize(selectedPageSize));
+    g_signal_connect(pageFormatComboBox, "changed", G_CALLBACK(changedPaperFormatTemplateCb),
+                     const_cast<PageTypeSelectionPopover*>(this));
     gtk_box_append(pageFormatBox, GTK_WIDGET(pageFormatComboBox));
 
     gtk_box_append(box, GTK_WIDGET(grid));
@@ -334,6 +339,43 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     gtk_widget_show_all(GTK_WIDGET(box));
 
     return popover;
+}
+void PageTypeSelectionPopover::changedPaperFormatTemplateCb(GtkComboBox* widget, PageTypeSelectionPopover* self) {
+    if (self->ignoreComboBoxSelectionChange) {
+        return;
+    }
+    int selected = gtk_combo_box_get_active(widget);
+    if (selected < self->customPaperSizeIndex) {
+        GtkOrientation orientation = static_cast<GtkOrientation>(
+                g_variant_get_boolean(g_action_get_state(G_ACTION(self->orientationAction.get()))));
+
+        PaperSize paperSize(std::get<PaperFormatUtils::GtkPaperSizeUniquePtr_t>(self->paperSizeMenuOptions[selected]));
+        if (paperSize.orientation() != orientation) {
+            paperSize.swapWidthHeight();
+        }
+
+        self->setSelectedPaperSize<false>(paperSize);
+    } else if (selected == self->customPaperSizeIndex) {
+        std::unique_ptr<xoj::popup::PopupWindowWrapper<xoj::popup::FormatDialog>> popup;
+        auto callback = [self](double width, double height) {
+            self->setSelectedPaperSize<true>(PaperSize(width, height));
+        };
+        if (self->selectedPageSize) {
+            popup = std::make_unique<xoj::popup::PopupWindowWrapper<xoj::popup::FormatDialog>>(
+                    self->control->getGladeSearchPath(), self->settings, self->selectedPageSize->width,
+                    self->selectedPageSize->height, callback);
+        } else {
+            PageTemplateSettings model;
+            model.parse(self->settings->getPageTemplate());
+            popup = std::make_unique<xoj::popup::PopupWindowWrapper<xoj::popup::FormatDialog>>(
+                    self->control->getGladeSearchPath(), self->settings, model.getPageWidth(), model.getPageHeight(),
+                    callback);
+        }
+        popup->show(self->control->getGtkWindow());
+
+    } else if (selected == self->copyCurrentPaperSizeIndex) {
+        self->setSelectedPaperSize<false>(std::nullopt);
+    }
 }
 
 void PageTypeSelectionPopover::entrySelected(const PageTypeInfo*) {
