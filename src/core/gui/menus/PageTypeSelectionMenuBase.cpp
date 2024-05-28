@@ -79,7 +79,7 @@ void PageTypeSelectionMenuBase::changeSelectionCallback(GSimpleAction* ga, GVari
     self->entrySelected(info);
 }
 
-void PageTypeSelectionMenuBase::setSelected(const std::optional<PageType>& selected) {
+void PageTypeSelectionMenuBase::setSelectedPT(const std::optional<PageType>& selected) {
     if (this->selectedPT != selected) {
         size_t index = findIndex(types, selected);
         g_simple_action_set_state(typeSelectionAction.get(), g_variant_new_uint64(index));
