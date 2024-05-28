@@ -8,6 +8,7 @@
 
 #include "control/PageBackgroundChangeController.h"
 #include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo
+#include "control/settings/Settings.h"
 #include "gui/CreatePreviewImage.h"
 #include "gui/menus/StaticAssertActionNamespace.h"
 #include "model/PageType.h"  // for PageType
@@ -25,6 +26,7 @@ namespace {
 static constexpr auto PAGE_TYPES_PER_ROW = 4;
 static constexpr auto G_ACTION_NAMESPACE = "win.";
 static constexpr auto PAGETYPE_SELECTION_ACTION_NAME = "select-page-type-of-new-page";
+static constexpr auto ORIENTATION_SELECTION_ACTION_NAME = "select-page-orientation-of-new-page";
 
 GtkWidget* createEntryWithoutPreview(const char* label, size_t entryNb, const std::string_view& prefixedActionName) {
     GtkWidget* button = gtk_toggle_button_new();
@@ -54,6 +56,18 @@ GtkGrid* createEmptyGrid() {
     gtk_widget_set_margin_end(GTK_WIDGET(grid), 10);
 
     return grid;
+}
+auto getInitiallySelectedPaperSize(const Settings* settings) -> std::optional<PaperSize> {
+    if (settings) {
+        PageTemplateSettings model;
+        model.parse(settings->getPageTemplate());
+        return model.isCopyLastPageSize() ? std::nullopt : std::optional(PaperSize(model));
+    }
+    return std::nullopt;
+}
+auto createOrientationGAction(uint8_t orientation) -> GSimpleAction* {
+    return g_simple_action_new_stateful(ORIENTATION_SELECTION_ACTION_NAME, G_VARIANT_TYPE_BOOLEAN,
+                                        g_variant_new_boolean(orientation));
 }
 
 /**
@@ -110,20 +124,58 @@ GtkWidget* createPreviewGrid(const std::vector<std::unique_ptr<PageTypeInfo>>& p
 PageTypeSelectionPopover::PageTypeSelectionPopover(PageTypeHandler* typesHandler,
                                                    PageBackgroundChangeController* controller, const Settings* settings,
                                                    GtkApplicationWindow* win):
-        PageTypeSelectionMenuBase(typesHandler, settings, PAGETYPE_SELECTION_ACTION_NAME), controller(controller) {
+        PageTypeSelectionMenuBase(typesHandler, settings, PAGETYPE_SELECTION_ACTION_NAME),
+        controller(controller),
+        settings(settings),
+        selectedPageSize(getInitiallySelectedPaperSize(settings)),
+        selectedOrientation(selectedPageSize->orientation()) {
     static_assert(is_action_namespace_match<decltype(win)>(G_ACTION_NAMESPACE));
 
-    g_action_map_add_action(G_ACTION_MAP(win), G_ACTION(typeSelectionAction.get()));
+    PaperFormatUtils::loadDefaultPaperSizes(paperSizeMenuOptions);
+    // Add Special options
+    customPaperSizeIndex = paperSizeMenuOptions.size();
+    paperSizeMenuOptions.emplace_back(_("Custom"));
+    copyCurrentPaperSizeIndex = paperSizeMenuOptions.size();
+    paperSizeMenuOptions.emplace_back(_("Copy current page"));
 
-    controller->setPageTypeForNewPages(this->selectedPT);
+    this->controller->setPaperSizeForNewPages(this->selectedPageSize);
+
+    orientationAction.reset(createOrientationGAction(selectedOrientation), xoj::util::adopt);
+    g_action_map_add_action(G_ACTION_MAP(win), G_ACTION(orientationAction.get()));
+    g_simple_action_set_enabled(orientationAction.get(), selectedPageSize.has_value());
+
+    g_action_map_add_action(G_ACTION_MAP(win), G_ACTION(typeSelectionAction.get()));
 }
 
+unsigned int PageTypeSelectionPopover::getComboBoxIndexForPaperSize(const std::optional<PaperSize>& paperSize) const {
+    if (!paperSize) {
+        return copyCurrentPaperSizeIndex;
+    }
+
+    for (int i = 0; i < customPaperSizeIndex; i++) {
+        auto& currentPaperSize = std::get<PaperFormatUtils::GtkPaperSizeUniquePtr_t>(paperSizeMenuOptions[i]);
+        const PaperSize aDefaultPaperSize(currentPaperSize);
+        if (paperSize->equalDimensions(aDefaultPaperSize)) {
+            return i;
+        }
+    }
+    return customPaperSizeIndex;  // Custom option is returned if no matching format is found
+}
+GtkWidget* PageTypeSelectionPopover::createOrientationButton(std::string_view actionName, GtkOrientation orientation,
+                                                             std::string_view icon) const {
+    GtkWidget* button = gtk_toggle_button_new();
+    gtk_container_add(GTK_CONTAINER(button), gtk_image_new_from_icon_name(icon.data(), GTK_ICON_SIZE_LARGE_TOOLBAR));
+    gtk_actionable_set_action_name(GTK_ACTIONABLE(button), actionName.data());
+    gtk_actionable_set_action_target_value(GTK_ACTIONABLE(button), g_variant_new_boolean(orientation));
+    return button;
+}
 GtkWidget* PageTypeSelectionPopover::createPopover() const {
     GtkWidget* popover = gtk_popover_new();
 
     // Todo(cpp20): constexpr this
     std::string prefixedPageTypeActionName = G_ACTION_NAMESPACE;
     prefixedPageTypeActionName += PAGETYPE_SELECTION_ACTION_NAME;
+    std::string prefixedOrientationActionName = std::string(G_ACTION_NAMESPACE) + ORIENTATION_SELECTION_ACTION_NAME;
 
     GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
     gtk_popover_set_child(GTK_POPOVER(popover), GTK_WIDGET(box));
@@ -150,8 +202,34 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
         gtk_grid_attach(grid, gtk_label_new(""), gridX++, 0, 1, 1);
     }
 
+    GtkBox* pageFormatBox = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10));
+    gtk_widget_set_margin_start(GTK_WIDGET(pageFormatBox), 20);
+    gtk_widget_set_margin_end(GTK_WIDGET(pageFormatBox), 20);
+    gtk_widget_set_margin_top(GTK_WIDGET(pageFormatBox), 20);
+    gtk_widget_set_margin_bottom(GTK_WIDGET(pageFormatBox), 6);
+
+    GtkBox* orientationFormatBox = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0));
+    GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(orientationFormatBox));
+    gtk_style_context_add_class(context, "linked");
+
+    std::array<GtkWidget*, 2> orientationButtons{};
+    orientationButtons[GTK_ORIENTATION_VERTICAL] = createOrientationButton(
+            prefixedOrientationActionName, GTK_ORIENTATION_VERTICAL, "xopp-orientation-portrait");
+    orientationButtons[GTK_ORIENTATION_HORIZONTAL] = createOrientationButton(
+            prefixedOrientationActionName, GTK_ORIENTATION_HORIZONTAL, "xopp-orientation-landscape");
+
+    gtk_box_append(orientationFormatBox, orientationButtons[GTK_ORIENTATION_VERTICAL]);
+    gtk_box_append(orientationFormatBox, orientationButtons[GTK_ORIENTATION_HORIZONTAL]);
+
+    gtk_box_append(pageFormatBox, GTK_WIDGET(orientationFormatBox));
+
+    GtkComboBox* pageFormatComboBox = PaperFormatUtils::createPaperFormatDropDown(paperSizeMenuOptions);
+    gtk_combo_box_set_active(GTK_COMBO_BOX(pageFormatComboBox), getComboBoxIndexForPaperSize(selectedPageSize));
+    gtk_box_append(pageFormatBox, GTK_WIDGET(pageFormatComboBox));
+
     gtk_box_append(box, GTK_WIDGET(grid));
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
+    gtk_box_append(box, GTK_WIDGET(pageFormatBox));
 
     GtkWidget* applyToCurrentPageButton = gtk_button_new_with_label(_("Apply to current page"));
     g_signal_connect(applyToCurrentPageButton, "clicked", G_CALLBACK(+[](GtkWidget*, gpointer d) {
@@ -164,7 +242,8 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     gtk_box_append(box, applyToCurrentPageButton);
 
     // We cannot "Apply to current page" if no page type is selected...
-    gtk_widget_set_sensitive(applyToCurrentPageButton, this->selectedPT.has_value());
+    gtk_widget_set_sensitive(applyToCurrentPageButton,
+                             this->selectedPT.has_value() || this->selectedPageSize.has_value());
     g_signal_connect_object(this->typeSelectionAction.get(), "notify::state",
                             G_CALLBACK(+[](GObject* a, GParamSpec*, gpointer btn) {
                                 xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(a)), xoj::util::adopt);
