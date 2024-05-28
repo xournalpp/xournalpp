@@ -139,6 +139,9 @@ void PageBackgroundChangeController::changeCurrentPageBackground(const PageType&
 void PageBackgroundChangeController::setPageTypeForNewPages(const std::optional<PageType>& pt) {
     this->pageTypeForNewPages = pt;
 }
+void PageBackgroundChangeController::setPaperSizeForNewPages(const std::optional<PaperSize>& ps) {
+    this->paperSizeForNewPages = ps;
+}
 
 static void setPageImageBackground(const PageRef& page, BackgroundImage img) {
     page->setBackgroundImage(std::move(img));
@@ -257,15 +260,23 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
     PageTemplateSettings model;
     model.parse(control->getSettings()->getPageTemplate());
 
-    auto page = std::make_shared<XojPage>(model.getPageWidth(), model.getPageHeight());
+    PageRef current = control->getCurrentPage();
+    xoj_assert(current);
+    double width, height;
+    if (paperSizeForNewPages) {
+        width = paperSizeForNewPages->width;
+        height = paperSizeForNewPages->height;
+    } else {
+        width = current->getWidth();
+        height = current->getHeight();
+    }
+    auto page = std::make_shared<XojPage>(width, height);
 
     auto afterConfigured = [position, shouldScrollToPage, ctrl = this->control](PageRef page) {
         ctrl->insertPage(page, position, shouldScrollToPage);
     };
 
     if (!pageTypeForNewPages) {
-        PageRef current = control->getCurrentPage();
-        xoj_assert(current);
         copyBackgroundFromOtherPage(page, current);
         afterConfigured(std::move(page));
     } else if (pageTypeForNewPages->isImagePage()) {
@@ -285,11 +296,6 @@ void PageBackgroundChangeController::insertNewPage(size_t position, bool shouldS
         // Set background Color
         page->setBackgroundColor(model.getBackgroundColor());
 
-        if (model.isCopyLastPageSize()) {
-            PageRef current = control->getCurrentPage();
-            xoj_assert(current);
-            page->setSize(current->getWidth(), current->getHeight());
-        }
         afterConfigured(std::move(page));
     }
 }

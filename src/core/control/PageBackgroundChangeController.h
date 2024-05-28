@@ -22,6 +22,7 @@
 #include "model/DocumentListener.h"    // for DocumentListener
 #include "model/PageRef.h"             // for PageRef
 #include "model/PageType.h"            // for PageType
+#include "model/PaperSize.h"
 
 #include "filesystem.h"  // for path
 
@@ -42,6 +43,13 @@ public:
      *      If the page type is not set, newly created pages will have the same type as the current page.
      */
     void setPageTypeForNewPages(const std::optional<PageType>& pageType);
+    /**
+     * @brief (Un)set the paper size for newly created pages
+     * @param paperSize The new paper size.
+     *      Passing std::nullopt will unset the paper size.
+     *      If the page size is not set, newly created pages will have the same format as the current page.
+     */
+    void setPaperSizeForNewPages(const std::optional<PaperSize>& paperSize);
     void applyCurrentPageBackgroundToAll();
     void applyBackgroundToAllPages(const PageType& pt);
     void changePdfPagesBackground(const fs::path& filepath, bool attachPdf);
@@ -81,4 +89,5 @@ private:
 private:
     Control* control = nullptr;
     std::optional<PageType> pageTypeForNewPages;
+    std::optional<PaperSize> paperSizeForNewPages;
 };
