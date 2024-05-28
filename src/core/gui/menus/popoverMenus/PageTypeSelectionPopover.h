@@ -51,10 +51,7 @@ private:
                                                     PageTypeSelectionPopover* self);
     static void changedPaperFormatTemplateCb(GtkComboBox* widget, PageTypeSelectionPopover* dlg);
 
-    unsigned int getComboBoxIndexForPaperSize(const std::optional<PaperSize>& paperSize) const;
-
-    GtkWidget* createOrientationButton(std::string_view actionName, GtkOrientation orientation,
-                                       std::string_view icon) const;
+    [[nodiscard]] unsigned int getComboBoxIndexForPaperSize(const std::optional<PaperSize>& paperSize) const;
 
 private:
     Control* control;
@@ -63,7 +60,7 @@ private:
 
     std::optional<PaperSize> selectedPageSize;
 
-    GtkOrientation selectedOrientation;
+    PaperOrientation selectedOrientation;
     xoj::util::GObjectSPtr<GSimpleAction> orientationAction;
 
     // By activating the comboBoxChangeSelectionAction the option selected by the page size comboBox is changed to the
@@ -73,7 +70,7 @@ private:
     // The pageSizeChangedAction is activated when the pageSize changed
     xoj::util::GObjectSPtr<GSimpleAction> pageSizeChangedAction;
 
-    PaperFormatUtils::PaperFormatMenuOptionVector_t paperSizeMenuOptions;
+    PaperFormatUtils::PaperFormatMenuOptionVector paperSizeMenuOptions;
 
     bool ignoreComboBoxSelectionChange = false;
 

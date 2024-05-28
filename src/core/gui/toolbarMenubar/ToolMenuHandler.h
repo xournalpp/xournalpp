@@ -24,7 +24,6 @@
 
 #include "gui/IconNameHelper.h"  // for IconNameHelper
 #include "model/PaperSize.h"
-#include "util/PaperFormatUtils.h"
 #include "util/raii/GObjectSPtr.h"
 
 class AbstractToolItem;

@@ -18,6 +18,7 @@ constexpr auto UI_FILE = "pageFormat.glade";
 constexpr auto UI_DIALOG_NAME = "pageFormatDialog";
 
 using namespace xoj::popup;
+using xoj::util::GtkPaperSizeUPtr;
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height,
                            std::function<void(double, double)> callback):
@@ -47,9 +48,9 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
 
     PaperFormatUtils::loadDefaultPaperSizes(paperSizes);
     paperSizes.emplace_back(_("Custom"));
-    PaperFormatUtils::createPaperFormatDropDown(paperSizes, paperTemplatesCombo);
-    paperSizes.erase(paperSizes.end());  // Remove the custom option to prevent it from being matched in the
-                                         // spinValueChangedCb function, as its presence would lead to errors
+    PaperFormatUtils::fillPaperFormatDropDown(paperSizes, paperTemplatesCombo);
+    paperSizes.pop_back();  // Remove the custom option to prevent it from being matched in the
+                            // spinValueChangedCb function, as its presence would lead to errors
 
     reset(this);
 
@@ -101,11 +102,9 @@ void FormatDialog::spinValueChangedCb(FormatDialog* dlg) {
 
     int i = 0;
     for (auto& size: dlg->paperSizes) {
-        xoj_assert(std::holds_alternative<PaperFormatUtils::GtkPaperSizeUniquePtr_t>(size));
-        double w = gtk_paper_size_get_width(std::get<PaperFormatUtils::GtkPaperSizeUniquePtr_t>(size).get(),
-                                            GTK_UNIT_POINTS);
-        double h = gtk_paper_size_get_height(std::get<PaperFormatUtils::GtkPaperSizeUniquePtr_t>(size).get(),
-                                             GTK_UNIT_POINTS);
+        xoj_assert(std::holds_alternative<GtkPaperSizeUPtr>(size));
+        double w = gtk_paper_size_get_width(std::get<GtkPaperSizeUPtr>(size).get(), GTK_UNIT_POINTS);
+        double h = gtk_paper_size_get_height(std::get<GtkPaperSizeUPtr>(size).get(), GTK_UNIT_POINTS);
 
         if ((static_cast<int>(w - width) == 0 && static_cast<int>(h - height) == 0) ||
             (static_cast<int>(h - width) == 0 && static_cast<int>(w - height) == 0)) {

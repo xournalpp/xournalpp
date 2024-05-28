@@ -18,7 +18,7 @@
 #include <gtk/gtk.h>  // for gtk_paper_size_free, GtkComboBox, GtkToggl...
 
 #include "gui/Builder.h"
-#include "util/PaperFormatUtils.h"  // for PaperFormatMenuOptionVector_t
+#include "util/PaperFormatUtils.h"  // for PaperFormatMenuOptionVector
 #include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
@@ -48,7 +48,7 @@ private:
 private:
     Settings* settings = nullptr;
 
-    PaperFormatUtils::PaperFormatMenuOptionVector_t paperSizes;
+    PaperFormatUtils::PaperFormatMenuOptionVector paperSizes;
 
     Orientation orientation = ORIENTATION_NOT_DEFINED;
     int selectedScale = 0;
