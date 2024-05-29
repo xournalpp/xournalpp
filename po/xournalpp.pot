@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-15 12:58+0000\n"
+"POT-Creation-Date: 2024-05-29 21:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,46 +23,46 @@ msgid ""
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:220
+#: ../src/core/control/Control.cpp:226
 msgid "Filesystem error: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:232
+#: ../src/core/control/Control.cpp:238
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:544
+#: ../src/core/control/Control.cpp:550
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:564
+#: ../src/core/control/Control.cpp:570
 msgid ""
 "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to "
 "edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:567
+#: ../src/core/control/Control.cpp:573 ../src/core/control/Control.cpp:1499
 msgid "Yes"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:567
+#: ../src/core/control/Control.cpp:573 ../src/core/control/Control.cpp:1499
 msgid "No"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:789 ../src/core/control/Control.cpp:1616
-#: ../src/core/control/Control.cpp:2034 ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/Control.cpp:797 ../src/core/control/Control.cpp:1666
+#: ../src/core/control/Control.cpp:1997 ../src/core/control/XournalMain.cpp:200
 msgid "Cancel"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:790
+#: ../src/core/control/Control.cpp:798
 msgid "Insert after current page"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:791
+#: ../src/core/control/Control.cpp:799
 msgid "Insert at end"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:794
+#: ../src/core/control/Control.cpp:802
 msgid ""
 "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n"
@@ -71,132 +71,114 @@ msgid ""
 "PDF page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:838
+#: ../src/core/control/Control.cpp:846
 msgid ""
 "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:852
+#: ../src/core/control/Control.cpp:860
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1419
+#: ../src/core/control/Control.cpp:1424
 msgid ""
 "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1430
+#: ../src/core/control/Control.cpp:1444
 msgid "file: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1459
+#: ../src/core/control/Control.cpp:1476
 msgid "Error opening file \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1467
+#: ../src/core/control/Control.cpp:1501
+msgid "File version mismatch"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1502
 msgid ""
 "The file being loaded has a file format version newer than the one currently "
 "supported by this version of Xournal++, so it may not load properly. Open "
 "anyways?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1596
+#: ../src/core/control/Control.cpp:1525
+msgid ""
+"Error reading PDF file \"{1}\"\n"
+"{2}"
+msgstr ""
+
+#: ../src/core/control/Control.cpp:1646
 msgid ""
 "The attached background file could not be found. It might have been moved, "
 "renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1599
+#: ../src/core/control/Control.cpp:1649
 msgid ""
 "The background file \"{1}\" could not be found. It might have been moved, "
 "renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1609
+#: ../src/core/control/Control.cpp:1659
 msgid ""
 "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1614
+#: ../src/core/control/Control.cpp:1664
 msgid "Select another PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1615
+#: ../src/core/control/Control.cpp:1665
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1619
+#: ../src/core/control/Control.cpp:1669
 msgid "Use proposed PDF"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1622
+#: ../src/core/control/Control.cpp:1672
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1716
-msgid ""
-"Error annotate PDF file \"{1}\"\n"
-"{2}"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:1820
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
-msgid "Save File"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:1820
-#: ../src/core/control/jobs/BaseExportJob.cpp:55
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:93
-msgid "_Cancel"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:1821
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:113
-msgid "_Save"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:1824
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:46
-msgid "Xournal++ files"
-msgstr ""
-
-#: ../src/core/control/Control.cpp:1869
+#: ../src/core/control/Control.cpp:1804
 msgid "Select font"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1884
+#: ../src/core/control/Control.cpp:1819
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1906
+#: ../src/core/control/Control.cpp:1841
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2025
+#: ../src/core/control/Control.cpp:1990
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2025
+#: ../src/core/control/Control.cpp:1990
 msgid "This document is not saved yet."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2026
+#: ../src/core/control/Control.cpp:1992
 msgid "Save As..."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2026 ../src/core/control/jobs/SaveJob.cpp:24
+#: ../src/core/control/Control.cpp:1992 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
 msgid "Save"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2031
+#: ../src/core/control/Control.cpp:1995
 msgid "Discard"
 msgstr ""
 
@@ -205,8 +187,8 @@ msgid "Trying to emergency save the current open document..."
 msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:40
-#: ../src/core/control/XournalMain.cpp:301
-#: ../src/core/control/XournalMain.cpp:307
+#: ../src/core/control/XournalMain.cpp:303
+#: ../src/core/control/XournalMain.cpp:309
 msgid "Error: {1}"
 msgstr ""
 
@@ -284,8 +266,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr ""
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:94
-#: ../src/core/control/xojfile/LoadHandler.cpp:469
-#: ../src/core/control/xojfile/LoadHandler.cpp:485
+#: ../src/core/control/xojfile/LoadHandler.cpp:470
+#: ../src/core/control/xojfile/LoadHandler.cpp:486
 msgid "Error reading PDF: {1}"
 msgstr ""
 
@@ -358,25 +340,25 @@ msgid ""
 "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:226
+#: ../src/core/control/XournalMain.cpp:227
 msgid "Recovery file detected"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:227
+#: ../src/core/control/XournalMain.cpp:228
 msgid "Delete file"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:227
+#: ../src/core/control/XournalMain.cpp:228
 msgid "Restore file"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:246
+#: ../src/core/control/XournalMain.cpp:248
 msgid ""
 "The background file \"{1}\" could not be found. It might have been moved, "
 "renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:438
+#: ../src/core/control/XournalMain.cpp:440
 msgid ""
 "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
@@ -386,59 +368,58 @@ msgid ""
 "  Not in {2}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:443
+#: ../src/core/control/XournalMain.cpp:445
 msgid ""
 "\n"
 "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:460
-#: ../src/core/control/XournalMain.cpp:520
+#: ../src/core/control/XournalMain.cpp:462
+#: ../src/core/control/XournalMain.cpp:522
 msgid ""
 "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:471
+#: ../src/core/control/XournalMain.cpp:473
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:475
-#: ../src/core/control/XournalMain.cpp:540
+#: ../src/core/control/XournalMain.cpp:477
 msgid ""
 "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:658
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:662
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Get version of xournalpp"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:664
+#: ../src/core/control/XournalMain.cpp:644
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:646
 msgid ""
 "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:670
+#: ../src/core/control/XournalMain.cpp:650
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:679
+#: ../src/core/control/XournalMain.cpp:659
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:681
+#: ../src/core/control/XournalMain.cpp:661
 msgid ""
 "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension "
@@ -446,7 +427,7 @@ msgid ""
 "                                 Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:666
 msgid ""
 "Export without background\n"
 "                                 The exported file has transparent or white "
@@ -454,13 +435,13 @@ msgid ""
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:691
+#: ../src/core/control/XournalMain.cpp:671
 msgid ""
 "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:695
+#: ../src/core/control/XournalMain.cpp:675
 msgid ""
 "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively "
@@ -472,34 +453,34 @@ msgid ""
 "presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:702
+#: ../src/core/control/XournalMain.cpp:682
 msgid ""
 "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--"
 "create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:706
+#: ../src/core/control/XournalMain.cpp:686
 msgid ""
 "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--"
 "create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:710
+#: ../src/core/control/XournalMain.cpp:690
 msgid ""
 "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:714
+#: ../src/core/control/XournalMain.cpp:694
 msgid ""
 "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:720
+#: ../src/core/control/XournalMain.cpp:700
 msgid ""
 "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
@@ -507,11 +488,11 @@ msgid ""
 "width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:725
+#: ../src/core/control/XournalMain.cpp:705
 msgid "Advanced export options"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:726
+#: ../src/core/control/XournalMain.cpp:706
 msgid "Display advanced export options"
 msgstr ""
 
@@ -527,29 +508,23 @@ msgstr ""
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:39
+#: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:45
+#: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:46
-msgid ""
-"\n"
-" Do you want to continue?"
+#: ../src/core/control/jobs/BaseExportJob.cpp:77
+msgid "Export File"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:54
+#: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export"
 msgstr ""
 
-#: ../src/core/control/jobs/BaseExportJob.cpp:55
-msgid "_Export"
-msgstr ""
-
-#: ../src/core/control/jobs/BaseExportJob.cpp:133
+#: ../src/core/control/jobs/BaseExportJob.cpp:93
 msgid ""
 "Failed to resolve path with the following error:\n"
 "{1}"
@@ -561,15 +536,17 @@ msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:32
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:31
 msgid "PDF files"
 msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:30
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:36
 msgid "PNG graphics"
 msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:31
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:35
 msgid "SVG graphics"
 msgstr ""
 
@@ -577,8 +554,8 @@ msgstr ""
 msgid "Xournal (Compatibility)"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:137
-#: ../src/core/control/jobs/SaveJob.cpp:135
+#: ../src/core/control/jobs/CustomExportJob.cpp:133
+#: ../src/core/control/jobs/SaveJob.cpp:138
 msgid "Save file error: {1}"
 msgstr ""
 
@@ -603,7 +580,7 @@ msgstr ""
 msgid "PDF Export"
 msgstr ""
 
-#: ../src/core/control/jobs/SaveJob.cpp:121
+#: ../src/core/control/jobs/SaveJob.cpp:124
 msgid "Save file error, can't backup: {1}"
 msgstr ""
 
@@ -698,8 +675,15 @@ msgstr ""
 msgid "Open Image"
 msgstr ""
 
+#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:75
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:19
+msgid "_Cancel"
+msgstr ""
+
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:94
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:76
 msgid "_Open"
 msgstr ""
 
@@ -708,7 +692,7 @@ msgid "Images"
 msgstr ""
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:33
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:181
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:161
 msgid "Attach file to the journal"
 msgstr ""
 
@@ -732,27 +716,27 @@ msgstr ""
 msgid "Failed to load image, could not determine image size!"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:134
+#: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:142
+#: ../src/core/control/xojfile/LoadHandler.cpp:141
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:151
+#: ../src/core/control/xojfile/LoadHandler.cpp:150
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:164
+#: ../src/core/control/xojfile/LoadHandler.cpp:163
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:173
+#: ../src/core/control/xojfile/LoadHandler.cpp:172
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:181
+#: ../src/core/control/xojfile/LoadHandler.cpp:180
 msgid "Could not open file: \"{1}\""
 msgstr ""
 
@@ -793,57 +777,57 @@ msgstr ""
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:476
+#: ../src/core/control/xojfile/LoadHandler.cpp:477
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:514
+#: ../src/core/control/xojfile/LoadHandler.cpp:515
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:539
+#: ../src/core/control/xojfile/LoadHandler.cpp:540
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:607
+#: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:625
+#: ../src/core/control/xojfile/LoadHandler.cpp:626
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:796
-#: ../src/core/control/xojfile/LoadHandler.cpp:812
+#: ../src/core/control/xojfile/LoadHandler.cpp:797
+#: ../src/core/control/xojfile/LoadHandler.cpp:813
 #: ../src/core/control/xojfile/LoadHandler.cpp:1126
 #: ../src/core/control/xojfile/LoadHandler.cpp:1140
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:805
+#: ../src/core/control/xojfile/LoadHandler.cpp:806
 #: ../src/core/control/xojfile/LoadHandler.cpp:1133
 #: ../src/core/control/xojfile/LoadHandler.cpp:1151
 msgid ""
 "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:824
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:833
+#: ../src/core/control/xojfile/LoadHandler.cpp:834
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1020
+#: ../src/core/control/xojfile/LoadHandler.cpp:1021
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1036
+#: ../src/core/control/xojfile/LoadHandler.cpp:1037
 msgid "xoj-File: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1037
+#: ../src/core/control/xojfile/LoadHandler.cpp:1038
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
@@ -1094,6 +1078,27 @@ msgstr ""
 msgid "Draw Spline"
 msgstr ""
 
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
+msgid "All files"
+msgstr ""
+
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
+msgid "Supported files"
+msgstr ""
+
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:32
+msgid "Xournal files"
+msgstr ""
+
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
+msgid "Xournal++ files"
+msgstr ""
+
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+msgid "Xournal++ template"
+msgstr ""
+
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
 msgstr ""
@@ -1134,9 +1139,13 @@ msgid ""
 "settings. "
 msgstr ""
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:53
-msgid "Xournal++ template"
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:79
+msgid "Save File"
+msgstr ""
+
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:113
+msgid "_Save"
 msgstr ""
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
@@ -1214,21 +1223,17 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:14
-msgid "All files"
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:118
+msgid "Open template file"
 msgstr ""
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:21
-msgid "Supported files"
-msgstr ""
-
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:39
-msgid "Xournal files"
-msgstr ""
-
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:93
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Open file"
+msgstr ""
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:150
+msgid "Annotate Pdf file"
 msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
@@ -2018,15 +2023,15 @@ msgstr ""
 msgid "Error {1} executing system command: {2}"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:174 ../src/util/XojMsgBox.cpp:194
+#: ../src/util/XojMsgBox.cpp:187
 msgid "Select another name"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:175 ../src/util/XojMsgBox.cpp:195
+#: ../src/util/XojMsgBox.cpp:188
 msgid "Replace"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:219
+#: ../src/util/XojMsgBox.cpp:211
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
