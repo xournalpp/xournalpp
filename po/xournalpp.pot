@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.3+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-29 21:31+0000\n"
+"POT-Creation-Date: 2024-06-02 18:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -265,13 +265,13 @@ msgstr ""
 msgid "Could not load LaTeX PDF file"
 msgstr ""
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:94
+#: ../src/core/control/PageBackgroundChangeController.cpp:93
 #: ../src/core/control/xojfile/LoadHandler.cpp:470
 #: ../src/core/control/xojfile/LoadHandler.cpp:486
 msgid "Error reading PDF: {1}"
 msgstr ""
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:216
+#: ../src/core/control/PageBackgroundChangeController.cpp:215
 msgid ""
 "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page "
@@ -671,31 +671,6 @@ msgstr ""
 msgid "%{name}_annotated"
 msgstr ""
 
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
-msgid "Open Image"
-msgstr ""
-
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:75
-#: ../src/core/gui/dialog/XojSaveDlg.cpp:19
-msgid "_Cancel"
-msgstr ""
-
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:76
-msgid "_Open"
-msgstr ""
-
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:22
-msgid "Images"
-msgstr ""
-
-#: ../src/core/control/stockdlg/ImageOpenDlg.cpp:33
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:161
-msgid "Attach file to the journal"
-msgstr ""
-
 #: ../src/core/control/tools/EditSelection.cpp:456
 msgid "Arrange"
 msgstr ""
@@ -712,8 +687,12 @@ msgstr ""
 msgid "Send to back"
 msgstr ""
 
-#: ../src/core/control/tools/ImageHandler.cpp:70
-msgid "Failed to load image, could not determine image size!"
+#: ../src/core/control/tools/ImageHandler.cpp:41
+msgid "Failed to load image"
+msgstr ""
+
+#: ../src/core/control/tools/ImageHandler.cpp:69
+msgid "Error while opening image file: "
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
@@ -1099,6 +1078,10 @@ msgstr ""
 msgid "Xournal++ template"
 msgstr ""
 
+#: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
+msgid "Image files"
+msgstr ""
+
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
 msgstr ""
@@ -1142,6 +1125,12 @@ msgstr ""
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:79
 msgid "Save File"
+msgstr ""
+
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:80
+#: ../src/core/gui/dialog/XojSaveDlg.cpp:19
+msgid "_Cancel"
 msgstr ""
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:113
@@ -1223,17 +1212,29 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:118
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:49
+msgid "Attach file to the journal"
+msgstr ""
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:81
+msgid "_Open"
+msgstr ""
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
 msgstr ""
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:131
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Open file"
 msgstr ""
 
-#: ../src/core/gui/dialog/XojOpenDlg.cpp:150
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
+msgstr ""
+
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:173
+msgid "Choose image file"
 msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
@@ -1248,11 +1249,11 @@ msgstr ""
 msgid "Load file"
 msgstr ""
 
-#: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:115
+#: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
-#: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:121
+#: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
 msgstr ""
 
