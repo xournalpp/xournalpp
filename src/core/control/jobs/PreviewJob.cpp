@@ -37,7 +37,7 @@ void PreviewJob::initGraphics() {
     auto w = this->sidebarPreview->imageWidth;
     auto h = this->sidebarPreview->imageHeight;
     auto DPIscaling = this->sidebarPreview->DPIscaling;
-    buffer.reset(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w, h), xoj::util::adopt);
+    buffer.reset(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w * DPIscaling, h * DPIscaling), xoj::util::adopt);
     cairo_surface_set_device_scale(buffer.get(), DPIscaling, DPIscaling);
     cr.reset(cairo_create(buffer.get()), xoj::util::adopt);
     double zoom = this->sidebarPreview->sidebar->getZoom();
