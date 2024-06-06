@@ -296,6 +296,23 @@ auto Plugin::callFunction(const std::string& fnc, ptrdiff_t mode) -> bool {
     return true;
 }
 
+auto Plugin::callFunction(const std::string& fnc, const char* s) -> bool {
+    lua_getglobal(lua.get(), fnc.c_str());
+
+    lua_pushstring(lua.get(), s);
+
+    // Run the function
+    if (lua_pcall(lua.get(), 1, 0, 0)) {
+        const char* errMsg = lua_tostring(lua.get(), -1);
+        XojMsgBox::showPluginMessage(name, errMsg, true);
+
+        g_warning("Error in Plugin: \"%s\", error: \"%s\"", name.c_str(), errMsg);
+        return false;
+    }
+
+    return true;
+}
+
 auto Plugin::getName() const -> std::string const& { return name; }
 auto Plugin::getDescription() const -> std::string const& { return description; }
 auto Plugin::getAuthor() const -> std::string const& { return author; }
