@@ -191,3 +191,21 @@ void xoj::OpenDlg::showOpenImageDialog(GtkWindow* parent, Settings* settings,
 
     popup.show(parent);
 }
+
+void xoj::OpenDlg::showMultiFormatDialog(GtkWindow* parent, std::vector<std::string> formats,
+                                         std::function<void(fs::path)> callback) {
+    auto popup = xoj::popup::PopupWindowWrapper<FileDlg>(_("Open file"), std::move(callback));
+
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
+
+    if (formats.size() > 0) {
+        GtkFileFilter* filterSupported = gtk_file_filter_new();
+        gtk_file_filter_set_name(filterSupported, _("Supported files"));
+        for (std::string format: formats) {
+            gtk_file_filter_add_pattern(filterSupported, format.c_str());
+        }
+        gtk_file_chooser_add_filter(fc, filterSupported);
+    }
+
+    popup.show(parent);
+}
