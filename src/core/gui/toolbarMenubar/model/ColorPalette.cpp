@@ -32,9 +32,10 @@ void Palette::load() {
     // parse standard header line
     parseFirstGimpPaletteLine(line);
     // attempt parsing line by line as either header, color, or fallback
-    while (gplFile.peek() != EOF && getline(gplFile, line)) {
+    while (!gplFile.eof() && gplFile.peek() != EOF && getline(gplFile, line)) {
         lineNumber++;
-        parseCommentLine(line) || parseHeaderLine(line) || parseColorLine(line) || parseLineFallback(lineNumber);
+        parseCommentLine(line) || parseHeaderLine(line) || parseColorLine(line) || parseEmptyLine(line) ||
+                parseLineFallback(lineNumber);
     }
     if (namedColors.size() < 1) {
         throw std::invalid_argument("Your Palettefile has no parsable color. It needs at least one!");
@@ -82,6 +83,8 @@ auto Palette::parseColorLine(const std::string& line) -> bool {
 }
 
 auto Palette::parseCommentLine(const std::string& line) const -> bool { return line.front() == '#'; }
+
+auto Palette::parseEmptyLine(const std::string& line) const -> bool { return line.empty(); }
 
 auto Palette::parseLineFallback(int lineNumber) const -> const bool {
     throw std::invalid_argument(FS(FORMAT_STR("The line {1} is malformed.") % lineNumber));
