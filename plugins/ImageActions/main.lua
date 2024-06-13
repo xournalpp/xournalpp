@@ -143,8 +143,8 @@ function Split(mode)
     local firstAfter = false
     local currentLength = 0
     local n = 0
-    for i = 1, last do
-      if sum[i - 1] == maxSum then -- completely white row (or column)
+    for j = 1, last do
+      if sum[j - 1] == maxSum then -- completely white row (or column)
         if currentLength > 0 then
           currentLength = currentLength + 1
         else
@@ -153,7 +153,7 @@ function Split(mode)
         end
       else
         if firstAfter then
-          whiteEnds[n] = i - 1
+          whiteEnds[n] = j - 1
           whiteLengths[n] = currentLength
           n = n + 1
           firstAfter = false
@@ -172,10 +172,10 @@ function Split(mode)
 
     local maxBlockLength = 0
     local endIndex = 0
-    for i = 1, #whiteEnds do
-      if whiteLengths[i] > maxBlockLength then
-        maxBlockLength = whiteLengths[i]
-        endIndex = whiteEnds[i]
+    for j = 1, #whiteEnds do
+      if whiteLengths[j] > maxBlockLength then
+        maxBlockLength = whiteLengths[j]
+        endIndex = whiteEnds[j]
       end
     end
     if vertical then
