@@ -11,13 +11,14 @@
 
 #pragma once
 
-#include <array>    // for array
-#include <cstddef>  // for size_t
-#include <map>      // for map
-#include <memory>   // for make_shared, shared_ptr
-#include <string>   // for string, basic_string
-#include <utility>  // for pair
-#include <vector>   // for vector
+#include <array>     // for array
+#include <cstddef>   // for size_t
+#include <map>       // for map
+#include <memory>    // for make_shared, shared_ptr
+#include <optional>  // for optional
+#include <string>    // for string, basic_string
+#include <utility>   // for pair
+#include <vector>    // for vector
 
 #include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
 #include <glib.h>                         // for gchar, gboolean, gint
@@ -566,7 +567,8 @@ public:
     void setStabilizerAveragingMethod(StrokeStabilizer::AveragingMethod averagingMethod);
     void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
 
-    const Palette& getColorPalette();
+    fs::path const& getColorPaletteSetting();
+    void setColorPaletteSetting(fs::path palettePath);
 
     void setNumberOfSpacesForTab(unsigned int numberSpaces);
     unsigned int getNumberOfSpacesForTab() const;
@@ -1147,12 +1149,7 @@ private:
     StrokeStabilizer::AveragingMethod stabilizerAveragingMethod{};
     StrokeStabilizer::Preprocessor stabilizerPreprocessor{};
 
-    /**
-     * @brief Color Palette for tool colors
-     *
-     */
-    std::unique_ptr<Palette> palette;
-
+    fs::path colorPaletteSetting;
 
     /**
      * Tab control settings

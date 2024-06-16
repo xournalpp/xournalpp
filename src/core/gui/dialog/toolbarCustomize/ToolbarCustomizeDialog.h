@@ -19,6 +19,7 @@
 #include <glib.h>     // for guint, gint
 #include <gtk/gtk.h>  // for GtkWidget, GtkSelectionData, GtkToolbar
 
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "util/raii/GtkWindowUPtr.h"
 
 class AbstractToolItem;
@@ -88,4 +89,5 @@ private:
 
     xoj::util::GtkWindowUPtr window;
     GtkNotebook* notebook;
+    Palette palette;
 };

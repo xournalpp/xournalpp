@@ -127,6 +127,10 @@ struct Palette {
      */
     NamedColor const& getColorAt(size_t i) const;
 
+    fs::path const& getFilePath() const;
+
+    std::string getHeader(const std::string& attr) const;
+
 
 private:
     /**

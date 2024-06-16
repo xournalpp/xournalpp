@@ -46,7 +46,7 @@ struct ToolbarCustomizeDialog::ToolItemDragData {
 
 struct ToolbarCustomizeDialog::ColorToolItemDragData {
     ToolbarCustomizeDialog* dlg;
-    const NamedColor* namedColor;
+    size_t paletteColorIndex;
     xoj::util::WidgetSPtr ebox;
 };
 
@@ -68,7 +68,8 @@ constexpr auto UI_DIALOG_NAME = "DialogCustomizeToolbar";
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
                                                ToolbarDragDropHandler* handler):
         itemData(buildToolDataVector(win->getToolMenuHandler()->getToolItems())),
-        colorItemData(buildColorDataVector(handler->getControl()->getSettings()->getColorPalette())) {
+        colorItemData(buildColorDataVector(handler->getControl()->getPalette())),
+        palette(handler->getControl()->getPalette()) {
     Builder builder(gladeSearchPath, UI_FILE);
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
     notebook = GTK_NOTEBOOK(builder.get("notebook"));
@@ -201,9 +202,10 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
  */
 void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragContext* context,
                                                     ColorToolItemDragData* data) {
-    ToolItemDragCurrentData::setDataColor(-1, data->namedColor);
+    ToolItemDragCurrentData::setDataColor(-1, data->paletteColorIndex);
 
-    auto image = ColorIcon::newGdkPixbuf(data->namedColor->getColor(), 16, true);
+    auto namedColor = data->dlg->palette.getColorAt(data->paletteColorIndex);
+    auto image = ColorIcon::newGdkPixbuf(namedColor.getColor(), 16, true);
     gtk_drag_set_icon_pixbuf(context, image.get(), -2, -2);
 }
 
@@ -218,11 +220,11 @@ void ToolbarCustomizeDialog::toolitemColorDragEnd(GtkWidget* widget, GdkDragCont
 void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDragContext* context,
                                                       GtkSelectionData* selection_data, guint info, guint time,
                                                       ColorToolItemDragData* data) {
-    ToolItemDragCurrentData::setDataColor(-1, data->namedColor);
+    ToolItemDragCurrentData::setDataColor(-1, data->paletteColorIndex);
 
     auto it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
     it->type = TOOL_ITEM_COLOR;
-    it->namedColor = data->namedColor;
+    it->paletteColorIndex = data->paletteColorIndex;
 
     gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0,
                            reinterpret_cast<const guchar*>(it.get()), sizeof(ToolItemDragDropData));
@@ -287,13 +289,13 @@ auto ToolbarCustomizeDialog::buildColorDataVector(const Palette& palette) -> std
     // By reserving, we ensure no reallocation is done, so the pointer `&data` used below is not invalidated
     std::vector<ColorToolItemDragData> database;
     database.reserve(palette.size());
-    for (size_t i = 0; i < palette.size(); i++) {
+    for (size_t paletteColorIndex = 0; paletteColorIndex < palette.size(); paletteColorIndex++) {
         // namedColor needs to be a pointer to pass it into a ColorToolItemDragData
-        const NamedColor* namedColor = &(palette.getColorAt(i));
+        const NamedColor& namedColor = palette.getColorAt(paletteColorIndex);
 
         GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2));
-        gtk_box_append(box, ColorIcon::newGtkImage(namedColor->getColor(), 16, true));
-        gtk_box_append(box, gtk_label_new(namedColor->getName().c_str()));
+        gtk_box_append(box, ColorIcon::newGtkImage(namedColor.getColor(), 16, true));
+        gtk_box_append(box, gtk_label_new(namedColor.getName().c_str()));
 
         GtkWidget* ebox = gtk_event_box_new();
         gtk_container_add(GTK_CONTAINER(ebox), GTK_WIDGET(box));
@@ -305,7 +307,7 @@ auto ToolbarCustomizeDialog::buildColorDataVector(const Palette& palette) -> std
 
         auto& data = database.emplace_back();
         data.dlg = this;
-        data.namedColor = namedColor;
+        data.paletteColorIndex = paletteColorIndex;
         data.ebox.reset(ebox, xoj::util::ref);
 
         g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemColorDragBegin), &data);

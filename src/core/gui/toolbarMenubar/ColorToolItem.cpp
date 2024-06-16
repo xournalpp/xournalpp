@@ -59,3 +59,5 @@ auto ColorToolItem::getToolDisplayName() const -> std::string { return this->nam
 auto ColorToolItem::getNewToolIcon() const -> GtkWidget* {
     return ColorIcon::newGtkImage(this->namedColor.getColor(), 16, true);
 }
+
+void ColorToolItem::updateColor(const Palette& palette) { namedColor = palette.getColorAt(namedColor.getIndex()); }

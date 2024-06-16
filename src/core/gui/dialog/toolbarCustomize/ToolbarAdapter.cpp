@@ -24,11 +24,11 @@
 using std::string;
 
 ToolbarAdapter::ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuHandler* toolHandler,
-                               MainWindow* window) {
+                               MainWindow* window):
+        palette(toolHandler->getControl()->getPalette()) {
     this->w = toolbar;
     g_object_ref(this->w);
     this->toolbarName = std::move(toolbarName);
-    this->toolHandler = toolHandler;
     this->window = window;
 
     // prepare drag & drop
@@ -238,7 +238,8 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
         gtk_tool_item_set_expand(it, true);
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        GtkWidget* iconWidget = ColorIcon::newGtkImage(d->namedColor->getColor(), 16, true);
+        auto namedColor = adapter->palette.getColorAt(d->paletteColorIndex);
+        GtkWidget* iconWidget = ColorIcon::newGtkImage(namedColor.getColor(), 16, true);
         GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else {
@@ -276,7 +277,8 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         int newId = tb->insertItem(name, id, pos);
         ToolitemDragDrop::attachMetadata(it.get(), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        auto item = std::make_unique<ColorToolItem>(*(d->namedColor));
+        auto namedColor = adapter->palette.getColorAt(d->paletteColorIndex);
+        auto item = std::make_unique<ColorToolItem>(namedColor);
 
         auto it = item->createToolItem(horizontal);
 
@@ -289,7 +291,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         string id = item->getId();
 
         int newId = tb->insertItem(name, id, pos);
-        ToolitemDragDrop::attachMetadataColor(it.get(), newId, d->namedColor, item.get());
+        ToolitemDragDrop::attachMetadataColor(it.get(), newId, d->paletteColorIndex, item.get());
 
         adapter->window->getToolMenuHandler()->addColorToolItem(std::move(item));
     } else if (d->type == TOOL_ITEM_SEPARATOR) {

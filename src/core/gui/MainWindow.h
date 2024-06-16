@@ -65,6 +65,13 @@ private:
     void loadToolbar(ToolbarData* d);
 
 public:
+    /**
+     * reloadToolbars reloads the currently selected toolbar
+     *
+     * This is especially useful when a change in the SettingsDialog should be reflected right away
+     */
+    void reloadToolbars();
+
     void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
 
     void setMaximized(bool maximized);

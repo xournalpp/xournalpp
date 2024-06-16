@@ -26,20 +26,23 @@
 #include "DeviceClassConfigGui.h"
 #include "LanguageConfigGui.h"
 #include "LatexSettingsPanel.h"
+#include "SettingsDialogPaletteTab.h"
+#include "filesystem.h"  // for path
 
 class Control;
 class Settings;
 
+struct Palette;
+
 class SettingsDialog {
 public:
     SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
-                   std::function<void()> callback);
+                   const std::vector<fs::path>& paletteDirectories, std::function<void()> callback);
 
     inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
     void save();
-
     void setDpi(int dpi);
 
     /**
@@ -90,6 +93,7 @@ private:
     std::vector<DeviceClassConfigGui> deviceClassConfigs;
 
     LatexSettingsPanel latexPanel;
+    SettingsDialogPaletteTab paletteTab;
 
     std::function<void()> callback;
 };
