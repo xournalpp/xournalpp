@@ -55,7 +55,7 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
         GenError res{FS(_F("Failed to parse LaTeX generator path: {1}") % e.what())};
     }
 
-    for (auto i = cmd.find(u8"{}"); i != std::string::npos; i = cmd.find(u8"{}", i + texFilePathOSEncoding.length())) {
+    for (auto i = cmd.find("{}"); i != std::string::npos; i = cmd.find("{}", i + texFilePathOSEncoding.length())) {
         cmd.replace(i, 2, texFilePathOSEncoding);
     }
     // Todo (rolandlo): is this a todo?
@@ -86,7 +86,7 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
 
     auto flags = static_cast<GSubprocessFlags>(G_SUBPROCESS_FLAGS_STDOUT_PIPE | G_SUBPROCESS_FLAGS_STDERR_MERGE);
     xoj::util::GObjectSPtr<GSubprocessLauncher> launcher(g_subprocess_launcher_new(flags), xoj::util::adopt);
-    g_subprocess_launcher_set_cwd(launcher.get(), texDir.u8string().c_str());
+    g_subprocess_launcher_set_cwd(launcher.get(), texDir.string().c_str());
     auto* proc = g_subprocess_launcher_spawnv(launcher.get(), argv.get(), out_ptr(err));
 
     if (proc) {

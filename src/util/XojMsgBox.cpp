@@ -6,6 +6,7 @@
 #include <glib.h>         // for g_free, g_markup_escape_text, g_error_free
 
 #include "util/PopupWindowWrapper.h"
+#include "util/StringUtils.h"
 #include "util/Util.h"
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for _, FS, _F
@@ -179,8 +180,7 @@ void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
 
     GtkWidget* dialog = gtk_message_dialog_new(
             win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-            FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % file.filename().u8string())
-                    .c_str());
+            FS(_F("The file {1} already exists! Do you want to replace it?") % file.filename().u8string()).c_str());
     if (win != nullptr) {
         gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
     }

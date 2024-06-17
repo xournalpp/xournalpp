@@ -15,9 +15,9 @@ static void addlastSavePathShortcut(GtkFileChooser* fc, Settings* settings) {
     auto lastSavePath = settings->getLastSavePath();
     if (!lastSavePath.empty()) {
 #if GTK_MAJOR_VERSION == 3
-        gtk_file_chooser_add_shortcut_folder(fc, lastSavePath.u8string().c_str(), nullptr);
+        gtk_file_chooser_add_shortcut_folder(fc, char_cast(lastSavePath.u8string().c_str()), nullptr);
 #else
-        gtk_file_chooser_add_shortcut_folder(fc, Util::toGFile(lastSavePath.u8string()).get(), nullptr);
+        gtk_file_chooser_add_shortcut_folder(fc, Util::toGFile(lastSavePath).get(), nullptr);
 #endif
     }
 }
