@@ -139,53 +139,6 @@ void XojMsgBox::showPluginMessage(const std::string& pluginName, const std::stri
     showMarkupMessageToUser(nullptr, header, msg, error ? GTK_MESSAGE_ERROR : GTK_MESSAGE_INFO);
 }
 
-auto XojMsgBox::askPluginQuestion(const std::string& pluginName, const std::string& msg,
-                                  const std::vector<Button>& buttons, bool error) -> int {
-    /*
-     * Todo(gtk4): Remove this function entirely.
-     */
-    std::string header = "<i>Warning: The plugin interface function msgbox() is deprecated and will soon be removed. "
-                         "Please adapt your plugin to use the function openDialog() instead</i>\n\n";
-    header += (error ? std::string("<b>Error in </b>") : "") + std::string("Xournal++ Plugin «") + pluginName + "»";
-
-    GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL,
-                                                           error ? GTK_MESSAGE_ERROR : GTK_MESSAGE_QUESTION,
-                                                           GTK_BUTTONS_NONE, nullptr);
-
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), header.c_str());
-
-    if (defaultWindow != nullptr) {
-        gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);
-    }
-
-    GValue val = G_VALUE_INIT;
-    g_value_init(&val, G_TYPE_STRING);
-    g_value_set_string(&val, msg.c_str());
-    g_object_set_property(G_OBJECT(dialog), "secondary-text", &val);
-    g_value_unset(&val);
-
-    for (auto& b: buttons) {
-        gtk_dialog_add_button(GTK_DIALOG(dialog), b.label.c_str(), b.response);
-    }
-
-    // We use a hack to ensure the app does not exit until the user has read the error message and closed the popup
-    bool done = false;
-    int res = 0;
-
-    xoj::popup::PopupWindowWrapper<XojMsgBox> popup(GTK_DIALOG(dialog), [&done, &res](int r) {
-        done = true;
-        res = r;
-    });
-
-    popup.show(defaultWindow);
-
-    while (!done) {
-        // Let the main loop run so the popup pops up and can be interacted with
-        g_main_context_iteration(g_main_context_default(), true);
-    }
-    return res;
-}
-
 void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
                                     xoj::util::move_only_function<void(const fs::path&)> writeTofile) {
     if (!fs::exists(file)) {
