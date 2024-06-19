@@ -210,53 +210,6 @@ static int applib_glib_rename(lua_State* L) {
     }
 }
 
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_fileDialogSave() instead.
- *
- * @deprecated
- * Create a 'Save As' native dialog and return as a string
- * the filepath of the location the user chose to save.
- *
- * @param filename string suggestion for a filename, defaults to "Untitled"
- * @return string path of the selected location
- *
- * Examples:
- *   local filename = app.saveAs() -- defaults to suggestion "Untitled"
- *   local filename = app.saveAs("foo") -- suggests "foo" as filename
- */
-static int applib_saveAs(lua_State* L) {
-    gint res;
-    int args_returned = 0;  // change to 1 if user chooses file
-
-    const char* filename = luaL_checkstring(L, -1);
-
-    // Create a 'Save As' native dialog
-    xoj::util::GObjectSPtr<GtkFileChooserNative> native(
-            gtk_file_chooser_native_new(_("Save file"), nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, nullptr, nullptr),
-            xoj::util::adopt);
-
-    // If user tries to overwrite a file, ask if it's OK
-    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native.get()), TRUE);
-    // Offer a suggestion for the filename if filename absent
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native.get()),
-                                      filename ? filename : (std::string{_("Untitled")}).c_str());
-
-    // Wait until user responds to dialog
-    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native.get()));
-
-    // Return the filename chosen to lua
-    if (res == GTK_RESPONSE_ACCEPT) {
-        char* filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())));
-
-        lua_pushlstring(L, filename, strlen(filename));
-        g_free(static_cast<gchar*>(filename));
-        args_returned = 1;
-    }
-
-    return args_returned;
-}
-
 /**
  * Create a 'Save As' dialog and once the user has chosen the filepath of the location to save
  * calls the specified callback function to which it passes the filepath or the empty string, if the
@@ -308,65 +261,6 @@ static int applib_fileDialogSave(lua_State* L) {
     return 0;
 }
 
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_fileDialogOpen() instead.
- *
- * @deprecated
- * Create a 'Open File' native dialog and return as a string
- * the filepath the user chose to open.
- *
- * @param types string[] array of the different allowed extensions e.g. {'\*.bmp', '\*.png'}
- * @returns string path of the selected location
- *
- * Examples:
- *   path = app.getFilePath({})
- *   path = app.getFilePath({'*.bmp', '*.png'})
- */
-static int applib_getFilePath(lua_State* L) {
-    xoj::util::GObjectSPtr<GtkFileChooserNative> native(
-            gtk_file_chooser_native_new(_("Open file"), nullptr, GTK_FILE_CHOOSER_ACTION_OPEN, nullptr, nullptr),
-            xoj::util::adopt);
-    gint res;
-    int args_returned = 0;  // change to 1 if user chooses file
-    char* filename;
-
-    // Get vector of supported formats from Lua stack
-    std::vector<std::string> formats;
-    // stack now contains: -1 => table
-    lua_pushnil(L);
-    // stack now contains: -1 => nil; -2 => table
-    while (lua_next(L, -2)) {
-        // stack now contains: -1 => value; -2 => key; -3 => table
-        const char* value = lua_tostring(L, -1);
-        formats.push_back(value);
-        lua_pop(L, 1);
-        // stack now contains: -1 => key; -2 => table
-    }
-    // stack now contains: -1 => table
-    lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
-    if (formats.size() > 0) {
-        GtkFileFilter* filterSupported = gtk_file_filter_new();
-        gtk_file_filter_set_name(filterSupported, _("Supported files"));
-        for (std::string format: formats) {
-            gtk_file_filter_add_pattern(filterSupported, format.c_str());
-        }
-        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(native.get()), filterSupported);
-    }
-
-    // Wait until user responds to dialog
-    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native.get()));
-    // Return the filename chosen to lua
-    if (res == GTK_RESPONSE_ACCEPT) {
-        filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())));
-        lua_pushlstring(L, filename, strlen(filename));
-        g_free(static_cast<gchar*>(filename));
-        args_returned = 1;
-    }
-    // Destroy the dialog and free memory
-    return args_returned;
-}
-
 /**
  * Create an 'Open File' dialog and when the user has chosen a filepath
  * call a callback function whose sole argument is the filepath.
@@ -407,40 +301,6 @@ static int applib_fileDialogOpen(lua_State* L) {
                                             plugin->callFunction(callback, path.string().c_str());
                                         });
     return 0;
-}
-
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_openDialog() instead.
- *
- * @deprecated
- * Example: local result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"})
- * Pops up a message box with two buttons "Yes" and "No" and returns 1 for yes, 2 for no
- */
-static int applib_msgbox(lua_State* L) {
-    const char* msg = luaL_checkstring(L, 1);
-
-    // discard any extra arguments passed in
-    lua_settop(L, 2);
-    luaL_checktype(L, 2, LUA_TTABLE);
-
-    lua_pushnil(L);  // initial key for table traversal with `next`
-
-    std::vector<XojMsgBox::Button> buttons;
-
-    while (lua_next(L, 2) != 0) {
-        int index = static_cast<int>(lua_tointeger(L, -2));
-        const char* buttonText = luaL_checkstring(L, -1);
-        lua_pop(L, 1);
-
-        buttons.emplace_back(buttonText, index);
-    }
-
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-
-    int result = XojMsgBox::askPluginQuestion(plugin->getName(), msg, buttons);
-    lua_pushinteger(L, result);
-    return 1;
 }
 
 /**
@@ -750,182 +610,6 @@ static int applib_activateAction(lua_State* L) {
     } else {
         actionDB->fireActivateAction(action);
     }
-    return 0;
-}
-
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_changeActionState or
- * applib_activateAction instead.
- *
- * @deprecated
- * Execute an UI action (usually internally called from Toolbar / Menu)
- * The argument consists of a Lua table with 3 keys: "action", "group" and "enabled"
- * The key "group" is currently only used for debugging purpose and can safely be omitted.
- * The key "enabled" is true by default.
- *
- * @param opts {action: string, enabled:boolean} options (`enabled` is `true` by default)
- *
- * Example 1: app.uiAction({["action"] = "ACTION_PASTE"})
- * pastes the clipboard content into the document
- *
- * Example 2: app.uiAction({["action"] = "ACTION_TOOL_DRAW_ELLIPSE", ["enabled"] = false})
- * turns off the Ellipse drawing type
- */
-static int applib_uiAction(lua_State* L) {
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-
-    // discard any extra arguments passed in
-    lua_settop(L, 1);
-    luaL_checktype(L, 1, LUA_TTABLE);
-
-    lua_getfield(L, 1, "enabled");
-    lua_getfield(L, 1, "action");
-    // stack now has following:
-    //    1 = {["action"] = "ACTION_GRID_SNAPPING", ["group"] = "GROUP_GRID_SNAPPING", ["enabled"] = true}
-    //   -2 = true
-    //   -1 = "ACTION_GRID_SNAPPING"
-
-    bool enabled = lua_isboolean(L, -2) ? lua_toboolean(L, -2) : true;
-
-    const char* actionStr = luaL_optstring(L, -1, nullptr);
-    if (actionStr == nullptr) {
-        return luaL_error(L, "Missing action!");
-    }
-
-    ActionBackwardCompatibilityLayer::actionPerformed(plugin->getControl(), actionStr, enabled);
-
-    return 0;
-}
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
- *
- * @deprecated
- * Execute action from sidebar menu
- *
- * @param action string the desired action
- *
- * Example: app.sidebarAction("MOVE_DOWN")
- * moves down the current page or layer, depending on which sidebar tab is selected
- */
-static int applib_sidebarAction(lua_State* L) {
-    // Connect the context menu actions
-    const std::map<std::string, Action> actionMapPage = {
-            {"COPY", Action::DUPLICATE_PAGE},
-            {"DELETE", Action::DELETE_PAGE},
-            {"MOVE_UP", Action::MOVE_PAGE_TOWARDS_BEGINNING},
-            {"MOVE_DOWN", Action::MOVE_PAGE_TOWARDS_END},
-            {"NEW_BEFORE", Action::NEW_PAGE_BEFORE},
-            {"NEW_AFTER", Action::NEW_PAGE_AFTER},
-    };
-    const std::map<std::string, Action> actionMapLayer = {
-            {"COPY", Action::LAYER_COPY},
-            {"DELETE", Action::LAYER_DELETE},
-            {"MOVE_UP", Action::LAYER_MOVE_UP},
-            {"MOVE_DOWN", Action::LAYER_MOVE_DOWN},
-            {"MERGE_DOWN", Action::LAYER_MERGE_DOWN},
-    };
-    const char* actionStr = luaL_checkstring(L, 1);
-    if (actionStr == nullptr) {
-        return luaL_error(L, "Missing action!");
-    }
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-    Control* control = plugin->getControl();
-    size_t tab = control->getSidebar()->getSelectedTab();
-
-    if (tab == 0) {
-        return luaL_error(L, "Currently selected sidebar tab does not have any actions");
-    }
-
-    const auto actionMap = (tab == 1) ? actionMapPage : actionMapLayer;
-    auto pos = actionMap.find(actionStr);
-    if (pos == actionMap.end()) {
-        return luaL_error(L, "Unknown action: %s", actionStr);
-    }
-
-    auto* actionDB = control->getActionDatabase();
-    actionDB->fireActivateAction(pos->second);
-
-    return 0;
-}
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
- *
- * @deprecated
- * Get the index of the currently active sidebar-page.
- *
- * @return integer pageNr pageNr of the sidebar page
- *
- * Example: app.getSidebarPageNo() -- returns e.g. 1
- */
-static int applib_getSidebarPageNo(lua_State* L) {
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-    Sidebar* sidebar = plugin->getControl()->getSidebar();
-    lua_pushinteger(L, as_signed(sidebar->getSelectedTab()) + 1);
-    return 1;
-}
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. No substitute needed.
- *
- * @deprecated
- * Set the currently active sidebar-page by its index.
- *
- * @param pageNr integer pageNr of the sidebar page
- *
- * Look at src/core/gui/sidebar/Sidebar.cpp to find out which index corresponds to which page (e.g. currently 1 is the
- * page with the TOC/index if available). Note that indexing the sidebar-pages starts at 1 (as usual in lua).
- *
- * Example: app.setSidebarPageNo(3) -- sets the sidebar-page to preview Layer
- */
-static int applib_setSidebarPageNo(lua_State* L) {
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-    Sidebar* sidebar = plugin->getControl()->getSidebar();
-
-    // Discard any extra arguments passed in
-    lua_settop(L, 1);
-    if (!lua_isinteger(L, 1)) {
-        return luaL_error(L, "Missing pageNo for setSidebarPageNo!");
-    }
-
-    auto page = static_cast<int>(lua_tointeger(L, 1));
-    if (page <= 0) {
-        lua_pushnil(L);
-        lua_pushfstring(L, "Invalid pageNo (%d) provided!", page);
-        return 2;
-    }
-    if (as_unsigned(page) > sidebar->getNumberOfTabs()) {
-        lua_pushnil(L);
-        lua_pushfstring(L, "Invalid pageNo (%d >= %d) provided!", page, sidebar->getNumberOfTabs());
-        return 2;
-    }
-
-    sidebar->setSelectedTab(as_unsigned(page) - 1);
-    return 0;
-}
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_activateAction instead.
- *
- * @deprecated
- * Execute action from layer controller
- *
- * @param action string the desired action
- *
- * Example: app.layerAction("ACTION_DELETE_LAYER")
- * deletes the current layer
- */
-static int applib_layerAction(lua_State* L) {
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-
-    const char* actionStr = luaL_checkstring(L, 1);
-    if (actionStr == nullptr) {
-        return luaL_error(L, "Missing action!");
-    }
-    ActionBackwardCompatibilityLayer::actionPerformed(plugin->getControl(), actionStr, true);
-
     return 0;
 }
 
@@ -3795,63 +3479,53 @@ static int applib_setFont(lua_State* L) {
     return 0;
 }
 
-static const luaL_Reg applib[] = {
-        {"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
-        {"openDialog", applib_openDialog},
-        {"getActionState", applib_getActionState},
-        {"changeActionState", applib_changeActionState},
-        {"activateAction", applib_activateAction},
-        {"getPageLabel", applib_getPageLabel},
-        {"glib_rename", applib_glib_rename},
-        {"saveAs", applib_saveAs},  // Todo(gtk4) remove this deprecated function
-        {"fileDialogSave", applib_fileDialogSave},
-        {"registerUi", applib_registerUi},
-        {"uiAction", applib_uiAction},            // Todo(gtk4) remove this deprecated function
-        {"sidebarAction", applib_sidebarAction},  // Todo(gtk4) remove this deprecated function
-        {"layerAction", applib_layerAction},      // Todo(gtk4) remove this deprecated function
-        {"showFloatingToolbox", applib_showFloatingToolbox},
-        {"changeToolColor", applib_changeToolColor},
-        {"getColorPalette", applib_getColorPalette},
-        {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
-        {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
-        {"getToolInfo", applib_getToolInfo},
-        {"getFolder", applib_getFolder},
-        {"getSidebarPageNo", applib_getSidebarPageNo},  // Todo(gtk4) remove this deprecated function
-        {"setSidebarPageNo", applib_setSidebarPageNo},  // Todo(gtk4) remove this deprecated function
-        {"getDocumentStructure", applib_getDocumentStructure},
-        {"scrollToPage", applib_scrollToPage},
-        {"scrollToPos", applib_scrollToPos},
-        {"setCurrentPage", applib_setCurrentPage},
-        {"setPageSize", applib_setPageSize},
-        {"setCurrentLayer", applib_setCurrentLayer},
-        {"setLayerVisibility", applib_setLayerVisibility},
-        {"setCurrentLayerName", applib_setCurrentLayerName},
-        {"setBackgroundName", applib_setBackgroundName},
-        {"getDisplayDpi", applib_getDisplayDpi},
-        {"getZoom", applib_getZoom},
-        {"setZoom", applib_setZoom},
-        {"export", applib_export},
-        {"addStrokes", applib_addStrokes},
-        {"addSplines", applib_addSplines},
-        {"addImages", applib_addImages},
-        {"addTexts", applib_addTexts},
-        {"addToSelection", applib_addToSelection},
-        {"clearSelection", applib_clearSelection},
-        {"getFilePath", applib_getFilePath},  // Todo(gtk4) remove this deprecated function
-        {"fileDialogOpen", applib_fileDialogOpen},
-        {"refreshPage", applib_refreshPage},
-        {"getStrokes", applib_getStrokes},
-        {"getImages", applib_getImages},
-        {"getTexts", applib_getTexts},
-        {"openFile", applib_openFile},
-        {"registerPlaceholder", applib_registerPlaceholder},
-        {"setPlaceholderValue", applib_setPlaceholderValue},
-        {"getFonts", applib_getFonts},
-        {"getFont", applib_getFont},
-        {"setFont", applib_setFont},
-        // Placeholder
-        // {"MSG_BT_OK", nullptr},
-        {nullptr, nullptr}};
+static const luaL_Reg applib[] = {{"openDialog", applib_openDialog},
+                                  {"getActionState", applib_getActionState},
+                                  {"changeActionState", applib_changeActionState},
+                                  {"activateAction", applib_activateAction},
+                                  {"getPageLabel", applib_getPageLabel},
+                                  {"glib_rename", applib_glib_rename},
+                                  {"fileDialogSave", applib_fileDialogSave},
+                                  {"registerUi", applib_registerUi},
+                                  {"changeToolColor", applib_changeToolColor},
+                                  {"getColorPalette", applib_getColorPalette},
+                                  {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
+                                  {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
+                                  {"getToolInfo", applib_getToolInfo},
+                                  {"getFolder", applib_getFolder},
+                                  {"getDocumentStructure", applib_getDocumentStructure},
+                                  {"scrollToPage", applib_scrollToPage},
+                                  {"scrollToPos", applib_scrollToPos},
+                                  {"setCurrentPage", applib_setCurrentPage},
+                                  {"setPageSize", applib_setPageSize},
+                                  {"setCurrentLayer", applib_setCurrentLayer},
+                                  {"setLayerVisibility", applib_setLayerVisibility},
+                                  {"setCurrentLayerName", applib_setCurrentLayerName},
+                                  {"setBackgroundName", applib_setBackgroundName},
+                                  {"getDisplayDpi", applib_getDisplayDpi},
+                                  {"getZoom", applib_getZoom},
+                                  {"setZoom", applib_setZoom},
+                                  {"export", applib_export},
+                                  {"addStrokes", applib_addStrokes},
+                                  {"addSplines", applib_addSplines},
+                                  {"addImages", applib_addImages},
+                                  {"addTexts", applib_addTexts},
+                                  {"addToSelection", applib_addToSelection},
+                                  {"clearSelection", applib_clearSelection},
+                                  {"fileDialogOpen", applib_fileDialogOpen},
+                                  {"refreshPage", applib_refreshPage},
+                                  {"getStrokes", applib_getStrokes},
+                                  {"getImages", applib_getImages},
+                                  {"getTexts", applib_getTexts},
+                                  {"openFile", applib_openFile},
+                                  {"registerPlaceholder", applib_registerPlaceholder},
+                                  {"setPlaceholderValue", applib_setPlaceholderValue},
+                                  {"getFonts", applib_getFonts},
+                                  {"getFont", applib_getFont},
+                                  {"setFont", applib_setFont},
+                                  // Placeholder
+                                  // {"MSG_BT_OK", nullptr},
+                                  {nullptr, nullptr}};
 
 /**
  * Open application Library
