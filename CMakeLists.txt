@@ -186,7 +186,7 @@ if (ENABLE_QPDF)
     message(STATUS "Found qpdf: ${qpdf_VERSION}")
 endif ()
 
-option(ENABLE_PLUGINS "Compile with plugin support" OFF)
+option(ENABLE_PLUGINS "Compile with plugin support" ON)
 if (ENABLE_PLUGINS)
     message(STATUS "Enable Xournal++ Plugins")
     find_package(Lua REQUIRED)
