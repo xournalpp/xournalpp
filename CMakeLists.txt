@@ -141,7 +141,7 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
 
-option(ENABLE_PLUGINS "Compile with plugin support" OFF)
+option(ENABLE_PLUGINS "Compile with plugin support" ON)
 find_package(Lua) # Lua 5.4 is only supported with cmake >=3.18
 message(STATUS "Found Lua: ${Lua_FOUND}")
 if (Lua_FOUND AND ENABLE_PLUGINS)
