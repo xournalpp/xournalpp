@@ -17,20 +17,6 @@ app = {}
 --- Returns 1 on success, and (nil, message) on failure.
 function app.glib_rename(from, to) end
 
---- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_fileDialogSave() instead.
---- 
---- @deprecated
---- Create a 'Save As' native dialog and return as a string
---- the filepath of the location the user chose to save.
---- 
---- @param filename string suggestion for a filename, defaults to "Untitled"
---- @return string path of the selected location
---- 
---- Examples:
----   local filename = app.saveAs() -- defaults to suggestion "Untitled"
----   local filename = app.saveAs("foo") -- suggests "foo" as filename
-function app.saveAs(filename) end
-
 --- Create a 'Save As' dialog and once the user has chosen the filepath of the location to save
 --- calls the specified callback function to which it passes the filepath or the empty string, if the
 --- operation was cancelled.
@@ -44,20 +30,6 @@ function app.saveAs(filename) end
 ---   app.fileDialogSave("cb", "/path/to/folder/bar.png") -- suggestes the given absolute path
 function app.fileDialogSave(cb, filename) end
 
---- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_fileDialogOpen() instead.
---- 
---- @deprecated
---- Create a 'Open File' native dialog and return as a string
---- the filepath the user chose to open.
---- 
---- @param types string[] array of the different allowed extensions e.g. {'\*.bmp', '\*.png'}
---- @returns string path of the selected location
---- 
---- Examples:
----   path = app.getFilePath({})
----   path = app.getFilePath({'*.bmp', '*.png'})
-function app.getFilePath(types) end
-
 --- Create an 'Open File' dialog and when the user has chosen a filepath
 --- call a callback function whose sole argument is the filepath.
 --- 
@@ -68,13 +40,6 @@ function app.getFilePath(types) end
 ---   app.fileDialogOpen("cb", {})
 ---   app.fileDialogOpen("cb", {'*.bmp', '*.png'})
 function app.fileDialogOpen(cb, types) end
-
---- THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_openDialog() instead.
---- 
---- @deprecated
---- Example: local result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"})
---- Pops up a message box with two buttons "Yes" and "No" and returns 1 for yes, 2 for no
-function app.msgbox() end
 
 --- Open a dialog with arbitrary text and buttons (with callbacks)
 --- 
