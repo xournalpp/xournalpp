@@ -36,7 +36,7 @@ public:
 
     Color getColor() const;
 
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
 private:
     NamedColor namedColor;

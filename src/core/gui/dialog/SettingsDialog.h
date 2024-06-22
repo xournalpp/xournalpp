@@ -26,6 +26,7 @@
 #include "DeviceClassConfigGui.h"
 #include "LanguageConfigGui.h"
 #include "LatexSettingsPanel.h"
+#include "filesystem.h"
 
 class Control;
 class Settings;
@@ -74,11 +75,14 @@ private:
     void showStabilizerAvMethodOptions(StrokeStabilizer::AveragingMethod method);
     void showStabilizerPreprocessorOptions(StrokeStabilizer::Preprocessor preprocessor);
 
+    void setAudioRecordingFolder(fs::path folder);
+
 private:
     Settings* settings = nullptr;
     Control* control = nullptr;
     GtkWidget* callib = nullptr;
     int dpi = 72;
+    fs::path audioRecordingsFolder;
     std::vector<DeviceInfo> audioInputDevices;
     std::vector<DeviceInfo> audioOutputDevices;
 

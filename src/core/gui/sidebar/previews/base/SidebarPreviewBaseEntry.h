@@ -18,7 +18,6 @@
 #include <gtk/gtk.h>  // for GtkWidget
 
 #include "model/PageRef.h"  // for PageRef
-#include "util/raii/CairoWrappers.h"
 #include "util/raii/GObjectSPtr.h"
 
 class SidebarPreviewBase;
@@ -48,8 +47,6 @@ public:
 
 public:
     virtual GtkWidget* getWidget() const;
-    virtual int getWidth() const;
-    virtual int getHeight() const;
 
     virtual void setSelected(bool selected);
 
@@ -67,8 +64,7 @@ private:
 protected:
     virtual void mouseButtonPressCallback() = 0;
 
-    virtual void drawLoadingPage();
-    virtual void paint(cairo_t* cr);
+    void setMiniature(xoj::util::WidgetSPtr child);
 
 protected:
     /**
@@ -89,12 +85,6 @@ protected:
      * The page which is representated
      */
     PageRef page;
-
-    /// Mutex protecting the buffer
-    std::mutex drawingMutex{};
-
-    /// Buffer because of performance reasons
-    xoj::util::CairoSurfaceSPtr buffer;
 
     /// The main widget, containing the miniature
     xoj::util::WidgetSPtr button;

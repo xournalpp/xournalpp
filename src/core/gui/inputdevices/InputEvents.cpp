@@ -6,7 +6,9 @@
 
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
-#include "util/gdk4_helper.h"
+#include "util/Assert.h"
+#include "util/GtkUtil.h"
+#include "util/Point.h"
 
 auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
     switch (type) {
@@ -16,10 +18,6 @@ auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
         case GDK_BUTTON_PRESS:
         case GDK_TOUCH_BEGIN:
             return BUTTON_PRESS_EVENT;
-        case GDK_2BUTTON_PRESS:
-            return BUTTON_2_PRESS_EVENT;
-        case GDK_3BUTTON_PRESS:
-            return BUTTON_3_PRESS_EVENT;
         case GDK_BUTTON_RELEASE:
         case GDK_TOUCH_END:
         case GDK_TOUCH_CANCEL:
@@ -76,44 +74,51 @@ auto InputEvents::translateDeviceType(GdkDevice* device, Settings* settings) -> 
     return translateDeviceType(gdk_device_get_name(device), gdk_device_get_source(device), settings);
 }
 
-auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> InputEvent {
+auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings, GtkWidget* referenceWidget) -> InputEvent {
     InputEvent targetEvent{};
 
-    targetEvent.sourceEvent = sourceEvent;
+    targetEvent.sourceEvent.reset(sourceEvent, xoj::util::ref);
 
     // Map the event type to our internal ones
     GdkEventType sourceEventType = gdk_event_get_event_type(sourceEvent);
     targetEvent.type = translateEventType(sourceEventType);
 
-    GdkDevice* device = gdk_event_get_source_device(sourceEvent);
+    GdkDevice* device = gdk_event_get_device(sourceEvent);
     targetEvent.deviceClass = translateDeviceType(device, settings);
 
     targetEvent.deviceName = gdk_device_get_name(device);
     targetEvent.deviceId = DeviceId(device);
 
     // Copy both coordinates of the event
-    gdk_event_get_root_coords(sourceEvent, &targetEvent.absoluteX, &targetEvent.absoluteY);
-    gdk_event_get_coords(sourceEvent, &targetEvent.relativeX, &targetEvent.relativeY);
-
-    // Copy the event button if there is any
-    if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
-        gdk_event_get_button(sourceEvent, &targetEvent.button);
+    if (xoj::util::Point<double> surfCoord; gdk_event_get_position(sourceEvent, &surfCoord.x, &surfCoord.y)) {
+        targetEvent.relative = xoj::util::gtk::gdkSurfaceToWidgetCoordinates(surfCoord, referenceWidget);
+        targetEvent.absolute = xoj::util::gtk::gdkSurfaceToWidgetCoordinates(
+                surfCoord, gtk_widget_get_ancestor(referenceWidget, GTK_TYPE_SCROLLED_WINDOW));
+    } else if (targetEvent.type != GRAB_BROKEN_EVENT) {
+        g_warning("InputEvents::translateEvent() but GdkEvent has no position");
     }
+
     if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_END || sourceEventType == GDK_TOUCH_CANCEL) {
         // As we only handle single finger events we can set the button statically to 1
         targetEvent.button = 1;
-    }
-    targetEvent.state = gdk_event_get_modifier_state(sourceEvent);
-    if (targetEvent.deviceClass == INPUT_DEVICE_KEYBOARD) {
-        targetEvent.button = gdk_key_event_get_keyval(sourceEvent);
+    } else if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
+        targetEvent.button = gdk_button_event_get_button(sourceEvent);
     }
 
+    targetEvent.state = gdk_event_get_modifier_state(sourceEvent);
+
+    if (targetEvent.type == KEY_PRESS_EVENT || targetEvent.type == KEY_RELEASE_EVENT) {
+        targetEvent.button = gdk_key_event_get_keyval(sourceEvent);
+        g_warning("Unhandled keyboard event: %d", targetEvent.button);
+    }
 
     // Copy the timestamp
     targetEvent.timestamp = gdk_event_get_time(sourceEvent);
 
     // Copy the pressure data
-    gdk_event_get_axis(sourceEvent, GDK_AXIS_PRESSURE, &targetEvent.pressure);
+    if (!gdk_event_get_axis(sourceEvent, GDK_AXIS_PRESSURE, &targetEvent.pressure)) {
+        targetEvent.pressure = Point::NO_PRESSURE;
+    }
 
     // Copy the event sequence if there is any, and report no pressure
     if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_UPDATE || sourceEventType == GDK_TOUCH_END ||

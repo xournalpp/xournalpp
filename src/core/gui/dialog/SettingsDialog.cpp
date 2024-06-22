@@ -19,10 +19,9 @@
 #include "gui/widgets/ZoomCallib.h"              // for zoomcallib_new, zoom...
 #include "model/PageType.h"                      // for PageType
 #include "util/Color.h"                          // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"                       // for fromGFile, toGFilename
+#include "util/PathUtil.h"                       // for fromGFile
 #include "util/StringUtils.h"                    // for StringUtils
 #include "util/Util.h"                           // for systemWithMessage
-#include "util/gtk4_helper.h"                    //
 #include "util/i18n.h"                           // for _
 #include "util/raii/CairoWrappers.h"             // for CairoSurfaceSPtr
 #include "util/safe_casts.h"                     // for round_cast
@@ -31,6 +30,7 @@
 #include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
 #include "LanguageConfigGui.h"     // for LanguageConfigGui
 #include "LatexSettingsPanel.h"    // for LatexSettingsPanel
+#include "XojOpenDlg.h"            // for showSelectFolderDialog
 #include "filesystem.h"            // for is_directory
 
 class GladeSearchpath;
@@ -38,7 +38,7 @@ class GladeSearchpath;
 using std::string;
 using std::vector;
 
-constexpr auto UI_FILE = "settings.glade";
+constexpr auto UI_FILE = "settings.ui";
 constexpr auto UI_DIALOG_NAME = "settingsDialog";
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
@@ -48,16 +48,14 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         callib(zoomcallib_new()),
         builder(gladeSearchPath, UI_FILE),
         window(GTK_WINDOW(builder.get(UI_DIALOG_NAME))),
-        languageConfig(gladeSearchPath, builder.get("hboxLanguageSelect"), settings),
+        languageConfig(GTK_BOX(builder.get("hboxLanguageSelect")), settings),
         latexPanel(gladeSearchPath),
         callback(callback) {
 
     gtk_box_append(GTK_BOX(builder.get("zoomVBox")), callib);
-    gtk_widget_show(callib);
 
     GtkWidget* preview = xoj::helper::createPreviewImage(PageType{PageTypeFormat::Lined});
     gtk_box_append(GTK_BOX(builder.get("pagePreviewImage")), preview);
-    gtk_widget_show(preview);
 
     initMouseButtonEvents(gladeSearchPath);
 
@@ -72,7 +70,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         gtk_label_set_markup(GTK_LABEL(label),
                              _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
         gtk_box_append(GTK_BOX(container), label);
-        gtk_widget_show(label);
     }
 
     gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.getPanel());
@@ -80,6 +77,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     g_signal_connect(builder.get("zoomCallibSlider"), "change-value",
                      G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, SettingsDialog* self) {
                          self->setDpi(round_cast<int>(value));
+                         return false;  // Let the default callback run
                      }),
                      this);
 
@@ -99,17 +97,17 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                              this);
 
 
-    g_signal_connect_swapped(
-            builder.get("btTestEnable"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
-                Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->builder.get("txtEnableTouchCommand"))));
-            }),
-            this);
+    g_signal_connect_swapped(builder.get("btTestEnable"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
+                                 Util::systemWithMessage(gtk_editable_get_text(
+                                         GTK_EDITABLE(self->builder.get("txtEnableTouchCommand"))));
+                             }),
+                             this);
 
-    g_signal_connect_swapped(
-            builder.get("btTestDisable"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
-                Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->builder.get("txtDisableTouchCommand"))));
-            }),
-            this);
+    g_signal_connect_swapped(builder.get("btTestDisable"), "clicked", G_CALLBACK(+[](SettingsDialog* self) {
+                                 Util::systemWithMessage(gtk_editable_get_text(
+                                         GTK_EDITABLE(self->builder.get("txtDisableTouchCommand"))));
+                             }),
+                             this);
 
     g_signal_connect_swapped(builder.get("cbAddVerticalSpace"), "toggled", G_CALLBACK(+[](SettingsDialog* self) {
                                  self->enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpaceAbove");
@@ -197,6 +195,15 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     g_signal_connect(builder.get("cbUseSpacesAsTab"), "toggled",
                      G_CALLBACK(+[](GtkCheckButton* checkBox, SettingsDialog* self) {
                          self->enableWithCheckbox("cbUseSpacesAsTab", "numberOfSpacesContainer");
+                     }),
+                     this);
+
+    g_signal_connect(builder.get("fcAudioPath"), "clicked", G_CALLBACK(+[](GtkButton* btn, gpointer d) {
+                         auto* self = static_cast<SettingsDialog*>(d);
+                         xoj::OpenDlg::showSelectFolderDialog(
+                                 GTK_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(btn), GTK_TYPE_WINDOW)),
+                                 _("Select folder for audio recordings"), self->audioRecordingsFolder,
+                                 [self](fs::path p) { self->setAudioRecordingFolder(std::move(p)); });
                      }),
                      this);
 
@@ -401,13 +408,12 @@ void SettingsDialog::load() {
     gtk_combo_box_set_active(cbSidebarNumberingStyle, static_cast<int>(settings->getSidebarNumberingStyle()));
 
     GtkWidget* txtDefaultSaveName = builder.get("txtDefaultSaveName");
-    gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), settings->getDefaultSaveName().c_str());
+    gtk_editable_set_text(GTK_EDITABLE(txtDefaultSaveName), settings->getDefaultSaveName().c_str());
 
     GtkWidget* txtDefaultPdfName = builder.get("txtDefaultPdfName");
-    gtk_entry_set_text(GTK_ENTRY(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
+    gtk_editable_set_text(GTK_EDITABLE(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
-                                        Util::toGFilename(settings->getAudioFolder()).c_str());
+    setAudioRecordingFolder(settings->getAudioFolder());
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
@@ -629,11 +635,11 @@ void SettingsDialog::load() {
 
     string cmd;
     touch.getString("cmdEnable", cmd);
-    gtk_entry_set_text(GTK_ENTRY(builder.get("txtEnableTouchCommand")), cmd.c_str());
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("txtEnableTouchCommand")), cmd.c_str());
 
     cmd = "";
     touch.getString("cmdDisable", cmd);
-    gtk_entry_set_text(GTK_ENTRY(builder.get("txtDisableTouchCommand")), cmd.c_str());
+    gtk_editable_set_text(GTK_EDITABLE(builder.get("txtDisableTouchCommand")), cmd.c_str());
 
     int timeoutMs = 1000;
     touch.getInt("timeout", timeoutMs);
@@ -862,15 +868,10 @@ void SettingsDialog::save() {
     settings->setPreloadPagesBefore(preloadPagesBefore);
     settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
-    settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(builder.get("txtDefaultSaveName"))));
-    settings->setDefaultPdfExportName(gtk_entry_get_text(GTK_ENTRY(builder.get("txtDefaultPdfName"))));
-    // Todo(fabian): use Util::fromGFilename!
-    auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(builder.get("fcAudioPath")));
-    auto path = Util::fromGFile(file);
-    g_object_unref(file);
-    if (fs::is_directory(path)) {
-        settings->setAudioFolder(path);
-    }
+    settings->setDefaultSaveName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultSaveName"))));
+    settings->setDefaultPdfExportName(gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDefaultPdfName"))));
+
+    settings->setAudioFolder(audioRecordingsFolder);
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     int autosaveTimeout = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout)));
@@ -976,8 +977,8 @@ void SettingsDialog::save() {
         default:
             touch.setString("method", "auto");
     }
-    touch.setString("cmdEnable", gtk_entry_get_text(GTK_ENTRY(builder.get("txtEnableTouchCommand"))));
-    touch.setString("cmdDisable", gtk_entry_get_text(GTK_ENTRY(builder.get("txtDisableTouchCommand"))));
+    touch.setString("cmdEnable", gtk_editable_get_text(GTK_EDITABLE(builder.get("txtEnableTouchCommand"))));
+    touch.setString("cmdDisable", gtk_editable_get_text(GTK_EDITABLE(builder.get("txtDisableTouchCommand"))));
 
     touch.setInt(
             "timeout",
@@ -1040,4 +1041,14 @@ void SettingsDialog::save() {
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
+}
+
+void SettingsDialog::setAudioRecordingFolder(fs::path folder) {
+    if (!fs::is_directory(folder)) {
+        g_warning("SettingsDialog::setAudioRecordingFolder(): provided path is not a directory: %s",
+                  folder.u8string().c_str());
+        return;
+    }
+    gtk_button_set_label(GTK_BUTTON(builder.get("fcAudioPath")), folder.u8string().c_str());
+    audioRecordingsFolder = std::move(folder);
 }

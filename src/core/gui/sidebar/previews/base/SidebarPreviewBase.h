@@ -85,7 +85,7 @@ public:
     /**
      * Opens a context menu, at the current cursor position.
      */
-    void openPreviewContextMenu(GdkEvent* currentEvent);
+    void openPreviewContextMenu(double x, double y, GtkWidget* entry);
 
 private:
     /**
@@ -116,7 +116,7 @@ protected:
      * This must be populated by the derived classes constructors.
      * It must be a GtkPopover parented (gtk_widget_set_parent()) by this->miniaturesContainer
      */
-    xoj::util::GObjectSPtr<GtkMenu> contextMenu;
+    xoj::util::GObjectSPtr<GtkPopover> contextMenu;
 
     /**
      * The currently selected entry in the sidebar, starting from 0

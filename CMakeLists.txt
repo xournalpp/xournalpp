@@ -101,7 +101,7 @@ endif (Backtrace_FOUND)
 
 set(pkg-module-spec "")
 list(APPEND pkg-module-spec "glib-2.0 >= 2.32.0")
-list(APPEND pkg-module-spec "gtk+-3.0 >= 3.18.9")
+list(APPEND pkg-module-spec "gtk4 >= 4.6.1")
 list(APPEND pkg-module-spec "poppler-glib >= 0.41.0")
 list(APPEND pkg-module-spec "gthread-2.0 >= 2.4.0")
 list(APPEND pkg-module-spec "libxml-2.0 >= 2.0.0")
@@ -110,7 +110,7 @@ list(APPEND pkg-module-spec "portaudiocpp >= 12")
 list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
 
-pkg_check_modules(GtkSourceView IMPORTED_TARGET "gtksourceview-4 >= 4.0.0")
+pkg_check_modules(GtkSourceView IMPORTED_TARGET "gtksourceview-5 >= 5.0.0")
 
 # Profiling
 option (ENABLE_PROFILING "Link with gperftools" OFF)
@@ -120,23 +120,6 @@ if (ENABLE_PROFILING)
 endif (ENABLE_PROFILING)
 
 pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
-
-if (#[[${CMAKE_VERSION} VERSION_LESS "3.18" AND]] ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    # bugfix for old pkg_config versions
-    get_target_property(libs PkgConfig::ExternalModules INTERFACE_LINK_LIBRARIES)
-    # message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES: ${libs}")
-    string(REPLACE "-framework;" "-framework " libs "${libs}")
-    # message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES fixed: ${libs}")
-    set_target_properties(PkgConfig::ExternalModules PROPERTIES INTERFACE_LINK_LIBRARIES "${libs}")
-
-
-    if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.13")
-        # fix broken framework flags from pkgconfig
-        get_target_property(opts PkgConfig::ExternalModules INTERFACE_LINK_OPTIONS)
-        string(REPLACE "-framework;" "SHELL:-framework " opts "${opts}")
-        set_target_properties(PkgConfig::ExternalModules PROPERTIES INTERFACE_LINK_OPTIONS "${opts}")
-    endif ()
-endif ()
 
 if (UNIX AND NOT APPLE AND NOT CYGWIN)
     set(INSTALL_DESKTOP_FILES true)
@@ -203,7 +186,7 @@ target_link_libraries(external_modules INTERFACE
 
 target_compile_definitions(external_modules INTERFACE
         GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_40
-        GDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18
+        GDK_VERSION_MIN_REQUIRED=GDK_VERSION_4_0
         $<$<TARGET_EXISTS:X11::X11>:X11_ENABLED>
         )
 target_link_options(external_modules INTERFACE
@@ -409,7 +392,7 @@ set(CPACK_DEBIAN_PACKAGE_RELEASE 2)
 set(CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PROJECT_VERSION}")
 set(CPACK_DEBIAN_PACKAGE_SECTION "graphics")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS
-        "libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6")
+        "libglib2.0-0 (>= 2.32), libgtk-4-0 (>= 4.6), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6")
 set(CPACK_DEBIAN_PACKAGE_SUGGESTS "texlive-base, texlive-latex-extra")  # Latex tool
 # Use debian's arch scheme; we only care about x86/amd64 for now but feel free to add more
 if (${PACKAGE_ARCH} STREQUAL "x86_64")

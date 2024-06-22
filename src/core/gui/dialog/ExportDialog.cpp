@@ -9,11 +9,10 @@
 
 #include "gui/Builder.h"
 #include "util/ElementRange.h"  // for parse, PageRangeVector
-#include "util/gtk4_helper.h"
 
 class GladeSearchpath;
 
-constexpr auto UI_FILE = "exportSettings.glade";
+constexpr auto UI_FILE = "exportSettings.ui";
 constexpr auto UI_DIALOG_NAME = "exportDialog";
 
 using namespace xoj::popup;
@@ -26,10 +25,6 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
     gtk_label_set_text(GTK_LABEL(builder.get("lbAllPagesInfo")), ("1 - " + std::to_string(pageCount)).c_str());
     gtk_label_set_text(GTK_LABEL(builder.get("lbCurrentPage")), std::to_string(currentPage).c_str());
 
-#if GTK_MAJOR_VERSION == 3
-    // Widgets are visible by default in gtk4
-    gtk_widget_show_all(builder.get("dialog-main-box"));
-#endif
 
     auto removeQualitySetting = [&builder = this->builder]() {
         gtk_widget_hide(builder.get("lbQuality"));
@@ -77,7 +72,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
     // and sets the sensitivity of the OK button to FALSE. These actions are
     // reversed when the text form contains a valid page range.
     auto changedHandler = G_CALLBACK(+[](GtkEditable* txtPages, ExportDialog* self) {
-        const std::string text_form(gtk_editable_get_chars(txtPages, 0, -1));
+        const std::string text_form(gtk_editable_get_text(txtPages));
         auto btOk = self->builder.get("btOk");
         try {
             ElementRange::parse(text_form, self->pageCount);
@@ -103,19 +98,11 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath, ExportGraphicsForma
      *
      * The callback returns `false` so that the PopupWindowManager callback deleting `this` gets called as well.
      */
-#if GTK_MAJOR_VERSION == 3
-    g_signal_connect_swapped(window.get(), "delete-event", G_CALLBACK(+[](ExportDialog* self) {
-                                 self->callbackFun(*self);
-                                 return false;
-                             }),
-                             this);
-#else
     g_signal_connect_swapped(window.get(), "close-request", G_CALLBACK(+[](ExportDialog* self) {
                                  self->callbackFun(*self);
                                  return false;
                              }),
                              this);
-#endif
 }
 
 ExportDialog::~ExportDialog() = default;
@@ -126,13 +113,13 @@ void ExportDialog::selectQualityCriterion(GtkComboBox* comboBox, ExportDialog* s
         case EXPORT_QUALITY_DPI:
             gtk_label_set_text(GTK_LABEL(self->builder.get("lbQualityUnit")), "dpi");
             gtk_spin_button_set_adjustment(GTK_SPIN_BUTTON(self->builder.get("sbQualityValue")),
-                                           GTK_ADJUSTMENT(self->builder.get<GObject>("adjustmentDpi")));
+                                           GTK_ADJUSTMENT(self->builder.getObject("adjustmentDpi")));
             break;
         case EXPORT_QUALITY_WIDTH:
         case EXPORT_QUALITY_HEIGHT:
             gtk_label_set_text(GTK_LABEL(self->builder.get("lbQualityUnit")), "px");
             gtk_spin_button_set_adjustment(GTK_SPIN_BUTTON(self->builder.get("sbQualityValue")),
-                                           GTK_ADJUSTMENT(self->builder.get<GObject>("adjustmentHeightWidth")));
+                                           GTK_ADJUSTMENT(self->builder.getObject("adjustmentHeightWidth")));
             break;
     }
 }
@@ -147,7 +134,8 @@ void ExportDialog::onSuccessCallback(ExportDialog* self) {
         GtkWidget* rdRangePages = self->builder.get("rdRangePages");
 
         if (gtk_check_button_get_active(GTK_CHECK_BUTTON(rdRangePages))) {
-            return ElementRange::parse(gtk_entry_get_text(GTK_ENTRY(self->builder.get("txtPages"))), self->pageCount);
+            return ElementRange::parse(gtk_editable_get_text(GTK_EDITABLE(self->builder.get("txtPages"))),
+                                       self->pageCount);
         }
         if (gtk_check_button_get_active(GTK_CHECK_BUTTON(rdRangeCurrent))) {
             PageRangeVector range;
