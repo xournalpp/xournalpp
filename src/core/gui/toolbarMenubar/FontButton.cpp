@@ -7,7 +7,6 @@
 
 #include "control/Control.h"                      // for Control
 #include "control/actions/ActionDatabase.h"       // for ActionDatabase
-#include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
 #include "model/Font.h"                           // for Font
 #include "util/GtkUtil.h"                         // for fixActionableInitialSensitivity
 #include "util/i18n.h"                            // for _
@@ -16,7 +15,7 @@
 
 
 FontButton::FontButton(std::string id, ActionDatabase& db):
-        AbstractToolItem(std::move(id), Category::TOOLS), gAction(db.getAction(Action::FONT)) {}
+        ItemWithNamedIcon(std::move(id), Category::TOOLS), gAction(db.getAction(Action::FONT)) {}
 
 static GtkWidget* makeChild(const char* desc) {
     XojFont font(desc);
@@ -67,4 +66,4 @@ auto FontButton::createItem(ToolbarSide side) -> Widgetry {
 
 auto FontButton::getToolDisplayName() const -> std::string { return _("Font"); }
 
-auto FontButton::getNewToolIcon() const -> GtkWidget* { return gtk_image_new_from_icon_name("font-x-generic"); }
+auto FontButton::getIconName() const -> const char* { return "font-x-generic"; }

@@ -22,18 +22,14 @@ typedef struct {
     const char* propName;
 } ToolbarEntryDefinition;
 
-constexpr ToolbarEntryDefinition TOOLBAR_DEFINITIONS[] = {
-        {"tbTop1", "toolbarTop1"},       {"tbTop2", "toolbarTop2"},
-        {"tbLeft1", "toolbarLeft1"},     {"tbLeft2", "toolbarLeft2"},
-        {"tbRight1", "toolbarRight1"},   {"tbRight2", "toolbarRight2"},
-        {"tbBottom1", "toolbarBottom1"}, {"tbBottom2", "toolbarBottom2"},
-        {"tbFloat1", "toolbarFloat1"},  // define this index below as TBFloatFirst
-        {"tbFloat2", "toolbarFloat2"},   {"tbFloat3", "toolbarFloat3"},
-        {"tbFloat4", "toolbarFloat4"}  // define this index below as TBFloatLast
-};
-
-
-constexpr size_t TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
+constexpr std::array<ToolbarEntryDefinition, 12> TOOLBAR_DEFINITIONS(
+        {ToolbarEntryDefinition{"tbTop1", "toolbarTop1"}, ToolbarEntryDefinition{"tbTop2", "toolbarTop2"},
+         ToolbarEntryDefinition{"tbLeft1", "toolbarLeft1"}, ToolbarEntryDefinition{"tbLeft2", "toolbarLeft2"},
+         ToolbarEntryDefinition{"tbRight1", "toolbarRight1"}, ToolbarEntryDefinition{"tbRight2", "toolbarRight2"},
+         ToolbarEntryDefinition{"tbBottom1", "toolbarBottom1"}, ToolbarEntryDefinition{"tbBottom2", "toolbarBottom2"},
+         ToolbarEntryDefinition{"tbFloat1", "toolbarFloat1"},  // define this index below as TBFloatFirst
+         ToolbarEntryDefinition{"tbFloat2", "toolbarFloat2"}, ToolbarEntryDefinition{"tbFloat3", "toolbarFloat3"},
+         ToolbarEntryDefinition{"tbFloat4", "toolbarFloat4"}});
 
 #define TBFloatFirst 8
 #define TBFloatLast 11

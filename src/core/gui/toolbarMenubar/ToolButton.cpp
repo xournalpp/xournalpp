@@ -12,7 +12,7 @@
 
 ToolButton::ToolButton(std::string id, Category cat, Action action, std::string iconName, std::string description,
                        bool toggle):
-        AbstractToolItem(std::move(id), cat),
+        ItemWithNamedIcon(std::move(id), cat),
         iconName(std::move(iconName)),
         description(std::move(description)),
         action(action),
@@ -20,7 +20,7 @@ ToolButton::ToolButton(std::string id, Category cat, Action action, std::string 
 
 ToolButton::ToolButton(std::string id, Category cat, Action action, GVariant* target, std::string iconName,
                        std::string description):
-        AbstractToolItem(std::move(id), cat),
+        ItemWithNamedIcon(std::move(id), cat),
         iconName(std::move(iconName)),
         description(std::move(description)),
         action(action),
@@ -86,6 +86,6 @@ auto ToolButton::createItem(ToolbarSide side) -> Widgetry {
 
 auto ToolButton::getToolDisplayName() const -> std::string { return description; }
 
-auto ToolButton::getNewToolIcon() const -> GtkWidget* { return gtk_image_new_from_icon_name(iconName.c_str()); }
+auto ToolButton::getIconName() const -> const char* { return iconName.c_str(); }
 
 void ToolButton::setPopoverFactory(const PopoverFactory* factory) { popoverFactory = factory; }

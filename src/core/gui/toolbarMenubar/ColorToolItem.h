@@ -56,6 +56,9 @@ public:
 
     Widgetry createItem(ToolbarSide side) override;
 
+    xoj::util::GObjectSPtr<GdkPaintable> createPaintable(GdkSurface*) const override;
+
+
 private:
     NamedColor namedColor;
     xoj::util::GVariantSPtr target;       ///< Contains the color in ARGB as a uint32_t

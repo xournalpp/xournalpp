@@ -91,7 +91,9 @@ private:
 };
 
 ToolPageSpinner::ToolPageSpinner(std::string id, IconNameHelper iconNameHelper, SpinPageListener* listener):
-        AbstractToolItem(std::move(id), Category::NAVIGATION), iconNameHelper(iconNameHelper), listener(listener) {}
+        ItemWithNamedIcon(std::move(id), Category::NAVIGATION),
+        listener(listener),
+        iconName(iconNameHelper.iconName("page-spinner")) {}
 
 ToolPageSpinner::~ToolPageSpinner() {
     for (auto* i: instances) {
@@ -107,9 +109,7 @@ void ToolPageSpinner::setPageInfo(size_t currentPage, size_t pageCount, size_t p
 
 auto ToolPageSpinner::getToolDisplayName() const -> std::string { return _("Page number"); }
 
-auto ToolPageSpinner::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconNameHelper.iconName("page-spinner").c_str());
-}
+auto ToolPageSpinner::getIconName() const -> const char* { return iconName.c_str(); }
 
 auto ToolPageSpinner::createItem(ToolbarSide side) -> Widgetry {
     auto data = std::make_unique<Instance>(this, to_Orientation(side));
