@@ -10,7 +10,7 @@
 #ifdef ENABLE_PLUGINS
 
 PluginPlaceholderLabel::PluginPlaceholderLabel(ToolbarPlaceholderEntry* t):
-        AbstractToolItem(t->toolbarId, Category::PLUGINS), t(t) {
+        ItemWithNamedIcon(t->toolbarId, Category::PLUGINS), t(t) {
     t->label = this;
 }
 
@@ -71,8 +71,6 @@ void PluginPlaceholderLabel::setText(std::string text) {
 
 auto PluginPlaceholderLabel::getToolDisplayName() const -> std::string { return this->t->description; }
 
-auto PluginPlaceholderLabel::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name("dialog-information");
-}
+auto PluginPlaceholderLabel::getIconName() const -> const char* { return "dialog-information"; }
 
 #endif /* ENABLE_PLUGINS */
