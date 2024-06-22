@@ -57,10 +57,12 @@ public:
 
     virtual std::string getToolDisplayName() const = 0;
 
-    /**
-     * Returns: (transfer floating)
-     */
+
+    /// Returns a floating GtkImage representing the tool
     virtual GtkWidget* getNewToolIcon() const = 0;
+
+    /// Returns a GdkPaintable representing the tool
+    virtual xoj::util::GObjectSPtr<GdkPaintable> createPaintable(GdkSurface* target) const = 0;
 
 protected:
     std::string id;

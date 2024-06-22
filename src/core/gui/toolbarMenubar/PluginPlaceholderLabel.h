@@ -16,11 +16,11 @@
 
 #include <gtk/gtk.h>
 
-#include "AbstractToolItem.h"
+#include "ItemWithNamedIcon.h"
 
 struct ToolbarPlaceholderEntry;
 
-class PluginPlaceholderLabel: public AbstractToolItem {
+class PluginPlaceholderLabel: public ItemWithNamedIcon {
 public:
     /// Constructor: links placeholder entry to this label
     explicit PluginPlaceholderLabel(ToolbarPlaceholderEntry* t);
@@ -39,7 +39,7 @@ protected:
     Widgetry createItem(ToolbarSide side) override;
 
     /// Returns a theme-supported icon for the placeholder tool
-    GtkWidget* getNewToolIcon() const override;
+    const char* getIconName() const override;
 
 private:
     ToolbarPlaceholderEntry* t;

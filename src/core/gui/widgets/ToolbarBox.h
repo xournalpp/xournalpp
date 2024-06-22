@@ -10,6 +10,7 @@
  */
 #pragma once
 
+#include <memory>
 #include <vector>
 
 #include <glib-object.h>  // for G_TYPE_CHECK_INSTANCE_TYPE, G_TYPE_CHECK_IN...
@@ -21,6 +22,9 @@
 
 struct _ToolbarBox;
 struct _ToolbarBoxClass;
+
+class ToolbarEntry;
+class ToolMenuHandler;
 
 G_BEGIN_DECLS
 
@@ -34,9 +38,9 @@ G_END_DECLS
 
 class ToolbarBox final {
 public:
-    ToolbarBox(ToolbarSide side, int spacing = 2);
+    ToolbarBox(const char* name, ToolbarSide side, int spacing = 2);
     /// Create a toolbar replacing the placeholder
-    ToolbarBox(GtkWidget* placeholder);
+    ToolbarBox(const char* name, GtkWidget* placeholder);
     ~ToolbarBox();
 
     GtkWidget* getWidget() const;
@@ -44,12 +48,25 @@ public:
 
     bool empty() const;
     void clear();
+    void reserve(size_t n);
 
     /**
      * @param widget The button in the toolbar
      * @param proxy Proxy menu item in case of overflow
      */
-    void append(GtkWidget* widget, GtkWidget* proxy);
+    void append(xoj::util::WidgetSPtr widget, xoj::util::WidgetSPtr proxy);
+
+    /**
+     * The toolbar becomes responsive to Drop events. Dropping any GString data containing an item ID (cf ToolbarData)
+     * will add the corresponding widget. Items can also be dragged out.
+     */
+    void startEditing(ToolMenuHandler* handler);
+    /**
+     * @return the new configuration
+     */
+    auto endEditing() -> ToolbarEntry;
+
+    inline auto getName() const -> const char* { return name; }
 
 public:
     void measure(GtkOrientation orientation, int for_size, int* minimum, int* natural, int* minimum_baseline,
@@ -58,24 +75,22 @@ public:
     void snapshot(GtkSnapshot* sn) const;
 
 private:
-    class Child final {
-    public:
-        Child(GtkWidget* widget, GtkWidget* proxy);
-        ~Child();
-        Child(const Child&) = delete;
-        Child& operator=(const Child&) = delete;
-        Child(Child&&);
-        Child& operator=(Child&&);
-        GtkWidget* widget = nullptr;
-        GtkWidget* proxy = nullptr;
-    };
-
     xoj::util::GObjectSPtr<_ToolbarBox> widget;
+
+    class Child;
     std::vector<Child> children;
+
+    /// Children are replaced by their proxies in an overflow menu in case there is not enough space.
     xoj::util::WidgetSPtr overflowMenuButton;
     GtkBox* popoverBox;
 
     ptrdiff_t visibleChildren = 0;
     int spacing;       ///< Spacing between children
     ToolbarSide side;  ///< Side of the window the toolbar is on
+
+    const char* name;  ///< Points to the corresponding name in ToolbarDefinitions
+
+    struct EditingData;
+    /// Only non null when editing the toolbar
+    std::unique_ptr<EditingData> editingData;
 };
