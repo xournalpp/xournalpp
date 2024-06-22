@@ -11,6 +11,7 @@
 #include "control/settings/ButtonConfig.h"   // for ButtonConfig
 #include "control/settings/Settings.h"       // for Settings
 #include "control/settings/SettingsEnums.h"  // for BUTTON_COUNT
+#include "gui/widgets/ToolbarBox.h"
 #include "util/glib_casts.h"
 
 #include "MainWindow.h"          // for MainWindow
@@ -76,14 +77,14 @@ auto FloatingToolbox::floatingToolboxActivated() -> bool {
 
 
 auto FloatingToolbox::hasWidgets() -> bool {
-    for (int index = TBFloatFirst; index <= TBFloatLast; index++) {
-        const char* guiName = TOOLBAR_DEFINITIONS[index].guiName;
-        GtkWidget* tb = this->mainWindow->get(guiName);
-        if (gtk_widget_get_first_child(tb)) {
+    const auto& tbs = mainWindow->getToolbars();
+    static_assert(std::tuple_size<ToolbarArray>() == std::tuple_size<decltype(TOOLBAR_DEFINITIONS)>() &&
+                  std::tuple_size<ToolbarArray>() > TBFloatLast);
+    for (size_t index = TBFloatFirst; index <= TBFloatLast; index++) {
+        if (!tbs[index]->empty()) {
             return true;
         }
     }
-
     return false;
 }
 

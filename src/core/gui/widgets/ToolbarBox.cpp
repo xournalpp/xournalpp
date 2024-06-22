@@ -1,5 +1,13 @@
 #include "ToolbarBox.h"
 
+#include <algorithm>
+
+#include "control/Control.h"
+#include "gui/MainWindow.h"
+#include "gui/dialog/toolbarCustomize/ToolItemGType.h"
+#include "gui/toolbarMenubar/ToolMenuHandler.h"
+#include "gui/toolbarMenubar/model/ToolbarEntry.h"
+#include "util/Assert.h"
 #include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"
 
@@ -39,11 +47,66 @@ static void toolbarbox_init(_ToolbarBox* w) {
     gtk_widget_set_overflow(GTK_WIDGET(w), GTK_OVERFLOW_HIDDEN);
 }
 
-ToolbarBox::ToolbarBox(ToolbarSide side, int spacing):
+class ToolbarBox::Child final {
+public:
+    Child(xoj::util::WidgetSPtr widget, xoj::util::WidgetSPtr proxy): widget(widget), proxy(proxy) {}
+    ~Child() {
+        if (widget) {
+            gtk_widget_unparent(widget.get());
+        }
+    }
+    Child(const Child&) = delete;
+    Child& operator=(const Child&) = delete;
+    Child(Child&& o): widget(std::exchange(o.widget, nullptr)), proxy(std::exchange(o.proxy, nullptr)) {}
+    Child& operator=(Child&& o) {
+        /**
+         * We should really do the following here
+         *   // if (widget) {
+         *   //     gtk_widget_unparent(widget.get());
+         *   // }
+         * but this causes a SegFault in gtk (cf https://gitlab.gnome.org/GNOME/gtk/-/issues/6699)
+         * For now, leave this "memleak". This causes messages on exit:
+         * "Finalizing _ToolbarBox 0x5a7499d1cfe0, but it still has children left: ..."
+         */
+        widget = std::exchange(o.widget, nullptr);
+        proxy = std::exchange(o.proxy, nullptr);
+        return *this;
+    }
+
+    xoj::util::WidgetSPtr widget = nullptr;
+    xoj::util::WidgetSPtr proxy = nullptr;
+};
+
+/// Data required when editing the toolbar
+struct ToolbarBox::EditingData {
+    ToolMenuHandler* handler;
+    ToolbarData* toolbarData;
+    const char* toolbarName;  ///< Name in the config file
+
+    /// Item currently being dragged over the toolbar
+    xoj::util::WidgetSPtr tempItem;
+    /// Index of the dragged item in the children vector
+    ptrdiff_t tempItemPosition = -1;
+
+    // DND event controllers - To be removed once editing is over
+    xoj::util::GObjectSPtr<GtkDropTarget> target;  ///< Used for receiving items
+    xoj::util::GObjectSPtr<GtkDragSource> source;  ///< Used for removing/moving items
+
+    // Cached positioning info - for tempItem positioning or dragging items out of the toolbar
+    /// The x (if horizontal) or y (if vertical) positions of the center of the visible children (in widget coords)
+    std::vector<int> childrenCenter;
+    /// The x (if horizontal) or y (if vertical) positions of the end of the visible children (in widget coords)
+    std::vector<int> childrenEnd;
+
+    bool rightToLeft;  ///< true if horizontal and in RTL language
+};
+
+ToolbarBox::ToolbarBox(const char* name, ToolbarSide side, int spacing):
         widget(TOOLBAR_BOX(g_object_new(toolbarbox_get_type(), nullptr)), xoj::util::adopt),
         overflowMenuButton(gtk_menu_button_new(), xoj::util::adopt),
         spacing(spacing),
-        side(side) {
+        side(side),
+        name(name) {
     widget->parent = this;
     gtk_widget_set_parent(overflowMenuButton.get(), getWidget());
     gtk_widget_set_can_focus(getWidget(), false);
@@ -80,7 +143,7 @@ static ToolbarSide fetchFromPlaceholder(GtkWidget* placeholder) {
     }
 }
 
-ToolbarBox::ToolbarBox(GtkWidget* placeholder): ToolbarBox(fetchFromPlaceholder(placeholder)) {
+ToolbarBox::ToolbarBox(const char* name, GtkWidget* placeholder): ToolbarBox(name, fetchFromPlaceholder(placeholder)) {
     xoj_assert(GTK_IS_BOX(gtk_widget_get_parent(placeholder)));
     GtkBox* parent = GTK_BOX(gtk_widget_get_parent(placeholder));
     gtk_box_insert_child_after(parent, getWidget(), placeholder);
@@ -88,20 +151,6 @@ ToolbarBox::ToolbarBox(GtkWidget* placeholder): ToolbarBox(fetchFromPlaceholder(
 }
 
 ToolbarBox::~ToolbarBox() { gtk_widget_unparent(overflowMenuButton.get()); }
-
-ToolbarBox::Child::Child(GtkWidget* widget, GtkWidget* proxy): widget(widget), proxy(proxy) {}
-ToolbarBox::Child::~Child() {
-    if (widget) {
-        gtk_widget_unparent(widget);
-    }
-}
-
-ToolbarBox::Child::Child(Child&& o): widget(std::exchange(o.widget, nullptr)), proxy(std::exchange(o.proxy, nullptr)) {}
-auto ToolbarBox::Child::operator=(Child&& o) -> Child& {
-    widget = std::exchange(o.widget, nullptr);
-    proxy = std::exchange(o.proxy, nullptr);
-    return *this;
-}
 
 GtkWidget* ToolbarBox::getWidget() const {
     xoj_assert(GTK_IS_WIDGET(widget.get()));
@@ -121,13 +170,15 @@ void ToolbarBox::clear() {
     gtk_popover_set_child(gtk_menu_button_get_popover(GTK_MENU_BUTTON(overflowMenuButton.get())), box);
 }
 
-void ToolbarBox::append(GtkWidget* w, GtkWidget* proxy) {
-    this->children.emplace_back(w, proxy);
-    gtk_widget_set_parent(w, getWidget());
+void ToolbarBox::reserve(size_t n) { children.reserve(n); }
+
+void ToolbarBox::append(xoj::util::WidgetSPtr w, xoj::util::WidgetSPtr proxy) {
+    gtk_widget_set_parent(w.get(), getWidget());
     if (proxy) {
-        gtk_widget_add_css_class(GTK_WIDGET(proxy), "model");
-        gtk_box_append(popoverBox, GTK_WIDGET(proxy));
+        gtk_widget_add_css_class(proxy.get(), "model");
+        gtk_box_append(popoverBox, proxy.get());
     }
+    this->children.emplace_back(std::move(w), std::move(proxy));
 }
 
 inline static void setIfNonNull(int* p, int value) {
@@ -152,7 +203,7 @@ void ToolbarBox::measure(GtkOrientation orientation, int for_size, int* minimum,
         int nat = 0;
         for (const auto& c: children) {
             int minChild, natChild;
-            gtk_widget_measure(c.widget, orientation, -1, &minChild, &natChild, nullptr, nullptr);
+            gtk_widget_measure(c.widget.get(), orientation, -1, &minChild, &natChild, nullptr, nullptr);
             min += minChild;
             nat += natChild;
         }
@@ -166,7 +217,7 @@ void ToolbarBox::measure(GtkOrientation orientation, int for_size, int* minimum,
         int nat = 0;
         for (const auto& c: children) {
             int minChild, natChild;
-            gtk_widget_measure(c.widget, orientation, -1, &minChild, &natChild, nullptr, nullptr);
+            gtk_widget_measure(c.widget.get(), orientation, -1, &minChild, &natChild, nullptr, nullptr);
             min = std::max(min, minChild);
             nat = std::max(nat, natChild);
         }
@@ -186,11 +237,12 @@ void ToolbarBox::size_allocate(int width, int height, int baseline) {
     std::vector<GtkRequestedSize> sizes;
     sizes.reserve(children.size());
     for (const auto& c: children) {
-        auto& s = sizes.emplace_back(GtkRequestedSize{c.widget, 0, 0});
-        gtk_widget_measure(c.widget, orientation, staticDim, &(s.minimum_size), &(s.natural_size), nullptr, nullptr);
+        auto& s = sizes.emplace_back(GtkRequestedSize{c.widget.get(), 0, 0});
+        gtk_widget_measure(c.widget.get(), orientation, staticDim, &(s.minimum_size), &(s.natural_size), nullptr,
+                           nullptr);
         min += s.minimum_size + spacing;
 
-        if (gtk_widget_compute_expand(c.widget, orientation)) {
+        if (gtk_widget_compute_expand(c.widget.get(), orientation)) {
             nbExpanders++;
         }
 
@@ -249,12 +301,24 @@ void ToolbarBox::size_allocate(int width, int height, int baseline) {
                                          0);
     };
 
+    if (editingData) {
+        editingData->childrenCenter.clear();
+        editingData->childrenEnd.clear();
+    }
+    auto recordSize = [&](int size, int pos, gpointer widget, bool rightToLeft = false) {
+        if (editingData && widget && !gtk_widget_has_css_class(GTK_WIDGET(widget), "phantom")) {
+            editingData->childrenCenter.emplace_back(pos + size / 2);
+            editingData->childrenEnd.emplace_back(rightToLeft ? pos : pos + size);
+        }
+    };
+
     if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-        if (gtk_widget_get_direction(GTK_WIDGET(widget.get())) == GTK_TEXT_DIR_LTR) {
+        if (gtk_widget_get_direction(getWidget()) == GTK_TEXT_DIR_LTR) {
             auto p = GRAPHENE_POINT_INIT_ZERO;
             int x = 0;
             for (const auto& s: sizes) {
                 int size = getSize(s);
+                recordSize(size, x, s.data);
                 gtk_widget_allocate(GTK_WIDGET(s.data), size, height, -1, gsk_transform_translate(nullptr, &p));
                 x += size + spacing;          // Sum as int to avoid rounding errors
                 p.x = static_cast<float>(x);  // Shift the next widget
@@ -272,6 +336,7 @@ void ToolbarBox::size_allocate(int width, int height, int baseline) {
                 int size = getSize(s);
                 x -= size + spacing;  // Sum as int to avoid rounding errors
                 p.x = static_cast<float>(x);
+                recordSize(size, x, s.data, true);
                 gtk_widget_allocate(GTK_WIDGET(s.data), size, height, -1, gsk_transform_translate(nullptr, &p));
             }
             if (overflow) {
@@ -284,6 +349,7 @@ void ToolbarBox::size_allocate(int width, int height, int baseline) {
         int y = 0;
         for (const auto& s: sizes) {
             int size = getSize(s);
+            recordSize(size, y, s.data);
             gtk_widget_allocate(GTK_WIDGET(s.data), width, size, -1, gsk_transform_translate(nullptr, &p));
             y += size + spacing;          // Sum as int to avoid rounding errors
             p.y = static_cast<float>(y);  // Shift the next widget
@@ -298,7 +364,7 @@ void ToolbarBox::size_allocate(int width, int height, int baseline) {
 
     for (auto it = children.begin(); it < std::next(children.begin(), visibleChildren); ++it) {
         if (it->proxy) {
-            gtk_widget_set_visible(it->proxy, false);
+            gtk_widget_set_visible(it->proxy.get(), false);
         }
     }
     bool proxies = false;
@@ -308,10 +374,10 @@ void ToolbarBox::size_allocate(int width, int height, int baseline) {
         // bugs upon resizing
         // Todo(anyone): find a better solution
         auto p = GRAPHENE_POINT_INIT(-100000.f, 0.f);
-        gtk_widget_allocate(it->widget, 100, 100, -1, gsk_transform_translate(nullptr, &p));
+        gtk_widget_allocate(it->widget.get(), 100, 100, -1, gsk_transform_translate(nullptr, &p));
 
         if (it->proxy) {
-            gtk_widget_set_visible(it->proxy, true);
+            gtk_widget_set_visible(it->proxy.get(), true);
             proxies = true;
         }
     }
@@ -320,9 +386,286 @@ void ToolbarBox::size_allocate(int width, int height, int baseline) {
 
 void ToolbarBox::snapshot(GtkSnapshot* sn) const {
     for (auto it = children.begin(); it < std::next(children.begin(), visibleChildren); ++it) {
-        gtk_widget_snapshot_child(getWidget(), it->widget, sn);
+        gtk_widget_snapshot_child(getWidget(), it->widget.get(), sn);
     }
     if (gtk_widget_get_visible(overflowMenuButton.get())) {
         gtk_widget_snapshot_child(getWidget(), overflowMenuButton.get(), sn);
     }
+}
+
+void ToolbarBox::startEditing(ToolMenuHandler* handler) {
+    this->editingData = std::make_unique<EditingData>();
+    editingData->handler = handler;
+
+    editingData->rightToLeft = to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL &&
+                               gtk_widget_get_direction(getWidget()) == GTK_TEXT_DIR_RTL;
+    gtk_widget_add_css_class(getWidget(), "editing");
+    gtk_widget_set_visible(getWidget(), true);  // Empty toolbar might be hidden
+
+    // prepare drag & drop
+    auto* target =
+            gtk_drop_target_new(xoj::dnd::get_tool_item_gtype(), GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE));
+    xoj_assert(target);
+
+    constexpr auto getInsertPosition = +[](ToolbarSide side, double x, double y, EditingData& data) {
+        double pos = to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL ? x : y;
+        if (data.rightToLeft) {
+            // childrenCenter is decreasing in this case
+            auto it = std::upper_bound(data.childrenCenter.rbegin(), data.childrenCenter.rend(), floor_cast<int>(pos));
+            return std::distance(it, data.childrenCenter.rend());
+        } else {
+            auto it = std::upper_bound(data.childrenCenter.begin(), data.childrenCenter.end(), floor_cast<int>(pos));
+            return std::distance(data.childrenCenter.begin(), it);
+        }
+    };
+
+    g_signal_connect(
+            target, "enter", G_CALLBACK((+[](GtkDropTarget* target, gdouble x, gdouble y, gpointer) -> GdkDragAction {
+                ToolbarBox* toolbar =
+                        TOOLBAR_BOX(gtk_event_controller_get_widget(GTK_EVENT_CONTROLLER(target)))->parent;
+                xoj_assert(toolbar->editingData);
+                auto& data = *(toolbar->editingData);
+
+                GdkDrop* drop = gtk_drop_target_get_drop(target);
+                if (!drop) {
+                    g_warning("Drop::enter no drop");
+                    return GdkDragAction(0);
+                }
+                auto* drag = gdk_drop_get_drag(drop);
+                if (!drag) {
+                    // The drag came from another app
+                    return GdkDragAction(0);
+                }
+                auto* content = gdk_drag_get_content(drag);
+                if (!content) {
+                    g_message("Drop::enter no content");
+                    return GdkDragAction(0);
+                }
+                GValue val = G_VALUE_INIT;
+                g_value_init(&val, xoj::dnd::get_tool_item_gtype());
+                if (!gdk_content_provider_get_value(content, &val, nullptr)) {
+                    g_message("Drop::enter no value");
+                    return GdkDragAction(0);
+                }
+
+                if (data.tempItem) {
+                    g_warning("Drop::enter but already have a DragItem");
+                    return GdkDragAction(0);
+                }
+
+                auto side = toolbar->getSide();
+                auto [item, proxy] = data.handler->createItem(xoj::dnd::g_value_get_tool_item_string(&val), side);
+                data.tempItem = item;
+
+                g_message("Drop::enter: Created %s at %p", xoj::dnd::g_value_get_tool_item_string(&val), item.get());
+
+                gtk_widget_add_css_class(item.get(), "phantom");
+                gtk_widget_set_can_target(item.get(), false);  // Disable pointer interactions while editing
+                gtk_widget_set_parent(item.get(), toolbar->getWidget());
+
+                data.tempItemPosition = getInsertPosition(side, x, y, data);
+                xoj_assert(as_unsigned(data.tempItemPosition) <=
+                           toolbar->children.size());  // Could be == for end insertion
+                toolbar->children.emplace(std::next(toolbar->children.begin(), data.tempItemPosition), std::move(item),
+                                          std::move(proxy));
+
+                return GDK_ACTION_COPY;
+            })),
+            nullptr);
+
+    g_signal_connect(
+            target, "motion", G_CALLBACK(+[](GtkDropTarget* target, gdouble x, gdouble y, gpointer) -> GdkDragAction {
+                ToolbarBox* toolbar =
+                        TOOLBAR_BOX(gtk_event_controller_get_widget(GTK_EVENT_CONTROLLER(target)))->parent;
+                xoj_assert(toolbar->editingData);
+                auto& data = *(toolbar->editingData);
+
+                if (!data.tempItem) {
+                    g_warning("Drop::motion but no DragItem yet");
+                    return GdkDragAction(0);
+                }
+
+                xoj_assert(data.tempItemPosition >= 0);
+                xoj_assert(as_unsigned(data.tempItemPosition) < toolbar->children.size());
+                xoj_assert(toolbar->children[as_unsigned(data.tempItemPosition)].widget.get() == data.tempItem.get());
+
+                auto newPosition = getInsertPosition(toolbar->getSide(), x, y, data);
+
+                xoj_assert(as_unsigned(newPosition) < toolbar->children.size());
+
+                if (newPosition == data.tempItemPosition) {
+                    // The item is already at the right place.
+                    return GDK_ACTION_COPY;
+                }
+                if (newPosition < data.tempItemPosition) {
+                    auto first = std::next(toolbar->children.begin(), newPosition);
+                    auto middle = std::next(toolbar->children.begin(), data.tempItemPosition);
+                    auto last = std::next(middle);
+                    std::rotate(first, middle, last);
+                } else {
+                    auto first = std::next(toolbar->children.begin(), data.tempItemPosition);
+                    auto middle = std::next(first);
+                    auto last = std::next(toolbar->children.begin(), newPosition + 1);
+                    std::rotate(first, middle, last);
+                }
+                data.tempItemPosition = newPosition;
+                gtk_widget_queue_allocate(toolbar->getWidget());
+
+                return GDK_ACTION_COPY;
+            }),
+            nullptr);
+
+    g_signal_connect(
+            target, "leave", G_CALLBACK(+[](GtkDropTarget* target, gpointer) {
+                ToolbarBox* toolbar =
+                        TOOLBAR_BOX(gtk_event_controller_get_widget(GTK_EVENT_CONTROLLER(target)))->parent;
+                xoj_assert(toolbar->editingData);
+                auto& data = *(toolbar->editingData);
+
+                if (!data.tempItem) {
+                    g_warning("Drop::leave but no DragItem");
+                    return;
+                }
+
+                xoj_assert(data.tempItemPosition >= 0);
+                xoj_assert(as_unsigned(data.tempItemPosition) < toolbar->children.size());
+                xoj_assert(toolbar->children[as_unsigned(data.tempItemPosition)].widget.get() == data.tempItem.get());
+
+                toolbar->children.erase(std::next(toolbar->children.begin(), data.tempItemPosition));
+
+                // If Child::operator=(Child&&) called gtk_widget_unparent() as it should (see comment there), we would
+                // not need the following...
+                gtk_widget_queue_resize(toolbar->getWidget());
+
+                data.tempItemPosition = -1;
+                data.tempItem.reset();
+            }),
+            nullptr);
+
+    g_signal_connect(
+            target, "drop",
+            G_CALLBACK(+[](GtkDropTarget* target, const GValue* v, gdouble x, gdouble y, gpointer) -> gboolean {
+                ToolbarBox* toolbar =
+                        TOOLBAR_BOX(gtk_event_controller_get_widget(GTK_EVENT_CONTROLLER(target)))->parent;
+                xoj_assert(toolbar->editingData);
+                auto& data = *(toolbar->editingData);
+
+                if (!data.tempItem) {
+                    g_warning("Drop::drop but no DragItem");
+                    return false;
+                }
+
+                xoj_assert(data.tempItemPosition >= 0);
+                xoj_assert(as_unsigned(data.tempItemPosition) < toolbar->children.size());
+                xoj_assert(toolbar->children[as_unsigned(data.tempItemPosition)].widget.get() == data.tempItem.get());
+                gtk_widget_remove_css_class(data.tempItem.get(), "phantom");
+
+                // This is only required to refill data.childrenCenter and data.childrenEnd for further DND's
+                gtk_widget_queue_allocate(toolbar->getWidget());
+
+                data.tempItemPosition = -1;
+                data.tempItem.reset();
+
+                return true;
+            }),
+            nullptr);
+
+    gtk_widget_add_controller(getWidget(), GTK_EVENT_CONTROLLER(target));
+    editingData->target.reset(target, xoj::util::ref);
+
+    constexpr auto getChildUnderPointer = +[](ToolbarSide side, double x, double y, EditingData& data) {
+        double pos = to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL ? x : y;
+        if (data.rightToLeft) {
+            auto it = std::upper_bound(data.childrenEnd.rbegin(), data.childrenEnd.rend(), round_cast<int>(pos));
+            return it == data.childrenEnd.rbegin() ? -1 : std::distance(it, data.childrenEnd.rend());
+        } else {
+            auto it = std::upper_bound(data.childrenEnd.begin(), data.childrenEnd.end(), round_cast<int>(pos));
+            return it == data.childrenEnd.end() ? -1 : std::distance(data.childrenEnd.begin(), it);
+        }
+    };
+
+    auto* source = gtk_drag_source_new();
+    gtk_drag_source_set_actions(source, GDK_ACTION_MOVE);
+    g_signal_connect(
+            source, "prepare",
+            G_CALLBACK(+[](GtkDragSource* source, double x, double y, gpointer) -> GdkContentProvider* {
+                ToolbarBox* toolbar =
+                        TOOLBAR_BOX(gtk_event_controller_get_widget(GTK_EVENT_CONTROLLER(source)))->parent;
+                xoj_assert(toolbar->editingData);
+                auto& data = *(toolbar->editingData);
+
+                auto pos = getChildUnderPointer(toolbar->getSide(), x, y, data);
+                if (pos < 0) {
+                    // The pointer is on no item
+                    return nullptr;
+                }
+                xoj_assert(as_unsigned(pos) < toolbar->children.size());
+                auto child = std::next(toolbar->children.begin(), pos);
+
+                auto* prop = static_cast<std::string*>(
+                        g_object_get_data(G_OBJECT(child->widget.get()), TOOLITEM_ID_PROPERTY));
+                std::string id(std::move(*prop));  // The widget will get removed, so it does not need the data anymore
+
+                auto icon = data.handler->createIcon(id.c_str());
+                gtk_image_set_pixel_size(GTK_IMAGE(icon.get()), 24);
+                gtk_drag_source_set_icon(source, gtk_widget_paintable_new(icon.get()), 12, 12);
+
+                // Remove the dragged item
+                toolbar->children.erase(child);
+                // If Child::operator=(Child&&) called gtk_widget_unparent() as it should (see comment there), we would
+                // not need the following...
+                gtk_widget_queue_resize(toolbar->getWidget());
+
+                return gdk_content_provider_new_typed(xoj::dnd::get_tool_item_gtype(), id.c_str());
+            }),
+            nullptr);
+
+    gtk_widget_add_controller(getWidget(), GTK_EVENT_CONTROLLER(source));
+    editingData->source.reset(source, xoj::util::ref);
+
+    // Disable pointer interactions with the items
+    for (auto&& c: children) {
+        gtk_widget_set_can_target(c.widget.get(), false);
+    }
+    gtk_widget_set_can_target(overflowMenuButton.get(), false);
+}
+
+auto ToolbarBox::endEditing() -> ToolbarEntry {
+    gtk_widget_remove_controller(getWidget(), GTK_EVENT_CONTROLLER(editingData->target.get()));
+    gtk_widget_remove_controller(getWidget(), GTK_EVENT_CONTROLLER(editingData->source.get()));
+    editingData.reset();
+
+    gtk_widget_remove_css_class(getWidget(), "editing");
+
+    // Refill/reorder the overflow menu
+    for (auto it = children.begin(); it != children.end(); ++it) {
+        if (it->proxy) {
+            if (gtk_widget_get_parent(it->proxy.get()) == GTK_WIDGET(popoverBox)) {
+                gtk_box_reorder_child_after(popoverBox, it->proxy.get(),
+                                            gtk_widget_get_last_child(GTK_WIDGET(popoverBox)));
+            } else {
+                gtk_box_append(popoverBox, it->proxy.get());
+            }
+        }
+    }
+
+    // Reenable pointer interactions with the items
+    for (auto&& c: children) {
+        gtk_widget_set_can_target(c.widget.get(), true);
+    }
+    gtk_widget_set_can_target(overflowMenuButton.get(), true);
+
+    if (children.empty()) {
+        gtk_widget_set_visible(getWidget(), false);
+    }
+
+    ToolbarEntry model;
+    model.setName(name);
+
+    for (auto&& c: children) {
+        auto* prop = static_cast<std::string*>(g_object_get_data(G_OBJECT(c.widget.get()), TOOLITEM_ID_PROPERTY));
+        model.addItem(*prop);
+    }
+
+    return model;
 }

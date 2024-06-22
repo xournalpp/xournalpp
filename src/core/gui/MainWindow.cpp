@@ -429,8 +429,8 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
 
 auto MainWindow::clearToolbar() -> const ToolbarData* {
     if (this->selectedToolbar != nullptr) {
-        for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-            ToolMenuHandler::unloadToolbar(this->toolbars[i].get());
+        for (auto& tb: this->toolbars) {
+            ToolMenuHandler::unloadToolbar(tb.get());
         }
 
         this->toolbar->freeDynamicToolbarItems();
@@ -441,8 +441,8 @@ auto MainWindow::clearToolbar() -> const ToolbarData* {
 void MainWindow::loadToolbar(ToolbarData* d) {
     this->selectedToolbar = d;
 
-    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        this->toolbar->load(d, this->toolbars[i].get(), TOOLBAR_DEFINITIONS[i].propName);
+    for (auto& tb: this->toolbars) {
+        this->toolbar->load(d, *tb);
     }
 
     this->floatingToolbox->flagRecalculateSizeRequired();
@@ -456,16 +456,6 @@ void MainWindow::reloadToolbars() {
 
 auto MainWindow::getSelectedToolbar() const -> ToolbarData* { return this->selectedToolbar; }
 
-auto MainWindow::getToolbarName(GtkWidget* toolbar) const -> const char* {
-    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        if (this->toolbars[i]->getWidget() == toolbar) {
-            return TOOLBAR_DEFINITIONS[i].propName;
-        }
-    }
-
-    return "";
-}
-
 void MainWindow::setDynamicallyGeneratedSubmenuDisabled(bool disabled) { menubar->setDisabled(disabled); }
 
 void MainWindow::updateToolbarMenu() {
@@ -473,8 +463,9 @@ void MainWindow::updateToolbarMenu() {
 }
 
 void MainWindow::createToolbar() {
-    for (size_t i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        this->toolbars[i] = std::make_unique<ToolbarBox>(get(TOOLBAR_DEFINITIONS[i].guiName));
+    size_t i = 0;
+    for (auto&& def: TOOLBAR_DEFINITIONS) {
+        this->toolbars[i++] = std::make_unique<ToolbarBox>(def.propName, get(def.guiName));
     }
 
     toolbarSelected(control->getSettings()->getSelectedToolbar());
