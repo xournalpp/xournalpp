@@ -43,7 +43,7 @@ class ToolbarBox;
 
 class Menubar;
 
-typedef std::array<std::unique_ptr<ToolbarBox>, TOOLBAR_DEFINITIONS_LEN> ToolbarArray;
+typedef std::array<std::unique_ptr<ToolbarBox>, TOOLBAR_DEFINITIONS.size()> ToolbarArray;
 
 class MainWindow: public GladeGui {
 public:
@@ -100,13 +100,12 @@ public:
 
     ToolbarModel* getToolbarModel() const;
     ToolMenuHandler* getToolMenuHandler() const;
+    inline const ToolbarArray& getToolbars() const { return toolbars; }
 
     void setDynamicallyGeneratedSubmenuDisabled(bool disabled);
 
     void updateToolbarMenu();
     void updateColorscheme();
-
-    const char* getToolbarName(GtkWidget* toolbar) const;
 
     Layout* getLayout() const;
 

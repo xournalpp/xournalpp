@@ -14,7 +14,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gtk/gtk.h>                // for GtkWidget
 
-enum SeparatorType { SEPARATOR, SPACER };
+enum SeparatorType : bool { SEPARATOR, SPACER };
 
 /**
  * Menuitem handler
