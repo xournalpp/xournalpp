@@ -53,7 +53,6 @@ protected:
     static double scaleInverseFunction(double x);
 
 protected:
-    std::string iconName;
     ZoomControl* zoomCtrl;
 
     template <class FinalSliderType>

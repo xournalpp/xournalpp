@@ -48,3 +48,7 @@ auto ColorSelectorToolItem::createItem(ToolbarSide) -> Widgetry {
 auto ColorSelectorToolItem::getToolDisplayName() const -> std::string { return _("Select color"); }
 
 auto ColorSelectorToolItem::getNewToolIcon() const -> GtkWidget* { return ColorIcon::newGtkImage(Colors::gray, false); }
+
+auto ColorSelectorToolItem::createPaintable(GdkSurface*) const -> xoj::util::GObjectSPtr<GdkPaintable> {
+    return ColorIcon::newGdkPaintable(Colors::gray, false);
+}

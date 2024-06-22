@@ -34,6 +34,8 @@ public:
     std::string getToolDisplayName() const override;
     GtkWidget* getNewToolIcon() const override;
 
+    xoj::util::GObjectSPtr<GdkPaintable> createPaintable(GdkSurface*) const override;
+
     Widgetry createItem(ToolbarSide side) override;
 
 private:

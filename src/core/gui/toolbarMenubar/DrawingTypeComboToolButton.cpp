@@ -50,7 +50,7 @@ DrawingTypeComboToolButton::Entry::Entry(std::string name, std::string icon, con
         fullActionName(std::string("win.") + g_action_get_name(G_ACTION(gAction.get()))) {}
 
 DrawingTypeComboToolButton::DrawingTypeComboToolButton(std::string id, IconNameHelper& icons, const ActionDatabase& db):
-        AbstractToolItem(std::move(id), Category::TOOLS),
+        ItemWithNamedIcon(std::move(id), Category::TOOLS),
         entries(makeEntries(icons, db)),
         iconName(icons.iconName("combo-drawing-type")),
         description(_("Drawing Type Combo")) {}
@@ -163,6 +163,4 @@ auto DrawingTypeComboToolButton::createItem(ToolbarSide side) -> Widgetry {
 
 auto DrawingTypeComboToolButton::getToolDisplayName() const -> std::string { return this->description; }
 
-auto DrawingTypeComboToolButton::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconName.c_str());
-}
+auto DrawingTypeComboToolButton::getIconName() const -> const char* { return iconName.c_str(); }

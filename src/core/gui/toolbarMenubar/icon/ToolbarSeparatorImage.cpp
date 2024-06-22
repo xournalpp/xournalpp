@@ -10,14 +10,7 @@ constexpr double LINE_WIDTH = 5.;
 constexpr double MARGIN = 3.;
 constexpr double TAIL_SIZE = 5.;
 
-auto ToolbarSeparatorImage::newImage(SeparatorType separator) -> GtkWidget* {
-    GdkPixbuf* pixbuf = ToolbarSeparatorImage::getNewToolPixbuf(separator);
-    GtkWidget* w = gtk_image_new_from_pixbuf(pixbuf);
-    g_object_unref(pixbuf);
-    return w;
-}
-
-auto ToolbarSeparatorImage::getNewToolPixbuf(SeparatorType separator) -> GdkPixbuf* {
+static auto newGdkPixbuf(SeparatorType separator) -> xoj::util::GObjectSPtr<GdkPixbuf> {
     constexpr auto width = 30;
     constexpr auto height = 30;
     cairo_surface_t* crImage = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
@@ -44,5 +37,14 @@ auto ToolbarSeparatorImage::getNewToolPixbuf(SeparatorType separator) -> GdkPixb
     cairo_destroy(cr);
     GdkPixbuf* pixbuf = gdk_pixbuf_get_from_surface(crImage, 0, 0, width, height);
     cairo_surface_destroy(crImage);
-    return pixbuf;
+    return xoj::util::GObjectSPtr<GdkPixbuf>(pixbuf, xoj::util::adopt);
+}
+
+auto ToolbarSeparatorImage::newImage(SeparatorType separator) -> GtkWidget* {
+    return gtk_image_new_from_pixbuf(newGdkPixbuf(separator).get());
+}
+
+auto ToolbarSeparatorImage::newGdkPaintable(SeparatorType separator) -> xoj::util::GObjectSPtr<GdkPaintable> {
+    return xoj::util::GObjectSPtr<GdkPaintable>(
+            GDK_PAINTABLE(gdk_texture_new_for_pixbuf(newGdkPixbuf(separator).get())), xoj::util::adopt);
 }

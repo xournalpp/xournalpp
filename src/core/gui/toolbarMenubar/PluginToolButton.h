@@ -15,11 +15,11 @@
 
 #include <gtk/gtk.h>  // for GtkWidget, GtkToolItem
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "ItemWithNamedIcon.h"  // for ItemWithNamedIcon
 
 struct ToolbarButtonEntry;
 
-class PluginToolButton: public AbstractToolItem {
+class PluginToolButton: public ItemWithNamedIcon {
 public:
     PluginToolButton(ToolbarButtonEntry* t);
 
@@ -29,6 +29,8 @@ public:
 protected:
     Widgetry createItem(ToolbarSide side) override;
     GtkWidget* getNewToolIcon() const override;
+
+    const char* getIconName() const override;
 
 private:
     ToolbarButtonEntry* t;

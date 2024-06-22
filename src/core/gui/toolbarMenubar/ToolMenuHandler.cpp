@@ -10,8 +10,8 @@
 #include "control/settings/Settings.h"               // for Settings
 #include "gui/GladeGui.h"                            // for GladeGui
 #include "gui/GladeSearchpath.h"
-#include "gui/ToolitemDragDrop.h"  // for ToolitemDragDrop
 #include "gui/menus/popoverMenus/PageTypeSelectionPopover.h"
+#include "gui/toolbarMenubar/icon/ColorIcon.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/toolbarMenubar/model/ToolbarData.h"   // for ToolbarData
 #include "gui/toolbarMenubar/model/ToolbarEntry.h"  // for ToolbarEntry
@@ -24,7 +24,9 @@
 #include "util/NamedColor.h"  // for NamedColor
 #include "util/PathUtil.h"
 #include "util/StringUtils.h"  // for StringUtils
+#include "util/Util.h"         // for npos
 #include "util/XojMsgBox.h"
+#include "util/glib_casts.h"
 #include "util/i18n.h"  // for _
 
 #include "AbstractToolItem.h"            // for AbstractToolItem
@@ -34,18 +36,18 @@
 #include "FontButton.h"                  // for FontButton
 #include "PluginPlaceholderLabel.h"      // for PluginPlaceholderLabel
 #include "PluginToolButton.h"            // for PluginToolButton
-#include "StylePopoverFactory.h"         // for ToolButtonWithStylePopover
-#include "ToolButton.h"                  // for ToolButton
-#include "ToolPageLayer.h"               // for ToolPageLayer
-#include "ToolPageSpinner.h"             // for ToolPageSpinner
-#include "ToolPdfCombocontrol.h"         // for ToolPdfCombocontrol
-#include "ToolSelectCombocontrol.h"      // for ToolSelectComboc...
-#include "ToolZoomSlider.h"              // for ToolZoomSlider
-#include "TooltipToolButton.h"           // for TooltipToolButton
-#include "config-dev.h"                  // for TOOLBAR_CONFIG
-#include "config-features.h"             // for ENABLE_PLUGINS
-#include "filesystem.h"                  // for exists
-
+#include "SeparatorSpacer.h"
+#include "StylePopoverFactory.h"     // for ToolButtonWithStylePopover
+#include "ToolButton.h"              // for ToolButton
+#include "ToolPageLayer.h"           // for ToolPageLayer
+#include "ToolPageSpinner.h"         // for ToolPageSpinner
+#include "ToolPdfCombocontrol.h"     // for ToolPdfCombocontrol
+#include "ToolSelectCombocontrol.h"  // for ToolSelectComboc...
+#include "ToolZoomSlider.h"          // for ToolZoomSlider
+#include "TooltipToolButton.h"       // for TooltipToolButton
+#include "config-dev.h"              // for TOOLBAR_CONFIG
+#include "config-features.h"         // for ENABLE_PLUGINS
+#include "filesystem.h"              // for exists
 
 using std::string;
 
@@ -92,16 +94,85 @@ void ToolMenuHandler::unloadToolbar(ToolbarBox* toolbar) {
     gtk_widget_hide(toolbar->getWidget());
 }
 
-void ToolMenuHandler::load(const ToolbarData* d, ToolbarBox* toolbar, const char* toolbarName) {
+/// Adds a property to the tool item, so that drag-n-drop operations know what kind of item is being dragged
+static void setWidgetId(GtkWidget* item, const std::string_view& name) {
+    g_object_set_data_full(G_OBJECT(item), TOOLITEM_ID_PROPERTY, new std::string(name),
+                           xoj::util::destroy_cb<std::string>);
+}
+
+
+static size_t parseColorNumber(std::string_view name) {
+    if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
+        std::string arg(name.substr(6, name.length() - 7));
+
+        size_t paletteIndex{};
+        std::istringstream colorStream(arg.data());
+        colorStream >> paletteIndex;
+        if (!colorStream.eof() || colorStream.fail()) {
+            g_warning("Toolbar:COLOR(N) has wrong format: %s", name.data());
+            return npos;
+        }
+        return paletteIndex;
+    }
+    return npos;
+}
+
+auto ToolMenuHandler::createItem(const char* id, ToolbarSide side) const
+        -> std::pair<xoj::util::WidgetSPtr, xoj::util::WidgetSPtr> {
+    auto name = std::string_view(id);
+    if (size_t N = parseColorNumber(name); N != npos) {
+        const auto& r = this->control->getSettings()->getRecolorParameters();
+        auto recolor = r.recolorizeMainView ? std::make_optional(r.recolor) : std::nullopt;
+
+        auto it = ColorToolItem(this->control->getPalette().getColorAt(N), recolor).createItem(side);
+        setWidgetId(it.item.get(), name);
+        return {std::move(it.item), std::move(it.proxy)};
+    }
+
+    for (auto& item: this->toolItems) {
+        if (name == item->getId()) {
+            auto it = item->createItem(side);
+            setWidgetId(it.item.get(), name);
+            return {std::move(it.item), std::move(it.proxy)};
+        }
+    }
+    g_warning("Toolbar item \"%s\" not found!", name.data());
+    return {nullptr, nullptr};
+}
+
+auto ToolMenuHandler::createIcon(const char* id, GdkSurface* target) const -> xoj::util::GObjectSPtr<GdkPaintable> {
+    auto name = std::string_view(id);
+
+    if (size_t N = parseColorNumber(name); N != npos) {
+        return ColorIcon::newGdkPaintable(this->control->getPalette().getColorAt(N).getColor(), true);
+    }
+
+    if (target == nullptr) {
+        g_warning("ToolMenuHandler::createIcon() for \"%s\" but no target surface is provided.", name.data());
+        xoj_assert_message(false, "ToolMenuHandler::createIcon() but no target surface is provided.");
+        return nullptr;
+    }
+    for (auto& item: this->toolItems) {
+        if (name == item->getId()) {
+            return item->createPaintable(target);
+        }
+    }
+    g_warning("Toolbar item \"%s\" not found!", name.data());
+    return nullptr;
+}
+
+void ToolMenuHandler::load(const ToolbarData* d, ToolbarBox& toolbar) {
     int count = 0;
     const auto palette = this->control->getPalette();
-    ToolbarSide side = toolbar->getSide();
+    ToolbarSide side = toolbar.getSide();
+    xoj_assert(toolbar.empty());
 
     const auto& recolorParams = control->getSettings()->getRecolorParameters();
     auto recolor = recolorParams.recolorizeMainView ? std::make_optional(recolorParams.recolor) : std::nullopt;
 
     for (const ToolbarEntry& e: d->contents) {
-        if (e.getName() == toolbarName) {
+        if (e.getName() == toolbar.getName()) {
+            toolbar.reserve(e.getItems().size());
             for (const ToolbarItem& dataItem: e.getItems()) {
                 std::string name = dataItem.getName();
 
@@ -111,73 +182,24 @@ void ToolMenuHandler::load(const ToolbarData* d, ToolbarBox* toolbar, const char
                     continue;
                 }
 
-                if (name == "SEPARATOR") {
-                    auto* it = gtk_separator_new(to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL ?
-                                                         GTK_ORIENTATION_VERTICAL :
-                                                         GTK_ORIENTATION_HORIZONTAL);
-                    auto* proxy = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-                    gtk_widget_add_css_class(proxy, "model");
-                    toolbar->append(it, proxy);
-
-                    ToolitemDragDrop::attachMetadata(it, dataItem.getId(), TOOL_ITEM_SEPARATOR);
-
-                    continue;
-                }
-
-                if (name == "SPACER") {
-                    GtkWidget* it;
-                    if (to_Orientation(side) == GTK_ORIENTATION_HORIZONTAL) {
-                        it = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
-                        gtk_widget_set_hexpand(it, true);
-                    } else {
-                        it = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-                        gtk_widget_set_vexpand(it, true);
-                    }
-                    gtk_widget_add_css_class(it, "spacer");
-                    toolbar->append(it, nullptr);
-
-                    ToolitemDragDrop::attachMetadata(it, dataItem.getId(), TOOL_ITEM_SPACER);
-
-                    continue;
-                }
-                if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
-                    std::string arg = name.substr(6, name.length() - 7);
-
-                    size_t paletteIndex{};
-                    std::istringstream colorStream(arg);
-                    colorStream >> paletteIndex;
-                    if (!colorStream.eof() || colorStream.fail()) {
-                        g_warning("Toolbar:COLOR(N) has wrong format: %s", arg.c_str());
-                        continue;
-                    }
-
-                    count++;
-                    const NamedColor& namedColor = palette.getColorAt(paletteIndex);
-                    auto& item =
-                            this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor, recolor));
+                // Handle colors separately in order to populate toolbarColorItems
+                if (size_t N = parseColorNumber(name); N != npos) {
+                    auto& item = this->toolbarColorItems.emplace_back(
+                            std::make_unique<ColorToolItem>(palette.getColorAt(N), recolor));
 
                     auto it = item->createItem(side);
-                    toolbar->append(it.item.get(), it.proxy.get());
-
-                    ToolitemDragDrop::attachMetadataColor(it.item.get(), dataItem.getId(), paletteIndex, item.get());
+                    setWidgetId(it.item.get(), name);
+                    toolbar.append(std::move(it.item), std::move(it.proxy));
+                    count++;
                     continue;
                 }
 
-                bool found = false;
-                for (auto& item: this->toolItems) {
-                    if (name == item->getId()) {
-                        count++;
-                        auto it = item->createItem(side);
-                        toolbar->append(it.item.get(), it.proxy.get());
-
-                        ToolitemDragDrop::attachMetadata(it.item.get(), dataItem.getId(), item.get());
-
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
+                auto&& [it, proxy] = createItem(name.c_str(), side);
+                if (!it) {
                     g_warning("Toolbar item \"%s\" not found!", name.c_str());
+                } else {
+                    count++;
+                    toolbar.append(std::move(it), std::move(proxy));
                 }
             }
 
@@ -185,7 +207,7 @@ void ToolMenuHandler::load(const ToolbarData* d, ToolbarBox* toolbar, const char
         }
     }
 
-    gtk_widget_set_visible(toolbar->getWidget(), count != 0);
+    gtk_widget_set_visible(toolbar.getWidget(), count != 0);
 }
 
 void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it) {
@@ -507,6 +529,10 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemWithTarget("THICK", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_THICK, "thickness-thick", _("Thick"));
     emplaceCustomItemWithTarget("VERY_THICK", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_VERY_THICK, "thickness-thicker",
                                 _("Very Thick"));
+
+    /* Separators */
+    emplaceItem<SeparatorItem>();
+    emplaceItem<Spacer>();
 }
 
 void ToolMenuHandler::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage) {

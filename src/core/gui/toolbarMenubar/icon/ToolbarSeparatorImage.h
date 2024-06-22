@@ -14,7 +14,9 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
 #include <gtk/gtk.h>                // for GtkWidget
 
-enum SeparatorType { SEPARATOR, SPACER };
+#include "util/raii/GObjectSPtr.h"
+
+enum SeparatorType : bool { SEPARATOR, SPACER };
 
 /**
  * Menuitem handler
@@ -34,7 +36,7 @@ GtkWidget* newImage(SeparatorType separator);
  * This is used in the toolbar customization to drag the separator
  * from the Customization dialog to the toolbar and vice versa.
  *
- * @return GdkPixbuf* Seperator
+ * @return Separator icon
  */
-GdkPixbuf* getNewToolPixbuf(SeparatorType separator);
+xoj::util::GObjectSPtr<GdkPaintable> newGdkPaintable(SeparatorType separator);
 };  // namespace ToolbarSeparatorImage
