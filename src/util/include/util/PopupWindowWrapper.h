@@ -37,9 +37,9 @@ public:
     }
     ~PopupWindowWrapper() { delete popup; }
 
-    void show(GtkWindow* parent) {
+    void show(GtkWindow* parent, bool modal = true) {
         gtk_window_set_transient_for(popup->getWindow(), parent);
-        gtk_window_set_modal(popup->getWindow(), true);
+        gtk_window_set_modal(popup->getWindow(), modal);
 
         gtk_widget_show(GTK_WIDGET(popup->getWindow()));
         g_signal_connect(popup->getWindow(), "close-request", G_CALLBACK(+[](GtkWindow*, gpointer popup) -> gboolean {
