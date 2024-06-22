@@ -20,10 +20,10 @@
 #include "gui/PopoverFactory.h"
 #include "util/raii/GVariantSPtr.h"
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "ItemWithNamedIcon.h"  // for ItemWithNamedIcon
 
 
-class ToolButton: public AbstractToolItem {
+class ToolButton: public ItemWithNamedIcon {
 public:
     ToolButton(std::string id, Category cat, Action action, std::string iconName, std::string description, bool toggle);
     ToolButton(std::string id, Category cat, Action action, GVariant* target, std::string iconName,
@@ -37,7 +37,7 @@ public:
 protected:
     Widgetry createItem(ToolbarSide side) override;
 
-    GtkWidget* getNewToolIcon() const override;
+    const char* getIconName() const override;
 
 protected:
     std::string iconName;
