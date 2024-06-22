@@ -89,28 +89,6 @@ window.darkMode #pdfFloatingToolGrid  {
 	box-shadow: 0px 0px 5px rgba(90, 90, 90, 0.7);
 }
 
-/* Add additional padding and a border to make editing toolbars easier. */
-toolbar.editing {
-	padding-top: 4px;
-	padding-bottom: 4px;
-
-	border: 4px dashed orange;
-	border-radius: 3px;
-
-	box-shadow: inset -2px -2px 8px orange;
-}
-
-/*Fix ugly Background drop down button
- *
- * We need to select the button beside two labels or we will affect
- * the pen tool when in FloatingToolbox (and can't see activation highlight).
- *
- * Ideally we will give name properties to all of the widgets created in
- * code as well as specifying names in glade files.
- *
- * Note: in glade files, property with name="name". i.e. <property name="name">floatingToolbox</property>
- */
-
 /*** Toolbar business ***/
 box.toolbar button:not(.model),
 popover.toolbar button:not(.model) {
@@ -179,6 +157,22 @@ box.toolbar scale.model {
   margin-bottom:6px;
   margin-left:3px;
   margin-right:0;
+}
+
+/* Add additional padding and a border to make editing toolbars easier. */
+box.toolbar.editing {
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+    border: 4px dashed orange;
+    border-radius: 3px;
+
+    box-shadow: inset -2px -2px 8px orange;
+}
+box.toolbar.editing .phantom * {
+    color:dark grey;
+    background-color: grey;
+    background-image:none;
 }
 
 /* Grid in AddPage popover or PageTemplateDialog popover */
