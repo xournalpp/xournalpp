@@ -59,6 +59,7 @@
 #include "gui/inputdevices/CompassInputHandler.h"                // for Comp...
 #include "gui/inputdevices/GeometryToolInputHandler.h"           // for Geom...
 #include "gui/inputdevices/HandRecognition.h"                    // for Hand...
+#include "gui/inputdevices/PositionInputData.h"
 #include "gui/inputdevices/SetsquareInputHandler.h"              // for Sets...
 #include "gui/menus/menubar/Menubar.h"                           // for Menubar
 #include "gui/sidebar/Sidebar.h"                                 // for Sidebar
@@ -1905,7 +1906,25 @@ void Control::saveAs(std::function<void(bool)> callback) { saveImpl(true, std::m
 
 void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
     // clear selection before saving
-    clearSelectionEndText();
+    clearSelection();
+
+    XojPageView* pageView = win->getXournal()->getViewFor(getCurrentPageNo());
+    TextEditor* editor = pageView->getTextEditor();
+
+    if (editor) {
+        PositionInputData pos = {};
+        pos.x = editor->getTextElement()->getX() + editor->getCursorBox().getX();
+        pos.y = editor->getTextElement()->getY() + editor->getCursorBox().getY() + editor->getCursorBox().getHeight();
+
+        double z = zoom->getZoom();
+        pos.x *= z;
+        pos.y *= z;
+
+        pageView->endText();
+
+        pageView->onButtonPressEvent(pos);
+        pageView->onButtonReleaseEvent(pos);
+    }
 
     this->doc->lock();
     fs::path filepath = this->doc->getFilepath();
@@ -1913,7 +1932,7 @@ void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
 
     auto doSave = [ctrl = this, cb = std::move(callback)]() {
         // clear selection before saving
-        ctrl->clearSelectionEndText();
+        ctrl->clearSelection();
 
         auto* job = new SaveJob(ctrl, std::move(cb));
         ctrl->scheduler->addJob(job, JOB_PRIORITY_URGENT);
