@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 18:25+0000\n"
-"PO-Revision-Date: 2024-06-02 18:29\n"
+"POT-Creation-Date: 2024-06-13 20:32+0000\n"
+"PO-Revision-Date: 2024-06-28 19:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -501,7 +501,7 @@ msgstr "Die Überprüfung des Überschreibens des Hintergrundes ist fehlgeschlag
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export File"
-msgstr ""
+msgstr "Datei exportieren"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export"
@@ -1041,6 +1041,7 @@ msgid "All files"
 msgstr "Alle Dateien"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
 msgstr "Unterstützte Dateiformate"
 
@@ -1196,6 +1197,7 @@ msgid "Open template file"
 msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:197
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Open file"
 msgstr "Öffne Datei"
