@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 18:25+0000\n"
-"PO-Revision-Date: 2024-06-02 18:29\n"
+"POT-Creation-Date: 2024-06-13 20:32+0000\n"
+"PO-Revision-Date: 2024-06-18 06:27\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -94,7 +94,7 @@ msgstr "Erreur lors de l'ouverture du fichier \"{1}\""
 
 #: ../src/core/control/Control.cpp:1501
 msgid "File version mismatch"
-msgstr ""
+msgstr "La version du fichier ne correspond pas"
 
 #: ../src/core/control/Control.cpp:1502
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -103,7 +103,7 @@ msgstr "Le fichier en cours de chargement utilise une version du format de fichi
 #: ../src/core/control/Control.cpp:1525
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Erreur de lecture du fichier PDF \"{1}\" {2}"
 
 #: ../src/core/control/Control.cpp:1646
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -501,7 +501,7 @@ msgstr "La vérification pour le remplacement de l'arrière-plan a échoué avec
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export File"
-msgstr ""
+msgstr "Exporter le fichier"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export"
@@ -669,11 +669,11 @@ msgstr "Mettre en arrière-plan"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 msgid "Failed to load image"
-msgstr ""
+msgstr "Échec du chargement de l'image"
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
-msgstr ""
+msgstr "Erreur lors de l'ouverture du fichier image : "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1041,6 +1041,7 @@ msgid "All files"
 msgstr "Tous les fichiers"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
 msgstr "Fichiers pris en charge"
 
@@ -1059,7 +1060,7 @@ msgstr "Modèle Xournal++"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "Fichiers image"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
@@ -1193,20 +1194,21 @@ msgstr "_Ouvrir"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
-msgstr ""
+msgstr "Ouvrir un fichier modèle"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:197
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Open file"
 msgstr "Ouvrir un fichier"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
-msgstr ""
+msgstr "Annoter un fichier Pdf"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
-msgstr ""
+msgstr "Choisir un fichier image"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"

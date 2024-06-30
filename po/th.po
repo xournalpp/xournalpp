@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 18:25+0000\n"
-"PO-Revision-Date: 2024-06-02 18:30\n"
+"POT-Creation-Date: 2024-06-13 20:32+0000\n"
+"PO-Revision-Date: 2024-06-23 12:54\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
 "Language: th_TH\n"
@@ -54,11 +54,11 @@ msgstr "ยกเลิก"
 
 #: ../src/core/control/Control.cpp:798
 msgid "Insert after current page"
-msgstr ""
+msgstr "แทรกต่อจากหน้าปัจจุบัน"
 
 #: ../src/core/control/Control.cpp:799
 msgid "Insert at end"
-msgstr ""
+msgstr "แทรกอยู่หน้าสุดท้าย"
 
 #: ../src/core/control/Control.cpp:802
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -92,7 +92,7 @@ msgstr "เกิดข้อผิดพลาดในการเปิดไ
 
 #: ../src/core/control/Control.cpp:1501
 msgid "File version mismatch"
-msgstr ""
+msgstr "เวอร์ชันของไฟล์ไม่ตรงกัน"
 
 #: ../src/core/control/Control.cpp:1502
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -1008,6 +1008,7 @@ msgid "All files"
 msgstr "ไฟล์ทั้งหมด"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
 msgstr ""
 
@@ -1162,6 +1163,7 @@ msgid "Open template file"
 msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:197
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Open file"
 msgstr "เปิดไฟล์"
