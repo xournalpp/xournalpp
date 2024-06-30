@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 18:25+0000\n"
-"PO-Revision-Date: 2024-06-03 01:57\n"
+"POT-Creation-Date: 2024-06-13 20:32+0000\n"
+"PO-Revision-Date: 2024-06-30 03:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1042,6 +1042,7 @@ msgid "All files"
 msgstr "所有文件"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
 msgstr "支撑文件"
 
@@ -1197,6 +1198,7 @@ msgid "Open template file"
 msgstr "打开模板文件"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:197
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Open file"
 msgstr "打开文件"
@@ -2805,7 +2807,7 @@ msgstr "<i>因为某些设置，笔触在开始时会出现伪影， 通过忽�
 
 #: ../ui/settings.glade:1890
 msgid "Ignore the first"
-msgstr "忽略第一个"
+msgstr "忽略第"
 
 #: ../ui/settings.glade:1908
 msgid "1"
