@@ -3,6 +3,7 @@
 #include <functional>     // for function
 #include <stdexcept>      // for runtime_error
 #include <string>         // for stod, string
+#include <string_view>    // for string_view
 #include <unordered_map>  // for unordered_map
 #include <utility>        // for move
 #include <vector>         // for vector
@@ -746,29 +747,38 @@ void XmlParser::closeTag(TagType type) {
     this->hierarchy.pop();
 }
 
-auto XmlParser::tagNameToType(const std::string& name) const -> TagType {
-    static const std::unordered_map<std::string, TagType> typeMap = {{"xournal", TagType::XOURNAL},
-                                                                     {"MrWriter", TagType::MRWRITER},
-                                                                     {"title", TagType::TITLE},
-                                                                     {"preview", TagType::PREVIEW},
-                                                                     {"page", TagType::PAGE},
-                                                                     {"audio", TagType::AUDIO},
-                                                                     {"background", TagType::BACKGROUND},
-                                                                     {"layer", TagType::LAYER},
-                                                                     {"timestamp", TagType::TIMESTAMP},
-                                                                     {"stroke", TagType::STROKE},
-                                                                     {"text", TagType::TEXT},
-                                                                     {"image", TagType::IMAGE},
-                                                                     {"teximage", TagType::TEXIMAGE},
-                                                                     {"attachment", TagType::ATTACHMENT}};
+auto XmlParser::tagNameToType(std::string_view name) const -> TagType {
+    using namespace std::literals;
 
-    auto it = typeMap.find(name);
-    if (it == typeMap.end()) {
-        g_warning("XML parser: unknown tag name \"%s\"", name.c_str());
-        return TagType::UNKNOWN;
-    } else {
-        return it->second;
-    }
+    if ("MrWriter"sv == name)
+        return TagType::MRWRITER;
+    if ("attachment"sv == name)
+        return TagType::ATTACHMENT;
+    if ("audio"sv == name)
+        return TagType::AUDIO;
+    if ("background"sv == name)
+        return TagType::BACKGROUND;
+    if ("image"sv == name)
+        return TagType::IMAGE;
+    if ("layer"sv == name)
+        return TagType::LAYER;
+    if ("page"sv == name)
+        return TagType::PAGE;
+    if ("preview"sv == name)
+        return TagType::PREVIEW;
+    if ("stroke"sv == name)
+        return TagType::STROKE;
+    if ("teximage"sv == name)
+        return TagType::TEXIMAGE;
+    if ("text"sv == name)
+        return TagType::TEXT;
+    if ("timestamp"sv == name)
+        return TagType::TIMESTAMP;
+    if ("title"sv == name)
+        return TagType::TITLE;
+    if ("xournal"sv == name)
+        return TagType::XOURNAL;
+    return TagType::UNKNOWN;
 }
 auto XmlParser::currentName() -> const char* {
     return reinterpret_cast<const char*>(xmlTextReaderConstName(this->reader));
