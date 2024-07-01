@@ -1,7 +1,7 @@
 #include "Document.h"
 
-#include <array>
-#include <ctime>  // for size_t, localtime, strf...
+#include <codecvt>  // for codecvt_utf8_utf16
+#include <ctime>    // for size_t, localtime, strf...
 #include <iomanip>
 #include <memory>
 #include <sstream>
@@ -65,7 +65,7 @@ void Document::lock() {
 
     //	if(tryLock()) {
     //		fprintf(stderr, "Locked by\n");
-    //		Stacktrace::printStracktrace();
+    //		Stacktrace::printStacktrace();
     //		fprintf(stderr, "\n\n\n\n");
     //	} else {
     //		g_mutex_lock(&this->documentLock);
@@ -76,7 +76,7 @@ void Document::unlock() {
     this->documentLock.unlock();
 
     //	fprintf(stderr, "Unlocked by\n");
-    //	Stacktrace::printStracktrace();
+    //	Stacktrace::printStacktrace();
     //	fprintf(stderr, "\n\n\n\n");
 }
 
@@ -135,8 +135,9 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
-auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPdfName) -> fs::path {
-    constexpr static std::string_view forbiddenChars = {"\\/:*?\"<>|"};
+auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName,
+                                  const std::string& defaultPdfName) -> fs::path {
+    constexpr static std::wstring_view forbiddenChars = {L"\\/:*?\"<>|"};
     std::string wildcardString;
     if (type != Document::PDF) {
         if (!filepath.empty()) {
@@ -156,13 +157,16 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->filepath.filename());
     }
 
-    const char* format = wildcardString.empty() ? defaultSaveName.c_str() : wildcardString.c_str();
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+
+    auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
+    auto format = converter.from_bytes(format_str);
 
     // Todo (cpp20): use <format>
-    std::ostringstream ss;
+    std::wostringstream ss;
     ss.imbue(std::locale());
     time_t curtime = time(nullptr);
-    ss << std::put_time(localtime(&curtime), format);
+    ss << std::put_time(localtime(&curtime), format.c_str());
     auto filename = ss.str();
     // Todo (cpp20): use <ranges>
     for (auto& c: filename) {

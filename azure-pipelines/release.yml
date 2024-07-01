@@ -120,7 +120,7 @@ stages:
 
       - job: macOS
         pool:
-          vmImage: 'macOS-11'
+          vmImage: 'macOS-12'
         displayName: 'Build for macOS'
         steps:
           - template: steps/build_mac.yml

@@ -293,7 +293,7 @@ static void inline setColorAlpha(Tool& tool, int alpha) {
         tool.setColor(color);
     } else {
         g_warning("setColorAlpha : tool='%s' has no color capability!", tool.getName().c_str());
-        Stacktrace::printStracktrace();
+        Stacktrace::printStacktrace();
     }
 }
 

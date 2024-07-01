@@ -179,20 +179,22 @@ void Util::openFileWithDefaultApplication(const fs::path& filename) {
     }
 }
 
-auto Util::getGettextFilepath(const char* localeDir) -> fs::path {
+auto Util::getGettextFilepath(fs::path const& localeDir) -> fs::path {
+    /// documentation of g_getenv is wrong, its UTF-8, see #5640
     const char* gettextEnv = g_getenv("TEXTDOMAINDIR");
     // Only consider first path in environment variable
-    std::string directories;
+    std::string_view directories;
     if (gettextEnv) {
-        directories = std::string(gettextEnv);
+        directories = gettextEnv;
         size_t firstDot = directories.find(G_SEARCHPATH_SEPARATOR);
         if (firstDot != std::string::npos) {
             directories = directories.substr(0, firstDot);
         }
     }
-    const char* dir = (gettextEnv) ? directories.c_str() : localeDir;
-    g_debug("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnv, localeDir, dir);
-    return fs::path(dir);
+    auto dir = (gettextEnv) ? fs::u8path(directories) : localeDir;
+    g_debug("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnv,
+            localeDir.string().c_str(), dir.string().c_str());
+    return dir;
 }
 
 auto Util::getAutosaveFilepath() -> fs::path {

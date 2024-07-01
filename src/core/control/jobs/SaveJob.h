@@ -21,8 +21,7 @@ class Control;
 
 class SaveJob: public BlockingJob {
 public:
-    SaveJob(
-            Control* control, std::function<void(bool)> = [](bool) {});
+    SaveJob(Control* control, std::function<void(bool)> = [](bool) {});
 
 protected:
     ~SaveJob() override;

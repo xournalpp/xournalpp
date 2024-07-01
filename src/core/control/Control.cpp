@@ -438,7 +438,7 @@ void Control::selectAlpha(OpacityFeature feature) {
             break;
         default:
             g_warning("Unhandled OpacityFeature for selectAlpha event: %s", opacityFeatureToString(feature).c_str());
-            Stacktrace::printStracktrace();
+            Stacktrace::printStacktrace();
             break;
     }
     auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::SelectOpacityDialog>(
@@ -456,7 +456,7 @@ void Control::selectAlpha(OpacityFeature feature) {
                     default:
                         g_warning("Unhandled OpacityFeature for callback of SelectOpacityDialog: %s",
                                   opacityFeatureToString(feature).c_str());
-                        Stacktrace::printStracktrace();
+                        Stacktrace::printStacktrace();
                         break;
                 }
             });
@@ -2232,7 +2232,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         win->getXournal()->setSelection(selection.release());
     } catch (const std::exception& e) {
         g_warning("could not paste, Exception occurred: %s", e.what());
-        Stacktrace::printStracktrace();
+        Stacktrace::printStacktrace();
         if (selection) {
             for (Element* el: selection->getElements()) {
                 delete el;

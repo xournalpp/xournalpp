@@ -23,8 +23,7 @@
 
 class XojMsgBox final {
 public:
-    XojMsgBox(
-            GtkDialog* dialog, xoj::util::move_only_function<void(int)> callback = [](int) {});
+    XojMsgBox(GtkDialog* dialog, xoj::util::move_only_function<void(int)> callback = [](int) {});
     ~XojMsgBox() = default;
 
     inline GtkWindow* getWindow() const { return window.get(); }

@@ -187,6 +187,16 @@ private:
     bool parseCommentLine(const std::string& line) const;
 
     /**
+     * @brief Parse an empty line
+     * Empty lines do not contain any characters and are ignored
+     *
+     * @param line
+     * @return true if line is empty
+     * @return false otherwise
+     */
+    bool parseEmptyLine(const std::string& line) const;
+
+    /**
      * @brief Fallback for line parsing
      * This function is the fallback in case no other parsing attempt works.
      * In this case this function throws an error containing the non-parseable line number

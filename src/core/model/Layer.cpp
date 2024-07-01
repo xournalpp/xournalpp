@@ -34,7 +34,7 @@ auto Layer::clone() const -> Layer* {
 void Layer::addElement(ElementPtr e) {
     if (e == nullptr) {
         g_warning("addElement(nullptr)!");
-        Stacktrace::printStracktrace();
+        Stacktrace::printStacktrace();
         return;
     }
 
@@ -44,7 +44,7 @@ void Layer::addElement(ElementPtr e) {
 void Layer::insertElement(ElementPtr e, Element::Index pos) {
     if (e == nullptr) {
         g_warning("insertElement(nullptr)!");
-        Stacktrace::printStracktrace();
+        Stacktrace::printStacktrace();
         return;
     }
 
@@ -82,7 +82,7 @@ auto Layer::removeElement(Element* e) -> InsertionPosition {
     }
 
     g_warning("Could not remove element from layer, it's not on the layer!");
-    Stacktrace::printStracktrace();
+    Stacktrace::printStacktrace();
     return InsertionPosition{nullptr, Element::InvalidIndex};
 }
 
@@ -107,7 +107,7 @@ auto Layer::removeElementsAt(InsertionOrderRef const& elts) -> InsertionOrder {
             pos = indexOf(e);
             if (pos == Element::InvalidIndex) {
                 g_warning("Could not remove element from layer, it's not on the layer!");
-                Stacktrace::printStracktrace();
+                Stacktrace::printStacktrace();
                 continue;
             }
         }
