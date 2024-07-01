@@ -97,7 +97,7 @@ private:
      */
     void closeTag(XmlTags::Type type);
 
-    XmlTags::Type tagNameToType(const std::string& name) const;
+    XmlTags::Type tagNameToType(std::string_view name) const;
     const char* currentName();
     XmlTags::Type currentTagType();
 
