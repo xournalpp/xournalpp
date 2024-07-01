@@ -16,6 +16,8 @@
 #include "control/xml/XmlPointNode.h"          // for XmlPointNode
 #include "control/xml/XmlTexNode.h"            // for XmlTexNode
 #include "control/xml/XmlTextNode.h"           // for XmlTextNode
+#include "control/xojfile/XmlAttrs.h"          // for XmlAttrs
+#include "control/xojfile/XmlTags.h"           // for XmlTags
 #include "model/AudioElement.h"                // for AudioElement
 #include "model/BackgroundImage.h"             // for BackgroundImage
 #include "model/Document.h"                    // for Document
@@ -39,6 +41,10 @@
 
 #include "config.h"  // for FILE_FORMAT_VERSION
 
+
+static constexpr auto& TAG_NAMES = XmlTags::NAMES;
+using TagType = XmlTags::Type;
+
 SaveHandler::SaveHandler() {
     this->firstPdfPageVisited = false;
     this->attachBgId = 1;
@@ -53,13 +59,13 @@ void SaveHandler::prepareSave(Document* doc) {
     this->firstPdfPageVisited = false;
     this->attachBgId = 1;
 
-    root.reset(new XmlNode("xournal"));
+    root.reset(new XmlNode(TAG_NAMES[TagType::XOURNAL]));
 
     writeHeader();
 
     cairo_surface_t* preview = doc->getPreview();
     if (preview) {
-        auto* image = new XmlImageNode("preview");
+        auto* image = new XmlImageNode(TAG_NAMES[TagType::PREVIEW]);
         image->setImage(preview);
         this->root->addChild(image);
     }
@@ -76,9 +82,10 @@ void SaveHandler::prepareSave(Document* doc) {
 }
 
 void SaveHandler::writeHeader() {
-    this->root->setAttrib("creator", PROJECT_STRING);
-    this->root->setAttrib("fileversion", FILE_FORMAT_VERSION);
-    this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_HOMEPAGE_URL));
+    this->root->setAttrib(XmlAttrs::CREATOR_STR, PROJECT_STRING);
+    this->root->setAttrib(XmlAttrs::FILEVERSION_STR, FILE_FORMAT_VERSION);
+    this->root->addChild(new XmlTextNode(TAG_NAMES[TagType::TITLE],
+                                         std::string{"Xournal++ document - see "} + PROJECT_HOMEPAGE_URL));
 }
 
 auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
@@ -91,8 +98,8 @@ auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
 void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
     if (!audioElement->getAudioFilename().empty()) {
         /** set stroke timestamp value to the XmlPointNode */
-        xmlAudioNode->setAttrib("ts", audioElement->getTimestamp());
-        xmlAudioNode->setAttrib("fn", audioElement->getAudioFilename().u8string());
+        xmlAudioNode->setAttrib(XmlAttrs::TIMESTAMP_STR, audioElement->getTimestamp());
+        xmlAudioNode->setAttrib(XmlAttrs::AUDIO_FILENAME_STR, audioElement->getAudioFilename().u8string());
     }
 }
 
@@ -101,20 +108,20 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 
     unsigned char alpha = 0xff;
 
-    if (t == StrokeTool::PEN) {
-        stroke->setAttrib("tool", "pen");
-        writeTimestamp(s, stroke);
-    } else if (t == StrokeTool::ERASER) {
-        stroke->setAttrib("tool", "eraser");
-    } else if (t == StrokeTool::HIGHLIGHTER) {
-        stroke->setAttrib("tool", "highlighter");
-        alpha = 0x7f;
-    } else {
-        g_warning("Unknown StrokeTool::Value");
-        stroke->setAttrib("tool", "pen");
+    if (t >= StrokeTool::NAMES.size()) {
+        g_warning("Unknown StrokeTool::Value: %d", static_cast<unsigned int>(t));
+        t = StrokeTool::PEN;
     }
 
-    stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
+    stroke->setAttrib(XmlAttrs::TOOL_STR, StrokeTool::NAMES[t]);
+
+    if (t == StrokeTool::PEN) {
+        writeTimestamp(s, stroke);
+    } else if (t == StrokeTool::HIGHLIGHTER) {
+        alpha = 0x7f;
+    }
+
+    stroke->setAttrib(XmlAttrs::COLOR_STR, getColorStr(s->getColor(), alpha).c_str());
 
     const auto& pts = s->getPointVector();
 
@@ -125,9 +132,9 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
         values.reserve(pts.size() + 1);
         values.emplace_back(s->getWidth());
         std::transform(pts.begin(), pts.end() - 1, std::back_inserter(values), [](const Point& p) { return p.z; });
-        stroke->setAttrib("width", std::move(values));
+        stroke->setAttrib(XmlAttrs::WIDTH_STR, std::move(values));
     } else {
-        stroke->setAttrib("width", s->getWidth());
+        stroke->setAttrib(XmlAttrs::WIDTH_STR, s->getWidth());
     }
 
     visitStrokeExtended(stroke, s);
@@ -138,85 +145,82 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
  */
 void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
     if (s->getFill() != -1) {
-        stroke->setAttrib("fill", s->getFill());
+        stroke->setAttrib(XmlAttrs::FILL_STR, s->getFill());
     }
 
-    const StrokeCapStyle capStyle = s->getStrokeCapStyle();
-    if (capStyle == StrokeCapStyle::BUTT) {
-        stroke->setAttrib("capStyle", "butt");
-    } else if (capStyle == StrokeCapStyle::ROUND) {
-        stroke->setAttrib("capStyle", "round");
-    } else if (capStyle == StrokeCapStyle::SQUARE) {
-        stroke->setAttrib("capStyle", "square");
-    } else {
-        g_warning("Unknown stroke cap type: %i", capStyle);
-        stroke->setAttrib("capStyle", "round");
+    StrokeCapStyle capStyle = s->getStrokeCapStyle();
+
+    if (capStyle >= STROKE_CAP_STYLE_NAMES.size()) {
+        g_warning("Unknown stroke cap type: %d", capStyle);
+        capStyle = StrokeCapStyle::ROUND;
     }
+
+    stroke->setAttrib(XmlAttrs::CAPSTYLE_STR, STROKE_CAP_STYLE_NAMES[capStyle]);
 
     if (s->getLineStyle().hasDashes()) {
-        stroke->setAttrib("style", StrokeStyle::formatStyle(s->getLineStyle()));
+        stroke->setAttrib(XmlAttrs::STYLE_STR, StrokeStyle::formatStyle(s->getLineStyle()));
     }
 }
 
 void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
-    auto* layer = new XmlNode("layer");
+    auto* layer = new XmlNode(TAG_NAMES[TagType::LAYER]);
     page->addChild(layer);
     if (l->hasName()) {
-        layer->setAttrib("name", l->getName().c_str());
+        layer->setAttrib(XmlAttrs::NAME_STR, l->getName().c_str());
     }
 
     for (auto&& e: l->getElements()) {
         if (e->getType() == ELEMENT_STROKE) {
             auto* s = dynamic_cast<Stroke*>(e.get());
-            auto* stroke = new XmlPointNode("stroke");
+            auto* stroke = new XmlPointNode(TAG_NAMES[TagType::STROKE]);
             layer->addChild(stroke);
             visitStroke(stroke, s);
         } else if (e->getType() == ELEMENT_TEXT) {
             Text* t = dynamic_cast<Text*>(e.get());
-            auto* text = new XmlTextNode("text", t->getText());
+            auto* text = new XmlTextNode(TAG_NAMES[TagType::TEXT], t->getText());
             layer->addChild(text);
 
             XojFont& f = t->getFont();
 
-            text->setAttrib("font", f.getName().c_str());
-            text->setAttrib("size", f.getSize());
-            text->setAttrib("x", t->getX());
-            text->setAttrib("y", t->getY());
-            text->setAttrib("color", getColorStr(t->getColor()).c_str());
+            text->setAttrib(XmlAttrs::FONT_STR, f.getName().c_str());
+            text->setAttrib(XmlAttrs::SIZE_STR, f.getSize());
+            text->setAttrib(XmlAttrs::X_COORD_STR, t->getX());
+            text->setAttrib(XmlAttrs::Y_COORD_STR, t->getY());
+            text->setAttrib(XmlAttrs::COLOR_STR, getColorStr(t->getColor()).c_str());
 
             writeTimestamp(t, text);
         } else if (e->getType() == ELEMENT_IMAGE) {
             auto* i = dynamic_cast<Image*>(e.get());
-            auto* image = new XmlImageNode("image");
+            auto* image = new XmlImageNode(TAG_NAMES[TagType::IMAGE]);
             layer->addChild(image);
 
             image->setImage(i->getImage());
 
-            image->setAttrib("left", i->getX());
-            image->setAttrib("top", i->getY());
-            image->setAttrib("right", i->getX() + i->getElementWidth());
-            image->setAttrib("bottom", i->getY() + i->getElementHeight());
+            image->setAttrib(XmlAttrs::LEFT_POS_STR, i->getX());
+            image->setAttrib(XmlAttrs::TOP_POS_STR, i->getY());
+            image->setAttrib(XmlAttrs::RIGHT_POS_STR, i->getX() + i->getElementWidth());
+            image->setAttrib(XmlAttrs::BOTTOM_POS_STR, i->getY() + i->getElementHeight());
         } else if (e->getType() == ELEMENT_TEXIMAGE) {
             auto* i = dynamic_cast<TexImage*>(e.get());
-            auto* image = new XmlTexNode("teximage", std::string(i->getBinaryData()));
+            auto* image = new XmlTexNode(TAG_NAMES[TagType::TEXIMAGE], std::string(i->getBinaryData()));
             layer->addChild(image);
 
-            image->setAttrib("text", i->getText().c_str());
-            image->setAttrib("left", i->getX());
-            image->setAttrib("top", i->getY());
-            image->setAttrib("right", i->getX() + i->getElementWidth());
-            image->setAttrib("bottom", i->getY() + i->getElementHeight());
+            image->setAttrib(XmlAttrs::TEXT_STR, i->getText().c_str());
+            image->setAttrib(XmlAttrs::LEFT_POS_STR, i->getX());
+            image->setAttrib(XmlAttrs::TOP_POS_STR, i->getY());
+            image->setAttrib(XmlAttrs::RIGHT_POS_STR, i->getX() + i->getElementWidth());
+            image->setAttrib(XmlAttrs::BOTTOM_POS_STR, i->getY() + i->getElementHeight());
         }
     }
 }
 
 void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
-    auto* page = new XmlNode("page");
+    auto* page = new XmlNode(TAG_NAMES[TagType::PAGE]);
     root->addChild(page);
-    page->setAttrib("width", p->getWidth());
-    page->setAttrib("height", p->getHeight());
+    page->setAttrib(XmlAttrs::WIDTH_STR, p->getWidth());
+    page->setAttrib(XmlAttrs::HEIGHT_STR, p->getHeight());
 
-    auto* background = new XmlNode("background");
+    auto* background = new XmlNode(TAG_NAMES[TagType::BACKGROUND]);
     page->addChild(background);
 
     writeBackgroundName(background, p);
@@ -227,16 +231,16 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
          * DO NOT CHANGE THE ORDER OF THE ATTRIBUTES!
          */
 
-        background->setAttrib("type", "pdf");
+        background->setAttrib(XmlAttrs::TYPE_STR, "pdf");
         if (!firstPdfPageVisited) {
             firstPdfPageVisited = true;
 
             if (doc->isAttachPdf()) {
-                background->setAttrib("domain", "attach");
+                background->setAttrib(XmlAttrs::DOMAIN_STR, "attach");
                 auto filepath = doc->getFilepath();
                 Util::clearExtensions(filepath);
                 filepath += ".xopp.bg.pdf";
-                background->setAttrib("filename", "bg.pdf");
+                background->setAttrib(XmlAttrs::FILENAME_STR, "bg.pdf");
 
                 GError* error = nullptr;
                 if (!exists(filepath)) {
@@ -253,24 +257,24 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                     g_error_free(error);
                 }
             } else {
-                background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilepath().string());
+                background->setAttrib(XmlAttrs::DOMAIN_STR, "absolute");
+                background->setAttrib(XmlAttrs::FILENAME_STR, doc->getPdfFilepath().string());
             }
         }
-        background->setAttrib("pageno", p->getPdfPageNr() + 1);
+        background->setAttrib(XmlAttrs::PAGE_NUMBER_STR, p->getPdfPageNr() + 1);
     } else if (p->getBackgroundType().isImagePage()) {
-        background->setAttrib("type", "pixmap");
+        background->setAttrib(XmlAttrs::TYPE_STR, "pixmap");
 
         int cloneId = p->getBackgroundImage().getCloneId();
         if (cloneId != -1) {
-            background->setAttrib("domain", "clone");
+            background->setAttrib(XmlAttrs::DOMAIN_STR, "clone");
             char* filename = g_strdup_printf("%i", cloneId);
-            background->setAttrib("filename", filename);
+            background->setAttrib(XmlAttrs::FILENAME_STR, filename);
             g_free(filename);
         } else if (p->getBackgroundImage().isAttached() && p->getBackgroundImage().getPixbuf()) {
             char* filename = g_strdup_printf("bg_%d.png", this->attachBgId++);
-            background->setAttrib("domain", "attach");
-            background->setAttrib("filename", filename);
+            background->setAttrib(XmlAttrs::DOMAIN_STR, "attach");
+            background->setAttrib(XmlAttrs::FILENAME_STR, filename);
             p->getBackgroundImage().setFilepath(filename);
 
             backgroundImages.emplace_back(p->getBackgroundImage());
@@ -278,8 +282,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
             g_free(filename);
             p->getBackgroundImage().setCloneId(id);
         } else {
-            background->setAttrib("domain", "absolute");
-            background->setAttrib("filename", p->getBackgroundImage().getFilepath().string());
+            background->setAttrib(XmlAttrs::DOMAIN_STR, "absolute");
+            background->setAttrib(XmlAttrs::FILENAME_STR, p->getBackgroundImage().getFilepath().string());
             p->getBackgroundImage().setCloneId(id);
         }
     } else {
@@ -288,7 +292,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
 
     // no layer, but we need to write one layer, else the old Xournal cannot read the file
     if (p->getLayers()->empty()) {
-        auto* layer = new XmlNode("layer");
+        auto* layer = new XmlNode(TAG_NAMES[TagType::LAYER]);
         page->addChild(layer);
     }
 
@@ -298,20 +302,21 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
 }
 
 void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
-    background->setAttrib("type", "solid");
-    background->setAttrib("color", getColorStr(p->getBackgroundColor()));
-    background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(p->getBackgroundType().format));
+    background->setAttrib(XmlAttrs::TYPE_STR, "solid");
+    background->setAttrib(XmlAttrs::COLOR_STR, getColorStr(p->getBackgroundColor()));
+    background->setAttrib(XmlAttrs::STYLE_STR,
+                          PageTypeHandler::getStringForPageTypeFormat(p->getBackgroundType().format));
 
     // Not compatible with Xournal, so the background needs
     // to be changed to a basic one!
     if (!p->getBackgroundType().config.empty()) {
-        background->setAttrib("config", p->getBackgroundType().config);
+        background->setAttrib(XmlAttrs::CONFIG_STR, p->getBackgroundType().config);
     }
 }
 
 void SaveHandler::writeBackgroundName(XmlNode* background, PageRef p) {
     if (p->backgroundHasName()) {
-        background->setAttrib("name", p->getBackgroundName());
+        background->setAttrib(XmlAttrs::NAME_STR, p->getBackgroundName());
     }
 }
 
