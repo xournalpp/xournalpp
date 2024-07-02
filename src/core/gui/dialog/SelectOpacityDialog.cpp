@@ -42,7 +42,7 @@ static inline void buildLabel(Builder& builder, OpacityFeature opacityFeature) {
             break;
         default:
             g_warning("No opacityFeature description set for '%s'", opacityFeatureToString(opacityFeature).c_str());
-            Stacktrace::printStracktrace();
+            Stacktrace::printStacktrace();
             break;
     }
     gtk_label_set_label(GTK_LABEL(builder.get("label1")),

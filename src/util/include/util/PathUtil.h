@@ -138,7 +138,7 @@ auto system_single_byte_filename(const fs::path& path) -> std::string;
 [[maybe_unused]] [[nodiscard]] fs::path getCacheFile(const fs::path& relativeFileName = "");
 [[maybe_unused]] [[nodiscard]] fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getAutosaveFilepath();
-[[maybe_unused]] [[nodiscard]] fs::path getGettextFilepath(const char* localeDir);
+[[maybe_unused]] [[nodiscard]] fs::path getGettextFilepath(fs::path const& localeDir);
 [[maybe_unused]] [[nodiscard]] fs::path getDataPath();
 [[maybe_unused]] [[nodiscard]] fs::path getLocalePath();
 

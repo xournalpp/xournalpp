@@ -2,8 +2,10 @@
 
 #include <algorithm>  // for max
 #include <array>      // for array
+#include <cerrno>     // for errno
 #include <cstdint>    // for uintptr_t
 #include <cstdio>     // for fgets, pclose, popen, snprintf, FILE
+#include <cstring>    // for strerror
 #include <iostream>   // for operator<<, basic_ostream, basic_ostream::...
 #include <string>     // for string
 
@@ -45,8 +47,8 @@ fs::path Stacktrace::getExePath() {
 
     return fs::path{szFileName};
 }
-void Stacktrace::printStracktrace(std::ostream& stream) {
-    // Stracktrace is currently not implemented for Windows
+void Stacktrace::printStacktrace(std::ostream& stream) {
+    // Stacktrace is currently not implemented for Windows
     // Currently this is only needed for developing, so this is no issue
 }
 #else
@@ -87,7 +89,7 @@ auto Stacktrace::getExePath() -> fs::path {
 }
 #endif
 
-void Stacktrace::printStracktrace(std::ostream& stream) {
+void Stacktrace::printStacktrace(std::ostream& stream) {
     std::array<void*, 32> trace{};
     std::array<char, 2048> buff{};
 
@@ -109,14 +111,18 @@ void Stacktrace::printStracktrace(std::ostream& stream) {
                  info.dli_fname);
 
         FILE* fProc = popen(syscom.data(), "r");
-        while (fgets(buff.data(), buff.size(), fProc) != nullptr) {
-            stream << buff.data();
+        if (fProc != nullptr) {
+            while (fgets(buff.data(), buff.size(), fProc) != nullptr) {
+                stream << buff.data();
+            }
+            pclose(fProc);
+        } else {
+            stream << "failed to invoke addr2line: " << std::strerror(errno);
         }
-        pclose(fProc);
     }
 
     free(messages);
 }
 #endif
 
-void Stacktrace::printStracktrace() { printStracktrace(std::cerr); }
+void Stacktrace::printStacktrace() { printStacktrace(std::cerr); }

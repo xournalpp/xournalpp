@@ -22,6 +22,6 @@ private:
 
 public:
     static fs::path getExePath();
-    static void printStracktrace();
-    static void printStracktrace(std::ostream& stream);
+    static void printStacktrace();
+    static void printStacktrace(std::ostream& stream);
 };

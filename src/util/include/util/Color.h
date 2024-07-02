@@ -11,12 +11,12 @@
 
 #pragma once
 
-#include <cstdint>      // for uint32_t, uint8_t, uint16_t
-#include <cstring>      // for size_t
-#include <iostream>     // for istream, ostream, basic_istream<>::__istream_...
-#include <limits>       // for numeric_limits
-#include <string>       // for string
-#include <string_view>  // for hash
+#include <cstdint>     // for uint32_t, uint8_t, uint16_t
+#include <cstring>     // for size_t
+#include <functional>  // for hash
+#include <iostream>    // for istream, ostream, basic_istream<>::__istream_...
+#include <limits>      // for numeric_limits
+#include <string>      // for string
 
 #include <cairo.h>    // for cairo_t
 #include <gdk/gdk.h>  // for GdkRGBA
