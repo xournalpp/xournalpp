@@ -1912,13 +1912,12 @@ void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
     TextEditor* editor = pageView->getTextEditor();
 
     if (editor) {
-        PositionInputData pos = {};
-        pos.x = editor->getTextElement()->getX() + editor->getCursorBox().getX();
-        pos.y = editor->getTextElement()->getY() + editor->getCursorBox().getY() + editor->getCursorBox().getHeight();
+        PositionInputData pos = {.x = editor->getTextElement()->getX() + editor->getCursorBox().getX(),
+                                 .y = editor->getTextElement()->getY() + editor->getCursorBox().getY() +
+                                      editor->getCursorBox().getHeight()};
 
-        double z = zoom->getZoom();
-        pos.x *= z;
-        pos.y *= z;
+        pos.x *= zoom->getZoom();
+        pos.y *= zoom->getZoom();
 
         pageView->endText();
 
