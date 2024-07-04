@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 18:25+0000\n"
-"PO-Revision-Date: 2024-06-02 18:30\n"
+"POT-Creation-Date: 2024-07-03 22:47+0000\n"
+"PO-Revision-Date: 2024-07-04 22:55\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:550
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "你刪咗用緊嘅工具列。會用返預設工具列。"
 
 #: ../src/core/control/Control.cpp:570
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr ""
 
 #: ../src/core/control/Control.cpp:797 ../src/core/control/Control.cpp:1666
-#: ../src/core/control/Control.cpp:1997 ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/Control.cpp:1997 ../src/core/control/XournalMain.cpp:206
 msgid "Cancel"
 msgstr "取消"
 
@@ -92,7 +92,7 @@ msgstr "打開檔案\"{1}\"出錯"
 
 #: ../src/core/control/Control.cpp:1501
 msgid "File version mismatch"
-msgstr ""
+msgstr "檔案版本不符"
 
 #: ../src/core/control/Control.cpp:1502
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -173,8 +173,8 @@ msgid "Trying to emergency save the current open document..."
 msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:40
-#: ../src/core/control/XournalMain.cpp:303
 #: ../src/core/control/XournalMain.cpp:309
+#: ../src/core/control/XournalMain.cpp:315
 msgid "Error: {1}"
 msgstr "錯誤：{1}"
 
@@ -251,8 +251,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "無法載入 LaTeX PDF 檔案"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:93
-#: ../src/core/control/xojfile/LoadHandler.cpp:470
-#: ../src/core/control/xojfile/LoadHandler.cpp:486
+#: ../src/core/control/xojfile/LoadHandler.cpp:471
+#: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Error reading PDF: {1}"
 msgstr "讀入PDF出錯：{1}"
 
@@ -269,71 +269,71 @@ msgstr "PDF背景丟失"
 msgid "Running print operation failed with {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:148
+#: ../src/core/control/XournalMain.cpp:154
 msgid "Failed to delete file: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:150
+#: ../src/core/control/XournalMain.cpp:156
 msgid "Please delete the file manually"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:186
+#: ../src/core/control/XournalMain.cpp:192
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:188
+#: ../src/core/control/XournalMain.cpp:194
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:191
+#: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
 msgstr "最近的日誌檔案名：{1}"
 
-#: ../src/core/control/XournalMain.cpp:193
+#: ../src/core/control/XournalMain.cpp:199
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:196
+#: ../src/core/control/XournalMain.cpp:202
 msgid "File Bug Report"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:197
+#: ../src/core/control/XournalMain.cpp:203
 msgid "Open Logfile"
 msgstr "打開日誌檔案"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:204
 msgid "Open Logfile directory"
 msgstr "打開日誌檔案目錄"
 
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/XournalMain.cpp:205
 msgid "Delete Logfile"
 msgstr "刪除日誌檔案"
 
-#: ../src/core/control/XournalMain.cpp:201
+#: ../src/core/control/XournalMain.cpp:207
 msgid "Crash log"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:223
+#: ../src/core/control/XournalMain.cpp:229
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:227
+#: ../src/core/control/XournalMain.cpp:233
 msgid "Recovery file detected"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:228
+#: ../src/core/control/XournalMain.cpp:234
 msgid "Delete file"
 msgstr "刪除檔案"
 
-#: ../src/core/control/XournalMain.cpp:228
+#: ../src/core/control/XournalMain.cpp:234
 msgid "Restore file"
 msgstr "還原檔案"
 
-#: ../src/core/control/XournalMain.cpp:248
+#: ../src/core/control/XournalMain.cpp:254
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:440
+#: ../src/core/control/XournalMain.cpp:446
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -347,72 +347,72 @@ msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔�
 "  不在工作目錄\n"
 "  不在 {2}"
 
-#: ../src/core/control/XournalMain.cpp:445
+#: ../src/core/control/XournalMain.cpp:451
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "現在將嘗試在沒有此檔案的情況下執行。"
 
-#: ../src/core/control/XournalMain.cpp:462
-#: ../src/core/control/XournalMain.cpp:522
+#: ../src/core/control/XournalMain.cpp:468
+#: ../src/core/control/XournalMain.cpp:528
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "對唔住，Xournal++每次只能開啓一個檔案。\n"
-"其餘的已被忽略。"
+"其餘嘅已被忽略。"
 
-#: ../src/core/control/XournalMain.cpp:473
+#: ../src/core/control/XournalMain.cpp:479
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:477
+#: ../src/core/control/XournalMain.cpp:483
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:638
+#: ../src/core/control/XournalMain.cpp:644
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到頁面(第一頁:1)"
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Get version of xournalpp"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:644
+#: ../src/core/control/XournalMain.cpp:650
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:652
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:656
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:659
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:661
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:671
+#: ../src/core/control/XournalMain.cpp:677
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:681
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -420,38 +420,38 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:688
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:692
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:696
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:700
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:700
+#: ../src/core/control/XournalMain.cpp:706
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:705
+#: ../src/core/control/XournalMain.cpp:711
 msgid "Advanced export options"
 msgstr "進階輸出選項"
 
-#: ../src/core/control/XournalMain.cpp:706
+#: ../src/core/control/XournalMain.cpp:712
 msgid "Display advanced export options"
 msgstr "展示進階輸出選項"
 
@@ -696,73 +696,73 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:379
-#: ../src/core/control/xojfile/LoadHandler.cpp:408
+#: ../src/core/control/xojfile/LoadHandler.cpp:380
+#: ../src/core/control/xojfile/LoadHandler.cpp:409
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "未能讀入圖像：{1}。錯誤提示為：{2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:418
+#: ../src/core/control/xojfile/LoadHandler.cpp:419
 msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:426
+#: ../src/core/control/xojfile/LoadHandler.cpp:427
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:477
+#: ../src/core/control/xojfile/LoadHandler.cpp:478
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:515
+#: ../src/core/control/xojfile/LoadHandler.cpp:516
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:540
+#: ../src/core/control/xojfile/LoadHandler.cpp:541
 msgid "Error reading width of a stroke: {1}"
 msgstr "讀入筆劃粗細出錯：{1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:608
+#: ../src/core/control/xojfile/LoadHandler.cpp:609
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:626
+#: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "未知的筆畫類別： \"{1}\"，假設爲畫筆"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:797
-#: ../src/core/control/xojfile/LoadHandler.cpp:813
-#: ../src/core/control/xojfile/LoadHandler.cpp:1126
-#: ../src/core/control/xojfile/LoadHandler.cpp:1140
+#: ../src/core/control/xojfile/LoadHandler.cpp:798
+#: ../src/core/control/xojfile/LoadHandler.cpp:814
+#: ../src/core/control/xojfile/LoadHandler.cpp:1127
+#: ../src/core/control/xojfile/LoadHandler.cpp:1141
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "未能打開圖像：{1}。錯誤訊息：{2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:806
-#: ../src/core/control/xojfile/LoadHandler.cpp:1133
-#: ../src/core/control/xojfile/LoadHandler.cpp:1151
+#: ../src/core/control/xojfile/LoadHandler.cpp:807
+#: ../src/core/control/xojfile/LoadHandler.cpp:1134
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "無法打開附件：{1} 。錯誤信息：未有提供有效文件大小"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:826
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "無法打開附件：{1} 。錯誤信息：無法讀取文件"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:834
+#: ../src/core/control/xojfile/LoadHandler.cpp:835
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "無法打開附件：{1} 。錯誤信息：無法寫入文件"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1021
+#: ../src/core/control/xojfile/LoadHandler.cpp:1022
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1037
+#: ../src/core/control/xojfile/LoadHandler.cpp:1038
 msgid "xoj-File: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1038
+#: ../src/core/control/xojfile/LoadHandler.cpp:1039
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1170
+#: ../src/core/control/xojfile/LoadHandler.cpp:1171
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -820,17 +820,17 @@ msgstr "加載glade檔案\"{1}\"出錯(嘗試加載\"{2}\")"
 msgid "Unable to play audio recording {1}"
 msgstr "無法播放錄音{1}"
 
-#: ../src/core/gui/PageView.cpp:917
+#: ../src/core/gui/PageView.cpp:921
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "加載中..."
 
-#: ../src/core/gui/PageView.cpp:974
+#: ../src/core/gui/PageView.cpp:978
 msgid "Scroll to page {1}"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:976
+#: ../src/core/gui/PageView.cpp:980
 msgid "Add missing page"
 msgstr ""
 
@@ -1014,6 +1014,7 @@ msgid "All files"
 msgstr "所有檔案"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
 msgstr "支撐檔案"
 
@@ -1168,6 +1169,7 @@ msgid "Open template file"
 msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:197
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Open file"
 msgstr "打開檔案"
@@ -1676,57 +1678,57 @@ msgstr ""
 msgid "Zoom Slider"
 msgstr "縮放游標"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:109
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:112
 msgctxt "Color"
 msgid "Black"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:110
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:113
 msgctxt "Color"
 msgid "Green"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:111
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:114
 msgctxt "Color"
 msgid "Light Blue"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:112
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:115
 msgctxt "Color"
 msgid "Light Green"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:113
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:116
 msgctxt "Color"
 msgid "Blue"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:114
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:117
 msgctxt "Color"
 msgid "Gray"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:115
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:118
 msgctxt "Color"
 msgid "Red"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:116
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
 msgctxt "Color"
 msgid "Magenta"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:117
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
 msgid "Orange"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:118
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Yellow"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
 msgid "White"
 msgstr ""
@@ -1736,8 +1738,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr ""
 
-#: ../src/core/model/Document.cpp:322 ../src/core/model/Document.cpp:331
-#: ../src/core/model/Document.cpp:334
+#: ../src/core/model/Document.cpp:326 ../src/core/model/Document.cpp:335
+#: ../src/core/model/Document.cpp:338
 msgid "Document not loaded! ({1}), {2}"
 msgstr "文檔未加載！({1}), {2}"
 
@@ -1952,11 +1954,11 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "未能打開檔案，請手動操作：\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:246
+#: ../src/util/PathUtil.cpp:248
 msgid "xournalpp-{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:256
+#: ../src/util/PathUtil.cpp:258
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
