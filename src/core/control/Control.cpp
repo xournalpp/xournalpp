@@ -214,7 +214,7 @@ Control::~Control() {
 
 struct Control::MissingPdfData {
     bool wasPdfAttached;
-    std::string missingFileName;
+    fs::path missingFileName;
 };
 
 void Control::setLastAutosaveFile(fs::path newAutosaveFile) {
@@ -1645,7 +1645,7 @@ void Control::fileLoaded(int scrollToPage) {
 enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
 
 void Control::promptMissingPdf(Control::MissingPdfData& missingPdf, const fs::path& filepath) {
-    const fs::path missingFilePath = fs::path(missingPdf.missingFileName);
+    const fs::path& missingFilePath = missingPdf.missingFileName;
 
     // create error message
     std::string parentFolderPath;
