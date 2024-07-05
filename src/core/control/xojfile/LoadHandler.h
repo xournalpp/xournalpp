@@ -134,7 +134,7 @@ private:
     std::unique_ptr<InputStream> xmlContentStream;
 
     std::vector<PageRef> pages;
-    std::unordered_map<std::string, fs::path> audioFiles;
+    std::unordered_map<fs::path, fs::path> audioFiles;
 
     PageRef page;
     std::unique_ptr<Layer> layer;

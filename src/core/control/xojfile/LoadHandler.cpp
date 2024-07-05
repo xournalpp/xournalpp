@@ -206,7 +206,7 @@ void LoadHandler::addAudioAttachment(const fs::path& filename) {
     // Map the filename to the extracted temporary filepath
     char* tmpPath = g_file_get_path(tmpFile.get());
     // fs::path does not have a std::hash specialization on all compilers
-    this->audioFiles[filename.string()] = tmpPath;
+    this->audioFiles[filename] = tmpPath;
     g_free(tmpPath);
 }
 
@@ -735,7 +735,7 @@ void LoadHandler::setAudioAttributes(AudioElement& elem, const fs::path& filenam
 }
 
 auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
-    auto it = this->audioFiles.find(filename.string());
+    auto it = this->audioFiles.find(filename);
 
     if (it == this->audioFiles.end()) {
         logError(FS(PlaceholderString("Requested temporary file was not found for attachment {1}") %
