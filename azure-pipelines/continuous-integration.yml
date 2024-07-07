@@ -29,7 +29,7 @@ stages:
             displayName: 'Generate test locales'
           - bash: |
               cmake --build . --target test-units
-              CI=true ctest --verbose
+              CI=true ./test/test-units
             workingDirectory: ./build
             displayName: 'Run tests'
 
@@ -45,7 +45,7 @@ stages:
           - script: |
               set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
               C:\msys64\usr\bin\bash -lc "cmake --build . --target test-units"
-              C:\msys64\usr\bin\bash -lc "CI=true ctest --verbose"
+              C:\msys64\usr\bin\bash -lc "CI=true ./test/test-units"
             workingDirectory: ./build
             env:
               MSYS2_ARCH: x86_64
@@ -67,6 +67,6 @@ stages:
               export PATH="$HOME/.local/bin:/Users/xournal-dev/gtk/inst/bin:$PATH"
               cmake --build . --target test-units
               install_name_tool -add_rpath /Users/xournal-dev/gtk/inst/lib/. test/test-toolEnums
-              CI=true ctest --verbose
+              CI=true ./test/test-units
             workingDirectory: ./build
             displayName: 'Run tests'

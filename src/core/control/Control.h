@@ -22,16 +22,17 @@
 #include <glib.h>                   // for guint
 #include <gtk/gtk.h>                // for GtkLabel
 
-#include "control/ToolEnums.h"              // for ToolSize, ToolType
-#include "control/jobs/ProgressListener.h"  // for ProgressListener
-#include "control/settings/ViewModes.h"     // for ViewModeId
-#include "control/tools/EditSelection.h"    // for OrderChange
-#include "enums/Action.enum.h"              // for Action
-#include "model/DocumentHandler.h"          // for DocumentHandler
-#include "model/DocumentListener.h"         // for DocumentListener
-#include "model/GeometryTool.h"             // for GeometryTool
-#include "model/PageRef.h"                  // for PageRef
-#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler (ptr only)
+#include "control/ToolEnums.h"                      // for ToolSize, ToolType
+#include "control/jobs/ProgressListener.h"          // for ProgressListener
+#include "control/settings/ViewModes.h"             // for ViewModeId
+#include "control/tools/EditSelection.h"            // for OrderChange
+#include "enums/Action.enum.h"                      // for Action
+#include "gui/toolbarMenubar/model/ColorPalette.h"  // for ColorPalette
+#include "model/DocumentHandler.h"                  // for DocumentHandler
+#include "model/DocumentListener.h"                 // for DocumentListener
+#include "model/GeometryTool.h"                     // for GeometryTool
+#include "model/PageRef.h"                          // for PageRef
+#include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler (ptr only)
 
 #include "ClipboardHandler.h"  // for ClipboardListener
 #include "ToolHandler.h"       // for ToolListener
@@ -297,6 +298,7 @@ public:
     PageBackgroundChangeController* getPageBackgroundChangeController() const;
     LayerController* getLayerController() const;
     PluginController* getPluginController() const;
+    const Palette& getPalette() const;
 
 
     bool copy();
@@ -338,6 +340,7 @@ public:
 public:
     void registerPluginToolButtons(ToolMenuHandler* toolMenuHandler);
     inline ActionDatabase* getActionDatabase() const { return actionDB.get(); }
+    void loadPaletteFromSettings();
 
 protected:
     void setRotationSnapping(bool enable);
@@ -419,6 +422,7 @@ private:
     ZoomControl* zoom = nullptr;
 
     Settings* settings = nullptr;
+    std::unique_ptr<Palette> palette;
     MainWindow* win = nullptr;
 
     Document* doc = nullptr;

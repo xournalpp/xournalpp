@@ -1419,7 +1419,7 @@ static int applib_getColorPalette(lua_State* L) {
 
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Settings* settings = plugin->getControl()->getSettings();
-    const Palette& palette = settings->getColorPalette();
+    const Palette& palette = plugin->getControl()->getPalette();
 
 
     lua_newtable(L);  // return table

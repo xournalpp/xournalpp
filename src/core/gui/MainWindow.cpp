@@ -675,6 +675,12 @@ void MainWindow::loadToolbar(ToolbarData* d) {
     this->floatingToolbox->flagRecalculateSizeRequired();
 }
 
+void MainWindow::reloadToolbars() {
+    ToolbarData* d = getSelectedToolbar();
+    this->clearToolbar();
+    this->toolbarSelected(d);
+}
+
 auto MainWindow::getSelectedToolbar() const -> ToolbarData* { return this->selectedToolbar; }
 
 auto MainWindow::getToolbarWidgets() const -> const ToolbarWidgetArray& { return toolbarWidgets; }
