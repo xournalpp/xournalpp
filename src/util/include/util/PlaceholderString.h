@@ -44,7 +44,7 @@ public:
  */
 class PlaceholderElementString: public PlaceholderElement {
 public:
-    explicit PlaceholderElementString(std::string text): text(std::move(text)) {}
+    explicit PlaceholderElementString(std::string_view text): text(text) {}
 
     auto format(std::string format) const -> std::string override { return text; }
 

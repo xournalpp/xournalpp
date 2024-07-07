@@ -18,6 +18,8 @@
 #include <glib.h>     // for gint, guint
 #include <gtk/gtk.h>  // for GtkWidget, GtkToolbar, GtkToolItem, GtkSelectio...
 
+#include "gui/toolbarMenubar/model/ColorPalette.h"
+
 class AbstractToolItem;
 class MainWindow;
 class ToolMenuHandler;
@@ -77,5 +79,5 @@ private:
     std::string toolbarName;
     MainWindow* window;
 
-    ToolMenuHandler* toolHandler;
+    Palette palette;
 };

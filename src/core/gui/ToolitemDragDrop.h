@@ -28,7 +28,7 @@ struct ToolItemDragDropData {
     ToolItemType type;
     int id;
     AbstractToolItem* item;
-    const NamedColor* namedColor;
+    size_t paletteColorIndex;
 };
 
 class ToolitemDragDrop {
@@ -39,7 +39,7 @@ private:
 public:
     static void attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait);
     static void attachMetadata(GtkWidget* w, int id, ToolItemType type);
-    static void attachMetadataColor(GtkWidget* w, int id, const NamedColor* namedColor, AbstractToolItem* item);
+    static void attachMetadataColor(GtkWidget* w, int id, size_t paletteColorIndex, AbstractToolItem* item);
 
 public:
     static std::unique_ptr<ToolItemDragDropData> ToolItemDragDropData_new(AbstractToolItem* item);

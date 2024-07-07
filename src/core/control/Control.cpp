@@ -129,6 +129,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath, bool di
     auto name = Util::getConfigFile(SETTINGS_XML_FILE);
     this->settings = new Settings(std::move(name));
     this->settings->load();
+    this->loadPaletteFromSettings();
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
 
@@ -1308,17 +1309,21 @@ void Control::showSettings() {
         StylusCursorType stylusCursorType;
         bool highlightPosition;
         SidebarNumberingStyle sidebarStyle;
-    } callbackData = {settings->getBorderColor(),
-                      settings->getAddVerticalSpace(),
-                      settings->getAddVerticalSpaceAmountAbove(),
-                      settings->getAddVerticalSpaceAmountBelow(),
-                      settings->getAddHorizontalSpace(),
-                      settings->getAddHorizontalSpaceAmountRight(),
-                      settings->getAddHorizontalSpaceAmountLeft(),
-                      settings->getUnlimitedScrolling(),
-                      settings->getStylusCursorType(),
-                      settings->isHighlightPosition(),
-                      settings->getSidebarNumberingStyle()};
+        std::optional<std::filesystem::path> colorPaletteSetting;
+    } callbackData = {
+            settings->getBorderColor(),
+            settings->getAddVerticalSpace(),
+            settings->getAddVerticalSpaceAmountAbove(),
+            settings->getAddVerticalSpaceAmountBelow(),
+            settings->getAddHorizontalSpace(),
+            settings->getAddHorizontalSpaceAmountRight(),
+            settings->getAddHorizontalSpaceAmountLeft(),
+            settings->getUnlimitedScrolling(),
+            settings->getStylusCursorType(),
+            settings->isHighlightPosition(),
+            settings->getSidebarNumberingStyle(),
+            settings->getColorPaletteSetting(),
+    };
 
     auto dlg = xoj::popup::PopupWindowWrapper<SettingsDialog>(
             this->gladeSearchPath, settings, this, [ctrl = this, callbackData]() {
@@ -2419,3 +2424,29 @@ auto Control::getPageBackgroundChangeController() const -> PageBackgroundChangeC
 auto Control::getLayerController() const -> LayerController* { return this->layerController; }
 
 auto Control::getPluginController() const -> PluginController* { return this->pluginController; }
+
+auto Control::getPalette() const -> const Palette& { return *(this->palette); }
+
+auto Control::loadPaletteFromSettings() -> void {
+    const auto palettePath = this->settings->getColorPaletteSetting();
+    if (palettePath.empty()) {
+        this->palette->load_default();
+        return;
+    }
+
+    auto newPalette = std::make_unique<Palette>(palettePath);
+    this->palette = std::move(newPalette);
+
+    // If file does not exist there is no need to attempt parsing it
+    if (!fs::exists(this->palette->getFilePath())) {
+        this->palette->load_default();
+        return;
+    }
+
+    try {
+        this->palette->load();
+    } catch (const std::exception& e) {
+        this->palette->parseErrorDialog(e);
+        this->palette->load_default();
+    }
+}

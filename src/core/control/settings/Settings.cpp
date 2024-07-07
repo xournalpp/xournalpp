@@ -20,14 +20,14 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
 #include "util/Color.h"
-#include "util/PathUtil.h"    // for getConfigFile
-#include "util/Util.h"        // for PRECISION_FORMAT_...
-#include "util/i18n.h"        // for _
-#include "util/safe_casts.h"  // for as_unsigned
+#include "util/PathUtil.h"  // for getConfigFile
+#include "util/Util.h"      // for PRECISION_FORMAT_...
+#include "util/i18n.h"      // for _#include "util/safe_casts.h"  // for as_unsigned
 
 #include "ButtonConfig.h"  // for ButtonConfig
 #include "config-dev.h"    // for PALETTE_FILE
-#include "filesystem.h"    // for path, u8path, exists
+#include "config-dev.h"
+#include "filesystem.h"  // for path, u8path, exists
 
 
 using std::string;
@@ -239,6 +239,8 @@ void Settings::loadDefault() {
 
     this->useSpacesForTab = false;
     this->numberOfSpacesForTab = 4;
+
+    this->colorPaletteSetting = Util::getBuiltInPaletteDirectoryPath() / DEFAULT_PALETTE_FILE;
 }
 
 auto Settings::loadViewMode(ViewModeId mode) -> bool {
@@ -675,6 +677,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->stabilizerCuspDetection = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerFinalizeStroke")) == 0) {
         this->stabilizerFinalizeStroke = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("colorPalette")) == 0) {
+        std::string paletteConfig = std::string{reinterpret_cast<const char*>(value)};
+        if (!paletteConfig.empty()) {
+            this->colorPaletteSetting = paletteConfig;
+        }
     }
     /**/
 
@@ -816,24 +823,6 @@ auto Settings::load() -> bool {
 #else
     setenv("LANGUAGE", this->preferredLocale.c_str(), 1);
 #endif
-
-    /*
-     * load Color Palette
-     *  - if path does not exist create default palette file
-     *  - if error during parsing load default, but do not overwrite
-     *    existing palette file (would be annoying for users)
-     */
-    auto paletteFile = Util::getConfigFile(PALETTE_FILE);
-    if (!fs::exists(paletteFile)) {
-        Palette::create_default(paletteFile);
-    }
-    this->palette = std::make_unique<Palette>(std::move(paletteFile));
-    try {
-        this->palette->load();
-    } catch (const std::exception& e) {
-        this->palette->parseErrorDialog(e);
-        this->palette->load_default();
-    }
 
     return true;
 }
@@ -1150,6 +1139,11 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(stabilizerMass);
     SAVE_BOOL_PROP(stabilizerCuspDetection);
     SAVE_BOOL_PROP(stabilizerFinalizeStroke);
+
+    if (!this->colorPaletteSetting.empty()) {
+        saveProperty("colorPalette", this->colorPaletteSetting.u8string().c_str(), root);
+    }
+
     /**/
 
     SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
@@ -2590,12 +2584,10 @@ void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preproce
     save();
 }
 
-/**
- * @brief Get Color Palette used for Tools
- *
- * @return Palette&
- */
-auto Settings::getColorPalette() -> const Palette& { return *(this->palette); }
+
+auto Settings::getColorPaletteSetting() -> fs::path const& { return this->colorPaletteSetting; }
+
+void Settings::setColorPaletteSetting(fs::path palettePath) { this->colorPaletteSetting = palettePath; }
 
 
 void Settings::setUseSpacesAsTab(bool useSpaces) { this->useSpacesForTab = useSpaces; }
