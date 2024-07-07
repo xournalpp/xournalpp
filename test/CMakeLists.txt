@@ -86,6 +86,20 @@ target_link_libraries (test-units xoj::core xoj::util std::filesystem gtest_main
 target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/test")
 
 ###############################################################################
+# Define test-gtk-integration
+###############################################################################
+
+# Get all test-gtk test source files
+file (GLOB_RECURSE test-gtk-sources
+        gtk_tests/*.cpp
+        )
+
+# Define test-gtk-integration target
+add_executable (test-gtk-integration EXCLUDE_FROM_ALL ${test-gtk-sources})
+target_link_libraries (test-gtk-integration xoj::core xoj::util std::filesystem gtest_main)
+target_include_directories(test-gtk-integration PRIVATE "${PROJECT_BINARY_DIR}/test")
+
+###############################################################################
 # Discover and Register Tests
 ###############################################################################
 # MacOs needs a bit longer to find the tests on azure
@@ -97,4 +111,11 @@ gtest_discover_tests(test-units
     ENVIRONMENT "${TEST_ENV_VARS}"
   $<$<NOT:$<STREQUAL:${TEST_GDK_PIXBUF_LOADER_CACHE},"">>:
     DEPENDS create-gdk-pixbuf-loader-cache>
+)
+gtest_discover_tests(test-gtk-integration
+        DISCOVERY_TIMEOUT 30
+        PROPERTIES
+        ENVIRONMENT "${TEST_ENV_VARS}"
+        $<$<NOT:$<STREQUAL:${TEST_GDK_PIXBUF_LOADER_CACHE},"">>:
+        DEPENDS create-gdk-pixbuf-loader-cache>
 )
