@@ -37,7 +37,7 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const std::string& glade, c
 
 GladeGui::~GladeGui() {
     if (!gtk_widget_get_parent(window)) {
-        gtk_widget_destroy(window);
+        //    gtk_widget_destroy(window);
     }
 }
 

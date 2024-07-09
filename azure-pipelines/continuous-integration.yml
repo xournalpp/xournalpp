@@ -29,6 +29,9 @@ stages:
             displayName: 'Generate test locales'
           - bash: |
               cmake --build . --target test-units
+              Xvfb :99 &
+              export DISPLAY=:99
+              sleep 3 # give xvfb some time to start
               CI=true ctest --verbose
             workingDirectory: ./build
             displayName: 'Run tests'
