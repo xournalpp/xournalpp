@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-03 22:47+0000\n"
-"PO-Revision-Date: 2024-07-12 01:08\n"
+"PO-Revision-Date: 2024-07-12 02:08\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -284,11 +284,11 @@ msgstr "手動でファイルを削除してください"
 
 #: ../src/core/control/XournalMain.cpp:192
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Xournal++に最近のエラーログファイルがあります。バグレポートを送信していただけると、バグが修正されるかもしれません。"
 
 #: ../src/core/control/XournalMain.cpp:194
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Xournal++に最近のエラーログファイルがあります。バグレポートを送信していただけると、バグが修正されるかもしれません。"
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
@@ -296,11 +296,11 @@ msgstr "最新のログファイル名: {1}"
 
 #: ../src/core/control/XournalMain.cpp:199
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
-msgstr ""
+msgstr "このポップアップが再び表示されないようにするには、エラーログファイルを削除してください。"
 
 #: ../src/core/control/XournalMain.cpp:202
 msgid "File Bug Report"
-msgstr ""
+msgstr "バグレポートを送信"
 
 #: ../src/core/control/XournalMain.cpp:203
 msgid "Open Logfile"
@@ -459,13 +459,17 @@ msgstr "PNGエクスポートにDPIを設定します。デフォルトは300\n"
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "PNGエクスポート時にページ幅を設定する\n"
+"                                 -i/-create-img=foo.png無しに効果はありません\n"
+"                                 -export-png-dpiが使用されると無視されます"
 
 #: ../src/core/control/XournalMain.cpp:706
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "PNGエクスポートにページの高さを設定する\n"
+"                                 -i/-create-img=foo.png無しに効果はありません\n"
+"                                 --export-png-dpi または --export-png-width 使用されると無視されます"
 
 #: ../src/core/control/XournalMain.cpp:711
 msgid "Advanced export options"
@@ -493,7 +497,7 @@ msgstr "背景のPDFを上書きしないでください。エラーの原因に
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "背景上書きの確認に失敗しました:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export File"
@@ -531,7 +535,7 @@ msgstr "SVG画像"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:32
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (互換性)"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:133
 #: ../src/core/control/jobs/SaveJob.cpp:138
@@ -665,11 +669,11 @@ msgstr "最背面に移動"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 msgid "Failed to load image"
-msgstr ""
+msgstr "画像の読み込みに失敗しました"
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
-msgstr ""
+msgstr "画像ファイルを開く際にエラーが発生しました: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -705,7 +709,7 @@ msgstr "不明なパーサエラー"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:261
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "ドキュメントが完全ではありません (末尾が切れている可能性があります)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:265
 msgid "Document is corrupted (no pages found in file)"
@@ -717,7 +721,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:331
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "ドキュメント内の予期しないタグ: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:380
 #: ../src/core/control/xojfile/LoadHandler.cpp:409
@@ -730,7 +734,7 @@ msgstr "クローンされた背景画像のページ番号を読み取ること
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:427
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "不明なpixmap::domainタイプ:{1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:478
 msgid "Unknown domain type: {1}"
@@ -750,7 +754,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "未知のストロークタイプ: \"{1}\", ペンを仮定する"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:798
 #: ../src/core/control/xojfile/LoadHandler.cpp:814
@@ -783,7 +787,7 @@ msgstr "xoj-File: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1039
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "筆圧の値が間違っています。 {1} が設定されましたが、期待値は {2} です"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1171
 msgid "Requested temporary file was not found for attachment {1}"
@@ -829,7 +833,7 @@ msgstr "属性\"{1}\"は size_t に解析しない、値が \"{2}\""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:251
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "背景\"{1}\"を書き込めませんでした、 {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:348
 msgid "Could not write background \"{1}\". Continuing anyway."
@@ -837,7 +841,7 @@ msgstr "背景\"{1}\"を書き込めませんでした。とにかく続行し�
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "Gladeファイル\"{1}\" の読み込みエラー (\"{2}\" を読み込んでみてください)"
 
 #: ../src/core/gui/PageView.cpp:388
 msgid "Unable to play audio recording {1}"
@@ -859,12 +863,12 @@ msgstr "不足しているページを追加"
 
 #: ../src/core/gui/SearchBar.cpp:80
 msgid "Text found once on this page"
-msgstr ""
+msgstr "このページでテキストが 1 件見つかりました"
 
 #: ../src/core/gui/SearchBar.cpp:82
 #, c-format
 msgid "Text found %zu times on this page"
-msgstr ""
+msgstr "このページでテキストが %zu 件見つかりました"
 
 #: ../src/core/gui/SearchBar.cpp:87
 msgid "Text not found"
@@ -876,7 +880,7 @@ msgstr "ページ {1} でテキストが 1 件見つかりました"
 
 #: ../src/core/gui/SearchBar.cpp:131
 msgid "Text found {1} times on page {2} ({3} of {1})"
-msgstr ""
+msgstr "{2} ページで {1} 件のテキストが見つかりました ({1} 件中{3} 件目)"
 
 #: ../src/core/gui/SearchBar.cpp:136
 msgid "Text not found, searched on all pages"
@@ -1024,7 +1028,7 @@ msgstr "座標を表示"
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "筆跡認識"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
@@ -1056,7 +1060,7 @@ msgstr "Xournal++テンプレート"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "画像ファイル"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
@@ -1080,7 +1084,7 @@ msgstr "Xournal++をビルドした際にGtkSourceViewが無効になりまし�
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "{1} でグローバルテンプレートファイルを開くことができません。存在していますか？"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
@@ -1123,7 +1127,7 @@ msgstr "背景色を選択"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
-msgstr ""
+msgstr "不透明度を選択: "
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
@@ -1158,15 +1162,15 @@ msgstr "<b>デバイスが見つかりませんでした。間違っているよ
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "この設定を変更するには、筆圧感度または筆圧推定を有効にしてください!"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "入力筆圧にフィルターをかける。フィルター後の筆圧に筆圧乗数を乗算する。算出された筆圧が最小筆圧よりも小さい場合は、最小筆圧値を適用します。"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
-msgstr ""
+msgstr "定義済み"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:39
 msgid "Customized"
