@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-03 22:47+0000\n"
-"PO-Revision-Date: 2024-07-14 08:31\n"
+"PO-Revision-Date: 2024-07-14 14:50\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -311,11 +311,11 @@ msgstr "刪除日誌檔案"
 
 #: ../src/core/control/XournalMain.cpp:207
 msgid "Crash log"
-msgstr ""
+msgstr "死機紀錄"
 
 #: ../src/core/control/XournalMain.cpp:229
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++上次死咗機。你要恢復上次編輯過嘅檔案嗎?"
 
 #: ../src/core/control/XournalMain.cpp:233
 msgid "Recovery file detected"
