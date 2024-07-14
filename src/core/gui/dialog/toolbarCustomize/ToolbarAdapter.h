@@ -55,10 +55,10 @@ private:
     /**
      * A tool item was dragged to the toolbar
      */
-    static bool toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y, guint time,
+    static bool toolbarDragMotionCb(GtkWidget* toolbar, GdkDragContext* context, gint x, gint y, guint time,
                                     ToolbarAdapter* adapter);
-    static void toolbarDragLeafeCb(GtkToolbar* toolbar, GdkDragContext* context, guint time, ToolbarAdapter* adapter);
-    static void toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y,
+    static void toolbarDragLeafeCb(GtkWidget* toolbar, GdkDragContext* context, guint time, ToolbarAdapter* adapter);
+    static void toolbarDragDataReceivedCb(GtkWidget* toolbar, GdkDragContext* context, gint x, gint y,
                                           GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter);
 
     /**
@@ -70,7 +70,7 @@ private:
      * @param horizontal denotes whether the toolbar is horizontal
      * @return gint position at which drop item should be inserted
      */
-    static gint toolbarGetDropIndex(GtkToolbar* toolbar, gint x, gint y, bool horizontal);
+    static gint toolbarGetDropIndex(GtkWidget* toolbar, gint x, gint y, bool horizontal);
 
 private:
     GtkWidget* w;
