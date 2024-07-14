@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-03 22:47+0000\n"
-"PO-Revision-Date: 2024-07-04 22:55\n"
+"PO-Revision-Date: 2024-07-14 06:14\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -271,11 +271,11 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:154
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "刪除檔案失敗: {1}"
 
 #: ../src/core/control/XournalMain.cpp:156
 msgid "Please delete the file manually"
-msgstr ""
+msgstr "請手動刪除檔案"
 
 #: ../src/core/control/XournalMain.cpp:192
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
