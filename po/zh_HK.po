@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-03 22:47+0000\n"
-"PO-Revision-Date: 2024-07-14 06:14\n"
+"PO-Revision-Date: 2024-07-14 08:31\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -279,7 +279,7 @@ msgstr "請手動刪除檔案"
 
 #: ../src/core/control/XournalMain.cpp:192
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "最近有 Xournal++ 嘅錯誤紀錄檔案。請提交錯誤報告，以便修正問題。"
 
 #: ../src/core/control/XournalMain.cpp:194
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
