@@ -25,6 +25,7 @@
 #include "model/PageRef.h"          // for PageRef
 #include "model/Stroke.h"           // for Stroke, StrokeTool,...
 #include "util/Color.h"             // for Color
+#include "util/PathUtil.h"          // for Util::hash
 
 #include "filesystem.h"  // for path
 
@@ -134,7 +135,8 @@ private:
     std::unique_ptr<InputStream> xmlContentStream;
 
     std::vector<PageRef> pages;
-    std::unordered_map<fs::path, fs::path> audioFiles;
+    // todo(cpp20): remove the custom hash
+    std::unordered_map<fs::path, fs::path, Util::hash<fs::path>> audioFiles;
 
     PageRef page;
     std::unique_ptr<Layer> layer;
