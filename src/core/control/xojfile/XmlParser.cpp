@@ -471,7 +471,7 @@ void XmlParser::parseBgSolid(const XmlParserHelper::AttributeMap& attributeMap) 
 
 void XmlParser::parseBgPixmap(const XmlParserHelper::AttributeMap& attributeMap) {
     const auto domain = XmlParserHelper::getAttribMandatory<XmlParserHelper::Domain>(XmlAttrs::DOMAIN_STR, attributeMap,
-                                                                                     XmlParserHelper::Domain::ABOSLUTE);
+                                                                                     XmlParserHelper::Domain::ABSOLUTE);
 
     if (domain != XmlParserHelper::Domain::CLONE) {
         const fs::path filename =
@@ -488,10 +488,10 @@ void XmlParser::parseBgPixmap(const XmlParserHelper::AttributeMap& attributeMap)
 void XmlParser::parseBgPdf(const XmlParserHelper::AttributeMap& attributeMap) {
     if (!this->pdfFilenameParsed) {
         auto domain = XmlParserHelper::getAttribMandatory<XmlParserHelper::Domain>(XmlAttrs::DOMAIN_STR, attributeMap,
-                                                                                   XmlParserHelper::Domain::ABOSLUTE);
+                                                                                   XmlParserHelper::Domain::ABSOLUTE);
         if (domain == XmlParserHelper::Domain::CLONE) {
             g_warning("XML parser: Domain \"clone\" is invalid for PDF backgrounds. Using \"absolute\" instead");
-            domain = XmlParserHelper::Domain::ABOSLUTE;
+            domain = XmlParserHelper::Domain::ABSOLUTE;
         }
 
         const fs::path filename =

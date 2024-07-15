@@ -21,6 +21,7 @@
 #include <glib.h>
 
 #include "util/Color.h"
+#include "util/EnumIndexedArray.h"
 #include "util/Util.h"
 #include "util/serdesstream.h"
 
@@ -58,7 +59,8 @@ std::optional<Color> parsePredefinedColor(const std::string& str);
 std::string decodeBase64(const char* base64data);
 
 // custom types for easier parsing using stream operators
-enum class Domain { ABOSLUTE, ATTACH, CLONE };
+enum class Domain : size_t { ABSOLUTE, ATTACH, CLONE, ENUMERATOR_COUNT };
+constexpr EnumIndexedArray<const char*, Domain> DOMAIN_NAMES = {"absolute", "attach", "clone"};
 
 };  // namespace XmlParserHelper
 

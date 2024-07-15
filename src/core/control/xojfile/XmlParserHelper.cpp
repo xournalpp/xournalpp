@@ -156,20 +156,11 @@ auto XmlParserHelper::decodeBase64(const char* base64data) -> std::string {
 
 // XmlParserHelper::Domain
 auto operator<<(std::ostream& stream, const XmlParserHelper::Domain domain) -> std::ostream& {
-    switch (domain) {
-        case XmlParserHelper::Domain::ABOSLUTE:
-            stream << "absolute";
-            break;
-        case XmlParserHelper::Domain::ATTACH:
-            stream << "attach";
-            break;
-        case XmlParserHelper::Domain::CLONE:
-            stream << "clone";
-            break;
-        default:
-            // invalid domain
-            stream.setstate(std::ios::failbit);
-            break;
+    if (domain < XmlParserHelper::Domain::ENUMERATOR_COUNT) {
+        stream << XmlParserHelper::DOMAIN_NAMES[domain];
+    } else {
+        // invalid domain
+        stream.setstate(std::ios::failbit);
     }
     return stream;
 }
@@ -177,16 +168,14 @@ auto operator<<(std::ostream& stream, const XmlParserHelper::Domain domain) -> s
 auto operator>>(std::istream& stream, XmlParserHelper::Domain& domain) -> std::istream& {
     std::string str;
     stream >> str;
-    if (str == "absolute") {
-        domain = XmlParserHelper::Domain::ABOSLUTE;
-    } else if (str == "attach") {
-        domain = XmlParserHelper::Domain::ATTACH;
-    } else if (str == "clone") {
-        domain = XmlParserHelper::Domain::CLONE;
-    } else {
-        // invalid input
-        stream.setstate(std::ios::failbit);
+    for (auto it = XmlParserHelper::DOMAIN_NAMES.begin(); it != XmlParserHelper::DOMAIN_NAMES.end(); it++) {
+        if (str == *it) {
+            domain = static_cast<XmlParserHelper::Domain>(std::distance(XmlParserHelper::DOMAIN_NAMES.begin(), it));
+            return stream;
+        }
     }
+    // invalid input
+    stream.setstate(std::ios::failbit);
     return stream;
 }
 
