@@ -51,7 +51,7 @@ public:
     bool hasErrorMessages() const;
     std::string getErrorMessages() const;
     bool isAttachedPdfMissing() const;
-    fs::path getMissingPdfFilename() const;
+    const fs::path& getMissingPdfFilename() const;
 
     /** @return The version of the loaded file */
     int getFileVersion() const;
@@ -64,7 +64,7 @@ public:
     void addPage(double width, double height);
     void finalizePage();
     void addAudioAttachment(fs::path filename);
-    void addBackground(const std::optional<std::string>& name);
+    void setBgName(std::string name);
     void setBgSolid(const PageType& bg, Color color);
     void setBgPixmap(bool attach, const fs::path& filename);
     void setBgPixmapCloned(size_t pageNr);

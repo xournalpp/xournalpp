@@ -9,11 +9,11 @@
 #include <iterator>       // for back_inserter
 #include <memory>         // for make_unique, make_shared...
 #include <optional>       // for optional
-#include <regex>          // for regex_search, smatch
+#include <regex>          // for regex_search, match_results
 #include <stdexcept>      // for runtime_error
 #include <string>         // for string
 #include <unordered_map>  // for unordered_map
-#include <utility>        // for move, forward
+#include <utility>        // for move, forward, exchange
 #include <vector>         // for vector
 
 #include <gio/gio.h>     // for g_file_get_path, g_fil...
@@ -102,7 +102,7 @@ auto LoadHandler::getErrorMessages() const -> std::string {
 
 auto LoadHandler::isAttachedPdfMissing() const -> bool { return this->attachedPdfMissing; }
 
-auto LoadHandler::getMissingPdfFilename() const -> fs::path { return this->missingPdf; }
+auto LoadHandler::getMissingPdfFilename() const -> const fs::path& { return this->missingPdf; }
 
 auto LoadHandler::getFileVersion() const -> int { return this->fileVersion; }
 
@@ -210,10 +210,9 @@ void LoadHandler::addAudioAttachment(fs::path filename) {
     g_free(tmpPath);
 }
 
-void LoadHandler::addBackground(const std::optional<std::string>& name) {
-    if (name) {
-        this->page->setBackgroundName(*name);
-    }
+void LoadHandler::setBgName(std::string name) {
+    xoj_assert(!name.empty());
+    this->page->setBackgroundName(std::move(name));
 }
 
 void LoadHandler::setBgSolid(const PageType& bg, Color color) {
@@ -516,18 +515,18 @@ void LoadHandler::openFile(fs::path const& filepath) {
                        filepath.u8string() % zip_error_strerror(zip_get_error(zipFp))));
         }
         std::array<char, MAX_VERSION_LENGTH + 1> versionString = {};
-        zip_fread(versionFp, versionString.data(), MAX_VERSION_LENGTH);
-        const std::string versions(versionString.data());
+        const auto length =
+                std::max(zip_fread(versionFp, versionString.data(), MAX_VERSION_LENGTH), static_cast<zip_int64_t>(0));
         const std::regex versionRegex("current=(\\d+?)(?:\n|\r\n)min=(\\d+?)");
-        std::smatch match;
-        if (std::regex_search(versions, match, versionRegex)) {
+        std::match_results<char*> match;
+        if (std::regex_search(versionString.data(), versionString.data() + length, match, versionRegex)) {
             this->fileVersion = std::stoi(match.str(1));
             this->minimalFileVersion = std::stoi(match.str(2));
         } else {
             zip_fclose(versionFp);
             throw std::runtime_error(
                     FS(_F("The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\"") %
-                       filepath.u8string() % versions));
+                       filepath.u8string() % std::string(versionString.data(), versionString.data() + length)));
         }
         zip_fclose(versionFp);
 
@@ -668,8 +667,7 @@ void LoadHandler::fixNullPressureValues(std::vector<double> pressures) {
                 auto newStroke = std::make_unique<Stroke>();
                 newStroke->applyStyleFrom(this->stroke.get());
                 newStroke->setPointVector(std::move(points));
-                this->layer->addElement(std::move(this->stroke));
-                this->stroke = std::move(newStroke);
+                this->layer->addElement(std::exchange(this->stroke, std::move(newStroke)));
             });
 }
 

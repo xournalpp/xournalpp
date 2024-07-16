@@ -449,10 +449,12 @@ void XmlParser::parseAudioTag() {
 void XmlParser::parseBackgroundTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto name = XmlParserHelper::getAttrib<std::string>(XmlAttrs::NAME_STR, attributeMap);
+    auto name = XmlParserHelper::getAttrib<std::string>(XmlAttrs::NAME_STR, attributeMap);
     const auto optType = XmlParserHelper::getAttrib<std::string>(XmlAttrs::TYPE_STR, attributeMap);
 
-    this->handler->addBackground(name);
+    if (name) {
+        this->handler->setBgName(std::move(*name));
+    }
     if (optType) {
         if (*optType == "solid") {
             parseBgSolid(attributeMap);
