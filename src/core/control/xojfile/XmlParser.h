@@ -32,7 +32,6 @@ class LoadHandler;
 class XmlParser {
 public:
     XmlParser(InputStream& input, LoadHandler* handler);
-    ~XmlParser();
 
     /**
      * @brief Parse the XML input and forward data to the handler's appropriate add*,
@@ -107,7 +106,13 @@ private:
 #endif
 
 
-    xmlTextReaderPtr reader;
+    struct textReaderDeleter {
+        void operator()(xmlTextReader* ptr) { xmlFreeTextReader(ptr); }
+    };
+    using xmlTextReaderWrapper = std::unique_ptr<xmlTextReader, textReaderDeleter>;
+
+
+    xmlTextReaderWrapper reader;
     LoadHandler* handler;
 
     std::stack<xoj::xml_tags::Type> hierarchy;

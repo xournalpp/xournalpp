@@ -50,7 +50,13 @@
 namespace {
 constexpr size_t MAX_VERSION_LENGTH = 50;
 constexpr size_t MAX_MIMETYPE_LENGTH = 25;
+
+struct zip_file_deleter {
+    void operator()(zip_file_t* ptr) { zip_fclose(ptr); }
+};
 }  // namespace
+
+using zip_file_wrapper = std::unique_ptr<zip_file_t, zip_file_deleter>;
 
 LoadHandler::LoadHandler():
         parsingComplete(false),
@@ -156,7 +162,7 @@ void LoadHandler::addAudioAttachment(fs::path filename) {
         return;
     }
 
-    zip_file_t* attachmentFile = zip_fopen(this->zipFp, filename.u8string().c_str(), 0);
+    auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp, filename.u8string().c_str(), 0));
 
     if (!attachmentFile) {
         logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") %
@@ -175,23 +181,19 @@ void LoadHandler::addAudioAttachment(fs::path filename) {
 
     GOutputStream* outputStream = g_io_stream_get_output_stream(G_IO_STREAM(fileStream));
 
-    gpointer data = g_malloc(1024);
+    auto data = std::make_unique<std::array<std::byte, 1024>>();
     zip_uint64_t readBytes = 0;
     while (readBytes < length) {
-        const zip_int64_t read = zip_fread(attachmentFile, data, 1024);
+        const zip_int64_t read = zip_fread(attachmentFile.get(), data->data(), data->size());
         if (read == -1) {
-            g_free(data);
-            zip_fclose(attachmentFile);
             logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: Could not read file") %
                         filename.u8string().c_str()));
             return;
         }
 
-        const gboolean writeSuccessful =
-                g_output_stream_write_all(outputStream, data, static_cast<gsize>(read), nullptr, nullptr, nullptr);
+        const gboolean writeSuccessful = g_output_stream_write_all(outputStream, data->data(), static_cast<gsize>(read),
+                                                                   nullptr, nullptr, nullptr);
         if (!writeSuccessful) {
-            g_free(data);
-            zip_fclose(attachmentFile);
             logError(FS(
                     PlaceholderString("Could not open attachment: {1}. Error message: Could not write temporary file") %
                     filename.u8string().c_str()));
@@ -200,8 +202,6 @@ void LoadHandler::addAudioAttachment(fs::path filename) {
 
         readBytes += static_cast<zip_uint64_t>(read);
     }
-    g_free(data);
-    zip_fclose(attachmentFile);
 
     // Map the filename to the extracted temporary filepath
     char* tmpPath = g_file_get_path(tmpFile.get());
@@ -491,7 +491,7 @@ void LoadHandler::openFile(fs::path const& filepath) {
 
     if (this->zipFp && !this->isGzFile) {
         // Check the mimetype
-        zip_file_t* mimetypeFp = zip_fopen(this->zipFp, "mimetype", 0);
+        auto mimetypeFp = zip_file_wrapper(zip_fopen(this->zipFp, "mimetype", 0));
         if (!mimetypeFp) {
             throw std::runtime_error(
                     FS(_F("The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}") %
@@ -499,36 +499,32 @@ void LoadHandler::openFile(fs::path const& filepath) {
         }
         std::array<char, MAX_MIMETYPE_LENGTH + 1> mimetype = {};
         // read the mimetype and a few more bytes to make sure we do not only read a subset
-        zip_fread(mimetypeFp, mimetype.data(), MAX_MIMETYPE_LENGTH);
+        zip_fread(mimetypeFp.get(), mimetype.data(), MAX_MIMETYPE_LENGTH);
         if (!strcmp(mimetype.data(), "application/xournal++")) {
-            zip_fclose(mimetypeFp);
             throw std::runtime_error(FS(_F("The file \"{1}\" is no valid .xopp file (Mimetype wrong): \"{2}\"") %
                                         filepath.u8string() % mimetype.data()));
         }
-        zip_fclose(mimetypeFp);
 
         // Get the file version
-        zip_file_t* versionFp = zip_fopen(this->zipFp, "META-INF/version", 0);
+        auto versionFp = zip_file_wrapper(zip_fopen(this->zipFp, "META-INF/version", 0));
         if (!versionFp) {
             throw std::runtime_error(
                     FS(_F("The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}") %
                        filepath.u8string() % zip_error_strerror(zip_get_error(zipFp))));
         }
         std::array<char, MAX_VERSION_LENGTH + 1> versionString = {};
-        const auto length =
-                std::max(zip_fread(versionFp, versionString.data(), MAX_VERSION_LENGTH), static_cast<zip_int64_t>(0));
+        const auto length = std::max(zip_fread(versionFp.get(), versionString.data(), MAX_VERSION_LENGTH),
+                                     static_cast<zip_int64_t>(0));
         const std::regex versionRegex("current=(\\d+?)(?:\n|\r\n)min=(\\d+?)");
         std::match_results<char*> match;
         if (std::regex_search(versionString.data(), versionString.data() + length, match, versionRegex)) {
             this->fileVersion = std::stoi(match.str(1));
             this->minimalFileVersion = std::stoi(match.str(2));
         } else {
-            zip_fclose(versionFp);
             throw std::runtime_error(
                     FS(_F("The file \"{1}\" is not a valid .xopp file (Version string corrupted): \"{2}\"") %
                        filepath.u8string() % std::string(versionString.data(), versionString.data() + length)));
         }
-        zip_fclose(versionFp);
 
         // open the main content file
         this->xmlContentStream = std::make_unique<ZipInputStream>(this->zipFp, "content.xml");
@@ -687,7 +683,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     }
     const zip_uint64_t length = attachmentFileStat.size;
 
-    zip_file_t* attachmentFile = zip_fopen(this->zipFp, filename.u8string().c_str(), 0);
+    auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp, filename.u8string().c_str(), 0));
     if (!attachmentFile) {
         logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                     zip_error_strerror(zip_get_error(this->zipFp))));
@@ -697,9 +693,8 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     auto data = std::make_unique<std::string>(length, 0);
     zip_uint64_t readBytes = 0;
     while (readBytes < length) {
-        const zip_int64_t read = zip_fread(attachmentFile, data->data() + readBytes, length - readBytes);
+        const zip_int64_t read = zip_fread(attachmentFile.get(), data->data() + readBytes, length - readBytes);
         if (read == -1) {
-            zip_fclose(attachmentFile);
             logError(
                     FS(PlaceholderString("Could not open attachment: {1}. Error message: No valid file size provided") %
                        filename.u8string()));
@@ -708,8 +703,6 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
 
         readBytes += static_cast<zip_uint64_t>(read);
     }
-
-    zip_fclose(attachmentFile);
 
     return data;
 }

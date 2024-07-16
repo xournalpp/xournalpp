@@ -72,26 +72,20 @@ XmlParser::XmlParser(InputStream& input, LoadHandler* handler):
     }
 }
 
-XmlParser::~XmlParser() {
-    if (this->reader) {
-        xmlFreeTextReader(this->reader);
-    }
-}
-
 auto XmlParser::parse(const std::function<int(XmlParser*)>& processNodeFunction) -> int {
-    int res = xmlTextReaderRead(reader);
+    int res = xmlTextReaderRead(this->reader.get());
     int startDepth{};
     if (res == 1) {
-        if (xmlTextReaderNodeType(this->reader) != XML_ELEMENT_NODE) {
+        if (xmlTextReaderNodeType(this->reader.get()) != XML_ELEMENT_NODE) {
             // The first node isn't an opening node.
             return res;
         } else {
-            startDepth = xmlTextReaderDepth(this->reader);
+            startDepth = xmlTextReaderDepth(this->reader.get());
         }
     }
 
     while (res == 1) {
-        if (xmlTextReaderDepth(this->reader) >= startDepth) {
+        if (xmlTextReaderDepth(this->reader.get()) >= startDepth) {
             DEBUG_PARSER(debugPrintNode());
             // The node processing functions always perform a read operation at
             // the end. Some do because they call parse(), so all must comply.
@@ -116,11 +110,11 @@ auto XmlParser::parse(const std::function<int(XmlParser*)>& processNodeFunction)
 
 auto XmlParser::processRootNode() -> int {
     // The root tag should not be empty
-    if (xmlTextReaderIsEmptyElement(this->reader)) {
+    if (xmlTextReaderIsEmptyElement(this->reader.get())) {
         throw std::runtime_error(_("Error parsing XML file: the document root tag is empty"));
     }
 
-    const int nodeType = xmlTextReaderNodeType(this->reader);
+    const int nodeType = xmlTextReaderNodeType(this->reader.get());
     switch (nodeType) {
         case XML_ELEMENT_NODE: {
             xoj_assert(this->hierarchy.empty());
@@ -146,18 +140,18 @@ auto XmlParser::processRootNode() -> int {
             // Parsing is done: we have arrived at the closing node
             this->handler->finalizeDocument();
             closeTag(currentTagType());
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         }
         default:
             g_warning("XML parser: Ignoring unexpected node type %d at document root", nodeType);
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
     }
 }
 
 auto XmlParser::processDocumentChildNode() -> int {
     xoj_assert(!this->hierarchy.empty());
 
-    const int nodeType = xmlTextReaderNodeType(this->reader);
+    const int nodeType = xmlTextReaderNodeType(this->reader.get());
     switch (nodeType) {
         case XML_ELEMENT_NODE: {
             xoj_assert(this->hierarchy.top() == TagType::XOURNAL || this->hierarchy.top() == TagType::MRWRITER ||
@@ -173,7 +167,7 @@ auto XmlParser::processDocumentChildNode() -> int {
                 case TagType::PAGE: {
                     // When parsing the page, the reader will move to the attributes,
                     // which are never empty. Check for empty page first.
-                    const bool isEmptyPage = xmlTextReaderIsEmptyElement(this->reader);
+                    const bool isEmptyPage = xmlTextReaderIsEmptyElement(this->reader.get());
                     parsePageTag();
                     if (isEmptyPage) {
                         g_warning("XML parser: Found empty page");
@@ -190,32 +184,32 @@ auto XmlParser::processDocumentChildNode() -> int {
                     break;
             }
 
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         }
         case XML_TEXT_NODE: {
             // ignore text from tags above (title or preview), print a warning otherwise
             if (this->hierarchy.top() != TagType::TITLE && this->hierarchy.top() != TagType::PREVIEW) {
                 g_warning("XML parser: Ignoring unexpected text under tag \"%s\"", TAG_NAMES[this->hierarchy.top()]);
             }
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         }
         case XML_ELEMENT_DECL: {
             if (this->hierarchy.top() == TagType::PAGE) {
                 this->handler->finalizePage();
             }
             closeTag(currentTagType());
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         }
         default:
             g_warning("XML parser: Ignoring unexpected node type %d in document", nodeType);
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
     }
 }
 
 auto XmlParser::processPageChildNode() -> int {
     xoj_assert(!this->hierarchy.empty());
 
-    const int nodeType = xmlTextReaderNodeType(this->reader);
+    const int nodeType = xmlTextReaderNodeType(this->reader.get());
     switch (nodeType) {
         case XML_ELEMENT_NODE: {
             xoj_assert(this->hierarchy.top() == TagType::PAGE || this->hierarchy.top() == TagType::UNKNOWN);
@@ -227,7 +221,7 @@ auto XmlParser::processPageChildNode() -> int {
                     parseBackgroundTag();
                     break;
                 case TagType::LAYER: {
-                    const bool isEmptyLayer = xmlTextReaderIsEmptyElement(this->reader);
+                    const bool isEmptyLayer = xmlTextReaderIsEmptyElement(this->reader.get());
                     parseLayerTag();
                     if (isEmptyLayer) {
                         // Don't warn: it's normal to have an empty layer in an empty page
@@ -240,24 +234,24 @@ auto XmlParser::processPageChildNode() -> int {
                     g_warning("XML parser: Ignoring unexpected tag in page: \"%s\"", currentName());
                     break;
             }
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         }
         case XML_ELEMENT_DECL:
             if (this->hierarchy.top() == TagType::LAYER) {
                 this->handler->finalizeLayer();
             }
             closeTag(currentTagType());
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         default:
             g_warning("XML parser: Ignoring unexpected node type %d in page", nodeType);
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
     }
 }
 
 auto XmlParser::processLayerChildNode() -> int {
     xoj_assert(!this->hierarchy.empty());
 
-    const int nodeType = xmlTextReaderNodeType(this->reader);
+    const int nodeType = xmlTextReaderNodeType(this->reader.get());
     switch (nodeType) {
         case XML_ELEMENT_NODE: {
             xoj_assert(this->hierarchy.top() == TagType::LAYER || this->hierarchy.top() == TagType::UNKNOWN);
@@ -269,7 +263,7 @@ auto XmlParser::processLayerChildNode() -> int {
                     parseTimestampTag();
                     break;
                 case TagType::STROKE: {
-                    const bool isEmptyStroke = xmlTextReaderIsEmptyElement(this->reader);
+                    const bool isEmptyStroke = xmlTextReaderIsEmptyElement(this->reader.get());
                     parseStrokeTag();
                     if (isEmptyStroke) {
                         g_warning("XML parser: Found empty stroke");
@@ -278,7 +272,7 @@ auto XmlParser::processLayerChildNode() -> int {
                     break;
                 }
                 case TagType::TEXT: {
-                    const bool isEmptyText = xmlTextReaderIsEmptyElement(this->reader);
+                    const bool isEmptyText = xmlTextReaderIsEmptyElement(this->reader.get());
                     parseTextTag();
                     if (isEmptyText) {
                         g_warning("XML parser: Found empty text");
@@ -287,7 +281,7 @@ auto XmlParser::processLayerChildNode() -> int {
                     break;
                 }
                 case TagType::IMAGE: {
-                    const bool isEmptyImage = xmlTextReaderIsEmptyElement(this->reader);
+                    const bool isEmptyImage = xmlTextReaderIsEmptyElement(this->reader.get());
                     parseImageTag();
                     if (isEmptyImage) {
                         g_warning("XML parser: Found empty image");
@@ -299,7 +293,7 @@ auto XmlParser::processLayerChildNode() -> int {
                     return parse(&XmlParser::processAttachment);
                 }
                 case TagType::TEXIMAGE: {
-                    const bool isEmptyTexImage = xmlTextReaderIsEmptyElement(this->reader);
+                    const bool isEmptyTexImage = xmlTextReaderIsEmptyElement(this->reader.get());
                     parseTexImageTag();
                     if (isEmptyTexImage) {
                         g_warning("XML parser: Found empty TEX image");
@@ -313,7 +307,7 @@ auto XmlParser::processLayerChildNode() -> int {
                     g_warning("XML parser: Ignoring unexpected tag in layer: \"%s\"", currentName());
                     break;
             }
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         }
         case XML_TEXT_NODE: {
             switch (this->hierarchy.top()) {
@@ -334,7 +328,7 @@ auto XmlParser::processLayerChildNode() -> int {
                               TAG_NAMES[this->hierarchy.top()]);
                     break;
             }
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         }
         case XML_ELEMENT_DECL: {
             switch (this->hierarchy.top()) {
@@ -354,18 +348,18 @@ auto XmlParser::processLayerChildNode() -> int {
                     break;
             }
             closeTag(currentTagType());
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         }
         default:
             g_warning("XML parser: Ignoring unexpected node type %d in layer", nodeType);
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
     }
 }
 
 auto XmlParser::processAttachment() -> int {
     xoj_assert(!this->hierarchy.empty());
 
-    const int nodeType = xmlTextReaderNodeType(this->reader);
+    const int nodeType = xmlTextReaderNodeType(this->reader.get());
     switch (nodeType) {
         case XML_ELEMENT_NODE: {
             xoj_assert(this->hierarchy.top() == TagType::IMAGE || this->hierarchy.top() == TagType::TEXIMAGE ||
@@ -381,14 +375,14 @@ auto XmlParser::processAttachment() -> int {
                     g_warning("XML parser: Ignoring unexpected tag in image or TEX image: \"%s\"", currentName());
                     break;
             }
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         }
         case XML_ELEMENT_DECL:
             closeTag(currentTagType());
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
         default:
             g_warning("XML parser: Ignoring unexpected node type %d in image or TEX image", nodeType);
-            return xmlTextReaderRead(this->reader);
+            return xmlTextReaderRead(this->reader.get());
     }
 }
 
@@ -622,7 +616,7 @@ void XmlParser::parseStrokeText() {
     pointVector.reserve(this->pressureBuffer.size());
 
     // Use g_ascii_strtod instead of streams beacuse it is about twice as fast
-    const char* itPtr = reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader));
+    const char* itPtr = reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader.get()));
     char* endPtr = nullptr;
     while (*itPtr != 0) {
         const double x = g_ascii_strtod(itPtr, &endPtr);
@@ -668,7 +662,7 @@ void XmlParser::parseTextTag() {
 }
 
 void XmlParser::parseTextText() {
-    auto text = std::string(reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader)));
+    auto text = std::string(reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader.get())));
     this->handler->setTextContents(std::move(text));
 }
 
@@ -685,7 +679,7 @@ void XmlParser::parseImageTag() {
 
 void XmlParser::parseImageText() {
     std::string imageData =
-            XmlParserHelper::decodeBase64(reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader)));
+            XmlParserHelper::decodeBase64(reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader.get())));
     this->handler->setImageData(std::move(imageData));
 }
 
@@ -706,7 +700,7 @@ void XmlParser::parseTexImageTag() {
 
 void XmlParser::parseTexImageText() {
     std::string imageData =
-            XmlParserHelper::decodeBase64(reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader)));
+            XmlParserHelper::decodeBase64(reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader.get())));
     this->handler->setTexImageData(std::move(imageData));
 }
 
@@ -729,11 +723,11 @@ void XmlParser::parseAttachment() {
 
 
 auto XmlParser::getAttributeMap() -> XmlParserHelper::AttributeMap {
-    xoj_assert(xmlTextReaderNodeType(this->reader) == XML_ELEMENT_NODE);
+    xoj_assert(xmlTextReaderNodeType(this->reader.get()) == XML_ELEMENT_NODE);
 
     XmlParserHelper::AttributeMap attributeMap;
-    while (xmlTextReaderMoveToNextAttribute(this->reader)) {
-        attributeMap[currentName()] = reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader));
+    while (xmlTextReaderMoveToNextAttribute(this->reader.get())) {
+        attributeMap[currentName()] = reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader.get()));
     }
 
     DEBUG_PARSER(debugPrintAttributes(attributeMap));
@@ -746,7 +740,7 @@ auto XmlParser::openTag() -> TagType {
     const TagType type = currentTagType();
     // Add a level to the hierarchy only if the element isn't "empty" (which
     // means there is no closing element)
-    if (!xmlTextReaderIsEmptyElement(this->reader)) {
+    if (!xmlTextReaderIsEmptyElement(this->reader.get())) {
         this->hierarchy.push(type);
     }
     return type;
@@ -802,7 +796,7 @@ auto XmlParser::tagNameToType(std::string_view name) const -> TagType {
     return TagType::UNKNOWN;
 }
 auto XmlParser::currentName() -> const char* {
-    return reinterpret_cast<const char*>(xmlTextReaderConstName(this->reader));
+    return reinterpret_cast<const char*>(xmlTextReaderConstName(this->reader.get()));
 }
 auto XmlParser::currentTagType() -> TagType { return tagNameToType(currentName()); }
 
@@ -815,11 +809,11 @@ void XmlParser::debugPrintNode() {
         name = "--";
     }
 
-    std::cout << std::dec << std::boolalpha << "Depth: " << xmlTextReaderDepth(this->reader)
-              << "  Type: " << xmlTextReaderNodeType(this->reader) << "  Name: " << name
-              << "  Empty: " << xmlTextReaderIsEmptyElement(this->reader);
+    std::cout << std::dec << std::boolalpha << "Depth: " << xmlTextReaderDepth(this->reader.get())
+              << "  Type: " << xmlTextReaderNodeType(this->reader.get()) << "  Name: " << name
+              << "  Empty: " << xmlTextReaderIsEmptyElement(this->reader.get());
 
-    value = reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader));
+    value = reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader.get()));
     if (value == nullptr) {
         std::cout << '\n';
     } else {
