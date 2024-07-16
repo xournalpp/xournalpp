@@ -88,18 +88,18 @@ private:
     /**
      * Add the current node's tag to the hierarchy stack and return it
      */
-    XmlTags::Type openTag();
+    xoj::xml_tags::Type openTag();
     /**
      * Remove the specified tag from the hierarchy stack. This function also
      * checks the document integrity together with `openTag()`: each opening
      * tag matches exactly one closing tag of the same name. It may throw an
      * exception if the document structure is not sound.
      */
-    void closeTag(XmlTags::Type type);
+    void closeTag(xoj::xml_tags::Type type);
 
-    XmlTags::Type tagNameToType(std::string_view name) const;
+    xoj::xml_tags::Type tagNameToType(std::string_view name) const;
     const char* currentName();
-    XmlTags::Type currentTagType();
+    xoj::xml_tags::Type currentTagType();
 
 #ifdef DEBUG_XML_PARSER
     void debugPrintNode();
@@ -110,7 +110,7 @@ private:
     xmlTextReaderPtr reader;
     LoadHandler* handler;
 
-    std::stack<XmlTags::Type> hierarchy;
+    std::stack<xoj::xml_tags::Type> hierarchy;
 
     bool pdfFilenameParsed;
 

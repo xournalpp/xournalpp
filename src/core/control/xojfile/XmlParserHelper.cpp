@@ -50,7 +50,7 @@ auto XmlParserHelper::getAttribMandatory<std::string>(const std::string& name, c
 
 auto XmlParserHelper::getAttribColorMandatory(const AttributeMap& attributeMap, const Color& defaultValue,
                                               bool bg) -> Color {
-    const auto optColorStr = getAttrib<std::string>(XmlAttrs::COLOR_STR, attributeMap);
+    const auto optColorStr = getAttrib<std::string>(xoj::xml_attrs::COLOR_STR, attributeMap);
 
     if (optColorStr) {
         std::optional<Color> optColor;

@@ -13,7 +13,7 @@
 
 
 // Names of attributes
-namespace XmlAttrs {
+namespace xoj::xml_attrs {
 
 // xournal
 constexpr auto CREATOR_STR = "creator";
@@ -62,4 +62,4 @@ constexpr auto TEXT_STR = "text";
 // attachment
 constexpr auto PATH_STR = "path";
 
-}  // namespace XmlAttrs
+}  // namespace xoj::xml_attrs

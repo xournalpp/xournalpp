@@ -30,16 +30,16 @@ void XojExportHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
 }
 
 void XojExportHandler::writeHeader() {
-    this->root->setAttrib(XmlAttrs::CREATOR_STR, PROJECT_STRING);
+    this->root->setAttrib(xoj::xml_attrs::CREATOR_STR, PROJECT_STRING);
     // Keep this version on 2, as this is anyway not read by Xournal
-    this->root->setAttrib(XmlAttrs::FILEVERSION_STR, "2");
+    this->root->setAttrib(xoj::xml_attrs::FILEVERSION_STR, "2");
     this->root->addChild(
             new XmlTextNode("title", std::string{"Xournal document (Compatibility) - see "} + PROJECT_HOMEPAGE_URL));
 }
 
 void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p) {
-    background->setAttrib(XmlAttrs::TYPE_STR, "solid");
-    background->setAttrib(XmlAttrs::COLOR_STR, getColorStr(p->getBackgroundColor()));
+    background->setAttrib(xoj::xml_attrs::TYPE_STR, "solid");
+    background->setAttrib(xoj::xml_attrs::COLOR_STR, getColorStr(p->getBackgroundColor()));
 
     PageTypeFormat bgFormat = p->getBackgroundType().format;
     std::string format;
@@ -50,7 +50,7 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p) {
         format = "plain";
     }
 
-    background->setAttrib(XmlAttrs::STYLE_STR, format);
+    background->setAttrib(xoj::xml_attrs::STYLE_STR, format);
 }
 
 void XojExportHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {

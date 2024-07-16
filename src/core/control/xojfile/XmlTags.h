@@ -13,7 +13,7 @@
 
 #include "util/EnumIndexedArray.h"
 
-namespace XmlTags {
+namespace xoj::xml_tags {
 
 enum class Type : size_t {
     UNKNOWN,
@@ -36,9 +36,9 @@ enum class Type : size_t {
     ENUMERATOR_COUNT
 };
 
-// Names corresponding to the XmlTags::Type enum. They must imperatively correspond to the order of the enum!
+// Names corresponding to the xoj::xml_tags::Type enum. They must imperatively correspond to the order of the enum!
 constexpr EnumIndexedArray<const char*, Type> NAMES = {"[unknown]", "xournal", "MrWriter",   "title",    "preview",
                                                        "page",      "audio",   "background", "layer",    "timestamp",
                                                        "stroke",    "text",    "image",      "teximage", "attachment"};
 
-}  // namespace XmlTags
+}  // namespace xoj::xml_tags
