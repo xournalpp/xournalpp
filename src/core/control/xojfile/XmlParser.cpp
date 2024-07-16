@@ -397,7 +397,7 @@ void XmlParser::parseXournalTag() {
 
     const auto fileversion = XmlParserHelper::getAttribMandatory<int>(XmlAttrs::FILEVERSION_STR, attributeMap, 1);
 
-    this->handler->addXournal(creator, fileversion);
+    this->handler->addXournal(std::move(creator), fileversion);
 }
 
 void XmlParser::parseMrWriterTag() {
@@ -411,7 +411,7 @@ void XmlParser::parseMrWriterTag() {
         creator = "Unknown";
     }
 
-    this->handler->addMrWriter(creator);
+    this->handler->addMrWriter(std::move(creator));
 }
 
 void XmlParser::parsePageTag() {
@@ -426,9 +426,9 @@ void XmlParser::parsePageTag() {
 void XmlParser::parseAudioTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto filename = XmlParserHelper::getAttribMandatory<fs::path>(XmlAttrs::AUDIO_FILENAME_STR, attributeMap);
+    auto filename = XmlParserHelper::getAttribMandatory<fs::path>(XmlAttrs::AUDIO_FILENAME_STR, attributeMap);
 
-    this->handler->addAudioAttachment(filename);
+    this->handler->addAudioAttachment(std::move(filename));
 }
 
 void XmlParser::parseBackgroundTag() {
@@ -589,10 +589,10 @@ void XmlParser::parseStrokeTag() {
     }
 
     // forward data to handler
-    this->handler->addStroke(tool, color, width, fill, capStyle, lineStyle, this->tempFilename, this->tempTimestamp);
+    this->handler->addStroke(tool, color, width, fill, capStyle, lineStyle, std::move(this->tempFilename),
+                             this->tempTimestamp);
 
-    // Reset saved audio attributes
-    this->tempFilename.clear();
+    // Reset timestamp, filename was already moved from
     this->tempTimestamp = 0;
 }
 
@@ -624,7 +624,7 @@ void XmlParser::parseStrokeText() {
 void XmlParser::parseTextTag() {
     const auto attributeMap = getAttributeMap();
 
-    const auto font = XmlParserHelper::getAttribMandatory<std::string>(XmlAttrs::FONT_STR, attributeMap, "Sans");
+    auto font = XmlParserHelper::getAttribMandatory<std::string>(XmlAttrs::FONT_STR, attributeMap, "Sans");
     const auto size = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::SIZE_STR, attributeMap, 12);
     const auto x = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::X_COORD_STR, attributeMap);
     const auto y = XmlParserHelper::getAttribMandatory<double>(XmlAttrs::Y_COORD_STR, attributeMap);
@@ -640,15 +640,14 @@ void XmlParser::parseTextTag() {
         this->tempTimestamp = XmlParserHelper::getAttribMandatory<size_t>(XmlAttrs::TIMESTAMP_STR, attributeMap, 0UL);
     }
 
-    this->handler->addText(font, size, x, y, color, tempFilename, tempTimestamp);
+    this->handler->addText(std::move(font), size, x, y, color, std::move(tempFilename), tempTimestamp);
 
-    this->tempFilename.clear();
     this->tempTimestamp = 0;
 }
 
 void XmlParser::parseTextText() {
-    const auto text = std::string(reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader)));
-    this->handler->setTextContents(text);
+    auto text = std::string(reinterpret_cast<const char*>(xmlTextReaderConstValue(this->reader)));
+    this->handler->setTextContents(std::move(text));
 }
 
 void XmlParser::parseImageTag() {
@@ -680,7 +679,7 @@ void XmlParser::parseTexImageTag() {
 
     // Attribute "texlength" found in eralier parsers was a workaround from 098a67b to bdd0ec2
 
-    this->handler->addTexImage(left, top, right, bottom, text);
+    this->handler->addTexImage(left, top, right, bottom, std::move(text));
 }
 
 void XmlParser::parseTexImageText() {

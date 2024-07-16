@@ -107,13 +107,13 @@ auto LoadHandler::getMissingPdfFilename() const -> fs::path { return this->missi
 auto LoadHandler::getFileVersion() const -> int { return this->fileVersion; }
 
 
-void LoadHandler::addXournal(const std::string& creator, int fileversion) {
-    this->creator = creator;
+void LoadHandler::addXournal(std::string creator, int fileversion) {
+    this->creator = std::move(creator);
     this->fileVersion = fileversion;
 }
 
-void LoadHandler::addMrWriter(const std::string& creator) {
-    this->creator = creator;
+void LoadHandler::addMrWriter(std::string creator) {
+    this->creator = std::move(creator);
     this->fileVersion = 1;
 }
 
@@ -137,7 +137,7 @@ void LoadHandler::finalizePage() {
     this->page.reset();
 }
 
-void LoadHandler::addAudioAttachment(const fs::path& filename) {
+void LoadHandler::addAudioAttachment(fs::path filename) {
     // Verify if attachment exists and is valid
     zip_stat_t attachmentFileStat;
     const int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
@@ -216,7 +216,7 @@ void LoadHandler::addBackground(const std::optional<std::string>& name) {
     }
 }
 
-void LoadHandler::setBgSolid(const PageType& bg, const Color& color) {
+void LoadHandler::setBgSolid(const PageType& bg, Color color) {
     this->page->setBackgroundType(bg);
     this->page->setBackgroundColor(color);
 }
@@ -336,8 +336,8 @@ void LoadHandler::finalizeLayer() {
     this->page->addLayer(this->layer.release());
 }
 
-void LoadHandler::addStroke(StrokeTool tool, const Color& color, double width, int fill, StrokeCapStyle capStyle,
-                            const std::optional<LineStyle>& lineStyle, const fs::path& filename, size_t timestamp) {
+void LoadHandler::addStroke(StrokeTool tool, Color color, double width, int fill, StrokeCapStyle capStyle,
+                            const std::optional<LineStyle>& lineStyle, fs::path filename, size_t timestamp) {
     xoj_assert(!this->stroke);
     this->stroke = std::make_unique<Stroke>();
 
@@ -351,10 +351,10 @@ void LoadHandler::addStroke(StrokeTool tool, const Color& color, double width, i
         this->stroke->setLineStyle(*lineStyle);
     }
 
-    setAudioAttributes(*this->stroke, filename, timestamp);
+    setAudioAttributes(*this->stroke, std::move(filename), timestamp);
 }
 
-void LoadHandler::setStrokePoints(std::vector<Point>&& pointVector, std::vector<double> pressures) {
+void LoadHandler::setStrokePoints(std::vector<Point> pointVector, std::vector<double> pressures) {
     xoj_assert(this->stroke);
 
     if (pointVector.size() < 2) {
@@ -387,25 +387,25 @@ void LoadHandler::finalizeStroke() {
     }
 }
 
-void LoadHandler::addText(const std::string& font, double size, double x, double y, const Color& color,
-                          const fs::path& filename, size_t timestamp) {
+void LoadHandler::addText(std::string font, double size, double x, double y, Color color, fs::path filename,
+                          size_t timestamp) {
     xoj_assert(!this->text);
     this->text = std::make_unique<Text>();
 
     XojFont& f = this->text->getFont();
-    f.setName(font);
+    f.setName(std::move(font));
     f.setSize(size);
     this->text->setX(x);
     this->text->setY(y);
     this->text->setColor(color);
 
-    setAudioAttributes(*this->text, filename, timestamp);
+    setAudioAttributes(*this->text, std::move(filename), timestamp);
 }
 
-void LoadHandler::setTextContents(const std::string& contents) {
+void LoadHandler::setTextContents(std::string contents) {
     xoj_assert(this->text);
 
-    this->text->setText(contents);
+    this->text->setText(std::move(contents));
 }
 
 void LoadHandler::finalizeText() {
@@ -424,7 +424,7 @@ void LoadHandler::addImage(double left, double top, double right, double bottom)
     this->image->setHeight(bottom - top);
 }
 
-void LoadHandler::setImageData(std::string&& data) {
+void LoadHandler::setImageData(std::string data) {
     xoj_assert(this->image);
 
     this->image->setImage(std::move(data));
@@ -445,7 +445,7 @@ void LoadHandler::finalizeImage() {
     this->layer->addElement(std::move(this->image));
 }
 
-void LoadHandler::addTexImage(double left, double top, double right, double bottom, const std::string& text) {
+void LoadHandler::addTexImage(double left, double top, double right, double bottom, std::string text) {
     xoj_assert(!this->teximage);
     this->teximage = std::make_unique<TexImage>();
 
@@ -454,10 +454,10 @@ void LoadHandler::addTexImage(double left, double top, double right, double bott
     this->teximage->setWidth(right - left);
     this->teximage->setHeight(bottom - top);
 
-    this->teximage->setText(text);
+    this->teximage->setText(std::move(text));
 }
 
-void LoadHandler::setTexImageData(std::string&& data) {
+void LoadHandler::setTexImageData(std::string data) {
     xoj_assert(this->teximage);
 
     this->teximage->loadData(std::move(data));
@@ -716,14 +716,14 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     return data;
 }
 
-void LoadHandler::setAudioAttributes(AudioElement& elem, const fs::path& filename, size_t timestamp) {
+void LoadHandler::setAudioAttributes(AudioElement& elem, fs::path filename, size_t timestamp) {
     if (!filename.empty()) {
         if (this->isGzFile) {
-            elem.setAudioFilename(filename);
+            elem.setAudioFilename(std::move(filename));
         } else {
-            const auto tempFile = getTempFileForPath(filename);
+            auto tempFile = getTempFileForPath(filename);
             if (!tempFile.empty()) {
-                elem.setAudioFilename(tempFile);
+                elem.setAudioFilename(std::move(tempFile));
             }
         }
 

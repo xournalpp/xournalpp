@@ -58,34 +58,33 @@ public:
 
 public:
     // interface for XmlParser
-    void addXournal(const std::string& creator, int fileversion);
-    void addMrWriter(const std::string& creator);
+    void addXournal(std::string creator, int fileversion);
+    void addMrWriter(std::string creator);
     void finalizeDocument();
     void addPage(double width, double height);
     void finalizePage();
-    void addAudioAttachment(const fs::path& filename);
+    void addAudioAttachment(fs::path filename);
     void addBackground(const std::optional<std::string>& name);
-    void setBgSolid(const PageType& bg, const Color& color);
+    void setBgSolid(const PageType& bg, Color color);
     void setBgPixmap(bool attach, const fs::path& filename);
     void setBgPixmapCloned(size_t pageNr);
     void setBgPdf(size_t pageno);
     void loadBgPdf(bool attach, const fs::path& filename);
     void addLayer(const std::optional<std::string>& name);
     void finalizeLayer();
-    void addStroke(StrokeTool tool, const Color& color, double width, int fill, StrokeCapStyle capStyle,
-                   const std::optional<LineStyle>& lineStyle, const fs::path& filename, size_t timestamp);
-    void setStrokePoints(std::vector<Point>&& pointVector, std::vector<double> pressures);
+    void addStroke(StrokeTool tool, Color color, double width, int fill, StrokeCapStyle capStyle,
+                   const std::optional<LineStyle>& lineStyle, fs::path filename, size_t timestamp);
+    void setStrokePoints(std::vector<Point> pointVector, std::vector<double> pressures);
     void finalizeStroke();
-    void addText(const std::string& font, double size, double x, double y, const Color& color, const fs::path& filename,
-                 size_t timestamp);
-    void setTextContents(const std::string& contents);
+    void addText(std::string font, double size, double x, double y, Color color, fs::path filename, size_t timestamp);
+    void setTextContents(std::string contents);
     void finalizeText();
     void addImage(double left, double top, double right, double bottom);
-    void setImageData(std::string&& data);
+    void setImageData(std::string data);
     void setImageAttachment(const fs::path& filename);
     void finalizeImage();
-    void addTexImage(double left, double top, double right, double bottom, const std::string& text);
-    void setTexImageData(std::string&& data);
+    void addTexImage(double left, double top, double right, double bottom, std::string text);
+    void setTexImageData(std::string data);
     void setTexImageAttachment(const fs::path& filename);
     void finalizeTexImage();
 
@@ -104,7 +103,7 @@ private:
      */
     std::unique_ptr<std::string> readZipAttachment(fs::path const& filename);
 
-    void setAudioAttributes(AudioElement& elem, const fs::path& filename, size_t timestamp);
+    void setAudioAttributes(AudioElement& elem, fs::path filename, size_t timestamp);
     fs::path getTempFileForPath(fs::path const& filename);
 
     /**
