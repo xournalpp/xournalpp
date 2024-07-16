@@ -115,6 +115,11 @@ auto XmlParser::parse(const std::function<int(XmlParser*)>& processNodeFunction)
 
 
 auto XmlParser::processRootNode() -> int {
+    // The root tag should not be empty
+    if (xmlTextReaderIsEmptyElement(this->reader)) {
+        throw std::runtime_error(_("Error parsing XML file: the document root tag is empty"));
+    }
+
     const int nodeType = xmlTextReaderNodeType(this->reader);
     switch (nodeType) {
         case XML_ELEMENT_NODE: {
@@ -133,11 +138,6 @@ auto XmlParser::processRootNode() -> int {
                     // Print a warning, but attempt parsing the document anyway
                     g_warning("XML parser: Unexpected root tag: \"%s\"", currentName());
                     break;
-            }
-
-            // The root tag should not be empty
-            if (xmlTextReaderIsEmptyElement(this->reader)) {
-                throw std::runtime_error(_("Error parsing XML file: the document root tag is empty"));
             }
 
             return parse(&XmlParser::processDocumentChildNode);
@@ -170,14 +170,18 @@ auto XmlParser::processDocumentChildNode() -> int {
                 case TagType::PREVIEW:
                     // Ignore these tags, we don't need them.
                     break;
-                case TagType::PAGE:
+                case TagType::PAGE: {
+                    // When parsing the page, the reader will move to the attributes,
+                    // which are never empty. Check for empty page first.
+                    const bool isEmptyPage = xmlTextReaderIsEmptyElement(this->reader);
                     parsePageTag();
-                    if (xmlTextReaderIsEmptyElement(this->reader)) {
+                    if (isEmptyPage) {
                         g_warning("XML parser: Found empty page");
                         this->handler->finalizePage();
                         break;
                     }
                     return parse(&XmlParser::processPageChildNode);
+                }
                 case TagType::AUDIO:
                     parseAudioTag();
                     break;
@@ -222,14 +226,16 @@ auto XmlParser::processPageChildNode() -> int {
                 case TagType::BACKGROUND:
                     parseBackgroundTag();
                     break;
-                case TagType::LAYER:
+                case TagType::LAYER: {
+                    const bool isEmptyLayer = xmlTextReaderIsEmptyElement(this->reader);
                     parseLayerTag();
-                    if (xmlTextReaderIsEmptyElement(this->reader)) {
+                    if (isEmptyLayer) {
                         // Don't warn: it's normal to have an empty layer in an empty page
                         this->handler->finalizeLayer();
                         break;
                     }
                     return parse(&XmlParser::processLayerChildNode);
+                }
                 default:
                     g_warning("XML parser: Ignoring unexpected tag in page: \"%s\"", currentName());
                     break;
@@ -262,38 +268,47 @@ auto XmlParser::processLayerChildNode() -> int {
                 case TagType::TIMESTAMP:
                     parseTimestampTag();
                     break;
-                case TagType::STROKE:
+                case TagType::STROKE: {
+                    const bool isEmptyStroke = xmlTextReaderIsEmptyElement(this->reader);
                     parseStrokeTag();
-                    if (xmlTextReaderIsEmptyElement(this->reader)) {
+                    if (isEmptyStroke) {
                         g_warning("XML parser: Found empty stroke");
                         this->handler->finalizeStroke();
                     }
                     break;
-                case TagType::TEXT:
+                }
+                case TagType::TEXT: {
+                    const bool isEmptyText = xmlTextReaderIsEmptyElement(this->reader);
                     parseTextTag();
-                    if (xmlTextReaderIsEmptyElement(this->reader)) {
+                    if (isEmptyText) {
                         g_warning("XML parser: Found empty text");
                         this->handler->finalizeText();
                     }
                     break;
-                case TagType::IMAGE:
+                }
+                case TagType::IMAGE: {
+                    const bool isEmptyImage = xmlTextReaderIsEmptyElement(this->reader);
                     parseImageTag();
-                    if (xmlTextReaderIsEmptyElement(this->reader)) {
+                    if (isEmptyImage) {
                         g_warning("XML parser: Found empty image");
                         this->handler->finalizeImage();
+                        break;
                     }
                     // An image may have an attachment. If it doesn't, parse()
                     // will return right away
                     return parse(&XmlParser::processAttachment);
-                case TagType::TEXIMAGE:
+                }
+                case TagType::TEXIMAGE: {
+                    const bool isEmptyTexImage = xmlTextReaderIsEmptyElement(this->reader);
                     parseTexImageTag();
-                    if (xmlTextReaderIsEmptyElement(this->reader)) {
+                    if (isEmptyTexImage) {
                         g_warning("XML parser: Found empty TEX image");
                         this->handler->finalizeTexImage();
                     }
                     // An image may have an attachment. If it doesn't, parse()
                     // will return right away
                     return parse(&XmlParser::processAttachment);
+                }
                 default:
                     g_warning("XML parser: Ignoring unexpected tag in layer: \"%s\"", currentName());
                     break;
