@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-02 18:25+0000\n"
-"PO-Revision-Date: 2024-06-02 18:29\n"
+"POT-Creation-Date: 2024-07-18 01:44+0000\n"
+"PO-Revision-Date: 2024-07-18 01:48\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -23,44 +23,44 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Ο φάκελος ήχου δεν έχει οριστεί ή δεν είναι έγκυρος! Η εγγραφή δεν λειτουργεί!\n"
 "Παρακαλώ ορίστε το φάκελο εγγραφής στο πεδίο \"Προτιμήσεις > Εγγραφή ήχου\""
 
-#: ../src/core/control/Control.cpp:226
+#: ../src/core/control/Control.cpp:227
 msgid "Filesystem error: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:238
+#: ../src/core/control/Control.cpp:239
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:550
+#: ../src/core/control/Control.cpp:551
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:570
+#: ../src/core/control/Control.cpp:571
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Η διαμόρφωση τη γραμμής εργαλείων \"{1}\" είναι προκαθορισμένη, θα θέλατε να δημιουργήσετε αντίγραφο για να την επεξεργαστείτε;"
 
-#: ../src/core/control/Control.cpp:573 ../src/core/control/Control.cpp:1499
+#: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
 msgid "Yes"
 msgstr "Ναι"
 
-#: ../src/core/control/Control.cpp:573 ../src/core/control/Control.cpp:1499
+#: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
 msgid "No"
 msgstr "Όχι"
 
-#: ../src/core/control/Control.cpp:797 ../src/core/control/Control.cpp:1666
-#: ../src/core/control/Control.cpp:1997 ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
+#: ../src/core/control/Control.cpp:2014 ../src/core/control/XournalMain.cpp:206
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: ../src/core/control/Control.cpp:798
+#: ../src/core/control/Control.cpp:799
 msgid "Insert after current page"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:799
+#: ../src/core/control/Control.cpp:800
 msgid "Insert at end"
 msgstr "Εισαγωγή στο τέλος της σελίδας"
 
-#: ../src/core/control/Control.cpp:802
+#: ../src/core/control/Control.cpp:803
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
@@ -68,15 +68,15 @@ msgstr "Το τρέχων έγγραφο δεν περιέχει σελίδα PD
 "Θα θέλατε να εισάγετε την σελίδα?\n\n"
 "Συμβουλή: Μπορείτε να επιλέξετε Journal → Φόντο Χαρτιού → Φόντο PDF για να εισάγεται σελίδα PDF."
 
-#: ../src/core/control/Control.cpp:846
+#: ../src/core/control/Control.cpp:847
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Καμία σελίδα PDF δεν είναι δυνατή για προσάρτηση. Πιθανότατα να χρειαστεί να ανοίξετε ξανά το έγγραφο πρώτα."
 
-#: ../src/core/control/Control.cpp:860
+#: ../src/core/control/Control.cpp:861
 msgid "Unable to retrieve pdf page."
 msgstr "Δεν ήταν να δυνατό να ανακτηθεί αυτή η σελίδα PDF."
 
-#: ../src/core/control/Control.cpp:1424
+#: ../src/core/control/Control.cpp:1441
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -84,90 +84,90 @@ msgstr "Μην ανοίγετε αρχεία αυτόματης αποθήκευ
 "Αντιγράψτε τα αρχεία σε άλλο φάκελο.\n"
 "Τα αρχεία στον Φάκελο {1} δεν μπορούν να ανοιχτούν."
 
-#: ../src/core/control/Control.cpp:1444
+#: ../src/core/control/Control.cpp:1461
 msgid "file: {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1476
+#: ../src/core/control/Control.cpp:1493
 msgid "Error opening file \"{1}\""
 msgstr "Σφάλμα κατά το άνοιγμα αρχείου \"{1}\""
 
-#: ../src/core/control/Control.cpp:1501
+#: ../src/core/control/Control.cpp:1518
 msgid "File version mismatch"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1502
+#: ../src/core/control/Control.cpp:1519
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Το αρχείο προς φόρτωση έχει μια έκδοση τύπου αρχείου νεότερη από αυτή που υποστηρίζεται από την τρέχουσα έκδοση του Xournal++, όποτε μπορεί να μη φορτωθεί ορθά. Άνοιγμα παρ'όλα αυτά;"
 
-#: ../src/core/control/Control.cpp:1525
+#: ../src/core/control/Control.cpp:1542
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1646
+#: ../src/core/control/Control.cpp:1663
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Το επισυναπτόμενο αρχείο φόντο ήταν αδύνατο να βρεθεί. Δύναται να έχει μετακινηθεί, μετονομαστεί ή διαγραφτεί."
 
-#: ../src/core/control/Control.cpp:1649
+#: ../src/core/control/Control.cpp:1666
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Το αρχείο φόντου \"{1}\" ήταν αδύνατο να βρεθεί. Δύναται να έχει μετακινηθεί, μετονομαστεί ή διαγραφτεί. Την τελευταία φορά εντοπίστηκε στο: \"{2}\""
 
-#: ../src/core/control/Control.cpp:1659
+#: ../src/core/control/Control.cpp:1676
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Προτεινόμενο αρχείο αντικατάστασης: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1664
+#: ../src/core/control/Control.cpp:1681
 msgid "Select another PDF"
 msgstr "Επιλέξτε άλλο PDF"
 
-#: ../src/core/control/Control.cpp:1665
+#: ../src/core/control/Control.cpp:1682
 msgid "Remove PDF Background"
 msgstr "Αφαίρεση φόντου PDF"
 
-#: ../src/core/control/Control.cpp:1669
+#: ../src/core/control/Control.cpp:1686
 msgid "Use proposed PDF"
 msgstr "Χρήση του προτεινόμενου αρχείου PDF"
 
-#: ../src/core/control/Control.cpp:1672
+#: ../src/core/control/Control.cpp:1689
 msgid "Missing PDF background file"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1804
+#: ../src/core/control/Control.cpp:1821
 msgid "Select font"
 msgstr "Επιλέξτε Γραμματοσειρά"
 
-#: ../src/core/control/Control.cpp:1819
+#: ../src/core/control/Control.cpp:1836
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Επιλέξτε χρώμα"
 
-#: ../src/core/control/Control.cpp:1841
+#: ../src/core/control/Control.cpp:1858
 msgid "Unsaved Document"
 msgstr "Μη Αποθηκευμένο Έγγραφο"
 
-#: ../src/core/control/Control.cpp:1990
+#: ../src/core/control/Control.cpp:2007
 msgid "Document file was removed."
 msgstr "Το έγγραφο αφαιρέθηκε."
 
-#: ../src/core/control/Control.cpp:1990
+#: ../src/core/control/Control.cpp:2007
 msgid "This document is not saved yet."
 msgstr "Το αρχείο δεν έχει αποθηκευτεί ακόμα."
 
-#: ../src/core/control/Control.cpp:1992
+#: ../src/core/control/Control.cpp:2009
 msgid "Save As..."
 msgstr "Αποθήκευση Ως..."
 
-#: ../src/core/control/Control.cpp:1992 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2009 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: ../src/core/control/Control.cpp:1995
+#: ../src/core/control/Control.cpp:2012
 msgid "Discard"
 msgstr "Απόρριψη"
 
@@ -176,8 +176,8 @@ msgid "Trying to emergency save the current open document..."
 msgstr "Προσπάθεια επείγουσας αποθήκευσης του τρέχοντος ανοιχτού εγγράφου..."
 
 #: ../src/core/control/CrashHandler.cpp:40
-#: ../src/core/control/XournalMain.cpp:303
 #: ../src/core/control/XournalMain.cpp:309
+#: ../src/core/control/XournalMain.cpp:315
 msgid "Error: {1}"
 msgstr "Σφάλμα: {1}"
 
@@ -254,8 +254,8 @@ msgid "Could not load LaTeX PDF file"
 msgstr "Δεν ήταν δυνατό να φορτωθεί το αρχείο LaTeX PDF"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:93
-#: ../src/core/control/xojfile/LoadHandler.cpp:470
-#: ../src/core/control/xojfile/LoadHandler.cpp:486
+#: ../src/core/control/xojfile/LoadHandler.cpp:471
+#: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Error reading PDF: {1}"
 msgstr "Σφάλμα ανάγνωσης PDF: {1}"
 
@@ -273,71 +273,71 @@ msgstr "Φόντο PDF λείπει"
 msgid "Running print operation failed with {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:148
+#: ../src/core/control/XournalMain.cpp:154
 msgid "Failed to delete file: {1}"
 msgstr "Απέτυχε η διαγραφή του αρχείου: {1}"
 
-#: ../src/core/control/XournalMain.cpp:150
+#: ../src/core/control/XournalMain.cpp:156
 msgid "Please delete the file manually"
 msgstr "Παρακαλώ σβήσε το αρχείο χειροκίνητα"
 
-#: ../src/core/control/XournalMain.cpp:186
+#: ../src/core/control/XournalMain.cpp:192
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:188
+#: ../src/core/control/XournalMain.cpp:194
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:191
+#: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
 msgstr "Το πιο πρόσφατο όνομα αρχείου καταγραφής: {1}"
 
-#: ../src/core/control/XournalMain.cpp:193
+#: ../src/core/control/XournalMain.cpp:199
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:196
+#: ../src/core/control/XournalMain.cpp:202
 msgid "File Bug Report"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:197
+#: ../src/core/control/XournalMain.cpp:203
 msgid "Open Logfile"
 msgstr "Άνοιγμα αρχείου καταγραφής"
 
-#: ../src/core/control/XournalMain.cpp:198
+#: ../src/core/control/XournalMain.cpp:204
 msgid "Open Logfile directory"
 msgstr "Άνοιγμα φακέλου αρχείου καταγραφής"
 
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/XournalMain.cpp:205
 msgid "Delete Logfile"
 msgstr "Διαγραφή αρχείου καταγραφής"
 
-#: ../src/core/control/XournalMain.cpp:201
+#: ../src/core/control/XournalMain.cpp:207
 msgid "Crash log"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:223
+#: ../src/core/control/XournalMain.cpp:229
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Το Xournal++ κατέρρευσε την προηγούμενη φορά. Θα θέλατε να επαναφέρετε το τελευταίο αρχείο που επεξεργαστήκατε;"
 
-#: ../src/core/control/XournalMain.cpp:227
+#: ../src/core/control/XournalMain.cpp:233
 msgid "Recovery file detected"
 msgstr "Εντοπίστηκε αρχείο για επαναφορά"
 
-#: ../src/core/control/XournalMain.cpp:228
+#: ../src/core/control/XournalMain.cpp:234
 msgid "Delete file"
 msgstr "Διαγραφή αρχείου"
 
-#: ../src/core/control/XournalMain.cpp:228
+#: ../src/core/control/XournalMain.cpp:234
 msgid "Restore file"
 msgstr "Επαναφορά αρχείου"
 
-#: ../src/core/control/XournalMain.cpp:248
+#: ../src/core/control/XournalMain.cpp:254
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Το αρχείο φόντου \"{1}\" ήταν αδύνατο να βρεθεί. Δύναται να έχει μετακινηθεί, μετονομαστεί ή διαγραφτεί."
 
-#: ../src/core/control/XournalMain.cpp:440
+#: ../src/core/control/XournalMain.cpp:446
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -351,72 +351,72 @@ msgstr "<span foreground='red' size='x-large'>Το απαιτούμενο αρχ
 " Δεν είναι στο λειτουργικό μονοπάτι\n"
 " Δεν είναι στο {2}"
 
-#: ../src/core/control/XournalMain.cpp:445
+#: ../src/core/control/XournalMain.cpp:451
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Θα προσπαθήσουμε να εκτελέσουμε χωρίς αυτό το αρχείο."
 
-#: ../src/core/control/XournalMain.cpp:462
-#: ../src/core/control/XournalMain.cpp:522
+#: ../src/core/control/XournalMain.cpp:468
+#: ../src/core/control/XournalMain.cpp:528
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Συγγνώμη το Xournal++ μπορεί να ανοίξει μόνο ένα αρχείο την φορά.\n"
 "Τα υπόλοιπα θα αγνοηθούν."
 
-#: ../src/core/control/XournalMain.cpp:473
+#: ../src/core/control/XournalMain.cpp:479
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:477
+#: ../src/core/control/XournalMain.cpp:483
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:638
+#: ../src/core/control/XournalMain.cpp:644
 msgid "Jump to Page (first Page: 1)"
 msgstr "Μετάβαση στη σελίδα (πρώτη σελίδα: 1)"
 
-#: ../src/core/control/XournalMain.cpp:642
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Get version of xournalpp"
 msgstr "Δείτε την έκδοση του xournalpp"
 
-#: ../src/core/control/XournalMain.cpp:644
+#: ../src/core/control/XournalMain.cpp:650
 msgid "Disable audio for this session"
 msgstr "Απενεργοποίηση ήχου για την υπόλοιπη διάρκεια εκτέλεσης του προγράμματος"
 
-#: ../src/core/control/XournalMain.cpp:646
+#: ../src/core/control/XournalMain.cpp:652
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:656
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:659
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as PDF"
 msgstr "Εξαγωγή σε αρχείο PDF"
 
-#: ../src/core/control/XournalMain.cpp:661
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:666
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:671
+#: ../src/core/control/XournalMain.cpp:677
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:675
+#: ../src/core/control/XournalMain.cpp:681
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -424,23 +424,23 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:682
+#: ../src/core/control/XournalMain.cpp:688
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:686
+#: ../src/core/control/XournalMain.cpp:692
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:690
+#: ../src/core/control/XournalMain.cpp:696
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Θέσε DPI για εξαγωγές PNG. Το σύνηθες είναι 300\n"
 "                                 Κανένα αποτέλεσμα χωρίς -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:694
+#: ../src/core/control/XournalMain.cpp:700
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -448,7 +448,7 @@ msgstr "Θέσε το πλάτος σελίδας για εξαγωγές PNG\n"
 "                                 Κανένα αποτέλεσμα χωρίς -i/--create-img=foo.png\n"
 "                                 Παραλείπεται αν χρησιμοποιείται το --export-png-dpi"
 
-#: ../src/core/control/XournalMain.cpp:700
+#: ../src/core/control/XournalMain.cpp:706
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -456,11 +456,11 @@ msgstr "Θέσε το μήκος σελίδας για εξαγωγές PNG\n"
 "                                 Κανένα αποτέλεσμα χωρίς -i/--create-img=foo.png\n"
 "                                 Παραλείπεται αν χρησιμοποιηθεί το --export-png-dpi ή το --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:705
+#: ../src/core/control/XournalMain.cpp:711
 msgid "Advanced export options"
 msgstr "Σύνθετες επιλογές εξαγωγής"
 
-#: ../src/core/control/XournalMain.cpp:706
+#: ../src/core/control/XournalMain.cpp:712
 msgid "Display advanced export options"
 msgstr "Εμφάνιση επιλογών προχωρημένης εξαγωγής"
 
@@ -621,7 +621,7 @@ msgid "With PDF background"
 msgstr "Με φόντο PDF"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Image"
 msgstr "Εικόνα"
 
@@ -705,73 +705,73 @@ msgstr "Μη αναμενόμενη ετικέτα ρίζας: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Μη αναμενόμενη ετικέτα στο έγγραφο: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:379
-#: ../src/core/control/xojfile/LoadHandler.cpp:408
+#: ../src/core/control/xojfile/LoadHandler.cpp:380
+#: ../src/core/control/xojfile/LoadHandler.cpp:409
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Απέτυχε η ανάγνωση της εικόνας: {1}. Μήνυμα σφάλματος: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:418
+#: ../src/core/control/xojfile/LoadHandler.cpp:419
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Δεν ήταν δυνατή η ανάγνωση αριθμού σελίδας για κλωνοποιημένη εικόνα φόντου: {1}."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:426
+#: ../src/core/control/xojfile/LoadHandler.cpp:427
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Άγνωστος pixmap::τύπος τομέα: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:477
+#: ../src/core/control/xojfile/LoadHandler.cpp:478
 msgid "Unknown domain type: {1}"
 msgstr "Άγνωστος τύπος τομέα: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:515
+#: ../src/core/control/xojfile/LoadHandler.cpp:516
 msgid "Unknown background type: {1}"
 msgstr "Άγνωστος τύπος φόντου: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:540
+#: ../src/core/control/xojfile/LoadHandler.cpp:541
 msgid "Error reading width of a stroke: {1}"
 msgstr "Σφάλμα ανάγνωσης πλάτους μιας μολυβιάς: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:608
+#: ../src/core/control/xojfile/LoadHandler.cpp:609
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:626
+#: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Άγνωστος τύπος μολυβιάς: \"{1}\", υποθέτω στυλό"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:797
-#: ../src/core/control/xojfile/LoadHandler.cpp:813
-#: ../src/core/control/xojfile/LoadHandler.cpp:1126
-#: ../src/core/control/xojfile/LoadHandler.cpp:1140
+#: ../src/core/control/xojfile/LoadHandler.cpp:798
+#: ../src/core/control/xojfile/LoadHandler.cpp:814
+#: ../src/core/control/xojfile/LoadHandler.cpp:1127
+#: ../src/core/control/xojfile/LoadHandler.cpp:1141
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:806
-#: ../src/core/control/xojfile/LoadHandler.cpp:1133
-#: ../src/core/control/xojfile/LoadHandler.cpp:1151
+#: ../src/core/control/xojfile/LoadHandler.cpp:807
+#: ../src/core/control/xojfile/LoadHandler.cpp:1134
+#: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: Δεν δόθηκε αποδεκτό μέγεθος αρχείου"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:826
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: Δεν ήταν δυνατή η ανάγνωση του αρχείου"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:834
+#: ../src/core/control/xojfile/LoadHandler.cpp:835
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: Δεν ήταν δυνατή η εγγραφή του αρχείου"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1021
+#: ../src/core/control/xojfile/LoadHandler.cpp:1022
 msgid "Wrong count of points ({1})"
 msgstr "Λάθος μέτρημα σημείων ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1037
+#: ../src/core/control/xojfile/LoadHandler.cpp:1038
 msgid "xoj-File: {1}"
 msgstr "xoj-Αρχείο: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1038
+#: ../src/core/control/xojfile/LoadHandler.cpp:1039
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1170
+#: ../src/core/control/xojfile/LoadHandler.cpp:1171
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Το προσωρινό αρχείο που ζητήθηκε δεν βρέθηκε για επισύναψη {1}"
 
@@ -829,17 +829,17 @@ msgstr "Σφάλμα κατά την φόρτωση αρχείου glade \"{1}\"
 msgid "Unable to play audio recording {1}"
 msgstr "Αδυναμία αναπαραγωγής ηχητικής εγγραφής {1}"
 
-#: ../src/core/gui/PageView.cpp:917
+#: ../src/core/gui/PageView.cpp:921
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Φόρτωση..."
 
-#: ../src/core/gui/PageView.cpp:974
+#: ../src/core/gui/PageView.cpp:978
 msgid "Scroll to page {1}"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:976
+#: ../src/core/gui/PageView.cpp:980
 msgid "Add missing page"
 msgstr ""
 
@@ -901,22 +901,22 @@ msgid "Tool - don't change"
 msgstr "Εργαλείο - καμία αλλαγή"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Pen"
 msgstr "Στυλό"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 msgid "Eraser"
 msgstr "Γόμα"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "Highlighter"
 msgstr "Υπογραμμισμός"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Text"
 msgstr "Κείμενο"
 
@@ -946,7 +946,7 @@ msgid "Select multi layer rect"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Hand"
 msgstr "Χέρι"
 
@@ -972,37 +972,37 @@ msgstr "Κανονικός σχεδιασμός"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Line"
 msgstr "Σχεδίασε Γραμμή"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Draw Rectangle"
 msgstr "Σχεδίασε Παραλληλόγραμμο"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Draw Ellipse"
 msgstr "Σχεδίαση Έλλειψης"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Draw Arrow"
 msgstr "Σχεδίασε Βέλος"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Draw Double Arrow"
 msgstr "Σχεδίασε Διπλό Βέλος"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw coordinate system"
 msgstr "Σχεδίασε σύστημα συντεταγμένων"
 
@@ -1014,7 +1014,7 @@ msgstr "Αναγνωρισμός μολυβιάς"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Draw Spline"
 msgstr "Σχεδίασε Spline"
 
@@ -1023,6 +1023,7 @@ msgid "All files"
 msgstr "Όλα τα αρχεία"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
 msgstr "Υποστηριζόμενα αρχεία"
 
@@ -1136,16 +1137,45 @@ msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:73
+#: ../src/core/gui/dialog/SettingsDialog.cpp:76
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Δεν βρέθηκαν συσκευές. Κάτι δεν πάει καλά - μήπως να κάνετε μια αναφορά σφάλματος;</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:278
+#: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:282
+#: ../src/core/gui/dialog/SettingsDialog.cpp:287
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
+msgid "Built-in palettes"
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
+msgid "User palettes"
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
+msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
+msgid "No palette files (i.e. with extension .gpl) could be found.\n"
+"Using the default until another palette is configured."
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
+msgid "Error"
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
+msgid "Name"
+msgstr ""
+
+#: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
+msgid "Palette has no Name"
 msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
@@ -1177,7 +1207,8 @@ msgid "Open template file"
 msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
+#: ../src/core/gui/dialog/XojOpenDlg.cpp:197
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
 msgid "Open file"
 msgstr "Άνοιγμα αρχείου"
 
@@ -1245,47 +1276,47 @@ msgstr "Διαχωριστικό"
 msgid "Spacer"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:78
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:79
 msgctxt "Item category in toolbar customization dialog"
 msgid "Audio"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:79
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
 msgid "Files"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
 msgctxt "Item category in toolbar customization dialog"
 msgid "Miscellaneous"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:83
 msgctxt "Item category in toolbar customization dialog"
 msgid "Navigation"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:83
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:84
 msgctxt "Item category in toolbar customization dialog"
 msgid "Selection"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:84
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
 msgctxt "Item category in toolbar customization dialog"
 msgid "Tools"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
 msgctxt "Item category in toolbar customization dialog"
 msgid "Separators"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
 msgstr ""
@@ -1359,272 +1390,272 @@ msgid "Could not parse custom toolbar.ini file: {1}\n"
 msgstr "Αδύνατη προσπέλαση προσαρμοσμένου αρχείου toolbar.ini: {1}\n"
 "Οι γραμμές εργαλείων δεν θα είναι διαθέσιμες"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
 msgid "New Xournal"
 msgstr "Νέο Xournal"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
 msgid "Export as PDF"
 msgstr "Εξαγωγή ως PDF"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:285
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
 msgid "Print"
 msgstr "Εκτύπωση"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:294
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
 #: ../src/core/undo/UndoRedoHandler.cpp:177
 msgid "Undo"
 msgstr "Αναίρεση"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:297
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
 #: ../src/core/undo/UndoRedoHandler.cpp:189
 msgid "Redo"
 msgstr "Ακύρωση Αναίρεσης"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:299
 msgid "Cut"
 msgstr "Αποκοπή"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:301
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 msgid "Copy"
 msgstr "Αντιγραφή"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:302
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 #: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
 msgstr "Επικόλληση"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:306
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
 msgid "Rotation Snapping"
 msgstr "Περιστροφή με σκάλες"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:310
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 msgid "Grid Snapping"
 msgstr "Προσκόλληση στον καμβά"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Paired pages"
 msgstr "Διπλές σελίδες"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:320
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "Presentation mode"
 msgstr "Λειτουργία παρουσίασης"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:321
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:320
 msgid "Toggle fullscreen"
 msgstr "Εναλλαγή πλήρης οθόνης"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:322
 msgid "Manage Toolbars"
 msgstr "Διαχείριση γραμμής εργαλείων"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:324
 msgid "Customize Toolbars"
 msgstr "Προσαρμογή γραμμών εργαλείων"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Zoom out"
 msgstr "Σμίκρυνση"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Zoom in"
 msgstr "Μεγέθυνση"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Zoom fit to screen"
 msgstr "Μεγέθυνση εφαρμοσμένη στην οθόνη"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Zoom to 100%"
 msgstr "Μεγέθυνση στο 100%"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Go to first page"
 msgstr "Μετάβαση στην πρώτη σελίδα"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:447
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Back"
 msgstr "Πίσω"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Go to page"
 msgstr "Μετάβαση στη σελίδα"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:340
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
 msgid "Next"
 msgstr "Επόμενο"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:341
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:340
 msgid "Go to last page"
 msgstr "Μετάβαση στην τελευταία σελίδα"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 msgid "Go to previous layer"
 msgstr "Πηγαίνετε στην προηγούμενη στρώση"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:345
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
 msgid "Go to next layer"
 msgstr "Μετάβαση στην επόμενη στρώση"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:346
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:345
 msgid "Go to top layer"
 msgstr "Μετάβαση στην πρώτη στρώση"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:349
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Next annotated page"
 msgstr "Επόμενη σημειωμένη σελίδα"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:355
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 msgid "Insert page"
 msgstr "Εισαγωγή σελίδας"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:357
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Delete current page"
 msgstr "Διαγραφή της τρέχουσας σελίδας"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:365
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "standard"
 msgstr "κανονικό"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:366
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:365
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "dashed"
 msgstr "διακεκομμένο"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:366
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "dash-/ dotted"
 msgstr "διακεκομμένο και τελείες"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "dotted"
 msgstr "τελείες"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "whiteout"
 msgstr "διορθωτικό υγρό"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "delete stroke"
 msgstr "διαγραφή μολυβιάς"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
 msgid "Add/Edit TeX"
 msgstr "Προσθήκη/επεξεργασία TeX"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Default Tool"
 msgstr "Προεπιλεγμένο εργαλείο"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Select PDF Text in Rectangle"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Setsquare"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Shape Recognizer"
 msgstr "Αναγνωρισμός Σχήματος"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "Επιλογή Περιοχής"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "Ορθογώνια Επιλογή"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "Επιλογή Περιοχή Πολλαπλών Στρωμάτων"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "Επιλογή Αντικειμένου"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Vertical Space"
 msgstr "Κατακόρυφος Χώρος"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "Αναπαραγωγή Αντικειμένου"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Record Audio / Stop Recording"
 msgstr "Εγγραφή ήχου / Λήξη εγγραφής"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Pause / Play"
 msgstr "Παύση/Αναπαραγωγή"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Stop"
 msgstr "Διακοπή"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Forward"
 msgstr "Επόμενη σελίδα"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Fill"
 msgstr "Γέμισμα"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 msgid "Fill Opacity"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Very Fine"
 msgstr "Πολύ λεπτό"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Fine"
 msgstr "Λεπτό"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Medium"
 msgstr "Μεσαίο"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Thick"
 msgstr "Παχύ"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Very Thick"
 msgstr "Πολύ παχύ"
 
@@ -1685,57 +1716,57 @@ msgstr ""
 msgid "Zoom Slider"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:109
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
 msgctxt "Color"
 msgid "Black"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:110
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
 msgid "Green"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:111
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Light Blue"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:112
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
 msgid "Light Green"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:113
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
 msgctxt "Color"
 msgid "Blue"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:114
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
 msgctxt "Color"
 msgid "Gray"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:115
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
 msgctxt "Color"
 msgid "Red"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:116
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
 msgctxt "Color"
 msgid "Magenta"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:117
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
 msgctxt "Color"
 msgid "Orange"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:118
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
 msgctxt "Color"
 msgid "Yellow"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
 msgctxt "Color"
 msgid "White"
 msgstr ""
@@ -1745,8 +1776,8 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr ""
 
-#: ../src/core/model/Document.cpp:322 ../src/core/model/Document.cpp:331
-#: ../src/core/model/Document.cpp:334
+#: ../src/core/model/Document.cpp:326 ../src/core/model/Document.cpp:335
+#: ../src/core/model/Document.cpp:338
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Το έγγραφο δεν φορτώθηκε! ({1}),{2}"
 
@@ -1955,17 +1986,17 @@ msgstr ""
 msgid "Error code {1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:175
+#: ../src/util/PathUtil.cpp:176
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Δεν ήταν δυνατό το άνοιγμα του αρχείου Πρέπει να γίνει χειροκίνητα.\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:246
+#: ../src/util/PathUtil.cpp:249
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:256
+#: ../src/util/PathUtil.cpp:259
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Αδυναμία δημιουργίας φακέλου: {1}\n"
@@ -2067,7 +2098,7 @@ msgstr "Κλείσιμο"
 #: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:425
 #: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
 #: ../ui/plugin.glade:113 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6264
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6288
 #: ../ui/texdialog.glade:203
 msgid "Ok"
 msgstr ""
@@ -2358,6 +2389,10 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:247
 msgid "Load from file"
+msgstr ""
+
+#: ../ui/paletteSettings.glade:76
+msgid "Color Palettes"
 msgstr ""
 
 #: ../ui/plugin.glade:22
@@ -3532,6 +3567,10 @@ msgstr "Γλώσσα"
 
 #: ../ui/settings.glade:6195
 msgid "Language Settings"
+msgstr ""
+
+#: ../ui/settings.glade:6249
+msgid "Palette"
 msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:20
