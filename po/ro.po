@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-18 01:47\n"
+"PO-Revision-Date: 2024-07-23 11:54\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1171,7 +1171,7 @@ msgstr "Filtrează forța de apăsare. Înmulțește forța de apăsare cu multi
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "Palete integrate"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
@@ -3654,7 +3654,7 @@ msgstr "Alege limba"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr ""
+msgstr "Paletă"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
