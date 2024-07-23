@@ -150,9 +150,12 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<Latex
                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
-    g_signal_connect(builder.get("btCancel"), "clicked",
-                     G_CALLBACK(+[](GtkButton*, gpointer win) { gtk_window_close(GTK_WINDOW(win)); }),
-                     this->window.get());
+    g_signal_connect(builder.get("btCancel"), "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
+                         auto* self = static_cast<LatexDialog*>(d);
+                         self->texCtrl->cancelEditing();
+                         gtk_window_close(self->window.get());
+                     }),
+                     this);
     g_signal_connect(builder.get("btOk"), "clicked", G_CALLBACK(+[](GtkButton*, gpointer d) {
                          auto* self = static_cast<LatexDialog*>(d);
                          self->texCtrl->insertTexImage();

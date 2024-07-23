@@ -340,6 +340,11 @@ void LatexController::insertTexImage() {
     view->getXournal()->setSelection(selection.release());
 }
 
+void LatexController::cancelEditing() {
+    // The original element is currently selected. This drops it back onto the page
+    this->control->clearSelectionEndText();
+}
+
 void LatexController::run(Control* ctrl) {
     auto self = std::make_unique<LatexController>(ctrl);
     auto depStatus = self->findTexDependencies();
