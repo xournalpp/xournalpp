@@ -41,7 +41,7 @@ auto getDisplayPalettePath(const fs::path& path) -> std::string {
 // Public Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-constexpr auto UI_FILE = "paletteSettings.glade";
+constexpr auto UI_FILE = "paletteSettings.ui";
 constexpr auto UI_PANEL_NAME = "paletteSettingsPanel";
 
 SettingsDialogPaletteTab::SettingsDialogPaletteTab(GladeSearchpath* gladeSearchPath,
