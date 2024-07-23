@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-23 13:26\n"
+"PO-Revision-Date: 2024-07-23 16:55\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3655,7 +3655,7 @@ msgstr "Alege limba"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr "Paletă"
+msgstr "Paleta"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
