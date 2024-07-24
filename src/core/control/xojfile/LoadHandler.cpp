@@ -42,6 +42,7 @@
 #include "util/PlaceholderString.h"          // for PlaceholderString
 #include "util/i18n.h"                       // for _F, FC, FS, _
 #include "util/raii/CLibrariesSPtr.h"        // for adopt
+#include "util/raii/GLibGuards.h"            // for GErrorGuard
 #include "util/raii/GObjectSPtr.h"           // for GObjectSPtr
 
 #include "filesystem.h"  // for path, is_regular_file
@@ -225,13 +226,12 @@ void LoadHandler::setBgPixmap(bool attach, const fs::path& filename) {
     if (this->isGzFile || !attach) {
         fs::path fileToLoad = getAbsoluteFilepath(filename, attach);
 
-        GError* error = nullptr;
-        img.loadFile(fileToLoad, &error);
+        xoj::util::GErrorGuard error{};
+        img.loadFile(fileToLoad, xoj::util::out_ptr(error));
 
         if (error) {
             logError(FS(PlaceholderString("Could not read image: {1}. Error message: {2}") %
                         fileToLoad.u8string().c_str() % error->message));
-            g_error_free(error);
         }
     } else {
         // The image is stored in an attachemt inside the zip archive
@@ -250,15 +250,14 @@ void LoadHandler::setBgPixmap(bool attach, const fs::path& filename) {
                 g_memory_input_stream_new_from_data(imgData.data(), static_cast<gssize>(imgData.size()), nullptr),
                 xoj::util::adopt);
 
-        GError* error = nullptr;
-        img.loadFile(inputStream.get(), filename, &error);
+        xoj::util::GErrorGuard error{};
+        img.loadFile(inputStream.get(), filename, xoj::util::out_ptr(error));
 
         g_input_stream_close(inputStream.get(), nullptr, nullptr);
 
         if (error) {
             logError(FS(PlaceholderString("Could not read image: {1}. Error message: {2}") %
                         filename.u8string().c_str() % error->message));
-            g_error_free(error);
         }
     }
     this->page->setBackgroundImage(img);
