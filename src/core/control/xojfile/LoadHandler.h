@@ -129,7 +129,11 @@ private:
     int fileVersion;
     int minimalFileVersion;
 
-    zip_t* zipFp;
+    struct zip_deleter {
+        void operator()(zip_t* ptr) { zip_close(ptr); }
+    };
+    using zip_wrapper = std::unique_ptr<zip_t, zip_deleter>;
+    zip_wrapper zipFp;
     bool isGzFile;
     std::unique_ptr<InputStream> xmlContentStream;
 

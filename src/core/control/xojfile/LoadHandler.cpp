@@ -65,7 +65,6 @@ LoadHandler::LoadHandler():
         pdfFilenameParsed(false),
         fileVersion(0),
         minimalFileVersion(0),
-        zipFp(nullptr),
         isGzFile(false) {}
 
 LoadHandler::~LoadHandler() = default;
@@ -82,7 +81,7 @@ void LoadHandler::initAttributes() {
     this->fileVersion = 0;
     this->minimalFileVersion = 0;
 
-    this->zipFp = nullptr;
+    this->zipFp.reset();
     this->isGzFile = false;
     this->xmlContentStream.reset();
 
@@ -147,10 +146,10 @@ void LoadHandler::finalizePage() {
 void LoadHandler::addAudioAttachment(fs::path filename) {
     // Verify if attachment exists and is valid
     zip_stat_t attachmentFileStat;
-    const int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
+    const int statStatus = zip_stat(this->zipFp.get(), filename.u8string().c_str(), 0, &attachmentFileStat);
     if (statStatus != 0) {
         logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") %
-                    filename.u8string().c_str() % zip_error_strerror(zip_get_error(this->zipFp))));
+                    filename.u8string().c_str() % zip_error_strerror(zip_get_error(this->zipFp.get()))));
         return;
     }
 
@@ -163,11 +162,11 @@ void LoadHandler::addAudioAttachment(fs::path filename) {
         return;
     }
 
-    auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp, filename.u8string().c_str(), 0));
+    auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp.get(), filename.u8string().c_str(), 0));
 
     if (!attachmentFile) {
         logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") %
-                    filename.u8string().c_str() % zip_error_strerror(zip_get_error(this->zipFp))));
+                    filename.u8string().c_str() % zip_error_strerror(zip_get_error(this->zipFp.get()))));
         return;
     }
 
@@ -479,7 +478,7 @@ void LoadHandler::setTexImageAttachment(const fs::path& filename) {
 void LoadHandler::openFile(fs::path const& filepath) {
     this->xournalFilepath = filepath;
     int zipError = 0;
-    this->zipFp = zip_open(filepath.u8string().c_str(), ZIP_RDONLY, &zipError);
+    this->zipFp = zip_wrapper(zip_open(filepath.u8string().c_str(), ZIP_RDONLY, &zipError));
 
     // Try to open the file as a gzip
     if (!this->zipFp && zipError == ZIP_ER_NOZIP) {
@@ -489,11 +488,11 @@ void LoadHandler::openFile(fs::path const& filepath) {
 
     if (this->zipFp && !this->isGzFile) {
         // Check the mimetype
-        auto mimetypeFp = zip_file_wrapper(zip_fopen(this->zipFp, "mimetype", 0));
+        auto mimetypeFp = zip_file_wrapper(zip_fopen(this->zipFp.get(), "mimetype", 0));
         if (!mimetypeFp) {
             throw std::runtime_error(
                     FS(_F("The file \"{1}\" is no valid .xopp file (Mimetype missing). Error message: {2}") %
-                       filepath.u8string() % zip_error_strerror(zip_get_error(zipFp))));
+                       filepath.u8string() % zip_error_strerror(zip_get_error(zipFp.get()))));
         }
         std::array<char, MAX_MIMETYPE_LENGTH + 1> mimetype = {};
         // read the mimetype and a few more bytes to make sure we do not only read a subset
@@ -504,11 +503,11 @@ void LoadHandler::openFile(fs::path const& filepath) {
         }
 
         // Get the file version
-        auto versionFp = zip_file_wrapper(zip_fopen(this->zipFp, "META-INF/version", 0));
+        auto versionFp = zip_file_wrapper(zip_fopen(this->zipFp.get(), "META-INF/version", 0));
         if (!versionFp) {
             throw std::runtime_error(
                     FS(_F("The file \"{1}\" is no valid .xopp file (Version missing). Error message: {2}") %
-                       filepath.u8string() % zip_error_strerror(zip_get_error(zipFp))));
+                       filepath.u8string() % zip_error_strerror(zip_get_error(zipFp.get()))));
         }
         std::array<char, MAX_VERSION_LENGTH + 1> versionString = {};
         const auto length = std::max(zip_fread(versionFp.get(), versionString.data(), MAX_VERSION_LENGTH),
@@ -525,7 +524,7 @@ void LoadHandler::openFile(fs::path const& filepath) {
         }
 
         // open the main content file
-        this->xmlContentStream = std::make_unique<ZipInputStream>(this->zipFp, "content.xml");
+        this->xmlContentStream = std::make_unique<ZipInputStream>(this->zipFp.get(), "content.xml");
     }
 
     // Fail if neither utility could open the file
@@ -536,10 +535,7 @@ void LoadHandler::openFile(fs::path const& filepath) {
 
 void LoadHandler::closeFile() noexcept {
     this->xmlContentStream.reset();
-
-    if (!this->isGzFile && this->zipFp) {
-        zip_close(this->zipFp);
-    }
+    this->zipFp.reset();
 }
 
 void LoadHandler::parseXml() {
@@ -667,10 +663,10 @@ void LoadHandler::fixNullPressureValues(std::vector<double> pressures) {
 
 auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr<std::string> {
     zip_stat_t attachmentFileStat;
-    const int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
+    const int statStatus = zip_stat(this->zipFp.get(), filename.u8string().c_str(), 0, &attachmentFileStat);
     if (statStatus != 0) {
         logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
-                    zip_error_strerror(zip_get_error(this->zipFp))));
+                    zip_error_strerror(zip_get_error(this->zipFp.get()))));
         return {};
     }
 
@@ -681,10 +677,10 @@ auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::unique_ptr
     }
     const zip_uint64_t length = attachmentFileStat.size;
 
-    auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp, filename.u8string().c_str(), 0));
+    auto attachmentFile = zip_file_wrapper(zip_fopen(this->zipFp.get(), filename.u8string().c_str(), 0));
     if (!attachmentFile) {
         logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
-                    zip_error_strerror(zip_get_error(this->zipFp))));
+                    zip_error_strerror(zip_get_error(this->zipFp.get()))));
         return {};
     }
 
