@@ -153,9 +153,9 @@ void LoadHandler::addAudioAttachment(fs::path filename) {
         return;
     }
 
-    gsize length = 0;
+    zip_int64_t length = 0;
     if (attachmentFileStat.valid & ZIP_STAT_SIZE) {
-        length = attachmentFileStat.size;
+        length = static_cast<zip_int64_t>(attachmentFileStat.size);
     } else {
         logError(FS(PlaceholderString("Could not open attachment: {1}. Error message: No valid file size provided") %
                     filename.u8string().c_str()));
@@ -182,7 +182,7 @@ void LoadHandler::addAudioAttachment(fs::path filename) {
     GOutputStream* outputStream = g_io_stream_get_output_stream(G_IO_STREAM(fileStream));
 
     auto data = std::make_unique<std::array<std::byte, 1024>>();
-    zip_uint64_t readBytes = 0;
+    zip_int64_t readBytes = 0;
     while (readBytes < length) {
         const zip_int64_t read = zip_fread(attachmentFile.get(), data->data(), data->size());
         if (read == -1) {
@@ -200,14 +200,13 @@ void LoadHandler::addAudioAttachment(fs::path filename) {
             return;
         }
 
-        readBytes += static_cast<zip_uint64_t>(read);
+        readBytes += read;
     }
 
     // Map the filename to the extracted temporary filepath
-    char* tmpPath = g_file_get_path(tmpFile.get());
+    const char* tmpPath = g_file_peek_path(tmpFile.get());
     // fs::path does not have a std::hash specialization on all compilers
     this->audioFiles[filename] = tmpPath;
-    g_free(tmpPath);
 }
 
 void LoadHandler::setBgName(std::string name) {
