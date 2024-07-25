@@ -434,6 +434,7 @@ void ToolbarBox::startEditing(ToolMenuHandler* handler) {
                 auto* drag = gdk_drop_get_drag(drop);
                 if (!drag) {
                     // The drag came from another app
+                    g_debug("Drop::enter but not GdkDrag - the drag probably comes from another app");
                     return GdkDragAction(0);
                 }
                 auto* content = gdk_drag_get_content(drag);
