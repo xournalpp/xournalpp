@@ -43,7 +43,7 @@ class ColorToolItem;
 struct ToolbarButtonEntry;
 class PageTypeSelectionPopover;
 class PageType;
-class Palette;
+struct Palette;
 class StylePopoverFactory;
 
 class ToolMenuHandler {
