@@ -168,11 +168,17 @@ void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
 constexpr auto* XOJ_HELP = "https://xournalpp.github.io/community/help/";
 
 void XojMsgBox::showHelp(GtkWindow* win) {
+#if GTK_CHECK_VERSION(4, 10, 0)
+    GtkUriLauncher* launcher = gtk_uri_launcher_new(XOJ_HELP);
+    gtk_uri_launcher_launch(launcher, win, nullptr, nullptr, nullptr);
+    g_object_unref(launcher);
+#else
 #ifdef _WIN32  // TODO Do we still need a separate handling for Windows?
     // gvfs is not in MSYS repositories, so we can't use gtk_show_uri.
     // Instead, we use the native API instead.
     ShellExecute(nullptr, "open", XOJ_HELP, nullptr, nullptr, SW_SHOW);
 #else
     gtk_show_uri(win, XOJ_HELP, GDK_CURRENT_TIME);
+#endif
 #endif
 }
