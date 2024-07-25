@@ -267,7 +267,7 @@ std::unique_ptr<Document> loadDocumentOrExit(const char* filename) {
     } catch (std::exception& e) {
         g_error("Document was not loaded: %s", e.what());
     }
-    return std::move(doc);
+    return doc;
 }
 }  // namespace
 
