@@ -563,18 +563,9 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Docu
     initAttributes();
     this->doc = std::make_unique<Document>(&dHanlder);
 
-    try {
-        openFile(filepath);
-        parseXml();
-    } catch (const std::exception& e) {
-        // Loading failed in an unrecoverable way
-        closeFile();
-        this->doc.reset();
-        g_warning("LoadHandler: Failed to load document. Error message: %s", e.what());
-        this->errorMessages.emplace_back(e.what());
-        return nullptr;
-    }
-
+    openFile(filepath);
+    parseXml();
+    closeFile();
 
     if (this->fileVersion == 1 || hasErrorMessages()) {
         // Either, this file was created by Xournal, not Xournal++, or loading
@@ -589,8 +580,7 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Docu
         this->doc->setFilepath(filepath);
     }
 
-    closeFile();
-
+    xoj_assert(this->doc);
     return std::move(this->doc);
 }
 
