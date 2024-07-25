@@ -55,11 +55,6 @@ private:
     xoj::util::CairoSPtr cr;
 
     /**
-     * Zoom factor
-     */
-    double zoom = 0;
-
-    /**
      * Sidebar preview
      */
     SidebarPreviewBaseEntry* sidebarPreview = nullptr;
