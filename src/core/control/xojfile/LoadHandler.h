@@ -46,11 +46,35 @@ public:
     virtual ~LoadHandler();
 
 public:
+    /**
+     * Load document located at `filepath`
+     * @returns A valid pointer to a `Document`
+     * @exception Throws a `std::runtime_error` if a fatal error is encountered.
+     */
     std::unique_ptr<Document> loadDocument(fs::path const& filepath);
 
+    /**
+     * @return True if any errors or warning have been reported using
+     *         `logError()`
+     */
     bool hasErrorMessages() const;
+
+    /**
+     * Get error messages and warnings logged when loading the file. These have
+     * already been printed to the console, but may be useful to show in the GUI
+     * as well.
+     */
     std::string getErrorMessages() const;
+
+    /**
+     * The attached PDF file was not found.
+     * Here "attached" refers to either a file in the zip archive, or a file in
+     * the same directory as the document prefixed with the filename of the
+     * document.
+     */
     bool isAttachedPdfMissing() const;
+
+    /** @return The name of the PDF background in case it was not found */
     const fs::path& getMissingPdfFilename() const;
 
     /** @return The version of the loaded file */
@@ -89,12 +113,37 @@ public:
     void finalizeTexImage();
 
 private:
+    /** Clear any attributes that may have been used before */
     void initAttributes();
 
+    /**
+     * Open a file for reading
+     * If the file is a zip file, initializes `zipFp` for access to the other
+     * files in the archive.
+     * @returns A pointer to an XML input stream, reading either directly from
+     *          the gzip file, or from "content.xml" in the zip archive
+     * @exception Throws a `std::runtime_error` if the file could not be opened
+     *            or required contents could not be found.
+     */
     std::unique_ptr<InputStream> openFile(fs::path const& filepath);
+    /** Reset `zipFp`, closing the zip archive if it is open. */
     void closeFile() noexcept;
+    /**
+     * Parse the contents of `xmlContentStream`
+     * The document will get built during this call.
+     * @param xmlContentStream An InputStream reading from the XML file. It is
+     *                         "consumed" and destroyed at function exit.
+     * @exception Throws a `std::runtime_error` if the document is corrupted and
+     *            cannot be loaded.
+     */
     void parseXml(std::unique_ptr<InputStream> xmlContentStream);
 
+    /**
+     * Remove points of the current `stroke` that have an invalid pressure.
+     * Splits up the stroke into valid segments and adds them to the layer,
+     * except for the last one, which is left in `stroke`. If no pressure points
+     * are valid, the stroke is removed entirely and `stroke` is reset.
+     */
     void fixNullPressureValues(std::vector<double> pressures);
 
     /**
@@ -103,7 +152,10 @@ private:
      */
     std::unique_ptr<std::string> readZipAttachment(fs::path const& filename);
 
+    /** Set audio attributes for `elem`, for any file type and file version. */
     void setAudioAttributes(AudioElement& elem, fs::path filename, size_t timestamp);
+
+    /** @return The path of a temporary file extracted from the zip archive. */
     fs::path getTempFileForPath(fs::path const& filename);
 
     /**
@@ -113,6 +165,10 @@ private:
      */
     fs::path getAbsoluteFilepath(const fs::path& filename, bool attach) const;
 
+    /**
+     * Store an error for retrieval through `getErrorMessages()` and print it
+     * to the console as a warning.
+     */
     void logError(std::string&& error);
 
 private:

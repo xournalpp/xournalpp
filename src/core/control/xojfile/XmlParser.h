@@ -82,6 +82,9 @@ private:
     void parseAttachment();
 
 
+    /**
+     * Get an attribute map for the current tag
+     */
     XmlParserHelper::AttributeMap getAttributeMap();
 
     /**
@@ -91,8 +94,9 @@ private:
     /**
      * Remove the specified tag from the hierarchy stack. This function also
      * checks the document integrity together with `openTag()`: each opening
-     * tag matches exactly one closing tag of the same name. It may throw an
-     * exception if the document structure is not sound.
+     * tag matches exactly one closing tag of the same name.
+     * @exception Throws a `std::runtime_error` if the document structure is not
+     *            sound.
      */
     void closeTag(xoj::xml_tags::Type type);
 
