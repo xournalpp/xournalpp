@@ -174,6 +174,12 @@ void XojMsgBox::openURL(GtkWindow* win, const char* url) {
     // Instead, we use the native API.
     ShellExecute(nullptr, "open", url, nullptr, nullptr, SW_SHOW);
 #else
+#if GTK_CHECK_VERSION(4, 10, 0)
+    GtkUriLauncher* launcher = gtk_uri_launcher_new(XOJ_HELP);
+    gtk_uri_launcher_launch(launcher, win, nullptr, nullptr, nullptr);
+    g_object_unref(launcher);
+#else
     gtk_show_uri(win, XOJ_HELP, GDK_CURRENT_TIME);
+#endif
 #endif
 }
