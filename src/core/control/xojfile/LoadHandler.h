@@ -91,9 +91,9 @@ public:
 private:
     void initAttributes();
 
-    void openFile(fs::path const& filepath);
+    std::unique_ptr<InputStream> openFile(fs::path const& filepath);
     void closeFile() noexcept;
-    void parseXml();
+    void parseXml(std::unique_ptr<InputStream> xmlContentStream);
 
     void fixNullPressureValues(std::vector<double> pressures);
 
@@ -135,7 +135,6 @@ private:
     using zip_wrapper = std::unique_ptr<zip_t, zip_deleter>;
     zip_wrapper zipFp;
     bool isGzFile;
-    std::unique_ptr<InputStream> xmlContentStream;
 
     std::vector<PageRef> pages;
     // todo(cpp20): remove the custom hash

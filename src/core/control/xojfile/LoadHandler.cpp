@@ -83,7 +83,6 @@ void LoadHandler::initAttributes() {
 
     this->zipFp.reset();
     this->isGzFile = false;
-    this->xmlContentStream.reset();
 
     this->pages.clear();
     this->audioFiles.clear();
@@ -475,15 +474,15 @@ void LoadHandler::setTexImageAttachment(const fs::path& filename) {
 }
 
 
-void LoadHandler::openFile(fs::path const& filepath) {
+std::unique_ptr<InputStream> LoadHandler::openFile(fs::path const& filepath) {
     this->xournalFilepath = filepath;
     int zipError = 0;
     this->zipFp = zip_wrapper(zip_open(filepath.u8string().c_str(), ZIP_RDONLY, &zipError));
 
     // Try to open the file as a gzip
     if (!this->zipFp && zipError == ZIP_ER_NOZIP) {
-        this->xmlContentStream = std::make_unique<GzInputStream>(filepath);
         this->isGzFile = true;
+        return std::make_unique<GzInputStream>(filepath);
     }
 
     if (this->zipFp && !this->isGzFile) {
@@ -524,25 +523,20 @@ void LoadHandler::openFile(fs::path const& filepath) {
         }
 
         // open the main content file
-        this->xmlContentStream = std::make_unique<ZipInputStream>(this->zipFp.get(), "content.xml");
+        return std::make_unique<ZipInputStream>(this->zipFp.get(), "content.xml");
     }
 
     // Fail if neither utility could open the file
-    if (!this->xmlContentStream) {
-        throw std::runtime_error(FS(_F("Could not open file: \"{1}\"") % filepath.u8string()));
-    }
+    throw std::runtime_error(FS(_F("Could not open file: \"{1}\"") % filepath.u8string()));
 }
 
-void LoadHandler::closeFile() noexcept {
-    this->xmlContentStream.reset();
-    this->zipFp.reset();
-}
+void LoadHandler::closeFile() noexcept { this->zipFp.reset(); }
 
-void LoadHandler::parseXml() {
+void LoadHandler::parseXml(std::unique_ptr<InputStream> xmlContentStream) {
     xoj_assert(this->doc);
-    xoj_assert(this->xmlContentStream);
+    xoj_assert(xmlContentStream);
 
-    XmlParser parser(*this->xmlContentStream, this);
+    XmlParser parser(*xmlContentStream, this);
     auto res = parser.parse();
 
     if (res != 0) {
@@ -563,8 +557,8 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Docu
     initAttributes();
     this->doc = std::make_unique<Document>(&dHanlder);
 
-    openFile(filepath);
-    parseXml();
+    auto xmlContentStream = openFile(filepath);
+    parseXml(std::move(xmlContentStream));
     closeFile();
 
     if (this->fileVersion == 1 || hasErrorMessages()) {
