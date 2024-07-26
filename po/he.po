@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-18 01:48\n"
+"PO-Revision-Date: 2024-07-26 06:25\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -25,7 +25,7 @@ msgstr "לא נבחרה תיקיית שמע או שהיא שגויה! הקלטה
 
 #: ../src/core/control/Control.cpp:227
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "שגיאת מערכת קבצים: {1}"
 
 #: ../src/core/control/Control.cpp:239
 msgid "Could not remove old autosave file \"{1}\": {2}"
@@ -41,11 +41,11 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
 msgid "Yes"
-msgstr ""
+msgstr "כן"
 
 #: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
 msgid "No"
-msgstr ""
+msgstr "לא"
 
 #: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
 #: ../src/core/control/Control.cpp:2014 ../src/core/control/XournalMain.cpp:206
@@ -1469,7 +1469,7 @@ msgstr "תקריב 100%‏"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Go to first page"
-msgstr "עבור לדף הראשון"
+msgstr "מעבר לדף הראשון"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
@@ -1478,7 +1478,7 @@ msgstr "חזרה"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Go to page"
-msgstr "עבור לדף"
+msgstr "מעבר לדף"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
 msgid "Next"
@@ -1486,7 +1486,7 @@ msgstr "הבא"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:340
 msgid "Go to last page"
-msgstr "עבור לדף האחרון"
+msgstr "מעבר לדף האחרון"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 msgid "Go to previous layer"
@@ -1506,11 +1506,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 msgid "Insert page"
-msgstr "הכנס דף"
+msgstr "הוספת דף"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Delete current page"
-msgstr "מחק דף נוכחי"
+msgstr "מחיקת הדף הנוכחי"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
@@ -1650,15 +1650,15 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Show all"
-msgstr "הצג הכל"
+msgstr "להציג הכול"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
 msgid "Hide all"
-msgstr "הסתר הכל"
+msgstr "להסתיר הכול"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
 msgid "Create new layer"
-msgstr "צור שכבה חדשה"
+msgstr "יצירת שכבה חדשה"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:205
 msgid "Layer"
@@ -1909,11 +1909,11 @@ msgstr "שינוי עובי קו המתאר"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page upwards"
-msgstr "העברת הדף למעלה"
+msgstr "העלאת הדף למעלה"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page downwards"
-msgstr "העברת הדף למטה"
+msgstr "הורדת הדף למטה"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:26
 msgid "Edit text"
@@ -2311,7 +2311,7 @@ msgstr "תבנית:"
 
 #: ../ui/pageFormat.glade:98
 msgid "<b>Pagesize</b>"
-msgstr "<b>גודל עמוד</b>"
+msgstr "<b>גודל דף</b>"
 
 #: ../ui/pageFormat.glade:146
 msgid "Width:"
@@ -2327,7 +2327,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:27
 msgid "Configure new page template"
-msgstr "הגדר תבנית דף חדש"
+msgstr "הגדרת תבנית דף חדשה"
 
 #: ../ui/pageTemplate.glade:45
 msgid "These settings will be used for new pages"
@@ -2335,7 +2335,7 @@ msgstr "יהיה שימוש בהגדרות אלה רק בשביל דפים חד�
 
 #: ../ui/pageTemplate.glade:67
 msgid "<b>Page size</b>"
-msgstr "<b>גודל עמוד</b>"
+msgstr "<b>גודל דף</b>"
 
 #: ../ui/pageTemplate.glade:92
 msgid "Change"
@@ -2363,11 +2363,11 @@ msgstr "<b>רקע</b>"
 
 #: ../ui/pageTemplate.glade:203
 msgid "Copy current page size instead"
-msgstr "העתק את גודל הדף הנוכחי במקום"
+msgstr "העתקת גודל הדף הנוכחי במקום"
 
 #: ../ui/pageTemplate.glade:208
 msgid "Use the current page size instead of the page size above."
-msgstr "השתמש בגודל הדף הנוכחי במקום בגודל הדף העליון."
+msgstr "להשתמש בגודל הדף הנוכחי במקום בגודל הדף העליון."
 
 #: ../ui/pageTemplate.glade:233
 msgid "Save to file"
@@ -3855,23 +3855,23 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:379
 msgid "_First Page"
-msgstr ""
+msgstr "הדף ה_ראשון"
 
 #: ../ui/mainmenubar.xml:384
 msgid "_Previous Page"
-msgstr ""
+msgstr "הדף ה_קודם"
 
 #: ../ui/mainmenubar.xml:389
 msgid "_Goto Page"
-msgstr ""
+msgstr "מ_עבר לדף"
 
 #: ../ui/mainmenubar.xml:394
 msgid "_Next Page"
-msgstr ""
+msgstr "הדף ה_בא"
 
 #: ../ui/mainmenubar.xml:399
 msgid "_Last Page"
-msgstr ""
+msgstr "הדף ה_קודם"
 
 #: ../ui/mainmenubar.xml:406
 msgid "_Previous Layer"
