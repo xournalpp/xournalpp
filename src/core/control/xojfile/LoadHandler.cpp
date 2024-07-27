@@ -59,8 +59,9 @@ struct zip_file_deleter {
 
 using zip_file_wrapper = std::unique_ptr<zip_file_t, zip_file_deleter>;
 
-LoadHandler::LoadHandler():
+LoadHandler::LoadHandler(std::string* errorMessages):
         parsingComplete(false),
+        errorMessages(errorMessages),
         attachedPdfMissing(false),
         pdfFilenameParsed(false),
         fileVersion(0),
@@ -71,7 +72,9 @@ LoadHandler::~LoadHandler() = default;
 
 void LoadHandler::initAttributes() {
     this->parsingComplete = false;
-    this->errorMessages.clear();
+    if (errorMessages) {
+        this->errorMessages->clear();
+    }
 
     this->missingPdf.clear();
     this->attachedPdfMissing = false;
@@ -93,16 +96,6 @@ void LoadHandler::initAttributes() {
     this->image.reset();
     this->teximage.reset();
     this->text.reset();
-}
-
-auto LoadHandler::hasErrorMessages() const -> bool { return !this->errorMessages.empty(); }
-
-auto LoadHandler::getErrorMessages() const -> std::string {
-    std::string messages;
-    for (const auto& error: this->errorMessages) {
-        messages += '\n' + error;
-    }
-    return messages;
 }
 
 auto LoadHandler::isAttachedPdfMissing() const -> bool { return this->attachedPdfMissing; }
@@ -561,7 +554,7 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> std::unique_ptr<Docu
     parseXml(std::move(xmlContentStream));
     closeFile();
 
-    if (this->fileVersion == 1 || hasErrorMessages()) {
+    if (this->fileVersion == 1 || (this->errorMessages && !this->errorMessages->empty())) {
         // Either, this file was created by Xournal, not Xournal++, or loading
         // the file failed to some extent (i.e. file is corrupt or uses unknown
         // features). In all cases, do not set the doc's filename, in order to
@@ -734,7 +727,9 @@ auto LoadHandler::getAbsoluteFilepath(const fs::path& filename, bool attach) con
     return absolutePath;
 }
 
-void LoadHandler::logError(std::string&& error) {
-    this->errorMessages.emplace_back(std::move(error));
-    g_warning("%s", this->errorMessages.back().c_str());
+void LoadHandler::logError(std::string error) {
+    if (this->errorMessages) {
+        g_warning("%s", error.c_str());
+        this->errorMessages->append("\n" + error);
+    }
 }

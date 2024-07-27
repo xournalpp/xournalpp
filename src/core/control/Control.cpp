@@ -1492,14 +1492,13 @@ void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<vo
     std::string errorMessages{};
 
     try {
-        LoadHandler loadHandler;
+        LoadHandler loadHandler(&errorMessages);
         doc = loadHandler.loadDocument(filepath);
 
         if (!loadHandler.getMissingPdfFilename().empty() || loadHandler.isAttachedPdfMissing()) {
             missingPdf = {loadHandler.isAttachedPdfMissing(), loadHandler.getMissingPdfFilename()};
         }
         fileVersion = loadHandler.getFileVersion();
-        errorMessages = loadHandler.getErrorMessages();
     } catch (std::exception& e) {
         g_warning("LoadHandler failed to load document. Error message: %s", e.what());
 

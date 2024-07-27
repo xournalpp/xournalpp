@@ -42,7 +42,15 @@ class Text;
 
 class LoadHandler {
 public:
-    LoadHandler();
+    /**
+     * @param errorMessages Either `nullptr` or a pointer to a string to which
+     *                      error messages that may be relevant for the user
+     *                      will be written. Error messages written to this
+     *                      string are also printed as warnings to the console.
+     *                      The pointer must remain valid until the LoadHandler
+     *                      object is destroyed.
+     */
+    LoadHandler(std::string* errorMessages = nullptr);
     virtual ~LoadHandler();
 
 public:
@@ -52,19 +60,6 @@ public:
      * @exception Throws a `std::runtime_error` if a fatal error is encountered.
      */
     std::unique_ptr<Document> loadDocument(fs::path const& filepath);
-
-    /**
-     * @return True if any errors or warning have been reported using
-     *         `logError()`
-     */
-    bool hasErrorMessages() const;
-
-    /**
-     * Get error messages and warnings logged when loading the file. These have
-     * already been printed to the console, but may be useful to show in the GUI
-     * as well.
-     */
-    std::string getErrorMessages() const;
 
     /**
      * The attached PDF file was not found.
@@ -169,13 +164,13 @@ private:
      * Store an error for retrieval through `getErrorMessages()` and print it
      * to the console as a warning.
      */
-    void logError(std::string&& error);
+    void logError(std::string error);
 
 private:
     fs::path xournalFilepath;
 
     bool parsingComplete;
-    std::vector<std::string> errorMessages;
+    std::string* errorMessages;
 
     fs::path missingPdf;
     bool attachedPdfMissing;
