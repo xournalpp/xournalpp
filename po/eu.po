@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-27 14:29\n"
+"PO-Revision-Date: 2024-07-27 15:51\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2416,7 +2416,7 @@ msgstr "Kargatu fitxategitik"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
-msgstr ""
+msgstr "Kolore Paletak"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
@@ -3650,7 +3650,7 @@ msgstr "Hizkuntza-ezarpenak"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr ""
+msgstr "Paleta"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
