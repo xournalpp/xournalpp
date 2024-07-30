@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-28 04:39\n"
+"PO-Revision-Date: 2024-07-30 09:39\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1171,32 +1171,33 @@ msgstr "过滤输入压力，压力乘以压力乘数，如果小于最小压力
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "内置调色板"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
-msgstr ""
+msgstr "用户调色板"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>以下显示的调色板来自 <a href=\"file://{1}\">内置调色板</a> 和 <a href=\"file://{2}\">用户调色板</a> 目录：</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
-msgstr ""
+msgstr "找不到调色板文件（即扩展名为 .gpl 的文件）。\n"
+"使用默认设置，直到配置了另一个调色板。"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
-msgstr ""
+msgstr "错误"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr ""
+msgstr "调色板没有名称"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
@@ -2414,7 +2415,7 @@ msgstr "从文件加载"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
-msgstr ""
+msgstr "调色板"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
@@ -3651,7 +3652,7 @@ msgstr "语言设置"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr ""
+msgstr "调色板"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
