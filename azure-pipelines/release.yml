@@ -20,7 +20,7 @@ stages:
     jobs:
       - job: 'Versioning'
         pool:
-          vmImage: 'ubuntu-20.04'
+          vmImage: 'ubuntu-22.04'
         displayName: 'Set Build Number'
         steps:
           - bash: |
@@ -48,24 +48,20 @@ stages:
     jobs:
       - template: jobs/release_ubuntu.yml
         parameters:
-          ubuntu_version: 20.04
-          job_name: 'Ubuntu20_04'
-          build_appimage: true
-      - template: jobs/release_ubuntu.yml
-        parameters:
           ubuntu_version: 22.04
           job_name: 'Ubuntu22_04'
-          gcc_version: '10'
+          build_appimage: true
+          gcc_version: '12'
       - job: 'Debian'
         pool:
-          vmImage: 'ubuntu-20.04'
+          vmImage: 'ubuntu-22.04'
         container:
           image: xournalpp/debian-latest-sudo:latest
         displayName: 'Build for Debian'
         steps:
           - bash: |
               sudo apt-get update
-              sudo apt-get install -y build-essential gcc-10 g++-10 cmake \
+              sudo apt-get install -y build-essential gcc-12 g++-12 cmake \
                   ninja-build libgtk-3-dev libpoppler-glib-dev libxml2-dev \
                   portaudio19-dev libsndfile-dev liblua5.3-dev \
                   libzip-dev gettext lsb-release librsvg2-dev help2man \
@@ -76,7 +72,7 @@ stages:
               build_type: 'RelWithDebInfo'
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DCMAKE_INSTALL_PREFIX=/usr -DCPACK_GENERATOR="TGZ;DEB"'
               cmake_commands: '--target package'
-              gcc_version: '10'
+              gcc_version: '12'
           - task: PublishPipelineArtifact@1
             inputs:
               artifactName: 'linux-debian-packages'
@@ -120,7 +116,7 @@ stages:
 
       - job: macOS
         pool:
-          vmImage: 'macOS-12'
+          vmImage: 'macOS-13'
         displayName: 'Build for macOS'
         steps:
           - template: steps/build_mac.yml

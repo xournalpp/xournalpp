@@ -1,6 +1,8 @@
 #include "util/SaveNameUtils.h"
 
-#include "util/PathUtil.h"    // for clearExtensions
+#include <string>
+
+#include "util/PathUtil.h"  // for clearExtensions
 
 
 auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardString, const fs::path& defaultFilePath) -> std::string {
@@ -9,7 +11,7 @@ auto SaveNameUtils::parseFilenameFromWildcardString(const std::string& wildcardS
 
     // parse all wildcards until none are left
     while (pos != std::string::npos) {
-        size_t wildcardStartLength = std::strlen(DEFAULT_WILDCARD_START);
+        size_t wildcardStartLength = std::string_view(DEFAULT_WILDCARD_START).length();
         size_t endPos = saveString.find(DEFAULT_WILDCARD_END, pos + wildcardStartLength);
         if (endPos == std::string::npos) {
             break;
@@ -27,7 +29,8 @@ auto SaveNameUtils::parseWildcard(const std::string& wildcard, const fs::path& d
     if (wildcard == WILDCARD_NAME) {
         fs::path path = defaultFilePath;
         Util::clearExtensions(path, ".pdf");
-        return path.u8string();
+        auto u8str = path.u8string();
+        return {u8str.begin(), u8str.end()};
     }
     if (wildcard == WILDCARD_DATE || wildcard == WILDCARD_TIME) {
         // Backwards compatibility: redirect to std::chrono placeholders
