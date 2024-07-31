@@ -62,3 +62,8 @@
  * Enable some debugging output around the action database
  */
 #cmakedefine DEBUG_ACTION_DB
+
+/**
+ * Enable debugging output for file parsing
+*/
+#cmakedefine DEBUG_XML_PARSER
