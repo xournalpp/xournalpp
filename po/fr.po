@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-18 01:47\n"
+"PO-Revision-Date: 2024-08-01 15:08\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1170,32 +1170,33 @@ msgstr "Filtrer la pression de la saisie. Multiplier la pression par le multipli
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "Palettes intégrées"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
-msgstr ""
+msgstr "Palettes de l'utilisateur"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Les palettes affichées ci-dessous proviennent des répertoires de <a href=\"file://{1}\">palettes intégrées</a> et de <a href=\"file://{2}\">palettes utilisateurs</a> :</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
-msgstr ""
+msgstr "Aucun fichier de palette (i.e. avec l'extension .gpl) n'a pu être trouvé.\n"
+"Utilisation de la valeur par défaut jusqu'à ce qu'une autre palette soit configurée."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr ""
+msgstr "La palette n'a pas de nom"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
@@ -2414,7 +2415,7 @@ msgstr "Charger depuis le fichier"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
-msgstr ""
+msgstr "Palettes de couleurs"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
@@ -3651,7 +3652,7 @@ msgstr "Paramètres de langue"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr ""
+msgstr "Palette"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
