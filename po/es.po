@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-18 01:47\n"
+"PO-Revision-Date: 2024-08-01 11:52\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -25,15 +25,15 @@ msgstr "¡Carpeta de audio no definida o inválida! ¡No funcionará la grabaci�
 
 #: ../src/core/control/Control.cpp:227
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Error en el sistema de archivos: {1}"
 
 #: ../src/core/control/Control.cpp:239
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "No se pudo eliminar el antiguo archivo de autoguardado \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:551
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "Ha eliminado la barra de herramientas activa. Volviendo a la barra de herramientas predeterminada."
 
 #: ../src/core/control/Control.cpp:571
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -94,7 +94,7 @@ msgstr "Error al abrir el archivo «{1}»"
 
 #: ../src/core/control/Control.cpp:1518
 msgid "File version mismatch"
-msgstr ""
+msgstr "La versión del archivo no coincide"
 
 #: ../src/core/control/Control.cpp:1519
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -103,7 +103,8 @@ msgstr "El archivo que se está cargando tiene una versión del formato más nue
 #: ../src/core/control/Control.cpp:1542
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Error al leer el archivo PDF \"{1}\"\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1663
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
