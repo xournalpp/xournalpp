@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-08-01 11:52\n"
+"PO-Revision-Date: 2024-08-01 13:05\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -41,7 +41,7 @@ msgstr "La configuración de barras de herramientas «{1}» es la predefinida. �
 
 #: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
 msgid "Yes"
-msgstr "Si"
+msgstr "Sí"
 
 #: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
 msgid "No"
@@ -136,7 +136,7 @@ msgstr "Usar el PDF propuesto"
 
 #: ../src/core/control/Control.cpp:1689
 msgid "Missing PDF background file"
-msgstr ""
+msgstr "Falta el archivo de fondo del PDF"
 
 #: ../src/core/control/Control.cpp:1821
 msgid "Select font"
@@ -501,7 +501,7 @@ msgstr "La comprobación al sobrescribir el fondo ha fallado por:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export File"
-msgstr ""
+msgstr "Exportar Archivo"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export"
@@ -669,11 +669,11 @@ msgstr "Enviar al fondo"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 msgid "Failed to load image"
-msgstr ""
+msgstr "Fallo al cargar la imagen"
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
-msgstr ""
+msgstr "Error al abrir el archivo de imagen: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1060,7 +1060,7 @@ msgstr "Plantilla de Xournal++"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "Archivos de imagen"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
@@ -1170,32 +1170,33 @@ msgstr "Filtrar la presión de entrada. Multiplica la presión por el multiplica
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "Paletas integradas"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
-msgstr ""
+msgstr "Paletas de usuario"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Las paletas mostradas a continuación se obtienen de las paletas <a href=\"file://{1}\">incorporadas</a> y el directorio de <a href=\"file://{2}\">paletas de usuario</a>:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
-msgstr ""
+msgstr "No se han encontrado archivos de paleta (con extensión .gpl).\n"
+"Usando el valor predeterminado hasta que se configure otra paleta."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr ""
+msgstr "La paleta no tiene Nombre"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
@@ -1223,7 +1224,7 @@ msgstr "_Abrir"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
-msgstr ""
+msgstr "Abrir plantilla"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
@@ -1233,11 +1234,11 @@ msgstr "Abrir archivo"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
-msgstr ""
+msgstr "Anotar archivo PDF"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
-msgstr ""
+msgstr "Seleccionar archivo de imagen"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
@@ -1257,7 +1258,7 @@ msgstr "No se pudo cargar esta imagen. Mensaje de error: {1}"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
-msgstr ""
+msgstr "No se pudo cargar la imagen."
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
@@ -1298,47 +1299,47 @@ msgstr "Espaciador"
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:79
 msgctxt "Item category in toolbar customization dialog"
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
-msgstr ""
+msgstr "Colores"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
 msgid "Files"
-msgstr ""
+msgstr "Archivos"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
 msgctxt "Item category in toolbar customization dialog"
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Miscelánea"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:83
 msgctxt "Item category in toolbar customization dialog"
 msgid "Navigation"
-msgstr ""
+msgstr "Navegación"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:84
 msgctxt "Item category in toolbar customization dialog"
 msgid "Selection"
-msgstr ""
+msgstr "Selección"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
 msgctxt "Item category in toolbar customization dialog"
 msgid "Tools"
-msgstr ""
+msgstr "Herramientas"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
 msgctxt "Item category in toolbar customization dialog"
 msgid "Separators"
-msgstr ""
+msgstr "Separadores"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
-msgstr ""
+msgstr "Extensiones"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
@@ -1793,7 +1794,7 @@ msgstr "Blanco"
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
 msgctxt "as a noun: a copy of"
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: ../src/core/model/Document.cpp:326 ../src/core/model/Document.cpp:335
 #: ../src/core/model/Document.cpp:338
@@ -1806,7 +1807,7 @@ msgstr "Fondo"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:123
 msgid "Error while finalizing the PDF Cairo surface"
-msgstr ""
+msgstr "Error al finalizar la superficie de PDF Cairo"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:239
@@ -1907,7 +1908,7 @@ msgstr "Combinar capa hacia abajo"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr ""
+msgstr "Reemplazar PDF faltante"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:28
 msgid "Move layer"
@@ -1991,19 +1992,19 @@ msgstr "Error al abrir el archivo: «{1}»"
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
-msgstr ""
+msgstr "Error al escribir datos en el archivo: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:49
 msgid "Error code {1}. Message:"
-msgstr ""
+msgstr "Código de error {1}. Mensaje:"
 
 #: ../src/util/OutputStream.cpp:69
 msgid "Error occurred while closing file: \"{1}\""
-msgstr ""
+msgstr "Ocurrió un error al cerrar el archivo: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
-msgstr ""
+msgstr "Código de error {1}"
 
 #: ../src/util/PathUtil.cpp:176
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -2414,7 +2415,7 @@ msgstr "Cargar desde un archivo"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
-msgstr ""
+msgstr "Paleta de Colores"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
@@ -2589,7 +2590,31 @@ msgid "%{name}\tThe name of the exported document\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%{name}\tEl nombre del documento exportado\n"
+"%a\t\t\tNombre del día de la semana abreviado (p.e. Jue)\n"
+"%A\t\t\tNombre completo del día de la semana (p.e. Jueves)\n"
+"%b\t\t\tNombre del mes abreviado (p.e. Ago)\n"
+"%B\t\t\tNombre completo del mes (p.e. Agosto)\n"
+"%c\t\t\tRepresentación de fecha y hora (p.e. Jue 23 Ago 14:55:02 2001)\n"
+"%d\t\t\tDía del mes (01-31)\n"
+"%F\t\t\tRepresentación de la fecha (p.e. 2001-08-23)\n"
+"%H\t\t\tHora en formato 24h (00-23)\n"
+"%I\t\t\tHora en formato de 12h (01-12)\n"
+"%j\t\t\tDía del año (001-366)\n"
+"%m\t\t\tMes como número decimal (01-12)\n"
+"%M\t\t\tMinuto (00-59)\n"
+"%p\t\t\tDiseño AM o PM (p.e. PM)\n"
+"%S\t\t\tSegundo (00-61)\n"
+"%U\t\t\tNúmero de semana con el primer domingo como primer día de la semana uno (00-53)\n"
+"%w\t\t\tDía de la semana como número decimal con el domingo como 0 (0-6)\n"
+"%W\t\t\tNúmero de semana con el primer lunes como primer día de la semana uno (00-53)\n"
+"%x\t\t\tRepresentación de la fecha (p.e. 08/23/01)\n"
+"%X\t\t\tRepresentación del tiempo (p.e. 14:55:02 o 2:55:02 PM)\n"
+"%y\t\t\tAño, últimos dos dígitos (00-99)\n"
+"%Y\t\t\tAño (p.e. 2001)\n"
+"%Z\t\t\tZona horaria o abreviatura (p.e. CDT)\n"
+"%%\t\t\t%\n"
+"los caracteres ilegales son reemplazados por \"_\""
 
 #: ../ui/settings.glade:781
 msgid "Default Pdf export name"
@@ -2739,19 +2764,19 @@ msgstr "Estabilización de entrada"
 
 #: ../ui/settings.glade:1396
 msgid "Indent using spaces"
-msgstr ""
+msgstr "Indentar usando espacios"
 
 #: ../ui/settings.glade:1418
 msgid "Number of Spaces : "
-msgstr ""
+msgstr "Número de Espacios: "
 
 #: ../ui/settings.glade:1430
 msgid "Number of spaces inserted with tab."
-msgstr ""
+msgstr "Número de espacios insertados con tabulador."
 
 #: ../ui/settings.glade:1432
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../ui/settings.glade:1460
 msgid "Tab"
@@ -2847,7 +2872,7 @@ msgstr "Botones del lápiz"
 
 #: ../ui/settings.glade:2118
 msgid "Stylus-based eraser is visible"
-msgstr ""
+msgstr "El borrador basado en stylus es visible"
 
 #: ../ui/settings.glade:2133
 msgctxt "eraser is never visible"
@@ -3049,19 +3074,19 @@ msgstr "(Requiere reinicio)"
 
 #: ../ui/settings.glade:3178
 msgid "Theme Variant:"
-msgstr ""
+msgstr "Variante del Tema:"
 
 #: ../ui/settings.glade:3198
 msgid "Use system default"
-msgstr ""
+msgstr "Utilizar el predeterminado del sistema"
 
 #: ../ui/settings.glade:3199
 msgid "Force light theme"
-msgstr ""
+msgstr "Forzar tema claro"
 
 #: ../ui/settings.glade:3200
 msgid "Force dark theme"
-msgstr ""
+msgstr "Forzar tema oscuro"
 
 #: ../ui/settings.glade:3213
 msgid "(this may not work, depending on your system theme)"
@@ -3300,19 +3325,19 @@ msgstr "<i>Si añade espacio adicional junto a las páginas podrá elegir el ár
 
 #: ../ui/settings.glade:4603
 msgid "Add additional horizontal space"
-msgstr ""
+msgstr "Añadir espacio horizontal adicional"
 
 #: ../ui/settings.glade:4619
 msgid "Add additional vertical space"
-msgstr ""
+msgstr "Añadir espacio vertical adicional"
 
 #: ../ui/settings.glade:4637
 msgid "<i>or</i>"
-msgstr ""
+msgstr "<i>o</i>"
 
 #: ../ui/settings.glade:4649
 msgid "Unlimited scrolling"
-msgstr ""
+msgstr "Desplazamiento ilimitado"
 
 #: ../ui/settings.glade:4673
 msgid "<i>The amount is specified in pixels.</i>"
@@ -3536,11 +3561,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5676
 msgid "Disable Audio"
-msgstr ""
+msgstr "Desactivar Audio"
 
 #: ../ui/settings.glade:5698
 msgid "Enable or Disable Audio"
-msgstr ""
+msgstr "Activar o Desactivar Audio"
 
 #: ../ui/settings.glade:5725
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
@@ -3622,7 +3647,7 @@ msgstr "Configuración del idioma"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr ""
+msgstr "Paleta"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
@@ -3650,15 +3675,15 @@ msgstr "Eliminar trazo"
 
 #: ../ui/settingsButtonConfig.glade:143
 msgid "Stroke Type - don't change"
-msgstr ""
+msgstr "Tipo de trazo - no cambiar"
 
 #: ../ui/settingsButtonConfig.glade:145
 msgid "Dashed"
-msgstr ""
+msgstr "Discontinua"
 
 #: ../ui/settingsButtonConfig.glade:146
 msgid "Dash-dotted"
-msgstr ""
+msgstr "Discontinua-punteada"
 
 #: ../ui/settingsDeviceClassConfig.glade:34
 msgid "Disabled"
@@ -3698,7 +3723,7 @@ msgstr "Gestionar barra de herramientas"
 
 #: ../ui/mainmenubar.xml:5
 msgid "_File"
-msgstr ""
+msgstr "_Archivo"
 
 #: ../ui/mainmenubar.xml:13
 msgid "Open"
@@ -3707,19 +3732,19 @@ msgstr "Abrir"
 #. Filled dynamically
 #: ../ui/mainmenubar.xml:19
 msgid "Recent _Documents"
-msgstr ""
+msgstr "_Documentos Recientes"
 
 #: ../ui/mainmenubar.xml:22
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Anotar PDF"
 
 #: ../ui/mainmenubar.xml:31
 msgid "Save As"
-msgstr ""
+msgstr "Guardar Como"
 
 #: ../ui/mainmenubar.xml:39
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Exportar como PDF"
 
 #: ../ui/mainmenubar.xml:43
 msgid "Export as..."
@@ -3727,11 +3752,11 @@ msgstr "Exportar como…"
 
 #: ../ui/mainmenubar.xml:55
 msgid "Quit"
-msgstr ""
+msgstr "Salir"
 
 #: ../ui/mainmenubar.xml:62
 msgid "_Edit"
-msgstr ""
+msgstr "_Editar"
 
 #: ../ui/mainmenubar.xml:94
 msgid "Select All"
@@ -3743,7 +3768,7 @@ msgstr "Buscar"
 
 #: ../ui/mainmenubar.xml:115
 msgid "Arrange Selection"
-msgstr ""
+msgstr "Ordenar Selección"
 
 #: ../ui/mainmenubar.xml:118
 msgid "Bring to Front"
@@ -3751,15 +3776,15 @@ msgstr "Traer al frente"
 
 #: ../ui/mainmenubar.xml:123
 msgid "Bring Forward"
-msgstr ""
+msgstr "Traer al frente"
 
 #: ../ui/mainmenubar.xml:128
 msgid "Send Backward"
-msgstr ""
+msgstr "Enviar átras"
 
 #: ../ui/mainmenubar.xml:133
 msgid "Send to Back"
-msgstr ""
+msgstr "Enviar al fondo"
 
 #: ../ui/mainmenubar.xml:142
 msgid "Move Selection Layer Up"
@@ -3771,7 +3796,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:162
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencias"
 
 #: ../ui/mainmenubar.xml:167
 msgid "T_oolbars"
@@ -3779,15 +3804,15 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:170
 msgid "_Manage"
-msgstr ""
+msgstr "_Gestionar"
 
 #: ../ui/mainmenubar.xml:174
 msgid "_Customize"
-msgstr ""
+msgstr "_Personalizar"
 
 #: ../ui/mainmenubar.xml:182
 msgid "_View"
-msgstr ""
+msgstr "_Vista"
 
 #: ../ui/mainmenubar.xml:185
 msgid "_Pair Pages"
@@ -3795,167 +3820,167 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:189
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "Modo de _Presentación"
 
 #: ../ui/mainmenubar.xml:201
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Mostrar barra de herramientas"
 
 #: ../ui/mainmenubar.xml:218
 msgid "Layout"
-msgstr ""
+msgstr "Disposición"
 
 #: ../ui/mainmenubar.xml:221
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horizontal"
 
 #: ../ui/mainmenubar.xml:226
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertical"
 
 #: ../ui/mainmenubar.xml:233
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Izquierda a Derecha"
 
 #: ../ui/mainmenubar.xml:238
 msgid "_Right to Left"
-msgstr ""
+msgstr "_Derecha a Izquierda"
 
 #: ../ui/mainmenubar.xml:245
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "_Arriba hacia Abajo"
 
 #: ../ui/mainmenubar.xml:250
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "_Abajo hacia Arriba"
 
 #: ../ui/mainmenubar.xml:257
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Col/Filas"
 
 #: ../ui/mainmenubar.xml:260
 msgid "Set Columns"
-msgstr ""
+msgstr "Establecer Columnas"
 
 #: ../ui/mainmenubar.xml:264
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 Columna"
 
 #: ../ui/mainmenubar.xml:269
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 Columnas"
 
 #: ../ui/mainmenubar.xml:274
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 Columnas"
 
 #: ../ui/mainmenubar.xml:279
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 Columnas"
 
 #: ../ui/mainmenubar.xml:284
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 Columnas"
 
 #: ../ui/mainmenubar.xml:289
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 Columnas"
 
 #: ../ui/mainmenubar.xml:294
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 Columnas"
 
 #: ../ui/mainmenubar.xml:299
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 Columnas"
 
 #: ../ui/mainmenubar.xml:306
 msgid "Set Rows"
-msgstr ""
+msgstr "Establecer Filas"
 
 #: ../ui/mainmenubar.xml:310
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 Fila"
 
 #: ../ui/mainmenubar.xml:315
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 Filas"
 
 #: ../ui/mainmenubar.xml:320
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 Filas"
 
 #: ../ui/mainmenubar.xml:325
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 Filas"
 
 #: ../ui/mainmenubar.xml:330
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 Filas"
 
 #: ../ui/mainmenubar.xml:335
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 Filas"
 
 #: ../ui/mainmenubar.xml:340
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 Filas"
 
 #: ../ui/mainmenubar.xml:345
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 Filas"
 
 #: ../ui/mainmenubar.xml:356
 msgid "Zoom In"
-msgstr ""
+msgstr "Acercar"
 
 #: ../ui/mainmenubar.xml:361
 msgid "Zoom Out"
-msgstr ""
+msgstr "Alejar"
 
 #: ../ui/mainmenubar.xml:366
 msgid "Normal Size"
-msgstr ""
+msgstr "Tamaño Normal"
 
 #: ../ui/mainmenubar.xml:370
 msgid "Zoom to Fit"
-msgstr ""
+msgstr "Ajustar Zoom"
 
 #: ../ui/mainmenubar.xml:376
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navegación"
 
 #: ../ui/mainmenubar.xml:379
 msgid "_First Page"
-msgstr ""
+msgstr "_Primera Página"
 
 #: ../ui/mainmenubar.xml:384
 msgid "_Previous Page"
-msgstr ""
+msgstr "_Página Anterior"
 
 #: ../ui/mainmenubar.xml:389
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Ir a la Página"
 
 #: ../ui/mainmenubar.xml:394
 msgid "_Next Page"
-msgstr ""
+msgstr "_Página Siguiente"
 
 #: ../ui/mainmenubar.xml:399
 msgid "_Last Page"
-msgstr ""
+msgstr "_Última Página"
 
 #: ../ui/mainmenubar.xml:406
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Capa Anterior"
 
 #: ../ui/mainmenubar.xml:411
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Siguiente Capa"
 
 #: ../ui/mainmenubar.xml:416
 msgid "_Top Layer"
-msgstr ""
+msgstr "_Capa Superior"
 
 #: ../ui/mainmenubar.xml:422
 msgid "N_ext Annotated Page"
@@ -3967,43 +3992,43 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:434
 msgid "_Journal"
-msgstr ""
+msgstr "_Cuaderno"
 
 #: ../ui/mainmenubar.xml:437
 msgid "New Page _Before"
-msgstr ""
+msgstr "Nueva Página _Antes"
 
 #: ../ui/mainmenubar.xml:441
 msgid "New Page _After"
-msgstr ""
+msgstr "Nueva Página _Después"
 
 #: ../ui/mainmenubar.xml:446
 msgid "New Page at _End"
-msgstr ""
+msgstr "Nueva Página al _Final"
 
 #: ../ui/mainmenubar.xml:450
 msgid "Duplicate Page"
-msgstr ""
+msgstr "Duplicar página"
 
 #: ../ui/mainmenubar.xml:454
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Adjuntar nuevas páginas PDF"
 
 #: ../ui/mainmenubar.xml:458
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Configurar Plantilla de Página"
 
 #: ../ui/mainmenubar.xml:462
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Eliminar Página"
 
 #: ../ui/mainmenubar.xml:469
 msgid "New _Layer"
-msgstr ""
+msgstr "Nueva _Capa"
 
 #: ../ui/mainmenubar.xml:474
 msgid "Delete Layer"
-msgstr ""
+msgstr "Eliminar Capa"
 
 #: ../ui/mainmenubar.xml:479
 msgid "Merge Layer Down"
@@ -4011,15 +4036,15 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:484
 msgid "Rename Layer"
-msgstr ""
+msgstr "Renombrar Capa"
 
 #: ../ui/mainmenubar.xml:491
 msgid "Paper _Format"
-msgstr ""
+msgstr "_Formato de Papel"
 
 #: ../ui/mainmenubar.xml:495
 msgid "Paper _Color"
-msgstr ""
+msgstr "_Color de Papel"
 
 #: ../ui/mainmenubar.xml:499
 msgid "Paper B_ackground"
@@ -4027,15 +4052,15 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:504
 msgid "_Tools"
-msgstr ""
+msgstr "_Herramientas"
 
 #: ../ui/mainmenubar.xml:507
 msgid "_Pen"
-msgstr ""
+msgstr "_Lápiz"
 
 #: ../ui/mainmenubar.xml:513
 msgid "_Eraser"
-msgstr ""
+msgstr "_Borrador"
 
 #: ../ui/mainmenubar.xml:519
 msgid "Select Linear Text"
@@ -4047,19 +4072,19 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:531
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Resaltador"
 
 #: ../ui/mainmenubar.xml:537
 msgid "_Text"
-msgstr ""
+msgstr "_Texto"
 
 #: ../ui/mainmenubar.xml:543
 msgid "_Image"
-msgstr ""
+msgstr "_Imagen"
 
 #: ../ui/mainmenubar.xml:549
 msgid "_Default Tool"
-msgstr ""
+msgstr "_Herramienta Predeterminada"
 
 #: ../ui/mainmenubar.xml:556
 msgid "Drawing Type"
@@ -4067,19 +4092,19 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Reconocedor de Formas"
 
 #: ../ui/mainmenubar.xml:583
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Dibujar Sistema de Coordenadas"
 
 #: ../ui/mainmenubar.xml:588
 msgid "Draw _Line"
-msgstr ""
+msgstr "Dibujar _Línea"
 
 #: ../ui/mainmenubar.xml:629
 msgid "_Vertical Space"
-msgstr ""
+msgstr "Espacio _Vertical"
 
 #: ../ui/mainmenubar.xml:641
 msgid "H_and Tool"
@@ -4092,43 +4117,43 @@ msgstr ""
 #: ../ui/mainmenubar.xml:660 ../ui/mainmenubar.xml:722
 #: ../ui/mainmenubar.xml:769
 msgid "_very fine"
-msgstr ""
+msgstr "_muy fino"
 
 #: ../ui/mainmenubar.xml:665 ../ui/mainmenubar.xml:727
 #: ../ui/mainmenubar.xml:774
 msgid "_fine"
-msgstr ""
+msgstr "_fino"
 
 #: ../ui/mainmenubar.xml:670 ../ui/mainmenubar.xml:732
 #: ../ui/mainmenubar.xml:779
 msgid "_medium"
-msgstr ""
+msgstr "_medio"
 
 #: ../ui/mainmenubar.xml:675 ../ui/mainmenubar.xml:737
 #: ../ui/mainmenubar.xml:784
 msgid "_thick"
-msgstr ""
+msgstr "_grueso"
 
 #: ../ui/mainmenubar.xml:680 ../ui/mainmenubar.xml:742
 #: ../ui/mainmenubar.xml:789
 msgid "ver_y thick"
-msgstr ""
+msgstr "mu_y grueso"
 
 #: ../ui/mainmenubar.xml:709 ../ui/mainmenubar.xml:796
 msgid "Fi_ll"
-msgstr ""
+msgstr "Re_llenar"
 
 #: ../ui/mainmenubar.xml:713 ../ui/mainmenubar.xml:800
 msgid "Fill opacity"
-msgstr ""
+msgstr "Opacidad del relleno"
 
 #: ../ui/mainmenubar.xml:719
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Opcio_nes de borrador"
 
 #: ../ui/mainmenubar.xml:749
 msgid "_standard"
-msgstr ""
+msgstr "_estándar"
 
 #: ../ui/mainmenubar.xml:754
 msgid "_whiteout"
@@ -4136,7 +4161,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:759
 msgid "_delete strokes"
-msgstr ""
+msgstr "_eliminar trazos"
 
 #: ../ui/mainmenubar.xml:766
 msgid "Highlighter Opti_ons"
@@ -4144,7 +4169,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:806
 msgid "Select PDF Text Options"
-msgstr ""
+msgstr "Seleccionar Opciones de Texto PDF"
 
 #: ../ui/mainmenubar.xml:809
 msgid "Marker Opacity"
@@ -4152,39 +4177,39 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:815
 msgid "Text Font..."
-msgstr ""
+msgstr "Fuente del Texto..."
 
 #: ../ui/mainmenubar.xml:820
 msgid "Record / Stop"
-msgstr ""
+msgstr "Grabar / Detener"
 
 #: ../ui/mainmenubar.xml:825
 msgid "Pause"
-msgstr ""
+msgstr "Pausar"
 
 #: ../ui/mainmenubar.xml:852
 msgid "_Help"
-msgstr ""
+msgstr "_Ayuda"
 
 #: ../ui/mainmenubar.xml:856
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #: ../ui/mainmenubar.xml:860
 msgid "About"
-msgstr ""
+msgstr "Acerca de"
 
 #: ../resources-templates/pagetemplates.ini.in:17
 msgid "Ruled with vertical line on the right"
-msgstr ""
+msgstr "Reglas con línea vertical a la derecha"
 
 #: ../resources-templates/pagetemplates.ini.in:42
 msgid "Graph with border"
-msgstr ""
+msgstr "Gráfico con borde"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
-msgstr ""
+msgstr "Todas las herramientas"
 
 #: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
@@ -4200,7 +4225,7 @@ msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
-msgstr ""
+msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Right hand Note Taking"
@@ -4208,19 +4233,19 @@ msgstr ""
 
 #: ../resources-templates/toolbar.ini.in:80
 msgid "Toolbar Left"
-msgstr ""
+msgstr "Barra de herramientas izquierda"
 
 #: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Right"
-msgstr ""
+msgstr "Barra de herramientas derecha"
 
 #: ../resources-templates/toolbar.ini.in:101
 msgid "Empty Toolbar"
-msgstr ""
+msgstr "Barra de herramientas vacía"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Take handwritten notes"
-msgstr ""
+msgstr "Tomar notas manuscritas"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
@@ -4228,7 +4253,7 @@ msgstr ""
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:15
 msgid "com.github.xournalpp.xournalpp"
-msgstr ""
+msgstr "com.github.xournalpp.xournalpp"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
@@ -4236,7 +4261,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:17
 msgid "Xournal++ features:"
-msgstr ""
+msgstr "Características de Xournal++:"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:21
 msgid "Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)"
@@ -4248,7 +4273,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:23
 msgid "Annotate on top of PDFs"
-msgstr ""
+msgstr "Anotar sobre PDFs"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:24
 msgid "Select text from the background PDF, copy, highlight or underline it or strike it through"
@@ -4268,7 +4293,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:28
 msgid "Shape drawing (line, arrow, circle, rectangle, spline)"
-msgstr ""
+msgstr "Dibujo de forma (línea, flecha, círculo, rectángulo, spline)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:29
 msgid "Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii"
@@ -4276,7 +4301,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:30
 msgid "Fill shape functionality"
-msgstr ""
+msgstr "Función de relleno de forma"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:31
 msgid "Shape resizing and rotation"
@@ -4292,15 +4317,15 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:34
 msgid "Text tool for adding text in different fonts, colors, and sizes"
-msgstr ""
+msgstr "Herramienta de texto para añadir texto en diferentes fuentes, colores y tamaños"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:35
 msgid "Enhanced support for image insertion"
-msgstr ""
+msgstr "Soporte mejorado para la inserción de imágenes"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:36
 msgid "Eraser with multiple configurations"
-msgstr ""
+msgstr "Borrador con múltiples configuraciones"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:37
 msgid "LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting"
@@ -4308,11 +4333,11 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:38
 msgid "Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)"
-msgstr ""
+msgstr "Barra lateral que contiene previsualizaciones de páginas con clasificación avanzada de páginas, marcadores PDF y capas (puede ocultarse o editarse individualmente)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:39
 msgid "Allows mapping different tools/colors etc. to stylus/mouse buttons"
-msgstr ""
+msgstr "Permite mapear diferentes herramientas/colores, etc. a stylus/ratón"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:40
 msgid "Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape"
@@ -4324,23 +4349,23 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:42
 msgid "Page template definitions"
-msgstr ""
+msgstr "Definiciones de plantillas de página"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:43
 msgid "Bug reporting, autosave, and auto backup tools"
-msgstr ""
+msgstr "Reporte de errores, auto guardado y herramientas de copia de seguridad"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:44
 msgid "Audio recording and playback alongside with handwritten notes"
-msgstr ""
+msgstr "Grabación y reproducción de audio junto con notas manuscritas"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:45
 msgid "Multi language support (over 20 languages supported)"
-msgstr ""
+msgstr "Soporte para múltiples idiomas (más de 20 idiomas soportados)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:46
 msgid "Plugins using Lua scripting"
-msgstr ""
+msgstr "Extensiones usando scripts Lua"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"
@@ -4352,5 +4377,5 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:12
 msgid "Xournal++ page template file"
-msgstr ""
+msgstr "Archivo de plantilla de Xournal++"
 
