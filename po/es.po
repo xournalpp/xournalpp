@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-08-01 13:05\n"
+"PO-Revision-Date: 2024-08-01 15:08\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -273,7 +273,7 @@ msgstr "Falta el fondo de PDF"
 
 #: ../src/core/control/PrintHandler.cpp:121
 msgid "Running print operation failed with {1}"
-msgstr "Operación de impresión en ejecución falló con {1}"
+msgstr "La operación de impresión en ejecución falló con {1}"
 
 #: ../src/core/control/XournalMain.cpp:154
 msgid "Failed to delete file: {1}"
