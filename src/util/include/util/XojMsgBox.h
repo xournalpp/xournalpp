@@ -69,9 +69,6 @@ public:
     [[noreturn]] static void showErrorAndQuit(std::string& msg, int exitCode);
 
     static void showPluginMessage(const std::string& pluginName, const std::string& msg, bool error = false);
-    [[deprecated("Will be removed when porting to gtk4")]] static int askPluginQuestion(
-            const std::string& pluginName, const std::string& msg, const std::vector<Button>& buttons,
-            bool error = false);
     static void showHelp(GtkWindow* win);
 
     /**

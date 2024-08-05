@@ -136,53 +136,6 @@ static int applib_glib_rename(lua_State* L) {
     }
 }
 
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_fileDialogSave() instead.
- *
- * @deprecated
- * Create a 'Save As' native dialog and return as a string
- * the filepath of the location the user chose to save.
- *
- * @param filename string suggestion for a filename, defaults to "Untitled"
- * @return string path of the selected location
- *
- * Examples:
- *   local filename = app.saveAs() -- defaults to suggestion "Untitled"
- *   local filename = app.saveAs("foo") -- suggests "foo" as filename
- */
-static int applib_saveAs(lua_State* L) {
-    gint res;
-    int args_returned = 0;  // change to 1 if user chooses file
-
-    const char* filename = luaL_checkstring(L, -1);
-
-    // Create a 'Save As' native dialog
-    xoj::util::GObjectSPtr<GtkFileChooserNative> native(
-            gtk_file_chooser_native_new(_("Save file"), nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, nullptr, nullptr),
-            xoj::util::adopt);
-
-    // If user tries to overwrite a file, ask if it's OK
-    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native.get()), TRUE);
-    // Offer a suggestion for the filename if filename absent
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native.get()),
-                                      filename ? filename : (std::string{_("Untitled")}).c_str());
-
-    // Wait until user responds to dialog
-    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native.get()));
-
-    // Return the filename chosen to lua
-    if (res == GTK_RESPONSE_ACCEPT) {
-        char* filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())));
-
-        lua_pushlstring(L, filename, strlen(filename));
-        g_free(static_cast<gchar*>(filename));
-        args_returned = 1;
-    }
-
-    return args_returned;
-}
-
 /**
  * Create a 'Save As' dialog and once the user has chosen the filepath of the location to save
  * calls the specified callback function to which it passes the filepath or the empty string, if the
@@ -234,65 +187,6 @@ static int applib_fileDialogSave(lua_State* L) {
     return 0;
 }
 
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_fileDialogOpen() instead.
- *
- * @deprecated
- * Create a 'Open File' native dialog and return as a string
- * the filepath the user chose to open.
- *
- * @param types string[] array of the different allowed extensions e.g. {'\*.bmp', '\*.png'}
- * @returns string path of the selected location
- *
- * Examples:
- *   path = app.getFilePath({})
- *   path = app.getFilePath({'*.bmp', '*.png'})
- */
-static int applib_getFilePath(lua_State* L) {
-    xoj::util::GObjectSPtr<GtkFileChooserNative> native(
-            gtk_file_chooser_native_new(_("Open file"), nullptr, GTK_FILE_CHOOSER_ACTION_OPEN, nullptr, nullptr),
-            xoj::util::adopt);
-    gint res;
-    int args_returned = 0;  // change to 1 if user chooses file
-    char* filename;
-
-    // Get vector of supported formats from Lua stack
-    std::vector<std::string> formats;
-    // stack now contains: -1 => table
-    lua_pushnil(L);
-    // stack now contains: -1 => nil; -2 => table
-    while (lua_next(L, -2)) {
-        // stack now contains: -1 => value; -2 => key; -3 => table
-        const char* value = lua_tostring(L, -1);
-        formats.push_back(value);
-        lua_pop(L, 1);
-        // stack now contains: -1 => key; -2 => table
-    }
-    // stack now contains: -1 => table
-    lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
-    if (formats.size() > 0) {
-        GtkFileFilter* filterSupported = gtk_file_filter_new();
-        gtk_file_filter_set_name(filterSupported, _("Supported files"));
-        for (std::string format: formats) {
-            gtk_file_filter_add_pattern(filterSupported, format.c_str());
-        }
-        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(native.get()), filterSupported);
-    }
-
-    // Wait until user responds to dialog
-    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native.get()));
-    // Return the filename chosen to lua
-    if (res == GTK_RESPONSE_ACCEPT) {
-        filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())));
-        lua_pushlstring(L, filename, strlen(filename));
-        g_free(static_cast<gchar*>(filename));
-        args_returned = 1;
-    }
-    // Destroy the dialog and free memory
-    return args_returned;
-}
-
 /**
  * Create an 'Open File' dialog and when the user has chosen a filepath
  * call a callback function whose sole argument is the filepath.
@@ -333,40 +227,6 @@ static int applib_fileDialogOpen(lua_State* L) {
                                             plugin->callFunction(callback, path.string().c_str());
                                         });
     return 0;
-}
-
-
-/**
- * THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED SOON. Use applib_openDialog() instead.
- *
- * @deprecated
- * Example: local result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"})
- * Pops up a message box with two buttons "Yes" and "No" and returns 1 for yes, 2 for no
- */
-static int applib_msgbox(lua_State* L) {
-    const char* msg = luaL_checkstring(L, 1);
-
-    // discard any extra arguments passed in
-    lua_settop(L, 2);
-    luaL_checktype(L, 2, LUA_TTABLE);
-
-    lua_pushnil(L);  // initial key for table traversal with `next`
-
-    std::vector<XojMsgBox::Button> buttons;
-
-    while (lua_next(L, 2) != 0) {
-        int index = static_cast<int>(lua_tointeger(L, -2));
-        const char* buttonText = luaL_checkstring(L, -1);
-        lua_pop(L, 1);
-
-        buttons.emplace_back(buttonText, index);
-    }
-
-    Plugin* plugin = Plugin::getPluginFromLua(L);
-
-    int result = XojMsgBox::askPluginQuestion(plugin->getName(), msg, buttons);
-    lua_pushinteger(L, result);
-    return 1;
 }
 
 /**
@@ -2923,10 +2783,8 @@ static int applib_getImages(lua_State* L) {
  * The full Lua Plugin API.
  * See above for example usage of each function.
  */
-static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
-                                  {"openDialog", applib_openDialog},
+static const luaL_Reg applib[] = {{"openDialog", applib_openDialog},
                                   {"glib_rename", applib_glib_rename},
-                                  {"saveAs", applib_saveAs},  // Todo(gtk4) remove this deprecated function
                                   {"fileDialogSave", applib_fileDialogSave},
                                   {"registerUi", applib_registerUi},
                                   {"uiAction", applib_uiAction},
@@ -2955,7 +2813,6 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"addSplines", applib_addSplines},
                                   {"addImages", applib_addImages},
                                   {"addTexts", applib_addTexts},
-                                  {"getFilePath", applib_getFilePath},  // Todo(gtk4) remove this deprecated function
                                   {"fileDialogOpen", applib_fileDialogOpen},
                                   {"refreshPage", applib_refreshPage},
                                   {"getStrokes", applib_getStrokes},

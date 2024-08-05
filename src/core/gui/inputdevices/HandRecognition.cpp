@@ -71,7 +71,8 @@ void HandRecognition::reload() {
             return;
         }
 #ifdef X11_ENABLED
-        touchImpl = new TouchDisableX11();
+        g_warning("Fix X11 touch-disabled");
+        // touchImpl = new TouchDisableX11();
 #endif
     } else if (disableMethod == "custom") {
         string enableCommand;
@@ -83,9 +84,9 @@ void HandRecognition::reload() {
     } else  // Auto detect
     {
 #ifdef X11_ENABLED
-        if (x11Session) {
-            touchImpl = new TouchDisableX11();
-        }
+        // if (x11Session) {
+        //     touchImpl = new TouchDisableX11();
+        // }
 #endif
     }
 

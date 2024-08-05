@@ -1,7 +1,6 @@
 #include "BlockingJob.h"
 
-#include <glib.h>     // for g_idle_add
-#include <gtk/gtk.h>  // for gtk_widget_grab_focus
+#include <glib.h>  // for g_idle_add
 
 #include "control/Control.h"   // for Control
 #include "control/jobs/Job.h"  // for JOB_TYPE_BLOCKING, JobType
@@ -17,20 +16,10 @@ BlockingJob::~BlockingJob() { this->control = nullptr; }
 void BlockingJob::execute() {
     this->run();
 
-    g_idle_add(xoj::util::wrap_for_once_v<finished>, this->control);
-}
-
-auto BlockingJob::finished(Control* control) -> bool {
-    // "this" is not needed, "control" is in
-    // the closure, therefore no sync needed
-    Util::execInUiThread([=]() {
+    Util::execInUiThread([control = this->control]() {
         control->unblock();
-        XournalView* xournal = control->getWindow()->getXournal();
-        gtk_widget_grab_focus(xournal->getWidget());
+        control->getWindow()->getXournal()->requestFocus();
     });
-
-    // do not call again
-    return false;
 }
 
 auto BlockingJob::getType() -> JobType { return JOB_TYPE_BLOCKING; }

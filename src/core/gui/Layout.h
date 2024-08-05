@@ -155,12 +155,6 @@ private:
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
     static void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
 
-    /**
-     * Calls the scroll handler to set the layout size by updating the horizontal and vertical GtkAdjustments
-     */
-    // Todo(Fabian): remove this function the true size always depends on the expose event
-    void setLayoutSize(int width, int height);
-
 private:
     XournalView* view = nullptr;
     ScrollHandling* scrollHandling = nullptr;
