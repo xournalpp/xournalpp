@@ -41,6 +41,7 @@ public:
 
 private:
     static void openFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self);
+    static void removeFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self);
 
     gulong recentHandlerId{};
 
@@ -69,4 +70,5 @@ private:
     xoj::util::GObjectSPtr<GMenu> menuPdfFiles;
     xoj::util::GObjectSPtr<GSimpleAction> openFileAction;
     xoj::util::GObjectSPtr<GSimpleAction> clearListAction;
+    xoj::util::GObjectSPtr<GSimpleAction> removeFileAction;
 };
