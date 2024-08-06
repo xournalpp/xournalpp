@@ -41,10 +41,7 @@ public:
 
 private:
     static void openFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self);
-    static void removeRecentFileCallback(GSimpleAction* action, GVariant* parameter, RecentDocumentsSubmenu* self);
     static void removeFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self);
-    void removeFile(const fs::path& path, RecentDocumentsSubmenu* self);
-    void remove_from_vector(TinyVector<fs::path, RecentManager::MAX_RECENT>& vec, const fs::path& path);
 
     gulong recentHandlerId{};
 
