@@ -64,19 +64,24 @@ auto createRemoveMenuItem(const GtkRecentInfo* info, size_t i) {
     action += std::to_string(i);
     action += ")";
 
-    auto item = xoj::util::GObjectSPtr<GMenuItem>(g_menu_item_new(label.c_str(), action.c_str()), xoj::util::adopt);
-    
-    // Create submenu for the remove action
     GMenu* submenu = g_menu_new();
-    std::string remove_action = G_ACTION_NAMESPACE;
-    remove_action += REMOVE_ACTION_NAME;
-    remove_action += "(uint64 ";
-    remove_action += std::to_string(i);
-    remove_action += ")";
-    g_menu_append(submenu, _("Remove from list"), remove_action.c_str());
-    g_menu_item_set_submenu(item.get(), G_MENU_MODEL(submenu));
+    g_menu_append(submenu, _("Remove from list"), action.c_str());
     
-    return item;
+    return xoj::util::GObjectSPtr<GMenu>(submenu, xoj::util::adopt);
+
+    // auto item = xoj::util::GObjectSPtr<GMenuItem>(g_menu_item_new(label.c_str(), action.c_str()), xoj::util::adopt);
+    
+    // // Create submenu for the remove action
+    // GMenu* submenu = g_menu_new();
+    // std::string remove_action = G_ACTION_NAMESPACE;
+    // remove_action += REMOVE_ACTION_NAME;
+    // remove_action += "(uint64 ";
+    // remove_action += std::to_string(i);
+    // remove_action += ")";
+    // g_menu_append(submenu, _("Remove from list"), remove_action.c_str());
+    // g_menu_item_set_submenu(item.get(), G_MENU_MODEL(submenu));
+    
+    // return item;
 
 }
 
@@ -92,10 +97,15 @@ auto createRecentMenu(const container& recentFiles, size_t start_index) -> xoj::
 
         auto item = createRecentMenuItem(recent.get(), start_index);
         auto removeItem = createRemoveMenuItem(recent.get(), start_index);
-        GMenu* submenu = g_menu_new();
-        g_menu_append_item(submenu, removeItem.get());
-        g_menu_item_set_submenu(item.get(), G_MENU_MODEL(submenu));
+
+        g_menu_item_set_submenu(item.get(), G_MENU_MODEL(removeItem.get()));
         g_menu_append_item(menu, item.get());
+
+        // GMenu* submenu = g_menu_new();
+        // g_menu_append_item(submenu, removeItem.get());
+        // g_menu_item_set_submenu(item.get(), G_MENU_MODEL(submenu));
+        // g_menu_append_item(menu, item.get());
+
         start_index++;
     }
     
