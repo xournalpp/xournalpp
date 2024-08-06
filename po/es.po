@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-08-01 15:08\n"
+"PO-Revision-Date: 2024-08-06 23:11\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -408,8 +408,8 @@ msgstr "Exportar archivo en formato PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr "Exportar como archivos de imagen (uno por página)\n"
-"                                 Adivina el formato de salida en base a la extensión del archivo de imagen.\n"
+msgstr "Exportar FILE como archivos de imagen (uno por página)\n"
+"                                 Adivina el formato de salida en base a la extensión de IMGFILE\n"
 "                                 Formatos soportados: .png, .svg"
 
 #: ../src/core/control/XournalMain.cpp:672
@@ -447,7 +447,7 @@ msgstr "Solo exportar las páginas especificadas por INTERVALO (p. ej: \"2-3,5,7
 #: ../src/core/control/XournalMain.cpp:692
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Al exportar, sólo exporta las capas especificadas por el RANGO (por ejemplo, \"2-3,5,7-\")\n"
+msgstr "Al exportar, sólo exporta las capas especificadas por el RANGE (p. e., \"2-3,5,7-\")\n"
 "                                 Sin efecto sin -p/--create-pdf o -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:696
@@ -497,7 +497,7 @@ msgstr "No sobrescriba el PDF de fondo; ello provocará problemas."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
-msgstr "La comprobación al sobrescribir el fondo ha fallado por:\n"
+msgstr "La comprobación al sobrescribir el fondo ha fallado con:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export File"
@@ -544,7 +544,7 @@ msgstr "Error al guardar el archivo: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
-msgstr "Formato gráfico no compatible: "
+msgstr "Formato de gráficos no compatible: "
 
 #: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
@@ -579,7 +579,7 @@ msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 msgstr "No se ha encontrado el programa generador de LaTeX en el PATH: {1}\n\n"
-"Ya que se ha detectado la instalación con Flatpak, hay que instalar la extensió Tex Live de Flatpak. Ejecutar, por ejemplo:\n\n"
+"Ya que se ha detectado la instalación con Flatpak, necesitará instalar la extensión Tex Live de Flatpak. Por ejemplo, ejecutando:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:76
@@ -904,7 +904,7 @@ msgstr "Consigna de Git"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:61
 msgid "See the full list of contributors"
-msgstr "Ver la lista completa de colaboradores"
+msgstr "Ver la lista completa de contribuidores"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:63
 msgid "GNU GPLv2 or later"
@@ -961,7 +961,7 @@ msgstr "Seleccionar región de multicapa"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 msgid "Select multi layer rect"
-msgstr "Seleccionar recta multicapa"
+msgstr "Seleccionar rectángulo de multicapa"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
@@ -974,7 +974,7 @@ msgstr "Cuadro de herramientas flotante (experimental)"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
 msgid "Select Text from pdf"
-msgstr "Seleccionar texto del PDF"
+msgstr "Seleccionar texto desde PDF"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
 msgid "Select Area Text from pdf"
@@ -1080,7 +1080,7 @@ msgstr "Tema del editor LaTeX:"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr "¡GtkSourceView fue desactivado cuando se construyó Xournal++! Algunas opciones no estarán disponibles."
+msgstr "¡GtkSourceView fue desactivado cuando se compiló Xournal++! Algunas opciones no estarán disponibles."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -1136,7 +1136,7 @@ msgstr "Opciones de resaltado"
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
-msgstr "Rellenar color"
+msgstr "Color de relleno"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
@@ -1343,7 +1343,7 @@ msgstr "Extensiones"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
-msgstr "Error cargando la barra del archivo XML(intento cargar \"{1}\")"
+msgstr "Error al cargar la barra del archivo XML(intento cargar \"{1}\")"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:176
@@ -1356,7 +1356,7 @@ msgstr "Gestor de complementos"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:32
 msgid "Plugin"
-msgstr "Plugin"
+msgstr "Complemento"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:67
 msgid "No recent files"
