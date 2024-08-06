@@ -96,6 +96,11 @@ void RecentManager::removeRecentFileFilename(const fs::path& filename) {
     }
     GtkRecentManager* recentManager = gtk_recent_manager_get_default();
     gtk_recent_manager_remove_item(recentManager, uri->c_str(), nullptr);
+
+    // Remove the file from the vectors
+    auto remove_from_vector = [&filename](auto& vec) {
+        vec.erase(std::remove(vec.begin(), vec.end(), filename), vec.end());
+    };
 }
 
 auto RecentManager::getMostRecent() -> GtkRecentInfoSPtr {
