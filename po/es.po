@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-08-06 23:11\n"
+"PO-Revision-Date: 2024-08-07 00:40\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1749,7 +1749,7 @@ msgstr "Verde"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Light Blue"
-msgstr "Celeste"
+msgstr "Azul claro"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
@@ -1817,7 +1817,7 @@ msgstr "No hay ninguna página que exportar."
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:202
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "Failed to initialize PDF Cairo surface"
-msgstr "Error al inicializar PDF Cairo surface"
+msgstr "Error al inicializar la superficie PDF Cairo"
 
 #: ../src/core/undo/AddUndoAction.cpp:70
 #: ../src/core/undo/DeleteUndoAction.cpp:71
@@ -1843,7 +1843,7 @@ msgstr "imagen"
 #: ../src/core/undo/AddUndoAction.cpp:94
 #: ../src/core/undo/DeleteUndoAction.cpp:96
 msgid "latex"
-msgstr "LaTeX"
+msgstr "latex"
 
 #: ../src/core/undo/AddUndoAction.cpp:97
 #: ../src/core/undo/DeleteUndoAction.cpp:99
@@ -1896,7 +1896,7 @@ msgstr "Insertar elementos"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
-msgstr "Cambiar el nombre de la capa"
+msgstr "Renombrar capa"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:86
 msgid "Change line style"
@@ -2780,7 +2780,7 @@ msgstr "4"
 
 #: ../ui/settings.glade:1460
 msgid "Tab"
-msgstr ""
+msgstr "Tabulador"
 
 #: ../ui/settings.glade:1491
 msgid "Input System"
@@ -2970,7 +2970,8 @@ msgstr "Activar gestos de escala (es necesario reiniciar)"
 #: ../ui/settings.glade:2634
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Al dibujar con el táctil, los gestos con dos dedos destinados a desplazar la vista pueden hacer que se amplíe la vista, provocando problemas de rendimiento.\n"
+"Esta configuración puede facilitar el dibujo usando el táctil. "
 
 #: ../ui/settings.glade:2640
 msgid "Start zooming after a distance "
@@ -3050,7 +3051,7 @@ msgstr "Color de selección (texto, selección de trazo, etc.)"
 
 #: ../ui/settings.glade:3083
 msgid "Active Selection Color (Search Results etc.)"
-msgstr ""
+msgstr "Color de selección activo (resultados de búsqueda, etc.)"
 
 #: ../ui/settings.glade:3105
 msgid "Use available Stock Icons (requires restart)"
@@ -3090,7 +3091,7 @@ msgstr "Forzar tema oscuro"
 
 #: ../ui/settings.glade:3213
 msgid "(this may not work, depending on your system theme)"
-msgstr ""
+msgstr "(esto puede no funcionar, dependiendo del tema del sistema)"
 
 #: ../ui/settings.glade:3234
 msgid "Colors"
@@ -3183,11 +3184,11 @@ msgstr "Numeración de página  "
 
 #: ../ui/settings.glade:3638
 msgid "Below preview"
-msgstr ""
+msgstr "Vista previa"
 
 #: ../ui/settings.glade:3639
 msgid "Circle background"
-msgstr ""
+msgstr "Fondo circular"
 
 #: ../ui/settings.glade:3640
 msgid "Square background"
@@ -3341,7 +3342,7 @@ msgstr "Desplazamiento ilimitado"
 
 #: ../ui/settings.glade:4673
 msgid "<i>The amount is specified in pixels.</i>"
-msgstr ""
+msgstr "<i>La cuantía es especificada en píxeles</i>"
 
 #: ../ui/settings.glade:4705
 msgid "Scrolling outside the page"
@@ -3512,7 +3513,8 @@ msgstr "Acción en la herramienta de toque"
 #: ../ui/settings.glade:5361
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Re-renderizar fondos de PDF más a menudo cuando se hace zoom para una mejor calidad de renderización.\n"
+"<b>Nota:</b> Esto no debería afectar la calidad de impresión.</i>"
 
 #: ../ui/settings.glade:5383
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
@@ -3557,7 +3559,10 @@ msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"Utilizando la casilla de verificación se puede desactivar o activar el sistema de audio para futuras sesiones (es necesario reiniciar).\n"
+"La desactivación del audio para una sola sesión se puede lograr utilizando el indicador <tt>--disable-audio</tt> en la línea de comandos.\n"
+"</i>"
 
 #: ../ui/settings.glade:5676
 msgid "Disable Audio"
@@ -3715,7 +3720,7 @@ msgstr "Salida de comandos"
 
 #: ../ui/toolbarCustomizeDialog.glade:30
 msgid "Drag and drop Components from here to the toolbars and back."
-msgstr ""
+msgstr "Arrastra y suelta componentes desde aquí a las barras de herramientas y de vuelta."
 
 #: ../ui/toolbarManageDialog.glade:28
 msgid "Manage Toolbar"
@@ -3788,11 +3793,11 @@ msgstr "Enviar al fondo"
 
 #: ../ui/mainmenubar.xml:142
 msgid "Move Selection Layer Up"
-msgstr ""
+msgstr "Mover la selección un nivel arriba"
 
 #: ../ui/mainmenubar.xml:146
 msgid "Move Selection Layer Down"
-msgstr ""
+msgstr "Mover la selección un nivel abajo"
 
 #: ../ui/mainmenubar.xml:162
 msgid "Preferences"
@@ -3800,7 +3805,7 @@ msgstr "Preferencias"
 
 #: ../ui/mainmenubar.xml:167
 msgid "T_oolbars"
-msgstr ""
+msgstr "_Barras de herramientas"
 
 #: ../ui/mainmenubar.xml:170
 msgid "_Manage"
@@ -3816,7 +3821,7 @@ msgstr "_Vista"
 
 #: ../ui/mainmenubar.xml:185
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Emparejar páginas"
 
 #: ../ui/mainmenubar.xml:189
 msgid "_Presentation Mode"
@@ -3984,11 +3989,11 @@ msgstr "_Capa Superior"
 
 #: ../ui/mainmenubar.xml:422
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "S_iguiente página anotada"
 
 #: ../ui/mainmenubar.xml:427
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "P_ágina anotada anterior"
 
 #: ../ui/mainmenubar.xml:434
 msgid "_Journal"
@@ -4032,7 +4037,7 @@ msgstr "Eliminar Capa"
 
 #: ../ui/mainmenubar.xml:479
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Combinar capa con la inferior"
 
 #: ../ui/mainmenubar.xml:484
 msgid "Rename Layer"
@@ -4048,7 +4053,7 @@ msgstr "_Color de Papel"
 
 #: ../ui/mainmenubar.xml:499
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "F_ondo de papel"
 
 #: ../ui/mainmenubar.xml:504
 msgid "_Tools"
@@ -4064,11 +4069,11 @@ msgstr "_Borrador"
 
 #: ../ui/mainmenubar.xml:519
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Seleccionar texto lineal"
 
 #: ../ui/mainmenubar.xml:525
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Seleccionar texto en rectángulo"
 
 #: ../ui/mainmenubar.xml:531
 msgid "_Highlighter"
@@ -4088,7 +4093,7 @@ msgstr "_Herramienta Predeterminada"
 
 #: ../ui/mainmenubar.xml:556
 msgid "Drawing Type"
-msgstr ""
+msgstr "Tipo de dibujo"
 
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
@@ -4108,11 +4113,11 @@ msgstr "Espacio _Vertical"
 
 #: ../ui/mainmenubar.xml:641
 msgid "H_and Tool"
-msgstr ""
+msgstr "Herramienta _mano"
 
 #: ../ui/mainmenubar.xml:657
 msgid "Pen _Options"
-msgstr ""
+msgstr "_Opciones de lápiz"
 
 #: ../ui/mainmenubar.xml:660 ../ui/mainmenubar.xml:722
 #: ../ui/mainmenubar.xml:769
@@ -4157,7 +4162,7 @@ msgstr "_estándar"
 
 #: ../ui/mainmenubar.xml:754
 msgid "_whiteout"
-msgstr ""
+msgstr "_blanqueo"
 
 #: ../ui/mainmenubar.xml:759
 msgid "_delete strokes"
@@ -4165,7 +4170,7 @@ msgstr "_eliminar trazos"
 
 #: ../ui/mainmenubar.xml:766
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "Opci_ones de resaltado"
 
 #: ../ui/mainmenubar.xml:806
 msgid "Select PDF Text Options"
@@ -4173,7 +4178,7 @@ msgstr "Seleccionar Opciones de Texto PDF"
 
 #: ../ui/mainmenubar.xml:809
 msgid "Marker Opacity"
-msgstr ""
+msgstr "Opacidad del marcador"
 
 #: ../ui/mainmenubar.xml:815
 msgid "Text Font..."
@@ -4213,15 +4218,15 @@ msgstr "Todas las herramientas"
 
 #: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
-msgstr ""
+msgstr "Vertical"
 
 #: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
-msgstr ""
+msgstr "Mínimo izquierdo"
 
 #: ../resources-templates/toolbar.ini.in:65
 msgid "Minimal Top"
-msgstr ""
+msgstr "Mínimo superior"
 
 #: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
@@ -4229,7 +4234,7 @@ msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Right hand Note Taking"
-msgstr ""
+msgstr "Toma de notas con mano derecha"
 
 #: ../resources-templates/toolbar.ini.in:80
 msgid "Toolbar Left"
@@ -4249,7 +4254,7 @@ msgstr "Tomar notas manuscritas"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr ""
+msgstr "tablet;Wacom;pen input;PDF Annotation;markup"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:15
 msgid "com.github.xournalpp.xournalpp"
@@ -4257,7 +4262,7 @@ msgstr "com.github.xournalpp.xournalpp"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
-msgstr ""
+msgstr "Xournal++ es un software de toma de notas escrito en C++ con el objetivo de flexibilidad, funcionalidad y velocidad. El Reconocimiento de trazo y otras partes se basan en el Código Xournal, que se puede encontrar en sourceforge. Soporta GNU/Linux (por ejemplo, Ubuntu, Debian, Arch, SUSE), macOS y Windows. Soporta entrada de entrada desde dispositivos como Tabletas Wacom."
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:17
 msgid "Xournal++ features:"
@@ -4265,11 +4270,11 @@ msgstr "Características de Xournal++:"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:21
 msgid "Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)"
-msgstr ""
+msgstr "Soporta lápices sensibles a la presión y lápices de tabletas digitales (por ejemplo, tabletas Wacom, Huion, XP Pen, etc.)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:22
 msgid "Paper backgrounds for note-taking, scratch paper, or whiteboarding"
-msgstr ""
+msgstr "Fondos de papel para tomar notas, papel para bocetos, o pizarra"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:23
 msgid "Annotate on top of PDFs"
@@ -4277,19 +4282,19 @@ msgstr "Anotar sobre PDFs"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:24
 msgid "Select text from the background PDF, copy, highlight or underline it or strike it through"
-msgstr ""
+msgstr "Seleccionar texto de PDF, copiarlo, resaltarlo o subrayarlo o tacharlo"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:25
 msgid "Follow links from the background PDF"
-msgstr ""
+msgstr "Seguir enlaces desde el PDF"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:26
 msgid "Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line"
-msgstr ""
+msgstr "Exportar a una variedad de formatos incluyendo SVG, PNG y PDF, tanto desde la GUI como desde la línea de comandos"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:27
 msgid "Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)"
-msgstr ""
+msgstr "Diferentes herramientas de dibujo (p.e. pluma, resaltador) y estilos de trazo (p.e. sólido, punteado)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:28
 msgid "Shape drawing (line, arrow, circle, rectangle, spline)"
@@ -4297,7 +4302,7 @@ msgstr "Dibujo de forma (línea, flecha, círculo, rectángulo, spline)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:29
 msgid "Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii"
-msgstr ""
+msgstr "Utilice las herramientas escuadra y compás para mediciones o como guía para dibujar líneas rectas, arcos circulares y radios"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:30
 msgid "Fill shape functionality"
@@ -4305,15 +4310,15 @@ msgstr "Función de relleno de forma"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:31
 msgid "Shape resizing and rotation"
-msgstr ""
+msgstr "Tamaño y rotación de forma"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:32
 msgid "Rotation and grid snapping for precise alignment of objects"
-msgstr ""
+msgstr "Rotación y ajuste de cuadrícula para un alineamiento preciso de los objetos"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:33
 msgid "Input stabilization for smoother writing/drawing"
-msgstr ""
+msgstr "Estabilización de entrada para escribir o dibujar de forma más fluida"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:34
 msgid "Text tool for adding text in different fonts, colors, and sizes"
@@ -4329,7 +4334,7 @@ msgstr "Borrador con múltiples configuraciones"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:37
 msgid "LaTeX support (requires a working LaTeX installation) with customizable template and a resizable editor with syntax highlighting"
-msgstr ""
+msgstr "Soporte LaTeX (requiere una instalación de LaTeX en funcionamiento) con plantilla personalizable y un editor con resaltado de sintaxis"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:38
 msgid "Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)"
@@ -4341,11 +4346,11 @@ msgstr "Permite mapear diferentes herramientas/colores, etc. a stylus/ratón"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:40
 msgid "Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape"
-msgstr ""
+msgstr "Barra de herramientas personalizable con múltiples configuraciones, por ejemplo, para optimizar la barra de herramientas para retrato/paisaje"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:41
 msgid "Custom color palette support using the .gpl format"
-msgstr ""
+msgstr "Soporte de paleta de colores personalizadas usando el formato .gpl"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:42
 msgid "Page template definitions"
@@ -4369,11 +4374,11 @@ msgstr "Extensiones usando scripts Lua"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"
-msgstr ""
+msgstr "Archivo de notas Xournal"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:8
 msgid "Xournal++ note file"
-msgstr ""
+msgstr "Archivo de notas Xournal++"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:12
 msgid "Xournal++ page template file"
