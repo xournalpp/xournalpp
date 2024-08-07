@@ -37,7 +37,7 @@ void addRecentFileFilename(const fs::path& filename);
 /**
  * Removes a file from the underlying GtkRecentManager
  */
-[[maybe_unused]] void removeRecentFileFilename(const fs::path& filename);
+void removeRecentFileFilename(const fs::path& filename);
 
 /**
  * Remove all supported files from the recent file list
