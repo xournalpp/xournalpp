@@ -92,7 +92,7 @@ auto createRemoveSubmenu(const container& recentFiles, size_t start_index) -> xo
         g_menu_append_item(menu, item.get());
         start_index++;
     }
-    
+
     return xoj::util::GObjectSPtr<GMenu>(menu, xoj::util::adopt);
 }
 
@@ -166,26 +166,27 @@ void RecentDocumentsSubmenu::updateMenu() {
     }
     if (this->menuPdfFiles) {
         g_menu_append_section(recentFilesSubmenu.get(), nullptr, G_MENU_MODEL(this->menuPdfFiles.get()));
-    }    
+    }
     if (this->menuXoppFiles || this->menuPdfFiles) {
         g_menu_append_section(recentFilesSubmenu.get(), nullptr, G_MENU_MODEL(createClearListSection().get()));
-    } 
+    }
 
 
     if (!fileList.recentXoppFiles.empty() || !fileList.recentPdfFiles.empty()) {
         GMenu* removeSubmenu = g_menu_new();
-        
+
         if (!fileList.recentXoppFiles.empty()) {
             auto removeXoppMenu = createRemoveSubmenu(fileList.recentXoppFiles, 0);
             g_menu_append_section(removeSubmenu, _("Xournal++ Files"), G_MENU_MODEL(removeXoppMenu.get()));
         }
-        
+
         if (!fileList.recentPdfFiles.empty()) {
             auto removePdfMenu = createRemoveSubmenu(fileList.recentPdfFiles, fileList.recentXoppFiles.size());
             g_menu_append_section(removeSubmenu, _("PDF Files"), G_MENU_MODEL(removePdfMenu.get()));
         }
-        
-        GMenuItem* removeSubmenuItem = g_menu_item_new_submenu(_("Remove Recent Documents"), G_MENU_MODEL(removeSubmenu));
+
+        GMenuItem* removeSubmenuItem =
+                g_menu_item_new_submenu(_("Remove Recent Documents"), G_MENU_MODEL(removeSubmenu));
         g_menu_append_item(recentFilesSubmenu.get(), removeSubmenuItem);
     } else {
         g_menu_append_item(recentFilesSubmenu.get(), createEmptyListPlaceholder().get());
@@ -211,7 +212,8 @@ void RecentDocumentsSubmenu::openFileCallback(GSimpleAction* ga, GVariant* param
 
 void RecentDocumentsSubmenu::removeFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self) {
     auto index = g_variant_get_uint64(parameter);
-    auto& path = index < self->xoppFiles.size() ? self->xoppFiles[index] : self->pdfFiles[index - self->xoppFiles.size()];
+    auto& path =
+            index < self->xoppFiles.size() ? self->xoppFiles[index] : self->pdfFiles[index - self->xoppFiles.size()];
     RecentManager::removeRecentFileFilename(path);
     self->updateMenu();
 }

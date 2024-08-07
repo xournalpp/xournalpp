@@ -5,10 +5,10 @@
 #include <functional>  // for greater, less
 #include <string>      // for string, allocator, operator+
 
-#include "util/GListView.h"          // for GListView, GListView<>::GListVie...
-#include "util/PathUtil.h"           // for fromUri, toUri, hasPdfFileExt
-#include "util/TinyVector.h"         // for TinyVector
-#include "util/safe_casts.h"         // for as_signed
+#include "util/GListView.h"   // for GListView, GListView<>::GListVie...
+#include "util/PathUtil.h"    // for fromUri, toUri, hasPdfFileExt
+#include "util/TinyVector.h"  // for TinyVector
+#include "util/safe_casts.h"  // for as_signed
 
 #include "Control.h"
 
@@ -56,9 +56,7 @@ void RecentManager::clearRecentFiles() {
     auto item_view = GListView<GtkRecentInfo>(items);
     for (auto& recent: item_view) {
         if (getFileType(recent) != UNSUPPORTED_FILE_TYPE) {
-            gtk_recent_manager_remove_item(recentManager,
-                                           gtk_recent_info_get_uri(&recent),
-                                           nullptr);
+            gtk_recent_manager_remove_item(recentManager, gtk_recent_info_get_uri(&recent), nullptr);
         }
     }
     g_list_free_full(items, GDestroyNotify(gtk_recent_info_unref));
@@ -96,11 +94,6 @@ void RecentManager::removeRecentFileFilename(const fs::path& filename) {
     }
     GtkRecentManager* recentManager = gtk_recent_manager_get_default();
     gtk_recent_manager_remove_item(recentManager, uri->c_str(), nullptr);
-
-    // Remove the file from the vectors
-    auto remove_from_vector = [&filename](auto& vec) {
-        vec.erase(std::remove(vec.begin(), vec.end(), filename), vec.end());
-    };
 }
 
 auto RecentManager::getMostRecent() -> GtkRecentInfoSPtr {
