@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-18 01:48\n"
+"PO-Revision-Date: 2024-08-08 22:27\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1171,7 +1171,7 @@ msgstr "Druck vom Eingabegerät filtern. Passe den Druck mit dem Druckmultiplika
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "Eingebaute Paletten"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
