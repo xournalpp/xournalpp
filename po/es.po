@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-08-07 00:40\n"
+"PO-Revision-Date: 2024-08-10 13:48\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -402,7 +402,7 @@ msgstr "Guardar el archivo xopp con el PDF de fondo especificado como ARCHIVO"
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as PDF"
-msgstr "Exportar archivo en formato PDF"
+msgstr "Exportar FILE como PDF"
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "Export FILE as image files (one per page)\n"
