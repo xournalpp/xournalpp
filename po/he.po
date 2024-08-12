@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-26 06:25\n"
+"PO-Revision-Date: 2024-08-12 12:55\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -54,7 +54,7 @@ msgstr "ביטול"
 
 #: ../src/core/control/Control.cpp:799
 msgid "Insert after current page"
-msgstr ""
+msgstr "הוספה אחרי העמוד הנוכחי"
 
 #: ../src/core/control/Control.cpp:800
 msgid "Insert at end"
@@ -126,7 +126,7 @@ msgstr "הסר רקע מ-PDF"
 
 #: ../src/core/control/Control.cpp:1686
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "להשתמש ב־pdf המוצע"
 
 #: ../src/core/control/Control.cpp:1689
 msgid "Missing PDF background file"
