@@ -79,9 +79,9 @@ protected:
     bool selected = false;
     bool neverRendered = true;  ///< Whether the miniature has been rendered at least once
 
-    int imageWidth;
-    int imageHeight;
-    int DPIscaling;  ///< 1, maybe 2 in HiDPI setups
+    int imageWidth;                  ///< Does not take DPI scaling into account
+    int imageHeight;                 ///< Does not take DPI scaling into account
+    int DPIscaling;                  ///< Usually 1, sometimes 2 in HiDPI setups
     Interval<int> verticalPosition;  ///< Where the entry lies in the sidebar
 
     /**
