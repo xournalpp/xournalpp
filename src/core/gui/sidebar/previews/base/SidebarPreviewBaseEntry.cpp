@@ -70,7 +70,8 @@ void SidebarPreviewBaseEntry::repaint() {
 }
 
 void SidebarPreviewBaseEntry::updateSize() {
-    this->DPIscaling = gtk_widget_get_scale_factor(this->button.get());
+    this->DPIscaling = 1;  // It should really be gtk_widget_get_scale_factor(this->button.get()) but it causes a weird
+                           // positionning bug when adding a new page
     // To avoid having a black line, we use floor rather than ceil
     this->imageWidth = std::min(floor_cast<int>(page->getWidth() * sidebar->getZoom()), MAX_MINIATURE_SIZE);
     this->imageHeight = std::min(floor_cast<int>(page->getHeight() * sidebar->getZoom()), MAX_MINIATURE_SIZE);
