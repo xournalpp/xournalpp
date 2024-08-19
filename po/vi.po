@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-08-19 13:40\n"
+"PO-Revision-Date: 2024-08-19 15:21\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -717,7 +717,7 @@ msgstr "Tài liệu đã bị sửa đổi lại (không tìm thấy trang nào 
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:310
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Thẻ gốc không mong muốn: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:331
 msgid "Unexpected tag in document: \"{1}\""
@@ -799,7 +799,7 @@ msgstr "Thuộc tính màu chưa cài đặt!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Giá trị màu sắc không xác định: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
@@ -845,7 +845,7 @@ msgstr "Lỗi khi nạp tệp glade \"{1}\" (thử tải \"{2}\")"
 
 #: ../src/core/gui/PageView.cpp:388
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "Không thể phát ghi âm {1}"
 
 #: ../src/core/gui/PageView.cpp:921
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
@@ -855,7 +855,7 @@ msgstr "Đang nạp..."
 
 #: ../src/core/gui/PageView.cpp:978
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "Cuộn đến trang {1}"
 
 #: ../src/core/gui/PageView.cpp:980
 msgid "Add missing page"
@@ -863,28 +863,28 @@ msgstr "Thêm trang đang thiếu"
 
 #: ../src/core/gui/SearchBar.cpp:80
 msgid "Text found once on this page"
-msgstr ""
+msgstr "Văn bản được tìm thấy một lần trên trang này"
 
 #: ../src/core/gui/SearchBar.cpp:82
 #, c-format
 msgid "Text found %zu times on this page"
-msgstr ""
+msgstr "Văn bản được tìm thấy %zu lần trên trang này"
 
 #: ../src/core/gui/SearchBar.cpp:87
 msgid "Text not found"
-msgstr ""
+msgstr "Không tìm thấy văn bản"
 
 #: ../src/core/gui/SearchBar.cpp:130
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "Văn bản được tìm thấy một lần trên trang {1}"
 
 #: ../src/core/gui/SearchBar.cpp:131
 msgid "Text found {1} times on page {2} ({3} of {1})"
-msgstr ""
+msgstr "Văn bản được tìm thấy {1} lần trên trang {2} ({3} trên {1})"
 
 #: ../src/core/gui/SearchBar.cpp:136
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "Không tìm thấy văn bản, đã tìm kiếm trên tất cả các trang"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:41
 msgid "Version"
@@ -900,7 +900,7 @@ msgstr "Phiên bản GTK"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:54
 msgid "Git commit"
-msgstr ""
+msgstr "Git commit"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:61
 msgid "See the full list of contributors"
@@ -945,7 +945,7 @@ msgstr "Chèn ảnh"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Vertical space"
-msgstr ""
+msgstr "Khoảng cách dọc"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select region"
