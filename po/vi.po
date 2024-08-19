@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-18 01:48\n"
+"PO-Revision-Date: 2024-08-19 13:40\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -677,23 +677,23 @@ msgstr "Lỗi khi mở tập tin hình ảnh: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "Tệp không phải là tệp .xopp hợp lệ (Thiếu loại Mime): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:141
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "Tệp không phải là tệp .xopp hợp lệ (Sai loại Mime): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:150
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "Tệp không phải là tệp .xopp hợp lệ (Thiếu phiên bản): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:163
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "Tệp không phải là tệp .xopp hợp lệ (Chuỗi phiên bản bị hỏng): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:172
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Thất bại khi mở content.xml trong lưu trữ zip: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:180
 msgid "Could not open file: \"{1}\""
@@ -701,11 +701,11 @@ msgstr "Không thể mở tệp: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:247
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "Lỗi trình phân tích cú pháp XML: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:250
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Lỗi trình phân tích cú pháp không xác định"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:261
 msgid "Document is not complete (maybe the end is cut off?)"
@@ -721,7 +721,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:331
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Thẻ không mong muốn trong tài liệu: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:380
 #: ../src/core/control/xojfile/LoadHandler.cpp:409
