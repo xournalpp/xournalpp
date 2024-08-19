@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-08-19 13:40\n"
+"PO-Revision-Date: 2024-08-19 15:21\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -94,7 +94,7 @@ msgstr "Erro ao abrir o arquivo {1}"
 
 #: ../src/core/control/Control.cpp:1518
 msgid "File version mismatch"
-msgstr ""
+msgstr "Incompatibilidade com a Versão desse Arquivo"
 
 #: ../src/core/control/Control.cpp:1519
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -103,7 +103,8 @@ msgstr "O arquivo que está sendo carregado tem uma versão de formato de arquiv
 #: ../src/core/control/Control.cpp:1542
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Erro lendo o Arquivo PDF \"{1}\"\n\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1663
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -134,7 +135,7 @@ msgstr "Usar PDF proposto"
 
 #: ../src/core/control/Control.cpp:1689
 msgid "Missing PDF background file"
-msgstr ""
+msgstr "O arquivo PDF não tem um arquivo de fundo"
 
 #: ../src/core/control/Control.cpp:1821
 msgid "Select font"
@@ -500,7 +501,7 @@ msgstr "A verificação de substituição do plano de fundo falhou com:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export File"
-msgstr ""
+msgstr "Exportar Arquivo"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export"
@@ -668,11 +669,11 @@ msgstr "Enviar para o fundo"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 msgid "Failed to load image"
-msgstr ""
+msgstr "Erro carregando imagem"
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
-msgstr ""
+msgstr "Ocorreu um erro abrindo o arquivo de imagem: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1059,7 +1060,7 @@ msgstr "Modelo Xournal++"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "Arquivos de Imagem"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
@@ -1169,32 +1170,33 @@ msgstr "Filtrar pressão de entrada. Multiplique a pressão pelo multiplicador d
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "Paletas Padrão"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
-msgstr ""
+msgstr "Paletas Customizadas"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>As Paletas mostradas aqui são pegas dos diretórios de<a href=\"file://{1}\">Paletas Padrão</a> e as <a href=\"file://{2}\">Paletas Customizadas.</a></i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
-msgstr ""
+msgstr "Nenhuma paleta (arquivo .gpl) foi encontrado.\n"
+"A paleta padrão irá ser usada até que uma nova paleta é configurada corretamente."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr ""
+msgstr "Paleta não tem nome"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
@@ -1222,7 +1224,7 @@ msgstr "_Abrir"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
-msgstr ""
+msgstr "Abrir arquivo de Molde"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
@@ -1232,11 +1234,11 @@ msgstr "Abrir arquivo"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
-msgstr ""
+msgstr "Anotar no Arquivo PDF"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
-msgstr ""
+msgstr "Escolher uma imagem"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
@@ -1256,7 +1258,7 @@ msgstr "Não foi possível carregar esta imagem. Mensagem de erro: {1}"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
-msgstr ""
+msgstr "Essa Imagem não pôde ser carregada."
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
@@ -1297,47 +1299,47 @@ msgstr "Espaçador"
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:79
 msgctxt "Item category in toolbar customization dialog"
 msgid "Audio"
-msgstr ""
+msgstr "Áudio"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
-msgstr ""
+msgstr "Cores"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
 msgid "Files"
-msgstr ""
+msgstr "Arquivos"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
 msgctxt "Item category in toolbar customization dialog"
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Variados"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:83
 msgctxt "Item category in toolbar customization dialog"
 msgid "Navigation"
-msgstr ""
+msgstr "Navegação"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:84
 msgctxt "Item category in toolbar customization dialog"
 msgid "Selection"
-msgstr ""
+msgstr "Seleção"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
 msgctxt "Item category in toolbar customization dialog"
 msgid "Tools"
-msgstr ""
+msgstr "Ferramentas"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
 msgctxt "Item category in toolbar customization dialog"
 msgid "Separators"
-msgstr ""
+msgstr "Separadores"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
@@ -1792,7 +1794,7 @@ msgstr "Branco"
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
 msgctxt "as a noun: a copy of"
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: ../src/core/model/Document.cpp:326 ../src/core/model/Document.cpp:335
 #: ../src/core/model/Document.cpp:338
@@ -1805,7 +1807,7 @@ msgstr "Plano de fundo"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:123
 msgid "Error while finalizing the PDF Cairo surface"
-msgstr ""
+msgstr "Erro finalizando o PDF Cairo Surface"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:239
@@ -1906,7 +1908,7 @@ msgstr "Mesclar camada para abaixo"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr ""
+msgstr "Modificar PDF Faltando"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:28
 msgid "Move layer"
@@ -2413,7 +2415,7 @@ msgstr "Carregar do arquivo"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
-msgstr ""
+msgstr "Paletas de cores"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
@@ -3074,23 +3076,23 @@ msgstr "(Requer reinicialização)"
 
 #: ../ui/settings.glade:3178
 msgid "Theme Variant:"
-msgstr ""
+msgstr "Variante de tema:"
 
 #: ../ui/settings.glade:3198
 msgid "Use system default"
-msgstr ""
+msgstr "Usar o padrão do sistema"
 
 #: ../ui/settings.glade:3199
 msgid "Force light theme"
-msgstr ""
+msgstr "Forçar tema claro"
 
 #: ../ui/settings.glade:3200
 msgid "Force dark theme"
-msgstr ""
+msgstr "Forçar tema escuro"
 
 #: ../ui/settings.glade:3213
 msgid "(this may not work, depending on your system theme)"
-msgstr ""
+msgstr "(talvez isso não funcione dependendo do tema do seu sistema.)"
 
 #: ../ui/settings.glade:3234
 msgid "Colors"
@@ -3651,7 +3653,7 @@ msgstr "Configurações de idioma"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr ""
+msgstr "Paleta"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
@@ -3996,7 +3998,7 @@ msgstr "Página Anotada Anterior"
 
 #: ../ui/mainmenubar.xml:434
 msgid "_Journal"
-msgstr ""
+msgstr "_Jornal"
 
 #: ../ui/mainmenubar.xml:437
 msgid "New Page _Before"
@@ -4161,7 +4163,7 @@ msgstr "_padrão"
 
 #: ../ui/mainmenubar.xml:754
 msgid "_whiteout"
-msgstr ""
+msgstr "_Corrigir"
 
 #: ../ui/mainmenubar.xml:759
 msgid "_delete strokes"
@@ -4253,7 +4255,7 @@ msgstr "Tomar notas manuscritas"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr ""
+msgstr "tablet;Wacom;pen input;Anotação PDF;markup"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:15
 msgid "com.github.xournalpp.xournalpp"
@@ -4301,7 +4303,7 @@ msgstr "Desenhos de forma (linha, seta, círculo, retângulo, spline)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:29
 msgid "Use the set-square and compass tools for measurements or as a guide for drawing straight lines, circular arcs and radii"
-msgstr ""
+msgstr "Use o compasso e o Esquadro para medir ou como guia para desenhar linhas Retas, Arcs circulares e Radii"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:30
 msgid "Fill shape functionality"
