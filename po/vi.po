@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-08-19 15:21\n"
+"PO-Revision-Date: 2024-08-20 07:31\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -742,7 +742,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:516
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Loại nền không xác định: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:541
 msgid "Error reading width of a stroke: {1}"
@@ -1056,11 +1056,11 @@ msgstr "Tập tin xournal++"
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Mẫu Xournal++"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "Các tệp hình ảnh"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
@@ -1080,11 +1080,11 @@ msgstr "Chủ đề trình chỉnh sửa LaTeX:"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "GtkSourceView đã bị vô hiệu hóa khi build Xournal++! Một số tùy chọn sẽ không khả dụng."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Không thể đọc được tệp mẫu chung tại {1}. Tệp có tồn tại không?"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
@@ -1107,19 +1107,19 @@ msgstr "Lưu Tệp tin"
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
-msgstr ""
+msgstr "_Hủy bỏ"
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:113
 msgid "_Save"
-msgstr ""
+msgstr "_Lưu"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
-msgstr ""
+msgstr "mặc định kích hoạt"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default disabled"
-msgstr ""
+msgstr "mặc định không được kích hoạt"
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
@@ -1127,16 +1127,16 @@ msgstr "Chọn màu nền"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
-msgstr ""
+msgstr "Chọn độ trong suốt cho: "
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
-msgstr ""
+msgstr "Tùy chọn bút dạ quang"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
-msgstr ""
+msgstr "Tô màu"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
