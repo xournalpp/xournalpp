@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-18 01:44+0000\n"
-"PO-Revision-Date: 2024-07-18 01:48\n"
+"POT-Creation-Date: 2024-08-30 09:50+0000\n"
+"PO-Revision-Date: 2024-08-30 10:20\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -1319,12 +1319,32 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:67
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
+msgctxt "The selected document will be removed from the recent files list"
+msgid "Dismiss"
+msgstr ""
+
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
 msgstr ""
 
-#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:77
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:110
 msgid "Clear list"
+msgstr ""
+
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
+msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
+msgid "Xournal++ Files"
+msgstr ""
+
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
+msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
+msgid "PDF Files"
+msgstr ""
+
+#: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
+msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
+msgid "Dismiss a single document"
 msgstr ""
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:138
