@@ -16,16 +16,18 @@
 #include "gui/CreatePreviewImage.h"              // for createPreviewImage
 #include "gui/MainWindow.h"                      // for MainWindow
 #include "gui/XournalView.h"                     // for XournalView
-#include "gui/widgets/ZoomCallib.h"              // for zoomcallib_new, zoom...
-#include "model/PageType.h"                      // for PageType
-#include "util/Color.h"                          // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"                       // for fromGFile, toGFilename
-#include "util/StringUtils.h"                    // for StringUtils
-#include "util/Util.h"                           // for systemWithMessage
-#include "util/gtk4_helper.h"                    //
-#include "util/i18n.h"                           // for _
-#include "util/raii/CairoWrappers.h"             // for CairoSurfaceSPtr
-#include "util/safe_casts.h"                     // for round_cast
+#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
+#include "gui/toolbarMenubar/icon/ColorIcon.h"
+#include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
+#include "gui/widgets/ZoomCallib.h"                 // for zoomcallib_new, zoom...
+#include "model/PageType.h"                         // for PageType
+#include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
+#include "util/PathUtil.h"                          // for fromGFile, toGFilename
+#include "util/Util.h"                              // for systemWithMessage
+#include "util/gtk4_helper.h"                       //
+#include "util/i18n.h"                              // for _
+#include "util/raii/CairoWrappers.h"                // for CairoSurfaceSPtr
+#include "util/safe_casts.h"                        // for round_cast
 
 #include "ButtonConfigGui.h"       // for ButtonConfigGui
 #include "DeviceClassConfigGui.h"  // for DeviceClassConfigGui
@@ -42,7 +44,7 @@ constexpr auto UI_FILE = "settings.glade";
 constexpr auto UI_DIALOG_NAME = "settingsDialog";
 
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control,
-                               std::function<void()> callback):
+                               const std::vector<fs::path>& paletteDirectories, std::function<void()> callback):
         settings(settings),
         control(control),
         callib(zoomcallib_new()),
@@ -50,6 +52,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         window(GTK_WINDOW(builder.get(UI_DIALOG_NAME))),
         languageConfig(gladeSearchPath, builder.get("hboxLanguageSelect"), settings),
         latexPanel(gladeSearchPath),
+        paletteTab(gladeSearchPath, paletteDirectories),
         callback(callback) {
 
     gtk_box_append(GTK_BOX(builder.get("zoomVBox")), callib);
@@ -76,6 +79,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     }
 
     gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.getPanel());
+    gtk_box_append(GTK_BOX(builder.get("paletteTabBox")), this->paletteTab.getPanel());
+
 
     g_signal_connect(builder.get("zoomCallibSlider"), "change-value",
                      G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, SettingsDialog* self) {
@@ -687,6 +692,7 @@ void SettingsDialog::load() {
     }
 
     this->latexPanel.load(settings->latexSettings);
+    paletteTab.renderPaletteTab(this->control->getPalette().getFilePath());
 }
 
 void SettingsDialog::save() {
@@ -1029,6 +1035,11 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")))));
 
+    const std::optional<std::filesystem::path> selectedPalette = paletteTab.getSelectedPalette();
+    if (selectedPalette.has_value()) {
+        settings->setColorPaletteSetting(selectedPalette.value());
+    }
+
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui.saveSettings();
     }
@@ -1038,6 +1049,7 @@ void SettingsDialog::save() {
     settings->transactionEnd();
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
+
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
 }

@@ -43,6 +43,7 @@ class ColorToolItem;
 struct ToolbarButtonEntry;
 class PageTypeSelectionPopover;
 class PageType;
+struct Palette;
 class StylePopoverFactory;
 
 class ToolMenuHandler {
@@ -66,6 +67,13 @@ public:
      * @param horizontal whether the toolbar is horizontal
      */
     void load(const ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
+
+    /**
+     * @brief Update all ColorToolItems based on palette
+     *
+     * @param palette
+     */
+    void updateColorToolItems(const Palette& palette);
 
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);

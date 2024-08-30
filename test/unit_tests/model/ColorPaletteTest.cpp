@@ -71,6 +71,15 @@ TEST(ColorPalette, testRainbowLoad) {
     EXPECT_EQ(palette.getColorAt(4).getColor(), Color{0xFF004DFFU});
 }
 
+TEST(ColorPalette, testOverflow) {
+    Palette palette = Palette{""};
+    palette.load_default();
+
+    EXPECT_EQ((size_t)11, palette.size());
+    EXPECT_EQ(palette.getColorAt(11).getColor(), palette.getColorAt(0).getColor());
+    EXPECT_EQ(palette.getColorAt(12).getColor(), palette.getColorAt(1).getColor());
+}
+
 TEST(ColorPalette, testNotExistLoad) {
     Palette palette = Palette{GET_TESTFILE("palettes/the_question_to_the_answer_42.gpl")};
     EXPECT_THROW(palette.load(), std::invalid_argument);

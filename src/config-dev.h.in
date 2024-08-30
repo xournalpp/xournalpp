@@ -24,7 +24,7 @@
 /**
  * Gimp Palette File
  */
-#define PALETTE_FILE "@DEV_PALETTE_FILE@"
+#define DEFAULT_PALETTE_FILE "@DEV_DEFAULT_PALETTE_FILE@"
 
 /**
  * Print config file name

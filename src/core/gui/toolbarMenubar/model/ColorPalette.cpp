@@ -55,6 +55,13 @@ auto Palette::load_default() -> void {
     }
 }
 
+auto Palette::getHeader(const std::string& attr) const -> std::string {
+    if (header.find(attr) == header.end()) {
+        return std::string{};
+    }
+    return header.at(attr);
+}
+
 auto Palette::parseFirstGimpPaletteLine(const std::string& line) const -> bool {
     if (StringUtils::trim(line) != "GIMP Palette") {
         throw std::invalid_argument(".gpl file needs to start with \"GIMP Palette\" in the "
@@ -107,7 +114,7 @@ auto Palette::size() const -> size_t { return namedColors.size(); }
 auto Palette::default_palette() -> const std::string {
     auto d = serdes_stream<std::stringstream>();
     d << "GIMP Palette\n"
-      << "Name: Xournal Default Palette\n"
+      << "Name: Xournal Palette\n"
       << "#\n"
       << 0 << " " << 0 << " " << 0 << " " << NC_("Color", "Black") << "\n"
       << 0 << " " << 128 << " " << 0 << " " << NC_("Color", "Green") << "\n"
@@ -130,7 +137,7 @@ void Palette::create_default(fs::path filepath) {
 
 auto Header::getAttribute() const -> std::string { return this->attribute; };
 auto Header::getValue() const -> std::string { return this->value; };
-
+auto Palette::getFilePath() const -> fs::path const& { return this->filepath; };
 
 auto operator>>(std::istream& str, Header& header) -> std::istream& {
     /*

@@ -101,8 +101,7 @@ void setRadioButtonActionName(GtkRadioButton* btn, const char* actionNamespace, 
                 }
 
                 static auto toggledCallback = +[](GtkToggleButton* btn, gpointer action) {
-                    GVariant* tgt = gtk_actionable_get_action_target_value(GTK_ACTIONABLE(btn));
-                    xoj_assert(tgt);
+                    xoj_assert(gtk_actionable_get_action_target_value(GTK_ACTIONABLE(btn)));
                     if (gtk_toggle_button_get_active(btn)) {
                         g_action_change_state(G_ACTION(action),
                                               gtk_actionable_get_action_target_value(GTK_ACTIONABLE(btn)));

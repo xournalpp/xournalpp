@@ -116,6 +116,9 @@ private:
      */
     void insertTexImage();
 
+    /// Cancels the current edition: puts the original Tex element back in place (does nothing if there was none)
+    void cancelEditing();
+
 private:
     Control* control = nullptr;
     LatexSettings const& settings;
