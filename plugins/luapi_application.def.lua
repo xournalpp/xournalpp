@@ -633,6 +633,16 @@ function app.scrollToPage(page, relative) end
 --- scrolls to page position 200pt right and 50pt down from the left page corner  (absolute mode)
 function app.scrollToPos(x, y, relative) end
 
+--- Obtains the label of the specified page in the pdf background.
+--- 
+--- @param page integer
+--- @return string|nil Returns the label on success and (nil, message) if page number is out of range.
+--- @return string
+--- 
+--- Example 1: local label = app.getPageLabel(10)
+---  ' obtains the page label of page 10 in the background pdf
+function app.getPageLabel(page) end
+
 --- Sets the current page as indicated (without scrolling)
 --- The page number passed is clamped to the range between first page and last page
 --- 

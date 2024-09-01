@@ -85,6 +85,13 @@ void PopplerGlibPage::renderForPrinting(cairo_t* cr) const { poppler_page_render
 
 auto PopplerGlibPage::getPageId() const -> int { return poppler_page_get_index(page); }
 
+auto PopplerGlibPage::getPageLabel() const -> std::string {
+    gchar* label{poppler_page_get_label(page)};
+    std::string cpp_label{label};
+    g_free(label);
+    return cpp_label;
+}
+
 auto PopplerGlibPage::findText(const std::string& text) -> std::vector<XojPdfRectangle> {
     std::vector<XojPdfRectangle> findings;
 
