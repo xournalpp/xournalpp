@@ -46,6 +46,8 @@ public:
 
     int getPageId() const override;
 
+    std::string getPageLabel() const override;
+
 private:
     PopplerPage* page;
     PopplerDocument* document;
