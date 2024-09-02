@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-02 10:14\n"
+"PO-Revision-Date: 2024-09-02 12:04\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -1189,7 +1189,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
 msgid "Name"
-msgstr ""
+msgstr "Název"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
@@ -1255,7 +1255,7 @@ msgstr "Obrázek se nepodařilo načíst. Chybová zpráva: {1}"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
-msgstr ""
+msgstr "Obrázek nelze načíst."
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
