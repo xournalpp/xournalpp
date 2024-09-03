@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-08-30 10:19\n"
+"PO-Revision-Date: 2024-09-03 06:31\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -20,23 +20,24 @@ msgstr ""
 #: ../src/core/control/AudioController.cpp:120
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "오디오 폴더가 없거나 지정되지 않았습니다! 녹음이 작동하지 않습니다!\n"
+"\"설정 > 오디오 녹음\"에서 녹음폴더를 지정하세요."
 
 #: ../src/core/control/Control.cpp:227
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "파일시스템 오류: {1}"
 
 #: ../src/core/control/Control.cpp:239
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "이전 자동저장 파일 \"{1}\"을 삭제할 수 없습니다: {2}"
 
 #: ../src/core/control/Control.cpp:551
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "현재 활성화된 툴바를 삭제했습니다. 기본 툴바를 사용합니다."
 
 #: ../src/core/control/Control.cpp:571
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "툴바설정 \"{1}\"은 수정할 수 없습니다. 수정을 위해 이 툴바설정의 복사본을 만들겠습니까?"
 
 #: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
 msgid "Yes"
@@ -44,7 +45,7 @@ msgstr "예"
 
 #: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
 msgid "No"
-msgstr "아니요"
+msgstr "아니오"
 
 #: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
 #: ../src/core/control/Control.cpp:2014 ../src/core/control/XournalMain.cpp:206
@@ -53,11 +54,11 @@ msgstr "취소"
 
 #: ../src/core/control/Control.cpp:799
 msgid "Insert after current page"
-msgstr ""
+msgstr "현재 페이지 다음에 추가"
 
 #: ../src/core/control/Control.cpp:800
 msgid "Insert at end"
-msgstr ""
+msgstr "마지막에 추가"
 
 #: ../src/core/control/Control.cpp:803
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -137,7 +138,7 @@ msgstr "글꼴 선택"
 #: ../src/core/control/Control.cpp:1836
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
-msgstr "색 선택"
+msgstr "색상 선택"
 
 #: ../src/core/control/Control.cpp:1858
 msgid "Unsaved Document"
