@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-04 22:02\n"
+"PO-Revision-Date: 2024-09-04 23:08\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1389,7 +1389,7 @@ msgstr "레이어스택 미리보기"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layer Preview"
-msgstr ""
+msgstr "레이어 미리보기"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:36
 msgid "Page Preview"
@@ -1406,12 +1406,14 @@ msgstr "글꼴"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:68
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "기본 toolbar.ini 파일 {1}을 읽을 수 없습니다.\n"
+"툴바를 사용할 수 없습니다."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:77
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "사용자 정의된 toolbar.ini 파일 {1}을 읽을 수 없습니다.\n"
+"툴바를 사용할 수 없습니다."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
 msgid "New Xournal"
@@ -1459,23 +1461,23 @@ msgstr "삭제"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "회전 자동 맞춤"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 msgid "Grid Snapping"
-msgstr "그리드 맞추기"
+msgstr "그리드 자동 맞춤"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Paired pages"
-msgstr ""
+msgstr "두 쪽 보기"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "Presentation mode"
-msgstr ""
+msgstr "발표 모드"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:320
 msgid "Toggle fullscreen"
-msgstr ""
+msgstr "전체 화면 전환"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:322
 msgid "Manage Toolbars"
@@ -1483,7 +1485,7 @@ msgstr "도구 모음 관리"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:324
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "툴바 사용자 정의"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Zoom out"
@@ -1495,7 +1497,7 @@ msgstr "확대"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Zoom fit to screen"
-msgstr ""
+msgstr "화면에 맞춤"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Zoom to 100%"
@@ -1536,11 +1538,11 @@ msgstr "최상위 레이어로 이동"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Next annotated page"
-msgstr ""
+msgstr "주석 추가된 다음 페이지"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 msgid "Insert page"
-msgstr ""
+msgstr "페이지 추가"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Delete current page"
@@ -1863,7 +1865,7 @@ msgstr "긴급 저장 문서"
 
 #: ../src/core/undo/FillUndoAction.cpp:88
 msgid "Change stroke fill"
-msgstr ""
+msgstr "획 채우기 변경"
 
 #: ../src/core/undo/FontUndoAction.cpp:118
 msgid "Change font"
@@ -1871,7 +1873,7 @@ msgstr "글꼴 변경"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:83
 msgid "Page inserted"
-msgstr "페이지 삽입됨"
+msgstr "페이지 추가됨"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:87
 msgid "Page deleted"
@@ -1879,23 +1881,23 @@ msgstr "페이지 삭제됨"
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:29
 msgid "Insert layer"
-msgstr ""
+msgstr "레이서 추가"
 
 #: ../src/core/undo/InsertUndoAction.cpp:25
 msgid "Draw stroke"
-msgstr ""
+msgstr "획 그리기"
 
 #: ../src/core/undo/InsertUndoAction.cpp:27
 msgid "Write text"
-msgstr ""
+msgstr "텍스트 쓰기"
 
 #: ../src/core/undo/InsertUndoAction.cpp:31
 msgid "Insert latex"
-msgstr ""
+msgstr "LaTeX 추가"
 
 #: ../src/core/undo/InsertUndoAction.cpp:70
 msgid "Insert elements"
-msgstr ""
+msgstr "요소 추가"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
@@ -1907,11 +1909,11 @@ msgstr "줄 표시 변경"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
 msgid "Merge layer down"
-msgstr ""
+msgstr "레이어 합치기"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr ""
+msgstr "누락된 PDF 대체"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:28
 msgid "Move layer"
@@ -1923,7 +1925,7 @@ msgstr "이동"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:97
 msgid "Page background changed"
-msgstr "페이지 백그라운드 변경됨"
+msgstr "페이지 배경 변경됨"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -1931,15 +1933,15 @@ msgstr "레이어 삭제"
 
 #: ../src/core/undo/RotateUndoAction.cpp:58
 msgid "Rotation"
-msgstr ""
+msgstr "회전"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:62
 msgid "Scale"
-msgstr ""
+msgstr "배율"
 
 #: ../src/core/undo/SizeUndoAction.cpp:118
 msgid "Change stroke width"
-msgstr ""
+msgstr "획 두께 변경"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page upwards"
@@ -1956,13 +1958,14 @@ msgstr "텍스트 편집"
 #: ../src/core/undo/UndoRedoHandler.cpp:112
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "\"{1}\" 되돌리기 실패\n"
+"문제가 생겼습니다… 버그 리포트를 작성 하십시오…"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:138
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\" 다시 실행 실패\n"
-"문제가 생겼습니다… 버그 리포트를 작성해주세요…"
+"문제가 생겼습니다… 버그 리포트를 작성 하십시오…"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:172
 msgid "Undo: "
@@ -1974,48 +1977,49 @@ msgstr "다시 실행: "
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): 잘못된 요소 범위"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): 주어진 요소의 인덱스가 최대 갯수보다 큽니다."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): interval bounds는 오름차순이어야 합니다."
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): 요소 인덱스는 1부터 시작합니다."
 
 #: ../src/util/OutputStream.cpp:27
 msgid "Error opening file: \"{1}\""
-msgstr ""
+msgstr "\"{1}\" 파일 열기 오류"
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
-msgstr ""
+msgstr "\"{1}\" 파일에 데이터 쓰기 오류"
 
 #: ../src/util/OutputStream.cpp:49
 msgid "Error code {1}. Message:"
-msgstr ""
+msgstr "오류 코드 {1}. 메시지:"
 
 #: ../src/util/OutputStream.cpp:69
 msgid "Error occurred while closing file: \"{1}\""
-msgstr ""
+msgstr "\"{1}\"파일을 닫는 중 오류 발생"
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
-msgstr ""
+msgstr "오류 코드 {1}"
 
 #: ../src/util/PathUtil.cpp:176
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "파일을 열 수 없습니다. 수동으로 직접 파일을 열어야 합니다.\n"
+"URL: {1}"
 
 #: ../src/util/PathUtil.cpp:249
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../src/util/PathUtil.cpp:259
 msgid "Could not create folder: {1}\n"
@@ -2025,7 +2029,7 @@ msgstr "다음 폴더를 생성할 수 없음: {1}\n"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "시스템 커맨드 {2} 실행 중 오류 {1} 발생"
 
 #: ../src/util/XojMsgBox.cpp:187
 msgid "Select another name"
@@ -2037,7 +2041,7 @@ msgstr "바꾸기"
 
 #: ../src/util/XojMsgBox.cpp:211
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "도움말을 표시하는데 오류가 발생해습니다: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -2045,31 +2049,31 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: \"{1}\"파일은 .xoj 파일이 아닙니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: 입력파일 \"{1}\"을 열지 못했습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: \"{1}\" 파일에 미리보기가 없습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: 미리보기와 페이지가 없습니다. 잘못된 파일일 수 있습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: \"{1}\" 아이콘을 찾을 수 없습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: 출력파일 \"{1}\"을 열지 못했습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "xoj-preview-extractor: 추출 성공"
 
 #: ../ui/about.glade:12
 msgid "About Xournal++"
@@ -2082,37 +2086,38 @@ msgstr ""
 
 #: ../ui/about.glade:133
 msgid "Icon Designers"
-msgstr ""
+msgstr "아이콘 디자이너"
 
 #: ../ui/about.glade:186
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Denis Auroux에 의해\n"
+"Xournal에 부분적으로 기반함"
 
 #: ../ui/about.glade:218
 msgid "Website"
-msgstr ""
+msgstr "웹사이트"
 
 #: ../ui/about.glade:246
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "소스 코드 / 버그 트래커"
 
 #: ../ui/about.glade:283
 msgid "With help from the community"
-msgstr ""
+msgstr "커뮤니티 회원들의 기여"
 
 #: ../ui/about.glade:311
 msgid "License"
-msgstr "라이선스"
+msgstr "라이센스"
 
 #: ../ui/about.glade:339
 msgid "Authors"
-msgstr ""
+msgstr "제작자들"
 
 #: ../ui/about.glade:397 ../ui/toolbarCustomizeDialog.glade:73
 #: ../ui/toolbarManageDialog.glade:134
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:425
 #: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
@@ -2120,7 +2125,7 @@ msgstr ""
 #: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6288
 #: ../ui/texdialog.glade:203
 msgid "Ok"
-msgstr ""
+msgstr "확인"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
@@ -2128,16 +2133,16 @@ msgstr "해상도"
 
 #: ../ui/exportSettings.glade:39
 msgid "Width"
-msgstr ""
+msgstr "너비"
 
 #: ../ui/exportSettings.glade:42
 msgid "Height"
-msgstr ""
+msgstr "높이"
 
 #: ../ui/exportSettings.glade:53 ../ui/settings.glade:254
 #: ../ui/settings.glade:271 ../ui/settings.glade:3637
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #: ../ui/exportSettings.glade:56
 msgid "No ruling"
@@ -2145,16 +2150,17 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:59
 msgid "All"
-msgstr ""
+msgstr "전체"
 
 #: ../ui/exportSettings.glade:91
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>문서 내보내기 설정</b>\n"
+"내보내기 조건 설정"
 
 #: ../ui/exportSettings.glade:114
 msgid "Image quality"
-msgstr ""
+msgstr "이미지 품질"
 
 #: ../ui/exportSettings.glade:129
 msgid "Range"
