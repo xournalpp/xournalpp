@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-03 06:31\n"
+"PO-Revision-Date: 2024-09-04 19:34\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -64,21 +64,25 @@ msgstr "마지막에 추가"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "현재 문서에는 PDF 페이지 번호 {1} 가 없습니다.\n"
+"이 페이지를 추가합니까?\n\n"
+"팁: 저널 → 종이 배경 → PDF 배경 사용을 선택해서 PDF 페이지를 추가하세요."
 
 #: ../src/core/control/Control.cpp:847
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "추가할 PDF 페이지가 없습니다. 우선 문서를 다시 열어야 할 수 있습니다."
 
 #: ../src/core/control/Control.cpp:861
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "PDF 페이지를 가져 올 수 없습니다."
 
 #: ../src/core/control/Control.cpp:1441
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "자동저장파일을 열지 마십시오. 덮어쓰기 될 수 있습니다.\n"
+"해당 파일을 다른 폴더로 복사하십시오.\n"
+"{1} 폴더로부터 파일을 열 수 없습니다."
 
 #: ../src/core/control/Control.cpp:1461
 msgid "file: {1}"
@@ -86,20 +90,21 @@ msgstr "파일: {1}"
 
 #: ../src/core/control/Control.cpp:1493
 msgid "Error opening file \"{1}\""
-msgstr ""
+msgstr "\"{1}\" 파일 열기 오류"
 
 #: ../src/core/control/Control.cpp:1518
 msgid "File version mismatch"
-msgstr ""
+msgstr "파일 버전 불일치"
 
 #: ../src/core/control/Control.cpp:1519
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "지금 불러오는 파일이 더 최신 버전의 Xournal++ 파일 포맷을 사용하기 때문에, 파일이 정상적으로 열리지 않을 수 있습니다. 그래도 파일을 불러옵니까?"
 
 #: ../src/core/control/Control.cpp:1542
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "\"{1}\" PDF파일 읽기 오류\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1663
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
