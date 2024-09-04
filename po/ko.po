@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-04 20:58\n"
+"PO-Revision-Date: 2024-09-04 22:02\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -241,7 +241,7 @@ msgstr "글로벌 템플릿 파일을 읽는데 실패했습니다. 설정을 �
 
 #: ../src/core/control/LatexController.cpp:90
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "글로벌 템플릿 파일이 정상적인 파일이 아닙니다. 설정을 확인 하십시오. "
 
 #: ../src/core/control/LatexController.cpp:236
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -398,7 +398,7 @@ msgstr "첨부모드로 PDF 열기\n"
 
 #: ../src/core/control/XournalMain.cpp:656
 msgid "Save xopp-file with the background PDF specified as FILE"
-msgstr ""
+msgstr "지정된 PDF 파일의 배경과 함께 xopp 파일 저장"
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as PDF"
@@ -466,7 +466,7 @@ msgstr "고급 내보내기 옵션 표시"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:21
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "자동 저장 중 오류: {1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:45
 msgid "Autosaving to {1}"
@@ -474,15 +474,15 @@ msgstr "{1} 로 자동저장 중"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:68
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "자동 저장 파일의 이름을 \"{1}\"에서 \"{2}\"로 바꾸지 못했습니다: {3}"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "백그라운드 PDF를 덮어쓰지 마세요! 에러를 발생시킬 것입니다!"
+msgstr "배경 PDF를 덮어쓰기 하지 마십시오! 에러가 발생하게 됩니다."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "배경을 덮어쓰기하기 위한 검사에 문제가 있습니다:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export File"
@@ -605,11 +605,11 @@ msgstr "오선지"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Graph"
-msgstr "그래프"
+msgstr "그래프 모눈종이"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Dotted"
-msgstr "점 노트"
+msgstr "점 모눈종이"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:35
 msgid "Isometric Dotted"
@@ -634,7 +634,7 @@ msgstr "%F-노트-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:153
 msgid "%{name}_annotated"
-msgstr ""
+msgstr "%{name}_주석추가됨"
 
 #: ../src/core/control/tools/EditSelection.cpp:456
 msgid "Arrange"
@@ -844,32 +844,32 @@ msgstr "페이지로 스크롤 {1}"
 
 #: ../src/core/gui/PageView.cpp:980
 msgid "Add missing page"
-msgstr ""
+msgstr "누락된 페이지 추가"
 
 #: ../src/core/gui/SearchBar.cpp:80
 msgid "Text found once on this page"
-msgstr "해당 페이지에서 글자를 찾음"
+msgstr "해당 페이지에서 텍스트 1개 찾음"
 
 #: ../src/core/gui/SearchBar.cpp:82
 #, c-format
 msgid "Text found %zu times on this page"
-msgstr "해당 페이지에서 글자 %zu 개를 찾음"
+msgstr "해당 페이지에서 텍스트 %zu 개 찾음"
 
 #: ../src/core/gui/SearchBar.cpp:87
 msgid "Text not found"
-msgstr "글자를 찾지 못함"
+msgstr "텍스트 없음"
 
 #: ../src/core/gui/SearchBar.cpp:130
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "{1} 페이지에서 텍스트 1개 찾음"
 
 #: ../src/core/gui/SearchBar.cpp:131
 msgid "Text found {1} times on page {2} ({3} of {1})"
-msgstr ""
+msgstr "{2} 페이지에서 텍스트 {1} 개 찾음 ({1} 개 중 {3})"
 
 #: ../src/core/gui/SearchBar.cpp:136
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "모든 페이지 검색 결과, 텍스트 없음"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:41
 msgid "Version"
@@ -1032,7 +1032,7 @@ msgstr "지원되는 파일"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:32
 msgid "Xournal files"
-msgstr ""
+msgstr "Xournal 파일"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
 msgid "Xournal++ files"
@@ -1041,47 +1041,47 @@ msgstr "Xournal++ 파일"
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Xournal++ 템플릿"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "이미지 파일"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
-msgstr ""
+msgstr "사용자 정의"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
-msgstr ""
+msgstr "시스템 기본 설정"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "이전에 선택된 언어를 더 이상 사용할 수 없습니다!"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "LaTeX 에디터 테마:"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "Xournal++ 빌드 중 GtkSourceView가 비활성화 되었습니다! 몇몇 설정은 사용할 수 없게 됩니다."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "{1} 에서 글로벌 템플릿 파일을 열 수 없습니다. 파일이 존재합니까?"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "샘플 LaTeX 파일이 성공적으로 생성되었습니다."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "오류: {1}. {2} 의 내용을 확인 하십시오."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "오류: {1} 는 정상적인 파일이 아닙니다. LaTeX 템플릿 파일 설정을 확인 하십시오. "
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:79
@@ -1100,11 +1100,11 @@ msgstr "_저장"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
-msgstr ""
+msgstr "기본 설정 활성화"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default disabled"
-msgstr ""
+msgstr "기본 설정 비활성화"
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
@@ -1112,33 +1112,34 @@ msgstr "다른 백그라운드 색 선택"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
-msgstr ""
+msgstr "다음의 불투명도 선택: "
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
-msgstr ""
+msgstr "형광펜 설정"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
-msgstr ""
+msgstr "채우기 색"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
-msgstr ""
+msgstr "펜 설정"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:40
 msgid "PDF Text Options"
-msgstr ""
+msgstr "PDF 텍스트 설정"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
 msgid "PDF Text Marker"
-msgstr ""
+msgstr "PDF 텍스트 마커"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
 "{2}{3}"
-msgstr ""
+msgstr "<b>{1}</b>\n"
+"{2}{3}"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:76
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -1146,48 +1147,49 @@ msgstr "<b>기기를 찾을 수 없습니다. 문제가 있는 것 같습니다 
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "이 설정을 바꾸기 위해 필압 감지 또는 필압 예측을 활성화 하십시오!"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:287
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "입력 필압을 조절합니다. 필압 배수로 곱한 값만큼 필압을 증가시킵니다. 만약 최소 필압보다 작을 경우, 최소 필압을 사용합니다."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "내장된 팔레트"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
-msgstr ""
+msgstr "사용자 팔레트"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>아래 보여지는 팔레트는 <a href=\"file://{1}\">내장된 팔레트</a>와 <a href=\"file://{2}\">사용자 팔레트</a> 디렉토리에서 가져왔습니다:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
-msgstr ""
+msgstr "팔레트 파일(예: .gpl 확장자 파일)을 찾을 수 없습니다.\n"
+"다른 팔레트가 설정되기 전까지 기본 설정을 사용합니다."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
-msgstr ""
+msgstr "오류"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr ""
+msgstr "팔레트에 이름이 없습니다"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
-msgstr ""
+msgstr "사전 정의됨"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:39
 msgid "Customized"
-msgstr ""
+msgstr "사용자 정의됨"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:65
 msgid "Toolbars"
@@ -1195,7 +1197,7 @@ msgstr "툴바"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:87
 msgid "New"
-msgstr ""
+msgstr "신규"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:49
 msgid "Attach file to the journal"
@@ -1203,11 +1205,11 @@ msgstr "저널에 파일 첨부"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:81
 msgid "_Open"
-msgstr ""
+msgstr "_불러옴"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
-msgstr ""
+msgstr "템플릿 파일 열기"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
@@ -1217,19 +1219,19 @@ msgstr "파일 열기"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
-msgstr ""
+msgstr "PDF 파일에 주석 추가"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
-msgstr ""
+msgstr "이미지 파일 선택"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
-msgstr ""
+msgstr "이미지 선택"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:33
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>... 또는 이미 사용된 이미지 선택:</b>"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:37
 msgid "Load file"
@@ -1237,96 +1239,96 @@ msgstr "파일 불러오기"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "이 이미지를 불러올 수 없습니다. 오류 메시지: {1}"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
-msgstr ""
+msgstr "이 이미지를 불러올 수 없습니다."
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
-msgstr ""
+msgstr "PDF 페이지 선택"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:56
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "사용되지 않은 페이지만 표시 (총 1개)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:57
 msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
+msgstr "사용되지 않은 페이지만 표시 (총 {1} 개)"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:161
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "{1} 도구 항목을 {2} 툴바 ID {3} 으로부터 제거함"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "도구 항목을 {1} 툴바 ID {2} 으로부터 제거함"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:167
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "{1} 도구 항목을 {2} 툴바의 {3} 위치에서 제거할 수 없습니다"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:172
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "도구 항목을 {1} 툴바의 {2} 위치에서 제거할 수 없습니다"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:61
 msgid "Separator"
-msgstr ""
+msgstr "구분선"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Spacer"
-msgstr ""
+msgstr "공백"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:79
 msgctxt "Item category in toolbar customization dialog"
 msgid "Audio"
-msgstr ""
+msgstr "오디오"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
-msgstr ""
+msgstr "색"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
 msgid "Files"
-msgstr ""
+msgstr "파일"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
 msgctxt "Item category in toolbar customization dialog"
 msgid "Miscellaneous"
-msgstr ""
+msgstr "기타"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:83
 msgctxt "Item category in toolbar customization dialog"
 msgid "Navigation"
-msgstr ""
+msgstr "탐색"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:84
 msgctxt "Item category in toolbar customization dialog"
 msgid "Selection"
-msgstr ""
+msgstr "선택"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
 msgctxt "Item category in toolbar customization dialog"
 msgid "Tools"
-msgstr ""
+msgstr "도구"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
 msgctxt "Item category in toolbar customization dialog"
 msgid "Separators"
-msgstr ""
+msgstr "구분선"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
-msgstr ""
+msgstr "플러그인"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
-msgstr ""
+msgstr "메뉴바 XML 파일 {1} 의 불러오기 오류"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:176
@@ -1335,43 +1337,43 @@ msgstr "모든 페이지에 적용"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:15
 msgid "Plugin Manager"
-msgstr ""
+msgstr "플러그인 관리"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:32
 msgid "Plugin"
-msgstr ""
+msgstr "플러그인"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
-msgstr ""
+msgstr "무시"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
-msgstr ""
+msgstr "최근 파일 없음"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:110
 msgid "Clear list"
-msgstr ""
+msgstr "목록 지우기"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
-msgstr ""
+msgstr "Xournal++ 파일"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
-msgstr ""
+msgstr "PDF 파일"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
 msgid "Dismiss a single document"
-msgstr ""
+msgstr "1개 문서 무시하고 닫기"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:138
 msgid "Copy current background"
-msgstr ""
+msgstr "현재 배경 복사"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:156
 msgid "Apply to current page"
@@ -1383,7 +1385,7 @@ msgstr "내용"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "레이어스택 미리보기"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:37
 msgid "Layer Preview"
@@ -1548,30 +1550,30 @@ msgstr "현재 페이지 삭제"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "standard"
-msgstr ""
+msgstr "일반"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "dashed"
-msgstr ""
+msgstr "파선"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "1점 쇄선"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "dotted"
-msgstr ""
+msgstr "점선"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "whiteout"
-msgstr ""
+msgstr "흰색 덧칠"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "delete stroke"
-msgstr ""
+msgstr "획 삭제"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
 msgid "Add/Edit TeX"
@@ -1584,23 +1586,23 @@ msgstr "기본 도구:"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "한 줄 PDF 텍스트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "사각형으로 PDF 텍스트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Setsquare"
-msgstr ""
+msgstr "삼각자"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
-msgstr ""
+msgstr "컴퍼스"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "도형 자동인식"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1615,12 +1617,12 @@ msgstr "직사각형 선택"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
-msgstr ""
+msgstr "다중 레이어 영역 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
-msgstr ""
+msgstr "다중 레이어 사각형 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
@@ -1629,24 +1631,24 @@ msgstr "오브젝트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Vertical Space"
-msgstr ""
+msgstr "수직 공간"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
-msgstr ""
+msgstr "객체 실행"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "오디오 녹음 / 중지"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Pause / Play"
-msgstr ""
+msgstr "일시정지 / 재생"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Stop"
-msgstr ""
+msgstr "정지"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Forward"
@@ -1658,7 +1660,7 @@ msgstr "채우기"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 msgid "Fill Opacity"
-msgstr ""
+msgstr "채우기 불투명도"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Very Fine"
@@ -1670,11 +1672,11 @@ msgstr "부드럽게"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Medium"
-msgstr ""
+msgstr "중간"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Thick"
-msgstr ""
+msgstr "두꺼운"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Very Thick"
@@ -1694,7 +1696,7 @@ msgstr "새 레이어 생성"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:205
 msgid "Layer"
-msgstr ""
+msgstr "레이어"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:302
 msgid "Layer Combo"
@@ -1707,15 +1709,15 @@ msgstr "페이지"
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:82
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " {1} 의"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "PDF의 {1} 페이지"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:87
 msgid "PDF {1}"
-msgstr ""
+msgstr "{1} PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:109
 msgid "Page number"
@@ -1723,84 +1725,84 @@ msgstr "페이지 번호"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:13
 msgid "PDF text selection dropdown menu"
-msgstr ""
+msgstr "PDF 텍스트 선택 드롭다운 메뉴"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:15
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "PDF 텍스트 사각형 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:28
 msgid "Selection dropdown menu"
-msgstr ""
+msgstr "드롭다운 메뉴 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:70
 msgid "Zoom Slider"
-msgstr ""
+msgstr "확대 슬라이더"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:119
 msgctxt "Color"
 msgid "Black"
-msgstr ""
+msgstr "검정"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:120
 msgctxt "Color"
 msgid "Green"
-msgstr ""
+msgstr "초록"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:121
 msgctxt "Color"
 msgid "Light Blue"
-msgstr ""
+msgstr "밝은 파랑"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:122
 msgctxt "Color"
 msgid "Light Green"
-msgstr ""
+msgstr "밝은 초록"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:123
 msgctxt "Color"
 msgid "Blue"
-msgstr ""
+msgstr "파랑"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:124
 msgctxt "Color"
 msgid "Gray"
-msgstr ""
+msgstr "회색"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:125
 msgctxt "Color"
 msgid "Red"
-msgstr ""
+msgstr "빨강"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:126
 msgctxt "Color"
 msgid "Magenta"
-msgstr ""
+msgstr "진홍"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:127
 msgctxt "Color"
 msgid "Orange"
-msgstr ""
+msgstr "주황"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:128
 msgctxt "Color"
 msgid "Yellow"
-msgstr ""
+msgstr "노랑"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:129
 msgctxt "Color"
 msgid "White"
-msgstr ""
+msgstr "흰색"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
 msgctxt "as a noun: a copy of"
 msgid "Copy"
-msgstr ""
+msgstr "복사"
 
 #: ../src/core/model/Document.cpp:326 ../src/core/model/Document.cpp:335
 #: ../src/core/model/Document.cpp:338
 msgid "Document not loaded! ({1}), {2}"
-msgstr ""
+msgstr "문서가 로드되지 않았습니다! ({1}), {2}"
 
 #: ../src/core/model/XojPage.cpp:170
 msgid "Background"
@@ -1808,7 +1810,7 @@ msgstr "배경"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:123
 msgid "Error while finalizing the PDF Cairo surface"
-msgstr ""
+msgstr "PDF Cairo surface 마무리 중 오류"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:239
@@ -1818,23 +1820,23 @@ msgstr "내보내기할 페이지가 없습니다!"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:202
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "PDF Cairo surface을 시작하지 못했습니다."
 
 #: ../src/core/undo/AddUndoAction.cpp:70
 #: ../src/core/undo/DeleteUndoAction.cpp:71
 #: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
-msgstr ""
+msgstr "획 삭제"
 
 #: ../src/core/undo/AddUndoAction.cpp:80
 #: ../src/core/undo/DeleteUndoAction.cpp:82
 msgid "elements"
-msgstr ""
+msgstr "요소"
 
 #: ../src/core/undo/AddUndoAction.cpp:88
 #: ../src/core/undo/DeleteUndoAction.cpp:90
 msgid "stroke"
-msgstr ""
+msgstr "획"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:93
@@ -1849,7 +1851,7 @@ msgstr "latex"
 #: ../src/core/undo/AddUndoAction.cpp:97
 #: ../src/core/undo/DeleteUndoAction.cpp:99
 msgid "text"
-msgstr ""
+msgstr "텍스트"
 
 #: ../src/core/undo/ColorUndoAction.cpp:97
 msgid "Change color"
@@ -1857,7 +1859,7 @@ msgstr "색상 변경"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
-msgstr ""
+msgstr "긴급 저장 문서"
 
 #: ../src/core/undo/FillUndoAction.cpp:88
 msgid "Change stroke fill"
@@ -2156,27 +2158,27 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:129
 msgid "Range"
-msgstr ""
+msgstr "범위"
 
 #: ../ui/exportSettings.glade:143
 msgid "All pages"
-msgstr ""
+msgstr "모든 페이지"
 
 #: ../ui/exportSettings.glade:159
 msgid "Current page"
-msgstr ""
+msgstr "현재 페이지"
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr ""
+msgstr "페이지:"
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr ""
+msgstr "<i>예시:</i> 1-3 또는 1,3,5-7 등"
 
 #: ../ui/exportSettings.glade:279
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:321
