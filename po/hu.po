@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-06 17:50\n"
+"PO-Revision-Date: 2024-09-06 19:11\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -368,7 +368,7 @@ msgstr "Elnézést, a Xournal++ egyszerre csak egy fájlt tud megnyitni.\n"
 
 #: ../src/core/control/XournalMain.cpp:479
 msgid "File {1} does not exist."
-msgstr ""
+msgstr "A(z) {1} fájl nem létezik."
 
 #: ../src/core/control/XournalMain.cpp:483
 msgid "Filesystem error: {1}\n"
@@ -1169,20 +1169,21 @@ msgstr "Nyomásszűrés. A nyomást a nyomási szorzóval szorozza. Ha az eredm�
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "Beépített paletták"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
-msgstr ""
+msgstr "Felhasználói paletták"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Az alább látható paletták a <a href=\"file://{1}\">beépített palettákból</a> és a <a href=\"file://{2}\">felhasználói palettákból származnak </a> könyvtárak:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
-msgstr ""
+msgstr "Nem találhatók palettafájlok (azaz .gpl kiterjesztéssel).\n"
+"Az alapértelmezettet használja, amíg egy másik paletta be nem állít."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
@@ -1194,7 +1195,7 @@ msgstr "Név"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr ""
+msgstr "A palettának nincs neve"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
@@ -1236,7 +1237,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
-msgstr ""
+msgstr "Képfájl kijelölése"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
@@ -1337,7 +1338,7 @@ msgstr ""
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
-msgstr ""
+msgstr "Beépülő modulok"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
@@ -1926,7 +1927,7 @@ msgstr "Rétegek egyesítése lefelé"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr ""
+msgstr "Hiányzó PDF csere"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:28
 msgid "Move layer"
@@ -2255,7 +2256,7 @@ msgstr "A LaTeX eszközbe beírt matematikai mód képlet."
 
 #: ../ui/latexSettings.glade:158
 msgid "Choose a global LaTeX template file"
-msgstr "Válasszon ki egy globális LaTeX-sablonfájlt"
+msgstr "Globális LaTeX sablonfájl kijelölése"
 
 #: ../ui/latexSettings.glade:170
 msgid "%%XPP_TEXT_COLOR%%"
@@ -2433,7 +2434,7 @@ msgstr "Betöltés fájlból"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
-msgstr ""
+msgstr "Színpaletták"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
@@ -3106,7 +3107,7 @@ msgstr "Rajzolj átlátszó kört a kurzor köré"
 
 #: ../ui/settings.glade:3349 ../ui/settings.glade:3492
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr "Válassza ki a „Kurzor pozíciójának kiemeléséhez” használandó színt"
+msgstr "\"Kurzorpozíció kiemelése\" színének kijelölése"
 
 #: ../ui/settings.glade:3363
 msgid "Circle Color"
@@ -3623,7 +3624,7 @@ msgstr "Nyelvi beállítások"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr ""
+msgstr "Paletta"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
@@ -4321,7 +4322,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:41
 msgid "Custom color palette support using the .gpl format"
-msgstr ""
+msgstr "Egyéni színpaletta támogatása a .gpl formátum használatával"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:42
 msgid "Page template definitions"
@@ -4341,7 +4342,7 @@ msgstr "Több nyelv támogatása (több mint 20 nyelv támogatott)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:46
 msgid "Plugins using Lua scripting"
-msgstr ""
+msgstr "Beépülő modulok Lua parancsfájlok használatával"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.xml.in:4
 msgid "Xournal note file"
