@@ -166,7 +166,7 @@ static const std::map<std::string_view, std::pair<Action, bool>> LAYOUT_MAP = {
 
 static const std::map<std::string_view, EditSelection::OrderChange> SELECTION_ORDER_ACTION_MAP = {
         {"ACTION_ARRANGE_BRING_TO_FRONT"sv, EditSelection::OrderChange::BringToFront},
-        {"ACTION_ARRANGE_BRING_TO_FRONT"sv, EditSelection::OrderChange::BringToFront},
+        {"ACTION_ARRANGE_BRING_FORWARD"sv, EditSelection::OrderChange::BringForward},
         {"ACTION_ARRANGE_SEND_BACKWARD"sv, EditSelection::OrderChange::SendBackward},
         {"ACTION_ARRANGE_SEND_TO_BACK"sv, EditSelection::OrderChange::SendToBack}};
 
