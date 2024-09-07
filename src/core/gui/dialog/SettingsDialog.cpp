@@ -89,11 +89,11 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      this);
 
     g_signal_connect(builder.get("sidDefaultZoomSlider"), "change-value",
-                    G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, gpointer self) -> gboolean {
-                        static_cast<SettingsDialog*>(self)->setDefaultPageZoom(round_cast<int>(value));
-                        return false;
-                    }),
-                    this);
+                     G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, gpointer self) -> gboolean {
+                         static_cast<SettingsDialog*>(self)->setDefaultPageZoom(round_cast<int>(value));
+                         return false;
+                     }),
+                     this);
 
     g_signal_connect_swapped(builder.get("cbEnablePressureInference"), "toggled",
                              G_CALLBACK(+[](SettingsDialog* self) { self->updatePressureSensitivityOptions(); }), this);
@@ -105,9 +105,10 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
             builder.get("cbAutosave"), "toggled",
             G_CALLBACK(+[](SettingsDialog* self) { self->enableWithCheckbox("cbAutosave", "boxAutosave"); }), this);
 
-    g_signal_connect_swapped(
-            builder.get("cbActivateDefaultPageZoom"), "toggled",
-            G_CALLBACK(+[](SettingsDialog* self) { self->enableWithCheckbox("cbActivateDefaultPageZoom", "sidDefaultZoomSlider"); }), this);
+    g_signal_connect_swapped(builder.get("cbActivateDefaultPageZoom"), "toggled", G_CALLBACK(+[](SettingsDialog* self) {
+                                 self->enableWithCheckbox("cbActivateDefaultPageZoom", "sidDefaultZoomSlider");
+                             }),
+                             this);
 
     g_signal_connect_swapped(builder.get("cbIgnoreFirstStylusEvents"), "toggled", G_CALLBACK(+[](SettingsDialog* self) {
                                  self->enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
@@ -248,7 +249,7 @@ void SettingsDialog::setDefaultPageZoom(double defaultPageZoom) {
     if (this->defaultPageZoom == defaultPageZoom) {
         return;
     }
-    
+
     this->defaultPageZoom = defaultPageZoom;
 }
 
