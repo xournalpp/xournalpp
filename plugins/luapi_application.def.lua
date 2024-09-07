@@ -710,6 +710,21 @@ function app.scaleTextElements(factor) end
 --- Example: app.getDisplayDpi()
 function app.getDisplayDpi() end
 
+--- Gets the current zoom.
+--- 
+--- @return double current zoom level
+--- 
+--- Example: app.getZoom()
+function app.getZoom() end
+
+--- Sets the current zoom.
+--- 
+--- @param zoom number
+--- 
+--- Example: app.setZoom(2.5)
+--- Changes zoom level to 2.5
+function app.setZoom(zoom) end
+
 --- Exports the current document as a pdf or as a svg or png image
 --- 
 --- @param opts {outputFile:string, range:string, background:string, progressiveMode: boolean}
