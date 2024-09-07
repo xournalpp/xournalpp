@@ -81,6 +81,9 @@ void Settings::loadDefault() {
 
     this->displayDpi = 72;
 
+    this->defaultPageZoom = 100.00;
+    this->defaultPageZoomEnabled = false;
+
     this->font.setName(DEFAULT_FONT);
     this->font.setSize(DEFAULT_FONT_SIZE);
 
@@ -408,6 +411,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->zoomStepScroll = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("displayDpi")) == 0) {
         this->displayDpi = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultPageZoomEnabled")) == 0) {
+        this->defaultPageZoomEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultPageZoom")) == 0) {
+        this->defaultPageZoom = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndWidth")) == 0) {
         this->mainWndWidth = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("mainWndHeight")) == 0) {
@@ -970,6 +977,8 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(zoomStep);
     SAVE_DOUBLE_PROP(zoomStepScroll);
     SAVE_INT_PROP(displayDpi);
+    SAVE_BOOL_PROP(defaultPageZoomEnabled);
+    SAVE_DOUBLE_PROP(defaultPageZoom);
     SAVE_INT_PROP(mainWndWidth);
     SAVE_INT_PROP(mainWndHeight);
     SAVE_BOOL_PROP(maximized);
@@ -1941,6 +1950,28 @@ void Settings::setDisplayDpi(int dpi) {
 }
 
 auto Settings::getDisplayDpi() const -> int { return this->displayDpi; }
+
+auto Settings::isDefaultPageZoomEnabled() const -> bool { return this->defaultPageZoomEnabled; }
+
+void Settings::setDefaultPageZoomEnabled(bool defaultPageZoom) {
+    if (this->defaultPageZoomEnabled == defaultPageZoom) {
+        return;
+    }
+
+    this->defaultPageZoomEnabled = defaultPageZoom;
+
+    save();
+}
+
+void Settings::setDefaultPageZoom(double defaultPageZoom) {
+    if (this->defaultPageZoom == defaultPageZoom) {
+        return;
+    }
+    this->defaultPageZoom = defaultPageZoom;
+    save();
+}
+
+auto Settings::getDefaultPageZoom() const -> double { return this->defaultPageZoom; }
 
 void Settings::setAreStockIconsUsed(bool use) {
     if (this->useStockIcons == use) {

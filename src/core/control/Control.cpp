@@ -1623,8 +1623,13 @@ void Control::fileLoaded(int scrollToPage) {
         loadMetadata(md);
         RecentManager::addRecentFileFilename(filepath);
     } else {
-        zoom->updateZoomFitValue();
-        zoom->setZoomFitMode(true);
+        if (settings->isDefaultPageZoomEnabled() == true) {
+            zoom->setZoom(settings->getDefaultPageZoom() / 100);
+        }
+        else {
+            zoom->updateZoomFitValue();
+            zoom->setZoomFitMode(true);
+        }
     }
 
     updateWindowTitle();

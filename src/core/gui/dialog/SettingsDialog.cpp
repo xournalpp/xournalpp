@@ -88,6 +88,13 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(builder.get("sidDefaultZoomSlider"), "change-value",
+                    G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, gpointer self) -> gboolean {
+                        static_cast<SettingsDialog*>(self)->setDefaultPageZoom(round_cast<int>(value));
+                        return false;
+                    }),
+                    this);
+
     g_signal_connect_swapped(builder.get("cbEnablePressureInference"), "toggled",
                              G_CALLBACK(+[](SettingsDialog* self) { self->updatePressureSensitivityOptions(); }), this);
 
@@ -97,6 +104,10 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     g_signal_connect_swapped(
             builder.get("cbAutosave"), "toggled",
             G_CALLBACK(+[](SettingsDialog* self) { self->enableWithCheckbox("cbAutosave", "boxAutosave"); }), this);
+
+    g_signal_connect_swapped(
+            builder.get("cbActivateDefaultPageZoom"), "toggled",
+            G_CALLBACK(+[](SettingsDialog* self) { self->enableWithCheckbox("cbActivateDefaultPageZoom", "sidDefaultZoomSlider"); }), this);
 
     g_signal_connect_swapped(builder.get("cbIgnoreFirstStylusEvents"), "toggled", G_CALLBACK(+[](SettingsDialog* self) {
                                  self->enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
@@ -233,6 +244,14 @@ void SettingsDialog::setDpi(int dpi) {
     zoomcallib_set_val(ZOOM_CALLIB(callib), dpi);
 }
 
+void SettingsDialog::setDefaultPageZoom(double defaultPageZoom) {
+    if (this->defaultPageZoom == defaultPageZoom) {
+        return;
+    }
+    
+    this->defaultPageZoom = defaultPageZoom;
+}
+
 void SettingsDialog::loadCheckbox(const char* name, bool value) {
     gtk_check_button_set_active(GTK_CHECK_BUTTON(builder.get(name)), value);
 }
@@ -346,6 +365,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbAutoloadMostRecent", settings->isAutoloadMostRecent());
     loadCheckbox("cbAutoloadXoj", settings->isAutoloadPdfXoj());
     loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
+    loadCheckbox("cbActivateDefaultPageZoom", settings->isDefaultPageZoomEnabled());
     loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
     loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
     loadCheckbox("cbUnlimitedScrolling", settings->getUnlimitedScrolling());
@@ -493,6 +513,9 @@ void SettingsDialog::load() {
     loadSlider("scaleMinimumPressure", settings->getMinimumPressure());
     loadSlider("scalePressureMultiplier", settings->getPressureMultiplier());
 
+    this->setDefaultPageZoom(settings->getDefaultPageZoom());
+    loadSlider("sidDefaultZoomSlider", defaultPageZoom);
+
     GdkRGBA color = Util::rgb_to_GdkRGBA(settings->getBorderColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(builder.get("colorBorder")), &color);
     color = Util::rgb_to_GdkRGBA(settings->getBackgroundColor());
@@ -598,6 +621,7 @@ void SettingsDialog::load() {
     disableWithCheckbox("cbUnlimitedScrolling", "cbAddHorizontalSpace");
 
     enableWithCheckbox("cbAutosave", "boxAutosave");
+    enableWithCheckbox("cbActivateDefaultPageZoom", "sidDefaultZoomSlider");
     enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
     enableWithEnabledCheckbox("cbAddVerticalSpace", "spAddVerticalSpaceAbove");
     enableWithEnabledCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpaceRight");
@@ -707,6 +731,7 @@ void SettingsDialog::save() {
     settings->setAutoloadMostRecent(getCheckbox("cbAutoloadMostRecent"));
     settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));
     settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
+    settings->setDefaultPageZoomEnabled(getCheckbox("cbActivateDefaultPageZoom"));
     settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
     settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
     settings->setUnlimitedScrolling(getCheckbox("cbUnlimitedScrolling"));
@@ -960,6 +985,7 @@ void SettingsDialog::save() {
 
 
     settings->setDisplayDpi(dpi);
+    settings->setDefaultPageZoom(defaultPageZoom);
 
     for (auto&& bcg: this->buttonConfigs) {
         bcg->saveSettings();

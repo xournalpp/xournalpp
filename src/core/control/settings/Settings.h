@@ -187,6 +187,14 @@ public:
     bool areStockIconsUsed() const;
 
     /**
+     * Sets the default page zoom
+     */
+    bool isDefaultPageZoomEnabled() const;
+    void setDefaultPageZoomEnabled(bool defaultPageZoom);
+    void setDefaultPageZoom(double defaultPageZoom);
+    double getDefaultPageZoom() const;
+
+    /**
      * The last saved path
      */
     void setLastSavePath(fs::path p);
@@ -787,6 +795,12 @@ private:
      * The display resolution, in pixels per inch
      */
     gint displayDpi{};
+
+    /**
+     * The default zoom level of the document
+     */
+    double defaultPageZoom{};
+    bool defaultPageZoomEnabled{};
 
     /**
      *  If the window is maximized

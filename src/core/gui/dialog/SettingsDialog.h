@@ -44,6 +44,7 @@ public:
 private:
     void save();
     void setDpi(int dpi);
+    void setDefaultPageZoom(double defaultPageZoom);
 
     /**
      * Set active regions
@@ -82,6 +83,7 @@ private:
     Control* control = nullptr;
     GtkWidget* callib = nullptr;
     int dpi = 72;
+    double defaultPageZoom = 100;
     std::vector<DeviceInfo> audioInputDevices;
     std::vector<DeviceInfo> audioOutputDevices;
 

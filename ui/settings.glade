@@ -18,6 +18,12 @@
     <property name="step-increment">1</property>
     <property name="page-increment">5</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentDefaultPageZoom">
+    <property name="lower">30</property>
+    <property name="upper">700</property>
+    <property name="value">100</property>
+    <property name="step-increment">1</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentDrawDirModRadius">
     <property name="lower">2</property>
     <property name="upper">1000</property>
@@ -4293,6 +4299,95 @@ This setting can make it easier to draw with touch. </property>
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkFrame" id="sid_default_zoom">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0</property>
+                                <child>
+                                  <object class="GtkAlignment">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="left-padding">12</property>
+                                    <child>
+                                      <object class="GtkBox" id="sid_default_zoom_box">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkLabel" id="sid_default_zoom_info_label">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">If the checkbox is checked, the value specified by the slider will be used as the default zoom level
+of all documents upon opening them. Otherwise the default behavior is to zoom to fit documents.
+Requires restart.</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <child>
+                                              <object class="GtkCheckButton" id="cbActivateDefaultPageZoom">
+                                                <property name="label" translatable="yes">Use custom zoom</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="receives-default">False</property>
+                                                <property name="draw-indicator">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkScale" id="sidDefaultZoomSlider">
+                                                <property name="name">zoomCallibSlider</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="margin-top">10</property>
+                                                <property name="margin-bottom">20</property>
+                                                <property name="adjustment">adjustmentDefaultPageZoom</property>
+                                                <property name="round-digits">0</property>
+                                                <property name="digits">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">True</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="sid_default_zoom_label">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Default Page Zoom</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkFrame" id="sid129">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -4404,7 +4499,7 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
