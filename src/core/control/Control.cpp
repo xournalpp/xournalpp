@@ -1625,8 +1625,7 @@ void Control::fileLoaded(int scrollToPage) {
     } else {
         if (settings->isDefaultPageZoomEnabled() == true) {
             zoom->setZoom(settings->getDefaultPageZoom() / 100);
-        }
-        else {
+        } else {
             zoom->updateZoomFitValue();
             zoom->setZoomFitMode(true);
         }
