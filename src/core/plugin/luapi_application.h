@@ -29,6 +29,7 @@
 #include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/ImageHandler.h"
+#include "control/zoom/ZoomControl.h"
 #include "enums/Action.enum.h"
 #include "gui/Layout.h"
 #include "gui/MainWindow.h"
@@ -2507,6 +2508,46 @@ static int applib_getDisplayDpi(lua_State* L) {
 
 
 /**
+ * Gets the current zoom.
+ *
+ * @return double current zoom level
+ *
+ * Example: app.getZoom()
+ **/
+static int applib_getZoom(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    double zoom = control->getZoomControl()->getZoomReal();
+    lua_pushnumber(L, zoom);
+
+    return 1;
+}
+
+
+/**
+ * Sets the current zoom.
+ *
+ * @param zoom number
+ *
+ * Example: app.setZoom(2.5)
+ * Changes zoom level to 2.5
+ **/
+static int applib_setZoom(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    ZoomControl* zoomControl = control->getZoomControl();
+
+    double newZoom = luaL_checknumber(L, 1) * zoomControl->getZoom100Value();
+    zoomControl->setZoomFitMode(false);
+    zoomControl->startZoomSequence();
+    zoomControl->zoomSequenceChange(newZoom, false);
+    zoomControl->endZoomSequence();
+
+    return 0;
+}
+
+
+/**
  * Exports the current document as a pdf or as a svg or png image
  *
  * @param opts {outputFile:string, range:string, background:string, progressiveMode: boolean}
@@ -2950,6 +2991,8 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"setBackgroundName", applib_setBackgroundName},
                                   {"scaleTextElements", applib_scaleTextElements},
                                   {"getDisplayDpi", applib_getDisplayDpi},
+                                  {"getZoom", applib_getZoom},
+                                  {"setZoom", applib_setZoom},
                                   {"export", applib_export},
                                   {"addStrokes", applib_addStrokes},
                                   {"addSplines", applib_addSplines},
