@@ -101,7 +101,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %files -f %{name}.lang
 %license LICENSE
 %doc README.md AUTHORS
-%{_bindir}/xournalpp-thumbnailer
+%{_bindir}/%{name}-thumbnailer
 %{_bindir}/%{name}
 %{_datadir}/applications/com.github.%{name}.%{name}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/com.github.%{name}.%{name}.svg
@@ -109,6 +109,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/mime/packages/com.github.%{name}.%{name}.xml
 %{_datadir}/thumbnailers/com.github.%{name}.%{name}.thumbnailer
 %dir %{_datadir}/%{name}
+%{_datadir}/%{name}/palettes/{xournal,xournalpp}.gpl
 %{_datadir}/%{name}/resources/{default,legacy}_template.tex
 %{_mandir}/man1/%{name}*.gz
 %{_metainfodir}/com.github.%{name}.%{name}.appdata.xml
@@ -120,6 +121,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
+* Mon Sep 9 2024 Luya Tshimbalanga <luya@fedoraproject.org>
+- Add color palettes support
+
 * Fri Apr 1 2022 Michael J Gruber <mjg@fedoraproject.org>
 - Switch spec file to rpkg format
 
