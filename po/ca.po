@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-08-30 10:19\n"
+"PO-Revision-Date: 2024-09-10 16:30\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -45,7 +45,7 @@ msgstr "Si"
 
 #: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
 #: ../src/core/control/Control.cpp:2014 ../src/core/control/XournalMain.cpp:206
@@ -54,11 +54,11 @@ msgstr "Cancel·la"
 
 #: ../src/core/control/Control.cpp:799
 msgid "Insert after current page"
-msgstr ""
+msgstr "Insereix després de la pàgina actual"
 
 #: ../src/core/control/Control.cpp:800
 msgid "Insert at end"
-msgstr ""
+msgstr "Insereix al final"
 
 #: ../src/core/control/Control.cpp:803
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -120,7 +120,7 @@ msgstr "\n"
 
 #: ../src/core/control/Control.cpp:1681
 msgid "Select another PDF"
-msgstr ""
+msgstr "Tria un altre PDF"
 
 #: ../src/core/control/Control.cpp:1682
 msgid "Remove PDF Background"
@@ -128,11 +128,11 @@ msgstr "Eliminar fons PDF"
 
 #: ../src/core/control/Control.cpp:1686
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Fes servir el PDF proposat"
 
 #: ../src/core/control/Control.cpp:1689
 msgid "Missing PDF background file"
-msgstr ""
+msgstr "Falta el fitxer PDF de fons"
 
 #: ../src/core/control/Control.cpp:1821
 msgid "Select font"
@@ -145,7 +145,7 @@ msgstr "Selecciona un color"
 
 #: ../src/core/control/Control.cpp:1858
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Document sense desar"
 
 #: ../src/core/control/Control.cpp:2007
 msgid "Document file was removed."
@@ -157,7 +157,7 @@ msgstr "Aquest document no està desat encara."
 
 #: ../src/core/control/Control.cpp:2009
 msgid "Save As..."
-msgstr ""
+msgstr "Anomena i desa..."
 
 #: ../src/core/control/Control.cpp:2009 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
@@ -185,31 +185,31 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:95
 msgid "mouse"
-msgstr ""
+msgstr "ratolí"
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "pen"
-msgstr ""
+msgstr "llapis"
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
-msgstr ""
+msgstr "goma d'esborrar"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
-msgstr ""
+msgstr "cursor"
 
 #: ../src/core/control/DeviceListHelper.cpp:104
 msgid "keyboard"
-msgstr ""
+msgstr "teclat"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "touchscreen"
-msgstr ""
+msgstr "pantalla tàctil"
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchpad"
-msgstr ""
+msgstr "ratolí tàctil"
 
 #: ../src/core/control/DeviceListHelper.cpp:111
 msgid "trackpoint"
@@ -579,7 +579,7 @@ msgstr "No s'ha pogut iniciar {1}: {2} (codi de sortida: {3})"
 
 #: ../src/core/control/layer/LayerController.cpp:348
 msgid "Layer {1}"
-msgstr ""
+msgstr "Capa {1}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Could not load pagetemplates.ini file"
@@ -603,7 +603,7 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 msgid "Graph"
-msgstr ""
+msgstr "Quadrícula"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:34
 msgid "Dotted"
@@ -619,12 +619,12 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:40
 msgid "With PDF background"
-msgstr ""
+msgstr "Amb fons de PDF"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Image"
-msgstr ""
+msgstr "Imatge"
 
 #: ../src/core/control/settings/Settings.cpp:151
 msgid "%F-Note-%H-%M"
@@ -644,11 +644,11 @@ msgstr "Portar endavant"
 
 #: ../src/core/control/tools/EditSelection.cpp:482
 msgid "Send backward"
-msgstr ""
+msgstr "Envia avall"
 
 #: ../src/core/control/tools/EditSelection.cpp:489
 msgid "Send to back"
-msgstr ""
+msgstr "Envia al fons"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 msgid "Failed to load image"
@@ -855,23 +855,23 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:87
 msgid "Text not found"
-msgstr ""
+msgstr "El text no s'ha trobat"
 
 #: ../src/core/gui/SearchBar.cpp:130
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "El text s'ha trobat una sola vegada a la pàgina {1}"
 
 #: ../src/core/gui/SearchBar.cpp:131
 msgid "Text found {1} times on page {2} ({3} of {1})"
-msgstr ""
+msgstr "El text s'ha trobat {1} vegades a la pàgina {2} ({3} de {1})"
 
 #: ../src/core/gui/SearchBar.cpp:136
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "El text no s'ha trobat tot i buscar-lo a totes les pàgines"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:41
 msgid "Version"
-msgstr ""
+msgstr "Versió"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:44
 msgid "Built on"
@@ -879,7 +879,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:47
 msgid "GTK Version"
-msgstr ""
+msgstr "Versió GTK"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:54
 msgid "Git commit"
@@ -891,7 +891,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:63
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 o posterior"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:67
 msgid "No device"
@@ -1030,7 +1030,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:32
 msgid "Xournal files"
-msgstr ""
+msgstr "Fitxers Xournal"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
 msgid "Xournal++ files"
@@ -1039,11 +1039,11 @@ msgstr "Arxius Xournal++"
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Plantilla Xournal++"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "Fitxers d'imatge"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
@@ -1051,7 +1051,7 @@ msgstr "Personalitzat"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:49
 msgid "System Default"
-msgstr ""
+msgstr "Predeterminat del sistema"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
@@ -1059,7 +1059,7 @@ msgstr "L'idioma seleccionat previament ja no està disponible!"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "Tema d'editor LaTeX:"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
@@ -1114,29 +1114,30 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
-msgstr ""
+msgstr "Opcions del subratllador"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
-msgstr ""
+msgstr "Color de l'emplenament"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
-msgstr ""
+msgstr "Opcions del llapis"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:40
 msgid "PDF Text Options"
-msgstr ""
+msgstr "Opcions del text PDF"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
 msgid "PDF Text Marker"
-msgstr ""
+msgstr "Marcador de text de PDF"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
 "{2}{3}"
-msgstr ""
+msgstr "<b>{1}</b>\n"
+"{2}{3}"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:76
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -1169,15 +1170,15 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr ""
+msgstr "La paleta no té nom"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
@@ -1189,7 +1190,7 @@ msgstr "Personalitzat"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:65
 msgid "Toolbars"
-msgstr ""
+msgstr "Barres d'eines"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:87
 msgid "New"
@@ -1205,7 +1206,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
-msgstr ""
+msgstr "Obre fitxer de plantilla"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
@@ -1215,15 +1216,15 @@ msgstr "Obrir fitxer"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
-msgstr ""
+msgstr "Escriu notes en un fitxer PDF"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
-msgstr ""
+msgstr "Tria un fitxer d'imatge"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
-msgstr ""
+msgstr "Tria imatge"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:33
 msgid "<b>... or select already used Image:</b>"
@@ -1231,7 +1232,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:37
 msgid "Load file"
-msgstr ""
+msgstr "Carrega fitxer"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
 msgid "This image could not be loaded. Error message: {1}"
@@ -1243,7 +1244,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
-msgstr ""
+msgstr "Tria pàgina PDF"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:56
 msgid "Show only not used pages (one unused page)"
@@ -1271,51 +1272,51 @@ msgstr "No s'ha pogut eliminar l'element de la barra d'eines {1} a la posició {
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:61
 msgid "Separator"
-msgstr ""
+msgstr "Separador"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Spacer"
-msgstr ""
+msgstr "Espaiador"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:79
 msgctxt "Item category in toolbar customization dialog"
 msgid "Audio"
-msgstr ""
+msgstr "So"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
-msgstr ""
+msgstr "Colors"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
 msgid "Files"
-msgstr ""
+msgstr "Fitxers"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
 msgctxt "Item category in toolbar customization dialog"
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Miscel·lània"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:83
 msgctxt "Item category in toolbar customization dialog"
 msgid "Navigation"
-msgstr ""
+msgstr "Navegació"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:84
 msgctxt "Item category in toolbar customization dialog"
 msgid "Selection"
-msgstr ""
+msgstr "Selecció"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
 msgctxt "Item category in toolbar customization dialog"
 msgid "Tools"
-msgstr ""
+msgstr "Eines"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
 msgctxt "Item category in toolbar customization dialog"
 msgid "Separators"
-msgstr ""
+msgstr "Separadors"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
