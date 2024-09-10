@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-08-30 10:19\n"
+"PO-Revision-Date: 2024-09-10 19:21\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1361,7 +1361,7 @@ msgstr "Plugin"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
-msgstr ""
+msgstr "Dispensar"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
@@ -1374,17 +1374,17 @@ msgstr "Limpar lista"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
-msgstr ""
+msgstr "Arquivos Xournal++"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
-msgstr ""
+msgstr "Arquivos PDF"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
 msgid "Dismiss a single document"
-msgstr ""
+msgstr "Descartar um único documento"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:138
 msgid "Copy current background"
