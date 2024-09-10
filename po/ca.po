@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-10 19:21\n"
+"PO-Revision-Date: 2024-09-10 20:34\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -1335,7 +1335,7 @@ msgstr "Separadors"
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
-msgstr ""
+msgstr "Complements"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
@@ -1352,30 +1352,30 @@ msgstr ""
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:32
 msgid "Plugin"
-msgstr ""
+msgstr "Complement"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
-msgstr ""
+msgstr "Descarta"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
-msgstr ""
+msgstr "No hi ha fitxers recents."
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:110
 msgid "Clear list"
-msgstr ""
+msgstr "Esborra la llista"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
-msgstr ""
+msgstr "Fitxers Xournal++"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
-msgstr ""
+msgstr "Fitxers PDF"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
@@ -1412,7 +1412,7 @@ msgstr "Caixa de tria de tipus de dibuix"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:74
 msgid "Font"
-msgstr ""
+msgstr "Tipus de lletra"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:68
 msgid "Could not parse general toolbar.ini file: {1}\n"
@@ -1500,11 +1500,11 @@ msgstr "Personalitza les barres d'eines"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Zoom out"
-msgstr ""
+msgstr "Allunya"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Zoom in"
-msgstr ""
+msgstr "Apropa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Zoom fit to screen"
@@ -1516,7 +1516,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Go to first page"
-msgstr ""
+msgstr "Vés a la primera pàgina"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
@@ -1533,7 +1533,7 @@ msgstr "Següent"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:340
 msgid "Go to last page"
-msgstr ""
+msgstr "Vés a l'última pàgina"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 msgid "Go to previous layer"
@@ -1553,7 +1553,7 @@ msgstr "Pàgina anotada següent"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 msgid "Insert page"
-msgstr ""
+msgstr "Afegeix una pàgina"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Delete current page"
@@ -1563,7 +1563,7 @@ msgstr "Elimina la pàgina actual"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "standard"
-msgstr ""
+msgstr "estàndard"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:383
@@ -1620,31 +1620,31 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
-msgstr ""
+msgstr "Selecciona una regió"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
-msgstr ""
+msgstr "Selecciona una àrea rectangular"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
-msgstr ""
+msgstr "Selecciona una regió multicapa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
-msgstr ""
+msgstr "Selecciona una àrea rectangular multicapa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
-msgstr ""
+msgstr "Selecciona un objecte"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Vertical Space"
-msgstr ""
+msgstr "Espai vertical"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1669,11 +1669,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Fill"
-msgstr ""
+msgstr "Omple"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 msgid "Fill Opacity"
-msgstr ""
+msgstr "Opacitat del farciment"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Very Fine"
@@ -1697,11 +1697,11 @@ msgstr "Molt gruixut"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Show all"
-msgstr ""
+msgstr "Mostra-ho tot"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:176
 msgid "Hide all"
-msgstr ""
+msgstr "Amaga-ho tot"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
 msgid "Create new layer"
@@ -1849,12 +1849,12 @@ msgstr "elements"
 #: ../src/core/undo/AddUndoAction.cpp:88
 #: ../src/core/undo/DeleteUndoAction.cpp:90
 msgid "stroke"
-msgstr ""
+msgstr "traç"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:93
 msgid "image"
-msgstr ""
+msgstr "imatge"
 
 #: ../src/core/undo/AddUndoAction.cpp:94
 #: ../src/core/undo/DeleteUndoAction.cpp:96
@@ -1900,15 +1900,15 @@ msgstr "Dibuixa un traç"
 
 #: ../src/core/undo/InsertUndoAction.cpp:27
 msgid "Write text"
-msgstr ""
+msgstr "Escriu text"
 
 #: ../src/core/undo/InsertUndoAction.cpp:31
 msgid "Insert latex"
-msgstr ""
+msgstr "Afegeix text LaTeX"
 
 #: ../src/core/undo/InsertUndoAction.cpp:70
 msgid "Insert elements"
-msgstr ""
+msgstr "Insereix elements"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
@@ -1948,7 +1948,7 @@ msgstr "Rotació"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:62
 msgid "Scale"
-msgstr ""
+msgstr "Escala"
 
 #: ../src/core/undo/SizeUndoAction.cpp:118
 msgid "Change stroke width"
@@ -1980,7 +1980,7 @@ msgstr "«{1}» no s'ha pogut tornar a fer.\n"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:172
 msgid "Undo: "
-msgstr ""
+msgstr "Desfés: "
 
 #: ../src/core/undo/UndoRedoHandler.cpp:184
 msgid "Redo: "
@@ -2020,7 +2020,7 @@ msgstr ""
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
-msgstr ""
+msgstr "Codi d'error {1}"
 
 #: ../src/util/PathUtil.cpp:176
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -2087,7 +2087,7 @@ msgstr ""
 
 #: ../ui/about.glade:12
 msgid "About Xournal++"
-msgstr ""
+msgstr "Quant al Xournal++"
 
 #: ../ui/about.glade:93
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2096,7 +2096,7 @@ msgstr ""
 
 #: ../ui/about.glade:133
 msgid "Icon Designers"
-msgstr ""
+msgstr "Dissenyadors de les icones"
 
 #: ../ui/about.glade:186
 msgid "Partially based on Xournal\n"
@@ -2105,7 +2105,7 @@ msgstr ""
 
 #: ../ui/about.glade:218
 msgid "Website"
-msgstr ""
+msgstr "Lloc web"
 
 #: ../ui/about.glade:246
 msgid "Source Code / Bug Tracker"
@@ -2117,16 +2117,16 @@ msgstr ""
 
 #: ../ui/about.glade:311
 msgid "License"
-msgstr ""
+msgstr "Llicència"
 
 #: ../ui/about.glade:339
 msgid "Authors"
-msgstr ""
+msgstr "Autors"
 
 #: ../ui/about.glade:397 ../ui/toolbarCustomizeDialog.glade:73
 #: ../ui/toolbarManageDialog.glade:134
 msgid "Close"
-msgstr ""
+msgstr "Tanca"
 
 #: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:425
 #: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
@@ -2134,32 +2134,32 @@ msgstr ""
 #: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6288
 #: ../ui/texdialog.glade:203
 msgid "Ok"
-msgstr ""
+msgstr "D'acord"
 
 #: ../ui/exportSettings.glade:36
 msgid "Resolution"
-msgstr ""
+msgstr "Resolució"
 
 #: ../ui/exportSettings.glade:39
 msgid "Width"
-msgstr ""
+msgstr "Amplada"
 
 #: ../ui/exportSettings.glade:42
 msgid "Height"
-msgstr ""
+msgstr "Alçària"
 
 #: ../ui/exportSettings.glade:53 ../ui/settings.glade:254
 #: ../ui/settings.glade:271 ../ui/settings.glade:3637
 msgid "None"
-msgstr ""
+msgstr "Cap"
 
 #: ../ui/exportSettings.glade:56
 msgid "No ruling"
-msgstr ""
+msgstr "Sense guies"
 
 #: ../ui/exportSettings.glade:59
 msgid "All"
-msgstr ""
+msgstr "Tot"
 
 #: ../ui/exportSettings.glade:91
 msgid "<b>Document export settings</b>\n"
@@ -2281,7 +2281,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:340
 msgid "Line numbers"
-msgstr ""
+msgstr "Números de línies"
 
 #: ../ui/latexSettings.glade:354
 msgid "Auto-indent"
@@ -2293,7 +2293,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:400
 msgid "Wrap text"
-msgstr ""
+msgstr "Ajusta el text"
 
 #: ../ui/latexSettings.glade:434
 msgid "Use font from system theme."
@@ -2301,7 +2301,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:454
 msgid "Font: "
-msgstr ""
+msgstr "Tipus de lletra: "
 
 #: ../ui/latexSettings.glade:469
 msgid "Pick the Editor's Font"
@@ -2309,7 +2309,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:507
 msgid "Editor settings"
-msgstr ""
+msgstr "Configuració de l'editor"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -2350,11 +2350,11 @@ msgstr ""
 
 #: ../ui/pageFormat.glade:28
 msgid "Paper Format"
-msgstr ""
+msgstr "Format de paper"
 
 #: ../ui/pageFormat.glade:57
 msgid "Template:"
-msgstr ""
+msgstr "Plantilla:"
 
 #: ../ui/pageFormat.glade:98
 msgid "<b>Pagesize</b>"
@@ -2362,15 +2362,15 @@ msgstr ""
 
 #: ../ui/pageFormat.glade:146
 msgid "Width:"
-msgstr ""
+msgstr "Amplada:"
 
 #: ../ui/pageFormat.glade:169
 msgid "Height:"
-msgstr ""
+msgstr "Alçària:"
 
 #: ../ui/pageFormat.glade:315
 msgid "Reset"
-msgstr ""
+msgstr "Restableix"
 
 #: ../ui/pageTemplate.glade:27
 msgid "Configure new page template"
@@ -2382,15 +2382,15 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:67
 msgid "<b>Page size</b>"
-msgstr ""
+msgstr "<b>Mida de la pàgina</b>"
 
 #: ../ui/pageTemplate.glade:92
 msgid "Change"
-msgstr ""
+msgstr "Canvia"
 
 #: ../ui/pageTemplate.glade:109
 msgid "Select Background Color"
-msgstr ""
+msgstr "Tria el color de fons"
 
 #: ../ui/pageTemplate.glade:119
 msgid "Copy current page background instead"
@@ -2402,11 +2402,11 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:179
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>Color de fons</b>"
 
 #: ../ui/pageTemplate.glade:192
 msgid "<b>Background</b>"
-msgstr ""
+msgstr "<b>Fons</b>"
 
 #: ../ui/pageTemplate.glade:203
 msgid "Copy current page size instead"
@@ -2418,19 +2418,19 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:233
 msgid "Save to file"
-msgstr ""
+msgstr "Desa en un fitxer"
 
 #: ../ui/pageTemplate.glade:247
 msgid "Load from file"
-msgstr ""
+msgstr "Carrega des d'un fitxer"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
-msgstr ""
+msgstr "Paletes de colors"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
-msgstr ""
+msgstr "Complements"
 
 #: ../ui/plugin.glade:80
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -2438,15 +2438,15 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:50
 msgid "Author: "
-msgstr ""
+msgstr "Autor: "
 
 #: ../ui/pluginEntry.glade:87
 msgid "Path: "
-msgstr ""
+msgstr "Camí: "
 
 #: ../ui/pluginEntry.glade:123
 msgid "Version: "
-msgstr ""
+msgstr "Versió: "
 
 #: ../ui/pluginEntry.glade:158
 msgid "enabled,"
@@ -2466,7 +2466,7 @@ msgstr ""
 
 #: ../ui/settings.glade:257
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Mitjana aritmètica"
 
 #: ../ui/settings.glade:260
 msgid "Velocity based Gaussian weights"
@@ -2478,7 +2478,7 @@ msgstr ""
 
 #: ../ui/settings.glade:277
 msgid "Inertia"
-msgstr ""
+msgstr "Inèrcia"
 
 #: ../ui/settings.glade:285
 msgid "Xournal++ Preferences"
@@ -2495,11 +2495,11 @@ msgstr ""
 
 #: ../ui/settings.glade:388
 msgid "every"
-msgstr ""
+msgstr "cada"
 
 #: ../ui/settings.glade:415
 msgid "minutes"
-msgstr ""
+msgstr "minuts"
 
 #: ../ui/settings.glade:443
 msgid "Autosaving"
@@ -2511,7 +2511,7 @@ msgstr ""
 
 #: ../ui/settings.glade:502 ../ui/settings.glade:671
 msgid "Default name: "
-msgstr ""
+msgstr "Nom per defecte: "
 
 #: ../ui/settings.glade:541
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2643,7 +2643,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1058
 msgid "Options"
-msgstr ""
+msgstr "Opcions"
 
 #: ../ui/settings.glade:1088
 msgid "Averaging method"
@@ -2659,7 +2659,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1149
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:1166
 msgid "Deadzone radius"
@@ -2667,7 +2667,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1178
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:1196 ../ui/settings.glade:1208
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
@@ -2679,7 +2679,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1210
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1228 ../ui/settings.glade:1240
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
@@ -2687,11 +2687,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1229
 msgid "Mass"
-msgstr ""
+msgstr "Massa"
 
 #: ../ui/settings.glade:1242
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/settings.glade:1260 ../ui/settings.glade:1280
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
@@ -2699,11 +2699,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1262
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:1294
 msgid "Preprocessor"
-msgstr ""
+msgstr "Preprocessador"
 
 #: ../ui/settings.glade:1325
 msgid "Cusp detection"
@@ -2735,7 +2735,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1432
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../ui/settings.glade:1460
 msgid "Tab"
@@ -2759,11 +2759,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1618
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "Botons del ratolí"
 
 #: ../ui/settings.glade:1649 ../ui/settingsDeviceClassConfig.glade:35
 msgid "Mouse"
-msgstr ""
+msgstr "Ratolí"
 
 #: ../ui/settings.glade:1696
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -2803,11 +2803,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1908
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:1924
 msgid "events"
-msgstr ""
+msgstr "esdeveniments"
 
 #: ../ui/settings.glade:1945
 msgid "Artifact workaround"
@@ -2819,11 +2819,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2006
 msgid "Button 1"
-msgstr ""
+msgstr "Botó 1"
 
 #: ../ui/settings.glade:2038
 msgid "Button 2"
-msgstr ""
+msgstr "Botó 2"
 
 #: ../ui/settings.glade:2086
 msgid "Stylus Buttons"
@@ -2836,12 +2836,12 @@ msgstr ""
 #: ../ui/settings.glade:2133
 msgctxt "eraser is never visible"
 msgid "Never"
-msgstr ""
+msgstr "Mai"
 
 #: ../ui/settings.glade:2134
 msgctxt "eraser is always visible"
 msgid "Always"
-msgstr ""
+msgstr "Sempre"
 
 #: ../ui/settings.glade:2135
 msgctxt "eraser is only visible when floating"
@@ -2868,7 +2868,7 @@ msgstr ""
 #: ../ui/settings.glade:2269 ../ui/settings.glade:2857
 #: ../ui/settingsDeviceClassConfig.glade:39
 msgid "Touchscreen"
-msgstr ""
+msgstr "Pantalla tàctil"
 
 #: ../ui/settings.glade:2296
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
@@ -2900,15 +2900,15 @@ msgstr ""
 
 #: ../ui/settings.glade:2462
 msgid "Enable"
-msgstr ""
+msgstr "Activa"
 
 #: ../ui/settings.glade:2473
 msgid "Disable"
-msgstr ""
+msgstr "Desactiva"
 
 #: ../ui/settings.glade:2506 ../ui/settings.glade:2519
 msgid "Test"
-msgstr ""
+msgstr "Prova"
 
 #: ../ui/settings.glade:2552
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2937,7 +2937,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2652
 msgid "1.0"
-msgstr ""
+msgstr "1,0"
 
 #: ../ui/settings.glade:2667
 msgid "% greater than the initial distance between the two touches."
@@ -3021,19 +3021,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3141
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: ../ui/settings.glade:3142
 msgid "Lucide"
-msgstr ""
+msgstr "Lucide"
 
 #: ../ui/settings.glade:3155
 msgid "(requires restart)"
-msgstr ""
+msgstr "(cal reiniciar)"
 
 #: ../ui/settings.glade:3178
 msgid "Theme Variant:"
-msgstr ""
+msgstr "Variant del tema:"
 
 #: ../ui/settings.glade:3198
 msgid "Use system default"
@@ -3053,11 +3053,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3234
 msgid "Colors"
-msgstr ""
+msgstr "Colors"
 
 #: ../ui/settings.glade:3250
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: ../ui/settings.glade:3283
 msgid "Cursor icon for pen"
@@ -3066,7 +3066,7 @@ msgstr ""
 #: ../ui/settings.glade:3298
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Sense icona"
 
 #: ../ui/settings.glade:3299
 msgctxt "stylus cursor uses a small dot"
@@ -3097,32 +3097,32 @@ msgstr ""
 
 #: ../ui/settings.glade:3363
 msgid "Circle Color"
-msgstr ""
+msgstr "Color del cercle"
 
 #: ../ui/settings.glade:3387 ../ui/settings.glade:3438
 #: ../ui/settings.glade:4904
 msgid "pixels"
-msgstr ""
+msgstr "píxels"
 
 #: ../ui/settings.glade:3415
 msgid "Radius"
-msgstr ""
+msgstr "Radi"
 
 #: ../ui/settings.glade:3451
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:3467
 msgid "Border Width"
-msgstr ""
+msgstr "Amplada de la vora"
 
 #: ../ui/settings.glade:3506
 msgid "Border Color"
-msgstr ""
+msgstr "Color de la vora"
 
 #: ../ui/settings.glade:3538
 msgid "Cursor"
-msgstr ""
+msgstr "Cursor"
 
 #: ../ui/settings.glade:3563
 msgid "Show sidebar on the right side"
@@ -3170,7 +3170,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3734
 msgid "Scrollbars"
-msgstr ""
+msgstr "Barres de desplaçament"
 
 #: ../ui/settings.glade:3788
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
@@ -3208,19 +3208,19 @@ msgstr ""
 
 #: ../ui/settings.glade:3890 ../ui/mainmenubar.xml:194
 msgid "Fullscreen"
-msgstr ""
+msgstr "Pantalla completa"
 
 #: ../ui/settings.glade:3945
 msgid "Go Fullscreen"
-msgstr ""
+msgstr "Pantalla completa"
 
 #: ../ui/settings.glade:3980
 msgid "Select toolbar:"
-msgstr ""
+msgstr "Tria una barra d'eines:"
 
 #: ../ui/settings.glade:4013
 msgid "Presentation Mode"
-msgstr ""
+msgstr "Mode de presentació"
 
 #: ../ui/settings.glade:4042
 msgid "Pre-load pages before"
@@ -3236,11 +3236,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4118
 msgid "Performance"
-msgstr ""
+msgstr "Rendiment"
 
 #: ../ui/settings.glade:4149
 msgid "View"
-msgstr ""
+msgstr "Visualització"
 
 #: ../ui/settings.glade:4198
 msgid "Speed for Ctrl + Scroll"
@@ -3252,7 +3252,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4252 ../ui/settings.glade:4263
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:4285
 msgid "Zoom Speed"
@@ -3276,7 +3276,7 @@ msgstr "Calibració dels ppp de la pantalla"
 
 #: ../ui/settings.glade:4431
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #: ../ui/settings.glade:4480
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -3292,11 +3292,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4637
 msgid "<i>or</i>"
-msgstr ""
+msgstr "<i>o</i>"
 
 #: ../ui/settings.glade:4649
 msgid "Unlimited scrolling"
-msgstr ""
+msgstr "Desplaçament il·limitat"
 
 #: ../ui/settings.glade:4673
 msgid "<i>The amount is specified in pixels.</i>"
@@ -3320,7 +3320,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4765
 msgid "Paired Pages"
-msgstr ""
+msgstr "Pàgines emparellades"
 
 #: ../ui/settings.glade:4791
 msgid "when scrolling to end of last page"
@@ -3332,7 +3332,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4821
 msgid "disabled"
-msgstr ""
+msgstr "desactivat"
 
 #: ../ui/settings.glade:4839
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
@@ -3375,7 +3375,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5041
 msgid "Grid size"
-msgstr ""
+msgstr "Mida de la graella"
 
 #: ../ui/settings.glade:5072
 msgid "Use snapping for recognized shapes"
@@ -3395,11 +3395,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5132
 msgid "0.20"
-msgstr ""
+msgstr "0,20"
 
 #: ../ui/settings.glade:5149
 msgid "Stroke Recognizer"
-msgstr ""
+msgstr "Reconeixedor de traços"
 
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
@@ -3477,11 +3477,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5399
 msgid "0.00"
-msgstr ""
+msgstr "0,00"
 
 #: ../ui/settings.glade:5416
 msgid "%."
-msgstr ""
+msgstr "%,"
 
 #: ../ui/settings.glade:5437
 msgid "PDF Cache"
@@ -3501,7 +3501,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5607
 msgid "Defaults"
-msgstr ""
+msgstr "Valors per defecte"
 
 #: ../ui/settings.glade:5660
 msgid "<i>\n"
@@ -3512,7 +3512,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5676
 msgid "Disable Audio"
-msgstr ""
+msgstr "Desactiva l'àudio"
 
 #: ../ui/settings.glade:5698
 msgid "Enable or Disable Audio"
@@ -3524,11 +3524,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5744 ../ui/settings.glade:5780
 msgid "Storage Folder"
-msgstr ""
+msgstr "Carpeta d'emmagatzematge"
 
 #: ../ui/settings.glade:5759
 msgid "Select Folder"
-msgstr ""
+msgstr "Tria una carpeta"
 
 #: ../ui/settings.glade:5807
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
@@ -3537,19 +3537,19 @@ msgstr ""
 
 #: ../ui/settings.glade:5831
 msgid "Input Device"
-msgstr ""
+msgstr "Dispositiu d'entrada"
 
 #: ../ui/settings.glade:5853
 msgid "Output Device"
-msgstr ""
+msgstr "Dispositiu de sortida"
 
 #: ../ui/settings.glade:5884
 msgid "Audio Devices"
-msgstr ""
+msgstr "Dispositius d'àudio"
 
 #: ../ui/settings.glade:5913
 msgid "Sample Rate"
-msgstr ""
+msgstr "Freqüència de mostreig"
 
 #: ../ui/settings.glade:5924
 msgid "Gain"
@@ -3557,7 +3557,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5971
 msgid "Recording Quality"
-msgstr ""
+msgstr "Qualitat de l'enregistrament"
 
 #: ../ui/settings.glade:5997
 msgid "Default Seek Time (in seconds)"
@@ -3565,11 +3565,11 @@ msgstr ""
 
 #: ../ui/settings.glade:6010
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:6029
 msgid "Playback Settings"
-msgstr ""
+msgstr "Configuració de reproducció"
 
 #: ../ui/settings.glade:6043
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
@@ -3581,7 +3581,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6099
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/settings.glade:6147
 msgid "<i>Select language (requires restart)</i>"
@@ -3589,19 +3589,19 @@ msgstr ""
 
 #: ../ui/settings.glade:6179 ../ui/settings.glade:6225
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: ../ui/settings.glade:6195
 msgid "Language Settings"
-msgstr ""
+msgstr "Opcions d'idioma"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr ""
+msgstr "Paleta"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
-msgstr ""
+msgstr "Dispositiu"
 
 #: ../ui/settingsButtonConfig.glade:44
 msgid "Disable drawing for this device"
@@ -3613,7 +3613,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:126 ../ui/settingsButtonConfig.glade:144
 msgid "Standard"
-msgstr ""
+msgstr "Estàndard"
 
 #: ../ui/settingsButtonConfig.glade:127
 msgid "Whiteout"
@@ -3673,52 +3673,52 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:5
 msgid "_File"
-msgstr ""
+msgstr "_Fitxer"
 
 #: ../ui/mainmenubar.xml:13
 msgid "Open"
-msgstr ""
+msgstr "Obre"
 
 #. Filled dynamically
 #: ../ui/mainmenubar.xml:19
 msgid "Recent _Documents"
-msgstr ""
+msgstr "Documents _recents"
 
 #: ../ui/mainmenubar.xml:22
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Comenta un PDF"
 
 #: ../ui/mainmenubar.xml:31
 msgid "Save As"
-msgstr ""
+msgstr "Anomena i desa"
 
 #: ../ui/mainmenubar.xml:39
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Exporta a PDF"
 
 #: ../ui/mainmenubar.xml:43
 msgid "Export as..."
-msgstr ""
+msgstr "Exporta com a..."
 
 #: ../ui/mainmenubar.xml:55
 msgid "Quit"
-msgstr ""
+msgstr "Surt"
 
 #: ../ui/mainmenubar.xml:62
 msgid "_Edit"
-msgstr ""
+msgstr "_Edita"
 
 #: ../ui/mainmenubar.xml:94
 msgid "Select All"
-msgstr ""
+msgstr "Selecciona-ho tot"
 
 #: ../ui/mainmenubar.xml:101
 msgid "Find"
-msgstr ""
+msgstr "Cerca"
 
 #: ../ui/mainmenubar.xml:115
 msgid "Arrange Selection"
-msgstr ""
+msgstr "Ordena la selecció"
 
 #: ../ui/mainmenubar.xml:118
 msgid "Bring to Front"
@@ -3746,203 +3746,203 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:162
 msgid "Preferences"
-msgstr ""
+msgstr "Preferències"
 
 #: ../ui/mainmenubar.xml:167
 msgid "T_oolbars"
-msgstr ""
+msgstr "_Barres d'eines"
 
 #: ../ui/mainmenubar.xml:170
 msgid "_Manage"
-msgstr ""
+msgstr "_Gestiona"
 
 #: ../ui/mainmenubar.xml:174
 msgid "_Customize"
-msgstr ""
+msgstr "_Personalitza"
 
 #: ../ui/mainmenubar.xml:182
 msgid "_View"
-msgstr ""
+msgstr "_Visualitza"
 
 #: ../ui/mainmenubar.xml:185
 msgid "_Pair Pages"
-msgstr ""
+msgstr "Pàgines _emparellades"
 
 #: ../ui/mainmenubar.xml:189
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "Mode de _presentació"
 
 #: ../ui/mainmenubar.xml:201
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Mostra les barres d'eines"
 
 #: ../ui/mainmenubar.xml:218
 msgid "Layout"
-msgstr ""
+msgstr "Disposició"
 
 #: ../ui/mainmenubar.xml:221
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horitzontal"
 
 #: ../ui/mainmenubar.xml:226
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertical"
 
 #: ../ui/mainmenubar.xml:233
 msgid "_Left to Right"
-msgstr ""
+msgstr "D'_esquerra a dreta"
 
 #: ../ui/mainmenubar.xml:238
 msgid "_Right to Left"
-msgstr ""
+msgstr "De d_reta a esquerra"
 
 #: ../ui/mainmenubar.xml:245
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "De _dalt cap avall"
 
 #: ../ui/mainmenubar.xml:250
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "De _baix cap amunt"
 
 #: ../ui/mainmenubar.xml:257
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Columnes/Files"
 
 #: ../ui/mainmenubar.xml:260
 msgid "Set Columns"
-msgstr ""
+msgstr "Estableix les columnes"
 
 #: ../ui/mainmenubar.xml:264
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 columna"
 
 #: ../ui/mainmenubar.xml:269
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 columnes"
 
 #: ../ui/mainmenubar.xml:274
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 columnes"
 
 #: ../ui/mainmenubar.xml:279
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 columnes"
 
 #: ../ui/mainmenubar.xml:284
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 columnes"
 
 #: ../ui/mainmenubar.xml:289
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 columnes"
 
 #: ../ui/mainmenubar.xml:294
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 columnes"
 
 #: ../ui/mainmenubar.xml:299
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 columnes"
 
 #: ../ui/mainmenubar.xml:306
 msgid "Set Rows"
-msgstr ""
+msgstr "Estableix les files"
 
 #: ../ui/mainmenubar.xml:310
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 fila"
 
 #: ../ui/mainmenubar.xml:315
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 files"
 
 #: ../ui/mainmenubar.xml:320
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 files"
 
 #: ../ui/mainmenubar.xml:325
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 files"
 
 #: ../ui/mainmenubar.xml:330
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 files"
 
 #: ../ui/mainmenubar.xml:335
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 files"
 
 #: ../ui/mainmenubar.xml:340
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 files"
 
 #: ../ui/mainmenubar.xml:345
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 files"
 
 #: ../ui/mainmenubar.xml:356
 msgid "Zoom In"
-msgstr ""
+msgstr "Apropa"
 
 #: ../ui/mainmenubar.xml:361
 msgid "Zoom Out"
-msgstr ""
+msgstr "Allunya"
 
 #: ../ui/mainmenubar.xml:366
 msgid "Normal Size"
-msgstr ""
+msgstr "Mida normal"
 
 #: ../ui/mainmenubar.xml:370
 msgid "Zoom to Fit"
-msgstr ""
+msgstr "Ajusta"
 
 #: ../ui/mainmenubar.xml:376
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navegació"
 
 #: ../ui/mainmenubar.xml:379
 msgid "_First Page"
-msgstr ""
+msgstr "_Primera pàgina"
 
 #: ../ui/mainmenubar.xml:384
 msgid "_Previous Page"
-msgstr ""
+msgstr "Pàgina _anterior"
 
 #: ../ui/mainmenubar.xml:389
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Vés a la pàgina"
 
 #: ../ui/mainmenubar.xml:394
 msgid "_Next Page"
-msgstr ""
+msgstr "Pàgina _següent"
 
 #: ../ui/mainmenubar.xml:399
 msgid "_Last Page"
-msgstr ""
+msgstr "Ú_ltima pàgina"
 
 #: ../ui/mainmenubar.xml:406
 msgid "_Previous Layer"
-msgstr ""
+msgstr "Capa _anterior"
 
 #: ../ui/mainmenubar.xml:411
 msgid "_Next Layer"
-msgstr ""
+msgstr "Capa _següent"
 
 #: ../ui/mainmenubar.xml:416
 msgid "_Top Layer"
-msgstr ""
+msgstr "Capa _superior"
 
 #: ../ui/mainmenubar.xml:422
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Pàgina comentada s_egüent"
 
 #: ../ui/mainmenubar.xml:427
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Pàgina comentada an_terior"
 
 #: ../ui/mainmenubar.xml:434
 msgid "_Journal"
-msgstr ""
+msgstr "_Quadern"
 
 #: ../ui/mainmenubar.xml:437
 msgid "New Page _Before"
@@ -3978,7 +3978,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:474
 msgid "Delete Layer"
-msgstr ""
+msgstr "Elimina una capa"
 
 #: ../ui/mainmenubar.xml:479
 msgid "Merge Layer Down"
@@ -3986,128 +3986,128 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:484
 msgid "Rename Layer"
-msgstr ""
+msgstr "Canvia el nom de la capa"
 
 #: ../ui/mainmenubar.xml:491
 msgid "Paper _Format"
-msgstr ""
+msgstr "_Format de paper"
 
 #: ../ui/mainmenubar.xml:495
 msgid "Paper _Color"
-msgstr ""
+msgstr "_Color del paper"
 
 #: ../ui/mainmenubar.xml:499
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "_Fons del paper"
 
 #: ../ui/mainmenubar.xml:504
 msgid "_Tools"
-msgstr ""
+msgstr "_Eines"
 
 #: ../ui/mainmenubar.xml:507
 msgid "_Pen"
-msgstr ""
+msgstr "_Llapis"
 
 #: ../ui/mainmenubar.xml:513
 msgid "_Eraser"
-msgstr ""
+msgstr "_Goma d'esborrar"
 
 #: ../ui/mainmenubar.xml:519
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Selecciona text lineal"
 
 #: ../ui/mainmenubar.xml:525
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Selecciona el text en un rectangle"
 
 #: ../ui/mainmenubar.xml:531
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Subratllador"
 
 #: ../ui/mainmenubar.xml:537
 msgid "_Text"
-msgstr ""
+msgstr "_Text"
 
 #: ../ui/mainmenubar.xml:543
 msgid "_Image"
-msgstr ""
+msgstr "_Imatge"
 
 #: ../ui/mainmenubar.xml:549
 msgid "_Default Tool"
-msgstr ""
+msgstr "Eina per _defecte"
 
 #: ../ui/mainmenubar.xml:556
 msgid "Drawing Type"
-msgstr ""
+msgstr "Tipus de dibuix"
 
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Reconeixedor de traços"
 
 #: ../ui/mainmenubar.xml:583
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Dibuixa sistemes de coordenades"
 
 #: ../ui/mainmenubar.xml:588
 msgid "Draw _Line"
-msgstr ""
+msgstr "Dibuixa _línies"
 
 #: ../ui/mainmenubar.xml:629
 msgid "_Vertical Space"
-msgstr ""
+msgstr "Espai _vertical"
 
 #: ../ui/mainmenubar.xml:641
 msgid "H_and Tool"
-msgstr ""
+msgstr "Eina _mà"
 
 #: ../ui/mainmenubar.xml:657
 msgid "Pen _Options"
-msgstr ""
+msgstr "Opcions del lla_pis"
 
 #: ../ui/mainmenubar.xml:660 ../ui/mainmenubar.xml:722
 #: ../ui/mainmenubar.xml:769
 msgid "_very fine"
-msgstr ""
+msgstr "_molt fi"
 
 #: ../ui/mainmenubar.xml:665 ../ui/mainmenubar.xml:727
 #: ../ui/mainmenubar.xml:774
 msgid "_fine"
-msgstr ""
+msgstr "_fi"
 
 #: ../ui/mainmenubar.xml:670 ../ui/mainmenubar.xml:732
 #: ../ui/mainmenubar.xml:779
 msgid "_medium"
-msgstr ""
+msgstr "_mitjà"
 
 #: ../ui/mainmenubar.xml:675 ../ui/mainmenubar.xml:737
 #: ../ui/mainmenubar.xml:784
 msgid "_thick"
-msgstr ""
+msgstr "_gruixut"
 
 #: ../ui/mainmenubar.xml:680 ../ui/mainmenubar.xml:742
 #: ../ui/mainmenubar.xml:789
 msgid "ver_y thick"
-msgstr ""
+msgstr "mol_t gruixut"
 
 #: ../ui/mainmenubar.xml:709 ../ui/mainmenubar.xml:796
 msgid "Fi_ll"
-msgstr ""
+msgstr "_Omple"
 
 #: ../ui/mainmenubar.xml:713 ../ui/mainmenubar.xml:800
 msgid "Fill opacity"
-msgstr ""
+msgstr "Opacitat del farciment"
 
 #: ../ui/mainmenubar.xml:719
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Opcions de la goma d'es_borrar"
 
 #: ../ui/mainmenubar.xml:749
 msgid "_standard"
-msgstr ""
+msgstr "_estàndard"
 
 #: ../ui/mainmenubar.xml:754
 msgid "_whiteout"
-msgstr ""
+msgstr "_pinta (com el líquid corrector)"
 
 #: ../ui/mainmenubar.xml:759
 msgid "_delete strokes"
@@ -4115,19 +4115,19 @@ msgstr "_esborra traços"
 
 #: ../ui/mainmenubar.xml:766
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "_Opcions del subratllador"
 
 #: ../ui/mainmenubar.xml:806
 msgid "Select PDF Text Options"
-msgstr ""
+msgstr "Selecciona les opcions del text PDF"
 
 #: ../ui/mainmenubar.xml:809
 msgid "Marker Opacity"
-msgstr ""
+msgstr "Opacitat del subratllador"
 
 #: ../ui/mainmenubar.xml:815
 msgid "Text Font..."
-msgstr ""
+msgstr "Tipus de lletra..."
 
 #: ../ui/mainmenubar.xml:820
 msgid "Record / Stop"
@@ -4299,15 +4299,15 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:42
 msgid "Page template definitions"
-msgstr ""
+msgstr "Definicions de plantilles de pàgina"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:43
 msgid "Bug reporting, autosave, and auto backup tools"
-msgstr ""
+msgstr "Eines d'informes d'error, autodesades i recuperació automàtica"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:44
 msgid "Audio recording and playback alongside with handwritten notes"
-msgstr ""
+msgstr "Gravació i reproducció d'àudio juntament amb notes escrites"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:45
 msgid "Multi language support (over 20 languages supported)"
