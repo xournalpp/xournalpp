@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-10 17:43\n"
+"PO-Revision-Date: 2024-09-10 19:21\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -451,7 +451,7 @@ msgstr "Quan s'exporta, exporta només les capes especificades per l'INTERVAL (p
 #: ../src/core/control/XournalMain.cpp:696
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr "Estableix els DPI per a exportar a PNG. El valor per defecte és 300.\n"
+msgstr "Estableix els ppp per a exportar a PNG. El valor per defecte és 300.\n"
 "                                 No té efecte sense -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:700
@@ -670,23 +670,23 @@ msgstr "No s'ha pogut carregar la imatge."
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
-msgstr ""
+msgstr "S'ha produït un error mentre s'obria el fitxer d'imatge: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "El fitxer no és un fitxer .xopp vàlid (falta el tipus MIME): «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:141
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "El fitxer no és un fitxer .xopp vàlid (el tipus MIME no és correcte): «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:150
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "El fitxer no és un fitxer .xopp vàlid (falta la versió): «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:163
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "El fitxer no és un fitxer .xopp vàlid (la cadena de versió està danyada): «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:172
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -698,11 +698,11 @@ msgstr "El fitxer «{1}» no s'ha pogut obrir."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:247
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "Error del processador XML: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:250
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Error desconegut del processador"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:261
 msgid "Document is not complete (maybe the end is cut off?)"
@@ -714,11 +714,11 @@ msgstr "El document està danyat (al fitxer no s'ha trobat cap pàgina)."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:310
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Etiqueta «root» inesperada: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:331
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Etiqueta inesperada al document: «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:380
 #: ../src/core/control/xojfile/LoadHandler.cpp:409
@@ -731,15 +731,15 @@ msgstr "No s'ha pogut llegir el número de pàgina de la imatge de fons clonada:
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:427
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "El tipus pixmap::domain és desconegut: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:478
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "El tipus de domini és desconegut: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:516
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Tipus de fons desconegut: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:541
 msgid "Error reading width of a stroke: {1}"
@@ -747,48 +747,48 @@ msgstr "Error al llegir l'amplada d'un traç: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:609
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "El tipus d'extrem de traç «{1}» és desconegut. Es canvia a rodó."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:627
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "El tipus de traç «{1}» és desconegut. Es canvia a llapis."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:798
 #: ../src/core/control/xojfile/LoadHandler.cpp:814
 #: ../src/core/control/xojfile/LoadHandler.cpp:1127
 #: ../src/core/control/xojfile/LoadHandler.cpp:1141
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr "El fitxer adjunt no s'ha pogut obrir: {1}. Missatge d'error: {2}"
+msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:807
 #: ../src/core/control/xojfile/LoadHandler.cpp:1134
 #: ../src/core/control/xojfile/LoadHandler.cpp:1152
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr "El fitxer adjunt no s'ha pogut obrir: {1}. Missatge d'error: No s'ha proporcionat una mida de fitxer vàlida."
+msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha proporcionat una mida de fitxer vàlida."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:826
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr "El fitxer adjunt no s'ha pogut obrir: {1}. Missatge d'error: No s'ha pogut llegir el fitxer."
+msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: No s'ha pogut llegir el fitxer."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:835
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr "El fitxer adjunt no s'ha pogut obrir: {1}. Missatge d'error: El fitxer no s'ha pogut escriure."
+msgstr "No s'ha pogut obrir el fitxer adjunt: {1}. Missatge d'error: El fitxer no s'ha pogut escriure."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1022
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "Recompte de punts incorrecte ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1038
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "Fitxer xoj: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1039
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "Nombre de valors de pressió incorrecte. N'hi ha {1} i se n'esperaven {2}."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1171
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr "No s'ha trobat el fitxer temporal sol·licitat per a l'adjunt {1}"
+msgstr "El fitxer temporal sol·licitat per a l'adjunt {1} no s'ha pogut trobar."
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
 msgid "Attribute color not set!"
@@ -796,92 +796,92 @@ msgstr "Atribut de color no definit!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Valor de color «{1}» desconegut"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "Es desconeix el color \"{1}\" (no està definit a la llista de colors predeterminada)!"
+msgstr "Es desconeix el color «{1}» (no està definit a la llista de colors predeterminada)!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "No s'ha pogut processar l'atribut «{1}» com a «double»; el valor és «nullptr»"
+msgstr "No s'ha pogut processar l'atribut «{1}» com a «double». El valor és «nullptr»."
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "No s'ha pogut processar l'atribut «{1}» com a «double»; el valor és «{2}»"
+msgstr "No s'ha pogut processar l'atribut «{1}» com a «double». El valor és «{2}»."
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr "L'atribut \"{1}\" no s'ha pogut analitzar com a int, el valor és nullptr"
+msgstr "L'atribut «{1}» no s'ha pogut processar com a «int». El valor és «nullptr»."
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:147
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:166
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "No s'ha pogut procesar l'atribut «{1}» com a «int»; el valor és «{2}»"
+msgstr "No s'ha pogut processar l'atribut «{1}» com a «int». El valor és «{2}»."
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:178
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "L'atribut \"{1}\" no s'ha pogut analitzar com a size_t, el valor és nullptr"
+msgstr "L'atribut «{1}» no s'ha pogut processar com a «size_t». El valor és «nullptr»."
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:185
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:205
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "No s'ha pogut processar l'atribut «{1}» com a «size_t»; el valor és «{2}»"
+msgstr "No s'ha pogut processar l'atribut «{1}» com a «size_t». El valor és «{2}»."
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:251
 msgid "Could not write background \"{1}\", {2}"
-msgstr "No s'ha pogut escriure el fons \"{1}\", {2}"
+msgstr "No s'ha pogut escriure el fons «{1}», {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:348
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr "No s'ha pogut escriure el fons \"{1}\". Es continua de totes maneres."
+msgstr "No s'ha pogut escriure el fons «{1}». Es continua de totes maneres."
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "Error al carregar l'arxiu de glade \"{1}\" (s'intentarà carregar \"{2}\")"
+msgstr "Error al carregar el fitxer de glade «{1}» (s'intentarà carregar \"{2}\")."
 
 #: ../src/core/gui/PageView.cpp:388
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "No es pot reproduir la gravació de so {1}"
 
 #: ../src/core/gui/PageView.cpp:921
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
-msgstr "Carregant..."
+msgstr "Es carrega..."
 
 #: ../src/core/gui/PageView.cpp:978
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "Desplaça fins a la pàgina {1}"
 
 #: ../src/core/gui/PageView.cpp:980
 msgid "Add missing page"
-msgstr ""
+msgstr "Afegeix la pàgina que falta"
 
 #: ../src/core/gui/SearchBar.cpp:80
 msgid "Text found once on this page"
-msgstr ""
+msgstr "El text s'ha trobat una sola vegada en aquesta pàgina."
 
 #: ../src/core/gui/SearchBar.cpp:82
 #, c-format
 msgid "Text found %zu times on this page"
-msgstr ""
+msgstr "El text s'ha trobat %zu vegades en aquesta pàgina."
 
 #: ../src/core/gui/SearchBar.cpp:87
 msgid "Text not found"
-msgstr "El text no s'ha trobat"
+msgstr "El text no s'ha trobat."
 
 #: ../src/core/gui/SearchBar.cpp:130
 msgid "Text found once on page {1}"
-msgstr "El text s'ha trobat una sola vegada a la pàgina {1}"
+msgstr "El text s'ha trobat una sola vegada a la pàgina {1}."
 
 #: ../src/core/gui/SearchBar.cpp:131
 msgid "Text found {1} times on page {2} ({3} of {1})"
-msgstr "El text s'ha trobat {1} vegades a la pàgina {2} ({3} de {1})"
+msgstr "El text s'ha trobat {1} vegades a la pàgina {2} ({3} de {1})."
 
 #: ../src/core/gui/SearchBar.cpp:136
 msgid "Text not found, searched on all pages"
-msgstr "El text no s'ha trobat tot i buscar-lo a totes les pàgines"
+msgstr "El text no s'ha trobat tot i buscar-lo a totes les pàgines."
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:41
 msgid "Version"
@@ -889,7 +889,7 @@ msgstr "Versió"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:44
 msgid "Built on"
-msgstr ""
+msgstr "Compilat el"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:47
 msgid "GTK Version"
@@ -897,11 +897,11 @@ msgstr "Versió GTK"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:54
 msgid "Git commit"
-msgstr ""
+msgstr "Comissió Git"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:61
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Mostra la llista completa de contribuidors"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:63
 msgid "GNU GPLv2 or later"
@@ -909,11 +909,11 @@ msgstr "GNU GPLv2 o posterior"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:67
 msgid "No device"
-msgstr "No hi ha cap dispositiu"
+msgstr "No hi ha cap dispositiu."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Tool - don't change"
-msgstr ""
+msgstr "Eina ‒ no ho canvieu"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
@@ -923,12 +923,12 @@ msgstr "Llapis"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 msgid "Eraser"
-msgstr "Borrador"
+msgstr "Goma d'esborrar"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "Highlighter"
-msgstr ""
+msgstr "Subratllador"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
@@ -942,44 +942,44 @@ msgstr "Afegeix imatge"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Vertical space"
-msgstr ""
+msgstr "Espai vertical"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select region"
-msgstr ""
+msgstr "Selecciona una regió"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select rectangle"
-msgstr ""
+msgstr "Selecciona un rectangle"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
 msgid "Select multi layer region"
-msgstr ""
+msgstr "Selecciona una regió multicapa"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 msgid "Select multi layer rect"
-msgstr ""
+msgstr "Selecciona un rectangle multicapa"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Hand"
-msgstr ""
+msgstr "Mà"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Caixa d'eines flotant (experimental)"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Selecciona text d'un pdf"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Selecciona una àrea de text d'un pdf"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 msgid "Drawing Type - don't change"
-msgstr "Tipus de dibuix - no canviar"
+msgstr "Tipus de dibuix ‒ no ho canvieu"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 msgid "Normal drawing"
@@ -989,58 +989,58 @@ msgstr "Dibuix normal"
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Line"
-msgstr "Dibuixar Línia"
+msgstr "Dibuixa línies"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Draw Rectangle"
-msgstr "Dibuixar Rectangle"
+msgstr "Dibuixa rectangles"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Draw Ellipse"
-msgstr "Dibuixar El·lipse"
+msgstr "Dibuixa el·lipses"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Draw Arrow"
-msgstr "Dibuixar Fletxa"
+msgstr "Dibuixa fletxes"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Draw Double Arrow"
-msgstr "Dibuixar Fletxa Doble"
+msgstr "Dibuixa fletxes dobles"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw coordinate system"
-msgstr "Dibuixar sistema de coordenades"
+msgstr "Dibuixa sistemes de coordenades"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "Reconeixedor de traços"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Draw Spline"
-msgstr "Dibuixar Curva Spline"
+msgstr "Dibuixa corbes spline"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:15
 msgid "All files"
-msgstr "Tots els arxius"
+msgstr "Tots els fitxers"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:22
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:203
 msgid "Supported files"
-msgstr ""
+msgstr "Fitxers suportats"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:32
 msgid "Xournal files"
@@ -1048,7 +1048,7 @@ msgstr "Fitxers Xournal"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:33
 msgid "Xournal++ files"
-msgstr "Arxius Xournal++"
+msgstr "Fitxers Xournal++"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
@@ -1069,7 +1069,7 @@ msgstr "Predeterminat del sistema"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:67
 msgid "Previously selected language not available anymore!"
-msgstr "L'idioma seleccionat previament ja no està disponible!"
+msgstr "L'idioma seleccionat anteriorment ja no està disponible!"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:52
 msgid "LaTeX editor theme:"
@@ -1077,11 +1077,11 @@ msgstr "Tema d'editor LaTeX:"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:62
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "GtkSourceView no estava activat quan es va compilar aquesta versió del Xournal++! Algunes opcions no estaran disponibles."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "No es pot obrir el fitxer de plantilla global a {1}. Existeix?"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
@@ -1089,22 +1089,22 @@ msgstr "Fitxer LaTeX d'exemple generat amb èxit."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr "Error: {1}. Si us plau, comprovi els continguts de {2}"
+msgstr "Error: {1}. Comproveu els continguts de {2}."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr "Error: {1} no és un fitxer regular. Si us plau, comprovi la configuració de la seva plantilla d'arxiu LaTeX. "
+msgstr "Error: {1} no és un fitxer regular. Comproveu la configuració del fitxer de plantilla LaTeX. "
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:79
 msgid "Save File"
-msgstr "Desa l'arxiu"
+msgstr "Desa el fitxer"
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
-msgstr "_Cancela"
+msgstr "_Cancel·la"
 
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:113
 msgid "_Save"
@@ -1112,19 +1112,19 @@ msgstr "_Desa"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default enabled"
-msgstr ""
+msgstr "activat per defecte"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:28
 msgid "default disabled"
-msgstr ""
+msgstr "desactivat per defecte"
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:62
 msgid "Select background color"
-msgstr ""
+msgstr "Tria el color de fons"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
-msgstr ""
+msgstr "Tria l'opacitat de: "
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
@@ -1155,11 +1155,11 @@ msgstr "<b>{1}</b>\n"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:76
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr "<b>No s'ha trobat cap dispositiu. Això és inusual; recomanem que envií un informe d'error.</b>"
+msgstr "<b>No s'ha trobat cap dispositiu. Això no és normal i recomanem que envieu un informe d'error.</b>"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr "Per a canviar aquesta configuració, la sensibilitat de pressió o inferència de pressió ha d'estar activada!"
+msgstr "Per a canviar aquesta opció, cal activar prèviament la sensibilitat o inferència de pressió."
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:287
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
@@ -1192,15 +1192,15 @@ msgstr "Nom"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr "La paleta no té nom"
+msgstr "La paleta no té nom."
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
-msgstr "Predefinit"
+msgstr "Predefinides"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:39
 msgid "Customized"
-msgstr "Personalitzat"
+msgstr "Personalitzades"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:65
 msgid "Toolbars"
@@ -1208,15 +1208,15 @@ msgstr "Barres d'eines"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:87
 msgid "New"
-msgstr "Nou"
+msgstr "Nova"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:49
 msgid "Attach file to the journal"
-msgstr "Adjuntar arxiu al quadern"
+msgstr "Adjunta fitxer al quadern"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:81
 msgid "_Open"
-msgstr ""
+msgstr "_Obre"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
@@ -1226,7 +1226,7 @@ msgstr "Obre fitxer de plantilla"
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
 msgid "Open file"
-msgstr "Obrir fitxer"
+msgstr "Obre fitxer"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
@@ -1270,19 +1270,19 @@ msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:161
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr "S'ha eliminat l'element {1} de la barra d'eines {2} ID {3}"
+msgstr "S'ha tret l'element {1} de la barra d'eines {2} ID {3}."
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr "S'ha eliminat l'element de la barra d'eines {1} ID {2}"
+msgstr "S'ha tret l'element de la barra d'eines {1} ID {2}."
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:167
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr "No s'ha pogut eliminar l'element {1} de la barra d'eines {2} a la posició {3}"
+msgstr "No s'ha pogut traure l'element {1} de la barra d'eines {2} a la posició {3}."
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:172
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr "No s'ha pogut eliminar l'element de la barra d'eines {1} a la posició {2}"
+msgstr "No s'ha pogut traure l'element de la barra d'eines {1} a la posició {2}."
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:61
 msgid "Separator"
@@ -1344,7 +1344,7 @@ msgstr ""
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:176
 msgid "Apply to all pages"
-msgstr "Aplicar a totes les pàgines"
+msgstr "Aplica a totes les pàgines"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:15
 msgid "Plugin Manager"
@@ -1388,7 +1388,7 @@ msgstr ""
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:156
 msgid "Apply to current page"
-msgstr "Aplicar a la pàgina actual"
+msgstr "Aplica a la pàgina actual"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:172
 msgid "Contents"
@@ -1408,7 +1408,7 @@ msgstr "Previsualització de pàgina"
 
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
-msgstr "Estoig de Tipus de Dibuix"
+msgstr "Caixa de tria de tipus de dibuix"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:74
 msgid "Font"
@@ -1417,58 +1417,58 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:68
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr "No s'ha pogut processar l'arxiu general toolbar.ini: {1}\n"
-"No estarà disponible cap barra d'eines"
+msgstr "No s'ha pogut processar el fitxer «toolbar.ini» general: {1}\n"
+"No hi haurà cap barra d'eines disponible."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:77
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr "No s'ha pogut processar l'arxiu personalitzat toolbar.ini: {1}\n"
+msgstr "No s'ha pogut processar el fitxer «toolbar.ini» personalitzat: {1}\n"
 "Les barres d'eines no estaran disponibles"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
 msgid "New Xournal"
-msgstr "Xournal Nou"
+msgstr "Xournal nou"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
 msgid "Export as PDF"
-msgstr "Exportar a PDF"
+msgstr "Exporta a PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
 msgid "Print"
-msgstr "Imprimir"
+msgstr "Imprimeix"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
 #: ../src/core/undo/UndoRedoHandler.cpp:177
 msgid "Undo"
-msgstr ""
+msgstr "Desfés"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
 #: ../src/core/undo/UndoRedoHandler.cpp:189
 msgid "Redo"
-msgstr "Refer"
+msgstr "Torna a fer"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:299
 msgid "Cut"
-msgstr "Tallar"
+msgstr "Retalla"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 msgid "Copy"
-msgstr "Copiar"
+msgstr "Copia"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 #: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
-msgstr "Enganxar"
+msgstr "Enganxa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:303
 msgid "Search"
-msgstr ""
+msgstr "Cerca"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
-msgstr "Eliminar"
+msgstr "Elimina"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
 msgid "Rotation Snapping"
@@ -1492,11 +1492,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:322
 msgid "Manage Toolbars"
-msgstr "Gestionar barres d'eines"
+msgstr "Gestiona les barres d'eines"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:324
 msgid "Customize Toolbars"
-msgstr "Personalitzar barres d'eines"
+msgstr "Personalitza les barres d'eines"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Zoom out"
@@ -1521,11 +1521,11 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Back"
-msgstr "Enrera"
+msgstr "Anterior"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Go to page"
-msgstr ""
+msgstr "Vés a la pàgina"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
 msgid "Next"
@@ -1557,7 +1557,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Delete current page"
-msgstr "Eliminar pàgina actual"
+msgstr "Elimina la pàgina actual"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
@@ -1590,7 +1590,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
 msgid "Add/Edit TeX"
-msgstr "Afegir/Editar TeX"
+msgstr "Afegeix/Edita TeX"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Default Tool"
@@ -1649,19 +1649,19 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
-msgstr "Reproduir objecte"
+msgstr "Reprodueix objecte"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Record Audio / Stop Recording"
-msgstr "Enregistrar àudio / Aturar enregistrament"
+msgstr "Enregistra àudio / Atura l'enregistrament"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Pause / Play"
-msgstr "Pausa / Reproduir"
+msgstr "Reprodueix / Posa en pausa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Stop"
-msgstr ""
+msgstr "Para"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Forward"
@@ -1677,11 +1677,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Very Fine"
-msgstr ""
+msgstr "Molt fi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Fine"
-msgstr ""
+msgstr "Fi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Medium"
@@ -1689,11 +1689,11 @@ msgstr "Mitjà"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Thick"
-msgstr ""
+msgstr "Gruixut"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Very Thick"
-msgstr ""
+msgstr "Molt gruixut"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:175
 msgid "Show all"
@@ -1705,11 +1705,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:178
 msgid "Create new layer"
-msgstr "Crear capa nova"
+msgstr "Crea capa nova"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:205
 msgid "Layer"
-msgstr ""
+msgstr "Capa"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:302
 msgid "Layer Combo"
@@ -1730,7 +1730,7 @@ msgstr "Pàgina de PDF {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:87
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:109
 msgid "Page number"
@@ -1815,7 +1815,7 @@ msgstr "Copia"
 #: ../src/core/model/Document.cpp:326 ../src/core/model/Document.cpp:335
 #: ../src/core/model/Document.cpp:338
 msgid "Document not loaded! ({1}), {2}"
-msgstr "No s'ha carregat el document! ({1}),{2}"
+msgstr "El document no s'ha carregat! ({1}), {2}"
 
 #: ../src/core/model/XojPage.cpp:170
 msgid "Background"
@@ -1833,13 +1833,13 @@ msgstr "No hi ha cap pàgina per a exportar!"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:202
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:244
 msgid "Failed to initialize PDF Cairo surface"
-msgstr "Fallida en inicialitzar la superfície PDF Cairo"
+msgstr "La PDF Cairo Surface no s'ha pogut inicialitzar."
 
 #: ../src/core/undo/AddUndoAction.cpp:70
 #: ../src/core/undo/DeleteUndoAction.cpp:71
 #: ../src/core/undo/EraseUndoAction.cpp:64
 msgid "Erase stroke"
-msgstr "Borrar traç"
+msgstr "Esborra traç"
 
 #: ../src/core/undo/AddUndoAction.cpp:80
 #: ../src/core/undo/DeleteUndoAction.cpp:82
@@ -1868,35 +1868,35 @@ msgstr "text"
 
 #: ../src/core/undo/ColorUndoAction.cpp:97
 msgid "Change color"
-msgstr "Canviar color"
+msgstr "Canvia de color"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
-msgstr "Document desat d'emergència"
+msgstr "Document de desada d'emergència"
 
 #: ../src/core/undo/FillUndoAction.cpp:88
 msgid "Change stroke fill"
-msgstr "Canviar emplenament de traç"
+msgstr "Canvia l'emplenament del traç"
 
 #: ../src/core/undo/FontUndoAction.cpp:118
 msgid "Change font"
-msgstr "Canviar tipus de lletra"
+msgstr "Canvia el tipus de lletra"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:83
 msgid "Page inserted"
-msgstr "S'ha afegit una pàgina"
+msgstr "S'ha afegit una pàgina."
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:87
 msgid "Page deleted"
-msgstr "S'ha eliminat la pàgina"
+msgstr "La pàgina s'ha eliminat."
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:29
 msgid "Insert layer"
-msgstr ""
+msgstr "Afegeix una capa"
 
 #: ../src/core/undo/InsertUndoAction.cpp:25
 msgid "Draw stroke"
-msgstr "Dibuixar traç"
+msgstr "Dibuixa un traç"
 
 #: ../src/core/undo/InsertUndoAction.cpp:27
 msgid "Write text"
@@ -1912,11 +1912,11 @@ msgstr ""
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
-msgstr "Canviar el nom de la capa"
+msgstr "Canvia el nom de la capa"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:86
 msgid "Change line style"
-msgstr "Canviar estil de línia"
+msgstr "Canvia l'estil de línia"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:40
 msgid "Merge layer down"
@@ -1928,19 +1928,19 @@ msgstr ""
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:28
 msgid "Move layer"
-msgstr "Moure capa"
+msgstr "Mou la capa"
 
 #: ../src/core/undo/MoveUndoAction.cpp:20
 msgid "Move"
-msgstr "Moure"
+msgstr "Mou"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:97
 msgid "Page background changed"
-msgstr "S'ha canviat el fons de la pàgina"
+msgstr "El fons de la pàgina s'ha canviat."
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
-msgstr "Eliminar capa"
+msgstr "Elimina una capa"
 
 #: ../src/core/undo/RotateUndoAction.cpp:58
 msgid "Rotation"
@@ -1952,31 +1952,31 @@ msgstr ""
 
 #: ../src/core/undo/SizeUndoAction.cpp:118
 msgid "Change stroke width"
-msgstr "Canviar amplada de traç"
+msgstr "Canvia el gruix del traç"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page upwards"
-msgstr "Pujar pàgina"
+msgstr "Mou la pàgina amunt"
 
 #: ../src/core/undo/SwapUndoAction.cpp:67
 msgid "Move page downwards"
-msgstr "Baixar pàgina"
+msgstr "Mou la pàgina avall"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:26
 msgid "Edit text"
-msgstr "Editar text"
+msgstr "Edita text"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:112
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "No s'ha pogut desfer \"{1}\"\n"
-"Alguna cosa ha anat malament... Si us plau envia'ns un informe d'error…"
+msgstr "«{1}» no s'ha pogut desfer.\n"
+"Alguna cosa ha anat malament... Envieu un informe d'error…"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:138
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "No s'ha pogut refer \"{1}\"\n"
-"Alguna cosa ha anat malament... Si us plau envia'ns un informe d'error…"
+msgstr "«{1}» no s'ha pogut tornar a fer.\n"
+"Alguna cosa ha anat malament... Envieu un informe d'error…"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:172
 msgid "Undo: "
@@ -1984,11 +1984,11 @@ msgstr ""
 
 #: ../src/core/undo/UndoRedoHandler.cpp:184
 msgid "Redo: "
-msgstr "Refer: "
+msgstr "Torna a fer: "
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr "ElementRange::parse(): interval d'elements invàlids."
+msgstr "ElementRange::parse(): interval d'elements no vàlid."
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
@@ -2000,11 +2000,11 @@ msgstr "ElementRange::parse(): els extrems de l'interval han d'anar en ordre cre
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr "ElementRange::parse(): els indexes de l'element comencen per 1"
+msgstr "ElementRange::parse(): els índexos dels elements comencen per 1."
 
 #: ../src/util/OutputStream.cpp:27
 msgid "Error opening file: \"{1}\""
-msgstr "Error a l'obrir l'arxiu: \"{1}\""
+msgstr "S'ha produït un error a l'obrir el fitxer «{1}»."
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
@@ -2047,7 +2047,7 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:188
 msgid "Replace"
-msgstr "Reemplaçar"
+msgstr "Reemplaça"
 
 #: ../src/util/XojMsgBox.cpp:211
 msgid "There was an error displaying help: {1}"
@@ -2168,23 +2168,23 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:114
 msgid "Image quality"
-msgstr ""
+msgstr "Qualitat de la imatge"
 
 #: ../ui/exportSettings.glade:129
 msgid "Range"
-msgstr ""
+msgstr "Interval"
 
 #: ../ui/exportSettings.glade:143
 msgid "All pages"
-msgstr ""
+msgstr "Totes les pàgines"
 
 #: ../ui/exportSettings.glade:159
 msgid "Current page"
-msgstr ""
+msgstr "Pàgina actual"
 
 #: ../ui/exportSettings.glade:175
 msgid "Pages:"
-msgstr ""
+msgstr "Pàgines:"
 
 #: ../ui/exportSettings.glade:209
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -2192,7 +2192,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:279
 msgid "dpi"
-msgstr ""
+msgstr "ppp"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:321
@@ -2209,7 +2209,7 @@ msgstr ""
 
 #: ../ui/goto.glade:23
 msgid "Go to Page"
-msgstr ""
+msgstr "Vés a la pàgina"
 
 #: ../ui/latexSettings.glade:36
 msgid "Always check LaTeX dependencies before running"
@@ -3272,7 +3272,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4400
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "Calibració dels ppp de la pantalla"
 
 #: ../ui/settings.glade:4431
 msgid "Zoom"
@@ -4111,7 +4111,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:759
 msgid "_delete strokes"
-msgstr ""
+msgstr "_esborra traços"
 
 #: ../ui/mainmenubar.xml:766
 msgid "Highlighter Opti_ons"
@@ -4131,79 +4131,79 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:820
 msgid "Record / Stop"
-msgstr ""
+msgstr "Grava / Para"
 
 #: ../ui/mainmenubar.xml:825
 msgid "Pause"
-msgstr ""
+msgstr "Posa en pausa"
 
 #: ../ui/mainmenubar.xml:852
 msgid "_Help"
-msgstr ""
+msgstr "_Ajuda"
 
 #: ../ui/mainmenubar.xml:856
 msgid "Help"
-msgstr ""
+msgstr "Ajuda"
 
 #: ../ui/mainmenubar.xml:860
 msgid "About"
-msgstr ""
+msgstr "Quant a"
 
 #: ../resources-templates/pagetemplates.ini.in:17
 msgid "Ruled with vertical line on the right"
-msgstr ""
+msgstr "Amb línies i un marge vertical a la dreta"
 
 #: ../resources-templates/pagetemplates.ini.in:42
 msgid "Graph with border"
-msgstr ""
+msgstr "Quadrícula amb vora"
 
 #: ../resources-templates/toolbar.ini.in:50
 msgid "All Tools"
-msgstr ""
+msgstr "Totes les eines"
 
 #: ../resources-templates/toolbar.ini.in:55
 msgid "Portrait"
-msgstr ""
+msgstr "Vertical"
 
 #: ../resources-templates/toolbar.ini.in:61
 msgid "Minimal Left"
-msgstr ""
+msgstr "Mínima a l'esquerra"
 
 #: ../resources-templates/toolbar.ini.in:65
 msgid "Minimal Top"
-msgstr ""
+msgstr "Mínima a dalt"
 
 #: ../resources-templates/toolbar.ini.in:69
 msgid "Xournal++"
-msgstr ""
+msgstr "Xournal++"
 
 #: ../resources-templates/toolbar.ini.in:77
 msgid "Right hand Note Taking"
-msgstr ""
+msgstr "Presa de notes per a dretans"
 
 #: ../resources-templates/toolbar.ini.in:80
 msgid "Toolbar Left"
-msgstr ""
+msgstr "Barra d'eines a l'esquerra"
 
 #: ../resources-templates/toolbar.ini.in:86
 msgid "Toolbar Right"
-msgstr ""
+msgstr "Barra d'eines a la dreta"
 
 #: ../resources-templates/toolbar.ini.in:101
 msgid "Empty Toolbar"
-msgstr ""
+msgstr "Barra d'eines buida"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:6
 msgid "Take handwritten notes"
-msgstr ""
+msgstr "Pren notes a mà"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:7
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
-msgstr ""
+msgstr "tablet;Wacom;pen input;PDF Annotation;markup"
 
 #: ../desktop/com.github.xournalpp.xournalpp.desktop.in:15
 msgid "com.github.xournalpp.xournalpp"
-msgstr ""
+msgstr "com.github.xournalpp.xournalpp"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
@@ -4211,7 +4211,7 @@ msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:17
 msgid "Xournal++ features:"
-msgstr ""
+msgstr "Característiques i funcions del Xournal++:"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:21
 msgid "Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)"
