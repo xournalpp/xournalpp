@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-11 16:43\n"
+"PO-Revision-Date: 2024-09-11 17:49\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -577,7 +577,9 @@ msgstr "La comanda del generador LaTeX no s'ha pogut processar: {1}"
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr ""
+msgstr "No s'ha pogut trobar el programa generador de LaTeX al CAMÍ: {1}\n\n"
+"Com la instal·lació es detecta amb Platpak, heu d'instal·lar l'extensió Tex Live del Flatpak freedesktop. Ho podeu fer per exemple amb:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:76
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -2073,19 +2075,19 @@ msgstr "xoj-preview-extractor: el fitxer «{1}» no conté cap previsualització
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: no s'ha trobat cap previsualització ni pàgina; potser es tracta d'un fitxer no vàlid."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: la icona «{1}» no s'ha trobat."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: no s'ha pogut obrir el fitxer de sortida «{1}»."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:212
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "xoj-preview-extractor: extracció correcta"
 
 #: ../ui/about.glade:12
 msgid "About Xournal++"
@@ -2168,7 +2170,8 @@ msgstr "Tot"
 #: ../ui/exportSettings.glade:91
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Configuració de l'exportació de documents</b>\n"
+"Establiu els paràmetres d'exportació"
 
 #: ../ui/exportSettings.glade:114
 msgid "Image quality"
@@ -2201,7 +2204,7 @@ msgstr "ppp"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:321
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Exporta el document sense fons (Cap) o només amb fons de PDF o d'imatge (Sense guies) o amb tots els tipus de fons (Tots)."
 
 #: ../ui/exportSettings.glade:336
 msgid "Export layers progressively"
@@ -2209,7 +2212,7 @@ msgstr "Exporta les capes progressivament"
 
 #: ../ui/exportSettings.glade:340
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Si s'activa les capes de cada pàgina s'afegiran una a una. El resultat és un fitxer PDF que es pot fer servir per a presentacions."
 
 #: ../ui/goto.glade:23
 msgid "Go to Page"
@@ -2217,11 +2220,11 @@ msgstr "Vés a la pàgina"
 
 #: ../ui/latexSettings.glade:36
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Comprova sempre les dependències LaTeX abans d'arrancar"
 
 #: ../ui/latexSettings.glade:40
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Si s'activa, es comprovarà que els paquets LaTeX estan instal·lats i que les ordres estan disponibles abans d'executar l'eina LaTeX."
 
 #: ../ui/latexSettings.glade:48
 msgid "General LaTeX tool settings"
@@ -2233,43 +2236,43 @@ msgstr "Text LaTeX per defecte"
 
 #: ../ui/latexSettings.glade:105
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "El fitxer LaTeX que s'ha de fer servir com a plantilla per a l'eina LaTeX."
 
 #: ../ui/latexSettings.glade:107
 msgid "Global template file path"
-msgstr ""
+msgstr "Camí del fitxer de plantilla global"
 
 #: ../ui/latexSettings.glade:119
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "Les cadenes següents es substituiran al fitxer de plantilla global quan s'executi l'eina LaTeX:"
 
 #: ../ui/latexSettings.glade:133
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/latexSettings.glade:145
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "El mode de fórmula matemàtica escrita amb l'eina LaTeX."
 
 #: ../ui/latexSettings.glade:158
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Escolliu un fitxer de plantilla LaTeX global."
 
 #: ../ui/latexSettings.glade:170
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:182
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "El color actual de l'eina de text, en format hexadecimal RGB."
 
 #: ../ui/latexSettings.glade:195
 msgid "Template file settings"
-msgstr ""
+msgstr "Configuració del fitxer de plantilla"
 
 #: ../ui/latexSettings.glade:224
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Comanda de generació LaTeX"
 
 #: ../ui/latexSettings.glade:245
 msgid "Test configuration"
@@ -2277,11 +2280,11 @@ msgstr "Configuració de prova"
 
 #: ../ui/latexSettings.glade:249
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "Comprova si la configuració actual és vàlida: s'executarà la comanda de generació LaTeX al fitxer de plantilla global amb una fórmula de prova."
 
 #: ../ui/latexSettings.glade:265
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Configuració de l'executable LaTeX"
 
 #: ../ui/latexSettings.glade:340
 msgid "Line numbers"
@@ -2317,20 +2320,21 @@ msgstr "Configuració de l'editor"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = Caixa d'eines flotant (experimental) ="
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Caixa d'eines buida</b>\n"
+"            <i>Menú: Visualització/Barres d'eines</i>"
 
 #: ../ui/main.glade:421
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "Troba la coincidència anterior de la cadena de cerca"
 
 #: ../ui/main.glade:443
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "Troba la coincidència següent de la cadena de cerca"
 
 #: ../ui/main.glade:645
 msgid "Copy selected text"
@@ -2346,11 +2350,11 @@ msgstr "Subratlla el text seleccionat"
 
 #: ../ui/main.glade:707
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Tatxa el text seleccionat"
 
 #: ../ui/main.glade:727
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Commuta entre selecció estàndard/per regió"
 
 #: ../ui/pageFormat.glade:28
 msgid "Paper Format"
@@ -2382,7 +2386,7 @@ msgstr "Configura la plantilla de pàgina nova"
 
 #: ../ui/pageTemplate.glade:45
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "Aquesta configuració es farà servir per a les pàgines noves."
 
 #: ../ui/pageTemplate.glade:67
 msgid "<b>Page size</b>"
@@ -2398,11 +2402,11 @@ msgstr "Tria el color de fons"
 
 #: ../ui/pageTemplate.glade:119
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "Copia el fons de la pàgina actual en el seu lloc"
 
 #: ../ui/pageTemplate.glade:124
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "Copia el fons de la pàgina actual en lloc de fer servir el fons de pantalla que s'ha establert més amunt."
 
 #: ../ui/pageTemplate.glade:179
 msgid "<b>Background Color</b>"
@@ -2414,11 +2418,11 @@ msgstr "<b>Fons</b>"
 
 #: ../ui/pageTemplate.glade:203
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "Copia la mida de la pàgina actual"
 
 #: ../ui/pageTemplate.glade:208
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "Fes servir la mida de la pàgina actual en lloc de la mida establerta més amunt."
 
 #: ../ui/pageTemplate.glade:233
 msgid "Save to file"
@@ -2438,7 +2442,7 @@ msgstr "Complements"
 
 #: ../ui/plugin.glade:80
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Els canvis dels complements s'apliquen quan es reiniciï el Xournal++."
 
 #: ../ui/pluginEntry.glade:50
 msgid "Author: "
@@ -2474,7 +2478,7 @@ msgstr "Mitjana aritmètica"
 
 #: ../ui/settings.glade:260
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Velocitat basada en pesos gaussians"
 
 #: ../ui/settings.glade:274
 msgid "Deadzone"
@@ -2491,7 +2495,8 @@ msgstr "Configuració de Xournal++"
 #: ../ui/settings.glade:346
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xopp\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Si el document ja s'ha desat, el podeu trobar a la mateixa carpeta amb l'extensió .autosave.xopp\n"
+"Si el fitxer encara no s'ha desat, el podeu trobar a ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:365
 msgid "Enable Autosaving"
@@ -2511,7 +2516,7 @@ msgstr "Desada automàtica"
 
 #: ../ui/settings.glade:469
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr ""
+msgstr "<i>Es proposarà aquest nom quan es desi un document nou.</i>"
 
 #: ../ui/settings.glade:502 ../ui/settings.glade:671
 msgid "Default name: "
@@ -2542,11 +2547,34 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%a\t\tDia de la setmana abreujat (com ara Thu)\n"
+"%A\t\tDia de la setmana sencer (com ara Thursday)\n"
+"%b\t\tNom del mes abreujat (com ara Aug)\n"
+"%B\t\tNom del mes sencer (com ara August)\n"
+"%c\t\tRepresentació de la data i hora (com ara Thu Aug 23 14:55:02 2001)\n"
+"%d\t\tDia del mes (01-31)\n"
+"%F\t\tRepresentació any-mes-dia (com ara 2001-08-23)\n"
+"%H\t\tHora en format 24 hores (00-23)\n"
+"%I\t\tHora en format 12 hores (01-12)\n"
+"%j\t\tDia de l'any (001-366)\n"
+"%m\t\tMes com a número (01-12)\n"
+"%M\t\tMinut (00-59)\n"
+"%p\t\tFranja AM o PM (com ara PM)\n"
+"%S\t\tSegon (00-61)\n"
+"%U\t\tNúmero de setmana amb el primer diumenge com a primer dia de la setmana 1 (00-53)\n"
+"%W\t\tNúmero de setmana amb el primer dilluns com a primer dia de la setmana 1 (00-53)\n"
+"%w\t\tNúmero del dia de la setmana on el diumenge és el dia 0 (0-6)\n"
+"%x\t\tRepresentació de la data (e.g. 08/23/01)\n"
+"%X\t\tRepresentació de l'hora (e.g. 14:55:02)\n"
+"%y\t\tÚltims dos dígits de l'any (00-99)\n"
+"%Y\t\tAny (com ara 2001)\n"
+"%Z\t\tNom de la zona horària o abreviació (com ara CDT)\n"
+"%%\t\t%\n"
+"Els caràcters no vàlids es reemplaçaran amb «_»."
 
 #: ../ui/settings.glade:588 ../ui/settings.glade:757
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Paràmetres disponibles"
 
 #: ../ui/settings.glade:612
 msgid "Default Save Name"
@@ -2554,7 +2582,7 @@ msgstr "Nom predeterminat de les desades"
 
 #: ../ui/settings.glade:638
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
-msgstr ""
+msgstr "<i>Aquest serà el nom proposat quan s'exporta un document a PDF.</i>"
 
 #: ../ui/settings.glade:709
 msgid "%{name}\tThe name of the exported document\n"
@@ -2582,23 +2610,47 @@ msgid "%{name}\tThe name of the exported document\n"
 "%Z\t\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\t\t%\n"
 "Illegal characters are replaced with \"_\""
-msgstr ""
+msgstr "%{name}\tEl nom del document exportat\n"
+"%a\t\t\tNom abreviat del dia de la setmana (com ara Thu)\n"
+"%A\t\t\tNom del dia de la setmana sencer (com ara Thursday)\n"
+"%b\t\t\tNom abreviat del mes (com ara Aug)\n"
+"%B\t\t\tNom sencer del mes (com ara August)\n"
+"%c\t\t\tRepresentació de la data i hora (com ara Thu Aug 23 14:55:02 2001)\n"
+"%d\t\t\tDia del mes (01-31)\n"
+"%F\t\t\tRepresentació any-mes-dia (com ara 2001-08-23)\n"
+"%H\t\t\tHora en format 24 hores (00-23)\n"
+"%I\t\t\tHora en format 12 hores (01-12)\n"
+"%j\t\t\tDia de l'any (001-366)\n"
+"%m\t\t\tNúmero del mes (01-12)\n"
+"%M\t\t\tMinut (00-59)\n"
+"%p\t\t\tDessignació AM o PM (com ara PM)\n"
+"%S\t\t\tSegon (00-61)\n"
+"%U\t\t        Número de setmana amb el primer diumenge com a primer dia de la setmana 1 (00-53)\n"
+"%W\t\t        Número de setmana amb el primer dilluns com a primer dia de la setmana 1 (00-53)\n"
+"%w\t\t        Número del dia de la setmana on el diumenge és el dia 0 (0-6)\n"
+"%x\t\t\tRepresentació de la data (com ara 08/23/01)\n"
+"%X\t\t\tRepresentació de l'hora (com ara 14:55:02 o 2:55:02 PM)\n"
+"%y\t\t\tDos últims dígits de l'any (00-99)\n"
+"%Y\t\t\tAnys (com ara 2001)\n"
+"%Z\t\t\tNom de la zona horària o abreviació (com ara CDT)\n"
+"%%\t\t\t%\n"
+"Els caràcters no vàlids es reemplaçaran amb «_»."
 
 #: ../ui/settings.glade:781
 msgid "Default Pdf export name"
-msgstr ""
+msgstr "Nom d'exportació de PDF per defecte"
 
 #: ../ui/settings.glade:806
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "Activa la càrrega automàtica de quaderns"
 
 #: ../ui/settings.glade:811
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Si obriu un PDF i hi ha un fitxer Xournal amb el mateix nom, s'obrirà el fitxer .xoj."
 
 #: ../ui/settings.glade:822
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Activa la càrrega automàtica del fitxer més recent quan s'inicia l'aplicació"
 
 #: ../ui/settings.glade:827
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
@@ -2606,7 +2658,7 @@ msgstr ""
 
 #: ../ui/settings.glade:842
 msgid "Autoloading"
-msgstr ""
+msgstr "Càrrega automàtica"
 
 #: ../ui/settings.glade:870
 msgid "Load / Save"
@@ -2659,7 +2711,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1137
 msgid "Buffersize"
-msgstr ""
+msgstr "Mida del búfer"
 
 #: ../ui/settings.glade:1149
 msgid "20"
@@ -2675,7 +2727,7 @@ msgstr "1,30"
 
 #: ../ui/settings.glade:1196 ../ui/settings.glade:1208
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Arrossega: Si el valor és molt petit, poden aparèixer oscil·lacions estranyes. Si el valor és massa alt, no hi haurà cap tipus d'estabilització."
 
 #: ../ui/settings.glade:1197
 msgid "Drag"
@@ -2687,7 +2739,7 @@ msgstr "0,4"
 
 #: ../ui/settings.glade:1228 ../ui/settings.glade:1240
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Massa: quant més alta sigui, més inèrcia i més estabilització."
 
 #: ../ui/settings.glade:1229
 msgid "Mass"
@@ -2699,7 +2751,7 @@ msgstr "5"
 
 #: ../ui/settings.glade:1260 ../ui/settings.glade:1280
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Paràmetre gaussià: com més alt sigui, més estabilització i més retard entre el cursor i el cursor/punta de llapis."
 
 #: ../ui/settings.glade:1262
 msgid "0,50"
@@ -2719,7 +2771,7 @@ msgstr "Acaba el traç"
 
 #: ../ui/settings.glade:1347
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "L'estabilització de l'entrada pot crear un espai buit al final del traç. Si s'activa, aquest buit s'omple."
 
 #: ../ui/settings.glade:1365
 msgid "Input stabilization"
@@ -2751,7 +2803,7 @@ msgstr "Sistema d'entrada"
 
 #: ../ui/settings.glade:1536
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Defineix quines eines es seleccionaran si premeu un botó de ratolí. Després de soltar el botó, es tornarà a seleccionar l'eina anterior.</i>"
 
 #: ../ui/settings.glade:1570
 msgid "Middle Mouse Button"
@@ -2867,7 +2919,7 @@ msgstr "Llapis"
 
 #: ../ui/settings.glade:2236
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>Podeu configurar despositius no identificats pel GTK, com ara pantalles tàctils, i establir quin ha de ser el seu comportament.</i>"
 
 #: ../ui/settings.glade:2269 ../ui/settings.glade:2857
 #: ../ui/settingsDeviceClassConfig.glade:39
@@ -2876,7 +2928,7 @@ msgstr "Pantalla tàctil"
 
 #: ../ui/settings.glade:2296
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr ""
+msgstr "<i>Si el vostre programari no suporta el reconeixement de mà, el Xournal++ pot desactivar la vostra pantalla tàctil quan el llapis estigui a prop de la pantalla.</i>"
 
 #: ../ui/settings.glade:2310
 msgid "Enable internal Hand Recognition"
@@ -2916,7 +2968,7 @@ msgstr "Prova"
 
 #: ../ui/settings.glade:2552
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "Comandes personalitzades (per al mètode «Personalitzat»)"
 
 #: ../ui/settings.glade:2575
 msgid "Hand Recognition"
@@ -2924,11 +2976,11 @@ msgstr "Reconeixement de mà"
 
 #: ../ui/settings.glade:2602
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
+msgstr "<i>Feu servir gestos de pinça per a fer zoom a les pàgines del quadern.</i>"
 
 #: ../ui/settings.glade:2616
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Activa els gestos de zoom (cal reiniciar)"
 
 #: ../ui/settings.glade:2634
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
@@ -2937,7 +2989,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2640
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "Comença a fer zoom després d'una distància de "
 
 #: ../ui/settings.glade:2652
 msgid "1.0"
@@ -2957,7 +3009,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2746
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Activa el dibuix tàctil"
 
 #: ../ui/settings.glade:2751
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
@@ -2965,7 +3017,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2766
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Dibuix tàctil"
 
 #: ../ui/settings.glade:2793
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
@@ -2977,27 +3029,27 @@ msgstr ""
 
 #: ../ui/settings.glade:2826
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Desplaçament tàctil"
 
 #: ../ui/settings.glade:2913
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "Mostra la barra de menús a l'inici"
 
 #: ../ui/settings.glade:2931
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>Commuteu la visibilitat de la barra de menús amb F10</i>"
 
 #: ../ui/settings.glade:2949
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "Mostra el camí del fitxer a la barra de títol"
 
 #: ../ui/settings.glade:2964
 msgid "Show page number in title bar"
-msgstr ""
+msgstr "Mostra el número de pàgina a la barra de títol"
 
 #: ../ui/settings.glade:3004
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "El color de la vora de la pàgina actual i altres seleccions"
 
 #: ../ui/settings.glade:3018
 msgid "Border color"
@@ -3009,15 +3061,15 @@ msgstr "Color de fons entre pàgines"
 
 #: ../ui/settings.glade:3057
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Color de selecció (selecció de text, traç...)"
 
 #: ../ui/settings.glade:3083
 msgid "Active Selection Color (Search Results etc.)"
-msgstr ""
+msgstr "Color de selecció activa (com ara resultats de cerca)"
 
 #: ../ui/settings.glade:3105
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Fes servir les icones disponibles del sistema (cal reiniciar)"
 
 #: ../ui/settings.glade:3126
 msgid "Icon Theme"
@@ -3053,7 +3105,7 @@ msgstr "Força el tema fosc"
 
 #: ../ui/settings.glade:3213
 msgid "(this may not work, depending on your system theme)"
-msgstr ""
+msgstr "(potser no funcioni, en funció del tema del vostre sistema)"
 
 #: ../ui/settings.glade:3234
 msgid "Colors"
@@ -3065,7 +3117,7 @@ msgstr "Global"
 
 #: ../ui/settings.glade:3283
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Icona de cursor per al llapis"
 
 #: ../ui/settings.glade:3298
 msgctxt "stylus cursor uses no icon"
@@ -3075,12 +3127,12 @@ msgstr "Sense icona"
 #: ../ui/settings.glade:3299
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Icona de punt petit"
 
 #: ../ui/settings.glade:3300
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Icona de llapis gran"
 
 #: ../ui/settings.glade:3301
 msgctxt "stylus cursor uses system cursor"
@@ -3093,7 +3145,7 @@ msgstr "Ressalta la posició del cursor"
 
 #: ../ui/settings.glade:3331
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "Dibuixa un cercle translúcid al voltant del cursor"
 
 #: ../ui/settings.glade:3349 ../ui/settings.glade:3492
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -3130,15 +3182,15 @@ msgstr "Cursor"
 
 #: ../ui/settings.glade:3563
 msgid "Show sidebar on the right side"
-msgstr ""
+msgstr "Mostra la barra lateral a la dreta"
 
 #: ../ui/settings.glade:3578
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "Mostra la barra de desplaçament vertical a l'esquerra"
 
 #: ../ui/settings.glade:3597
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "Esquerrà o dretà"
 
 #: ../ui/settings.glade:3622
 msgid "Page numbering  "
@@ -3170,7 +3222,7 @@ msgstr "Amaga la barra de desplaçament vertical"
 
 #: ../ui/settings.glade:3716
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "Desactiva l'ocultació de la barra de desplaçament"
 
 #: ../ui/settings.glade:3734
 msgid "Scrollbars"
@@ -3190,11 +3242,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3803
 msgid "Max multiplier"
-msgstr ""
+msgstr "Multiplicador màxim"
 
 #: ../ui/settings.glade:3816
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Marges de la selecció de vores"
 
 #: ../ui/settings.glade:3841 ../ui/settings.glade:3915
 #: ../ui/mainmenubar.xml:206
@@ -3264,7 +3316,7 @@ msgstr "Variació del zoom"
 
 #: ../ui/settings.glade:4312
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
+msgstr "<i>Per a assegurar que a un zoom del 100 % la mida dels elements és natural. (cal reiniciar)</i>"
 
 #: ../ui/settings.glade:4332
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -3304,11 +3356,11 @@ msgstr "Desplaçament il·limitat"
 
 #: ../ui/settings.glade:4673
 msgid "<i>The amount is specified in pixels.</i>"
-msgstr ""
+msgstr "<i>La quantitat s'especifica en píxels.</i>"
 
 #: ../ui/settings.glade:4705
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "Desplaçament fora de la pàgina"
 
 #: ../ui/settings.glade:4732
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -3328,11 +3380,11 @@ msgstr "Pàgines emparellades"
 
 #: ../ui/settings.glade:4791
 msgid "when scrolling to end of last page"
-msgstr ""
+msgstr "quan es desplaça fins al final de l'última pàgina"
 
 #: ../ui/settings.glade:4806
 msgid "when drawing on last page"
-msgstr ""
+msgstr "quan es dibuixa a l'última pàgina"
 
 #: ../ui/settings.glade:4821
 msgid "disabled"
@@ -3340,11 +3392,11 @@ msgstr "desactivat"
 
 #: ../ui/settings.glade:4839
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
-msgstr ""
+msgstr "Afegeix automàticament una última pàgina buida (excloent els PDF)."
 
 #: ../ui/settings.glade:4863
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "Activa amb un radi de determinació de "
 
 #: ../ui/settings.glade:4868
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -3471,7 +3523,8 @@ msgstr "Acció amb l'eina de toc"
 #: ../ui/settings.glade:5361
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Torna a renderitzar els fons de PDF més sovint quan es fa zoom per a millorar-ne la qualitat.\n"
+"<b>Avís:</b> Aquesta opció no afecta a la qualitat d'impressió.</i>"
 
 #: ../ui/settings.glade:5383
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
@@ -3480,7 +3533,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5386
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Torna a renderitzar quan el zoom de la pàgina canvia més d'un "
 
 #: ../ui/settings.glade:5399
 msgid "0.00"
@@ -3500,7 +3553,7 @@ msgstr "Àrea de dibuix"
 
 #: ../ui/settings.glade:5515
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr ""
+msgstr "<i>Selecciona l'eina i la seva configuració si premeu el botó per defecte.</i>"
 
 #: ../ui/settings.glade:5567
 msgid "<b>Default</b>"
