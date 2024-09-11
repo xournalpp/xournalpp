@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-11 17:49\n"
+"PO-Revision-Date: 2024-09-11 18:56\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -2654,7 +2654,7 @@ msgstr "Activa la càrrega automàtica del fitxer més recent quan s'inicia l'ap
 
 #: ../ui/settings.glade:827
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Si s'activa, el Xournal++ obrirà el document que s'hagi desat més recentment de manera automàtica i el podreu continuar editant."
 
 #: ../ui/settings.glade:842
 msgid "Autoloading"
@@ -2666,7 +2666,7 @@ msgstr "Carrega/Desa"
 
 #: ../ui/settings.glade:916
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Assigna classes de dispositius a cada dispositiu d'entrada del sistema. Canvieu només aquests valors si els dispositius no funcionen correctament (com ara si el llapis apareix com a pantalla tàctil).</i>"
 
 #: ../ui/settings.glade:950
 msgid "Input Devices"
@@ -2674,28 +2674,33 @@ msgstr "Dispositius d’entrada"
 
 #: ../ui/settings.glade:984
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "Permet dibuixar fora de la finestra <i>(No es pararà de dibuixar quan s'arribi a la vora de la finestra)</i>"
 
 #: ../ui/settings.glade:1002
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Arrossegar a l'ESQUERRA des del punt inicial actua com si es premés la tecla majúscula.\n"
+"\t    Arrossegar AMUNT actua com si es premés la tecla Control.\n\n"
+"            Radi de determinació: Radi en el qual els modificadors estaran blocats fins que s'acabi de dibuixar.\n\n"
+"\t    <i>Útil si es vol operar sense teclat.</i>"
 
 #: ../ui/settings.glade:1013
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Combina els esdeveniments de botons amb els de punta de llapis\n"
+"\t    <i>(Comproveu això si</i> «<tt>xsetwacom get *deviceId* TabletPCButton</tt>» <i>torna</i> \"<tt>on</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:1032
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "Als traços lents se'ls assigna una pressió més elevada que als traços ràpids si no hi ha informació sobre la pressió.\n\n"
+"<i>Aquesta funció pot ser útil per a dispositius que no tinguin sensibilitat de pressió. Per exemple, amb ratolins o pantalles tàctils.</i>"
 
 #: ../ui/settings.glade:1040
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Activa la inferència de pressió <i>(Estima la pressió segons la velocitat de dibuix quan el dispositiu no pot aportar dades de la pressió.)</i>"
 
 #: ../ui/settings.glade:1058
 msgid "Options"
@@ -2707,7 +2712,7 @@ msgstr "Mètode d'aproximació"
 
 #: ../ui/settings.glade:1121
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Trieu un algoritme d'estabilització d'entrada i els seus paràmetres.</i>"
 
 #: ../ui/settings.glade:1137
 msgid "Buffersize"
@@ -2823,7 +2828,7 @@ msgstr "Ratolí"
 
 #: ../ui/settings.glade:1696
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr ""
+msgstr "<i>La sensibilitat a la pressió permet dibuixar línies amb diferents amplades, en funció de la pressió que apliqueu al llapis. Si la tauleta no indica les pressions, aquesta opció no té efecte.</i>"
 
 #: ../ui/settings.glade:1710
 msgid "Enable Pressure Sensitivity"
@@ -2831,7 +2836,7 @@ msgstr "Activa la sensibilitat a la pressió"
 
 #: ../ui/settings.glade:1740
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>Alguns dispositius informen de pressions molt grans o molt petits de manera sobtada. Això es pot solucionar si s'estableix una pressió mínima o s'escala la pressió que indica el dispositiu.</i>"
 
 #: ../ui/settings.glade:1762
 msgid "Minimum Pressure:"
@@ -2851,7 +2856,7 @@ msgstr "Sensibilitat a la pressió"
 
 #: ../ui/settings.glade:1872
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>Amb algunes configuracions, els traços de llapis tenen artefactes al principi. Això es pot evitar si s'ignora els primers esdeveniments/punts de traç quan el llapis toca la pantalla.</i>"
 
 #: ../ui/settings.glade:1890
 msgid "Ignore the first"
@@ -2871,7 +2876,7 @@ msgstr "Solució alternativa per als artefactes"
 
 #: ../ui/settings.glade:1972
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Especifica les eines que es seleccionaran si es pressiona el botó d'un llapis o es fa servir la goma d'esborrar. Quan es solti el botó, es tornarà a seleccionar l'eina anterior.</i>"
 
 #: ../ui/settings.glade:2006
 msgid "Button 1"
@@ -2948,11 +2953,11 @@ msgstr "Detecta automàticament"
 
 #: ../ui/settings.glade:2394
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
+msgstr "s <i>(després del qual es reactivarà la pantalla tàctil)</i>"
 
 #: ../ui/settings.glade:2439
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr ""
+msgstr "<i>Especifica les comandes que s'executen quan s'activa el reconeixement de mà. Les comandes s'executaran al fil de la interfície: assegureu-vos que no les bloqueu!</i>"
 
 #: ../ui/settings.glade:2462
 msgid "Enable"
@@ -2985,7 +2990,8 @@ msgstr "Activa els gestos de zoom (cal reiniciar)"
 #: ../ui/settings.glade:2634
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Quan es dibuixa amb el tàctil, els gestos de dos dits que es fan per a desplaçar la vista, poden aplicar un zoom i provocar problemes de rendiment.\n"
+"Aquesta opció pot facilitar els dibuixos amb el tàctil. "
 
 #: ../ui/settings.glade:2640
 msgid "Start zooming after a distance "
@@ -2997,7 +3003,7 @@ msgstr "1,0"
 
 #: ../ui/settings.glade:2667
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% més gran que la distància inicial entre els dos tocs."
 
 #: ../ui/settings.glade:2705
 msgid "Zoom Gestures"
@@ -3005,7 +3011,7 @@ msgstr "Gestos de zoom"
 
 #: ../ui/settings.glade:2732
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Feu servir la pantalla tàctil com un llapis multitàctil.</i>"
 
 #: ../ui/settings.glade:2746
 msgid "Enable touch drawing"
@@ -3013,7 +3019,7 @@ msgstr "Activa el dibuix tàctil"
 
 #: ../ui/settings.glade:2751
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Feu servir dos dits per a moure o fer zoom i un dit per a fer servir l'eina seleccionada."
 
 #: ../ui/settings.glade:2766
 msgid "Touch Drawing"
@@ -3021,11 +3027,11 @@ msgstr "Dibuix tàctil"
 
 #: ../ui/settings.glade:2793
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr ""
+msgstr "<i>Si es desactiva el desplaçament en pantalles tàctils inclòs al GTK pot resoldre alguns errors en algunes plataformes. Considereu canviar aquesta opció si observeu salts o canvies sobtats en la posició de desplaçament quan voleu desplaçar-vos amb una pantalla tàctil.</i>"
 
 #: ../ui/settings.glade:2807
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "Desactiva la funcionalitat de desplaçament inercial inclosa al GTK (cal reiniciar)."
 
 #: ../ui/settings.glade:2826
 msgid "Touch Scrolling"
@@ -3198,7 +3204,7 @@ msgstr "Numeració de pàgines  "
 
 #: ../ui/settings.glade:3638
 msgid "Below preview"
-msgstr ""
+msgstr "Vista prèvia"
 
 #: ../ui/settings.glade:3639
 msgid "Circle background"
@@ -3230,7 +3236,7 @@ msgstr "Barres de desplaçament"
 
 #: ../ui/settings.glade:3788
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Quan se selecciona i es mou un element més enllà de la porció visible del llenç, desplaça la pantalla aquest percentatge de la part visible del llenç."
 
 #: ../ui/settings.glade:3790
 msgid "Base speed"
@@ -3238,7 +3244,7 @@ msgstr "Velocitat base"
 
 #: ../ui/settings.glade:3801
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Multiplica la velocitat de desplaçament per aquesta quantitat, en funció de la porció de l'element seleccionat està fora de la vista."
 
 #: ../ui/settings.glade:3803
 msgid "Max multiplier"
@@ -3320,7 +3326,7 @@ msgstr "<i>Per a assegurar que a un zoom del 100 % la mida dels elements és nat
 
 #: ../ui/settings.glade:4332
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr ""
+msgstr "<i>Posa un regle a la pantalla i moveu el botó lliscant fins que coincideixin els regles.</i>"
 
 #: ../ui/settings.glade:4379
 msgid "The unit of the ruler is cm"
@@ -3336,7 +3342,7 @@ msgstr "Zoom"
 
 #: ../ui/settings.glade:4480
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
-msgstr ""
+msgstr "<i>Si afegiu espai addicional al costat de les pàgines, podeu escollir l'àrea de la pantalla on voleu treballar.</i>"
 
 #: ../ui/settings.glade:4603
 msgid "Add additional horizontal space"
@@ -3364,11 +3370,11 @@ msgstr "Desplaçament fora de la pàgina"
 
 #: ../ui/settings.glade:4732
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "Desfassa la primera pàgina aquest nombre de pàgines quan l'opció <b>Pàgines emparellades</b> estigui activada."
 
 #: ../ui/settings.glade:4733
 msgid "First Page Offset "
-msgstr ""
+msgstr "Òfset de la primera pàgina "
 
 #: ../ui/settings.glade:4746
 msgid "Usually 0 or 1"
@@ -3403,11 +3409,14 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Arrossegar a l'ESQUERRA des del punt inicial actua com si es premés la tecla majúscula.\n"
+"Arrossegar AMUNT actua com si es premés la tecla Control.\n\n"
+"Radi de determinació: Radi en el qual els modificadors estaran blocats fins que s'acabi de dibuixar.\n\n"
+"<i>Útil si es vol operar sense teclat.</i>"
 
 #: ../ui/settings.glade:4918
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "Eines de dibuix ‒ Estableix els modificadors amb la direcció de dibuix (experimental)"
 
 #: ../ui/settings.glade:4935
 msgid "Preserve line width"
@@ -3415,7 +3424,7 @@ msgstr "Mantén el gruix de la línia"
 
 #: ../ui/settings.glade:4940
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "Després de redimensionar una selecció, el gruix dels traços serà el mateix que abans de l'operació de redimensionament. "
 
 #: ../ui/settings.glade:4951
 msgid "Resizing"
@@ -3463,7 +3472,7 @@ msgstr "Activa l'acció per toc"
 
 #: ../ui/settings.glade:5180
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr ""
+msgstr "No dibuixis entrades amb temps i llargada curtes excepte si es produeixen en successions en breus intervals de temps. En el seu lloc, mostra la caixa d'eines flotant."
 
 #: ../ui/settings.glade:5192
 msgid "Ignore Time (ms)"
@@ -3501,12 +3510,13 @@ msgstr "Intenteu seleccionar primer l'objecte."
 
 #: ../ui/settings.glade:5289 ../ui/settings.glade:5319
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "Intenteu seleccionar primer l'element; si no es selecciona res i s'ha activat l'acció corresponent, es mostrarà la caixa d'eines flotant."
 
 #: ../ui/settings.glade:5302
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "S'han de complir totes tres condicions per tal d'ignorar el traç.\n"
+"Ha de ser curt en temps i llargada i no es pot haver ignorat un traç recentment."
 
 #: ../ui/settings.glade:5305
 msgid "Settings:"
@@ -3529,7 +3539,7 @@ msgstr "<i>Torna a renderitzar els fons de PDF més sovint quan es fa zoom per a
 #: ../ui/settings.glade:5383
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "Quan es fa zoom en un PDF d'alta resolució, cada nova renderització pot trigar bastant temps. Si s'estableix aquest valor a un nombre gran, les renderitzacions es faran menys sovint."
 
 #: ../ui/settings.glade:5386
 msgid "Re-render when the page's zoom changes by more than "
