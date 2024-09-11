@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-11 15:15\n"
+"PO-Revision-Date: 2024-09-11 16:43\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -2013,11 +2013,11 @@ msgstr "S'ha produït un error a l'escriure el fitxer «{1}»."
 
 #: ../src/util/OutputStream.cpp:49
 msgid "Error code {1}. Message:"
-msgstr ""
+msgstr "Codi d'error {1}. Missatge:"
 
 #: ../src/util/OutputStream.cpp:69
 msgid "Error occurred while closing file: \"{1}\""
-msgstr ""
+msgstr "S'ha produïut un error mentre es tancava el fitxer «{1}»."
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
@@ -2026,7 +2026,8 @@ msgstr "Codi d'error {1}"
 #: ../src/util/PathUtil.cpp:176
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "El fitxer no s'ha pogut obrir. Caldrà que ho feu manualment:\n"
+"URL: {1}"
 
 #: ../src/util/PathUtil.cpp:249
 msgid "xournalpp-{1}"
@@ -2052,23 +2053,23 @@ msgstr "Reemplaça"
 
 #: ../src/util/XojMsgBox.cpp:211
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "S'ha produït un error mentre es mostrava l'ajuda: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: executar amb INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: el fitxer «{1}» no és del tipus .xoj"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: no s'ha pogut obrir el fitxer d'entrada «{1}»."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: el fitxer «{1}» no conté cap previsualització."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
@@ -2093,7 +2094,8 @@ msgstr "Quant al Xournal++"
 #: ../ui/about.glade:93
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>La propera generació</i>"
 
 #: ../ui/about.glade:133
 msgid "Icon Designers"
@@ -2102,7 +2104,8 @@ msgstr "Dissenyadors de les icones"
 #: ../ui/about.glade:186
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Basat parcialment amb el Xournal\n"
+"de Denis Auroux"
 
 #: ../ui/about.glade:218
 msgid "Website"
@@ -2110,7 +2113,7 @@ msgstr "Lloc web"
 
 #: ../ui/about.glade:246
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Codi font/Informes d'error"
 
 #: ../ui/about.glade:283
 msgid "With help from the community"
@@ -2286,7 +2289,7 @@ msgstr "Números de línies"
 
 #: ../ui/latexSettings.glade:354
 msgid "Auto-indent"
-msgstr ""
+msgstr "Indentació automàtica"
 
 #: ../ui/latexSettings.glade:368
 msgid "Syntax highlighting"
@@ -2772,7 +2775,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1710
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Activa la sensibilitat a la pressió"
 
 #: ../ui/settings.glade:1740
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
@@ -2780,11 +2783,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1762
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Pressió mínima:"
 
 #: ../ui/settings.glade:1773
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Multiplicador per a la pressió: "
 
 #: ../ui/settings.glade:1832
 msgid "Sensitivity Scale"
