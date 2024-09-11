@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-10 20:34\n"
+"PO-Revision-Date: 2024-09-11 13:15\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -1163,24 +1163,25 @@ msgstr "Per a canviar aquesta opció, cal activar prèviament la sensibilitat o 
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:287
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Filtre de la pressió d'entrada. Multiplica la pressió pel valor especificat. Si és menor que el mínim, fa servir la pressió mínima."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "Paletes predefinides"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
-msgstr ""
+msgstr "Paletes personalitzades"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Les paletes que es mostren a sota s'han obtingut de les carpetes de <a href=\"file://{1}\">paletes predefinides</a> i <a href=\"file://{2}\">paletes personalitzades</a>:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
-msgstr ""
+msgstr "No s'ha trobat cap fitxer de paletes (amb l'extensió .gpl).\n"
+"Es farà servir la paleta per defecte fins que se'n configuri una altra."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
@@ -1242,7 +1243,7 @@ msgstr "Tria imatge"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:33
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>... o seleccioneu una imatge usada:</b>"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:37
 msgid "Load file"
@@ -1250,15 +1251,15 @@ msgstr "Carrega fitxer"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Aquesta imatge no s'ha pogut carregar. Missatge d'error: {1}"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
-msgstr ""
+msgstr "La imatge no s'ha pogut carregar."
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
-msgstr "Tria pàgina PDF"
+msgstr "Tria una pàgina PDF"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:56
 msgid "Show only not used pages (one unused page)"
@@ -1339,7 +1340,7 @@ msgstr "Complements"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
-msgstr ""
+msgstr "Error al carregar el fitxer XML de la barra de menús (s'intenta carregar «{1}»)."
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:176
@@ -1348,7 +1349,7 @@ msgstr "Aplica a totes les pàgines"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:15
 msgid "Plugin Manager"
-msgstr ""
+msgstr "Gestor de complements"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:32
 msgid "Plugin"
