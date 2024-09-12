@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-12 20:10\n"
+"PO-Revision-Date: 2024-09-12 21:29\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -3777,7 +3777,7 @@ msgstr "Beállítások"
 
 #: ../ui/mainmenubar.xml:167
 msgid "T_oolbars"
-msgstr ""
+msgstr "Es_zköztárak"
 
 #: ../ui/mainmenubar.xml:170
 msgid "_Manage"
@@ -3929,23 +3929,23 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:379
 msgid "_First Page"
-msgstr ""
+msgstr "El_ső oldal"
 
 #: ../ui/mainmenubar.xml:384
 msgid "_Previous Page"
-msgstr ""
+msgstr "Elő_ző oldal"
 
 #: ../ui/mainmenubar.xml:389
 msgid "_Goto Page"
-msgstr ""
+msgstr "Ugrás _másik oldalra"
 
 #: ../ui/mainmenubar.xml:394
 msgid "_Next Page"
-msgstr ""
+msgstr "_Következő oldal"
 
 #: ../ui/mainmenubar.xml:399
 msgid "_Last Page"
-msgstr ""
+msgstr "_Utolsó oldal"
 
 #: ../ui/mainmenubar.xml:406
 msgid "_Previous Layer"
