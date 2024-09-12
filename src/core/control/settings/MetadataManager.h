@@ -34,7 +34,7 @@ public:
 
 class MetadataManager {
 public:
-    MetadataManager();
+    MetadataManager() = default;
     virtual ~MetadataManager();
 
 public:
@@ -67,7 +67,7 @@ private:
     /**
      * Store metadata to file
      */
-    static void storeMetadata(MetadataEntry* m);
+    static void storeMetadata(const MetadataEntry& m);
 
 private:
     /**
@@ -75,8 +75,7 @@ private:
      */
     static std::vector<MetadataEntry> loadList();
 
-
 private:
     std::mutex mutex;
-    MetadataEntry* metadata;
+    std::unique_ptr<MetadataEntry> metadata;
 };
