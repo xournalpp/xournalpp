@@ -74,6 +74,11 @@ private:
      */
     static fs::path getMetadataDirectory();
 
+    /**
+     * Migrate metadata directory from legacy location
+     */
+    static void migrateMetadataDirectory();
+
 private:
     /**
      * Load the metadata list (sorted)
