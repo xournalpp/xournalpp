@@ -7,7 +7,7 @@
 #include <sstream>    // for istringstream
 #include <string>     // for char_traits, string, getline, operator!=
 
-#include <glib.h>  // for g_get_real_time, g_warning, gint64
+#include <glib.h>  // for g_get_real_time, g_message, g_warning, gint64
 
 #include "util/PathUtil.h"   // for getConfigSubfolder, getStateSubfolder
 #include "util/XojMsgBox.h"  // for XojMsgBox
@@ -31,7 +31,9 @@ void MetadataManager::deleteMetadataFile(fs::path const& path) {
 
     try {
         fs::remove(path);
-    } catch (const fs::filesystem_error&) { g_warning("Could not delete metadata file %s", path.string().c_str()); }
+    } catch (const fs::filesystem_error&) {
+        g_warning("Could not delete metadata file %s", path.string().c_str());
+    }
 }
 
 /**
@@ -56,6 +58,7 @@ auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool { return a.time > 
  * Load the metadata list (sorted)
  */
 auto MetadataManager::loadList() -> vector<MetadataEntry> {
+    migrateMetadataDirectory();
     auto folder = getMetadataDirectory();
 
     vector<MetadataEntry> data;
@@ -204,7 +207,7 @@ void MetadataManager::migrateMetadataDirectory() {
     // do not pass "metadata" to getConfigSubfolder() to avoid creating directory if it doesn't exist
     auto legacyDir = Util::getConfigSubfolder() / "metadata";
 
-    if (fs::is_directory(legacyDir)) {
+    if (!fs::is_directory(legacyDir)) {
         // nothing to do
         return;
     }
@@ -222,4 +225,6 @@ void MetadataManager::migrateMetadataDirectory() {
     } catch (const fs::filesystem_error&) {
         g_warning("Could not delete legacy metadata directory %s", legacyDir.c_str());
     }
+
+    g_message("Migrated metadata directory from %s to %s", legacyDir.c_str(), newDir.c_str());
 }
