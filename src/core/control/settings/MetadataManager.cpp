@@ -17,8 +17,6 @@ using namespace std;
 MetadataEntry::MetadataEntry(): valid(false), zoom(1), page(0), time(0) {}
 
 
-MetadataManager::MetadataManager(): metadata(nullptr) {}
-
 MetadataManager::~MetadataManager() { documentChanged(); }
 
 /**
@@ -40,17 +38,16 @@ void MetadataManager::deleteMetadataFile(fs::path const& path) {
  * Document was closed, a new document was opened etc.
  */
 void MetadataManager::documentChanged() {
+    // take ownership of metadata
     this->mutex.lock();
-    MetadataEntry* m = metadata;
-    metadata = nullptr;
+    auto m = std::move(this->metadata);
     this->mutex.unlock();
 
     if (m == nullptr) {
         return;
     }
 
-    storeMetadata(m);
-    delete m;
+    storeMetadata(*m);
 }
 
 auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool { return a.time > b.time; }
@@ -152,10 +149,10 @@ auto MetadataManager::getForFile(fs::path const& file) -> MetadataEntry {
 /**
  * Store metadata to file
  */
-void MetadataManager::storeMetadata(MetadataEntry* m) {
+void MetadataManager::storeMetadata(const MetadataEntry& m) {
     vector<MetadataEntry> files = loadList();
     for (const MetadataEntry& e: files) {
-        if (e.path == m->path) {
+        if (e.path == m.path) {
             // This is an old entry with the same path
             deleteMetadataFile(e.metadataFile);
         }
@@ -168,9 +165,9 @@ void MetadataManager::storeMetadata(MetadataEntry* m) {
 
     ofstream out(path);
     out << "XOJ-METADATA/1.0\n";
-    out << m->path << "\n";
-    out << "page=" << m->page << "\n";
-    out << "zoom=" << m->zoom << "\n";
+    out << m.path << "\n";
+    out << "page=" << m.page << "\n";
+    out << "zoom=" << m.zoom << "\n";
     out.close();
 }
 
@@ -184,7 +181,7 @@ void MetadataManager::storeMetadata(fs::path const& file, int page, double zoom)
 
     this->mutex.lock();
     if (metadata == nullptr) {
-        metadata = new MetadataEntry();
+        metadata = std::make_unique<MetadataEntry>();
     }
 
     metadata->valid = true;
