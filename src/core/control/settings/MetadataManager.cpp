@@ -9,7 +9,7 @@
 
 #include <glib.h>  // for g_get_real_time, g_warning, gint64
 
-#include "util/PathUtil.h"   // for getConfigSubfolder
+#include "util/PathUtil.h"   // for getConfigSubfolder, getStateSubfolder
 #include "util/XojMsgBox.h"  // for XojMsgBox
 
 using namespace std;
@@ -56,7 +56,7 @@ auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool { return a.time > 
  * Load the metadata list (sorted)
  */
 auto MetadataManager::loadList() -> vector<MetadataEntry> {
-    auto folder = Util::getConfigSubfolder("metadata");
+    auto folder = getMetadataDirectory();
 
     vector<MetadataEntry> data;
     try {
@@ -158,7 +158,7 @@ void MetadataManager::storeMetadata(const MetadataEntry& m) {
         }
     }
 
-    auto path = Util::getConfigSubfolder("metadata");
+    auto path = getMetadataDirectory();
     gint64 time = g_get_real_time();
     path /= std::to_string(time);
     path += ".metadata";
@@ -191,3 +191,8 @@ void MetadataManager::storeMetadata(fs::path const& file, int page, double zoom)
     metadata->time = g_get_real_time();
     this->mutex.unlock();
 }
+
+/**
+ * Get directory to store metadata files to
+ */
+fs::path MetadataManager::getMetadataDirectory() { return Util::getStateSubfolder("metadata"); }

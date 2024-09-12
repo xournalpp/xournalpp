@@ -69,6 +69,11 @@ private:
      */
     static void storeMetadata(const MetadataEntry& m);
 
+    /**
+     * Get directory to store metadata files to
+     */
+    static fs::path getMetadataDirectory();
+
 private:
     /**
      * Load the metadata list (sorted)
