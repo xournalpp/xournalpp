@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-12 21:29\n"
+"PO-Revision-Date: 2024-09-12 23:47\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -3993,7 +3993,7 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:458
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Oldalsablon beállítása"
 
 #: ../ui/mainmenubar.xml:462
 msgid "_Delete Page"
