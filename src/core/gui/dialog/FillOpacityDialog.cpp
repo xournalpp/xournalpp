@@ -6,6 +6,8 @@
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <glib.h>         // for gdouble
 
+#include "util/safe_casts.h"
+
 class GladeSearchpath;
 
 FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen):
@@ -16,10 +18,9 @@ FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha
 
     setPreviewImage(alpha);
 
-    g_signal_connect(scaleAlpha, "change-value",
-                     G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, FillOpacityDialog* self) {
-                         self->setPreviewImage((int)(value / 100 * 255));
-                         gtk_range_set_value(range, value);
+    g_signal_connect(scaleAlpha, "value-changed", G_CALLBACK(+[](GtkRange* range, gpointer self) {
+                         static_cast<FillOpacityDialog*>(self)->setPreviewImage(
+                                 round_cast<int>(gtk_range_get_value(range) * 2.55));
                      }),
                      this);
 }

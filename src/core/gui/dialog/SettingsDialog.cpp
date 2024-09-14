@@ -44,64 +44,72 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 
     GtkWidget* zoomCalibSlider = get("zoomCallibSlider");
     g_return_if_fail(zoomCalibSlider != nullptr);
-    g_signal_connect(zoomCalibSlider, "change-value",
-                     G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* self) {
-                         self->setDpi((int)value);
+    g_signal_connect(GTK_RANGE(zoomCalibSlider), "value-changed", G_CALLBACK(+[](GtkRange* range, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->setDpi(round_cast<int>(gtk_range_get_value(range)));
                      }),
                      this);
 
-    g_signal_connect(
-            get("cbEnablePressureInference"), "toggled",
-            G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->updatePressureSensitivityOptions(); }),
-            this);
-
-    g_signal_connect(
-            get("cbSettingPresureSensitivity"), "toggled",
-            G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->updatePressureSensitivityOptions(); }),
-            this);
-
-    g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
-                         self->enableWithCheckbox("cbAutosave", "boxAutosave");
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbEnablePressureInference")), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton*, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->updatePressureSensitivityOptions();
                      }),
                      this);
 
-    g_signal_connect(get("cbIgnoreFirstStylusEvents"), "toggled",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
-                         self->enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbSettingPresureSensitivity")), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton*, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->updatePressureSensitivityOptions();
+                     }),
+                     this);
+
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbAutosave")), "toggled", G_CALLBACK(+[](GtkToggleButton*, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->enableWithCheckbox("cbAutosave", "boxAutosave");
+                     }),
+                     this);
+
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbIgnoreFirstStylusEvents")), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton*, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->enableWithCheckbox("cbIgnoreFirstStylusEvents",
+                                                                                "spNumIgnoredStylusEvents");
                      }),
                      this);
 
 
-    g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
-                         Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
+    g_signal_connect(GTK_BUTTON(get("btTestEnable")), "clicked", G_CALLBACK(+[](GtkButton*, gpointer self) {
+                         Util::systemWithMessage(gtk_entry_get_text(
+                                 GTK_ENTRY(static_cast<SettingsDialog*>(self)->get("txtEnableTouchCommand"))));
                      }),
                      this);
 
-    g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
-                         Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
+    g_signal_connect(GTK_BUTTON(get("btTestDisable")), "clicked", G_CALLBACK(+[](GtkButton*, gpointer self) {
+                         Util::systemWithMessage(gtk_entry_get_text(
+                                 GTK_ENTRY(static_cast<SettingsDialog*>(self)->get("txtDisableTouchCommand"))));
                      }),
                      this);
 
-    g_signal_connect(get("cbAddVerticalSpace"), "toggled",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
-                         self->enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbAddVerticalSpace")), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->enableWithCheckbox("cbAddVerticalSpace",
+                                                                                "spAddVerticalSpace");
                      }),
                      this);
 
-    g_signal_connect(get("cbAddHorizontalSpace"), "toggled",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
-                         self->enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbAddHorizontalSpace")), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->enableWithCheckbox("cbAddHorizontalSpace",
+                                                                                "spAddHorizontalSpace");
                      }),
                      this);
 
-    g_signal_connect(get("cbDrawDirModsEnabled"), "toggled",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
-                         self->enableWithCheckbox("cbDrawDirModsEnabled", "spDrawDirModsRadius");
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbDrawDirModsEnabled")), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->enableWithCheckbox("cbDrawDirModsEnabled",
+                                                                                "spDrawDirModsRadius");
                      }),
                      this);
 
-    g_signal_connect(get("cbStrokeFilterEnabled"), "toggled",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbStrokeFilterEnabled")), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, gpointer d) {
+                         auto* self = static_cast<SettingsDialog*>(d);
                          self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreTime");
                          self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeIgnoreLength");
                          self->enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
@@ -110,8 +118,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
-    g_signal_connect(get("cbDisableAudio"), "toggled",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbDisableAudio")), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, gpointer d) {
+                         auto* self = static_cast<SettingsDialog*>(d);
                          self->disableWithCheckbox("cbDisableAudio", "sidAudio1");
                          self->disableWithCheckbox("cbDisableAudio", "sidAudio2");
                          self->disableWithCheckbox("cbDisableAudio", "sidAudio3");
@@ -121,38 +130,41 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      this);
 
 
-    g_signal_connect(get("cbDisableTouchOnPenNear"), "toggled",
-                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
-                         self->enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
+    g_signal_connect(GTK_TOGGLE_BUTTON(get("cbDisableTouchOnPenNear")), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->enableWithCheckbox("cbDisableTouchOnPenNear",
+                                                                                "boxInternalHandRecognition");
+                     }),
+                     this);
+
+    g_signal_connect(GTK_COMBO_BOX(get("cbTouchDisableMethod")), "changed",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->customHandRecognitionToggled();
                      }),
                      this);
 
     g_signal_connect(
-            get("cbTouchDisableMethod"), "changed",
-            G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->customHandRecognitionToggled(); }),
+            GTK_TOGGLE_BUTTON(get("cbEnableZoomGestures")), "toggled", G_CALLBACK(+[](GtkToggleButton*, gpointer self) {
+                static_cast<SettingsDialog*>(self)->enableWithCheckbox("cbEnableZoomGestures", "gdStartZoomAtSetting");
+            }),
             this);
 
-    g_signal_connect(get("cbEnableZoomGestures"), "toggled",
-                     G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
-                         self->enableWithCheckbox("cbEnableZoomGestures", "gdStartZoomAtSetting");
+    g_signal_connect(GTK_COMBO_BOX(get("cbStylusCursorType")), "changed",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->customStylusIconTypeChanged();
                      }),
                      this);
 
-    g_signal_connect(get("cbStylusCursorType"), "changed", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
-                         self->customStylusIconTypeChanged();
-                     }),
-                     this);
-
-    g_signal_connect(get("cbStabilizerAveragingMethods"), "changed",
-                     G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
-                         self->showStabilizerAvMethodOptions(
+    g_signal_connect(GTK_COMBO_BOX(get("cbStabilizerAveragingMethods")), "changed",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->showStabilizerAvMethodOptions(
                                  static_cast<StrokeStabilizer::AveragingMethod>(gtk_combo_box_get_active(comboBox)));
                      }),
                      this);
 
-    g_signal_connect(get("cbStabilizerPreprocessors"), "changed",
-                     G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
-                         self->showStabilizerPreprocessorOptions(
+    g_signal_connect(GTK_COMBO_BOX(get("cbStabilizerPreprocessors")), "changed",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->showStabilizerPreprocessorOptions(
                                  static_cast<StrokeStabilizer::Preprocessor>(gtk_combo_box_get_active(comboBox)));
                      }),
                      this);

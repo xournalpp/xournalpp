@@ -30,6 +30,7 @@
 #include "control/settings/LatexSettings.h"  // for LatexSettings
 #include "model/Font.h"                      // for XojFont
 #include "util/StringUtils.h"                // for replace_pair, StringUtils
+#include "util/glib_casts.h"
 
 class GladeSearchpath;
 
@@ -101,8 +102,8 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(this->texBox), texBoxWrapMode);
 
     // Connect to redraw events for the texImage.
-    g_signal_connect(G_OBJECT(this->texTempRender), "draw", G_CALLBACK(drawPreviewCallback), this);
-    g_signal_connect(G_OBJECT(this->texTempRender), "size-allocate", G_CALLBACK(resizePreviewCallback), nullptr);
+    g_signal_connect(this->texTempRender, "draw", xoj::util::wrap_for_g_callback_v<drawPreviewCallback>, this);
+    g_signal_connect(this->texTempRender, "size-allocate", G_CALLBACK(resizePreviewCallback), nullptr);
 
     std::stringstream texBoxCssBuilder;
     if (settings.useCustomEditorFont) {
@@ -253,7 +254,7 @@ auto LatexDialog::getBufferContents() -> std::string {
     return s;
 }
 
-void LatexDialog::drawPreviewCallback(GtkWidget* widget, cairo_t* cr, LatexDialog* self) {
+bool LatexDialog::drawPreviewCallback(GtkWidget* widget, cairo_t* cr, LatexDialog* self) {
     GtkStyleContext* context = gtk_widget_get_style_context(widget);
 
     guint widgetWidth = gtk_widget_get_allocated_width(widget);
@@ -263,7 +264,7 @@ void LatexDialog::drawPreviewCallback(GtkWidget* widget, cairo_t* cr, LatexDialo
 
     // If we have nothing to render, do nothing!
     if (!self->tempRenderSource) {
-        return;
+        return true;
     }
 
     double scaleFactor = self->getPreviewScale();
@@ -281,7 +282,7 @@ void LatexDialog::drawPreviewCallback(GtkWidget* widget, cairo_t* cr, LatexDialo
 
     // Don't render empty previews.
     if (renderedWidth == 0 || renderedHeight == 0) {
-        return;
+        return true;
     }
 
     // Center the image horizontally and vertically.
@@ -310,6 +311,7 @@ void LatexDialog::drawPreviewCallback(GtkWidget* widget, cairo_t* cr, LatexDialo
     cairo_paint(cr);
 
     cairo_set_matrix(cr, &matOriginal);
+    return true;
 }
 
 static void resizePreviewCallback(GtkWidget* widget, GdkRectangle* allocation, gpointer _unused) {
