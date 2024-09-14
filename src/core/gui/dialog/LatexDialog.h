@@ -108,7 +108,7 @@ private:
      * @param cr is drawn to
      * @param self The LatexDialog that is the source and target of the callback.
      */
-    static void drawPreviewCallback(GtkWidget* widget, cairo_t* cr, LatexDialog* self);
+    static bool drawPreviewCallback(GtkWidget* widget, cairo_t* cr, LatexDialog* self);
 
 private:
     // Temporary render

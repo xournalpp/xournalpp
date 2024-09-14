@@ -41,7 +41,7 @@ struct _GtkMenuToolToggleButtonPrivate {
 
 static void gtk_menu_tool_toggle_button_dispose(GObject* object);
 
-static auto menu_deactivate_cb(GtkMenuShell* menu_shell, GtkMenuToolToggleButton* button) -> int;
+static void menu_deactivate_cb(GtkMenuShell* menu_shell, GtkMenuToolToggleButton* button);
 
 enum { SHOW_MENU, LAST_SIGNAL };
 
@@ -390,12 +390,10 @@ auto gtk_menu_tool_toggle_button_new_from_stock(const gchar* stock_id) -> GtkToo
  * This is used so that we unset the state of the toggle button
  * when the pop-up menu disappears.
  */
-static auto menu_deactivate_cb(GtkMenuShell* menu_shell, GtkMenuToolToggleButton* button) -> int {
+static void menu_deactivate_cb(GtkMenuShell* menu_shell, GtkMenuToolToggleButton* button) {
     GtkMenuToolToggleButtonPrivate* priv = button->priv;
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(priv->arrow_button), false);
-
-    return true;
 }
 
 static void menu_detacher(GtkWidget* widget, GtkMenu* menu) {
