@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-08-30 18:57\n"
+"PO-Revision-Date: 2024-09-15 22:48\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2158,7 +2158,7 @@ msgstr "Altura"
 #: ../ui/exportSettings.glade:53 ../ui/settings.glade:254
 #: ../ui/settings.glade:271 ../ui/settings.glade:3637
 msgid "None"
-msgstr "Ningúno"
+msgstr "Ninguno"
 
 #: ../ui/exportSettings.glade:56
 msgid "No ruling"
@@ -2479,7 +2479,7 @@ msgstr "Media aritmética"
 
 #: ../ui/settings.glade:260
 msgid "Velocity based Gaussian weights"
-msgstr "Velocidad basada en pesos gaussianos"
+msgstr "Velocidad basada en pesos Gaussianos"
 
 #: ../ui/settings.glade:274
 msgid "Deadzone"
@@ -3133,12 +3133,12 @@ msgstr "Sin icono"
 #: ../ui/settings.glade:3299
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr "Icono de punto pequeño"
+msgstr "Punto pequeño"
 
 #: ../ui/settings.glade:3300
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr "Icono de lápiz grande"
+msgstr "Lápiz grande"
 
 #: ../ui/settings.glade:3301
 msgctxt "stylus cursor uses system cursor"
