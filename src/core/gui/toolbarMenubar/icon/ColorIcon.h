@@ -27,5 +27,5 @@ GtkWidget* newGtkImage(Color color, bool circle = true);
 /**
  * @brief Create a new GdkPixbuf* with preview color
  */
-xoj::util::GObjectSPtr<GdkPixbuf> newGdkPixbuf(Color color, bool circle = true);
+xoj::util::GObjectSPtr<GdkPaintable> newGdkPaintable(Color color, bool circle = true);
 };  // namespace ColorIcon

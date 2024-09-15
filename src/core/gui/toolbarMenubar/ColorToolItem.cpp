@@ -53,4 +53,8 @@ auto ColorToolItem::getNewToolIcon() const -> GtkWidget* {
     return ColorIcon::newGtkImage(this->namedColor.getColor(), true);
 }
 
+auto ColorToolItem::createPaintable(GdkSurface*) const -> xoj::util::GObjectSPtr<GdkPaintable> {
+    return ColorIcon::newGdkPaintable(namedColor.getColor(), true);
+}
+
 void ColorToolItem::updateColor(const Palette& palette) { namedColor = palette.getColorAt(namedColor.getIndex()); }

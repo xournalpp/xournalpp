@@ -247,7 +247,7 @@ private:
 
 
 ToolPageLayer::ToolPageLayer(std::string id, LayerController* lc, IconNameHelper iconNameHelper):
-        AbstractToolItem(std::move(id), Category::NAVIGATION),
+        ItemWithNamedIcon(std::move(id), Category::NAVIGATION),
         lc(lc),
         iconName(iconNameHelper.iconName("combo-layer")) {}
 
@@ -255,9 +255,7 @@ ToolPageLayer::~ToolPageLayer() = default;
 
 auto ToolPageLayer::getToolDisplayName() const -> std::string { return _("Layer Combo"); }
 
-auto ToolPageLayer::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(this->iconName.c_str());
-}
+auto ToolPageLayer::getIconName() const -> const char* { return this->iconName.c_str(); }
 
 auto ToolPageLayer::createItem(ToolbarSide side) -> Widgetry {
     auto data = std::make_unique<InstanceData>(lc);

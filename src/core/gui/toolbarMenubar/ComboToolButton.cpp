@@ -30,7 +30,7 @@ static GtkWidget* createPopoverEntry(GSimpleAction* a, const ComboToolButton::En
 
 ComboToolButton::ComboToolButton(std::string id, Category cat, std::string iconName, std::string description,
                                  std::vector<Entry> entries, ActionRef gAction):
-        AbstractToolItem(std::move(id), cat),
+        ItemWithNamedIcon(std::move(id), cat),
         entries(std::move(entries)),
         gAction(std::move(gAction)),
         iconName(std::move(iconName)),
@@ -114,4 +114,4 @@ auto ComboToolButton::createItem(ToolbarSide side) -> Widgetry {
 
 auto ComboToolButton::getToolDisplayName() const -> std::string { return this->description; }
 
-auto ComboToolButton::getNewToolIcon() const -> GtkWidget* { return gtk_image_new_from_icon_name(iconName.c_str()); }
+auto ComboToolButton::getIconName() const -> const char* { return iconName.c_str(); }

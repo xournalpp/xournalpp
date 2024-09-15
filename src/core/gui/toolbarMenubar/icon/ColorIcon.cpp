@@ -8,20 +8,7 @@
 #include "util/raii/GObjectSPtr.h"
 #include "util/serdesstream.h"
 
-namespace ColorIcon {
-/**
- * Create a new GtkImage with preview color
- */
-auto newGtkImage(Color color, bool circle) -> GtkWidget* {
-    xoj::util::GObjectSPtr<GdkPixbuf> img(newGdkPixbuf(color, circle));
-    GtkWidget* w = gtk_image_new_from_pixbuf(img.get());
-    return w;
-}
-
-/**
- * Create a new GdkPixbuf* with preview color
- */
-auto newGdkPixbuf(Color color, bool circle) -> xoj::util::GObjectSPtr<GdkPixbuf> {
+static auto newGdkPixbuf(Color color, bool circle) -> xoj::util::GObjectSPtr<GdkPixbuf> {
     auto stream = serdes_stream<std::stringstream>();
     stream << "<svg width=\"240\" height=\"240\" stroke-width=\"20\" stroke-linecap=\"round\" "
               "stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\">";
@@ -38,5 +25,21 @@ auto newGdkPixbuf(Color color, bool circle) -> xoj::util::GObjectSPtr<GdkPixbuf>
                                                  xoj::util::adopt);
 
     return xoj::util::GObjectSPtr<GdkPixbuf>(gdk_pixbuf_new_from_stream(gstream.get(), NULL, NULL), xoj::util::adopt);
+}
+
+namespace ColorIcon {
+/**
+ * Create a new GtkImage with preview color
+ */
+auto newGtkImage(Color color, bool circle) -> GtkWidget* {
+    return gtk_image_new_from_pixbuf(newGdkPixbuf(color, circle).get());
+}
+
+/**
+ * Create a new GdkPaintable* with preview color
+ */
+auto newGdkPaintable(Color color, bool circle) -> xoj::util::GObjectSPtr<GdkPaintable> {
+    return xoj::util::GObjectSPtr<GdkPaintable>(
+            GDK_PAINTABLE(gdk_texture_new_for_pixbuf(newGdkPixbuf(color, circle).get())), xoj::util::adopt);
 }
 };  // namespace ColorIcon
