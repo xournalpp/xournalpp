@@ -607,10 +607,6 @@ void ToolbarBox::startEditing(ToolMenuHandler* handler) {
                         g_object_get_data(G_OBJECT(child->widget.get()), TOOLITEM_ID_PROPERTY));
                 std::string id(std::move(*prop));  // The widget will get removed, so it does not need the data anymore
 
-                auto icon = data.handler->createIcon(id.c_str());
-                gtk_image_set_pixel_size(GTK_IMAGE(icon.get()), 24);
-                gtk_drag_source_set_icon(source, gtk_widget_paintable_new(icon.get()), 12, 12);
-
                 // Remove the dragged item
                 toolbar->children.erase(child);
                 // If Child::operator=(Child&&) called gtk_widget_unparent() as it should (see comment there), we would
@@ -620,6 +616,25 @@ void ToolbarBox::startEditing(ToolMenuHandler* handler) {
                 return gdk_content_provider_new_typed(xoj::dnd::get_tool_item_gtype(), id.c_str());
             }),
             nullptr);
+    g_signal_connect(source, "drag-begin", G_CALLBACK(+[](GtkDragSource* source, GdkDrag* drag, gpointer) {
+                         ToolbarBox* toolbar =
+                                 TOOLBAR_BOX(gtk_event_controller_get_widget(GTK_EVENT_CONTROLLER(source)))->parent;
+                         xoj_assert(toolbar->editingData);
+                         auto& data = *(toolbar->editingData);
+                         auto* content = gdk_drag_get_content(drag);
+
+                         GValue val = G_VALUE_INIT;
+                         g_value_init(&val, xoj::dnd::get_tool_item_gtype());
+                         if (!gdk_content_provider_get_value(content, &val, nullptr)) {
+                             g_message("Drag::drag-begin no value");
+                             return;
+                         }
+
+                         auto icon = data.handler->createIcon(xoj::dnd::g_value_get_tool_item_string(&val),
+                                                              gdk_drag_get_surface(drag));
+                         gtk_drag_source_set_icon(source, icon.get(), 12, 12);
+                     }),
+                     nullptr);
 
     gtk_widget_add_controller(getWidget(), GTK_EVENT_CONTROLLER(source));
     editingData->source.reset(source, xoj::util::ref);

@@ -11,7 +11,7 @@
 
 
 PluginToolButton::PluginToolButton(ToolbarButtonEntry* t):
-        AbstractToolItem(std::move(t->toolbarId), Category::PLUGINS), t(t) {}
+        ItemWithNamedIcon(std::move(t->toolbarId), Category::PLUGINS), t(t) {}
 
 PluginToolButton::~PluginToolButton() = default;
 
@@ -37,5 +37,7 @@ auto PluginToolButton::getToolDisplayName() const -> std::string { return this->
 auto PluginToolButton::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name(t->iconName.c_str());
 }
+
+auto PluginToolButton::getIconName() const -> const char* { return t->iconName.c_str(); }
 
 #endif /* ENABLE_PLUGINS */

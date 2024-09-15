@@ -21,11 +21,11 @@
 #include "control/actions/ActionRef.h"
 #include "util/raii/GObjectSPtr.h"  // for WidgetSPtr
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "ItemWithNamedIcon.h"  // for ItemWithNamedIcon
 
 class ActionDatabase;
 
-class ComboToolButton: public AbstractToolItem {
+class ComboToolButton: public ItemWithNamedIcon {
 public:
     struct Entry {
         template <typename T>
@@ -52,7 +52,7 @@ public:
 protected:
     Widgetry createItem(ToolbarSide side) override;
 
-    GtkWidget* getNewToolIcon() const override;
+    const char* getIconName() const override;
 
 protected:
     const std::vector<Entry> entries;

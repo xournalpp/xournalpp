@@ -29,6 +29,6 @@ GtkWidget* newGtkImage(Color color, bool circle = true, std::optional<Color> sec
 /**
  * @brief Create a new GdkPixbuf* with preview color
  */
-xoj::util::GObjectSPtr<GdkPixbuf> newGdkPixbuf(Color color, bool circle = true,
-                                               std::optional<Color> secondaryColor = std::nullopt);
+xoj::util::GObjectSPtr<GdkPaintable> newGdkPaintable(Color color, bool circle = true,
+                                                     std::optional<Color> secondaryColor = std::nullopt);
 };  // namespace ColorIcon
