@@ -59,6 +59,10 @@ auto ColorToolItem::getNewToolIcon() const -> GtkWidget* {
     return ColorIcon::newGtkImage(this->namedColor.getColor(), true, this->secondaryColor);
 }
 
+auto ColorToolItem::createPaintable(GdkSurface*) const -> xoj::util::GObjectSPtr<GdkPaintable> {
+    return ColorIcon::newGdkPaintable(namedColor.getColor(), true);
+}
+
 void ColorToolItem::updateColor(const Palette& palette) { namedColor = palette.getColorAt(namedColor.getIndex()); }
 
 void ColorToolItem::updateSecondaryColor(const std::optional<Recolor>& recolor) {

@@ -151,14 +151,14 @@ auto ToolMenuHandler::createItem(const char* id,
     return {nullptr, nullptr};
 }
 
-auto ToolMenuHandler::createIcon(const char* id) const -> xoj::util::WidgetSPtr {
+auto ToolMenuHandler::createIcon(const char* id, GdkSurface* target) const -> xoj::util::GObjectSPtr<GdkPaintable> {
     auto name = std::string_view(id);
     if (name == "SEPARATOR") {
-        return xoj::util::WidgetSPtr(ToolbarSeparatorImage::newImage(SeparatorType::SEPARATOR), xoj::util::adopt);
+        return ToolbarSeparatorImage::newGdkPaintable(SeparatorType::SEPARATOR);
     }
 
     if (name == "SPACER") {
-        return xoj::util::WidgetSPtr(ToolbarSeparatorImage::newImage(SeparatorType::SPACER), xoj::util::adopt);
+        return ToolbarSeparatorImage::newGdkPaintable(SeparatorType::SPACER);
     }
     if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
         std::string arg(name.substr(6, name.length() - 7));
@@ -172,12 +172,17 @@ auto ToolMenuHandler::createIcon(const char* id) const -> xoj::util::WidgetSPtr 
         }
 
         const NamedColor& namedColor = this->control->getPalette().getColorAt(paletteIndex);
-        return xoj::util::WidgetSPtr(ColorIcon::newGtkImage(namedColor.getColor(), true), xoj::util::adopt);
+        return ColorIcon::newGdkPaintable(namedColor.getColor(), true);
     }
 
+    if (target == nullptr) {
+        g_warning("ToolMenuHandler::createIcon() for \"%s\" but not target surface is provided.", name.data());
+        xoj_assert_message(false, "ToolMenuHandler::createIcon() but not target surface is provided.");
+        return nullptr;
+    }
     for (auto& item: this->toolItems) {
         if (name == item->getId()) {
-            return xoj::util::WidgetSPtr(item->getNewToolIcon(), xoj::util::adopt);
+            return item->createPaintable(target);
         }
     }
     g_warning("Toolbar item \"%s\" not found!", name.data());

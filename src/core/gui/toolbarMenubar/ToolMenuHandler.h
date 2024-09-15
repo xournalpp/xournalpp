@@ -104,7 +104,7 @@ public:
     /// @return .first is the toolbar widget, .second is its proxy for the overflow menu
     std::pair<xoj::util::WidgetSPtr, xoj::util::WidgetSPtr> createItem(const char* id, ToolbarSide side) const;
 
-    xoj::util::WidgetSPtr createIcon(const char* id) const;
+    xoj::util::GObjectSPtr<GdkPaintable> createIcon(const char* id, GdkSurface* target) const;
 
     Control* getControl();
 
