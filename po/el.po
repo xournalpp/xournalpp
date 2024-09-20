@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-08-30 10:19\n"
+"PO-Revision-Date: 2024-09-20 07:58\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -25,7 +25,7 @@ msgstr "Ο φάκελος ήχου δεν έχει οριστεί ή δεν εί
 
 #: ../src/core/control/Control.cpp:227
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Σφάλμα συστήματος αρχείων: {1}"
 
 #: ../src/core/control/Control.cpp:239
 msgid "Could not remove old autosave file \"{1}\": {2}"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:551
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "Διαγράψατε την ενεργή γραμμή εργαλείων. Επιστροφή στην προεπιλεγμένη γραμμή εργαλείων."
 
 #: ../src/core/control/Control.cpp:571
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -54,7 +54,7 @@ msgstr "Ακύρωση"
 
 #: ../src/core/control/Control.cpp:799
 msgid "Insert after current page"
-msgstr ""
+msgstr "Εισαγωγή μετά την τρέχουσα σελίδα"
 
 #: ../src/core/control/Control.cpp:800
 msgid "Insert at end"
@@ -86,7 +86,7 @@ msgstr "Μην ανοίγετε αρχεία αυτόματης αποθήκευ
 
 #: ../src/core/control/Control.cpp:1461
 msgid "file: {1}"
-msgstr ""
+msgstr "αρχείο{1}"
 
 #: ../src/core/control/Control.cpp:1493
 msgid "Error opening file \"{1}\""
@@ -231,11 +231,11 @@ msgstr "Το αρχείο PDF δημιουργήθηκε με επιτυχία"
 
 #: ../src/core/control/LatexController.cpp:79
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Το αρχείο γενικού πρότυπου δεν υπάρχει. Παρακαλώ ελέγξτε τις ρυθμίσεις σας."
 
 #: ../src/core/control/LatexController.cpp:84
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Απέτυχε η ανάγνωση αρχείου γενικού προτύπου. Παρακαλώ ελέγξτε τις ρυθμίσεις σας."
 
 #: ../src/core/control/LatexController.cpp:90
 msgid "Global template file is not a regular file. Please check your settings. "
