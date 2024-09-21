@@ -45,7 +45,7 @@ static void removeItemsWithClass(GMenu* menu, const char* classname) {
     }
 }
 
-static void setupAccels(GMenu* menu, GtkApplication* app) {
+static void setupAccels(GMenu* menu, GtkShortcutController* ctrl) {
     auto getAttr = [&](int itemNb, const char* attr, const GVariantType* type) {
         return xoj::util::GVariantSPtr(g_menu_model_get_item_attribute_value(G_MENU_MODEL(menu), itemNb, attr, type),
                                        xoj::util::adopt);
@@ -60,15 +60,16 @@ static void setupAccels(GMenu* menu, GtkApplication* app) {
                                std::string("Menu entry without linked action: ") +
                                        g_variant_get_string(getAttr(n, "label", G_VARIANT_TYPE_STRING).get(), nullptr));
 
-            const char* a[2] = {g_variant_get_string(acc.get(), nullptr), nullptr};
-
+            auto* trigger = gtk_shortcut_trigger_parse_string(g_variant_get_string(acc.get(), nullptr));
+            GtkShortcutAction* action;
             if (auto tgt = getAttr(n, "target", nullptr)) {
                 auto tgtstr = xoj::util::OwnedCString::assumeOwnership(g_variant_print(tgt.get(), true));
                 auto fullActionName = std::string(g_variant_get_string(act.get(), nullptr)) + "(" + tgtstr.get() + ")";
-                gtk_application_set_accels_for_action(app, fullActionName.c_str(), a);
+                action = gtk_named_action_new(fullActionName.c_str());
             } else {
-                gtk_application_set_accels_for_action(app, g_variant_get_string(act.get(), nullptr), a);
+                action = gtk_named_action_new(g_variant_get_string(act.get(), nullptr));
             }
+            gtk_shortcut_controller_add_shortcut(ctrl, gtk_shortcut_new(trigger, action));
         }
 
         xoj::util::GObjectSPtr<GMenuLinkIter> it(g_menu_model_iterate_item_links(G_MENU_MODEL(menu), n),
@@ -76,7 +77,7 @@ static void setupAccels(GMenu* menu, GtkApplication* app) {
         while (g_menu_link_iter_next(it.get())) {
             xoj::util::GObjectSPtr<GMenuModel> sub(g_menu_link_iter_get_value(it.get()), xoj::util::adopt);
             if (sub && G_IS_MENU(sub.get())) {
-                setupAccels(G_MENU(sub.get()), app);
+                setupAccels(G_MENU(sub.get()), ctrl);
             }
         }
     }
@@ -124,6 +125,7 @@ void Menubar::populate(const GladeSearchpath* gladeSearchPath, MainWindow* win) 
 
     gtk_application_set_menubar(gtk_window_get_application(GTK_WINDOW(win->getWindow())), menu);
     gtk_window_set_handle_menubar_accel(GTK_WINDOW(win->getWindow()), false);  // Disable GTK handling F10.
+    gtk_application_window_set_show_menubar(GTK_APPLICATION_WINDOW(win->getWindow()), true);
 
     /*
      * Due to a bug in gtk4 see https://gitlab.gnome.org/GNOME/gtk/-/issues/4574
@@ -132,8 +134,11 @@ void Menubar::populate(const GladeSearchpath* gladeSearchPath, MainWindow* win) 
      *      (in fact, they work when the corresponding menu is shown...)
      * Set them up by hand here.
      */
-    setupAccels(G_MENU(menu), gtk_window_get_application(GTK_WINDOW(win->getWindow())));
-    gtk_application_window_set_show_menubar(GTK_APPLICATION_WINDOW(win->getWindow()), true);
+    auto* shortcuts = gtk_shortcut_controller_new();
+    setupAccels(G_MENU(menu), GTK_SHORTCUT_CONTROLLER(shortcuts));
+    // Only catch shortcuts if nothing else caught the event. Otherwise Ctrl+A in text mode does not select the text.
+    gtk_event_controller_set_propagation_phase(shortcuts, GTK_PHASE_BUBBLE);
+    gtk_widget_add_controller(win->getWindow(), shortcuts);
 
     /**** Debug info ****/
     // char** act = gtk_application_list_action_descriptions(gtk_window_get_application(GTK_WINDOW(win->getWindow())));
