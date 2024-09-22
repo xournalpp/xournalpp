@@ -96,8 +96,11 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 #endif
 
     // "watch over" all key events
-    g_signal_connect(this->window, "key-press-event", G_CALLBACK(gtk_window_propagate_key_event), nullptr);
-    g_signal_connect(this->window, "key-release-event", G_CALLBACK(gtk_window_propagate_key_event), nullptr);
+    auto keyPropagate = +[](GtkWidget* w, GdkEvent* e, gpointer) {
+        return gtk_window_propagate_key_event(GTK_WINDOW(w), (GdkEventKey*)(e));
+    };
+    g_signal_connect(this->window, "key-press-event", G_CALLBACK(keyPropagate), nullptr);
+    g_signal_connect(this->window, "key-release-event", G_CALLBACK(keyPropagate), nullptr);
 
     updateScrollbarSidebarPosition();
 
