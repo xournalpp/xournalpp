@@ -10,12 +10,12 @@
 
 static auto newGdkPixbuf(Color color, bool circle) -> xoj::util::GObjectSPtr<GdkPixbuf> {
     auto stream = serdes_stream<std::stringstream>();
-    stream << "<svg width=\"240\" height=\"240\" stroke-width=\"20\" stroke-linecap=\"round\" "
+    stream << "<svg width=\"24\" height=\"24\" stroke-width=\"2\" stroke-linecap=\"round\" "
               "stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\">";
     if (circle) {
-        stream << "<circle cx=\"120\" cy=\"120\" r=\"100\" ";
+        stream << "<circle cx=\"12\" cy=\"12\" r=\"10\" ";
     } else {
-        stream << "<rect width=\"200\" height=\"200\" x=\"20\" y=\"20\" rx=\"10\" ry=\"10\" ";
+        stream << "<rect width=\"20\" height=\"20\" x=\"2\" y=\"2\" rx=\"1\" ry=\"1\" ";
     }
     stream << "style=\"stroke:#000000;stroke-opacity:1;fill:#" << std::hex << std::setw(6) << std::setfill('0')
            << (uint32_t(color) & 0x00ffffff) << "\"/></svg>";
