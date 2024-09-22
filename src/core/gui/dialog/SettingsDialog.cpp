@@ -81,10 +81,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     gtk_box_append(GTK_BOX(builder.get("latexTabBox")), this->latexPanel.getPanel());
     gtk_box_append(GTK_BOX(builder.get("paletteTabBox")), this->paletteTab.getPanel());
 
-
-    g_signal_connect(builder.get("zoomCallibSlider"), "change-value",
-                     G_CALLBACK(+[](GtkRange*, GtkScrollType, gdouble value, SettingsDialog* self) {
-                         self->setDpi(round_cast<int>(value));
+    g_signal_connect(GTK_RANGE(builder.get("zoomCallibSlider")), "value-changed",
+                     G_CALLBACK(+[](GtkRange* range, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->setDpi(round_cast<int>(gtk_range_get_value(range)));
                      }),
                      this);
 
@@ -177,16 +176,16 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     g_signal_connect_swapped(builder.get("cbStylusCursorType"), "changed",
                              G_CALLBACK(+[](SettingsDialog* self) { self->customStylusIconTypeChanged(); }), this);
 
-    g_signal_connect(builder.get("cbStabilizerAveragingMethods"), "changed",
-                     G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
-                         self->showStabilizerAvMethodOptions(
+    g_signal_connect(GTK_COMBO_BOX(builder.get("cbStabilizerAveragingMethods")), "changed",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->showStabilizerAvMethodOptions(
                                  static_cast<StrokeStabilizer::AveragingMethod>(gtk_combo_box_get_active(comboBox)));
                      }),
                      this);
 
-    g_signal_connect(builder.get("cbStabilizerPreprocessors"), "changed",
-                     G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
-                         self->showStabilizerPreprocessorOptions(
+    g_signal_connect(GTK_COMBO_BOX(builder.get("cbStabilizerPreprocessors")), "changed",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, gpointer self) {
+                         static_cast<SettingsDialog*>(self)->showStabilizerPreprocessorOptions(
                                  static_cast<StrokeStabilizer::Preprocessor>(gtk_combo_box_get_active(comboBox)));
                      }),
                      this);
