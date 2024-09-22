@@ -11,12 +11,7 @@ end
 
 function Beamer(mode)
     local struct = app.getDocumentStructure()
-    local diff
-    if mode == m.inc then
-        diff = 1
-    elseif mode == m.dec then
-        diff = -1
-    end
+    local diff = (mode == m.inc) and 1 or -1
 
 
     local pCurr = app.getPageLabel(struct.pages[struct.currentPage].pdfBackgroundPageNo)
