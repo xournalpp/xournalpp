@@ -29,7 +29,6 @@ function Beamer(mode)
         return
     else
         app.scrollToPage(diff, true)
-        return
     end
 end
 
