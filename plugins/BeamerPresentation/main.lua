@@ -26,7 +26,6 @@ function Beamer(mode)
     if pCurr and pNext and pCurr == pNext then
         app.changeBackgroundPdfPageNr(diff, true)
         app.refreshPage()
-        return
     else
         app.scrollToPage(diff, true)
     end
