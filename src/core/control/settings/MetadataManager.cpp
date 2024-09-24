@@ -17,9 +17,7 @@ using namespace std;
 /**
  * Get directory to store metadata files to
  */
-static fs::path getMetadataDirectory() {
-    return Util::getStateSubfolder("metadata");
-}
+static fs::path getMetadataDirectory() { return Util::getStateSubfolder("metadata"); }
 
 /**
  * Migrate metadata directory from legacy location
@@ -229,4 +227,3 @@ void MetadataManager::storeMetadata(fs::path const& file, int page, double zoom)
     metadata->time = g_get_real_time();
     this->mutex.unlock();
 }
-
