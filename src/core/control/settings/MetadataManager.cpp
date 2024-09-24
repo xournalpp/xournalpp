@@ -14,8 +14,41 @@
 
 using namespace std;
 
-MetadataEntry::MetadataEntry(): valid(false), zoom(1), page(0), time(0) {}
+/**
+ * Get directory to store metadata files to
+ */
+static fs::path getMetadataDirectory() { return Util::getStateSubfolder("metadata"); }
 
+/**
+ * Migrate metadata directory from legacy location
+ */
+static void migrateMetadataDirectory() {
+    // do not pass "metadata" to getConfigSubfolder() to avoid creating directory if it doesn't exist
+    auto legacyDir = Util::getConfigSubfolder() / "metadata";
+
+    if (!fs::is_directory(legacyDir)) {
+        // nothing to do
+        return;
+    }
+
+    // move all files to the new directory
+    auto newDir = getMetadataDirectory();
+    for (auto const& e: fs::directory_iterator(legacyDir)) {
+        auto newPath = newDir / e.path().filename();
+        Util::safeRenameFile(e, newPath);
+    }
+
+    // remove legacy directory
+    try {
+        fs::remove(legacyDir);
+    } catch (const fs::filesystem_error&) {
+        g_warning("Could not delete legacy metadata directory %s", legacyDir.c_str());
+    }
+
+    g_message("Migrated metadata directory from %s to %s", legacyDir.c_str(), newDir.c_str());
+}
+
+MetadataEntry::MetadataEntry(): valid(false), zoom(1), page(0), time(0) {}
 
 MetadataManager::~MetadataManager() { documentChanged(); }
 
@@ -193,38 +226,4 @@ void MetadataManager::storeMetadata(fs::path const& file, int page, double zoom)
     metadata->page = page;
     metadata->time = g_get_real_time();
     this->mutex.unlock();
-}
-
-/**
- * Get directory to store metadata files to
- */
-fs::path MetadataManager::getMetadataDirectory() { return Util::getStateSubfolder("metadata"); }
-
-/**
- * Migrate metadata directory from legacy location
- */
-void MetadataManager::migrateMetadataDirectory() {
-    // do not pass "metadata" to getConfigSubfolder() to avoid creating directory if it doesn't exist
-    auto legacyDir = Util::getConfigSubfolder() / "metadata";
-
-    if (!fs::is_directory(legacyDir)) {
-        // nothing to do
-        return;
-    }
-
-    // move all files to the new directory
-    auto newDir = getMetadataDirectory();
-    for (auto const& e: fs::directory_iterator(legacyDir)) {
-        auto newPath = newDir / e.path().filename();
-        Util::safeRenameFile(e, newPath);
-    }
-
-    // remove legacy directory
-    try {
-        fs::remove(legacyDir);
-    } catch (const fs::filesystem_error&) {
-        g_warning("Could not delete legacy metadata directory %s", legacyDir.c_str());
-    }
-
-    g_message("Migrated metadata directory from %s to %s", legacyDir.c_str(), newDir.c_str());
 }
