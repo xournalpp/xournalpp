@@ -69,16 +69,6 @@ private:
      */
     static void storeMetadata(const MetadataEntry& m);
 
-    /**
-     * Get directory to store metadata files to
-     */
-    static fs::path getMetadataDirectory();
-
-    /**
-     * Migrate metadata directory from legacy location
-     */
-    static void migrateMetadataDirectory();
-
 private:
     /**
      * Load the metadata list (sorted)
