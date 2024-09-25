@@ -23,7 +23,10 @@
 
 class XojMsgBox final {
 public:
-    XojMsgBox(GtkDialog* dialog, xoj::util::move_only_function<void(int)> callback = [](int) {});
+    enum CallbackPolicy { IMMEDIATE, POSTPONED };
+    XojMsgBox(
+            GtkDialog* dialog, xoj::util::move_only_function<void(int)> callback = [](int) {},
+            CallbackPolicy pol = POSTPONED);
     ~XojMsgBox() = default;
 
     inline GtkWindow* getWindow() const { return window.get(); }
@@ -32,6 +35,13 @@ private:
     xoj::util::GtkWindowUPtr window;
     xoj::util::move_only_function<void(int)> callback;  ///< The parameter is the dialog's response ID
     gulong signalId;
+    /**
+     * If POSTPONED, the callback is called after the dialog has been closed. This is necessary when the callback can
+     * pop up another dialog.
+     * However, if POSTPONED, the dialog instance will have been destroyed by the time the callback is called, so any
+     * pointer to the GtkDialog instance will be dangling
+     */
+    CallbackPolicy policy;
 
 public:
     struct Button {

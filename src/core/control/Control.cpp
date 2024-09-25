@@ -1821,13 +1821,17 @@ void Control::showFontDialog() {
     auto* dlg = gtk_font_chooser_dialog_new(_("Select font"), GTK_WINDOW(this->win->getWindow()));
     gtk_font_chooser_set_font(GTK_FONT_CHOOSER(dlg), settings->getFont().asString().c_str());
 
-    auto popup = xoj::popup::PopupWindowWrapper<XojMsgBox>(GTK_DIALOG(dlg), [this, dlg](int response) {
-        if (response == GTK_RESPONSE_OK) {
-            auto font = xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(GTK_FONT_CHOOSER(dlg)));
-            this->actionDB->fireChangeActionState(Action::FONT, font.get());
-        }
-        this->actionDB->enableAction(Action::SELECT_FONT, true);
-    });
+    auto popup = xoj::popup::PopupWindowWrapper<XojMsgBox>(
+            GTK_DIALOG(dlg),
+            [this, dlg](int response) {
+                if (response == GTK_RESPONSE_OK) {
+                    auto font =
+                            xoj::util::OwnedCString::assumeOwnership(gtk_font_chooser_get_font(GTK_FONT_CHOOSER(dlg)));
+                    this->actionDB->fireChangeActionState(Action::FONT, font.get());
+                }
+                this->actionDB->enableAction(Action::SELECT_FONT, true);
+            },
+            XojMsgBox::IMMEDIATE);  // We need IMMEDIATE so accessing GTK_FONT_CHOOSER(dlg) is not UB
     popup.show(GTK_WINDOW(this->win->getWindow()));
 }
 
@@ -1838,14 +1842,17 @@ void Control::showColorChooserDialog() {
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(dlg), &c);
     gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dlg), false);
 
-    auto popup = xoj::popup::PopupWindowWrapper<XojMsgBox>(GTK_DIALOG(dlg), [this, dlg](int response) {
-        if (response == GTK_RESPONSE_OK) {
-            GdkRGBA c;
-            gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dlg), &c);
-            this->actionDB->fireChangeActionState(Action::TOOL_COLOR, Util::GdkRGBA_to_rgb(c));
-        }
-        this->actionDB->enableAction(Action::SELECT_COLOR, true);
-    });
+    auto popup = xoj::popup::PopupWindowWrapper<XojMsgBox>(
+            GTK_DIALOG(dlg),
+            [this, dlg](int response) {
+                if (response == GTK_RESPONSE_OK) {
+                    GdkRGBA c;
+                    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dlg), &c);
+                    this->actionDB->fireChangeActionState(Action::TOOL_COLOR, Util::GdkRGBA_to_rgb(c));
+                }
+                this->actionDB->enableAction(Action::SELECT_COLOR, true);
+            },
+            XojMsgBox::IMMEDIATE);  // We need IMMEDIATE so accessing GTK_COLOR_CHOOSER(dlg) is not UB
     popup.show(GTK_WINDOW(this->win->getWindow()));
 }
 

@@ -20,17 +20,21 @@
 
 GtkWindow* defaultWindow = nullptr;
 
-XojMsgBox::XojMsgBox(GtkDialog* dialog, xoj::util::move_only_function<void(int)> callback):
-        window(reinterpret_cast<GtkWindow*>(dialog)), callback(std::move(callback)) {
+XojMsgBox::XojMsgBox(GtkDialog* dialog, xoj::util::move_only_function<void(int)> callback, CallbackPolicy pol):
+        window(reinterpret_cast<GtkWindow*>(dialog)), callback(std::move(callback)), policy(pol) {
     this->signalId =
             g_signal_connect(dialog, "response", G_CALLBACK(+[](GtkDialog* dialog, int response, gpointer data) {
                                  auto* self = static_cast<XojMsgBox*>(data);
 
-                                 // We need to call gtk_window_close() before invoking the callback, because if the
-                                 // callback pops up another dialog, the first one won't close...
-                                 // But since gtk_window_close() triggers the destruction of *self, we first move the
-                                 // callback
-                                 Util::execInUiThread([cb = std::move(self->callback), response]() { cb(response); });
+                                 if (self->policy == IMMEDIATE) {
+                                     self->callback(response);
+                                 } else {  // POSTPONED
+                                     // We sometimes need to call gtk_window_close() before invoking the callback,
+                                     // because if the callback pops up another dialog, the first one won't close...
+                                     // But since gtk_window_close() triggers the destruction of *self, we first move
+                                     // the callback
+                                     Util::execInUiThread([cb = std::move(self->callback), r = response]() { cb(r); });
+                                 }
 
                                  // Closing the window causes another "response" signal, which we want to ignore
                                  g_signal_handler_disconnect(dialog, self->signalId);
