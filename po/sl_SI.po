@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-22 19:22+0000\n"
-"PO-Revision-Date: 2024-09-26 07:37\n"
+"PO-Revision-Date: 2024-09-26 09:32\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -93,7 +93,7 @@ msgstr "napaka pri odpiranju datoteke \"{1}\""
 
 #: ../src/core/control/Control.cpp:1518
 msgid "File version mismatch"
-msgstr ""
+msgstr "Verziji datoteke se ne skladata"
 
 #: ../src/core/control/Control.cpp:1519
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -102,7 +102,8 @@ msgstr "Datoteka, ki se nalaga je v formatu, ki je novejši od trenutno podprteg
 #: ../src/core/control/Control.cpp:1542
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Napaka branja PDF \"{1}\"\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1663
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -500,7 +501,7 @@ msgstr "Preverjanje prepisovanja ozadja ni uspelo zaradi:\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export File"
-msgstr ""
+msgstr "Izvozi datoteko"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export"
@@ -668,11 +669,11 @@ msgstr "Pomakni v ozadje"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 msgid "Failed to load image"
-msgstr ""
+msgstr "Nalaganje slike je spodletelo"
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
-msgstr ""
+msgstr "Napaka pri odpiranju slike: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1059,7 +1060,7 @@ msgstr "Xournal++ predloga"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "Slikovne datoteke"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
@@ -1169,20 +1170,21 @@ msgstr "Filtriranje vhodnega tlaka. Množenje tlaka z množiteljem tlaka. Če je
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "Vgrajene palete"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
-msgstr ""
+msgstr "Uporabnikove palete"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
-msgstr ""
+msgstr "<i>Spodnje palete so iz <a href=\"file://{1}\">Vgrajene palete</a> in <a href=\"file://{2}\">Uporabnikove palete</a>:</i>\n"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:109
 msgid "No palette files (i.e. with extension .gpl) could be found.\n"
 "Using the default until another palette is configured."
-msgstr ""
+msgstr "Palet (s končnico .gpl) ni bilo mogoče najti.\n"
+"Dokler ne nastavite druge palete je v uporabi osnovna."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
@@ -1377,12 +1379,12 @@ msgstr "Xournal++ datoteke"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
 msgid "PDF Files"
-msgstr ""
+msgstr "Datoteke PDF"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:198
 msgctxt "This opens a submenu of the recent files list, and clicking on individual entries in this submenu will remove it from the recent files list"
 msgid "Dismiss a single document"
-msgstr ""
+msgstr "Zapri en dokument"
 
 #: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:138
 msgid "Copy current background"
@@ -2433,7 +2435,7 @@ msgstr "Naloži iz datoteke"
 
 #: ../ui/paletteSettings.glade:76
 msgid "Color Palettes"
-msgstr ""
+msgstr "Barvne palete"
 
 #: ../ui/plugin.glade:22
 msgid "Plugins"
@@ -3671,7 +3673,7 @@ msgstr "Jezikovne nastavitve"
 
 #: ../ui/settings.glade:6249
 msgid "Palette"
-msgstr ""
+msgstr "Paleta"
 
 #: ../ui/settingsButtonConfig.glade:20
 msgid "Device"
