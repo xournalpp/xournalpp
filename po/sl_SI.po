@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-08-30 10:19\n"
+"POT-Creation-Date: 2024-09-22 19:22+0000\n"
+"PO-Revision-Date: 2024-09-26 07:37\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1159,11 +1159,11 @@ msgstr "<b>{1}</b>\n"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Ni najdenih naprav. To se ne zdi prav – bi morda prijavili napako?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Omogočite občutljivost na pritisk ali sklepanje o pritisku, da spremenite to nastavitev!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:287
+#: ../src/core/gui/dialog/SettingsDialog.cpp:286
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtriranje vhodnega tlaka. Množenje tlaka z množiteljem tlaka. Če je nižji od minimuma, uporabi najmanjši tlak."
 
@@ -1186,15 +1186,15 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
-msgstr ""
+msgstr "Napaka"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
 msgid "Name"
-msgstr ""
+msgstr "Ime"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr ""
+msgstr "Paleta je brez imena"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
@@ -1222,7 +1222,7 @@ msgstr "_Odprto"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
-msgstr ""
+msgstr "Odpri predlogo"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
@@ -1232,11 +1232,11 @@ msgstr "Odpri datoteko"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:155
 msgid "Annotate Pdf file"
-msgstr ""
+msgstr "Označi PDF datoteko"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
-msgstr ""
+msgstr "Izberi sliko"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
@@ -1359,7 +1359,7 @@ msgstr "Vtičnik"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
-msgstr ""
+msgstr "Opusti"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
@@ -1372,7 +1372,7 @@ msgstr "Počisti seznam"
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:182
 msgctxt "In the submenu for removing recent documents, this will display on top of the list xournal++ files to separate them from PDF files"
 msgid "Xournal++ Files"
-msgstr ""
+msgstr "Xournal++ datoteke"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:191
 msgctxt "In the submenu for removing recent documents, this will display on top of the list PDF files to separate them from xournal++ files"
