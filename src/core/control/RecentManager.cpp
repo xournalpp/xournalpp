@@ -104,8 +104,8 @@ auto RecentManager::getMostRecent() -> GtkRecentInfoSPtr {
     if (!recent_items) {
         return nullptr;
     }
-    GtkRecentInfo* mostRecent = static_cast<GtkRecentInfo*>(recent_items->data);
-    for (auto& recent: GListView<GtkRecentInfo>(recent_items->next)) {
+    GtkRecentInfo* mostRecent = nullptr;
+    for (auto& recent: GListView<GtkRecentInfo>(recent_items)) {
         auto time = gtk_recent_info_get_modified(&recent);
         if (as_signed(time) < 0) {
             continue;
@@ -113,12 +113,12 @@ auto RecentManager::getMostRecent() -> GtkRecentInfoSPtr {
         if (getFileType(recent) != XOURNAL_FILE_TYPE) {
             continue;
         }
-        if (*mostRecent < recent) {
+        if (mostRecent == nullptr || *mostRecent < recent) {
             mostRecent = &recent;
         }
     }
     // Prolong lifetime past the list deletion
-    GtkRecentInfoSPtr res(mostRecent, xoj::util::ref);
+    GtkRecentInfoSPtr res = mostRecent == nullptr ? nullptr : GtkRecentInfoSPtr(mostRecent, xoj::util::ref);
 
     g_list_free_full(recent_items, GDestroyNotify(gtk_recent_info_unref));
 
