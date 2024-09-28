@@ -30,7 +30,7 @@ auto createToolbarSelectionMenuItem(const ToolbarData* toolbarData) {
 void toolbarSelectionMenuChangeStateCallback(GSimpleAction* ga, GVariant* parameter, MainWindow* window) {
     g_simple_action_set_state(ga, parameter);
 
-    size_t l = 0;
+    gsize l = 0;
     const char* p = g_variant_get_string(parameter, &l);
     std::string toolbarId(p, l);
 
