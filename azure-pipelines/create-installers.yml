@@ -48,6 +48,11 @@ stages:
           ubuntu_version: 22.04
           job_name: 'Ubuntu22_04'
           gcc_version: '10'
+      - template: jobs/release_ubuntu.yml
+        parameters:
+          ubuntu_version: 24.04
+          job_name: 'Ubuntu24_04'
+          gcc_version: '14'
       - job: 'Debian'
         pool:
           vmImage: 'ubuntu-20.04'
