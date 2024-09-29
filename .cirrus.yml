@@ -1,5 +1,5 @@
 macos_instance:
-  image: ghcr.io/cirruslabs/macos-ventura-base:latest
+  image: ghcr.io/cirruslabs/macos-runner:sonoma
 
 # Need to override the user HOME so we can cache the jhbuild stuff.
 env:
@@ -71,5 +71,5 @@ build_xournalpp_task:
 
 upload_task:
   xournalpp_upload_script: |
-    bash mac-setup/upload-release.sh 
+    bash mac-setup/upload-release.sh
   only_if: $BRANCH =~ 'release-*' && "$CIRRUS_RELEASE" != ""
