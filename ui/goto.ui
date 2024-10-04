@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+  </object>
+  <object class="GtkWindow" id="gotoDialog">
+    <property name="title" translatable="1">Go to Page</property>
+    <property name="resizable">0</property>
+    <property name="modal">1</property>
+    <property name="focus-widget">spinPage</property>
+    <property name="default-widget">btOk</property>
+    <property name="destroy-with-parent">1</property>
+    <property name="child">
+      <object class="GtkBox" id="dialog-main-box">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkBox" id="hbox1">
+            <child>
+              <object class="GtkSpinButton" id="spinPage">
+                <property name="hexpand">1</property>
+                <property name="name">spinPage</property>
+                <property name="focusable">1</property>
+                <property name="activates-default">1</property>
+                <property name="text">0</property>
+                <property name="adjustment">adjustment1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="label" translatable="1">Go to page</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="buttonBox">
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="label" translatable="1">Cancel</property>
+                <property name="name">btCancel</property>
+                <property name="focusable">1</property>
+                <child>
+                  <object class='GtkShortcutController'>
+                    <property name='scope'>managed</property>
+                    <child>
+                      <object class='GtkShortcut'>
+                        <property name='trigger'>Escape</property>
+                        <property name='action'>activate</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="label" translatable="1">Ok</property>
+                <property name="name">btOk</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>

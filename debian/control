@@ -3,12 +3,12 @@ Maintainer: Andreas Butti <andreasbutti@gmail.com>
 Section: misc
 Priority: optional
 Standards-Version: 4.5.1
-Build-Depends: debhelper (>= 11), cmake, help2man, git, libgtk-3-dev, libpoppler-glib-dev, libxml2-dev, portaudio19-dev, libsndfile1-dev | libsndfile-dev, liblua5.3-dev, libzip-dev, librsvg2-dev, libgtksourceview-4-dev
+Build-Depends: debhelper (>= 11), cmake, help2man, git, libgtk-3-dev, libpoppler-glib-dev, libxml2-dev, portaudio19-dev, libsndfile1-dev | libsndfile-dev, liblua5.3-dev, libzip-dev, librsvg2-dev, libgtksourceview-5-dev
 Homepage: https://github.com/xournalpp/xournalpp/
 
 Package: xournalpp
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, librsvg2-2 (>= 2.40), libgtksourceview-4-0
+Depends: ${shlibs:Depends}, ${misc:Depends}, libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, librsvg2-2 (>= 2.40), libgtksourceview-5-0
 Suggests: texlive-base, texlive-latex-extra
 Recommends: lua-lgi
 Description: Xournal++ - Open source hand note-taking program

@@ -31,6 +31,7 @@ jobs:
           gcc_version: ${{ parameters.gcc_version }}
       - bash: |
           # Build AppImage
+          sudo apt-get install -y libfuse2
           export VERSION=$(cat VERSION | sed '1q;d')
           export ARCH=$(cat VERSION | sed '4q;d')
           export OUTPUT="xournalpp-$VERSION-$ARCH.AppImage"

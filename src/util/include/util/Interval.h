@@ -83,8 +83,8 @@ public:
      * @return true if *this and other intersect, false otherwise
      */
     [[maybe_unused]] std::optional<Interval<T>> intersect(const Interval& other) const {
-        double newMin = std::max(min, other.min);
-        double newMax = std::min(max, other.max);
+        T newMin = std::max(min, other.min);
+        T newMax = std::min(max, other.max);
         return (newMin < newMax) ? std::optional(Interval(newMin, newMax)) : std::nullopt;
     }
 

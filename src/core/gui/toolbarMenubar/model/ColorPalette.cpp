@@ -176,5 +176,5 @@ auto Palette::parseErrorDialog(const std::exception& e) const -> void {
     msg_stream << "Until this is fixed, the application will use the default color palette.";
 
     // Call later, to make sure the main window has been set up, so the popup is displayed in front of it (and modal)
-    Util::execInUiThread([msg = msg_stream.str()]() { XojMsgBox::showErrorToUser(nullptr, msg); });
+    Util::execWhenIdle([msg = msg_stream.str()]() { XojMsgBox::showErrorToUser(nullptr, msg); });
 }

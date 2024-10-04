@@ -125,7 +125,7 @@ private:
     void repaintCursorAfterChange();
     void resetImContext();
 
-    static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te);
+    static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GdkClipboard* clipboard, TextEditor* te);
 
     static void iMCommitCallback(GtkIMContext* context, const gchar* str, TextEditor* te);
     static void iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te);
@@ -211,7 +211,7 @@ private:
                 g_source_remove(id);
             }
         }
-        static bool callback(TextEditor* te);
+        static void callback(TextEditor* te);
 
     private:
         unsigned int id = 0;  // handler id

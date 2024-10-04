@@ -1,46 +1,45 @@
 #include "ColorIcon.h"
 
 #include <cmath>  // for M_PI
+#include <iomanip>
+#include <sstream>
 
 #include "util/raii/CairoWrappers.h"
 #include "util/raii/GObjectSPtr.h"
+#include "util/serdesstream.h"
+
+static auto newGdkPixbuf(Color color, bool circle) -> xoj::util::GObjectSPtr<GdkPixbuf> {
+    auto stream = serdes_stream<std::stringstream>();
+    stream << "<svg width=\"24\" height=\"24\" stroke-width=\"2\" stroke-linecap=\"round\" "
+              "stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\">";
+    if (circle) {
+        stream << "<circle cx=\"12\" cy=\"12\" r=\"10\" ";
+    } else {
+        stream << "<rect width=\"20\" height=\"20\" x=\"2\" y=\"2\" rx=\"1\" ry=\"1\" ";
+    }
+    stream << "style=\"stroke:#000000;stroke-opacity:1;fill:#" << std::hex << std::setw(6) << std::setfill('0')
+           << (uint32_t(color) & 0x00ffffff) << "\"/></svg>";
+
+    std::string str = stream.str();  // Keep this alive as long as gstream is
+    xoj::util::GObjectSPtr<GInputStream> gstream(g_memory_input_stream_new_from_data(str.c_str(), -1, nullptr),
+                                                 xoj::util::adopt);
+
+    return xoj::util::GObjectSPtr<GdkPixbuf>(gdk_pixbuf_new_from_stream(gstream.get(), NULL, NULL), xoj::util::adopt);
+}
 
 namespace ColorIcon {
 /**
  * Create a new GtkImage with preview color
  */
-auto newGtkImage(Color color, int size, bool circle) -> GtkWidget* {
-    xoj::util::GObjectSPtr<GdkPixbuf> img(newGdkPixbuf(color, size, circle));
-    GtkWidget* w = gtk_image_new_from_pixbuf(img.get());
-    gtk_widget_show(w);
-    return w;
+auto newGtkImage(Color color, bool circle) -> GtkWidget* {
+    return gtk_image_new_from_pixbuf(newGdkPixbuf(color, circle).get());
 }
 
 /**
- * Create a new GdkPixbuf* with preview color
+ * Create a new GdkPaintable* with preview color
  */
-auto newGdkPixbuf(Color color, int size, bool circle) -> xoj::util::GObjectSPtr<GdkPixbuf> {
-    xoj::util::CairoSurfaceSPtr buf(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, size, size), xoj::util::adopt);
-    xoj::util::CairoSPtr cr(cairo_create(buf.get()), xoj::util::adopt);
-
-    Util::cairo_set_source_rgbi(cr.get(), color, 1);
-
-    constexpr double PADDING = 1;
-
-    if (circle) {
-        const double mid = .5 * size;
-        const double radius = mid - PADDING;
-        cairo_arc(cr.get(), mid, mid, radius, 0, 2 * M_PI);
-    } else {
-        cairo_rectangle(cr.get(), PADDING, PADDING, size - 2 * PADDING, size - 2 * PADDING);
-    }
-    cairo_fill_preserve(cr.get());
-
-    cairo_set_source_rgba(cr.get(), 0, 0, 0, 1);
-    cairo_set_line_width(cr.get(), 1);
-    cairo_stroke(cr.get());
-
-    return xoj::util::GObjectSPtr<GdkPixbuf>(gdk_pixbuf_get_from_surface(buf.get(), 0, 0, size, size),
-                                             xoj::util::adopt);
+auto newGdkPaintable(Color color, bool circle) -> xoj::util::GObjectSPtr<GdkPaintable> {
+    return xoj::util::GObjectSPtr<GdkPaintable>(
+            GDK_PAINTABLE(gdk_texture_new_for_pixbuf(newGdkPixbuf(color, circle).get())), xoj::util::adopt);
 }
 };  // namespace ColorIcon

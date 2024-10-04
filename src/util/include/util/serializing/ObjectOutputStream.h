@@ -45,7 +45,8 @@ public:
     /// Writes the raw image data to the output stream.
     void writeImage(const std::string_view& imgData);
 
-    GString* getStr();
+    /// The caller takes ownership of the returned data
+    GString* stealData();
 
 private:
     ObjectEncoding* encoder = nullptr;

@@ -26,7 +26,6 @@ private:
     GdkEventSequence* secondarySequence{};
 
     double startZoomDistance = 0.0;
-    xoj::util::Point<double> lastZoomScrollCenter{};
 
     xoj::util::Point<double> priLastAbs{-1.0, -1.0};
     xoj::util::Point<double> secLastAbs{-1.0, -1.0};

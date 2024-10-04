@@ -8,18 +8,16 @@
 #include "control/actions/ActionDatabase.h"
 #include "gui/IconNameHelper.h"
 #include "util/glib_casts.h"
-#include "util/gtk4_helper.h"  // for gtk_popover_new
 #include "util/i18n.h"
 
 /// Returns a floating ref
 static GtkWidget* createPopoverEntry(const DrawingTypeComboToolButton::Entry& e) {
     GtkWidget* entry = gtk_toggle_button_new();
-    gtk_widget_set_can_focus(entry, false);  // todo(gtk4) not necessary anymore
     auto actionName = std::string("win.") + g_action_get_name(G_ACTION(e.gAction.get()));
     gtk_actionable_set_action_name(GTK_ACTIONABLE(entry), actionName.data());
     GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6));
     gtk_button_set_child(GTK_BUTTON(entry), GTK_WIDGET(box));
-    gtk_box_append(box, gtk_image_new_from_icon_name(e.icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_box_append(box, gtk_image_new_from_icon_name(e.icon.c_str()));
     gtk_box_append(box, gtk_label_new(e.name.c_str()));
     gtk_widget_set_tooltip_text(entry, e.name.c_str());
     return entry;
@@ -52,7 +50,7 @@ DrawingTypeComboToolButton::Entry::Entry(std::string name, std::string icon, con
         fullActionName(std::string("win.") + g_action_get_name(G_ACTION(gAction.get()))) {}
 
 DrawingTypeComboToolButton::DrawingTypeComboToolButton(std::string id, IconNameHelper& icons, const ActionDatabase& db):
-        AbstractToolItem(std::move(id), Category::TOOLS),
+        ItemWithNamedIcon(std::move(id), Category::TOOLS),
         entries(makeEntries(icons, db)),
         iconName(icons.iconName("combo-drawing-type")),
         description(_("Drawing Type Combo")) {}
@@ -79,7 +77,7 @@ struct Data {
     }
 };
 
-auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
+auto DrawingTypeComboToolButton::createItem(ToolbarSide side) -> Widgetry {
     auto data = std::make_unique<Data>();
     data->entries = this->entries;
 
@@ -88,19 +86,18 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
         GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
         gtk_popover_set_child(data->popover, GTK_WIDGET(box));
         gtk_widget_add_css_class(GTK_WIDGET(data->popover), "toolbar");
+        gtk_popover_set_has_arrow(data->popover, false);
+        gtk_widget_set_halign(GTK_WIDGET(data->popover), GTK_ALIGN_START);
+        gtk_widget_set_valign(GTK_WIDGET(data->popover), GTK_ALIGN_START);
 
         for (const Entry& t: *this->entries) {
             gtk_box_append(box, createPopoverEntry(t));
         }
-
-        gtk_widget_show_all(GTK_WIDGET(box));
     }
 
     {  // Create prominent button
         GtkWidget* btn = gtk_toggle_button_new();
         data->button = GTK_BUTTON(btn);
-
-        gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
 
         auto it = std::find_if(entries->begin(), entries->end(), [](auto& e) {
             xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(e.gAction.get())), xoj::util::adopt);
@@ -114,12 +111,11 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
 
     // Create item
     GtkMenuButton* menubutton = GTK_MENU_BUTTON(gtk_menu_button_new());
-    gtk_widget_set_can_focus(GTK_WIDGET(menubutton), false);  // todo(gtk4) not necessary anymore
     gtk_menu_button_set_popover(menubutton, GTK_WIDGET(data->popover));
-    gtk_menu_button_set_direction(menubutton,
-                                  horizontal ? GTK_ARROW_DOWN : GTK_ARROW_RIGHT);  // TODO: fix directions
+    setMenuButtonDirection(menubutton, side);
+    gtk_menu_button_set_always_show_arrow(menubutton, true);
 
-    GtkBox* box = GTK_BOX(gtk_box_new(horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL, 0));
+    GtkBox* box = GTK_BOX(gtk_box_new(to_Orientation(side), 0));
     gtk_box_append(box, GTK_WIDGET(data->button));
     gtk_box_append(box, GTK_WIDGET(menubutton));
 
@@ -162,11 +158,9 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
             },
             data.release());
 
-    return item;
+    return {std::move(item), nullptr};
 }
 
 auto DrawingTypeComboToolButton::getToolDisplayName() const -> std::string { return this->description; }
 
-auto DrawingTypeComboToolButton::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
-}
+auto DrawingTypeComboToolButton::getIconName() const -> const char* { return iconName.c_str(); }
