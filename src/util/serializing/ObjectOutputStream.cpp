@@ -1,5 +1,7 @@
 #include "util/serializing/ObjectOutputStream.h"
 
+#include <string_view>
+
 #include <cairo.h>  // for CAIRO_STATUS_SUCCESS
 
 #include "util/Assert.h"                      // for xoj_assert
@@ -46,13 +48,13 @@ void ObjectOutputStream::writeSizeT(size_t st) {
     this->encoder->addData(&st, sizeof(size_t));
 }
 
-void ObjectOutputStream::writeString(const char* str) { writeString(std::string(str)); }
+void ObjectOutputStream::writeString(const char* str) { writeString(std::string_view(str)); }
 
-void ObjectOutputStream::writeString(const std::string& s) {
+void ObjectOutputStream::writeString(std::string_view s) {
     this->encoder->addStr("_s");
     size_t len = s.length();
     this->encoder->addData(&len, sizeof(size_t));
-    this->encoder->addData(s.c_str(), len);
+    this->encoder->addData(s.data(), len);
 }
 
 void ObjectOutputStream::writeData(const void* data, size_t len, size_t width) {

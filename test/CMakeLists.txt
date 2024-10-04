@@ -82,7 +82,7 @@ file (GLOB_RECURSE test-units-sources
 
 # Define test-units target
 add_executable (test-units EXCLUDE_FROM_ALL ${test-units-sources})
-target_link_libraries (test-units xoj::core xoj::util std::filesystem gtest_main)
+target_link_libraries (test-units xoj::core xoj::util gtest_main)
 target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/test")
 
 ###############################################################################
