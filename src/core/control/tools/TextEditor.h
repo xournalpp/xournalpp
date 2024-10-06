@@ -18,6 +18,7 @@
 #include <gtk/gtk.h>      // for GtkIMContext, GtkTextIter, GtkWidget
 #include <pango/pango.h>  // for PangoAttrList, PangoLayout
 
+#include "control/KeyBindingsGroup.h"
 #include "model/OverlayBase.h"
 #include "model/PageRef.h"  // for PageRef
 #include "util/Color.h"     // for Color
@@ -228,6 +229,5 @@ private:
     static constexpr unsigned int CURSOR_OFF_MULTIPLIER = 1;
     static constexpr unsigned int CURSOR_DIVIDER = CURSOR_ON_MULTIPLIER + CURSOR_OFF_MULTIPLIER;
 
-    struct KeyBindings;
-    static const KeyBindings keyBindings;
+    static const KeyBindingsGroup<TextEditor> keyBindings;
 };

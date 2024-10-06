@@ -12,6 +12,7 @@
 #include <gdk/gdk.h>  // for gdk_cairo_set_sour...
 
 #include "control/Control.h"                       // for Control
+#include "control/KeyBindingsGroup.h"              // for KeyBinding, KeyBindingsGroup
 #include "control/settings/Settings.h"             // for Settings
 #include "control/tools/CursorSelectionType.h"     // for CURSOR_SELECTION_NONE
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
@@ -1233,4 +1234,37 @@ void EditSelection::readSerialized(ObjectInputStream& in) {
     this->contents->readSerialized(in);
 
     in.endObject();
+}
+
+template <int dx, int dy>
+static void moveAndKeepVisible(EditSelection* s) {
+    s->moveSelection(dx, dy, true);
+    s->ensureWithinVisibleArea();
+}
+
+static void clear(EditSelection* s) {
+    s->getView()->getXournal()->clearSelection();  // Destroys *this. Do nothing after this line
+}
+
+bool EditSelection::onKeyPressEvent(const KeyEvent& event) {
+    constexpr int REGULAR_MOVE_AMOUNT = 3;
+    constexpr int SMALL_MOVE_AMOUNT = 1;
+    constexpr int LARGE_MOVE_AMOUNT = 10;
+    // clang-format off
+    static const KeyBindingsGroup<EditSelection> selectionKeyBindings(
+            {{KeyBinding::hash(NONE,  GDK_KEY_Left),    moveAndKeepVisible<-REGULAR_MOVE_AMOUNT,                    0>},
+             {KeyBinding::hash(ALT,   GDK_KEY_Left),    moveAndKeepVisible<  -SMALL_MOVE_AMOUNT,                    0>},
+             {KeyBinding::hash(SHIFT, GDK_KEY_Left),    moveAndKeepVisible<  -LARGE_MOVE_AMOUNT,                    0>},
+             {KeyBinding::hash(NONE,  GDK_KEY_Right),   moveAndKeepVisible< REGULAR_MOVE_AMOUNT,                    0>},
+             {KeyBinding::hash(ALT,   GDK_KEY_Right),   moveAndKeepVisible<   SMALL_MOVE_AMOUNT,                    0>},
+             {KeyBinding::hash(SHIFT, GDK_KEY_Right),   moveAndKeepVisible<   LARGE_MOVE_AMOUNT,                    0>},
+             {KeyBinding::hash(NONE,  GDK_KEY_Up),      moveAndKeepVisible<                   0, -REGULAR_MOVE_AMOUNT>},
+             {KeyBinding::hash(ALT,   GDK_KEY_Up),      moveAndKeepVisible<                   0,   -SMALL_MOVE_AMOUNT>},
+             {KeyBinding::hash(SHIFT, GDK_KEY_Up),      moveAndKeepVisible<                   0,   -LARGE_MOVE_AMOUNT>},
+             {KeyBinding::hash(NONE,  GDK_KEY_Down),    moveAndKeepVisible<                   0,  REGULAR_MOVE_AMOUNT>},
+             {KeyBinding::hash(ALT,   GDK_KEY_Down),    moveAndKeepVisible<                   0,    SMALL_MOVE_AMOUNT>},
+             {KeyBinding::hash(SHIFT, GDK_KEY_Down),    moveAndKeepVisible<                   0,    LARGE_MOVE_AMOUNT>},
+             {KeyBinding::hash(NONE,  GDK_KEY_Escape),  clear}});
+    // clang-format on
+    return selectionKeyBindings.processEvent(this, event);  // May destroy *this - Never do anything after.
 }
