@@ -105,6 +105,8 @@ public:
 
     virtual int getPageId() const = 0;
 
+    virtual std::string getPageLabel() const = 0;
+
 private:
 };
 
