@@ -294,11 +294,8 @@ auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
 
     Rectangle widget_rect = getVisibleRect();
     double zoom_fit_width = widget_rect.width / (page->getWidth() + 20.0);
-    if (zoom_fit_width < this->zoomMin || zoom_fit_width > this->zoomMax) {
-        return false;
-    }
 
-    this->zoomFitValue = zoom_fit_width;
+    this->zoomFitValue = std::clamp(zoom_fit_width, this->zoomMin, this->zoomMax);
     fireZoomRangeValueChanged();
     if (this->isZoomFitMode() && !this->zoomPresentationMode) {
         this->zoomFit();
@@ -319,11 +316,8 @@ auto ZoomControl::updateZoomPresentationValue(size_t pageNo) -> bool {
     double zoom_fit_width = widget_rect.width / (page->getWidth() + 14.0);
     double zoom_fit_height = widget_rect.height / (page->getHeight() + 14.0);
     double zoom_presentation = zoom_fit_width < zoom_fit_height ? zoom_fit_width : zoom_fit_height;
-    if (zoom_presentation < this->zoomMin) {
-        return false;
-    }
 
-    this->zoomPresentationValue = zoom_presentation;
+    this->zoomPresentationValue = std::clamp(zoom_presentation, this->zoomMin, this->zoomMax);
     if (this->zoomPresentationMode) {
         this->zoomPresentation();
     }
