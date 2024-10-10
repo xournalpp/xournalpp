@@ -232,6 +232,43 @@ auto Util::getDataSubfolder(const fs::path& subfolder) -> fs::path {
     return Util::ensureFolderExists(p);
 }
 
+static auto buildUserStateDir() -> fs::path {
+#if _WIN32
+    // Windows: state directory is same as data directory
+    return fs::u8path(g_get_user_data_dir());
+#else
+    // Unix: $XDG_STATE_HOME or ~/.local/state
+    const char* xdgStateHome = std::getenv("XDG_STATE_HOME");
+    if (xdgStateHome && xdgStateHome[0]) {
+        // environment variable exists and is non-empty
+        return fs::u8path(xdgStateHome);
+    }
+
+    auto path = fs::u8path(g_get_home_dir());
+    return path / ".local/state";
+#endif
+}
+
+static auto getUserStateDir() -> const fs::path& {
+    // The GLib function g_get_user_state_dir is not supported on GLib < 2.72,
+    // so we implement our version here.
+
+    // Cache fs::path so it is only computed once.
+    static std::optional<const fs::path> userStateDir;
+    if (!userStateDir.has_value()) {
+        userStateDir.emplace(buildUserStateDir());
+    }
+    return *userStateDir;
+}
+
+auto Util::getStateSubfolder(const fs::path& subfolder) -> fs::path {
+    auto p = getUserStateDir();
+    p /= CONFIG_FOLDER_NAME;
+    p /= subfolder;
+
+    return Util::ensureFolderExists(p);
+}
+
 auto Util::getConfigFile(const fs::path& relativeFileName) -> fs::path {
     fs::path p = getConfigSubfolder(relativeFileName.parent_path());
     p /= relativeFileName.filename();
