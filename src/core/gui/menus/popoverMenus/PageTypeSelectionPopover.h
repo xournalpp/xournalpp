@@ -74,6 +74,6 @@ private:
 
     bool ignoreComboBoxSelectionChange = false;
 
-    size_t customPaperSizeIndex;  // this - 1 is the last index of an actual PaperSize option
-    size_t copyCurrentPaperSizeIndex;
+    uint32_t customPaperSizeIndex;  // this - 1 is the last index of an actual PaperSize option
+    uint32_t copyCurrentPaperSizeIndex;
 };

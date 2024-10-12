@@ -159,9 +159,9 @@ PageTypeSelectionPopover::PageTypeSelectionPopover(Control* control, Settings* s
 
     PaperFormatUtils::loadDefaultPaperSizes(paperSizeMenuOptions);
     // Add Special options
-    customPaperSizeIndex = paperSizeMenuOptions.size();
+    customPaperSizeIndex = static_cast<uint32_t>(paperSizeMenuOptions.size());
     paperSizeMenuOptions.emplace_back(_("Custom"));
-    copyCurrentPaperSizeIndex = paperSizeMenuOptions.size();
+    copyCurrentPaperSizeIndex = static_cast<uint32_t>(paperSizeMenuOptions.size());
     paperSizeMenuOptions.emplace_back(_("Copy current page"));
 
     this->controller->setPaperSizeForNewPages(this->selectedPageSize);
@@ -186,7 +186,7 @@ void PageTypeSelectionPopover::setSelectedPaperSize(const std::optional<PaperSiz
         if constexpr (changeComboBoxSelection) {
             ignoreComboBoxSelectionChange = true;
             g_action_activate(G_ACTION(comboBoxChangeSelectionAction.get()),
-                              g_variant_new_uint32(getComboBoxIndexForPaperSize(newPageSize)));
+                              g_variant_new_uint32(static_cast<uint32_t>(getComboBoxIndexForPaperSize(newPageSize))));
             ignoreComboBoxSelectionChange = false;
         }
 
@@ -289,7 +289,8 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     GtkWidget* pageFormatComboBox = gtk_combo_box_new();
     PaperFormatUtils::fillPaperFormatDropDown(paperSizeMenuOptions, GTK_COMBO_BOX(pageFormatComboBox));
     gtk_widget_set_halign(pageFormatComboBox, GTK_ALIGN_END);
-    gtk_combo_box_set_active(GTK_COMBO_BOX(pageFormatComboBox), getComboBoxIndexForPaperSize(selectedPageSize));
+    gtk_combo_box_set_active(GTK_COMBO_BOX(pageFormatComboBox),
+                             static_cast<gint>(getComboBoxIndexForPaperSize(selectedPageSize)));
     g_signal_connect(pageFormatComboBox, "changed", G_CALLBACK(changedPaperFormatTemplateCb),
                      const_cast<PageTypeSelectionPopover*>(this));
     gtk_box_append(pageFormatBox, pageFormatComboBox);
@@ -332,7 +333,7 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                         *static_cast<std::tuple<GtkButton*, const PageTypeSelectionPopover*, GtkComboBox*>*>(
                                 pointerTuple);
                 xoj::util::GVariantSPtr state(g_action_get_state(G_ACTION(a)), xoj::util::adopt);
-                size_t selectedIndex = getGVariantValue<size_t>(state.get());
+                auto selectedIndex = getGVariantValue<size_t>(state.get());
                 gtk_widget_set_sensitive(GTK_WIDGET(btn), selectedIndex != COPY_CURRENT_PLACEHOLDER ||
                                                                   self->selectedPageSize.has_value());
                 // Enable page format selection for all page types except special ones (PDF and image)
@@ -358,9 +359,9 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
 
     g_signal_connect_object(this->comboBoxChangeSelectionAction.get(), "activate",
                             G_CALLBACK(+[](GSimpleAction* action, GVariant* comboBoxIndex, gpointer comboBoxPtr) {
-                                GtkWidget* comboBox = static_cast<GtkWidget*>(comboBoxPtr);
+                                auto* comboBox = static_cast<GtkWidget*>(comboBoxPtr);
                                 gtk_combo_box_set_active(GTK_COMBO_BOX(comboBox),
-                                                         getGVariantValue<uint32_t>(comboBoxIndex));
+                                                         static_cast<gint>(getGVariantValue<guint32>(comboBoxIndex)));
                             }),
                             pageFormatComboBox, GConnectFlags(0));
 
@@ -400,7 +401,7 @@ void PageTypeSelectionPopover::changedPaperFormatTemplateCb(GtkComboBox* widget,
     if (self->ignoreComboBoxSelectionChange) {
         return;
     }
-    int selected = gtk_combo_box_get_active(widget);
+    auto selected = static_cast<uint32_t>(gtk_combo_box_get_active(widget));
     if (selected < self->customPaperSizeIndex) {
         auto orientation = static_cast<PaperOrientation>(getGVariantValue<bool>(
                 xoj::util::GVariantSPtr(g_action_get_state(G_ACTION(self->orientationAction.get())), xoj::util::adopt)
