@@ -300,7 +300,7 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
 
     GtkWidget* applyToCurrentPageButton = gtk_button_new_with_label(_("Apply to current page"));
     g_signal_connect_data(
-            applyToCurrentPageButton, "clicked", G_CALLBACK((+[](GtkWidget*, gpointer pointerTuple) {
+            applyToCurrentPageButton, "clicked", G_CALLBACK((+[](GtkButton*, gpointer pointerTuple) {
                 auto [self, popover] =
                         *static_cast<std::tuple<const PageTypeSelectionPopover*, GtkPopover*>*>(pointerTuple);
                 if (self->selectedPT) {
@@ -349,7 +349,7 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
 
     g_signal_connect_data(
             this->pageSizeChangedAction.get(), "activate",
-            G_CALLBACK((+[](GObject* a, GParamSpec*, gpointer pointerTuple) {
+            G_CALLBACK((+[](GSimpleAction*, GVariant*, gpointer pointerTuple) {
                 auto [btn, self] = *static_cast<std::tuple<GtkWidget*, const PageTypeSelectionPopover*>*>(pointerTuple);
                 gtk_widget_set_sensitive(btn, self->selectedPT.has_value() || self->selectedPageSize.has_value());
             })),
