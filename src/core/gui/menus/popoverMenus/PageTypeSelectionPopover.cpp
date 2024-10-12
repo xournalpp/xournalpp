@@ -270,6 +270,7 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
 
     GtkBox* orientationFormatBox = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0));
     gtk_widget_add_css_class(GTK_WIDGET(orientationFormatBox), "linked");
+    gtk_widget_add_css_class(GTK_WIDGET(orientationFormatBox), "orientationFormatBox");
 
     std::array<GtkWidget*, 2> orientationButtons{};
     orientationButtons[GTK_ORIENTATION_VERTICAL] = createOrientationButton(
