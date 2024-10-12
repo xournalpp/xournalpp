@@ -313,7 +313,7 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                 }
             })),
             new std::tuple<const PageTypeSelectionPopover*, GtkPopover*>(this, GTK_POPOVER(popover)),
-            (GClosureNotify)free, GConnectFlags(0));
+            xoj::util::closure_notify_cb<std::tuple<const PageTypeSelectionPopover*, GtkPopover*>>, GConnectFlags(0));
     gtk_widget_set_margin_start(applyToCurrentPageButton, 10);
     gtk_widget_set_margin_end(applyToCurrentPageButton, 10);
     gtk_widget_set_margin_bottom(applyToCurrentPageButton, 3);
@@ -343,7 +343,9 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                 g_simple_action_set_enabled(self->orientationAction.get(),
                                             shouldPageFormatSettingsBeEnabled && self->selectedPageSize.has_value());
             })),
-            userdataPointerTuple, (GClosureNotify)free, GConnectFlags(0));
+            userdataPointerTuple,
+            xoj::util::closure_notify_cb<std::tuple<GtkButton*, const PageTypeSelectionPopover*, GtkComboBox*>>,
+            GConnectFlags(0));
 
     g_signal_connect_data(
             this->pageSizeChangedAction.get(), "activate",
@@ -352,7 +354,7 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                 gtk_widget_set_sensitive(btn, self->selectedPT.has_value() || self->selectedPageSize.has_value());
             })),
             new std::tuple<GtkWidget*, const PageTypeSelectionPopover*>(applyToCurrentPageButton, this),
-            (GClosureNotify)free, GConnectFlags(0));
+            xoj::util::closure_notify_cb<std::tuple<GtkWidget*, const PageTypeSelectionPopover*>>, GConnectFlags(0));
 
     g_signal_connect_object(this->comboBoxChangeSelectionAction.get(), "activate",
                             G_CALLBACK(+[](GSimpleAction* action, GVariant* comboBoxIndex, gpointer comboBoxPtr) {
@@ -383,7 +385,7 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                 gtk_popover_set_modal(popover, true);
             })),
             new std::tuple<const PageTypeSelectionPopover*, GtkPopover*>(this, GTK_POPOVER(popover)),
-            (GClosureNotify)free, GConnectFlags(0));
+            xoj::util::closure_notify_cb<std::tuple<const PageTypeSelectionPopover*, GtkPopover*>>, GConnectFlags(0));
     gtk_widget_set_margin_start(applyToAllPagesButton, 10);
     gtk_widget_set_margin_end(applyToAllPagesButton, 10);
     gtk_widget_set_margin_top(applyToAllPagesButton, 3);
