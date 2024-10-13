@@ -104,11 +104,6 @@ public:
      * */
     void replaceInsertOrder(std::deque<std::pair<Element*, Element::Index>> newInsertOrder);
 
-    /**
-     * Creates an undo/redo item for translating by (dx, dy), and then updates the bounding boxes accordingly.
-     */
-    void addMoveUndo(UndoRedoHandler* undo, double dx, double dy);
-
 public:
     /**
      * paints the selection
@@ -119,12 +114,11 @@ public:
      * Finish the editing
      */
     void finalizeSelection(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds,
-                           bool aspectRatio, Layer* layer, const PageRef& targetPage, XojPageView* targetView,
-                           UndoRedoHandler* undo);
+                           bool aspectRatio, Layer* destinationLayer);
 
     void updateContent(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds, double rotation,
-                       bool aspectRatio, Layer* layer, const PageRef& targetPage, XojPageView* targetView,
-                       UndoRedoHandler* undo, CursorSelectionType type);
+                       bool aspectRatio, Layer* layer, const PageRef& targetPage, UndoRedoHandler* undo,
+                       CursorSelectionType type);
 
 private:
     /**

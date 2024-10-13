@@ -83,15 +83,6 @@ void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, El
     this->insertOrder = std::move(newInsertOrder);
 }
 
-void EditSelectionContents::addMoveUndo(UndoRedoHandler* undo, double dx, double dy) {
-    undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, dx, dy,
-                                                         this->sourceLayer, this->sourcePage));
-    this->lastBounds.x += dx;
-    this->lastBounds.y += dy;
-    this->lastSnappedBounds.x += dx;
-    this->lastSnappedBounds.y += dy;
-}
-
 /**
  * Returns all containing elements of this selection
  */
@@ -356,8 +347,7 @@ void EditSelectionContents::deleteViewBuffer() {
  * The contents of the selection
  */
 void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,
-                                              bool aspectRatio, Layer* layer, const PageRef& targetPage,
-                                              XojPageView* targetView, UndoRedoHandler* undo) {
+                                              bool aspectRatio, Layer* destinationLayer) {
     double fx = bounds.width / this->originalBounds.width;
     double fy = bounds.height / this->originalBounds.height;
 
@@ -388,9 +378,9 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
         }
         if (index == Element::InvalidIndex) {
             // if the element didn't have a source layer (e.g, clipboard)
-            layer->addElement(e);
+            destinationLayer->addElement(e);
         } else {
-            layer->insertElement(e, index);
+            destinationLayer->insertElement(e, index);
         }
     }
 }
@@ -408,7 +398,7 @@ auto EditSelectionContents::getSourceView() -> XojPageView* { return this->sourc
 
 void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<double> snappedBounds, double rotation,
                                           bool aspectRatio, Layer* layer, const PageRef& targetPage,
-                                          XojPageView* targetView, UndoRedoHandler* undo, CursorSelectionType type) {
+                                          UndoRedoHandler* undo, CursorSelectionType type) {
     double mx = snappedBounds.x - this->lastSnappedBounds.x;
     double my = snappedBounds.y - this->lastSnappedBounds.y;
     bool move = mx != 0 || my != 0;
