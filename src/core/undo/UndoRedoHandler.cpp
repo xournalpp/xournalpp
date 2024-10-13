@@ -24,32 +24,35 @@ T* GetPtr(T* ptr) {
 }
 
 template <typename T>
-T* GetPtr(std::unique_ptr<T> ptr) {
+T* GetPtr(const std::unique_ptr<T>& ptr) {
     return ptr.get();
 }
 
 template <typename PtrType>
-inline void printAction(PtrType& action) {
+inline void printAction(PtrType& action, size_t n = 666) {
     if (action) {
-        g_message("%" PRIu64 " / %s", static_cast<uint64_t>(GetPtr(action)), action->getClassName());
+        g_message("%3zu -- %p / %s", n, GetPtr(action), action->getClassName().c_str());
     } else {
-        g_message("(null)");
+        g_message("%3zu -- (null)", n);
     }
 }
 
 template <typename PtrType>
-inline void printUndoList(std::deque<PtrType> list) {
-    for (auto&& action: list) { printAction(action); }
+inline void printUndoList(const std::deque<PtrType>& list) {
+    size_t n = 1;
+    for (const auto& action: list) {
+        printAction(action, n++);
+    }
 }
 
 #ifdef UNDO_TRACE
-constexpr bool UNDO_TRACE = true;
+constexpr bool UNDO_TRACE_BOOL = true;
 #else
-constexpr bool UNDO_TRACE = false;
+constexpr bool UNDO_TRACE_BOOL = false;
 #endif
 
 void UndoRedoHandler::printContents() {
-    if constexpr (UNDO_TRACE)  // NOLINT
+    if constexpr (UNDO_TRACE_BOOL)  // NOLINT
     {
         g_message("redoList");             // NOLINT
         printUndoList(this->redoList);     // NOLINT
@@ -70,8 +73,7 @@ UndoRedoHandler::~UndoRedoHandler() { clearContents(); }
 void UndoRedoHandler::clearContents() {
 #ifdef UNDO_TRACE
     for (auto const& undoAction: this->undoList) {
-        g_message("clearContents()::Delete UndoAction: %" PRIu64 " / %s", (size_t)*undoAction,
-                  undoAction.getClassName());
+        g_message("clearContents()::Delete UndoAction: %p / %s", undoAction.get(), undoAction->getClassName().c_str());
     }
 #endif  // UNDO_TRACE
 
@@ -87,7 +89,7 @@ void UndoRedoHandler::clearContents() {
 void UndoRedoHandler::clearRedo() {
 #ifdef UNDO_TRACE
     for (auto const& undoAction: this->redoList) {
-        g_message("clearRedo()::Delete UndoAction: %" PRIu64 " / %s", (size_t)&undoAction, undoAction.getClassName());
+        g_message("clearRedo()::Delete UndoAction: %p / %s", undoAction.get(), undoAction->getClassName().c_str());
     }
 #endif
     redoList.clear();

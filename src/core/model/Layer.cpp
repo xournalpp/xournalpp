@@ -92,7 +92,7 @@ auto Layer::removeElement(Element* e, bool free) -> Element::Index {
         }
     }
 
-    g_warning("Could not remove element from layer, it's not on the layer!");
+    g_warning("Could not remove element %p from layer %p, it's not on the layer!", e, this);
     Stacktrace::printStacktrace();
     return Element::InvalidIndex;
 }
