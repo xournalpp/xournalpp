@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-08-30 10:19\n"
+"POT-Creation-Date: 2024-09-27 08:09+0000\n"
+"PO-Revision-Date: 2024-10-14 20:29\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -25,15 +25,15 @@ msgstr "Папка для аудио не установлена! Записи �
 
 #: ../src/core/control/Control.cpp:227
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Ошибка файловой системы: {1}"
 
 #: ../src/core/control/Control.cpp:239
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "Не удалось удалить старый файл автосохранения \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:551
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr ""
+msgstr "Вы удалили активную панель инструментов. Возврат к панели инструментов по умолчанию."
 
 #: ../src/core/control/Control.cpp:571
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr "Нет"
 
 #: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
-#: ../src/core/control/Control.cpp:2014 ../src/core/control/XournalMain.cpp:206
+#: ../src/core/control/Control.cpp:2021 ../src/core/control/XournalMain.cpp:206
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -94,7 +94,7 @@ msgstr "Ошибка при открытии файла «{1}»"
 
 #: ../src/core/control/Control.cpp:1518
 msgid "File version mismatch"
-msgstr ""
+msgstr "Версии файлов не совпадают"
 
 #: ../src/core/control/Control.cpp:1519
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -103,7 +103,8 @@ msgstr "Загружаемый файл имеет более новую вер�
 #: ../src/core/control/Control.cpp:1542
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Ошибка чтения PDF файла \"{1}\"\n"
+"{2}"
 
 #: ../src/core/control/Control.cpp:1663
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
@@ -134,40 +135,40 @@ msgstr "Использовать предложенный PDF"
 
 #: ../src/core/control/Control.cpp:1689
 msgid "Missing PDF background file"
-msgstr ""
+msgstr "Отсутствует файл фона PDF"
 
 #: ../src/core/control/Control.cpp:1821
 msgid "Select font"
 msgstr "Выбрать шрифт"
 
-#: ../src/core/control/Control.cpp:1836
+#: ../src/core/control/Control.cpp:1840
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Выбрать цвет"
 
-#: ../src/core/control/Control.cpp:1858
+#: ../src/core/control/Control.cpp:1865
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "Document file was removed."
 msgstr "Файл документа был удален."
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "This document is not saved yet."
 msgstr "Этот документ еще не сохранен."
 
-#: ../src/core/control/Control.cpp:2009
+#: ../src/core/control/Control.cpp:2016
 msgid "Save As..."
 msgstr "Сохранить как..."
 
-#: ../src/core/control/Control.cpp:2009 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2016 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../src/core/control/Control.cpp:2012
+#: ../src/core/control/Control.cpp:2019
 msgid "Discard"
 msgstr "Не сохранять"
 
@@ -283,11 +284,11 @@ msgstr "Пожалуйста, удалите файл вручную"
 
 #: ../src/core/control/XournalMain.cpp:192
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Недавно появился лог файл с ошибкой из Xournal++. Пожалуйста, отправьте отчет об ошибке, чтобы ошибка могла быть исправлена."
 
 #: ../src/core/control/XournalMain.cpp:194
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Недавно появились лог файлы с ошибками из Xournal++. Пожалуйста, отправьте отчет об ошибках, чтобы ошибки могли быть исправлены."
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
@@ -295,7 +296,7 @@ msgstr "Последнее имя файла лога: {1}"
 
 #: ../src/core/control/XournalMain.cpp:199
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
-msgstr ""
+msgstr "Чтобы это всплывающее окно не появлялось снова, просто удалите лог файлы с ошибкой."
 
 #: ../src/core/control/XournalMain.cpp:202
 msgid "File Bug Report"
@@ -391,11 +392,12 @@ msgstr "Отключить аудио для этой сессии"
 #: ../src/core/control/XournalMain.cpp:652
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
-msgstr ""
+msgstr "Открыть PDF  в режиме прикрепления\n"
+"                                 Игнорируется, если не указан PDF файл."
 
 #: ../src/core/control/XournalMain.cpp:656
 msgid "Save xopp-file with the background PDF specified as FILE"
-msgstr ""
+msgstr "Сохраните xopp-файл с фоновым PDF-файлом, указанным в качестве файла"
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as PDF"
@@ -498,7 +500,7 @@ msgstr "Проверка на перезапись фона не удалась 
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export File"
-msgstr ""
+msgstr "Экспорт файла"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:77
 msgid "Export"
@@ -666,11 +668,11 @@ msgstr "На задний план"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
 msgid "Failed to load image"
-msgstr ""
+msgstr "Ошибка загрузки изображения"
 
 #: ../src/core/control/tools/ImageHandler.cpp:69
 msgid "Error while opening image file: "
-msgstr ""
+msgstr "Ошибка при открытии файла изображения: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -877,7 +879,7 @@ msgstr "Текст найден один раз на странице {1}"
 
 #: ../src/core/gui/SearchBar.cpp:131
 msgid "Text found {1} times on page {2} ({3} of {1})"
-msgstr ""
+msgstr "Текст найден {1} раз на странице {2} ({3} из {1})"
 
 #: ../src/core/gui/SearchBar.cpp:136
 msgid "Text not found, searched on all pages"
@@ -954,11 +956,11 @@ msgstr "Прямоугольное выделение"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
 msgid "Select multi layer region"
-msgstr ""
+msgstr "Выбор многослойного региона"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 msgid "Select multi layer rect"
-msgstr ""
+msgstr "Выбор многослойной прямой"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
@@ -1057,7 +1059,7 @@ msgstr "Xournal++ шаблон"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:40
 msgid "Image files"
-msgstr ""
+msgstr "Файлы изображений"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:70
 msgid "Custom"
@@ -1124,28 +1126,28 @@ msgstr "Выбрать цвет фона"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:27
 msgid "Select opacity for: "
-msgstr ""
+msgstr "Выбрать прозрачность для: "
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:32
 msgid "Highlighter Options"
-msgstr ""
+msgstr "Настройки маркера"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:33
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:37
 msgid "Fill color"
-msgstr ""
+msgstr "Цвет заливки"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:36
 msgid "Pen Options"
-msgstr ""
+msgstr "Настройки пера"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:40
 msgid "PDF Text Options"
-msgstr ""
+msgstr "Настройки Текста PDF"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:41
 msgid "PDF Text Marker"
-msgstr ""
+msgstr "Маркер текста PDF"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
 msgid "<b>{1}</b>\n"
@@ -1156,21 +1158,21 @@ msgstr ""
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Устройства не найдены. Должно быть что-то не так - может отправить отчёт об ошибке?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Включите чувствительность к нажатию или оценку нажатия, чтобы изменить эту настройку!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:287
+#: ../src/core/gui/dialog/SettingsDialog.cpp:286
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Фильтровать силу нажатия. Умножить нажатие на мультипликатор силы нажатия. Если она меньше минимума, использовать минимальное значение."
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:30
 msgid "Built-in palettes"
-msgstr ""
+msgstr "Встроенные палитры"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:32
 msgid "User palettes"
-msgstr ""
+msgstr "Пользовательские палитры"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
@@ -1183,15 +1185,15 @@ msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:151
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:163
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:166
 msgid "Palette has no Name"
-msgstr ""
+msgstr "Палитра не имеет Имени"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:27
 msgid "Predefined"
@@ -1219,7 +1221,7 @@ msgstr "_Открыть"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:123
 msgid "Open template file"
-msgstr ""
+msgstr "Открыть файл шаблона"
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
@@ -1233,7 +1235,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:173
 msgid "Choose image file"
-msgstr ""
+msgstr "Выбрать файл с изображением"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:30
 msgid "Select Image"
@@ -1253,7 +1255,7 @@ msgstr "Это изображение не может быть загружен�
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:113
 msgid "This image could not be loaded."
-msgstr ""
+msgstr "Это изображение не может быть загружено."
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:28
 msgid "Select PDF Page"
@@ -1294,17 +1296,17 @@ msgstr ""
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:79
 msgctxt "Item category in toolbar customization dialog"
 msgid "Audio"
-msgstr ""
+msgstr "Аудио"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
-msgstr ""
+msgstr "Цвета"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
 msgid "Files"
-msgstr ""
+msgstr "Файлы"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:82
 msgctxt "Item category in toolbar customization dialog"
@@ -1314,27 +1316,27 @@ msgstr ""
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:83
 msgctxt "Item category in toolbar customization dialog"
 msgid "Navigation"
-msgstr ""
+msgstr "Навигация"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:84
 msgctxt "Item category in toolbar customization dialog"
 msgid "Selection"
-msgstr ""
+msgstr "Выделение"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:85
 msgctxt "Item category in toolbar customization dialog"
 msgid "Tools"
-msgstr ""
+msgstr "Инструменты"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:86
 msgctxt "Item category in toolbar customization dialog"
 msgid "Separators"
-msgstr ""
+msgstr "Разделители"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
-msgstr ""
+msgstr "Плагины"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
@@ -1347,16 +1349,16 @@ msgstr "Применить ко всем страницам"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:15
 msgid "Plugin Manager"
-msgstr ""
+msgstr "Менеджер плагинов"
 
 #: ../src/core/gui/menus/menubar/PluginsSubmenu.cpp:32
 msgid "Plugin"
-msgstr ""
+msgstr "Плагин"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:61
 msgctxt "The selected document will be removed from the recent files list"
 msgid "Dismiss"
-msgstr ""
+msgstr "Отменить"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:100
 msgid "No recent files"
@@ -2041,15 +2043,15 @@ msgstr "Не удалось создать папку: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Ошибка {1} при выполнении системной команды: {2}"
 
-#: ../src/util/XojMsgBox.cpp:187
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Select another name"
 msgstr "Выбрать другое имя"
 
-#: ../src/util/XojMsgBox.cpp:188
+#: ../src/util/XojMsgBox.cpp:192
 msgid "Replace"
 msgstr "Заменить"
 
-#: ../src/util/XojMsgBox.cpp:211
+#: ../src/util/XojMsgBox.cpp:215
 msgid "There was an error displaying help: {1}"
 msgstr "Произошла ошибка при отображении справки: {1}"
 
