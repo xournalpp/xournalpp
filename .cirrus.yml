@@ -63,6 +63,8 @@ build_xournalpp_task:
     cmake .. -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo
     cmake --build .
     cmake --install . --prefix /opt/devroot/gtk/inst
+  pkgconf_symlink_script: | # used for gtk-mac-bundler
+    ln -sf $(which pkgconf) /opt/devroot/gtk/inst/bin/pkg-config
   package_script: |
     (cd mac-setup && bash build-app.sh ~/gtk && bash build-dmg.sh Xournal++.app Xournal++.dmg)
   xournalpp_artifacts:
