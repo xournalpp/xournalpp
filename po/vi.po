@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: vi\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -32,7 +32,8 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2324
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Tập tin thay thế được đề xuất: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -45,7 +46,7 @@ msgstr "%F-Ghi chú-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:145
 msgid "%{name}_annotated"
-msgstr ""
+msgstr "%{name}_đã chú thích"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:166
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -131,7 +132,7 @@ msgstr "Thuộc tính màu chưa cài đặt!"
 #: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Thư mục ghi âm không hợp lệ! Chức năng ghi ân sẽ không hoạt động! Vui lòng cài đặt thư mục ghi âm trong \"Tùy chọn> Ghi âm\""
 
 #: ../src/core/control/Control.cpp:257
 msgid "Autosave failed with an error: {1}"
@@ -165,7 +166,7 @@ msgstr "Đưa ra phía trước"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:36
 msgid "Built on"
-msgstr ""
+msgstr "Dựa trên"
 
 #: ../src/core/control/Control.cpp:2336 ../src/core/control/Control.cpp:2813
 #: ../src/core/control/XournalMain.cpp:188
@@ -195,7 +196,7 @@ msgstr "Đổi chiều rộng nét bút"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:65
 msgid "Clear list"
-msgstr ""
+msgstr "Xóa danh sách"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
@@ -203,7 +204,7 @@ msgstr "Không xác định được màu \"{1}\" (không có trong danh sách m
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Compass"
-msgstr ""
+msgstr "Com-pa"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
@@ -434,7 +435,7 @@ msgstr "Vẽ Mũi tên"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Vẽ cặp múi tên"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:134
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -560,7 +561,7 @@ msgstr "Lỗi khi đang lưu tự động: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Lỗi khi xuất nền pdf: Không thể tìm thấy trang pdf số "
 
 #: ../src/util/Util.cpp:93
 msgid "Error {1} executing system command: {2}"
@@ -626,7 +627,7 @@ msgstr "Xuất không quy định\n"
 
 #: ../src/core/control/XournalMain.cpp:146
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "Không xóa được tập tin: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -636,7 +637,9 @@ msgstr "Không tìm thấy chương trình tạo LaTeX trong ĐƯỜNG DẪN: {1
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr ""
+msgstr "Không thể tìm thấy trình tạo LaTeX trong ĐƯỜNG DẪN: {1}\n"
+"Vì được cài đặt bằng Flatpak, bạn cần cài đặt tiện ích mở rộng Flatpak freedesktop Tex Live. Ví dụ, chạy câu lệnh sau đây:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
@@ -649,7 +652,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:179
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Thất bại khi mở content.xml trong lưu trữ zip: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -657,7 +660,7 @@ msgstr "Không thể phân tích cú pháp lệnh của trình tạo LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:61
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "Không thể phân tích đường dẫn trình tạo LaTeX: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
@@ -709,7 +712,7 @@ msgstr "Giấy phép Công cộng Chung GNU phiên bản 2 trở lên"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:39
 msgid "GTK Version"
-msgstr ""
+msgstr "Phiên bản GTK"
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
@@ -717,7 +720,7 @@ msgstr "Tải phiên bản của xournalpp"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:46
 msgid "Git commit"
-msgstr ""
+msgstr "Git commit"
 
 #: ../src/core/control/LatexController.cpp:76
 msgid "Global template file does not exist. Please check your settings."
@@ -761,7 +764,7 @@ msgstr "Khoá Lưới"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "GtkSourceView đã bị vô hiệu hóa khi build Xournal++! Một số tùy chọn sẽ không khả dụng."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:539
@@ -800,11 +803,11 @@ msgstr "Chèn một bản sao chép của trang hiện tại bên dưới"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:95
 msgid "Insert after current page"
-msgstr ""
+msgstr "Chèn sau trang hiện tại"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:96
 msgid "Insert at end"
-msgstr ""
+msgstr "Chèn ở cuối"
 
 #: ../src/core/undo/InsertUndoAction.cpp:82
 msgid "Insert elements"
@@ -841,7 +844,7 @@ msgstr "Nhảy đến Trang (Trang đầu tiên: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "Chủ đề trình chỉnh sửa LaTeX:"
 
 #: ../src/core/control/LatexController.cpp:244
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -932,7 +935,7 @@ msgstr "Không có trang pdf nào hiện sẵn để gắn vào. Bạn có thể
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
 msgid "No recent files"
-msgstr ""
+msgstr "Không có tập tin gần đây"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:128
 msgid "Normal drawing"
@@ -946,7 +949,8 @@ msgstr "Đồng ý"
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Khi xuất, chỉ xuất lớp được chỉ định theo PHẠM VI (ví dụ: \"2-3,5,7-\")\n"
+"                                 Không có tác dụng nếu thiếu -p/--create-pdf hoặc -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:663
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1059,7 +1063,7 @@ msgstr "Chơi Đối tượng"
 
 #: ../src/core/control/XournalMain.cpp:148
 msgid "Please delete the file manually"
-msgstr ""
+msgstr "Vui lòng xóa tệp tin thủ công"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
 msgid "Predefined"
@@ -1162,7 +1166,7 @@ msgstr "Lưu Tệp tin"
 
 #: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error, can't backup: {1}"
-msgstr ""
+msgstr "Lỗi lưu tệp tin, không thể sao lưu: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:125
 #: ../src/core/control/jobs/SaveJob.cpp:131
@@ -1175,7 +1179,7 @@ msgstr "Tỷ lệ"
 
 #: ../src/core/gui/PageView.cpp:912
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "Cuộn đến trang {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Search"
@@ -1187,7 +1191,7 @@ msgstr "Xem toàn bộ danh sách người đóng góp"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:101
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Chọn vùng văn bản từ pdf"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:543
 msgid "Select Font"
@@ -1255,7 +1259,7 @@ msgstr "Chọn vùng"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Chọn văn bản từ pdf"
 
 #: ../src/core/control/Control.cpp:2334
 msgid "Select another PDF"
@@ -1299,11 +1303,11 @@ msgstr "Gửi báo cáo lỗi"
 
 #: ../src/core/control/tools/EditSelection.cpp:426
 msgid "Send backward"
-msgstr ""
+msgstr "Đưa về sau"
 
 #: ../src/core/control/tools/EditSelection.cpp:434
 msgid "Send to back"
-msgstr ""
+msgstr "Đưa về sau cùng"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:57
 msgid "Separator"
@@ -1312,23 +1316,28 @@ msgstr "Dấu ngăn cách"
 #: ../src/core/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Đặt DPI cho xuất ảnh PNG. Mặc định là 300\n"
+"                                 Không có tác dụng nếu thiếu -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:681
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Đặt độ dài trang cho xuất ảnh PNG\n"
+"                                 Không có tác dụng nếu thiếu -i/--create-img=foo.png\n"
+"                                 Bỏ qua nếu đã sử dụng --export-png-dpi hoặc --export-png-width"
 
 #: ../src/core/control/XournalMain.cpp:675
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Đặt độ rộng trang cho xuất ảnh PNG\n"
+"                                 Không có tác dụng nếu thiếu -i/--create-img=foo.png\n"
+"                                 Bỏ qua nếu đã sử dụng --export-png-dpi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Setsquare"
-msgstr ""
+msgstr "Ê ke"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:517
 msgid "Shape Recognizer"
@@ -1363,7 +1372,7 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
-msgstr ""
+msgstr "Khuôn nhạc"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:552
 msgid "Stop"
@@ -1377,11 +1386,11 @@ msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "Lưu thành công tài liệu vào \"{1}\""
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
 msgid "Supported files"
-msgstr ""
+msgstr "Tập tin được hỗ trợ"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
@@ -1401,7 +1410,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
-msgstr ""
+msgstr "Mặc định hệ thống"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:512
@@ -1419,7 +1428,7 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:133
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "Văn bản được tìm thấy một lần trên trang {1}"
 
 #: ../src/core/gui/SearchBar.cpp:134
 msgid "Text found {1} times on page {2}"
@@ -1427,52 +1436,53 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:84
 msgid "Text not found"
-msgstr ""
+msgstr "Không tìm thấy văn bản"
 
 #: ../src/core/gui/SearchBar.cpp:139
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "Không tìm thấy văn bản, đã tìm kiếm trên tất cả các trang"
 
 #: ../src/core/control/Control.cpp:1257
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "Cấu hình thanh công cụ \"{1}\" đã được xác định, bạn có muốn tạo một bản sao để chỉnh sửa?"
 
 #: ../src/core/control/Control.cpp:2311
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Tệp tin nền đính kèm không thể được tìm thấy. Nó có thể đã bị di chuyển, đổi tên hoặc bị xóa."
 
 #: ../src/core/control/XournalMain.cpp:245
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Tệp tin nền \"{1}\" không thể được tìm thấy. Nó có thể đã bị di chuyển, đổi tên hoặc bị xóa."
 
 #: ../src/core/control/Control.cpp:2314
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr ""
+msgstr "Tệp tin nền \"{1}\" không thể được tìm thấy. Nó có thể đã bị di chuyển, đổi tên hoặc bị xóa.\n"
+"Lần cuối tìm thấy ở: \"{2}\""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "Kiểm tra ghi đè nền không thành công với:\n"
 
 #: ../src/core/control/Control.cpp:2375
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Tệp tin đang được tải có định dạng tệp mới hơn định dạng tệp đang được hỗ trợ bởi phiên bản Xournal++ này, vì vậy nó có thể không được tải đúng cách. Vẫn mở?"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "Tệp không phải là tệp .xopp hợp lệ (Thiếu loại Mime): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:148
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "Tệp không phải là tệp .xopp hợp lệ (Sai loại Mime): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:157
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "Tệp không phải là tệp .xopp hợp lệ (Thiếu phiên bản): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:170
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "Tệp không phải là tệp .xopp hợp lệ (Chuỗi phiên bản bị hỏng): \"{1}\""
 
 #: ../src/core/control/LatexController.cpp:303
 msgid "The formula is empty when rendered or invalid."
@@ -1480,7 +1490,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:178
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "Tên tệp tin nhật ký gần đây nhất: {1}"
 
 #: ../src/core/control/XournalMain.cpp:174
 msgid "There are errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
@@ -1508,11 +1518,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Toggle fullscreen"
-msgstr ""
+msgstr "Toàn màn hình"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Tool - don't change"
-msgstr ""
+msgstr "Công cụ - không thay đổi"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
@@ -1528,15 +1538,15 @@ msgstr "Thử lưu khẩn cấp tập tin đang mở…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Không thể đọc được tệp mẫu chung tại {1}. Tệp có tồn tại không?"
 
 #: ../src/core/gui/PageView.cpp:371
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "Không thể phát ghi âm {1}"
 
 #: ../src/core/control/Control.cpp:1481
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Không thể truy xuất trang pdf."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/core/undo/UndoRedoHandler.cpp:182
@@ -1549,19 +1559,19 @@ msgstr "Hoàn tác: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:316
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Thẻ gốc không mong muốn: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:337
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Thẻ không mong muốn trong tài liệu: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:540
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Loại nền không xác định: {1}"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Giá trị màu sắc không xác định: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:496
 msgid "Unknown domain type: {1}"
@@ -1569,7 +1579,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:256
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Lỗi trình phân tích cú pháp không xác định"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:444
 msgid "Unknown pixmap::domain type: {1}"
@@ -1585,15 +1595,15 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2696
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Tài liệu chưa được lưu"
 
 #: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "Định dạng đồ họa không được hỗ trợ: "
 
 #: ../src/core/control/Control.cpp:2332
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Sử dụng PDF được đề xuất"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:33
 msgid "Version"
@@ -1605,7 +1615,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Vertical space"
-msgstr ""
+msgstr "Khoảng cách dọc"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:604
 msgid "Very Fine"
@@ -1617,7 +1627,7 @@ msgstr "Rất dày"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "With PDF background"
-msgstr ""
+msgstr "Với nền PDF"
 
 #: ../src/core/undo/InsertUndoAction.cpp:35
 msgid "Write text"
@@ -1633,34 +1643,35 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:253
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "Lỗi trình phân tích cú pháp XML: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (Tương thích)"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
 msgid "Xournal files"
-msgstr ""
+msgstr "Tập tin xournal"
 
 #: ../src/core/control/XournalMain.cpp:213
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++ lần trước đã bị sự cố. Bạn có muốn khôi phục tệp tin đã được chỉnh sửa lần trước?"
 
 #: ../src/core/control/Control.cpp:2645
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Tập tin xournal++"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:91
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Mẫu Xournal++"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:201
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "Bạn không có bất kỳ trang PDF nào để chọn. Hủy bỏ hoạt động.\n"
+"Vui lòng chọn một loại nền khác: Menu \"Nhật ký\" → \"Cấu hình Mẫu Trang\"."
 
 #: ../src/core/control/XournalMain.cpp:176
 msgid "You're using \"{1}/{2}\" branch."
@@ -1670,7 +1681,9 @@ msgstr ""
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "Tài liệu hiện tại của bạn không chứa trang PDF số {1}\n"
+"Bạn có muốn chèn trang này?\n\n"
+"Mẹo: Bạn có thể chọn Nhật ký → Nền trang → Nền PDF để chèn một trang PDF."
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
@@ -1698,18 +1711,18 @@ msgstr "Hiện 100%"
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Cancel"
-msgstr ""
+msgstr "_Hủy bỏ"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 msgid "_Open"
-msgstr ""
+msgstr "_Mở"
 
 #: ../src/core/control/Control.cpp:2640
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
-msgstr ""
+msgstr "_Lưu"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
@@ -1723,19 +1736,19 @@ msgstr "gạch-/ chấm"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
 msgid "dashed"
-msgstr ""
+msgstr "gạch"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default disabled"
-msgstr ""
+msgstr "mặc định không được kích hoạt"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default enabled"
-msgstr ""
+msgstr "mặc định kích hoạt"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "delete stroke"
-msgstr ""
+msgstr "xóa nét"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:307
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:505
@@ -1753,7 +1766,7 @@ msgstr "tẩy"
 
 #: ../src/core/control/Control.cpp:2263
 msgid "file: {1}"
-msgstr ""
+msgstr "tệp tin: {1}"
 
 #: ../src/core/undo/AddUndoAction.cpp:85
 #: ../src/core/undo/DeleteUndoAction.cpp:83
@@ -1785,16 +1798,16 @@ msgstr "hiện"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
 msgid "standard"
-msgstr ""
+msgstr "bình thường"
 
 #: ../src/core/undo/AddUndoAction.cpp:82
 #: ../src/core/undo/DeleteUndoAction.cpp:80
 msgid "stroke"
-msgstr ""
+msgstr "Nét"
 
 #: ../src/core/control/DeviceListHelper.cpp:113
 msgid "tablet pad"
-msgstr ""
+msgstr "tablet pad"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:89
@@ -1803,7 +1816,7 @@ msgstr "văn bản"
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchpad"
-msgstr ""
+msgstr "touchpad"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "touchscreen"
@@ -1811,7 +1824,7 @@ msgstr "màn hình cảm ứng"
 
 #: ../src/core/control/DeviceListHelper.cpp:111
 msgid "trackpoint"
-msgstr ""
+msgstr "trackpoint"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "whiteout"
@@ -1936,7 +1949,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3217
 msgid "(requires restart)"
-msgstr ""
+msgstr "(yêu cầu khởi động lại)"
 
 #: ../ui/settings.glade:5435
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1945,7 +1958,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1265
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1317
 msgid "0,50"
@@ -1969,7 +1982,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1233
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2712
 msgid "1.0"
@@ -1977,7 +1990,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1204
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3481
 msgid "30"
@@ -1993,7 +2006,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>Màu nền</b>"
 
 #: ../ui/pageTemplate.glade:258
 msgid "<b>Background</b>"
@@ -2028,11 +2041,11 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
-msgstr ""
+msgstr "<b>Cỡ trang</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr ""
+msgstr "<b>Cỡ trang</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
@@ -2120,7 +2133,7 @@ msgstr ""
 
 #: ../ui/settings.glade:663
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
-msgstr ""
+msgstr "<i>Tên này sẽ được đề xuất nếu như bạn xuất tài liệu sang PDF</i>"
 
 #: ../ui/settings.glade:492
 msgid "<i>This name will be proposed if you save a new document.</i>"
@@ -2177,7 +2190,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Tất cả"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -2191,7 +2204,7 @@ msgstr ""
 #: ../ui/settings.glade:2167
 msgctxt "eraser is always visible"
 msgid "Always"
-msgstr ""
+msgstr "Luôn luôn"
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
@@ -2219,11 +2232,11 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Tác giả: "
 
 #: ../ui/about.glade:363
 msgid "Authors"
-msgstr ""
+msgstr "Tác giả"
 
 #: ../ui/latexSettings.glade:447
 msgid "Auto-indent"
@@ -2308,7 +2321,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Thay đổi"
 
 #: ../ui/latexSettings.glade:205
 msgid "Choose a global LaTeX template file"
@@ -2332,7 +2345,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3203
 msgid "Color"
-msgstr ""
+msgstr "Màu"
 
 #: ../ui/settings.glade:3258
 msgid "Colors"
@@ -2348,7 +2361,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "Tùy chỉnh mẫu trang mới"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2360,7 +2373,7 @@ msgstr ""
 
 #: ../ui/main.glade:2777
 msgid "Copy selected text"
-msgstr ""
+msgstr "Sao chép văn bản đã chọn"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2404,11 +2417,11 @@ msgstr ""
 
 #: ../ui/settings.glade:805
 msgid "Default Pdf export name"
-msgstr ""
+msgstr "Tên mặc định khi xuất ra Pdf"
 
 #: ../ui/settings.glade:637
 msgid "Default Save Name"
-msgstr ""
+msgstr "Tên mặc định khi lưu"
 
 #: ../ui/settings.glade:6213
 msgid "Default Seek Time (in seconds)"
@@ -2416,7 +2429,7 @@ msgstr ""
 
 #: ../ui/settings.glade:525 ../ui/settings.glade:696
 msgid "Default name: "
-msgstr ""
+msgstr "Tên mặc định: "
 
 #: ../ui/settings.glade:5812
 msgid "Defaults"
@@ -2424,7 +2437,7 @@ msgstr ""
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "Xóa lớp"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2468,7 +2481,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1252
 msgid "Drag"
-msgstr ""
+msgstr "Kéo"
 
 #: ../ui/settings.glade:1046
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2542,7 +2555,7 @@ msgstr ""
 
 #: ../ui/settings.glade:381
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "Bật tự động lưu"
 
 #: ../ui/settings.glade:1087
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
@@ -2594,7 +2607,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
-msgstr ""
+msgstr "Xuất"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
@@ -2635,11 +2648,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:549
 msgid "Font: "
-msgstr ""
+msgstr "Phông chữ: "
 
 #: ../ui/main.glade:578 ../ui/settings.glade:3977
 msgid "Fullscreen"
-msgstr ""
+msgstr "Toàn màn hình"
 
 #: ../ui/settings.glade:6115
 msgid "Gain"
@@ -2687,7 +2700,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Cao"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2711,7 +2724,7 @@ msgstr ""
 
 #: ../ui/main.glade:2799
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Đánh dấu văn bản đã chọn"
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
@@ -2729,11 +2742,11 @@ msgstr ""
 
 #: ../ui/about.glade:157
 msgid "Icon Designers"
-msgstr ""
+msgstr "Thiết kế biểu tượng"
 
 #: ../ui/settings.glade:3187
 msgid "Icon Theme"
-msgstr ""
+msgstr "Chủ đề biểu tượng"
 
 #: ../ui/settings.glade:5216
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2765,7 +2778,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Chất lượng hình ảnh"
 
 #: ../ui/settings.glade:246
 msgid "Inertia"
@@ -2837,7 +2850,7 @@ msgstr "Bản quyền"
 
 #: ../ui/latexSettings.glade:433
 msgid "Line numbers"
-msgstr ""
+msgstr "Số dòng"
 
 #: ../ui/settings.glade:902
 msgid "Load / Save"
@@ -2853,7 +2866,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3204
 msgid "Lucide"
-msgstr ""
+msgstr "Lucide"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2939,7 +2952,7 @@ msgstr ""
 #: ../ui/settings.glade:2166
 msgctxt "eraser is never visible"
 msgid "Never"
-msgstr ""
+msgstr "Không bao giờ"
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
@@ -3017,7 +3030,7 @@ msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr ""
+msgstr "Định dạng trang"
 
 #: ../ui/main.glade:1350
 msgid "Paper _Color"
@@ -3058,7 +3071,7 @@ msgstr ""
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "Trình quản lý tiện ích mở rộng"
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
@@ -3106,7 +3119,7 @@ msgstr "Bán kính"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
-msgstr ""
+msgstr "Phạm vi"
 
 #: ../ui/settings.glade:5566
 msgid "Re-render when the page's zoom changes by more than "
@@ -3162,7 +3175,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3808
 msgid "Scrollbars"
-msgstr ""
+msgstr "Thanh cuộn"
 
 #: ../ui/settings.glade:4733
 msgid "Scrolling outside the page"
@@ -3170,7 +3183,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "Chọn màu nền"
 
 #: ../ui/settings.glade:5900
 msgid "Select Folder"
@@ -3266,7 +3279,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3728
 msgid "Sidebar"
-msgstr ""
+msgstr "Thanh bên"
 
 #: ../ui/settings.glade:1078
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
@@ -3312,7 +3325,7 @@ msgstr ""
 
 #: ../ui/main.glade:2839
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Gạch ngang văn bản đã chọn"
 
 #: ../ui/settings.glade:5312
 msgid "Stroke Recognizer"
@@ -3357,7 +3370,7 @@ msgstr ""
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "Mẫu:"
 
 #: ../ui/settings.glade:2559 ../ui/settings.glade:2572
 msgid "Test"
@@ -3373,7 +3386,7 @@ msgstr ""
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "Kiểu chữ..."
+msgstr ""
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3397,7 +3410,7 @@ msgstr "Đơn vị của thước là cm"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "Những cài đặt này sẽ được áp dụng cho trang mới"
 
 #: ../ui/settings.glade:2397
 msgid "Timeout"
@@ -3430,7 +3443,7 @@ msgstr "Thử chọn đối tượng trước; nếu không có gì được ch�
 
 #: ../ui/main.glade:2819
 msgid "Underline selected text"
-msgstr ""
+msgstr "Gạch dưới văn bản đã chọn"
 
 #: ../ui/settings.glade:3165
 msgid "Use available Stock Icons (requires restart)"
@@ -3438,7 +3451,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:529
 msgid "Use font from system theme."
-msgstr ""
+msgstr "Sử dụng phông chữ từ chủ đề hệ thống."
 
 #: ../ui/settings.glade:5212
 msgid "Use snapping for recognized shapes"
@@ -3502,7 +3515,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Rộng"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3518,7 +3531,7 @@ msgstr ""
 
 #: ../ui/settings.glade:254
 msgid "Xournal++ Preferences"
-msgstr ""
+msgstr "Cài đặt Xournal++"
 
 #: ../ui/settings.glade:4548
 msgid "Zoom"
@@ -3794,11 +3807,11 @@ msgstr ""
 
 #: ../ui/settings.glade:405
 msgid "every"
-msgstr ""
+msgstr "mỗi"
 
 #: ../ui/settings.glade:432
 msgid "minutes"
-msgstr ""
+msgstr "phút"
 
 #: ../ui/settings.glade:3417 ../ui/settings.glade:3468
 #: ../ui/settings.glade:4691 ../ui/settings.glade:4702
