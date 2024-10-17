@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-10 19:21\n"
+"POT-Creation-Date: 2024-09-27 08:09+0000\n"
+"PO-Revision-Date: 2024-10-17 15:42\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr "Não"
 
 #: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
-#: ../src/core/control/Control.cpp:2014 ../src/core/control/XournalMain.cpp:206
+#: ../src/core/control/Control.cpp:2021 ../src/core/control/XournalMain.cpp:206
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -141,34 +141,34 @@ msgstr "O arquivo PDF não tem um arquivo de fundo"
 msgid "Select font"
 msgstr "Selecionar fonte"
 
-#: ../src/core/control/Control.cpp:1836
+#: ../src/core/control/Control.cpp:1840
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Selecionar cor"
 
-#: ../src/core/control/Control.cpp:1858
+#: ../src/core/control/Control.cpp:1865
 msgid "Unsaved Document"
 msgstr "Documento não salvo"
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "Document file was removed."
 msgstr "Documento foi removido."
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "This document is not saved yet."
 msgstr "Este documento ainda não foi salvo."
 
-#: ../src/core/control/Control.cpp:2009
+#: ../src/core/control/Control.cpp:2016
 msgid "Save As..."
 msgstr "Salvar como..."
 
-#: ../src/core/control/Control.cpp:2009 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2016 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "Salvar"
 
-#: ../src/core/control/Control.cpp:2012
+#: ../src/core/control/Control.cpp:2019
 msgid "Discard"
 msgstr "Descartar"
 
@@ -1160,11 +1160,11 @@ msgstr "<b>{1}</b>\n"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Nenhum dispositivo encontrado. Isto parece errado - talvez arquive um relatório de bug?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Ative sensibilidade à pressão ou inferência de pressão para alterar esta configuração!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:287
+#: ../src/core/gui/dialog/SettingsDialog.cpp:286
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtrar pressão de entrada. Multiplique a pressão pelo multiplicador de pressão. Se menor que o mínimo, use a pressão mínima."
 
@@ -2046,15 +2046,15 @@ msgstr "Não foi possível criar a pasta: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Erro {1} ao executar o comando do sistema: {2}"
 
-#: ../src/util/XojMsgBox.cpp:187
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Select another name"
 msgstr "Selecione outro nome"
 
-#: ../src/util/XojMsgBox.cpp:188
+#: ../src/util/XojMsgBox.cpp:192
 msgid "Replace"
 msgstr "Substituir"
 
-#: ../src/util/XojMsgBox.cpp:211
+#: ../src/util/XojMsgBox.cpp:215
 msgid "There was an error displaying help: {1}"
 msgstr "Ocorreu um erro ao exibir a ajuda: {1}"
 
