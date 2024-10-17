@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:15\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: fi\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -917,7 +917,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
 #: ../src/core/plugin/Plugin.cpp:265 ../src/core/plugin/Plugin.cpp:288
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -2398,7 +2398,7 @@ msgstr ""
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "Poista taso"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2572,7 +2572,7 @@ msgstr "Vienti"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "Vie tiedostona..."
+msgstr ""
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2929,7 +2929,7 @@ msgstr ""
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
-msgstr "Uusi _taso"
+msgstr ""
 
 #: ../ui/settings.glade:3329
 msgctxt "stylus cursor uses no icon"
@@ -3012,7 +3012,7 @@ msgstr ""
 
 #: ../ui/main.glade:2072
 msgid "Pause"
-msgstr "Keskeytä"
+msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
@@ -3052,7 +3052,7 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "Asetukset"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
@@ -3347,7 +3347,7 @@ msgstr ""
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "Tekstin fontti..."
+msgstr ""
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3516,59 +3516,59 @@ msgstr ""
 
 #: ../ui/main.glade:753
 msgid "_2 Columns"
-msgstr "_2 saraketta"
+msgstr ""
 
 #: ../ui/main.glade:858
 msgid "_2 Rows"
-msgstr "_2 riviä"
+msgstr ""
 
 #: ../ui/main.glade:764
 msgid "_3 Columns"
-msgstr "_3 saraketta"
+msgstr ""
 
 #: ../ui/main.glade:869
 msgid "_3 Rows"
-msgstr "_3 riviä"
+msgstr ""
 
 #: ../ui/main.glade:775
 msgid "_4 Columns"
-msgstr "_4 saraketta"
+msgstr ""
 
 #: ../ui/main.glade:880
 msgid "_4 Rows"
-msgstr "_4 riviä"
+msgstr ""
 
 #: ../ui/main.glade:786
 msgid "_5 Columns"
-msgstr "_5 saraketta"
+msgstr ""
 
 #: ../ui/main.glade:891
 msgid "_5 Rows"
-msgstr "_5 riviä"
+msgstr ""
 
 #: ../ui/main.glade:797
 msgid "_6 Columns"
-msgstr "_6 saraketta"
+msgstr ""
 
 #: ../ui/main.glade:902
 msgid "_6 Rows"
-msgstr "_6 riviä"
+msgstr ""
 
 #: ../ui/main.glade:808
 msgid "_7 Columns"
-msgstr "_7 saraketta"
+msgstr ""
 
 #: ../ui/main.glade:913
 msgid "_7 Rows"
-msgstr "_7 riviä"
+msgstr ""
 
 #: ../ui/main.glade:819
 msgid "_8 Columns"
-msgstr "_8 saraketta"
+msgstr ""
 
 #: ../ui/main.glade:924
 msgid "_8 Rows"
-msgstr "_8 riviä"
+msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
@@ -3580,7 +3580,7 @@ msgstr ""
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
-msgstr "_Sarakkeet/rivit"
+msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
@@ -3592,27 +3592,27 @@ msgstr ""
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
-msgstr "_Poista sivu"
+msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "_Muokkaa"
+msgstr ""
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "_Pyyhekumi"
+msgstr ""
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "_Vie PDF:nä"
+msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr "_Tiedosto"
+msgstr ""
 
 #: ../ui/main.glade:1076
 msgid "_First Page"
-msgstr "_Ensimmäinen sivu"
+msgstr ""
 
 #: ../ui/main.glade:1098
 msgid "_Goto Page"
@@ -3620,19 +3620,19 @@ msgstr ""
 
 #: ../ui/main.glade:2151
 msgid "_Help"
-msgstr "_Ohje"
+msgstr ""
 
 #: ../ui/main.glade:1432
 msgid "_Highlighter"
-msgstr "_Tussikynä"
+msgstr ""
 
 #: ../ui/main.glade:633
 msgid "_Horizontal"
-msgstr "_Vaakasuora"
+msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr "_Kuva"
+msgstr ""
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
@@ -3640,7 +3640,7 @@ msgstr ""
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
-msgstr "_Viimeinen sivu"
+msgstr ""
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
@@ -3656,11 +3656,11 @@ msgstr ""
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "_Seuraava taso"
+msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
-msgstr "_Seuraava sivu"
+msgstr ""
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
@@ -3668,7 +3668,7 @@ msgstr ""
 
 #: ../ui/main.glade:1384
 msgid "_Pen"
-msgstr "_Kynä"
+msgstr ""
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
@@ -3680,11 +3680,11 @@ msgstr ""
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "_Edellinen taso"
+msgstr ""
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
-msgstr "_Edellinen sivu"
+msgstr ""
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
@@ -3696,11 +3696,11 @@ msgstr ""
 
 #: ../ui/main.glade:1444
 msgid "_Text"
-msgstr "_Teksti"
+msgstr ""
 
 #: ../ui/main.glade:1373
 msgid "_Tools"
-msgstr "_Työkalut"
+msgstr ""
 
 #: ../ui/main.glade:1159
 msgid "_Top Layer"
@@ -3708,11 +3708,11 @@ msgstr ""
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
-msgstr "_Ylhäältä alas"
+msgstr ""
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
-msgstr "_Pystysuora"
+msgstr ""
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
@@ -3720,7 +3720,7 @@ msgstr ""
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr "_Näytä"
+msgstr ""
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
@@ -3740,7 +3740,7 @@ msgstr ""
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "_paksu"
+msgstr ""
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
