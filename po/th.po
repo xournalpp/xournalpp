@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
 "Language: th_TH\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: th\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -31,7 +31,8 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2324
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"เสนอไฟล์ทดแทน: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -40,7 +41,7 @@ msgstr " จาก {1}"
 
 #: ../src/core/control/settings/Settings.cpp:143
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-บันทึก-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:145
 msgid "%{name}_annotated"
@@ -61,11 +62,11 @@ msgstr ""
 
 #: ../src/core/gui/PageView.cpp:914
 msgid "Add missing page"
-msgstr ""
+msgstr "เพิ่มหน้าที่ขาดหายไป"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:513
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "เพิ่ม/แก้ไข TeX"
 
 #: ../src/core/control/XournalMain.cpp:686
 msgid "Advanced export options"
@@ -85,7 +86,7 @@ msgstr "ใช้กับหน้าปัจจุบัน"
 
 #: ../src/core/control/tools/EditSelection.cpp:400
 msgid "Arrange"
-msgstr ""
+msgstr "จัดเรียง"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
@@ -125,7 +126,8 @@ msgstr ""
 #: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "โฟลเดอร์เสียงไม่ถูกต้อง การบันทึกเสียงไม่สามารถใช้งานได้\n"
+"กรุณาเลือกโฟลเดอร์ที่ \"ตั้งค่า > การบันทึกเสียง\""
 
 #: ../src/core/control/Control.cpp:257
 msgid "Autosave failed with an error: {1}"
@@ -137,7 +139,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:48
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "กำลังบันทึกอัตโนมัติไปยัง {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:558
@@ -297,7 +299,7 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:91
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "ไม่สามารถบันทึกไฟล์ .tex ได้: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:105
 msgid "Could not start {1}: {2} (exit code: {3})"
@@ -322,7 +324,7 @@ msgstr "สร้างเลเยอร์ใหม่"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:71
 msgid "Custom"
-msgstr ""
+msgstr "กำหนดเอง"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "Custom Export"
@@ -330,7 +332,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "ปรับแต่งแถบเครื่องมือ"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
 msgid "Customized"
@@ -375,17 +377,19 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2810
 msgid "Discard"
-msgstr ""
+msgstr "ละทิ้ง"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Display advanced export options"
-msgstr ""
+msgstr "ตัวเลือกการส่งออกขั้นสูง"
 
 #: ../src/core/control/Control.cpp:2249
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "ห้ามเปิดไฟล์บันทึกอัตโนมัติ ไฟล์อาจถูกบันทึกทับได้!\n"
+"กรุณาคัดลอกไฟล์ไปอีกโฟลเดอร์\n"
+"ไม่สามารถเปิดไฟล์จากโฟลเดอร์ {1} ได้"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -393,7 +397,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2804
 msgid "Document file was removed."
-msgstr ""
+msgstr "ไฟล์เอกสารถูกลบ"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:271
 msgid "Document is corrupted (no pages found in file)"
@@ -554,7 +558,7 @@ msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:40
 msgid "Error: {1}"
-msgstr ""
+msgstr "เกิดข้อผิดพลาด: {1}"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
@@ -566,7 +570,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:640
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "ส่งออกไฟล์เป็น PDF"
 
 #: ../src/core/control/XournalMain.cpp:642
 msgid "Export FILE as image files (one per page)\n"
@@ -580,7 +584,7 @@ msgstr "ส่งออกเป็น PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Export as PDF"
-msgstr ""
+msgstr "ส่งออกเป็น PDF"
 
 #: ../src/core/control/XournalMain.cpp:656
 msgid "Export layers progressively\n"
@@ -603,7 +607,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:146
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "การลบไฟล์ล้มเหลว: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -680,11 +684,11 @@ msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:72
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 หรือใหม่กว่า"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:39
 msgid "GTK Version"
-msgstr ""
+msgstr "เวอร์ชัน GTK"
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
@@ -775,11 +779,11 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:95
 msgid "Insert after current page"
-msgstr ""
+msgstr "แทรกต่อจากหน้าปัจจุบัน"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:96
 msgid "Insert at end"
-msgstr ""
+msgstr "แทรกอยู่หน้าสุดท้าย"
 
 #: ../src/core/undo/InsertUndoAction.cpp:82
 msgid "Insert elements"
@@ -903,7 +907,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1467
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "ไม่มีหน้า PDF ให้ผนวก คุณอาจต้องเปิดเอกสารใหม่อีกครั้ง"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
 msgid "No recent files"
@@ -955,11 +959,11 @@ msgstr ""
 
 #: ../src/core/control/PdfCache.cpp:123
 msgid "PDF background missing"
-msgstr ""
+msgstr "พื้นหลัง PDF หายไป"
 
 #: ../src/core/control/ExportHelper.cpp:120
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "สร้างไฟล์ PDF สำเร็จ"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:26
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
@@ -1070,7 +1074,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2335
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "นำพื้นหลัง PDF ออก"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -1233,7 +1237,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2334
 msgid "Select another PDF"
-msgstr ""
+msgstr "เลือก PDF อีกไฟล์"
 
 #: ../src/util/XojMsgBox.cpp:85
 msgid "Select another name"
@@ -1273,11 +1277,11 @@ msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:426
 msgid "Send backward"
-msgstr ""
+msgstr "ส่งไปข้างหลัง"
 
 #: ../src/core/control/tools/EditSelection.cpp:434
 msgid "Send to back"
-msgstr ""
+msgstr "ส่งไปข้างหลัง"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:57
 msgid "Separator"
@@ -1350,7 +1354,7 @@ msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "บันทึกเอกสารไปที่ \"{1}\" สำเร็จ"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
 msgid "Supported files"
@@ -1473,7 +1477,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2804
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "เอกสารนี้ยังไม่ได้บันทึก"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:166
 msgid "This image could not be loaded. Error message: {1}"
@@ -1509,7 +1513,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1481
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "ไม่สามารถเรียกหน้า PDF กลับคืนมาได้"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/core/undo/UndoRedoHandler.cpp:182
@@ -1558,7 +1562,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2696
 msgid "Unsaved Document"
-msgstr ""
+msgstr "เอกสารไม่บันทึก"
 
 #: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
@@ -1566,7 +1570,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2332
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "ใช้ PDF ที่เสนอ"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:33
 msgid "Version"
@@ -1623,7 +1627,7 @@ msgstr ""
 #: ../src/core/control/Control.cpp:2645
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
-msgstr ""
+msgstr "ไฟล์ Xournal++"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:91
@@ -1671,7 +1675,7 @@ msgstr "ซูม 100%"
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Cancel"
-msgstr ""
+msgstr "_ยกเลิก"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
@@ -1682,7 +1686,7 @@ msgstr ""
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
-msgstr ""
+msgstr "_บันทึก"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
@@ -1726,7 +1730,7 @@ msgstr "ยางลบ"
 
 #: ../src/core/control/Control.cpp:2263
 msgid "file: {1}"
-msgstr ""
+msgstr "ไฟล์: {1}"
 
 #: ../src/core/undo/AddUndoAction.cpp:85
 #: ../src/core/undo/DeleteUndoAction.cpp:83
@@ -1767,7 +1771,7 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:113
 msgid "tablet pad"
-msgstr ""
+msgstr "แท็บเล็ต"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:89
@@ -1776,15 +1780,15 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchpad"
-msgstr ""
+msgstr "แป้นสัมผัส"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "touchscreen"
-msgstr ""
+msgstr "หน้าจอสัมผัส"
 
 #: ../src/core/control/DeviceListHelper.cpp:111
 msgid "trackpoint"
-msgstr ""
+msgstr "trackpoint"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "whiteout"
@@ -2215,7 +2219,7 @@ msgstr ""
 
 #: ../ui/settings.glade:462
 msgid "Autosaving"
-msgstr "บันทึกอัตโนมัต"
+msgstr "กำลังบันทึกอัตโนมัติ"
 
 #: ../ui/settings.glade:611 ../ui/settings.glade:781
 msgid "Available Placeholders"
@@ -2396,7 +2400,7 @@ msgstr ""
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "ลบเลเยอร์นี้"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2570,7 +2574,7 @@ msgstr "ส่งออก"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "ส่งออกเป็น..."
+msgstr ""
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -3050,7 +3054,7 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "การตั้งค่า"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
