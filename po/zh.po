@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -205,7 +205,7 @@ msgstr "色彩\"{1}\"未定义！"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Compass"
-msgstr "指南针"
+msgstr "圆规"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
@@ -640,7 +640,7 @@ msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 msgstr "在 PATH 中找不到 LaTeX 生成器: {1}\n\n"
-"检测到已经在 Flatpak 中安装， 您需要安装 Flatpak freedestop Tex Live 扩展。 例如执行：\n\n"
+"检测到本软件已经在 Flatpak 中安装， 您需要安装 Flatpak freedestop Tex Live 扩展。 例如执行：\n\n"
 "$ flatpak install flatthub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
@@ -709,7 +709,7 @@ msgstr "下一步"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:72
 msgid "GNU GPLv2 or later"
-msgstr "GNU GPLv2 或更新的GNU协议版本"
+msgstr "GNU GPLv2 或更新的 GNU 协议版本"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:39
 msgid "GTK Version"
@@ -1540,7 +1540,7 @@ msgstr "尝试紧急保存当前打开的文档…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr "无法在 {1} 打开全局模板文件，它是否存在？"
+msgstr "无法在 {1} 打开全局模板文件，该文件是否存在？"
 
 #: ../src/core/gui/PageView.cpp:371
 msgid "Unable to play audio recording {1}"
@@ -2210,7 +2210,7 @@ msgstr "<i>像使用多点触控笔一样使用触摸屏。</i>"
 
 #: ../ui/settings.glade:1873
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr "<i>因为某些设置，笔触在开始时会出现伪影， 通过忽略笔触摸屏幕时的前几个事件/笔触点，可以避免这种情况。</ i>"
+msgstr "<i>因为某些设置，笔触在开始时会出现伪影， 通过忽略笔触摸屏幕时的前几个事件/笔触点，可以避免这种情况。</i>"
 
 #: ../ui/settings.glade:2275
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -2331,7 +2331,7 @@ msgstr "基本速度"
 
 #: ../ui/settings.glade:3697
 msgid "Below preview"
-msgstr "以下预览"
+msgstr "预览下方"
 
 #: ../ui/settings.glade:3331
 msgctxt "stylus cursor uses a big pen icon"
@@ -2432,7 +2432,7 @@ msgstr "复制选定文本"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr "复制当前页的页面背景，而不是使用上一页设置的页面背景。"
+msgstr "复制当前页面的背景，而不是使用上面设置的背景。"
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
@@ -2492,7 +2492,7 @@ msgstr "缺省"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "删除层"
+msgstr "删除图层"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2572,7 +2572,7 @@ msgstr "绘制坐标系统"
 
 #: ../ui/main.glade:1551
 msgid "Draw _Line"
-msgstr "绘制直线"
+msgstr "绘制直线(L)"
 
 #: ../ui/settings.glade:3361
 msgid "Draw a transparent circle around the cursor"
@@ -2656,7 +2656,7 @@ msgstr "输入/编辑 LaTeX 文本"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "橡皮选项(_n)"
+msgstr "橡皮选项(_N)"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2672,7 +2672,7 @@ msgstr "输出"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "输出为..."
+msgstr "导出为..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2685,11 +2685,11 @@ msgstr "导出文档时不带任何背景(无) 或者仅具有PDF和图像背景
 
 #: ../ui/main.glade:1821 ../ui/main.glade:2026
 msgid "Fi_ll"
-msgstr "填充(_l)"
+msgstr "填充(_L)"
 
 #: ../ui/main.glade:1831 ../ui/main.glade:2036
 msgid "Fill opacity"
-msgstr "透明度填充"
+msgstr "填充不透明度"
 
 #: ../ui/settings.glade:1397
 msgid "Finalize the stroke"
@@ -2753,7 +2753,7 @@ msgstr "网格吸附范围"
 
 #: ../ui/main.glade:1661
 msgid "H_and Tool"
-msgstr "手形工具(_a)"
+msgstr "手形工具(_A)"
 
 #: ../ui/settings.glade:2632
 msgid "Hand Recognition"
@@ -2789,7 +2789,7 @@ msgstr "高亮选中的文本"
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
-msgstr "高亮选项(_o)"
+msgstr "高亮选项(_O)"
 
 #: ../ui/settings.glade:5392
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2837,7 +2837,7 @@ msgstr "忽略时间（毫秒）"
 
 #: ../ui/settings.glade:1891
 msgid "Ignore the first"
-msgstr "忽略第一个"
+msgstr "忽略第"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
@@ -3011,7 +3011,7 @@ msgstr "根据当前视图外被选中的元素数量将滚动速度翻倍，并
 
 #: ../ui/main.glade:1175
 msgid "N_ext Annotated Page"
-msgstr "下一个标注页(_e)"
+msgstr "下一个标注页面(_E)"
 
 #: ../ui/settings.glade:2166
 msgctxt "eraser is never visible"
@@ -3074,7 +3074,7 @@ msgstr "PDF 缓存"
 
 #: ../ui/main.glade:1186
 msgid "P_revious Annotated Page"
-msgstr "上一注释页(_r)"
+msgstr "上一个标注页面(_r)"
 
 #: ../ui/settings.glade:3681
 msgid "Page numbering  "
@@ -3090,7 +3090,7 @@ msgstr "双页模式"
 
 #: ../ui/main.glade:1360
 msgid "Paper B_ackground"
-msgstr "纸张背景(_a)"
+msgstr "纸张背景(_A)"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -3155,7 +3155,7 @@ msgstr "预加载页面前"
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "偏好设置"
+msgstr "首选项"
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
@@ -3259,7 +3259,7 @@ msgstr "选择图片"
 
 #: ../ui/main.glade:1408
 msgid "Select Linear Text"
-msgstr "选择线性文本"
+msgstr "选择连续文本"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -3423,7 +3423,7 @@ msgstr "系统光标"
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "工具条(_o)"
+msgstr "工具栏(_O)"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
@@ -3677,11 +3677,11 @@ msgstr "_8行"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "标注PDF(_A)"
+msgstr "标注 PDF(_A)"
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
-msgstr "从下到上"
+msgstr "从下到上(_B)"
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
@@ -3709,7 +3709,7 @@ msgstr "橡皮(_E)"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "输出为PDF(_E)"
+msgstr "导出为 PDF(_E)"
 
 #: ../ui/main.glade:152
 msgid "_File"
@@ -3733,11 +3733,11 @@ msgstr "高亮(_H)"
 
 #: ../ui/main.glade:633
 msgid "_Horizontal"
-msgstr "水平"
+msgstr "水平(_H)"
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr "图片(_I)"
+msgstr "图像(_I)"
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
@@ -3761,7 +3761,7 @@ msgstr "导航(_N)"
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "下一层(_N)"
+msgstr "下一个图层(_N)"
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
@@ -3785,7 +3785,7 @@ msgstr "演讲模式(_P)"
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "上一图层(_P)"
+msgstr "上一个图层(_P)"
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
@@ -3813,7 +3813,7 @@ msgstr "顶层(_T)"
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
-msgstr "从上到下"
+msgstr "从上到下(_T)"
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
@@ -3829,31 +3829,31 @@ msgstr "视图(_V)"
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "删除笔划(_d)"
+msgstr "删除笔划(_D)"
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
-msgstr "细(_f)"
+msgstr "细(_F)"
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "中(_m)"
+msgstr "中(_M)"
 
 #: ../ui/main.glade:1917
 msgid "_standard"
-msgstr "标准(_s)"
+msgstr "标准(_S)"
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "粗(_t)"
+msgstr "粗(_T)"
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
-msgstr "极细(_v)"
+msgstr "极细(_V)"
 
 #: ../ui/main.glade:1928
 msgid "_whiteout"
-msgstr "涂白(_w)"
+msgstr "涂白(_W)"
 
 #: ../ui/settings.glade:4878
 msgid "disabled"
@@ -3891,7 +3891,7 @@ msgstr "s <i>(在此之后触摸屏将被重新激活)</i>"
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "极粗(_y)"
+msgstr "极粗(_Y)"
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
