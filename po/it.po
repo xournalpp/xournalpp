@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:50\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: it\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -92,7 +92,7 @@ msgstr "Applica alla pagina corrente"
 
 #: ../src/core/control/tools/EditSelection.cpp:400
 msgid "Arrange"
-msgstr "Disporre"
+msgstr "Disponi"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
@@ -132,8 +132,8 @@ msgstr "Colore non impostato!"
 #: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "Cartella Audio non impostata o invalida! Le registrazioni non funzioneranno!\n"
-"Per favore, imposta la cartella Audio in \"Preferenze > Registrazione Audio\""
+msgstr "Cartella dell'audio non impostata o non valida! La registrazione non funzionerà!\n"
+"Impostare la cartella di registrazione in “Preferenze > Registrazione audio”"
 
 #: ../src/core/control/Control.cpp:257
 msgid "Autosave failed with an error: {1}"
@@ -945,7 +945,7 @@ msgstr "Disegno normale"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
 #: ../src/core/plugin/Plugin.cpp:265 ../src/core/plugin/Plugin.cpp:288
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1412,7 +1412,7 @@ msgstr "Scambia la pagina corrente con quella sotto"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
-msgstr "Lingua del sistema"
+msgstr "Predefinita di sistema"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:512
@@ -2104,7 +2104,7 @@ msgstr "<b>Separatori</b>"
 
 #: ../ui/settings.glade:952
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr "<i>Assegna classi di dispositivo ad ogni dispositivo di input del sistema. Cambia questi valori solo se i tuoi dispositivi non sono correttamente abbinati. (ad esempio se la penna viene mostrata come touchscreen)</i>"
+msgstr "<i>Assegna classi di dispositivo a ogni dispositivo di immissione del sistema. Cambia questi valori solo se i tuoi dispositivi non sono correttamente abbinati. (ad esempio se la penna viene mostrata come touchscreen)</i>"
 
 #: ../ui/settings.glade:5863
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
@@ -2163,11 +2163,11 @@ msgstr "<i>Ricarica gli sfondi PDF più spesso durante lo zoom per una migliore 
 
 #: ../ui/settings.glade:6390
 msgid "<i>Select language (requires restart)</i>"
-msgstr "<i>Seleziona la lingua (richiede riavvio)</i>"
+msgstr "<i>Seleziona la lingua (richiede il riavvio)</i>"
 
 #: ../ui/settings.glade:5718
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr "<i>Seleziona lo strumento e le impostazioni se si preme il pulsante Predefinito.</i>"
+msgstr "<i>Seleziona lo strumento e le impostazioni se premi il pulsante predefinito.</i>"
 
 #: ../ui/settings.glade:1729
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
@@ -2175,7 +2175,7 @@ msgstr "<i>Alcuni dispositivi segnalano pressioni inaspettatamente piccole o gra
 
 #: ../ui/settings.glade:2491
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr "<i>Specificare i comandi che verranno eseguiti quando si attiva il riconoscimento del palmo. I comandi verranno eseguiti nell'interfaccia grafica, assicurarsi che non siano bloccati!</i>"
+msgstr "<i>Specifica i comandi che verranno eseguiti quando si attiva il riconoscimento del palmo. I comandi verranno eseguiti nell'interfaccia grafica, assicurati che non siano bloccati!</i>"
 
 #: ../ui/settings.glade:5974
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
@@ -2191,11 +2191,11 @@ msgstr "<i>Qui puoi definire quali strumenti saranno selezionati se terrai premu
 
 #: ../ui/settings.glade:663
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
-msgstr "<i>Questo nome verrà proposto quando si esporta un documento in PDF.</i>"
+msgstr "<i>Questo nome sarà proposto quando esporti un documento in PDF.</i>"
 
 #: ../ui/settings.glade:492
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr "<i>Questo nome sarà proposto in fase di un nuovo salvataggio </i>"
+msgstr "<i>Questo nome sarà proposto salvando un nuovo documento </i>"
 
 #: ../ui/settings.glade:4425
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
@@ -2272,7 +2272,7 @@ msgstr "Controlla sempre le dipendenze LaTeX prima di eseguire"
 
 #: ../ui/main.glade:1253
 msgid "Append New PDF Pages"
-msgstr "Aggiungi nuove pagine di un PDF"
+msgstr "Aggiungi nuove pagine PDF"
 
 #: ../ui/settings.glade:226
 msgid "Arithmetic mean"
@@ -2473,7 +2473,7 @@ msgstr "Raggio per la zona morta"
 
 #: ../ui/latexSettings.glade:119
 msgid "Default LaTeX Text"
-msgstr "Testo LaTeX Predefinito"
+msgstr "Testo LaTeX predefinito"
 
 #: ../ui/settings.glade:805
 msgid "Default Pdf export name"
@@ -2497,7 +2497,7 @@ msgstr "Predefinite"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "Cancella Livello"
+msgstr "Elimina Livello"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2577,7 +2577,7 @@ msgstr "Disegna il sistema di coordinate"
 
 #: ../ui/main.glade:1551
 msgid "Draw _Line"
-msgstr "Disegna _Linea"
+msgstr "Disegna _Linea retta"
 
 #: ../ui/settings.glade:3361
 msgid "Draw a transparent circle around the cursor"
@@ -2597,7 +2597,7 @@ msgstr "Duplicato"
 
 #: ../ui/main.glade:1243
 msgid "Duplicate Page"
-msgstr "Duplica pagina"
+msgstr "Duplica Pagina"
 
 #: ../ui/main.glade:2985
 msgid "Edit (not implemented yet)"
@@ -2661,7 +2661,7 @@ msgstr "Inserisci / modifica Testo LaTeX"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "Op_zioni Gomma"
+msgstr "Opzio_ni Gomma"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2758,7 +2758,7 @@ msgstr "Tolleranza forzatura alla griglia: "
 
 #: ../ui/main.glade:1661
 msgid "H_and Tool"
-msgstr "Strumento _Mano"
+msgstr "Strumento M_ano"
 
 #: ../ui/settings.glade:2632
 msgid "Hand Recognition"
@@ -2826,7 +2826,7 @@ msgstr "Se abilitato, Xournal++ aprirà automaticamente il documento più recent
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr "Se abilitato, controllare che i pacchetti LaTeX richiesti siano installati e che i comandi LaTeX siano disponibili prima di eseguire lo strumento LaTeX."
+msgstr "Se abilitato, controlla che i pacchetti LaTeX richiesti siano installati e che i comandi LaTeX siano disponibili prima di eseguire lo strumento LaTeX."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -2902,11 +2902,11 @@ msgstr "Lingua"
 
 #: ../ui/settings.glade:6445
 msgid "Language Settings"
-msgstr "Impostazioni Lingua"
+msgstr "Impostazioni della lingua"
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "Layout"
+msgstr "Disposizione"
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2918,7 +2918,7 @@ msgstr "Licenza"
 
 #: ../ui/latexSettings.glade:433
 msgid "Line numbers"
-msgstr "Numeri per le righe"
+msgstr "Numeri di riga"
 
 #: ../ui/settings.glade:902
 msgid "Load / Save"
@@ -3016,7 +3016,7 @@ msgstr "Moltiplica la velocità di scorrimento fino a questo valore, in base a q
 
 #: ../ui/main.glade:1175
 msgid "N_ext Annotated Page"
-msgstr "P_rossima pagina annotata"
+msgstr "Pr_ossima pagina annotata"
 
 #: ../ui/settings.glade:2166
 msgctxt "eraser is never visible"
@@ -3025,11 +3025,11 @@ msgstr "Mai"
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
-msgstr "Inserisci una nuova pagina sotto"
+msgstr "Nuova Pagina _Dopo"
 
 #: ../ui/main.glade:1212
 msgid "New Page _Before"
-msgstr "Aggiungi una nuova pagina sopra"
+msgstr "Nuova Pagina _Prima"
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
@@ -3079,7 +3079,7 @@ msgstr "Cache PDF"
 
 #: ../ui/main.glade:1186
 msgid "P_revious Annotated Page"
-msgstr "P_recedente pagina annotata"
+msgstr "Pagina annotata p_recedente"
 
 #: ../ui/settings.glade:3681
 msgid "Page numbering  "
@@ -3095,7 +3095,7 @@ msgstr "Pagine accoppiate"
 
 #: ../ui/main.glade:1360
 msgid "Paper B_ackground"
-msgstr "_Sfondo Carta"
+msgstr "Sfondo C_arta"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -3201,7 +3201,7 @@ msgstr "_Documenti Recenti"
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
-msgstr "Registra / Stop"
+msgstr "Registra / Ferma"
 
 #: ../ui/settings.glade:6180
 msgid "Recording Quality"
@@ -3313,7 +3313,7 @@ msgstr "Impostazioni:"
 
 #: ../ui/settings.glade:5484
 msgid "Show Floating Toolbox"
-msgstr "Mostra Barra degli strumenti mobile"
+msgstr "Mostra la barra degli strumenti mobile"
 
 #: ../ui/settings.glade:3923 ../ui/settings.glade:4006
 msgid "Show Menubar"
@@ -3429,7 +3429,7 @@ msgstr "Cursore di sistema"
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "B_arre degli Strumenti"
+msgstr "_Barre degli Strumenti"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
@@ -3457,7 +3457,7 @@ msgstr "Verifica se la configurazione corrente è valida eseguendo il comando di
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "Font Testo..."
+msgstr "Carattere del testo..."
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3510,7 +3510,7 @@ msgstr "Tentare di selezionare prima l'oggetto."
 
 #: ../ui/settings.glade:5457 ../ui/settings.glade:5489
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr "Tentare di selezionare prima l'oggetto; se non viene selezionato nulla, mostrare la barra degli strumenti mobile se abilitata."
+msgstr "Tenta di selezionare prima l'oggetto; se non viene selezionato nulla, mostrare la barra degli strumenti mobile se abilitata."
 
 #: ../ui/main.glade:2819
 msgid "Underline selected text"
@@ -3518,7 +3518,7 @@ msgstr "Sottolinea il testo selezionato"
 
 #: ../ui/settings.glade:3165
 msgid "Use available Stock Icons (requires restart)"
-msgstr "Usa le icone Stock disponibili (richiede riavvio)"
+msgstr "Usa le icone predefinite disponibili (richiede il riavvio)"
 
 #: ../ui/latexSettings.glade:529
 msgid "Use font from system theme."
@@ -3612,7 +3612,7 @@ msgstr "Zoom"
 
 #: ../ui/settings.glade:2767
 msgid "Zoom Gestures"
-msgstr "Gesti Zoom"
+msgstr "Gesti zoom"
 
 #: ../ui/settings.glade:4394
 msgid "Zoom Speed"
@@ -3688,7 +3688,7 @@ msgstr "_Annota PDF"
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
-msgstr "_Dal basso in alto"
+msgstr "Dal _basso in alto"
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
@@ -3724,11 +3724,11 @@ msgstr "_File"
 
 #: ../ui/main.glade:1076
 msgid "_First Page"
-msgstr "_Prima Pagina"
+msgstr "_Prima pagina"
 
 #: ../ui/main.glade:1098
 msgid "_Goto Page"
-msgstr "_Vai a Pagina"
+msgstr "_Vai alla pagina"
 
 #: ../ui/main.glade:2151
 msgid "_Help"
@@ -3752,11 +3752,11 @@ msgstr "_Documento"
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
-msgstr "_Ultima Pagina"
+msgstr "_Ultima pagina"
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
-msgstr "_Da sinistra a destra"
+msgstr "Da _sinistra a destra"
 
 #: ../ui/main.glade:967
 msgid "_Manage"
@@ -3768,11 +3768,11 @@ msgstr "_Navigazione"
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "_Prossimo Livello"
+msgstr "_Prossimo livello"
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
-msgstr "_Pagina Successiva"
+msgstr "Pagina _successiva"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
@@ -3784,19 +3784,19 @@ msgstr "_Penna"
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
-msgstr "_Plugin"
+msgstr ""
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "_Modalità Presentazione"
+msgstr "Modalità _Presentazione"
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "_Livello Precedente"
+msgstr "_Livello precedente"
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
-msgstr "_Pagina Precedente"
+msgstr "Pagina p_recedente"
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
@@ -3804,7 +3804,7 @@ msgstr "_Da destra a sinistra"
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
-msgstr "_Riconoscitore di Forme"
+msgstr "Riconoscitore di _Forme"
 
 #: ../ui/main.glade:1444
 msgid "_Text"
@@ -3816,11 +3816,11 @@ msgstr "_Strumenti"
 
 #: ../ui/main.glade:1159
 msgid "_Top Layer"
-msgstr "_Livello Superiore"
+msgstr "Livello _superiore"
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
-msgstr "_Da alto in basso"
+msgstr "Da _alto in basso"
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
@@ -3828,7 +3828,7 @@ msgstr "_Verticale"
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
-msgstr "_Spazio Verticale"
+msgstr "Spazio _Verticale"
 
 #: ../ui/main.glade:546
 msgid "_View"
@@ -3844,7 +3844,7 @@ msgstr "_sottile"
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "_medio"
+msgstr "m_edio"
 
 #: ../ui/main.glade:1917
 msgid "_standard"
@@ -3852,7 +3852,7 @@ msgstr "_standart"
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "_spesso"
+msgstr "spess_o"
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
@@ -3860,7 +3860,7 @@ msgstr "_molto sottile"
 
 #: ../ui/main.glade:1928
 msgid "_whiteout"
-msgstr "_sbianca"
+msgstr "s_bianca"
 
 #: ../ui/settings.glade:4878
 msgid "disabled"
