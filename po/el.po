@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:15\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: el\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -32,7 +32,8 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2324
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Προτεινόμενο αρχείο αντικατάστασης: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -67,7 +68,7 @@ msgstr "<span foreground='red' size='x-large'>Το απαιτούμενο αρχ
 
 #: ../src/core/gui/PageView.cpp:914
 msgid "Add missing page"
-msgstr ""
+msgstr "Προσθήκη σελίδας που λείπει"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:513
 msgid "Add/Edit TeX"
@@ -196,7 +197,7 @@ msgstr "Αλλαγή πάχους μολυβιάς"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:65
 msgid "Clear list"
-msgstr ""
+msgstr "Εκκαθάριση λίστας"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
@@ -435,7 +436,7 @@ msgstr "Σχεδίασε Βέλος"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Σχεδίασε Διπλό Βέλος"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:134
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -499,7 +500,7 @@ msgstr ""
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "Εύρος στοιχείων: parse(): μη έγκυρο εύρος στοιχείων."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -561,7 +562,7 @@ msgstr "Σφάλμα κατά την αυτόματη αποθήκευση: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Σφάλμα κατά την εξαγωγή του φόντου pdf: Δεν μπορώ να βρω τον αριθμό σελίδας pdf "
 
 #: ../src/util/Util.cpp:93
 msgid "Error {1} executing system command: {2}"
@@ -573,7 +574,7 @@ msgstr "Σφάλμα: {1}"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "Σφάλμα: Το {1} δεν είναι κανονικό. Παρακαλώ ελέγξτε τις ρυθμίσεις του προτύπου LaTeX. "
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
@@ -587,7 +588,9 @@ msgstr "Εξαγωγή σε αρχείο PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "Εξαγωγή FILE ως αρχεία εικόνας (ένα ανά σελίδα)\n"
+"                                 Μαντέψτε τη μορφή εξόδου από την επέκταση IMGFILE\n"
+"                                 Υποστηριζόμενες μορφές: .png, .svg"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
@@ -609,31 +612,36 @@ msgstr ""
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Εξαγωγή χωρίς φόντο\n"
+"                                 Το εξαγόμενο αρχείο έχει διαφανές ή λευκό φόντο,\n"
+"                                 ανάλογα με τη μορφή που υποστηρίζει\n"
 
 #: ../src/core/control/XournalMain.cpp:652
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Εξαγωγή χωρίς απόφαση\n"
+"                                 Το εξαγόμενο αρχείο δεν έχει καμία έντυπη απόφαση\n"
 
 #: ../src/core/control/XournalMain.cpp:146
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "Απέτυχε η διαγραφή του αρχείου: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Αποτυχία εύρεσης προγράμματος γεννήτριας LaTeX στο PATH: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:78
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr ""
+msgstr "Αποτυχία εύρεσης προγράμματος γεννήτριας LaTeX στο PATH: {1}\n\n"
+"Από την εγκατάσταση ανιχνεύεται μέσα στο Flatpak, θα πρέπει να εγκαταστήσετε την επέκταση Flatpak Freedesktop Tex Live. Για παράδειγμα, τρέχοντας:\n\n"
+"$ flatpak εγκαταστήστε το flathub org.Freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Αποτυχία αρχικοποίησης PDF επιφάνειας του Καΐρου"
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
@@ -641,24 +649,25 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:179
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Αποτυχία ανοίγματος του content.xml στο αρχείο zip: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Αποτυχία ανάλυσης της εντολής γεννήτριας LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:61
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "Αποτυχία ανάλυσης της διαδρομής γεννήτριας LaTeX: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Απέτυχε η ανάγνωση αρχείου γενικού προτύπου. Παρακαλώ ελέγξτε τις ρυθμίσεις σας."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:108
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Αποτυχία επίλυσης διαδρομής με το ακόλουθο σφάλμα:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:166 ../src/util/PathUtil.cpp:183
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -700,7 +709,7 @@ msgstr "GNU GPLv2 ή νεότερη έκδοση"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:39
 msgid "GTK Version"
-msgstr ""
+msgstr "Έκδοση GTK"
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
@@ -712,11 +721,11 @@ msgstr "Git commit"
 
 #: ../src/core/control/LatexController.cpp:76
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Το αρχείο γενικού πρότυπου δεν υπάρχει. Παρακαλώ ελέγξτε τις ρυθμίσεις σας."
 
 #: ../src/core/control/LatexController.cpp:87
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Το αρχείο παγκόσμιου προτύπου δεν είναι ένα κανονικό αρχείο. Παρακαλώ ελέγξτε τις ρυθμίσεις σας. "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Go to first page"
@@ -752,7 +761,7 @@ msgstr "Προσκόλληση στον καμβά"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "Το GtkSourceView απενεργοποιήθηκε κατά την οικοδόμηση του Xournal++! Ορισμένες επιλογές δεν θα είναι διαθέσιμες."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:539
@@ -791,11 +800,11 @@ msgstr "Εισαγωγή αντιγράφου της τρέχουσας σελί
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:95
 msgid "Insert after current page"
-msgstr ""
+msgstr "Εισαγωγή μετά την τρέχουσα σελίδα"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:96
 msgid "Insert at end"
-msgstr ""
+msgstr "Εισαγωγή στο τέλος της σελίδας"
 
 #: ../src/core/undo/InsertUndoAction.cpp:82
 msgid "Insert elements"
@@ -832,11 +841,11 @@ msgstr "Μετάβαση στη σελίδα (πρώτη σελίδα: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "Θέμα επεξεργαστή LaTeX:"
 
 #: ../src/core/control/LatexController.cpp:244
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "το pdflatex αντιμετώπισε σφάλμα: {1} (κωδικός εξόδου: {2})"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:251
 msgid "Layer"
@@ -874,7 +883,7 @@ msgstr "Μεσαίο"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:32
 msgid "Merge layer down"
-msgstr ""
+msgstr "Συγχώνευση επιπέδου κάτω"
 
 #: ../src/core/undo/MoveUndoAction.cpp:19
 msgid "Move"
@@ -919,11 +928,11 @@ msgstr "Δεν υπάρχουν σελίδες για εξαγωγή!"
 
 #: ../src/core/control/Control.cpp:1467
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Καμία σελίδα PDF δεν είναι δυνατή για προσάρτηση. Πιθανότατα να χρειαστεί να ανοίξετε ξανά το έγγραφο πρώτα."
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
 msgid "No recent files"
-msgstr ""
+msgstr "Κανένα πρόσφατο αρχείο"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:128
 msgid "Normal drawing"
@@ -937,12 +946,14 @@ msgstr "ΟΚ"
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Κατά την εξαγωγή, εξαγωγή μόνο των στρωμάτων που καθορίζονται από το RANGE (π.χ. \"2-3,5,7-\")\n"
+"                                 Καμία επίδραση χωρίς -p/--create-pdf ή -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:663
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Εξαγωγή μόνο των σελίδων που καθορίζονται από το RANGE (π.χ. \"2-3,5,7-\")\n"
+"                                 Χωρίς εφέ χωρίς -p/--create-pdf ή -i/--create-img"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
@@ -985,7 +996,7 @@ msgstr "Αρχεία PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:47
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "PNG graphics"
@@ -1049,7 +1060,7 @@ msgstr "Αναπαραγωγή Αντικειμένου"
 
 #: ../src/core/control/XournalMain.cpp:148
 msgid "Please delete the file manually"
-msgstr ""
+msgstr "Παρακαλώ σβήσε το αρχείο χειροκίνητα"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
 msgid "Predefined"
@@ -1152,7 +1163,7 @@ msgstr "Αποθήκευση Αρχείου"
 
 #: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error, can't backup: {1}"
-msgstr ""
+msgstr "Σφάλμα κατά την αποθήκευση αρχείου, αδυναμία δημιουργίας αντιγράφου ασφαλείας: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:125
 #: ../src/core/control/jobs/SaveJob.cpp:131
@@ -1165,7 +1176,7 @@ msgstr "Κλιμάκωση"
 
 #: ../src/core/gui/PageView.cpp:912
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "Κύλιση στη σελίδα {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Search"
@@ -1177,7 +1188,7 @@ msgstr "Δείτε τον πλήρη κατάλογο των συνεισφερ�
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:101
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Επιλέξτε Κείμενο Περιοχής από pdf"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:543
 msgid "Select Font"
@@ -1202,7 +1213,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:82
 msgid "Select Multi-Layer Region"
-msgstr ""
+msgstr "Επιλογή Περιοχή Πολλαπλών Στρωμάτων"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:536
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:26
@@ -1245,7 +1256,7 @@ msgstr "Επιλογή Περιοχής"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Επιλογή κειμένου από pdf"
 
 #: ../src/core/control/Control.cpp:2334
 msgid "Select another PDF"
@@ -1265,11 +1276,11 @@ msgstr "Επιλέξτε χρώμα"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Select multi layer rect"
-msgstr ""
+msgstr "Επιλογή πολλαπλών στρώσεων rect"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 msgid "Select multi layer region"
-msgstr ""
+msgstr "Επιλέξτε περιοχή πολλαπλών στρώσεων"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
 msgid "Select rectangle"
@@ -1302,19 +1313,24 @@ msgstr "Διαχωριστικό"
 #: ../src/core/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Θέσε DPI για εξαγωγές PNG. Το σύνηθες είναι 300\n"
+"                                 Κανένα αποτέλεσμα χωρίς -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:681
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Θέσε το μήκος σελίδας για εξαγωγές PNG\n"
+"                                 Κανένα αποτέλεσμα χωρίς -i/--create-img=foo.png\n"
+"                                 Παραλείπεται αν χρησιμοποιηθεί το --export-png-dpi ή το --export-png-width"
 
 #: ../src/core/control/XournalMain.cpp:675
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Θέσε το πλάτος σελίδας για εξαγωγές PNG\n"
+"                                 Κανένα αποτέλεσμα χωρίς -i/--create-img=foo.png\n"
+"                                 Παραλείπεται αν χρησιμοποιείται το --export-png-dpi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Setsquare"
@@ -1392,7 +1408,7 @@ msgstr "Αντιστροφή της θέσης της τρέχουσας σελ�
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
-msgstr ""
+msgstr "Προεπιλογή Συστήματος"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:512
@@ -1430,24 +1446,24 @@ msgstr "Η διαμόρφωση τη γραμμής εργαλείων \"{1}\" �
 
 #: ../src/core/control/Control.cpp:2311
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Το επισυναπτόμενο αρχείο φόντο ήταν αδύνατο να βρεθεί. Δύναται να έχει μετακινηθεί, μετονομαστεί ή διαγραφτεί."
 
 #: ../src/core/control/XournalMain.cpp:245
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Το αρχείο φόντου \"{1}\" ήταν αδύνατο να βρεθεί. Δύναται να έχει μετακινηθεί, μετονομαστεί ή διαγραφτεί."
 
 #: ../src/core/control/Control.cpp:2314
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr ""
+msgstr "Το αρχείο φόντου \"{1}\" ήταν αδύνατο να βρεθεί. Δύναται να έχει μετακινηθεί, μετονομαστεί ή διαγραφτεί. Την τελευταία φορά εντοπίστηκε στο: \"{2}\""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "Ο έλεγχος για την αντικατάσταση του φόντου απέτυχε με:\n"
 
 #: ../src/core/control/Control.cpp:2375
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Το αρχείο προς φόρτωση έχει μια έκδοση τύπου αρχείου νεότερη από αυτή που υποστηρίζεται από την τρέχουσα έκδοση του Xournal++, όποτε μπορεί να μη φορτωθεί ορθά. Άνοιγμα παρ'όλα αυτά;"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1527,7 +1543,7 @@ msgstr "Αδυναμία αναπαραγωγής ηχητικής εγγραφ�
 
 #: ../src/core/control/Control.cpp:1481
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Δεν ήταν να δυνατό να ανακτηθεί αυτή η σελίδα PDF."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/core/undo/UndoRedoHandler.cpp:182
@@ -1568,7 +1584,7 @@ msgstr "Άγνωστος pixmap::τύπος τομέα: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:632
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Άγνωστος τύπος καπέλου: \"{1}\", υποθέτοντας γύρο"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:650
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1580,11 +1596,11 @@ msgstr "Μη Αποθηκευμένο Έγγραφο"
 
 #: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "Μη υποστηριζόμενη μορφή γραφικών: "
 
 #: ../src/core/control/Control.cpp:2332
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Χρήση του προτεινόμενου αρχείου PDF"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:33
 msgid "Version"
@@ -1620,7 +1636,7 @@ msgstr "Λάθος μέτρημα σημείων ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1059
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "Λάθος αριθμός τιμών πίεσης, πήρε {1}, αναμενόταν {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:253
 msgid "XML Parser error: {1}"
@@ -1747,7 +1763,7 @@ msgstr "γόμα"
 
 #: ../src/core/control/Control.cpp:2263
 msgid "file: {1}"
-msgstr ""
+msgstr "αρχείο{1}"
 
 #: ../src/core/undo/AddUndoAction.cpp:85
 #: ../src/core/undo/DeleteUndoAction.cpp:83
@@ -1930,7 +1946,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3217
 msgid "(requires restart)"
-msgstr ""
+msgstr "(απαιτεί επανεκκίνηση)"
 
 #: ../ui/settings.glade:5435
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1980,7 +1996,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1297
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -2219,7 +2235,7 @@ msgstr "Συγγραφέας: "
 
 #: ../ui/about.glade:363
 msgid "Authors"
-msgstr ""
+msgstr "Συγγραφείς"
 
 #: ../ui/latexSettings.glade:447
 msgid "Auto-indent"
@@ -2304,7 +2320,7 @@ msgstr "Κουμπί 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Αλλαγή"
 
 #: ../ui/latexSettings.glade:205
 msgid "Choose a global LaTeX template file"
@@ -2328,7 +2344,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3203
 msgid "Color"
-msgstr ""
+msgstr "Χρώμα"
 
 #: ../ui/settings.glade:3258
 msgid "Colors"
@@ -2340,7 +2356,7 @@ msgstr ""
 
 #: ../ui/main.glade:1263
 msgid "Configure Page Template"
-msgstr "Ρύθμιση Πρότυπου Σελίδων"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
@@ -2356,7 +2372,7 @@ msgstr ""
 
 #: ../ui/main.glade:2777
 msgid "Copy selected text"
-msgstr ""
+msgstr "Αντιγραφή του επιλεγμένου κειμένου"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2420,7 +2436,7 @@ msgstr "Προεπιλογές"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "Διαγραφή Στρώσης"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2497,7 +2513,7 @@ msgstr ""
 
 #: ../ui/main.glade:1551
 msgid "Draw _Line"
-msgstr "Σχεδίασε _Γραμμή"
+msgstr ""
 
 #: ../ui/settings.glade:3361
 msgid "Draw a transparent circle around the cursor"
@@ -2525,7 +2541,7 @@ msgstr "Επεξεργασία (μη υλοποιημένο)"
 
 #: ../ui/latexSettings.glade:606
 msgid "Editor settings"
-msgstr ""
+msgstr "Ρυθμίσεις συντάκτη"
 
 #: ../ui/settings.glade:2514
 msgid "Enable"
@@ -2581,7 +2597,7 @@ msgstr "Προσθήκη / επεξεργασία κειμένου LaTeX"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "Ρυθ_μίσεις Γόμας"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2589,7 +2605,7 @@ msgstr "Τύπος γόμας - καμία αλλαγή"
 
 #: ../ui/settings.glade:2193
 msgid "Eraser visibility"
-msgstr ""
+msgstr "Ορατότητα γόμας"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
@@ -2597,7 +2613,7 @@ msgstr "Εξαγωγή"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "Εξαγωγή ως..."
+msgstr ""
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2610,7 +2626,7 @@ msgstr ""
 
 #: ../ui/main.glade:1821 ../ui/main.glade:2026
 msgid "Fi_ll"
-msgstr "Γε_μισμα"
+msgstr ""
 
 #: ../ui/main.glade:1831 ../ui/main.glade:2036
 msgid "Fill opacity"
@@ -2678,7 +2694,7 @@ msgstr "Ευαισθησία προσκόλλησης στον καμβά"
 
 #: ../ui/main.glade:1661
 msgid "H_and Tool"
-msgstr "Εργαλείο Χ_εριού"
+msgstr ""
 
 #: ../ui/settings.glade:2632
 msgid "Hand Recognition"
@@ -2714,7 +2730,7 @@ msgstr ""
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
-msgstr "Επι_λογές Υπογραμμισμού"
+msgstr ""
 
 #: ../ui/settings.glade:5392
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2730,7 +2746,7 @@ msgstr "Πόσο σύντομη (χρόνος) ΚΑΙ...\n\n"
 
 #: ../ui/about.glade:157
 msgid "Icon Designers"
-msgstr ""
+msgstr "Σχεδιαστές εικονιδιών"
 
 #: ../ui/settings.glade:3187
 msgid "Icon Theme"
@@ -2762,7 +2778,7 @@ msgstr "Αγνόησε Χρόνο (ms)"
 
 #: ../ui/settings.glade:1891
 msgid "Ignore the first"
-msgstr ""
+msgstr "Αγνόησε το πρώτο"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
@@ -2786,7 +2802,7 @@ msgstr "Σύστημα Εισόδου"
 
 #: ../ui/settings.glade:1422
 msgid "Input stabilization"
-msgstr ""
+msgstr "Σταθεροποίηση εισόδου"
 
 #: ../ui/settings.glade:1402
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
@@ -2818,7 +2834,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6427 ../ui/settings.glade:6475
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 #: ../ui/settings.glade:6445
 msgid "Language Settings"
@@ -2826,7 +2842,7 @@ msgstr ""
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "Διάταξη"
+msgstr ""
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2944,19 +2960,19 @@ msgstr ""
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
-msgstr "Νέα σελίδα _Μετά"
+msgstr ""
 
 #: ../ui/main.glade:1212
 msgid "New Page _Before"
-msgstr "Νέα Σελίδα _Πριν"
+msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
-msgstr "Νέα Σελίδα στο _Τέλος"
+msgstr ""
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
-msgstr "Νέα _Στρώση"
+msgstr ""
 
 #: ../ui/settings.glade:3329
 msgctxt "stylus cursor uses no icon"
@@ -3022,11 +3038,11 @@ msgstr "Σχήμα και διάταξη Χαρτιού"
 
 #: ../ui/main.glade:1350
 msgid "Paper _Color"
-msgstr "Χρώμα _Χαρτιού"
+msgstr ""
 
 #: ../ui/main.glade:1340
 msgid "Paper _Format"
-msgstr "Σχήμα και _Διάταξη Χαρτιού"
+msgstr ""
 
 #: ../ui/about.glade:210
 msgid "Partially based on Xournal\n"
@@ -3040,11 +3056,11 @@ msgstr ""
 
 #: ../ui/main.glade:2072
 msgid "Pause"
-msgstr "Παύση"
+msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
-msgstr "Επιλογές _Στυλό"
+msgstr ""
 
 #: ../ui/settings.glade:4219
 msgid "Performance"
@@ -3060,7 +3076,7 @@ msgstr "Ρυθμίσεις αναπαραγωγής"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "Διαχείριση Προσθέτων"
+msgstr ""
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
@@ -3080,7 +3096,7 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "Προτιμήσεις"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
@@ -3116,11 +3132,11 @@ msgstr ""
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "Πρόσφατα _Έγγραφα"
+msgstr ""
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
-msgstr "Έναρξη / Διακοπή Εγγραφής"
+msgstr ""
 
 #: ../ui/settings.glade:6180
 msgid "Recording Quality"
@@ -3220,11 +3236,11 @@ msgstr ""
 
 #: ../ui/main.glade:730
 msgid "Set Columns"
-msgstr "Ορισμός Στηλών"
+msgstr ""
 
 #: ../ui/main.glade:835
 msgid "Set Rows"
-msgstr "Ορισμός Γραμμών"
+msgstr ""
 
 #: ../ui/settings.glade:5475
 msgid "Settings:"
@@ -3286,7 +3302,7 @@ msgstr "Προσκόλληση"
 
 #: ../ui/about.glade:270
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Πηγαίος Κώδικας / Πρόγραμμα Εντοπισμού Σφαλμάτων"
 
 #: ../ui/settings.glade:4303
 msgid "Speed for Ctrl + Scroll"
@@ -3347,7 +3363,7 @@ msgstr ""
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "Γ_ραμμές Εργαλείων"
+msgstr ""
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
@@ -3375,7 +3391,7 @@ msgstr ""
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "Γραμματοσειρά κειμένου..."
+msgstr ""
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3472,7 +3488,7 @@ msgstr "Προβολή"
 
 #: ../ui/about.glade:242
 msgid "Website"
-msgstr ""
+msgstr "Ιστοσελίδα"
 
 #: ../ui/settings.glade:3864
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
@@ -3536,83 +3552,83 @@ msgstr "Ταχύτητα Μεγέθυνσης"
 
 #: ../ui/main.glade:742
 msgid "_1 Column"
-msgstr "_1 Στήλη"
+msgstr ""
 
 #: ../ui/main.glade:847
 msgid "_1 Row"
-msgstr "_1 Γραμμή"
+msgstr ""
 
 #: ../ui/main.glade:753
 msgid "_2 Columns"
-msgstr "_2 Στήλες"
+msgstr ""
 
 #: ../ui/main.glade:858
 msgid "_2 Rows"
-msgstr "_2 Γραμμές"
+msgstr ""
 
 #: ../ui/main.glade:764
 msgid "_3 Columns"
-msgstr "_3 Στήλες"
+msgstr ""
 
 #: ../ui/main.glade:869
 msgid "_3 Rows"
-msgstr "_3 Γραμμές"
+msgstr ""
 
 #: ../ui/main.glade:775
 msgid "_4 Columns"
-msgstr "_4 Στήλες"
+msgstr ""
 
 #: ../ui/main.glade:880
 msgid "_4 Rows"
-msgstr "_4 Γραμμές"
+msgstr ""
 
 #: ../ui/main.glade:786
 msgid "_5 Columns"
-msgstr "_5 Στήλες"
+msgstr ""
 
 #: ../ui/main.glade:891
 msgid "_5 Rows"
-msgstr "_5 Γραμμές"
+msgstr ""
 
 #: ../ui/main.glade:797
 msgid "_6 Columns"
-msgstr "_6 Στήλες"
+msgstr ""
 
 #: ../ui/main.glade:902
 msgid "_6 Rows"
-msgstr "_6 Γραμμές"
+msgstr ""
 
 #: ../ui/main.glade:808
 msgid "_7 Columns"
-msgstr "_7 Στήλες"
+msgstr ""
 
 #: ../ui/main.glade:913
 msgid "_7 Rows"
-msgstr "_7 Γραμμές"
+msgstr ""
 
 #: ../ui/main.glade:819
 msgid "_8 Columns"
-msgstr "_8 Στήλες"
+msgstr ""
 
 #: ../ui/main.glade:924
 msgid "_8 Rows"
-msgstr "_8 Γραμμές"
+msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "_Σημείωση στο PDF"
+msgstr ""
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
-msgstr "_Επιστροφή στην Αρχή"
+msgstr ""
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
-msgstr "_Στήλες/Γραμμές"
+msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr "_Προσωποποίηση"
+msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
@@ -3620,55 +3636,55 @@ msgstr "_Προεπιλεγμένα Εργαλεία"
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
-msgstr "_Διαγραφή Σελίδας"
+msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "_Επεξεργασία"
+msgstr ""
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "_Γόμα"
+msgstr ""
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "_Εξαγωγή ως PDF"
+msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr "_Αρχείο"
+msgstr ""
 
 #: ../ui/main.glade:1076
 msgid "_First Page"
-msgstr "_Πρώτη σελίδα"
+msgstr ""
 
 #: ../ui/main.glade:1098
 msgid "_Goto Page"
-msgstr "_Μετάβαση σε σελίδα"
+msgstr ""
 
 #: ../ui/main.glade:2151
 msgid "_Help"
-msgstr "_Βοήθεια"
+msgstr ""
 
 #: ../ui/main.glade:1432
 msgid "_Highlighter"
-msgstr "_Υπογραμμιστής"
+msgstr ""
 
 #: ../ui/main.glade:633
 msgid "_Horizontal"
-msgstr "_Οριζόντιο"
+msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr "_Εικόνα"
+msgstr ""
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
-msgstr "_Journal"
+msgstr ""
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
-msgstr "_Τελευταία σελίδα"
+msgstr ""
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
@@ -3676,27 +3692,27 @@ msgstr ""
 
 #: ../ui/main.glade:967
 msgid "_Manage"
-msgstr "_Διαχείριση"
+msgstr ""
 
 #: ../ui/main.glade:1065
 msgid "_Navigation"
-msgstr "_Πλοήγηση"
+msgstr ""
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "_Επόμενη Στρώση"
+msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
-msgstr "_Επόμενη Σελίδα"
+msgstr ""
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr "_Διπλές σελίδες"
+msgstr ""
 
 #: ../ui/main.glade:1384
 msgid "_Pen"
-msgstr "_Στυλό"
+msgstr ""
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
@@ -3704,15 +3720,15 @@ msgstr "_Πρόσθετο"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "_Λειτουργία Παρουσίασης"
+msgstr ""
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "_Προηγούμενη Στρώση"
+msgstr ""
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
-msgstr "_Προηγούμενη Σελίδα"
+msgstr ""
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
@@ -3720,63 +3736,63 @@ msgstr ""
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
-msgstr "_Αναγνώριση Σχημάτων"
+msgstr ""
 
 #: ../ui/main.glade:1444
 msgid "_Text"
-msgstr "_Κείμενο"
+msgstr ""
 
 #: ../ui/main.glade:1373
 msgid "_Tools"
-msgstr "_Εργαλεία"
+msgstr ""
 
 #: ../ui/main.glade:1159
 msgid "_Top Layer"
-msgstr "_Κορυφαία Στρώση"
+msgstr ""
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
-msgstr "_Πάνω προς τα Κάτω"
+msgstr ""
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
-msgstr "Κατακόρυφο"
+msgstr ""
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
-msgstr "_Κατακόρυφος Χώρος"
+msgstr ""
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr "_Προβολή"
+msgstr ""
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "_διαγραφή μολυβιών"
+msgstr ""
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
-msgstr "_λεπτό"
+msgstr ""
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "_μεσαίο"
+msgstr ""
 
 #: ../ui/main.glade:1917
 msgid "_standard"
-msgstr "_τυπικό"
+msgstr ""
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "_παχύ"
+msgstr ""
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
-msgstr "_πολύ λεπτό"
+msgstr ""
 
 #: ../ui/main.glade:1928
 msgid "_whiteout"
-msgstr "_διορθωτικό υγρό"
+msgstr ""
 
 #: ../ui/settings.glade:4878
 msgid "disabled"
@@ -3814,7 +3830,7 @@ msgstr "s <i>(μετά από το οποίο θα ενεργοποιηθεί ξ
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "πολ_ύ παχύ"
+msgstr ""
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
