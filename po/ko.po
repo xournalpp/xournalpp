@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: ko\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -32,12 +32,13 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2324
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"제안하는 대체 파일: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " {1} 의"
 
 #: ../src/core/control/settings/Settings.cpp:143
 msgid "%F-Note-%H-%M"
@@ -45,7 +46,7 @@ msgstr "%F-노트-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:145
 msgid "%{name}_annotated"
-msgstr ""
+msgstr "%{name}_주석추가됨"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:166
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -67,7 +68,7 @@ msgstr "<span foreground='red' size='x-large'>다음 필수 UI 파일이 존재�
 
 #: ../src/core/gui/PageView.cpp:914
 msgid "Add missing page"
-msgstr ""
+msgstr "누락된 페이지 추가"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:513
 msgid "Add/Edit TeX"
@@ -126,12 +127,13 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:72
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "속성의 색상이 설정되지 않았습니다!"
 
 #: ../src/core/control/AudioController.cpp:118
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "오디오 폴더가 없거나 설정되지 않았습니다! 녹음이 작동하지 않습니다!\n"
+"\"설정 > 오디오 녹음\"에서 녹음 폴더를 지정하십시오."
 
 #: ../src/core/control/Control.cpp:257
 msgid "Autosave failed with an error: {1}"
@@ -165,7 +167,7 @@ msgstr "맨 앞으로 보내기"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:36
 msgid "Built on"
-msgstr ""
+msgstr "제작 날짜"
 
 #: ../src/core/control/Control.cpp:2336 ../src/core/control/Control.cpp:2813
 #: ../src/core/control/XournalMain.cpp:188
@@ -187,23 +189,23 @@ msgstr "줄 표시 변경"
 
 #: ../src/core/undo/FillUndoAction.cpp:81
 msgid "Change stroke fill"
-msgstr ""
+msgstr "획 채우기 변경"
 
 #: ../src/core/undo/SizeUndoAction.cpp:106
 msgid "Change stroke width"
-msgstr ""
+msgstr "획 두께 변경"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:65
 msgid "Clear list"
-msgstr ""
+msgstr "목록 지우기"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
+msgstr "알 수 없는 색상입니다 \"{1}\" (색상 목록에 정의되지 않았습니다.)"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Compass"
-msgstr ""
+msgstr "컴퍼스"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
@@ -264,17 +266,19 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:187
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "\"{1}\" 파일을 열 수 없습니다."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:76
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "사용자 정의된 toolbar.ini 파일 {1}을 읽을 수 없습니다.\n"
+"툴바를 사용할 수 없습니다."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:67
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "기본 toolbar.ini 파일 {1}을 읽을 수 없습니다.\n"
+"툴바를 사용할 수 없습니다."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:403
 #: ../src/core/control/xojfile/LoadHandler.cpp:426
@@ -289,40 +293,41 @@ msgstr ""
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\" 다시 실행 실패\n"
-"문제가 생겼습니다… 버그 리포트를 작성해주세요…"
+"문제가 생겼습니다… 버그 리포트를 작성 하십시오…"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:179
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "도구 항목을 {1} 툴바의 {2} 위치에서 제거할 수 없습니다"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:174
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "{1} 도구 항목을 {2} 툴바의 {3} 위치에서 제거할 수 없습니다"
 
 #: ../src/core/control/Control.cpp:248
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "자동 저장 파일의 이름을 \"{1}\"에서 \"{2}\"로 바꾸지 못했습니다: {3}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:91
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr ".tex 파일을 저장하지 못했습니다: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:105
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "{1} 을 시작할 수 없습니다:{2} (exit code {3})"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "\"{1}\" 되돌리기 실패\n"
+"문제가 생겼습니다… 버그 리포트를 작성 하십시오…"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:253
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "\"{1}\" 배경을 작성할 수 없습니다, {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:369
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "\"{1}\" 배경을 작성할 수 없습니다. 무시하고 진행합니다."
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:88
 msgid "Create new layer"
@@ -330,19 +335,19 @@ msgstr "새 레이어 생성"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:71
 msgid "Custom"
-msgstr ""
+msgstr "사용자 정의"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "Custom Export"
-msgstr ""
+msgstr "사용자 지정 내보내기"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "툴바 사용자 정의"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
 msgid "Customized"
-msgstr ""
+msgstr "사용자 정의됨"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Cut"
@@ -393,11 +398,13 @@ msgstr "고급 내보내기 옵션 표시"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "자동 저장 파일을 열지 마십시오. 덮어쓰기 될 수 있습니다.\n"
+"해당 파일을 다른 폴더로 복사하십시오.\n"
+"{1} 폴더로부터 파일을 열 수 없습니다."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "백그라운드 PDF를 덮어쓰지 마세요! 에러를 발생시킬 것입니다!"
+msgstr "배경 PDF를 덮어쓰기 하지 마십시오! 에러가 발생하게 됩니다."
 
 #: ../src/core/control/Control.cpp:2804
 msgid "Document file was removed."
@@ -405,37 +412,37 @@ msgstr "문서 파일 삭제됨."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:271
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "이 문서는 손상되었습니다. (파일에 페이지가 없습니다)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "이 문서는 완전한 파일이 압니다. (파일에서 끝 부분이 누락된 것 같습니다)"
 
 #: ../src/core/model/Document.cpp:306 ../src/core/model/Document.cpp:315
 #: ../src/core/model/Document.cpp:318
 msgid "Document not loaded! ({1}), {2}"
-msgstr ""
+msgstr "문서가 로드되지 않았습니다! ({1}), {2}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Dotted"
-msgstr ""
+msgstr "점 모눈종이"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:136
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:524
 msgid "Draw Arrow"
-msgstr ""
+msgstr "화살표 그리기"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "양쪽 화살표 그리기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:134
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:523
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "타원 그리기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:130
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
@@ -455,21 +462,21 @@ msgstr "직사각형 그리기"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:46
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:530
 msgid "Draw Spline"
-msgstr ""
+msgstr "스플라인 그리기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:528
 msgid "Draw coordinate system"
-msgstr ""
+msgstr "평면좌표축 그리기"
 
 #: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Draw stroke"
-msgstr ""
+msgstr "획 그리기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:126
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "그리기 타입 - 바꾸지 않기"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 msgid "Drawing Type Combo"
@@ -481,33 +488,33 @@ msgstr "텍스트 편집"
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): 요소 인덱스는 1부터 시작합니다."
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): 주어진 요소의 인덱스가 최대 갯수보다 큽니다."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): interval bounds는 오름차순이어야 합니다."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): 잘못된 요소 범위"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
-msgstr ""
+msgstr "긴급 저장 문서"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:285
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "이 설정을 바꾸기 위해 필압 감지 또는 필압 예측을 활성화 하십시오!"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
 #: ../src/core/undo/EraseUndoAction.cpp:60
 msgid "Erase stroke"
-msgstr ""
+msgstr "획 삭제"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:315
@@ -521,20 +528,20 @@ msgstr ""
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "글레이드 파일 \"{1}\"을 불러오는 중 오류 발생 (\"{2}\"를 사용해 보십시오.)"
 
 #: ../src/core/control/Control.cpp:2367
 msgid "Error opening file \"{1}\""
-msgstr ""
+msgstr "\"{1}\" 파일 열기 오류"
 
 #: ../src/util/OutputStream.cpp:24
 msgid "Error opening file: \"{1}\""
-msgstr ""
+msgstr "\"{1}\" 파일 열기 오류"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:489
 #: ../src/core/control/xojfile/LoadHandler.cpp:509
 msgid "Error reading PDF: {1}"
-msgstr ""
+msgstr "PDF를 읽는데 실패했습니다: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:564
 msgid "Error reading width of a stroke: {1}"
@@ -542,35 +549,35 @@ msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
-msgstr ""
+msgstr "이미지 저장 오류 #1"
 
 #: ../src/core/control/jobs/ImageExport.cpp:197
 msgid "Error save image #2"
-msgstr ""
+msgstr "이미지 저장 오류 #2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:21
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "자동 저장 중 오류: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "PDF 배경 내보내기 오류: PDF 페이지 번호를 찾을 수 없습니다. "
 
 #: ../src/util/Util.cpp:93
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "시스템 커맨드 {2} 실행 중 오류 {1} 발생"
 
 #: ../src/core/control/CrashHandler.cpp:40
 msgid "Error: {1}"
-msgstr ""
+msgstr "오류: {1}"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "오류: {1} 는 정상적인 파일이 아닙니다. LaTeX 템플릿 파일 설정을 확인 하십시오. "
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "오류: {1}. {2} 의 내용을 확인 하십시오."
 
 #: ../src/core/control/XournalMain.cpp:640
 msgid "Export FILE as PDF"
@@ -580,7 +587,9 @@ msgstr "파일을 PDF로 내보내기"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "이미지 파일로 내보내기(1페이지 당 개별 파일)\n"
+"                                 IMGFILE의 확장자로 이미지 포맷을 유추합니다.\n"
+"                                 지원되는 포맷: .png, .svg"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
@@ -602,31 +611,36 @@ msgstr ""
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "배경없이 내보내기\n"
+"                                 내보내기 된 파일은 파일 포맷의 지원여부에 따라\n"
+"                                 투명 또는 하얀 배경을 갖게 됩니다.\n"
 
 #: ../src/core/control/XournalMain.cpp:652
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "노트의 줄 없이 내보내기\n"
+"                                 내보내기 된 파일의 노트에서 가로줄이 빠지게 됩니다.\n"
 
 #: ../src/core/control/XournalMain.cpp:146
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "파일을 삭제하지 못했습니다: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "{1} 경로에서 LaTeX 생성 프로그램을 찾을 수 없습니다."
 
 #: ../src/core/control/latex/LatexGenerator.cpp:78
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr ""
+msgstr "{1} 경로에서 LaTeX 생성 프로그램을 찾을 수 없습니다.\n\n"
+"Flatpak에 이 프로그램이 설치된 것으로 감지되었으므로, Flatpak freedesktop Tex Live 확장을 설치해야 합니다. 예를 들어, 다음과 같은 명령어를 실행하십시오:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "PDF Cairo surface을 시작하지 못했습니다."
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
@@ -634,29 +648,31 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:179
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "zip 압축파일에서 content.xml 파일을 불러오지 못했습니다: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "LaTeX 생성프로그램 명령 읽기 실패: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:61
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "LaTeX 생성프로그램 경로 읽기 실패: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "글로벌 템플릿 파일을 읽는데 실패했습니다. 설정을 확인하십시오."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:108
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "다음 오류로 인해 경로를 찾지 못했습니다.\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:166 ../src/util/PathUtil.cpp:183
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "파일을 열 수 없습니다. 수동으로 직접 파일을 열어야 합니다.\n"
+"URL: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:585
 msgid "Fill"
@@ -664,11 +680,11 @@ msgstr "채우기"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:586
 msgid "Fill Opacity"
-msgstr ""
+msgstr "채우기 불투명도"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:289
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "입력 필압을 조절합니다. 필압 배수로 곱한 값만큼 필압을 증가시킵니다. 만약 최소 필압보다 작을 경우, 최소 필압을 사용합니다."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:605
 msgid "Fine"
@@ -676,7 +692,7 @@ msgstr "부드럽게"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "플로팅 도구상자 (테스트중)"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:65
 msgid "Font"
@@ -688,11 +704,11 @@ msgstr "앞으로"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:72
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 또는 더 최신 라이센스"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:39
 msgid "GTK Version"
-msgstr ""
+msgstr "GTK 버전"
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
@@ -700,15 +716,15 @@ msgstr "xournalpp 버전 가져오기"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:46
 msgid "Git commit"
-msgstr ""
+msgstr "Git 커밋"
 
 #: ../src/core/control/LatexController.cpp:76
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "글로벌 템플릿 파일이 존재하지 않습니다. 설정을 확인하십시오."
 
 #: ../src/core/control/LatexController.cpp:87
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "글로벌 템플릿 파일이 정상적인 파일이 아닙니다. 설정을 확인 하십시오. "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Go to first page"
@@ -736,15 +752,15 @@ msgstr "최상위 레이어로 이동"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:24
 msgid "Graph"
-msgstr "그래프"
+msgstr "그래프 모눈종이"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Grid Snapping"
-msgstr "그리드 맞추기"
+msgstr "그리드 자동 맞춤"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "Xournal++ 빌드 중 GtkSourceView가 비활성화 되었습니다! 몇몇 설정은 사용할 수 없게 됩니다."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:539
@@ -763,11 +779,11 @@ msgstr "형광펜"
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:514
 msgid "Image"
-msgstr ""
+msgstr "이미지"
 
 #: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
-msgstr ""
+msgstr "이미지 파일이 성공적으로 생성되었습니다"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
 msgid "Images"
@@ -783,56 +799,56 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:95
 msgid "Insert after current page"
-msgstr ""
+msgstr "현재 페이지 다음에 추가"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:96
 msgid "Insert at end"
-msgstr ""
+msgstr "마지막에 추가"
 
 #: ../src/core/undo/InsertUndoAction.cpp:82
 msgid "Insert elements"
-msgstr ""
+msgstr "요소 추가"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 #: ../src/core/undo/InsertUndoAction.cpp:37
 msgid "Insert image"
-msgstr ""
+msgstr "이미지 추가"
 
 #: ../src/core/undo/InsertUndoAction.cpp:39
 msgid "Insert latex"
-msgstr ""
+msgstr "LaTeX 추가"
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:29
 msgid "Insert layer"
-msgstr ""
+msgstr "레이서 추가"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Insert page"
-msgstr ""
+msgstr "페이지 추가"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "등각 투영 점 모눈종이"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Graph"
-msgstr ""
+msgstr "등각 투영 그래프 모눈종이"
 
 #: ../src/core/control/XournalMain.cpp:627
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "페이지로 이동 (첫 페이지: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "LaTeX 에디터 테마:"
 
 #: ../src/core/control/LatexController.cpp:244
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "Latex 생성 중 오류가 발생했습니다: {1} (종료 코드: {2})"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:251
 msgid "Layer"
-msgstr ""
+msgstr "레이어"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:237
 msgid "Layer Combo"
@@ -840,21 +856,21 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Layer Preview"
-msgstr ""
+msgstr "레이어 미리보기"
 
 #: ../src/core/control/layer/LayerController.cpp:375
 msgid "Layer {1}"
-msgstr ""
+msgstr "{1} 레이어"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "레이어스택 미리보기"
 
 #: ../src/core/gui/PageView.cpp:849
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:97
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
-msgstr ""
+msgstr "로딩중..."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:454
 msgid "Manage Toolbars"
@@ -862,11 +878,11 @@ msgstr "도구 모음 관리"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:606
 msgid "Medium"
-msgstr ""
+msgstr "중간"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:32
 msgid "Merge layer down"
-msgstr ""
+msgstr "레이어 합치기"
 
 #: ../src/core/undo/MoveUndoAction.cpp:19
 msgid "Move"
@@ -886,7 +902,7 @@ msgstr "페이지를 위로 이동"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:75
 msgid "New"
-msgstr ""
+msgstr "신규"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "New Xournal"
@@ -898,7 +914,7 @@ msgstr "다음"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 msgid "Next annotated page"
-msgstr ""
+msgstr "주석 추가된 다음 페이지"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:68
 msgid "No device"
@@ -911,15 +927,15 @@ msgstr "내보내기할 페이지가 없습니다!"
 
 #: ../src/core/control/Control.cpp:1467
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "추가할 PDF 페이지가 없습니다. 우선 문서를 다시 열어야 할 수 있습니다."
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
 msgid "No recent files"
-msgstr ""
+msgstr "최근 파일 없음"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:128
 msgid "Normal drawing"
-msgstr ""
+msgstr "일반 그리기"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
 #: ../src/core/plugin/Plugin.cpp:265 ../src/core/plugin/Plugin.cpp:288
@@ -959,7 +975,7 @@ msgstr "PDF 내보내기"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:41
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "PDF의 {1} 페이지"
 
 #: ../src/core/control/PdfCache.cpp:123
 msgid "PDF background missing"
@@ -977,11 +993,11 @@ msgstr "PDF 파일"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:47
 msgid "PDF {1}"
-msgstr ""
+msgstr "{1} PDF"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "PNG graphics"
-msgstr ""
+msgstr "PNG 이미지"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:88
 msgid "Page"
@@ -993,7 +1009,7 @@ msgstr "페이지 미리보기"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:84
 msgid "Page background changed"
-msgstr "페이지 백그라운드 변경됨"
+msgstr "페이지 배경 변경됨"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:100
 msgid "Page deleted"
@@ -1001,7 +1017,7 @@ msgstr "페이지 삭제됨"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:96
 msgid "Page inserted"
-msgstr "페이지 삽입됨"
+msgstr "페이지 추가됨"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:61
 msgid "Page number"
@@ -1013,7 +1029,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Paired pages"
-msgstr ""
+msgstr "두 쪽 보기"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/undo/AddUndoAction.cpp:66
@@ -1022,7 +1038,7 @@ msgstr "붙여넣기"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Pause / Play"
-msgstr ""
+msgstr "일시정지 / 재생"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
@@ -1031,29 +1047,29 @@ msgstr "펜"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
-msgstr ""
+msgstr "빈 노트"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:538
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:27
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:94
 msgid "Play Object"
-msgstr ""
+msgstr "객체 실행"
 
 #: ../src/core/control/XournalMain.cpp:148
 msgid "Please delete the file manually"
-msgstr ""
+msgstr "직접 파일을 삭제해주세요"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
 msgid "Predefined"
-msgstr ""
+msgstr "사전 정의됨"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Presentation mode"
-msgstr ""
+msgstr "발표 모드"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:64
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "이전에 선택된 언어를 더 이상 사용할 수 없습니다!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Print"
@@ -1061,7 +1077,7 @@ msgstr "인쇄"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "오디오 녹음 / 중지"
 
 #: ../src/core/control/Control.cpp:1013
 msgid "Recorder could not be started."
@@ -1082,11 +1098,11 @@ msgstr "PDF 백그라운드 제거"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "도구 항목을 {1} 툴바 ID {2} 으로부터 제거함"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "{1} 도구 항목을 {2} 툴바 ID {3} 으로부터 제거함"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
@@ -1098,35 +1114,35 @@ msgstr "바꾸기"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1192
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "{1} 첨부 파일에 대해 요청된 임시 파일을 찾을 수 없습니다."
 
 #: ../src/core/control/XournalMain.cpp:219
 msgid "Restore file"
-msgstr ""
+msgstr "파일 복구하기"
 
 #: ../src/core/undo/RotateUndoAction.cpp:56
 msgid "Rotation"
-msgstr ""
+msgstr "회전"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "회전 자동 맞춤"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
-msgstr ""
+msgstr "줄 노트"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "수직 줄 노트"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 msgid "SVG graphics"
-msgstr ""
+msgstr "SVG 이미지"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "샘플 LaTeX 파일이 성공적으로 생성되었습니다."
 
 #: ../src/core/control/Control.cpp:2805 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
@@ -1144,20 +1160,20 @@ msgstr "파일 저장"
 
 #: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error, can't backup: {1}"
-msgstr ""
+msgstr "파일 저장 오류, {1} 을 백업할 수 없습니다"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:125
 #: ../src/core/control/jobs/SaveJob.cpp:131
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "파일 저장 오류: {1}"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
-msgstr ""
+msgstr "배율"
 
 #: ../src/core/gui/PageView.cpp:912
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "페이지로 스크롤 {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Search"
@@ -1165,11 +1181,11 @@ msgstr "검색"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:65
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "전체 기여자 리스트 보기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:101
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "PDF로부터 영역 텍스트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:543
 msgid "Select Font"
@@ -1179,7 +1195,7 @@ msgstr "글꼴 선택"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:22
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "한 줄 PDF 텍스트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:535
 msgid "Select Multi-Layer Rect"
@@ -1188,13 +1204,13 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:76
 msgid "Select Multi-Layer Rectangle"
-msgstr ""
+msgstr "다중 레이어 사각형 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:534
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:82
 msgid "Select Multi-Layer Region"
-msgstr ""
+msgstr "다중 레이어 영역 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:536
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:26
@@ -1212,11 +1228,11 @@ msgstr "PDF 텍스트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "PDF 텍스트 사각형 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:521
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "사각형으로 PDF 텍스트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
@@ -1253,15 +1269,15 @@ msgstr "다른 백그라운드 색 선택"
 
 #: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:79
 msgid "Select color"
-msgstr "색 선택"
+msgstr "색상 선택"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Select multi layer rect"
-msgstr ""
+msgstr "다중 레이어 사각형 선택"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 msgid "Select multi layer region"
-msgstr ""
+msgstr "다중 레이어 영역 선택"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
 msgid "Select rectangle"
@@ -1285,11 +1301,11 @@ msgstr "뒤로 보내기"
 
 #: ../src/core/control/tools/EditSelection.cpp:434
 msgid "Send to back"
-msgstr ""
+msgstr "맨 뒤로 보내기"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:57
 msgid "Separator"
-msgstr ""
+msgstr "구분선"
 
 #: ../src/core/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -1310,11 +1326,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Setsquare"
-msgstr ""
+msgstr "삼각자"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:517
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "도형 자동인식"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:77
 msgid "Show all"
@@ -1322,16 +1338,17 @@ msgstr "모두 보이기"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:102
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "사용되지 않은 페이지만 표시 (총 1개)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
 msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
+msgstr "사용되지 않은 페이지만 표시 (총 {1} 개)"
 
 #: ../src/core/control/XournalMain.cpp:499
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "Xournal++은 한번에 한 개의 파일만 열 수 있습니다.\n"
+"다른 파일들을 무시합니다."
 
 #: ../src/core/control/XournalMain.cpp:514
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
@@ -1340,29 +1357,29 @@ msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:58
 msgid "Spacer"
-msgstr ""
+msgstr "공백"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
-msgstr ""
+msgstr "오선지"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:552
 msgid "Stop"
-msgstr ""
+msgstr "정지"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
 #: ../src/core/undo/RecognizerUndoAction.cpp:76
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "획 자동인식"
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "정상적으로 문서를 \"{1}\"에 저장했습니다"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
 msgid "Supported files"
-msgstr ""
+msgstr "지원되는 파일"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
@@ -1382,7 +1399,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
-msgstr ""
+msgstr "시스템 기본 설정"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:512
@@ -1400,7 +1417,7 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:133
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "{1} 페이지에서 텍스트 1개 찾음"
 
 #: ../src/core/gui/SearchBar.cpp:134
 msgid "Text found {1} times on page {2}"
@@ -1408,52 +1425,53 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:84
 msgid "Text not found"
-msgstr ""
+msgstr "텍스트 없음"
 
 #: ../src/core/gui/SearchBar.cpp:139
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "모든 페이지 검색 결과, 텍스트 없음"
 
 #: ../src/core/control/Control.cpp:1257
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "툴바설정 \"{1}\"은 수정할 수 없습니다. 수정을 위해 이 툴바설정의 복사본을 만들겠습니까?"
 
 #: ../src/core/control/Control.cpp:2311
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "첨부된 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다."
 
 #: ../src/core/control/XournalMain.cpp:245
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "\"{1}\" 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다."
 
 #: ../src/core/control/Control.cpp:2314
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr ""
+msgstr "\"{1}\" 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다.\n"
+"파일의 최근 위치: \"{2}\""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "배경을 덮어쓰기하기 위한 검사에 문제가 있습니다:\n"
 
 #: ../src/core/control/Control.cpp:2375
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "지금 불러오는 파일이 더 최신 버전의 Xournal++ 파일 포맷을 사용하기 때문에, 파일이 정상적으로 열리지 않을 수 있습니다. 그래도 파일을 불러옵니까?"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "이 파일은 올바른 .xopp 파일이 아닙니다 (Mimetype 누락): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:148
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "이 파일은 올바른 .xopp 파일이 아닙니다 (잘못된 Mimetype): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:157
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "이 파일은 올바른 .xopp 파일이 아닙니다 (버전 누락): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:170
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "이 파일은 올바른 .xopp 파일이 아닙니다 (버전 문자열 손상): \"{1}\""
 
 #: ../src/core/control/LatexController.cpp:303
 msgid "The formula is empty when rendered or invalid."
@@ -1461,7 +1479,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:178
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "가장 최근 로그 파일 이름: {1}"
 
 #: ../src/core/control/XournalMain.cpp:174
 msgid "There are errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
@@ -1473,27 +1491,27 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:104
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "도움말을 표시하는데 오류가 발생해습니다: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:607
 msgid "Thick"
-msgstr ""
+msgstr "두꺼운"
 
 #: ../src/core/control/Control.cpp:2804
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "문서가 아직 저장되지 않았습니다"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:166
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "이 이미지를 불러올 수 없습니다. 오류 메시지: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Toggle fullscreen"
-msgstr ""
+msgstr "전체 화면 전환"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Tool - don't change"
-msgstr ""
+msgstr "도구 - 바꾸지 않기"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
@@ -1509,15 +1527,15 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "{1} 에서 글로벌 템플릿 파일을 열 수 없습니다. 파일이 존재합니까?"
 
 #: ../src/core/gui/PageView.cpp:371
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "오디오 녹음 {1} 을 재생할 수 없습니다."
 
 #: ../src/core/control/Control.cpp:1481
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "PDF 페이지를 가져 올 수 없습니다."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/core/undo/UndoRedoHandler.cpp:182
@@ -1542,7 +1560,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "알 수 없는 색상의 값입니다 \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:496
 msgid "Unknown domain type: {1}"
@@ -1550,7 +1568,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:256
 msgid "Unknown parser error"
-msgstr ""
+msgstr "알 수 없는 구문 해석기 오류"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:444
 msgid "Unknown pixmap::domain type: {1}"
@@ -1566,27 +1584,27 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2696
 msgid "Unsaved Document"
-msgstr ""
+msgstr "저장되지 않은 문서"
 
 #: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "지원되지 않는 이미지 형식: "
 
 #: ../src/core/control/Control.cpp:2332
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "제안된 PDF를 사용하십시오."
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:33
 msgid "Version"
-msgstr ""
+msgstr "버전"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:537
 msgid "Vertical Space"
-msgstr ""
+msgstr "수직 공간"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Vertical space"
-msgstr ""
+msgstr "수직 공간"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:604
 msgid "Very Fine"
@@ -1598,11 +1616,11 @@ msgstr "매우 두껍게"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "With PDF background"
-msgstr ""
+msgstr "PDF를 배경으로 사용"
 
 #: ../src/core/undo/InsertUndoAction.cpp:35
 msgid "Write text"
-msgstr ""
+msgstr "텍스트 쓰기"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1042
 msgid "Wrong count of points ({1})"
@@ -1610,7 +1628,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1059
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "잘못된 필압 수치입니다. {2} 를 예상했으나, {1} 이 입력 되었습니다."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:253
 msgid "XML Parser error: {1}"
@@ -1618,30 +1636,31 @@ msgstr "XML 파서 오류: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (호환성)"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
 msgid "Xournal files"
-msgstr ""
+msgstr "Xournal 파일"
 
 #: ../src/core/control/XournalMain.cpp:213
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "마지막 사용 중 Xournal++이 강제 종료 되었습니다. 마지막에 작업 중이던 파일을 복구합니까?"
 
 #: ../src/core/control/Control.cpp:2645
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++ 파일"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:91
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Xournal++ 템플릿"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:201
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "선택할 PDF 페이지가 없습니다. 작업을 취소합니다.\n"
+"\"저널\" → \"페이지 템플릿 설정\"에서 다른 배경 타입을 선택하십시오."
 
 #: ../src/core/control/XournalMain.cpp:176
 msgid "You're using \"{1}/{2}\" branch."
@@ -1651,15 +1670,17 @@ msgstr ""
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "현재 문서에는 PDF 페이지 번호 {1} 가 없습니다.\n"
+"이 페이지를 추가합니까?\n\n"
+"팁: 저널 → 종이 배경 → PDF 배경 사용을 선택해서 PDF 페이지를 추가하십시오."
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
-msgstr ""
+msgstr "확대 슬라이더"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Zoom fit to screen"
-msgstr ""
+msgstr "화면에 맞춤"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
 msgid "Zoom in"
@@ -1679,54 +1700,54 @@ msgstr "확대／축소 100%"
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Cancel"
-msgstr ""
+msgstr "_취소"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 msgid "_Open"
-msgstr ""
+msgstr "_불러옴"
 
 #: ../src/core/control/Control.cpp:2640
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
-msgstr ""
+msgstr "_저장"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
-msgstr ""
+msgstr "커서"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "1점 쇄선"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
 msgid "dashed"
-msgstr ""
+msgstr "파선"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default disabled"
-msgstr ""
+msgstr "기본 설정 비활성화"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default enabled"
-msgstr ""
+msgstr "기본 설정 활성화"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "delete stroke"
-msgstr ""
+msgstr "획 삭제"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:307
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:505
 msgid "dotted"
-msgstr ""
+msgstr "점선"
 
 #: ../src/core/undo/AddUndoAction.cpp:74
 #: ../src/core/undo/DeleteUndoAction.cpp:72
 msgid "elements"
-msgstr ""
+msgstr "요소"
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
@@ -1766,77 +1787,77 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
 msgid "standard"
-msgstr ""
+msgstr "일반"
 
 #: ../src/core/undo/AddUndoAction.cpp:82
 #: ../src/core/undo/DeleteUndoAction.cpp:80
 msgid "stroke"
-msgstr ""
+msgstr "획"
 
 #: ../src/core/control/DeviceListHelper.cpp:113
 msgid "tablet pad"
-msgstr ""
+msgstr "태블릿 패드"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:89
 msgid "text"
-msgstr ""
+msgstr "텍스트"
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchpad"
-msgstr ""
+msgstr "터치패드"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "touchscreen"
-msgstr ""
+msgstr "터치스크린"
 
 #: ../src/core/control/DeviceListHelper.cpp:111
 msgid "trackpoint"
-msgstr ""
+msgstr "트랙포인트"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "whiteout"
-msgstr ""
+msgstr "흰색 덧칠"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1058
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "xoj-File: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:185
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: \"{1}\" 아이콘을 찾을 수 없습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: \"{1}\" 파일에 미리보기가 없습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: \"{1}\"파일은 .xoj 파일이 아닙니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:147
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: 미리보기와 페이지가 없습니다. 잘못된 파일일 수 있습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: 입력파일 \"{1}\"을 열지 못했습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:202
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: 출력파일 \"{1}\"을 열지 못했습니다."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:209
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "xoj-preview-extractor: 추출 성공"
 
 #: ../src/util/PathUtil.cpp:255
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -1946,7 +1967,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6226
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1233
 msgid "1,30"
@@ -1970,7 +1991,7 @@ msgstr ""
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>... 또는 이미 사용된 이미지 선택:</b>"
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
@@ -1995,7 +2016,8 @@ msgstr ""
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>문서 내보내기 설정</b>\n"
+"내보내기 조건 설정"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -2029,7 +2051,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6281
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
+msgstr "<i>변경 사항은 새로운 녹음과 재생에만 적용됩니다.</i>"
 
 #: ../ui/settings.glade:1502
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
@@ -2041,7 +2063,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr ""
+msgstr "<i>예시:</i> 1-3 또는 1,3,5-7 등"
 
 #: ../ui/settings.glade:362
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
@@ -2075,7 +2097,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6390
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>언어 선택 (재시작 필요)</i>"
 
 #: ../ui/settings.glade:5718
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -2133,7 +2155,8 @@ msgstr ""
 #: ../ui/about.glade:117
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>The next generation</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -2157,11 +2180,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "전체"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
-msgstr ""
+msgstr "모든 페이지"
 
 #: ../ui/settings.glade:5472
 msgid "All three conditions must be met before stroke is ignored.\n"
@@ -2191,11 +2214,11 @@ msgstr ""
 
 #: ../ui/settings.glade:6070
 msgid "Audio Devices"
-msgstr ""
+msgstr "오디오 장치"
 
 #: ../ui/settings.glade:6313
 msgid "Audio Recording"
-msgstr ""
+msgstr "오디오 녹음"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
@@ -2203,7 +2226,7 @@ msgstr ""
 
 #: ../ui/about.glade:363
 msgid "Authors"
-msgstr ""
+msgstr "제작자들"
 
 #: ../ui/latexSettings.glade:447
 msgid "Auto-indent"
@@ -2211,7 +2234,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2412
 msgid "Autodetect"
-msgstr ""
+msgstr "자동감지"
 
 #: ../ui/settings.glade:874
 msgid "Autoloading"
@@ -2320,7 +2343,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:163
 msgid "Command Output"
-msgstr ""
+msgstr "명령 출력"
 
 #: ../ui/main.glade:1263
 msgid "Configure Page Template"
@@ -2348,7 +2371,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
-msgstr ""
+msgstr "현재 페이지"
 
 #: ../ui/settings.glade:3579
 msgid "Cursor"
@@ -2392,7 +2415,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6213
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "기본 탐색 시간 (초)"
 
 #: ../ui/settings.glade:525 ../ui/settings.glade:696
 msgid "Default name: "
@@ -2404,19 +2427,19 @@ msgstr ""
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "레이어 삭제"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr ""
+msgstr "획 삭제"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr ""
+msgstr "장치"
 
 #: ../ui/settings.glade:2526
 msgid "Disable"
-msgstr ""
+msgstr "비활성화"
 
 #: ../ui/settings.glade:2880
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
@@ -2424,7 +2447,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr ""
+msgstr "이 장치에서 그리기 비활성화"
 
 #: ../ui/settings.glade:3788
 msgid "Disable scrollbar fade out"
@@ -2432,7 +2455,7 @@ msgstr ""
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "사용 안 함"
 
 #: ../ui/settings.glade:2386
 msgid "Disabling Method"
@@ -2510,7 +2533,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2514
 msgid "Enable"
-msgstr ""
+msgstr "활성화"
 
 #: ../ui/settings.glade:4928
 msgid "Enable  with determination radius of "
@@ -2558,7 +2581,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "LaTeX 텍스트 입력 / 수정"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
@@ -2566,7 +2589,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "지우개 타입 - 바꾸지 않기"
 
 #: ../ui/settings.glade:2193
 msgid "Eraser visibility"
@@ -2623,7 +2646,7 @@ msgstr "전체 화면"
 
 #: ../ui/settings.glade:6115
 msgid "Gain"
-msgstr ""
+msgstr "게인"
 
 #: ../ui/settings.glade:1315 ../ui/settings.glade:1335
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
@@ -2667,7 +2690,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "높이"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2709,7 +2732,7 @@ msgstr ""
 
 #: ../ui/about.glade:157
 msgid "Icon Designers"
-msgstr ""
+msgstr "아이콘 디자이너"
 
 #: ../ui/settings.glade:3187
 msgid "Icon Theme"
@@ -2745,7 +2768,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "이미지 품질"
 
 #: ../ui/settings.glade:246
 msgid "Inertia"
@@ -2753,7 +2776,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5998
 msgid "Input Device"
-msgstr ""
+msgstr "입력 장치"
 
 #: ../ui/settings.glade:988
 msgid "Input Devices"
@@ -2773,7 +2796,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr ""
+msgstr "LaTeX 추가"
 
 #: ../ui/main.glade:2940
 msgid "Insert Page After"
@@ -2805,7 +2828,7 @@ msgstr "언어 설정"
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "레이아웃"
+msgstr ""
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2813,7 +2836,7 @@ msgstr "왼손 / 오른손잡이"
 
 #: ../ui/about.glade:335
 msgid "License"
-msgstr "라이선스"
+msgstr "라이센스"
 
 #: ../ui/latexSettings.glade:433
 msgid "Line numbers"
@@ -2890,7 +2913,7 @@ msgstr ""
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "마우스+키보드 콤보"
 
 #: ../ui/main.glade:2895 ../ui/main.glade:2970
 msgid "Move Down"
@@ -2944,12 +2967,12 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "노트 줄 없음"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:223
 #: ../ui/settings.glade:240 ../ui/settings.glade:3696
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #: ../ui/settings.glade:4766
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2965,11 +2988,11 @@ msgstr "옵션"
 
 #: ../ui/settings.glade:6021
 msgid "Output Device"
-msgstr "출력 기기"
+msgstr "출력 장치"
 
 #: ../ui/texdialog.glade:143
 msgid "Output generated by the LaTeX command."
-msgstr ""
+msgstr "LaTeX 명령에 의해 생성된 출력"
 
 #: ../ui/settings.glade:5636
 msgid "PDF Cache"
@@ -2985,7 +3008,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
-msgstr ""
+msgstr "페이지:"
 
 #: ../ui/settings.glade:4820
 msgid "Paired Pages"
@@ -3010,7 +3033,8 @@ msgstr ""
 #: ../ui/about.glade:210
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Denis Auroux에 의해\n"
+"Xournal에 부분적으로 기반함"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Path: "
@@ -3018,7 +3042,7 @@ msgstr ""
 
 #: ../ui/main.glade:2072
 msgid "Pause"
-msgstr "일시정지"
+msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
@@ -3034,11 +3058,11 @@ msgstr ""
 
 #: ../ui/settings.glade:6267
 msgid "Playback Settings"
-msgstr ""
+msgstr "재생 설정"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "플러그인 관리"
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
@@ -3086,7 +3110,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
-msgstr ""
+msgstr "범위"
 
 #: ../ui/settings.glade:5566
 msgid "Re-render when the page's zoom changes by more than "
@@ -3102,7 +3126,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6180
 msgid "Recording Quality"
-msgstr ""
+msgstr "녹음 품질"
 
 #: ../ui/main.glade:1323
 msgid "Rename Layer"
@@ -3130,7 +3154,7 @@ msgstr ""
 
 #: ../ui/settings.glade:6103
 msgid "Sample Rate"
-msgstr ""
+msgstr "샘플 레이트"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
@@ -3158,7 +3182,7 @@ msgstr ""
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "이미지 선택"
 
 #: ../ui/main.glade:1408
 msgid "Select Linear Text"
@@ -3166,7 +3190,7 @@ msgstr ""
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "PDF 페이지 선택"
 
 #: ../ui/main.glade:1420
 msgid "Select Text In Rectangle"
@@ -3264,7 +3288,7 @@ msgstr ""
 
 #: ../ui/about.glade:270
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "소스 코드 / 버그 트래커"
 
 #: ../ui/settings.glade:4303
 msgid "Speed for Ctrl + Scroll"
@@ -3280,7 +3304,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "일반"
 
 #: ../ui/settings.glade:2700
 msgid "Start zooming after a distance "
@@ -3329,7 +3353,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "LaTeX 소스"
 
 #: ../ui/latexSettings.glade:265
 msgid "Template file settings"
@@ -3341,7 +3365,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2559 ../ui/settings.glade:2572
 msgid "Test"
-msgstr ""
+msgstr "테스트"
 
 #: ../ui/latexSettings.glade:318
 msgid "Test configuration"
@@ -3450,7 +3474,7 @@ msgstr ""
 
 #: ../ui/about.glade:242
 msgid "Website"
-msgstr ""
+msgstr "웹사이트"
 
 #: ../ui/settings.glade:3864
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
@@ -3478,11 +3502,11 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "흰색 덧칠"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "너비"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3490,7 +3514,7 @@ msgstr ""
 
 #: ../ui/about.glade:307
 msgid "With help from the community"
-msgstr ""
+msgstr "커뮤니티 회원들의 기여"
 
 #: ../ui/latexSettings.glade:493
 msgid "Wrap text"
@@ -3762,7 +3786,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:167
 msgid "enabled,"
