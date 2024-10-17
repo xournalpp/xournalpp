@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -32,7 +32,8 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2324
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"提案された代替ファイル:\"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -41,11 +42,11 @@ msgstr " / {1}"
 
 #: ../src/core/control/settings/Settings.cpp:143
 msgid "%F-Note-%H-%M"
-msgstr "%F-注-%H-%M"
+msgstr "%F-ノート-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:145
 msgid "%{name}_annotated"
-msgstr ""
+msgstr "%{name}_注釈付き"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:166
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -67,7 +68,7 @@ msgstr "<span foreground='red' size='x-large'>必要なUIファイルがあり�
 
 #: ../src/core/gui/PageView.cpp:914
 msgid "Add missing page"
-msgstr ""
+msgstr "不足しているページを追加"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:513
 msgid "Add/Edit TeX"
@@ -254,14 +255,14 @@ msgstr "添付ファイルを開くことができませんでした: {1}. エ�
 #: ../src/core/control/xojfile/LoadHandler.cpp:1155
 #: ../src/core/control/xojfile/LoadHandler.cpp:1173
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "添付ファイルを開けませんでした: {1}. エラーメッセージ: 有効なファイルサイズが指定されていません"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:818
 #: ../src/core/control/xojfile/LoadHandler.cpp:834
 #: ../src/core/control/xojfile/LoadHandler.cpp:1148
 #: ../src/core/control/xojfile/LoadHandler.cpp:1162
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "添付ファイルを開くことができませんでした：{1}。エラーメッセージ：{2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:187
 msgid "Could not open file: \"{1}\""
@@ -286,24 +287,25 @@ msgstr "画像を読み込めませんでした: {1}。エラーメッセージ:
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "クローンされた背景画像のページ番号を読み取ることができませんでした: {1}."
 
 #: ../src/core/undo/UndoRedoHandler.cpp:143
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "\"{1}\"を再度実行することができませんでした。\n"
+"うまく行かなかったようです… バグレポートを書いてください..."
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:179
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "{2} にあるツールバー{1} からツールを削除することができませんでした。"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:174
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "{3} にあるツールバー{2} から{1} を削除できませんでした。"
 
 #: ../src/core/control/Control.cpp:248
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "自動保存するファイルの名前を「{1}」から「{2}」に変更できませんでした：{3}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:91
 msgid "Could not save .tex file: {1}"
@@ -311,20 +313,21 @@ msgstr ".tex ファイルを保存できませんでした: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:105
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "{1} を開始できませんでした：{2} (終了コード: {3})"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "\"{1}\"をもとに戻せませんでした。\n"
+"うまく行かなかったようです… バグレポートを書いてください..."
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:253
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "背景\"{1}\"を書き込めませんでした、 {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:369
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "背景\"{1}\"を書き込めませんでした。とにかく続行します。"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:88
 msgid "Create new layer"
@@ -389,17 +392,19 @@ msgstr "破棄"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Display advanced export options"
-msgstr ""
+msgstr "高度なエクスポートオプションを表示"
 
 #: ../src/core/control/Control.cpp:2249
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "Autosaveファイルを開かないでください。上書きされてしまう可能性があります！\n"
+"Autosaveファイルを別のフォルダにコピーしてください。\n"
+"フォルダ {1} からのファイルは開けません。"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "背景のPDFを上書きしないでください。エラーの原因になります。"
 
 #: ../src/core/control/Control.cpp:2804
 msgid "Document file was removed."
@@ -407,11 +412,11 @@ msgstr "ドキュメントファイルが削除されました。"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:271
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "ドキュメントが破損しています(ファイルにページが見つかりません)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:267
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "ドキュメントが完全ではありません (末尾が切れている可能性があります)"
 
 #: ../src/core/model/Document.cpp:306 ../src/core/model/Document.cpp:315
 #: ../src/core/model/Document.cpp:318
@@ -431,7 +436,7 @@ msgstr "矢印を描く"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:526
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "二重矢印"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:134
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -457,13 +462,13 @@ msgstr "長方形を描く"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:46
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:530
 msgid "Draw Spline"
-msgstr ""
+msgstr "曲線を描く"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:528
 msgid "Draw coordinate system"
-msgstr ""
+msgstr "座標を表示"
 
 #: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Draw stroke"
@@ -475,7 +480,7 @@ msgstr "描画の種類 - 変更しない"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "描画タイプの一覧"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:43
 msgid "Edit text"
@@ -499,11 +504,11 @@ msgstr ""
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
-msgstr ""
+msgstr "緊急保存された文書"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:285
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "この設定を変更するには、筆圧感度または筆圧推定を有効にしてください!"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
@@ -523,11 +528,11 @@ msgstr ""
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "Gladeファイル\"{1}\" の読み込みエラー (\"{2}\" を読み込んでみてください)"
 
 #: ../src/core/control/Control.cpp:2367
 msgid "Error opening file \"{1}\""
-msgstr "ファイル \"{1}\" の展開中にエラー"
+msgstr "ファイル \"{1}\" の展開中にエラーが発生しました"
 
 #: ../src/util/OutputStream.cpp:24
 msgid "Error opening file: \"{1}\""
@@ -540,7 +545,7 @@ msgstr "PDF読み込みエラー: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:564
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "ストロークの幅を読み取る際にエラーが発生しました: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
@@ -560,7 +565,7 @@ msgstr "PDF背景をエクスポート中にエラーが発生しました: pdf�
 
 #: ../src/util/Util.cpp:93
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "システムコマンド{1} 実行時のエラー： {2}"
 
 #: ../src/core/control/CrashHandler.cpp:40
 msgid "Error: {1}"
@@ -572,7 +577,7 @@ msgstr "エラー： {1} は通常のファイルではありません。LaTeX�
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "エラー： {1}。{2} の内容を確認してください。"
 
 #: ../src/core/control/XournalMain.cpp:640
 msgid "Export FILE as PDF"
@@ -592,7 +597,7 @@ msgstr "PDFでエクスポート"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Export as PDF"
-msgstr "PDFでエクスポート"
+msgstr "PDFにエクスポート"
 
 #: ../src/core/control/XournalMain.cpp:656
 msgid "Export layers progressively\n"
@@ -600,7 +605,11 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "レイヤーを段階的にエクスポート\n"
+"                                 PDFに書き出すとき, レイヤーを一枚一枚徐々にレンダリングします。\n"
+"                                 この結果、1ページあたりN枚のレイヤーでN枚のエクスポートページが作成され、\n"
+"                                 レイヤースタックを徐々に積み上げます。\n"
+"                                 出来上がったPDFファイルはプレゼンテーションに使用することができます。\n"
 
 #: ../src/core/control/XournalMain.cpp:647
 msgid "Export without background\n"
@@ -613,7 +622,8 @@ msgstr "背景なしでエクスポート\n"
 #: ../src/core/control/XournalMain.cpp:652
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "罫線なしでエクスポート\n"
+"                                 エクスポートされたファイルには紙の罫線がありません\n"
 
 #: ../src/core/control/XournalMain.cpp:146
 msgid "Failed to delete file: {1}"
@@ -627,7 +637,9 @@ msgstr "PATHにLaTeX出力用プログラムが見つかりませんでした: {
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr ""
+msgstr "PATH 内に LaTeX ジェネレーター・プログラムが見つかりません: {1}.\n\n"
+"インストールはFlatpak内で行われるため、Flatpak freedesktop Tex Live拡張機能をインストールする必要があります。 例えば、これを実行することで解決できます：\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
@@ -648,16 +660,17 @@ msgstr "LaTeX生成コマンドの解析に失敗しました: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:61
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "LaTeX生成コマンドの解析に失敗しました: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "グローバルテンプレートファイルの読み込みに失敗しました。設定を確認してください。"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:108
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "以下のエラーでパスを解決できませんでした:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:166 ../src/util/PathUtil.cpp:183
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -671,11 +684,11 @@ msgstr "塗りつぶし"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:586
 msgid "Fill Opacity"
-msgstr ""
+msgstr "塗りつぶしの不透明度"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:289
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "入力筆圧にフィルターをかける。フィルター後の筆圧に筆圧乗数を乗算する。算出された筆圧が最小筆圧よりも小さい場合は、最小筆圧値を適用します。"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:605
 msgid "Fine"
@@ -711,11 +724,11 @@ msgstr "Git コミット"
 
 #: ../src/core/control/LatexController.cpp:76
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "グローバルテンプレートファイルが存在しません。設定を確認してください。"
 
 #: ../src/core/control/LatexController.cpp:87
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "グローバルテンプレートファイルは通常のファイルではありません。設定を確認してください。 "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Go to first page"
@@ -747,7 +760,7 @@ msgstr "グラフ"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Grid Snapping"
-msgstr ""
+msgstr "グリッドにスナップ"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
@@ -819,11 +832,11 @@ msgstr "ページを挿入"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "等間隔の点"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Graph"
-msgstr ""
+msgstr "等角グラフ"
 
 #: ../src/core/control/XournalMain.cpp:627
 msgid "Jump to Page (first Page: 1)"
@@ -843,7 +856,7 @@ msgstr "レイヤー"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:237
 msgid "Layer Combo"
-msgstr ""
+msgstr "レイヤーの一覧"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Layer Preview"
@@ -905,11 +918,11 @@ msgstr "次へ"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 msgid "Next annotated page"
-msgstr ""
+msgstr "次の注釈ページへ"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:68
 msgid "No device"
-msgstr ""
+msgstr "デバイスがありません"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
@@ -918,7 +931,7 @@ msgstr "エクスポートするページがありません。"
 
 #: ../src/core/control/Control.cpp:1467
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "追加できるpdfページがありません。ドキュメントを再度開く必要があるかもしれません。"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
 msgid "No recent files"
@@ -926,22 +939,24 @@ msgstr "最近開いたファイルはありません"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:128
 msgid "Normal drawing"
-msgstr ""
+msgstr "通常の描画"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
 #: ../src/core/plugin/Plugin.cpp:265 ../src/core/plugin/Plugin.cpp:288
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "エクスポート時、RANGEで指定されたレイヤーのみをエクスポートします(例: \"2-3,5,7-\")\n"
+"                                 -p/-create-pdf または -i/-create-imgを使用しない場合は適用されません。"
 
 #: ../src/core/control/XournalMain.cpp:663
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "エクスポート時、RANGEで指定されたレイヤーのみをエクスポートします(例: \"2-3,5,7-\")\n"
+"                                 -p/-create-pdf または -i/-create-imgを使用しない場合は適用されません。"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
@@ -1048,11 +1063,11 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:148
 msgid "Please delete the file manually"
-msgstr ""
+msgstr "手動でファイルを削除してください"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
 msgid "Predefined"
-msgstr ""
+msgstr "定義済み"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Presentation mode"
@@ -1060,7 +1075,7 @@ msgstr "プレゼンテーションモード"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:64
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "以前選択した言語はもう利用できません。"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Print"
@@ -1089,11 +1104,11 @@ msgstr "PDFの背景を削除"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "ツールバー {1} ID {2} からツールアイテムを削除しました"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "ツールバー {1} ID {2} からツールアイテム {3} を削除しました"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
@@ -1105,7 +1120,7 @@ msgstr "置換"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1192
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "リクエストされた一時ファイルが添付ファイル {1} に見つかりませんでした"
 
 #: ../src/core/control/XournalMain.cpp:219
 msgid "Restore file"
@@ -1117,7 +1132,7 @@ msgstr "回転"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "回転のスナップ"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
@@ -1151,7 +1166,7 @@ msgstr "ファイルを保存"
 
 #: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error, can't backup: {1}"
-msgstr ""
+msgstr "ファイルの保存エラーが発生しました。バックアップできません： {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:125
 #: ../src/core/control/jobs/SaveJob.cpp:131
@@ -1176,7 +1191,7 @@ msgstr "すべての貢献者のリストを見る"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:101
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "PDFの特定領域からテキストを選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:543
 msgid "Select Font"
@@ -1186,7 +1201,7 @@ msgstr "フォントを選択"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:22
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "線形の PDF テキストを選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:535
 msgid "Select Multi-Layer Rect"
@@ -1201,7 +1216,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:82
 msgid "Select Multi-Layer Region"
-msgstr ""
+msgstr "複数レイヤーの領域を選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:536
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:26
@@ -1234,17 +1249,17 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:64
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:109
 msgid "Select Rectangle"
-msgstr ""
+msgstr "長方形を選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:532
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:70
 msgid "Select Region"
-msgstr ""
+msgstr "エリアの選択"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:100
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "PDFからテキストを選択"
 
 #: ../src/core/control/Control.cpp:2334
 msgid "Select another PDF"
@@ -1264,19 +1279,19 @@ msgstr "色を選択"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Select multi layer rect"
-msgstr ""
+msgstr "マルチレイヤーを長方形で選択"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 msgid "Select multi layer region"
-msgstr ""
+msgstr "マルチレイヤーを手書きで選択"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:95
 msgid "Select rectangle"
-msgstr ""
+msgstr "長方形で選択"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select region"
-msgstr ""
+msgstr "手書きで選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Selection Combo"
@@ -1301,19 +1316,24 @@ msgstr "分割線"
 #: ../src/core/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "PNGエクスポートにDPIを設定します。デフォルトは300\n"
+"                                 -i/-create-img=foo.png なしでは効果がありません。"
 
 #: ../src/core/control/XournalMain.cpp:681
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "PNGエクスポートにページの高さを設定する\n"
+"                                 -i/-create-img=foo.png無しに効果はありません\n"
+"                                 --export-png-dpi または --export-png-width 使用されると無視されます"
 
 #: ../src/core/control/XournalMain.cpp:675
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "PNGエクスポート時にページ幅を設定する\n"
+"                                 -i/-create-img=foo.png無しに効果はありません\n"
+"                                 -export-png-dpiが使用されると無視されます"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Setsquare"
@@ -1321,7 +1341,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:517
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "図形認識"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:77
 msgid "Show all"
@@ -1363,7 +1383,7 @@ msgstr "停止"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
 #: ../src/core/undo/RecognizerUndoAction.cpp:76
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "筆跡認識"
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
@@ -1425,11 +1445,11 @@ msgstr "テキストが見つかりません。すべてのページで検索さ
 
 #: ../src/core/control/Control.cpp:1257
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "ツールバー設定 \"{1}\" が定義されています。コピーを作成して編集しますか？"
 
 #: ../src/core/control/Control.cpp:2311
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "背景に設定されていたファイルが見つかりませんでした。ファイルが移動、名前の変更または削除された可能性があります。"
 
 #: ../src/core/control/XournalMain.cpp:245
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
@@ -1442,11 +1462,11 @@ msgstr "背景ファイル \"{1}\" が見つかりませんでした。ファイ
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "背景上書きの確認に失敗しました:\n"
 
 #: ../src/core/control/Control.cpp:2375
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "読み込まれるファイルにはこのバージョンの Xournal++で現在サポートされているものよりも新しいファイル形式のバージョンがあり、 正しくロードされない可能性があります それでも開きますか？"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1470,7 +1490,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:178
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "最新のログファイル名: {1}"
 
 #: ../src/core/control/XournalMain.cpp:174
 msgid "There are errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
@@ -1482,7 +1502,7 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:104
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "ヘルプの表示中にエラーが発生しました: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:607
 msgid "Thick"
@@ -1490,11 +1510,11 @@ msgstr "太い"
 
 #: ../src/core/control/Control.cpp:2804
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "このドキュメントはまだ保存されていません。"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:166
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "この画像を読み込めませんでした。エラーメッセージ: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Toggle fullscreen"
@@ -1518,7 +1538,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "{1} でグローバルテンプレートファイルを開くことができません。存在していますか？"
 
 #: ../src/core/gui/PageView.cpp:371
 msgid "Unable to play audio recording {1}"
@@ -1543,7 +1563,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:337
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "ドキュメント内の予期しないタグ: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:540
 msgid "Unknown background type: {1}"
@@ -1563,7 +1583,7 @@ msgstr "不明なパーサエラー"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:444
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "不明なpixmap::domainタイプ:{1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:632
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
@@ -1571,7 +1591,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:650
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "未知のストロークタイプ: \"{1}\", ペンを仮定する"
 
 #: ../src/core/control/Control.cpp:2696
 msgid "Unsaved Document"
@@ -1595,7 +1615,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Vertical space"
-msgstr ""
+msgstr "垂直方向の間隔"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:604
 msgid "Very Fine"
@@ -1619,7 +1639,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1059
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr ""
+msgstr "筆圧の値が間違っています。 {1} が設定されましたが、期待値は {2} です"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:253
 msgid "XML Parser error: {1}"
@@ -1627,7 +1647,7 @@ msgstr "XML構文解析エラー: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (互換性)"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
 msgid "Xournal files"
@@ -1650,7 +1670,8 @@ msgstr "Xournal++テンプレート"
 #: ../src/core/control/PageBackgroundChangeController.cpp:201
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "選択するPDFページがありません。操作をキャンセルします。\n"
+"メニューの「Journal」→「ページテンプレートの設定」から、別の背景タイプを選択してください。"
 
 #: ../src/core/control/XournalMain.cpp:176
 msgid "You're using \"{1}/{2}\" branch."
@@ -1660,7 +1681,9 @@ msgstr ""
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "現在のドキュメントにはPDFページ {1} が含まれていません。\n"
+"このページを挿入しますか？\n\n"
+"Tips：「Journal」→「用紙の背景」→「PDF背景あり」から挿入するPDFページを選択できます。"
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
@@ -1708,12 +1731,12 @@ msgstr "カーソル"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "破線/点線"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:301
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
 msgid "dashed"
-msgstr ""
+msgstr "破線"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default disabled"
@@ -1730,12 +1753,12 @@ msgstr "ストロークを削除"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:307
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:505
 msgid "dotted"
-msgstr ""
+msgstr "点線"
 
 #: ../src/core/undo/AddUndoAction.cpp:74
 #: ../src/core/undo/DeleteUndoAction.cpp:72
 msgid "elements"
-msgstr ""
+msgstr "要素"
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
@@ -1809,7 +1832,7 @@ msgstr "ホワイトアウト"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1058
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "xoj-File: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:121
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -1949,7 +1972,7 @@ msgstr "%{name}\tエクスポートされたドキュメントの名前\n"
 
 #: ../ui/settings.glade:3217
 msgid "(requires restart)"
-msgstr "（要再起動）"
+msgstr "（再起動が必要です）"
 
 #: ../ui/settings.glade:5435
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2027,7 +2050,8 @@ msgstr "<b>デフォルト</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>ドキュメントのエクスポート設定</b>\n"
+"エクスポート時の値を設定する"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -2057,7 +2081,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5863
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
+msgstr "<i>録音音声は現在別々のフォルダに保存され、ジャーナルから参照されています。</i>"
 
 #: ../ui/settings.glade:6281
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
@@ -2124,7 +2148,8 @@ msgstr ""
 #: ../ui/settings.glade:5974
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>オーディオアタッチメントの録音と再生に使用するオーディオデバイスを指定します。利用可能な場合は入力/出力デバイスとして\n"
+" <small><tt>pulse</tt></small> を選択します。</i>"
 
 #: ../ui/settings.glade:1980
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -2211,7 +2236,7 @@ msgstr "実行する前に LaTeX の依存関係を常に確認する"
 
 #: ../ui/main.glade:1253
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "新しいPDFページを追加"
 
 #: ../ui/settings.glade:226
 msgid "Arithmetic mean"
@@ -2255,7 +2280,7 @@ msgstr "最後のページに空のページを自動的に追加（PDFを除く
 
 #: ../ui/settings.glade:462
 msgid "Autosaving"
-msgstr "自動保存中"
+msgstr "自動保存"
 
 #: ../ui/settings.glade:611 ../ui/settings.glade:781
 msgid "Available Placeholders"
@@ -2271,7 +2296,7 @@ msgstr "ページ間の背景色"
 
 #: ../ui/settings.glade:3866
 msgid "Base speed"
-msgstr ""
+msgstr "基本速度"
 
 #: ../ui/settings.glade:3697
 msgid "Below preview"
@@ -2284,7 +2309,7 @@ msgstr "大きいペン"
 
 #: ../ui/settings.glade:3536
 msgid "Border Color"
-msgstr ""
+msgstr "枠線の色"
 
 #: ../ui/settings.glade:3497
 msgid "Border Width"
@@ -2292,23 +2317,23 @@ msgstr ""
 
 #: ../ui/settings.glade:3090
 msgid "Border color"
-msgstr ""
+msgstr "枠線の色"
 
 #: ../ui/settings.glade:3075
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "現在のページとその他の選択範囲の境界線の色"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr "前面に移動"
+msgstr ""
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr "最前面に移動"
+msgstr ""
 
 #: ../ui/settings.glade:1192
 msgid "Buffersize"
-msgstr ""
+msgstr "バッファサイズ"
 
 #: ../ui/settings.glade:2020
 msgid "Button 1"
@@ -2324,7 +2349,7 @@ msgstr "変更"
 
 #: ../ui/latexSettings.glade:205
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "グローバルのLaTeXテンプレートファイルを選択してください"
 
 #: ../ui/settings.glade:3379 ../ui/settings.glade:3522
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2332,15 +2357,15 @@ msgstr "カーソル位置をハイライト表示するときに使用する色
 
 #: ../ui/settings.glade:3393
 msgid "Circle Color"
-msgstr ""
+msgstr "円の色"
 
 #: ../ui/settings.glade:3698
 msgid "Circle background"
-msgstr ""
+msgstr "円の背景"
 
 #: ../ui/settings.glade:4190
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "スクロール中にキャッシュしたページを削除する"
 
 #: ../ui/settings.glade:3203
 msgid "Color"
@@ -2416,7 +2441,7 @@ msgstr "デフォルトのLaTeXテキスト"
 
 #: ../ui/settings.glade:805
 msgid "Default Pdf export name"
-msgstr ""
+msgstr "デフォルトのPDFエクスポート名"
 
 #: ../ui/settings.glade:637
 msgid "Default Save Name"
@@ -2424,7 +2449,7 @@ msgstr "デフォルトの保存名"
 
 #: ../ui/settings.glade:6213
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "デフォルトのシーク時間 (秒)"
 
 #: ../ui/settings.glade:525 ../ui/settings.glade:696
 msgid "Default name: "
@@ -2436,7 +2461,7 @@ msgstr "デフォルト"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "レイヤーを削除"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2444,7 +2469,7 @@ msgstr "ストロークを削除"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr ""
+msgstr "デバイス"
 
 #: ../ui/settings.glade:2526
 msgid "Disable"
@@ -2456,7 +2481,7 @@ msgstr "GTK内蔵の慣性スクロール機能を無効にする(再起動が�
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr ""
+msgstr "このデバイスでの描画を無効にする"
 
 #: ../ui/settings.glade:3788
 msgid "Disable scrollbar fade out"
@@ -2510,7 +2535,7 @@ msgstr ""
 
 #: ../ui/main.glade:1551
 msgid "Draw _Line"
-msgstr "線を描く(_L)"
+msgstr ""
 
 #: ../ui/settings.glade:3361
 msgid "Draw a transparent circle around the cursor"
@@ -2530,7 +2555,7 @@ msgstr "複製"
 
 #: ../ui/main.glade:1243
 msgid "Duplicate Page"
-msgstr ""
+msgstr "ページを複製"
 
 #: ../ui/main.glade:2985
 msgid "Edit (not implemented yet)"
@@ -2566,7 +2591,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5342
 msgid "Enable Tap action"
-msgstr ""
+msgstr "タップ操作を有効にする"
 
 #: ../ui/settings.glade:851
 msgid "Enable autoloading of most recent file on application startup"
@@ -2582,11 +2607,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2812
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "タッチ描画を有効にする"
 
 #: ../ui/settings.glade:2675
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "ズームジェスチャーを有効にする (再起動が必要です)"
 
 #: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
@@ -2594,7 +2619,7 @@ msgstr "LaTeXテキストの入力/編集"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "消しゴムのオプション(_n)"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2663,7 +2688,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:87
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "LaTeXツールの一般設定"
 
 #: ../ui/settings.glade:3276
 msgid "Global"
@@ -2671,7 +2696,7 @@ msgstr "グローバル"
 
 #: ../ui/latexSettings.glade:154
 msgid "Global template file path"
-msgstr ""
+msgstr "全体のテンプレートのパス"
 
 #: ../ui/settings.glade:4038
 msgid "Go Fullscreen"
@@ -2691,7 +2716,7 @@ msgstr ""
 
 #: ../ui/main.glade:1661
 msgid "H_and Tool"
-msgstr ""
+msgstr "ハンドツール(_a)"
 
 #: ../ui/settings.glade:2632
 msgid "Hand Recognition"
@@ -2699,11 +2724,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "高さ"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
-msgstr ""
+msgstr "高さ:"
 
 #: ../ui/main.glade:997
 msgid "Hide Menubar"
@@ -2723,7 +2748,7 @@ msgstr "カーソルの位置をハイライト表示する"
 
 #: ../ui/main.glade:2799
 msgid "Highlight selected text"
-msgstr ""
+msgstr "選択したテキストをハイライト表示"
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
@@ -2749,7 +2774,7 @@ msgstr "アイコンテーマ"
 
 #: ../ui/settings.glade:5216
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "有効にすると、図形認識によって認識された図形が自動的にグリッドにスナップされます。 書き込み中に図形認識がオンになっている場合、予期しない結果になる可能性があります。"
 
 #: ../ui/settings.glade:856
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
@@ -2757,11 +2782,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "有効にした場合、必要なLaTeXパッケージがインストールされ、LaTeXツールを実行する前にLaTeXコマンドが使用可能であることを確認してください。"
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "有効にすると、各ページのレイヤーが1つずつ追加されます。結果のPDFファイルをプレゼンテーションに使用できます。"
 
 #: ../ui/settings.glade:839
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
@@ -2837,7 +2862,7 @@ msgstr "言語設定"
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "レイアウト"
+msgstr ""
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2902,7 +2927,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1542
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "マウス中央ボタン"
 
 #: ../ui/settings.glade:1752
 msgid "Minimum Pressure:"
@@ -2922,7 +2947,7 @@ msgstr "マウスボタン"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "マウス+キーボード選択"
 
 #: ../ui/main.glade:2895 ../ui/main.glade:2970
 msgid "Move Down"
@@ -2930,11 +2955,11 @@ msgstr "下へ"
 
 #: ../ui/main.glade:490
 msgid "Move Selection Layer Down"
-msgstr ""
+msgstr "選択したレイヤーを下に移動"
 
 #: ../ui/main.glade:480
 msgid "Move Selection Layer Up"
-msgstr ""
+msgstr "選択したレイヤーを上に移動"
 
 #: ../ui/main.glade:2887 ../ui/main.glade:2962
 msgid "Move Up"
@@ -2946,7 +2971,7 @@ msgstr ""
 
 #: ../ui/main.glade:1175
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "次の注釈付きページ(_e)"
 
 #: ../ui/settings.glade:2166
 msgctxt "eraser is never visible"
@@ -2976,12 +3001,12 @@ msgstr "アイコンなし"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "罫線なし"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:223
 #: ../ui/settings.glade:240 ../ui/settings.glade:3696
 msgid "None"
-msgstr ""
+msgstr "なし"
 
 #: ../ui/settings.glade:4766
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -3009,7 +3034,7 @@ msgstr "PDFキャッシュ"
 
 #: ../ui/main.glade:1186
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "前の注釈付きページ(_r)"
 
 #: ../ui/settings.glade:3681
 msgid "Page numbering  "
@@ -3017,15 +3042,15 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
-msgstr ""
+msgstr "ページ:"
 
 #: ../ui/settings.glade:4820
 msgid "Paired Pages"
-msgstr ""
+msgstr "2面表示"
 
 #: ../ui/main.glade:1360
 msgid "Paper B_ackground"
-msgstr "用紙の背景(_B)"
+msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -3033,11 +3058,11 @@ msgstr "用紙サイズ"
 
 #: ../ui/main.glade:1350
 msgid "Paper _Color"
-msgstr "用紙の色(_C)"
+msgstr ""
 
 #: ../ui/main.glade:1340
 msgid "Paper _Format"
-msgstr "用紙の書式(_F)"
+msgstr ""
 
 #: ../ui/about.glade:210
 msgid "Partially based on Xournal\n"
@@ -3054,11 +3079,11 @@ msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
-msgstr ""
+msgstr "ペンのオプション(_O)"
 
 #: ../ui/settings.glade:4219
 msgid "Performance"
-msgstr ""
+msgstr "パフォーマンス"
 
 #: ../ui/latexSettings.glade:564
 msgid "Pick the Editor's Font"
@@ -3078,19 +3103,19 @@ msgstr "プラグインマネージャー(_M)"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "プラグインの変更はXournal++の再起動後にのみ適用されます"
 
 #: ../ui/settings.glade:4153
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "プリロードするページ数（後）"
 
 #: ../ui/settings.glade:4141
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "プリロードするページ数（前）"
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "環境設定"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
@@ -3126,11 +3151,11 @@ msgstr ""
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "最近のドキュメント(_D)"
+msgstr ""
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
-msgstr "録音/停止"
+msgstr ""
 
 #: ../ui/settings.glade:6180
 msgid "Recording Quality"
@@ -3138,7 +3163,7 @@ msgstr "録音品質"
 
 #: ../ui/main.glade:1323
 msgid "Rename Layer"
-msgstr "レイヤー名を変更"
+msgstr ""
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
@@ -3150,11 +3175,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
-msgstr ""
+msgstr "解像度"
 
 #: ../ui/settings.glade:1580
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "マウス右ボタン"
 
 #: ../ui/settings.glade:5115
 msgid "Rotation snapping tolerance"
@@ -3162,11 +3187,11 @@ msgstr ""
 
 #: ../ui/settings.glade:6103
 msgid "Sample Rate"
-msgstr ""
+msgstr "サンプルレート"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "サンプルレイヤー名"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
@@ -3202,7 +3227,7 @@ msgstr "PDFページを選択"
 
 #: ../ui/main.glade:1420
 msgid "Select Text In Rectangle"
-msgstr "長方形でのテキストの選択"
+msgstr "長方形でテキストを選択"
 
 #: ../ui/settings.glade:4075
 msgid "Select toolbar:"
@@ -3210,7 +3235,7 @@ msgstr "ツールバーを選択:"
 
 #: ../ui/settings.glade:3126
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "選択色（テキスト、ストローク選択など）"
 
 #: ../ui/settings.glade:3894
 msgid "Selection Edge Panning"
@@ -3218,11 +3243,11 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr "背面に移動"
+msgstr ""
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr "最背面に移動"
+msgstr ""
 
 #: ../ui/settings.glade:1824
 msgid "Sensitivity Scale"
@@ -3230,11 +3255,11 @@ msgstr ""
 
 #: ../ui/main.glade:730
 msgid "Set Columns"
-msgstr "列の設定"
+msgstr ""
 
 #: ../ui/main.glade:835
 msgid "Set Rows"
-msgstr "行の設定"
+msgstr ""
 
 #: ../ui/settings.glade:5475
 msgid "Settings:"
@@ -3300,11 +3325,11 @@ msgstr "ソースコード/バグトラッカー"
 
 #: ../ui/settings.glade:4303
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Ctrl + スクロールの割合"
 
 #: ../ui/settings.glade:4331
 msgid "Speed for a Zoomstep"
-msgstr ""
+msgstr "ズームの割合"
 
 #: ../ui/settings.glade:3699
 msgid "Square background"
@@ -3320,7 +3345,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5885 ../ui/settings.glade:5943
 msgid "Storage Folder"
-msgstr ""
+msgstr "ストレージフォルダ"
 
 #: ../ui/main.glade:2839
 msgid "Strikethrough selected text"
@@ -3348,7 +3373,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:461
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "構文の強調表示"
 
 #: ../ui/settings.glade:3332
 msgctxt "stylus cursor uses system cursor"
@@ -3357,7 +3382,7 @@ msgstr "システムカーソル"
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "ツールバー(_o)"
+msgstr ""
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
@@ -3385,7 +3410,7 @@ msgstr ""
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "フォント…"
+msgstr ""
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3413,7 +3438,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2397
 msgid "Timeout"
-msgstr ""
+msgstr "タイムアウト"
 
 #: ../ui/main.glade:2859
 msgid "Toggle standard / region text selection"
@@ -3434,19 +3459,19 @@ msgstr "タッチパネル"
 
 #: ../ui/settings.glade:5452
 msgid "Try to select object first."
-msgstr ""
+msgstr "最初にオブジェクトを選択してください。"
 
 #: ../ui/settings.glade:5457 ../ui/settings.glade:5489
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "最初にオブジェクトを選択してみてください。選択されていない場合、有効であればフローティングツールボックスを表示します。"
 
 #: ../ui/main.glade:2819
 msgid "Underline selected text"
-msgstr ""
+msgstr "選択したテキストを下線表示"
 
 #: ../ui/settings.glade:3165
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "利用可能なストックアイコンを使用する (再起動が必要です)"
 
 #: ../ui/latexSettings.glade:529
 msgid "Use font from system theme."
@@ -3454,7 +3479,7 @@ msgstr "システムテーマのフォントを使用する"
 
 #: ../ui/settings.glade:5212
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "認識された図形にスナップを使用する"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
@@ -3478,7 +3503,7 @@ msgstr "バージョン: "
 
 #: ../ui/settings.glade:4250
 msgid "View"
-msgstr ""
+msgstr "表示"
 
 #: ../ui/about.glade:242
 msgid "Website"
@@ -3522,7 +3547,7 @@ msgstr "幅:"
 
 #: ../ui/about.glade:307
 msgid "With help from the community"
-msgstr ""
+msgstr "その他、コミュニティからのヘルプなど"
 
 #: ../ui/latexSettings.glade:493
 msgid "Wrap text"
@@ -3534,83 +3559,83 @@ msgstr "Xournal++の設定"
 
 #: ../ui/settings.glade:4548
 msgid "Zoom"
-msgstr ""
+msgstr "ズーム"
 
 #: ../ui/settings.glade:2767
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "ズームジェスチャー"
 
 #: ../ui/settings.glade:4394
 msgid "Zoom Speed"
-msgstr ""
+msgstr "ズーム速度"
 
 #: ../ui/main.glade:742
 msgid "_1 Column"
-msgstr "_1 列"
+msgstr ""
 
 #: ../ui/main.glade:847
 msgid "_1 Row"
-msgstr "_1 行"
+msgstr ""
 
 #: ../ui/main.glade:753
 msgid "_2 Columns"
-msgstr "_2 列"
+msgstr ""
 
 #: ../ui/main.glade:858
 msgid "_2 Rows"
-msgstr "_2 行"
+msgstr ""
 
 #: ../ui/main.glade:764
 msgid "_3 Columns"
-msgstr "_3 列"
+msgstr ""
 
 #: ../ui/main.glade:869
 msgid "_3 Rows"
-msgstr "_3 行"
+msgstr ""
 
 #: ../ui/main.glade:775
 msgid "_4 Columns"
-msgstr "_4 列"
+msgstr ""
 
 #: ../ui/main.glade:880
 msgid "_4 Rows"
-msgstr "_4 行"
+msgstr ""
 
 #: ../ui/main.glade:786
 msgid "_5 Columns"
-msgstr "_5 列"
+msgstr ""
 
 #: ../ui/main.glade:891
 msgid "_5 Rows"
-msgstr "_5 行"
+msgstr ""
 
 #: ../ui/main.glade:797
 msgid "_6 Columns"
-msgstr "_6 列"
+msgstr ""
 
 #: ../ui/main.glade:902
 msgid "_6 Rows"
-msgstr "_6 行"
+msgstr ""
 
 #: ../ui/main.glade:808
 msgid "_7 Columns"
-msgstr "_7 列"
+msgstr ""
 
 #: ../ui/main.glade:913
 msgid "_7 Rows"
-msgstr "_7 行"
+msgstr ""
 
 #: ../ui/main.glade:819
 msgid "_8 Columns"
-msgstr "_8 列"
+msgstr ""
 
 #: ../ui/main.glade:924
 msgid "_8 Rows"
-msgstr "_8 行"
+msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "注釈をつけるPDFを開く"
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
@@ -3618,11 +3643,11 @@ msgstr ""
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
-msgstr "列/行(_C)"
+msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr "カスタマイズ(_C)"
+msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
@@ -3638,11 +3663,11 @@ msgstr "編集(_E)"
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "消しゴム(_E)"
+msgstr ""
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "PDFにエクスポート(_E)"
+msgstr "PDFとしてエクスポート(_E)"
 
 #: ../ui/main.glade:152
 msgid "_File"
@@ -3670,7 +3695,7 @@ msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr "画像(_I)"
+msgstr ""
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
@@ -3686,7 +3711,7 @@ msgstr ""
 
 #: ../ui/main.glade:967
 msgid "_Manage"
-msgstr "管理(_M)"
+msgstr ""
 
 #: ../ui/main.glade:1065
 msgid "_Navigation"
@@ -3694,7 +3719,7 @@ msgstr "ナビゲーション(_N)"
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "次のレイヤー(_N)"
+msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
@@ -3702,7 +3727,7 @@ msgstr "次のページ(_N)"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr ""
+msgstr "2枚表示(_P)"
 
 #: ../ui/main.glade:1384
 msgid "_Pen"
@@ -3714,11 +3739,11 @@ msgstr "プラグイン(_P)"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "プレゼンテーションモード(_P)"
+msgstr ""
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "前のレイヤー(_P)"
+msgstr ""
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
@@ -3730,11 +3755,11 @@ msgstr ""
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
-msgstr "図形認識(_S)"
+msgstr ""
 
 #: ../ui/main.glade:1444
 msgid "_Text"
-msgstr "テキスト(_T)"
+msgstr ""
 
 #: ../ui/main.glade:1373
 msgid "_Tools"
@@ -3762,31 +3787,31 @@ msgstr "表示(_V)"
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "ストロークを削除(_D)"
+msgstr ""
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
-msgstr "細(_f)"
+msgstr ""
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "中(_m)"
+msgstr ""
 
 #: ../ui/main.glade:1917
 msgid "_standard"
-msgstr "標準(_C)"
+msgstr ""
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "太(_t)"
+msgstr ""
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
-msgstr "極細(_v)"
+msgstr ""
 
 #: ../ui/main.glade:1928
 msgid "_whiteout"
-msgstr "白塗り(_W)"
+msgstr ""
 
 #: ../ui/settings.glade:4878
 msgid "disabled"
@@ -3798,15 +3823,15 @@ msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:167
 msgid "enabled,"
-msgstr ""
+msgstr "有効化,"
 
 #: ../ui/settings.glade:1926
 msgid "events"
-msgstr ""
+msgstr "イベント"
 
 #: ../ui/settings.glade:405
 msgid "every"
-msgstr ""
+msgstr "間隔"
 
 #: ../ui/settings.glade:432
 msgid "minutes"
@@ -3824,7 +3849,7 @@ msgstr ""
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "極太(_y)"
+msgstr ""
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
