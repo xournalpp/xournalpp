@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-03 20:16\n"
+"PO-Revision-Date: 2024-10-17 15:42\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -1298,7 +1298,7 @@ msgstr ""
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
-msgstr ""
+msgstr "Χρώματα"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
