@@ -81,7 +81,7 @@ auto Layer::removeElement(Element* e) -> InsertionPosition {
         }
     }
 
-    g_warning("Could not remove element from layer, it's not on the layer!");
+    g_warning("Could not remove element %p from layer %p, it's not on the layer!", e, this);
     Stacktrace::printStacktrace();
     return InsertionPosition{nullptr, Element::InvalidIndex};
 }

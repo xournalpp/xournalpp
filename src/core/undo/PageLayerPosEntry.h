@@ -21,12 +21,12 @@ class Layer;
 template <class T>
 struct PageLayerPosEntry {
     // TODO (cpp20): constructor could be removed with C++20
-    explicit PageLayerPosEntry<T>(Layer* layer, std::unique_ptr<T> element, typename T::Index pos):
+    explicit PageLayerPosEntry(Layer* layer, std::unique_ptr<T> element, typename T::Index pos):
             pos(pos),
             layer(layer),  //
             element(element.get()),
             elementOwn(std::move(element)) {}
-    explicit PageLayerPosEntry<T>(Layer* layer, T* element, typename T::Index pos):
+    explicit PageLayerPosEntry(Layer* layer, T* element, typename T::Index pos):
             pos(pos),
             layer(layer),  //
             element(element) {}

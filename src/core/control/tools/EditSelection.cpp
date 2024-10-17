@@ -273,6 +273,12 @@ void EditSelection::finalizeSelection() {
         this->snappedBounds.x = this->x + ox;
         this->snappedBounds.y = this->y + oy;
         v = this->contents->getSourceView();
+
+        PageRef page = v->getPage();
+        Layer* layer = page->getSelectedLayer();
+        // Create an Undo action to compensate - avoids Segfault/Freeze if the user presses undo after this happened
+        this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->preserveAspectRatio,
+                                      layer, page, this->undo, CURSOR_SELECTION_MOVE);
     }
 
 
@@ -280,8 +286,7 @@ void EditSelection::finalizeSelection() {
 
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
-    this->contents->finalizeSelection(this->getRect(), this->snappedBounds, this->preserveAspectRatio, layer, page,
-                                      this->view, this->undo);
+    this->contents->finalizeSelection(this->getRect(), this->snappedBounds, this->preserveAspectRatio, layer);
 
 
     // Calculate new clip region delta due to rotation:
@@ -518,7 +523,7 @@ void EditSelection::mouseUp() {
     this->sourceLayer = layer;
 
     this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->preserveAspectRatio,
-                                  layer, page, this->view, this->undo, this->mouseDownType);
+                                  layer, page, this->undo, this->mouseDownType);
 
     this->mouseDownType = CURSOR_SELECTION_NONE;
 
@@ -683,15 +688,17 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
 
     this->view->getXournal()->repaintSelection();
 
-    XojPageView* v = getPageViewUnderCursor();
+    if (this->mouseDownType == CURSOR_SELECTION_MOVE) {
+        XojPageView* v = getPageViewUnderCursor();
 
-    if (v && v != this->view) {
-        XournalView* xournal = this->view->getXournal();
-        const auto pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
+        if (v && v != this->view) {
+            XournalView* xournal = this->view->getXournal();
+            const auto pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
 
-        xournal->pageSelected(pageNr);
+            xournal->pageSelected(pageNr);
 
-        translateToView(v);
+            translateToView(v);
+        }
     }
 }
 
@@ -823,7 +830,19 @@ void EditSelection::moveSelection(double dx, double dy, bool addMoveUndo) {
     updateMatrix();
 
     if (addMoveUndo) {
-        this->contents->addMoveUndo(this->undo, dx, dy);
+        XojPageView* v = getPageViewUnderCursor();
+
+        if (v && v != this->view) {
+            XournalView* xournal = this->view->getXournal();
+            const auto pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
+
+            xournal->pageSelected(pageNr);
+
+            translateToView(v);
+        }
+        this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->preserveAspectRatio,
+                                      this->view->getPage()->getSelectedLayer(), this->view->getPage(), this->undo,
+                                      CURSOR_SELECTION_MOVE);
     }
 
     this->view->getXournal()->repaintSelection();
