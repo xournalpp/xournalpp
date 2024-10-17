@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-02 12:04\n"
+"POT-Creation-Date: 2024-09-27 08:09+0000\n"
+"PO-Revision-Date: 2024-10-17 15:42\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -47,7 +47,7 @@ msgid "No"
 msgstr "Ne"
 
 #: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
-#: ../src/core/control/Control.cpp:2014 ../src/core/control/XournalMain.cpp:206
+#: ../src/core/control/Control.cpp:2021 ../src/core/control/XournalMain.cpp:206
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -140,34 +140,34 @@ msgstr ""
 msgid "Select font"
 msgstr "Vybrat písmo"
 
-#: ../src/core/control/Control.cpp:1836
+#: ../src/core/control/Control.cpp:1840
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Vybrat barvu"
 
-#: ../src/core/control/Control.cpp:1858
+#: ../src/core/control/Control.cpp:1865
 msgid "Unsaved Document"
 msgstr "Neuložený dokument"
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "Document file was removed."
 msgstr "Soubor s dokumentem byl odstraněn."
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "This document is not saved yet."
 msgstr "Tento dokument ještě nebyl uložen."
 
-#: ../src/core/control/Control.cpp:2009
+#: ../src/core/control/Control.cpp:2016
 msgid "Save As..."
 msgstr "Uložit jako..."
 
-#: ../src/core/control/Control.cpp:2009 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2016 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "Uložit"
 
-#: ../src/core/control/Control.cpp:2012
+#: ../src/core/control/Control.cpp:2019
 msgid "Discard"
 msgstr "Zahodit"
 
@@ -1158,11 +1158,11 @@ msgstr ""
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Žádná zařízení nebyla nalezena. Zdá se to být špatně - možná můžete nahlásit chybu?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Pro změnu tohoto nastavení zapněte citlivost na tlak nebo odvozování tlaku!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:287
+#: ../src/core/gui/dialog/SettingsDialog.cpp:286
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtrovat vstupní tlak. Násobí tlak tlakovým multiplikátorem. Pokud je menší než minimální, použije minimální tlak."
 
@@ -1811,7 +1811,7 @@ msgstr "Bílá"
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
 msgctxt "as a noun: a copy of"
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovat"
 
 #: ../src/core/model/Document.cpp:326 ../src/core/model/Document.cpp:335
 #: ../src/core/model/Document.cpp:338
@@ -2043,15 +2043,15 @@ msgstr "Nelze vytvořit složku: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Chyba {1} při provádění systémového příkazu: {2}"
 
-#: ../src/util/XojMsgBox.cpp:187
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Select another name"
 msgstr "Vyberte jiný název"
 
-#: ../src/util/XojMsgBox.cpp:188
+#: ../src/util/XojMsgBox.cpp:192
 msgid "Replace"
 msgstr "Nahradit"
 
-#: ../src/util/XojMsgBox.cpp:211
+#: ../src/util/XojMsgBox.cpp:215
 msgid "There was an error displaying help: {1}"
 msgstr "Při zobrazování nápovědy došlo k chybě: {1}"
 
