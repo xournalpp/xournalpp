@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: sv-SE\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -925,7 +925,7 @@ msgstr "Normal ritning"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
 #: ../src/core/plugin/Plugin.cpp:265 ../src/core/plugin/Plugin.cpp:288
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -2272,11 +2272,11 @@ msgstr "Kantfärg för nuvarande sida och andra markeringar"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr "Skicka framåt"
+msgstr ""
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr "Lägg längst fram"
+msgstr ""
 
 #: ../ui/settings.glade:1192
 msgid "Buffersize"
@@ -2328,7 +2328,7 @@ msgstr ""
 
 #: ../ui/main.glade:1263
 msgid "Configure Page Template"
-msgstr "Konfigurera mall för sidor"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
@@ -2408,7 +2408,7 @@ msgstr ""
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "Ta bort lager"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2478,11 +2478,11 @@ msgstr ""
 
 #: ../ui/main.glade:1540
 msgid "Draw Coordinate System"
-msgstr "Rita koordinatsystem"
+msgstr ""
 
 #: ../ui/main.glade:1551
 msgid "Draw _Line"
-msgstr "Rita _linje"
+msgstr ""
 
 #: ../ui/settings.glade:3361
 msgid "Draw a transparent circle around the cursor"
@@ -2566,7 +2566,7 @@ msgstr "Ange / redigera LaTeX-text"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "Alternativ för radergummi"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2582,7 +2582,7 @@ msgstr "Exportera"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "Exportera som..."
+msgstr ""
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2699,7 +2699,7 @@ msgstr ""
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
-msgstr "Alternativ för överstrykningspenna"
+msgstr ""
 
 #: ../ui/settings.glade:5392
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2809,7 +2809,7 @@ msgstr "Språkinställningar"
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "Layout"
+msgstr ""
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2865,7 +2865,7 @@ msgstr "Slå ihop nedåt"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
-msgstr "Slå ihop lager nedåt"
+msgstr ""
 
 #: ../ui/settings.glade:1058
 msgid "Merge button events with stylus tip events\n"
@@ -2918,7 +2918,7 @@ msgstr ""
 
 #: ../ui/main.glade:1175
 msgid "N_ext Annotated Page"
-msgstr "Nästa annoterade sida"
+msgstr ""
 
 #: ../ui/settings.glade:2166
 msgctxt "eraser is never visible"
@@ -2927,19 +2927,19 @@ msgstr ""
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
-msgstr "Ny sida efter"
+msgstr ""
 
 #: ../ui/main.glade:1212
 msgid "New Page _Before"
-msgstr "Ny sida före"
+msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
-msgstr "Ny sida i slutet"
+msgstr ""
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
-msgstr "Nytt _Lager"
+msgstr ""
 
 #: ../ui/settings.glade:3329
 msgctxt "stylus cursor uses no icon"
@@ -2981,7 +2981,7 @@ msgstr "PDF-cache"
 
 #: ../ui/main.glade:1186
 msgid "P_revious Annotated Page"
-msgstr "Föregående annoterade sida"
+msgstr ""
 
 #: ../ui/settings.glade:3681
 msgid "Page numbering  "
@@ -2997,7 +2997,7 @@ msgstr ""
 
 #: ../ui/main.glade:1360
 msgid "Paper B_ackground"
-msgstr "Papprets bakgrund"
+msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -3005,11 +3005,11 @@ msgstr "Pappersformat"
 
 #: ../ui/main.glade:1350
 msgid "Paper _Color"
-msgstr "Pappersfärg"
+msgstr ""
 
 #: ../ui/main.glade:1340
 msgid "Paper _Format"
-msgstr "Pappersformat"
+msgstr ""
 
 #: ../ui/about.glade:210
 msgid "Partially based on Xournal\n"
@@ -3023,11 +3023,11 @@ msgstr ""
 
 #: ../ui/main.glade:2072
 msgid "Pause"
-msgstr "Pausa"
+msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
-msgstr "Alternativ för penna"
+msgstr ""
 
 #: ../ui/settings.glade:4219
 msgid "Performance"
@@ -3043,7 +3043,7 @@ msgstr "Uppspelningsinställningar"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "Hanterare för insticksprogram"
+msgstr ""
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
@@ -3063,7 +3063,7 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "Inställningar"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
@@ -3099,11 +3099,11 @@ msgstr ""
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "Senaste _dokument"
+msgstr ""
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
-msgstr "Spela in / stoppa"
+msgstr ""
 
 #: ../ui/settings.glade:6180
 msgid "Recording Quality"
@@ -3111,7 +3111,7 @@ msgstr "Inspelningskvalitet"
 
 #: ../ui/main.glade:1323
 msgid "Rename Layer"
-msgstr "Byt namn på lager"
+msgstr ""
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
@@ -3191,11 +3191,11 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr "Skicka bakåt"
+msgstr ""
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr "Lägg längst bak"
+msgstr ""
 
 #: ../ui/settings.glade:1824
 msgid "Sensitivity Scale"
@@ -3203,11 +3203,11 @@ msgstr ""
 
 #: ../ui/main.glade:730
 msgid "Set Columns"
-msgstr "Ange antal kolumner"
+msgstr ""
 
 #: ../ui/main.glade:835
 msgid "Set Rows"
-msgstr "Ange antal rader"
+msgstr ""
 
 #: ../ui/settings.glade:5475
 msgid "Settings:"
@@ -3235,7 +3235,7 @@ msgstr ""
 
 #: ../ui/main.glade:605
 msgid "Show Toolbars"
-msgstr "Visa verktygsfält"
+msgstr ""
 
 #: ../ui/settings.glade:3031
 msgid "Show filepath in title bar"
@@ -3358,7 +3358,7 @@ msgstr ""
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "Teckensnitt..."
+msgstr ""
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3519,71 +3519,71 @@ msgstr "Zoomhastighet"
 
 #: ../ui/main.glade:742
 msgid "_1 Column"
-msgstr "_1 kolumn"
+msgstr ""
 
 #: ../ui/main.glade:847
 msgid "_1 Row"
-msgstr "_1 rad"
+msgstr ""
 
 #: ../ui/main.glade:753
 msgid "_2 Columns"
-msgstr "_2 kolumner"
+msgstr ""
 
 #: ../ui/main.glade:858
 msgid "_2 Rows"
-msgstr "_2 rader"
+msgstr ""
 
 #: ../ui/main.glade:764
 msgid "_3 Columns"
-msgstr "_3 kolumner"
+msgstr ""
 
 #: ../ui/main.glade:869
 msgid "_3 Rows"
-msgstr "_3 rader"
+msgstr ""
 
 #: ../ui/main.glade:775
 msgid "_4 Columns"
-msgstr "_4 kolumner"
+msgstr ""
 
 #: ../ui/main.glade:880
 msgid "_4 Rows"
-msgstr "_4 rader"
+msgstr ""
 
 #: ../ui/main.glade:786
 msgid "_5 Columns"
-msgstr "_5 kolumner"
+msgstr ""
 
 #: ../ui/main.glade:891
 msgid "_5 Rows"
-msgstr "_5 rader"
+msgstr ""
 
 #: ../ui/main.glade:797
 msgid "_6 Columns"
-msgstr "_6 kolumner"
+msgstr ""
 
 #: ../ui/main.glade:902
 msgid "_6 Rows"
-msgstr "_6 rader"
+msgstr ""
 
 #: ../ui/main.glade:808
 msgid "_7 Columns"
-msgstr "_7 kolumner"
+msgstr ""
 
 #: ../ui/main.glade:913
 msgid "_7 Rows"
-msgstr "_7 rader"
+msgstr ""
 
 #: ../ui/main.glade:819
 msgid "_8 Columns"
-msgstr "_8 kolumner"
+msgstr ""
 
 #: ../ui/main.glade:924
 msgid "_8 Rows"
-msgstr "_8 rader"
+msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "_Annotera PDF"
+msgstr ""
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
@@ -3591,11 +3591,11 @@ msgstr ""
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
-msgstr "_Kol/Rader"
+msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr "_Anpassa"
+msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
@@ -3603,47 +3603,47 @@ msgstr ""
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
-msgstr "_Ta bort sida"
+msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "_Redigera"
+msgstr ""
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "Radergummi"
+msgstr ""
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "_Exportera som PDF"
+msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr "_Arkiv"
+msgstr ""
 
 #: ../ui/main.glade:1076
 msgid "_First Page"
-msgstr "_Första sidan"
+msgstr ""
 
 #: ../ui/main.glade:1098
 msgid "_Goto Page"
-msgstr "_Gå till sida"
+msgstr ""
 
 #: ../ui/main.glade:2151
 msgid "_Help"
-msgstr "_Hjälp"
+msgstr ""
 
 #: ../ui/main.glade:1432
 msgid "_Highlighter"
-msgstr "Överstrykningspenna"
+msgstr ""
 
 #: ../ui/main.glade:633
 msgid "_Horizontal"
-msgstr "_Horisontell"
+msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr "_Bild"
+msgstr ""
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
@@ -3651,35 +3651,35 @@ msgstr ""
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
-msgstr "_Sista sidan"
+msgstr ""
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
-msgstr "Vänster till höger"
+msgstr ""
 
 #: ../ui/main.glade:967
 msgid "_Manage"
-msgstr "_Hantera"
+msgstr ""
 
 #: ../ui/main.glade:1065
 msgid "_Navigation"
-msgstr "_Navigation"
+msgstr ""
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "Nästa lager"
+msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
-msgstr "_Nästa sida"
+msgstr ""
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr "_Parkopplade sidor"
+msgstr ""
 
 #: ../ui/main.glade:1384
 msgid "_Pen"
-msgstr "_Penna"
+msgstr ""
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
@@ -3687,19 +3687,19 @@ msgstr "Insticksprogram"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "_Presentationsläge"
+msgstr ""
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "Föregående lager"
+msgstr ""
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
-msgstr "F_öregående sida"
+msgstr ""
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
-msgstr "Höger till vänster"
+msgstr ""
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
@@ -3711,11 +3711,11 @@ msgstr ""
 
 #: ../ui/main.glade:1373
 msgid "_Tools"
-msgstr "_Verktyg"
+msgstr ""
 
 #: ../ui/main.glade:1159
 msgid "_Top Layer"
-msgstr "Översta lagret"
+msgstr ""
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
@@ -3723,15 +3723,15 @@ msgstr ""
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
-msgstr "_Vertikal"
+msgstr ""
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
-msgstr "_Vertikalt utrymme"
+msgstr ""
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr "Vi_sa"
+msgstr ""
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
