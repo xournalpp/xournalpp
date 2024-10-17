@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: eo\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -2220,7 +2220,7 @@ msgstr "Ĉiam kontroli LaTeX-dependaĵojn antaŭ rulado"
 
 #: ../ui/main.glade:1253
 msgid "Append New PDF Pages"
-msgstr "Postglui novajn PDF-paĝojn"
+msgstr ""
 
 #: ../ui/settings.glade:226
 msgid "Arithmetic mean"
@@ -2309,11 +2309,11 @@ msgstr "La bordera koloro por la aktuala paĝo kaj aliaj elektitaĵoj"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr "Porti antaŭen"
+msgstr ""
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr "Porti malfonen"
+msgstr ""
 
 #: ../ui/settings.glade:1192
 msgid "Buffersize"
@@ -2365,7 +2365,7 @@ msgstr "Eligo de komando"
 
 #: ../ui/main.glade:1263
 msgid "Configure Page Template"
-msgstr "Agordi paĝan ŝablonon"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
@@ -2445,7 +2445,7 @@ msgstr "Implicitaĵoj"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "Forviŝi tavolon"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2521,11 +2521,11 @@ msgstr "Malhelpo: Se la valoro estas tro malgranda, nedezirata oscilado eble oka
 
 #: ../ui/main.glade:1540
 msgid "Draw Coordinate System"
-msgstr "Desegni koordinataron"
+msgstr ""
 
 #: ../ui/main.glade:1551
 msgid "Draw _Line"
-msgstr "Desegni _linion"
+msgstr ""
 
 #: ../ui/settings.glade:3361
 msgid "Draw a transparent circle around the cursor"
@@ -2545,7 +2545,7 @@ msgstr "Duplikatigi"
 
 #: ../ui/main.glade:1243
 msgid "Duplicate Page"
-msgstr "Duplikatigi paĝon"
+msgstr ""
 
 #: ../ui/main.glade:2985
 msgid "Edit (not implemented yet)"
@@ -2609,7 +2609,7 @@ msgstr "Tajpi / modifi LaTeX-tekston"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "Opcioj pri _Skrapgumo"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2625,7 +2625,7 @@ msgstr "Elporti"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "Elporti kiel..."
+msgstr ""
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2638,11 +2638,11 @@ msgstr "Elporti la dokumenton sen ajna fono (Nenio) aŭ kun nur PDF-aj kaj bilda
 
 #: ../ui/main.glade:1821 ../ui/main.glade:2026
 msgid "Fi_ll"
-msgstr "P_lenigi"
+msgstr ""
 
 #: ../ui/main.glade:1831 ../ui/main.glade:2036
 msgid "Fill opacity"
-msgstr "Opakeco de plenigaĵo"
+msgstr ""
 
 #: ../ui/settings.glade:1397
 msgid "Finalize the stroke"
@@ -2706,7 +2706,7 @@ msgstr "Tolero pri alkradigado"
 
 #: ../ui/main.glade:1661
 msgid "H_and Tool"
-msgstr "_Manforma ilo"
+msgstr ""
 
 #: ../ui/settings.glade:2632
 msgid "Hand Recognition"
@@ -2742,7 +2742,7 @@ msgstr "Emfazi elektitan tekston"
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
-msgstr "_Opcioj pri emfazilo"
+msgstr ""
 
 #: ../ui/settings.glade:5392
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2854,7 +2854,7 @@ msgstr "Lingvaj agordoj"
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "Aranĝo"
+msgstr ""
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2910,7 +2910,7 @@ msgstr "Kunfandi malsupren"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
-msgstr "Kunfandi tavolon malsupren"
+msgstr ""
 
 #: ../ui/settings.glade:1058
 msgid "Merge button events with stylus tip events\n"
@@ -2964,7 +2964,7 @@ msgstr "Multipliki la ruluman rapidon per multiplikanto ne pli granda ol ĉi tiu
 
 #: ../ui/main.glade:1175
 msgid "N_ext Annotated Page"
-msgstr "S_ekva prinotita paĝo"
+msgstr ""
 
 #: ../ui/settings.glade:2166
 msgctxt "eraser is never visible"
@@ -2973,19 +2973,19 @@ msgstr ""
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
-msgstr "Nova paĝo _post"
+msgstr ""
 
 #: ../ui/main.glade:1212
 msgid "New Page _Before"
-msgstr "Nova paĝo _antaŭ"
+msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
-msgstr "Nova paĝo ĉe _fino"
+msgstr ""
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
-msgstr "Nova tavo_lo"
+msgstr ""
 
 #: ../ui/settings.glade:3329
 msgctxt "stylus cursor uses no icon"
@@ -3027,7 +3027,7 @@ msgstr "PDF-kaŝmemoro"
 
 #: ../ui/main.glade:1186
 msgid "P_revious Annotated Page"
-msgstr "_Antaŭa prinotita paĝo"
+msgstr ""
 
 #: ../ui/settings.glade:3681
 msgid "Page numbering  "
@@ -3043,7 +3043,7 @@ msgstr "Parigitaj paĝoj"
 
 #: ../ui/main.glade:1360
 msgid "Paper B_ackground"
-msgstr "Papera _fono"
+msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -3051,11 +3051,11 @@ msgstr "Formato"
 
 #: ../ui/main.glade:1350
 msgid "Paper _Color"
-msgstr "Papera _koloro"
+msgstr ""
 
 #: ../ui/main.glade:1340
 msgid "Paper _Format"
-msgstr "_Formato"
+msgstr ""
 
 #: ../ui/about.glade:210
 msgid "Partially based on Xournal\n"
@@ -3069,11 +3069,11 @@ msgstr "Dosierindiko: "
 
 #: ../ui/main.glade:2072
 msgid "Pause"
-msgstr "Paŭzigi"
+msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
-msgstr "_Opcioj pri plumo"
+msgstr ""
 
 #: ../ui/settings.glade:4219
 msgid "Performance"
@@ -3089,7 +3089,7 @@ msgstr "Agordoj pri ludado"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "Kromprogramadministrilo"
+msgstr ""
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
@@ -3109,7 +3109,7 @@ msgstr "Antaŭŝargi paĝojn post"
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "Agordoj"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
@@ -3145,11 +3145,11 @@ msgstr "Rebildigi kiam la paĝa zomo ŝanĝiĝas pli ol "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "Lastaj _dokumentoj"
+msgstr ""
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
-msgstr "Ekregistri / ĉesigi"
+msgstr ""
 
 #: ../ui/settings.glade:6180
 msgid "Recording Quality"
@@ -3157,7 +3157,7 @@ msgstr "Kvalito de registrado"
 
 #: ../ui/main.glade:1323
 msgid "Rename Layer"
-msgstr "Ŝanĝi nomon de tavolo"
+msgstr ""
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
@@ -3213,7 +3213,7 @@ msgstr "Elekti bildon"
 
 #: ../ui/main.glade:1408
 msgid "Select Linear Text"
-msgstr "Elekti linian tekston"
+msgstr ""
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -3221,7 +3221,7 @@ msgstr "Elekti PDF-paĝon"
 
 #: ../ui/main.glade:1420
 msgid "Select Text In Rectangle"
-msgstr "Elekti tekston en ortangulo"
+msgstr ""
 
 #: ../ui/settings.glade:4075
 msgid "Select toolbar:"
@@ -3237,11 +3237,11 @@ msgstr "Rulumado per elekta rando"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr "Porti malantaŭen"
+msgstr ""
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr "Porti fonen"
+msgstr ""
 
 #: ../ui/settings.glade:1824
 msgid "Sensitivity Scale"
@@ -3249,11 +3249,11 @@ msgstr "Skalo de sentemo"
 
 #: ../ui/main.glade:730
 msgid "Set Columns"
-msgstr "Agordi kolumnojn"
+msgstr ""
 
 #: ../ui/main.glade:835
 msgid "Set Rows"
-msgstr "Agordi vicojn"
+msgstr ""
 
 #: ../ui/settings.glade:5475
 msgid "Settings:"
@@ -3281,7 +3281,7 @@ msgstr ""
 
 #: ../ui/main.glade:605
 msgid "Show Toolbars"
-msgstr "Montri ilobretojn"
+msgstr ""
 
 #: ../ui/settings.glade:3031
 msgid "Show filepath in title bar"
@@ -3377,7 +3377,7 @@ msgstr "Sistema kursoro"
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "Ilobre_toj"
+msgstr ""
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
@@ -3405,7 +3405,7 @@ msgstr "Kontroli, ĉu la aktuala agordo validas per rulado de la LaTeX-komando s
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "Teksta tiparo..."
+msgstr ""
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3568,83 +3568,83 @@ msgstr "Zomrapido"
 
 #: ../ui/main.glade:742
 msgid "_1 Column"
-msgstr "_1 kolumno"
+msgstr ""
 
 #: ../ui/main.glade:847
 msgid "_1 Row"
-msgstr "_1 vico"
+msgstr ""
 
 #: ../ui/main.glade:753
 msgid "_2 Columns"
-msgstr "_2 kolumnoj"
+msgstr ""
 
 #: ../ui/main.glade:858
 msgid "_2 Rows"
-msgstr "_2 vicoj"
+msgstr ""
 
 #: ../ui/main.glade:764
 msgid "_3 Columns"
-msgstr "_3 kolumnoj"
+msgstr ""
 
 #: ../ui/main.glade:869
 msgid "_3 Rows"
-msgstr "_3 vicoj"
+msgstr ""
 
 #: ../ui/main.glade:775
 msgid "_4 Columns"
-msgstr "_4 kolumnoj"
+msgstr ""
 
 #: ../ui/main.glade:880
 msgid "_4 Rows"
-msgstr "_4 vicoj"
+msgstr ""
 
 #: ../ui/main.glade:786
 msgid "_5 Columns"
-msgstr "_5 kolumnoj"
+msgstr ""
 
 #: ../ui/main.glade:891
 msgid "_5 Rows"
-msgstr "_5 vicoj"
+msgstr ""
 
 #: ../ui/main.glade:797
 msgid "_6 Columns"
-msgstr "_6 kolumnoj"
+msgstr ""
 
 #: ../ui/main.glade:902
 msgid "_6 Rows"
-msgstr "_6 vicoj"
+msgstr ""
 
 #: ../ui/main.glade:808
 msgid "_7 Columns"
-msgstr "_7 kolumnoj"
+msgstr ""
 
 #: ../ui/main.glade:913
 msgid "_7 Rows"
-msgstr "_7 vicoj"
+msgstr ""
 
 #: ../ui/main.glade:819
 msgid "_8 Columns"
-msgstr "_8 kolumnoj"
+msgstr ""
 
 #: ../ui/main.glade:924
 msgid "_8 Rows"
-msgstr "_8 vicoj"
+msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "_Prinoti PDF"
+msgstr ""
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
-msgstr "De _malsupro supren"
+msgstr ""
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
-msgstr "_Kolumnoj/vicoj"
+msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr "_Adapti"
+msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
@@ -3652,83 +3652,83 @@ msgstr "_Implicitaj iloj"
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
-msgstr "_Forviŝi paĝon"
+msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "R_edakti"
+msgstr ""
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "_Skrapgumo"
+msgstr ""
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "_Elporti kiel PDF"
+msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr "_Dosiero"
+msgstr ""
 
 #: ../ui/main.glade:1076
 msgid "_First Page"
-msgstr "_Unua paĝo"
+msgstr ""
 
 #: ../ui/main.glade:1098
 msgid "_Goto Page"
-msgstr "_Iri al paĝo"
+msgstr ""
 
 #: ../ui/main.glade:2151
 msgid "_Help"
-msgstr "_Helpo"
+msgstr ""
 
 #: ../ui/main.glade:1432
 msgid "_Highlighter"
-msgstr "_Emfazilo"
+msgstr ""
 
 #: ../ui/main.glade:633
 msgid "_Horizontal"
-msgstr "_Horizontala"
+msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr "B_ildo"
+msgstr ""
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
-msgstr "Ĵ_urnalo"
+msgstr ""
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
-msgstr "_Lasta paĝo"
+msgstr ""
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
-msgstr "De ma_ldekstro dekstren"
+msgstr ""
 
 #: ../ui/main.glade:967
 msgid "_Manage"
-msgstr "Ad_ministri"
+msgstr ""
 
 #: ../ui/main.glade:1065
 msgid "_Navigation"
-msgstr "_Navigado"
+msgstr ""
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "_Sekva tavolo"
+msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
-msgstr "_Sekva paĝo"
+msgstr ""
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr "_Parigi paĝojn"
+msgstr ""
 
 #: ../ui/main.glade:1384
 msgid "_Pen"
-msgstr "_Plumo"
+msgstr ""
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
@@ -3736,79 +3736,79 @@ msgstr "Krom_programo"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "_Prezentoreĝimo"
+msgstr ""
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "_Antaŭa tavolo"
+msgstr ""
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
-msgstr "_Antaŭa paĝo"
+msgstr ""
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
-msgstr "De dekst_ro maldekstren"
+msgstr ""
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
-msgstr "_Formo-rekonilo"
+msgstr ""
 
 #: ../ui/main.glade:1444
 msgid "_Text"
-msgstr "_Teksto"
+msgstr ""
 
 #: ../ui/main.glade:1373
 msgid "_Tools"
-msgstr "_Iloj"
+msgstr ""
 
 #: ../ui/main.glade:1159
 msgid "_Top Layer"
-msgstr "_Supra tavolo"
+msgstr ""
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
-msgstr "De _supro malsupren"
+msgstr ""
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
-msgstr "_Vertikala"
+msgstr ""
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
-msgstr "_Vertikala spaco"
+msgstr ""
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr "_Vidi"
+msgstr ""
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "_forviŝi strekojn"
+msgstr ""
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
-msgstr "_maldika"
+msgstr ""
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "_meza"
+msgstr ""
 
 #: ../ui/main.glade:1917
 msgid "_standard"
-msgstr "_norma"
+msgstr ""
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "_dika"
+msgstr ""
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
-msgstr "maldik_ega"
+msgstr ""
 
 #: ../ui/main.glade:1928
 msgid "_whiteout"
-msgstr "_blanka korektilo"
+msgstr ""
 
 #: ../ui/settings.glade:4878
 msgid "disabled"
@@ -3846,7 +3846,7 @@ msgstr "s <i>(post tiom da daŭro, la tuŝekrano reaktiviĝos)</i>"
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "Dike_ga"
+msgstr ""
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
