@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:50\n"
+"PO-Revision-Date: 2024-10-17 16:15\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: de\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -205,7 +205,7 @@ msgstr "Farbe \"{1}\" unbekannt (nicht in der Standardfarbliste)!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Compass"
-msgstr "Kompass"
+msgstr "Zirkel"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
@@ -945,7 +945,7 @@ msgstr "Normales Zeichnen"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
 #: ../src/core/plugin/Plugin.cpp:265 ../src/core/plugin/Plugin.cpp:288
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1548,7 +1548,7 @@ msgstr "Audioaufnahme {1} kann nicht abgespielt werden"
 
 #: ../src/core/control/Control.cpp:1481
 msgid "Unable to retrieve pdf page."
-msgstr "PDF-Seite konnte nicht abgerufen werden."
+msgstr "PDF-Seite konnte nicht geladen werden."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/core/undo/UndoRedoHandler.cpp:182
@@ -2656,7 +2656,7 @@ msgstr "Bearbeite / Editiere LaTeX Text"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "Radierer Optio_nen"
+msgstr "Radierer-Einstellungen"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2789,7 +2789,7 @@ msgstr "Ausgewählten Text hervorheben"
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
-msgstr "Textmarker _Optionen"
+msgstr "Textmarker-Einstellungen"
 
 #: ../ui/settings.glade:5392
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -3296,11 +3296,11 @@ msgstr "Empfindlichkeitsskala"
 
 #: ../ui/main.glade:730
 msgid "Set Columns"
-msgstr "Spalten setzen"
+msgstr "Spalten"
 
 #: ../ui/main.glade:835
 msgid "Set Rows"
-msgstr "Zeilen setzen"
+msgstr "Zeilen"
 
 #: ../ui/settings.glade:5475
 msgid "Settings:"
@@ -3711,7 +3711,7 @@ msgstr "_Radierer"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "_Exportieren als PDF"
+msgstr "Als PDF _exportieren"
 
 #: ../ui/main.glade:152
 msgid "_File"
@@ -3755,7 +3755,7 @@ msgstr "_Links nach Rechts"
 
 #: ../ui/main.glade:967
 msgid "_Manage"
-msgstr "_Werkzeugleisten verwalten"
+msgstr "_Verwalten"
 
 #: ../ui/main.glade:1065
 msgid "_Navigation"
@@ -3771,7 +3771,7 @@ msgstr "_Nächste Seite"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr "_Mehrseitiges Layout"
+msgstr "Zweispaltig"
 
 #: ../ui/main.glade:1384
 msgid "_Pen"
@@ -3779,7 +3779,7 @@ msgstr "_Stift"
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
-msgstr "_Plugin"
+msgstr ""
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
@@ -3831,7 +3831,7 @@ msgstr "_Ansicht"
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "_Linien löschen"
+msgstr "_Striche löschen"
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
