@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:50\n"
+"PO-Revision-Date: 2024-10-17 16:15\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: ro\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -1121,7 +1121,7 @@ msgstr "Înlocuiește"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1192
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr "Fișierul temporar solicitat nu a fost găsit pentru atașamentul {1}"
+msgstr "Fișierul temporar solicitat nu a fost găsit pentru atașarea {1}"
 
 #: ../src/core/control/XournalMain.cpp:219
 msgid "Restore file"
@@ -1693,7 +1693,7 @@ msgstr "Cursor zoom"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Zoom fit to screen"
-msgstr "Zoom adaptat ferestrei"
+msgstr "Zoom Încadrare optimă"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
 msgid "Zoom in"
@@ -1742,11 +1742,11 @@ msgstr "linie întreruptă"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default disabled"
-msgstr "dezactivat în mod prestabilit"
+msgstr "prestabilit dezactivată"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default enabled"
-msgstr "activat în mod prestabilit"
+msgstr "prestabilit activată"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "delete stroke"
@@ -3033,7 +3033,7 @@ msgstr "O pagină nouă la _sfârșit"
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
-msgstr "Strat _nou"
+msgstr "_Strat nou"
 
 #: ../ui/settings.glade:3329
 msgctxt "stylus cursor uses no icon"
@@ -3091,7 +3091,7 @@ msgstr "Pagini alăturate"
 
 #: ../ui/main.glade:1360
 msgid "Paper B_ackground"
-msgstr "Fondul _hârtiei"
+msgstr "Fo_ndul hârtiei"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -3099,7 +3099,7 @@ msgstr "Formatul hârtiei"
 
 #: ../ui/main.glade:1350
 msgid "Paper _Color"
-msgstr "Culoare hârtiei"
+msgstr "_Culoare hârtiei"
 
 #: ../ui/main.glade:1340
 msgid "Paper _Format"
@@ -3129,7 +3129,7 @@ msgstr "Performanță"
 
 #: ../ui/latexSettings.glade:564
 msgid "Pick the Editor's Font"
-msgstr "Alege tipul de litere al elaboratorului"
+msgstr "Alege tipul de litere"
 
 #: ../ui/settings.glade:6267
 msgid "Playback Settings"
@@ -3137,7 +3137,7 @@ msgstr "Reglări de redare"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "Gestionare Module"
+msgstr "Gestionare Extensii"
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
@@ -3145,7 +3145,7 @@ msgstr "Gestionare _Module"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr "Modificările modulelor se aplică după ce Xournal++ a fost repornit"
+msgstr "Modificările extensiilor se aplică după ce Xournal++ a fost repornit"
 
 #: ../ui/settings.glade:4153
 msgid "Pre-load pages after"
@@ -3193,7 +3193,7 @@ msgstr "Reîncarcă atunci când zoomul paginii se schimbă cu mai mult de "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "Documente recente"
+msgstr "_Documente recente"
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
@@ -3333,7 +3333,7 @@ msgstr "Arată benzile cu instrumente"
 
 #: ../ui/settings.glade:3031
 msgid "Show filepath in title bar"
-msgstr "Arată calea fișierului în titlu"
+msgstr "Arată calea și numele fișierului în banda de sus"
 
 #: ../ui/settings.glade:3608
 msgid "Show sidebar on the right side"
@@ -3425,7 +3425,7 @@ msgstr "Cursorul sistemului"
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "B_enzi cu instrumente"
+msgstr "_Benzi cu instrumente"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
@@ -3453,7 +3453,7 @@ msgstr "Verifică dacă este valabilă configurarea actuală, prin executarea co
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "Tipul de litere al textului..."
+msgstr "Tipul de litere..."
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3518,7 +3518,7 @@ msgstr "Folosește simbolurile Stock disponibile (trebuie repornit programul)"
 
 #: ../ui/latexSettings.glade:529
 msgid "Use font from system theme."
-msgstr "Folosește tipul de litere al sistemului."
+msgstr "Folosește literele sistemului."
 
 #: ../ui/settings.glade:5212
 msgid "Use snapping for recognized shapes"
@@ -3680,7 +3680,7 @@ msgstr "_8 rânduri"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "_Adaugă însemnări în PDF"
+msgstr "_Adaugă însemnări pe PDF"
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
@@ -3748,7 +3748,7 @@ msgstr "_Document"
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
-msgstr "_Ultima pagină"
+msgstr "Ul_tima pagină"
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
@@ -3764,11 +3764,11 @@ msgstr "_Navigare"
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "_Stratul următor"
+msgstr "Stratul _următor"
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
-msgstr "_Pagina următoare"
+msgstr "Pagina _următoare"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
@@ -3788,11 +3788,11 @@ msgstr "_Prezentare"
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "_Stratul anterior"
+msgstr "Stratul _anterior"
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
-msgstr "_Pagina anterioară"
+msgstr "Pagina _anterioară"
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
@@ -3800,7 +3800,7 @@ msgstr "_De la dreapta la stânga"
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
-msgstr "_Recunoaște forma"
+msgstr "Recunoaște _forma"
 
 #: ../ui/main.glade:1444
 msgid "_Text"
@@ -3808,7 +3808,7 @@ msgstr "_Text"
 
 #: ../ui/main.glade:1373
 msgid "_Tools"
-msgstr "_Instrumente"
+msgstr "Ins_trumente"
 
 #: ../ui/main.glade:1159
 msgid "_Top Layer"
@@ -3816,7 +3816,7 @@ msgstr "_Cel mai de sus strat"
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
-msgstr "_De sus în jos"
+msgstr "De s_us în jos"
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
@@ -3824,7 +3824,7 @@ msgstr "_Vertical"
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
-msgstr "_Spațiu vertical"
+msgstr "Spațiu _vertical"
 
 #: ../ui/main.glade:546
 msgid "_View"
@@ -3868,7 +3868,7 @@ msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:167
 msgid "enabled,"
-msgstr "activat,"
+msgstr "activată,"
 
 #: ../ui/settings.glade:1926
 msgid "events"
@@ -3894,7 +3894,7 @@ msgstr "s <i>(după care ecranul tactil va fi reactivat)</i>"
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "foarte _gros"
+msgstr "foarte g_ros"
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
