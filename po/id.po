@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: id\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -196,7 +196,7 @@ msgstr "Ubah lebar goresan"
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:65
 msgid "Clear list"
-msgstr ""
+msgstr "Kosongkan daftar"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
@@ -204,7 +204,7 @@ msgstr "Warna \"{1}\" tidak diketahui (tidak didefinisikan pada daftar warna baw
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Compass"
-msgstr ""
+msgstr "Kompas"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
@@ -940,7 +940,7 @@ msgstr "Gambar normal"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
 #: ../src/core/plugin/Plugin.cpp:265 ../src/core/plugin/Plugin.cpp:288
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -2349,7 +2349,7 @@ msgstr ""
 
 #: ../ui/main.glade:1263
 msgid "Configure Page Template"
-msgstr "Konfigurasi Templat Halaman"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
@@ -2429,7 +2429,7 @@ msgstr "Bawaan"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "Hapus Lapisan"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2502,11 +2502,11 @@ msgstr ""
 
 #: ../ui/main.glade:1540
 msgid "Draw Coordinate System"
-msgstr "Gambar Sistem Koordinat"
+msgstr ""
 
 #: ../ui/main.glade:1551
 msgid "Draw _Line"
-msgstr "Gambar _Garis"
+msgstr ""
 
 #: ../ui/settings.glade:3361
 msgid "Draw a transparent circle around the cursor"
@@ -2590,7 +2590,7 @@ msgstr "Masukkan / edit Teks LaTeX"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "Opsi Pe_nghapus"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2606,7 +2606,7 @@ msgstr "Ekspor"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "Ekspor ke..."
+msgstr ""
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2619,7 +2619,7 @@ msgstr ""
 
 #: ../ui/main.glade:1821 ../ui/main.glade:2026
 msgid "Fi_ll"
-msgstr "_Isi"
+msgstr ""
 
 #: ../ui/main.glade:1831 ../ui/main.glade:2036
 msgid "Fill opacity"
@@ -2687,7 +2687,7 @@ msgstr "Toleransi lengketkan ke kisi"
 
 #: ../ui/main.glade:1661
 msgid "H_and Tool"
-msgstr "_Alat Tangan"
+msgstr ""
 
 #: ../ui/settings.glade:2632
 msgid "Hand Recognition"
@@ -2723,7 +2723,7 @@ msgstr ""
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
-msgstr "_Opsi Penyorot"
+msgstr ""
 
 #: ../ui/settings.glade:5392
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2835,7 +2835,7 @@ msgstr "Pengaturan Bahasa"
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "Tata Letak"
+msgstr ""
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2953,19 +2953,19 @@ msgstr ""
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
-msgstr "Halaman Baru _Setelah"
+msgstr ""
 
 #: ../ui/main.glade:1212
 msgid "New Page _Before"
-msgstr "Halaman Baru Se_belum"
+msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
-msgstr "Halaman Baru di _Akhir"
+msgstr ""
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
-msgstr "_Lapisan Baru"
+msgstr ""
 
 #: ../ui/settings.glade:3329
 msgctxt "stylus cursor uses no icon"
@@ -3031,11 +3031,11 @@ msgstr "Format Kertas"
 
 #: ../ui/main.glade:1350
 msgid "Paper _Color"
-msgstr "_Warna Kertas"
+msgstr ""
 
 #: ../ui/main.glade:1340
 msgid "Paper _Format"
-msgstr "_Format Kertas"
+msgstr ""
 
 #: ../ui/about.glade:210
 msgid "Partially based on Xournal\n"
@@ -3049,11 +3049,11 @@ msgstr ""
 
 #: ../ui/main.glade:2072
 msgid "Pause"
-msgstr "Jeda"
+msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
-msgstr "_Opsi Pena"
+msgstr ""
 
 #: ../ui/settings.glade:4219
 msgid "Performance"
@@ -3069,7 +3069,7 @@ msgstr ""
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "Pengelola Pengaya"
+msgstr ""
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
@@ -3089,7 +3089,7 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "Preferensi"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
@@ -3125,11 +3125,11 @@ msgstr ""
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "_Dokumen Terkini"
+msgstr ""
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
-msgstr "Rekam / Hentikan"
+msgstr ""
 
 #: ../ui/settings.glade:6180
 msgid "Recording Quality"
@@ -3217,11 +3217,11 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr "Bawa mundur"
+msgstr ""
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr "Bawa ke Belakang"
+msgstr ""
 
 #: ../ui/settings.glade:1824
 msgid "Sensitivity Scale"
@@ -3229,11 +3229,11 @@ msgstr "Skala Sensitivitas"
 
 #: ../ui/main.glade:730
 msgid "Set Columns"
-msgstr "Setel Kolom"
+msgstr ""
 
 #: ../ui/main.glade:835
 msgid "Set Rows"
-msgstr "Setel Baris"
+msgstr ""
 
 #: ../ui/settings.glade:5475
 msgid "Settings:"
@@ -3261,7 +3261,7 @@ msgstr ""
 
 #: ../ui/main.glade:605
 msgid "Show Toolbars"
-msgstr "Tampilkan Bilah Alat"
+msgstr ""
 
 #: ../ui/settings.glade:3031
 msgid "Show filepath in title bar"
@@ -3356,7 +3356,7 @@ msgstr ""
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "Bilah _Alat"
+msgstr ""
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
@@ -3384,7 +3384,7 @@ msgstr ""
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "Fonta Teks..."
+msgstr ""
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3545,83 +3545,83 @@ msgstr "Kecepatan Perbesaran"
 
 #: ../ui/main.glade:742
 msgid "_1 Column"
-msgstr "_1 Kolom"
+msgstr ""
 
 #: ../ui/main.glade:847
 msgid "_1 Row"
-msgstr "_1 Baris"
+msgstr ""
 
 #: ../ui/main.glade:753
 msgid "_2 Columns"
-msgstr "_2 Kolom"
+msgstr ""
 
 #: ../ui/main.glade:858
 msgid "_2 Rows"
-msgstr "_2 Baris"
+msgstr ""
 
 #: ../ui/main.glade:764
 msgid "_3 Columns"
-msgstr "_3 Kolom"
+msgstr ""
 
 #: ../ui/main.glade:869
 msgid "_3 Rows"
-msgstr "_3 Baris"
+msgstr ""
 
 #: ../ui/main.glade:775
 msgid "_4 Columns"
-msgstr "_4 Kolom"
+msgstr ""
 
 #: ../ui/main.glade:880
 msgid "_4 Rows"
-msgstr "_4 Baris"
+msgstr ""
 
 #: ../ui/main.glade:786
 msgid "_5 Columns"
-msgstr "_5 Kolom"
+msgstr ""
 
 #: ../ui/main.glade:891
 msgid "_5 Rows"
-msgstr "_5 Baris"
+msgstr ""
 
 #: ../ui/main.glade:797
 msgid "_6 Columns"
-msgstr "_6 Kolom"
+msgstr ""
 
 #: ../ui/main.glade:902
 msgid "_6 Rows"
-msgstr "_6 Baris"
+msgstr ""
 
 #: ../ui/main.glade:808
 msgid "_7 Columns"
-msgstr "_7 Kolom"
+msgstr ""
 
 #: ../ui/main.glade:913
 msgid "_7 Rows"
-msgstr "_7 Baris"
+msgstr ""
 
 #: ../ui/main.glade:819
 msgid "_8 Columns"
-msgstr "_8 Kolom"
+msgstr ""
 
 #: ../ui/main.glade:924
 msgid "_8 Rows"
-msgstr "_8 Baris"
+msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "_Anotasi PDF"
+msgstr ""
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
-msgstr "_Bawah ke Atas"
+msgstr ""
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
-msgstr "_Kolom/Baris"
+msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr "K_ustomisasi"
+msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
@@ -3629,83 +3629,83 @@ msgstr "_Alat Bawaan"
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
-msgstr "Hapus Halaman"
+msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "_Edit"
+msgstr ""
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "P_enghapus"
+msgstr ""
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "_Ekspor ke PDF"
+msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr "_Berkas"
+msgstr ""
 
 #: ../ui/main.glade:1076
 msgid "_First Page"
-msgstr "Halaman _Pertama"
+msgstr ""
 
 #: ../ui/main.glade:1098
 msgid "_Goto Page"
-msgstr "_Ke Halaman"
+msgstr ""
 
 #: ../ui/main.glade:2151
 msgid "_Help"
-msgstr "_Bantuan"
+msgstr ""
 
 #: ../ui/main.glade:1432
 msgid "_Highlighter"
-msgstr "_Penyorot"
+msgstr ""
 
 #: ../ui/main.glade:633
 msgid "_Horizontal"
-msgstr "_Horisontal"
+msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr "_Gambar"
+msgstr ""
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
-msgstr "_Jurnal"
+msgstr ""
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
-msgstr "Halaman _Terakhir"
+msgstr ""
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
-msgstr "_Kiri ke Kanan"
+msgstr ""
 
 #: ../ui/main.glade:967
 msgid "_Manage"
-msgstr "_Kelola"
+msgstr ""
 
 #: ../ui/main.glade:1065
 msgid "_Navigation"
-msgstr "_Navigasi"
+msgstr ""
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "Lapisan _Berikutnya"
+msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
-msgstr "Halaman _Berikutnya"
+msgstr ""
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
-msgstr "_Pasangkan Halaman"
+msgstr ""
 
 #: ../ui/main.glade:1384
 msgid "_Pen"
-msgstr "_Pena"
+msgstr ""
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
@@ -3713,79 +3713,79 @@ msgstr "_Pengaya"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "Mode _Presentasi"
+msgstr ""
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "Lapisan _Sebelumnya"
+msgstr ""
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
-msgstr "Halaman _Sebelumnya"
+msgstr ""
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
-msgstr "_Kanan ke Kiri"
+msgstr ""
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
-msgstr "_Pengenal Bentuk"
+msgstr ""
 
 #: ../ui/main.glade:1444
 msgid "_Text"
-msgstr "_Teks"
+msgstr ""
 
 #: ../ui/main.glade:1373
 msgid "_Tools"
-msgstr "A_lat"
+msgstr ""
 
 #: ../ui/main.glade:1159
 msgid "_Top Layer"
-msgstr "Lapisan _Atas"
+msgstr ""
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
-msgstr "A_tas ke Bawah"
+msgstr ""
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
-msgstr "_Vertikal"
+msgstr ""
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
-msgstr "Ruang _Vertikal"
+msgstr ""
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr "_Tampilan"
+msgstr ""
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "_hapus goresan"
+msgstr ""
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
-msgstr "_halus"
+msgstr ""
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "_sedang"
+msgstr ""
 
 #: ../ui/main.glade:1917
 msgid "_standard"
-msgstr "_standar"
+msgstr ""
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "_tebal"
+msgstr ""
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
-msgstr "_sangat halus"
+msgstr ""
 
 #: ../ui/main.glade:1928
 msgid "_whiteout"
-msgstr "_putihkan"
+msgstr ""
 
 #: ../ui/settings.glade:4878
 msgid "disabled"
@@ -3823,7 +3823,7 @@ msgstr "s <i>(setelah itu layar sentuh akan diaktifkan kembali)</i>"
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "_sangat tebal"
+msgstr ""
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
