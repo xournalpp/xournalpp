@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: no\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -921,7 +921,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
 #: ../src/core/plugin/Plugin.cpp:265 ../src/core/plugin/Plugin.cpp:288
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -2322,7 +2322,7 @@ msgstr ""
 
 #: ../ui/main.glade:1263
 msgid "Configure Page Template"
-msgstr "Konfigurer sidemal"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
@@ -2402,7 +2402,7 @@ msgstr "Standarder"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "Slett lag"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2576,7 +2576,7 @@ msgstr "Eksporter"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "Eksporter som..."
+msgstr ""
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2593,7 +2593,7 @@ msgstr ""
 
 #: ../ui/main.glade:1831 ../ui/main.glade:2036
 msgid "Fill opacity"
-msgstr "Fyllgjenomsiktighet"
+msgstr ""
 
 #: ../ui/settings.glade:1397
 msgid "Finalize the stroke"
@@ -3016,7 +3016,7 @@ msgstr ""
 
 #: ../ui/main.glade:2072
 msgid "Pause"
-msgstr "Pause"
+msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
@@ -3056,7 +3056,7 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "Innstillinger"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
