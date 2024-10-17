@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: bn\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -72,7 +72,7 @@ msgstr ""
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:40
 msgid "All files"
-msgstr ""
+msgstr "সকল নথিসমূহ"
 
 #: ../src/core/control/pagetype/PageTypeMenu.cpp:213
 msgid "Apply to all pages"
@@ -84,12 +84,12 @@ msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:400
 msgid "Arrange"
-msgstr ""
+msgstr "সাজানো"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
 msgid "Attach file to the journal"
-msgstr ""
+msgstr "জার্নালের সাথে ফাইল সংযুক্ত করুন"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
@@ -150,7 +150,7 @@ msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:415
 msgid "Bring forward"
-msgstr ""
+msgstr "সম্মুখ আনা"
 
 #: ../src/core/control/tools/EditSelection.cpp:405
 msgid "Bring to front"
@@ -164,7 +164,7 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:188
 #: ../src/core/gui/sidebar/Sidebar.cpp:94
 msgid "Cancel"
-msgstr ""
+msgstr "বাতিল করুন"
 
 #: ../src/core/undo/ColorUndoAction.cpp:90
 msgid "Change color"
@@ -223,7 +223,7 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:341
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "LaTeX PDF লোড হলোনা"
 
 #: ../src/core/control/LatexController.cpp:335
 msgid "Could not load LaTeX PDF file: {1}"
@@ -358,7 +358,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:218
 msgid "Delete file"
-msgstr ""
+msgstr "নথিটি মুছে ফেলুন"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
@@ -374,7 +374,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2810
 msgid "Discard"
-msgstr ""
+msgstr "বাতিল করুন"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Display advanced export options"
@@ -392,7 +392,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2804
 msgid "Document file was removed."
-msgstr ""
+msgstr "নথিটি বাতিল করা হয়েছে."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:271
 msgid "Document is corrupted (no pages found in file)"
@@ -533,7 +533,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
-msgstr ""
+msgstr "চিত্র সংরক্ষণ ত্রুটি"
 
 #: ../src/core/control/jobs/ImageExport.cpp:197
 msgid "Error save image #2"
@@ -553,7 +553,7 @@ msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:40
 msgid "Error: {1}"
-msgstr ""
+msgstr "ত্রুটি: {1}"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:164
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
@@ -942,7 +942,7 @@ msgstr ""
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Open file"
-msgstr ""
+msgstr "ফাইল খুলুন"
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:15
 msgid "PDF Export"
@@ -964,7 +964,7 @@ msgstr ""
 #: ../src/core/control/jobs/PdfExportJob.cpp:20
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
 msgid "PDF files"
-msgstr ""
+msgstr "পিডিএফ ফাইলসমূহ"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:47
 msgid "PDF {1}"
@@ -972,7 +972,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "PNG graphics"
-msgstr ""
+msgstr "পিএনজি গ্রাফিক্স"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:88
 msgid "Page"
@@ -1113,7 +1113,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 msgid "SVG graphics"
-msgstr ""
+msgstr "এসভিজি গ্রাফিক্স"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
@@ -1122,16 +1122,16 @@ msgstr ""
 #: ../src/core/control/Control.cpp:2805 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Save"
-msgstr ""
+msgstr "সংরক্ষণ করুন"
 
 #: ../src/core/control/Control.cpp:2805
 msgid "Save As..."
-msgstr ""
+msgstr "নতুন ভাবে সংরক্ষণ করুন..."
 
 #: ../src/core/control/Control.cpp:2639
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
-msgstr ""
+msgstr "ফাইল সংরক্ষণ করুন"
 
 #: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error, can't backup: {1}"
@@ -1140,7 +1140,7 @@ msgstr ""
 #: ../src/core/control/jobs/CustomExportJob.cpp:125
 #: ../src/core/control/jobs/SaveJob.cpp:131
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "নথি সংরক্ষণ ত্রুটি"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
@@ -1244,7 +1244,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:79
 msgid "Select color"
-msgstr ""
+msgstr "রং বেছে নিন"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Select multi layer rect"
@@ -1272,11 +1272,11 @@ msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:426
 msgid "Send backward"
-msgstr ""
+msgstr "পশ্চাৎ পাঠান"
 
 #: ../src/core/control/tools/EditSelection.cpp:434
 msgid "Send to back"
-msgstr ""
+msgstr "সর্বপশ্চাৎ পাঠান"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:57
 msgid "Separator"
@@ -1349,11 +1349,11 @@ msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "নথিটি সফলভাবে সংরক্ষিত হয়েছে {1}"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
 msgid "Supported files"
-msgstr ""
+msgstr "অনুমোদিত নথিসমূহ"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
@@ -1432,7 +1432,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:140
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "নথিটি বৈধ .xopp নথি সংস্করণ নয় (মাইমটাইপ অনুপস্থিত): {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:148
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
@@ -1472,7 +1472,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2804
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "নথিটি এখনও সংরক্ষণ করা হয়নি."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:166
 msgid "This image could not be loaded. Error message: {1}"
@@ -1557,7 +1557,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2696
 msgid "Unsaved Document"
-msgstr ""
+msgstr "অসংরক্ষিত নথি"
 
 #: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
@@ -1609,11 +1609,11 @@ msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "এক্সঔরনাল (সামঞ্জস্য)"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
 msgid "Xournal files"
-msgstr ""
+msgstr "এক্সঔরনাল নথিসমূহ"
 
 #: ../src/core/control/XournalMain.cpp:213
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
@@ -1622,12 +1622,12 @@ msgstr ""
 #: ../src/core/control/Control.cpp:2645
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
-msgstr ""
+msgstr "এক্সঔরনাল নথিসমূহ"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:91
 msgid "Xournal++ template"
-msgstr ""
+msgstr "এক্সঔরনাল++ পূর্বনির্ধারিত বিন্যাস"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:201
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
@@ -1670,7 +1670,7 @@ msgstr ""
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Cancel"
-msgstr ""
+msgstr "_বাতিল করুন"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
@@ -1685,7 +1685,7 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
-msgstr ""
+msgstr "কার্সর"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
@@ -1721,11 +1721,11 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
-msgstr ""
+msgstr "রাবার"
 
 #: ../src/core/control/Control.cpp:2263
 msgid "file: {1}"
-msgstr ""
+msgstr "নথি {1}"
 
 #: ../src/core/undo/AddUndoAction.cpp:85
 #: ../src/core/undo/DeleteUndoAction.cpp:83
@@ -1734,7 +1734,7 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:104
 msgid "keyboard"
-msgstr ""
+msgstr "কীবোৰ্ড"
 
 #: ../src/core/undo/AddUndoAction.cpp:88
 #: ../src/core/undo/DeleteUndoAction.cpp:86
@@ -1743,11 +1743,11 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:95
 msgid "mouse"
-msgstr ""
+msgstr "মাউস"
 
 #: ../src/core/control/DeviceListHelper.cpp:97
 msgid "pen"
-msgstr ""
+msgstr "কলম"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:154
 msgid "show"
@@ -1766,7 +1766,7 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:113
 msgid "tablet pad"
-msgstr ""
+msgstr "ট্যাবলেট প্যাড"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:89
@@ -1775,15 +1775,15 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "touchpad"
-msgstr ""
+msgstr "টাচপ্যাড"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "touchscreen"
-msgstr ""
+msgstr "টাচস্ক্রীন"
 
 #: ../src/core/control/DeviceListHelper.cpp:111
 msgid "trackpoint"
-msgstr ""
+msgstr "ট্র্যাকপয়েন্ট"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "whiteout"
