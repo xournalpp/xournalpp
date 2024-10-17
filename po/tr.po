@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: tr\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -32,7 +32,8 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2324
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Önerilen yedek dosya: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -45,7 +46,7 @@ msgstr "%F-Not-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:145
 msgid "%{name}_annotated"
-msgstr ""
+msgstr "%{name}_açıklanmış"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:166
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -387,7 +388,7 @@ msgstr "Bu sayfayı sil"
 
 #: ../src/core/control/Control.cpp:2810
 msgid "Discard"
-msgstr "Kaydetme"
+msgstr "Gözden Çıkar"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Display advanced export options"
@@ -487,19 +488,19 @@ msgstr "Metni düzenle"
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): öge indeksleri 1 ile başlar"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): verilen öge indeksi maksimum değerden büyük."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): aralık sınırları artan sırada olmalıdır."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): geçersiz öge aralığı."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -561,7 +562,7 @@ msgstr "Otomatik kaydetme hatası: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "PDF arka planını dışa aktarırken hata: PDF sayfa sayısını bulamıyorum "
 
 #: ../src/util/Util.cpp:93
 msgid "Error {1} executing system command: {2}"
@@ -627,7 +628,7 @@ msgstr "Çizgiler olmadan dışa aktar\n"
 
 #: ../src/core/control/XournalMain.cpp:146
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "Bu dosya silinemedi: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -637,7 +638,9 @@ msgstr "KONUM içinde LaTeX oluşturucu programı bulunamadı: {1}"
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr ""
+msgstr "PATH değişkeninde LaTeX oluşturma programı bulunamadı: {1}\n\n"
+"Kurulum Flatpak içinde tespit edildiği için, Flatpak freedesktop Tex Live uzantısını indirmeniz gerekiyor. Örneğin, şunu çalıştırarak:\n\n"
+"$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
@@ -650,7 +653,7 @@ msgstr "Resim yüklenemedi, resim boyutu belirlenemedi!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:179
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Zip arşivindeki content.xml dosyası açılamadı: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -658,7 +661,7 @@ msgstr "LaTeX oluşturucu komutu ayrıştırılamadı: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:61
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "LaTex oluşturucu dizini çözümlenemedi: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
@@ -762,7 +765,7 @@ msgstr "Izgara Yakalama"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "Xournal++ derlenirken GtkSourceView devre dışıydı! Bazı seçenekler kullanılamayacak."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:539
@@ -854,7 +857,7 @@ msgstr "Katman"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:237
 msgid "Layer Combo"
-msgstr "Katman birleşimi"
+msgstr "Katman Birleşimi"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Layer Preview"
@@ -947,7 +950,8 @@ msgstr "Tamam"
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Dışa aktarımda yalnızca ARALIK kısmında belirtilen sayfaları dışa aktarın (ör. \"2-3,5,7-\")\n"
+"                                  -p/--create-pdf veya -i/-create-img kullanılmadan bir etkisi yoktur"
 
 #: ../src/core/control/XournalMain.cpp:663
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1060,7 +1064,7 @@ msgstr "Nesne Oynat"
 
 #: ../src/core/control/XournalMain.cpp:148
 msgid "Please delete the file manually"
-msgstr ""
+msgstr "Lütfen dosyayı manuel olarak silin"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
 msgid "Predefined"
@@ -1163,7 +1167,7 @@ msgstr "Dosyayı Kaydet"
 
 #: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error, can't backup: {1}"
-msgstr ""
+msgstr "Dosya kaydetme hatası, yedekleme yapılamıyor: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:125
 #: ../src/core/control/jobs/SaveJob.cpp:131
@@ -1176,7 +1180,7 @@ msgstr "Ölçek"
 
 #: ../src/core/gui/PageView.cpp:912
 msgid "Scroll to page {1}"
-msgstr ""
+msgstr "{1}. sayfaya kaydırın"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Search"
@@ -1207,13 +1211,13 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:76
 msgid "Select Multi-Layer Rectangle"
-msgstr ""
+msgstr "Çok-Katmanlı Dikdörtgen Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:534
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:82
 msgid "Select Multi-Layer Region"
-msgstr ""
+msgstr "Çok-Katmanlı Bölge Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:536
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:26
@@ -1276,7 +1280,7 @@ msgstr "Renk seç"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Select multi layer rect"
-msgstr ""
+msgstr "Çok katmanlı dikdörtgen seç"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 msgid "Select multi layer region"
@@ -1450,7 +1454,7 @@ msgstr "Eklenmiş arka plan dosyası bulunamadı. Taşınmış, yeniden adlandı
 
 #: ../src/core/control/XournalMain.cpp:245
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Arka plan dosyası \"{1}\" bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir."
 
 #: ../src/core/control/Control.cpp:2314
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
@@ -1625,7 +1629,7 @@ msgstr "Çok Kalın"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "With PDF background"
-msgstr "PDF arkaplanı ile"
+msgstr "PDF arka planı ile"
 
 #: ../src/core/undo/InsertUndoAction.cpp:35
 msgid "Write text"
@@ -1709,7 +1713,7 @@ msgstr "100% Yakınlaştır"
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Cancel"
-msgstr "İ_ptal et"
+msgstr "İ_ptal"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
@@ -2137,7 +2141,7 @@ msgstr "<i>Kalemin bir düğmesine basılırsa veya silgi kullanılırsa seçile
 
 #: ../ui/settings.glade:663
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
-msgstr ""
+msgstr "<i>Bir dökümanı PDF olarak dışa aktarırsanız bu ad önerilecektir.</i>"
 
 #: ../ui/settings.glade:492
 msgid "<i>This name will be proposed if you save a new document.</i>"
@@ -2258,7 +2262,7 @@ msgstr "Otomatik Yükleme"
 
 #: ../ui/settings.glade:4898
 msgid "Automatically Add Empty Last Page (excluding PDFs)"
-msgstr ""
+msgstr "Otomatikman Boş bir Son Sayfa Ekle (PDF'ler hariç)"
 
 #: ../ui/settings.glade:462
 msgid "Autosaving"
@@ -2282,7 +2286,7 @@ msgstr "Temel Hız"
 
 #: ../ui/settings.glade:3697
 msgid "Below preview"
-msgstr ""
+msgstr "Ön izlemenin altı"
 
 #: ../ui/settings.glade:3331
 msgctxt "stylus cursor uses a big pen icon"
@@ -2343,7 +2347,7 @@ msgstr "Daire Rengi"
 
 #: ../ui/settings.glade:3698
 msgid "Circle background"
-msgstr ""
+msgstr "Çember arka plan"
 
 #: ../ui/settings.glade:4190
 msgid "Clear cached paged while scrolling"
@@ -2363,7 +2367,7 @@ msgstr "Komut Çıktısı"
 
 #: ../ui/main.glade:1263
 msgid "Configure Page Template"
-msgstr "Sayfa Şablonlarını Yapılandır"
+msgstr "Sayfa Şablonunu Yapılandır"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
@@ -2423,7 +2427,7 @@ msgstr "Varsayılan LaTeX Metni"
 
 #: ../ui/settings.glade:805
 msgid "Default Pdf export name"
-msgstr ""
+msgstr "Varsayılan Pdf dışa aktarma adı"
 
 #: ../ui/settings.glade:637
 msgid "Default Save Name"
@@ -2640,7 +2644,7 @@ msgstr "Do_ldur"
 
 #: ../ui/main.glade:1831 ../ui/main.glade:2036
 msgid "Fill opacity"
-msgstr "Dolgu Opaklığı"
+msgstr "Dolgu matlığı"
 
 #: ../ui/settings.glade:1397
 msgid "Finalize the stroke"
@@ -2852,7 +2856,7 @@ msgstr "Dil Ayarları"
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "Düzen"
+msgstr "Yerleşim"
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2971,11 +2975,11 @@ msgstr "Asla"
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
-msgstr "Sonr_a Yeni Sayfa"
+msgstr "Sonr_asına Yeni Sayfa"
 
 #: ../ui/main.glade:1212
 msgid "New Page _Before"
-msgstr "Ön_ce Yeni Sayfa"
+msgstr "Ön_cesine Yeni Sayfa"
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
@@ -3029,7 +3033,7 @@ msgstr "_Önceki Açıklamalı Sayfa"
 
 #: ../ui/settings.glade:3681
 msgid "Page numbering  "
-msgstr ""
+msgstr "Sayfa numaralandırma  "
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -3143,7 +3147,7 @@ msgstr "Sayfanın yakınlaştırması belirtilenden fazla değişirse sayfayı y
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "Son Çalışılan _Belgeler"
+msgstr "Son _Belgeler"
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
@@ -3155,7 +3159,7 @@ msgstr "Kayıt Kalitesi"
 
 #: ../ui/main.glade:1323
 msgid "Rename Layer"
-msgstr "Katmanı yeniden adlandır"
+msgstr "Katmanı Yeniden Adlandır"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
@@ -3235,11 +3239,11 @@ msgstr "Seçim Kenarı Kaydırma"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr "Bir alta gönder"
+msgstr "Alta Gönder"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr "En alta gönder"
+msgstr "En Alta Gönder"
 
 #: ../ui/settings.glade:1824
 msgid "Sensitivity Scale"
@@ -3279,7 +3283,7 @@ msgstr "Araç Çubuğunu Göster"
 
 #: ../ui/main.glade:605
 msgid "Show Toolbars"
-msgstr "Araç Çubuğunu Göster"
+msgstr "Araç Çubularını Göster"
 
 #: ../ui/settings.glade:3031
 msgid "Show filepath in title bar"
@@ -3295,7 +3299,7 @@ msgstr "Sol tarafta dikey kaydırma çubuğunu göster"
 
 #: ../ui/settings.glade:3728
 msgid "Sidebar"
-msgstr ""
+msgstr "Kenar çubuğu"
 
 #: ../ui/settings.glade:1078
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
@@ -3326,7 +3330,7 @@ msgstr "Bir Yakınlaştırma Adımı İçin Hız"
 
 #: ../ui/settings.glade:3699
 msgid "Square background"
-msgstr ""
+msgstr "Kare arka plan"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
@@ -3358,7 +3362,7 @@ msgstr "Stilus Düğmeleri"
 
 #: ../ui/settings.glade:2150
 msgid "Stylus-based eraser is visible"
-msgstr ""
+msgstr "Kalem tabanlı silgi görünür durumda"
 
 #: ../ui/settings.glade:5423
 msgid "Successive (ms)"
@@ -3515,12 +3519,12 @@ msgstr "Dokunarak çizim yapılırken, sayfayı kaydırmaya yönelik olan iki pa
 #: ../ui/settings.glade:2168
 msgctxt "eraser is only visible when floating"
 msgid "When floating"
-msgstr ""
+msgstr "Hareket ederken"
 
 #: ../ui/settings.glade:2169
 msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
-msgstr ""
+msgstr "Dokunurken"
 
 #: ../ui/settings.glade:5563
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
@@ -3694,7 +3698,7 @@ msgstr "Res_im"
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
-msgstr "_Günlük"
+msgstr "_Journal"
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
@@ -3774,7 +3778,7 @@ msgstr "_Dikey"
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
-msgstr "_Dikey Alan Aç"
+msgstr "_Dikey Boşluk"
 
 #: ../ui/main.glade:546
 msgid "_View"
@@ -3782,7 +3786,7 @@ msgstr "_Görünüm"
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "_konturları sil"
+msgstr "_Çizgiyi sil"
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
@@ -3848,9 +3852,9 @@ msgstr "_Çok Kalın"
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
-msgstr ""
+msgstr "son sayfada çizerken"
 
 #: ../ui/settings.glade:4848
 msgid "when scrolling to end of last page"
-msgstr ""
+msgstr "son sayfanın sonuna kaydırırken"
 
