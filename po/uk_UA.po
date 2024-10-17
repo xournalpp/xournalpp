@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-08-30 10:20\n"
+"POT-Creation-Date: 2024-09-27 08:09+0000\n"
+"PO-Revision-Date: 2024-10-17 15:42\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr "Ні"
 
 #: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
-#: ../src/core/control/Control.cpp:2014 ../src/core/control/XournalMain.cpp:206
+#: ../src/core/control/Control.cpp:2021 ../src/core/control/XournalMain.cpp:206
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -142,34 +142,34 @@ msgstr "Відсутній PDF-файл підложки"
 msgid "Select font"
 msgstr "Обрати шрифт"
 
-#: ../src/core/control/Control.cpp:1836
+#: ../src/core/control/Control.cpp:1840
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Обрати колір"
 
-#: ../src/core/control/Control.cpp:1858
+#: ../src/core/control/Control.cpp:1865
 msgid "Unsaved Document"
 msgstr "Незбережений документ"
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "Document file was removed."
 msgstr "Файл документу видалено."
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "This document is not saved yet."
 msgstr "Цей документ ще не збережено."
 
-#: ../src/core/control/Control.cpp:2009
+#: ../src/core/control/Control.cpp:2016
 msgid "Save As..."
 msgstr "Зберегти як..."
 
-#: ../src/core/control/Control.cpp:2009 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2016 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "Зберегти"
 
-#: ../src/core/control/Control.cpp:2012
+#: ../src/core/control/Control.cpp:2019
 msgid "Discard"
 msgstr "Відмінити"
 
@@ -1160,11 +1160,11 @@ msgstr "<b>{1}</b>\n"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Пристроїв не знайдено. Здається, щось не так - можливо надіслати звіт про помилку?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Увімкніть чутливість натиску або налаштування натиску, щоб змінити це налаштування!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:287
+#: ../src/core/gui/dialog/SettingsDialog.cpp:286
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Фільтрувати тиск введення. Перемножте тиск на коефіцієнт тиску. Якщо менше за мінімальний, використовуйте мінімальний тиск."
 
@@ -1303,7 +1303,7 @@ msgstr ""
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:80
 msgctxt "Item category in toolbar customization dialog"
 msgid "Colors"
-msgstr ""
+msgstr "Кольори"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:81
 msgctxt "Item category in toolbar customization dialog"
@@ -1338,7 +1338,7 @@ msgstr ""
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:87
 msgctxt "Item category in toolbar customization dialog"
 msgid "Plugins"
-msgstr ""
+msgstr "Доповнення"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
 msgid "Error loading menubar XML file (try to load \"{1}\")"
@@ -1813,7 +1813,7 @@ msgstr "Білий"
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
 msgctxt "as a noun: a copy of"
 msgid "Copy"
-msgstr ""
+msgstr "Копіювати"
 
 #: ../src/core/model/Document.cpp:326 ../src/core/model/Document.cpp:335
 #: ../src/core/model/Document.cpp:338
@@ -2044,15 +2044,15 @@ msgstr "Не вдалося створити теку: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Помилка {1} під час виконання системної команди: {2}"
 
-#: ../src/util/XojMsgBox.cpp:187
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Select another name"
 msgstr "Оберіть інше ім'я"
 
-#: ../src/util/XojMsgBox.cpp:188
+#: ../src/util/XojMsgBox.cpp:192
 msgid "Replace"
 msgstr "Замінити"
 
-#: ../src/util/XojMsgBox.cpp:211
+#: ../src/util/XojMsgBox.cpp:215
 msgid "There was an error displaying help: {1}"
 msgstr "Виникла помилка при відображенні допомоги: {1}"
 
