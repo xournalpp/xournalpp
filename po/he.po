@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:50\n"
+"PO-Revision-Date: 2024-10-17 16:15\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: he\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -331,7 +331,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:88
 msgid "Create new layer"
-msgstr "צור שכבה חדשה"
+msgstr "יצירת שכבה חדשה"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:71
 msgid "Custom"
@@ -368,7 +368,7 @@ msgstr "מחק קובץ לוג"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Delete current page"
-msgstr "מחק דף נוכחי"
+msgstr "מחיקת הדף הנוכחי"
 
 #: ../src/core/control/XournalMain.cpp:218
 msgid "Delete file"
@@ -388,7 +388,7 @@ msgstr "מחיקת דף נוכחי"
 
 #: ../src/core/control/Control.cpp:2810
 msgid "Discard"
-msgstr "השלך"
+msgstr "התעלמות"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Display advanced export options"
@@ -717,11 +717,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Go to first page"
-msgstr "עבור לדף הראשון"
+msgstr "מעבר לדף הראשון"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Go to last page"
-msgstr "עבור לדף האחרון"
+msgstr "מעבר לדף האחרון"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Go to next layer"
@@ -729,7 +729,7 @@ msgstr "עבור לשכבה הבאה"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Go to page"
-msgstr "עבור לדף"
+msgstr "מעבר לדף"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Go to previous layer"
@@ -758,7 +758,7 @@ msgstr "יד"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:82
 msgid "Hide all"
-msgstr "הסתר הכל"
+msgstr "להסתיר הכול"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:510
@@ -788,7 +788,7 @@ msgstr "הכנס העתק של הדף הנוכחי מתחת"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:95
 msgid "Insert after current page"
-msgstr ""
+msgstr "הוספה אחרי העמוד הנוכחי"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:96
 msgid "Insert at end"
@@ -813,7 +813,7 @@ msgstr "הכנס שכבה"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Insert page"
-msgstr "הכנס דף"
+msgstr "הוספת דף"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
@@ -883,11 +883,11 @@ msgstr "העברת שכבה"
 
 #: ../src/core/undo/SwapUndoAction.cpp:68
 msgid "Move page downwards"
-msgstr "העברת הדף למטה"
+msgstr "הורדת הדף למטה"
 
 #: ../src/core/undo/SwapUndoAction.cpp:68
 msgid "Move page upwards"
-msgstr "העברת הדף למעלה"
+msgstr "העלאת הדף למעלה"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:75
 msgid "New"
@@ -1136,7 +1136,7 @@ msgstr ""
 #: ../src/core/control/Control.cpp:2805 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Save"
-msgstr "שמור"
+msgstr "שמירה"
 
 #: ../src/core/control/Control.cpp:2805
 msgid "Save As..."
@@ -1145,7 +1145,7 @@ msgstr "שמירה בשם..."
 #: ../src/core/control/Control.cpp:2639
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
-msgstr "שמור קובץ"
+msgstr "שמירת קובץ"
 
 #: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error, can't backup: {1}"
@@ -1258,7 +1258,7 @@ msgstr "בחר צבע רקע"
 
 #: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:79
 msgid "Select color"
-msgstr "בחר צבע"
+msgstr "בחירת צבע"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Select multi layer rect"
@@ -1323,7 +1323,7 @@ msgstr "מזהה צורות"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:77
 msgid "Show all"
-msgstr "הצג הכל"
+msgstr "להציג הכול"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:102
 msgid "Show only not used pages (one unused page)"
@@ -1363,7 +1363,7 @@ msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
-msgstr "מסמך נשמר בהצלחה ל- {1}"
+msgstr "המסמך נשמר בהצלחה ל־„{1}”"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:97
 msgid "Supported files"
@@ -1579,11 +1579,11 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2332
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "להשתמש ב־pdf המוצע"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:33
 msgid "Version"
-msgstr "גירסה"
+msgstr "גרסה"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:537
 msgid "Vertical Space"
@@ -1695,7 +1695,7 @@ msgstr "_פתח"
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
-msgstr "_שמור"
+msgstr "_שמירה"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
@@ -2014,11 +2014,11 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
-msgstr "<b>גודל עמוד</b>"
+msgstr "<b>גודל דף</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr "<b>גודל עמוד</b>"
+msgstr "<b>גודל דף</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
@@ -2265,7 +2265,7 @@ msgstr "רוחב הגבול"
 
 #: ../ui/settings.glade:3090
 msgid "Border color"
-msgstr "צבע גבול"
+msgstr "צבע מסגרת"
 
 #: ../ui/settings.glade:3075
 msgid "Border color for current page and other selections"
@@ -2329,11 +2329,11 @@ msgstr ""
 
 #: ../ui/main.glade:1263
 msgid "Configure Page Template"
-msgstr "הגדר תבנית הדף"
+msgstr ""
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr "הגדר תבנית דף חדש"
+msgstr "הגדרת תבנית דף חדשה"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2341,7 +2341,7 @@ msgstr "העתק את רקע הדף הנוכחי במקום"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr "העתק את גודל הדף הנוכחי במקום"
+msgstr "העתקת גודל הדף הנוכחי במקום"
 
 #: ../ui/main.glade:2777
 msgid "Copy selected text"
@@ -2409,7 +2409,7 @@ msgstr "ברירות מחדל"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "מחיקת שכבה"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2421,7 +2421,7 @@ msgstr "מכשיר"
 
 #: ../ui/settings.glade:2526
 msgid "Disable"
-msgstr "השבת"
+msgstr "השבתה"
 
 #: ../ui/settings.glade:2880
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
@@ -2600,7 +2600,7 @@ msgstr ""
 
 #: ../ui/main.glade:1831 ../ui/main.glade:2036
 msgid "Fill opacity"
-msgstr "אטימות המילוי"
+msgstr ""
 
 #: ../ui/settings.glade:1397
 msgid "Finalize the stroke"
@@ -2664,7 +2664,7 @@ msgstr ""
 
 #: ../ui/main.glade:1661
 msgid "H_and Tool"
-msgstr "כלי _יד"
+msgstr ""
 
 #: ../ui/settings.glade:2632
 msgid "Hand Recognition"
@@ -2700,7 +2700,7 @@ msgstr ""
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
-msgstr "אפשרויות מ_דגיש"
+msgstr ""
 
 #: ../ui/settings.glade:5392
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2810,7 +2810,7 @@ msgstr "הגדרות שפה"
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "פריסה"
+msgstr ""
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2940,7 +2940,7 @@ msgstr ""
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
-msgstr "_שכבה חדשה"
+msgstr ""
 
 #: ../ui/settings.glade:3329
 msgctxt "stylus cursor uses no icon"
@@ -3006,7 +3006,7 @@ msgstr "סוג הנייר"
 
 #: ../ui/main.glade:1350
 msgid "Paper _Color"
-msgstr "_צבע הדף"
+msgstr ""
 
 #: ../ui/main.glade:1340
 msgid "Paper _Format"
@@ -3027,7 +3027,7 @@ msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
-msgstr "_אפשרויות עט"
+msgstr ""
 
 #: ../ui/settings.glade:4219
 msgid "Performance"
@@ -3043,7 +3043,7 @@ msgstr "הגדרות ניגון"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "מנהל תוספים"
+msgstr ""
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
@@ -3063,7 +3063,7 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "העדפות"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
@@ -3191,11 +3191,11 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr "הרחקה אחורה"
+msgstr ""
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr "קידום לחזית"
+msgstr ""
 
 #: ../ui/settings.glade:1824
 msgid "Sensitivity Scale"
@@ -3203,11 +3203,11 @@ msgstr "דירוג רגישות"
 
 #: ../ui/main.glade:730
 msgid "Set Columns"
-msgstr "הגדרת עמודות"
+msgstr ""
 
 #: ../ui/main.glade:835
 msgid "Set Rows"
-msgstr "הגדרת שורות"
+msgstr ""
 
 #: ../ui/settings.glade:5475
 msgid "Settings:"
@@ -3235,7 +3235,7 @@ msgstr ""
 
 #: ../ui/main.glade:605
 msgid "Show Toolbars"
-msgstr "הצגת סרגלי הכלים"
+msgstr ""
 
 #: ../ui/settings.glade:3031
 msgid "Show filepath in title bar"
@@ -3358,7 +3358,7 @@ msgstr ""
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "גופן טקסט…"
+msgstr ""
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3431,7 +3431,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr "השתמש בגודל הדף הנוכחי במקום בגודל הדף העליון."
+msgstr "להשתמש בגודל הדף הנוכחי במקום בגודל הדף העליון."
 
 #: ../ui/settings.glade:2817 ../ui/settings.glade:2885
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
@@ -3447,7 +3447,7 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:131
 msgid "Version: "
-msgstr "גירסה: "
+msgstr "גרסה: "
 
 #: ../ui/settings.glade:4250
 msgid "View"
@@ -3519,67 +3519,67 @@ msgstr "מהירות תקריב"
 
 #: ../ui/main.glade:742
 msgid "_1 Column"
-msgstr "עמודה _1"
+msgstr ""
 
 #: ../ui/main.glade:847
 msgid "_1 Row"
-msgstr "שורה _1"
+msgstr ""
 
 #: ../ui/main.glade:753
 msgid "_2 Columns"
-msgstr "_2 עמודות"
+msgstr ""
 
 #: ../ui/main.glade:858
 msgid "_2 Rows"
-msgstr "_2 שורות"
+msgstr ""
 
 #: ../ui/main.glade:764
 msgid "_3 Columns"
-msgstr "_3 עמודות"
+msgstr ""
 
 #: ../ui/main.glade:869
 msgid "_3 Rows"
-msgstr "_3 שורות"
+msgstr ""
 
 #: ../ui/main.glade:775
 msgid "_4 Columns"
-msgstr "_4 עמודות"
+msgstr ""
 
 #: ../ui/main.glade:880
 msgid "_4 Rows"
-msgstr "_4 שורות"
+msgstr ""
 
 #: ../ui/main.glade:786
 msgid "_5 Columns"
-msgstr "_5 עמודות"
+msgstr ""
 
 #: ../ui/main.glade:891
 msgid "_5 Rows"
-msgstr "_5 שורות"
+msgstr ""
 
 #: ../ui/main.glade:797
 msgid "_6 Columns"
-msgstr "_6 עמודות"
+msgstr ""
 
 #: ../ui/main.glade:902
 msgid "_6 Rows"
-msgstr "_6 שורות"
+msgstr ""
 
 #: ../ui/main.glade:808
 msgid "_7 Columns"
-msgstr "_7 עמודות"
+msgstr ""
 
 #: ../ui/main.glade:913
 msgid "_7 Rows"
-msgstr "_7 שורות"
+msgstr ""
 
 #: ../ui/main.glade:819
 msgid "_8 Columns"
-msgstr "_8 עמודות"
+msgstr ""
 
 #: ../ui/main.glade:924
 msgid "_8 Rows"
-msgstr "_8 שורות"
+msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
@@ -3587,15 +3587,15 @@ msgstr ""
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
-msgstr "מלמ_טה למעלה"
+msgstr ""
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
-msgstr "_עמודות/שורות"
+msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr "ה_תאמה אישית"
+msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
@@ -3603,27 +3603,27 @@ msgstr "_כלי ברירת מחדל"
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
-msgstr "מ_חיקת דף"
+msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "_עריכה"
+msgstr ""
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "מ_חק"
+msgstr ""
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "יי_צוא כ־PDF"
+msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr "_קובץ"
+msgstr ""
 
 #: ../ui/main.glade:1076
 msgid "_First Page"
-msgstr "דף _ראשון"
+msgstr "הדף ה_ראשון"
 
 #: ../ui/main.glade:1098
 msgid "_Goto Page"
@@ -3631,19 +3631,19 @@ msgstr "מ_עבר לדף"
 
 #: ../ui/main.glade:2151
 msgid "_Help"
-msgstr "ע_זרה"
+msgstr ""
 
 #: ../ui/main.glade:1432
 msgid "_Highlighter"
-msgstr "מ_דגיש"
+msgstr ""
 
 #: ../ui/main.glade:633
 msgid "_Horizontal"
-msgstr "_אופקי"
+msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr "_תמונה"
+msgstr ""
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
@@ -3651,23 +3651,23 @@ msgstr ""
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
-msgstr "דף _אחרון"
+msgstr "הדף ה_קודם"
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
-msgstr "מ_שמאל לימין"
+msgstr ""
 
 #: ../ui/main.glade:967
 msgid "_Manage"
-msgstr "_ניהול"
+msgstr ""
 
 #: ../ui/main.glade:1065
 msgid "_Navigation"
-msgstr "ניוו_ט"
+msgstr ""
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "השכבה ה_באה"
+msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
@@ -3679,7 +3679,7 @@ msgstr ""
 
 #: ../ui/main.glade:1384
 msgid "_Pen"
-msgstr "_עט"
+msgstr ""
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
@@ -3687,11 +3687,11 @@ msgstr "_תוסף"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "_מצב מצגת"
+msgstr ""
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "השכבה ה_קודמת"
+msgstr ""
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
@@ -3699,39 +3699,39 @@ msgstr "הדף ה_קודם"
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
-msgstr "מ_ימין לשמאל"
+msgstr ""
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
-msgstr "מ_זהה צורות"
+msgstr ""
 
 #: ../ui/main.glade:1444
 msgid "_Text"
-msgstr "_טקסט"
+msgstr ""
 
 #: ../ui/main.glade:1373
 msgid "_Tools"
-msgstr "_כלים"
+msgstr ""
 
 #: ../ui/main.glade:1159
 msgid "_Top Layer"
-msgstr "שכבה _עליונה"
+msgstr ""
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
-msgstr "מלמ_עלה למטה"
+msgstr ""
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
-msgstr "א_נכי"
+msgstr ""
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
-msgstr "רווח _אנכי"
+msgstr ""
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr "_תצוגה"
+msgstr ""
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
@@ -3743,15 +3743,15 @@ msgstr ""
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "_בינוני"
+msgstr ""
 
 #: ../ui/main.glade:1917
 msgid "_standard"
-msgstr "_סטנדרטי"
+msgstr ""
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "_עבה"
+msgstr ""
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
@@ -3797,7 +3797,7 @@ msgstr ""
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "עבה _מאוד"
+msgstr ""
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
