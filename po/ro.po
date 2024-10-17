@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 09:50+0000\n"
-"PO-Revision-Date: 2024-09-01 15:46\n"
+"POT-Creation-Date: 2024-09-27 08:09+0000\n"
+"PO-Revision-Date: 2024-10-17 15:42\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -48,7 +48,7 @@ msgid "No"
 msgstr "Nu"
 
 #: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
-#: ../src/core/control/Control.cpp:2014 ../src/core/control/XournalMain.cpp:206
+#: ../src/core/control/Control.cpp:2021 ../src/core/control/XournalMain.cpp:206
 msgid "Cancel"
 msgstr "Renunță"
 
@@ -142,34 +142,34 @@ msgstr "Lipsește fișierul fondului PDF"
 msgid "Select font"
 msgstr "Alege tipul de litere"
 
-#: ../src/core/control/Control.cpp:1836
+#: ../src/core/control/Control.cpp:1840
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Alege culoarea"
 
-#: ../src/core/control/Control.cpp:1858
+#: ../src/core/control/Control.cpp:1865
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost eliminat."
 
-#: ../src/core/control/Control.cpp:2007
+#: ../src/core/control/Control.cpp:2014
 msgid "This document is not saved yet."
 msgstr "Acest document nu este salvat încă."
 
-#: ../src/core/control/Control.cpp:2009
+#: ../src/core/control/Control.cpp:2016
 msgid "Save As..."
 msgstr "Salvează ca..."
 
-#: ../src/core/control/Control.cpp:2009 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2016 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Save"
 msgstr "Salvează"
 
-#: ../src/core/control/Control.cpp:2012
+#: ../src/core/control/Control.cpp:2019
 msgid "Discard"
 msgstr "Nu salva"
 
@@ -1161,11 +1161,11 @@ msgstr "<b>{1}</b>\n"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Niciun dispozitiv nu a fost găsit. Poți să încarci un raport de eroare?</b>"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:282
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Activează sensibilitatea la apăsare sau estimarea forței de apăsare pentru a schimba această reglare!"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:287
+#: ../src/core/gui/dialog/SettingsDialog.cpp:286
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtrează forța de apăsare. Înmulțește forța de apăsare cu multiplicatorul forței de apăsare. Dacă este mai mică decât valoarea minimă, se folosește apăsarea minimă."
 
@@ -2047,15 +2047,15 @@ msgstr "Nu s-a putut crea dosarul: {1}\n"
 msgid "Error {1} executing system command: {2}"
 msgstr "Eroare {1} la executarea comenzii de sistem: {2}"
 
-#: ../src/util/XojMsgBox.cpp:187
+#: ../src/util/XojMsgBox.cpp:191
 msgid "Select another name"
 msgstr "Alege un alt nume"
 
-#: ../src/util/XojMsgBox.cpp:188
+#: ../src/util/XojMsgBox.cpp:192
 msgid "Replace"
 msgstr "Înlocuiește"
 
-#: ../src/util/XojMsgBox.cpp:211
+#: ../src/util/XojMsgBox.cpp:215
 msgid "There was an error displaying help: {1}"
 msgstr "A apărut o eroare la afișarea ajutorului: {1}"
 
