@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:16\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: zh-HK\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -617,7 +617,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:146
 msgid "Failed to delete file: {1}"
-msgstr ""
+msgstr "刪除檔案失敗: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:83
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -1048,7 +1048,7 @@ msgstr "播放物件"
 
 #: ../src/core/control/XournalMain.cpp:148
 msgid "Please delete the file manually"
-msgstr ""
+msgstr "請手動刪除檔案"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:22
 msgid "Predefined"
@@ -1339,7 +1339,7 @@ msgstr "只顯示未使用頁面({1}個未使用頁面)"
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "對唔住，Xournal++每次只能開啓一個檔案。\n"
-"其餘的已被忽略。"
+"其餘嘅已被忽略。"
 
 #: ../src/core/control/XournalMain.cpp:514
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
@@ -1635,7 +1635,7 @@ msgstr "Xournal檔案"
 
 #: ../src/core/control/XournalMain.cpp:213
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++上次死咗機。你要恢復上次編輯過嘅檔案嗎?"
 
 #: ../src/core/control/Control.cpp:2645
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
@@ -2417,7 +2417,7 @@ msgstr "預設"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "刪除層"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2575,7 +2575,7 @@ msgstr ""
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "橡皮選項(_n)"
+msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2591,7 +2591,7 @@ msgstr "輸出"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "輸出為..."
+msgstr ""
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2672,7 +2672,7 @@ msgstr ""
 
 #: ../ui/main.glade:1661
 msgid "H_and Tool"
-msgstr "手形工具(_a)"
+msgstr ""
 
 #: ../ui/settings.glade:2632
 msgid "Hand Recognition"
@@ -2936,19 +2936,19 @@ msgstr ""
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
-msgstr "新建後頁(_A)"
+msgstr ""
 
 #: ../ui/main.glade:1212
 msgid "New Page _Before"
-msgstr "新建前頁(_B)"
+msgstr ""
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
-msgstr "新建尾頁(_E)"
+msgstr ""
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
-msgstr "新建圖層(_L)"
+msgstr ""
 
 #: ../ui/settings.glade:3329
 msgctxt "stylus cursor uses no icon"
@@ -3014,11 +3014,11 @@ msgstr "紙張樣式"
 
 #: ../ui/main.glade:1350
 msgid "Paper _Color"
-msgstr "紙張顏色(_C)"
+msgstr ""
 
 #: ../ui/main.glade:1340
 msgid "Paper _Format"
-msgstr "紙張樣式(_F)"
+msgstr ""
 
 #: ../ui/about.glade:210
 msgid "Partially based on Xournal\n"
@@ -3035,7 +3035,7 @@ msgstr ""
 
 #: ../ui/main.glade:1699
 msgid "Pen _Options"
-msgstr "畫筆選項(_O)"
+msgstr ""
 
 #: ../ui/settings.glade:4219
 msgid "Performance"
@@ -3071,7 +3071,7 @@ msgstr ""
 
 #: ../ui/main.glade:532
 msgid "Preferences"
-msgstr "偏好設置"
+msgstr ""
 
 #: ../ui/settings.glade:1349
 msgid "Preprocessor"
@@ -3107,7 +3107,7 @@ msgstr ""
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "最近文檔(_D)"
+msgstr ""
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
@@ -3338,7 +3338,7 @@ msgstr ""
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "工具條(_o)"
+msgstr ""
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
@@ -3366,7 +3366,7 @@ msgstr ""
 
 #: ../ui/main.glade:2050
 msgid "Text Font..."
-msgstr "文本字型..."
+msgstr ""
 
 #: ../ui/latexSettings.glade:152
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3591,7 +3591,7 @@ msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "標註PDF(_A)"
+msgstr ""
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
@@ -3603,7 +3603,7 @@ msgstr ""
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr "設置(_C)"
+msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
@@ -3611,27 +3611,27 @@ msgstr ""
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
-msgstr "刪除頁面(_D)"
+msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "編輯(_E)"
+msgstr ""
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "橡皮(_E)"
+msgstr ""
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "輸出為PDF(_E)"
+msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr "檔案(_F)"
+msgstr ""
 
 #: ../ui/main.glade:1076
 msgid "_First Page"
-msgstr "首頁(_F)"
+msgstr ""
 
 #: ../ui/main.glade:1098
 msgid "_Goto Page"
@@ -3639,11 +3639,11 @@ msgstr ""
 
 #: ../ui/main.glade:2151
 msgid "_Help"
-msgstr "幫助(_H)"
+msgstr ""
 
 #: ../ui/main.glade:1432
 msgid "_Highlighter"
-msgstr "高亮(_H)"
+msgstr ""
 
 #: ../ui/main.glade:633
 msgid "_Horizontal"
@@ -3651,15 +3651,15 @@ msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr "圖片(_I)"
+msgstr ""
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
-msgstr "日誌(_J)"
+msgstr ""
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
-msgstr "末頁(_L)"
+msgstr ""
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
@@ -3667,11 +3667,11 @@ msgstr ""
 
 #: ../ui/main.glade:967
 msgid "_Manage"
-msgstr "管理(_M)"
+msgstr ""
 
 #: ../ui/main.glade:1065
 msgid "_Navigation"
-msgstr "導航(_N)"
+msgstr ""
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
@@ -3679,7 +3679,7 @@ msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
-msgstr "下一頁(_N)"
+msgstr ""
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
@@ -3687,7 +3687,7 @@ msgstr ""
 
 #: ../ui/main.glade:1384
 msgid "_Pen"
-msgstr "畫筆(_P)"
+msgstr ""
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
@@ -3695,7 +3695,7 @@ msgstr ""
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "演講模式(_P)"
+msgstr ""
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
@@ -3703,7 +3703,7 @@ msgstr ""
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
-msgstr "前一頁(_P)"
+msgstr ""
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
@@ -3711,15 +3711,15 @@ msgstr ""
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
-msgstr "形狀識別(_S)"
+msgstr ""
 
 #: ../ui/main.glade:1444
 msgid "_Text"
-msgstr "文本(_T)"
+msgstr ""
 
 #: ../ui/main.glade:1373
 msgid "_Tools"
-msgstr "工具(_T)"
+msgstr ""
 
 #: ../ui/main.glade:1159
 msgid "_Top Layer"
@@ -3735,39 +3735,39 @@ msgstr ""
 
 #: ../ui/main.glade:1637
 msgid "_Vertical Space"
-msgstr "垂直間距(_V)"
+msgstr ""
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr "視圖(_V)"
+msgstr ""
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "刪除筆劃(_d)"
+msgstr ""
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
-msgstr "細(_f)"
+msgstr ""
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "中(_m)"
+msgstr ""
 
 #: ../ui/main.glade:1917
 msgid "_standard"
-msgstr "標準(_s)"
+msgstr ""
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "粗(_t)"
+msgstr ""
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
-msgstr "極細(_v)"
+msgstr ""
 
 #: ../ui/main.glade:1928
 msgid "_whiteout"
-msgstr "涂白(_w)"
+msgstr ""
 
 #: ../ui/settings.glade:4878
 msgid "disabled"
@@ -3805,7 +3805,7 @@ msgstr ""
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "極粗(_y)"
+msgstr ""
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
