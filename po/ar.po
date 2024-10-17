@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:15\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: ar\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -167,7 +167,7 @@ msgstr "اجلب للمقدمة"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:36
 msgid "Built on"
-msgstr "تم بناء هذا التطبيق في (تاريخ)"
+msgstr "وقت البناء"
 
 #: ../src/core/control/Control.cpp:2336 ../src/core/control/Control.cpp:2813
 #: ../src/core/control/XournalMain.cpp:188
@@ -185,7 +185,7 @@ msgstr "تغيير الخط"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:78
 msgid "Change line style"
-msgstr "تغيير نمط سطر الكتابة"
+msgstr "تغيير نمط الخط"
 
 #: ../src/core/undo/FillUndoAction.cpp:81
 msgid "Change stroke fill"
@@ -364,7 +364,7 @@ msgstr "حذف"
 
 #: ../src/core/control/XournalMain.cpp:187
 msgid "Delete Logfile"
-msgstr "حذف ملفات المسجل بها أخطاء التطبيق"
+msgstr "حذف ملف سجل الأخطاء"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Delete current page"
@@ -388,7 +388,7 @@ msgstr "حذف هذه الصفحة"
 
 #: ../src/core/control/Control.cpp:2810
 msgid "Discard"
-msgstr "إغلاق بدون حفظ"
+msgstr "إغلاق بغير حفظ"
 
 #: ../src/core/control/XournalMain.cpp:687
 msgid "Display advanced export options"
@@ -462,7 +462,7 @@ msgstr "رسم مستطيل"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:46
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:530
 msgid "Draw Spline"
-msgstr "رسم خط مٌنحنِى"
+msgstr "رسم خط مُنحنِي"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
@@ -472,11 +472,11 @@ msgstr "رسم نظام إحداثيات"
 
 #: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Draw stroke"
-msgstr "مدى ثِقل خط القلم"
+msgstr "رسم خط أو شكل"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:126
 msgid "Drawing Type - don't change"
-msgstr "نوع الرسم - لا تغيرهُ"
+msgstr "نوع الرسم - لا تغيير"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 msgid "Drawing Type Combo"
@@ -496,11 +496,11 @@ msgstr "ElementRange::parse()‎: دليل العنصر المعطى أكبر م
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr "ElementRange::parse()‎: يجب أن يكونا حدّي المساحة بترتيب تصاعدي."
+msgstr "ElementRange::parse()‎: يجب أن يكونا حدّي المدى بترتيب تصاعدي."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr "مساحة العنصر::parse(): مساحة العنصر غير صحيحة."
+msgstr "ElementRange::parse()‎: مدى عنصر غير صالح."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -508,7 +508,7 @@ msgstr "المستند المحفوظ اضطراريا"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:285
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr "قم بتفعيل الإحساس بضغط قلم الكتابة أو دعني احدده تلقائياً!"
+msgstr "قم بتفعيل الإحساس بالضغط أو استنتاج الضغط لتغيير هذا الإعداد!"
 
 #: ../src/core/undo/AddUndoAction.cpp:64
 #: ../src/core/undo/DeleteUndoAction.cpp:61
@@ -519,7 +519,7 @@ msgstr "محو خط أو شكل"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:315
 msgid "Eraser"
-msgstr "الممحاة"
+msgstr "ممحاة"
 
 #: ../src/core/control/Control.cpp:2540
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -529,7 +529,7 @@ msgstr "خطأ في كتابة تعليق على ملف الـPDF المسمى �
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "تعذر تحميل الملف الذي يساعد على تحميل واجهة المستخدم , المسمى «{1}» (حاول تحميل «{2}»)"
+msgstr "تعذر تحميل ملف واجهة المستخدم المسمى «{1}» (حاول تحميل «{2}»)"
 
 #: ../src/core/control/Control.cpp:2367
 msgid "Error opening file \"{1}\""
@@ -582,14 +582,14 @@ msgstr "خطأ: {1}. برجاء التحقق من محتويات {2}"
 
 #: ../src/core/control/XournalMain.cpp:640
 msgid "Export FILE as PDF"
-msgstr "تصدير «ملف» كـPDF"
+msgstr "تصدير المعطى FILE بصيغة PDF"
 
 #: ../src/core/control/XournalMain.cpp:642
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr "تصدير الملف كملفات صور (صورة واحدة لكل صفحة)\n"
-"                                 تخمين صيغة التصدير من امتداد الملف\n"
+msgstr "تصدير المعطى FILE إلى ملفات صور (صورة واحدة لكل صفحة)\n"
+"                                 يخمّن صيغة التصدير من امتداد الملف\n"
 "                                 الصيغ المدعومة: png و svg"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
@@ -616,14 +616,14 @@ msgstr "تصدير الطبقات تدريجيا\n"
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr "تصدير بدون خلفية\n"
+msgstr "تصدير بغير خلفية\n"
 "                                 ستكون خلفية الملف المصدَّر شفافة أو بيضاء،\n"
 "                                 اعتمادا على ما تدعمه الصيغة\n"
 
 #: ../src/core/control/XournalMain.cpp:652
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr "تصدير بدون تسطير\n"
+msgstr "تصدير بغير تسطير\n"
 "                                 الملف المصدَّر لن يكون ورقه مسطَّرا\n"
 
 #: ../src/core/control/XournalMain.cpp:146
@@ -713,7 +713,7 @@ msgstr "رخصة جنو العمومية، الإصدارة الثانية أو 
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:39
 msgid "GTK Version"
-msgstr "إصدار الــــ GTK"
+msgstr "إصدار GTK"
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
@@ -957,7 +957,7 @@ msgstr "عند التصدير، قم بتصدير الطبقات التي يحد
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "تصدير الصفحات التي يحددها «المدى» فقط (مثال: «‪2-3,5,7-‬»)\n"
-"                                 لا تأثير بدون ‪-p/--create-pdf‬ أو ‪-i/--create-img‬"
+"                                 لا تأثير بغير ‪-p/--create-pdf‬ أو ‪-i/--create-img‬"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
@@ -1317,24 +1317,24 @@ msgstr "فاصل"
 #: ../src/core/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr "تعيين دقة (DPI) التصدير إلى PNG. الدقة المبدئية هي 300\n"
-"                                 لا تأثير بدون ‪-i/--create-img=foo.png‬"
+msgstr "تعيين دقة DPI عند التصدير إلى PNG. الدقة المبدئية هي 300\n"
+"                                 لا تأثير بغير ‪-i/--create-img=foo.png‬"
 
 #: ../src/core/control/XournalMain.cpp:681
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr "تعيين ارتفاع الصفحة عند التصدير إلى PNG\n"
-"                                 لا تأثير بدون ‪-i/--create-img=foo.png‬\n"
-"                                 يتم إهماله عند استخدام ‪--export-png-dpi‬ أو ‪--export-png-width‬"
+"                                 لا تأثير بغير ‪-i/--create-img=foo.png‬\n"
+"                                 يُهمل عند استخدام ‪--export-png-dpi‬ أو ‪--export-png-width‬"
 
 #: ../src/core/control/XournalMain.cpp:675
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr "تعيين عرض الصفحة عند التصدير إلى PNG\n"
-"                                 لا تأثير بدون ‪-i/--create-img=foo.png‬\n"
-"                                 يتم إهماله عند استخدام ‪--export-png-dpi‬"
+"                                 لا تأثير بغير ‪-i/--create-img=foo.png‬\n"
+"                                 يُهمل عند استخدام ‪--export-png-dpi‬"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Setsquare"
@@ -1742,7 +1742,7 @@ msgstr "متقطع"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default disabled"
-msgstr "مبدئيا معطل"
+msgstr "الافتراضي معطل"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default enabled"
@@ -2551,7 +2551,7 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 msgstr "السحب <b>لليسار</b> من نقطة البداية يمثل الضغط على زر Shift مع الإبقاء عليه مضغوطا.\n"
 "السحب <b>للأعلى</b> من نقطة البداية يمثل الضغط على زر Ctrl مع الإبقاء عليه مضغوطا.\n\n"
 "نصف قطر التحديد: نصف القطر الذي عنده هذان الزران سيظلان «مضغوطين» حتى إنهاء الرسم.\n\n"
-"<i>مفيد للتعامل بدون لوحة مفاتيح.</i>"
+"<i>مفيد للاستخدام بغير لوحة مفاتيح.</i>"
 
 #: ../ui/settings.glade:4933
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2561,7 +2561,7 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 msgstr "السحب <b>لليسار</b> من نقطة البداية يمثل الضغط على زر Shift مع الإبقاء عليه مضغوطا.\n"
 "السحب <b>للأعلى</b> من نقطة البداية يمثل الضغط على زر Ctrl مع الإبقاء عليه مضغوطا.\n\n"
 "نصف قطر التحديد: نصف القطر الذي عنده هذان الزران سيظلان «مضغوطين» حتى إنهاء الرسم.\n\n"
-"<i>مفيد للتعامل بدون لوحة مفاتيح.</i>"
+"<i>مفيد للاستخدام بغير لوحة مفاتيح.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
@@ -2617,7 +2617,7 @@ msgstr "تفعيل بنصف قطر تحديد مقداره "
 
 #: ../ui/settings.glade:834
 msgid "Enable Autoloading of Journals"
-msgstr "تفعيل التحميل التلقائي للجورنالات"
+msgstr "تمكين التشغيل التلقائي للصحف"
 
 #: ../ui/settings.glade:381
 msgid "Enable Autosaving"
@@ -2686,7 +2686,7 @@ msgstr "تصدير الطبقات تدريجيا"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr "تصدير المستند بدون أي خلفية (لا شيء) أو مع خلفيات PDF والصور فقط (بدون تسطير) أو مع جميع أنواع الخلفيات (الكل)."
+msgstr "تصدير المستند بغير أي خلفية («لا شيء») أو مع خلفيات PDF والصور فقط («بغير تسطير») أو مع جميع أنواع الخلفيات («الكل»)."
 
 #: ../ui/main.glade:1821 ../ui/main.glade:2026
 msgid "Fi_ll"
@@ -2794,7 +2794,7 @@ msgstr "تظليل النص المحدد"
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
-msgstr "خيارات قلم التظليل"
+msgstr "خيا_رات قلم التظليل"
 
 #: ../ui/settings.glade:5392
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2834,7 +2834,7 @@ msgstr "لو مفعلة، طبقات كل صفحة ستُضاف طبقة طبق�
 
 #: ../ui/settings.glade:839
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr "إذا فتحت ملف PDF وكان موجودا ملف جورنال بنفس الاسم (بالامتداد xoj)، سيتم فتح ملف الجورنال."
+msgstr "إذا فتحت مِلَفّ PDF وكان موجودا مِلَفّ Xournal بنفس الاسم (بالامتداد xoj)، سيتم فتح مِلَفّ Xournal."
 
 #: ../ui/settings.glade:5360
 msgid "Ignore Time (ms)"
@@ -3004,7 +3004,7 @@ msgstr "نقل طبقة التحديد لأسفل"
 
 #: ../ui/main.glade:480
 msgid "Move Selection Layer Up"
-msgstr "نقل طبقة التحديد لأسفل"
+msgstr "نقل طبقة التحديد لأعلى"
 
 #: ../ui/main.glade:2887 ../ui/main.glade:2962
 msgid "Move Up"
@@ -3037,7 +3037,7 @@ msgstr "صفحة جديدة في الآ_خر"
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
-msgstr "طبقة _جديدة"
+msgstr "_طبقة جديدة"
 
 #: ../ui/settings.glade:3329
 msgctxt "stylus cursor uses no icon"
@@ -3046,7 +3046,7 @@ msgstr "بلا شكل"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr "بدون تسطير"
+msgstr "بغير تسطير"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:223
 #: ../ui/settings.glade:240 ../ui/settings.glade:3696
@@ -3181,7 +3181,7 @@ msgstr "مضاعف الضغط: "
 
 #: ../ui/settings.glade:1842
 msgid "Pressure Sensitivity"
-msgstr "الإحساس بالضغط"
+msgstr "حساسية الضغط"
 
 #: ../ui/settings.glade:3445
 msgid "Radius"
@@ -3201,7 +3201,7 @@ msgstr "ال_مستندات الحديثة"
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
-msgstr "تسجيل / إنهاء"
+msgstr "تسجيل / إيقاف"
 
 #: ../ui/settings.glade:6180
 msgid "Recording Quality"
@@ -3209,7 +3209,7 @@ msgstr "جودة التسجيل"
 
 #: ../ui/main.glade:1323
 msgid "Rename Layer"
-msgstr "إعادة تسمية الطبقة"
+msgstr "تغيير اسم الطبقة"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
@@ -3273,7 +3273,7 @@ msgstr "اختيار صفحة PDF"
 
 #: ../ui/main.glade:1420
 msgid "Select Text In Rectangle"
-msgstr "تحديد النص في المستطيل"
+msgstr "تحديد النص بمستطيل"
 
 #: ../ui/settings.glade:4075
 msgid "Select toolbar:"
@@ -3696,7 +3696,7 @@ msgstr "أ_عمدة/صفوف"
 
 #: ../ui/main.glade:977
 msgid "_Customize"
-msgstr "تخصيص"
+msgstr "ت_خصيص"
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
