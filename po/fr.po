@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-21 09:02\n"
+"PO-Revision-Date: 2024-10-17 16:15\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -38,7 +38,7 @@ msgstr "\n"
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr " de {1}"
+msgstr " sur {1}"
 
 #: ../src/core/control/settings/Settings.cpp:143
 msgid "%F-Note-%H-%M"
@@ -205,7 +205,7 @@ msgstr "Couleur \"{1}\" inconnue (non définie dans la liste de couleurs par dé
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Compass"
-msgstr "Boussole"
+msgstr "Rapporteur"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
@@ -792,7 +792,7 @@ msgstr "Fichier image créé avec succès"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
 msgid "Images"
-msgstr "Images"
+msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Insert a copy of the current layer below"
@@ -945,7 +945,7 @@ msgstr "Dessin normal"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
 #: ../src/core/plugin/Plugin.cpp:265 ../src/core/plugin/Plugin.cpp:288
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1211,13 +1211,13 @@ msgstr "Sélectionner Rect Multi-Layer"
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:76
 msgid "Select Multi-Layer Rectangle"
-msgstr "Sélectionner le Rectangle Multi-Couche"
+msgstr "Sélectionner un rectangle multicalque"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:534
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:82
 msgid "Select Multi-Layer Region"
-msgstr "Sélectionnez la région Multi-Layer"
+msgstr "Sélectionner une région multicalque"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:536
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:26
@@ -2267,7 +2267,7 @@ msgstr "Toujours vérifier les dépendances LaTeX avant de lancer"
 
 #: ../ui/main.glade:1253
 msgid "Append New PDF Pages"
-msgstr "Ajouter de nouvelles pages au PDF"
+msgstr "Ajouter de nouvelles pages PDF"
 
 #: ../ui/settings.glade:226
 msgid "Arithmetic mean"
@@ -2356,7 +2356,7 @@ msgstr "Couleur de bordure pour la page courante et d'autres sélections"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr "Mettre en avant"
+msgstr "Déplacer vers l'avant"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
@@ -2656,7 +2656,7 @@ msgstr "Entrer / éditer le texte LaTeX"
 
 #: ../ui/main.glade:1845
 msgid "Eraser Optio_ns"
-msgstr "Effacer Optio_ns"
+msgstr "Optio_ns de la gomme"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2753,7 +2753,7 @@ msgstr "Tolérance de capture sur la grille"
 
 #: ../ui/main.glade:1661
 msgid "H_and Tool"
-msgstr "Outil"
+msgstr "Main"
 
 #: ../ui/settings.glade:2632
 msgid "Hand Recognition"
@@ -2789,7 +2789,7 @@ msgstr "Surligner le texte sélectionné"
 
 #: ../ui/main.glade:1954
 msgid "Highlighter Opti_ons"
-msgstr "Surligneur Opti_ons"
+msgstr "_Options de surligneur"
 
 #: ../ui/settings.glade:5392
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2901,7 +2901,7 @@ msgstr "Paramètres de langue"
 
 #: ../ui/main.glade:621
 msgid "Layout"
-msgstr "Disposition"
+msgstr "Mise en page"
 
 #: ../ui/settings.glade:3646
 msgid "Left / Right-Handed"
@@ -2995,11 +2995,11 @@ msgstr "Descendre"
 
 #: ../ui/main.glade:490
 msgid "Move Selection Layer Down"
-msgstr "Déplacer le calque sélectionné vers le bas"
+msgstr "Déplacer la sélection vers le calque inférieur"
 
 #: ../ui/main.glade:480
 msgid "Move Selection Layer Up"
-msgstr "Déplacer le calque sélectionné vers le haut"
+msgstr "Déplacer la sélection vers le calque supérieur"
 
 #: ../ui/main.glade:2887 ../ui/main.glade:2962
 msgid "Move Up"
@@ -3011,7 +3011,7 @@ msgstr "Multiplier la vitesse de déplacement, en fonction de combien l'élémen
 
 #: ../ui/main.glade:1175
 msgid "N_ext Annotated Page"
-msgstr "Page annotée suivante"
+msgstr "Page annotée s_uivante"
 
 #: ../ui/settings.glade:2166
 msgctxt "eraser is never visible"
@@ -3020,11 +3020,11 @@ msgstr "Jamais"
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
-msgstr "Nouvelle page _Après"
+msgstr "Nouvelle page A_près"
 
 #: ../ui/main.glade:1212
 msgid "New Page _Before"
-msgstr "Nouvelle page _Avant"
+msgstr "Nouvelle page A_vant"
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
@@ -3074,7 +3074,7 @@ msgstr "Cache PDF"
 
 #: ../ui/main.glade:1186
 msgid "P_revious Annotated Page"
-msgstr "Page annotée P_récédente"
+msgstr "Page annotée p_récédente"
 
 #: ../ui/settings.glade:3681
 msgid "Page numbering  "
@@ -3136,7 +3136,7 @@ msgstr "Paramètres de lecture"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "Gestionnaire de plugins"
+msgstr "Gestionnaire de greffons"
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
@@ -3284,7 +3284,7 @@ msgstr "Sélection du bord de déplacement"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr "Mettre en arrière"
+msgstr "Déplacer vers l'arrière"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
@@ -3296,11 +3296,11 @@ msgstr "Échelle de sensibilité"
 
 #: ../ui/main.glade:730
 msgid "Set Columns"
-msgstr "Définir les colonnes"
+msgstr "Nombre de colonnes"
 
 #: ../ui/main.glade:835
 msgid "Set Rows"
-msgstr "Définir les lignes"
+msgstr "Nombre de lignes"
 
 #: ../ui/settings.glade:5475
 msgid "Settings:"
@@ -3683,7 +3683,7 @@ msgstr "_Annoter un PDF"
 
 #: ../ui/main.glade:702
 msgid "_Bottom to Top"
-msgstr "_Bas en haut"
+msgstr "_Bas en Haut"
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
@@ -3707,7 +3707,7 @@ msgstr "_Editer"
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "_Effacer"
+msgstr "_Gomme"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
@@ -3719,7 +3719,7 @@ msgstr "_Fichier"
 
 #: ../ui/main.glade:1076
 msgid "_First Page"
-msgstr "_Première page"
+msgstr "P_remière page"
 
 #: ../ui/main.glade:1098
 msgid "_Goto Page"
@@ -3751,7 +3751,7 @@ msgstr "_Dernière page"
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
-msgstr "_Gauche à droite"
+msgstr "_Gauche à Droite"
 
 #: ../ui/main.glade:967
 msgid "_Manage"
@@ -3763,11 +3763,11 @@ msgstr "_Navigation"
 
 #: ../ui/main.glade:1148
 msgid "_Next Layer"
-msgstr "_Calque suivant"
+msgstr "Calque sui_vant"
 
 #: ../ui/main.glade:1109
 msgid "_Next Page"
-msgstr "_Page suivante"
+msgstr "Page _suivante"
 
 #: ../ui/main.glade:557
 msgid "_Pair Pages"
@@ -3783,11 +3783,11 @@ msgstr "_Greffon"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "Mode de _présentation"
+msgstr "Mode _présentation"
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
-msgstr "Calque _précédente"
+msgstr "Calque pré_cédent"
 
 #: ../ui/main.glade:1087
 msgid "_Previous Page"
@@ -3795,11 +3795,11 @@ msgstr "Page _précédente"
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
-msgstr "_Droite à gauche"
+msgstr "_Droite à Gauche"
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
-msgstr "_Identificateur de forme"
+msgstr "_Reconnaissance de forme"
 
 #: ../ui/main.glade:1444
 msgid "_Text"
@@ -3815,7 +3815,7 @@ msgstr "Calque du _haut"
 
 #: ../ui/main.glade:691
 msgid "_Top to Bottom"
-msgstr "_Haut au bas"
+msgstr "_Haut en Bas"
 
 #: ../ui/main.glade:644
 msgid "_Vertical"
@@ -3827,19 +3827,19 @@ msgstr "Espace _vertical"
 
 #: ../ui/main.glade:546
 msgid "_View"
-msgstr "_Vue"
+msgstr "Affi_chage"
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "_supprimer les traits"
+msgstr "_suppression de traits"
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
-msgstr "_mince"
+msgstr "Fin"
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "_moyen"
+msgstr "_Moyen"
 
 #: ../ui/main.glade:1917
 msgid "_standard"
@@ -3847,11 +3847,11 @@ msgstr "_standard"
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "_épais"
+msgstr "É_pais"
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
-msgstr "_très fin"
+msgstr "_Très Fin"
 
 #: ../ui/main.glade:1928
 msgid "_whiteout"
@@ -3893,7 +3893,7 @@ msgstr "s <i>(après quoi l'écran tactile sera réactivé)</i>"
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "trè_s épais"
+msgstr "Trè_s épais"
 
 #: ../ui/settings.glade:4863
 msgid "when drawing on last page"
