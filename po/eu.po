@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-16 08:43+0000\n"
-"PO-Revision-Date: 2023-07-16 08:51\n"
+"PO-Revision-Date: 2024-10-17 16:15\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
 "X-Crowdin-Language: eu\n"
-"X-Crowdin-File: /master/po/xournalpp.pot\n"
-"X-Crowdin-File-ID: 6\n"
+"X-Crowdin-File: /[xournalpp.xournalpp] release-1.2/po/xournalpp.pot\n"
+"X-Crowdin-File-ID: 20\n"
 
 #: ../src/core/control/XournalMain.cpp:411
 msgid "\n\n"
@@ -205,7 +205,7 @@ msgstr "'{1}' kolore ezezaguna (ez dago gogoko koloreen zerrendan)!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Compass"
-msgstr "Iparrorratza"
+msgstr "Angelu-garraiagailua"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:169
 msgid "Contents"
@@ -468,7 +468,7 @@ msgstr "Marraztu spline"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:528
 msgid "Draw coordinate system"
-msgstr "Koordenatuen sistema"
+msgstr "Marraztu koordenatu ardatzak"
 
 #: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Draw stroke"
@@ -2568,7 +2568,7 @@ msgstr "Arrastatu: balioa txikiegia bada, nahi ez diren oszilazioak ager daitezk
 
 #: ../ui/main.glade:1540
 msgid "Draw Coordinate System"
-msgstr "Marraztu koordenatuen sistema"
+msgstr "Marraztu koordenatu-ardatza"
 
 #: ../ui/main.glade:1551
 msgid "Draw _Line"
@@ -3028,7 +3028,7 @@ msgstr "Orri berria _aurretik"
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
-msgstr "Orri berria _bukaeran"
+msgstr "Orri berria bukaeran"
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
@@ -3407,7 +3407,7 @@ msgstr "Stylus-aren botoiak"
 
 #: ../ui/settings.glade:2150
 msgid "Stylus-based eraser is visible"
-msgstr "Boligrafoaren borragoma ikusgai dago"
+msgstr "Arkatzean oinarritutako borragoma ikusgai dago"
 
 #: ../ui/settings.glade:5423
 msgid "Successive (ms)"
@@ -3424,7 +3424,7 @@ msgstr "Sistemaren kurtsorea"
 
 #: ../ui/main.glade:949
 msgid "T_oolbars"
-msgstr "Tresna-barrak"
+msgstr "_Tresna-barrak"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
@@ -3686,7 +3686,7 @@ msgstr "_Behetik gora"
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
-msgstr "_Zutabe/Errenkada"
+msgstr "_Zutabeak/Errenkadak"
 
 #: ../ui/main.glade:977
 msgid "_Customize"
@@ -3706,7 +3706,7 @@ msgstr "_Editatu"
 
 #: ../ui/main.glade:1396
 msgid "_Eraser"
-msgstr "_Ezabatzailea"
+msgstr "_Borragoma"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
@@ -3742,7 +3742,7 @@ msgstr "_Irudia"
 
 #: ../ui/main.glade:1201
 msgid "_Journal"
-msgstr "_Koadernoa"
+msgstr "_Egunkaria"
 
 #: ../ui/main.glade:1120
 msgid "_Last Page"
@@ -3750,7 +3750,7 @@ msgstr "_Azken orria"
 
 #: ../ui/main.glade:662
 msgid "_Left to Right"
-msgstr "_Ezkerretik eskuinera"
+msgstr "E_zkerretik eskuinera"
 
 #: ../ui/main.glade:967
 msgid "_Manage"
@@ -3794,7 +3794,7 @@ msgstr "_Aurreko orria"
 
 #: ../ui/main.glade:673
 msgid "_Right to Left"
-msgstr "_Eskuinetik ezkerrera"
+msgstr "E_skuinetik ezkerrera"
 
 #: ../ui/main.glade:1485
 msgid "_Shape Recognizer"
@@ -3842,7 +3842,7 @@ msgstr "_ertaina"
 
 #: ../ui/main.glade:1917
 msgid "_standard"
-msgstr "_estandarra"
+msgstr "_estandar"
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
