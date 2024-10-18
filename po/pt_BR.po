@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-17 16:13\n"
+"POT-Creation-Date: 2024-10-21 18:49+0000\n"
+"PO-Revision-Date: 2024-11-06 19:28\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -29,11 +29,11 @@ msgstr "Erro do Sistema de arquivos: {1}"
 
 #: ../src/core/control/Control.cpp:239
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr "Não foi possível remover o arquivo de salvamento automático antigo \"{1}\": {2}"
+msgstr "Não foi possível remover o arquivo antigo salvo automaticamente \"{1}\": {2}"
 
 #: ../src/core/control/Control.cpp:551
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr "Você excluiu a Barra de Ferramentas ativa. A Barra de ferramentas será modificada para a padrão."
+msgstr "Você excluiu a Barra de Ferramentas ativa. Restaurando a Barra de ferramentas padrão."
 
 #: ../src/core/control/Control.cpp:571
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -70,7 +70,7 @@ msgstr "Seu documento atual não contém página PDF {1}\n"
 
 #: ../src/core/control/Control.cpp:847
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr "Nenhuma página de PDF disponível para ser adicionada. Primeiro você precisa reabrir o documento."
+msgstr "Nenhuma página de PDF disponível para ser adicionada. Talvez, primeiro você precise reabrir o documento."
 
 #: ../src/core/control/Control.cpp:861
 msgid "Unable to retrieve pdf page."
@@ -94,7 +94,7 @@ msgstr "Erro ao abrir o arquivo {1}"
 
 #: ../src/core/control/Control.cpp:1518
 msgid "File version mismatch"
-msgstr "Incompatibilidade com a Versão desse Arquivo"
+msgstr "Versão do arquivo incompatível"
 
 #: ../src/core/control/Control.cpp:1519
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -135,7 +135,7 @@ msgstr "Usar PDF proposto"
 
 #: ../src/core/control/Control.cpp:1689
 msgid "Missing PDF background file"
-msgstr "O arquivo PDF não tem um arquivo de fundo"
+msgstr "O arquivo PDF do plano fundo ausente"
 
 #: ../src/core/control/Control.cpp:1821
 msgid "Select font"
@@ -272,7 +272,7 @@ msgstr "Está faltando fundo no PDF"
 
 #: ../src/core/control/PrintHandler.cpp:121
 msgid "Running print operation failed with {1}"
-msgstr "Falha ao executar operação de impressão com {1}"
+msgstr "Operação de impressão em execução falhou com {1}"
 
 #: ../src/core/control/XournalMain.cpp:154
 msgid "Failed to delete file: {1}"
@@ -280,15 +280,15 @@ msgstr "Falha ao deletar arquivo: {1}"
 
 #: ../src/core/control/XournalMain.cpp:156
 msgid "Please delete the file manually"
-msgstr "Por favor, deletar o arquivo manualmente"
+msgstr "Por favor, delete o arquivo manualmente"
 
 #: ../src/core/control/XournalMain.cpp:192
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr "Existe um arquivo recente com registro de erro do Xournal++. Por favor, crie um relato de erro, assim o erro poderá ser corrigido."
+msgstr "Existe um recente arquivo de registro de erro do Xournal++. Por favor, submeta um relatório de erro, para que o erro possa ser corrigido."
 
 #: ../src/core/control/XournalMain.cpp:194
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
-msgstr "Existem arquivos recentes com registro de erro do Xournal++. Por favor, crie um relato de erro, assim os erros poderão ser corrigidos."
+msgstr "Existem recentes arquivos de registro de erro do Xournal++. Por favor, submeta um relatório de erro, para que o erro possa ser corrigido."
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
@@ -300,15 +300,15 @@ msgstr "Para impedir que este popup reapareça, simplesmente exclua os arquivos 
 
 #: ../src/core/control/XournalMain.cpp:202
 msgid "File Bug Report"
-msgstr "Submeter relatório de bug"
+msgstr "Submeter Relatório de Erro"
 
 #: ../src/core/control/XournalMain.cpp:203
 msgid "Open Logfile"
-msgstr "Abrir Registro"
+msgstr "Abrir Arquivo de Registro"
 
 #: ../src/core/control/XournalMain.cpp:204
 msgid "Open Logfile directory"
-msgstr "Abrir diretório de registro"
+msgstr "Abrir diretório de arquivos de registro"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Delete Logfile"
@@ -316,7 +316,7 @@ msgstr "Apagar Arquivo de Registro"
 
 #: ../src/core/control/XournalMain.cpp:207
 msgid "Crash log"
-msgstr "Registro de erros"
+msgstr "Registro de Falhas"
 
 #: ../src/core/control/XournalMain.cpp:229
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
@@ -336,7 +336,7 @@ msgstr "Restaurar arquivo"
 
 #: ../src/core/control/XournalMain.cpp:254
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr "O arquivo de fundo anexado \"{1}\" não pôde ser encontrado. Ele pode ter sido movido, renomeado ou excluído."
+msgstr "O arquivo de plano de fundo anexado \"{1}\" não pôde ser encontrado. Ele pode ter sido movido, renomeado ou excluído."
 
 #: ../src/core/control/XournalMain.cpp:446
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -362,7 +362,7 @@ msgstr "\n\n"
 #: ../src/core/control/XournalMain.cpp:528
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr "Desculpa, o Xournal++ só consegue abrir um arquivo por vez.\n"
+msgstr "Desculpe, o Xournal++ só consegue abrir um arquivo por vez.\n"
 "Os outros são ignorados."
 
 #: ../src/core/control/XournalMain.cpp:479
@@ -397,7 +397,7 @@ msgstr "Abrir PDF no modo de anexação\n"
 
 #: ../src/core/control/XournalMain.cpp:656
 msgid "Save xopp-file with the background PDF specified as FILE"
-msgstr "Salvar arquivo xopp com o PDF de fundo especificado como ARQUIVO"
+msgstr "Salvar arquivo xopp com o plano de fundo PDF especificado como ARQUIVO"
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as PDF"
@@ -407,8 +407,8 @@ msgstr "Exportar ARQUIVO como PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr "Exportar como arquivos de imagem (um arquivo para cada página)\n"
-"                                 Adivinhe o formato de saída pela extensão IMGFILE\n"
+msgstr "Exportar ARQUIVO como arquivos de imagem (um por página)\n"
+"                                 Adivinhar o formato de saída da extensão do IMGFILE\n"
 "                                 Formatos suportados: .png, .svg"
 
 #: ../src/core/control/XournalMain.cpp:672
@@ -417,7 +417,7 @@ msgid "Export without background\n"
 "                                 depending on what its format supports\n"
 msgstr "Exportar sem plano de fundo\n"
 "                                 O arquivo exportado tem fundo transparente ou branco,\n"
-"                                 dependendo do suporte do formato\n"
+"                                 dependendo do que o formato suporta\n"
 
 #: ../src/core/control/XournalMain.cpp:677
 msgid "Export without ruling\n"
@@ -440,13 +440,13 @@ msgstr "Exportar camadas progressivamente\n"
 #: ../src/core/control/XournalMain.cpp:688
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Exporte apenas as páginas especificadas no DOMÍNIO (ex: \"2-3,5,7-\")\n"
+msgstr "Exporte apenas as páginas especificadas por INTERVALO (ex: \"2-3,5,7-\")\n"
 "                                 Sem efeito sem -p/--create-pdf ou -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:692
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Ao exportar, somente exporta as camadas pelo INTERVALO (e.g. \"2-3,5,7-\")\n"
+msgstr "Ao exportar, somente exporta as camadas por INTERVALO (e.g. \"2-3,5,7-\")\n"
 "                                 Sem efeito sem -p/--create-pdf ou -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:696
@@ -651,19 +651,19 @@ msgstr "%F-Nota-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_anotado"
 
-#: ../src/core/control/tools/EditSelection.cpp:456
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
 msgstr "Dispor"
 
-#: ../src/core/control/tools/EditSelection.cpp:471
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
 msgstr "Trazer para a frente"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
 msgstr "Enviar para trás"
 
-#: ../src/core/control/tools/EditSelection.cpp:489
+#: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
 msgstr "Enviar para o fundo"
 
@@ -1019,16 +1019,15 @@ msgid "Draw Double Arrow"
 msgstr "Desenhar Seta Dupla"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
-msgid "Draw coordinate system"
+msgid "Draw Coordinate System"
 msgstr "Desenhar Sistema de Coordenadas"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
-msgid "Stroke recognizer"
-msgstr "Reconhecimento de formas"
+msgid "Shape Recognizer"
+msgstr "Reconhecimento de forma"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
@@ -1410,6 +1409,14 @@ msgstr "Pré-visualização da camada"
 msgid "Page Preview"
 msgstr "Pré-visualização da Página"
 
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
+msgid "Draw coordinate system"
+msgstr "Desenhar Sistema de Coordenadas"
+
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+msgid "Stroke recognizer"
+msgstr "Reconhecimento de formas"
+
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
 msgstr "Combo de Tipo de Desenho"
@@ -1443,12 +1450,12 @@ msgid "Print"
 msgstr "Imprimir"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "Desfazer"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "Refazer"
 
@@ -1616,10 +1623,6 @@ msgstr "Esquadro"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
 msgstr "Transferidor"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Shape Recognizer"
-msgstr "Reconhecimento de forma"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1970,23 +1973,23 @@ msgstr "Mover página para baixo"
 msgid "Edit text"
 msgstr "Editar texto"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:112
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Não foi possível desfazer \"{1}\"\n"
 "Algo deu errado… Por favor, escreva um relatório de erros…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:138
+#: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Não foi possível refazer \"{1}\"\n"
 "Algo deu errado… Por favor, escreva um relatório reportando os erros…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:172
+#: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
 msgstr "Desfazer: "
 
-#: ../src/core/undo/UndoRedoHandler.cpp:184
+#: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
 msgstr "Refazer: "
 
@@ -2032,11 +2035,11 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "O arquivo não pôde ser aberto. Você tem que fazer isso manualmente:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:286
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:259
+#: ../src/util/PathUtil.cpp:296
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Não foi possível criar a pasta: {1}\n"
@@ -3463,10 +3466,6 @@ msgstr "Tamanho Mínimo do Traço"
 msgid "0.20"
 msgstr "0,20"
 
-#: ../ui/settings.glade:5149
-msgid "Stroke Recognizer"
-msgstr "Reconhecedor de Traço"
-
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
 msgstr "Habilitar Duplo Clique"
@@ -4119,10 +4118,6 @@ msgstr "Tipo de desenho"
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
 msgstr "_Reconhecimento de forma"
-
-#: ../ui/mainmenubar.xml:583
-msgid "Draw Coordinate System"
-msgstr "Desenhar Sistema de Coordenadas"
 
 #: ../ui/mainmenubar.xml:588
 msgid "Draw _Line"

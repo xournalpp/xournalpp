@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-17 16:12\n"
+"POT-Creation-Date: 2024-10-21 18:49+0000\n"
+"PO-Revision-Date: 2024-10-21 18:52\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -652,19 +652,19 @@ msgstr "%F-Notițe-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_adnotat"
 
-#: ../src/core/control/tools/EditSelection.cpp:456
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
 msgstr "Aranjare"
 
-#: ../src/core/control/tools/EditSelection.cpp:471
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
 msgstr "Adu mai aproape"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
 msgstr "Trimite în plan secundar"
 
-#: ../src/core/control/tools/EditSelection.cpp:489
+#: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
 msgstr "Trimite în ultimul plan"
 
@@ -1020,15 +1020,14 @@ msgid "Draw Double Arrow"
 msgstr "Desenează săgeți duble"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
-msgid "Draw coordinate system"
+msgid "Draw Coordinate System"
 msgstr "Desenează sistemul de coordonate"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
-msgid "Stroke recognizer"
+msgid "Shape Recognizer"
 msgstr "Recunoaște forma"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
@@ -1411,6 +1410,14 @@ msgstr "Previzualizare strat"
 msgid "Page Preview"
 msgstr "Previzualizare a paginii"
 
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
+msgid "Draw coordinate system"
+msgstr "Desenează sistemul de coordonate"
+
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+msgid "Stroke recognizer"
+msgstr "Recunoaște forma"
+
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
 msgstr "Tipuri de desenare"
@@ -1444,12 +1451,12 @@ msgid "Print"
 msgstr "Tipărește"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "Anulează"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "Refă"
 
@@ -1617,10 +1624,6 @@ msgstr "Echer"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
 msgstr "Compas"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Shape Recognizer"
-msgstr "Recunoaște forma"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1971,23 +1974,23 @@ msgstr "Mută pagina în jos"
 msgid "Edit text"
 msgstr "Modifică textul"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:112
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Nu s-a putut anula „{1}”\n"
 "Ceva nu a mers bine… Te rugăm să scrii un raport de eroare…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:138
+#: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Nu s-a putut reface „{1}”\n"
 "Ceva nu a mers bine… Te rugăm să scrii un raport de eroare…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:172
+#: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
 msgstr "Anulează: "
 
-#: ../src/core/undo/UndoRedoHandler.cpp:184
+#: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
 msgstr "Refă: "
 
@@ -2033,11 +2036,11 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Fișierul nu a putut fi deschis. Trebuie deschis manual:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:286
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:259
+#: ../src/util/PathUtil.cpp:296
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nu s-a putut crea dosarul: {1}\n"
@@ -3191,7 +3194,7 @@ msgstr "Cursor"
 
 #: ../ui/settings.glade:3563
 msgid "Show sidebar on the right side"
-msgstr "Arată miniaturile în dreaptă"
+msgstr "Arată panoul lateral în dreaptă"
 
 #: ../ui/settings.glade:3578
 msgid "Show vertical scrollbar on the left side"
@@ -3219,7 +3222,7 @@ msgstr "Într-un pătrat"
 
 #: ../ui/settings.glade:3660
 msgid "Sidebar"
-msgstr "Miniaturi"
+msgstr "Panoul lateral"
 
 #: ../ui/settings.glade:3686
 msgid "Hide the horizontal scrollbar"
@@ -3269,7 +3272,7 @@ msgstr "Arată banda cu instrumente"
 #: ../ui/settings.glade:3871 ../ui/settings.glade:3960
 #: ../ui/mainmenubar.xml:211
 msgid "Show Sidebar"
-msgstr "Arată miniaturile"
+msgstr "Arată Panoul lateral"
 
 #: ../ui/settings.glade:3890 ../ui/mainmenubar.xml:194
 msgid "Fullscreen"
@@ -3464,10 +3467,6 @@ msgstr "Mărimea minimă a formei"
 #: ../ui/settings.glade:5132
 msgid "0.20"
 msgstr "0.20"
-
-#: ../ui/settings.glade:5149
-msgid "Stroke Recognizer"
-msgstr "Recunoaște forma"
 
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
@@ -4122,10 +4121,6 @@ msgstr "Tip de desenare"
 msgid "_Shape Recognizer"
 msgstr "Recunoaște _forma"
 
-#: ../ui/mainmenubar.xml:583
-msgid "Draw Coordinate System"
-msgstr "Desenează sistemul de coordonate"
-
 #: ../ui/mainmenubar.xml:588
 msgid "Draw _Line"
 msgstr "Desenează _drepte"
@@ -4361,7 +4356,7 @@ msgstr "Compatibilitate cu LaTeX (necesită o instalare LaTeX funcțională) cu 
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:38
 msgid "Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)"
-msgstr "Panou lateral care conține previzualizări de pagini cu aranjare avansată a paginilor, marcaje PDF și straturi (pot fi ascunse/modificate individual)"
+msgstr "Panou lateral care conține previzualizări de pagini cu aranjare avansată a paginilor, semne de carte pentru PDF și straturi (pot fi ascunse/modificate individual)"
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:39
 msgid "Allows mapping different tools/colors etc. to stylus/mouse buttons"

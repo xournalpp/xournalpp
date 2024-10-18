@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-17 16:12\n"
+"POT-Creation-Date: 2024-10-21 18:49+0000\n"
+"PO-Revision-Date: 2024-10-21 18:52\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -651,19 +651,19 @@ msgstr "%F-Nota-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_anotado"
 
-#: ../src/core/control/tools/EditSelection.cpp:456
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
 msgstr "Ordenar"
 
-#: ../src/core/control/tools/EditSelection.cpp:471
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
 msgstr "Traer hacia delante"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
 msgstr "Enviar atrás"
 
-#: ../src/core/control/tools/EditSelection.cpp:489
+#: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
 msgstr "Enviar al fondo"
 
@@ -1019,16 +1019,15 @@ msgid "Draw Double Arrow"
 msgstr "Dibujar una flecha doble"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
-msgid "Draw coordinate system"
-msgstr "Dibujar sistema de coordenadas"
+msgid "Draw Coordinate System"
+msgstr "Dibujar Sistema de Coordenadas"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
-msgid "Stroke recognizer"
-msgstr "Reconocedor de trazos"
+msgid "Shape Recognizer"
+msgstr "Reconocedor de formas"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
@@ -1410,6 +1409,14 @@ msgstr "Previsualización de capa"
 msgid "Page Preview"
 msgstr "Previsualización de página"
 
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
+msgid "Draw coordinate system"
+msgstr "Dibujar sistema de coordenadas"
+
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+msgid "Stroke recognizer"
+msgstr "Reconocedor de trazos"
+
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
 msgstr "Combo de tipo de dibujo"
@@ -1443,12 +1450,12 @@ msgid "Print"
 msgstr "Imprimir"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "Deshacer"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "Rehacer"
 
@@ -1616,10 +1623,6 @@ msgstr "Escuadra"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
 msgstr "Compás"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Shape Recognizer"
-msgstr "Reconocedor de formas"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1970,23 +1973,23 @@ msgstr "Bajar página"
 msgid "Edit text"
 msgstr "Editar texto"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:112
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "No se pudo deshacer «{1}»\n"
 "Se produjo un problema… Envíenos un informe de error."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:138
+#: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "No se pudo rehacer «{1}».\n"
 "Se produjo un problema… Envíenos un informe de error."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:172
+#: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
 msgstr "Deshacer: "
 
-#: ../src/core/undo/UndoRedoHandler.cpp:184
+#: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
 msgstr "Rehacer: "
 
@@ -2032,11 +2035,11 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "No se pudo abrir el archivo. Debe hacerlo manualmente:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:286
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:259
+#: ../src/util/PathUtil.cpp:296
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "No se pudo crear la carpeta: {1}\n"
@@ -3462,10 +3465,6 @@ msgstr "Tamaño mínimo de trazo"
 msgid "0.20"
 msgstr "0,20"
 
-#: ../ui/settings.glade:5149
-msgid "Stroke Recognizer"
-msgstr "Reconocedor de trazos"
-
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
 msgstr "Activar acción de toque"
@@ -3757,7 +3756,7 @@ msgstr "Abrir"
 #. Filled dynamically
 #: ../ui/mainmenubar.xml:19
 msgid "Recent _Documents"
-msgstr "_Documentos Recientes"
+msgstr "_Documentos recientes"
 
 #: ../ui/mainmenubar.xml:22
 msgid "_Annotate PDF"
@@ -3765,7 +3764,7 @@ msgstr "_Anotar PDF"
 
 #: ../ui/mainmenubar.xml:31
 msgid "Save As"
-msgstr "Guardar Como"
+msgstr "Guardar como"
 
 #: ../ui/mainmenubar.xml:39
 msgid "_Export as PDF"
@@ -3845,7 +3844,7 @@ msgstr "_Emparejar páginas"
 
 #: ../ui/mainmenubar.xml:189
 msgid "_Presentation Mode"
-msgstr "Modo de _Presentación"
+msgstr "Modo _presentación"
 
 #: ../ui/mainmenubar.xml:201
 msgid "Show Toolbars"
@@ -3881,7 +3880,7 @@ msgstr "_Abajo hacia Arriba"
 
 #: ../ui/mainmenubar.xml:257
 msgid "_Cols/Rows"
-msgstr "_Col/Filas"
+msgstr "_Columnas/Filas"
 
 #: ../ui/mainmenubar.xml:260
 msgid "Set Columns"
@@ -4118,10 +4117,6 @@ msgstr "Tipo de dibujo"
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
 msgstr "_Reconocedor de Formas"
-
-#: ../ui/mainmenubar.xml:583
-msgid "Draw Coordinate System"
-msgstr "Dibujar Sistema de Coordenadas"
 
 #: ../ui/mainmenubar.xml:588
 msgid "Draw _Line"
