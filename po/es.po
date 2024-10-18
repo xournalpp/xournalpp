@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-18 10:53\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2106,7 +2106,7 @@ msgstr "<b>Fondo</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>Color</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
@@ -2144,7 +2144,7 @@ msgstr "<b>Tamaño de página</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
-msgstr ""
+msgstr "<b>Separadores</b>"
 
 #: ../ui/settings.glade:5898
 msgid "<i>\n"
@@ -2872,7 +2872,7 @@ msgstr "Diseñadores de iconos"
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Temática de íconos:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
