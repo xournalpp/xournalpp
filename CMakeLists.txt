@@ -121,23 +121,6 @@ endif (ENABLE_PROFILING)
 
 pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
-if (#[[${CMAKE_VERSION} VERSION_LESS "3.18" AND]] ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    # bugfix for old pkg_config versions
-    get_target_property(libs PkgConfig::ExternalModules INTERFACE_LINK_LIBRARIES)
-    # message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES: ${libs}")
-    string(REPLACE "-framework;" "-framework " libs "${libs}")
-    # message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES fixed: ${libs}")
-    set_target_properties(PkgConfig::ExternalModules PROPERTIES INTERFACE_LINK_LIBRARIES "${libs}")
-
-
-    if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.13")
-        # fix broken framework flags from pkgconfig
-        get_target_property(opts PkgConfig::ExternalModules INTERFACE_LINK_OPTIONS)
-        string(REPLACE "-framework;" "SHELL:-framework " opts "${opts}")
-        set_target_properties(PkgConfig::ExternalModules PROPERTIES INTERFACE_LINK_OPTIONS "${opts}")
-    endif ()
-endif ()
-
 if (UNIX AND NOT APPLE AND NOT CYGWIN)
     set(INSTALL_DESKTOP_FILES true)
 endif()
