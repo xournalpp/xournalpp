@@ -124,6 +124,11 @@ popover.toolbar button {
   padding:3px;
 }
 
+.orientationFormatBox > button > widget > box > image {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
 toolbar button:not(:checked):not(:active):not(:hover),
 popover.toolbar button:not(:checked):not(:active):not(:hover){
   border-color:transparent;

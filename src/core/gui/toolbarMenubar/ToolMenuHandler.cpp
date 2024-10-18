@@ -56,9 +56,8 @@ ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui):
         tbModel(std::make_unique<ToolbarModel>()),
         pageBackgroundChangeController(control->getPageBackgroundChangeController()),
         iconNameHelper(control->getSettings()),
-        pageTypeSelectionPopup(std::make_unique<PageTypeSelectionPopover>(
-                control->getPageTypes(), control->getPageBackgroundChangeController(), control->getSettings(),
-                GTK_APPLICATION_WINDOW(parent))) {}
+        pageTypeSelectionPopup(std::make_unique<PageTypeSelectionPopover>(control, control->getSettings(),
+                                                                          GTK_APPLICATION_WINDOW(parent))) {}
 
 void ToolMenuHandler::populate(const GladeSearchpath* gladeSearchPath) {
     initToolItems();
@@ -516,5 +515,8 @@ void ToolMenuHandler::updateColorToolItems(const Palette& palette) {
 }
 
 void ToolMenuHandler::setDefaultNewPageType(const std::optional<PageType>& pt) {
-    this->pageTypeSelectionPopup->setSelected(pt);
+    this->pageTypeSelectionPopup->setSelectedPT(pt);
+}
+void ToolMenuHandler::setDefaultNewPaperSize(const std::optional<PaperSize>& paperSize) {
+    this->pageTypeSelectionPopup->setSelectedPaperSize(paperSize);
 }
