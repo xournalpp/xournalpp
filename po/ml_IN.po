@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:41\n"
+"PO-Revision-Date: 2024-10-18 19:17\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/core/control/jobs/BaseExportJob.cpp:53
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"നിങ്ങൾ തുടരാൻ ആഗ്രഹിക്കുന്നുവോ?"
 
 #: ../src/core/control/Control.cpp:2440
 msgid "\n"
@@ -152,7 +153,7 @@ msgstr "മുന്നോട്ട് കൊണ്ടുവരിക"
 
 #: ../src/core/control/tools/EditSelection.cpp:406
 msgid "Bring to front"
-msgstr ""
+msgstr "മുന്നിലേക്ക് കൊണ്ടുവരിക"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:36
 msgid "Built on"
@@ -208,11 +209,11 @@ msgstr "പകർത്തുക"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Copy current"
-msgstr ""
+msgstr "നിലവിലുള്ളത് പകർത്തുക"
 
 #: ../src/core/undo/CopyUndoAction.cpp:62
 msgid "Copy page"
-msgstr ""
+msgstr "താൾ പകർത്തുക"
 
 #: ../src/util/PathUtil.cpp:255
 msgid "Could not create folder: {1}\n"
@@ -371,11 +372,11 @@ msgstr "പാളി നീക്കം ചെയ്യുക"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Delete this layer"
-msgstr ""
+msgstr "ഈ പാളി നീക്കം ചെയ്യുക"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
 msgid "Delete this page"
-msgstr ""
+msgstr "ഈ താൾ നീക്കം ചെയ്യുക"
 
 #: ../src/core/control/XournalMain.cpp:644
 msgid "Disable audio for this session"
@@ -518,7 +519,8 @@ msgstr "ഇറേസർ"
 #: ../src/core/control/Control.cpp:2547
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "പിഡിഎഫ് വ്യാഖ്യാനിക്കുന്നതിൽ പിശക് \"{1}\"\n"
+"{2}"
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
@@ -608,7 +610,7 @@ msgstr "ഫയൽ ചിത്രങ്ങളുടെ ഫയലുകളായ�
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
-msgstr ""
+msgstr "പിഡിഎഫ് എക്സ്പോർട്ട് ചെയ്യുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Export as PDF"
@@ -663,7 +665,7 @@ msgstr "പിഡിഎഫ് കെയ്റോ പ്രതലം ഇനിഷ
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "ചിത്രം തുറക്കുന്നതിൽ പരാജയപെട്ടു, അതിന്റെ വലുപ്പം തിട്ടപ്പെടുത്താൻ സാധിച്ചില്ല!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -820,15 +822,15 @@ msgstr "ചിത്രത്തിന്റെ ഫയൽ വിജയകരമ�
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
 msgid "Images"
-msgstr ""
+msgstr "ചിത്രങ്ങൾ"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "നിലവിലുള്ള പാളിയുടെ പകർപ്പ് താഴേക്ക് ചേർക്കുക"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "നിലവിലുള്ള താളിന്റെ പകർപ്പ് താഴേക്ക് ചേർക്കുക"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:97
 msgid "Insert after current page"
@@ -973,7 +975,7 @@ msgstr "സാധാരണ വര"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
 #: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
 msgid "OK"
-msgstr ""
+msgstr "ശരി"
 
 #: ../src/core/control/XournalMain.cpp:680
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -987,7 +989,7 @@ msgstr ""
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
-msgstr ""
+msgstr "ചിത്രം തുറക്കുക"
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Open Logfile"
@@ -1114,7 +1116,7 @@ msgstr "ഓഡിയോ റെക്കോർഡ് ചെയ്യുക/നി
 
 #: ../src/core/control/Control.cpp:991
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "റെക്കോർഡർ തുടങ്ങാൻ സാധിച്ചില്ല."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/undo/UndoRedoHandler.cpp:194
@@ -1226,7 +1228,7 @@ msgstr "പിഡിഎഫിൽ നിന്നും ഏരിയ ടെക്
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:555
 msgid "Select Font"
-msgstr ""
+msgstr "ഫോണ്ട് തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:531
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
@@ -1236,7 +1238,7 @@ msgstr "രേഖീയമായ പിഡിഎഫ് ടെക്സ്റ്�
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "അനേകം പാളികൾക്ക് മേൽ റെക്ട് തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1257,11 +1259,11 @@ msgstr "വസ്തു തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "പിഡിഎഫ് ഏരിയ ടെക്സ്റ്റ് തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
-msgstr ""
+msgstr "പിഡിഎഫ് ടെക്സ്റ്റ് തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
@@ -1273,7 +1275,7 @@ msgstr "ദീർഘചതുരത്തിലെ പിഡിഎഫ് ടെ�
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "പിഡിഎഫ് ടെക്സ്റ്റ് തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
@@ -1326,11 +1328,11 @@ msgstr "മണ്ഡലം തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 msgid "Selection Combo"
-msgstr ""
+msgstr "കോംബോ തിരഞ്ഞെടുക്കുക"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Send Bugreport"
-msgstr ""
+msgstr "ബഗ്ഗ്‌ റിപ്പോർട്ട് അയക്കുക"
 
 #: ../src/core/control/tools/EditSelection.cpp:427
 msgid "Send backward"
@@ -1417,19 +1419,19 @@ msgstr "അനുവദനീയമായ ഫയലുകൾ"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "നിലവിലെ പാളി മുകളിലെ പാളിയുമായി കൈമാറുക"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "നിലവിലെ പാളി താഴത്തെ പാളിയുമായി കൈമാറുക"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "നിലവിലെ താൾ മുകളിലത്തേതുമായി കൈമാറുക"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "നിലവിലെ താൾ താഴത്തേതുമായി കൈമാറുക"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
@@ -1443,11 +1445,11 @@ msgstr "ടെക്സ്റ്റ്"
 #: ../src/core/gui/SearchBar.cpp:79
 #, c-format
 msgid "Text %zu times found on this page"
-msgstr ""
+msgstr "ഈ താളിൽ ടെക്സ്റ്റ് %zu തവണ കണ്ടെത്തി"
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
-msgstr ""
+msgstr "ഈ താളിൽ ടെക്സ്റ്റ് കണ്ടെത്തി"
 
 #: ../src/core/gui/SearchBar.cpp:133
 msgid "Text found once on page {1}"
@@ -1455,7 +1457,7 @@ msgstr "താളിൽ ടെക്സ്റ്റ് ഒരു തവണ ക�
 
 #: ../src/core/gui/SearchBar.cpp:134
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "{2}-ആം താളിൽ ടെക്സ്റ്റ് {1} തവണ കണ്ടെത്തി"
 
 #: ../src/core/gui/SearchBar.cpp:84
 msgid "Text not found"
@@ -1509,7 +1511,7 @@ msgstr "ഫയൽ നേരായ വിധത്തിലുള്ള .എക�
 
 #: ../src/core/control/LatexController.cpp:303
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "റെൻഡർ ചെയ്യുമ്പോൾ ഫോർമുല ശൂന്യമാണ്/അസാധുവാണ്."
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
@@ -1553,7 +1555,7 @@ msgstr "ടൂൾ - മാറ്റരുത്"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "ടൂൾബാർ കണ്ടെത്തി: {1}"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
@@ -1561,7 +1563,7 @@ msgstr "ടൂൾബാറുകൾ"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "അടിയന്തിരമായി ഇപ്പോൾ തുറന്നിരിക്കുന്ന ഡോക്യുമെന്റ് സേവ് ചെയ്യാൻ ശ്രമിക്കുന്നു…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -1817,7 +1819,7 @@ msgstr "പേന"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:154
 msgid "show"
-msgstr ""
+msgstr "കാണിക്കുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:310
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
@@ -2042,11 +2044,11 @@ msgstr "<b>പശ്ചാത്തലം</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>നിറം</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr ""
+msgstr "<b>സ്ഥിരസ്ഥിതിയിലുള്ള ടൂളുകൾ</b>"
 
 #: ../ui/settings.glade:5805
 msgid "<b>Default</b>"
@@ -2066,7 +2068,8 @@ msgstr "<b>ഒഴിഞ്ഞ ടൂൾബോക്സ്</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>ഫിൽ ഒപാസിറ്റി ക്രമീകരണങ്ങൾ</b>\n"
+"ഫിൽ നിറത്തിന് വേണ്ടി ഒപാസിറ്റി തിരഞ്ഞെടുക്കുക"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2078,7 +2081,7 @@ msgstr "<b>താൾ വലുപ്പം</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
-msgstr ""
+msgstr "<b>വേർപെടുത്തൽ</b>"
 
 #: ../ui/settings.glade:5898
 msgid "<i>\n"
@@ -2114,7 +2117,8 @@ msgstr "<i>ഉദാഹരണം:</i> 1-3 അല്ലെങ്കിൽ 1,3,5-7
 #: ../ui/settings.glade:363
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>ഡോക്യുമെന്റ് മുൻപേ സേവ് ചെയ്തു വച്ചിട്ടുണ്ടെങ്കിൽ അവ ഇതേ ഫോൾഡറിൽ .autosave.xoj എന്ന എക്സ്റ്റൻഷനോടെ നിങ്ങൾക്ക് കണ്ടെത്താനാകും\n"
+"ഫയൽ ഇതുവരെ സേവ് ചെയ്തു വച്ചിട്ടില്ലെങ്കിൽ അത് നിങ്ങൾക്ക് ~/.cache/xournalpp/autosaves എന്ന സ്ഥലത്ത് കണ്ടെത്താനാകും.</i>"
 
 #: ../ui/settings.glade:4632
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2213,11 +2217,11 @@ msgstr "ടൂൾ തൊടുമ്പോഴുള്ള പ്രവർത്�
 
 #: ../ui/settings.glade:4685
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "കൂടുതൽ സമാന്തരമായി ചേർക്കേണ്ട വ്യാപ്തി"
 
 #: ../ui/settings.glade:4663
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "കൂടുതൽ കുത്തനെ ചേർക്കേണ്ട വ്യാപ്തി"
 
 #: ../ui/settings.glade:5066
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2563,7 +2567,7 @@ msgstr ""
 
 #: ../ui/main.glade:2911 ../ui/main.glade:2948
 msgid "Duplicate"
-msgstr ""
+msgstr "ഡ്യൂപ്ലിക്കേറ്റ്"
 
 #: ../ui/main.glade:1243
 msgid "Duplicate Page"
@@ -2571,7 +2575,7 @@ msgstr ""
 
 #: ../ui/main.glade:2985
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "തിരുത്തുക (ഇത് വരെ നടപ്പിലാക്കിയിട്ടില്ല)"
 
 #: ../ui/latexSettings.glade:606
 msgid "Editor settings"
@@ -2756,7 +2760,7 @@ msgstr "ഉയരം:"
 
 #: ../ui/main.glade:997
 msgid "Hide Menubar"
-msgstr ""
+msgstr "മെനുബാർ മറയ്ക്കുക"
 
 #: ../ui/settings.glade:3791
 msgid "Hide the horizontal scrollbar"
@@ -2858,11 +2862,11 @@ msgstr "ലാറ്റെക് (LaTeX) ചേർക്കുക"
 
 #: ../ui/main.glade:2940
 msgid "Insert Page After"
-msgstr ""
+msgstr "ശേഷം താൾ ചേർക്കുക"
 
 #: ../ui/main.glade:2932
 msgid "Insert Page Before"
-msgstr ""
+msgstr "മുൻപേ താൾ ചേർക്കുക"
 
 #: ../ui/settings.glade:6442
 msgid "LaTeX"
@@ -2938,7 +2942,7 @@ msgstr "ഏറ്റവും വലിയ ഗുണിതസംഖ്യ"
 
 #: ../ui/main.glade:2903
 msgid "Merge Down"
-msgstr ""
+msgstr "താഴേക്ക് കൂട്ടിച്ചേർക്കുക"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
@@ -2975,7 +2979,7 @@ msgstr "മൗസ്+കീബോർഡ് കോംബോ"
 
 #: ../ui/main.glade:2895 ../ui/main.glade:2970
 msgid "Move Down"
-msgstr ""
+msgstr "താഴേയ്ക്കു നീക്കുക"
 
 #: ../ui/main.glade:490
 msgid "Move Selection Layer Down"
@@ -2987,7 +2991,7 @@ msgstr ""
 
 #: ../ui/main.glade:2887 ../ui/main.glade:2962
 msgid "Move Up"
-msgstr ""
+msgstr "മുകളിലേക്ക് നീക്കുക"
 
 #: ../ui/settings.glade:3910
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."

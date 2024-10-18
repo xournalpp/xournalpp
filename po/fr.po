@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-18 19:16\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -604,15 +604,15 @@ msgstr "Erreur : {1}. Veuillez vérifier le contenu de {2}"
 
 #: ../src/core/control/XournalMain.cpp:653
 msgid "Export FILE as PDF"
-msgstr "Exporter le FICHIER en PDF"
+msgstr "Exporter le fichier FILE en PDF"
 
 #: ../src/core/control/XournalMain.cpp:655
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
 msgstr "Exporter le FICHIER en tant que fichiers image (une par page)\n"
-"                                 Deviner le format de sortie à partir de l'extension de IMGFILE\n"
-"                                 formats pris en charge : .png, .svg"
+"                                 Devine le format de sortie à partir de l'extension de IMGFILE\n"
+"                                 Formats pris en charge : .png, .svg"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
@@ -645,8 +645,8 @@ msgstr "Exporter sans arrière-plan\n"
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr "Exporter sans les règles\n"
-"                                 Le fichier exporté n'a aucune règle sur le papier\n"
+msgstr "Exporter sans les lignes\n"
+"                                 Le fichier exporté n'a ni lignes ni carreaux sur le papier\n"
 
 #: ../src/core/control/XournalMain.cpp:154
 msgid "Failed to delete file: {1}"
@@ -661,7 +661,7 @@ msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 msgstr "Impossible de trouver un programme générateur de LaTeX dans PATH: {1}\n\n"
-"Étant donné que l'installation a été faite avec Flatpak, vous devez installer l'extension Flatpak Tex Live de bureau gratuite. Par exemple, en exécutant : \n"
+"Étant donné que l'installation a été faite avec Flatpak, vous devez installer l'extension Flatpak Tex Live. Par exemple, en exécutant : \n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
@@ -756,7 +756,7 @@ msgstr "Version GTK"
 
 #: ../src/core/control/XournalMain.cpp:642
 msgid "Get version of xournalpp"
-msgstr "Récupérer la version de xournalpp"
+msgstr "Récupérer la version de Xournal++"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:46
 msgid "Git commit"
@@ -989,7 +989,7 @@ msgstr "OK"
 #: ../src/core/control/XournalMain.cpp:680
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Lors de l'exportation, n'exporter que les couches spécifiées par RANGE (par exemple \"2-3,5,7-\")\n"
+msgstr "Lors de l'exportation, n'exporter que les calques spécifiés par RANGE (par exemple \"2-3,5,7-\")\n"
 "                                 Aucun effet sans -p/--create-pdf ou -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:676
@@ -1558,7 +1558,7 @@ msgstr "Cette image n'a pas pu être chargée. Message d'erreur : {1}"
 
 #: ../src/core/control/XournalMain.cpp:199
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
-msgstr "Pour empêcher cette popup de réapparaître, il suffit de supprimer les fichiers journaux d'erreurs."
+msgstr "Pour empêcher ce popup de réapparaître, il suffit de supprimer les fichiers journaux d'erreurs."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Toggle fullscreen"
@@ -1590,7 +1590,7 @@ msgstr "Impossible de lire l'enregistrement audio {1}"
 
 #: ../src/core/control/Control.cpp:1486
 msgid "Unable to retrieve pdf page."
-msgstr "Impossible de récupérer la page pdf."
+msgstr "Impossible de récupérer la page PDF."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 #: ../src/core/undo/UndoRedoHandler.cpp:182
