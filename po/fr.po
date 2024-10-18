@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-18 10:53\n"
+"PO-Revision-Date: 2024-10-18 18:57\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -604,7 +604,7 @@ msgstr "Erreur : {1}. Veuillez vérifier le contenu de {2}"
 
 #: ../src/core/control/XournalMain.cpp:653
 msgid "Export FILE as PDF"
-msgstr "Exporter le FICHIER en PDF"
+msgstr "Exporter le fichier FILE en PDF"
 
 #: ../src/core/control/XournalMain.cpp:655
 msgid "Export FILE as image files (one per page)\n"
@@ -645,8 +645,8 @@ msgstr "Exporter sans arrière-plan\n"
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr "Exporter sans les règles\n"
-"                                 Le fichier exporté n'a aucune règle sur le papier\n"
+msgstr "Exporter sans les lignes\n"
+"                                 Le fichier exporté n'a ni lignes ni carreaux sur le papier\n"
 
 #: ../src/core/control/XournalMain.cpp:154
 msgid "Failed to delete file: {1}"
@@ -989,7 +989,7 @@ msgstr "OK"
 #: ../src/core/control/XournalMain.cpp:680
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Lors de l'exportation, n'exporter que les couches spécifiées par RANGE (par exemple \"2-3,5,7-\")\n"
+msgstr "Lors de l'exportation, n'exporter que les calques spécifiés par RANGE (par exemple \"2-3,5,7-\")\n"
 "                                 Aucun effet sans -p/--create-pdf ou -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:676
@@ -1724,7 +1724,7 @@ msgstr "Vous n'avez pas de pages PDF à sélectionner. Annuler l'opération.\n"
 #: ../src/core/gui/sidebar/Sidebar.cpp:88
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
-"Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
+"Tip: You can select Journal → Paper Background → With PDF Background to insert a PDF page."
 msgstr "Votre document actuel ne contient pas de page PDF n° {1}\n"
 "Voulez-vous insérer cette page ?\n\n"
 "Conseil : Vous pouvez sélectionner Journal → Arrière-plan papier → Arrière-plan PDF pour insérer une page PDF."
