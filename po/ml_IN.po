@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-17 16:13\n"
+"POT-Creation-Date: 2024-10-21 18:49+0000\n"
+"PO-Revision-Date: 2024-10-21 18:53\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -635,19 +635,19 @@ msgstr "%F-കുറിപ്പ്-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_വ്യാഖ്യാനിച്ചു"
 
-#: ../src/core/control/tools/EditSelection.cpp:456
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
 msgstr "ക്രമീകരിക്കുക"
 
-#: ../src/core/control/tools/EditSelection.cpp:471
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
 msgstr "മുന്നോട്ട് കൊണ്ടുവരിക"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
 msgstr "പിന്നിലേക്ക് അയക്കുക"
 
-#: ../src/core/control/tools/EditSelection.cpp:489
+#: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
 msgstr "പിന്നോട്ടയക്കുക"
 
@@ -1003,16 +1003,15 @@ msgid "Draw Double Arrow"
 msgstr "ഇരട്ട തലയുള്ള അമ്പ് വരയ്ക്കുക"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
-msgid "Draw coordinate system"
-msgstr "കോർഡിനേറ്റ് സിസ്റ്റം വരയ്ക്കുക"
+msgid "Draw Coordinate System"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
-msgid "Stroke recognizer"
-msgstr "സ്ട്രോക്ക് തിരിച്ചറിയുന്നത്"
+msgid "Shape Recognizer"
+msgstr "ആകൃതി തിരിച്ചറിയുന്നത്"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
@@ -1392,6 +1391,14 @@ msgstr "പാളിയുടെ പ്രീവ്യൂ"
 msgid "Page Preview"
 msgstr "താളിന്റെ പ്രീവ്യൂ"
 
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
+msgid "Draw coordinate system"
+msgstr "കോർഡിനേറ്റ് സിസ്റ്റം വരയ്ക്കുക"
+
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+msgid "Stroke recognizer"
+msgstr "സ്ട്രോക്ക് തിരിച്ചറിയുന്നത്"
+
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
 msgstr "വരയ്ക്കുന്ന ശൈലി കോംബോ"
@@ -1423,12 +1430,12 @@ msgid "Print"
 msgstr "പ്രിൻ്റ് ചെയ്യുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "പഴയപടിയാക്കുക"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "വീണ്ടും ചെയ്യുക"
 
@@ -1596,10 +1603,6 @@ msgstr "സെറ്റ്സ്‌ക്വയർ"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
 msgstr "കോമ്പസ്"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Shape Recognizer"
-msgstr "ആകൃതി തിരിച്ചറിയുന്നത്"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1950,23 +1953,23 @@ msgstr "താൾ താഴേക്ക് നീക്കുക"
 msgid "Edit text"
 msgstr "ടെക്സ്റ്റ് തിരുത്തുക"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:112
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\" പഴയപടിയാക്കാൻ സാധിച്ചില്ല\n"
 "എന്തോ തകരാർ സംഭവിച്ചു... ദയവായി ബഗ്ഗ്‌ റിപ്പോർട്ട് എഴുതുക…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:138
+#: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\" വീണ്ടും ചെയ്യാൻ സാധിച്ചില്ല\n"
 "എന്തോ തകരാർ സംഭവിച്ചു... ദയവായി ബഗ്ഗ്‌ റിപ്പോർട്ട് എഴുതുക…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:172
+#: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
 msgstr "പഴയപടിയാക്കുക: "
 
-#: ../src/core/undo/UndoRedoHandler.cpp:184
+#: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
 msgstr "വീണ്ടും ചെയ്യുക: "
 
@@ -2012,11 +2015,11 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "ഫയൽ തുറക്കാൻ സാധിച്ചില്ല. നിങ്ങൾക്ക് സ്വമേധയാ അത് ചെയ്യേണ്ടി വരും:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:286
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:259
+#: ../src/util/PathUtil.cpp:296
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "ഫോൾഡർ നിർമിക്കാൻ സാധിച്ചില്ല: {1}\n"
@@ -3383,10 +3386,6 @@ msgstr "ഏറ്റവും കുറഞ്ഞ സ്ട്രോക്ക് 
 msgid "0.20"
 msgstr "0.20"
 
-#: ../ui/settings.glade:5149
-msgid "Stroke Recognizer"
-msgstr ""
-
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
 msgstr "രണ്ടുവട്ടം സ്പർശിച്ചാലുള്ള പ്രവൃത്തി സജ്ജമാക്കുക"
@@ -4030,10 +4029,6 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
-msgstr ""
-
-#: ../ui/mainmenubar.xml:583
-msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../ui/mainmenubar.xml:588

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-17 16:12\n"
+"POT-Creation-Date: 2024-10-21 18:49+0000\n"
+"PO-Revision-Date: 2024-11-06 19:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -29,7 +29,7 @@ msgstr "文件系统错误： {1}"
 
 #: ../src/core/control/Control.cpp:239
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr "无法删除旧的自动保存文件\"{1}\"： {2}"
+msgstr "无法删除旧的自动保存文件“{1}”：{2}"
 
 #: ../src/core/control/Control.cpp:551
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
@@ -70,7 +70,7 @@ msgstr "您当前的文档不包含 PDF 页面号码 {1}\n"
 
 #: ../src/core/control/Control.cpp:847
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr "没有可添加的pdf页面，你可能需要重新打开文档。"
+msgstr "没有可添加的 PDF 页面，您可能需要重新打开该文档。"
 
 #: ../src/core/control/Control.cpp:861
 msgid "Unable to retrieve pdf page."
@@ -98,12 +98,12 @@ msgstr "文件版本不匹配"
 
 #: ../src/core/control/Control.cpp:1519
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr "正在加载的文件格式版本比当前版本Xournal++支持的文件格式版本更新， 可能无法正确加载，仍要打开？"
+msgstr "正在加载的文件格式版本比当前版本 Xournal++ 支持的文件格式版本更新，可能无法正确加载，仍要打开？"
 
 #: ../src/core/control/Control.cpp:1542
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
-msgstr "读取PDF文件 \"{1}\"\n"
+msgstr "读取 PDF 文件 \"{1}\"\n"
 "{2} 时出错"
 
 #: ../src/core/control/Control.cpp:1663
@@ -113,8 +113,8 @@ msgstr "无法找到所附的背景文件。它可能已被移动、重命名或
 #: ../src/core/control/Control.cpp:1666
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
-msgstr "无法找到背景文件\"{1}\"。它可能已被移动、重命名或删除。\n"
-"它最后一次出现是在：\"{2}\""
+msgstr "无法找到背景文件“{1}”。它可能已被移动、重命名或删除。\n"
+"它最后一次出现是在：“{2}”"
 
 #: ../src/core/control/Control.cpp:1676
 msgid "\n"
@@ -132,11 +132,11 @@ msgstr "去掉PDF背景"
 
 #: ../src/core/control/Control.cpp:1686
 msgid "Use proposed PDF"
-msgstr "使用拟议的 PDF"
+msgstr "使用建议的 PDF"
 
 #: ../src/core/control/Control.cpp:1689
 msgid "Missing PDF background file"
-msgstr "缺少PDF背景文件"
+msgstr "缺少 PDF 背景文件"
 
 #: ../src/core/control/Control.cpp:1821
 msgid "Select font"
@@ -175,7 +175,7 @@ msgstr "丢弃"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document..."
-msgstr "正在尝试紧急保存当前打开的文档……"
+msgstr "正在尝试紧急保存当前打开的文档..."
 
 #: ../src/core/control/CrashHandler.cpp:40
 #: ../src/core/control/XournalMain.cpp:309
@@ -245,7 +245,7 @@ msgstr "全局模板文件格式不正确，请检查你的设置。 "
 
 #: ../src/core/control/LatexController.cpp:236
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "LaTeX 生成器遇到了一个错误:{1}(退出代码: {2})"
+msgstr "LaTeX 生成器遇到了一个错误：{1} (退出代码：{2})"
 
 #: ../src/core/control/LatexController.cpp:302
 msgid "Could not load LaTeX PDF file: {1}"
@@ -321,7 +321,7 @@ msgstr "崩溃日志"
 
 #: ../src/core/control/XournalMain.cpp:229
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr "Xournal++ 上次崩溃了。您想恢复最后一个编辑的文件？"
+msgstr "Xournal++ 上次崩溃了。是否恢复最后一次编辑的文件？"
 
 #: ../src/core/control/XournalMain.cpp:233
 msgid "Recovery file detected"
@@ -393,12 +393,12 @@ msgstr "禁用此会话的音频"
 #: ../src/core/control/XournalMain.cpp:652
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
-msgstr "以附件模式打开PDF\n"
-"                                 如果没有指定PDF文件，则忽略。"
+msgstr "以附件模式打开 PDF\n"
+"                                 如果没有指定 PDF 文件，则忽略。"
 
 #: ../src/core/control/XournalMain.cpp:656
 msgid "Save xopp-file with the background PDF specified as FILE"
-msgstr "使用FILE指定的PDF作为背景保存xopp文件"
+msgstr "使用 FILE 指定的 PDF 作为背景保存 xopp 文件"
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as PDF"
@@ -442,14 +442,14 @@ msgstr "逐步导出图层\n"
 #: ../src/core/control/XournalMain.cpp:688
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "只导出RANGE指定的页面(例如“2-3,5,7-\")\n"
+msgstr "只导出 RANGE 指定的页面 (例如，“2-3,5,7-”)\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:692
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "导出时仅导出RANGE指定的图层(如\"2-3,5,7-\")\n"
-"                                 未选中-p/--create-pdf或-i/--create-img 时无效"
+msgstr "导出时，仅导出 RANGE 指定的图层 (例如，“2-3,5,7-”)\n"
+"                                 未选中 -p/--create-pdf 或 -i/--create-img 参数时无效"
 
 #: ../src/core/control/XournalMain.cpp:696
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -461,17 +461,17 @@ msgstr "设置PNG 导出的DPI ，默认是 300\n"
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr "设置PNG导出页面的宽度\n"
-"                                 No effect without -i/--create-img=foo.png\n"
-"                                 Ignored if --export-png-dpi is used"
+msgstr "设置 PNG 图片导出页面的宽度\n"
+"                                 未启用形如 -i/--create-img=foo.png 参数时无效\n"
+"                                 当指定 --export-png-dpi 参数时此项无效"
 
 #: ../src/core/control/XournalMain.cpp:706
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr "设置PNG导出页面的高度\n"
-"                                 No effect without -i/--create-img=foo.png\n"
-"                                 Ignored if --export-png-dpi or --export-png-width is used"
+msgstr "设置 PNG 图片导出页面的高度\n"
+"                                 未启用形如 -i/--create-img=foo.png 参数时无效\n"
+"                                 当指定 --export-png-dpi 或 --export-png-width 参数时无效"
 
 #: ../src/core/control/XournalMain.cpp:711
 msgid "Advanced export options"
@@ -579,8 +579,8 @@ msgstr "解析 LaTeX 生成命令失败:{1}"
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
-msgstr "在 PATH 中找不到 LaTeX 生成器: {1}\n\n"
-"检测到本软件已经在 Flatpak 中安装， 您需要安装 Flatpak freedestop Tex Live 扩展。 例如执行：\n\n"
+msgstr "在 PATH 中找不到 LaTeX 生成器：{1}\n\n"
+"检测到本软件已经在 Flatpak 中安装， 您需要安装 Flatpak freedesktop 的 Tex Live 扩展。 例如，您可以执行如下命令：\n\n"
 "$ flatpak install flatthub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:76
@@ -652,19 +652,19 @@ msgstr "%F-笔记-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_已注解"
 
-#: ../src/core/control/tools/EditSelection.cpp:456
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
 msgstr "排列"
 
-#: ../src/core/control/tools/EditSelection.cpp:471
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
 msgstr "上移一层"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
 msgstr "下移一层"
 
-#: ../src/core/control/tools/EditSelection.cpp:489
+#: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
 msgstr "置于底层"
 
@@ -881,7 +881,7 @@ msgstr "文本在第{1}页上找到"
 
 #: ../src/core/gui/SearchBar.cpp:131
 msgid "Text found {1} times on page {2} ({3} of {1})"
-msgstr "文本在第{2}页中出现{1}次（第{3}次，共{1}次）"
+msgstr "文本在第 {2} 页中出现 {1} 次 (第 {3} 次，共 {1} 次)"
 
 #: ../src/core/gui/SearchBar.cpp:136
 msgid "Text not found, searched on all pages"
@@ -905,7 +905,7 @@ msgstr "Git 提交"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:61
 msgid "See the full list of contributors"
-msgstr "查看贡献者的完整列表"
+msgstr "查看完整贡献者列表"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:63
 msgid "GNU GPLv2 or later"
@@ -1020,16 +1020,15 @@ msgid "Draw Double Arrow"
 msgstr "绘制双箭头"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
-msgid "Draw coordinate system"
+msgid "Draw Coordinate System"
 msgstr "绘制坐标系统"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
-msgid "Stroke recognizer"
-msgstr "笔划识别"
+msgid "Shape Recognizer"
+msgstr "识别形状"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
@@ -1411,6 +1410,14 @@ msgstr "图层预览"
 msgid "Page Preview"
 msgstr "页面预览"
 
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
+msgid "Draw coordinate system"
+msgstr "绘制坐标系统"
+
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+msgid "Stroke recognizer"
+msgstr "笔划识别"
+
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
 msgstr "绘制类型组合"
@@ -1444,12 +1451,12 @@ msgid "Print"
 msgstr "打印"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "撤销"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "重复"
 
@@ -1617,10 +1624,6 @@ msgstr "三角板"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
 msgstr "圆规"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Shape Recognizer"
-msgstr "识别形状"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1971,23 +1974,23 @@ msgstr "向后移动页面"
 msgid "Edit text"
 msgstr "编辑文本"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:112
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "未能撤销操作\"{1}\"\n"
 "有错误发生***请提交一个错误报告***"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:138
+#: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "未能重复操作\"{1}\"\n"
 "有错误发生***请提交一个错误报告***"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:172
+#: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
 msgstr "撤销："
 
-#: ../src/core/undo/UndoRedoHandler.cpp:184
+#: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
 msgstr "重复："
 
@@ -2033,11 +2036,11 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "未能打开文件，请手动操作：\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:286
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:259
+#: ../src/util/PathUtil.cpp:296
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "无法创建文件夹:{1}\n"
@@ -3463,10 +3466,6 @@ msgstr "最小笔画大小"
 msgid "0.20"
 msgstr "0.20"
 
-#: ../ui/settings.glade:5149
-msgid "Stroke Recognizer"
-msgstr "笔画识别"
-
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
 msgstr "启用点击操作"
@@ -4118,10 +4117,6 @@ msgstr "绘制类型"
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
 msgstr "形状识别(_S)"
-
-#: ../ui/mainmenubar.xml:583
-msgid "Draw Coordinate System"
-msgstr "绘制坐标系统"
 
 #: ../ui/mainmenubar.xml:588
 msgid "Draw _Line"
