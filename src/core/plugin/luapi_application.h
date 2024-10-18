@@ -862,6 +862,7 @@ static int applib_addSplines(lua_State* L) {
     // -1 = splines
 
     size_t numSplines = lua_rawlen(L, -1);
+    ctrl->getDocument()->lock();
     for (size_t a = 1; a <= numSplines; a++) {
         std::vector<double> coordStream;
         auto stroke = std::make_unique<Stroke>();
@@ -870,6 +871,7 @@ static int applib_addSplines(lua_State* L) {
         lua_gettable(L, -2);                 // get current spline from splines table
         lua_getfield(L, -1, "coordinates");  // get coordinates of the current spline
         if (!lua_istable(L, -1)) {
+            ctrl->getDocument()->unlock();
             return luaL_error(L, "Missing coordinate table!");
         }
         size_t numCoords = lua_rawlen(L, -1);
@@ -885,6 +887,7 @@ static int applib_addSplines(lua_State* L) {
         // Handle those points
         // Check if the list is divisible by 8.
         if (coordStream.size() % 8 != 0) {
+            ctrl->getDocument()->unlock();
             return luaL_error(L, "Point table incomplete!");
         }
 
@@ -927,6 +930,8 @@ static int applib_addSplines(lua_State* L) {
     allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
     lua_pop(L, 1);
     handleUndoRedoActionHelper(L, ctrl, allowUndoRedoAction, strokes);
+
+    ctrl->getDocument()->unlock();
     return 0;
 }
 
@@ -1008,6 +1013,7 @@ static int applib_addStrokes(lua_State* L) {
     //  1 = table arg
     // -1 = strokes
 
+    ctrl->getDocument()->lock();
     size_t numStrokes = lua_rawlen(L, -1);
     for (size_t a = 1; a <= numStrokes; a++) {
         std::vector<double> xStream;
@@ -1021,6 +1027,7 @@ static int applib_addStrokes(lua_State* L) {
 
         lua_getfield(L, -1, "x");  // get x array of current stroke
         if (!lua_istable(L, -1)) {
+            ctrl->getDocument()->unlock();
             return luaL_error(L, "Missing X-Coordinate table!");
         }
         size_t xPoints = lua_rawlen(L, -1);
@@ -1036,6 +1043,7 @@ static int applib_addStrokes(lua_State* L) {
         // Fetch table of Y values form the Lua stack
         lua_getfield(L, -1, "y");  // get y array of current stroke
         if (!lua_istable(L, -1)) {
+            ctrl->getDocument()->unlock();
             return luaL_error(L, "Missing Y-Coordinate table!");
         }
         size_t yPoints = lua_rawlen(L, -1);
@@ -1066,15 +1074,18 @@ static int applib_addStrokes(lua_State* L) {
         // Handle those points
         // Make sure all vectors are the same length.
         if (xStream.size() != yStream.size()) {
+            ctrl->getDocument()->unlock();
             return luaL_error(L, "X and Y vectors are not equal length!");
         }
         if (xStream.size() != pressureStream.size() && pressureStream.size() > 0) {
+            ctrl->getDocument()->unlock();
             return luaL_error(L, "Pressure vector is not equal length!");
         }
 
         // Check and make sure there's enough points (need at least 2)
         if (xStream.size() < 2) {
             g_warning("Stroke shorter than two points. Discarding. (Has %zu/2)", xStream.size());
+            ctrl->getDocument()->unlock();
             return 1;
         }
         // Add points to the stroke. Include pressure, if it exists.
@@ -1118,8 +1129,11 @@ static int applib_addStrokes(lua_State* L) {
     } else if (strcmp("none", allowUndoRedoAction) == 0)
         g_warning("Not allowing undo/redo action.");
     else {
+        ctrl->getDocument()->unlock();
         return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
     }
+
+    ctrl->getDocument()->unlock();
     return 0;
 }
 
@@ -1190,6 +1204,7 @@ static int applib_addTexts(lua_State* L) {
     XojFont& default_font = settings->getFont();
 
     size_t numTexts = lua_rawlen(L, -1);
+    control->getDocument()->lock();
     for (size_t a = 1; a <= numTexts; a++) {
         auto text = std::make_unique<Text>();
 
@@ -1210,6 +1225,7 @@ static int applib_addTexts(lua_State* L) {
             lua_pushnil(L);
             lua_pushnil(L);
         } else {
+            control->getDocument()->unlock();
             return luaL_error(L, "'font' value must be a table!");
         }
 
@@ -1230,6 +1246,7 @@ static int applib_addTexts(lua_State* L) {
         //   -1 = y
 
         if (!lua_isstring(L, -7)) {
+            control->getDocument()->unlock();
             return luaL_error(L, "Missing text!/'text' must be a string");
         }
         text->setText(lua_tostring(L, -7));
@@ -1244,21 +1261,25 @@ static int applib_addTexts(lua_State* L) {
             if (color > 0xffffff) {
                 std::stringstream msg;
                 msg << "Color 0x" << std::hex << color << " is no valid RGB color.";
+                control->getDocument()->unlock();
                 return luaL_error(L, msg.str().c_str());  // luaL_error does not support %x for hex numbers
             }
             text->setColor(Color(color | 0xff000000U));
         } else if (lua_isnil(L, -3)) {
             text->setColor(default_color);
         } else {
+            control->getDocument()->unlock();
             return luaL_error(L, "'color' must be an integer/hex-code or unset");
         }
 
         if (!lua_isnumber(L, -2)) {  // Check if x was provided
+            control->getDocument()->unlock();
             return luaL_error(L, "Missing X-Coordinate!/must be a number");
         }
         text->setX(lua_tonumber(L, -2));
 
         if (!lua_isnumber(L, -1)) {  // Check if y was provided
+            control->getDocument()->unlock();
             return luaL_error(L, "Missing Y-Coordinate!/must be a number");
         }
         text->setY(lua_tonumber(L, -1));
@@ -1281,6 +1302,7 @@ static int applib_addTexts(lua_State* L) {
     lua_pop(L, 1);
     handleUndoRedoActionHelper(L, control, allowUndoRedoAction, texts);
 
+    control->getDocument()->unlock();
     return 0;
 }
 
@@ -1336,6 +1358,7 @@ static int applib_getTexts(lua_State* L) {
 
     const auto& [err, elements] = getElementsFromHelper(control, type);
     if (err.has_value()) {
+        control->getDocument()->unlock();
         return luaL_error(L, err.value().c_str());
     }
 
@@ -1592,7 +1615,6 @@ static int applib_getColorPalette(lua_State* L) {
     lua_settop(L, 0);
 
     Plugin* plugin = Plugin::getPluginFromLua(L);
-    Settings* settings = plugin->getControl()->getSettings();
     const Palette& palette = plugin->getControl()->getPalette();
 
 
@@ -1727,12 +1749,15 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
         return luaL_error(L, "No page!");
     }
 
+    doc->lock();
+
     size_t selected = nr - 1;
     if (relative) {
         bool isPdf = page->getBackgroundType().isPdfPage();
         if (isPdf) {
             selected = page->getPdfPageNr() + nr;
         } else {
+            doc->unlock();
             return luaL_error(L, "Current page has no pdf background, cannot use relative mode!");
         }
     }
@@ -1743,9 +1768,11 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
         XojPdfPageSPtr p = doc->getPdfPage(selected);
         page->setSize(p->getWidth(), p->getHeight());
     } else {
+        doc->unlock();
         return luaL_error(L, "Pdf page number %d does not exist!", selected + 1);
     }
 
+    doc->unlock();
     return 0;
 }
 
@@ -2135,6 +2162,7 @@ static int applib_getDocumentStructure(lua_State* L) {
     //   -1 = pages table/array
 
     // add pages
+    doc->lock();
     for (size_t p = 1; p <= doc->getPageCount(); ++p) {
         auto page = doc->getPage(p - 1);
         lua_pushinteger(L, as_signed(p));  // key of the page
@@ -2213,6 +2241,7 @@ static int applib_getDocumentStructure(lua_State* L) {
     lua_pushstring(L, doc->getFilepath().string().c_str());  // value
     lua_setfield(L, -2, "xoppFilename");                     // insert
 
+    doc->unlock();
     return 1;
 }
 
@@ -2720,6 +2749,7 @@ static int applib_addImages(lua_State* L) {
     auto cntParams = static_cast<int>(lua_rawlen(L, 2));
 
     std::vector<Element*> images{};
+    control->getDocument()->lock();
     for (int imgParam{1}; imgParam <= cntParams; imgParam++) {
 
         lua_pushinteger(L, imgParam);
@@ -2753,16 +2783,19 @@ static int applib_addImages(lua_State* L) {
 
         int maxHeightParam = static_cast<int>(luaL_optinteger(L, -3, -1));
         if (maxHeightParam <= 0 && maxHeightParam != -1) {
+            control->getDocument()->unlock();
             return luaL_error(L, "Invalid height given, must be positive integer or -1 to deactivate manual setting.");
         }
 
         int maxWidthParam = static_cast<int>(luaL_optinteger(L, -4, -1));
         if (maxWidthParam <= 0 && maxWidthParam != -1) {
+            control->getDocument()->unlock();
             return luaL_error(L, "Invalid width given, must be positive integer or -1 to deactivate manual setting.");
         }
 
         double scale = luaL_optnumber(L, -2, 1);
         if (scale <= 0) {
+            control->getDocument()->unlock();
             return luaL_error(L, "Invalid scale given, must be a positive number.");
         }
 
@@ -2776,9 +2809,11 @@ static int applib_addImages(lua_State* L) {
         size_t dataLen = 0;
         const char* data = luaL_optlstring(L, -7, nullptr, &dataLen);
         if (!path && !data) {
+            control->getDocument()->unlock();
             return luaL_error(L, "no 'path' parameter and no image 'data' was provided.");
         }
         if (path && data) {
+            control->getDocument()->unlock();
             return luaL_error(L,
                               "both 'path' parameter and image 'data' were provided. Only one should be specified. ");
         }
@@ -2866,6 +2901,7 @@ static int applib_addImages(lua_State* L) {
     lua_pop(L, 1);
     handleUndoRedoActionHelper(L, control, allowUndoRedoAction, images);
 
+    control->getDocument()->unlock();
     return cntParams;
 }
 
