@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-17 16:13\n"
+"POT-Creation-Date: 2024-10-18 08:32+0000\n"
+"PO-Revision-Date: 2024-10-18 19:16\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -647,19 +647,19 @@ msgstr "%F-Nota-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_anotado"
 
-#: ../src/core/control/tools/EditSelection.cpp:456
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
 msgstr "Dispor"
 
-#: ../src/core/control/tools/EditSelection.cpp:471
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
 msgstr "Traer cara adiante"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
 msgstr "Enviar ao fondo"
 
-#: ../src/core/control/tools/EditSelection.cpp:489
+#: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
 msgstr "Enviar cara atrás"
 
@@ -1435,12 +1435,12 @@ msgid "Print"
 msgstr "Imprimir"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "Desfacer"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "Refacer"
 
@@ -1962,23 +1962,23 @@ msgstr "Mover páxina cara abaixo"
 msgid "Edit text"
 msgstr "Editar o texto"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:112
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Non foi posíbel desfacer «{1}»\n"
 "Algo foi mal… Remita un informe de erro…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:138
+#: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Non foi posíbel refacer «{1}»\n"
 "Algo foi mal… Remita un informe de erro…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:172
+#: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
 msgstr "Desfacer: "
 
-#: ../src/core/undo/UndoRedoHandler.cpp:184
+#: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
 msgstr "Refacer: "
 
