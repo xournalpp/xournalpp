@@ -2282,6 +2282,34 @@ static int applib_scrollToPos(lua_State* L) {
 }
 
 /**
+ * Obtains the label of the specified page in the pdf background.
+ *
+ * @param page integer
+ * @return string|nil Returns the label on success and (nil, message) if page number is out of range.
+ * @return string
+ *
+ * Example 1: local label = app.getPageLabel(10)
+ ' obtains the page label of page 10 in the background pdf
+ **/
+static int applib_getPageLabel(lua_State* L) {
+    const Plugin* plugin = Plugin::getPluginFromLua(L);
+    const Control* control = plugin->getControl();
+    const XojPdfDocument& doc = control->getDocument()->getPdfDocument();
+
+    const size_t pagenr = static_cast<size_t>(luaL_checkinteger(L, 1)) - 1;
+
+    if (pagenr >= doc.getPageCount()) {
+        lua_pushnil(L);
+        lua_pushfstring(L, "page nr %zu is out of range", pagenr);
+        return 2;
+    }
+
+    std::string label = doc.getPage(pagenr)->getPageLabel();
+    lua_pushlstring(L, label.c_str(), label.length());
+    return 1;
+}
+
+/**
  * Sets the current page as indicated (without scrolling)
  * The page number passed is clamped to the range between first page and last page
  *
@@ -2966,6 +2994,7 @@ static int applib_getImages(lua_State* L) {
  */
 static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remove this deprecated function
                                   {"openDialog", applib_openDialog},
+                                  {"getPageLabel", applib_getPageLabel},
                                   {"glib_rename", applib_glib_rename},
                                   {"saveAs", applib_saveAs},  // Todo(gtk4) remove this deprecated function
                                   {"fileDialogSave", applib_fileDialogSave},
