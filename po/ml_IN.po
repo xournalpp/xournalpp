@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-18 10:54\n"
+"PO-Revision-Date: 2024-10-18 18:57\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -1708,7 +1708,7 @@ msgstr "നിങ്ങൾക്ക് തിരഞ്ഞെടുക്കു�
 #: ../src/core/gui/sidebar/Sidebar.cpp:88
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
-"Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
+"Tip: You can select Journal → Paper Background → With PDF Background to insert a PDF page."
 msgstr "നിങ്ങളുടെ നിലവിലുള്ള ഡോക്യുമെന്റിൽ പിഡിഎഫ് താൾ സംഖ്യ {1} ഇല്ല. ഈ താൾ ഡോക്യൂമെന്റിലേക്ക് ചേർക്കേണമോ?\n\n"
 "അഭിപ്രായം: നിങ്ങൾക്ക് ജേർണൽ (Journal) → പേപ്പർ പശ്ചാത്തലം (Paper Background) → പിഡിഎഫ് പശ്ചാത്തലം (PDF Background) ഉപയോഗിച്ച് ഒരു പിഡിഎഫ് താൾ ചേർക്കാവുന്നതാണ്."
 
