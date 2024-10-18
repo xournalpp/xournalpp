@@ -20,7 +20,7 @@ uninstall_homebrew_template: &UNINSTALL_HOMEBREW
     sudo rm -rf /opt/homebrew
 
 
-build_binary_blob_task:
+build_binary_blob_for_macos_arm_task:
   << : *UNINSTALL_HOMEBREW
   create_devroot_script: |
     sudo mkdir -p /opt/devroot && sudo chown "$USER":admin /opt/devroot
@@ -35,10 +35,10 @@ build_binary_blob_task:
   upload_binary_blob_artifacts:
     path: "blobdir/*"
 
-build_xournalpp_task:
+build_xournalpp_for_macos_arm_task:
   << : *UNINSTALL_HOMEBREW
   depends_on:
-    - build_binary_blob
+    - build_binary_blob_for_macos_arm
   env:
     PATH: "/opt/devroot/.local/bin:/opt/devroot/gtk/inst/bin:${PATH}"
     # Based on $PKG_CONFIG_PATH in the jhbuild shell
