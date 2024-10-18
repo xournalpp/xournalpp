@@ -58,12 +58,14 @@ build_xournalpp_for_macos_arm_task:
     curl -L -o ninja-mac.zip https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-mac.zip
     unzip ninja-mac.zip -d /opt/devroot/gtk/inst/bin
     rm ninja-mac.zip
-  build_script: |
+  build_and_test_script: |
     mkdir -p build
     cd build
-    cmake .. -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    cmake .. -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on
     cmake --build .
     cmake --install . --prefix /opt/devroot/gtk/inst
+    cmake --build . --target test-units
+    CI=true ctest --verbose
   pkgconf_symlink_script: | # used for gtk-mac-bundler
     ln -sf $(which pkgconf) /opt/devroot/gtk/inst/bin/pkg-config
   package_script: |
