@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-18 19:17\n"
+"PO-Revision-Date: 2024-10-19 09:24\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -1047,7 +1047,7 @@ msgstr "Sidnummer"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "Sidtypsformat är PageTypeFormat::Kopiera - konverterad till PageTypeFormat::Enklare för att undvika skadad fil"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
@@ -1103,7 +1103,7 @@ msgstr "Spela in ljud / stoppa inspelning"
 
 #: ../src/core/control/Control.cpp:991
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "Inspelaren kunde inte startas."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/undo/UndoRedoHandler.cpp:194
@@ -1225,7 +1225,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "Välj Multi-Layer Rect"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1246,11 +1246,11 @@ msgstr "Markera objekt"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Välj PDF-område Text"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Välj PDF-text"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
@@ -1262,7 +1262,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Välj Pdf-text"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
@@ -1315,7 +1315,7 @@ msgstr "Markera region"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 msgid "Selection Combo"
-msgstr ""
+msgstr "Val av kombo"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Send Bugreport"
@@ -1431,7 +1431,7 @@ msgstr "Text"
 #: ../src/core/gui/SearchBar.cpp:79
 #, c-format
 msgid "Text %zu times found on this page"
-msgstr ""
+msgstr "Text %zu gånger hittades på denna sida"
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
@@ -1496,7 +1496,7 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:303
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "Formeln är tom när den återges eller är ogiltig."
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
@@ -1540,7 +1540,7 @@ msgstr "Verktyg - ändra inte"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "Verktygsfältet hittade: {1}"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
@@ -1548,7 +1548,7 @@ msgstr "Verktygsfält"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "Försöker spara det aktuella öppna dokumentet…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -2051,7 +2051,8 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Fyll i opacitetsinställningar</b>\n"
+"Välj opacitet för att fylla färg"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2063,14 +2064,17 @@ msgstr "<b>Sidstorlek</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
-msgstr ""
+msgstr "<b>Separatorer</b>"
 
 #: ../ui/settings.glade:5898
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"Använda kryssrutan ljudsystemet kan inaktiveras eller aktiveras för framtida sessioner (omstart krävs). \n"
+"Inaktivera ljud för en enda session kan uppnås med hjälp av flaggan <tt>--disable-audio</tt> på kommandoraden.\n"
+"</i>"
 
 #: ../ui/settings.glade:955
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2099,7 +2103,8 @@ msgstr "<i>Exempel:</i> 1-3 eller 1,3,5-7 etc."
 #: ../ui/settings.glade:363
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Om dokumentet redan sparats kan du hitta det i samma mapp med tillägget .autosave. oj\n"
+"Om filen ännu inte har sparats kan du hitta den i ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4632
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2124,7 +2129,8 @@ msgstr ""
 #: ../ui/settings.glade:5571
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Re-render PDF-bakgrunder oftare vid zoomning för bättre renderad kvalitet. \n"
+"<b>Obs:</b> Detta bör inte påverka utskriftskvaliteten.</i>"
 
 #: ../ui/settings.glade:6494
 msgid "<i>Select language (requires restart)</i>"
@@ -2198,11 +2204,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4685
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Lägg till ytterligare horisontellt utrymme av"
 
 #: ../ui/settings.glade:4663
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Lägg till ytterligare vertikal yta av"
 
 #: ../ui/settings.glade:5066
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2519,7 +2525,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Dra och släpp komponenter fom här till verktygsfält och tillbaka."
 
 #: ../ui/settings.glade:1254 ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
@@ -2555,7 +2561,7 @@ msgstr ""
 
 #: ../ui/main.glade:2985
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Redigera (inte implementerat ännu)"
 
 #: ../ui/latexSettings.glade:606
 msgid "Editor settings"
@@ -3533,7 +3539,8 @@ msgstr ""
 #: ../ui/settings.glade:2697
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "När du ritar med beröring kan tvåfingersgester som är avsedda att panorera vyn istället få den att zooma och orsaka prestandaproblem. \n"
+"Denna inställning kan göra det lättare att rita med touch. "
 
 #: ../ui/settings.glade:2171
 msgctxt "eraser is only visible when floating"
@@ -3668,7 +3675,7 @@ msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Standardverktyg"
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
