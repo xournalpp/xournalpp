@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-19 09:23\n"
+"PO-Revision-Date: 2024-10-19 18:14\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3389,7 +3389,7 @@ msgstr "Arată opțiunile la pornire"
 
 #: ../ui/main.glade:589 ../ui/settings.glade:3988 ../ui/settings.glade:4087
 msgid "Show Sidebar"
-msgstr "Arată miniaturile"
+msgstr "Arată Panoul lateral"
 
 #: ../ui/settings.glade:3972 ../ui/settings.glade:4055
 msgid "Show Toolbar"
@@ -3405,7 +3405,7 @@ msgstr "Arată calea și numele fișierului în banda de sus"
 
 #: ../ui/settings.glade:3641
 msgid "Show sidebar on the right side"
-msgstr "Arată miniaturile în dreaptă"
+msgstr "Arată panoul lateral în dreaptă"
 
 #: ../ui/settings.glade:3657
 msgid "Show vertical scrollbar on the left side"
@@ -3413,7 +3413,7 @@ msgstr "Arată bara verticală de răsfoire în stânga"
 
 #: ../ui/settings.glade:3761
 msgid "Sidebar"
-msgstr "Miniaturi"
+msgstr "Panoul lateral"
 
 #: ../ui/settings.glade:1081
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
