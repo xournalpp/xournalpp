@@ -6,6 +6,7 @@
 #include <glib.h>         // for g_list_free, GList
 
 #include "control/settings/Settings.h"  // for Settings
+#include "gui/PaperFormatUtils.h"       // for PaperFormatUtils
 #include "model/FormatDefinitions.h"    // for FormatUnits, XOJ_UNITS, XOJ_U...
 #include "util/GListView.h"             // for GListView, GListView<>::GList...
 #include "util/StringUtils.h"           // for StringUtils
@@ -17,6 +18,7 @@ constexpr auto UI_FILE = "pageFormat.glade";
 constexpr auto UI_DIALOG_NAME = "pageFormatDialog";
 
 using namespace xoj::popup;
+using xoj::util::GtkPaperSizeUPtr;
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height,
                            std::function<void(double, double)> callback):
@@ -43,32 +45,12 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
     }
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbUnit), this->selectedScale);
 
-    GtkListStore* store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_POINTER);
-    gtk_combo_box_set_model(paperTemplatesCombo, GTK_TREE_MODEL(store));
-    g_object_unref(store);
 
-    GtkCellRenderer* cell = gtk_cell_renderer_text_new();
-    gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(paperTemplatesCombo), cell, true);
-    gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(paperTemplatesCombo), cell, "text", 0, nullptr);
-
-    loadPageFormats();
-
-    for (auto& size: paperSizes) {
-        std::string displayName = gtk_paper_size_get_display_name(size.get());
-        if (StringUtils::startsWith(displayName, "custom_")) {
-            displayName = displayName.substr(7);
-        }
-
-        GtkTreeIter iter;
-        gtk_list_store_append(store, &iter);
-        gtk_list_store_set(store, &iter, 0, displayName.c_str(), -1);
-        gtk_list_store_set(store, &iter, 1, size.get(), -1);
-    }
-
-    GtkTreeIter iter;
-    gtk_list_store_append(store, &iter);
-    gtk_list_store_set(store, &iter, 0, _("Custom"), -1);
-    gtk_list_store_set(store, &iter, 1, nullptr, -1);
+    PaperFormatUtils::loadDefaultPaperSizes(paperSizes);
+    paperSizes.emplace_back(_("Custom"));
+    PaperFormatUtils::fillPaperFormatDropDown(paperSizes, paperTemplatesCombo);
+    paperSizes.pop_back();  // Remove the custom option to prevent it from being matched in the
+                            // spinValueChangedCb function, as its presence would lead to errors
 
     reset(this);
 
@@ -90,23 +72,6 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
                                  gtk_window_close(self->window.get());
                              }),
                              this);
-}
-
-void FormatDialog::loadPageFormats() {
-    GList* default_sizes = gtk_paper_size_get_paper_sizes(false);
-    for (auto& s: GListView<GtkPaperSize>(default_sizes)) {
-        std::string name = gtk_paper_size_get_name(&s);
-        if (name == GTK_PAPER_NAME_A3 || name == GTK_PAPER_NAME_A4 || name == GTK_PAPER_NAME_A5 ||
-            name == GTK_PAPER_NAME_LETTER || name == GTK_PAPER_NAME_LEGAL) {
-            paperSizes.emplace_back(&s, gtk_paper_size_free);
-            continue;
-        }
-        gtk_paper_size_free(&s);
-    }
-    g_list_free(default_sizes);
-    // Name format: ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf
-    paperSizes.emplace_back(gtk_paper_size_new("custom_16x9_320x180mm"), gtk_paper_size_free);
-    paperSizes.emplace_back(gtk_paper_size_new("custom_4x3_320x240mm"), gtk_paper_size_free);
 }
 
 void FormatDialog::setOrientation(Orientation orientation) {
@@ -137,8 +102,9 @@ void FormatDialog::spinValueChangedCb(FormatDialog* dlg) {
 
     int i = 0;
     for (auto& size: dlg->paperSizes) {
-        double w = gtk_paper_size_get_width(size.get(), GTK_UNIT_POINTS);
-        double h = gtk_paper_size_get_height(size.get(), GTK_UNIT_POINTS);
+        xoj_assert(std::holds_alternative<GtkPaperSizeUPtr>(size));
+        double w = gtk_paper_size_get_width(std::get<GtkPaperSizeUPtr>(size).get(), GTK_UNIT_POINTS);
+        double h = gtk_paper_size_get_height(std::get<GtkPaperSizeUPtr>(size).get(), GTK_UNIT_POINTS);
 
         if ((static_cast<int>(w - width) == 0 && static_cast<int>(h - height) == 0) ||
             (static_cast<int>(h - width) == 0 && static_cast<int>(w - height) == 0)) {
