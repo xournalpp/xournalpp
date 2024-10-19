@@ -39,12 +39,12 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
     drawTypes.push_back(new ToolDrawType(_("Draw Double Arrow"), toolMenuHandler->iconName("draw-double-arrow"),
                                          ACTION_TOOL_DRAW_DOUBLE_ARROW));
     drawTypes.push_back(new ToolDrawType(_("Draw Line"), toolMenuHandler->iconName("draw-line"), ACTION_RULER));
-    drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),
+    drawTypes.push_back(new ToolDrawType(_("Draw Coordinate System"),
                                          toolMenuHandler->iconName("draw-coordinate-system"),
                                          ACTION_TOOL_DRAW_COORDINATE_SYSTEM));
     drawTypes.push_back(
             new ToolDrawType(_("Draw Spline"), toolMenuHandler->iconName("draw-spline"), ACTION_TOOL_DRAW_SPLINE));
-    drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"), toolMenuHandler->iconName("shape-recognizer"),
+    drawTypes.push_back(new ToolDrawType(_("Shape Recognizer"), toolMenuHandler->iconName("shape-recognizer"),
                                          ACTION_SHAPE_RECOGNIZER));
 
     for (ToolDrawType* t: drawTypes) { createMenuItem(t->name, t->icon, t->type); }

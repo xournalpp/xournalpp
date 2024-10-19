@@ -5342,7 +5342,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                   <object class="GtkLabel">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">Stroke Recognizer</property>
+                                    <property name="label" translatable="yes">Shape Recognizer</property>
                                   </object>
                                 </child>
                               </object>
