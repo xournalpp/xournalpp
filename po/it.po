@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-19 11:08\n"
+"PO-Revision-Date: 2024-10-19 12:08\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -343,7 +343,7 @@ msgstr "Personalizza barra degli strumenti"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
 msgid "Customized"
-msgstr "Personalizzato"
+msgstr "Personalizzate"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Cut"
@@ -800,7 +800,7 @@ msgstr "A quadretti"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Grid Snapping"
-msgstr "Forza alla Griglia"
+msgstr "Aggancia alla griglia"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
@@ -1176,7 +1176,7 @@ msgstr "Rotazione"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Rotation Snapping"
-msgstr "Rotazione Forzata"
+msgstr "Rotazione forzata"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
