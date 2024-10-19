@@ -1,9 +1,10 @@
 #include "Sidebar.h"
 
-#include <cassert>    // for assert
-#include <cstdint>    // for int64_t
-#include <memory>     // for make_shared
-#include <string>     // for string
+#include <cassert>  // for assert
+#include <cstdint>  // for int64_t
+#include <memory>   // for make_shared
+#include <regex>
+#include <string>  // for string
 
 #include <config-features.h>
 #include <gdk/gdk.h>      // for gdk_display_get...
@@ -82,14 +83,22 @@ void Sidebar::buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* button
 
 void Sidebar::addPage(AbstractSidebarPage* page) { this->pages.push_back(page); }
 
+/// Remove mnemonic indicators in menu labels
+static std::string removeMnemonics(std::string orig) {
+    std::regex reg("_(.)");
+    return std::regex_replace(orig, reg, "$1");
+}
+
 void Sidebar::askInsertPdfPage(size_t pdfPage) {
+    // Must match the labels in main.glade and PageTypeHandler.cpp
+    std::string pathToMenuEntry = removeMnemonics(_("_Journal") + std::string(" → ") + _("Paper B_ackground") +
+                                                  std::string(" → ") + _("With PDF background"));
     GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
                                                GTK_BUTTONS_NONE, "%s",
                                                FC(_F("Your current document does not contain PDF Page no {1}\n"
                                                      "Would you like to insert this page?\n\n"
-                                                     "Tip: You can select Journal → Paper Background → PDF Background "
-                                                     "to insert a PDF page.") %
-                                                  static_cast<int64_t>(pdfPage + 1)));
+                                                     "Tip: You can select {2} to insert a PDF page.") %
+                                                  static_cast<int64_t>(pdfPage + 1) % pathToMenuEntry));
 
     using Responses = enum { CANCEL = 1, AFTER = 2, END = 3 };
 
