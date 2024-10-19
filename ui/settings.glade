@@ -1251,8 +1251,8 @@ Illegal characters are replaced with "_"</property>
                                           <object class="GtkLabel" id="lbStabilizerDrag">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="tooltip-text" translatable="yes">Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization.</property>
-                                            <property name="label" translatable="yes">Drag</property>
+                                            <property name="tooltip-text" translatable="yes" context="Drag = Noun: force opposing the movement">Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization.</property>
+                                            <property name="label" translatable="yes" context="Noun: force opposing the movement">Drag</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">2</property>
@@ -1283,8 +1283,8 @@ Illegal characters are replaced with "_"</property>
                                           <object class="GtkLabel" id="lbStabilizerMass">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="tooltip-text" translatable="yes">Mass: the higher the mass, the more inertia and the more stabilization</property>
-                                            <property name="label" translatable="yes">Mass</property>
+                                            <property name="tooltip-text" translatable="yes" context="Mass = Noun: physics term, related to weight">Mass: the higher the mass, the more inertia and the more stabilization</property>
+                                            <property name="label" translatable="yes" context="Noun: physics term, related to weight">Mass</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">2</property>
@@ -3190,7 +3190,7 @@ This setting can make it easier to draw with touch. </property>
                                                             <property name="active">0</property>
                                                             <items>
                                                             <item id="iconsColor" translatable="yes">Color</item>
-                                                            <item id="iconsLucide" translatable="yes">Lucide</item>
+                                                            <item id="iconsLucide" translatable="no">Lucide</item>
                                                             </items>
                                                           </object>
                                                           <packing>
@@ -4389,7 +4389,7 @@ This setting can make it easier to draw with touch. </property>
                                           <object class="GtkLabel" id="sid126">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">%</property>
+                                            <property name="label" translatable="no">%</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">2</property>
@@ -4400,7 +4400,7 @@ This setting can make it easier to draw with touch. </property>
                                           <object class="GtkLabel" id="sid127">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">%</property>
+                                            <property name="label" translatable="no">%</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">2</property>
@@ -5314,7 +5314,6 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                 <property name="name">spStrokeRecognizerMinSize</property>
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">True</property>
-                                                <property name="text" translatable="yes">0.20</property>
                                                 <property name="adjustment">adjustmentStrokeRecognizerMinSize</property>
                                                 <property name="climb-rate">2</property>
                                                 <property name="value">25</property>
@@ -5372,7 +5371,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                         <property name="column-spacing">5</property>
                                         <child>
                                           <object class="GtkCheckButton" id="cbStrokeFilterEnabled">
-                                            <property name="label" translatable="yes">Enable Tap action</property>
+                                            <property name="label" translatable="yes" context="Short taps/clicks will trigger special actions">Enable Tap action</property>
                                             <property name="name">cbStrokeFilterEnabled</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
@@ -5390,7 +5389,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           <object class="GtkLabel" id="sid156">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">Ignore Time (ms)</property>
+                                            <property name="label" translatable="yes">Time limit (ms)</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">1</property>
@@ -5402,7 +5401,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="name">spStrokeIgnoreTime</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
-                                            <property name="tooltip-markup" translatable="yes">How short (time)  AND...
+                                            <property name="tooltip-markup" translatable="yes">Time limit: taps lasting longer will not trigger a special action
 
 &lt;i&gt;Recommended: 150ms&lt;/i&gt;</property>
                                             <property name="valign">start</property>
@@ -5422,7 +5421,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="name">spStrokeIgnoreLength</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
-                                            <property name="tooltip-markup" translatable="yes">How short (screen mm)  of the stroke  AND...
+                                            <property name="tooltip-markup" translatable="yes">Size limit: taps moving further away will not trigger a special action
 
 &lt;i&gt;Recommended: 1 mm&lt;/i&gt;</property>
                                             <property name="valign">start</property>
@@ -5442,7 +5441,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           <object class="GtkLabel" id="sid157">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">Max Length (mm)</property>
+                                            <property name="label" translatable="yes">Length limit (mm)</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">2</property>
@@ -5453,7 +5452,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           <object class="GtkLabel" id="sid158">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">Successive (ms)</property>
+                                            <property name="label" translatable="yes">Frequency limit (ms)</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">3</property>
@@ -5465,7 +5464,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="name">spStrokeSuccessiveTime</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
-                                            <property name="tooltip-markup" translatable="yes">... AND How much time must have passed since last stroke.
+                                            <property name="tooltip-markup" translatable="yes">Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.
 
 &lt;i&gt;Recommended: 500ms&lt;/i&gt;</property>
                                             <property name="valign">start</property>
@@ -6439,7 +6438,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
               <object class="GtkLabel" id="latexTabLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">LaTeX</property>
+                <property name="label" translatable="no">LaTeX</property>
               </object>
               <packing>
                 <property name="position">11</property>
