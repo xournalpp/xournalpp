@@ -537,7 +537,7 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("DRAW_DOUBLE_ARROW", ACTION_TOOL_DRAW_DOUBLE_ARROW, GROUP_RULER, false, "draw-double-arrow",
                      _("Draw Double Arrow"));
     addCustomItemTgl("DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false,
-                     "draw-coordinate-system", _("Draw coordinate system"));
+                     "draw-coordinate-system", _("Draw Coordinate System"));
     addCustomItemTgl("RULER", ACTION_RULER, GROUP_RULER, false, "draw-line", _("Draw Line"));
     addCustomItemTgl("DRAW_SPLINE", ACTION_TOOL_DRAW_SPLINE, GROUP_RULER, false, "draw-spline", _("Draw Spline"));
 
