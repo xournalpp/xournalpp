@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-18 19:17\n"
+"PO-Revision-Date: 2024-10-19 09:23\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -668,7 +668,7 @@ msgstr ""
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Falha ao carregar a imagem, não foi possível determinar o tamanho da imagem!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -829,7 +829,7 @@ msgstr "Imagens"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Inserir uma cópia da camada atual abaixo"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
 msgid "Insert a copy of the current page below"
@@ -1063,7 +1063,7 @@ msgstr "Número da página"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "O formato do tipo de página é PageTypeFormat::Copiar - convertido para PageTypeFormat::Simples para evitar danificados arquivos"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
@@ -1241,7 +1241,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "Selecionar Multi-camada Rect"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1262,11 +1262,11 @@ msgstr "Selecionar Objeto"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Selecionar Texto de Área do PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Selecionar texto PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
@@ -1278,7 +1278,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Selecionar Texto Pdf"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
@@ -1331,7 +1331,7 @@ msgstr "Selecionar região"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 msgid "Selection Combo"
-msgstr ""
+msgstr "Combo de seleção"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Send Bugreport"
@@ -1421,19 +1421,19 @@ msgstr "Ficheiros suportados"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Trocar a camada atual pela acima"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Trocar a camada atual pela abaixo"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Trocar a página atual pela acima"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Trocar a página atual pela abaixo"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
@@ -2068,7 +2068,8 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Preencha as configurações de opacidade</b>\n"
+"Selecione opacidade para a cor de preenchimento"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2080,14 +2081,17 @@ msgstr "<b>Tamanho da página</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
-msgstr ""
+msgstr "Separadores <b></b>"
 
 #: ../ui/settings.glade:5898
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"Usando a caixa de seleção o sistema de áudio pode ser desativado ou habilitado para futuras sessões (é necessário reiniciar). \n"
+"Desabilitar áudio para uma única sessão pode ser alcançado usando a bandeira <tt>--disable-audio</tt> na linha de comando.\n"
+"</i>"
 
 #: ../ui/settings.glade:955
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2141,7 +2145,8 @@ msgstr ""
 #: ../ui/settings.glade:5571
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Reformatar fundos do PDF com mais frequência enquanto estiver fazendo zoom para uma melhor qualidade. \n"
+"<b>Nota:</b> Isto não deve afetar a qualidade da impressão.</i>"
 
 #: ../ui/settings.glade:6494
 msgid "<i>Select language (requires restart)</i>"
@@ -2536,7 +2541,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Arraste e solte o rastro dos componentes aqui para as barras de ferramentas e de volta."
 
 #: ../ui/settings.glade:1254 ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
@@ -2795,7 +2800,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Tema do Ícone:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2939,7 +2944,7 @@ msgstr "Multiplicador máximo"
 
 #: ../ui/main.glade:2903
 msgid "Merge Down"
-msgstr ""
+msgstr "Mesclar para baixo"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
@@ -3125,7 +3130,7 @@ msgstr ""
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "Gerenciador de _Plugin"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -3550,7 +3555,8 @@ msgstr ""
 #: ../ui/settings.glade:2697
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Ao desenhar com toque, gestos de dois dedos destinados a virar a vista podem fazer com que o zoom cause problemas de desempenho. \n"
+"Esta configuração pode tornar mais fácil desenhar com toque. "
 
 #: ../ui/settings.glade:2171
 msgctxt "eraser is only visible when floating"
@@ -3685,7 +3691,7 @@ msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Ferramentas Padrão"
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
@@ -3769,7 +3775,7 @@ msgstr "_Caneta"
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
-msgstr ""
+msgstr "_Plugin"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
