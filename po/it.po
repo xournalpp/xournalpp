@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-19 09:23\n"
+"PO-Revision-Date: 2024-10-19 11:08\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -193,7 +193,7 @@ msgstr "Cancella lista"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "Colore sconosciuto: \"{1}\" (non definito nella lista di default)"
+msgstr "Colore sconosciuto: \"{1}\" (non esiste nella lista predefinita)!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:553
 msgid "Compass"
@@ -360,7 +360,7 @@ msgstr "Cancella"
 
 #: ../src/core/control/XournalMain.cpp:208
 msgid "Delete Logfile"
-msgstr "Cancella Logfile"
+msgstr "Elimina registro"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
 msgid "Delete current page"
@@ -398,9 +398,9 @@ msgstr "Visualizza opzioni avanzate di esportazione"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr "Non aprire file di Autosalvataggio. Potrebbero essere sovrascritti!\n"
-"Copia i files in un'altra cartella.\n"
-"I files nella cartella {1} non possono essere aperti."
+msgstr "Non aprire file salvati automaticamente. Potrebbero essere sovrascritti!\n"
+"Copia i file in un'altra cartella.\n"
+"I file della cartella {1} non possono essere aperti."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -1004,11 +1004,11 @@ msgstr "Apri Immagine"
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Open Logfile"
-msgstr "Apri Logfile"
+msgstr "Apri registro"
 
 #: ../src/core/control/XournalMain.cpp:207
 msgid "Open Logfile directory"
-msgstr "Apri cartella di log"
+msgstr "Apri la cartella dei registri"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
