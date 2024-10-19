@@ -37,7 +37,7 @@ public:
     /**
      *  show(x,y): Show Toolbox at centered at x,y relative to main window.
      */
-    void show(int x, int y);
+    void show(double x, double y);
 
     /**
      * showForConfiguration
@@ -62,7 +62,7 @@ private:
     /**
      * Callback to hide floating Toolbar when mouse leaves it
      */
-    static void handleLeaveFloatingToolbox(GtkWidget* floatingToolbox, GdkEvent* event, FloatingToolbox* self);
+    static void handleLeaveFloatingToolbox(GtkEventControllerMotion* ectrl, FloatingToolbox* self);
 
     /**
      * Show the Floating Toolbox
@@ -76,10 +76,10 @@ private:
     bool floatingToolboxActivated();
 
     /**
-     * Return number of widgets in toolbox.
+     * Whether there are items in the toolbox.
      * Note this includes non-tools such as spacers and separators.
      */
-    int countWidgets();
+    bool hasWidgets();
 
 
 private:
@@ -89,7 +89,7 @@ private:
     /**
      * Communicating with getOverlayPosition callback
      * */
-    int floatingToolboxX = 0;
-    int floatingToolboxY = 0;
+    double floatingToolboxX = 0;
+    double floatingToolboxY = 0;
     FloatingToolBoxState floatingToolboxState = recalcSize;
 };

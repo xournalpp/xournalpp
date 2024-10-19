@@ -41,14 +41,17 @@ void PreviewJob::initGraphics() {
     cairo_surface_set_device_scale(buffer.get(), DPIscaling, DPIscaling);
     cr.reset(cairo_create(buffer.get()), xoj::util::adopt);
     double zoom = this->sidebarPreview->sidebar->getZoom();
-    cairo_translate(cr.get(), Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
     cairo_scale(cr.get(), zoom, zoom);
 }
 
 void PreviewJob::finishPaint() {
-    auto lock = std::lock_guard(this->sidebarPreview->drawingMutex);
-    this->sidebarPreview->buffer = std::move(this->buffer);
-    Util::execInUiThread([btn = this->sidebarPreview->button]() { gtk_widget_queue_draw(btn.get()); });
+    auto w = cairo_image_surface_get_width(buffer.get());
+    auto h = cairo_image_surface_get_height(buffer.get());
+    xoj::util::GObjectSPtr<GdkPixbuf> pixbuf(gdk_pixbuf_get_from_surface(buffer.get(), 0, 0, w, h), xoj::util::adopt);
+
+    xoj::util::WidgetSPtr pic(gtk_picture_new_for_pixbuf(pixbuf.get()), xoj::util::adopt);
+    gtk_widget_set_size_request(pic.get(), this->sidebarPreview->imageWidth, this->sidebarPreview->imageHeight);
+    this->sidebarPreview->setMiniature(std::move(pic));
 }
 
 void PreviewJob::drawPage() {

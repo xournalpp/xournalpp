@@ -1,5 +1,6 @@
 #include "TouchDisableX11.h"
 
+#undef X11_ENABLED
 #ifdef X11_ENABLED
 
 #include <X11/Xatom.h>          // for XA_INTEGER

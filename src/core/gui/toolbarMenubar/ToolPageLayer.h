@@ -20,21 +20,21 @@
 #include "model/Layer.h"                      // for Layer, Layer::Index
 #include "util/raii/GObjectSPtr.h"            // for WidgetSPtr
 
-#include "AbstractToolItem.h"  // for AbstractToolItem
+#include "ItemWithNamedIcon.h"  // for ItemWithNamedIcon
 
 class LayerController;
 class IconNameHelper;
 
-class ToolPageLayer: public AbstractToolItem {
+class ToolPageLayer: public ItemWithNamedIcon {
 public:
     ToolPageLayer(std::string id, LayerController* lc, IconNameHelper iconNameHelper);
     ~ToolPageLayer() override;
 
 public:
     std::string getToolDisplayName() const override;
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
 
-    GtkWidget* getNewToolIcon() const override;
+    const char* getIconName() const override;
 
 private:
     LayerController* lc = nullptr;

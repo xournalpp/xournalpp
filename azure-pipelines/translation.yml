@@ -9,7 +9,7 @@ stages:
   jobs:
   - job: 'Linux'
     pool:
-      vmImage: 'ubuntu-20.04'
+      vmImage: 'ubuntu-22.04'
     displayName: 'Update translation template'
     steps:
     - bash: |

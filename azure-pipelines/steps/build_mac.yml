@@ -12,7 +12,7 @@ steps:
       sudo mkdir "${{parameters.generation_path}}"
       sudo chown $USER "${{parameters.generation_path}}"
       cd "${{parameters.generation_path}}"
-      curl -L -O https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/macos-10.15-jhbuild/gtk/gtk-bin.tar.gz.a[a-b]
+      curl -L -O https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/macos-10.15-gtk4/gtk/gtk-bin.tar.gz.a[a-b]
       cat gtk-bin.tar.gz.* | tar -xz
     displayName: 'Unpack GTK'
   - bash: |
