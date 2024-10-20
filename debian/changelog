@@ -1,8 +1,12 @@
-xournalpp (1.2.4~dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.4-1) unstable; urgency=medium
 
-  * 
+  * Fixed various dark/light theme inconsistencies
+  * Improved edge panning for large selections
+  * Fixed various crashes, freezes and memory leaks
+  * MacOS: Added support for opening xopp-files from Finder
+  * Added builds for Ubuntu 24.04 and MacOS ARM
 
- -- Roland Lötscher <roland_loetscher@hotmail.com>  Thu, 29 Feb 2024 13:22:42 +0100
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Sun, 20 Oct 2024 08:02:11 +0200
 
 xournalpp (1.2.3-1) unstable; urgency=medium
 
