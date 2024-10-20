@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-20 16:43\n"
+"PO-Revision-Date: 2024-10-20 17:42\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -27,7 +27,7 @@ msgstr "\n\n"
 msgid "\n"
 " Do you want to continue?"
 msgstr "\n"
-"Vols continuar?"
+"Esteu segur que voleu continuar?"
 
 #: ../src/core/control/Control.cpp:2440
 msgid "\n"
@@ -155,7 +155,7 @@ msgstr "Porta al davant"
 
 #: ../src/core/control/tools/EditSelection.cpp:406
 msgid "Bring to front"
-msgstr "Portar al davant"
+msgstr "Mou a dalt de tot"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:36
 msgid "Built on"
@@ -211,11 +211,11 @@ msgstr "Copia"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Copy current"
-msgstr "Copiar actual"
+msgstr "Copia l'actual"
 
 #: ../src/core/undo/CopyUndoAction.cpp:62
 msgid "Copy page"
-msgstr "Copiar pàgina"
+msgstr "Copia la pàgina"
 
 #: ../src/util/PathUtil.cpp:255
 msgid "Could not create folder: {1}\n"
@@ -376,7 +376,7 @@ msgstr "Elimina una capa"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Delete this layer"
-msgstr "Eliminar aquesta capa"
+msgstr "Elimina aquesta capa"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
 msgid "Delete this page"
@@ -481,7 +481,7 @@ msgstr "Dibuix ‒ sense canviar-ne el tipus"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 msgid "Drawing Type Combo"
-msgstr "Caixa de tria de tipus de dibuix"
+msgstr "Menú desplegable de dibuix"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:43
 msgid "Edit text"
@@ -616,7 +616,7 @@ msgstr "Exporta el FITXER com a fitxers d'imatge (un per pàgina)\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
-msgstr "Exportar PDF"
+msgstr "Exporta a PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Export as PDF"
@@ -671,7 +671,7 @@ msgstr "La PDF Cairo Surface no s'ha pogut inicialitzar."
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
-msgstr "Error carregant imatge, no s'ha pogut determinar la seva mida!"
+msgstr "S'ha produït un error mentre es carregava la imatge: no se n'ha pogut determinar la mida!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -896,7 +896,7 @@ msgstr "Capa"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:237
 msgid "Layer Combo"
-msgstr "Caixa de capes"
+msgstr "Menú desplegable de capes"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Layer Preview"
@@ -922,7 +922,7 @@ msgstr "Gestiona les barres d'eines"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:618
 msgid "Medium"
-msgstr "Mitjà"
+msgstr "Normal"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:32
 msgid "Merge layer down"
@@ -1000,7 +1000,7 @@ msgstr "Exporta només les pàgines especificades per l'INTERVAL (p. ex: «2-3,5
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
-msgstr "Obrir Imatge"
+msgstr "Obre una imatge"
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Open Logfile"
@@ -1071,7 +1071,7 @@ msgstr "Número de pàgina"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "El format del tipus de pàgina és PageTypeFormat::Copy i es converteix a PageTypeFormat::Plain per a evitar que el fitxer creat estigui corromput."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
@@ -1127,7 +1127,7 @@ msgstr "Enregistra àudio/Atura l'enregistrament"
 
 #: ../src/core/control/Control.cpp:991
 msgid "Recorder could not be started."
-msgstr "No s'ha pogut iniciar l'enregistradora."
+msgstr "La gravadora no s'ha pogut iniciar."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/undo/UndoRedoHandler.cpp:194
@@ -1339,7 +1339,7 @@ msgstr "Selecciona una regió"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 msgid "Selection Combo"
-msgstr "Caixa de tria de tipus de selecció"
+msgstr "Menú desplegable de selecció"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Send Bugreport"
@@ -1446,7 +1446,7 @@ msgstr "Intercanvia la pàgina actual amb la d'abans"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Intercanvia la pàgina actual amb la següent"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
@@ -1791,7 +1791,7 @@ msgstr "activat per defecte"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:331
 msgid "delete stroke"
-msgstr "esborra traços sencers"
+msgstr "Esborra traços sencers"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:517
@@ -1871,7 +1871,7 @@ msgstr "ratolí de botó"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "whiteout"
-msgstr "pinta (com si fos líquid corrector)"
+msgstr "Pinta (com si fos líquid corrector)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1049
 msgid "xoj-File: {1}"
@@ -2170,7 +2170,7 @@ msgstr "<i>Els canvis s'apliquen només a enregistraments i reproduccions noves.
 
 #: ../ui/settings.glade:1505
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr "<i>Defineix quines eines es seleccionaran si premeu un botó de ratolí. Després de soltar el botó, es tornarà a seleccionar l'eina anterior.</i>"
+msgstr "<i>Defineix quines eines se seleccionaran si premeu un botó de ratolí. Quan se solti el botó, es tornarà a seleccionar l'eina anterior.</i>"
 
 #: ../ui/settings.glade:2869
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
@@ -2236,7 +2236,7 @@ msgstr "<i>Especifica els dispositius de so que es fan servir per a enregistrar 
 
 #: ../ui/settings.glade:1983
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr "<i>Especifica les eines que es seleccionaran si es pressiona el botó d'un llapis o es fa servir la goma d'esborrar. Quan es solti el botó, es tornarà a seleccionar l'eina anterior.</i>"
+msgstr "<i>Especifica les eines que se seleccionaran si es pressiona el botó d'un llapis o es fa servir la goma d'esborrar. Quan se solti el botó, es tornarà a seleccionar l'eina anterior.</i>"
 
 #: ../ui/settings.glade:665
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
@@ -2274,7 +2274,7 @@ msgstr "<i>Podeu configurar dispositius no identificats pel GTK, com ara pantall
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
-"<i>La propera generació</i>"
+"La propera generació"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -2546,7 +2546,7 @@ msgstr "Elimina una capa"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr "Esborra traços"
+msgstr "Esborra traços sencers"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
@@ -3086,15 +3086,15 @@ msgstr "Mai"
 
 #: ../ui/main.glade:1222
 msgid "New Page _After"
-msgstr "Pàgina nova _després"
+msgstr "Afegeix una pàgina nova _després"
 
 #: ../ui/main.glade:1212
 msgid "New Page _Before"
-msgstr "Pàgina nova _abans"
+msgstr "Afegeix una pàgina nova _abans"
 
 #: ../ui/main.glade:1233
 msgid "New Page at _End"
-msgstr "Pàgina nova al _final"
+msgstr "Afegeix una pàgina nova al _final"
 
 #: ../ui/main.glade:1290
 msgid "New _Layer"
@@ -3530,7 +3530,7 @@ msgstr "El color actual de l'eina de text, en format hexadecimal RGB."
 
 #: ../ui/latexSettings.glade:166
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr "Les cadenes següents es substituiran al fitxer de plantilla global quan s'executi l'eina LaTeX:"
+msgstr "Les cadenes següents se substituiran al fitxer de plantilla global quan s'executi l'eina LaTeX:"
 
 #: ../ui/latexSettings.glade:192
 msgid "The math mode formula typed in the LaTeX tool."
@@ -3575,7 +3575,7 @@ msgstr "Intenteu seleccionar primer l'objecte."
 
 #: ../ui/settings.glade:5490 ../ui/settings.glade:5522
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr "Intenteu seleccionar primer l'element; si no es selecciona res i s'ha activat l'acció corresponent, es mostrarà la caixa d'eines flotant."
+msgstr "Intenteu seleccionar primer l'element; si no se selecciona res i s'ha activat l'acció corresponent, es mostrarà la caixa d'eines flotant."
 
 #: ../ui/main.glade:2819
 msgid "Underline selected text"
@@ -3904,15 +3904,15 @@ msgstr "_Visualitza"
 
 #: ../ui/main.glade:1939
 msgid "_delete strokes"
-msgstr "_esborra traços"
+msgstr "_Esborra traços sencers"
 
 #: ../ui/main.glade:1721 ../ui/main.glade:1867 ../ui/main.glade:1976
 msgid "_fine"
-msgstr "_fi"
+msgstr "_Fi"
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1878 ../ui/main.glade:1987
 msgid "_medium"
-msgstr "_mitjà"
+msgstr "_Normal"
 
 #: ../ui/main.glade:1917
 msgid "_standard"
@@ -3920,15 +3920,15 @@ msgstr "_Estàndard"
 
 #: ../ui/main.glade:1743 ../ui/main.glade:1889 ../ui/main.glade:1998
 msgid "_thick"
-msgstr "_gruixut"
+msgstr "_Gruixut"
 
 #: ../ui/main.glade:1710 ../ui/main.glade:1856 ../ui/main.glade:1965
 msgid "_very fine"
-msgstr "_molt fi"
+msgstr "_Molt fi"
 
 #: ../ui/main.glade:1928
 msgid "_whiteout"
-msgstr "_pinta (com si fos líquid corrector)"
+msgstr "_Pinta (com si fos líquid corrector)"
 
 #: ../ui/settings.glade:4911
 msgid "disabled"
@@ -3966,7 +3966,7 @@ msgstr "s <i>(després del qual es reactivarà la pantalla tàctil)</i>"
 
 #: ../ui/main.glade:1754 ../ui/main.glade:1900 ../ui/main.glade:2009
 msgid "ver_y thick"
-msgstr "mol_t gruixut"
+msgstr "Mol_t gruixut"
 
 #: ../ui/settings.glade:4896
 msgid "when drawing on last page"
