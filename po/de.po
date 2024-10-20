@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-19 09:23\n"
+"PO-Revision-Date: 2024-10-20 04:24\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -33,7 +33,7 @@ msgstr "\n"
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
-"Vorgeschlagene Datei: \"{1}\""
+"Vorgeschlagene Ersatzdatei: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -843,11 +843,11 @@ msgstr "Eine Kopie der aktuellen Seite unten einfügen"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:97
 msgid "Insert after current page"
-msgstr "Nach aktueller Seite hinzufügen"
+msgstr "Nach aktueller Seite einfügen"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:98
 msgid "Insert at end"
-msgstr "Am Ende einfugen"
+msgstr "Am Ende einfügen"
 
 #: ../src/core/undo/InsertUndoAction.cpp:82
 msgid "Insert elements"
@@ -1851,7 +1851,7 @@ msgstr "Linie"
 
 #: ../src/core/control/DeviceListHelper.cpp:113
 msgid "tablet pad"
-msgstr "Grafiktablet"
+msgstr "Stifttablett"
 
 #: ../src/core/undo/AddUndoAction.cpp:91
 #: ../src/core/undo/DeleteUndoAction.cpp:89
