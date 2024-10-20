@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-20 17:42\n"
+"PO-Revision-Date: 2024-10-20 19:45\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -380,7 +380,7 @@ msgstr "Elimina aquesta capa"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
 msgid "Delete this page"
-msgstr "Eliminar aquesta pàgina"
+msgstr "Elimina aquesta pàgina"
 
 #: ../src/core/control/XournalMain.cpp:644
 msgid "Disable audio for this session"
@@ -525,7 +525,7 @@ msgstr "Goma d'esborrar"
 #: ../src/core/control/Control.cpp:2547
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr "Error a l'anotar l'arxiu PDF \"{1}\"\n"
+msgstr "S'ha produït un error mentre s'anotava el fitxer PDF «{1}».\n"
 "{2}"
 
 #: ../src/util/OutputStream.cpp:70
