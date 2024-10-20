@@ -1,3 +1,9 @@
+xournalpp (1.2.5~dev-1) UNRELEASED; urgency=medium
+
+  * 
+
+ -- Roland Lötscher <roland_loetscher@hotmail.com>  Sun, 20 Oct 2024 08:02:11 +0200
+
 xournalpp (1.2.4-1) unstable; urgency=medium
 
   * Fixed various dark/light theme inconsistencies
