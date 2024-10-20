@@ -31,7 +31,10 @@ stages:
           sudo apt-add-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-$VERSION main"
         done
         sudo apt-get update
-      displayName: 'Setup APT repository'
+        for VERSION in $(CLANG_FORMAT_VERSIONS); do
+          sudo apt-get install -y clang-format-$VERSION
+        done
+      displayName: 'Install clang-format'
     - bash: |
         git config --global clangFormat.extensions "c,h,cpp,hpp,hxx,cxx,cc,hh'"
         #
@@ -48,8 +51,7 @@ stages:
         git fetch origin $BASE_COMMIT
 
         for VERSION in $(CLANG_FORMAT_VERSIONS); do
-          echo "Installing clang-format-$VERSION"
-          sudo apt-get install -y clang-format-$VERSION
+          echo "Testing $(clang-format-$VERSION --version)"
           # A bug in llvm's .deb packages makes git-clang-format-$VERSION call clang-format instead of clang-format-$VERSION
           # The --binary option gives a workaround
           git clang-format-$VERSION --binary="clang-format-$VERSION" --diff $BASE_COMMIT -- && { echo "Success: changes are compatible with clang-format-$VERSION"; exit 0; }

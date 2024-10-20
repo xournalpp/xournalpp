@@ -1,80 +1,81 @@
-trigger:
-  branches:
-    include:
-      - '*'
-    exclude:
-      - stable
-      - l10n_master
-  paths:
-    exclude:
-      - po/xournalpp.pot
-      - po/*.po
+name: Build
 
-stages:
-  - stage: 'Build_Test_Stage'
-    jobs:
-      - job: 'Linux'
-        pool:
-          vmImage: 'ubuntu-20.04'
-        displayName: 'Test Xournal++ on Linux'
-        steps:
-          - template: steps/install_deps_ubuntu.yml
-          - template: steps/build_linux.yml
-            parameters:
-              build_type: 'Debug'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
-          - bash: |
-              echo "de_DE.UTF-8 UTF-8" | sudo tee /etc/locale.gen
-              sudo locale-gen
-            displayName: 'Generate test locales'
-          - bash: |
-              cmake --build . --target test-units
-              CI=true ./test/test-units
-            workingDirectory: ./build
-            displayName: 'Run tests'
-          - bash: |
-              sudo apt install xvfb
-              cmake .. -DCMAKE_INSTALL_PREFIX=install
-              cmake --build . --target install
-              cmake --build . --target test-gtk-integration
-              CI=true xvfb-run -a ./test/test-gtk-integration
-            workingDirectory: ./build
-            displayName: 'Run gtk-integration tests'
+on:
+  pull_request:
+    branches: [ "master", "release-*" ]
+    ignores-paths:
+      - 'po/xournalpp.pot'
+      - 'po/*.po'
 
-      - job: 'Windows'
-        pool:
-          vmImage: 'windows-2019'
-        displayName: 'Test Xournal++ on Windows'
-        steps:
-          - template: steps/build_windows.yml
-            parameters:
-              build_type: 'Debug'
-              cmake_flags: '-GNinja -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
-          - script: |
-              set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
-              C:\msys64\usr\bin\bash -lc "cmake --build . --target test-units"
-              C:\msys64\usr\bin\bash -lc "CI=true ./test/test-units"
-            workingDirectory: ./build
-            env:
-              MSYS2_ARCH: x86_64
-              MSYSTEM: MINGW64
-              CHERE_INVOKING: yes
-            displayName: 'Run tests'
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Debug
+  GCC_VERSION: 10
 
-      - job: macOS
-        pool:
-          vmImage: 'macOS-12'
-        displayName: 'Test Xournal++ on MacOS'
-        steps:
-          - template: steps/build_mac.yml
-            parameters:
-              build_type: 'Debug'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
-              generation_path: '/Users/xournal-dev'
-          - bash: |
-              export PATH="$HOME/.local/bin:/Users/xournal-dev/gtk/inst/bin:$PATH"
-              cmake --build . --target test-units
-              install_name_tool -add_rpath /Users/xournal-dev/gtk/inst/lib/. test/test-toolEnums
-              CI=true ./test/test-units
-            workingDirectory: ./build
-            displayName: 'Run tests'
+jobs:
+  ubuntu-20.04:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: .github/workflows/steps/install_deps_ubuntu.yml
+        with:
+          gcc_version: ${{env.GCC_VERSION}}
+      - uses: .github/workflows/steps/build_linux.yml
+        with:
+          gcc_version: ${{env.GCC_VERSION}}
+          build_type: ${{env.BUILD_TYPE}}
+          cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
+      - name: 'Generate test locales'
+        run: |
+          echo "de_DE.UTF-8 UTF-8" | sudo tee /etc/locale.gen
+          sudo locale-gen
+      - name: 'Run tests'
+        run: |
+          cmake --build . --target test-units
+          CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run gtk-integration tests'
+        run: |
+          sudo apt install xvfb
+          cmake .. -DCMAKE_INSTALL_PREFIX=install
+          cmake --build . --target install
+          cmake --build . --target test-gtk-integration
+          CI=true xvfb-run -a ./test/test-gtk-integration
+        working-directory: ${{github.workspace}}/build/build
+      #
+      # - job: 'Windows'
+      #   pool:
+      #     vmImage: 'windows-2019'
+      #   displayName: 'Test Xournal++ on Windows'
+      #   steps:
+      #     - template: steps/build_windows.yml
+      #       parameters:
+      #         build_type: 'Debug'
+      #         cmake_flags: '-GNinja -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
+      #     - script: |
+      #         set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
+      #         C:\msys64\usr\bin\bash -lc "cmake --build . --target test-units"
+      #         C:\msys64\usr\bin\bash -lc "CI=true ./test/test-units"
+      #       workingDirectory: ./build
+      #       env:
+      #         MSYS2_ARCH: x86_64
+      #         MSYSTEM: MINGW64
+      #         CHERE_INVOKING: yes
+      #       displayName: 'Run tests'
+      #
+      # - job: macOS
+      #   pool:
+      #     vmImage: 'macOS-12'
+      #   displayName: 'Test Xournal++ on MacOS'
+      #   steps:
+      #     - template: steps/build_mac.yml
+      #       parameters:
+      #         build_type: 'Debug'
+      #         cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
+      #         generation_path: '/Users/xournal-dev'
+      #     - bash: |
+      #         export PATH="$HOME/.local/bin:/Users/xournal-dev/gtk/inst/bin:$PATH"
+      #         cmake --build . --target test-units
+      #         install_name_tool -add_rpath /Users/xournal-dev/gtk/inst/lib/. test/test-toolEnums
+      #         CI=true ./test/test-units
+      #       workingDirectory: ./build
+      #       displayName: 'Run tests'
