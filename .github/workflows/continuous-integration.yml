@@ -18,32 +18,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: 'Install dependencies'
-        uses: ./github-actions/install_deps_ubuntu
+        uses: ./.github/actions/install_deps_ubuntu
         with:
           gcc_version: ${{env.GCC_VERSION}}
-      - name: Toto
-        uses: ./github-actions/build_linux
+      - uses: ./.github/actions/build_linux
         with:
           gcc_version: ${{env.GCC_VERSION}}
           build_type: ${{env.BUILD_TYPE}}
           cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
-      # - name: 'Generate test locales'
-      #   run: |
-      #     echo "de_DE.UTF-8 UTF-8" | sudo tee /etc/locale.gen
-      #     sudo locale-gen
-      # - name: 'Run tests'
-      #   run: |
-      #     cmake --build . --target test-units
-      #     CI=true ./test/test-units
-      #   working-directory: ${{github.workspace}}/build
-      # - name: 'Run gtk-integration tests'
-      #   run: |
-      #     sudo apt install xvfb
-      #     cmake .. -DCMAKE_INSTALL_PREFIX=install
-      #     cmake --build . --target install
-      #     cmake --build . --target test-gtk-integration
-      #     CI=true xvfb-run -a ./test/test-gtk-integration
-      #   working-directory: ${{github.workspace}}/build/build
+      - name: 'Generate test locales'
+        run: |
+          echo "de_DE.UTF-8 UTF-8" | sudo tee /etc/locale.gen
+          sudo locale-gen
+      - name: 'Run tests'
+        run: |
+          cmake --build . --target test-units
+          CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run gtk-integration tests'
+        run: |
+          sudo apt install xvfb
+          cmake .. -DCMAKE_INSTALL_PREFIX=install
+          cmake --build . --target install
+          cmake --build . --target test-gtk-integration
+          CI=true xvfb-run -a ./test/test-gtk-integration
+        working-directory: ${{github.workspace}}/build/build
       #
       # - job: 'Windows'
       #   pool:
