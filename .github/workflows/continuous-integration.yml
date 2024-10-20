@@ -21,12 +21,12 @@ jobs:
         uses: ./github-actions/install_deps_ubuntu
         with:
           gcc_version: ${{env.GCC_VERSION}}
-      # - name: Toto
-      #   uses: ./github-actions/build_linux
-      #   with:
-      #     gcc_version: ${{env.GCC_VERSION}}
-      #     build_type: ${{env.BUILD_TYPE}}
-      #     cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
+      - name: Toto
+        uses: ./github-actions/build_linux
+        with:
+          gcc_version: ${{env.GCC_VERSION}}
+          build_type: ${{env.BUILD_TYPE}}
+          cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
       # - name: 'Generate test locales'
       #   run: |
       #     echo "de_DE.UTF-8 UTF-8" | sudo tee /etc/locale.gen
