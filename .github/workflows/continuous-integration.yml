@@ -17,10 +17,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-      - uses: ${{github.workspace}}/github-actions/install_deps_ubuntu
+      - name: 'Install dependencies'
+        uses: ${{github.workspace}}/github-actions/install_deps_ubuntu
         with:
           gcc_version: ${{env.GCC_VERSION}}
-      - uses: ${{github.workspace}}/github-actions/steps/build_linux
+      - name: Toto
+        uses: ${{github.workspace}}/github-actions/build_linux
         with:
           gcc_version: ${{env.GCC_VERSION}}
           build_type: ${{env.BUILD_TYPE}}
