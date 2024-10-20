@@ -21,7 +21,8 @@ jobs:
         uses: ./.github/actions/install_deps_ubuntu
         with:
           gcc_version: ${{env.GCC_VERSION}}
-      - uses: ./.github/actions/build_linux
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build_linux
         with:
           gcc_version: ${{env.GCC_VERSION}}
           build_type: ${{env.BUILD_TYPE}}
@@ -42,27 +43,26 @@ jobs:
           cmake --build . --target install
           cmake --build . --target test-gtk-integration
           CI=true xvfb-run -a ./test/test-gtk-integration
-        working-directory: ${{github.workspace}}/build/build
-      #
-      # - job: 'Windows'
-      #   pool:
-      #     vmImage: 'windows-2019'
-      #   displayName: 'Test Xournal++ on Windows'
-      #   steps:
-      #     - template: steps/build_windows.yml
-      #       parameters:
-      #         build_type: 'Debug'
-      #         cmake_flags: '-GNinja -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
-      #     - script: |
-      #         set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
-      #         C:\msys64\usr\bin\bash -lc "cmake --build . --target test-units"
-      #         C:\msys64\usr\bin\bash -lc "CI=true ./test/test-units"
-      #       workingDirectory: ./build
-      #       env:
-      #         MSYS2_ARCH: x86_64
-      #         MSYSTEM: MINGW64
-      #         CHERE_INVOKING: yes
-      #       displayName: 'Run tests'
+        working-directory: ${{github.workspace}}/build
+  Windows-2019:
+    runs-on: windows-2019
+    name: 'Test Xournal++ on Windows'
+    steps:
+      - name: 'Build Xournal++'
+        uses: .github/actions/build_windows
+        with:
+          build_type: ${{env.BUILD_TYPE}}
+          cmake_flags: '-GNinja -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
+      - name: 'Run tests'
+        run: |
+          set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
+          C:\msys64\usr\bin\bash -lc "cmake --build . --target test-units"
+          C:\msys64\usr\bin\bash -lc "CI=true ./test/test-units"
+        working-directory: ${{github.workspace}}/build
+        env:
+          MSYS2_ARCH: x86_64
+          MSYSTEM: MINGW64
+          CHERE_INVOKING: yes
       #
       # - job: macOS
       #   pool:
