@@ -67,6 +67,7 @@ public:
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
+
 protected:
     void calcSize() const override;
     void updateSnapping() const;
