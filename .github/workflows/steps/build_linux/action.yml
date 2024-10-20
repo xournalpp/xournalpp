@@ -21,7 +21,6 @@ inputs:
 runs:
   using: composite
   steps:
-  - uses: actions/checkout@v4
   - name: 'Create build directory'
     run: mkdir build
   - name: 'Build Xournal++'

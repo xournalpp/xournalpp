@@ -16,6 +16,7 @@ jobs:
   ubuntu-20.04:
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v4
       - uses: ${{github.workspace}}/.github/workflows/steps/install_deps_ubuntu
         with:
           gcc_version: ${{env.GCC_VERSION}}
