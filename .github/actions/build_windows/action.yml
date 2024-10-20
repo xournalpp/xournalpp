@@ -16,7 +16,7 @@ runs:
   steps:
     - name: 'Install dependencies on Windows'
       run: |
-        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+        set PATH="C:\msys64\usr\bin;C:\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
         pacman --noconfirm -S mingw-w64-x86_64-imagemagick mingw-w64-x86_64-ninja mingw-w64-x86_64-poppler
         pacman --noconfirm -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip
         pacman --noconfirm -S mingw-w64-x86_64-lua mingw-w64-x86_64-portaudio mingw-w64-x86_64-gtksourceview4

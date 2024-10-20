@@ -56,7 +56,7 @@ jobs:
           cmake_flags: '-GNinja -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
       - name: 'Run tests'
         run: |
-          set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
+          set PATH="%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
           C:\msys64\usr\bin\bash -lc "cmake --build . --target test-units"
           C:\msys64\usr\bin\bash -lc "CI=true ./test/test-units"
         working-directory: ${{github.workspace}}/build
