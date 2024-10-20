@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-18 19:17\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1071,7 +1071,7 @@ msgstr "Sayfa numarası"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "Sayfa biçimi formatı PageTypeFormat::Copy - dosyanın bozulmasını engellemek için PageTypeFormat::Plain biçimine dönüşürüldü"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
@@ -1249,7 +1249,7 @@ msgstr "Doğrusal PDF Metnini Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "Çok-Katmanlı Dikdörtgen Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -2827,7 +2827,7 @@ msgstr "Simge Tararımcısı"
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Simge Teması:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."

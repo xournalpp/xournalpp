@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-19 09:24\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -615,7 +615,7 @@ msgstr "Експортувати у файли зображень (по одно
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
-msgstr ""
+msgstr "Експорт PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Export as PDF"
@@ -670,7 +670,7 @@ msgstr ""
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Не вдалося завантажити зображення, не можливо визначити розмір зображення!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -983,7 +983,7 @@ msgstr "Нормальний малюнок"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
 #: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/core/control/XournalMain.cpp:680
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1070,7 +1070,7 @@ msgstr "Номер сторінки"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "Формат типу сторінки є форматом PageType::Copy - перетворений на формат PageTypeFormat:: Простий для уникнення пошкоджених файлів"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
@@ -1248,7 +1248,7 @@ msgstr "Виберіть лінійний PDF-текст"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "Обрати мульти-шар"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1269,7 +1269,7 @@ msgstr "Обрати Об'єкт"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Обрати PDF-область тексту"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
@@ -1285,7 +1285,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Обрати PDF текст"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
@@ -1338,11 +1338,11 @@ msgstr "Виділення ласо"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 msgid "Selection Combo"
-msgstr ""
+msgstr "Комбо виділення"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Send Bugreport"
-msgstr ""
+msgstr "Надіслати звіт про помилку"
 
 #: ../src/core/control/tools/EditSelection.cpp:427
 msgid "Send backward"
@@ -1432,19 +1432,19 @@ msgstr "Файли, що підтримуються"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Перемістити поточний шар вище"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Перемістити поточний шар нижче"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Перемістити поточну сторінку вище"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Перемістити поточну сторінку нижче"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
@@ -1462,7 +1462,7 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
-msgstr ""
+msgstr "Текст, знайдений на цій сторінці"
 
 #: ../src/core/gui/SearchBar.cpp:133
 msgid "Text found once on page {1}"
@@ -1524,7 +1524,7 @@ msgstr "Некоректний .xopp файл (невірно вказана в�
 
 #: ../src/core/control/LatexController.cpp:303
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "Формула пуста, коли вона виконується або неправильна."
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
@@ -1568,7 +1568,7 @@ msgstr "Інструмент - Не змінюйте"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "Панель інструментів знайдено: {1}"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
@@ -1576,7 +1576,7 @@ msgstr "Панелі інструментів"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "Спроба аварійно зберегти поточний документ…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -1834,7 +1834,7 @@ msgstr "перо"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:154
 msgid "show"
-msgstr ""
+msgstr "показати"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:310
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
@@ -2082,11 +2082,11 @@ msgstr "<b>Тло</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>Колір</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr ""
+msgstr "<b>Інструменти за замовчуванням</b>"
 
 #: ../ui/settings.glade:5805
 msgid "<b>Default</b>"
@@ -2106,7 +2106,8 @@ msgstr "<b>Порожня панель</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Налаштування непрозорості</b>\n"
+"Виберіть непрозорість для заповнення кольору"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2118,7 +2119,7 @@ msgstr "<b>Розмір сторінки</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
-msgstr ""
+msgstr "<b>Роздільники</b>"
 
 #: ../ui/settings.glade:5898
 msgid "<i>\n"
@@ -2154,7 +2155,8 @@ msgstr "<i>Приклад:</i> 1-3 або 1,3,5-7 і т. д."
 #: ../ui/settings.glade:363
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>, якщо документ вже був збережений, ви можете знайти його в тій же папці з розширенням .autosave. oj\n"
+"Якщо файл ще не був збережений, ви можете знайти його в ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4632
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2253,11 +2255,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4685
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Додати додатковий горизонтальний простір"
 
 #: ../ui/settings.glade:4663
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Додати додатковий вертикальний простір"
 
 #: ../ui/settings.glade:5066
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2574,7 +2576,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Перетягніть компоненти fom тут на панелі інструментів і назад."
 
 #: ../ui/settings.glade:1254 ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
@@ -2602,7 +2604,7 @@ msgstr ""
 
 #: ../ui/main.glade:2911 ../ui/main.glade:2948
 msgid "Duplicate"
-msgstr ""
+msgstr "Дублювати"
 
 #: ../ui/main.glade:1243
 msgid "Duplicate Page"
@@ -2610,7 +2612,7 @@ msgstr "Дублювати сторінку"
 
 #: ../ui/main.glade:2985
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Редагування (не реалізовано ще)"
 
 #: ../ui/latexSettings.glade:606
 msgid "Editor settings"
@@ -2795,7 +2797,7 @@ msgstr "Висота:"
 
 #: ../ui/main.glade:997
 msgid "Hide Menubar"
-msgstr ""
+msgstr "Hide Menubar"
 
 #: ../ui/settings.glade:3791
 msgid "Hide the horizontal scrollbar"
@@ -2833,7 +2835,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Тема іконок:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2897,11 +2899,11 @@ msgstr ""
 
 #: ../ui/main.glade:2940
 msgid "Insert Page After"
-msgstr ""
+msgstr "Вставити сторінку після"
 
 #: ../ui/main.glade:2932
 msgid "Insert Page Before"
-msgstr ""
+msgstr "Вставити сторінку до"
 
 #: ../ui/settings.glade:6442
 msgid "LaTeX"
@@ -2977,7 +2979,7 @@ msgstr "Максимальний множник"
 
 #: ../ui/main.glade:2903
 msgid "Merge Down"
-msgstr ""
+msgstr "Об'єднати вниз"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
@@ -3014,7 +3016,7 @@ msgstr "Клавіатура+мишка"
 
 #: ../ui/main.glade:2895 ../ui/main.glade:2970
 msgid "Move Down"
-msgstr ""
+msgstr "Перемістити вниз"
 
 #: ../ui/main.glade:490
 msgid "Move Selection Layer Down"
@@ -3026,7 +3028,7 @@ msgstr ""
 
 #: ../ui/main.glade:2887 ../ui/main.glade:2962
 msgid "Move Up"
-msgstr ""
+msgstr "Перемістити вгору"
 
 #: ../ui/settings.glade:3910
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
@@ -3163,7 +3165,7 @@ msgstr "Менеджер доповнень"
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "Управління плагінами"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -3588,7 +3590,8 @@ msgstr ""
 #: ../ui/settings.glade:2697
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "При малюванні за допомогою дотику, жести з двома пальцями, які покликані ковтати погляд, може замість цього викликати їх масштабування, викликати проблеми з продуктивністю. \n"
+"Цей параметр може полегшити малювання дотиком. "
 
 #: ../ui/settings.glade:2171
 msgctxt "eraser is only visible when floating"
@@ -3724,7 +3727,7 @@ msgstr "_Налаштувати"
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Інструменти за замовчуванням"
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
@@ -3808,7 +3811,7 @@ msgstr "_Перо"
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
-msgstr ""
+msgstr "_Плагін"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"

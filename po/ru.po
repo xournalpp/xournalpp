@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-19 09:23\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -984,7 +984,7 @@ msgstr "Обычный рисунок"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
 #: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/core/control/XournalMain.cpp:680
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1248,7 +1248,7 @@ msgstr "Выбрать линейный PDF текст"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "Выберите многоуровневый вывод"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1459,7 +1459,7 @@ msgstr "Текст"
 #: ../src/core/gui/SearchBar.cpp:79
 #, c-format
 msgid "Text %zu times found on this page"
-msgstr ""
+msgstr "Текст найден %zu раз(а) на этой странице"
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
@@ -2104,7 +2104,10 @@ msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"Используя галочку, аудиосистема может быть отключена или включена для будущих сессий (требуется перезапуск). \n"
+"Возможность отключения аудио для одной сессии с помощью флага <tt>--disable-audio</tt> в командной строке.\n"
+"</i>"
 
 #: ../ui/settings.glade:955
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2825,7 +2828,7 @@ msgstr "Дизайнеры кнопок"
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Тема значков:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."

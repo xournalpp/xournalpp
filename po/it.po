@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-19 14:19\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -173,7 +173,7 @@ msgstr "Cambia colore"
 
 #: ../src/core/undo/FontUndoAction.cpp:110
 msgid "Change font"
-msgstr "Cambia font"
+msgstr "Cambia carattere"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:78
 msgid "Change line style"
@@ -193,7 +193,7 @@ msgstr "Cancella lista"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "Colore sconosciuto: \"{1}\" (non definito nella lista di default)"
+msgstr "Colore sconosciuto: \"{1}\" (non esiste nella lista predefinita)!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:553
 msgid "Compass"
@@ -343,7 +343,7 @@ msgstr "Personalizza barra degli strumenti"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
 msgid "Customized"
-msgstr "Personalizzato"
+msgstr "Personalizzate"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Cut"
@@ -351,7 +351,7 @@ msgstr "Taglia"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:527
 msgid "Default Tool"
-msgstr "Strumento di Default"
+msgstr "Strumento predefinito"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 #: ../src/core/undo/DeleteUndoAction.cpp:64
@@ -360,7 +360,7 @@ msgstr "Cancella"
 
 #: ../src/core/control/XournalMain.cpp:208
 msgid "Delete Logfile"
-msgstr "Cancella Logfile"
+msgstr "Elimina registro"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
 msgid "Delete current page"
@@ -398,9 +398,9 @@ msgstr "Visualizza opzioni avanzate di esportazione"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr "Non aprire file di Autosalvataggio. Potrebbero essere sovrascritti!\n"
-"Copia i files in un'altra cartella.\n"
-"I files nella cartella {1} non possono essere aperti."
+msgstr "Non aprire file salvati automaticamente. Potrebbero essere sovrascritti!\n"
+"Copia i file in un'altra cartella.\n"
+"I file della cartella {1} non possono essere aperti."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -800,7 +800,7 @@ msgstr "A quadretti"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:453
 msgid "Grid Snapping"
-msgstr "Forza alla Griglia"
+msgstr "Aggancia alla griglia"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
@@ -984,7 +984,7 @@ msgstr "Disegno normale"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
 #: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/core/control/XournalMain.cpp:680
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1004,11 +1004,11 @@ msgstr "Apri Immagine"
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Open Logfile"
-msgstr "Apri Logfile"
+msgstr "Apri registro"
 
 #: ../src/core/control/XournalMain.cpp:207
 msgid "Open Logfile directory"
-msgstr "Apri cartella di log"
+msgstr "Apri la cartella dei registri"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
@@ -1176,7 +1176,7 @@ msgstr "Rotazione"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Rotation Snapping"
-msgstr "Rotazione Forzata"
+msgstr "Rotazione forzata"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
@@ -2153,7 +2153,10 @@ msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"Utilizzando la casella di spunta il sistema audio può essere disabilitato o abilitato per sessioni future (è richiesto il riavvio). \n"
+"La disattivazione dell'audio per una singola sessione può essere ottenuta utilizzando il flag <tt>--disable-audio</tt> sulla riga di comando.\n"
+"</i>"
 
 #: ../ui/settings.glade:955
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2161,7 +2164,7 @@ msgstr "<i>Assegna classi di dispositivo a ogni dispositivo di immissione del si
 
 #: ../ui/settings.glade:5967
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr "<i>Le registrazioni audio vengono attualmente salvate in una cartella separata e referenziate dal file di xournal</i>"
+msgstr "<i>Le registrazioni audio sono attualmente salvate in una cartella separata e indicate nel documento.</i>"
 
 #: ../ui/settings.glade:6385
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
@@ -2260,7 +2263,7 @@ msgstr "<i>Abilita/disabilita la visibilità della barra del menu con F10</i>"
 
 #: ../ui/settings.glade:2666
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr "<i>Usa le gestures per zoommare le pagine</i>"
+msgstr "<i>Usare le dita per fare zoom sulle pagine del documento.</i>"
 
 #: ../ui/settings.glade:2801
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
@@ -2369,7 +2372,7 @@ msgstr "Aggiungi automaticamente l'ultima pagina vuota (esclusi i PDF)"
 
 #: ../ui/settings.glade:463
 msgid "Autosaving"
-msgstr "Autosalvataggio: {1}"
+msgstr "Salvataggio automatico"
 
 #: ../ui/settings.glade:613 ../ui/settings.glade:784
 msgid "Available Placeholders"
@@ -2530,7 +2533,7 @@ msgstr "Nome predefinito del PDF"
 
 #: ../ui/settings.glade:639
 msgid "Default Save Name"
-msgstr "<b>Nome salvataggio predefinito</b> "
+msgstr "Nome predefinito del file"
 
 #: ../ui/settings.glade:6317
 msgid "Default Seek Time (in seconds)"
@@ -2538,7 +2541,7 @@ msgstr "Tempo di ricerca predefinito (in secondi)"
 
 #: ../ui/settings.glade:526 ../ui/settings.glade:698
 msgid "Default name: "
-msgstr "<b>Nome predefinito:</b> "
+msgstr "Nome predefinito: "
 
 #: ../ui/settings.glade:5845
 msgid "Defaults"
@@ -2670,7 +2673,7 @@ msgstr "Abilita con raggio di determinazione di "
 
 #: ../ui/settings.glade:837
 msgid "Enable Autoloading of Journals"
-msgstr "Abilita il caricamento automatico dei Journal"
+msgstr "Abilita il caricamento automatico dei documenti"
 
 #: ../ui/settings.glade:382
 msgid "Enable Autosaving"
@@ -2710,7 +2713,7 @@ msgstr "Abilita la possibilità di disegnare col tocco"
 
 #: ../ui/settings.glade:2678
 msgid "Enable zoom gestures (requires restart)"
-msgstr "Attiva le gestures per lo zoom (necessita riavvio) "
+msgstr "Attiva i gesti per lo zoom (necessita riavvio)"
 
 #: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
@@ -2879,7 +2882,7 @@ msgstr "Progettisti d'icone"
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Tema icone:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -3386,11 +3389,11 @@ msgstr "Mostra le opzioni"
 
 #: ../ui/settings.glade:2997
 msgid "Show Menubar on Startup"
-msgstr "Mostra le opzioni all'avvio"
+msgstr "Mostra le la barra dei menu all'avvio"
 
 #: ../ui/main.glade:589 ../ui/settings.glade:3988 ../ui/settings.glade:4087
 msgid "Show Sidebar"
-msgstr "Mostra le anteprime"
+msgstr "Mostra barra laterale"
 
 #: ../ui/settings.glade:3972 ../ui/settings.glade:4055
 msgid "Show Toolbar"
@@ -3857,7 +3860,7 @@ msgstr "_Penna"
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
-msgstr ""
+msgstr "_Plugin"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"

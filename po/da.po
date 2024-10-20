@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-19 09:23\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -525,7 +525,8 @@ msgstr ""
 #: ../src/core/control/Control.cpp:2547
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Fejl under annotation af PDF-fil \"{1}\"\n"
+"{2}"
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
@@ -613,7 +614,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
-msgstr ""
+msgstr "Eksporter PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Export as PDF"
@@ -970,7 +971,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
 #: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
 msgid "OK"
-msgstr ""
+msgstr "Ok"
 
 #: ../src/core/control/XournalMain.cpp:680
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -984,7 +985,7 @@ msgstr ""
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
-msgstr ""
+msgstr "Åbn Billede"
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Open Logfile"
@@ -1055,7 +1056,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "Side type format er PageTypeFormat::Copy - konverteret til PageTypeFormat::Plain for at undgå beskadiget fil"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
@@ -1111,7 +1112,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:991
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "Optager kunne ikke startes."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/undo/UndoRedoHandler.cpp:194
@@ -1223,7 +1224,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:555
 msgid "Select Font"
-msgstr ""
+msgstr "Select Font"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:531
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
@@ -1233,7 +1234,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "Vælg Flere Lag Rect"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1254,11 +1255,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Vælg PDF-områdetekst"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Vælg PDF Tekst"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
@@ -1270,7 +1271,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Vælg PDF-tekst"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
@@ -1323,11 +1324,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 msgid "Selection Combo"
-msgstr ""
+msgstr "Valg Combo"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Send Bugreport"
-msgstr ""
+msgstr "Send Bugreport"
 
 #: ../src/core/control/tools/EditSelection.cpp:427
 msgid "Send backward"
@@ -1412,19 +1413,19 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Byt det aktuelle lag med det ovenstående"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Byt det aktuelle lag med det nedenstående"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Ombyt den aktuelle side med den ovenfor"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Ombyt den aktuelle side med den nedenfor"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
@@ -1438,11 +1439,11 @@ msgstr ""
 #: ../src/core/gui/SearchBar.cpp:79
 #, c-format
 msgid "Text %zu times found on this page"
-msgstr ""
+msgstr "Tekst %zu gange fundet på denne side"
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
-msgstr ""
+msgstr "Tekst fundet på denne side"
 
 #: ../src/core/gui/SearchBar.cpp:133
 msgid "Text found once on page {1}"
@@ -1450,7 +1451,7 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:134
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "Tekst fundet {1} gange på side {2}"
 
 #: ../src/core/gui/SearchBar.cpp:84
 msgid "Text not found"
@@ -1503,7 +1504,7 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:303
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "Formlen er tom når den gengives eller ugyldig."
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
@@ -1547,7 +1548,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "Værktøjslinje fundet: {1}"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
@@ -1555,7 +1556,7 @@ msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "Forsøger at gemme det åbne dokument…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -1810,7 +1811,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:154
 msgid "show"
-msgstr ""
+msgstr "vis"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:310
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
@@ -2034,11 +2035,11 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>Farve</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr ""
+msgstr "<b>Standardværktøjer</b>"
 
 #: ../ui/settings.glade:5805
 msgid "<b>Default</b>"
@@ -2057,7 +2058,8 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Fyld opacitet indstillinger</b>\n"
+"Vælg opacitet for fyld farve"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2069,14 +2071,17 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
-msgstr ""
+msgstr "<b>Separatorer</b>"
 
 #: ../ui/settings.glade:5898
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"Brug afkrydsningsfeltet lydsystemet kan deaktiveres eller aktiveres for fremtidige sessioner (genstart påkrævet). \n"
+"Deaktivering af lyd for en enkelt session kan opnås ved hjælp af flag <tt>--disable-audio</tt> på kommandolinjen.\n"
+"</i>"
 
 #: ../ui/settings.glade:955
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2105,7 +2110,8 @@ msgstr ""
 #: ../ui/settings.glade:363
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Hvis dokumentet allerede er gemt kan du finde det i samme mappe med udvidelsen .autosave. oj\n"
+"Hvis filen endnu ikke er gemt kan du finde den i ~/.cache/xournalpp/autosave</i>"
 
 #: ../ui/settings.glade:4632
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2130,7 +2136,8 @@ msgstr ""
 #: ../ui/settings.glade:5571
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Gengengiver PDF-baggrunde oftere under zooming for bedre render kvalitet. \n"
+"<b>Bemærk:</b> Dette bør ikke påvirke udskriftskvaliteten.</i>"
 
 #: ../ui/settings.glade:6494
 msgid "<i>Select language (requires restart)</i>"
@@ -2204,11 +2211,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4685
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Tilføj yderligere vandret plads af"
 
 #: ../ui/settings.glade:4663
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Tilføj yderligere lodret plads af"
 
 #: ../ui/settings.glade:5066
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2525,7 +2532,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Træk og slip Komponenter fom her til værktøjslinjerne og tilbage."
 
 #: ../ui/settings.glade:1254 ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
@@ -2553,7 +2560,7 @@ msgstr ""
 
 #: ../ui/main.glade:2911 ../ui/main.glade:2948
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplicate"
 
 #: ../ui/main.glade:1243
 msgid "Duplicate Page"
@@ -2561,7 +2568,7 @@ msgstr ""
 
 #: ../ui/main.glade:2985
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Rediger (ikke implementeret endnu)"
 
 #: ../ui/latexSettings.glade:606
 msgid "Editor settings"
@@ -2746,7 +2753,7 @@ msgstr ""
 
 #: ../ui/main.glade:997
 msgid "Hide Menubar"
-msgstr ""
+msgstr "Hide Menubar"
 
 #: ../ui/settings.glade:3791
 msgid "Hide the horizontal scrollbar"
@@ -2784,7 +2791,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Ikon Tema:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2848,11 +2855,11 @@ msgstr ""
 
 #: ../ui/main.glade:2940
 msgid "Insert Page After"
-msgstr ""
+msgstr "Indsæt Side Efter"
 
 #: ../ui/main.glade:2932
 msgid "Insert Page Before"
-msgstr ""
+msgstr "Indsæt Side Før"
 
 #: ../ui/settings.glade:6442
 msgid "LaTeX"
@@ -2928,7 +2935,7 @@ msgstr ""
 
 #: ../ui/main.glade:2903
 msgid "Merge Down"
-msgstr ""
+msgstr "Flet Ned"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
@@ -2965,7 +2972,7 @@ msgstr ""
 
 #: ../ui/main.glade:2895 ../ui/main.glade:2970
 msgid "Move Down"
-msgstr ""
+msgstr "Flyt Ned"
 
 #: ../ui/main.glade:490
 msgid "Move Selection Layer Down"
@@ -2977,7 +2984,7 @@ msgstr ""
 
 #: ../ui/main.glade:2887 ../ui/main.glade:2962
 msgid "Move Up"
-msgstr ""
+msgstr "Flyt Op"
 
 #: ../ui/settings.glade:3910
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
@@ -3113,7 +3120,7 @@ msgstr ""
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "Plugin _Manager"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -3538,7 +3545,8 @@ msgstr ""
 #: ../ui/settings.glade:2697
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Ved tegning med berøring, to-finger bevægelser beregnet til at panorere visningen kan i stedet få det til at zoome om, hvilket forårsager problemer ydeevne. \n"
+"Denne indstilling kan gøre det nemmere at tegne med berøring. "
 
 #: ../ui/settings.glade:2171
 msgctxt "eraser is only visible when floating"
@@ -3673,7 +3681,7 @@ msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Standard Værktøjer"
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"
@@ -3757,7 +3765,7 @@ msgstr ""
 
 #: ../ui/main.glade:2126
 msgid "_Plugin"
-msgstr ""
+msgstr "_Plugin"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"

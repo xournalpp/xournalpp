@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-19 09:23\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -667,7 +667,7 @@ msgstr "Αποτυχία αρχικοποίησης PDF επιφάνειας τ�
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Απέτυχε η φόρτωση της εικόνας, δεν μπόρεσε να προσδιοριστεί το μέγεθος της εικόνας!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -1067,7 +1067,7 @@ msgstr "Αριθμός σελίδας"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "Η μορφή του τύπου σελίδας είναι PageTypeFormat::Copy - μετατρέπεται σε PageTypeFormat::Plain to avoid corrupted file"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
@@ -1245,7 +1245,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "Επιλογή Διόρθωσης Πολλαπλών Στρωμάτων"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1266,11 +1266,11 @@ msgstr "Επιλογή Αντικειμένου"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Επιλέξτε Κείμενο Περιοχής Pdf"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Επιλογή Κειμένου PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
@@ -1282,7 +1282,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Επιλογή κειμένου PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
@@ -1335,7 +1335,7 @@ msgstr "Επιλογή περιοχής"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 msgid "Selection Combo"
-msgstr ""
+msgstr "Συνδυαστική επιλογή"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Send Bugreport"
@@ -1430,11 +1430,11 @@ msgstr "Υποστηριζόμενα αρχεία"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Άλλαξε την τρέχουσα στρώση με την αμέσως παραπάνω"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Άλλαξε την τρέχουσα στρώση με την αμέσως παρακάτω"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
 msgid "Swap the current page with the one above"
@@ -1456,7 +1456,7 @@ msgstr "Κείμενο"
 #: ../src/core/gui/SearchBar.cpp:79
 #, c-format
 msgid "Text %zu times found on this page"
-msgstr ""
+msgstr "Κείμενο βρέθηκε %zu σε αυτή την σελίδα"
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
@@ -2079,7 +2079,8 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Συμπληρώστε τις ρυθμίσεις αδιαφάνειας</b>\n"
+"Επιλέξτε αδιαφάνεια για το χρώμα γεμίσματος"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2091,14 +2092,17 @@ msgstr "<b>Μέγεθος σελίδας</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
-msgstr ""
+msgstr "<b>Διαχωριστικά</b>"
 
 #: ../ui/settings.glade:5898
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"Χρησιμοποιώντας το πλαίσιο ελέγχου το σύστημα ήχου μπορεί να απενεργοποιηθεί ή να ενεργοποιηθεί για μελλοντικές συνεδρίες (απαιτείται επανεκκίνηση). \n"
+"Η απενεργοποίηση του ήχου για μία μόνο συνεδρία μπορεί να επιτευχθεί χρησιμοποιώντας τη σημαία <tt>--απενεργοποιημένη-ήχου</tt> στη γραμμή εντολών.\n"
+"</i>"
 
 #: ../ui/settings.glade:955
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2127,7 +2131,8 @@ msgstr "<i>Παράδειγμα:</i> 1-3 ή 1,3,5-7 κοκ."
 #: ../ui/settings.glade:363
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Αν το έγγραφο ήταν ήδη αποθηκευμένο, μπορείτε να το βρείτε στον ίδιο φάκελο με την επέκταση .autosave. oj\n"
+"Αν το αρχείο δεν έχει αποθηκευτεί ακόμα, μπορείτε να το βρείτε στο ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4632
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2152,7 +2157,8 @@ msgstr "<i>Τοποθετήστε έναν χάρακα στην οθόνη σα
 #: ../ui/settings.glade:5571
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Re-render PDF υπόβαθρο πιο συχνά κατά τη μεγέθυνση για καλύτερη ποιότητα απόδοσης. \n"
+"<b>Σημείωση:</b> Αυτό δεν πρέπει να επηρεάζει την ποιότητα εκτύπωσης.</i>"
 
 #: ../ui/settings.glade:6494
 msgid "<i>Select language (requires restart)</i>"
@@ -2813,7 +2819,7 @@ msgstr "Σχεδιαστές εικονιδιών"
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Θέμα Εικονιδίου:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2957,7 +2963,7 @@ msgstr ""
 
 #: ../ui/main.glade:2903
 msgid "Merge Down"
-msgstr ""
+msgstr "Συγχώνευση Κάτω"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
@@ -3568,7 +3574,8 @@ msgstr ""
 #: ../ui/settings.glade:2697
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Όταν σχεδιάζετε με άγγιγμα, οι χειρονομίες δύο δακτύλων που προορίζονται για το τηγάνι της προβολής μπορούν αντ' αυτού να προκαλέσουν ζουμ, προκαλώντας προβλήματα απόδοσης. \n"
+"Αυτή η ρύθμιση μπορεί να καταστήσει ευκολότερη τη σχεδίαση με την αφή. "
 
 #: ../ui/settings.glade:2171
 msgctxt "eraser is only visible when floating"

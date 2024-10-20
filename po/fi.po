@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-19 09:23\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -148,7 +148,7 @@ msgstr ""
 
 #: ../src/core/control/tools/EditSelection.cpp:406
 msgid "Bring to front"
-msgstr ""
+msgstr "Tuo eteen"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:36
 msgid "Built on"
@@ -364,7 +364,7 @@ msgstr "Poista taso"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Delete this layer"
-msgstr ""
+msgstr "Poista tämä kerros"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
 msgid "Delete this page"
@@ -511,7 +511,8 @@ msgstr "Pyyhekumi"
 #: ../src/core/control/Control.cpp:2547
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Virhe huomautettaessa PDF-tiedostoa \"{1}\"\n"
+"{2}"
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
@@ -599,7 +600,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
-msgstr ""
+msgstr "Vie PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Export as PDF"
@@ -645,7 +646,7 @@ msgstr ""
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Kuvan lataaminen epäonnistui, kuvan kokoa ei voitu määrittää!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -805,11 +806,11 @@ msgstr "Kuvat"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Lisää kopio nykyisestä kerroksesta alle"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:81
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "Lisää kopio nykyisestä sivusta alla"
 
 #: ../src/core/gui/sidebar/Sidebar.cpp:97
 msgid "Insert after current page"
@@ -954,7 +955,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
 #: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/core/control/XournalMain.cpp:680
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1039,7 +1040,7 @@ msgstr "Sivunumero"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "Sivun tyypin muoto on PageTypeForma::Kopioi - muunnettu PageTypeFormaksi::Tavallinen välttääksesi vioittuneen tiedoston"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
@@ -1095,7 +1096,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:991
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "Nauhoitusta ei voitu käynnistää."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 #: ../src/core/undo/UndoRedoHandler.cpp:194
@@ -1217,7 +1218,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "Valitse Monikerroksinen Rect"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1238,11 +1239,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Valitse Pdf Area -teksti"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Valitse PDF Teksti"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
@@ -1254,7 +1255,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Valitse PDF-teksti"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
@@ -1307,7 +1308,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 msgid "Selection Combo"
-msgstr ""
+msgstr "Valinnan Kombo"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Send Bugreport"
@@ -1396,19 +1397,19 @@ msgstr "Tuetut tiedostot"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Vaihda nykyinen taso yläpuolella olevan tason kanssa"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Vaihda nykyinen kerros alla olevalla kerroksella"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Vaihda nykyinen sivu yllä olevalla sivulla"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Vaihda nykyinen sivu alla olevalla sivulla"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
@@ -1422,11 +1423,11 @@ msgstr "Teksti"
 #: ../src/core/gui/SearchBar.cpp:79
 #, c-format
 msgid "Text %zu times found on this page"
-msgstr ""
+msgstr "Teksti %zu kertaa löydetty tältä sivulta"
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
-msgstr ""
+msgstr "Tältä sivulta löytyvä teksti"
 
 #: ../src/core/gui/SearchBar.cpp:133
 msgid "Text found once on page {1}"
@@ -1434,7 +1435,7 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:134
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "Teksti löytyi {1} kertaa sivulla {2}"
 
 #: ../src/core/gui/SearchBar.cpp:84
 msgid "Text not found"
@@ -1487,7 +1488,7 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:303
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "Kaava on tyhjä, kun se on renderöity tai virheellinen."
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
@@ -1531,7 +1532,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "Työkalupalkki löytyi: {1}"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
@@ -1539,7 +1540,7 @@ msgstr "Työkalupalkki"
 
 #: ../src/core/control/CrashHandler.cpp:31
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "Yritetään tallentaa tämä avoin asiakirja…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:142
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -2022,7 +2023,7 @@ msgstr "<b>Väri</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr ""
+msgstr "<b>Oletustyökalut</b>"
 
 #: ../ui/settings.glade:5805
 msgid "<b>Default</b>"
@@ -2041,7 +2042,8 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Täytä läpinäkyvyysasetukset</b>\n"
+"Valitse täyttövärin läpinäkyvyys"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2053,14 +2055,17 @@ msgstr "<b>Sivun koko</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separators</b>"
-msgstr ""
+msgstr "<b>Erottimet</b>"
 
 #: ../ui/settings.glade:5898
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
 "</i>"
-msgstr ""
+msgstr "<i>\n"
+"Valintalaatikon avulla äänijärjestelmä voidaan ottaa pois käytöstä tai ottaa käyttöön tulevia istuntoja varten (uudelleenkäynnistys vaaditaan). \n"
+"Yksittäisen istunnon äänen poistaminen käytöstä voidaan tehdä käyttämällä komentorivillä <tt>--disable-audio</tt> .\n"
+"</i>"
 
 #: ../ui/settings.glade:955
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -2089,7 +2094,8 @@ msgstr "<i>Esimerkki:</i> 1-3 tai 1,3,5-7 jne."
 #: ../ui/settings.glade:363
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Jos asiakirja on jo tallennettu, voit löytää sen samasta kansiosta lisäosan .autosave. oj\n"
+"Jos tiedostoa ei ole vielä tallennettu, voit löytää sen ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4632
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2114,7 +2120,8 @@ msgstr ""
 #: ../ui/settings.glade:5571
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Palauta PDF-tausta useammin, kun zoomaus parantaa laadun laatua. \n"
+"<b>Huomautus:</b> Tämän ei pitäisi vaikuttaa tulostuksen laatuun.</i>"
 
 #: ../ui/settings.glade:6494
 msgid "<i>Select language (requires restart)</i>"
@@ -2189,11 +2196,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4685
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Lisätään uusi vaakasuora tila"
 
 #: ../ui/settings.glade:4663
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Lisää ylimääräinen pystysuora tila:"
 
 #: ../ui/settings.glade:5066
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2510,7 +2517,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Vedä ja pudota Komponentit fom tähän työkalupalkkeihin ja takaisin."
 
 #: ../ui/settings.glade:1254 ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
@@ -2546,7 +2553,7 @@ msgstr ""
 
 #: ../ui/main.glade:2985
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Muokkaa (ei vielä toteutettu)"
 
 #: ../ui/latexSettings.glade:606
 msgid "Editor settings"
@@ -2769,7 +2776,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Kuvakkeen Teema:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2833,11 +2840,11 @@ msgstr "Lisää Latex"
 
 #: ../ui/main.glade:2940
 msgid "Insert Page After"
-msgstr ""
+msgstr "Lisää Sivu Jälkeen"
 
 #: ../ui/main.glade:2932
 msgid "Insert Page Before"
-msgstr ""
+msgstr "Lisää Sivu Ennen"
 
 #: ../ui/settings.glade:6442
 msgid "LaTeX"
@@ -2913,7 +2920,7 @@ msgstr ""
 
 #: ../ui/main.glade:2903
 msgid "Merge Down"
-msgstr ""
+msgstr "Yhdistä Alas"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
@@ -3098,7 +3105,7 @@ msgstr ""
 
 #: ../ui/main.glade:2137
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "Liitännäisten _hallinta"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -3523,7 +3530,8 @@ msgstr ""
 #: ../ui/settings.glade:2697
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Kun piirustus kosketuksella, kaksisormella eleet, jotka on tarkoitettu avaamaan näkymä, voivat sen sijaan aiheuttaa suorituskykyä koskevia ongelmia. \n"
+"Tämä asetus voi helpottaa piirtämistä kosketuksella. "
 
 #: ../ui/settings.glade:2171
 msgctxt "eraser is only visible when floating"
@@ -3658,7 +3666,7 @@ msgstr ""
 
 #: ../ui/main.glade:1468
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Oletustyökalut"
 
 #: ../ui/main.glade:1273
 msgid "_Delete Page"

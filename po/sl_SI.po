@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-18 19:17\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/core/control/jobs/BaseExportJob.cpp:53
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"Ali želite nadaljevati?"
 
 #: ../src/core/control/Control.cpp:2440
 msgid "\n"
@@ -524,7 +525,8 @@ msgstr "Radirka"
 #: ../src/core/control/Control.cpp:2547
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Napaka komentiranje PDF \"{1}\"\n"
+"{2}"
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
@@ -669,7 +671,7 @@ msgstr "Zagon površine PDF Cairo ni uspela"
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Nalaganje slike ni uspelo, velikosti slike ni bilo mogoče določiti!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -829,7 +831,7 @@ msgstr "Slika uspešno ustvarjena"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
 msgid "Images"
-msgstr ""
+msgstr "Slike"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Insert a copy of the current layer below"
@@ -998,7 +1000,7 @@ msgstr "Izvozi samo strani, ki jih določa RANGE (npr. \"2-3,5,7-\")\n"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
-msgstr ""
+msgstr "Odpri sliko"
 
 #: ../src/core/control/XournalMain.cpp:206
 msgid "Open Logfile"
@@ -2868,7 +2870,7 @@ msgstr "Oblikovalci ikon"
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "Tema ikone:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."

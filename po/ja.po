@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-19 09:23\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -525,7 +525,8 @@ msgstr "消しゴム"
 #: ../src/core/control/Control.cpp:2547
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "PDF ファイル \"{1}\"\n"
+"{2} の注釈付時にエラーが発生しました"
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
@@ -983,7 +984,7 @@ msgstr "通常の描画"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
 #: ../src/core/plugin/Plugin.cpp:268 ../src/core/plugin/Plugin.cpp:291
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../src/core/control/XournalMain.cpp:680
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1070,7 +1071,7 @@ msgstr "ページ番号"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "PageTypeFormat::Copy - 破損したファイルを避けるためにPageTypeFormat::Plain に変換されます"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
@@ -1248,7 +1249,7 @@ msgstr "線形の PDF テキストを選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "マルチレイヤーの長方形を選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1285,7 +1286,7 @@ msgstr "長方形でPDFテキストを選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "PDFのテキストを選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
@@ -1338,7 +1339,7 @@ msgstr "手書きで選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 msgid "Selection Combo"
-msgstr ""
+msgstr "選択方法の一覧"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Send Bugreport"
@@ -1433,19 +1434,19 @@ msgstr "サポートされたファイル"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:72
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "現在のレイヤーを上部のレイヤーと入れ替え"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:73
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "現在のレイヤーを下のレイヤーに入れ替えます"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:79
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "現在のページを上記のページと入れ替え"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:80
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "下のページと現在のページを入れ替えます"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:48
 msgid "System Default"
@@ -1459,7 +1460,7 @@ msgstr "テキスト"
 #: ../src/core/gui/SearchBar.cpp:79
 #, c-format
 msgid "Text %zu times found on this page"
-msgstr ""
+msgstr "テキストがこのページで %zu 回見つかりました"
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
@@ -1524,7 +1525,7 @@ msgstr "ファイルが有効な.xoppファイルではありません（バー�
 
 #: ../src/core/control/LatexController.cpp:303
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "レンダリングまたは無効な場合、数式は空です。"
 
 #: ../src/core/control/XournalMain.cpp:197
 msgid "The most recent log file name: {1}"
@@ -1568,7 +1569,7 @@ msgstr "ツール - 変更しない"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "ツールバーが見つかりました: {1}"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
@@ -2082,7 +2083,8 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>不透明度の塗りつぶし設定</b>\n"
+"塗りつぶし色の不透明度を選択"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2155,7 +2157,8 @@ msgstr ""
 #: ../ui/settings.glade:5571
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>レンダリング品質を向上させるためにズーム時にPDFの背景をより頻繁に再レンダリングします。 \n"
+"<b>注意:</b> これは印刷品質に影響を与えるべきではありません。</i>"
 
 #: ../ui/settings.glade:6494
 msgid "<i>Select language (requires restart)</i>"
@@ -2551,7 +2554,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "ここにコンポーネントをドラッグ&ドロップして、ツールバーに戻します。"
 
 #: ../ui/settings.glade:1254 ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
@@ -2810,7 +2813,7 @@ msgstr "アイコンデザイナー"
 
 #: ../ui/settings.glade:3174
 msgid "Icon Theme:"
-msgstr ""
+msgstr "アイコンテーマ:"
 
 #: ../ui/settings.glade:5249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2954,7 +2957,7 @@ msgstr ""
 
 #: ../ui/main.glade:2903
 msgid "Merge Down"
-msgstr ""
+msgstr "統合ダウン"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
@@ -3564,7 +3567,8 @@ msgstr ""
 #: ../ui/settings.glade:2697
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "タッチで描画する場合、ビューをパンすることを目的とした2本指のジェスチャーではなく、ズームが発生し、パフォーマンスの問題が発生する可能性があります。 \n"
+"タッチで描きやすくなります。 "
 
 #: ../ui/settings.glade:2171
 msgctxt "eraser is only visible when floating"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-17 19:40\n"
+"PO-Revision-Date: 2024-10-18 19:17\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -669,7 +669,7 @@ msgstr "Non foi posíbel iniciar a superficie de Cairo de PDF"
 
 #: ../src/core/control/tools/ImageHandler.cpp:70
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Non foi posíbel cargar a imaxe; non foi posíbel determinar o tamaño da imaxe!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
@@ -1245,7 +1245,7 @@ msgstr "Seleccionar texto lineal do PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr ""
+msgstr "Seleccionar rectángulo de varias capas"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1456,7 +1456,7 @@ msgstr "Texto"
 #: ../src/core/gui/SearchBar.cpp:79
 #, c-format
 msgid "Text %zu times found on this page"
-msgstr ""
+msgstr "O texto atopouse %zu veces nesta páxina"
 
 #: ../src/core/gui/SearchBar.cpp:77
 msgid "Text found on this page"
@@ -2129,7 +2129,8 @@ msgstr "<i>Exemplo:</i> 1-3 ou 1,3,5-7 etc."
 #: ../ui/settings.glade:363
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Se o documento xa estivese gardado, pódeo atopar no mesmo cartafol coa extensión .autosave.xoj\n"
+"Se o ficheiro non estivese gardado aínda, pódeo atopar en ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4632
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2964,7 +2965,7 @@ msgstr ""
 
 #: ../ui/main.glade:2903
 msgid "Merge Down"
-msgstr ""
+msgstr "Fusionar para abaixo"
 
 #: ../ui/main.glade:1312
 msgid "Merge Layer Down"
