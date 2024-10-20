@@ -16,10 +16,10 @@ jobs:
   ubuntu-20.04:
     runs-on: ubuntu-20.04
     steps:
-      - uses: .github/workflows/steps/install_deps_ubuntu
+      - uses: ${{github.workspace}}/.github/workflows/steps/install_deps_ubuntu
         with:
           gcc_version: ${{env.GCC_VERSION}}
-      - uses: .github/workflows/steps/build_linux
+      - uses: ${{github.workspace}}/.github/workflows/steps/build_linux
         with:
           gcc_version: ${{env.GCC_VERSION}}
           build_type: ${{env.BUILD_TYPE}}
