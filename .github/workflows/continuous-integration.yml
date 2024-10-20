@@ -48,8 +48,9 @@ jobs:
     runs-on: windows-2019
     name: 'Test Xournal++ on Windows'
     steps:
+      - uses: actions/checkout@v4
       - name: 'Build Xournal++'
-        uses: .github/actions/build_windows
+        uses: ./.github/actions/build_windows
         with:
           build_type: ${{env.BUILD_TYPE}}
           cmake_flags: '-GNinja -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
