@@ -16,3 +16,4 @@ runs:
           ibus-gtk3 fcitx-frontend-gtk3 fcitx5-frontend-gtk3 uim-gtk3-immodule uim-data gcin-gtk3-immodule \
           liblua5.3-dev libzip-dev gettext help2man libgtest-dev libgtksourceview-4-dev
         g++ --version
+      shell: bash

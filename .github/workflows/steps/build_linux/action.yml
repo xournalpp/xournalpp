@@ -23,6 +23,7 @@ runs:
   steps:
   - name: 'Create build directory'
     run: mkdir build
+    shell: bash
   - name: 'Build Xournal++'
     run: |
       export CXX=g++-${{ inputs.gcc_version }}
