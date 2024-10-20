@@ -1,4 +1,4 @@
-name: Clang Format Applied
+name: Check for Clang Format
 on:
   pull_request:
     branches: [ "master" , "release-*" ]
@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Setup APT repository
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
