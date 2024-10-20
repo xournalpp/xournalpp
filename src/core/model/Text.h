@@ -41,6 +41,7 @@ public:
     const std::string& getText() const;
     void setText(std::string text);
 
+
     void setWidth(double width);
     void setHeight(double height);
 
