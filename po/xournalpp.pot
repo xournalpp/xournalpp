@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xournalpp 1.2.3+dev\n"
+"Project-Id-Version: xournalpp 1.2.4+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-19 14:57+0000\n"
+"POT-Creation-Date: 2024-10-21 18:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1040,15 +1040,14 @@ msgid "Draw Double Arrow"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
-msgid "Draw coordinate system"
+msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
-msgid "Stroke recognizer"
+msgid "Shape Recognizer"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
@@ -1448,6 +1447,14 @@ msgstr ""
 msgid "Page Preview"
 msgstr ""
 
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
+msgid "Draw coordinate system"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+msgid "Stroke recognizer"
+msgstr ""
+
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
 msgstr ""
@@ -1653,10 +1660,6 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
-msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Shape Recognizer"
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
@@ -3542,10 +3545,6 @@ msgstr ""
 msgid "0.20"
 msgstr ""
 
-#: ../ui/settings.glade:5149
-msgid "Stroke Recognizer"
-msgstr ""
-
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
 msgstr ""
@@ -4213,10 +4212,6 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
-msgstr ""
-
-#: ../ui/mainmenubar.xml:583
-msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../ui/mainmenubar.xml:588
