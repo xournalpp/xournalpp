@@ -27,7 +27,7 @@ build_binary_blob_for_macos_arm_task:
   binary_blob_cache:
     << : *BINARY_BLOB_CACHE_TEMPLATE
     populate_script: |
-      bash mac-setup/cirrus_jhbuild.sh
+      bash mac-setup/CI_jhbuild.sh
       mkdir blobdir
       mv xournalpp-binary-blob.tar.gz blobdir
   upload_caches:

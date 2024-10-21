@@ -1,0 +1,109 @@
+# Template for running Ubuntu release jobs
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        type: string
+        required: true
+      displayed_name:
+        type: string
+        required: true
+      build_appimage:
+        type: boolean
+        default: false
+      gcc_version:
+        default: ''     # This means the package 'gcc'
+        type: string
+      extra_packages:   # List of extra packages to be installed
+        type: string
+        default: ''
+      container_image:  # if provided, runs in a container (docker...)
+        required: false
+        type: string
+        default: ''
+      head_sha:         # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
+        type: string
+        default: ''
+    outputs:
+      link:
+        description: URL of the produced installer
+        value: ${{ jobs.release-linux.outputs.link }}
+      link_appimage:
+        description: URL of the AppImage (if any)
+        value: ${{ jobs.release-linux.outputs.link_appimage }}
+
+jobs:
+  release-linux:
+    name: Create installer for ${{ inputs.displayed_name }}
+    runs-on: ${{ inputs.runner }}
+    outputs:
+      link: ${{ steps.publish-packages.outputs.artifact-url }}
+      link_appimage: ${{ steps.publish-appimage.outputs.artifact-url }}
+    container:
+      image: ${{ inputs.container_image }}
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.head_sha }}
+      - name: 'Install dependencies (for AppImage)'
+        if: ${{ inputs.build_appimage }}
+        # Building the appimage requires extra packages (to add them to the appimage)
+        uses: ./.github/actions/install_deps_ubuntu
+        with:
+          gcc_version: ${{inputs.gcc_version}}
+          extra_packages: >-
+            ${{ inputs.extra_packages }}
+            fcitx-frontend-gtk3
+            fcitx5-frontend-gtk3
+            gcin-gtk3-immodule
+            ibus-gtk3
+            uim-data
+            uim-gtk3-immodule
+      - name: 'Install dependencies (no AppImage)'
+        if: ${{ ! inputs.build_appimage }}
+        uses: ./.github/actions/install_deps_ubuntu
+        with:
+          gcc_version: ${{inputs.gcc_version}}
+          extra_packages: ${{ inputs.extra_packages }}
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: 'RelWithDebInfo'
+          cmake_flags: >-
+            -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON
+            -DENABLE_GTEST=ON
+            -DCMAKE_INSTALL_PREFIX=/usr
+            -DCPACK_GENERATOR="TGZ;DEB"
+          cmake_commands: '--target package'
+      - name: 'Publish packages'
+        id: publish-packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Packages ${{ inputs.displayed_name }}"
+          compression-level: 0
+          path: "${{github.workspace}}/build/packages"
+          if-no-files-found: error
+      - name: 'Create AppImage'
+        if: ${{ inputs.build_appimage }}
+        shell: bash
+        run: |
+          # Build AppImage
+          export VERSION=$(cat VERSION | sed '1q;d')
+          export ARCH=$(cat VERSION | sed '4q;d')
+          export OUTPUT="xournalpp-$VERSION-$ARCH.AppImage"
+          ../linux-setup/build_appimage.sh
+
+          mkdir appimage
+          mv "$OUTPUT" "$OUTPUT".zsync appimage/
+        working-directory: ./build
+      - name: 'Publish AppImage'
+        id: publish-appimage
+        if: ${{ inputs.build_appimage }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Linux AppImage (built on ${{ inputs.displayed_name }})"
+          compression-level: 0
+          path: "${{github.workspace}}/build/appimage"
+          if-no-files-found: error

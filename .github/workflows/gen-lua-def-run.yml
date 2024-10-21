@@ -1,0 +1,38 @@
+name: Check Lua definition file up to date
+
+on:
+  pull_request:
+    branches: [ "master", "release-*" ]
+    paths:
+      - 'src/core/plugin/luapi_application.h'
+
+jobs:
+  Test_Lua_definition:
+    runs-on: ubuntu-latest
+    name: 'Check that lua definitions file is up-to-date'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Install python3'
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3
+      - name: 'Generate lua definitions file and check if the one in the repo is still up-to-date'
+        shell: bash
+        run: |
+          echo $(git status)
+          echo "generate the file fresh"
+          if ! python3 scripts/lua_def_file.py ; then
+              # Failure: Generating script failed
+              echo "Error generating the definitions file"
+              exit 1
+          fi
+
+          # check if it matches the one present in the repository
+          if ! git diff --exit-code plugins/luapi_application.def.lua ; then
+              # Failure: lua definitions file is not up-to-date
+              echo "Error: generated lua definitions file does not match the present one"
+              exit 1
+          fi
+          echo "Success: lua definitions file is up-to-date"
+          exit 0

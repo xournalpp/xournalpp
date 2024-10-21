@@ -26,20 +26,22 @@ ldd ../build/xournalpp.exe | grep '\/mingw.*\.dll' -o | sort -u | xargs -I{} cp 
 # CI workaround: copy libcrypto and libssl in case they are not already copied.
 ldd ../build/xournalpp.exe | grep -E 'lib(ssl|crypto)[^\.]*\.dll' -o | sort -u | xargs -I{} cp "/mingw64/bin/{}" "$setup_dir"/bin/
 
+echo "Installing GTK/Glib translations"
 # Copy system locale files
 for trans in ../build/po/*.gmo; do
     # Bail if there are no translations at all
     [ -f "$trans" ] || break;
 
-	# Retrieve locale from name of translation file
-	locale=$(basename -s .gmo $trans)
+    # Retrieve locale from name of translation file
+    locale=$(basename -s .gmo $trans)
+    locale_no_country=$(echo $locale | sed 's/_.*//')
 
-	# GTK / GLib Translation
-	cp -r /usr/share/locale/$locale/LC_MESSAGES/glib20.mo "$setup_dir"/share/locale/$locale/LC_MESSAGES/glib20.mo
-
-	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gdk-pixbuf.mo "$setup_dir"/share/locale/$locale/LC_MESSAGES/gdk-pixbuf.mo
-	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gtk30.mo "$setup_dir"/share/locale/$locale/LC_MESSAGES/gtk30.mo
-	cp -r /mingw64/share/locale/$locale/LC_MESSAGES/gtk30-properties.mo	"$setup_dir"/share/locale/$locale/LC_MESSAGES/gtk30-properties.mo
+    # GTK / GLib Translation
+    for f in "glib20.mo" "gdk-pixbuf.mo" "gtk30.mo" "gtk30-properties.mo"; do
+        install -Dvm644 /mingw64/share/locale/$locale/LC_MESSAGES/$f "$setup_dir"/share/locale/$locale/LC_MESSAGES/$f \
+          || ([ "$locale" != "$locale_no_country" ] \
+              && install -Dvm644 /mingw64/share/locale/$locale_no_country/LC_MESSAGES/$f "$setup_dir"/share/locale/$locale_no_country/LC_MESSAGES/$f)
+    done
 done
 
 echo "copy pixbuf libs"

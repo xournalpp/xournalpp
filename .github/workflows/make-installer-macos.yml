@@ -1,0 +1,56 @@
+# Template for running MacOS release jobs
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        type: string
+        required: true
+      displayed_name:
+        type: string
+        required: true
+      head_sha:         # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
+        type: string
+        default: ''
+    outputs:
+      link:
+        description: URL of the produced installer
+        value: ${{ jobs.release-macos.outputs.link }}
+
+jobs:
+  release-macos:
+    name: Create installer for ${{ inputs.displayed_name }}
+    runs-on: ${{ inputs.runner }}
+    outputs:
+      link: ${{ steps.publish.outputs.artifact-url }}
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.head_sha }}
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_mac
+        with:
+          install_path: $HOME
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: RelWithDebInfo
+          cmake_flags: >-
+            -DCMAKE_INSTALL_PREFIX="$HOME/gtk/inst"
+            -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON
+      - name: 'Create installer'
+        shell: bash
+        run: |
+          which pkg-config
+          pkg-config --version
+          (cd build && cmake --build . --target install)
+          (cd mac-setup && ./build-app.sh $HOME/gtk)                    # populates a folder mac-setup/Xournal++.app
+          (cd mac-setup && ./build-dmg.sh Xournal++.app Xournal++.dmg)  # makes an installer out of this folder
+      - name: 'Publish package'
+        id: publish
+        uses: actions/upload-artifact@v4
+        with:
+          name: "MacOS package ${{runner.os}}-${{runner.arch}}"
+          path: "${{github.workspace}}/mac-setup/Xournal++.dmg"
+          if-no-files-found: error
