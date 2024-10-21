@@ -1,6 +1,31 @@
 # Changelog
 
-## 1.2.3+dev (Unreleased)
+## 1.2.4+dev (Unreleased)
+
+## 1.2.4
+
+Bugfixes from various community contributors.
+
+* Fixed various dark/light theme inconsistencies (#5583)
+* Improved edge panning for large selections (#5578)
+* Made the "do you want to replace" dialog to stay on top (#5550, #3253)
+* Made the OK button default in the PDF Export settings dialog (#5558, #5557) 
+* Allow missing terminating newlines and empty lines in .gpl files (#5728, #5724) 
+* Fixed thumbnailer previews not always showing up (#5551, #5534)
+* Fixed potential issues with sliders and LaTeX preview (#5864)
+* Fixed an issue with the list of recent files (#5894)
+* Fixed crashes related to undo/redo with page transitioning elements (#5936, #5931 #5910, #1232)
+* Fixed a potential crash when entering the presentation mode (#5922,  #2943)
+* Fixed a crash in the crash handler (#5622, #5618)
+* Fixed a drawing related crash (#5662, #5659)
+* Fixed some memory leaks (#5597)
+* Windows: Fixed conversion problems with paths (#5640, #5638, #5606)
+* MacOS: Fixed titlebar color (#5651)
+* MacOS: Added support for opening xopp-files from Finder (#5950)
+* Appimage: Added universal input method data (#5603)
+* Added Ubuntu 24.04 and MacOS ARM builds (#5898, #5783)
+* Fixed inconsistencies in tool names (#5961)
+* Updated translations
 
 ## 1.2.3
 
