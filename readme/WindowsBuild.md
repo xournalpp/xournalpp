@@ -28,6 +28,7 @@ pacman -S \
   mingw-w64-x86_64-cmake \
   mingw-w64-x86_64-ninja \
   mingw-w64-x86_64-imagemagick \
+  mingw-w64-x86_64-gettext \
   patch \
   make \
   git
