@@ -51,13 +51,13 @@ void TexImageView::draw(const Context& ctx) const {
              * This sets the current pattern to the temporary surface.
              */
             cairo_push_group(cr);
-            poppler_page_render(page, cr);
+            poppler_page_render_for_printing(page, cr);
             cairo_pop_group_to_source(cr);
 
             // paint the temporary surface with opacity level
             cairo_paint_with_alpha(cr, OPACITY_NO_AUDIO);
         } else {
-            poppler_page_render(page, cr);
+            poppler_page_render_for_printing(page, cr);
         }
 
         g_clear_object(&page);
