@@ -49,8 +49,15 @@ configure_jhbuild_envvars
 setup_custom_modulesets() {
     local gtk_osx_commit=$(get_lockfile_entry gtk-osx)
     [ -d ~/gtk-osx-custom ] && rm -rf ~/gtk-osx-custom
-    git clone https://gitlab.gnome.org/GNOME/gtk-osx.git ~/gtk-osx-custom
-    (cd ~/gtk-osx-custom && git checkout "$gtk_osx_commit")
+    mkdir ~/gtk-osx-custom
+
+    # Shallow clone into a commit
+    (cd ~/gtk-osx-custom && git init)
+    (cd ~/gtk-osx-custom && git remote add origin https://gitlab.gnome.org/GNOME/gtk-osx.git)
+    (cd ~/gtk-osx-custom && git fetch --depth 1 origin "$gtk_osx_commit")
+    (cd ~/gtk-osx-custom && git checkout FETCH_HEAD)
+#     git clone https://gitlab.gnome.org/GNOME/gtk-osx.git ~/gtk-osx-custom
+#     (cd ~/gtk-osx-custom && git checkout "$gtk_osx_commit")
 
     # Set osx deployment target
     sed -i '' -e 's/^setup_sdk()/setup_sdk(target="11.7")/' ~/.config/jhbuildrc-custom

@@ -1,0 +1,37 @@
+# Template for building Xournal++
+
+name: Build xournal++
+inputs:
+  build_type:
+    required: true
+    type: string
+  cmake_flags:
+    default: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
+    type: string
+    required: false
+  cmake_commands:
+    default: ''
+    type: string
+    required: false
+  shell:
+    default: bash
+    required: false
+
+runs:
+  using: composite
+  steps:
+  - name: 'Create build directory'
+    shell: ${{inputs.shell}}
+    run: mkdir build
+  - name: 'Build Xournal++'
+    shell: ${{inputs.shell}}
+    working-directory: ${{github.workspace}}/build
+    run: |
+      which pkg-config
+      pkg-config --version
+      cmake -GNinja .. -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} ${{ inputs.cmake_flags }}
+      # Make sure pot is up to date with sources (maybe translation pipeline is currently running)
+      cmake --build . --target pot
+      cmake --build . --target translations
+      # Build Xournal++
+      cmake --build . ${{ inputs.cmake_commands }}

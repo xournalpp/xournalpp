@@ -1,0 +1,77 @@
+name: Create Installers
+
+on:
+  # To trigger from another workflow
+  workflow_call:
+    inputs:
+      linux_builds:
+        # Some JSON string of a list of items, each containing the following members
+        #   - runner: one of github's UBUNTU runners
+        #   - displayed_name
+        #   - gcc_version (optional, defaults to whatever the package "gcc" is on this version of ubuntu)
+        #   - build_appimage (optional, defaults to false)
+        #   - container_image: runs in the given container (optional)
+        #   - extra_packages: install those extra packages via apt before building (optional)
+        type: string
+        default: ''
+      windows_builds:
+        # Some JSON string of a list of items, each containing the following members
+        #   - runner: one of github's WINDOWS runners
+        #   - displayed_name
+        #   - build_portable (optional, defaults to false)
+        type: string
+        default: ''
+      macos_builds:
+        # Some JSON string of a list of items, each containing the following members
+        #   - runner: one of github's MACOS runners
+        #   - displayed_name
+        type: string
+        default: ''
+      head_sha:        # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
+        type: string
+        default: ''
+
+jobs:
+  ci-ubuntu:
+    name: Create installer (Linux)
+    if: ${{ inputs.linux_builds != '' && inputs.linux_builds != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        run: ${{fromJSON(inputs.linux_builds)}}
+    uses: ./.github/workflows/make-installer-linux.yml
+    with:
+      displayed_name: ${{ matrix.run.displayed_name }}
+      gcc_version: ${{ matrix.run.gcc_version }}
+      runner: ${{ matrix.run.runner }}
+      build_appimage: ${{ matrix.run.build_appimage == 'true' }}
+      extra_packages: ${{ matrix.run.extra_packages }}
+      container_image: ${{ matrix.run.container_image }}
+      head_sha: ${{ inputs.head_sha }}
+
+  ci-windows:
+    name: Create installer (Windows)
+    if: ${{ inputs.windows_builds != '' && inputs.windows_builds != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        run: ${{fromJSON(inputs.windows_builds)}}
+    uses: ./.github/workflows/make-installer-windows.yml
+    with:
+      runner: ${{ matrix.run.runner }}
+      displayed_name: ${{ matrix.run.displayed_name }}
+      publish_portable_version:  ${{ matrix.run.build_portable == 'true' }}
+      head_sha: ${{ inputs.head_sha }}
+
+  ci-macos:
+    name: Create installer (MacOS)
+    if: ${{ inputs.macos_builds != '' && inputs.macos_builds != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        run: ${{fromJSON(inputs.macos_builds)}}
+    uses: ./.github/workflows/make-installer-macos.yml
+    with:
+      runner: ${{ matrix.run.runner }}
+      displayed_name: ${{ matrix.run.displayed_name }}
+      head_sha: ${{ inputs.head_sha }}

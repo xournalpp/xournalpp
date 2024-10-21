@@ -1,0 +1,50 @@
+name: Check for Clang Format
+on:
+  pull_request:
+    branches: [ "master" , "release-*" ]
+    paths:
+      - 'src/**.cpp'
+      - 'src/**.h'
+      - 'test/**.cpp'
+
+jobs:
+  clang-format-checking:
+    runs-on: ubuntu-latest
+    env:
+      CLANG_FORMAT_VERSIONS: "18 17 16"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup APT repository
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          for VERSION in $CLANG_FORMAT_VERSIONS; do
+            sudo apt-add-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-$VERSION main"
+          done
+          sudo apt-get update
+
+      - name: Run clang-format on modified files
+        run: |
+          git config --global clangFormat.extensions "c,h,cpp,hpp,hxx,cxx,cc,hh'"
+          #
+          git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
+          BASE_COMMIT=$(git merge-base HEAD $GITHUB_BASE_REF)
+          #
+          echo Computing diff to commit hash $BASE_COMMIT
+          # Exit on git merge-base failure
+          [[ -z "$BASE_COMMIT" ]] && { echo "Error: BASE_COMMIT is empty" ; exit 1; }
+          git fetch origin $BASE_COMMIT
+
+          for VERSION in $CLANG_FORMAT_VERSIONS; do
+            echo "Installing clang-format-$VERSION"
+            sudo apt-get install -y clang-format-$VERSION
+            echo "Testing $(clang-format-$VERSION --version)"
+            # A bug in llvm's .deb packages makes git-clang-format-$VERSION call clang-format instead of clang-format-$VERSION
+            # The --binary option gives a workaround
+            git clang-format-$VERSION --binary="clang-format-$VERSION" --diff $BASE_COMMIT -- && { echo "Success: changes are compatible with clang-format-$VERSION"; exit 0; }
+          done
+          # Failure: None of the allowed clang-format versions validated the changes
+          echo "Error: changes are not compatible with any of the allowed clang-format versions: $CLANG_FORMAT_VERSIONS"
+          exit 1
