@@ -1,0 +1,19 @@
+# Template for setting up the Ubuntu build environment and building Xournal++ on
+# Ubuntu
+name: Install dependencies
+inputs:
+  gcc_version:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - run: |
+        sudo apt-get update
+        sudo apt-get install -y librsvg2-dev gcc-${{ inputs.gcc_version }} g++-${{ inputs.gcc_version }} cmake ninja-build \
+          libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
+          ibus-gtk3 fcitx-frontend-gtk3 fcitx5-frontend-gtk3 uim-gtk3-immodule uim-data gcin-gtk3-immodule \
+          liblua5.3-dev libzip-dev gettext help2man libgtest-dev libgtksourceview-4-dev
+        g++ --version
+      shell: bash

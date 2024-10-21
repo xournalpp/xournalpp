@@ -41,6 +41,7 @@ public:
     const std::string& getText() const;
     void setText(std::string text);
 
+
     void setWidth(double width);
     void setHeight(double height);
 
@@ -65,6 +66,7 @@ public:
     // Serialize interface
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
+
 
 protected:
     void calcSize() const override;

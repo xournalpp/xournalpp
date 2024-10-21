@@ -1,0 +1,38 @@
+# Template for setting up the Ubuntu build environment and building Xournal++ on
+# Ubuntu
+
+name: Build xournal++
+inputs:
+  gcc_version:
+    required: true
+    type: string
+  build_type:
+    required: true
+    type: string
+  cmake_flags:
+    default: ''
+    type: string
+    required: false
+  cmake_commands:
+    default: ''
+    type: string
+    required: false
+
+runs:
+  using: composite
+  steps:
+  - name: 'Create build directory'
+    run: mkdir build
+    shell: bash
+  - name: 'Build Xournal++'
+    run: |
+      export CXX=g++-${{ inputs.gcc_version }}
+      export CC=gcc-${{ inputs.gcc_version }}
+      cmake -GNinja .. -DCMAKE_BUILD_TYPE=${{ inputs.build_type }} ${{ inputs.cmake_flags }}
+      # Make sure pot is up to date with sources (maybe translation pipeline is currently running)
+      cmake --build . --target pot
+      cmake --build . --target translations
+      # Build Xournal++
+      cmake --build . ${{ inputs.cmake_commands }}
+    shell: bash
+    working-directory: ${{github.workspace}}/build
