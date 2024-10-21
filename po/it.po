@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-19 14:19\n"
+"PO-Revision-Date: 2024-10-21 18:53\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -3393,7 +3393,7 @@ msgstr "Mostra le la barra dei menu all'avvio"
 
 #: ../ui/main.glade:589 ../ui/settings.glade:3988 ../ui/settings.glade:4087
 msgid "Show Sidebar"
-msgstr "Mostra barra laterale"
+msgstr "Mostra Pannello laterale"
 
 #: ../ui/settings.glade:3972 ../ui/settings.glade:4055
 msgid "Show Toolbar"
@@ -3409,7 +3409,7 @@ msgstr "Mostra il percorso del file nella barra del titolo"
 
 #: ../ui/settings.glade:3641
 msgid "Show sidebar on the right side"
-msgstr "Mostra barra laterale a destra"
+msgstr "Mostra il pannello laterale a destra"
 
 #: ../ui/settings.glade:3657
 msgid "Show vertical scrollbar on the left side"
@@ -3417,7 +3417,7 @@ msgstr "Mostra barra di scorrimento a sinistra"
 
 #: ../ui/settings.glade:3761
 msgid "Sidebar"
-msgstr "Anteprime"
+msgstr "Pannello laterale"
 
 #: ../ui/settings.glade:1081
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
