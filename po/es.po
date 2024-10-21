@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-18 22:49\n"
+"PO-Revision-Date: 2024-10-21 18:53\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -3258,7 +3258,7 @@ msgstr "Re-renderizar cuando el zoom de la página cambia a más de "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "_Documentos Recientes"
+msgstr "_Documentos recientes"
 
 #: ../ui/main.glade:2062
 msgid "Record / Stop"
@@ -3761,7 +3761,7 @@ msgstr "_Abajo hacia Arriba"
 
 #: ../ui/main.glade:717
 msgid "_Cols/Rows"
-msgstr "_Col/Filas"
+msgstr "_Columnas/Filas"
 
 #: ../ui/main.glade:977
 msgid "_Customize"
@@ -3857,7 +3857,7 @@ msgstr "C_omplemento"
 
 #: ../ui/main.glade:567
 msgid "_Presentation Mode"
-msgstr "Modo de _Presentación"
+msgstr "Modo _presentación"
 
 #: ../ui/main.glade:1137
 msgid "_Previous Layer"
