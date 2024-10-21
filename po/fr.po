@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-17 16:12\n"
+"POT-Creation-Date: 2024-10-21 18:49+0000\n"
+"PO-Revision-Date: 2024-10-21 18:52\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -74,7 +74,7 @@ msgstr "Aucune page PDF de disponible à ajouter. Vous devrez peut-être rouvrir
 
 #: ../src/core/control/Control.cpp:861
 msgid "Unable to retrieve pdf page."
-msgstr "Impossible de récupérer la page pdf."
+msgstr "Impossible de récupérer la page PDF."
 
 #: ../src/core/control/Control.cpp:1441
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -296,7 +296,7 @@ msgstr "Le nom de fichier journal le plus récent : {1}"
 
 #: ../src/core/control/XournalMain.cpp:199
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
-msgstr "Pour empêcher cette popup de réapparaître, il suffit de supprimer les fichiers journaux d'erreurs."
+msgstr "Pour empêcher ce popup de réapparaître, il suffit de supprimer les fichiers journaux d'erreurs."
 
 #: ../src/core/control/XournalMain.cpp:202
 msgid "File Bug Report"
@@ -383,7 +383,7 @@ msgstr "Aller à la page (première page : 1)"
 
 #: ../src/core/control/XournalMain.cpp:648
 msgid "Get version of xournalpp"
-msgstr "Récupérer la version de xournalpp"
+msgstr "Récupérer la version de Xournal++"
 
 #: ../src/core/control/XournalMain.cpp:650
 msgid "Disable audio for this session"
@@ -401,15 +401,15 @@ msgstr "Enregistrer le fichier xopp avec le PDF d'arrière-plan spécifié comme
 
 #: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as PDF"
-msgstr "Exporter le FICHIER en PDF"
+msgstr "Exporter le fichier FILE en PDF"
 
 #: ../src/core/control/XournalMain.cpp:667
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
 msgstr "Exporter le FICHIER en tant que fichiers image (une par page)\n"
-"                                 Deviner le format de sortie à partir de l'extension de IMGFILE\n"
-"                                 formats pris en charge : .png, .svg"
+"                                 Devine le format de sortie à partir de l'extension de IMGFILE\n"
+"                                 Formats pris en charge : .png, .svg"
 
 #: ../src/core/control/XournalMain.cpp:672
 msgid "Export without background\n"
@@ -422,8 +422,8 @@ msgstr "Exporter sans arrière-plan\n"
 #: ../src/core/control/XournalMain.cpp:677
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr "Exporter sans les règles\n"
-"                                 Le fichier exporté n'a aucune règle sur le papier\n"
+msgstr "Exporter sans les lignes\n"
+"                                 Le fichier exporté n'a ni lignes ni carreaux sur le papier\n"
 
 #: ../src/core/control/XournalMain.cpp:681
 msgid "Export layers progressively\n"
@@ -446,7 +446,7 @@ msgstr "Exporter uniquement les pages spécifiées par INTERVALLE (par exemple \
 #: ../src/core/control/XournalMain.cpp:692
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Lors de l'exportation, n'exporter que les couches spécifiées par RANGE (par exemple \"2-3,5,7-\")\n"
+msgstr "Lors de l'exportation, n'exporter que les calques spécifiés par RANGE (par exemple \"2-3,5,7-\")\n"
 "                                 Aucun effet sans -p/--create-pdf ou -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:696
@@ -579,7 +579,7 @@ msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 msgstr "Impossible de trouver un programme générateur de LaTeX dans PATH: {1}\n\n"
-"Étant donné que l'installation a été faite avec Flatpak, vous devez installer l'extension Flatpak Tex Live de bureau gratuite. Par exemple, en exécutant : \n"
+"Étant donné que l'installation a été faite avec Flatpak, vous devez installer l'extension Flatpak Tex Live. Par exemple, en exécutant : \n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:76
@@ -651,19 +651,19 @@ msgstr "%F-Note-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_annoté"
 
-#: ../src/core/control/tools/EditSelection.cpp:456
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
 msgstr "Classer par"
 
-#: ../src/core/control/tools/EditSelection.cpp:471
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
 msgstr "Mettre en avant"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
 msgstr "Mettre en arrière"
 
-#: ../src/core/control/tools/EditSelection.cpp:489
+#: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
 msgstr "Mettre en arrière-plan"
 
@@ -1019,16 +1019,15 @@ msgid "Draw Double Arrow"
 msgstr "Dessiner une double flèche"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
-msgid "Draw coordinate system"
-msgstr "Dessiner le système de coordonnées"
+msgid "Draw Coordinate System"
+msgstr "Dessiner un système de coordonnées"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
-msgid "Stroke recognizer"
-msgstr "Identificateur de trait"
+msgid "Shape Recognizer"
+msgstr "Identificateur de forme"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
@@ -1410,6 +1409,14 @@ msgstr "Aperçu du calque"
 msgid "Page Preview"
 msgstr "Aperçu de la page"
 
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
+msgid "Draw coordinate system"
+msgstr "Dessiner le système de coordonnées"
+
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+msgid "Stroke recognizer"
+msgstr "Identificateur de trait"
+
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
 msgstr "Combinaison de type de dessin"
@@ -1443,12 +1450,12 @@ msgid "Print"
 msgstr "Imprimer"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "Annuler"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "Refaire"
 
@@ -1616,10 +1623,6 @@ msgstr "Équerre"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
 msgstr "Rapporteur"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Shape Recognizer"
-msgstr "Identificateur de forme"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1970,23 +1973,23 @@ msgstr "Déplacer la page vers le bas"
 msgid "Edit text"
 msgstr "Modifier le texte"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:112
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Impossible d'annuler \"{1}\"\n"
 "Quelque chose s'est mal passé… Veuillez écrire un rapport de bogue…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:138
+#: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Impossible de refaire \"{1}\"\n"
 "Quelque chose s'est mal passé… Veuillez écrire un rapport de bogue…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:172
+#: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
 msgstr "Annuler: "
 
-#: ../src/core/undo/UndoRedoHandler.cpp:184
+#: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
 msgstr "Refaire : "
 
@@ -2032,11 +2035,11 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Le fichier n'a pas pu être ouvert. Vous devez le faire manuellement :\n"
 "URL : {1}"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:286
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:259
+#: ../src/util/PathUtil.cpp:296
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Impossible de créer le dossier : {1}\n"
@@ -3462,10 +3465,6 @@ msgstr "Taille d'écriture minimum"
 msgid "0.20"
 msgstr "0.2"
 
-#: ../ui/settings.glade:5149
-msgid "Stroke Recognizer"
-msgstr "Reconnaissance d'écriture"
-
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
 msgstr "Activer l'action du bouton"
@@ -4118,10 +4117,6 @@ msgstr "Type de dessin"
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
 msgstr "_Reconnaissance de forme"
-
-#: ../ui/mainmenubar.xml:583
-msgid "Draw Coordinate System"
-msgstr "Dessiner un système de coordonnées"
 
 #: ../ui/mainmenubar.xml:588
 msgid "Draw _Line"

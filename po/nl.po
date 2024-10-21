@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-17 16:12\n"
+"POT-Creation-Date: 2024-10-21 18:49+0000\n"
+"PO-Revision-Date: 2024-10-21 18:53\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -479,7 +479,7 @@ msgstr "Wordt automatisch opgeslagen naar {1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:68
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "Kan automatisch bestand niet hernoemen van '{1}' in '{2}': {3}"
+msgstr "Kan automatisch opgeslagen bestand niet hernoemen van '{1}' in '{2}': {3}"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -639,19 +639,19 @@ msgstr "%F-Notitie-%H-%M"
 msgid "%{name}_annotated"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:456
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
 msgstr "Ordenen"
 
-#: ../src/core/control/tools/EditSelection.cpp:471
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
 msgstr "Naar voren brengen"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
 msgstr "Naar achter sturen"
 
-#: ../src/core/control/tools/EditSelection.cpp:489
+#: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
 msgstr "Naar achtergrond sturen"
 
@@ -1007,16 +1007,15 @@ msgid "Draw Double Arrow"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
-msgid "Draw coordinate system"
-msgstr "Coördinaatsysteem tekenen"
+msgid "Draw Coordinate System"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
-msgid "Stroke recognizer"
-msgstr "Penseelherkenning"
+msgid "Shape Recognizer"
+msgstr "Vormherkenning"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
@@ -1396,6 +1395,14 @@ msgstr "Voorbeeld van laag"
 msgid "Page Preview"
 msgstr "Paginavoorbeeld"
 
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
+msgid "Draw coordinate system"
+msgstr "Coördinaatsysteem tekenen"
+
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+msgid "Stroke recognizer"
+msgstr "Penseelherkenning"
+
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
 msgstr ""
@@ -1429,12 +1436,12 @@ msgid "Print"
 msgstr "Afdrukken"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "Ongedaan maken"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "Opnieuw uitvoeren"
 
@@ -1466,7 +1473,7 @@ msgstr "Draaien vastklikken"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 msgid "Grid Snapping"
-msgstr "Vastklikken aan raster"
+msgstr "Magnetisch raster"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Paired pages"
@@ -1602,10 +1609,6 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
 msgstr ""
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Shape Recognizer"
-msgstr "Vormherkenning"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1956,23 +1959,23 @@ msgstr "Pagina omlaag verplaatsen"
 msgid "Edit text"
 msgstr "Tekst bewerken"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:112
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Kan '{1}' niet ongedaan maken\n"
 "Er is iets misgegaan; stel een bugmelding op."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:138
+#: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Kan '{1}' niet opnieuw uitvoeren\n"
 "Er is iets misgegaan; stel een bugmelding op."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:172
+#: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
 msgstr "Ongedaan maken: "
 
-#: ../src/core/undo/UndoRedoHandler.cpp:184
+#: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
 msgstr "Opnieuw uitvoeren: "
 
@@ -2018,11 +2021,11 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Het bestand kan niet worden geopend; doe dit handmatig.\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:286
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:259
+#: ../src/util/PathUtil.cpp:296
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Kon map niet aanmaken: {1}\n"
@@ -3394,10 +3397,6 @@ msgstr ""
 msgid "0.20"
 msgstr ""
 
-#: ../ui/settings.glade:5149
-msgid "Stroke Recognizer"
-msgstr ""
-
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
 msgstr "Drukactie inschakelen"
@@ -4043,10 +4042,6 @@ msgstr ""
 
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
-msgstr ""
-
-#: ../ui/mainmenubar.xml:583
-msgid "Draw Coordinate System"
 msgstr ""
 
 #: ../ui/mainmenubar.xml:588

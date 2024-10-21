@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 08:09+0000\n"
-"PO-Revision-Date: 2024-10-17 16:12\n"
+"POT-Creation-Date: 2024-10-21 18:49+0000\n"
+"PO-Revision-Date: 2024-10-21 18:53\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -80,9 +80,9 @@ msgstr "Impossibile recuperare la pagina pdf."
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr "Non aprire file di Autosalvataggio. Potrebbero essere sovrascritti!\n"
-"Copia i files in un'altra cartella.\n"
-"I files nella cartella {1} non possono essere aperti."
+msgstr "Non aprire file salvati automaticamente. Potrebbero essere sovrascritti!\n"
+"Copia i file in un'altra cartella.\n"
+"I file della cartella {1} non possono essere aperti."
 
 #: ../src/core/control/Control.cpp:1461
 msgid "file: {1}"
@@ -305,15 +305,15 @@ msgstr "File segnalazione errori"
 
 #: ../src/core/control/XournalMain.cpp:203
 msgid "Open Logfile"
-msgstr "Apri Logfile"
+msgstr "Apri registro"
 
 #: ../src/core/control/XournalMain.cpp:204
 msgid "Open Logfile directory"
-msgstr "Apri cartella di log"
+msgstr "Apri la cartella dei registri"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Delete Logfile"
-msgstr "Cancella Logfile"
+msgstr "Elimina registro"
 
 #: ../src/core/control/XournalMain.cpp:207
 msgid "Crash log"
@@ -652,19 +652,19 @@ msgstr "%F-Nota-%H-%M"
 msgid "%{name}_annotated"
 msgstr "%{name}_annotato"
 
-#: ../src/core/control/tools/EditSelection.cpp:456
+#: ../src/core/control/tools/EditSelection.cpp:461
 msgid "Arrange"
 msgstr "Disponi"
 
-#: ../src/core/control/tools/EditSelection.cpp:471
+#: ../src/core/control/tools/EditSelection.cpp:476
 msgid "Bring forward"
 msgstr "Porta avanti"
 
-#: ../src/core/control/tools/EditSelection.cpp:482
+#: ../src/core/control/tools/EditSelection.cpp:487
 msgid "Send backward"
 msgstr "Invia indietro"
 
-#: ../src/core/control/tools/EditSelection.cpp:489
+#: ../src/core/control/tools/EditSelection.cpp:494
 msgid "Send to back"
 msgstr "Invia in fondo"
 
@@ -804,7 +804,7 @@ msgstr "Colore sconosciuto: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "Colore sconosciuto: \"{1}\" (non definito nella lista di default)"
+msgstr "Colore sconosciuto: \"{1}\" (non esiste nella lista predefinita)!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
@@ -1020,15 +1020,14 @@ msgid "Draw Double Arrow"
 msgstr "Disegna Doppia Freccia"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
-msgid "Draw coordinate system"
+msgid "Draw Coordinate System"
 msgstr "Disegna il sistema di coordinate"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
-msgid "Stroke recognizer"
+msgid "Shape Recognizer"
 msgstr "Riconoscitore di Forme"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
@@ -1205,7 +1204,7 @@ msgstr "Predefinito"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:39
 msgid "Customized"
-msgstr "Personalizzato"
+msgstr "Personalizzate"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:65
 msgid "Toolbars"
@@ -1411,6 +1410,14 @@ msgstr "Anteprima Livello"
 msgid "Page Preview"
 msgstr "Anteprima Pagina"
 
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:40
+msgid "Draw coordinate system"
+msgstr "Disegna il sistema di coordinate"
+
+#: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:44
+msgid "Stroke recognizer"
+msgstr "Riconoscitore di Forme"
+
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:58
 msgid "Drawing Type Combo"
 msgstr "Tipi di disegno"
@@ -1444,12 +1451,12 @@ msgid "Print"
 msgstr "Stampa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "Annulla"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "Ripeti"
 
@@ -1477,11 +1484,11 @@ msgstr "Cancella"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
 msgid "Rotation Snapping"
-msgstr "Rotazione Forzata"
+msgstr "Rotazione forzata"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
 msgid "Grid Snapping"
-msgstr "Forza alla Griglia"
+msgstr "Aggancia alla griglia"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
 msgid "Paired pages"
@@ -1599,7 +1606,7 @@ msgstr "Aggiungi/Modifica TeX"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Default Tool"
-msgstr "Strumento di Default"
+msgstr "Strumento predefinito"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
@@ -1617,10 +1624,6 @@ msgstr "Squadretta"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Compass"
 msgstr "Compasso"
-
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
-msgid "Shape Recognizer"
-msgstr "Riconoscitore di Forme"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
@@ -1885,7 +1888,7 @@ msgstr "Cambia riempimento tratto"
 
 #: ../src/core/undo/FontUndoAction.cpp:118
 msgid "Change font"
-msgstr "Cambia font"
+msgstr "Cambia carattere"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:83
 msgid "Page inserted"
@@ -1971,23 +1974,23 @@ msgstr "Muovi pagina giù"
 msgid "Edit text"
 msgstr "Modifica testo"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:112
+#: ../src/core/undo/UndoRedoHandler.cpp:114
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Impossibile annullare \"{1}\"\n"
 "Qualcosa è andato storto... Per favore inviaci un bug report…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:138
+#: ../src/core/undo/UndoRedoHandler.cpp:140
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Impossibile ripetere \"{1}\"\n"
 "Qualcosa è andato storto... Per favore inviaci un bug report…"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:172
+#: ../src/core/undo/UndoRedoHandler.cpp:174
 msgid "Undo: "
 msgstr "Annulla: "
 
-#: ../src/core/undo/UndoRedoHandler.cpp:184
+#: ../src/core/undo/UndoRedoHandler.cpp:186
 msgid "Redo: "
 msgstr "Ripeti: "
 
@@ -2033,11 +2036,11 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Impossibile aprire il file, Devi farlo manualmente:\n"
 "URL: {1}"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:286
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
-#: ../src/util/PathUtil.cpp:259
+#: ../src/util/PathUtil.cpp:296
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Impossibile creare la cartella: {1}\n"
@@ -2514,7 +2517,7 @@ msgstr "minuti"
 
 #: ../ui/settings.glade:443
 msgid "Autosaving"
-msgstr "Autosalvataggio: {1}"
+msgstr "Salvataggio automatico"
 
 #: ../ui/settings.glade:469
 msgid "<i>This name will be proposed if you save a new document.</i>"
@@ -2522,7 +2525,7 @@ msgstr "<i>Questo nome sarà proposto salvando un nuovo documento </i>"
 
 #: ../ui/settings.glade:502 ../ui/settings.glade:671
 msgid "Default name: "
-msgstr "<b>Nome predefinito:</b> "
+msgstr "Nome predefinito: "
 
 #: ../ui/settings.glade:541
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2580,7 +2583,7 @@ msgstr "Segnaposto disponibili"
 
 #: ../ui/settings.glade:612
 msgid "Default Save Name"
-msgstr "<b>Nome salvataggio predefinito</b> "
+msgstr "Nome predefinito del file"
 
 #: ../ui/settings.glade:638
 msgid "<i>This name will be proposed if you export a document to PDF.</i>"
@@ -2644,7 +2647,7 @@ msgstr "Nome predefinito del PDF"
 
 #: ../ui/settings.glade:806
 msgid "Enable Autoloading of Journals"
-msgstr "Abilita il caricamento automatico dei Journal"
+msgstr "Abilita il caricamento automatico dei documenti"
 
 #: ../ui/settings.glade:811
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
@@ -2987,11 +2990,11 @@ msgstr "Riconoscimento del palmo"
 
 #: ../ui/settings.glade:2602
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr "<i>Usa le gestures per zoommare le pagine</i>"
+msgstr "<i>Usare le dita per fare zoom sulle pagine del documento.</i>"
 
 #: ../ui/settings.glade:2616
 msgid "Enable zoom gestures (requires restart)"
-msgstr "Attiva le gestures per lo zoom (necessita riavvio) "
+msgstr "Attiva i gesti per lo zoom (necessita riavvio)"
 
 #: ../ui/settings.glade:2634
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues.\n"
@@ -3045,7 +3048,7 @@ msgstr "Scorrimento col tocco"
 
 #: ../ui/settings.glade:2913
 msgid "Show Menubar on Startup"
-msgstr "Mostra le opzioni all'avvio"
+msgstr "Mostra le la barra dei menu all'avvio"
 
 #: ../ui/settings.glade:2931
 msgid "<i>Toggle visibility of menubar with F10</i>"
@@ -3194,7 +3197,7 @@ msgstr "Cursore"
 
 #: ../ui/settings.glade:3563
 msgid "Show sidebar on the right side"
-msgstr "Mostra barra laterale a destra"
+msgstr "Mostra il pannello laterale a destra"
 
 #: ../ui/settings.glade:3578
 msgid "Show vertical scrollbar on the left side"
@@ -3222,7 +3225,7 @@ msgstr "In un quadrato"
 
 #: ../ui/settings.glade:3660
 msgid "Sidebar"
-msgstr "Anteprime"
+msgstr "Pannello laterale"
 
 #: ../ui/settings.glade:3686
 msgid "Hide the horizontal scrollbar"
@@ -3272,7 +3275,7 @@ msgstr "Mostra barra degli strumenti"
 #: ../ui/settings.glade:3871 ../ui/settings.glade:3960
 #: ../ui/mainmenubar.xml:211
 msgid "Show Sidebar"
-msgstr "Mostra le anteprime"
+msgstr "Mostra Pannello laterale"
 
 #: ../ui/settings.glade:3890 ../ui/mainmenubar.xml:194
 msgid "Fullscreen"
@@ -3469,10 +3472,6 @@ msgstr "Dimensione minima della forma"
 msgid "0.20"
 msgstr "0.20"
 
-#: ../ui/settings.glade:5149
-msgid "Stroke Recognizer"
-msgstr "Riconoscitore di Forme"
-
 #: ../ui/settings.glade:5175
 msgid "Enable Tap action"
 msgstr "Abilita l'azione al tocco"
@@ -3601,7 +3600,7 @@ msgstr "Attiva o disattiva l'audio"
 
 #: ../ui/settings.glade:5725
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr "<i>Le registrazioni audio vengono attualmente salvate in una cartella separata e referenziate dal file di xournal</i>"
+msgstr "<i>Le registrazioni audio sono attualmente salvate in una cartella separata e indicate nel documento.</i>"
 
 #: ../ui/settings.glade:5744 ../ui/settings.glade:5780
 msgid "Storage Folder"
@@ -4125,10 +4124,6 @@ msgstr "Tipo di Disegno"
 #: ../ui/mainmenubar.xml:558
 msgid "_Shape Recognizer"
 msgstr "Riconoscitore di _Forme"
-
-#: ../ui/mainmenubar.xml:583
-msgid "Draw Coordinate System"
-msgstr "Disegna il sistema di coordinate"
 
 #: ../ui/mainmenubar.xml:588
 msgid "Draw _Line"
