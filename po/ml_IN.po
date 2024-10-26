@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-18 19:17\n"
+"POT-Creation-Date: 2024-10-26 09:14+0200\n"
+"PO-Revision-Date: 2024-10-26 09:20\n"
 "Last-Translator: \n"
 "Language-Team: Malayalam\n"
 "Language: ml_IN\n"
@@ -89,7 +89,7 @@ msgstr "എല്ലാ താളുകൾക്കും ബാധകമാക�
 msgid "Apply to current page"
 msgstr "നിലവിലുള്ള താളിൽ ബാധകമാകുക"
 
-#: ../src/core/control/tools/EditSelection.cpp:401
+#: ../src/core/control/tools/EditSelection.cpp:406
 msgid "Arrange"
 msgstr "ക്രമീകരിക്കുക"
 
@@ -147,11 +147,11 @@ msgstr "പിന്നോട്ട്"
 msgid "Background"
 msgstr "പശ്ചാത്തലം"
 
-#: ../src/core/control/tools/EditSelection.cpp:416
+#: ../src/core/control/tools/EditSelection.cpp:421
 msgid "Bring forward"
 msgstr "മുന്നോട്ട് കൊണ്ടുവരിക"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:411
 msgid "Bring to front"
 msgstr "മുന്നിലേക്ക് കൊണ്ടുവരിക"
 
@@ -161,7 +161,7 @@ msgstr "നിർമിതമായത്"
 
 #: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
 #: ../src/core/control/XournalMain.cpp:209
-#: ../src/core/gui/sidebar/Sidebar.cpp:96
+#: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
 msgstr "റദ്ദാക്കുക"
 
@@ -277,7 +277,7 @@ msgstr "ചിത്രം വായിക്കാൻ സാധിച്ചി�
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "ക്ലോൺ ചെയ്ത പശ്ചാത്തല ചിത്രത്തെ സംബന്ധിച്ച താളിന്റെ സംഖ്യ വായിച്ചെടുക്കാൻ സാധിച്ചില്ല: {1}."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:143
+#: ../src/core/undo/UndoRedoHandler.cpp:145
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\" വീണ്ടും ചെയ്യാൻ സാധിച്ചില്ല\n"
@@ -307,7 +307,7 @@ msgstr ".ടെക്സ് ഫയൽ സേവ് ചെയ്യാൻ സാ�
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} ആരംഭിക്കാൻ സാധിച്ചില്ല: {2} (നിർഗമന കോഡ്: {3})"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:114
+#: ../src/core/undo/UndoRedoHandler.cpp:116
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\" പഴയപടിയാക്കാൻ സാധിച്ചില്ല\n"
@@ -427,6 +427,12 @@ msgstr "ഡോട്ട് ഇട്ടത്"
 msgid "Draw Arrow"
 msgstr "അമ്പ് വരയ്ക്കുക"
 
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
+msgid "Draw Coordinate System"
+msgstr ""
+
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:538
@@ -458,12 +464,6 @@ msgstr "ദീർഘചതുരം വരയ്ക്കുക"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:542
 msgid "Draw Spline"
 msgstr "സ്പ്ലൈൻ വരയ്ക്കുക"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
-msgid "Draw coordinate system"
-msgstr "കോർഡിനേറ്റ് സിസ്റ്റം വരയ്ക്കുക"
 
 #: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Draw stroke"
@@ -832,11 +832,11 @@ msgstr "നിലവിലുള്ള പാളിയുടെ പകർപ്�
 msgid "Insert a copy of the current page below"
 msgstr "നിലവിലുള്ള താളിന്റെ പകർപ്പ് താഴേക്ക് ചേർക്കുക"
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:97
+#: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
 msgstr "നിലവിലുള്ള താളിനു ശേഷം ചേർക്കുക"
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:98
+#: ../src/core/gui/sidebar/Sidebar.cpp:107
 msgid "Insert at end"
 msgstr "അവസാനം ചേർക്കുക"
 
@@ -978,7 +978,7 @@ msgid "OK"
 msgstr "ശരി"
 
 #: ../src/core/control/XournalMain.cpp:680
-msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
@@ -1066,6 +1066,10 @@ msgstr ""
 msgid "Paired pages"
 msgstr "ജോഡിയാക്കിയ താളുകൾ"
 
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "Paper B_ackground"
+msgstr ""
+
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 #: ../src/core/undo/AddUndoAction.cpp:66
 msgid "Paste"
@@ -1119,11 +1123,11 @@ msgid "Recorder could not be started."
 msgstr "റെക്കോർഡർ തുടങ്ങാൻ സാധിച്ചില്ല."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
-#: ../src/core/undo/UndoRedoHandler.cpp:194
+#: ../src/core/undo/UndoRedoHandler.cpp:196
 msgid "Redo"
 msgstr "വീണ്ടും ചെയ്യുക"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo: "
 msgstr "വീണ്ടും ചെയ്യുക: "
 
@@ -1334,11 +1338,11 @@ msgstr "കോംബോ തിരഞ്ഞെടുക്കുക"
 msgid "Send Bugreport"
 msgstr "ബഗ്ഗ്‌ റിപ്പോർട്ട് അയക്കുക"
 
-#: ../src/core/control/tools/EditSelection.cpp:427
+#: ../src/core/control/tools/EditSelection.cpp:432
 msgid "Send backward"
 msgstr "പിന്നിലേക്ക് അയക്കുക"
 
-#: ../src/core/control/tools/EditSelection.cpp:435
+#: ../src/core/control/tools/EditSelection.cpp:440
 msgid "Send to back"
 msgstr "പിന്നോട്ടയക്കുക"
 
@@ -1368,7 +1372,10 @@ msgstr ""
 msgid "Setsquare"
 msgstr "സെറ്റ്സ്‌ക്വയർ"
 
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
+#: ../src/core/undo/RecognizerUndoAction.cpp:76
 msgid "Shape Recognizer"
 msgstr "ആകൃതി തിരിച്ചറിയുന്നത്"
 
@@ -1402,12 +1409,6 @@ msgstr "സ്റ്റേവ്സ്"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:564
 msgid "Stop"
 msgstr "നിര്‍ത്തുക"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
-msgid "Stroke recognizer"
-msgstr "സ്ട്രോക്ക് തിരിച്ചറിയുന്നത്"
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
@@ -1578,11 +1579,11 @@ msgid "Unable to retrieve pdf page."
 msgstr "പിഡിഎഫ് താൾ ലഭ്യമാക്കാൻ സാധിക്കുന്നില്ല."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
-#: ../src/core/undo/UndoRedoHandler.cpp:182
+#: ../src/core/undo/UndoRedoHandler.cpp:184
 msgid "Undo"
 msgstr "പഴയപടിയാക്കുക"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo: "
 msgstr "പഴയപടിയാക്കുക: "
 
@@ -1655,6 +1656,7 @@ msgid "Very Thick"
 msgstr "വളരെ കനത്തിലുള്ള"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/gui/sidebar/Sidebar.cpp:95
 msgid "With PDF background"
 msgstr "പിഡിഎഫ് പശ്ചാത്തലം സഹിതം"
 
@@ -1705,12 +1707,11 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "നിങ്ങൾക്ക് തിരഞ്ഞെടുക്കുന്നതിന് വേണ്ടി പിഡിഫ് താളുകൾ ഇല്ല. പ്രവൃത്തി ഉപേക്ഷിക്കുക. മറ്റൊരു പശ്ചാത്തല തരം ദയവായി തിരഞ്ഞെടുക്കുക: മെനു \"ജേർണൽ\" → \"താൾ ടെമ്പ്ലേറ്റ് കോൺഫിഗർ ചെയ്യുക\"."
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:88
+#: ../src/core/gui/sidebar/Sidebar.cpp:98
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
-"Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr "നിങ്ങളുടെ നിലവിലുള്ള ഡോക്യുമെന്റിൽ പിഡിഎഫ് താൾ സംഖ്യ {1} ഇല്ല. ഈ താൾ ഡോക്യൂമെന്റിലേക്ക് ചേർക്കേണമോ?\n\n"
-"അഭിപ്രായം: നിങ്ങൾക്ക് ജേർണൽ (Journal) → പേപ്പർ പശ്ചാത്തലം (Paper Background) → പിഡിഎഫ് പശ്ചാത്തലം (PDF Background) ഉപയോഗിച്ച് ഒരു പിഡിഎഫ് താൾ ചേർക്കാവുന്നതാണ്."
+"Tip: You can select {2} to insert a PDF page."
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
@@ -1739,6 +1740,10 @@ msgstr "100% വലുപ്പത്തിലേക്ക് എത്തിക
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Cancel"
 msgstr "_ഉപേക്ഷിക്കുക"
+
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "_Journal"
+msgstr ""
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
@@ -1901,10 +1906,6 @@ msgstr "xournalpp-{1}"
 msgid " = Floating Toolbox (experimental) ="
 msgstr " = പൊങ്ങിക്കിടക്കുന്ന ടൂൾബോക്സ് (പരീക്ഷണാവസ്ഥയിൽ) ="
 
-#: ../ui/settings.glade:4392 ../ui/settings.glade:4403
-msgid "%"
-msgstr "%"
-
 #: ../ui/settings.glade:2730
 msgid "% greater than the initial distance between the two touches."
 msgstr "% ഇരു സ്പർശ തലങ്ങൾ തമ്മിലുള്ള ദൂരത്തേക്കാൾ കൂടുതൽ."
@@ -1917,7 +1918,7 @@ msgstr "%%XPP_TEXT_COLOR%%"
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
-#: ../ui/settings.glade:5628
+#: ../ui/settings.glade:5627
 msgid "%."
 msgstr "%."
 
@@ -1980,12 +1981,6 @@ msgstr ""
 msgid "(this may not work, depending on your system theme)"
 msgstr ""
 
-#: ../ui/settings.glade:5468
-msgid "... AND How much time must have passed since last stroke.\n\n"
-"<i>Recommended: 500ms</i>"
-msgstr "... കൂടാതെ അവസാന സ്‌ട്രോക്കിനു ശേഷം എത്ര സമയം കടന്നു പോയിട്ടുണ്ട്.\n"
-"<i>ശുപാർശ ചെയ്യുന്നത്: 500 മി. സെ. </i>"
-
 #: ../ui/settings.glade:1268
 msgid "0,4"
 msgstr "0,4"
@@ -1994,19 +1989,15 @@ msgstr "0,4"
 msgid "0,50"
 msgstr "0,50"
 
-#: ../ui/settings.glade:5612
+#: ../ui/settings.glade:5611
 msgid "0.00"
 msgstr "0.00"
-
-#: ../ui/settings.glade:5317
-msgid "0.20"
-msgstr "0.20"
 
 #: ../ui/settings.glade:1913
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:6330
+#: ../ui/settings.glade:6329
 msgid "1,00"
 msgstr "1,00"
 
@@ -2050,7 +2041,7 @@ msgstr "<b>നിറം</b>"
 msgid "<b>Default Tools</b>"
 msgstr "<b>സ്ഥിരസ്ഥിതിയിലുള്ള ടൂളുകൾ</b>"
 
-#: ../ui/settings.glade:5805
+#: ../ui/settings.glade:5804
 msgid "<b>Default</b>"
 msgstr "<b>സ്ഥിരസ്ഥിതി</b>"
 
@@ -2083,7 +2074,7 @@ msgstr "<b>താൾ വലുപ്പം</b>"
 msgid "<b>Separators</b>"
 msgstr "<b>വേർപെടുത്തൽ</b>"
 
-#: ../ui/settings.glade:5898
+#: ../ui/settings.glade:5897
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -2094,11 +2085,11 @@ msgstr ""
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr "<i>നിങ്ങളുടെ സിസ്റ്റത്തിന്റെ ഓരോ ഇൻപുട്ട് ഉപകരണങ്ങൾക്കും ഉപകരണ തരം നൽകുക. നിങ്ങളുടെ ഉപകരണങ്ങൾ ആ മൂല്യങ്ങളോട് ചേരുന്നില്ലെങ്കിൽ മാത്രം അത് മാറ്റുക. (ഉദാ. നിങ്ങളുടെ പേന ടച്ച്സ്ക്രീൻ ആയി രേഖപ്പെടുന്ന ഘട്ടത്തിൽ)</i>"
 
-#: ../ui/settings.glade:5967
+#: ../ui/settings.glade:5966
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>ഓഡിയോ റെക്കോർഡിങ്ങുകൾ നിലവിൽ മറ്റൊരു ഫോൾഡറിൽ സൂക്ഷിക്കപ്പെട്ടിരിക്കുന്നു. അവ ജേർണലിൽ നിന്നും റഫറൻസ് ചെയ്യപ്പെടുന്നു.</i>"
 
-#: ../ui/settings.glade:6385
+#: ../ui/settings.glade:6384
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>മാറ്റങ്ങൾ പുതിയ റെക്കോർഡിങ്ങുകളിലും പ്ലേബാക്കുകളിലും മാത്രമേ ബാധകമാകുന്നുളളൂ.</i>"
 
@@ -2140,16 +2131,16 @@ msgstr ""
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5571
+#: ../ui/settings.glade:5570
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6494
+#: ../ui/settings.glade:6493
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>ഭാഷ തിരഞ്ഞെടുക്കുക (റീസ്റ്റാർട്ട് ആവശ്യമാണ്)</i>"
 
-#: ../ui/settings.glade:5751
+#: ../ui/settings.glade:5750
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>സ്ഥിരസ്ഥിതി ബട്ടൺ അമർത്തിയെങ്കിൽ ടൂളും ക്രമീകരണങ്ങളും തിരഞ്ഞെടുക്കുക.</i>"
 
@@ -2161,7 +2152,7 @@ msgstr "<i>ചില ഉപകരണങ്ങൾ അപ്രതീക്ഷി�
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>ഹാൻഡ് റെക്കഗ്നിഷൻ പ്രവർത്തനം ആരംഭിക്കുമ്പോൾ വിളിക്കേണ്ട കമാൻഡുകൾ കുറിച്ച് വയ്ക്കുക. യുഐ ത്രെഡ് മുഖേന അവ പ്രവർത്തിപ്പിക്കപ്പെടും. അവ തടയപ്പെടുന്നില്ലെന്ന് ഉറപ്പു വരുത്തുക!</i>"
 
-#: ../ui/settings.glade:6078
+#: ../ui/settings.glade:6077
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
@@ -2211,7 +2202,7 @@ msgstr ""
 msgid "About Xournal++"
 msgstr "Xournal++-നെ കുറിച്ച്"
 
-#: ../ui/settings.glade:5540
+#: ../ui/settings.glade:5539
 msgid "Action on Tool Tap"
 msgstr "ടൂൾ തൊടുമ്പോഴുള്ള പ്രവർത്തനം"
 
@@ -2235,7 +2226,7 @@ msgstr "എല്ലാം"
 msgid "All pages"
 msgstr "എല്ലാ താളുകളും"
 
-#: ../ui/settings.glade:5505
+#: ../ui/settings.glade:5504
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "സ്ട്രോക്ക് അവഗണിക്കപ്പെടുന്നതിന് മുൻപ് എല്ലാ മൂന്ന് നിബന്ധനകളും പാലിച്ചിരിക്കണം.\n"
@@ -2262,11 +2253,11 @@ msgstr "ശരാശരി"
 msgid "Artifact workaround"
 msgstr ""
 
-#: ../ui/settings.glade:6174
+#: ../ui/settings.glade:6173
 msgid "Audio Devices"
 msgstr "ഓഡിയോ ഉപകരണങ്ങൾ"
 
-#: ../ui/settings.glade:6417
+#: ../ui/settings.glade:6416
 msgid "Audio Recording"
 msgstr "ഓഡിയോ റെക്കോർഡിങ്"
 
@@ -2459,7 +2450,7 @@ msgstr "സ്ഥിരസ്ഥിതിയിലുള്ള പിഡിഎ�
 msgid "Default Save Name"
 msgstr "സ്ഥിരസ്ഥിതിയിലുള്ള സേവ് നാമം"
 
-#: ../ui/settings.glade:6317
+#: ../ui/settings.glade:6316
 msgid "Default Seek Time (in seconds)"
 msgstr "സ്ഥിരസ്ഥിതിയിലുള്ള തിരച്ചിൽ സമയം (സെക്കന്റുകളിൽ)"
 
@@ -2467,7 +2458,7 @@ msgstr "സ്ഥിരസ്ഥിതിയിലുള്ള തിരച്�
 msgid "Default name: "
 msgstr "സ്ഥിരസ്ഥിതിയിലുള്ള നാമം: "
 
-#: ../ui/settings.glade:5845
+#: ../ui/settings.glade:5844
 msgid "Defaults"
 msgstr "സ്ഥിരസ്ഥിതി"
 
@@ -2487,7 +2478,7 @@ msgstr "ഉപകരണം"
 msgid "Disable"
 msgstr "പ്രവർത്തന രഹിതമാക്കുക"
 
-#: ../ui/settings.glade:5914
+#: ../ui/settings.glade:5913
 msgid "Disable Audio"
 msgstr ""
 
@@ -2515,11 +2506,12 @@ msgstr "പ്രവർത്തന രഹിതമാക്കും വിധ�
 msgid "Display DPI Calibration"
 msgstr "ഡിസ്‌പ്ലേയുടെ ഡിപിഐ (DPI) സജ്ജീകരണം"
 
-#: ../ui/settings.glade:5380
+#: ../ui/settings.glade:5379
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr ""
 
 #: ../ui/settings.glade:1255
+msgctxt "Noun: force opposing the movement"
 msgid "Drag"
 msgstr "വലിക്കുക"
 
@@ -2541,12 +2533,13 @@ msgstr ""
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr ""
 
-#: ../ui/settings.glade:1254 ../ui/settings.glade:1266
+#: ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
-#: ../ui/main.glade:1540
-msgid "Draw Coordinate System"
+#: ../ui/settings.glade:1254
+msgctxt "Drag = Noun: force opposing the movement"
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
 #: ../ui/main.glade:1551
@@ -2557,7 +2550,7 @@ msgstr ""
 msgid "Draw a transparent circle around the cursor"
 msgstr ""
 
-#: ../ui/settings.glade:5700
+#: ../ui/settings.glade:5699
 msgid "Drawing Area"
 msgstr ""
 
@@ -2605,7 +2598,8 @@ msgstr ""
 msgid "Enable Pressure Sensitivity"
 msgstr "സമ്മർദ്ദം തിരിച്ചറിയുന്നത് പ്രവർത്തനക്ഷമമാക്കുക"
 
-#: ../ui/settings.glade:5375
+#: ../ui/settings.glade:5374
+msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "രണ്ടുവട്ടം സ്പർശിച്ചാലുള്ള പ്രവൃത്തി സജ്ജമാക്കുക"
 
@@ -2621,7 +2615,7 @@ msgstr ""
 msgid "Enable internal Hand Recognition"
 msgstr ""
 
-#: ../ui/settings.glade:5936
+#: ../ui/settings.glade:5935
 msgid "Enable or Disable Audio"
 msgstr "ഓഡിയോ പ്രവർത്തന സജ്ജമോ പ്രവർത്തന രഹിതമോ ആക്കുക"
 
@@ -2702,11 +2696,20 @@ msgstr ""
 msgid "Force light theme"
 msgstr ""
 
+#: ../ui/settings.glade:5455
+msgid "Frequency limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5467
+msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
+"<i>Recommended: 500ms</i>"
+msgstr ""
+
 #: ../ui/main.glade:578 ../ui/settings.glade:4010
 msgid "Fullscreen"
 msgstr "പൂർണ്ണ സ്ക്രീൻ"
 
-#: ../ui/settings.glade:6219
+#: ../ui/settings.glade:6218
 msgid "Gain"
 msgstr "നേട്ടം"
 
@@ -2782,16 +2785,6 @@ msgstr "തിരഞ്ഞെടുത്ത ടെക്സ്റ്റ് ഹ�
 msgid "Highlighter Opti_ons"
 msgstr ""
 
-#: ../ui/settings.glade:5425
-msgid "How short (screen mm)  of the stroke  AND...\n\n"
-"<i>Recommended: 1 mm</i>"
-msgstr ""
-
-#: ../ui/settings.glade:5405
-msgid "How short (time)  AND...\n\n"
-"<i>Recommended: 150ms</i>"
-msgstr ""
-
 #: ../ui/about.glade:157
 msgid "Icon Designers"
 msgstr "ചിഹ്നം രൂപകൽപന ചെയ്തവർ"
@@ -2820,10 +2813,6 @@ msgstr ""
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr ""
 
-#: ../ui/settings.glade:5393
-msgid "Ignore Time (ms)"
-msgstr "സമയം അവഗണിക്കുക (മി. സെ.)"
-
 #: ../ui/settings.glade:1894
 msgid "Ignore the first"
 msgstr "ഒന്നാമത്തേത് അവഗണിക്കുക"
@@ -2836,7 +2825,7 @@ msgstr "ചിത്രത്തിന്റെ ഗുണം"
 msgid "Inertia"
 msgstr "അചേതനശക്തി"
 
-#: ../ui/settings.glade:6102
+#: ../ui/settings.glade:6101
 msgid "Input Device"
 msgstr "ഇൻപുട്ട് ഉപകരണം"
 
@@ -2868,10 +2857,6 @@ msgstr "ശേഷം താൾ ചേർക്കുക"
 msgid "Insert Page Before"
 msgstr "മുൻപേ താൾ ചേർക്കുക"
 
-#: ../ui/settings.glade:6442
-msgid "LaTeX"
-msgstr "ലാറ്റെക് (LaTex)"
-
 #: ../ui/latexSettings.glade:354
 msgid "LaTeX executable settings"
 msgstr "ലാറ്റെക് (LaTeX) പ്രവർത്തനശേഷിയുള്ള ക്രമീകരണങ്ങൾ"
@@ -2880,11 +2865,11 @@ msgstr "ലാറ്റെക് (LaTeX) പ്രവർത്തനശേഷി
 msgid "LaTeX generation command"
 msgstr "ലാറ്റെക് (LaTeX) നിർമാണ കമാൻഡ്"
 
-#: ../ui/settings.glade:6531 ../ui/settings.glade:6579
+#: ../ui/settings.glade:6530 ../ui/settings.glade:6578
 msgid "Language"
 msgstr "ഭാഷ"
 
-#: ../ui/settings.glade:6549
+#: ../ui/settings.glade:6548
 msgid "Language Settings"
 msgstr "ഭാഷാ ക്രമീകരണങ്ങള്‍"
 
@@ -2895,6 +2880,10 @@ msgstr ""
 #: ../ui/settings.glade:3679
 msgid "Left / Right-Handed"
 msgstr "ഇടത്/വലത് ഹസ്തം"
+
+#: ../ui/settings.glade:5444
+msgid "Length limit (mm)"
+msgstr ""
 
 #: ../ui/about.glade:335
 msgid "License"
@@ -2916,25 +2905,23 @@ msgstr "ഫയൽ തുറക്കുക"
 msgid "Load from file"
 msgstr "ഫയലിൽ നിന്നും ലോഡ് ചെയ്യുക"
 
-#: ../ui/settings.glade:3193
-msgid "Lucide"
-msgstr "ലുസൈഡ്"
-
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "ടൂൾബാറുകൾ ക്രമീകരിക്കുക"
 
 #: ../ui/settings.glade:1287
+msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
 msgstr "സാന്ദ്രത"
 
-#: ../ui/settings.glade:1286 ../ui/settings.glade:1298
+#: ../ui/settings.glade:1298
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "സാന്ദ്രത: എത്ര കൂടുതൽ സാന്ദ്രത ഉണ്ടോ അത്രയധികം അചലനശക്തിയും സ്ഥിരതയും കൈവരും"
 
-#: ../ui/settings.glade:5445
-msgid "Max Length (mm)"
-msgstr "ഏറ്റവും കൂടുതൽ നീളം (മിമീ/mm)"
+#: ../ui/settings.glade:1286
+msgctxt "Mass = Noun: physics term, related to weight"
+msgid "Mass: the higher the mass, the more inertia and the more stabilization"
+msgstr "സാന്ദ്രത: എത്ര കൂടുതൽ സാന്ദ്രത ഉണ്ടോ അത്രയധികം അചലനശക്തിയും സ്ഥിരതയും കൈവരും"
 
 #: ../ui/settings.glade:3912
 msgid "Max multiplier"
@@ -3048,7 +3035,7 @@ msgstr "ഒപാസിറ്റി ക്രമീകരണങ്ങൾ"
 msgid "Options"
 msgstr "ഓപ്ഷനുകൾ"
 
-#: ../ui/settings.glade:6125
+#: ../ui/settings.glade:6124
 msgid "Output Device"
 msgstr "ഔട്പുട്ട് ഉപകരണം"
 
@@ -3056,7 +3043,7 @@ msgstr "ഔട്പുട്ട് ഉപകരണം"
 msgid "Output generated by the LaTeX command."
 msgstr "ലാറ്റെക് (LaTeX) കമാൻഡ് ഉപയോഗിച്ച് നിർമിച്ച ഫലം."
 
-#: ../ui/settings.glade:5669
+#: ../ui/settings.glade:5668
 msgid "PDF Cache"
 msgstr "പിഡിഎഫ് കാഷ് (cache)"
 
@@ -3075,10 +3062,6 @@ msgstr "താളുകൾ:"
 #: ../ui/settings.glade:4853
 msgid "Paired Pages"
 msgstr "ജോഡിയാക്കിയ താളുകൾ"
-
-#: ../ui/main.glade:1360
-msgid "Paper B_ackground"
-msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -3117,7 +3100,7 @@ msgstr "പ്രകടനം"
 msgid "Pick the Editor's Font"
 msgstr ""
 
-#: ../ui/settings.glade:6371
+#: ../ui/settings.glade:6370
 msgid "Playback Settings"
 msgstr ""
 
@@ -3173,7 +3156,7 @@ msgstr "വൃത്തപരിധി"
 msgid "Range"
 msgstr "വ്യാപ്തി"
 
-#: ../ui/settings.glade:5599
+#: ../ui/settings.glade:5598
 msgid "Re-render when the page's zoom changes by more than "
 msgstr ""
 
@@ -3185,7 +3168,7 @@ msgstr ""
 msgid "Record / Stop"
 msgstr ""
 
-#: ../ui/settings.glade:6284
+#: ../ui/settings.glade:6283
 msgid "Recording Quality"
 msgstr "റെക്കോർഡിംഗ് ഗുണമേന്മ"
 
@@ -3213,7 +3196,7 @@ msgstr ""
 msgid "Rotation snapping tolerance"
 msgstr ""
 
-#: ../ui/settings.glade:6207
+#: ../ui/settings.glade:6206
 msgid "Sample Rate"
 msgstr ""
 
@@ -3237,7 +3220,7 @@ msgstr "താളിനു പുറത്ത് സ്ക്രോൾ ചെയ
 msgid "Select Background Color"
 msgstr "പശ്ചാത്തല നിറം തിരഞ്ഞെടുക്കുക"
 
-#: ../ui/settings.glade:6004
+#: ../ui/settings.glade:6003
 msgid "Select Folder"
 msgstr "ഫോൾഡർ തിരഞ്ഞെടുക്കുക"
 
@@ -3289,11 +3272,11 @@ msgstr ""
 msgid "Set Rows"
 msgstr ""
 
-#: ../ui/settings.glade:5508
+#: ../ui/settings.glade:5507
 msgid "Settings:"
 msgstr "ക്രമീകരണങ്ങള്‍:"
 
-#: ../ui/settings.glade:5517
+#: ../ui/settings.glade:5516
 msgid "Show Floating Toolbox"
 msgstr ""
 
@@ -3333,6 +3316,11 @@ msgstr "ഇടത് വശത്ത് കുത്തനെയുള്ള സ
 msgid "Sidebar"
 msgstr "സൈഡ്ബാർ"
 
+#: ../ui/settings.glade:5424
+msgid "Size limit: taps moving further away will not trigger a special action\n\n"
+"<i>Recommended: 1 mm</i>"
+msgstr ""
+
 #: ../ui/settings.glade:1081
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
@@ -3371,16 +3359,12 @@ msgstr ""
 msgid "Start zooming after a distance "
 msgstr ""
 
-#: ../ui/settings.glade:5989 ../ui/settings.glade:6047
+#: ../ui/settings.glade:5988 ../ui/settings.glade:6046
 msgid "Storage Folder"
 msgstr ""
 
 #: ../ui/main.glade:2839
 msgid "Strikethrough selected text"
-msgstr ""
-
-#: ../ui/settings.glade:5345
-msgid "Stroke Recognizer"
 msgstr ""
 
 #: ../ui/settings.glade:2227
@@ -3394,10 +3378,6 @@ msgstr "സ്റ്റൈലസ് ബട്ടണുകൾ"
 #: ../ui/settings.glade:2153
 msgid "Stylus-based eraser is visible"
 msgstr "സ്റ്റൈലസ് ബന്ധമുള്ള ഇറേസർ ദൃഷ്ടിയിലുണ്ട്"
-
-#: ../ui/settings.glade:5456
-msgid "Successive (ms)"
-msgstr "തുടരെ തുടരെ"
 
 #: ../ui/latexSettings.glade:461
 msgid "Syntax highlighting"
@@ -3468,6 +3448,15 @@ msgstr ""
 msgid "These settings will be used for new pages"
 msgstr ""
 
+#: ../ui/settings.glade:5392
+msgid "Time limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5404
+msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
+"<i>Recommended: 150ms</i>"
+msgstr ""
+
 #: ../ui/settings.glade:2400
 msgid "Timeout"
 msgstr ""
@@ -3489,11 +3478,11 @@ msgstr ""
 msgid "Touchscreen"
 msgstr "ടച്ച്സ്ക്രീൻ"
 
-#: ../ui/settings.glade:5485
+#: ../ui/settings.glade:5484
 msgid "Try to select object first."
 msgstr ""
 
-#: ../ui/settings.glade:5490 ../ui/settings.glade:5522
+#: ../ui/settings.glade:5489 ../ui/settings.glade:5521
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr ""
 
@@ -3564,7 +3553,7 @@ msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr ""
 
-#: ../ui/settings.glade:5596
+#: ../ui/settings.glade:5595
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
@@ -3731,10 +3720,6 @@ msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr ""
-
-#: ../ui/main.glade:1201
-msgid "_Journal"
 msgstr ""
 
 #: ../ui/main.glade:1120
