@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 09:14+0200\n"
-"PO-Revision-Date: 2024-10-26 13:52\n"
+"POT-Creation-Date: 2024-10-26 17:46+0200\n"
+"PO-Revision-Date: 2024-10-26 17:36\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -2962,6 +2962,11 @@ msgstr "Esquerrà o dretà"
 msgid "Length limit (mm)"
 msgstr "Límit de llargada (mm)"
 
+#: ../ui/settings.glade:5424
+msgid "Length limit: taps moving further away will not trigger a special action\n\n"
+"<i>Recommended: 1 mm</i>"
+msgstr ""
+
 #: ../ui/about.glade:335
 msgid "License"
 msgstr "Llicència"
@@ -3394,12 +3399,6 @@ msgstr "Mostra la barra de desplaçament vertical a l'esquerra"
 #: ../ui/settings.glade:3761
 msgid "Sidebar"
 msgstr "Barra lateral"
-
-#: ../ui/settings.glade:5424
-msgid "Size limit: taps moving further away will not trigger a special action\n\n"
-"<i>Recommended: 1 mm</i>"
-msgstr "Límit de llargada: els tocs que es moguin més d'aquesta distància no activaran l'acció especial.\n\n"
-"<i>Valor recomanat: 1 mm</i>"
 
 #: ../ui/settings.glade:1081
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
