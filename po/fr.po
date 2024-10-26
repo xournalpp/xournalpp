@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"PO-Revision-Date: 2024-10-26 18:40\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2966,7 +2966,8 @@ msgstr "Limite de longueur (mm)"
 #: ../ui/settings.glade:5424
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Limite de longueur : les touches se déplaçant de plus que cette distance ne déclencheront pas d'action spéciale\n\n"
+"<i>Recommandée : 1 mm</i>"
 
 #: ../ui/about.glade:335
 msgid "License"
