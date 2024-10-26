@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-19 09:23\n"
+"POT-Creation-Date: 2024-10-26 09:14+0200\n"
+"PO-Revision-Date: 2024-10-26 09:20\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -90,7 +90,7 @@ msgstr "全てのページに適用する"
 msgid "Apply to current page"
 msgstr "現在のページに適用する"
 
-#: ../src/core/control/tools/EditSelection.cpp:401
+#: ../src/core/control/tools/EditSelection.cpp:406
 msgid "Arrange"
 msgstr "並べ替える"
 
@@ -149,11 +149,11 @@ msgstr "戻る"
 msgid "Background"
 msgstr "背景"
 
-#: ../src/core/control/tools/EditSelection.cpp:416
+#: ../src/core/control/tools/EditSelection.cpp:421
 msgid "Bring forward"
 msgstr "繰り上げる"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:411
 msgid "Bring to front"
 msgstr "前景に持って来る"
 
@@ -163,7 +163,7 @@ msgstr "ビルド"
 
 #: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
 #: ../src/core/control/XournalMain.cpp:209
-#: ../src/core/gui/sidebar/Sidebar.cpp:96
+#: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -281,7 +281,7 @@ msgstr "画像を読み込めませんでした: {1}。エラーメッセージ:
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "クローンされた背景画像のページ番号を読み取ることができませんでした: {1}."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:143
+#: ../src/core/undo/UndoRedoHandler.cpp:145
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\"を再度実行することができませんでした。\n"
@@ -311,7 +311,7 @@ msgstr ".tex ファイルを保存できませんでした: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} を開始できませんでした：{2} (終了コード: {3})"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:114
+#: ../src/core/undo/UndoRedoHandler.cpp:116
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\"をもとに戻せませんでした。\n"
@@ -433,6 +433,12 @@ msgstr "点線"
 msgid "Draw Arrow"
 msgstr "矢印を描く"
 
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
+msgid "Draw Coordinate System"
+msgstr ""
+
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:538
@@ -464,12 +470,6 @@ msgstr "長方形を描く"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:542
 msgid "Draw Spline"
 msgstr "曲線を描く"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
-msgid "Draw coordinate system"
-msgstr "座標を表示"
 
 #: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Draw stroke"
@@ -841,11 +841,11 @@ msgstr "現在のレイヤーのコピーを下に挿入"
 msgid "Insert a copy of the current page below"
 msgstr "現在のページのコピーを下に挿入"
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:97
+#: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
 msgstr "現在のページの後に挿入"
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:98
+#: ../src/core/gui/sidebar/Sidebar.cpp:107
 msgid "Insert at end"
 msgstr "最後に挿入"
 
@@ -987,10 +987,9 @@ msgid "OK"
 msgstr "OK"
 
 #: ../src/core/control/XournalMain.cpp:680
-msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "エクスポート時、RANGEで指定されたレイヤーのみをエクスポートします(例: \"2-3,5,7-\")\n"
-"                                 -p/-create-pdf または -i/-create-imgを使用しない場合は適用されません。"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:676
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1077,6 +1076,10 @@ msgstr "PageTypeFormat::Copy - 破損したファイルを避けるためにPage
 msgid "Paired pages"
 msgstr ""
 
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "Paper B_ackground"
+msgstr ""
+
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 #: ../src/core/undo/AddUndoAction.cpp:66
 msgid "Paste"
@@ -1130,11 +1133,11 @@ msgid "Recorder could not be started."
 msgstr "録音を開始できませんでした。"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
-#: ../src/core/undo/UndoRedoHandler.cpp:194
+#: ../src/core/undo/UndoRedoHandler.cpp:196
 msgid "Redo"
 msgstr "やり直し"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo: "
 msgstr "やり直し: "
 
@@ -1345,11 +1348,11 @@ msgstr "選択方法の一覧"
 msgid "Send Bugreport"
 msgstr "バグレポートを送信"
 
-#: ../src/core/control/tools/EditSelection.cpp:427
+#: ../src/core/control/tools/EditSelection.cpp:432
 msgid "Send backward"
 msgstr "背面に移動"
 
-#: ../src/core/control/tools/EditSelection.cpp:435
+#: ../src/core/control/tools/EditSelection.cpp:440
 msgid "Send to back"
 msgstr "最背面に移動"
 
@@ -1383,7 +1386,10 @@ msgstr "PNGエクスポート時にページ幅を設定する\n"
 msgid "Setsquare"
 msgstr ""
 
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
+#: ../src/core/undo/RecognizerUndoAction.cpp:76
 msgid "Shape Recognizer"
 msgstr "図形認識"
 
@@ -1417,12 +1423,6 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:564
 msgid "Stop"
 msgstr "停止"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
-msgid "Stroke recognizer"
-msgstr "筆跡認識"
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
@@ -1592,11 +1592,11 @@ msgid "Unable to retrieve pdf page."
 msgstr "PDFページを取得できません。"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
-#: ../src/core/undo/UndoRedoHandler.cpp:182
+#: ../src/core/undo/UndoRedoHandler.cpp:184
 msgid "Undo"
 msgstr "元に戻す"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo: "
 msgstr "取り消し: "
 
@@ -1669,6 +1669,7 @@ msgid "Very Thick"
 msgstr "極太"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/gui/sidebar/Sidebar.cpp:95
 msgid "With PDF background"
 msgstr "PDF背景あり"
 
@@ -1720,13 +1721,11 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "選択するPDFページがありません。操作をキャンセルします。\n"
 "メニューの「Journal」→「ページテンプレートの設定」から、別の背景タイプを選択してください。"
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:88
+#: ../src/core/gui/sidebar/Sidebar.cpp:98
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
-"Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr "現在のドキュメントにはPDFページ {1} が含まれていません。\n"
-"このページを挿入しますか？\n\n"
-"Tips：「Journal」→「用紙の背景」→「PDF背景あり」から挿入するPDFページを選択できます。"
+"Tip: You can select {2} to insert a PDF page."
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
@@ -1755,6 +1754,10 @@ msgstr "100%の縮尺にする"
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Cancel"
 msgstr "キャンセル (_C)"
+
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "_Journal"
+msgstr ""
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
@@ -1917,10 +1920,6 @@ msgstr ""
 msgid " = Floating Toolbox (experimental) ="
 msgstr ""
 
-#: ../ui/settings.glade:4392 ../ui/settings.glade:4403
-msgid "%"
-msgstr ""
-
 #: ../ui/settings.glade:2730
 msgid "% greater than the initial distance between the two touches."
 msgstr ""
@@ -1933,7 +1932,7 @@ msgstr "%%XPP_TEXT_COLOR%%"
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
-#: ../ui/settings.glade:5628
+#: ../ui/settings.glade:5627
 msgid "%."
 msgstr "%."
 
@@ -1996,11 +1995,6 @@ msgstr ""
 msgid "(this may not work, depending on your system theme)"
 msgstr ""
 
-#: ../ui/settings.glade:5468
-msgid "... AND How much time must have passed since last stroke.\n\n"
-"<i>Recommended: 500ms</i>"
-msgstr ""
-
 #: ../ui/settings.glade:1268
 msgid "0,4"
 msgstr "0,4"
@@ -2009,19 +2003,15 @@ msgstr "0,4"
 msgid "0,50"
 msgstr "0,50"
 
-#: ../ui/settings.glade:5612
+#: ../ui/settings.glade:5611
 msgid "0.00"
 msgstr "0.00"
-
-#: ../ui/settings.glade:5317
-msgid "0.20"
-msgstr "0.20"
 
 #: ../ui/settings.glade:1913
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:6330
+#: ../ui/settings.glade:6329
 msgid "1,00"
 msgstr "1,00"
 
@@ -2065,7 +2055,7 @@ msgstr "<b>色</b>"
 msgid "<b>Default Tools</b>"
 msgstr "<b>デフォルトのツール</b>"
 
-#: ../ui/settings.glade:5805
+#: ../ui/settings.glade:5804
 msgid "<b>Default</b>"
 msgstr "<b>デフォルト</b>"
 
@@ -2098,7 +2088,7 @@ msgstr "<b>ページサイズ</b>"
 msgid "<b>Separators</b>"
 msgstr "<b>区切り文字</b>"
 
-#: ../ui/settings.glade:5898
+#: ../ui/settings.glade:5897
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -2109,11 +2099,11 @@ msgstr ""
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5967
+#: ../ui/settings.glade:5966
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>録音音声は現在別々のフォルダに保存され、ジャーナルから参照されています。</i>"
 
-#: ../ui/settings.glade:6385
+#: ../ui/settings.glade:6384
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr ""
 
@@ -2154,17 +2144,17 @@ msgstr ""
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5571
+#: ../ui/settings.glade:5570
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr "<i>レンダリング品質を向上させるためにズーム時にPDFの背景をより頻繁に再レンダリングします。 \n"
 "<b>注意:</b> これは印刷品質に影響を与えるべきではありません。</i>"
 
-#: ../ui/settings.glade:6494
+#: ../ui/settings.glade:6493
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>言語の選択 (再起動が必要です)</i>"
 
-#: ../ui/settings.glade:5751
+#: ../ui/settings.glade:5750
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>既定のボタンを押したときのツールと設定を選択します。</i>"
 
@@ -2176,7 +2166,7 @@ msgstr ""
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6078
+#: ../ui/settings.glade:6077
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>オーディオアタッチメントの録音と再生に使用するオーディオデバイスを指定します。利用可能な場合は入力/出力デバイスとして\n"
@@ -2227,7 +2217,7 @@ msgstr ""
 msgid "About Xournal++"
 msgstr "Xournal++について"
 
-#: ../ui/settings.glade:5540
+#: ../ui/settings.glade:5539
 msgid "Action on Tool Tap"
 msgstr ""
 
@@ -2251,7 +2241,7 @@ msgstr "すべて"
 msgid "All pages"
 msgstr "すべてのページ"
 
-#: ../ui/settings.glade:5505
+#: ../ui/settings.glade:5504
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr ""
@@ -2277,11 +2267,11 @@ msgstr "算術平均"
 msgid "Artifact workaround"
 msgstr ""
 
-#: ../ui/settings.glade:6174
+#: ../ui/settings.glade:6173
 msgid "Audio Devices"
 msgstr "オーディオデバイス"
 
-#: ../ui/settings.glade:6417
+#: ../ui/settings.glade:6416
 msgid "Audio Recording"
 msgstr "録音"
 
@@ -2474,7 +2464,7 @@ msgstr "デフォルトのPDFエクスポート名"
 msgid "Default Save Name"
 msgstr "デフォルトの保存名"
 
-#: ../ui/settings.glade:6317
+#: ../ui/settings.glade:6316
 msgid "Default Seek Time (in seconds)"
 msgstr "デフォルトのシーク時間 (秒)"
 
@@ -2482,7 +2472,7 @@ msgstr "デフォルトのシーク時間 (秒)"
 msgid "Default name: "
 msgstr "デフォルトの名前: "
 
-#: ../ui/settings.glade:5845
+#: ../ui/settings.glade:5844
 msgid "Defaults"
 msgstr "デフォルト"
 
@@ -2502,7 +2492,7 @@ msgstr "デバイス"
 msgid "Disable"
 msgstr ""
 
-#: ../ui/settings.glade:5914
+#: ../ui/settings.glade:5913
 msgid "Disable Audio"
 msgstr "オーディオを無効にする"
 
@@ -2530,11 +2520,12 @@ msgstr ""
 msgid "Display DPI Calibration"
 msgstr "画面のDPIの調整"
 
-#: ../ui/settings.glade:5380
+#: ../ui/settings.glade:5379
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr ""
 
 #: ../ui/settings.glade:1255
+msgctxt "Noun: force opposing the movement"
 msgid "Drag"
 msgstr "ドラッグ"
 
@@ -2556,12 +2547,13 @@ msgstr ""
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr "ここにコンポーネントをドラッグ&ドロップして、ツールバーに戻します。"
 
-#: ../ui/settings.glade:1254 ../ui/settings.glade:1266
+#: ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
-#: ../ui/main.glade:1540
-msgid "Draw Coordinate System"
+#: ../ui/settings.glade:1254
+msgctxt "Drag = Noun: force opposing the movement"
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
 #: ../ui/main.glade:1551
@@ -2572,7 +2564,7 @@ msgstr ""
 msgid "Draw a transparent circle around the cursor"
 msgstr ""
 
-#: ../ui/settings.glade:5700
+#: ../ui/settings.glade:5699
 msgid "Drawing Area"
 msgstr ""
 
@@ -2620,7 +2612,8 @@ msgstr ""
 msgid "Enable Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/settings.glade:5375
+#: ../ui/settings.glade:5374
+msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "タップ操作を有効にする"
 
@@ -2636,7 +2629,7 @@ msgstr ""
 msgid "Enable internal Hand Recognition"
 msgstr ""
 
-#: ../ui/settings.glade:5936
+#: ../ui/settings.glade:5935
 msgid "Enable or Disable Audio"
 msgstr "オーディオを有効または無効にする"
 
@@ -2717,11 +2710,20 @@ msgstr ""
 msgid "Force light theme"
 msgstr ""
 
+#: ../ui/settings.glade:5455
+msgid "Frequency limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5467
+msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
+"<i>Recommended: 500ms</i>"
+msgstr ""
+
 #: ../ui/main.glade:578 ../ui/settings.glade:4010
 msgid "Fullscreen"
 msgstr "全画面表示"
 
-#: ../ui/settings.glade:6219
+#: ../ui/settings.glade:6218
 msgid "Gain"
 msgstr "ゲイン"
 
@@ -2797,16 +2799,6 @@ msgstr "選択したテキストをハイライト表示"
 msgid "Highlighter Opti_ons"
 msgstr ""
 
-#: ../ui/settings.glade:5425
-msgid "How short (screen mm)  of the stroke  AND...\n\n"
-"<i>Recommended: 1 mm</i>"
-msgstr ""
-
-#: ../ui/settings.glade:5405
-msgid "How short (time)  AND...\n\n"
-"<i>Recommended: 150ms</i>"
-msgstr ""
-
 #: ../ui/about.glade:157
 msgid "Icon Designers"
 msgstr "アイコンデザイナー"
@@ -2835,10 +2827,6 @@ msgstr "有効にすると、各ページのレイヤーが1つずつ追加さ�
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr ""
 
-#: ../ui/settings.glade:5393
-msgid "Ignore Time (ms)"
-msgstr ""
-
 #: ../ui/settings.glade:1894
 msgid "Ignore the first"
 msgstr ""
@@ -2851,7 +2839,7 @@ msgstr "画質"
 msgid "Inertia"
 msgstr "慣性"
 
-#: ../ui/settings.glade:6102
+#: ../ui/settings.glade:6101
 msgid "Input Device"
 msgstr "入力デバイス"
 
@@ -2883,10 +2871,6 @@ msgstr "ページの後に挿入"
 msgid "Insert Page Before"
 msgstr "ページの前に挿入"
 
-#: ../ui/settings.glade:6442
-msgid "LaTeX"
-msgstr "LaTeX"
-
 #: ../ui/latexSettings.glade:354
 msgid "LaTeX executable settings"
 msgstr "LaTeX 実行可能ファイルの設定"
@@ -2895,11 +2879,11 @@ msgstr "LaTeX 実行可能ファイルの設定"
 msgid "LaTeX generation command"
 msgstr "LaTeX 生成コマンド"
 
-#: ../ui/settings.glade:6531 ../ui/settings.glade:6579
+#: ../ui/settings.glade:6530 ../ui/settings.glade:6578
 msgid "Language"
 msgstr "言語"
 
-#: ../ui/settings.glade:6549
+#: ../ui/settings.glade:6548
 msgid "Language Settings"
 msgstr "言語設定"
 
@@ -2910,6 +2894,10 @@ msgstr ""
 #: ../ui/settings.glade:3679
 msgid "Left / Right-Handed"
 msgstr "左利き / 右利き"
+
+#: ../ui/settings.glade:5444
+msgid "Length limit (mm)"
+msgstr ""
 
 #: ../ui/about.glade:335
 msgid "License"
@@ -2931,25 +2919,23 @@ msgstr "ファイルを読み込む"
 msgid "Load from file"
 msgstr "ファイルから読み込む"
 
-#: ../ui/settings.glade:3193
-msgid "Lucide"
-msgstr "Lucide"
-
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "ツールバーの管理"
 
 #: ../ui/settings.glade:1287
+msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
 msgstr "重さ"
 
-#: ../ui/settings.glade:1286 ../ui/settings.glade:1298
+#: ../ui/settings.glade:1298
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "重さ：重さを大きくすると、慣性感が強くなり安定します"
 
-#: ../ui/settings.glade:5445
-msgid "Max Length (mm)"
-msgstr ""
+#: ../ui/settings.glade:1286
+msgctxt "Mass = Noun: physics term, related to weight"
+msgid "Mass: the higher the mass, the more inertia and the more stabilization"
+msgstr "重さ：重さを大きくすると、慣性感が強くなり安定します"
 
 #: ../ui/settings.glade:3912
 msgid "Max multiplier"
@@ -3063,7 +3049,7 @@ msgstr ""
 msgid "Options"
 msgstr "オプション"
 
-#: ../ui/settings.glade:6125
+#: ../ui/settings.glade:6124
 msgid "Output Device"
 msgstr "出力デバイス"
 
@@ -3071,7 +3057,7 @@ msgstr "出力デバイス"
 msgid "Output generated by the LaTeX command."
 msgstr ""
 
-#: ../ui/settings.glade:5669
+#: ../ui/settings.glade:5668
 msgid "PDF Cache"
 msgstr "PDFキャッシュ"
 
@@ -3090,10 +3076,6 @@ msgstr "ページ:"
 #: ../ui/settings.glade:4853
 msgid "Paired Pages"
 msgstr "2面表示"
-
-#: ../ui/main.glade:1360
-msgid "Paper B_ackground"
-msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -3132,7 +3114,7 @@ msgstr "パフォーマンス"
 msgid "Pick the Editor's Font"
 msgstr "エディターのフォントを選択"
 
-#: ../ui/settings.glade:6371
+#: ../ui/settings.glade:6370
 msgid "Playback Settings"
 msgstr ""
 
@@ -3188,7 +3170,7 @@ msgstr "半径"
 msgid "Range"
 msgstr "範囲"
 
-#: ../ui/settings.glade:5599
+#: ../ui/settings.glade:5598
 msgid "Re-render when the page's zoom changes by more than "
 msgstr ""
 
@@ -3200,7 +3182,7 @@ msgstr ""
 msgid "Record / Stop"
 msgstr ""
 
-#: ../ui/settings.glade:6284
+#: ../ui/settings.glade:6283
 msgid "Recording Quality"
 msgstr "録音品質"
 
@@ -3228,7 +3210,7 @@ msgstr "マウス右ボタン"
 msgid "Rotation snapping tolerance"
 msgstr ""
 
-#: ../ui/settings.glade:6207
+#: ../ui/settings.glade:6206
 msgid "Sample Rate"
 msgstr "サンプルレート"
 
@@ -3252,7 +3234,7 @@ msgstr ""
 msgid "Select Background Color"
 msgstr "背景色を選択"
 
-#: ../ui/settings.glade:6004
+#: ../ui/settings.glade:6003
 msgid "Select Folder"
 msgstr "フォルダを選択"
 
@@ -3304,11 +3286,11 @@ msgstr ""
 msgid "Set Rows"
 msgstr ""
 
-#: ../ui/settings.glade:5508
+#: ../ui/settings.glade:5507
 msgid "Settings:"
 msgstr "値の受け渡し"
 
-#: ../ui/settings.glade:5517
+#: ../ui/settings.glade:5516
 msgid "Show Floating Toolbox"
 msgstr "フローティングツールボックスを表示"
 
@@ -3348,6 +3330,11 @@ msgstr "左側に垂直スクロールバーを表示する"
 msgid "Sidebar"
 msgstr "サイドバー"
 
+#: ../ui/settings.glade:5424
+msgid "Size limit: taps moving further away will not trigger a special action\n\n"
+"<i>Recommended: 1 mm</i>"
+msgstr ""
+
 #: ../ui/settings.glade:1081
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
@@ -3386,16 +3373,12 @@ msgstr "標準"
 msgid "Start zooming after a distance "
 msgstr ""
 
-#: ../ui/settings.glade:5989 ../ui/settings.glade:6047
+#: ../ui/settings.glade:5988 ../ui/settings.glade:6046
 msgid "Storage Folder"
 msgstr "ストレージフォルダ"
 
 #: ../ui/main.glade:2839
 msgid "Strikethrough selected text"
-msgstr ""
-
-#: ../ui/settings.glade:5345
-msgid "Stroke Recognizer"
 msgstr ""
 
 #: ../ui/settings.glade:2227
@@ -3408,10 +3391,6 @@ msgstr "ペンタブのボタン"
 
 #: ../ui/settings.glade:2153
 msgid "Stylus-based eraser is visible"
-msgstr ""
-
-#: ../ui/settings.glade:5456
-msgid "Successive (ms)"
 msgstr ""
 
 #: ../ui/latexSettings.glade:461
@@ -3483,6 +3462,15 @@ msgstr ""
 msgid "These settings will be used for new pages"
 msgstr ""
 
+#: ../ui/settings.glade:5392
+msgid "Time limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5404
+msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
+"<i>Recommended: 150ms</i>"
+msgstr ""
+
 #: ../ui/settings.glade:2400
 msgid "Timeout"
 msgstr "タイムアウト"
@@ -3504,11 +3492,11 @@ msgstr "タッチスクロール"
 msgid "Touchscreen"
 msgstr "タッチパネル"
 
-#: ../ui/settings.glade:5485
+#: ../ui/settings.glade:5484
 msgid "Try to select object first."
 msgstr "最初にオブジェクトを選択してください。"
 
-#: ../ui/settings.glade:5490 ../ui/settings.glade:5522
+#: ../ui/settings.glade:5489 ../ui/settings.glade:5521
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "最初にオブジェクトを選択してみてください。選択されていない場合、有効であればフローティングツールボックスを表示します。"
 
@@ -3580,7 +3568,7 @@ msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr ""
 
-#: ../ui/settings.glade:5596
+#: ../ui/settings.glade:5595
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
@@ -3747,10 +3735,6 @@ msgstr ""
 
 #: ../ui/main.glade:1456
 msgid "_Image"
-msgstr ""
-
-#: ../ui/main.glade:1201
-msgid "_Journal"
 msgstr ""
 
 #: ../ui/main.glade:1120
