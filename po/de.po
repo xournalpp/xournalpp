@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 09:14+0200\n"
-"PO-Revision-Date: 2024-10-26 09:20\n"
+"POT-Creation-Date: 2024-10-26 17:46+0200\n"
+"PO-Revision-Date: 2024-10-26 17:36\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2958,6 +2958,11 @@ msgstr "Links / Rechtshändig"
 msgid "Length limit (mm)"
 msgstr ""
 
+#: ../ui/settings.glade:5424
+msgid "Length limit: taps moving further away will not trigger a special action\n\n"
+"<i>Recommended: 1 mm</i>"
+msgstr ""
+
 #: ../ui/about.glade:335
 msgid "License"
 msgstr "Lizenz"
@@ -3390,11 +3395,6 @@ msgstr "Vertikale Bildlaufleiste auf der linken Seite anzeigen"
 #: ../ui/settings.glade:3761
 msgid "Sidebar"
 msgstr "Seitenleiste"
-
-#: ../ui/settings.glade:5424
-msgid "Size limit: taps moving further away will not trigger a special action\n\n"
-"<i>Recommended: 1 mm</i>"
-msgstr ""
 
 #: ../ui/settings.glade:1081
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
