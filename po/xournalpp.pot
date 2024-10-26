@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.2.5~dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 09:14+0200\n"
+"POT-Creation-Date: 2024-10-26 17:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3032,6 +3032,13 @@ msgstr ""
 msgid "Length limit (mm)"
 msgstr ""
 
+#: ../ui/settings.glade:5424
+msgid ""
+"Length limit: taps moving further away will not trigger a special action\n"
+"\n"
+"<i>Recommended: 1 mm</i>"
+msgstr ""
+
 #: ../ui/about.glade:335
 msgid "License"
 msgstr ""
@@ -3466,13 +3473,6 @@ msgstr ""
 
 #: ../ui/settings.glade:3761
 msgid "Sidebar"
-msgstr ""
-
-#: ../ui/settings.glade:5424
-msgid ""
-"Size limit: taps moving further away will not trigger a special action\n"
-"\n"
-"<i>Recommended: 1 mm</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1081

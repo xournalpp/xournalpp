@@ -5421,7 +5421,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="name">spStrokeIgnoreLength</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
-                                            <property name="tooltip-markup" translatable="yes">Size limit: taps moving further away will not trigger a special action
+                                            <property name="tooltip-markup" translatable="yes">Length limit: taps moving further away will not trigger a special action
 
 &lt;i&gt;Recommended: 1 mm&lt;/i&gt;</property>
                                             <property name="valign">start</property>
