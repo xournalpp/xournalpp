@@ -37,6 +37,7 @@
             <property name="can_focus">False</property>
             <property name="margin_bottom">10</property>
             <property name="label">Description</property>
+            <property name="wrap">True</property>
             <property name="selectable">True</property>
           </object>
           <packing>
