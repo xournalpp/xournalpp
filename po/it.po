@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"PO-Revision-Date: 2024-10-30 14:28\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -989,7 +989,8 @@ msgstr "OK"
 #: ../src/core/control/XournalMain.cpp:680
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Esporta solo i livelli specificati dall'intervallo (ad esempio \"2-3,5,7-\")\n"
+"                                 Nessun effetto senza -p/--create-pdf o -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:676
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1726,7 +1727,9 @@ msgstr "Non hai nessuna pagina PDF da cui selezionare. Annulla l'operazione.\n"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "Il documento attuale non contiene la pagina PDF n. {1}\n"
+"Vuoi inserire questa pagina?\n\n"
+"Consiglio: Puoi selezionare {2} per inserire una Pagina PDF."
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
@@ -2778,12 +2781,13 @@ msgstr "Forza tema chiaro"
 
 #: ../ui/settings.glade:5455
 msgid "Frequency limit (ms)"
-msgstr ""
+msgstr "Limite di frequenza (ms)"
 
 #: ../ui/settings.glade:5467
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "Limite di frequenza: Un tocco che si verifica entro questo periodo di tempo, dopo un tratto, non attiverà un'azione speciale.\n\n"
+"<i>Consigliato: 500ms</i>"
 
 #: ../ui/main.glade:578 ../ui/settings.glade:4010
 msgid "Fullscreen"
@@ -2963,12 +2967,13 @@ msgstr "Mancino / Destro"
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "Limite di lunghezza (mm)"
 
 #: ../ui/settings.glade:5424
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Limite di lunghezza: i tocchi che sono più lontani non attivano un'azione speciale\n\n"
+"<i>Consigliato: 1 mm</i>"
 
 #: ../ui/about.glade:335
 msgid "License"
@@ -3533,12 +3538,13 @@ msgstr "Queste impostazioni saranno utilizzate per le nuove pagine"
 
 #: ../ui/settings.glade:5392
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "Limite di tempo (ms)"
 
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Limite di tempo: i tocchi che durano più a lungo non attivano un'azione speciale\n\n"
+"<i>Consigliato: 150ms</i>"
 
 #: ../ui/settings.glade:2400
 msgid "Timeout"
