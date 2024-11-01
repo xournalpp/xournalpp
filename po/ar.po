@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"PO-Revision-Date: 2024-11-01 13:28\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -2963,12 +2963,13 @@ msgstr "استخدام اليد اليمنى أو اليسرى"
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "حد المسافة (مم)"
 
 #: ../ui/settings.glade:5424
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "حد المسافة: النقرات التي تتحرك أبعد من هذا لن تنفذ إجراءً خاصًا\n\n"
+"<i>المقترح: 1 مم</i>"
 
 #: ../ui/about.glade:335
 msgid "License"
@@ -3533,12 +3534,13 @@ msgstr "سيتم استخدام هذه الإعدادات للصفحات الج�
 
 #: ../ui/settings.glade:5392
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "المهلة (مللي ثانية)"
 
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "المهلة: النقرات التي تدوم وقتًا أطول لن تنفذ إجراءً خاصًا\n\n"
+"<i>المقترح: 150 مللي ثانية</i>"
 
 #: ../ui/settings.glade:2400
 msgid "Timeout"
