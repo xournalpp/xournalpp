@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:37\n"
+"PO-Revision-Date: 2024-11-01 02:11\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -289,7 +289,7 @@ msgstr "Não foi possível refazer \"{1}\"\n"
 
 #: ../src/core/control/Control.cpp:241
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr "Não foi possível remover o arquivo de salvamento automático antigo \"{1}\": {2}"
+msgstr "Não foi possível remover o arquivo antigo salvo automaticamente \"{1}\": {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:179
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
@@ -971,7 +971,7 @@ msgstr "Sem páginas para exportar!"
 
 #: ../src/core/control/Control.cpp:1472
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr "Nenhuma página de PDF disponível para ser adicionada. Primeiro você precisa reabrir o documento."
+msgstr "Nenhuma página de PDF disponível para ser adicionada. Talvez, primeiro você precise reabrir o documento."
 
 #: ../src/core/gui/menus/menubar/RecentDocumentsSubmenu.cpp:56
 msgid "No recent files"
@@ -989,7 +989,8 @@ msgstr "OK"
 #: ../src/core/control/XournalMain.cpp:680
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exporta apenas camadas especificadas por intervalo (e.g. \"2-3,5,7-\")\n"
+"                                 Sem efeito sem a opção \"-p/--create-pdf\" ou \"-i/--create-img\""
 
 #: ../src/core/control/XournalMain.cpp:676
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1713,7 +1714,7 @@ msgstr "Modelo Xournal++"
 
 #: ../src/core/control/Control.cpp:1248
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
-msgstr "Você excluiu a Barra de Ferramentas ativa. A Barra de ferramentas será modificada para a padrão."
+msgstr "Você excluiu a Barra de Ferramentas ativa. Restaurando a Barra de ferramentas padrão."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:228
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
