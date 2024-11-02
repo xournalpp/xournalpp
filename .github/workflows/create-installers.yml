@@ -30,6 +30,9 @@ on:
       head_sha:        # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
         type: string
         default: ''
+      artifact_version_suffix:
+        type: string
+        default: ''
 
 jobs:
   ci-ubuntu:
@@ -48,6 +51,7 @@ jobs:
       extra_packages: ${{ matrix.run.extra_packages }}
       container_image: ${{ matrix.run.container_image }}
       head_sha: ${{ inputs.head_sha }}
+      artifact_version_suffix: ${{ inputs.artifact_version_suffix }}
 
   ci-windows:
     name: Create installer (Windows)
@@ -62,6 +66,7 @@ jobs:
       displayed_name: ${{ matrix.run.displayed_name }}
       publish_portable_version:  ${{ matrix.run.build_portable == 'true' }}
       head_sha: ${{ inputs.head_sha }}
+      artifact_version_suffix: ${{ inputs.artifact_version_suffix }}
 
   ci-macos:
     name: Create installer (MacOS)
@@ -75,3 +80,4 @@ jobs:
       runner: ${{ matrix.run.runner }}
       displayed_name: ${{ matrix.run.displayed_name }}
       head_sha: ${{ inputs.head_sha }}
+      artifact_version_suffix: ${{ inputs.artifact_version_suffix }}
