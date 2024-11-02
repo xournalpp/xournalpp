@@ -43,7 +43,8 @@ jobs:
         with:
           build_type: RelWithDebInfo
           shell: msys2 {0}
-          cmake_flags: '-DCMAKE_CXX_FLAGS="-Os -s"'
+          cmake_flags: >-
+            -DCMAKE_CXX_FLAGS="-Os -s"
       - name: 'Create installer'
         working-directory: ${{github.workspace}}/windows-setup
         shell: msys2 {0}

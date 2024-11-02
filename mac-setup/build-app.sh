@@ -81,4 +81,7 @@ export GTKDIR="$1/inst"
 echo "Replace GDK_CONTROL_MASK by GDK_META_MASK in main.glade"
 sed -i -e 's/GDK_CONTROL_MASK/GDK_META_MASK/g' ./Xournal++.app/Contents/Resources/ui/main.glade
 
+echo "Create zip"
+zip --filesync -r Xournal++.zip Xournal++.app
+
 echo "finished"

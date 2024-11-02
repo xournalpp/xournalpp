@@ -6,7 +6,7 @@ inputs:
     required: true
     type: string
   cmake_flags:
-    default: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
+    default: '-DENABLE_GTEST=ON -DDOWNLOAD_GTEST=on'
     type: string
     required: false
   cmake_commands:
