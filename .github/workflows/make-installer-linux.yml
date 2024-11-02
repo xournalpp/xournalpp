@@ -72,8 +72,6 @@ jobs:
         with:
           build_type: 'RelWithDebInfo'
           cmake_flags: >-
-            -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON
-            -DENABLE_GTEST=ON
             -DCMAKE_INSTALL_PREFIX=/usr
             -DCPACK_GENERATOR="TGZ;DEB"
           cmake_commands: '--target package'

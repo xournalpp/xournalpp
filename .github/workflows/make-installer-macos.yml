@@ -38,7 +38,6 @@ jobs:
           build_type: RelWithDebInfo
           cmake_flags: >-
             -DCMAKE_INSTALL_PREFIX="$HOME/gtk/inst"
-            -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON
       - name: 'Create installer'
         shell: bash
         run: |

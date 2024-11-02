@@ -4,12 +4,6 @@ Details about installation process are on our [wiki](https://github.com/xournalp
 
 Here you can find complete list of Xournal++ CMake flags (sorted by categories). Advanced settings are marked with *[A]*.
 
-## `CMAKE` – some additional CMake related config
-
-| Variable name                        | Default | Description
-| ------------------------------------ | ------- | -----------
-| `CMAKE_DEBUG_INCLUDES_LDFLAGS` *[A]* | OFF     | At the end of config process list all include dirs and libraries used by main xournalpp binary
-
 
 ## `DEBUG` – debugging switches (shouldn't be enabled for normal usage), all *[A]* and disabled by default
 
