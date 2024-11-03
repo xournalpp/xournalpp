@@ -49,8 +49,6 @@ public:
 
     // parameters used when initially displaying setsquare on a page
     static constexpr double INITIAL_HEIGHT = 8.0;
-    static constexpr double INITIAL_X = 21. * HALF_CM;
-    static constexpr double INITIAL_Y = 15. * HALF_CM;
     // relation between setsquare height and radius
     static constexpr double DISTANCE_SEMICIRCLE_FROM_LEGS = 1.15;
     static inline double radiusFromHeight(double height) {

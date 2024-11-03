@@ -46,6 +46,4 @@ public:
 
     // parameters used when initially displaying the compass on a page
     static constexpr double INITIAL_HEIGHT = 3.0;
-    static constexpr double INITIAL_X = 21. * HALF_CM;
-    static constexpr double INITIAL_Y = 15. * HALF_CM;
 };
