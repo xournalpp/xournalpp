@@ -12,7 +12,7 @@ if (XGETTEXT_FOUND)
   gettext_create_pot ("${potfile}"
           PACKAGE ${PROJECT_NAME}
     VERSION ${PROJECT_VERSION}
-    OPTIONS --language=C++ -s --from-code=UTF-8
+    OPTIONS --language=C++ --from-code=UTF-8
             --keyword=_ --keyword=_F --keyword=N_
             --keyword=C_:1c,2 --keyword=C_F:1c,2 --keyword=NC_:1c,2
 

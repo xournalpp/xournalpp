@@ -166,7 +166,6 @@ endif()
 
 
 set(XGETTEXT_OPTIONS_DEFAULT
-  "-s"
   "--escape"
   "--add-comments=TRANSLATORS:"  #TODO: Make this configurable.
   "--from-code=UTF-8"
@@ -618,7 +617,7 @@ if(XGETTEXT_FOUND)
         OUTPUT
           "${_gmoFile}"
         COMMAND
-          "${GETTEXT_MSGMERGE_EXECUTABLE}" "--quiet" "--update" "--backup=none" "-s" "${_absFile}" "${_absPotFile}"
+          "${GETTEXT_MSGMERGE_EXECUTABLE}" "--quiet" "--update" "--backup=none" "${_absFile}" "${_absPotFile}"
         COMMAND
           "${GETTEXT_MSGFMT_EXECUTABLE}" "-o" "${_gmoFile}" "${_absFile}"
         DEPENDS
