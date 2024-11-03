@@ -55,6 +55,9 @@ jobs:
       macos_builds: ${{ steps.parse.outputs.macos_builds }}
       windows_builds: ${{ steps.parse.outputs.windows_builds }}
       run_details_url: ${{ steps.parse.outputs.run_details_url }}
+    permissions:
+      checks: write         # To create the check in the PR
+      pull-requests: write  # Write: To post a comment acknowledging the run + Read: To get the head_sha
     steps:
       - name: 'Get pull request HEAD_SHA'
         id: get-sha
@@ -73,6 +76,8 @@ jobs:
       - name: 'Parse command and acknowledge order'
         id: parse
         uses: actions/github-script@v7
+        env:
+          body: ${{ github.event.comment.body }} # Hardened security against code injection
         with:
           script: |
             const available_targets = JSON.parse(`${{ env.available_targets }}`)
@@ -84,10 +89,10 @@ jobs:
             var windows_builds = []
             var unknown = []
 
-            const cmd = String.raw`${{github.event.comment.body}}`
+            const cmd = process.env['body']  // Injects github.event.comment.body as a string - no code injection possible
             var re = /\s+/
             const targets = new Set(cmd.split(re).slice(2))  // Drop the "\action" and "create-installers"
-                                                           // and possible duplicates
+                                                             // and possible duplicates
             console.log('required targets: ' + JSON.stringify([...targets]))
 
             if (targets.has("all")) {
@@ -173,6 +178,9 @@ jobs:
   run-ci:
     name: Create installers
     needs: ack
+    permissions:
+      contents: read  # This CI will call action scripts from PRs. It must not be granted any write access to avoid
+                      # privilege escalation security risks
     uses: ./.github/workflows/create-installers.yml
     with:
       linux_builds: ${{ needs.ack.outputs.linux_builds }}
@@ -185,6 +193,9 @@ jobs:
     needs: [run-ci, ack]
     if: ${{ always() && needs.ack.result == 'success' }}
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write  # To post a comment with the results
+      checks: write         # To update the check status
     steps:
       - run: npm i @actions/artifact
       - name: 'Publish on PR page'
