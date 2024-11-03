@@ -46,7 +46,11 @@ env:
 jobs:
   ack:
     name: Acknowledge order
-    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, '\action create-installers')}}
+    # To circumvent a security issue, only members/owners of the xournalpp team can run this CI.
+    if: |
+      github.event.issue.pull_request &&
+      (github.event.comment.author_association == 'member' || github.event.comment.author_association == 'owner') &&
+      startsWith(github.event.comment.body, '\action create-installers')
     runs-on: ubuntu-latest
     outputs:
       head_sha: ${{ steps.get-sha.outputs.head_sha }}
