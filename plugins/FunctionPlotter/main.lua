@@ -1,7 +1,8 @@
 function initUi()
   app.registerUi({["menu"] = "Plot function...", ["callback"] = "showDialog"});
-  
-  sourcePath = debug.getinfo(1).source:match("@?(.*/)")
+
+    local sep = package.config:sub(1, 1) -- path separator depends on OS
+    SourcePath = debug.getinfo(1).source:match("@?(.*" .. sep .. ")")
 end
 
 function showDialog()
@@ -23,7 +24,7 @@ function showDialog()
   local Gdk = lgi.Gdk
   local assert = lgi.assert
   local builder = Gtk.Builder()
-  assert(builder:add_from_file(sourcePath .. "plotter.glade"))
+  assert(builder:add_from_file(SourcePath .. "plotter.glade"))
   local ui = builder.objects
   local dialog = ui.dlgMain
 
@@ -33,7 +34,7 @@ function showDialog()
     local tMax = ui.spbtTMax:get_value()
 
     wc = { -- coordinate system window
-      xMin = ui.spbtXMin:get_value(), 
+      xMin = ui.spbtXMin:get_value(),
       xMax = ui.spbtXMax:get_value(),
       xUnit = ui.spbtXUnit:get_value(),
       yMin = ui.spbtYMin:get_value(),
@@ -47,7 +48,7 @@ function showDialog()
     wxpp = { -- xournalpp window
       width = ui.spbtWidth:get_value()*factor,
       height = ui.spbtHeight:get_value()*factor,
-      cx = 300, 
+      cx = 300,
       cy = 200
     }
 
@@ -61,7 +62,7 @@ function showDialog()
       -- draw graph
       for i = 0, samples-1 do
         local t = tMin + i/(samples-1)*(tMax-tMin)
-        local xt = eval("x", t) 
+        local xt = eval("x", t)
         local yt = eval("y", t)
         local defined = xt~=nil and yt~=nil and xt==xt and yt==yt  -- not nil and not nan
         if defined then
@@ -85,23 +86,23 @@ function showDialog()
         if defined then
           table.insert(xcoord, fitX(xt))
           table.insert(ycoord, fitY(yt))
-        else 
+        else
           appendStroke(strokes, xcoord, ycoord)
           xcoord = {}; ycoord = {}
         end
       end
-    else 
+    else
       local lastInside = false
       local last = nil
       local p = nil
       -- draw graph
       for i = 0, samples-1 do
         local t = tMin + i/(samples-1)*(tMax-tMin)
-        local xt = eval("x", t) 
+        local xt = eval("x", t)
         local yt = eval("y", t)
         local defined = xt~=nil and yt~=nil and xt==xt and yt==yt  -- not nil and not nan
         local inside = (wc.xMin <= xt and xt<=wc.xMax and wc.yMin <= yt and yt <= wc.yMax)
-        if not defined then 
+        if not defined then
           last = nil
         elseif inside or lastInside then
           if inside and (last==nil or lastInside) then
@@ -115,7 +116,7 @@ function showDialog()
             table.insert(xcoord, fitX(p.x))
             table.insert(ycoord, fitY(p.y))
             table.insert(xcoord, fitX(xt))
-            table.insert(ycoord, fitY(yt))  
+            table.insert(ycoord, fitY(yt))
             last = {x=xt, y=yt}
             lastInside = true
           elseif lastInside then
@@ -177,7 +178,7 @@ function showDialog()
       -- draw horizontal grid lines
       for i = (wc.yMin // wc.yUnit) + 1, (wc.yMax // wc.yUnit) do
         local yval = fitY(i*wc.yUnit)
-        table.insert(strokes, {x = {mx, Mx}, y = {yval, yval}, width = lwGrid, lineStyle = gridStyle, color = colGrid}) 
+        table.insert(strokes, {x = {mx, Mx}, y = {yval, yval}, width = lwGrid, lineStyle = gridStyle, color = colGrid})
       end
     end
 
@@ -192,7 +193,7 @@ function showDialog()
       for i = (wc.yMin // wc.yUnit) + 1, (wc.yMax // wc.yUnit) do
         local yval = fitY(i*wc.yUnit)
         if yval <= My + 2*arrowLength then break end
-        table.insert(strokes, {x = {x0-tickHeight/2, x0+tickHeight/2}, y = {yval, yval}, width = lwAxis, color = colAxis}) 
+        table.insert(strokes, {x = {x0-tickHeight/2, x0+tickHeight/2}, y = {yval, yval}, width = lwAxis, color = colAxis})
       end
     end
 
@@ -219,7 +220,7 @@ function showDialog()
         local text = (v == math.floor(v)) and tostring(math.floor(v)) or tostring(v)
         if yval <= My + 2*arrowLength then break end
         if (v~=0) then
-          table.insert(texts, {text = text, font = font, x = x0+tickHeight, y = yval-font.size, color = colAxis}) 
+          table.insert(texts, {text = text, font = font, x = x0+tickHeight, y = yval-font.size, color = colAxis})
         end
       end
     end
@@ -249,7 +250,7 @@ function showDialog()
 
     local parsedExp, cerr = luaxp.compile(fstr)
     if parsedExp == nil then
-      print("Parsing failed: " .. cerr.message) 
+      print("Parsing failed: " .. cerr.message)
     end
     local context = {t = t, pi = math.pi}
     local resultValue, rerr = luaxp.run(parsedExp, context)
