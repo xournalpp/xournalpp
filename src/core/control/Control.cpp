@@ -1093,6 +1093,14 @@ void Control::makeGeometryTool() {
     std::unique_ptr<InputHandlerClass> geometryToolInputHandler =
             std::make_unique<InputHandlerClass>(this->win->getXournal(), geometryToolController.get());
     geometryToolInputHandler->registerToPool(tool->getHandlerPool());
+    Range range = view->getVisiblePart();
+    if (range.isValid()) {
+        double originX = (range.minX + range.maxX) * .5;
+        double originY = (range.minY + range.maxY) * .5;
+        geometryToolController->translate(originX, originY);
+    } else {
+        geometryToolController->translate(view->getWidth() * .5, view->getHeight() * .5);
+    }
     xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
     fireActionSelected(GROUP_GEOMETRY_TOOL, a);
     geometryTool->notify();

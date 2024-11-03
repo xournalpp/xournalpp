@@ -14,8 +14,7 @@ constexpr double MIN_HEIGHT = 0.5;
 constexpr double MAX_HEIGHT = 10.0;
 
 CompassInputHandler::CompassInputHandler(XournalView* xournal, GeometryToolController* controller):
-        GeometryToolInputHandler(xournal, controller, Compass::INITIAL_HEIGHT, Compass::INITIAL_X, Compass::INITIAL_Y) {
-}
+        GeometryToolInputHandler(xournal, controller, Compass::INITIAL_HEIGHT, 0., 0.) {}
 
 CompassInputHandler::~CompassInputHandler() noexcept { this->unregisterFromPool(); }
 
