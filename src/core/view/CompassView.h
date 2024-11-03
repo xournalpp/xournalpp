@@ -56,7 +56,7 @@ private:
 
     double height = Compass::INITIAL_HEIGHT;
     double rotation = 0.;
-    cairo_matrix_t matrix{CM, 0., 0., CM, Compass::INITIAL_X, Compass::INITIAL_Y};
+    cairo_matrix_t matrix{CM, 0., 0., CM, 0., 0.};
 
     /**
      * @brief the distance of the circle containing the rotation angle display from the center

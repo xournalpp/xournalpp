@@ -1,0 +1,26 @@
+# Template for setting up an MSYS2 environment on Windows
+
+name: Install dependencies for Windows build
+
+runs:
+  using: composite
+  steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: mingw64
+        update: true
+        install: >-
+          mingw-w64-x86_64-toolchain
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-make
+          mingw-w64-x86_64-ninja
+          mingw-w64-x86_64-gettext
+          patch
+          mingw-w64-x86_64-poppler
+          mingw-w64-x86_64-gtk3
+          mingw-w64-x86_64-libsndfile
+          mingw-w64-x86_64-libzip
+          mingw-w64-x86_64-portaudio
+          mingw-w64-x86_64-lua
+          mingw-w64-x86_64-gtksourceview4
+          mingw-w64-x86_64-imagemagick

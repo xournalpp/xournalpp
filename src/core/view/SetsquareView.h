@@ -58,7 +58,7 @@ private:
 
     double height = Setsquare::INITIAL_HEIGHT;
     double rotation = 0.;
-    cairo_matrix_t matrix{CM, 0., 0., CM, Setsquare::INITIAL_X, Setsquare::INITIAL_Y};
+    cairo_matrix_t matrix{CM, 0., 0., CM, 0., 0.};
 
 
     /**

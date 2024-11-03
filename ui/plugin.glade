@@ -77,6 +77,7 @@
             <property name="can-focus">False</property>
             <property name="margin-top">5</property>
             <property name="margin-bottom">5</property>
+            <property name="wrap">true</property>
             <property name="label" translatable="yes">Plugin changes are only applied after Xournal++ is restarted</property>
           </object>
           <packing>

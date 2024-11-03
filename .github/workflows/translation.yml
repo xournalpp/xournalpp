@@ -1,0 +1,29 @@
+name: Generate translation files
+
+on:
+  push:
+    branches: [ "master" ]
+    paths-ignore:
+      - 'po/xournalpp.pot'
+      - 'po/*.po'
+
+jobs:
+  Translations:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_ubuntu
+      - name: 'Update translation template'
+        shell: bash
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build . --target pot
+      - name: 'Commit new translation file'
+        uses: actions4git/add-commit-push@v1
+        with:
+          commit-message: "[skip ci] Update translation template"

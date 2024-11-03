@@ -30,6 +30,7 @@
         <property name="can-focus">False</property>
         <property name="margin-bottom">10</property>
         <property name="label">Description</property>
+        <property name="wrap">True</property>
         <property name="selectable">True</property>
       </object>
       <packing>

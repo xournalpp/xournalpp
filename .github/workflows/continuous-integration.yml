@@ -1,0 +1,86 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [ "master", "release-*" ]
+    ignores-paths:
+      - 'po/xournalpp.pot'
+      - 'po/*.po'
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Debug
+  GCC_VERSION: 10
+
+jobs:
+  ubuntu-20_04:
+    runs-on: ubuntu-20.04
+    name: 'Test Xournal++ on Ubuntu 20.04'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_ubuntu
+        with:
+          gcc_version: ${{env.GCC_VERSION}}
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: ${{env.BUILD_TYPE}}
+      - name: 'Generate test locales'
+        run: |
+          echo "de_DE.UTF-8 UTF-8" | sudo tee /etc/locale.gen
+          sudo locale-gen
+      - name: 'Run tests'
+        run: |
+          cmake --build . --target test-units
+          CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+      - name: 'Run gtk-integration tests'
+        # Todo: Port this to MacOS and Windows
+        run: |
+          sudo apt install xvfb
+          cmake .. -DCMAKE_INSTALL_PREFIX=install
+          cmake --build . --target install
+          cmake --build . --target test-gtk-integration
+          CI=true xvfb-run -a ./test/test-gtk-integration
+        working-directory: ${{github.workspace}}/build
+  Windows-2019:
+    runs-on: windows-2019
+    name: 'Test Xournal++ on Windows'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_windows
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: ${{env.BUILD_TYPE}}
+          shell: msys2 {0}
+      - name: 'Run tests'
+        shell: msys2 {0}
+        run: |
+          cmake --build . --target test-units
+          CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build
+  MacOS:
+    strategy:
+      matrix:
+        os: [macos-13, macos-14]  # macos-13 is Intel, macos-14 is ARM
+    runs-on: ${{ matrix.os }}
+    name: 'Test Xournal++ on MacOS (${{ matrix.os }})'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Install dependencies'
+        uses: ./.github/actions/install_deps_mac
+        with:
+          install_path: $HOME
+      - name: 'Build Xournal++'
+        uses: ./.github/actions/build
+        with:
+          build_type: ${{env.BUILD_TYPE}}
+      - name: 'Run tests'
+        shell: bash
+        run: |
+          cmake --build . --target test-units
+          CI=true ./test/test-units
+        working-directory: ${{github.workspace}}/build

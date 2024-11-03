@@ -367,9 +367,6 @@ Configuration:
     Profiling enabled:          ${ENABLE_PROFILING}
 ")
 
-option(CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)
-mark_as_advanced(FORCE CMAKE_DEBUG_INCLUDES_LDFLAGS)
-
 ##############################
 # Packaging options
 # !!! only override defaults if necessary !!!

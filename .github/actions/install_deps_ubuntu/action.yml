@@ -1,0 +1,48 @@
+# Template for setting up the Ubuntu build environment and building Xournal++ on
+# Ubuntu
+name: Install dependencies
+inputs:
+  gcc_version:
+    required: false
+    type: string
+    default: ''
+  extra_packages:
+    required: false
+    type: string
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: 'Compute GCC name'
+      id: gcc
+      shell: bash
+      run: echo "gcc_postfix=${{ (inputs.gcc_version) && '-' || '' }}${{inputs.gcc_version}}" >> $GITHUB_OUTPUT
+    - name: 'Install dependencies'
+      shell: bash
+      env:
+        # Those packages are required for building. To add extra packages (e.g. for packaging purposes), use inputs.extra_packages
+        packages: >-
+          ${{inputs.extra_packages}}
+          librsvg2-dev
+          gcc${{ steps.gcc.outputs.gcc_postfix }}
+          g++${{ steps.gcc.outputs.gcc_postfix }}
+          cmake ninja-build
+          libgtk-3-dev
+          libpoppler-glib-dev
+          portaudio19-dev
+          libsndfile1-dev
+          liblua5.3-dev
+          libzip-dev
+          gettext
+          help2man
+          libgtest-dev
+          libgtksourceview-4-dev
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ${{env.packages}}
+    - name: 'Set environment variables'
+      shell: bash
+      run: |
+        echo "CC=gcc${{ steps.gcc.outputs.gcc_postfix }}" >> $GITHUB_ENV
+        echo "CXX=g++${{ steps.gcc.outputs.gcc_postfix }}" >> $GITHUB_ENV

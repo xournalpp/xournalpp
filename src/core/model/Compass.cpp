@@ -6,7 +6,7 @@
 #include "gui/inputdevices/CompassInputHandler.h"
 #include "view/CompassView.h"
 
-Compass::Compass(): Compass(INITIAL_HEIGHT, .0, INITIAL_X, INITIAL_Y) {}
+Compass::Compass(): Compass(INITIAL_HEIGHT, .0, 0., 0.) {}
 
 Compass::Compass(double height, double rotation, double x, double y): GeometryTool(height, rotation, x, y) {
     this->lastRepaintRange = getToolRange(true);

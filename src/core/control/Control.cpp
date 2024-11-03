@@ -391,6 +391,14 @@ bool Control::toggleGeometryTool() {
     std::unique_ptr<InputHandlerClass> geometryToolInputHandler =
             std::make_unique<InputHandlerClass>(this->win->getXournal(), geometryToolController.get());
     geometryToolInputHandler->registerToPool(tool->getHandlerPool());
+    Range range = view->getVisiblePart();
+    if (range.isValid()) {
+        double originX = (range.minX + range.maxX) * .5;
+        double originY = (range.minY + range.maxY) * .5;
+        geometryToolController->translate(originX, originY);
+    } else {
+        geometryToolController->translate(view->getWidth() * .5, view->getHeight() * .5);
+    }
     xournal->input->setGeometryToolInputHandler(std::move(geometryToolInputHandler));
     geometryTool->notify();
     return true;
@@ -793,18 +801,27 @@ void Control::movePageTowardsEnd() {
     this->getScrollHandler()->scrollToPage(currentPageNo + 1);
 }
 
+/// Remove mnemonic indicators in menu labels
+static std::string removeMnemonics(std::string orig) {
+    std::regex reg("_(.)");
+    return std::regex_replace(orig, reg, "$1");
+}
+
 void Control::askInsertPdfPage(size_t pdfPage) {
     using Responses = enum { CANCEL = 1, AFTER = 2, END = 3 };
     std::vector<XojMsgBox::Button> buttons = {{_("Cancel"), Responses::CANCEL},
                                               {_("Insert after current page"), Responses::AFTER},
                                               {_("Insert at end"), Responses::END}};
 
+    // Must match the labels in main.glade and PageTypeHandler.cpp
+    std::string pathToMenuEntry = removeMnemonics(_("_Journal") + std::string(" → ") + _("Paper B_ackground") +
+                                                  std::string(" → ") + _("With PDF background"));
+
     XojMsgBox::askQuestion(this->getGtkWindow(),
                            FC(_F("Your current document does not contain PDF Page no {1}\n"
                                  "Would you like to insert this page?\n\n"
-                                 "Tip: You can select Journal → Paper Background → PDF Background "
-                                 "to insert a PDF page.") %
-                              static_cast<int64_t>(pdfPage + 1)),
+                                 "Tip: You can select {2} to insert a PDF page.") %
+                              static_cast<int64_t>(pdfPage + 1) % pathToMenuEntry),
                            "", buttons, [ctrl = this, pdfPage](int response) {
                                if (response == Responses::AFTER || response == Responses::END) {
                                    Document* doc = ctrl->getDocument();

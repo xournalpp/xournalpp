@@ -689,7 +689,7 @@ auto XournalMain::run(int argc, char** argv) -> int {
                            "                                 No effect without -p/--create-pdf or -i/--create-img"),
                          "RANGE"},
             GOptionEntry{"export-layer-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportLayerRange,
-                         _("On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+                         _("Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
                            "                                 No effect without -p/--create-pdf or -i/--create-img"),
                          "RANGE"},
             GOptionEntry{"export-png-dpi", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngDpi,
