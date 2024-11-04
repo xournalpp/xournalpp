@@ -1091,6 +1091,7 @@ static int applib_addStrokes(lua_State* L) {
         }
 
         // Finish building the Stroke and apply it to the layer.
+        strokes.push_back(stroke.get());
         addStrokeHelper(L, std::move(stroke));
         // Onto the next stroke
         lua_pop(L, 1);  // cleanup stroke table
