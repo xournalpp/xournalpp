@@ -25,18 +25,12 @@ end
 
 -- Function to read and provide formatted stroke data from a shape-file
 function read_strokes_from_file(filepath)
-    local file = io.open(filepath, "r")
-
-    local content = file:read("*all")
-    file:close()
-
-    local strokesData, err = load(content)
-
-    strokesData = strokesData()
-
+    if filepath == nil then return end
+    local hasFile, content = pcall(dofile, filepath)
+    if not hasFile then print("Error: " .. content) return end
     local strokesToAdd = {}
 
-    for _, stroke in pairs(strokesData) do
+    for _, stroke in pairs(content) do
         if type(stroke) == "table" and stroke.x and stroke.y then
             local newStroke = {
                 x = stroke.x,
@@ -80,7 +74,7 @@ function showMainShapeDialog()
 end
 
 -- Callback for the main shape dialog
-currentCategory = nil --At first its value is nill, it gets value after the {function mainShapeDialogCallback(result)} initiated
+local currentCategory = nil --At first its value is nil, it gets value after mainShapeDialogCallback is called
 function mainShapeDialogCallback(result)
     if result == #shapes_dict + 1 then
         -- When "Cancel" option is clicked it closes the main dialog
