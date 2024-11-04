@@ -1,0 +1,43 @@
+local strokesData = {
+  stroke1 = {
+    x = { 32.252175790151, 188.1576876011 },
+    y = { 175.79369738963, 175.79369738963 },
+    pressure = {},
+    tool = "pen",
+    color = 16711680,
+    width = 2.00,
+    fill = -1,
+    lineStyle = "plain",
+  },
+  stroke2 = {
+    x = { 32.252175790151, 32.252175790151 },
+    y = { 19.888185578678, 175.79369738963 },
+    pressure = {},
+    tool = "pen",
+    color = 16711680,
+    width = 2.00,
+    fill = -1,
+    lineStyle = "plain",
+  },
+  stroke3 = {
+    x = { 178.1576876011, 188.1576876011, 178.1576876011 },
+    y = { 180.79369738963, 175.79369738963, 170.79369738963 },
+    pressure = {},
+    tool = "pen",
+    color = 16711680,
+    width = 2.00,
+    fill = -1,
+    lineStyle = "plain",
+  },
+  stroke4 = {
+    x = { 37.252175790151, 32.252175790151, 27.252175790151 },
+    y = { 29.888185578678, 19.888185578678, 29.888185578678 },
+    pressure = {},
+    tool = "pen",
+    color = 16711680,
+    width = 2.00,
+    fill = -1,
+    lineStyle = "plain",
+  },
+}
+return strokesData   -- Return the strokesData table
