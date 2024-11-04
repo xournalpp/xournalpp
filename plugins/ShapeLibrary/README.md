@@ -34,11 +34,9 @@ Quick Shape Library for inserting predefined shapes into a Xournal++ document vi
 - Rename it and move it to the `Shapes` subfolder.
 
 1. **Coding step**:
-- Open `quick_shape_library.lua` in a code editor.
-- Focus on **"The dictionary for shapes"** section. You should be able to understand the necessary modifications.
+- Open `config.lua` in a code editor and make the necessary mofifications
+  to the shapes dictionary.
 
 ## Share Your Shapes!
 Don't forget to share your unique shapes with us!
-
-
 
