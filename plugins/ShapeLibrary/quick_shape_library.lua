@@ -119,7 +119,7 @@ function store_stroke_info_in_file()
     local strokes = app.getStrokes("selection")
 
     -- Open a file for writing in the folder path
-    local file = io.open(sourcePath .. "giveMeName_and_placeMe_in_shapesFolder.lua", "w")
+    local file = assert(io.open(sourcePath .. "giveMeName_and_placeMe_in_shapesFolder.lua", "w"))
     -- Start writing the Lua table format
     file:write("local strokesData = {\n")
     -- Iterate over each stroke and collect information
