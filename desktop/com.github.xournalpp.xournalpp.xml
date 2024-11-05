@@ -3,16 +3,19 @@
 	<mime-type type="application/x-xojpp">
 		<comment>Xournal note file</comment>
 		<comment xml:lang="hu">Xournal jegyzetfájl</comment>
+		<comment xml:lang="ca">Fitxer de notes del Xournal</comment>
 		<glob pattern="*.xoj"/>
 	</mime-type>
 	<mime-type type="application/x-xopp">
 		<comment>Xournal++ note file</comment>
 		<comment xml:lang="hu">Xournal++ jegyzetfájl</comment>
+		<comment xml:lang="ca">Fitxer de notes del Xournal++</comment>
 		<glob pattern="*.xopp"/>
 	</mime-type>
 	<mime-type type="application/x-xopt">
 		<comment>Xournal++ note file</comment>
 		<comment xml:lang="hu">Xournal++ jegyzetfájl</comment>
+		<comment xml:lang="ca">Plantilla de pàgina del Xournal++</comment>
 		<glob pattern="*.xopt"/>
 	</mime-type>
 </mime-info>

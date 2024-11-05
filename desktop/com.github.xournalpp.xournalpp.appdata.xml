@@ -14,6 +14,7 @@
   <summary xml:lang="ru">Делайте рукописные заметки</summary>
   <summary xml:lang="zh_CN">手写注释工具，可为PDF文件添加各种元素的注释标记</summary>
   <developer_name>Xournalpp Developers</developer_name>
+  <developer_name xml:lang="ca">Desenvolupadors del Xournalpp</developer_name>
   <description>
     <p>
       Xournal++ is a hand note-taking software written in C++ with the target of
@@ -88,6 +89,45 @@
       <li xml:lang="hu">Hangfelvétel és lejátszás kézírásos jegyzetekkel</li>
       <li xml:lang="hu">Több nyelv támogatása (több mint 20 nyelv támogatott)</li>
       <li xml:lang="hu">Lua-parancsfájlt használó beépülő modulok</li>
+    </ul>
+
+    <p xml:lang="ca">
+        El Xournal++ és un programari per a prendre notes a mà escrit en C++ i que
+        pretén ser ràpid, flexible i funcional. El reconeixedor de traços i altres
+        parts es basen en el codi del Xournal, que podeu trobar al sourceforge.
+        Suporta GNU/Linux (Ubuntu, Debia, Arch i SUSE), macOS i Windows.
+        Admet entrades a través de llapis òptics com ara les tauletes Wacom.
+    </p>
+    <p xml:lang="ca">
+        Característiques i funcions del Xournal++:
+    </p>
+    <ul>
+        <li xml:lang="ca">Suporta llapis sensibles a la pressió i llapis de tauletes digitals (com ara les tauletes Wacom, Huion, XP Pen, etc.).</li>
+        <li xml:lang="ca">Fons de paper amb guies per a prendre notes o fer esbossos</li>
+        <li xml:lang="ca">Permet escriure comentaris a sobre de fitxers PDF</li>
+        <li xml:lang="ca">Permet seleccionar, copiar, tatxar, ressaltar o subratllar text del PDF de fons</li>
+        <li xml:lang="ca">Permet obrir els enllaços del PDF de fons</li>
+        <li xml:lang="ca">Conversió a diversos formats com ara SVG, PNG i PDF, tant des de la interfície gràfica com de la línia de comandes</li>
+        <li xml:lang="ca">Eines de dibuix (llapis, subratllador...) i estils de traç (línia contínua, puntejada...)</li>
+        <li xml:lang="ca">Eines per a dibuixar formes (línies, fletxes, cercles, rectangles o corbes spline)</li>
+        <li xml:lang="ca">Transportadors i cartabons per a mesurar o per a dibuixar línies rectes, radis i arcs circulars</li>
+        <li xml:lang="ca">Funció per a omplir les formes</li>
+        <li xml:lang="ca">Redimensionament i gir de les formes</li>
+        <li xml:lang="ca">Ajust a la rotació i la graella per a alineació precisa d'objectes</li>
+        <li xml:lang="ca">Estabilització de l'entrada per a dibuixar i escriure millor</li>
+        <li xml:lang="ca">Eina de text per a afegir text amb diferents tipus de lletres, mides i colors</li>
+        <li xml:lang="ca">Suport millorat per a afegir imatges</li>
+        <li xml:lang="ca">Goma d'esborrar amb diferents opcions</li>
+        <li xml:lang="ca">Suport LaTeX (cal una instal·lació de LaTeX funcional) amb plantilles personalitzables i un editor amb ressaltat de sintaxi</li>
+        <li xml:lang="ca">Barra lateral amb previsualitzacions de les pàgines i ordenació avançada de les pàgines, marcadors PDF i capes (que es poden editar o amagar una a una)</li>
+        <li xml:lang="ca">Permet establir el comportament dels diferents botons del ratolí/llapis i associar-los a eines o colors</li>
+        <li xml:lang="ca">Barra d'eines personalitzable amb diferents configuracions per tal d'optimitzar la barra si es treballa amb pàgines en vertical o apaïsades</li>
+        <li xml:lang="ca">Suport per a paletes de color personalitzades amb el format de fitxer .gpl</li>
+        <li xml:lang="ca">Definicions de plantilles de pàgina</li>
+        <li xml:lang="ca">Eines d'informes d'error, autodesades i recuperació automàtica</li>
+        <li xml:lang="ca">Gravació i reproducció d'àudio juntament amb notes escrites</li>
+        <li xml:lang="ca">Suport per a més de 20 idiomes (i podeu afegir-hi el vostre)</li>
+        <li xml:lang="ca">Complements que fan servir scripts LUA</li>
     </ul>
 
   </description>
