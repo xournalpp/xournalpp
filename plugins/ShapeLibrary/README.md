@@ -16,7 +16,9 @@ Quick Shape Library for inserting predefined shapes into a Xournal++ document vi
 2. **In the Xournal++ app**:
   Open menu `Edit > Toolbars > Customize`. You will find the copied icons in the `Plugins` section. Place them at a suitable location in the toolbar.
 
-3. **Use the plugin** as needed
+3. **Activate the plugin** in menu `Plugins > Plugin Manager`
+
+4. **Use the plugin** as needed
 
 
 ## Add Your Own Shape with "Extract_Stroke_Info"
