@@ -1,5 +1,5 @@
 local strokesData = {
-  stroke1 = {
+  [1] = {
     x = { 46.68, 56.68, 46.68 },
     y = { 46.68, 51.68, 56.68 },
     pressure = {},
