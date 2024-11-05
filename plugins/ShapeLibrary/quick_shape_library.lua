@@ -30,7 +30,7 @@ function read_strokes_from_file(filepath)
     if not hasFile then print("Error: " .. content) return end
     local strokesToAdd = {}
 
-    for _, stroke in pairs(content) do
+    for _, stroke in ipairs(content) do
         if type(stroke) == "table" and stroke.x and stroke.y then
             local newStroke = {
                 x = stroke.x,
@@ -124,7 +124,7 @@ function store_stroke_info_in_file()
     file:write("local strokesData = {\n")
     -- Iterate over each stroke and collect information
     for i, stroke in ipairs(strokes) do
-        file:write(string.format("  stroke%d = {\n", i))
+        file:write(string.format("  [%d] = {\n", i))
         file:write("    x = { ")
         -- Write x coordinates
         for j = 1, #stroke.x do
