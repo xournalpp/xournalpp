@@ -1,5 +1,5 @@
 local strokesData = {
-  stroke1 = {
+  [1] = {
     x = { 35.636850867242, 75.618148840152, 155.58074478597, 195.562042758878, 155.58074478597, 75.618148840152, 35.636850867242 },
     y = { 104.59669620214, 35.347056760514, 35.347056760514, 104.59669620214, 173.84633564377, 173.84633564377, 104.59669620214 },
     pressure = {},
@@ -10,7 +10,7 @@ local strokesData = {
     lineStyle = "plain",
   },
   -- Diagonals to connect all non-adjacent vertices
-  stroke2 = {  -- A to C
+  [2] = {  -- A to C
     x = { 35.636850867242, 155.58074478597 },
     y = { 104.59669620214, 35.347056760514 },
     pressure = {},
@@ -20,7 +20,7 @@ local strokesData = {
     fill = -1,
     lineStyle = "plain",
   },
-  stroke3 = {  -- A to D
+  [3] = {  -- A to D
     x = { 35.636850867242, 195.562042758878 },
     y = { 104.59669620214, 104.59669620214 },
     pressure = {},
@@ -30,7 +30,7 @@ local strokesData = {
     fill = -1,
     lineStyle = "plain",
   },
-  stroke4 = {  -- A to E
+  [4] = {  -- A to E
     x = { 35.636850867242, 155.58074478597 },
     y = { 104.59669620214, 173.84633564377 },
     pressure = {},
@@ -40,7 +40,7 @@ local strokesData = {
     fill = -1,
     lineStyle = "plain",
   },
-  stroke5 = {  -- B to D
+  [5] = {  -- B to D
     x = { 75.618148840152, 195.562042758878 },
     y = { 35.347056760514, 104.59669620214 },
     pressure = {},
@@ -50,7 +50,7 @@ local strokesData = {
     fill = -1,
     lineStyle = "plain",
   },
-  stroke6 = {  -- B to E
+  [6] = {  -- B to E
     x = { 75.618148840152, 155.58074478597 },
     y = { 35.347056760514, 173.84633564377 },
     pressure = {},
@@ -60,7 +60,7 @@ local strokesData = {
     fill = -1,
     lineStyle = "plain",
   },
-  stroke7 = {  -- B to F
+  [7] = {  -- B to F
     x = { 75.618148840152, 75.618148840152 },
     y = { 35.347056760514, 173.84633564377 },
     pressure = {},
@@ -70,7 +70,7 @@ local strokesData = {
     fill = -1,
     lineStyle = "plain",
   },
-  stroke8 = {  -- C to E
+  [8] = {  -- C to E
     x = { 155.58074478597, 155.58074478597 },
     y = { 35.347056760514, 173.84633564377 },
     pressure = {},
@@ -80,7 +80,7 @@ local strokesData = {
     fill = -1,
     lineStyle = "plain",
   },
-  stroke9 = {  -- C to F
+  [9] = {  -- C to F
     x = { 155.58074478597, 75.618148840152 },
     y = { 35.347056760514, 173.84633564377 },
     pressure = {},
@@ -90,7 +90,7 @@ local strokesData = {
     fill = -1,
     lineStyle = "plain",
   },
-  stroke10 = {  -- D to F
+  [10] = {  -- D to F
     x = { 195.562042758878, 75.618148840152 },
     y = { 104.59669620214, 173.84633564377 },
     pressure = {},
