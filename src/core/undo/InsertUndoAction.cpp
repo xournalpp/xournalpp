@@ -94,11 +94,11 @@ auto InsertsUndoAction::redo(Control* control) -> bool {
         this->layer->addElement(std::move(elem));
     }
     doc->unlock();
-    for (auto&& elem: this->elementsOwn) {
-        auto ptr = elem.get();
-        this->page->fireElementChanged(ptr);
-    }
     this->elementsOwn = std::vector<ElementPtr>(0);
+
+    for (auto&& elem: this->elements) {
+        this->page->fireElementChanged(elem);
+    }
 
     this->undone = false;
 
