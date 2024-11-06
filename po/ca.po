@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-27 20:34\n"
+"PO-Revision-Date: 2024-11-06 19:28\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -372,7 +372,7 @@ msgstr "Esborra el fitxer"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
-msgstr "Elimina una capa"
+msgstr "Elimina la capa"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:74
 msgid "Delete this layer"
@@ -2534,7 +2534,7 @@ msgstr "Valors per defecte"
 
 #: ../ui/main.glade:1301
 msgid "Delete Layer"
-msgstr "Elimina una capa"
+msgstr "Elimina la capa"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2892,7 +2892,7 @@ msgstr "Si obriu un PDF i hi ha un fitxer Xournal amb el mateix nom, s'obrirà e
 
 #: ../ui/settings.glade:1894
 msgid "Ignore the first"
-msgstr "Ignora el primer"
+msgstr "Ignora els primers"
 
 #: ../ui/exportSettings.glade:147
 msgid "Image quality"
@@ -3562,7 +3562,7 @@ msgstr "Pantalla tàctil"
 
 #: ../ui/settings.glade:5484
 msgid "Try to select object first."
-msgstr "Intenteu seleccionar primer l'objecte."
+msgstr "Intenta seleccionar primer l'objecte"
 
 #: ../ui/settings.glade:5489 ../ui/settings.glade:5521
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
@@ -3578,7 +3578,7 @@ msgstr "Fes servir les icones disponibles del sistema (cal reiniciar)"
 
 #: ../ui/latexSettings.glade:529
 msgid "Use font from system theme."
-msgstr "Fes servir el tipus de lletra del tema del sistema."
+msgstr "Fes servir el tipus de lletra del tema del sistema"
 
 #: ../ui/settings.glade:5245
 msgid "Use snapping for recognized shapes"
