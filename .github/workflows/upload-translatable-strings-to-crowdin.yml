@@ -1,4 +1,4 @@
-name: Generate translation files
+name: Upload translatable strings to Crowdin
 
 on:
   push:
@@ -10,6 +10,7 @@ on:
 
 jobs:
   Translations:
+    name: Upload translatable strings to Crowdin
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -20,7 +21,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y gettext
-          # Download the last .its/loc files just in case - Cheaper than installing all of gtk + dependencies
+          # Download the last .its/loc files for gettext - Cheaper than installing all of gtk + dependencies
           sudo wget https://raw.githubusercontent.com/GNOME/gtk/gtk-3-24/gtk/gtkbuilder.{its,loc} -P /usr/share/gettext/its/
       - name: 'Update translation template'
         id: check-diff
