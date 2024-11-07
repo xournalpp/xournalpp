@@ -14,6 +14,7 @@
 #include <limits>  // for numeric_limits
 #include <memory>
 #include <sstream>
+#include <unordered_set>
 
 #include <gtk/gtk.h>
 #include <stdint.h>
@@ -2717,7 +2718,8 @@ static int applib_openFile(lua_State* L) {
         forceOpen = lua_toboolean(L, 3);
     }
 
-    control->openFile(fs::path(filename), [](bool) {}, scrollToPage - 1, forceOpen);
+    control->openFile(
+            fs::path(filename), [](bool) {}, scrollToPage - 1, forceOpen);
     lua_pushboolean(L, true);  // Todo replace with callback
     return 1;
 }
@@ -3025,6 +3027,69 @@ static int applib_getImages(lua_State* L) {
     return 1;
 }
 
+/**
+ * Clears a selection by releasing its elements to the current layer.
+ *
+ * Example: app.clearSelection()
+ *
+ */
+static int applib_clearSelection(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    XournalView* xournal = control->getWindow()->getXournal();
+    xournal->clearSelection();
+    return 0;
+}
+
+/**
+ * Adds those elements from the current layer to the current selection,
+ * whose addresses are in refs. If there is no selection create one.
+ *
+ * @param refs lightuserdata[] references to elements from the current layer
+ *
+ * Required argument: refs
+ *
+ * Example: local refs = app.addStrokes( <some stroke data> )
+ *          app.addToSelection(refs)
+ *
+ */
+static int applib_addToSelection(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    PageRef page = control->getCurrentPage();
+    XournalView* xournal = control->getWindow()->getXournal();
+    EditSelection* sel = xournal->getSelection();
+    XojPageView* view = xournal->getViewFor(control->getCurrentPageNo());
+
+    std::unordered_set<void*> refs;
+    // stack now contains: -1 => table
+    lua_pushnil(L);
+    // stack now contains: -1 => nil; -2 => table
+    while (lua_next(L, -2)) {
+        // stack now contains: -1 => value; -2 => key; -3 => table
+        void* ref = lua_touserdata(L, -1);
+        refs.emplace(ref);
+        lua_pop(L, 1);
+        // stack now contains: -1 => key; -2 => table
+    }
+    // stack now contains: -1 => table
+    lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
+
+    InsertionOrderRef insertionOrder;
+    insertionOrder.reserve(refs.size());
+    Element::Index n = 0;
+    for (auto&& e: page->getSelectedLayer()->getElements()) {
+        if (refs.count(e.get())) {
+            insertionOrder.emplace_back(e.get(), n++);
+        }
+    }
+
+    auto newSel = sel ? SelectionFactory::addElementsFromActiveLayer(control, sel, insertionOrder) :
+                        SelectionFactory::createFromElementsOnActiveLayer(control, page, view, insertionOrder);
+    xournal->setSelection(newSel.release());
+
+    return 0;
+}
 
 /*
  * The full Lua Plugin API.
@@ -3065,6 +3130,8 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"addSplines", applib_addSplines},
                                   {"addImages", applib_addImages},
                                   {"addTexts", applib_addTexts},
+                                  {"addToSelection", applib_addToSelection},
+                                  {"clearSelection", applib_clearSelection},
                                   {"getFilePath", applib_getFilePath},  // Todo(gtk4) remove this deprecated function
                                   {"fileDialogOpen", applib_fileDialogOpen},
                                   {"refreshPage", applib_refreshPage},
