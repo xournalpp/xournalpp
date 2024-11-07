@@ -689,6 +689,21 @@ static int handleUndoRedoActionHelper(lua_State* L, Control* control, const char
 
 
 /**
+ * Helper function for API adding elements. Empties the stack and then pushes the pointers
+ * to all elements in the given vector into a table on the stack.
+ */
+static void refsHelper(lua_State* L, std::vector<Element*> elements) {
+    lua_settop(L, 0);
+    lua_newtable(L);
+    size_t count = 0;
+    for (Element* element: elements) {
+        lua_pushinteger(L, ++count);                            // index
+        lua_pushlightuserdata(L, static_cast<void*>(element));  // value
+        lua_settable(L, -3);                                    // insert
+    }
+}
+
+/**
  * Helper function for addStroke API. Parses pen settings from API call, taking
  * in a Stroke and a chosen Layer, sets the pen settings, and applies the stroke.
  */
@@ -802,6 +817,7 @@ static void addStrokeHelper(lua_State* L, std::unique_ptr<Stroke> stroke) {
  *
  * @param opts {splines:{coordinates:number[], tool:string, width:number, color:integer, fill:number,
  * linestyle:string}[], allowUndoRedoAction:string}
+ * @return lightuserdata[] references to the created strokes
  *
  * Required Arguments: splines
  * Optional Arguments: pressure, tool, width, color, fill, lineStyle
@@ -817,7 +833,7 @@ static void addStrokeHelper(lua_State* L, std::unique_ptr<Stroke> stroke) {
  * The function checks that the length of the coordinate table is divisible by eight, and will throw
  * an error if it is not.
  *
- * Example: app.addSplines({
+ * Example: local refs = app.addSplines({
  *            ["splines"] = { -- The outer table is a table of strokes
  *                ["coordinates"] = { -- Each inner table is a coord stream that represents SplineSegments that can be
  * assembled into a stroke
@@ -927,7 +943,9 @@ static int applib_addSplines(lua_State* L) {
     allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
     lua_pop(L, 1);
     handleUndoRedoActionHelper(L, ctrl, allowUndoRedoAction, strokes);
-    return 0;
+
+    refsHelper(L, strokes);
+    return 1;
 }
 
 /**
@@ -938,6 +956,7 @@ static int applib_addSplines(lua_State* L) {
  *
  * @param opts {strokes:{X:number[], Y:number[], pressure:number[], tool:string, width:number, color:integer,
  * fill:number, linestyle:string}[], allowUndoRedoAction:string}
+ * @return lightuserdata[] references to the created strokes
  *
  * Required Arguments: X, Y
  * Optional Arguments: pressure, tool, width, color, fill, lineStyle
@@ -951,7 +970,7 @@ static int applib_addSplines(lua_State* L) {
  *
  * Example:
  *
- * app.addStrokes({
+ * local refs = app.addStrokes({
  *     ["strokes"] = { -- The outer table is a table of strokes
  *         {   -- Inside a stroke are three tables of equivalent length that represent a series of points
  *             ["x"]        = { [1] = 110.0, [2] = 120.0, [3] = 130.0, ... },
@@ -1121,7 +1140,8 @@ static int applib_addStrokes(lua_State* L) {
     else {
         return luaL_error(L, "Unrecognized undo/redo option: %s", allowUndoRedoAction);
     }
-    return 0;
+    refsHelper(L, strokes);
+    return 1;
 }
 
 /**
@@ -1134,6 +1154,7 @@ static int applib_addStrokes(lua_State* L) {
  *
  * @param opts {texts:{text:string, font:{name:string, size:number}, color:integer, x:number, y:number}[],
  * allowUndoRedoAction:string}
+ * @return lightuserdata[] references to the created text elements
  *
  * Parameters per textbox:
  *   - text string: content of the textbox (required)
@@ -1144,7 +1165,7 @@ static int applib_addStrokes(lua_State* L) {
  *
  * Example:
  *
- * app.addTexts{texts={
+ * local refs = app.addTexts{texts={
  *   {
  *     text="Hello World",
  *     font={name="Noto Sans Mono Medium", size=8.0},
@@ -1282,7 +1303,8 @@ static int applib_addTexts(lua_State* L) {
     lua_pop(L, 1);
     handleUndoRedoActionHelper(L, control, allowUndoRedoAction, texts);
 
-    return 0;
+    refsHelper(L, texts);
+    return 1;
 }
 
 /**
@@ -1291,7 +1313,7 @@ static int applib_addTexts(lua_State* L) {
  *
  * @param type string "selection" or "layer"
  * @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, width:number,
- * height:number}[] texts
+ * height:number, ref:lightuserdata}[] texts
  *
  * Required argument: type ("selection" or "layer")
  *
@@ -1310,6 +1332,7 @@ static int applib_addTexts(lua_State* L) {
  *     y = 70.0,
  *     width = 55.0,
  *     height = 23.0,
+ *     ref = userdata: 0x5f644c0700d0
  *   },
  *   {
  *     text = "Testing",
@@ -1322,6 +1345,7 @@ static int applib_addTexts(lua_State* L) {
  *     y = 70.0,
  *     width = 55.0,
  *     height = 23.0,
+ *     ref = userdata: 0x5f644c0701e8
  *   },
  * }
  *
@@ -1384,6 +1408,9 @@ static int applib_getTexts(lua_State* L) {
             lua_pushnumber(L, t->getElementHeight());
             lua_setfield(L, -2, "height");  // add height to text
 
+            lua_pushlightuserdata(L, static_cast<void*>(t));
+            lua_setfield(L, -2, "ref");
+
             lua_settable(L, -3);  // add text to elements
         }
     }
@@ -1396,7 +1423,7 @@ static int applib_getTexts(lua_State* L) {
  *
  * @param type string "selection" or "layer"
  * @return {x:number[], y:number[], pressure:number[], tool:string, width:number, color:integer, fill:number,
- * linestyle:string}[] strokes
+ * linestyle:string, ref:lightuserdata}[] strokes
  *
  * Required argument: type ("selection" or "layer")
  *
@@ -1415,6 +1442,7 @@ static int applib_getTexts(lua_State* L) {
  *             ["color"] = 0xa000f0,
  *             ["fill"] = 0,
  *             ["lineStyle"] = "plain",
+ *             ["ref"] = userdata: 0x5f644c02c538
  *         },
  *         {
  *             ["x"]         = {207, 207.5, 315.2, 315.29, 207.5844},
@@ -1424,6 +1452,7 @@ static int applib_getTexts(lua_State* L) {
  *             ["color"]     = 16744448,
  *             ["fill"]      = -1,
  *             ["lineStyle"] = "plain",
+ *             ["ref"] = userdata: 0x5f644c02d440
  *         },
  *         {
  *             ["x"]         = {387.60, 387.6042, 500.879, 500.87, 387.604},
@@ -1433,6 +1462,7 @@ static int applib_getTexts(lua_State* L) {
  *             ["color"]     = 16744448,
  *             ["fill"]      = -1,
  *             ["lineStyle"] = "plain",
+ *             ["ref"] = userdata: 0x5f644c0700d0
  *         },
  * }
  */
@@ -1528,6 +1558,9 @@ static int applib_getStrokes(lua_State* L) {
 
             lua_pushstring(L, StrokeStyle::formatStyle(s->getLineStyle()).c_str());
             lua_setfield(L, -2, "lineStyle");  // add linestyle to stroke
+
+            lua_pushlightuserdata(L, static_cast<void*>(s));
+            lua_setfield(L, -2, "ref");
 
             lua_settable(L, -3);  // add stroke to returned table
         }
@@ -2904,7 +2937,7 @@ static int applib_addImages(lua_State* L) {
  *
  * @param type string "selection" or "layer"
  * @return {x:number, y:number, width:number, height:number, data:string, format:string, imageWidth:number,
- * imageHeight:number}[] images
+ * imageHeight:number, ref:lightuserdata}[] images
  *
  * Required argument: type ("selection" or "layer")
  *
@@ -2921,6 +2954,7 @@ static int applib_addImages(lua_State* L) {
  *         ["format"] = string,
  *         ["imageWidth"] = integer,
  *         ["imageHeight"] = integer,
+ *         ["ref"] = userdata: 0x5f644c0700d0
  *     },
  *     {
  *         ...
@@ -2981,6 +3015,9 @@ static int applib_getImages(lua_State* L) {
             // image height: integer
             lua_pushinteger(L, imageSize.second);
             lua_setfield(L, -2, "imageHeight");
+
+            lua_pushlightuserdata(L, static_cast<void*>(im));
+            lua_setfield(L, -2, "ref");
 
             lua_settable(L, -3);  // add image to table
         }
