@@ -848,3 +848,21 @@ function app.addImages(opts) end
 --- }
 function app.getImages(type) end
 
+--- Clears a selection by releasing its elements to the current layer.
+--- 
+--- Example: app.clearSelection()
+--- 
+function app.clearSelection() end
+
+--- Adds those elements from the current layer to the current selection,
+--- whose addresses are in refs. If there is no selection create one.
+--- 
+--- @param refs lightuserdata[] references to elements from the current layer
+--- 
+--- Required argument: refs
+--- 
+--- Example: local refs = app.addStrokes( <some stroke data> )
+---          app.addToSelection(refs)
+--- 
+function app.addToSelection(refs) end
+
