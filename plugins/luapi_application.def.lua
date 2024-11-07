@@ -165,6 +165,7 @@ function app.layerAction(action) end
 --- 
 --- @param opts {splines:{coordinates:number[], tool:string, width:number, color:integer, fill:number,
 --- linestyle:string}[], allowUndoRedoAction:string}
+--- @return lightuserdata[] references to the created strokes
 --- 
 --- Required Arguments: splines
 --- Optional Arguments: pressure, tool, width, color, fill, lineStyle
@@ -180,7 +181,7 @@ function app.layerAction(action) end
 --- The function checks that the length of the coordinate table is divisible by eight, and will throw
 --- an error if it is not.
 --- 
---- Example: app.addSplines({
+--- Example: local refs = app.addSplines({
 ---            ["splines"] = { -- The outer table is a table of strokes
 ---                ["coordinates"] = { -- Each inner table is a coord stream that represents SplineSegments that can be
 --- assembled into a stroke
@@ -213,6 +214,7 @@ function app.addSplines(opts) end
 --- 
 --- @param opts {strokes:{X:number[], Y:number[], pressure:number[], tool:string, width:number, color:integer,
 --- fill:number, linestyle:string}[], allowUndoRedoAction:string}
+--- @return lightuserdata[] references to the created strokes
 --- 
 --- Required Arguments: X, Y
 --- Optional Arguments: pressure, tool, width, color, fill, lineStyle
@@ -226,7 +228,7 @@ function app.addSplines(opts) end
 --- 
 --- Example:
 --- 
---- app.addStrokes({
+--- local refs = app.addStrokes({
 ---     ["strokes"] = { -- The outer table is a table of strokes
 ---         {   -- Inside a stroke are three tables of equivalent length that represent a series of points
 ---             ["x"]        = { [1] = 110.0, [2] = 120.0, [3] = 130.0, ... },
@@ -274,6 +276,7 @@ function app.addStrokes(opts) end
 --- 
 --- @param opts {texts:{text:string, font:{name:string, size:number}, color:integer, x:number, y:number}[],
 --- allowUndoRedoAction:string}
+--- @return lightuserdata[] references to the created text elements
 --- 
 --- Parameters per textbox:
 ---   - text string: content of the textbox (required)
@@ -284,7 +287,7 @@ function app.addStrokes(opts) end
 --- 
 --- Example:
 --- 
---- app.addTexts{texts={
+--- local refs = app.addTexts{texts={
 ---   {
 ---     text="Hello World",
 ---     font={name="Noto Sans Mono Medium", size=8.0},
@@ -307,7 +310,7 @@ function app.addTexts(opts) end
 --- 
 --- @param type string "selection" or "layer"
 --- @return {text:string, font:{name:string, size:number}, color:integer, x:number, y:number, width:number,
---- height:number}[] texts
+--- height:number, ref:lightuserdata}[] texts
 --- 
 --- Required argument: type ("selection" or "layer")
 --- 
@@ -326,6 +329,7 @@ function app.addTexts(opts) end
 ---     y = 70.0,
 ---     width = 55.0,
 ---     height = 23.0,
+---     ref = userdata: 0x5f644c0700d0
 ---   },
 ---   {
 ---     text = "Testing",
@@ -338,6 +342,7 @@ function app.addTexts(opts) end
 ---     y = 70.0,
 ---     width = 55.0,
 ---     height = 23.0,
+---     ref = userdata: 0x5f644c0701e8
 ---   },
 --- }
 --- 
@@ -348,7 +353,7 @@ function app.getTexts(type) end
 --- 
 --- @param type string "selection" or "layer"
 --- @return {x:number[], y:number[], pressure:number[], tool:string, width:number, color:integer, fill:number,
---- linestyle:string}[] strokes
+--- linestyle:string, ref:lightuserdata}[] strokes
 --- 
 --- Required argument: type ("selection" or "layer")
 --- 
@@ -367,6 +372,7 @@ function app.getTexts(type) end
 ---             ["color"] = 0xa000f0,
 ---             ["fill"] = 0,
 ---             ["lineStyle"] = "plain",
+---             ["ref"] = userdata: 0x5f644c02c538
 ---         },
 ---         {
 ---             ["x"]         = {207, 207.5, 315.2, 315.29, 207.5844},
@@ -376,6 +382,7 @@ function app.getTexts(type) end
 ---             ["color"]     = 16744448,
 ---             ["fill"]      = -1,
 ---             ["lineStyle"] = "plain",
+---             ["ref"] = userdata: 0x5f644c02d440
 ---         },
 ---         {
 ---             ["x"]         = {387.60, 387.6042, 500.879, 500.87, 387.604},
@@ -385,6 +392,7 @@ function app.getTexts(type) end
 ---             ["color"]     = 16744448,
 ---             ["fill"]      = -1,
 ---             ["lineStyle"] = "plain",
+---             ["ref"] = userdata: 0x5f644c0700d0
 ---         },
 --- }
 function app.getStrokes(type) end
@@ -814,7 +822,7 @@ function app.addImages(opts) end
 --- 
 --- @param type string "selection" or "layer"
 --- @return {x:number, y:number, width:number, height:number, data:string, format:string, imageWidth:number,
---- imageHeight:number}[] images
+--- imageHeight:number, ref:lightuserdata}[] images
 --- 
 --- Required argument: type ("selection" or "layer")
 --- 
@@ -831,6 +839,7 @@ function app.addImages(opts) end
 ---         ["format"] = string,
 ---         ["imageWidth"] = integer,
 ---         ["imageHeight"] = integer,
+---         ["ref"] = userdata: 0x5f644c0700d0
 ---     },
 ---     {
 ---         ...
