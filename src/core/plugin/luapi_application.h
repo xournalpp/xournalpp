@@ -2729,6 +2729,7 @@ static int applib_openFile(lua_State* L) {
  *
  * @param opts {images:{path:string, data:string, x:number, y:number, maxHeight:number, maxWidth:number,
  * aspectRatio:boolean}[], allowUndoRedoAction:string}
+ * @return lightuserdata|string[]
  *
  * Global parameters:
  *  - images table: array of image-parameter-tables
@@ -2757,15 +2758,16 @@ static int applib_openFile(lua_State* L) {
  * specified. Still, the scale parameter is applied after this width/height scaling and if after that the dimensions are
  * too large for the page, the image still gets scaled down afterwards.
  *
- * Returns as many values as images were passed. A nil value represents success, while
- * on error the value corresponding to the image will be a string with the error message.
- * If the parameters don't fit at all, a real lua error might be thrown immediately.
+ * Returns a table with as many values as images were passed. A value of type lightuserdata represents the reference to
+ * the image, while on error the value corresponding to the image will be a string with the error message. If the
+ * parameters don't fit at all, a real lua error might be thrown immediately.
  *
- * Example 1: app.addImages{images={{path="/media/data/myImg.png", x=10, y=20, scale=2},
+ * Example 1: local refs = app.addImages{images={{path="/media/data/myImg.png", x=10, y=20, scale=2},
  *                                            {path="/media/data/myImg2.png", maxHeight=300, aspectRatio=true}},
  *                                    allowUndoRedoAction="grouped",
  *                                            }
- * Example 2: app.addImages{images={{data="<binary image data>", x=100, y=200, maxHeight=300, maxWidth=400}}}
+ * Example 2: local refs = app.addImages{images={{data="<binary image data>", x=100, y=200, maxHeight=300,
+ * maxWidth=400}}}
  */
 static int applib_addImages(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
@@ -2775,19 +2777,23 @@ static int applib_addImages(lua_State* L) {
     lua_settop(L, 1);
 
     luaL_checktype(L, 1, LUA_TTABLE);
+    lua_newtable(L);  // table for return values
 
     lua_getfield(L, 1, "images");
-    if (!lua_istable(L, 2)) {
+    if (!lua_istable(L, -1)) {
         return luaL_error(L, "Missing image table!");
     }
+    // stack now has the following:
+    //    1 = global params table
+    //    2 = table for return value
+    //    3 = images table
 
-    auto cntParams = static_cast<int>(lua_rawlen(L, 2));
+    auto cntParams = static_cast<int>(lua_rawlen(L, -1));
 
     std::vector<Element*> images{};
     for (int imgParam{1}; imgParam <= cntParams; imgParam++) {
-
         lua_pushinteger(L, imgParam);
-        lua_gettable(L, 2);
+        lua_gettable(L, -2);
         luaL_checktype(L, -1, LUA_TTABLE);
 
         lua_getfield(L, -1, "path");
@@ -2801,6 +2807,8 @@ static int applib_addImages(lua_State* L) {
 
         // stack now has the following:
         //    1 = global params table
+        //    2 = table for return value
+        //    3 = images table
         //   -9 = current img-params table
         //   -8 = filepath
         //   -7 = image data
@@ -2847,19 +2855,27 @@ static int applib_addImages(lua_State* L) {
                               "both 'path' parameter and image 'data' were provided. Only one should be specified. ");
         }
 
+        lua_pop(L, 9);  // pop the params we fetched from the global param-table from the stack
+        // stack now has the following:
+        //    1 = global params table
+        //    2 = table for return value
+        //    3 = images table
+
+        lua_pushinteger(L, imgParam);  // index for return table entry
+
         std::unique_ptr<Image> img;
         if (path) {
             fs::path p(path);
             if (p.empty() || !fs::exists(p)) {
-                lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
                 lua_pushfstring(L, "Error: file '%s' does not exist.", path);  // soft error
+                lua_settable(L, -4);                                           // insert
                 continue;
             }
 
             img = ImageHandler::createImageFromFile(p);
             if (!img) {
-                lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
                 lua_pushfstring(L, "Error: creating the image (%s) failed.", path);  // soft error
+                lua_settable(L, -4);                                                 // insert
                 continue;
             }
         } else {  // data was provided instead
@@ -2914,23 +2930,22 @@ static int applib_addImages(lua_State* L) {
         // store the image to later build the undo/redo action chain
         images.push_back(img.get());
 
-        lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
-
+        auto ptr = static_cast<void*>(img.get());
         bool succ = ImageHandler::addImageToDocument(std::move(img), page, control, false);
         if (!succ) {
             lua_pushfstring(L, "Error: Inserting the image (%s) failed.", path);  // soft error
+            lua_settable(L, -4);
         }
-
-        lua_pushnil(L);
+        lua_pushlightuserdata(L, ptr);  // value
+        lua_settable(L, -4);            // insert
     }
-
     // Check how the user wants to handle undoing
     lua_getfield(L, 1, "allowUndoRedoAction");
     const char* allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
-    lua_pop(L, 1);
+    lua_pop(L, 2);
     handleUndoRedoActionHelper(L, control, allowUndoRedoAction, images);
 
-    return cntParams;
+    return 1;
 }
 
 /**
