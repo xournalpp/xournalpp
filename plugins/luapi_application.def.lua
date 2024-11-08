@@ -778,6 +778,7 @@ function app.openFile(path, pageNr, oldDocument) end
 --- 
 --- @param opts {images:{path:string, data:string, x:number, y:number, maxHeight:number, maxWidth:number,
 --- aspectRatio:boolean}[], allowUndoRedoAction:string}
+--- @return lightuserdata|string[]
 --- 
 --- Global parameters:
 ---  - images table: array of image-parameter-tables
@@ -806,15 +807,16 @@ function app.openFile(path, pageNr, oldDocument) end
 --- specified. Still, the scale parameter is applied after this width/height scaling and if after that the dimensions are
 --- too large for the page, the image still gets scaled down afterwards.
 --- 
---- Returns as many values as images were passed. A nil value represents success, while
---- on error the value corresponding to the image will be a string with the error message.
---- If the parameters don't fit at all, a real lua error might be thrown immediately.
+--- Returns a table with as many values as images were passed. A value of type lightuserdata represents the reference to
+--- the image, while on error the value corresponding to the image will be a string with the error message. If the
+--- parameters don't fit at all, a real lua error might be thrown immediately.
 --- 
---- Example 1: app.addImages{images={{path="/media/data/myImg.png", x=10, y=20, scale=2},
+--- Example 1: local refs = app.addImages{images={{path="/media/data/myImg.png", x=10, y=20, scale=2},
 ---                                            {path="/media/data/myImg2.png", maxHeight=300, aspectRatio=true}},
 ---                                    allowUndoRedoAction="grouped",
 ---                                            }
---- Example 2: app.addImages{images={{data="<binary image data>", x=100, y=200, maxHeight=300, maxWidth=400}}}
+--- Example 2: local refs = app.addImages{images={{data="<binary image data>", x=100, y=200, maxHeight=300,
+--- maxWidth=400}}}
 function app.addImages(opts) end
 
 --- Puts a Lua Table of the Images (from the selection tool / selected layer) onto the stack.
