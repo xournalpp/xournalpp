@@ -1632,7 +1632,6 @@ static int applib_getColorPalette(lua_State* L) {
     lua_settop(L, 0);
 
     Plugin* plugin = Plugin::getPluginFromLua(L);
-    Settings* settings = plugin->getControl()->getSettings();
     const Palette& palette = plugin->getControl()->getPalette();
 
 
