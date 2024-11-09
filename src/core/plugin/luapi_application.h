@@ -664,10 +664,15 @@ static int applib_layerAction(lua_State* L) {
  * - "grouped": the elements get a single undo-redo-action
  * - "individual" each of the elements get an own undo-redo-action
  * - "none": no undo-redo-action will be inserted
- * if an invalid value is being passed as allowUndoRedoAction this function errors
+ * If an invalid value is being passed as allowUndoRedoAction this function errors.
+ * If there are no elements emits a warning and does not add an UndoAction.
  */
 static int handleUndoRedoActionHelper(lua_State* L, Control* control, const char* allowUndoRedoAction,
                                       const std::vector<Element*>& elements) {
+    if (elements.empty()) {
+        g_warning("No elements, therefore not adding an undo action");
+        return 0;
+    }
     if (strcmp("grouped", allowUndoRedoAction) == 0) {
         PageRef const& page = control->getCurrentPage();
         Layer* layer = page->getSelectedLayer();
