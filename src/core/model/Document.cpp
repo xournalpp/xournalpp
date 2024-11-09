@@ -1,6 +1,7 @@
 #include "Document.h"
 
 #include <codecvt>  // for codecvt_utf8_utf16
+#include <cstdlib>
 #include <ctime>    // for size_t, localtime, strf...
 #include <iomanip>
 #include <memory>
@@ -135,8 +136,8 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
-auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName,
-                                  const std::string& defaultPdfName) -> fs::path {
+auto Document::createSaveFilename(DocumentType type, std::string_view defaultSaveName,
+                                  std::string_view defaultPdfName) -> fs::path {
     constexpr static std::wstring_view forbiddenChars = {L"\\/:*?\"<>|"};
     std::string wildcardString;
     if (type != Document::PDF) {
@@ -157,10 +158,10 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->filepath.filename());
     }
 
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-
     auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
-    auto format = converter.from_bytes(format_str);
+    std::wstring format;
+    format.resize(wildcardString.size());
+    std::mbstowcs(format.data(), format_str.data(), format_str.size());
 
     // Todo (cpp20): use <format>
     std::wostringstream ss;
