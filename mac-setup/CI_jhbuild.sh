@@ -17,18 +17,24 @@ get_lockfile_entry() {
 install_jhbuild() {
     # Fetch the gtk-osx setup script
     local gtk_osx_commit=$(get_lockfile_entry gtk-osx)
-    local gtk_osx_url=https://gitlab.gnome.org/GNOME/gtk-osx/raw/"$gtk_osx_commit"
-    curl -LR "$gtk_osx_url"/gtk-osx-setup.sh -o ~/gtk-osx-setup.sh
+    [ -d ~/gtk-osx-custom ] && rm -rf ~/gtk-osx-custom
+    mkdir ~/gtk-osx-custom
+
+    # Shallow clone into a commit
+    (cd ~/gtk-osx-custom && git init)
+    (cd ~/gtk-osx-custom && git remote add origin https://gitlab.gnome.org/GNOME/gtk-osx.git)
+    (cd ~/gtk-osx-custom && git fetch --depth 1 origin "$gtk_osx_commit")
+    (cd ~/gtk-osx-custom && git checkout FETCH_HEAD)
 
     # Remove existing jhbuild
     rm -rf ~/gtk ~/.new_local ~/.config/jhbuildrc ~/.config/jhbuildrc-custom ~/Source ~/.cache/jhbuild
 
     # Build jhbuild
-    bash ~/gtk-osx-setup.sh
+    bash ~/gtk-osx-custom/gtk-osx-setup.sh
 
     # Copy default jhbuild config files from the pinned commit
-    curl -ks "$gtk_osx_url"/jhbuildrc-gtk-osx -o ~/.config/jhbuildrc
-    curl -ks "$gtk_osx_url"/jhbuildrc-gtk-osx-custom-example -o ~/.config/jhbuildrc-custom
+    install -m644 ~/gtk-osx-custom/jhbuildrc-gtk-osx ~/.config/jhbuildrc
+    install -m644 ~/gtk-osx-custom/jhbuildrc-gtk-osx-custom-example ~/.config/jhbuildrc-custom
 }
 
 configure_jhbuild_envvars() {
@@ -41,24 +47,7 @@ configure_jhbuild_envvars() {
     export PATH="$HOME"/.new_local/bin:"$PATH"
 }
 
-install_jhbuild
-configure_jhbuild_envvars
-
-### Step 2: set up custom modulesets
-
 setup_custom_modulesets() {
-    local gtk_osx_commit=$(get_lockfile_entry gtk-osx)
-    [ -d ~/gtk-osx-custom ] && rm -rf ~/gtk-osx-custom
-    mkdir ~/gtk-osx-custom
-
-    # Shallow clone into a commit
-    (cd ~/gtk-osx-custom && git init)
-    (cd ~/gtk-osx-custom && git remote add origin https://gitlab.gnome.org/GNOME/gtk-osx.git)
-    (cd ~/gtk-osx-custom && git fetch --depth 1 origin "$gtk_osx_commit")
-    (cd ~/gtk-osx-custom && git checkout FETCH_HEAD)
-#     git clone https://gitlab.gnome.org/GNOME/gtk-osx.git ~/gtk-osx-custom
-#     (cd ~/gtk-osx-custom && git checkout "$gtk_osx_commit")
-
     # Set osx deployment target
     sed -i '' -e 's/^setup_sdk()/setup_sdk(target="11.7")/' ~/.config/jhbuildrc-custom
 
@@ -87,35 +76,67 @@ EOF
     # Fix broken arg overrides in jhbuildrc
     sed -i '' -e 's/^\(module_cmakeargs\["freetype"\]\) =/module_cmakeargs.setdefault("freetype", ""); \1 +=/' ~/.config/jhbuildrc
     sed -i '' -e 's/^\(module_cmakeargs\["freetype-no-harfbuzz"\]\) =/module_cmakeargs.setdefault("freetype-no-harfbuzz", ""); \1 +=/' ~/.config/jhbuildrc
+
+    echo "interact = False" >> ~/.config/jhbuildrc
 }
 
+echo "::group::Setup jhbuild"
+install_jhbuild
+configure_jhbuild_envvars
 setup_custom_modulesets
+echo "::endgroup::"
 
-### Step 3: build gtk (~15 minutes on a Mac Mini M1 w/ 8 cores)
-build_gtk() {
-    jhbuild bootstrap-gtk-osx
-    jhbuild build meta-gtk-osx-gtk3 gtksourceview3
-    echo "Finished building gtk"
-}
 
-build_gtk
+### Step 2: Download all sources
+download() {
+    jhbuild update meta-gtk-osx-gtk3 gtksourceview3
+    jhbuild -m "$MODULEFILE" update meta-xournalpp-deps
+    jhbuild -m ~/gtk-osx-custom/modulesets-stable/bootstrap.modules update meta-bootstrap
+    echo "Downloaded all jhbuild modules' sources"
 
-### Step 4: build xournalpp deps
-
-build_xournalpp_deps() {
-    jhbuild -m "$MODULEFILE" build meta-xournalpp-deps
-}
-
-build_xournalpp_deps
-
-### Step 5: build binary blob
-
-build_binary_blob() {
     local pdeps_commit=$(get_lockfile_entry xournalpp-pipeline-dependencies)
     [ -d ~/xournalpp-pipeline-dependencies ] && rm -rf ~/xournalpp-pipeline-dependencies
     git clone https://github.com/xournalpp/xournalpp-pipeline-dependencies --depth 1 ~/xournalpp-pipeline-dependencies
     (cd ~/xournalpp-pipeline-dependencies && git checkout "$pdeps_commit")
+}
+echo "::group::Download sources"
+download
+echo "::endgroup::"
+
+### Step 3: bootstrap
+bootstrap_jhbuild() {
+    jhbuild -m ~/gtk-osx-custom/modulesets-stable/bootstrap.modules build --no-network meta-bootstrap
+}
+echo "::group::Bootstrap jhbuild"
+bootstrap_jhbuild
+echo "::endgroup::"
+
+
+### Step 4: build gtk (~15 minutes on a Mac Mini M1 w/ 8 cores)
+build_gtk() {
+    jhbuild build --no-network meta-gtk-osx-gtk3 gtksourceview3
+    echo "Finished building gtk"
+}
+echo "::group::Build gtk"
+build_gtk
+echo "::endgroup::"
+
+
+### Step 5: build xournalpp deps
+
+build_xournalpp_deps() {
+    jhbuild -m "$MODULEFILE" build --no-network meta-xournalpp-deps
+}
+echo "::group::Build deps"
+build_xournalpp_deps
+echo "::endgroup::"
+
+
+### Step 6: build binary blob
+
+build_binary_blob() {
     jhbuild run python3 ~/xournalpp-pipeline-dependencies/gtk/package-gtk-bin.py -o xournalpp-binary-blob.tar.gz
 }
-
+echo "::group::Build blob"
 build_binary_blob
+echo "::endgroup::"
