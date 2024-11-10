@@ -99,7 +99,9 @@ void Document::unlock() {
 /*
 ** Returns true when successfully acquiring lock.
 */
-auto Document::tryLock() -> bool { return this->documentLock.try_lock(); }
+
+auto Document::try_lock() -> bool { return this->documentLock.try_lock(); }
+auto Document::tryLock() -> bool { return try_lock(); }
 
 void Document::clearDocument(bool destroy) {
     if (this->preview) {
@@ -109,7 +111,7 @@ void Document::clearDocument(bool destroy) {
 
     if (!destroy) {
         // release lock
-        bool lastLock = tryLock();
+        bool lastLock = try_lock();
         unlock();
         this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
         if (!lastLock)  // document was locked before
