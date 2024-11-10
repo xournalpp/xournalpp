@@ -16,7 +16,7 @@
 
 #include <gtk/gtk.h>  // for GtkWindow
 
-#include "util/raii/GtkWindowUPtr.h"
+#include "util/raii/GtkFileChooserNativeUPtr.h"
 
 #include "filesystem.h"  // for path
 
@@ -37,18 +37,18 @@ public:
      * @param pathValidation May modify the given path. Returns true if the path is (now) valid for saving/exporting.
      * @param callback(path)
      */
-    SaveExportDialog(Settings* settings, fs::path suggestedPath, const char* windowTitle, const char* buttonLabel,
+    SaveExportDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath, const char* windowTitle, const char* buttonLabel,
                      std::function<bool(fs::path&, const char* filterName)> pathValidation,
                      std::function<void(std::optional<fs::path>)> callback);
     ~SaveExportDialog() = default;
 
-    inline GtkWindow* getWindow() const { return window.get(); }
+    inline GtkWindow* getWindow() const { return (GtkWindow*)fileChooserNative.get(); }
 
 private:
     /// Closes the dialog and calls the callback on `path`
     void close(std::optional<fs::path> path);
 
-    xoj::util::GtkWindowUPtr window;
+    xoj::util::GtkFileChooserNativeUPtr fileChooserNative;
     std::function<void(std::optional<fs::path>)> callback;
     std::function<bool(fs::path&, const char* filterName)> pathValidation;
     gulong signalId{};

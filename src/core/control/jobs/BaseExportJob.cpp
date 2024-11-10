@@ -73,7 +73,7 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
         }
     };
 
-    auto popup = xoj::popup::PopupWindowWrapper<xoj::SaveExportDialog>(control->getSettings(), std::move(suggestedPath),
+    auto popup = xoj::popup::PopupWindowWrapper<xoj::SaveExportDialog>(GTK_WINDOW(this->control->getWindow()->getWindow()), control->getSettings(), std::move(suggestedPath),
                                                                        _("Export File"), _("Export"),
                                                                        std::move(pathValidation), std::move(callback));
 
