@@ -5,43 +5,7 @@ on:
     types: [created]
 
 env:
-  available_targets: >-
-    {
-      "ubuntu-20": {
-            "displayed_name": "Ubuntu 20.04",
-            "runner": "ubuntu-20.04",
-            "gcc_version": 10,
-            "build_appimage": "true"
-          },
-      "ubuntu-22": {
-            "displayed_name": "Ubuntu 22.04",
-            "runner": "ubuntu-22.04"
-          },
-      "ubuntu-24": {
-            "displayed_name": "Ubuntu 24.04",
-            "runner": "ubuntu-24.04"
-          },
-      "debian": {
-            "displayed_name": "Debian",
-            "runner": "ubuntu-latest",
-            "extra_packages": "build-essential lsb-release",
-            "container_image": "ghcr.io/xournalpp/debian-latest-sudo:master"
-          },
-      "mac-x64": {
-            "displayed_name": "MacOS x64",
-            "runner": "macos-13"
-          },
-      "mac-arm": {
-            "displayed_name": "MacOS ARM",
-            "runner": "macos-14"
-          },
-      "windows": {
-            "displayed_name": "Windows",
-            "runner": "windows-2019",
-            "build_portable": "true"
-          }
-    }
-
+  build-targets-json: '.github/available-build-targets.json'
 
 jobs:
   ack:
@@ -77,6 +41,10 @@ jobs:
             });
             console.log('PR Head sha: ' + pr.data.head.sha)
             core.setOutput('head_sha', pr.data.head.sha)
+      - uses: actions/checkout@v4
+        with:  # Get the build targets **from the master branch**
+          sparse-checkout: '${{ env.build-targets-json }}'
+          sparse-checkout-cone-mode: false
       - name: 'Parse command and acknowledge order'
         id: parse
         uses: actions/github-script@v7
@@ -84,7 +52,7 @@ jobs:
           body: ${{ github.event.comment.body }} # Hardened security against code injection
         with:
           script: |
-            const available_targets = JSON.parse(`${{ env.available_targets }}`)
+            const available_targets = require('${{ env.build-targets-json }}')
             const run_details_url = String.raw`https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
             core.setOutput('run_details_url', run_details_url)
 
