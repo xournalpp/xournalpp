@@ -30,6 +30,21 @@
 #include "XojPage.h"          // for XojPage
 #include "filesystem.h"       // for path
 
+static auto as_wstring(std::string_view utf_string) -> std::wstring {
+    std::wstring format;
+    format.resize(utf_string.size());
+    auto* source = utf_string.data();
+    std::mbstate_t mb_state{};
+    auto w_len = std::mbsrtowcs(format.data(), &source, utf_string.size(), &mb_state);
+    if (w_len == static_cast<std::size_t>(-1)) {
+        throw std::runtime_error(
+                "Error converting string to wide string failed, recieved non valid multibyte sequence");
+        // return {}; // Todo check if function call is secured in any way by try catch or return empty path
+    }
+    format.resize(w_len);
+    return format;
+}
+
 Document::Document(DocumentHandler* handler): handler(handler) {}
 
 Document::~Document() {
@@ -159,11 +174,9 @@ auto Document::createSaveFilename(DocumentType type, std::string_view defaultSav
     }
 
     auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
-    std::wstring format;
-    format.resize(wildcardString.size());
-    std::mbstowcs(format.data(), format_str.data(), format_str.size());
+    auto format = as_wstring(format_str);
 
-    // Todo (cpp20): use <format>
+    // Todo (cpp20): use <format> or get {fmt}
     std::wostringstream ss;
     ss.imbue(std::locale());
     time_t curtime = time(nullptr);
@@ -452,7 +465,7 @@ auto Document::operator=(const Document& doc) -> Document& {
     buildContentsModel();
     updateIndexPageNumbers();
 
-    bool lastLock = tryLock();
+    bool lastLock = try_lock();
     unlock();
     this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
     if (!lastLock)  // document was locked before
