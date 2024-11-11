@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-11-01 03:26\n"
+"PO-Revision-Date: 2024-11-11 22:18\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1253,7 +1253,7 @@ msgstr "Selecionar Texto do PDF em Linha"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Select Multi-Layer Rect"
-msgstr "Selecionar Retângulo de Multicamada"
+msgstr "Selecionar Retângulo em Múltiplas Camadas"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
@@ -1736,7 +1736,7 @@ msgstr "Controle deslizante de zoom"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Zoom fit to screen"
-msgstr "Zoom em forma de tela"
+msgstr "Zoom ajustado à tela"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:470
 msgid "Zoom in"
@@ -1748,7 +1748,7 @@ msgstr "Diminuir zoom"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:472
 msgid "Zoom to 100%"
-msgstr "Zoom em 100%"
+msgstr "Zoom de 100%"
 
 #: ../src/core/control/Control.cpp:2646
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
@@ -2193,7 +2193,7 @@ msgstr "<i>Escolha um algoritmo de estabilização de entrada e seus parâmetros
 
 #: ../ui/settings.glade:1683
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr "<i>A sensibilidade à pressão permite que você desenhe linhas com diferentes larguras, dependendo de quanta pressão você se aplica à caneta. Se seu tablet não suporta esta configuração de recurso não tem efeito.</i>"
+msgstr "<i>A sensibilidade à pressão permite que você desenhe linhas com diferentes larguras, dependendo de quanta pressão você aplica na caneta. Se seu tablet não suporta este recurso, essa configuração não tem efeito.</i>"
 
 #: ../ui/settings.glade:4479
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -2211,7 +2211,7 @@ msgstr "<i>Selecione o idioma (requer reinicialização)</i>"
 
 #: ../ui/settings.glade:5750
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr "<i>Selecione a ferramenta e as configurações se você pressionar o botão padrão.</i>"
+msgstr "<i>Seleciona a ferramenta e as configurações se você pressionar o botão padrão.</i>"
 
 #: ../ui/settings.glade:1732
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
@@ -2673,7 +2673,7 @@ msgstr "Ativar Inferência de Pressão <i>(Adivinhe a pressão pela velocidade d
 
 #: ../ui/settings.glade:1697
 msgid "Enable Pressure Sensitivity"
-msgstr "Ativar Sensibilidade de Pressão"
+msgstr "Ativar Sensibilidade à Pressão"
 
 #: ../ui/settings.glade:5374
 msgctxt "Short taps/clicks will trigger special actions"
@@ -2682,7 +2682,7 @@ msgstr "Habilitar Duplo Clique"
 
 #: ../ui/settings.glade:854
 msgid "Enable autoloading of most recent file on application startup"
-msgstr "Carregar automaticamente o arquivo mais recente ao iniciar"
+msgstr "Habilitar carregamento automatico do arquivo mais recente ao iniciar o aplicativo"
 
 #: ../ui/settings.glade:1030
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2877,7 +2877,7 @@ msgstr "Se ativado, as formas que foram reconhecidas pelo reconhecedor de formas
 
 #: ../ui/settings.glade:859
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr "Se habilitado, o Xournal++ abrirá automaticamente o documento mais recente para continuar editando."
+msgstr "Se habilitado, o Xournal++ abrirá automaticamente o documento mais recente, para que você continue editando seu último documento salvo."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2889,7 +2889,7 @@ msgstr "Se ativado, as camadas de cada página serão adicionadas uma por uma. O
 
 #: ../ui/settings.glade:842
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr "Se você abrir um PDF e houver um arquivo Xournal com o mesmo nome, ele abrirá o arquivo xoj."
+msgstr "Se você abrir um PDF e houver um arquivo Xournal com o mesmo nome, será aberto o arquivo xoj."
 
 #: ../ui/settings.glade:1894
 msgid "Ignore the first"
@@ -3067,7 +3067,7 @@ msgstr "Mover para Cima"
 
 #: ../ui/settings.glade:3910
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr "Multiplicar a velocidade de movimentação até essa quantidade, de acordo com a distância do objeto selecionado."
+msgstr "Multiplique a velocidade de movimentação até esta quantidade, com base em quanto do elemento selecionado está fora de vista."
 
 #: ../ui/main.glade:1175
 msgid "N_ext Annotated Page"
