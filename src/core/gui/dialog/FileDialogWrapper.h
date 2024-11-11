@@ -43,7 +43,7 @@ public:
     ~FileDialogWrapper() = default;
 
     void show(GtkWindow* parent) const {
-        gtk_native_dialog_set_transient_for(getNativeDialog(), parent);xdg-desktop-portal --version
+        gtk_native_dialog_set_transient_for(getNativeDialog(), parent);
         gtk_native_dialog_set_modal(getNativeDialog(), true);
 
         gtk_native_dialog_show(getNativeDialog());
