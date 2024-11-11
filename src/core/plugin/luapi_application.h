@@ -35,8 +35,9 @@
 #include "gui/MainWindow.h"
 #include "gui/XournalView.h"
 #include "gui/dialog/FileChooserFiltersHelper.h"
-#include "gui/dialog/XojOpenDlg.h"  // for XojO...
-#include "gui/dialog/XojSaveDlg.h"  // for XojS...
+#include "gui/dialog/FileDialogWrapper.h"  // for FileDialogWrapper
+#include "gui/dialog/XojOpenDlg.h"         // for XojO...
+#include "gui/dialog/XojSaveDlg.h"         // for XojS...
 #include "gui/sidebar/Sidebar.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/widgets/XournalWidget.h"
@@ -223,14 +224,14 @@ static int applib_fileDialogSave(lua_State* L) {
         }
     };
 
-    auto popup = xoj::popup::PopupWindowWrapper<xoj::SaveExportDialog>(GTK_WINDOW(ctrl->getWindow()->getWindow()), ctrl->getSettings(), std::move(suggestedPath),
+    auto* popup = new xoj::popup::FileDialogWrapper(ctrl->getSettings(), std::move(suggestedPath),
                                                                        _("Save File"), _("Save"),
                                                                        std::move(pathValidation), std::move(callback));
 
-    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getWindow());
+    auto* fc = GTK_FILE_CHOOSER(popup->getNativeDialog());
     xoj::addFilterAllFiles(fc);
 
-    popup.show(GTK_WINDOW(ctrl->getWindow()->getWindow()));
+    popup->show(GTK_WINDOW(ctrl->getWindow()->getWindow()));
 
     return 0;
 }

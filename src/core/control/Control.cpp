@@ -1968,7 +1968,7 @@ void Control::saveImpl(bool saveAs, std::function<void(bool)> callback) {
         auto suggestedPath = this->doc->createSaveFolder(this->settings->getLastSavePath());
         suggestedPath /= this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
         this->doc->unlock();
-        xoj::SaveExportDialog::showSaveFileDialog(getGtkWindow(), settings, std::move(suggestedPath),
+        xoj::SaveDlg::showSaveFileDialog(getGtkWindow(), settings, std::move(suggestedPath),
                                                   [doSave = std::move(doSave), ctrl = this](std::optional<fs::path> p) {
                                                       if (p && !p->empty()) {
                                                           ctrl->settings->setLastSavePath(p->parent_path());
