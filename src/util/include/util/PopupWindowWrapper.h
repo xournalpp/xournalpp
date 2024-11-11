@@ -39,30 +39,26 @@ public:
     ~PopupWindowWrapper() { delete popup; }
 
     void show(GtkWindow* parent) {
-        if (GTK_IS_WINDOW(popup->getWindow())) {
-            gtk_window_set_transient_for(popup->getWindow(), parent);
-            gtk_window_set_modal(popup->getWindow(), true);
+        gtk_window_set_transient_for(popup->getWindow(), parent);
+        gtk_window_set_modal(popup->getWindow(), true);
 
 #if GTK_MAJOR_VERSION == 3
-            gtk_window_set_position(popup->getWindow(), GTK_WIN_POS_CENTER_ON_PARENT);
-            gtk_widget_show(GTK_WIDGET(popup->getWindow()));
-            g_signal_connect(popup->getWindow(), "delete-event",
-                            G_CALLBACK(+[](GtkWidget*, GdkEvent*, gpointer popup) -> gboolean {
-                                delete reinterpret_cast<PopupType*>(popup);
-                                return true;  // Block the default callback: we destroy the window via ~GtkWindowUPtr()
-                            }),
-                            popup);
+        gtk_window_set_position(popup->getWindow(), GTK_WIN_POS_CENTER_ON_PARENT);
+        gtk_widget_show(GTK_WIDGET(popup->getWindow()));
+        g_signal_connect(popup->getWindow(), "delete-event",
+                         G_CALLBACK(+[](GtkWidget*, GdkEvent*, gpointer popup) -> gboolean {
+                             delete reinterpret_cast<PopupType*>(popup);
+                             return true;  // Block the default callback: we destroy the window via ~GtkWindowUPtr()
+                         }),
+                         popup);
 #else
-            gtk_widget_show(GTK_WIDGET(popup->getWindow()));
-            g_signal_connect(popup->getWindow(), "close-request", G_CALLBACK(+[](GtkWindow*, gpointer popup) -> gboolean {
-                                delete reinterpret_cast<PopupType*>(popup);
-                                return true;  // Block the default callback: we destroy the window via ~GtkWindowUPtr()
-                            }),
-                            popup);
+        gtk_widget_show(GTK_WIDGET(popup->getWindow()));
+        g_signal_connect(popup->getWindow(), "close-request", G_CALLBACK(+[](GtkWindow*, gpointer popup) -> gboolean {
+                             delete reinterpret_cast<PopupType*>(popup);
+                             return true;  // Block the default callback: we destroy the window via ~GtkWindowUPtr()
+                         }),
+                         popup);
 #endif
-        } else {
-            gtk_native_dialog_run(GTK_NATIVE_DIALOG(popup->getWindow()));
-        }
 
         /*
          * The actual popup must outlive this wrapper (so the main loop can go on).
