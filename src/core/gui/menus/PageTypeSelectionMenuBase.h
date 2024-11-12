@@ -35,7 +35,7 @@ public:
     /**
      * @brief Set the selected page type in the menu. Does not trigger any signals but updates the radio buttons.
      */
-    void setSelected(const std::optional<PageType>& selected);
+    void setSelectedPT(const std::optional<PageType>& selected);
 
 private:
     /**

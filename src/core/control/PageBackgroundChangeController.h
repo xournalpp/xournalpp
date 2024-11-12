@@ -22,6 +22,7 @@
 #include "model/DocumentListener.h"    // for DocumentListener
 #include "model/PageRef.h"             // for PageRef
 #include "model/PageType.h"            // for PageType
+#include "model/PaperSize.h"
 
 #include "filesystem.h"  // for path
 
@@ -35,6 +36,7 @@ public:
 
 public:
     void changeCurrentPageBackground(const PageType& pageType);
+    void changeCurrentPageSize(const PaperSize& pageSize);
     /**
      * @brief (Un)set the page type for newly created pages
      * @param pageType The new page type.
@@ -42,8 +44,16 @@ public:
      *      If the page type is not set, newly created pages will have the same type as the current page.
      */
     void setPageTypeForNewPages(const std::optional<PageType>& pageType);
+    /**
+     * @brief (Un)set the paper size for newly created pages
+     * @param paperSize The new paper size.
+     *      Passing std::nullopt will unset the paper size.
+     *      If the page size is not set, newly created pages will have the same format as the current page.
+     */
+    void setPaperSizeForNewPages(const std::optional<PaperSize>& paperSize);
     void applyCurrentPageBackgroundToAll();
     void applyBackgroundToAllPages(const PageType& pt);
+    void applyPageSizeToAllPages(const PaperSize& paperSize);
     void changePdfPagesBackground(const fs::path& filepath, bool attachPdf);
     void insertNewPage(size_t position, bool shouldScrollToPage = true);
 
@@ -78,7 +88,16 @@ private:
     auto commitPageTypeChange(size_t pageNum, const PageType& pageType, CommitParameter param = std::nullopt)
             -> std::unique_ptr<UndoAction>;
 
+    /**
+     * Perform page size change.
+     * @param pageNum Index of the page whose size will be changed
+     * @param pageSize New page size
+     * @return Undo action of the page size change
+     */
+    auto commitPageSizeChange(size_t pageNum, const PaperSize& pageSize) -> std::unique_ptr<UndoAction>;
+
 private:
     Control* control = nullptr;
     std::optional<PageType> pageTypeForNewPages;
+    std::optional<PaperSize> paperSizeForNewPages;
 };
