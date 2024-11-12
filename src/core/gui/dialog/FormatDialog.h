@@ -18,6 +18,7 @@
 #include <gtk/gtk.h>  // for gtk_paper_size_free, GtkComboBox, GtkToggl...
 
 #include "gui/Builder.h"
+#include "gui/PaperFormatUtils.h"  // for PaperFormatMenuOptionVector
 #include "util/raii/GtkWindowUPtr.h"
 
 class GladeSearchpath;
@@ -34,7 +35,6 @@ public:
 private:
     enum Orientation { ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT };
 
-    void loadPageFormats();
     void setOrientation(Orientation orientation);
     void setSpinValues(double width, double heigth);
 
@@ -48,7 +48,7 @@ private:
 private:
     Settings* settings = nullptr;
 
-    std::vector<std::unique_ptr<GtkPaperSize, decltype(&gtk_paper_size_free)>> paperSizes;
+    PaperFormatUtils::PaperFormatMenuOptionVector paperSizes;
 
     Orientation orientation = ORIENTATION_NOT_DEFINED;
     int selectedScale = 0;
