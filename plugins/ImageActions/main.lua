@@ -63,10 +63,12 @@ function Cb(mode)
 
   local images = app.getImages("selection")
   local imdata = {}
+  local refs = {}
   for i = 1, #images do
     local im = images[i]
     local image = vips.Image.new_from_buffer(im["data"])
     local x, y, maxWidth, maxHeight = im["x"], im["y"], math.ceil(im["width"]), math.ceil(im["height"])
+    refs[i] = im.ref
     if mode == m.INVERT then
       image = image:invert()
     elseif mode == m.DOWNSCALE then
@@ -108,6 +110,8 @@ function Cb(mode)
       maxHeight = maxHeight
     })
   end
+  app.clearSelection()
+  app.addToSelection(refs)
   app.uiAction({ action = "ACTION_DELETE" })
   app.addImages({ images = imdata, allowUndoRedoAction = "grouped" })
 end
@@ -122,10 +126,12 @@ function Split(mode)
   local vertical = mode == m.SPLIT_V
   local images = app.getImages("selection")
   local imdata = {}
+  local refs = {}
   for i = 1, #images do
     local im = images[i]
     local image = vips.Image.new_from_buffer(im["data"])
     local x, y, maxWidth, maxHeight = im["x"], im["y"], math.ceil(im["width"]), math.ceil(im["height"])
+    refs[i] = im.ref
     -- find largest sequence of white or transparent pixel rows/columns
     local filter = image:colourspace("b-w") -- convert image to grayscale colour space
         :extract_band(0)                    -- ignore alpha channel if it exists
@@ -205,6 +211,8 @@ function Split(mode)
     end
     ::continue::
   end
+  app.clearSelection()
+  app.addToSelection(refs)
   app.uiAction({ action = "ACTION_DELETE" })
   app.addImages({ images = imdata, allowUndoRedoAction = "grouped" })
 end
