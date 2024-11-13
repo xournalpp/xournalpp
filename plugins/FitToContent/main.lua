@@ -17,6 +17,7 @@ local function fit_to_layer_or_selection(type)
     -- take the stroke width, or if set the pressure, into account hereby
     local mima    = {minX=100000, maxX=0, minY=100000, maxY=0}
     for _,stroke in ipairs(strokes) do
+        stroke.ref = nil
         if stroke.pressure then
             for i,x in ipairs(stroke.x) do
                 mima.maxX = math.max(mima.maxX, x + stroke.pressure[i]/2)
