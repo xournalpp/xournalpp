@@ -22,7 +22,7 @@ if (XGETTEXT_FOUND)
       "${PROJECT_SOURCE_DIR}/src/*.cpp"
 
     GLADEFILES
-      "${PROJECT_SOURCE_DIR}/ui/*.glade;${PROJECT_SOURCE_DIR}/ui/*.xml"
+      "${PROJECT_SOURCE_DIR}/ui/*.ui"
 
     DESKTOPFILES
       "${PROJECT_SOURCE_DIR}/desktop/com.github.xournalpp.xournalpp.desktop.in"
