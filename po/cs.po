@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"PO-Revision-Date: 2024-11-13 09:45\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -288,7 +288,7 @@ msgstr "Nelze znovuprovést „{1}“\n"
 
 #: ../src/core/control/Control.cpp:241
 msgid "Could not remove old autosave file \"{1}\": {2}"
-msgstr ""
+msgstr "Nelze odstranit starý soubor automatického ukládání \"{1}\": {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:179
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
@@ -706,7 +706,7 @@ msgstr "Soubor {1} neexistuje."
 
 #: ../src/core/control/Control.cpp:229
 msgid "Filesystem error: {1}"
-msgstr ""
+msgstr "Chyba souborového systému: {1}"
 
 #: ../src/core/control/XournalMain.cpp:467
 #: ../src/core/control/XournalMain.cpp:523
