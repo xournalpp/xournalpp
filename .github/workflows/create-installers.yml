@@ -30,6 +30,9 @@ on:
       head_sha:        # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
         type: string
         default: ''
+      build_type:
+        type: string
+        default: 'RelWithDebInfo'
       artifact_version_suffix:
         type: string
         default: ''

@@ -25,6 +25,9 @@ on:
       head_sha:         # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
         type: string
         default: ''
+      build_type:
+        type: string
+        default: 'RelWithDebInfo'
       artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
         type: string
         default: ''
@@ -73,7 +76,7 @@ jobs:
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:
-          build_type: 'RelWithDebInfo'
+          build_type: ${{ inputs.build_type }}
           cmake_flags: >-
             -DCMAKE_INSTALL_PREFIX=/usr
             -DCPACK_GENERATOR="TGZ;DEB"
