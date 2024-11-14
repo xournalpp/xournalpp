@@ -24,17 +24,7 @@ jobs:
         with:
           script: |
             const available_targets = require('${{ env.build-targets-json }}')
-
-            var macos_builds = []
-            for (const tgt in available_targets) {
-              if (available_targets[tgt].runner.startsWith('macos')) {
-                macos_builds.push(available_targets[tgt])
-              }
-            }
-
-            core.setOutput('macos_builds', macos_builds)
-            console.log('macos_builds: ' + JSON.stringify(macos_builds))
-
+            core.setOutput('macos_builds', Object.values(available_targets.macos_targets))
   blob-macos:
     name: Create and cache MacOS dependency blobs
     needs: ['prepare']

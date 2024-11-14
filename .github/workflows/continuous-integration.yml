@@ -8,20 +8,55 @@ on:
       - 'po/*.po'
 
 env:
+  build-targets-json: '.github/available-build-targets.json'
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Debug
-  GCC_VERSION: 10
 
 jobs:
-  ubuntu-20_04:
-    runs-on: ubuntu-20.04
-    name: 'Test Xournal++ on Ubuntu 20.04'
+  prepare:
+    runs-on: ubuntu-latest
+    name: 'Prepare jobs'
+    outputs:
+      linux_builds: ${{ steps.parse.outputs.linux_builds }}
+      macos_builds: ${{ steps.parse.outputs.macos_builds }}
+      windows_builds: ${{ steps.parse.outputs.windows_builds }}
+    steps:
+      - uses: actions/checkout@v4
+        with:  # Get the build targets
+          sparse-checkout: '${{ env.build-targets-json }}'
+          sparse-checkout-cone-mode: false
+      - name: 'Parse list of targets'
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const available_targets = require('${{ env.build-targets-json }}')
+
+            for (const tgt in available_targets.linux_targets) {
+              // No need to run the CI on all ubuntu versions - pick the one we build the AppImage with
+              if (available_targets.linux_targets[tgt].build_appimage === 'true') {
+                core.setOutput('linux_builds', [available_targets.linux_targets[tgt]])
+                break
+              }
+            }
+            core.setOutput('macos_builds', Object.values(available_targets.macos_targets))
+            core.setOutput('windows_builds', Object.values(available_targets.windows_targets))
+  ubuntu:
+    needs: ['prepare']
+    strategy:
+      matrix:
+        run: ${{fromJSON(needs.prepare.outputs.linux_builds)}}
+    runs-on: ${{ matrix.run.runner }}
+    container:
+      image: ${{ matrix.run.container_image }}
+    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
     steps:
       - uses: actions/checkout@v4
       - name: 'Install dependencies'
         uses: ./.github/actions/install_deps_ubuntu
         with:
-          gcc_version: ${{env.GCC_VERSION}}
+          gcc_version: ${{ matrix.run.gcc_version }}
+          extra_packages: ${{ matrix.run.extra_packages }}
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:
@@ -64,9 +99,13 @@ jobs:
           sudo locale-gen
           LC_ALL=zh_CN.GB18030 CI=true ./test/test-units
         working-directory: ${{github.workspace}}/build
-  Windows-2019:
-    runs-on: windows-2019
-    name: 'Test Xournal++ on Windows'
+  Windows:
+    needs: ['prepare']
+    strategy:
+      matrix:
+        run: ${{fromJSON(needs.prepare.outputs.windows_builds)}}
+    runs-on: ${{ matrix.run.runner }}
+    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }})'
     steps:
       - uses: actions/checkout@v4
       - name: 'Install dependencies'
@@ -87,11 +126,12 @@ jobs:
           CI=true ./test/test-units
         working-directory: ${{github.workspace}}/build
   MacOS:
+    needs: ['prepare']
     strategy:
       matrix:
-        os: [macos-13, macos-14]  # macos-13 is Intel, macos-14 is ARM
-    runs-on: ${{ matrix.os }}
-    name: 'Test Xournal++ on MacOS (${{ matrix.os }})'
+        run: ${{fromJSON(needs.prepare.outputs.macos_builds)}}
+    runs-on: ${{ matrix.run.runner }}
+    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }})'
     steps:
       - uses: actions/checkout@v4
       - name: 'Install dependencies'

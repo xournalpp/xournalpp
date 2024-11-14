@@ -68,25 +68,17 @@ jobs:
             console.log('required targets: ' + JSON.stringify([...targets]))
 
             if (targets.has("all")) {
-              for (const tgt in available_targets) {
-                if (available_targets[tgt].runner.startsWith('ubuntu')) {
-                  linux_builds.push(available_targets[tgt])
-                } else if (available_targets[tgt].runner.startsWith('macos')) {
-                  macos_builds.push(available_targets[tgt])
-                } else if (available_targets[tgt].runner.startsWith('windows')) {
-                  windows_builds.push(available_targets[tgt])
-                }
-              }
+              linux_builds = Object.values(available_targets.linux_targets)
+              macos_builds = Object.values(available_targets.macos_targets)
+              windows_builds = Object.values(available_targets.windows_targets)
             } else {
               for (const tgt of targets) {
-                if (Object.hasOwn(available_targets, tgt)) {
-                  if (available_targets[tgt].runner.startsWith('ubuntu')) {
-                    linux_builds.push(available_targets[tgt])
-                  } else if (available_targets[tgt].runner.startsWith('macos')) {
-                    macos_builds.push(available_targets[tgt])
-                  } else if (available_targets[tgt].runner.startsWith('windows')) {
-                    windows_builds.push(available_targets[tgt])
-                  }
+                if (Object.hasOwn(available_targets.linux_targets, tgt)) {
+                  linux_builds.push(available_targets.linux_targets[tgt])
+                } else if (Object.hasOwn(available_targets.macos_targets, tgt)) {
+                  macos_builds.push(available_targets.macos_targets[tgt])
+                } else if (Object.hasOwn(available_targets.windows_targets, tgt)) {
+                  windows_builds.push(available_targets.windows_targets[tgt])
                 } else {
                   unknown.push(tgt)
                 }
@@ -115,8 +107,10 @@ jobs:
               message = `> [!CAUTION]
               > ${sentence}. Usage is \`\\action create-installers target1 target2...\`
               > Available targets are:`
-              for (const tgt in available_targets) {
-                message += " " + `\`${tgt}\``
+              for (const tgts in available_targets) {
+                for (const tgt in available_targets[tgts]) {
+                  message += " " + `\`${tgt}\``
+                }
               }
               message += " or \`all\`"
               failed = true
