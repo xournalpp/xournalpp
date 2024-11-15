@@ -11,18 +11,12 @@
 
 #pragma once
 
-#include <functional>
 #include <memory>
-#include <optional>
 
 #include <gtk/gtk.h>
 
-#include "control/settings/Settings.h"
 #include "util/Assert.h"
 #include "util/gtk4_helper.h"
-#include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
-
-#include "filesystem.h"  // for path
 
 namespace xoj::popup {
 
@@ -60,36 +54,5 @@ public:
 
 private:
     FileDialogType* dialog = nullptr;
-};
-
-class SaveFileDialog {
-public:
-    SaveFileDialog(Settings* settings, fs::path suggestedPath, const char* windowTitle, const char* buttonLabel,
-                   std::function<bool(fs::path&, const char* filterName)> pathValidation,
-                   std::function<void(std::optional<fs::path>)> callback);
-    ~SaveFileDialog() = default;
-
-    [[nodiscard]] inline GtkNativeDialog* getNativeDialog() const { return GTK_NATIVE_DIALOG(fileChooserNative.get()); }
-
-private:
-    xoj::util::GObjectSPtr<GtkNativeDialog> fileChooserNative;
-    std::function<void(std::optional<fs::path>)> callback;
-    std::function<bool(fs::path&, const char* filterName)> pathValidation;
-    gulong signalId{};
-};
-
-class OpenFileDialog {
-public:
-    OpenFileDialog(const char* title, std::function<void(fs::path, bool)> callback);
-    OpenFileDialog(const char* title, std::function<void(fs::path)> callback);
-    ~OpenFileDialog() = default;
-
-    [[nodiscard]] inline GtkNativeDialog* getNativeDialog() const { return GTK_NATIVE_DIALOG(fileChooserNative.get()); }
-
-private:
-    xoj::util::GObjectSPtr<GtkNativeDialog> fileChooserNative;
-
-    std::function<void(fs::path, bool)> callback;
-    gulong signalId{};
 };
 };  // namespace xoj::popup

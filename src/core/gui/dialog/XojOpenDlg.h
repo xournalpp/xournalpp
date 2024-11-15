@@ -15,11 +15,28 @@
 
 #include <gtk/gtk.h>  // for GtkWindow
 
+#include "util/raii/GObjectSPtr.h"
+
 #include "filesystem.h"  // for path
 
 class Settings;
 
 namespace xoj::OpenDlg {
+class OpenFileDialog {
+public:
+    OpenFileDialog(const char* title, std::function<void(fs::path, bool)> callback);
+    OpenFileDialog(const char* title, std::function<void(fs::path)> callback);
+    ~OpenFileDialog() = default;
+
+    [[nodiscard]] inline GtkNativeDialog* getNativeDialog() const { return GTK_NATIVE_DIALOG(fileChooserNative.get()); }
+
+private:
+    util::GObjectSPtr<GtkNativeDialog> fileChooserNative;
+
+    std::function<void(fs::path, bool)> callback;
+    gulong signalId{};
+};
+
 void showOpenFileDialog(GtkWindow* parent, Settings* settings, std::function<void(fs::path)> callback);
 /// @param callback(path, attachPdf)
 void showAnnotatePdfDialog(GtkWindow* parent, Settings* settings, std::function<void(fs::path, bool)> callback);

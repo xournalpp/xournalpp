@@ -19,15 +19,16 @@
 #include "model/FormatDefinitions.h"  // for FormatUnits, XOJ_UNITS
 #include "model/PageType.h"           // for PageType
 #include "util/Color.h"               // for GdkRGBA_to_argb, rgb_t...
+#include "util/FileDialogWrapper.h"   // for FileDialogWrapper
 #include "util/PathUtil.h"            // for fromGFilename, readString
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/SaveNameUtils.h"
 #include "util/XojMsgBox.h"  // for XojMsgBox
 #include "util/i18n.h"       // for _
 
-#include "FileDialogWrapper.h"
 #include "FormatDialog.h"  // for FormatDialog
-#include "filesystem.h"    // for path
+#include "XojSaveDlg.h"
+#include "filesystem.h"  // for path
 
 class GladeSearchpath;
 
@@ -125,8 +126,9 @@ void PageTemplateDialog::saveToFile() {
 
     fs::path suggestedPath = SaveNameUtils::parseFilenameFromWildcardString(stime, settings->getLastSavePath());
 
-    auto popup = xoj::popup::FileDialogWrapper<popup::SaveFileDialog>(settings, std::move(suggestedPath), _("Save File"),
-                                                                 _("Save"), [](fs::path&, const char*){return true;}, std::move(callback));
+    auto popup = xoj::popup::FileDialogWrapper<SaveDlg::SaveFileDialog>(
+            settings, std::move(suggestedPath), _("Save File"), _("Save"), [](fs::path&, const char*) { return true; },
+            std::move(callback));
 
     auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getNativeDialog());
 

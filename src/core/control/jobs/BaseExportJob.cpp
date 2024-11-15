@@ -4,18 +4,17 @@
 
 #include <glib.h>  // for g_warning
 
-#include "control/Control.h"               // for Control
-#include "control/jobs/BlockingJob.h"      // for BlockingJob
-#include "control/settings/Settings.h"     // for Settings
-#include "gui/MainWindow.h"                // for MainWindow
-#include "gui/dialog/FileDialogWrapper.h"  // for FileDialogWrapper
+#include "control/Control.h"            // for Control
+#include "control/jobs/BlockingJob.h"   // for BlockingJob
+#include "control/settings/Settings.h"  // for Settings
+#include "gui/MainWindow.h"             // for MainWindow
 #include "gui/dialog/XojSaveDlg.h"
-#include "model/Document.h"           // for Document, Document::PDF
-#include "util/PathUtil.h"            // for toGFilename, clearExtensions
-#include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
-#include "util/XojMsgBox.h"           // for XojMsgBox
-#include "util/glib_casts.h"          // for wrap_for_g_callback_v
-#include "util/i18n.h"                // for _, FS, _F
+#include "model/Document.h"          // for Document, Document::PDF
+#include "util/FileDialogWrapper.h"  // for FileDialogWrapper
+#include "util/PathUtil.h"           // for toGFilename, clearExtensions
+#include "util/XojMsgBox.h"          // for XojMsgBox
+#include "util/glib_casts.h"         // for wrap_for_g_callback_v
+#include "util/i18n.h"               // for _, FS, _F
 
 BaseExportJob::BaseExportJob(Control* control, const std::string& name): BlockingJob(control, name) {}
 
@@ -74,9 +73,9 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
         }
     };
 
-    auto popup = xoj::popup::FileDialogWrapper<xoj::popup::SaveFileDialog>(control->getSettings(), std::move(suggestedPath),
-                                                                       _("Export File"), _("Export"),
-                                                                       std::move(pathValidation), std::move(callback));
+    auto popup = xoj::popup::FileDialogWrapper<xoj::SaveDlg::SaveFileDialog>(
+            control->getSettings(), std::move(suggestedPath), _("Export File"), _("Export"), std::move(pathValidation),
+            std::move(callback));
 
     auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getNativeDialog());
     addFilterToDialog(fc);

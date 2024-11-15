@@ -35,9 +35,8 @@
 #include "gui/MainWindow.h"
 #include "gui/XournalView.h"
 #include "gui/dialog/FileChooserFiltersHelper.h"
-#include "gui/dialog/FileDialogWrapper.h"  // for FileDialogWrapper
-#include "gui/dialog/XojOpenDlg.h"         // for XojO...
-#include "gui/dialog/XojSaveDlg.h"         // for XojS...
+#include "gui/dialog/XojOpenDlg.h"  // for XojO...
+#include "gui/dialog/XojSaveDlg.h"  // for XojS...
 #include "gui/sidebar/Sidebar.h"
 #include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
 #include "gui/widgets/XournalWidget.h"
@@ -52,7 +51,7 @@
 #include "model/XojPage.h"  // IWYU pragma: keep for XojPage
 #include "plugin/Plugin.h"
 #include "undo/InsertUndoAction.h"
-#include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
+#include "util/FileDialogWrapper.h"  // for FileDialogWrapper
 #include "util/StringUtils.h"
 #include "util/i18n.h"        // for _
 #include "util/safe_casts.h"  // for round_cast, as_signed, as_unsigned
@@ -224,9 +223,9 @@ static int applib_fileDialogSave(lua_State* L) {
         }
     };
 
-    auto popup = xoj::popup::FileDialogWrapper<xoj::popup::SaveFileDialog>(ctrl->getSettings(), std::move(suggestedPath),
-                                                                       _("Save File"), _("Save"),
-                                                                       std::move(pathValidation), std::move(callback));
+    auto popup = xoj::popup::FileDialogWrapper<xoj::SaveDlg::SaveFileDialog>(
+            ctrl->getSettings(), std::move(suggestedPath), _("Save File"), _("Save"), std::move(pathValidation),
+            std::move(callback));
 
     auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getNativeDialog());
     xoj::addFilterAllFiles(fc);
