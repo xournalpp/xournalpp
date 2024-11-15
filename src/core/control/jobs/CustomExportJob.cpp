@@ -37,7 +37,7 @@ CustomExportJob::~CustomExportJob() = default;
 void CustomExportJob::addFilterToDialog(GtkFileChooser* dialog) {
     // Runs on every filter inside the filters map
     for (auto& filter: filters) {
-        addFileFilterToDialog(dialog, filter.first, filter.second.mimeType);
+        addFileFilterToDialog(dialog, filter.first, filter.second);
     }
 }
 

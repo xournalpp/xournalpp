@@ -28,6 +28,14 @@ enum ExportBackgroundType { EXPORT_BACKGROUND_NONE, EXPORT_BACKGROUND_UNRULED, E
 
 class Control;
 
+class ExportType {
+public:
+    std::string extension;
+    std::string mimeType;
+
+    ExportType(std::string ext, std::string mime): extension(std::move(ext)), mimeType(std::move(mime)) {}
+};
+
 class BaseExportJob: public BlockingJob {
 public:
     BaseExportJob(Control* control, const std::string& name);
@@ -43,7 +51,7 @@ public:
 
 protected:
     virtual void addFilterToDialog(GtkFileChooser* dialog) = 0;
-    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mimetype);
+    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const ExportType& mimetype);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
     virtual bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr);
 
@@ -55,12 +63,4 @@ protected:
      * Error message to show to the user
      */
     std::string errorMsg;
-
-    class ExportType {
-    public:
-        std::string extension;
-        std::string mimeType;
-
-        ExportType(std::string ext, std::string mime): extension(std::move(ext)), mimeType(std::move(mime)) {}
-    };
 };

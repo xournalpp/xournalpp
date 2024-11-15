@@ -108,6 +108,18 @@ void PageTemplateDialog::saveToModel() {
     model.setBackgroundColor(Util::GdkRGBA_to_argb(color));
 }
 
+
+void PageTemplateDialog::loadFromFile() {
+    xoj::OpenDlg::showOpenTemplateDialog(this->getWindow(), settings, [this](fs::path path) {
+        auto contents = Util::readString(path);
+        if (!contents.has_value()) {
+            return;
+        }
+        model.parse(*contents);
+
+        updateDataFromModel();
+    });
+}
 void PageTemplateDialog::saveToFile() {
     saveToModel();
 
@@ -134,22 +146,14 @@ void PageTemplateDialog::saveToFile() {
 
     GtkFileFilter* filterXoj = gtk_file_filter_new();
     gtk_file_filter_set_name(filterXoj, _("Xournal++ template"));
+#ifdef G_OS_WIN32
+    gtk_file_filter_add_pattern(filterXoj, "*.xopt");
+#else
     gtk_file_filter_add_mime_type(filterXoj, "application/x-xopt");
+#endif
     gtk_file_chooser_add_filter(fc, filterXoj);
 
     popup.show(GTK_WINDOW(this->getWindow()));
-}
-
-void PageTemplateDialog::loadFromFile() {
-    xoj::OpenDlg::showOpenTemplateDialog(this->getWindow(), settings, [this](fs::path path) {
-        auto contents = Util::readString(path);
-        if (!contents.has_value()) {
-            return;
-        }
-        model.parse(*contents);
-
-        updateDataFromModel();
-    });
 }
 
 void PageTemplateDialog::updatePageSize() {
