@@ -27,7 +27,7 @@ void addFilterSupported(GtkFileChooser* fc) {
     gtk_file_filter_set_name(filterSupported, _("Supported files"));
 #ifdef G_OS_WIN32
     gtk_file_filter_add_pattern(filterSupported, "*.xoj");
-    gtk_file_filter_add_pattern(filterSupported, "*.xopp"));
+    gtk_file_filter_add_pattern(filterSupported, "*.xopp");
     gtk_file_filter_add_pattern(filterSupported, "*.xopt");
     gtk_file_filter_add_pattern(filterSupported, "*.pdf");
 #else
@@ -40,12 +40,18 @@ void addFilterSupported(GtkFileChooser* fc) {
     gtk_file_chooser_add_filter(fc, filterSupported);
 }
 
-void addFilterPdf(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PDF files"), ExportType(".pdf","application/pdf")); }
-void addFilterXoj(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal files"), ExportType(".xoj","application/x-xojpp")); }
-void addFilterXopp(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ files"), ExportType(".xopp","application/x-xopp")); }
-void addFilterXopt(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("Xournal++ template"), ExportType(".xopt","application/x-xopt")); }
-void addFilterSvg(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("SVG graphics"), ExportType(".svg","image/svg+xml")); }
-void addFilterPng(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PNG graphics"), ExportType(".png","image/png")); }
+void addFilterPdf(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PDF files"), ExportType(".pdf", "application/pdf")); }
+void addFilterXoj(GtkFileChooser* fc) {
+    addMimeTypeFilter(fc, _("Xournal files"), ExportType(".xoj", "application/x-xojpp"));
+}
+void addFilterXopp(GtkFileChooser* fc) {
+    addMimeTypeFilter(fc, _("Xournal++ files"), ExportType(".xopp", "application/x-xopp"));
+}
+void addFilterXopt(GtkFileChooser* fc) {
+    addMimeTypeFilter(fc, _("Xournal++ template"), ExportType(".xopt", "application/x-xopt"));
+}
+void addFilterSvg(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("SVG graphics"), ExportType(".svg", "image/svg+xml")); }
+void addFilterPng(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PNG graphics"), ExportType(".png", "image/png")); }
 
 void addFilterImages(GtkFileChooser* fc) {
     GtkFileFilter* filter = gtk_file_filter_new();
