@@ -224,14 +224,14 @@ static int applib_fileDialogSave(lua_State* L) {
         }
     };
 
-    auto* popup = new xoj::popup::FileDialogWrapper(ctrl->getSettings(), std::move(suggestedPath),
+    auto popup = xoj::popup::FileDialogWrapper<xoj::popup::SaveFileDialog>(ctrl->getSettings(), std::move(suggestedPath),
                                                                        _("Save File"), _("Save"),
                                                                        std::move(pathValidation), std::move(callback));
 
-    auto* fc = GTK_FILE_CHOOSER(popup->getNativeDialog());
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getNativeDialog());
     xoj::addFilterAllFiles(fc);
 
-    popup->show(GTK_WINDOW(ctrl->getWindow()->getWindow()));
+    popup.show(GTK_WINDOW(ctrl->getWindow()->getWindow()));
 
     return 0;
 }

@@ -22,11 +22,11 @@ static bool xoppPathValidation(fs::path& p, const char*) {
 
 void xoj::SaveDlg::showSaveFileDialog(GtkWindow* parent, Settings* settings, fs::path suggestedPath,
                                                std::function<void(std::optional<fs::path>)> callback) {
-    auto* popup = new xoj::popup::FileDialogWrapper(settings, std::move(suggestedPath), _("Save File"),
+    auto popup = xoj::popup::FileDialogWrapper<popup::SaveFileDialog>(settings, std::move(suggestedPath), _("Save File"),
                                                                   _("Save"), xoppPathValidation, std::move(callback));
 
-    auto* fc = GTK_FILE_CHOOSER(popup->getNativeDialog());
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getNativeDialog());
     xoj::addFilterXopp(fc);
 
-    popup->show(parent);
+    popup.show(parent);
 }

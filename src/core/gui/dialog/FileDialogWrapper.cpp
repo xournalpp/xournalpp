@@ -30,7 +30,7 @@ static auto makeFileChooserNative(Settings* settings, fs::path suggestedPath,
     return xoj::util::GObjectSPtr<GtkNativeDialog>(GTK_NATIVE_DIALOG(native), xoj::util::adopt);
 }
 
-xoj::popup::FileDialogWrapper::FileDialogWrapper(Settings* settings, fs::path suggestedPath, const char* windowTitle,
+xoj::popup::SaveFileDialog::SaveFileDialog(Settings* settings, fs::path suggestedPath, const char* windowTitle,
                       const char* buttonLabel, std::function<bool(fs::path&, const char* filterName)> pathValidation,
                       std::function<void(std::optional<fs::path>)> callback):
             fileChooserNative(
@@ -40,7 +40,7 @@ xoj::popup::FileDialogWrapper::FileDialogWrapper(Settings* settings, fs::path su
     this->signalId = g_signal_connect(
             getNativeDialog(), "response",
             G_CALLBACK(+[](GtkNativeDialog* dialog, int response, gpointer data) {
-                auto* self = static_cast<FileDialogWrapper*>(data);
+                auto* self = static_cast<SaveFileDialog*>(data);
                 auto* fc = GTK_FILE_CHOOSER(dialog);
                 if (response == GTK_RESPONSE_ACCEPT) {
                     auto file = Util::fromGFile(

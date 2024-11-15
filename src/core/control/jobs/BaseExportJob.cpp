@@ -74,14 +74,14 @@ void BaseExportJob::showFileChooser(std::function<void()> onFileSelected, std::f
         }
     };
 
-    auto* popup = new xoj::popup::FileDialogWrapper(control->getSettings(), std::move(suggestedPath),
+    auto popup = xoj::popup::FileDialogWrapper<xoj::popup::SaveFileDialog>(control->getSettings(), std::move(suggestedPath),
                                                                        _("Export File"), _("Export"),
                                                                        std::move(pathValidation), std::move(callback));
 
-    auto* fc = GTK_FILE_CHOOSER(popup->getNativeDialog());
+    auto* fc = GTK_FILE_CHOOSER(popup.getPopup()->getNativeDialog());
     addFilterToDialog(fc);
 
-    popup->show(GTK_WINDOW(this->control->getWindow()->getWindow()));
+    popup.show(GTK_WINDOW(this->control->getWindow()->getWindow()));
 }
 
 auto BaseExportJob::testAndSetFilepath(const fs::path& file, const char* /*filterName*/) -> bool {

@@ -31,23 +31,43 @@ namespace xoj::popup {
  * It shows the file dialog (upon a call to show()) and tasks a callback function to actually delete the popup once it
  * has been closed by the user.
  */
+template <class FileDialogType>
 class FileDialogWrapper {
 public:
     FileDialogWrapper() = delete;
     FileDialogWrapper(const FileDialogWrapper&) = delete;
     FileDialogWrapper(FileDialogWrapper&&) = delete;
 
-    FileDialogWrapper(Settings* settings, fs::path suggestedPath, const char* windowTitle,
-                      const char* buttonLabel, std::function<bool(fs::path&, const char* filterName)> pathValidation,
-                      std::function<void(std::optional<fs::path>)> callback);
+    template <class... Args>
+    explicit FileDialogWrapper(Args&&... args) {
+        dialog = new FileDialogType(std::forward<Args>(args)...);
+    }
+
+    // dialog must destory itself on close
     ~FileDialogWrapper() = default;
 
     void show(GtkWindow* parent) const {
-        gtk_native_dialog_set_transient_for(getNativeDialog(), parent);
-        gtk_native_dialog_set_modal(getNativeDialog(), true);
+        gtk_native_dialog_set_transient_for(dialog->getNativeDialog(), parent);
+        gtk_native_dialog_set_modal(dialog->getNativeDialog(), true);
 
-        gtk_native_dialog_show(getNativeDialog());
+        gtk_native_dialog_show(dialog->getNativeDialog());
      }
+
+    FileDialogType* getPopup() const {
+        xoj_assert_message(dialog, "Do not call getPopup() after show()!");
+        return dialog;
+    }
+
+private:
+    FileDialogType* dialog = nullptr;
+};
+
+class SaveFileDialog {
+public:
+    SaveFileDialog(Settings* settings, fs::path suggestedPath, const char* windowTitle,
+                      const char* buttonLabel, std::function<bool(fs::path&, const char* filterName)> pathValidation,
+                      std::function<void(std::optional<fs::path>)> callback);
+    ~SaveFileDialog() = default;
 
     [[nodiscard]] inline GtkNativeDialog* getNativeDialog() const { return GTK_NATIVE_DIALOG(fileChooserNative.get()); }
 
