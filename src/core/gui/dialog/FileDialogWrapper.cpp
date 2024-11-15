@@ -9,13 +9,11 @@
 #include "util/gtk4_helper.h"         // for gtk_file_chooser_set_current_folder
 #include "util/i18n.h"                // for _
 #include "util/raii/GObjectSPtr.h"    // for GObjectSPtr
-#include "util/raii/GtkWindowUPtr.h"  // for GtkWindowUPtr
-#include "util/raii/GtkFileChooserNativeUPtr.h"
 
 #include "FileChooserFiltersHelper.h"
 #include "FileDialogWrapper.h"  // for FileDialogWrapper
 
-static GtkFileChooserNative* makeFileChooserNative(Settings* settings, fs::path suggestedPath,
+static auto makeFileChooserNative(Settings* settings, fs::path suggestedPath,
                                                        const char* windowTitle, const char* buttonLabel) {
     GtkFileChooserNative* native = gtk_file_chooser_native_new(windowTitle, nullptr, GTK_FILE_CHOOSER_ACTION_SAVE,
                                                                buttonLabel, _("_Cancel"));
@@ -27,7 +25,9 @@ static GtkFileChooserNative* makeFileChooserNative(Settings* settings, fs::path 
     gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(native), Util::toGFile(settings->getLastOpenPath()).get(),
                                          nullptr);
 
-    return native;
+    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native), true);
+
+    return xoj::util::GObjectSPtr<GtkNativeDialog>(GTK_NATIVE_DIALOG(native), xoj::util::adopt);
 }
 
 xoj::popup::FileDialogWrapper::FileDialogWrapper(Settings* settings, fs::path suggestedPath, const char* windowTitle,
@@ -46,8 +46,9 @@ xoj::popup::FileDialogWrapper::FileDialogWrapper(Settings* settings, fs::path su
                     auto file = Util::fromGFile(
                             xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
 
-                    if (self->pathValidation(file, gtk_file_filter_get_name(gtk_file_chooser_get_filter(fc))))
+                    if (self->pathValidation(file, gtk_file_filter_get_name(gtk_file_chooser_get_filter(fc)))) {
                         self->callback(std::move(file));
+                    }
                 } else {
                     self->callback(std::nullopt);
                 }

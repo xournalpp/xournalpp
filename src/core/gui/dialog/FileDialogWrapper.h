@@ -20,7 +20,7 @@
 #include "control/settings/Settings.h"
 #include "util/Assert.h"
 #include "util/gtk4_helper.h"
-#include "util/raii/GtkFileChooserNativeUPtr.h"
+#include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
 
 #include "filesystem.h"  // for path
 
@@ -52,7 +52,7 @@ public:
     [[nodiscard]] inline GtkNativeDialog* getNativeDialog() const { return GTK_NATIVE_DIALOG(fileChooserNative.get()); }
 
 private:
-    xoj::util::GtkFileChooserNativeUPtr fileChooserNative;
+    xoj::util::GObjectSPtr<GtkNativeDialog> fileChooserNative;
     std::function<void(std::optional<fs::path>)> callback;
     std::function<bool(fs::path&, const char* filterName)> pathValidation;
     gulong signalId{};
