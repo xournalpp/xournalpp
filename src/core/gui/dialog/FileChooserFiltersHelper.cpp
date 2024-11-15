@@ -23,21 +23,27 @@ void addFilterAllFiles(GtkFileChooser* fc) {
 }
 
 void addFilterSupported(GtkFileChooser* fc) {
-    GtkFileFilter* filterSupported = gtk_file_filter_new();
-    gtk_file_filter_set_name(filterSupported, _("Supported files"));
+    const char* desktop_env = g_getenv("XDG_CURRENT_DESKTOP");
+    const char* portal = g_getenv("GTK_USE_PORTAL");
+
+    // KDE dolphin automatically adds Supported files
+    if (!desktop_env || g_strcmp0(desktop_env, "KDE") != 0 || !portal || g_strcmp0(portal, "1") != 0) {
+        GtkFileFilter* filterSupported = gtk_file_filter_new();
+        gtk_file_filter_set_name(filterSupported, _("Supported files"));
 #ifdef G_OS_WIN32
-    gtk_file_filter_add_pattern(filterSupported, "*.xoj");
-    gtk_file_filter_add_pattern(filterSupported, "*.xopp");
-    gtk_file_filter_add_pattern(filterSupported, "*.xopt");
-    gtk_file_filter_add_pattern(filterSupported, "*.pdf");
+        gtk_file_filter_add_pattern(filterSupported, "*.xoj");
+        gtk_file_filter_add_pattern(filterSupported, "*.xopp");
+        gtk_file_filter_add_pattern(filterSupported, "*.xopt");
+        gtk_file_filter_add_pattern(filterSupported, "*.pdf");
 #else
-    gtk_file_filter_add_mime_type(filterSupported, "application/x-xojpp");
-    gtk_file_filter_add_mime_type(filterSupported, "application/x-xopp");
-    gtk_file_filter_add_mime_type(filterSupported, "application/x-xopt");
-    gtk_file_filter_add_mime_type(filterSupported, "application/pdf");
+        gtk_file_filter_add_mime_type(filterSupported, "application/x-xojpp");
+        gtk_file_filter_add_mime_type(filterSupported, "application/x-xopp");
+        gtk_file_filter_add_mime_type(filterSupported, "application/x-xopt");
+        gtk_file_filter_add_mime_type(filterSupported, "application/pdf");
 #endif
-    gtk_file_filter_add_pattern(filterSupported, "*.moj");  // MrWriter
-    gtk_file_chooser_add_filter(fc, filterSupported);
+        gtk_file_filter_add_pattern(filterSupported, "*.moj");  // MrWriter
+        gtk_file_chooser_add_filter(fc, filterSupported);
+    }
 }
 
 void addFilterPdf(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PDF files"), ExportType(".pdf", "application/pdf")); }
