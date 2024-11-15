@@ -136,7 +136,7 @@ void PageTemplateDialog::saveToFile() {
     char stime[128];
     strftime(stime, sizeof(stime), "%F-Template-%H-%M.xopt", localtime(&curtime));
 
-    fs::path suggestedPath = SaveNameUtils::parseFilenameFromWildcardString(stime, settings->getLastSavePath());
+    fs::path suggestedPath = settings->getLastSavePath() / std::string(stime);
 
     auto popup = xoj::popup::FileDialogWrapper<SaveDlg::SaveFileDialog>(
             settings, std::move(suggestedPath), _("Save File"), _("Save"), [](fs::path&, const char*) { return true; },
