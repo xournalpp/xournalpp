@@ -36,7 +36,7 @@ public:
     /// Show the toolbox at the provided coordinates (relative to the application GTK window).
     ///
     /// Must have an active selection.
-    void show(int x, int y);
+    void show(double x, double y);
 
     /// Hide the floating toolbox widget (keeping the current selection).
     void hide();
@@ -89,7 +89,7 @@ private:
     std::unique_ptr<PdfElemSelection> pdfElemSelection;
 
     struct {
-        int x;
-        int y;
+        double x;
+        double y;
     } position;
 };

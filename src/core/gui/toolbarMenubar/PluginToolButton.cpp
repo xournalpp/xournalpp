@@ -21,7 +21,6 @@ auto PluginToolButton::createItem(bool) -> xoj::util::WidgetSPtr {
     gtk_widget_set_can_focus(item.get(), false);  // todo(gtk4) not necessary anymore
 
     GtkButton* btn = GTK_BUTTON(item.get());
-    gtk_button_set_relief(btn, GTK_RELIEF_NONE);
     gtk_button_set_icon_name(btn, t->iconName.c_str());
     gtk_widget_set_tooltip_text(GTK_WIDGET(btn), t->description.c_str());
 
@@ -38,7 +37,7 @@ auto PluginToolButton::createItem(bool) -> xoj::util::WidgetSPtr {
 auto PluginToolButton::getToolDisplayName() const -> std::string { return this->t->description; }
 
 auto PluginToolButton::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(t->iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+    return gtk_image_new_from_icon_name(t->iconName.c_str());
 }
 
 #endif /* ENABLE_PLUGINS */

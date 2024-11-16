@@ -57,13 +57,13 @@ void PenInputHandler::handleScrollEvent(InputEvent const& event) {
 
     // GTK handles event compression/filtering differently between versions - this may be needed on certain hardware/GTK
     // combinations.
-    if (std::abs((this->scrollStartPosition.x - event.absolute.x)) < 0.1 &&
-        std::abs((this->scrollStartPosition.y - event.absolute.y)) < 0.1) {
+    if (std::abs((this->scrollStartPosition.x - event.relative.x)) < 0.1 &&
+        std::abs((this->scrollStartPosition.y - event.relative.y)) < 0.1) {
         return;
     }
 
     if (this->scrollOffsetVector == xoj::util::Point<double>(0., 0.)) {
-        this->scrollOffsetVector = this->scrollStartPosition - event.absolute;
+        this->scrollOffsetVector = this->scrollStartPosition - event.relative;
 
         Util::execInUiThread([&]() {
             this->inputContext->getXournal()->layout->scrollRelative(this->scrollOffsetVector.x,
@@ -74,7 +74,7 @@ void PenInputHandler::handleScrollEvent(InputEvent const& event) {
         });
 
         // Update the reference for the scroll-offset
-        this->scrollStartPosition = event.absolute;
+        this->scrollStartPosition = event.relative;
     }
 }
 
@@ -82,7 +82,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->inputContext->focusWidget();
 
     this->lastActionStartTimeStamp = event.timestamp;
-    this->sequenceStartPosition = event.absolute;
+    this->sequenceStartPosition = event.relative;
 
     XojPageView* currentPage = this->getPageAtCurrentPosition(event);
     // set reference data for handling of entering/leaving page
@@ -116,7 +116,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
 
     // Save the starting offset when hand-tool is selected to get a reference for the scroll-offset
     if (toolType == TOOL_HAND) {
-        this->scrollStartPosition = event.absolute;
+        this->scrollStartPosition = event.relative;
     }
 
     this->sequenceStartPage = currentPage;
@@ -247,7 +247,7 @@ bool PenInputHandler::isCurrentTapSelection(InputEvent const& event) const {
     settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
 
     const double dpmm = settings->getDisplayDpi() / 25.4;
-    const double dist = this->sequenceStartPosition.distance(event.absolute);
+    const double dist = this->sequenceStartPosition.distance(event.relative);
 
     const bool noMovement = dist < tapMaxDistance * dpmm;
     const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < as_unsigned(tapMaxDuration);

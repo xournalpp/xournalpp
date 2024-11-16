@@ -24,7 +24,11 @@ static GAction* findAction(GtkActionable* w) {
         return nullptr;
     }
     std::string groupname(namesv.substr(0, dotpos));
+#if GTK_MAJOR_VERSION == 3
     GActionGroup* win = gtk_widget_get_action_group(GTK_WIDGET(w), groupname.c_str());
+#else
+    auto* win = GTK_APPLICATION_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(w), GTK_TYPE_APPLICATION_WINDOW));
+#endif
     if (!win) {
         // Most likely the widget just got removed from the toplevel
         g_debug("xoj::util::gtk::findAction: could not find action group \"%s\"", groupname.data());
@@ -42,9 +46,9 @@ void setToggleButtonUnreleasable(GtkToggleButton* btn) {
     // "hierarchy-change" is emitted when the widget is added to/removed from a toplevel's descendance
     // We use this to connect to the suitable GAction signals once the widget has been added to the toolbar
     g_signal_connect(btn, "hierarchy-changed", G_CALLBACK(+[](GtkWidget* btn, GtkWidget*, gpointer) {
-                         if (!GTK_IS_WINDOW(gtk_widget_get_toplevel(btn))) {
-                             return;  // The widget was removed from the hierarchy
-                         }
+                         // if (!GTK_IS_WINDOW(gtk_widget_get_toplevel(btn))) {
+                         //     return;  // The widget was removed from the hierarchy
+                         // }
                          GAction* action = findAction(GTK_ACTIONABLE(btn));
                          if (!action) {
                              return;
