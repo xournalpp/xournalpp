@@ -2,13 +2,14 @@
 
 #include "util/Assert.h"
 
+#if GDK_MAJOR_VERSION == 3
+
 /*** GdkEvent ***/
 GdkModifierType gdk_event_get_modifier_state(GdkEvent* event) {
     GdkModifierType state;
     gdk_event_get_state(event, &state);
     return state;
 }
-
 
 /*** GdkKeyEvent ***/
 GdkModifierType gdk_key_event_get_consumed_modifiers(GdkEvent* event) {
@@ -30,3 +31,5 @@ guint gdk_key_event_get_keyval(GdkEvent* event) {
     gdk_event_get_keyval(event, &res);
     return res;
 }
+
+#endif
