@@ -290,9 +290,6 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     orientationButtons[GTK_ORIENTATION_HORIZONTAL] = createOrientationButton(
             prefixedOrientationActionName, GTK_ORIENTATION_HORIZONTAL, "xopp-orientation-landscape");
 
-    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(orientationButtons[GTK_ORIENTATION_VERTICAL]));
-    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(orientationButtons[GTK_ORIENTATION_HORIZONTAL]));
-
     gtk_box_append(orientationFormatBox, orientationButtons[GTK_ORIENTATION_VERTICAL]);
     gtk_box_append(orientationFormatBox, orientationButtons[GTK_ORIENTATION_HORIZONTAL]);
 
@@ -400,8 +397,6 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     gtk_widget_set_margin_top(applyToAllPagesButton, 3);
     gtk_widget_set_margin_bottom(applyToAllPagesButton, 10);
     gtk_box_append(box, applyToAllPagesButton);
-
-    gtk_widget_show_all(GTK_WIDGET(box));
 
     return popover;
 }

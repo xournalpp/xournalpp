@@ -16,8 +16,10 @@
 #include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
 #include <glib.h>     // for gdouble, gchar, guint, guint32
 
-#include "model/Point.h"  // for Point::NO_PRESSURE
+#include "model/Point.h"  // for Point, Point::NO_PRESSURE
 #include "util/Point.h"
+#include "util/raii/CLibrariesSPtr.h"
+#include "util/raii/IdentityFunction.h"
 
 #include "DeviceId.h"
 
@@ -44,6 +46,13 @@ enum InputDeviceClass {
     INPUT_DEVICE_ERASER,
     INPUT_DEVICE_TOUCHSCREEN,
     INPUT_DEVICE_IGNORE
+};
+
+class GdkEventHandler {
+public:
+    constexpr static auto ref = [](GdkEvent* p) { return gdk_event_ref(p); };
+    constexpr static auto unref = [](GdkEvent* p) { gdk_event_unref(p); };
+    constexpr static auto adopt = xoj::util::specialization::identity<GdkEvent>;
 };
 
 struct InputEvent final {

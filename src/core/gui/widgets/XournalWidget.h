@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <memory>  // for unique_ptr
+#include <vector>
 
 #include <glib-object.h>  // for G_TYPE_CHECK_INSTANCE_CAST, G_TYPE_C...
 #include <glib.h>         // for G_BEGIN_DECLS, G_END_DECLS
@@ -72,6 +72,8 @@ struct _GtkXournal {
     GtkAdjustment* hadjustment;
     GtkScrollablePolicy hscroll_policy;
     GtkScrollablePolicy vscroll_policy;
+
+    std::vector<GtkPopover*>* popovers;
 };
 
 struct _GtkXournalClass {
@@ -90,5 +92,8 @@ void gtk_xournal_scroll_relative(GtkWidget* widget, double x, double y);
 void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2);
 
 xoj::util::Rectangle<double>* gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p);
+
+void gtk_xournal_add_popover(GtkWidget* xournal, GtkPopover* popover);
+void gtk_xournal_remove_popover(GtkWidget* xournal, GtkPopover* popover);
 
 G_END_DECLS

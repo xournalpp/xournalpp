@@ -6,7 +6,7 @@
 #include "util/glib_casts.h"           // for wrap_for_g_callback_v
 #include "util/raii/CStringWrapper.h"  // for OwnedCString
 
-constexpr auto UI_FILE = "linkDialog.glade";
+constexpr auto UI_FILE = "linkDialog.ui";
 constexpr auto UI_DIALOG_NAME = "linkDialog";
 
 static void okButtonClicked(GtkButton*, LinkDialog* dialog) { dialog->okButtonPressed(); }
@@ -41,15 +41,9 @@ LinkDialog::LinkDialog(Control* control, std::function<void(LinkDialog*)> callba
     g_signal_connect(G_OBJECT(okButton), "clicked", xoj::util::wrap_for_g_callback_v<okButtonClicked>, this);
     g_signal_connect(G_OBJECT(cancelButton), "clicked", xoj::util::wrap_for_g_callback_v<cancelButtonClicked>, this);
 
-#if GTK_MAJOR_VERSION == 3
-    g_signal_connect(G_OBJECT(layoutLeft), "released", xoj::util::wrap_for_g_callback_v<layoutToggledLeft>, this);
-    g_signal_connect(G_OBJECT(layoutCenter), "released", xoj::util::wrap_for_g_callback_v<layoutToggledCenter>, this);
-    g_signal_connect(G_OBJECT(layoutRight), "released", xoj::util::wrap_for_g_callback_v<layoutToggledRight>, this);
-#else
     g_signal_connect(G_OBJECT(layoutLeft), "clicked", xoj::util::wrap_for_g_callback_v<layoutToggledLeft>, this);
     g_signal_connect(G_OBJECT(layoutCenter), "clicked", xoj::util::wrap_for_g_callback_v<layoutToggledCenter>, this);
     g_signal_connect(G_OBJECT(layoutRight), "clicked", xoj::util::wrap_for_g_callback_v<layoutToggledRight>, this);
-#endif
 
     g_signal_connect(G_OBJECT(linkTypeChooser), "changed", xoj::util::wrap_for_g_callback_v<urlPrefixChangedClb>, this);
 }

@@ -108,4 +108,4 @@ void BackgroundSelectDialogBase::setSelected(size_t selected) {
     }
 }
 
-void BackgroundSelectDialogBase::ok() { gtk_button_clicked(GTK_BUTTON(okButton)); }
+void BackgroundSelectDialogBase::ok() { g_signal_emit(okButton, g_signal_lookup("clicked", GTK_TYPE_BUTTON), 0); }
