@@ -88,9 +88,10 @@ ToolMenuHandler::~ToolMenuHandler() = default;
 void ToolMenuHandler::freeDynamicToolbarItems() { this->toolbarColorItems.clear(); }
 
 void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
-    gtk_container_foreach(
-            GTK_CONTAINER(toolbar),
-            +[](GtkWidget* child, gpointer c) { gtk_container_remove(GTK_CONTAINER(c), child); }, toolbar);
+    g_warning("Implement ToolMenuHandler::unloadToolbar");
+    // gtk_container_foreach(
+    //         GTK_CONTAINER(toolbar),
+    //         +[](GtkWidget* child, gpointer c) { gtk_container_remove(GTK_CONTAINER(c), child); }, toolbar);
     gtk_widget_hide(toolbar);
 }
 
@@ -152,7 +153,6 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                             this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor, recolor));
 
                     auto it = item->createItem(horizontal);
-                    gtk_widget_show_all(it.get());
                     gtk_box_append(GTK_BOX(toolbar), it.get());
 
                     ToolitemDragDrop::attachMetadataColor(it.get(), dataItem.getId(), paletteIndex, item.get());
@@ -164,7 +164,6 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
                     if (name == item->getId()) {
                         count++;
                         auto it = item->createItem(horizontal);
-                        gtk_widget_show_all(it.get());
                         gtk_box_append(GTK_BOX(toolbar), it.get());
 
                         ToolitemDragDrop::attachMetadata(it.get(), dataItem.getId(), item.get());
@@ -185,7 +184,7 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
     if (count == 0) {
         gtk_widget_hide(GTK_WIDGET(toolbar));
     } else {
-        gtk_widget_show_all(GTK_WIDGET(toolbar));
+        gtk_widget_show(GTK_WIDGET(toolbar));
     }
 }
 

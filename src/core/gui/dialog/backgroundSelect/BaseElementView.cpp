@@ -19,16 +19,6 @@ BaseElementView::BaseElementView(size_t id, BackgroundSelectDialogBase* dlg): dl
                                    }),
                                    this, nullptr);
 
-#if GTK_MAJOR_VERSION == 3
-    gtk_widget_show(this->widget);
-    gtk_widget_add_events(widget, GDK_BUTTON_PRESS_MASK);
-    g_signal_connect(this->widget, "button-press-event", G_CALLBACK(+[](GtkWidget*, GdkEventButton*, gpointer d) {
-                         auto* element = static_cast<BaseElementView*>(d);
-                         element->dlg->setSelected(element->id);
-                         return true;
-                     }),
-                     this);
-#else
     auto* ctrl = gtk_gesture_click_new();
     gtk_widget_add_controller(widget, GTK_EVENT_CONTROLLER(ctrl));
     gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(ctrl), GDK_BUTTON_PRIMARY);
@@ -40,17 +30,9 @@ BaseElementView::BaseElementView(size_t id, BackgroundSelectDialogBase* dlg): dl
                          }
                      }),
                      this);
-#endif
 }
 
-BaseElementView::~BaseElementView() {
-    gtk_widget_destroy(this->widget);
-
-    if (this->crBuffer) {
-        cairo_surface_destroy(this->crBuffer);
-        this->crBuffer = nullptr;
-    }
-}
+BaseElementView::~BaseElementView() = default;
 
 void BaseElementView::setSelected(bool selected) {
     if (this->selected == selected) {
