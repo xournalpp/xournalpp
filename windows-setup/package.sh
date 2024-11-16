@@ -70,7 +70,7 @@ echo "copy poppler shared"
 cp -r "$prefix"/share/poppler "$setup_dir"/share/
 
 echo "copy gtksourceview shared"
-cp -r "$prefix"/share/gtksourceview-4 "$setup_dir"/share
+cp -r "$prefix"/share/gtksourceview-5 "$setup_dir"/share
 
 echo "copy gspawn-win64-helper"
 cp "$prefix"/bin/gspawn-win64-helper{,-console}.exe "$setup_dir"/bin/
