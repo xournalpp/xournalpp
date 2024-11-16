@@ -94,7 +94,7 @@ setup_custom_modulesets
 ### Step 3: build gtk (~15 minutes on a Mac Mini M1 w/ 8 cores)
 build_gtk() {
     jhbuild bootstrap-gtk-osx
-    jhbuild build meta-gtk-osx-gtk3 gtksourceview3
+    jhbuild build gtk-4 gtksourceview4 librsvg adwaita-icon-theme hicolor-icon-theme
     echo "Finished building gtk"
 }
 
@@ -113,7 +113,7 @@ build_xournalpp_deps
 build_binary_blob() {
     local pdeps_commit=$(get_lockfile_entry xournalpp-pipeline-dependencies)
     [ -d ~/xournalpp-pipeline-dependencies ] && rm -rf ~/xournalpp-pipeline-dependencies
-    git clone https://github.com/xournalpp/xournalpp-pipeline-dependencies --depth 1 ~/xournalpp-pipeline-dependencies
+    git clone https://github.com/xournalpp/xournalpp-pipeline-dependencies --depth 1 --branch base-gtk4 ~/xournalpp-pipeline-dependencies
     (cd ~/xournalpp-pipeline-dependencies && git checkout "$pdeps_commit")
     jhbuild run python3 ~/xournalpp-pipeline-dependencies/gtk/package-gtk-bin.py -o xournalpp-binary-blob.tar.gz
 }
