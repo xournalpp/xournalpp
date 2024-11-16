@@ -23,12 +23,12 @@ runs:
           mingw-w64-${{inputs.msys_package_env}}-ninja
           mingw-w64-${{inputs.msys_package_env}}-gettext
           mingw-w64-${{inputs.msys_package_env}}-poppler
-          mingw-w64-${{inputs.msys_package_env}}-gtk3
+          mingw-w64-${{inputs.msys_package_env}}-gtk4
           mingw-w64-${{inputs.msys_package_env}}-libsndfile
           mingw-w64-${{inputs.msys_package_env}}-libzip
           mingw-w64-${{inputs.msys_package_env}}-portaudio
           mingw-w64-${{inputs.msys_package_env}}-lua
-          mingw-w64-${{inputs.msys_package_env}}-gtksourceview4
+          mingw-w64-${{inputs.msys_package_env}}-gtksourceview5
           mingw-w64-${{inputs.msys_package_env}}-imagemagick
           make
           mingw-w64-${{inputs.msys_package_env}}-gobject-introspection-runtime
