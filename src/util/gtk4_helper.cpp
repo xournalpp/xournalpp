@@ -5,6 +5,8 @@
 #include "util/Assert.h"
 #include "util/raii/CStringWrapper.h"
 
+#if GTK_MAJOR_VERSION == 3
+
 namespace {
 void set_child(GtkContainer* c, GtkWidget* child) {
     gtk_container_foreach(
@@ -194,3 +196,10 @@ void gtk_editable_set_text(GtkEditable* e, const char* text) {
     xoj_assert(GTK_IS_ENTRY(e));
     return gtk_entry_set_text(GTK_ENTRY(e), text);
 }
+
+/**** Gtk ****/
+void gtk_show_uri(GtkWindow* parent, const char* uri, guint32 timestamp) {
+    gtk_show_uri_on_window(parent, uri, timestamp, nullptr);
+}
+
+#endif

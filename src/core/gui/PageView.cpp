@@ -633,10 +633,10 @@ void XojPageView::onTapEvent(const PositionInputData& pos) {
 
 auto XojPageView::showPdfToolbox(const PositionInputData& pos) -> void {
     // Convert to the widget-coordinate system
-    auto p = xoj::util::Point{pos.x, pos.y} - this->xournal->getScrollHandling()->getPosition();
-    auto q = xoj::util::Point{round_cast<int>(p.x), round_cast<int>(p.y)} + this->getPixelPosition();
+    auto q = this->getPixelPosition();
+    auto p = xoj::util::Point{pos.x + q.x, pos.y + q.y} - this->xournal->getScrollHandling()->getPosition();
 
-    this->getXournal()->getControl()->getWindow()->getPdfToolbox()->show(q.x, q.y);
+    this->getXournal()->getControl()->getWindow()->getPdfToolbox()->show(p.x, p.y);
 }
 
 void XojPageView::deleteView(xoj::view::OverlayView* view) {
@@ -1010,7 +1010,6 @@ bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pa
                                   (GConnectFlags)0);
         }
 
-        gtk_widget_show_all(popover);
         gtk_popover_popup(GTK_POPOVER(popover));
         return true;
     }
@@ -1021,7 +1020,7 @@ bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pa
 GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* child) {
     double zoom = xournal->getZoom();
 
-    GtkWidget* popover = gtk_popover_new(this->getXournal()->getWidget());
+    GtkWidget* popover = gtk_popover_new();
     gtk_popover_set_child(GTK_POPOVER(popover), child);
 
     auto p = getPixelPosition();
@@ -1033,7 +1032,6 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
 
     GdkRectangle canvasRect{x, y, w, h};
     gtk_popover_set_pointing_to(GTK_POPOVER(popover), &canvasRect);
-    gtk_popover_set_constrain_to(GTK_POPOVER(popover), GTK_POPOVER_CONSTRAINT_WINDOW);
 
     return popover;
 }
@@ -1167,10 +1165,10 @@ void XojPageView::elementsChanged(const std::vector<const Element*>& elements, c
 
 void XojPageView::showFloatingToolbox(const PositionInputData& pos) {
     // Convert to the widget-coordinate system
-    auto p = xoj::util::Point{pos.x, pos.y} - this->xournal->getScrollHandling()->getPosition();
-    auto q = xoj::util::Point{round_cast<int>(p.x), round_cast<int>(p.y)} + this->getPixelPosition();
+    auto q = this->getPixelPosition();
+    auto p = xoj::util::Point{pos.x + q.x, pos.y + q.y} - this->xournal->getScrollHandling()->getPosition();
 
-    this->getXournal()->getControl()->getWindow()->getFloatingToolbox()->show(q.x, q.y);
+    this->getXournal()->getControl()->getWindow()->getFloatingToolbox()->show(p.x, p.y);
 }
 
 void XojPageView::setGridCoordinates(xoj::util::Point<int> coords) { this->gridCoordinates = coords; }

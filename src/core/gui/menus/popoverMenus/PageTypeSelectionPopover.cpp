@@ -278,9 +278,6 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     orientationButtons[GTK_ORIENTATION_HORIZONTAL] = createOrientationButton(
             prefixedOrientationActionName, GTK_ORIENTATION_HORIZONTAL, "xopp-orientation-landscape");
 
-    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(orientationButtons[GTK_ORIENTATION_VERTICAL]));
-    xoj::util::gtk::setToggleButtonUnreleasable(GTK_TOGGLE_BUTTON(orientationButtons[GTK_ORIENTATION_HORIZONTAL]));
-
     gtk_box_append(orientationFormatBox, orientationButtons[GTK_ORIENTATION_VERTICAL]);
     gtk_box_append(orientationFormatBox, orientationButtons[GTK_ORIENTATION_HORIZONTAL]);
 
@@ -309,9 +306,7 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                     self->controller->changeCurrentPageBackground(self->selectedPT.value());
                 }
                 if (self->selectedPageSize && (!self->selectedPT.has_value() || !self->selectedPT->isSpecial())) {
-                    gtk_popover_set_modal(popover, false);
                     self->controller->changeCurrentPageSize(self->selectedPageSize.value());
-                    gtk_popover_set_modal(popover, true);
                 }
             })),
             new std::tuple<const PageTypeSelectionPopover*, GtkPopover*>(this, GTK_POPOVER(popover)),
@@ -377,14 +372,12 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
                     self->controller->applyCurrentPageBackgroundToAll();
                 }
 
-                gtk_popover_set_modal(popover, false);
                 if (self->selectedPageSize) {
                     self->controller->applyPageSizeToAllPages(self->selectedPageSize.value());
                 } else {
                     const PageRef page = self->control->getCurrentPage();
                     self->controller->applyPageSizeToAllPages(PaperSize(page->getWidth(), page->getHeight()));
                 }
-                gtk_popover_set_modal(popover, true);
             })),
             new std::tuple<const PageTypeSelectionPopover*, GtkPopover*>(this, GTK_POPOVER(popover)),
             xoj::util::closure_notify_cb<std::tuple<const PageTypeSelectionPopover*, GtkPopover*>>, GConnectFlags(0));
@@ -393,8 +386,6 @@ GtkWidget* PageTypeSelectionPopover::createPopover() const {
     gtk_widget_set_margin_top(applyToAllPagesButton, 3);
     gtk_widget_set_margin_bottom(applyToAllPagesButton, 10);
     gtk_box_append(box, applyToAllPagesButton);
-
-    gtk_widget_show_all(GTK_WIDGET(box));
 
     return popover;
 }
