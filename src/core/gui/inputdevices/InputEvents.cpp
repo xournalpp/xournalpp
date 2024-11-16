@@ -17,10 +17,11 @@ static auto translateEventType(GdkEventType type) -> InputEventType {
         case GDK_BUTTON_PRESS:
         case GDK_TOUCH_BEGIN:
             return BUTTON_PRESS_EVENT;
-        case GDK_2BUTTON_PRESS:
-            return BUTTON_2_PRESS_EVENT;
-        case GDK_3BUTTON_PRESS:
-            return BUTTON_3_PRESS_EVENT;
+        // TODO
+        // case GDK_2BUTTON_PRESS:
+        // return BUTTON_2_PRESS_EVENT;
+        // case GDK_3BUTTON_PRESS:
+        // return BUTTON_3_PRESS_EVENT;
         case GDK_BUTTON_RELEASE:
         case GDK_TOUCH_END:
         case GDK_TOUCH_CANCEL:
@@ -74,19 +75,18 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> I
     GdkEventType sourceEventType = gdk_event_get_event_type(sourceEvent);
     targetEvent.type = translateEventType(sourceEventType);
 
-    targetEvent.device = gdk_event_get_source_device(sourceEvent);
+    targetEvent.device = gdk_event_get_device(sourceEvent);
     targetEvent.deviceClass = translateDeviceType(targetEvent.device, settings);
 
     targetEvent.deviceName = gdk_device_get_name(targetEvent.device);
     targetEvent.deviceId = DeviceId(targetEvent.device);
 
     // Copy both coordinates of the event
-    gdk_event_get_root_coords(sourceEvent, &targetEvent.absolute.x, &targetEvent.absolute.y);
-    gdk_event_get_coords(sourceEvent, &targetEvent.relative.x, &targetEvent.relative.y);
+    gdk_event_get_position(sourceEvent, &targetEvent.relative.x, &targetEvent.relative.y);
 
     // Copy the event button if there is any
     if (targetEvent.type == BUTTON_PRESS_EVENT || targetEvent.type == BUTTON_RELEASE_EVENT) {
-        gdk_event_get_button(sourceEvent, &targetEvent.button);
+        targetEvent.button = gdk_button_event_get_button(sourceEvent);
     }
     if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_END || sourceEventType == GDK_TOUCH_CANCEL) {
         // As we only handle single finger events we can set the button statically to 1

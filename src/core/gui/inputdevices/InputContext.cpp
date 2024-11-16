@@ -74,8 +74,8 @@ static gboolean keyboardCallback(GtkEventControllerKey* self, guint keyval, guin
     e.keyval = keyval;
     e.state = static_cast<GdkModifierType>(state & gtk_accelerator_get_default_mod_mask() &
                                            ~gdk_key_event_get_consumed_modifiers(gdkEvent));
-    e.sourceEvent = gdkEvent;
-    return (static_cast<KeyboardInputHandler*>(d)->*handler)(e);
+    e.sourceEvent.reset(gdkEvent, xoj::util::ref);
+    return (static_cast<KeyboardInputHandler*>(d)->*handler)(std::move(e));
 }
 
 InputContext::~InputContext() {
@@ -87,58 +87,48 @@ void InputContext::connect(GtkWidget* pWidget, bool connectKeyboardHandler,
                            std::optional<std::function<void(GdkEvent*)>> logfunction) {
     xoj_assert(!this->widget && pWidget);
     this->widget = pWidget;
-    gtk_widget_set_support_multidevice(widget, true);
 
-    if (connectKeyboardHandler) {
-#if GTK_MAJOR_VERSION == 3
-        auto* keyCtrl = gtk_event_controller_key_new(widget);
-#else
-        auto* keyCtrl = gtk_event_controller_key_new();
-        gtk_widget_add_controller(keyCtrl);
-#endif
-
-        g_signal_connect(keyCtrl, "key-pressed", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyPressed>),
-                         keyboardHandler.get());
-        g_signal_connect(keyCtrl, "key-released", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyReleased>),
-                         keyboardHandler.get());
-    }
-
-    int mask =
-            // Allow scrolling
-            GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK |
-
-            // Touch / Pen / Mouse
-            GDK_TOUCH_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-            GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK | GDK_PROXIMITY_OUT_MASK;
-
-    gtk_widget_add_events(pWidget, mask);
-
-
+    auto* legCtrl = gtk_event_controller_legacy_new();
     if (!logfunction) {
-        signal_id =
-                g_signal_connect(pWidget, "event", G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, gpointer self) {
-                                     return static_cast<InputContext*>(self)->handle(event);
-                                 }),
-                                 this);
+        signal_id = g_signal_connect(legCtrl, "event",
+                                     G_CALLBACK(+[](GtkEventControllerLegacy*, GdkEvent* event, gpointer self) {
+                                         return static_cast<InputContext*>(self)->handle(event);
+                                     }),
+                                     this);
     } else {
         struct D {
             InputContext* self;
             std::function<void(GdkEvent*)> logfunction;
         };
         signal_id = g_signal_connect_data(
-                pWidget, "event", G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, gpointer d) {
+                legCtrl, "event", G_CALLBACK(+[](GtkEventControllerLegacy*, GdkEvent* event, gpointer d) {
                     auto* data = static_cast<D*>(d);
                     data->logfunction(event);
                     return data->self->handle(event);
                 }),
                 new D{this, logfunction.value()}, xoj::util::closure_notify_cb<D>, GConnectFlags(0));
     }
+    gtk_event_controller_set_propagation_phase(legCtrl, GTK_PHASE_TARGET);
+    gtk_widget_add_controller(widget, legCtrl);
+
+
+    // The last added GtkEventController gets called first: the GtkeventControllerKey gets a chance to grab the events,
+    // avoiding unnecessary calls of the GtkEventControllerLegacy
+    if (connectKeyboardHandler) {
+        auto* keyCtrl = gtk_event_controller_key_new();
+        gtk_widget_add_controller(widget, keyCtrl);
+        gtk_event_controller_set_propagation_phase(keyCtrl, GTK_PHASE_TARGET);
+        g_signal_connect(keyCtrl, "key-pressed", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyPressed>),
+                         keyboardHandler.get());
+        g_signal_connect(keyCtrl, "key-released", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyReleased>),
+                         keyboardHandler.get());
+    }
 }
 
 auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     printDebug(sourceEvent);
 
-    GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
+    GdkDevice* sourceDevice = gdk_event_get_device(sourceEvent);
     if (sourceDevice == NULL) {
         return false;
     }
@@ -152,7 +142,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     InputEvent event = InputEvents::translateEvent(sourceEvent, this->getSettings());
 
     // Add the device to the list of known devices if it is currently unknown
-    if (gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
+    if (/*gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&*/
         this->knownDevices.find(std::string(event.deviceName)) == this->knownDevices.end()) {
 
         this->knownDevices.insert(std::string(event.deviceName));

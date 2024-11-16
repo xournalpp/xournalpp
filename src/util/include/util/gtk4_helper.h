@@ -14,6 +14,8 @@
 
 #include <gtk/gtk.h>
 
+#if GTK_MAJOR_VERSION == 3
+
 /**** GtkBox ****/
 
 void gtk_box_append(GtkBox* box, GtkWidget* child);
@@ -101,3 +103,8 @@ GdkEvent* gtk_event_controller_get_current_event(GtkEventController*);
 /**** GtkEditable ****/
 const char* gtk_editable_get_text(GtkEditable* editable);
 void gtk_editable_set_text(GtkEditable* editable, const char* text);
+
+/**** Gtk ****/
+void gtk_show_uri(GtkWindow* parent, const char* uri, guint32 timestamp);
+
+#endif

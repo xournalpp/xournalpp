@@ -17,8 +17,10 @@
 #include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
 #include <glib.h>     // for gdouble, gchar, guint, guint32
 
-#include "model/Point.h"  // for Point::NO_PRESSURE
+#include "model/Point.h"  // for Point, Point::NO_PRESSURE
 #include "util/Point.h"
+#include "util/raii/CLibrariesSPtr.h"
+#include "util/raii/IdentityFunction.h"
 
 #include "DeviceId.h"
 
@@ -47,23 +49,11 @@ enum InputDeviceClass {
     INPUT_DEVICE_IGNORE
 };
 
-struct GdkEventGuard {
-    static inline GdkEvent* safeRef(GdkEvent* source) { return gdk_event_copy(source); }
-
-    GdkEventGuard() = default;
-
-    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source), &gdk_event_free) {}
-
-    GdkEventGuard& operator=(GdkEvent* source) {
-        event = {safeRef(source), &gdk_event_free};
-        return *this;
-    }
-
-    GdkEvent* get() const { return event.get(); }
-
-    // it's more performant to manage the GdkEvent over C++ than over gdk
-    // Since the gdk_copy is extreme expansive
-    std::shared_ptr<GdkEvent> event{};
+class GdkEventHandler {
+public:
+    constexpr static auto ref = [](GdkEvent* p) { return gdk_event_ref(p); };
+    constexpr static auto unref = [](GdkEvent* p) { gdk_event_unref(p); };
+    constexpr static auto adopt = xoj::util::specialization::identity<GdkEvent>;
 };
 
 struct InputEvent final {
@@ -75,7 +65,7 @@ struct InputEvent final {
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
     const gchar* deviceName{};
 
-    xoj::util::Point<double> absolute;  ///< In GdkSurface coordinates
+    xoj::util::Point<double> absolute;  ///< In XournalWidget coordinates
     xoj::util::Point<double> relative;  ///< In XournalWidget coordinates
 
     guint button{0};
@@ -92,7 +82,7 @@ struct KeyEvent final {
     guint keyval{0};
     GdkModifierType state{};  ///< Consumed modifiers have been masked out
 
-    GdkEventGuard sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
+    xoj::util::CLibrariesSPtr<GdkEvent, GdkEventHandler> sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
 };
 
 struct InputEvents {

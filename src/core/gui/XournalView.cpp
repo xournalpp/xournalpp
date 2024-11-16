@@ -40,7 +40,6 @@
 #include "util/Rectangle.h"                      // for Rectangle
 #include "util/Util.h"                           // for npos
 #include "util/glib_casts.h"                     // for wrap_v
-#include "util/gtk4_helper.h"                    // for gtk_scrolled_window_set_child
 #include "util/safe_casts.h"                     // for round_cast
 
 #include "Layout.h"           // for Layout
@@ -82,7 +81,8 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHand
     g_signal_connect(getWidget(), "realize", G_CALLBACK(+[](GtkWidget* widget, gpointer) {
                          // Disable event compression
                          if (gtk_widget_get_realized(widget)) {
-                             gdk_window_set_event_compression(gtk_widget_get_window(widget), false);
+                             g_warning("Find replacement for gdk_window_set_event_compression()");
+                             // gdk_window_set_event_compression(gtk_widget_get_window(view->getWidget()), false);
                          } else {
                              g_warning("could not disable event compression");
                          }
@@ -93,9 +93,8 @@ XournalView::XournalView(GtkScrolledWindow* parent, Control* control, ScrollHand
 
     control->getZoomControl()->addZoomListener(this);
 
-    gtk_widget_set_can_default(this->widget.get(), true);
-    gtk_widget_grab_default(this->widget.get());
-
+    gtk_window_set_default_widget(GTK_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(parent), GTK_TYPE_WINDOW)),
+                                  this->widget.get());
     gtk_widget_grab_focus(this->widget.get());
 
     this->cleanupTimeout = g_timeout_add_seconds(5, xoj::util::wrap_v<clearMemoryTimer>, this);
@@ -152,7 +151,7 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
         }
 
         int d = REGULAR_MOVE_AMOUNT;
-        if (state == GDK_MOD1_MASK) {
+        if (state == GDK_ALT_MASK) {
             d = SMALL_MOVE_AMOUNT;
         } else if (state == GDK_SHIFT_MASK) {
             d = LARGE_MOVE_AMOUNT;
@@ -522,7 +521,7 @@ void XournalView::recreatePdfCache() {
  * @return Helper class for Touch specific fixes
  */
 auto XournalView::getHandRecognition() const -> HandRecognition* {
-    return GTK_XOURNAL(widget)->input->getHandRecognition();
+    return GTK_XOURNAL(widget.get())->input->getHandRecognition();
 }
 
 /**

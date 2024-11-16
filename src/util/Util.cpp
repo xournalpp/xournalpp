@@ -54,7 +54,8 @@ xoj::util::Point<double> Util::toWidgetCoords(GtkWidget* widget, xoj::util::Poin
     // Converting them to widget-local coordinates will cancel out this difference.
     // `gtk_widget_get_window` doesn't return the actual window, but the local widget-window.
     // GTK4 renames `gdk_window_get_root_coords()` to `gdk_surface_get_root_coords()`
-    gdk_window_get_root_coords(gtk_widget_get_window(widget), 0, 0, &rx, &ry);
+    // gdk_window_get_root_coords(gtk_widget_get_window(widget), 0, 0, &rx, &ry);
+    g_warning("Implement this Util::toWidgetCoords");
     return xoj::util::Point<double>{absolute_coords.x - rx, absolute_coords.y - ry};
 }
 

@@ -32,7 +32,6 @@ static GtkWidget* makeChild(const char* desc) {
     auto size = serdes_stream<std::stringstream>();
     size << font.getSize();
     gtk_box_append(GTK_BOX(box), gtk_label_new(size.str().c_str()));
-    gtk_widget_show_all(box);
     return box;
 }
 
@@ -58,6 +57,4 @@ auto FontButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
 
 auto FontButton::getToolDisplayName() const -> std::string { return _("Font"); }
 
-auto FontButton::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name("font-x-generic", GTK_ICON_SIZE_LARGE_TOOLBAR);
-}
+auto FontButton::getNewToolIcon() const -> GtkWidget* { return gtk_image_new_from_icon_name("font-x-generic"); }

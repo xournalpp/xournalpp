@@ -136,7 +136,6 @@ static std::tuple<GtkWidget*, std::vector<ShowLayerEntry>, std::vector<std::pair
         gtk_grid_attach(grid, entries.emplace_back(lc, id).checkButton, 1, y, 1, 1);
     }
 
-    gtk_widget_show_all(GTK_WIDGET(grid));
     return {GTK_WIDGET(grid), std::move(entries), std::move(radioButtons)};
 }
 
@@ -175,7 +174,6 @@ static GtkBox* makePopoverContent() {
     addSpecialButton(box, _("Add a layer above the active layer"), Action::LAYER_NEW_ABOVE_CURRENT);
     addSpecialButton(box, _("Add a layer below the active layer"), Action::LAYER_NEW_BELOW_CURRENT);
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
-    gtk_widget_show_all(GTK_WIDGET(box));
     return box;
 }
 
@@ -300,7 +298,7 @@ ToolPageLayer::~ToolPageLayer() = default;
 auto ToolPageLayer::getToolDisplayName() const -> std::string { return _("Layer Combo"); }
 
 auto ToolPageLayer::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(this->iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+    return gtk_image_new_from_icon_name(this->iconName.c_str());
 }
 
 auto ToolPageLayer::createItem(bool horizontal) -> xoj::util::WidgetSPtr {

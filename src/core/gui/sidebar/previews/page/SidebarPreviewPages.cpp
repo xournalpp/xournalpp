@@ -54,38 +54,38 @@ void SidebarPreviewPages::updatePreviews() {
 }
 
 void SidebarPreviewPages::pageSizeChanged(size_t page) {
-    if (page == npos || page >= this->previews.size()) {
-        return;
-    }
-    auto& p = this->previews[page];
-    p->updateSize();
-    p->repaint();
-
-    layout();
+    // if (page == npos || page >= this->previews.size()) {
+    //     return;
+    // }
+    // auto& p = this->previews[page];
+    // p->updateSize();
+    // p->repaint();
+    //
+    // layout();
 }
 
 void SidebarPreviewPages::pageChanged(size_t page) {
-    if (page == npos || page >= this->previews.size()) {
-        return;
-    }
-
-    auto& p = this->previews[page];
-    p->repaint();
+    // if (page == npos || page >= this->previews.size()) {
+    //     return;
+    // }
+    //
+    // auto& p = this->previews[page];
+    // p->repaint();
 }
 
 void SidebarPreviewPages::pageDeleted(size_t page) {
-    if (page >= previews.size()) {
-        return;
-    }
-
-    previews.erase(previews.begin() + as_signed(page));
-
-    // Unselect page, to prevent double selection displaying
-    unselectPage();
-
-    updateIndices();
-
-    layout();
+    // if (page >= previews.size()) {
+    //     return;
+    // }
+    //
+    // previews.erase(previews.begin() + as_signed(page));
+    //
+    // // Unselect page, to prevent double selection displaying
+    // unselectPage();
+    //
+    // updateIndices();
+    //
+    // layout();
 }
 
 void SidebarPreviewPages::pageInserted(size_t page) {
@@ -134,8 +134,8 @@ void SidebarPreviewPages::pageSelected(size_t page) {
 }
 
 void SidebarPreviewPages::updateIndices() {
-    size_t index = 0;
-    for (auto& preview: this->previews) {
-        dynamic_cast<SidebarPreviewPageEntry*>(preview.get())->setIndex(index++);
-    }
+    // size_t index = 0;
+    // for (auto& preview: this->previews) {
+    //     dynamic_cast<SidebarPreviewPageEntry*>(preview.get())->setIndex(index++);
+    // }
 }
