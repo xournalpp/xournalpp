@@ -5,6 +5,8 @@
 #include "util/Assert.h"
 #include "util/raii/CStringWrapper.h"
 
+#if GTK_MAJOR_VERSION == 3
+
 namespace {
 void set_child(GtkContainer* c, GtkWidget* child) {
     gtk_container_foreach(
@@ -210,3 +212,10 @@ GtkWidget* gtk_image_new_from_icon_name(const char* name) {
 void gtk_overlay_remove_overlay(GtkOverlay* overlay, GtkWidget* widget) {
     gtk_container_remove(GTK_CONTAINER(overlay), widget);
 }
+
+/**** Gtk ****/
+void gtk_show_uri(GtkWindow* parent, const char* uri, guint32 timestamp) {
+    gtk_show_uri_on_window(parent, uri, timestamp, nullptr);
+}
+
+#endif

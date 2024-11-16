@@ -14,6 +14,8 @@
 
 #include <gtk/gtk.h>
 
+#if GTK_MAJOR_VERSION == 3
+
 /**** GtkBox ****/
 
 void gtk_box_append(GtkBox* box, GtkWidget* child);
@@ -109,3 +111,8 @@ GtkWidget* gtk_image_new_from_icon_name(const char* name);
 
 /**** GtkOverlay ****/
 void gtk_overlay_remove_overlay(GtkOverlay* overlay, GtkWidget* widget);
+
+/**** Gtk ****/
+void gtk_show_uri(GtkWindow* parent, const char* uri, guint32 timestamp);
+
+#endif
