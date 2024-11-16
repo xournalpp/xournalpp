@@ -103,5 +103,4 @@ void SidebarLayout::layout(SidebarPreviewBase* sidebar) {
     }
 
     gtk_widget_set_size_request(GTK_WIDGET(w), width, y);
-    gtk_widget_show_all(GTK_WIDGET(w));
 }

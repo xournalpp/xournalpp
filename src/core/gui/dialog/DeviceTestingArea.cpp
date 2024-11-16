@@ -211,10 +211,10 @@ DeviceTestingArea::DeviceTestingArea(GladeSearchpath* gladeSearchPath, GtkBox* p
                                             gtk_toggle_button_get_active(btn);
                                 }),
 #else
-                                (GtkCheckButton* btn,, gpointer d) {
-                                    static_cast<DeviceTestingArea*>(d)->emulateTipContactOnButtonPress =
-                                            gtk_check_button_get_active(btn);
-                                }),
+                             (GtkCheckButton* btn, gpointer d) {
+                                 static_cast<DeviceTestingArea*>(d)->emulateTipContactOnButtonPress =
+                                         gtk_check_button_get_active(btn);
+                             }),
 #endif
                      this);
 

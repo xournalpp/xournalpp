@@ -22,7 +22,7 @@
 #include "model/PageType.h"                         // for PageType
 #include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
 #include "util/GtkUtil.h"                           // for getWidgetDPI
-#include "util/PathUtil.h"                          // for fromGFile, toGFilename
+#include "util/PathUtil.h"                          // for fromGFile
 #include "util/Util.h"                              // for systemWithMessage
 #include "util/gtk4_helper.h"                       //
 #include "util/i18n.h"                              // for _
@@ -675,8 +675,8 @@ void SettingsDialog::load() {
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spTouchDisableTimeout")), timeoutMs / 1000.0);
 
 #ifdef ENABLE_AUDIO
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
-                                        Util::toGFilename(settings->getAudioFolder()).c_str());
+    // gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
+    //                                     Util::toGFilename(settings->getAudioFolder()).c_str());
     if (this->control->getAudioController()) {
         this->audioInputDevices = this->control->getAudioController()->getInputDevices();
         gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(builder.get("cbAudioInputDevice")), "", "System default");
@@ -724,7 +724,7 @@ void SettingsDialog::load() {
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(builder.get("spDefaultSeekTime")), settings->getDefaultSeekTime());
     }
 #else
-    gtk_widget_destroy(builder.get("audioRecordingTabBox"));
+    gtk_widget_hide(builder.get("audioRecordingTabBox"));
 #endif
 
     this->latexPanel.load(settings->latexSettings);
