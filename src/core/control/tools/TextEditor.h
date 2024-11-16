@@ -125,7 +125,7 @@ private:
     void repaintCursorAfterChange();
     void resetImContext();
 
-    static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te);
+    static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GdkClipboard* clipboard, TextEditor* te);
 
     static void iMCommitCallback(GtkIMContext* context, const gchar* str, TextEditor* te);
     static void iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te);

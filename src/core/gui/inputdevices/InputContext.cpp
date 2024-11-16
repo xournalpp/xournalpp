@@ -53,8 +53,8 @@ static gboolean keyboardCallback(GtkEventControllerKey* self, guint keyval, guin
     e.keyval = keyval;
     e.state = static_cast<GdkModifierType>(state & gtk_accelerator_get_default_mod_mask() &
                                            ~gdk_key_event_get_consumed_modifiers(gdkEvent));
-    e.sourceEvent = gdkEvent;
-    return (static_cast<KeyboardInputHandler*>(d)->*handler)(e);
+    e.sourceEvent.reset(gdkEvent, xoj::util::ref);
+    return (static_cast<KeyboardInputHandler*>(d)->*handler)(std::move(e));
 }
 
 InputContext::~InputContext() {
@@ -80,43 +80,32 @@ InputContext::~InputContext() {
 void InputContext::connect(GtkWidget* pWidget) {
     xoj_assert(!this->widget && pWidget);
     this->widget = pWidget;
-    gtk_widget_set_support_multidevice(widget, true);
 
-#if GTK_MAJOR_VERSION == 3
-    auto* keyCtrl = gtk_event_controller_key_new(widget);
-#else
+    auto* legCtrl = gtk_event_controller_legacy_new();
+    signal_id = g_signal_connect(legCtrl, "event", xoj::util::wrap_for_g_callback_v<eventCallback>, this);
+    gtk_event_controller_set_propagation_phase(legCtrl, GTK_PHASE_TARGET);
+    gtk_widget_add_controller(widget, legCtrl);
+
+    // The last added GtkEventController gets called first: the GtkeventControllerKey gets a chance to grab the events,
+    // avoiding unnecessary calls of the GtkEventControllerLegacy
     auto* keyCtrl = gtk_event_controller_key_new();
-    gtk_widget_add_controller(keyCtrl);
-#endif
+    gtk_widget_add_controller(widget, keyCtrl);
+    gtk_event_controller_set_propagation_phase(keyCtrl, GTK_PHASE_TARGET);
 
     g_signal_connect(keyCtrl, "key-pressed", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyPressed>),
                      keyboardHandler);
     g_signal_connect(keyCtrl, "key-released", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyReleased>),
                      keyboardHandler);
-
-    int mask =
-            // Allow scrolling
-            GDK_SCROLL_MASK |
-
-            // Touch / Pen / Mouse
-            GDK_TOUCH_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-            GDK_SMOOTH_SCROLL_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK |
-            GDK_PROXIMITY_OUT_MASK;
-
-    gtk_widget_add_events(pWidget, mask);
-
-
-    signal_id = g_signal_connect(pWidget, "event", xoj::util::wrap_for_g_callback_v<eventCallback>, this);
 }
 
-auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self) -> bool {
+auto InputContext::eventCallback(GtkEventControllerLegacy*, GdkEvent* event, InputContext* self) -> bool {
     return self->handle(event);
 }
 
 auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     printDebug(sourceEvent);
 
-    GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
+    GdkDevice* sourceDevice = gdk_event_get_device(sourceEvent);
     if (sourceDevice == NULL) {
         return false;
     }
@@ -125,7 +114,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
 
     // Add the device to the list of known devices if it is currently unknown
     GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
-    if (inputSource != GDK_SOURCE_KEYBOARD && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
+    if (inputSource != GDK_SOURCE_KEYBOARD /* && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER*/ &&
         this->knownDevices.find(std::string(event.deviceName)) == this->knownDevices.end()) {
 
         this->knownDevices.insert(std::string(event.deviceName));

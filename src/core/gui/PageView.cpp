@@ -617,14 +617,17 @@ void XojPageView::onTapEvent(const PositionInputData& pos) {
 
 auto XojPageView::showPdfToolbox(const PositionInputData& pos) -> void {
     // Compute coords of the canvas relative to the application window origin.
-    gint wx = 0, wy = 0;
+    double wx = 0, wy = 0;
     GtkWidget* widget = xournal->getWidget();
-    gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+
+    // Todo: Try with https://docs.gtk.org/gtk4/method.Native.get_surface_transform.html
+    gtk_widget_translate_coordinates(widget, gtk_widget_get_ancestor(widget, GTK_TYPE_WINDOW), 0, 0, &wx, &wy);
+
 
     // Add the position of the current page view widget (relative to canvas origin)
     // and add the input position (relative to the current page view widget).
-    wx += this->getX() + round_cast<gint>(pos.x);
-    wy += this->getY() + round_cast<gint>(pos.y);
+    wx += this->getX() + pos.x;
+    wy += this->getY() + pos.y;
 
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
     pdfToolbox->show(wx, wy);
@@ -999,7 +1002,6 @@ bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pa
                     new std::tuple(std::make_tuple(this, dest, popover)));
         }
 
-        gtk_widget_show_all(popover);
         gtk_popover_popup(GTK_POPOVER(popover));
         return true;
     }
@@ -1010,7 +1012,7 @@ bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pa
 GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* child) {
     double zoom = xournal->getZoom();
 
-    GtkWidget* popover = gtk_popover_new(this->getXournal()->getWidget());
+    GtkWidget* popover = gtk_popover_new();
     gtk_popover_set_child(GTK_POPOVER(popover), child);
 
     auto x = floor_cast<int>(this->getX() + rect.x1 * zoom);
@@ -1020,7 +1022,6 @@ GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* chil
 
     GdkRectangle canvasRect{x, y, w, h};
     gtk_popover_set_pointing_to(GTK_POPOVER(popover), &canvasRect);
-    gtk_popover_set_constrain_to(GTK_POPOVER(popover), GTK_POPOVER_CONSTRAINT_WINDOW);
 
     return popover;
 }
@@ -1175,12 +1176,12 @@ void XojPageView::elementsChanged(const std::vector<Element*>& elements, const R
 void XojPageView::showFloatingToolbox(const PositionInputData& pos) {
     Control* control = xournal->getControl();
 
-    gint wx = 0, wy = 0;
+    double wx = 0, wy = 0;
     GtkWidget* widget = xournal->getWidget();
-    gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+    gtk_widget_translate_coordinates(widget, gtk_widget_get_ancestor(widget, GTK_TYPE_WINDOW), 0, 0, &wx, &wy);
 
-    wx += round_cast<int>(pos.x) + this->getX();
-    wy += round_cast<int>(pos.y) + this->getY();
+    wx += pos.x + this->getX();
+    wy += pos.y + this->getY();
 
     control->getWindow()->getFloatingToolbox()->show(wx, wy);
 }

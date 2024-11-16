@@ -169,8 +169,21 @@ auto XojMsgBox::askPluginQuestion(const std::string& pluginName, const std::stri
         gtk_dialog_add_button(GTK_DIALOG(dialog), b.label.c_str(), b.response);
     }
 
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    // We use a hack to ensure the app does not exit until the user has read the error message and closed the popup
+    bool done = false;
+    int res = 0;
+
+    xoj::popup::PopupWindowWrapper<XojMsgBox> popup(GTK_DIALOG(dialog), [&done, &res](int r) {
+        done = true;
+        res = r;
+    });
+
+    popup.show(defaultWindow);
+
+    while (!done) {
+        // Let the main loop run so the popup pops up and can be interacted with
+        g_main_context_iteration(g_main_context_default(), true);
+    }
     return res;
 }
 
@@ -203,19 +216,11 @@ void XojMsgBox::replaceFileQuestion(GtkWindow* win, fs::path file,
 constexpr auto* XOJ_HELP = "https://xournalpp.github.io/community/help/";
 
 void XojMsgBox::showHelp(GtkWindow* win) {
-#ifdef _WIN32
+#ifdef _WIN32  // TODO Do we still need a separate handling for Windows?
     // gvfs is not in MSYS repositories, so we can't use gtk_show_uri.
     // Instead, we use the native API instead.
     ShellExecute(nullptr, "open", XOJ_HELP, nullptr, nullptr, SW_SHOW);
 #else
-    GError* error = nullptr;
-    gtk_show_uri(gtk_window_get_screen(win), XOJ_HELP, gtk_get_current_event_time(), &error);
-
-    if (error) {
-        std::string msg = FS(_F("There was an error displaying help: {1}") % error->message);
-        XojMsgBox::showErrorToUser(win, msg);
-
-        g_error_free(error);
-    }
+    gtk_show_uri(win, XOJ_HELP, GDK_CURRENT_TIME);
 #endif
 }

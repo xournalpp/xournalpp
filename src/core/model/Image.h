@@ -50,7 +50,7 @@ public:
     /// \deprecated Pass the raw image data instead.
     ///
     /// FIXME: remove this method. Currently, it is used by Control::clipboardPasteImage.
-    [[deprecated]] void setImage(GdkPixbuf* img);
+    // [[deprecated]] void setImage(GdkPixbuf* img);
 
     /// The image is rendered lazily by default; call this method to render it.
     /// Returns std::nullopt on success, an error message on failure

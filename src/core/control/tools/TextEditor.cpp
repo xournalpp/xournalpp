@@ -128,7 +128,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::TextEditionView>>()) {
     // Informs the windowing system of the selection -- i.e. for accessibility purposes
-    gtk_text_buffer_add_selection_clipboard(buffer.get(), gtk_clipboard_get(GDK_SELECTION_PRIMARY));
+    gtk_text_buffer_add_selection_clipboard(buffer.get(), gtk_widget_get_primary_clipboard(xournalWidget));
 
     this->initializeEditionAt(x, y);
 
@@ -302,8 +302,7 @@ auto TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
 auto TextEditor::onKeyPressEvent(const KeyEvent& event) -> bool {
 
     // IME needs to handle the input first so the candidate window works correctly
-    auto* e = (GdkEventKey*)(static_cast<GdkEvent*>(event.sourceEvent));
-    if (gtk_im_context_filter_keypress(this->imContext.get(), e)) {
+    if (gtk_im_context_filter_keypress(this->imContext.get(), event.sourceEvent.get())) {
         this->needImReset = true;
 
         GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
@@ -323,8 +322,8 @@ auto TextEditor::onKeyPressEvent(const KeyEvent& event) -> bool {
 auto TextEditor::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     GtkTextIter iter = getIteratorAtCursor(this->buffer.get());
 
-    auto* e = (GdkEventKey*)(static_cast<GdkEvent*>(event.sourceEvent));
-    if (gtk_text_iter_can_insert(&iter, true) && gtk_im_context_filter_keypress(this->imContext.get(), e)) {
+    if (gtk_text_iter_can_insert(&iter, true) &&
+        gtk_im_context_filter_keypress(this->imContext.get(), event.sourceEvent.get())) {
         this->needImReset = true;
         return true;
     }
@@ -837,12 +836,12 @@ void TextEditor::tabulation() {
 
 
 void TextEditor::copyToClipboard() const {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
+    GdkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
     gtk_text_buffer_copy_clipboard(this->buffer.get(), clipboard);
 }
 
 void TextEditor::cutToClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
+    GdkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
     gtk_text_buffer_cut_clipboard(this->buffer.get(), clipboard, true);
 
     this->contentsChanged(true);
@@ -850,11 +849,11 @@ void TextEditor::cutToClipboard() {
 }
 
 void TextEditor::pasteFromClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
+    GdkClipboard* clipboard = gtk_widget_get_clipboard(this->xournalWidget);
     gtk_text_buffer_paste_clipboard(this->buffer.get(), clipboard, nullptr, true);
 }
 
-void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te) {
+void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GdkClipboard* clipboard, TextEditor* te) {
     te->contentsChanged(true);
     te->repaintEditor();
 }
@@ -871,7 +870,7 @@ void TextEditor::resetImContext() {
  */
 void TextEditor::BlinkTimer::callback(TextEditor* te) {
     te->cursorVisible = !te->cursorVisible;
-    guint time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
+    auto time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
     te->blinkTimer = g_timeout_add(time, xoj::util::wrap_for_once_v<callback>, te);
 
     Range dirtyRange = te->cursorBox;

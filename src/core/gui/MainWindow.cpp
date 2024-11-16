@@ -55,8 +55,19 @@
 
 using std::string;
 
-
 static void themeCallback(GObject*, GParamSpec*, gpointer data) { static_cast<MainWindow*>(data)->updateColorscheme(); }
+
+/**
+ * Load Overall CSS file with custom icons, other styling and potentially, user changes
+ */
+static void loadCSS(GdkDisplay* display, GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
+    auto filepath = gladeSearchPath->findFile("", cssFilename);
+    xoj::util::GObjectSPtr<GtkCssProvider> provider(gtk_css_provider_new(), xoj::util::adopt);
+    gtk_css_provider_load_from_path(provider.get(), filepath.u8string().c_str());
+    gtk_style_context_add_provider_for_display(display, GTK_STYLE_PROVIDER(provider.get()),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+static constexpr auto CSS_FILENAME = "xournalpp.css";
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent):
         GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
@@ -70,7 +81,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     mainContentWidget.reset(get("boxContents"), xoj::util::ref);
     sidebarWidget.reset(get("sidebar"), xoj::util::ref);
 
-    loadMainCSS(gladeSearchPath, "xournalpp.css");
+    loadCSS(gtk_widget_get_display(this->window), gladeSearchPath, CSS_FILENAME);
 
     GtkOverlay* overlay = GTK_OVERLAY(get("mainOverlay"));
     this->pdfFloatingToolBox = std::make_unique<PdfFloatingToolbox>(this, overlay);
@@ -95,13 +106,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
                      this);
 #endif
 
-    // "watch over" all key events
-    auto keyPropagate = +[](GtkWidget* w, GdkEvent* e, gpointer) {
-        return gtk_window_propagate_key_event(GTK_WINDOW(w), (GdkEventKey*)(e));
-    };
-    g_signal_connect(this->window, "key-press-event", G_CALLBACK(keyPropagate), nullptr);
-    g_signal_connect(this->window, "key-release-event", G_CALLBACK(keyPropagate), nullptr);
-
     updateScrollbarSidebarPosition();
 
     gtk_window_set_default_size(GTK_WINDOW(this->window), control->getSettings()->getMainWndWidth(),
@@ -118,13 +122,15 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
         control->setShowMenubar(control->getSettings()->isMenubarVisible());
     });
 
-    // Drag and Drop
-    g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
-
-    gtk_drag_dest_set(this->window, GTK_DEST_DEFAULT_ALL, nullptr, 0, GDK_ACTION_COPY);
-    gtk_drag_dest_add_uri_targets(this->window);
-    gtk_drag_dest_add_image_targets(this->window);
-    gtk_drag_dest_add_text_targets(this->window);
+    // TODO
+    g_warning("Implement Drag'n'drop");
+    // // Drag and Drop
+    // g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
+    //
+    // gtk_drag_dest_set(this->window, GTK_DEST_DEFAULT_ALL, nullptr, 0, GDK_ACTION_COPY);
+    // gtk_drag_dest_add_uri_targets(this->window);
+    // gtk_drag_dest_add_image_targets(this->window);
+    // gtk_drag_dest_add_text_targets(this->window);
 
     g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-theme-name", G_CALLBACK(themeCallback), this);
     g_signal_connect(gtk_widget_get_settings(this->window), "notify::gtk-application-prefer-dark-theme",
@@ -255,7 +261,8 @@ void MainWindow::updateColorscheme() {
         }
 
         for (auto& p: iconLoadOrder) {
-            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str());
+            gtk_icon_theme_add_search_path(gtk_icon_theme_get_for_display(gtk_widget_get_display(this->window)),
+                                           p.c_str());
         }
     }
 
@@ -301,10 +308,9 @@ void MainWindow::initXournalWidget() {
 
     scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLABLE(vpXournal));
 
-    this->xournal = std::make_unique<XournalView>(vpXournal, control, scrollHandling.get());
+    this->xournal = std::make_unique<XournalView>(GTK_VIEWPORT(vpXournal), control, scrollHandling.get());
 
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal.get(), control);
-    gtk_widget_show_all(winXournal);
 
     Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
     scrollHandling->init(this->xournal->getWidget(), layout);
@@ -351,7 +357,7 @@ auto cancellable_cancel(GCancellable* cancel) -> bool {
 
     return false;
 }
-
+/*
 void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data,
                                  guint info, guint time, MainWindow* win) {
     GtkWidget* source = gtk_drag_get_source_widget(dragContext);
@@ -422,7 +428,7 @@ void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext,
     }
 
     gtk_drag_finish(dragContext, false, false, time);
-}
+}*/
 
 auto MainWindow::getControl() const -> Control* { return control; }
 
@@ -455,7 +461,7 @@ void MainWindow::updateScrollbarSidebarPosition() {
     int contentWidth = gtk_widget_get_width(this->boxContainerWidget.get());
 
     bool sidebarRight = control->getSettings()->isSidebarOnRight();
-    if (sidebarRight != (gtk_paned_get_child2(paned) == this->sidebarWidget.get())) {
+    if (sidebarRight != (gtk_paned_get_end_child(paned) == this->sidebarWidget.get())) {
         // switch sidebar and main content
         GtkWidget* sidebar = this->sidebarWidget.get();
         GtkWidget* mainContent = this->sidebarVisible ? this->mainContentWidget.get() : nullptr;
@@ -730,14 +736,6 @@ void MainWindow::setRedoDescription(const string& description) { menubar->setRed
 auto MainWindow::getToolbarModel() const -> ToolbarModel* { return this->toolbar->getModel(); }
 
 auto MainWindow::getToolMenuHandler() const -> ToolMenuHandler* { return this->toolbar.get(); }
-
-void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
-    auto filepath = gladeSearchPath->findFile("", cssFilename);
-    xoj::util::GObjectSPtr<GtkCssProvider> provider(gtk_css_provider_new(), xoj::util::adopt);
-    gtk_css_provider_load_from_path(provider.get(), filepath.u8string().c_str(), nullptr);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider.get()),
-                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-}
 
 PdfFloatingToolbox* MainWindow::getPdfToolbox() const { return this->pdfFloatingToolBox.get(); }
 

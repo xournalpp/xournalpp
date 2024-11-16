@@ -6,7 +6,6 @@
 
 #include <cairo-svg.h>      // for cairo_svg_surface_c...
 #include <cairo.h>          // for cairo_create, cairo...
-#include <gdk/gdkpixbuf.h>  // for gdk_pixbuf_get_from_surface
 #include <glib-object.h>    // for g_object_unref, g_s...
 
 #include "control/tools/EditSelection.h"          // for EditSelection
@@ -31,40 +30,45 @@ ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widge
     this->listener = listener;
     this->clipboard = gtk_widget_get_clipboard(widget);
 
-    this->handlerId = g_signal_connect(this->clipboard, "owner-change", G_CALLBACK(&ownerChangedCallback), this);
+    this->handlerId = g_signal_connect(this->clipboard, "changed", G_CALLBACK(+[](GdkClipboard* clip, gpointer d) {
+                                           static_cast<ClipboardHandler*>(d)->clipboardUpdated();
+                                       }),
+                                       this);
 
     this->listener->clipboardCutCopyEnabled(false);
+    g_warning("Implement ClipboardHandler");
 
-    gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
-                                   reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
+    // gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
+    // reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
 }
 
 ClipboardHandler::~ClipboardHandler() { g_signal_handler_disconnect(this->clipboard, this->handlerId); }
 
-static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
+// static GdkAtom atomXournal = gdk_atom_intern_static_string("application/xournal");
 
 auto ClipboardHandler::paste() -> bool {
     /* Request targets again, since the owner-change signal is not emitted on MacOS and under X11 with no XFIXES
      * extension. See https://docs.gtk.org/gdk3/struct.EventOwnerChange.html and
      * https://gitlab.gnome.org/GNOME/gtk/-/issues/1757 */
-    gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
-                                   reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
-
-    if (this->containsXournal) {
-        gtk_clipboard_request_contents(this->clipboard, atomXournal,
-                                       reinterpret_cast<GtkClipboardReceivedFunc>(pasteClipboardContents), this);
-        return true;
-    }
-    if (this->containsText) {
-        gtk_clipboard_request_text(this->clipboard, reinterpret_cast<GtkClipboardTextReceivedFunc>(pasteClipboardText),
-                                   this);
-        return true;
-    }
-    if (this->containsImage) {
-        gtk_clipboard_request_image(this->clipboard,
-                                    reinterpret_cast<GtkClipboardImageReceivedFunc>(pasteClipboardImage), this);
-        return true;
-    }
+    // gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
+    //                                reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
+    //
+    // if (this->containsXournal) {
+    //     gtk_clipboard_request_contents(this->clipboard, atomXournal,
+    //                                    reinterpret_cast<GtkClipboardReceivedFunc>(pasteClipboardContents), this);
+    //     return true;
+    // }
+    // if (this->containsText) {
+    //     gtk_clipboard_request_text(this->clipboard,
+    //     reinterpret_cast<GtkClipboardTextReceivedFunc>(pasteClipboardText),
+    //                                this);
+    //     return true;
+    // }
+    // if (this->containsImage) {
+    //     gtk_clipboard_request_image(this->clipboard,
+    //                                 reinterpret_cast<GtkClipboardImageReceivedFunc>(pasteClipboardImage), this);
+    //     return true;
+    // }
 
     return false;
 }
@@ -83,8 +87,8 @@ auto ElementCompareFunc(Element* a, Element* b) -> bool {
     return (a->getY() - b->getY()) < 0;
 }
 
-static GdkAtom atomSvg1 = gdk_atom_intern_static_string("image/svg");
-static GdkAtom atomSvg2 = gdk_atom_intern_static_string("image/svg+xml");
+// static GdkAtom atomSvg1 = gdk_atom_intern_static_string("image/svg");
+// static GdkAtom atomSvg2 = gdk_atom_intern_static_string("image/svg+xml");
 
 // The contents of the clipboard
 class ClipboardContents {
@@ -102,26 +106,26 @@ public:
     }
 
 
-    static void getFunction(GtkClipboard* clipboard, GtkSelectionData* selection, guint info,
-                            ClipboardContents* contents) {
-        GdkAtom target = gtk_selection_data_get_target(selection);
-
-        if (target == gdk_atom_intern_static_string("UTF8_STRING")) {
-            gtk_selection_data_set_text(selection, contents->text.c_str(), -1);
-        } else if (target == gdk_atom_intern_static_string("image/png") ||
-                   target == gdk_atom_intern_static_string("image/jpeg") ||
-                   target == gdk_atom_intern_static_string("image/gif")) {
-            gtk_selection_data_set_pixbuf(selection, contents->image);
-        } else if (atomSvg1 == target || atomSvg2 == target) {
-            gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar const*>(contents->svg.c_str()),
-                                   static_cast<gint>(contents->svg.length()));
-        } else if (atomXournal == target) {
-            gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar*>(contents->str->str),
-                                   static_cast<gint>(contents->str->len));
-        }
-    }
-
-    static void clearFunction(GtkClipboard* clipboard, ClipboardContents* contents) { delete contents; }
+    // static void getFunction(GtkClipboard* clipboard, GtkSelectionData* selection, guint info,
+    //                         ClipboardContents* contents) {
+    //     GdkAtom target = gtk_selection_data_get_target(selection);
+    //
+    //     if (target == gdk_atom_intern_static_string("UTF8_STRING")) {
+    //         gtk_selection_data_set_text(selection, contents->text.c_str(), -1);
+    //     } else if (target == gdk_atom_intern_static_string("image/png") ||
+    //                target == gdk_atom_intern_static_string("image/jpeg") ||
+    //                target == gdk_atom_intern_static_string("image/gif")) {
+    //         gtk_selection_data_set_pixbuf(selection, contents->image);
+    //     } else if (atomSvg1 == target || atomSvg2 == target) {
+    //         gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar const*>(contents->svg.c_str()),
+    //                                static_cast<gint>(contents->svg.length()));
+    //     } else if (atomXournal == target) {
+    //         gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar*>(contents->str->str),
+    //                                static_cast<gint>(contents->str->len));
+    //     }
+    // }
+    //
+    // static void clearFunction(GtkClipboard* clipboard, ClipboardContents* contents) { delete contents; }
 
 private:
     string text;
@@ -214,33 +218,34 @@ auto ClipboardHandler::copy() -> bool {
     // copy to clipboard
     /////////////////////////////////////////////////////////////////
 
-    GtkTargetList* list = gtk_target_list_new(nullptr, 0);
-    GtkTargetEntry* targets = nullptr;
-    int n_targets = 0;
-
-    // if we have text elements...
-    if (!text.empty()) {
-        gtk_target_list_add_text_targets(list, 0);
-    }
-    // we always copy an image to clipboard
-    gtk_target_list_add_image_targets(list, 0, true);
-    gtk_target_list_add(list, atomSvg1, 0, 0);
-    gtk_target_list_add(list, atomSvg2, 0, 0);
-    gtk_target_list_add(list, atomXournal, 0, 0);
-
-    targets = gtk_target_table_new_from_list(list, &n_targets);
-
-    auto* contents = new ClipboardContents(text, image, svgString->str, out.getStr());
-
-    gtk_clipboard_set_with_data(this->clipboard, targets, static_cast<guint>(n_targets),
-                                reinterpret_cast<GtkClipboardGetFunc>(ClipboardContents::getFunction),
-                                reinterpret_cast<GtkClipboardClearFunc>(ClipboardContents::clearFunction), contents);
-    gtk_clipboard_set_can_store(this->clipboard, nullptr, 0);
-
-    gtk_target_table_free(targets, n_targets);
-    gtk_target_list_unref(list);
-
-    g_string_free(svgString, true);
+    g_warning("Implement ClipboardHandler");
+    // GtkTargetList* list = gtk_target_list_new(nullptr, 0);
+    // GtkTargetEntry* targets = nullptr;
+    // int n_targets = 0;
+    //
+    // // if we have text elements...
+    // if (!text.empty()) {
+    //     gtk_target_list_add_text_targets(list, 0);
+    // }
+    // // we always copy an image to clipboard
+    // gtk_target_list_add_image_targets(list, 0, true);
+    // gtk_target_list_add(list, atomSvg1, 0, 0);
+    // gtk_target_list_add(list, atomSvg2, 0, 0);
+    // gtk_target_list_add(list, atomXournal, 0, 0);
+    //
+    // targets = gtk_target_table_new_from_list(list, &n_targets);
+    //
+    // auto* contents = new ClipboardContents(text, image, svgString->str, out.getStr());
+    //
+    // gtk_clipboard_set_with_data(this->clipboard, targets, static_cast<guint>(n_targets),
+    //                             reinterpret_cast<GtkClipboardGetFunc>(ClipboardContents::getFunction),
+    //                             reinterpret_cast<GtkClipboardClearFunc>(ClipboardContents::clearFunction), contents);
+    // gtk_clipboard_set_can_store(this->clipboard, nullptr, 0);
+    //
+    // gtk_target_table_free(targets, n_targets);
+    // gtk_target_list_unref(list);
+    //
+    // g_string_free(svgString, true);
 
     return true;
 }
@@ -259,17 +264,12 @@ void ClipboardHandler::setCopyCutEnabled(bool enabled) {
     }
 }
 
-void ClipboardHandler::ownerChangedCallback(GtkClipboard* clip, GdkEvent* event, ClipboardHandler* handler) {
-    if (gdk_event_get_event_type(event) == GDK_OWNER_CHANGE) {
-        handler->clipboardUpdated(event->owner_change.selection);
-    }
+void ClipboardHandler::clipboardUpdated() {
+    gdk_clipboard_get_formats(clipboard);
+    // gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
+    // reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
 }
-
-void ClipboardHandler::clipboardUpdated(GdkAtom atom) {
-    gtk_clipboard_request_contents(clipboard, gdk_atom_intern_static_string("TARGETS"),
-                                   reinterpret_cast<GtkClipboardReceivedFunc>(receivedClipboardContents), this);
-}
-
+/*
 void ClipboardHandler::pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf, ClipboardHandler* handler) {
     if (pixbuf) {
         handler->listener->clipboardPasteImage(pixbuf);
@@ -320,4 +320,4 @@ void ClipboardHandler::receivedClipboardContents(GtkClipboard* clipboard, GtkSel
 
     handler->listener->clipboardPasteEnabled(handler->containsText || handler->containsXournal ||
                                              handler->containsImage);
-}
+}*/

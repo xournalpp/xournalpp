@@ -20,53 +20,55 @@
 
 using xoj::util::Rectangle;
 
-auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom) -> bool {
-    auto state =
-            gdk_event_get_modifier_state(reinterpret_cast<GdkEvent*>(event)) & gtk_accelerator_get_default_mod_mask();
-
-    // do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
-    if (state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
-        return true;
-    }
-
-    if (state & GDK_CONTROL_MASK) {
-        auto direction =
-                (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0)) ?
-                        ZOOM_IN :
-                        ZOOM_OUT;
-        // translate absolute window coordinates to the widget-local coordinates and start zooming
-        zoom->zoomScroll(direction, Util::toWidgetCoords(widget, xoj::util::Point{event->x_root, event->y_root}));
-        return true;
-    }
-
-    // TODO(unknown): Disabling scroll here is maybe a bit hacky find a better way
-    return zoom->isZoomPresentationMode();
-}
-
-auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
-    if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
-        switch (event->phase) {
-            case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN:
-                if (zoom->isZoomFitMode()) {
-                    zoom->setZoomFitMode(false);
-                }
-                // translate absolute window coordinates to the widget-local coordinates and start zooming
-                zoom->startZoomSequence(Util::toWidgetCoords(widget, xoj::util::Point{event->x_root, event->y_root}));
-                break;
-            case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
-                zoom->zoomSequenceChange(event->scale, true);
-                break;
-            case GDK_TOUCHPAD_GESTURE_PHASE_END:
-                zoom->endZoomSequence();
-                break;
-            case GDK_TOUCHPAD_GESTURE_PHASE_CANCEL:
-                zoom->cancelZoomSequence();
-                break;
-        }
-        return true;
-    }
-    return false;
-}
+// auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom) -> bool {
+//     auto state =
+//             gdk_event_get_modifier_state(reinterpret_cast<GdkEvent*>(event)) &
+//             gtk_accelerator_get_default_mod_mask();
+//
+//     // do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
+//     if (state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
+//         return true;
+//     }
+//
+//     if (state & GDK_CONTROL_MASK) {
+//         auto direction =
+//                 (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0))
+//                 ?
+//                         ZOOM_IN :
+//                         ZOOM_OUT;
+//         // translate absolute window coordinates to the widget-local coordinates and start zooming
+//         zoom->zoomScroll(direction, Util::toWidgetCoords(widget, xoj::util::Point{event->x_root, event->y_root}));
+//         return true;
+//     }
+//
+//     // TODO(unknown): Disabling scroll here is maybe a bit hacky find a better way
+//     return zoom->isZoomPresentationMode();
+// }
+//
+// auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
+//     if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
+//         switch (event->phase) {
+//             case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN:
+//                 if (zoom->isZoomFitMode()) {
+//                     zoom->setZoomFitMode(false);
+//                 }
+//                 // translate absolute window coordinates to the widget-local coordinates and start zooming
+//                 zoom->startZoomSequence(Util::toWidgetCoords(widget, xoj::util::Point{event->x_root,
+//                 event->y_root})); break;
+//             case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
+//                 zoom->zoomSequenceChange(event->scale, true);
+//                 break;
+//             case GDK_TOUCHPAD_GESTURE_PHASE_END:
+//                 zoom->endZoomSequence();
+//                 break;
+//             case GDK_TOUCHPAD_GESTURE_PHASE_CANCEL:
+//                 zoom->cancelZoomSequence();
+//                 break;
+//         }
+//         return true;
+//     }
+//     return false;
+// }
 
 
 // Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to align/layout
@@ -242,9 +244,10 @@ void ZoomControl::removeZoomListener(ZoomListener* l) {
 void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c) {
     this->control = c;
     this->view = v;
-    gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
-    g_signal_connect(widget, "scroll-event", xoj::util::wrap_for_g_callback_v<onScrolledwindowMainScrollEvent>, this);
-    g_signal_connect(widget, "event", xoj::util::wrap_for_g_callback_v<onTouchpadPinchEvent>, this);
+    g_warning("Implement ZoomHandler");
+    // gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
+    // g_signal_connect(widget, "scroll-event", xoj::util::wrap_for_g_callback_v<onScrolledwindowMainScrollEvent>,
+    // this); g_signal_connect(widget, "event", xoj::util::wrap_for_g_callback_v<onTouchpadPinchEvent>, this);
     g_signal_connect(window, "configure-event", xoj::util::wrap_for_g_callback_v<onWindowSizeChangedEvent>, this);
     registerListener(this->control);
 }
