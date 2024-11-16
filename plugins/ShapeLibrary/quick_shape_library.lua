@@ -54,7 +54,12 @@ function insert_stroke(shape_name)
     local filepath = sourcePath .. "Shapes" .. sep .. shape_name .. ".lua"
     local strokes = read_strokes_from_file(filepath)
     if strokes and #strokes > 0 then
-        app.addStrokes({ strokes = strokes , allowUndoRedoAction = "grouped" })
+        local refs = app.addStrokes({ strokes = strokes , allowUndoRedoAction = "grouped" })
+        if app.addToSelection then
+            app.addToSelection(refs)
+        else
+            print("Cannot add shape to selection because of missing API, consider upgrading Xournal++")
+        end
         app.refreshPage()
     end
 end
