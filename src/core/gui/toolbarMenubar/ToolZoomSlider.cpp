@@ -69,9 +69,7 @@ auto ToolZoomSlider::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
 
 auto ToolZoomSlider::getToolDisplayName() const -> std::string { return _("Zoom Slider"); }
 
-auto ToolZoomSlider::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
-}
+auto ToolZoomSlider::getNewToolIcon() const -> GtkWidget* { return gtk_image_new_from_icon_name(iconName.c_str()); }
 
 auto ToolZoomSlider::scaleFunction(double x) -> double { return std::log(x - SCALE_LOG_OFFSET); }
 

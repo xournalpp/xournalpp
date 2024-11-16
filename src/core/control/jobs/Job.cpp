@@ -49,7 +49,7 @@ void Job::callAfterRun() {
     }
 
     this->ref();
-    this->afterRunId = gdk_threads_add_idle(xoj::util::wrap_for_once_v<Job::callAfterCallback>, this);
+    this->afterRunId = g_idle_add(xoj::util::wrap_for_once_v<Job::callAfterCallback>, this);
 }
 
 void Job::afterRun() {}

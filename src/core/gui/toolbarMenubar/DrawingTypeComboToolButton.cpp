@@ -19,7 +19,7 @@ static GtkWidget* createPopoverEntry(const DrawingTypeComboToolButton::Entry& e)
     gtk_actionable_set_action_name(GTK_ACTIONABLE(entry), actionName.data());
     GtkBox* box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6));
     gtk_button_set_child(GTK_BUTTON(entry), GTK_WIDGET(box));
-    gtk_box_append(box, gtk_image_new_from_icon_name(e.icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_box_append(box, gtk_image_new_from_icon_name(e.icon.c_str()));
     gtk_box_append(box, gtk_label_new(e.name.c_str()));
     gtk_widget_set_tooltip_text(entry, e.name.c_str());
     return entry;
@@ -92,8 +92,6 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
         for (const Entry& t: *this->entries) {
             gtk_box_append(box, createPopoverEntry(t));
         }
-
-        gtk_widget_show_all(GTK_WIDGET(box));
     }
 
     {  // Create prominent button
@@ -168,5 +166,5 @@ auto DrawingTypeComboToolButton::createItem(bool horizontal) -> xoj::util::Widge
 auto DrawingTypeComboToolButton::getToolDisplayName() const -> std::string { return this->description; }
 
 auto DrawingTypeComboToolButton::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+    return gtk_image_new_from_icon_name(iconName.c_str());
 }

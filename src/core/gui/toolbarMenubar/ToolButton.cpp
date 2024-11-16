@@ -31,7 +31,7 @@ ToolButton::ToolButton(std::string id, Category cat, Action action, GVariant* ta
 
 auto ToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     GtkWidget* btn = toggle ? gtk_toggle_button_new() : gtk_button_new();
-    gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
+    // gtk_widget_set_can_focus(btn, false);  // todo(gtk4) not necessary anymore
     gtk_button_set_child(GTK_BUTTON(btn), getNewToolIcon());
     gtk_widget_set_tooltip_text(btn, getToolDisplayName().c_str());
     gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), (std::string("win.") + Action_toString(action)).c_str());
@@ -43,7 +43,7 @@ auto ToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
     xoj::util::WidgetSPtr item;
     if (popoverFactory) {
         GtkMenuButton* menubutton = GTK_MENU_BUTTON(gtk_menu_button_new());
-        gtk_widget_set_can_focus(GTK_WIDGET(menubutton), false);  // todo(gtk4) not necessary anymore
+        // gtk_widget_set_can_focus(GTK_WIDGET(menubutton), false);  // todo(gtk4) not necessary anymore
         gtk_menu_button_set_popover(menubutton, popoverFactory->createPopover());
         gtk_menu_button_set_direction(menubutton, GTK_ARROW_DOWN);
 
@@ -60,8 +60,6 @@ auto ToolButton::createItem(bool horizontal) -> xoj::util::WidgetSPtr {
 
 auto ToolButton::getToolDisplayName() const -> std::string { return description; }
 
-auto ToolButton::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_LARGE_TOOLBAR);
-}
+auto ToolButton::getNewToolIcon() const -> GtkWidget* { return gtk_image_new_from_icon_name(iconName.c_str()); }
 
 void ToolButton::setPopoverFactory(const PopoverFactory* factory) { popoverFactory = factory; }

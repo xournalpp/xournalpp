@@ -5,13 +5,14 @@
 #include "gui/PageView.h"               // for PageView
 #include "gui/XournalView.h"            // for XournalView
 #include "gui/scroll/ScrollHandling.h"  // for getPosition
+#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_add_popover/gtk_xournal_remove_popover
 #include "util/XojMsgBox.h"             // for XojMsgBox
-#include "util/gtk4_helper.h"           // for gtk_box_append...
 #include "util/i18n.h"                  // for _, FS
 #include "util/safe_casts.h"            // for round_cast
 
 LinkPopover::LinkPopover(XournalView* view, bool markup): view(view), markup(markup) {
-    this->popover = GTK_POPOVER(gtk_popover_new(view->getWidget()));
+    this->popover = GTK_POPOVER(gtk_popover_new());
+    gtk_xournal_add_popover(view->getWidget(), this->popover);
     gtk_popover_set_autohide(this->popover, false);
     GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     this->label = GTK_LABEL(gtk_label_new(""));
@@ -33,11 +34,7 @@ LinkPopover::LinkPopover(XournalView* view, bool markup): view(view), markup(mar
 
 LinkPopover::~LinkPopover() {
     if (this->popover) {
-#if GTK_MAJOR_VERSION == 3
-        gtk_widget_destroy(GTK_WIDGET(this->popover));
-#else
-        gtk_widget_unparent(GTK_WIDGET(this->popover));
-#endif
+        gtk_xournal_remove_popover(this->view->getWidget(), this->popover);
     }
 }
 
