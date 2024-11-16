@@ -109,7 +109,7 @@ void ToolPageSpinner::setPageInfo(size_t currentPage, size_t pageCount, size_t p
 auto ToolPageSpinner::getToolDisplayName() const -> std::string { return _("Page number"); }
 
 auto ToolPageSpinner::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconNameHelper.iconName("page-spinner").c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+    return gtk_image_new_from_icon_name(iconNameHelper.iconName("page-spinner").c_str());
 }
 
 auto ToolPageSpinner::createItem(bool horizontal) -> xoj::util::WidgetSPtr {

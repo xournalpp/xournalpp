@@ -20,7 +20,7 @@ void createAndSetupWidgets(GtkApplication* app, GtkGrid** grid, GtkLabel** mainL
     GtkWidget* window = gtk_application_window_new(app);
 
     *grid = GTK_GRID(gtk_grid_new());
-    gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(*grid));
+    gtk_window_set_child(GTK_WINDOW(window), GTK_WIDGET(*grid));
 
     *mainLabel = GTK_LABEL(gtk_label_new(""));
     *optionsList = GTK_LIST_BOX(gtk_list_box_new());

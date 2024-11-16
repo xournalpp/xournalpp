@@ -218,7 +218,7 @@ label.setting-touch-indicator.pressed {
 
 image.flying-icon {
     padding: 0px;
-    margin: 1px;  /* Avoids graphical artifacts when moving those icons around... */
+    -gtk-icon-size:32px;
 }
 
 image.flying-icon.TL {
