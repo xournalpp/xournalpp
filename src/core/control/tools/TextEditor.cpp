@@ -129,7 +129,7 @@ TextEditor::TextEditor(Control* control, const PageRef& page, GtkWidget* xournal
         buffer(gtk_text_buffer_new(nullptr), xoj::util::adopt),
         viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::TextEditionView>>()) {
     // Informs the windowing system of the selection -- i.e. for accessibility purposes
-    gtk_text_buffer_add_selection_clipboard(buffer.get(), gtk_clipboard_get(GDK_SELECTION_PRIMARY));
+    gtk_text_buffer_add_selection_clipboard(buffer.get(), gtk_widget_get_primary_clipboard(xournalWidget));
 
     this->initializeEditionAt(x, y);
 
@@ -854,7 +854,7 @@ void TextEditor::pasteFromClipboard() {
     gtk_text_buffer_paste_clipboard(this->buffer.get(), clipboard, nullptr, true);
 }
 
-void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te) {
+void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GdkClipboard* clipboard, TextEditor* te) {
     te->contentsChanged(true);
     te->repaintEditor();
 }

@@ -101,14 +101,14 @@ void SearchBar::search(const char* text) {
     }
 
     if (found) {
-        gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry {}", -1, nullptr);
+        gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry {}", -1);
     } else {
-        gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry { color: #ff0000; }", -1, nullptr);
+        gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry { color: #ff0000; }", -1);
     }
 }
 
 void SearchBar::searchTextChangedCallback(GtkSearchEntry* entry, SearchBar* searchBar) {
-    const char* text = gtk_entry_get_text(GTK_ENTRY(entry));
+    const char* text = gtk_editable_get_text(GTK_EDITABLE(entry));
     searchBar->search(text);
 }
 
@@ -119,7 +119,7 @@ void SearchBar::search(Fun next) {
 
     MainWindow* win = control->getWindow();
     GtkWidget* searchTextField = win->get("searchTextField");
-    const char* text = gtk_entry_get_text(GTK_ENTRY(searchTextField));
+    const char* text = gtk_editable_get_text(GTK_EDITABLE(searchTextField));
     GtkWidget* lbSearchState = win->get("lbSearchState");
     if (*text == 0) {
         return;
@@ -185,7 +185,7 @@ void SearchBar::showSearchBar(bool show) {
 
     if (show) {
         GtkWidget* searchTextField = win->get("searchTextField");
-        gtk_widget_show_all(searchBar);
+        gtk_widget_show(searchBar);
         gtk_widget_grab_focus(searchTextField);
         this->indexInPage = 0;
     } else {

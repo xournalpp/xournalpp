@@ -135,38 +135,38 @@ void xoj::input::printGdkEvent(std::ostream& str, GdkEvent* e, guint32 reference
         str << "   Device:      " << d << " : " << gdkInputSources[gdk_device_get_source(d)] << " -- "
             << gdk_device_get_name(d) << "\n";
     }
-    if (GdkDevice* d = gdk_event_get_source_device(e); d) {
+    if (GdkDevice* d = gdk_event_get_device(e); d) {
         str << "   Source dev:  " << d << " : " << gdkInputSources[gdk_device_get_source(d)] << " -- "
             << gdk_device_get_name(d) << "\n";
     }
     if (GdkDeviceTool* t = gdk_event_get_device_tool(e); t) {
         str << "   DeviceTool:  " << t << "\n";
     }
-    if (guint btn; gdk_event_get_button(e, &btn)) {
-        str << "   Button:      " << btn << "\n";
-    }
-    if (guint key; gdk_event_get_keyval(e, &key)) {
-        str << "   Key:         " << key << "\n";
-    }
-    if (guint clickcount; gdk_event_get_click_count(e, &clickcount)) {
-        str << "   Click count: " << clickcount << "\n";
-    }
+    // if (GDK_IS_BUTTON_EVENT(e)) {
+    str << "   Button:      " << gdk_button_event_get_button(e) << "\n";
+    // }
+    // if (guint key; gdk_event_get_keyval(e, &key)) {
+    str << "   Key:         " << gdk_key_event_get_keyval(e) << "\n";
+    // }
+    // if (guint clickcount; gdk_event_get_click_count(e, &clickcount)) {
+    //     str << "   Click count: " << clickcount << "\n";
+    // }
     if (auto* seq = gdk_event_get_event_sequence(e); seq) {
         str << "   Sequence:    " << seq << "\n";
     }
-    if (GdkModifierType state; gdk_event_get_state(e, &state)) {
-        str << "   State:       " << std::bitset<8 * sizeof(decltype(state))>(state) << std::endl;
-    }
-    if (double x, y; gdk_event_get_coords(e, &x, &y)) {
+    str << "   State:       " << std::bitset<8 * sizeof(GdkModifierType)>(gdk_event_get_modifier_state(e)) << std::endl;
+    if (double x, y; gdk_event_get_position(e, &x, &y)) {
         str << "   Coords:      " << x << "   " << y << "\n";
     }
     if (double p; gdk_event_get_axis(e, GDK_AXIS_PRESSURE, &p)) {
         str << "   Pressure:    " << p << "\n";
     }
-    if (GdkScrollDirection dir; gdk_event_get_scroll_direction(e, &dir)) {
-        str << "   ScrollDir:   " << gdkScrollDirection[dir] << "\n";
-    }
-    if (double dx, dy; gdk_event_get_scroll_deltas(e, &dx, &dy)) {
+    // if (GdkScrollDirection dir; gdk_scroll_event_get_direction(e, &dir)) {
+    str << "   ScrollDir:   " << gdkScrollDirection[gdk_scroll_event_get_direction(e)] << "\n";
+    // }
+    {
+        double dx = 0., dy = 0.;
+        gdk_scroll_event_get_deltas(e, &dx, &dy);
         str << "   ScrollDelta: " << dx << "   " << dy << "\n";
     }
 }

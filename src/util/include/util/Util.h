@@ -54,14 +54,14 @@ bool isFlatpakInstallation();
 template <typename Fun>
 void execInUiThread(Fun&& callback, gint priority = G_PRIORITY_DEFAULT_IDLE) {
     if constexpr (std::is_function_v<Fun>) {
-        gdk_threads_add_idle_full(priority, std::forward<Fun>(callback), nullptr, nullptr);
+        g_idle_add_full(priority, std::forward<Fun>(callback), nullptr, nullptr);
     } else {
         constexpr auto fn = +[](gpointer functor) -> int {
             auto fun = static_cast<Fun*>(functor);
             (*fun)();
             return G_SOURCE_REMOVE;
         };
-        gdk_threads_add_idle_full(priority, fn, new auto(std::forward<Fun>(callback)), &xoj::util::destroy_cb<Fun>);
+        g_idle_add_full(priority, fn, new auto(std::forward<Fun>(callback)), &xoj::util::destroy_cb<Fun>);
     }
 }
 
