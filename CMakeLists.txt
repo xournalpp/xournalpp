@@ -139,7 +139,7 @@ endif()
 
 set(pkg-module-spec "")
 list(APPEND pkg-module-spec "glib-2.0 >= 2.32.0")
-list(APPEND pkg-module-spec "gtk+-3.0 >= 3.18.9")
+list(APPEND pkg-module-spec "gtk4 >= 4.6.1")
 list(APPEND pkg-module-spec "poppler-glib >= 0.41.0")
 if (APPLE)
   list(APPEND pkg-module-spec "poppler-cpp >= 0.41.0")
@@ -151,7 +151,7 @@ list(APPEND pkg-module-spec "portaudiocpp >= 12")
 list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
 
-pkg_check_modules(GtkSourceView IMPORTED_TARGET "gtksourceview-4 >= 4.0.0")
+pkg_check_modules(GtkSourceView IMPORTED_TARGET "gtksourceview-5 >= 5.0.0")
 
 # Profiling
 option (ENABLE_PROFILING "Link with gperftools" OFF)
@@ -180,7 +180,7 @@ if (ENABLE_QPDF)
     message(STATUS "Found qpdf: ${qpdf_VERSION}")
 endif ()
 
-option(ENABLE_PLUGINS "Compile with plugin support" ON)
+option(ENABLE_PLUGINS "Compile with plugin support" OFF)
 find_package(Lua) # Lua 5.4 is only supported with cmake >=3.18
 message(STATUS "Found Lua: ${Lua_FOUND}")
 if (Lua_FOUND AND ENABLE_PLUGINS)
@@ -239,7 +239,7 @@ target_link_libraries(external_modules INTERFACE
 
 target_compile_definitions(external_modules INTERFACE
         GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_40
-        GDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18
+        GDK_VERSION_MIN_REQUIRED=GDK_VERSION_4_0
         $<$<TARGET_EXISTS:X11::X11>:X11_ENABLED>
         )
 target_link_options(external_modules INTERFACE
@@ -288,14 +288,9 @@ set(DEV_ERRORLOG_DIR "errorlogs" CACHE STRING "Directory where errorlogfiles wil
 set(DEV_FILE_FORMAT_VERSION 4 CACHE STRING "File format version" FORCE)
 
 option(DEV_ENABLE_GCOV "Build with gcov support" OFF) # Enabel gcov support – expanded in src/
-option(DEV_CHECK_GTK3_COMPAT "Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)")
-if (DEV_CHECK_GTK3_COMPAT)
-    add_definitions(-DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE)
-endif ()
 
 mark_as_advanced(FORCE
-        DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE
-        DEV_ENABLE_GCOV DEV_CHECK_GTK3_COMPAT
+        DEV_TOOLBAR_CONFIG DEV_SETTINGS_XML_FILE DEV_PRINT_CONFIG_FILE DEV_METADATA_FILE DEV_ENABLE_GCOV
         )
 
 configure_file(
@@ -443,7 +438,7 @@ set(CPACK_DEBIAN_PACKAGE_RELEASE 2)
 set(CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PROJECT_VERSION}")
 set(CPACK_DEBIAN_PACKAGE_SECTION "graphics")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS
-        "libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, qpdf (>= 10.6.0)")
+        "libglib2.0-0 (>= 2.32), libgtk-4-0 (>= 4.6), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, qpdf (>= 10.6.0)")
 set(CPACK_DEBIAN_PACKAGE_SUGGESTS "texlive-base, texlive-latex-extra")  # Latex tool
 # Use debian's arch scheme; we only care about x86/amd64 for now but feel free to add more
 if (${PACKAGE_ARCH} STREQUAL "x86_64")
