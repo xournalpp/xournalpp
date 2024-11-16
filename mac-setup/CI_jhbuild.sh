@@ -14,7 +14,7 @@ get_lockfile_entry() {
     sed -e "/$key/!d" -e 's/^[^=]*=//' "$LOCKFILE"
 }
 
-install_jhbuild() {
+download_jhbuild_sources() {
     # Fetch the gtk-osx setup script
     local gtk_osx_commit=$(get_lockfile_entry gtk-osx)
     [ -d ~/gtk-osx-custom ] && rm -rf ~/gtk-osx-custom
@@ -25,6 +25,17 @@ install_jhbuild() {
     (cd ~/gtk-osx-custom && git remote add origin https://gitlab.gnome.org/GNOME/gtk-osx.git)
     (cd ~/gtk-osx-custom && git fetch --depth 1 origin "$gtk_osx_commit")
     (cd ~/gtk-osx-custom && git checkout FETCH_HEAD)
+
+    JHBUILD_BRANCH=$(sed -e '/^JHBUILD_RELEASE_VERSION=/!d' -e 's/^[^=]*=//' ~/gtk-osx-custom/gtk-osx-setup.sh)
+    echo "Cloning jhbuild version $JHBUILD_BRANCH"
+    git clone --depth 1 -b $JHBUILD_BRANCH https://gitlab.gnome.org/GNOME/jhbuild.git "$HOME/Source/jhbuild"
+}
+
+echo "::group::Download jhbuild sources"
+download_jhbuild_sources
+echo "::endgroup::"
+
+install_jhbuild() {
 
     # Remove existing jhbuild
     rm -rf ~/gtk ~/.new_local ~/.config/jhbuildrc ~/.config/jhbuildrc-custom ~/Source ~/.cache/jhbuild
