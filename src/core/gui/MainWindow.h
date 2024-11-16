@@ -152,13 +152,8 @@ private:
     /**
      * Callback for drag & drop files
      */
-    static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data,
-                                guint info, guint time, MainWindow* win);
-
-    /**
-     * Load Overall CSS file with custom icons, other styling and potentially, user changes
-     */
-    static void loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename);
+    // static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData*
+    // data, guint info, guint time, MainWindow* win);
 
 private:
     Control* control;

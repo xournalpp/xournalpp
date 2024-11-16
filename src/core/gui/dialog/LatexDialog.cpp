@@ -139,7 +139,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, std::unique_ptr<Latex
         texBoxCssBuilder << "  font-family: '" << fontName << "';";
         texBoxCssBuilder << " } ";
 
-        gtk_css_provider_load_from_data(this->cssProvider.get(), texBoxCssBuilder.str().c_str(), -1, nullptr);
+        gtk_css_provider_load_from_data(this->cssProvider.get(), texBoxCssBuilder.str().c_str(), -1);
 
         // Apply the CSS to both the texBox and the drawing area.
         gtk_style_context_add_provider(gtk_widget_get_style_context(GTK_WIDGET(this->previewDrawingArea)),

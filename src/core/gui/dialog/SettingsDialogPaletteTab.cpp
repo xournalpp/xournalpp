@@ -68,7 +68,6 @@ void SettingsDialogPaletteTab::renderPaletteTab(const fs::path& currentlySetPale
             gtk_list_box_select_row(GTK_LIST_BOX(lb), GTK_LIST_BOX_ROW(listBoxRow));
         }
     }
-    gtk_widget_show_all(GTK_WIDGET(lb));
 }
 
 

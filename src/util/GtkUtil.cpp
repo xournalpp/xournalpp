@@ -23,7 +23,11 @@ static GAction* findAction(GtkActionable* w) {
         return nullptr;
     }
     std::string groupname(namesv.substr(0, dotpos));
+#if GTK_MAJOR_VERSION == 3
     GActionGroup* win = gtk_widget_get_action_group(GTK_WIDGET(w), groupname.c_str());
+#else
+    auto* win = GTK_APPLICATION_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(w), GTK_TYPE_APPLICATION_WINDOW));
+#endif
     if (!win) {
         // Most likely the widget just got removed from the toplevel
         g_debug("xoj::util::gtk::findAction: could not find action group \"%s\"", groupname.data());

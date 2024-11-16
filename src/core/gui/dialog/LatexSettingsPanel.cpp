@@ -23,6 +23,7 @@
 #include "util/XojMsgBox.h"
 #include "util/gtk4_helper.h"
 #include "util/i18n.h"  // for FS, _F, _
+#include "util/raii/GObjectSPtr.h"
 
 #include "filesystem.h"  // for path, is_regular_file
 
@@ -170,8 +171,8 @@ void LatexSettingsPanel::checkDeps() {
         fail = true;
     }
 
-    GtkWindow* win = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(panel)));
-    XojMsgBox::showMessageToUser(win, msg, fail ? GTK_MESSAGE_ERROR : GTK_MESSAGE_INFO);
+    XojMsgBox::showMessageToUser(GTK_WINDOW(gtk_widget_get_ancestor(GTK_WIDGET(panel), GTK_TYPE_WINDOW)), msg,
+                                 fail ? GTK_MESSAGE_ERROR : GTK_MESSAGE_INFO);
 }
 
 void LatexSettingsPanel::updateWidgetSensitivity() {

@@ -22,7 +22,7 @@
 #include "gui/widgets/ZoomCallib.h"                 // for zoomcallib_new, zoom...
 #include "model/PageType.h"                         // for PageType
 #include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"                          // for fromGFile, toGFilename
+#include "util/PathUtil.h"                          // for fromGFile
 #include "util/Util.h"                              // for systemWithMessage
 #include "util/gtk4_helper.h"                       //
 #include "util/i18n.h"                              // for _
@@ -410,8 +410,8 @@ void SettingsDialog::load() {
     GtkWidget* txtDefaultPdfName = builder.get("txtDefaultPdfName");
     gtk_editable_set_text(GTK_EDITABLE(txtDefaultPdfName), settings->getDefaultPdfExportName().c_str());
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
-                                        Util::toGFilename(settings->getAudioFolder()).c_str());
+    // gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(builder.get("fcAudioPath")),
+    //                                     Util::toGFilename(settings->getAudioFolder()).c_str());
 
     GtkWidget* spAutosaveTimeout = builder.get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());

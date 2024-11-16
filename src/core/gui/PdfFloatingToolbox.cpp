@@ -37,7 +37,6 @@ PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* ov
     this->floatingToolbox = theMainWindow->get("pdfFloatingToolbox");
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
-    gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, true);
 
     g_signal_connect(overlay, "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
 
@@ -63,13 +62,13 @@ auto PdfFloatingToolbox::newSelection(double x, double y) -> const PdfElemSelect
     return this->pdfElemSelection.get();
 }
 
-void PdfFloatingToolbox::show(int x, int y) {
+void PdfFloatingToolbox::show(double x, double y) {
     xoj_assert(this->getSelection());
 
     // (x, y) are in the gtk window's coordinates.
     // However, we actually show the toolbox in the overlay's coordinate system.
-    gtk_widget_translate_coordinates(gtk_widget_get_toplevel(this->floatingToolbox), GTK_WIDGET(overlay.get()), x, y,
-                                     &this->position.x, &this->position.y);
+    gtk_widget_translate_coordinates(gtk_widget_get_ancestor(this->floatingToolbox, GTK_TYPE_WINDOW),
+                                     GTK_WIDGET(overlay.get()), x, y, &this->position.x, &this->position.y);
     this->show();
 }
 
@@ -136,15 +135,12 @@ void PdfFloatingToolbox::strikethroughCb(GtkButton* button, PdfFloatingToolbox* 
     pft->userCancelSelection();
 }
 
-void PdfFloatingToolbox::show() {
-    gtk_widget_hide(this->floatingToolbox);  // force showing in new position
-    gtk_widget_show_all(this->floatingToolbox);
-}
+void PdfFloatingToolbox::show() { gtk_widget_show(this->floatingToolbox); }
 
 void PdfFloatingToolbox::copyTextToClipboard() {
-    GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow());
+    GdkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow());
     if (std::string text = this->pdfElemSelection->getSelectedText(); !text.empty()) {
-        gtk_clipboard_set_text(clipboard, text.c_str(), -1);
+        gdk_clipboard_set_text(clipboard, text.c_str());
     }
 }
 

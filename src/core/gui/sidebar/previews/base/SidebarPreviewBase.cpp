@@ -37,7 +37,6 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, const char* menuId, con
     }
     doc->unlock();
 
-
     registerListener(this->control);
     this->control->addChangedDocumentListener(this);
 
@@ -50,12 +49,10 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, const char* menuId, con
 
     Builder builder(control->getGladeSearchPath(), XML_FILE);
     GMenuModel* menu = G_MENU_MODEL(builder.get<GObject>(menuId));
-    contextMenu.reset(GTK_MENU(gtk_menu_new_from_model(menu)), xoj::util::adopt);
-    gtk_menu_attach_to_widget(contextMenu.get(), mainBox.get(), nullptr);
+    contextMenu.reset(GTK_POPOVER(gtk_popover_menu_new_from_model(menu)), xoj::util::adopt);
+    gtk_widget_set_parent(GTK_WIDGET(contextMenu.get()), mainBox.get());
 
     gtk_box_append(GTK_BOX(mainBox.get()), builder.get(toolbarId));
-
-    gtk_widget_show_all(mainBox.get());
 }
 
 SidebarPreviewBase::~SidebarPreviewBase() { this->control->removeChangedDocumentListener(this); }
@@ -139,5 +136,5 @@ void SidebarPreviewBase::pageDeleted(size_t page) {}
 void SidebarPreviewBase::pageInserted(size_t page) {}
 
 void SidebarPreviewBase::openPreviewContextMenu(GdkEvent* currentEvent) {
-    gtk_menu_popup_at_pointer(contextMenu.get(), currentEvent);
+    // gtk_menu_popup_at_pointer(contextMenu.get(), currentEvent);
 }

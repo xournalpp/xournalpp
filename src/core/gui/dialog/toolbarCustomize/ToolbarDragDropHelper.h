@@ -15,11 +15,11 @@
 #include <gtk/gtk.h>  // for GtkWidget, GtkTargetEntry
 
 namespace ToolbarDragDropHelper {
-void dragDestAddToolbar(GtkWidget* target);
-void dragSourceAddToolbar(GtkWidget* widget);
+// void dragDestAddToolbar(GtkWidget* target);
+// void dragSourceAddToolbar(GtkWidget* widget);
 
-auto gdk_context_set_icon_from_image(GdkDragContext* ctx, GtkWidget* image) -> bool;
-
-extern const GdkAtom atomToolItem;
-extern const GtkTargetEntry dropTargetEntry;
+// auto gdk_context_set_icon_from_image(GdkDragContext* ctx, GtkWidget* image) -> bool;
+//
+// extern const GdkAtom atomToolItem;
+// extern const GtkTargetEntry dropTargetEntry;
 };  // namespace ToolbarDragDropHelper

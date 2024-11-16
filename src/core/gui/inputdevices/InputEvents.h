@@ -18,6 +18,8 @@
 #include <glib.h>     // for gdouble, gchar, guint, guint32
 
 #include "model/Point.h"  // for Point, Point::NO_PRESSURE
+#include "util/raii/CLibrariesSPtr.h"
+#include "util/raii/IdentityFunction.h"
 
 #include "DeviceId.h"
 
@@ -50,36 +52,22 @@ enum InputDeviceClass {
     INPUT_DEVICE_IGNORE
 };
 
-struct GdkEventGuard {
-    static inline GdkEvent* safeRef(GdkEvent* source) { return gdk_event_copy(source); }
-
-    GdkEventGuard() = default;
-
-    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source), &gdk_event_free) {}
-
-    GdkEventGuard& operator=(GdkEvent* source) {
-        event = {safeRef(source), &gdk_event_free};
-        return *this;
-    }
-
-    operator GdkEvent*() const { return event.get(); }
-
-    // it's more performant to manage the GdkEvent over C++ than over gdk
-    // Since the gdk_copy is extreme expansive
-    std::shared_ptr<GdkEvent> event{};
+class GdkEventHandler {
+public:
+    constexpr static auto ref = gdk_event_ref;
+    constexpr static auto unref = gdk_event_unref;
+    constexpr static auto adopt = xoj::util::specialization::identity<GdkEvent>;
 };
 
 struct InputEvent final {
-    /*explicit(false)*/ explicit operator bool() const { return !!sourceEvent.event; }
+    /*explicit(false)*/ explicit operator bool() const { return sourceEvent; }
 
-    GdkEventGuard sourceEvent;
+    xoj::util::CLibrariesSPtr<GdkEvent, GdkEventHandler> sourceEvent;
 
     InputEventType type{UNKNOWN};
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
     const gchar* deviceName{};
 
-    gdouble absoluteX{0};
-    gdouble absoluteY{0};
     gdouble relativeX{0};
     gdouble relativeY{0};
 
@@ -97,7 +85,7 @@ struct KeyEvent final {
     guint keyval{0};
     GdkModifierType state{};  ///< Consumed modifiers have been masked out
 
-    GdkEventGuard sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
+    xoj::util::CLibrariesSPtr<GdkEvent, GdkEventHandler> sourceEvent;  ///< Original GdkEvent. Avoid using if possible.
 };
 
 class InputEvents {

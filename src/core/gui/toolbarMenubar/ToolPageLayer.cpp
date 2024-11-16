@@ -101,7 +101,7 @@ static std::tuple<GtkWidget*, std::vector<ShowLayerEntry>, std::vector<std::pair
                                                                  Layer::Index id) -> std::pair<GtkWidget*, gulong> {
         GtkWidget* btn = gtk_check_button_new_with_label(layerName.c_str());
         // Is grouping necessary here? The GTK4 doc is unclear
-        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn));
+        gtk_check_button_set_group(GTK_CHECK_BUTTON(btn), std::exchange(group, GTK_CHECK_BUTTON(btn)));
         gtk_actionable_set_action_name(GTK_ACTIONABLE(btn), actionName.c_str());
         gtk_actionable_set_action_target_value(GTK_ACTIONABLE(btn), xoj::util::makeGVariantSPtr(id).get());
         // Callback to hide the popover when a new layer is selected
@@ -139,7 +139,6 @@ static std::tuple<GtkWidget*, std::vector<ShowLayerEntry>, std::vector<std::pair
         gtk_grid_attach(grid, entries.emplace_back(lc, id).checkButton, 1, y, 1, 1);
     }
 
-    gtk_widget_show_all(GTK_WIDGET(grid));
     return {GTK_WIDGET(grid), std::move(entries), std::move(radioButtons)};
 }
 
@@ -177,7 +176,6 @@ static GtkBox* makePopoverContent() {
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
     addSpecialButton(box, _("Create new layer"), Action::LAYER_NEW);
     gtk_box_append(box, gtk_separator_new(GTK_ORIENTATION_HORIZONTAL));
-    gtk_widget_show_all(GTK_WIDGET(box));
     return box;
 }
 
@@ -302,7 +300,7 @@ ToolPageLayer::~ToolPageLayer() = default;
 auto ToolPageLayer::getToolDisplayName() const -> std::string { return _("Layer Combo"); }
 
 auto ToolPageLayer::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(this->iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+    return gtk_image_new_from_icon_name(this->iconName.c_str());
 }
 
 auto ToolPageLayer::createItem(bool horizontal) -> xoj::util::WidgetSPtr {

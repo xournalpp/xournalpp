@@ -14,6 +14,8 @@
 
 #include <gtk/gtk.h>
 
+#if GTK_MAJOR_VERSION == 3
+
 /**** GtkBox ****/
 
 void gtk_box_append(GtkBox* box, GtkWidget* child);
@@ -93,3 +95,8 @@ GtkWidget* gtk_list_box_row_get_child(GtkListBoxRow* row);
 
 /**** GtkEventController ****/
 GdkEvent* gtk_event_controller_get_current_event(GtkEventController*);
+
+/**** Gtk ****/
+void gtk_show_uri(GtkWindow* parent, const char* uri, guint32 timestamp);
+
+#endif
