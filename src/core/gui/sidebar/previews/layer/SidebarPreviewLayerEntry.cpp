@@ -16,7 +16,6 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar
         layerId(layerId),
         box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 4), xoj::util::adopt),
         stacked(stacked) {
-
 #if GTK_CHECK_VERSION(4, 8, 0)
     cbVisible = gtk_check_button_new();
     GtkWidget* lbl = gtk_label_new(layerName.c_str());
@@ -39,8 +38,6 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar
     toolbarHeight = gtk_widget_get_allocated_height(cbVisible) + Shadow::getShadowTopLeftSize() + 20;
     gtk_box_append(GTK_BOX(box.get()), this->button.get());
     gtk_box_append(GTK_BOX(box.get()), cbVisible);
-
-    gtk_widget_show_all(box.get());
 }
 
 SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry() {
