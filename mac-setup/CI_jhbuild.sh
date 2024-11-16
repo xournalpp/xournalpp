@@ -8,7 +8,7 @@ set -o pipefail
 LOCKFILE="$(dirname "$0")"/jhbuild-version.lock
 MODULEFILE="$(dirname "$0")"/xournalpp.modules
 GTK_OSX_PATCHFILE="$(dirname "$0")"/gtk-osx.patch
-GTK_MODULES="meta-gtk-osx-gtk3 gtksourceview3"
+GTK_MODULES="gtk-4 gtksourceview4 librsvg adwaita-icon-theme hicolor-icon-theme"
 
 get_lockfile_entry() {
     local key="$1"
@@ -94,6 +94,14 @@ module_makeargs['portaudio'] = ' -j1 '
 # Uncomment when ftp.gnu.org is out...
 # repos['ftp.gnu.org'] = 'https://ftpmirror.gnu.org/gnu/'
 repos['ftp.gnu.org'] = 'https://raw.githubusercontent.com/xournalpp/xournalpp-pipeline-dependencies/refs/heads/gnu.org.source.mirror/gnu-sources/ftp.gnu.org/gnu/'
+
+# Disable gtksourceview 5 (for GTK 4) vapi
+module_mesonargs['gtksourceview4'] = mesonargs + ' -Dvapi=false -Dbuild-testsuite=false'
+
+module_mesonargs['gtk-4'] = mesonargs + ' -Dbuild-testsuite=false -Dbuild-examples=false -Dbuild-tests=false'
+
+module_mesonargs['glib-no-introspection'] = mesonargs + ' -Dglib_debug=disabled'
+module_mesonargs['glib'] = mesonargs + ' -Dglib_debug=disabled'
 
 ### END
 EOF
