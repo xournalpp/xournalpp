@@ -7,6 +7,7 @@ set -o pipefail
 
 LOCKFILE="$(dirname "$0")"/jhbuild-version.lock
 MODULEFILE="$(dirname "$0")"/xournalpp.modules
+GTK_MODULES="meta-gtk-osx-gtk3 gtksourceview3"
 
 get_lockfile_entry() {
     local key="$1"
@@ -14,18 +15,40 @@ get_lockfile_entry() {
     sed -e "/$key/!d" -e 's/^[^=]*=//' "$LOCKFILE"
 }
 
-install_jhbuild() {
-    # Fetch the gtk-osx setup script
-    local gtk_osx_commit=$(get_lockfile_entry gtk-osx)
-    [ -d ~/gtk-osx-custom ] && rm -rf ~/gtk-osx-custom
-    mkdir ~/gtk-osx-custom
+shallow_clone_into_commit() {
+    local repo="$1"            # Target repository
+    local lockfile_entry="$2"  # Name of the lockfile entry containing the commit hash
+    local dir="$3"             # Destination directory
+    local commit=$(get_lockfile_entry $lockfile_entry)
+
+    echo "Cloning commit $commit of $repo into $dir"
+
+    [ -d "$dir" ] && rm -rf "$dir"
+    mkdir -p "$dir"
 
     # Shallow clone into a commit
-    (cd ~/gtk-osx-custom && git init)
-    (cd ~/gtk-osx-custom && git remote add origin https://gitlab.gnome.org/GNOME/gtk-osx.git)
-    (cd ~/gtk-osx-custom && git fetch --depth 1 origin "$gtk_osx_commit")
-    (cd ~/gtk-osx-custom && git checkout FETCH_HEAD)
+    (cd "$dir" && git init -b main)
+    (cd "$dir" && git remote add origin "$repo")
+    (cd "$dir" && git fetch --depth 1 origin "$commit")
+    (cd "$dir" && git checkout FETCH_HEAD)
+}
 
+download_jhbuild_sources() {
+    shallow_clone_into_commit "https://gitlab.gnome.org/GNOME/gtk-osx.git" "gtk-osx" ~/gtk-osx-custom
+
+    # Make a shallow clone of jhbuild's sources. This way we detect if cloning fails and avoid the deep clone in gtk-osx-setup.sh
+    JHBUILD_BRANCH=$(sed -e '/^JHBUILD_RELEASE_VERSION=/!d' -e 's/^[^=]*=//' ~/gtk-osx-custom/gtk-osx-setup.sh)
+    echo "Cloning jhbuild version $JHBUILD_BRANCH"
+    git clone --depth 1 -b $JHBUILD_BRANCH https://gitlab.gnome.org/GNOME/jhbuild.git "$HOME/Source/jhbuild"
+
+    shallow_clone_into_commit "https://github.com/xournalpp/xournalpp-pipeline-dependencies" "xournalpp-pipeline-dependencies" ~/xournalpp-pipeline-dependencies
+}
+
+echo "::group::Download jhbuild sources"
+download_jhbuild_sources
+echo "::endgroup::"
+
+install_jhbuild() {
     # Remove existing jhbuild
     rm -rf ~/gtk ~/.new_local ~/.config/jhbuildrc ~/.config/jhbuildrc-custom ~/Source ~/.cache/jhbuild
 
@@ -87,19 +110,14 @@ setup_custom_modulesets
 echo "::endgroup::"
 
 
-### Step 2: Download all sources
+### Step 2: Download modules' sources
 download() {
-    jhbuild update meta-gtk-osx-gtk3 gtksourceview3
+    jhbuild update $GTK_MODULES
     jhbuild -m "$MODULEFILE" update meta-xournalpp-deps
     jhbuild -m ~/gtk-osx-custom/modulesets-stable/bootstrap.modules update meta-bootstrap
     echo "Downloaded all jhbuild modules' sources"
-
-    local pdeps_commit=$(get_lockfile_entry xournalpp-pipeline-dependencies)
-    [ -d ~/xournalpp-pipeline-dependencies ] && rm -rf ~/xournalpp-pipeline-dependencies
-    git clone https://github.com/xournalpp/xournalpp-pipeline-dependencies --depth 1 ~/xournalpp-pipeline-dependencies
-    (cd ~/xournalpp-pipeline-dependencies && git checkout "$pdeps_commit")
 }
-echo "::group::Download sources"
+echo "::group::Download modules' sources"
 download
 echo "::endgroup::"
 
@@ -114,7 +132,7 @@ echo "::endgroup::"
 
 ### Step 4: build gtk (~15 minutes on a Mac Mini M1 w/ 8 cores)
 build_gtk() {
-    jhbuild build --no-network meta-gtk-osx-gtk3 gtksourceview3
+    jhbuild build --no-network $GTK_MODULES
     echo "Finished building gtk"
 }
 echo "::group::Build gtk"
