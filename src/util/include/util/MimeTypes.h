@@ -26,7 +26,7 @@ public:
 
     void addToFilter(GtkFileFilter* filter) const {
 #ifdef G_OS_WIN32
-        gtk_file_filter_add_pattern(filter, ('*' + extension));
+        gtk_file_filter_add_pattern(filter, ('*' + std::string(extension)).c_str());
 #else
         gtk_file_filter_add_mime_type(filter, mimeType);
 #endif
