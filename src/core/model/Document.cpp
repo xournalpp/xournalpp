@@ -248,12 +248,14 @@ auto Document::createSaveFilename(DocumentType type, std::string_view defaultSav
         wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->filepath.filename());
     }
 
-    auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
-    auto format = utf8_to_wstring(format_str);
+
     auto oldloc = std::locale();
     auto loc_utf8 = std::locale("C.UTF8");
     auto loc = std::locale().combine<std::ctype<char>>(loc_utf8).combine<std::ctype<wchar_t>>(loc_utf8);
     std::locale::global(loc);
+    auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
+    auto format = utf8_to_wstring(format_str);
+
     // Todo (cpp20): use <format> or get {fmt} and switch back to utf8.
     using ou32stringstream = std::basic_ostringstream<wchar_t>;
     ou32stringstream ss;
