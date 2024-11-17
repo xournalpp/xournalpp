@@ -41,6 +41,11 @@ runs:
       run: |
         sudo apt-get update
         sudo apt-get install -y ${{env.packages}}
+        locale -a
+        sudo locale-gen en_US.UTF-8
+        sudo locale-gen C.UTF-8
+        locale -a
+        sudo update-locale 
     - name: 'Set environment variables'
       shell: bash
       run: |

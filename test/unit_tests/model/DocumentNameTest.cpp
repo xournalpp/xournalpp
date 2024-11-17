@@ -10,6 +10,7 @@
  */
 
 #include <filesystem>
+#include <locale>
 
 #include <config-test.h>
 #include <gtest/gtest.h>
@@ -24,6 +25,14 @@ static void test_u8_fn(Document& doc, Document::DocumentType dt, std::string_vie
 }
 
 TEST(DocumentName, testUTF8) {
+    
+    try {
+        std::locale("C.UTF8");
+    } catch (...) {
+        std::cerr << "C.UTF8 not available, skiping test..." << std::endl;
+        GTEST_SKIP();
+    }
+
     DocumentHandler dh;
     Document doc(&dh);
     test_u8_fn(doc,Document::PDF, u8"%%ç测试ôê€ß", u8"%{name}测试",u8"%ç测试ôê€ß");
