@@ -26,7 +26,7 @@ static auto makeSaveFileChooserNative(Settings* settings, fs::path suggestedPath
     gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(native), Util::toGFile(settings->getLastOpenPath()).get(),
                                          nullptr);
 
-    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native), true);
+    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native), false);
 
     return xoj::util::GObjectSPtr<GtkNativeDialog>(GTK_NATIVE_DIALOG(native), xoj::util::adopt);
 }
@@ -47,16 +47,25 @@ xoj::SaveDlg::SaveFileDialog::SaveFileDialog(Settings* settings, fs::path sugges
                             xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
 
                     if (self->pathValidation(file, gtk_file_filter_get_name(gtk_file_chooser_get_filter(fc)))) {
-                        self->callback(std::move(file));
+                        XojMsgBox::replaceFileQuestion(
+                                nullptr, std::move(file),
+                                [self](auto&& file) { self->close(std::forward<decltype(file)>(file)); },
+                                [dialog](auto&& file) { gtk_native_dialog_show(dialog); });
                     }
                 } else {
-                    self->callback(std::nullopt);
+                    self->close(std::nullopt);
                 }
-
-                // Delete the wrapper so there is no memory leak
-                delete self;
             }),
             this);
+}
+
+void xoj::SaveDlg::SaveFileDialog::close(std::optional<fs::path> path) {
+    auto cb = std::move(this->callback);
+
+    // Delete the wrapper so there is no memory leak
+    delete this;
+
+    cb(std::move(path));
 }
 
 static bool xoppPathValidation(fs::path& p, const char*) {
