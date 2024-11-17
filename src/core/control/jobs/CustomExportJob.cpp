@@ -26,10 +26,10 @@
 
 CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Custom Export")) {
     // Supported filters
-    filters.insert({_("PDF files"), ExportType(".pdf", "application/pdf")});
-    filters.insert({_("PNG graphics"), ExportType(".png", "image/png")});
-    filters.insert({_("SVG graphics"), ExportType(".svg", "image/svg+xml")});
-    filters.insert({_("Xournal (Compatibility)"), ExportType(".xoj", "application/x-xojpp")});
+    filters.insert({_("PDF files"), xoj::Mime::PDF});
+    filters.insert({_("PNG graphics"), xoj::Mime::PNG});
+    filters.insert({_("SVG graphics"), xoj::Mime::SVG});
+    filters.insert({_("Xournal (Compatibility)"), xoj::Mime::XOJ});
 }
 
 CustomExportJob::~CustomExportJob() = default;

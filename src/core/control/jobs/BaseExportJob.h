@@ -16,6 +16,8 @@
 
 #include <gtk/gtk.h>  // for GtkWidget
 
+#include "util/MimeTypes.h"
+
 #include "BlockingJob.h"  // for BlockingJob
 #include "filesystem.h"   // for path
 
@@ -27,14 +29,6 @@
 enum ExportBackgroundType { EXPORT_BACKGROUND_NONE, EXPORT_BACKGROUND_UNRULED, EXPORT_BACKGROUND_ALL };
 
 class Control;
-
-class ExportType {
-public:
-    std::string extension;
-    std::string mimeType;
-
-    ExportType(std::string ext, std::string mime): extension(std::move(ext)), mimeType(std::move(mime)) {}
-};
 
 class BaseExportJob: public BlockingJob {
 public:
@@ -51,7 +45,7 @@ public:
 
 protected:
     virtual void addFilterToDialog(GtkFileChooser* dialog) = 0;
-    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const ExportType& mimetype);
+    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const xoj::MimeType& mimetype);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
     virtual bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr);
 

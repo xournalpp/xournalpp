@@ -20,14 +20,12 @@ BaseExportJob::BaseExportJob(Control* control, const std::string& name): Blockin
 
 BaseExportJob::~BaseExportJob() = default;
 
-void BaseExportJob::addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const ExportType& mime) {
+void BaseExportJob::addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const xoj::MimeType& mime) {
     GtkFileFilter* filter = gtk_file_filter_new();
     gtk_file_filter_set_name(filter, name.c_str());
-#ifdef G_OS_WIN32
-    gtk_file_filter_add_pattern(filter, ('*' + mime.extension).c_str());
-#else
-    gtk_file_filter_add_mime_type(filter, mime.mimeType.c_str());
-#endif
+
+    mime.addToFilter(filter);
+
     gtk_file_chooser_add_filter(dialog, filter);
 }
 
