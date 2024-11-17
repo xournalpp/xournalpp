@@ -254,10 +254,10 @@ auto Document::createSaveFilename(DocumentType type, std::string_view defaultSav
     auto loc = std::locale().combine<std::ctype<char>>(loc_utf8).combine<std::ctype<wchar_t>>(loc_utf8);
     std::locale::global(loc);
     auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
-    auto format = utf8_to_wstring(format_str);
+    auto format = utf8_to_u32string(format_str);
 
     // Todo (cpp20): use <format> or get {fmt} and switch back to utf8.
-    using ou32stringstream = std::basic_ostringstream<wchar_t>;
+    using ou32stringstream = std::basic_ostringstream<char32_t>;
     ou32stringstream ss;
     ss.imbue(std::locale());
     time_t curtime = time(nullptr);
