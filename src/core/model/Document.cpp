@@ -39,7 +39,7 @@
 #include "filesystem.h"       // for path
 
 // Todo: move out of this file, implement the range interface for this or use boost.text
-static auto utf8_to_u32string(std::string_view utf_string) -> std::u32string {
+/* static auto utf8_to_u32string(std::string_view utf_string) -> std::u32string {
     setlocale(LC_CTYPE, "C.utf8");
     std::u32string format;
     format.resize(utf_string.size());
@@ -74,7 +74,7 @@ static auto utf8_to_u32string(std::string_view utf_string) -> std::u32string {
     auto size = size_t(target_iter - format.data());
     format.resize(size);
     return format;
-}
+} */
 
 // Todo: move out of this file, implement the range interface for this or use boost.text
 static auto utf8_to_wstring(std::string_view utf_string) -> std::wstring {
