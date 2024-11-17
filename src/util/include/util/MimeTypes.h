@@ -24,9 +24,9 @@ public:
 
     constexpr MimeType(const char* ext, const char* mime): extension(ext), mimeType(mime) {}
 
-    constexpr void addToFilter(GtkFileFilter* filter) const {
+    void addToFilter(GtkFileFilter* filter) const {
 #ifdef G_OS_WIN32
-        gtk_file_filter_add_pattern(filter, ('*' + extension)));
+        gtk_file_filter_add_pattern(filter, ('*' + extension));
 #else
         gtk_file_filter_add_mime_type(filter, mimeType);
 #endif
