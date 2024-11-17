@@ -250,7 +250,7 @@ auto Document::createSaveFilename(DocumentType type, std::string_view defaultSav
 
 
     auto oldloc = std::locale();
-    auto loc_utf8 = std::locale("C.UTF8");
+    auto loc_utf8 = std::locale("C.UTF-8");
     auto loc = std::locale().combine<std::ctype<char>>(loc_utf8).combine<std::ctype<wchar_t>>(loc_utf8);
     std::locale::global(loc);
     auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
