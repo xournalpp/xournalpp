@@ -79,7 +79,7 @@ void initCAndCoutLocales() {
      * This avoids issue with tags when exporting to PDF, see #3551
      */
     setlocale(LC_NUMERIC, "C.utf8");
-    setlocale(LC_CTYPE, "C.utf8"); // Enforce utf8 everywhere
+    setlocale(LC_CTYPE, "C.utf8");  // Enforce utf8 everywhere
 
     std::cout.imbue(std::locale());
 }
