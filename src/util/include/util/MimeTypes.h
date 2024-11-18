@@ -24,6 +24,8 @@ struct MimeType {
     constexpr MimeType(const char* ext, const char* mime): extension(ext), mimeType(mime) {}
 
     void addToFilter(GtkFileFilter* filter) const {
+        // Windows does not support mime types, so we have to use patterns
+        // See https://docs.gtk.org/gtk3/class.FileChooserNative.html#win32-details-gtkfilechooserdialognative-win32
 #ifdef G_OS_WIN32
         gtk_file_filter_add_pattern(filter, ('*' + std::string(extension)).c_str());
 #else

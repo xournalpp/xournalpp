@@ -47,14 +47,14 @@ public:
         gtk_widget_show(GTK_WIDGET(popup->getWindow()));
         g_signal_connect(popup->getWindow(), "delete-event",
                          G_CALLBACK(+[](GtkWidget*, GdkEvent*, gpointer popup) -> gboolean {
-                             delete reinterpret_cast<PopupType*>(popup);
+                             delete static_cast<PopupType*>(popup);
                              return true;  // Block the default callback: we destroy the window via ~GtkWindowUPtr()
                          }),
                          popup);
 #else
         gtk_widget_show(GTK_WIDGET(popup->getWindow()));
         g_signal_connect(popup->getWindow(), "close-request", G_CALLBACK(+[](GtkWindow*, gpointer popup) -> gboolean {
-                             delete reinterpret_cast<PopupType*>(popup);
+                             delete static_cast<PopupType*>(popup);
                              return true;  // Block the default callback: we destroy the window via ~GtkWindowUPtr()
                          }),
                          popup);

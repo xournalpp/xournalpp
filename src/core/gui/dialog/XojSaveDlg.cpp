@@ -38,7 +38,7 @@ xoj::SaveDlg::SaveFileDialog::SaveFileDialog(Settings* settings, fs::path sugges
         fileChooserNative(makeSaveFileChooserNative(settings, std::move(suggestedPath), windowTitle, buttonLabel)),
         callback(std::move(callback)),
         pathValidation(std::move(pathValidation)) {
-    this->signalId = g_signal_connect(
+    g_signal_connect(
             getNativeDialog(), "response", G_CALLBACK(+[](GtkNativeDialog* dialog, int response, gpointer data) {
                 auto* self = static_cast<SaveFileDialog*>(data);
                 auto* fc = GTK_FILE_CHOOSER(dialog);
@@ -62,7 +62,6 @@ xoj::SaveDlg::SaveFileDialog::SaveFileDialog(Settings* settings, fs::path sugges
 void xoj::SaveDlg::SaveFileDialog::close(std::optional<fs::path> path) {
     auto cb = std::move(this->callback);
 
-    // Delete the wrapper so there is no memory leak
     delete this;
 
     cb(std::move(path));

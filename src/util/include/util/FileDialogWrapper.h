@@ -36,8 +36,6 @@ public:
     explicit FileDialogWrapper(Args&&... args) {
         dialog = new FileDialogType(std::forward<Args>(args)...);
     }
-
-    // dialog must destory itself on close
     ~FileDialogWrapper() = default;
 
     void show(GtkWindow* parent) const {
@@ -53,6 +51,7 @@ public:
     }
 
 private:
-    FileDialogType* dialog = nullptr;
+    // The dialog has to destroy itself, since it may live longer than the wrapper
+    FileDialogType* dialog;
 };
 };  // namespace xoj::popup

@@ -20,6 +20,7 @@
 #include "model/PageType.h"           // for PageType
 #include "util/Color.h"               // for GdkRGBA_to_argb, rgb_t...
 #include "util/FileDialogWrapper.h"   // for FileDialogWrapper
+#include "util/MimeTypes.h"
 #include "util/PathUtil.h"            // for fromGFilename, readString
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/SaveNameUtils.h"
@@ -146,11 +147,9 @@ void PageTemplateDialog::saveToFile() {
 
     GtkFileFilter* filterXoj = gtk_file_filter_new();
     gtk_file_filter_set_name(filterXoj, _("Xournal++ template"));
-#ifdef G_OS_WIN32
-    gtk_file_filter_add_pattern(filterXoj, "*.xopt");
-#else
-    gtk_file_filter_add_mime_type(filterXoj, "application/x-xopt");
-#endif
+
+    Mime::XOPT.addToFilter(filterXoj);
+
     gtk_file_chooser_add_filter(fc, filterXoj);
 
     popup.show(GTK_WINDOW(this->getWindow()));

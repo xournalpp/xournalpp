@@ -59,7 +59,7 @@ static auto makeOpenFileChooserNative(const char* windowTitle) {
 
 xoj::OpenDlg::OpenFileDialog::OpenFileDialog(const char* title, std::function<void(fs::path, bool)> callback):
         fileChooserNative(makeOpenFileChooserNative(title)), callback(std::move(callback)) {
-    this->signalId = g_signal_connect(
+    g_signal_connect(
             getNativeDialog(), "response", G_CALLBACK(+[](GtkNativeDialog* win, int response, gpointer data) {
                 auto* self = static_cast<OpenFileDialog*>(data);
 
@@ -75,15 +75,8 @@ xoj::OpenDlg::OpenFileDialog::OpenFileDialog(const char* title, std::function<vo
                         attach = std::strcmp(choice, "true") == 0;
                     }
 
-                    // We need to call gtk_window_close() before invoking the callback, because if the callback pops up
-                    // another dialog, the first one won't close...
-                    // So we postpone the callback
-                    Util::execInUiThread(
-                            [cb = std::move(self->callback), path = std::move(path), attach]() { cb(path, attach); });
+                    self->close(path, attach);
                 }
-
-                // Delete the wrapper so there is no memory leak
-                delete self;
             }),
             this);
 }
@@ -91,6 +84,13 @@ xoj::OpenDlg::OpenFileDialog::OpenFileDialog(const char* title, std::function<vo
 xoj::OpenDlg::OpenFileDialog::OpenFileDialog(const char* title, std::function<void(fs::path)> callback):
         OpenFileDialog(title, [cb = std::move(callback)](fs::path path, bool) { cb(std::move(path)); }) {}
 
+void xoj::OpenDlg::OpenFileDialog::close(fs::path path, bool attach) {
+    auto cb = std::move(this->callback);
+
+    delete this;
+
+    cb(std::move(path), attach);
+}
 
 void xoj::OpenDlg::showOpenTemplateDialog(GtkWindow* parent, Settings* settings,
                                           std::function<void(fs::path)> callback) {

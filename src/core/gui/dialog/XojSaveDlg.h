@@ -39,7 +39,6 @@ private:
     util::GObjectSPtr<GtkNativeDialog> fileChooserNative;
     std::function<void(std::optional<fs::path>)> callback;
     std::function<bool(fs::path&, const char* filterName)> pathValidation;
-    gulong signalId{};
 };
 
 /**

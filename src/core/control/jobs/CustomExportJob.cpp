@@ -13,11 +13,12 @@
 #include "model/Document.h"                    // for Document
 #include "pdf/base/XojPdfExport.h"             // for XojPdfExport
 #include "pdf/base/XojPdfExportFactory.h"      // for XojPdfExportFactory
-#include "util/PathUtil.h"                     // for clearExtensions
-#include "util/PopupWindowWrapper.h"           // for PopupWindowWrapper
-#include "util/Util.h"                         // for execInUiThread
-#include "util/XojMsgBox.h"                    // for XojMsgBox
-#include "util/i18n.h"                         // for _, FS, _F
+#include "util/MimeTypes.h"
+#include "util/PathUtil.h"            // for clearExtensions
+#include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
+#include "util/Util.h"                // for execInUiThread
+#include "util/XojMsgBox.h"           // for XojMsgBox
+#include "util/i18n.h"                // for _, FS, _F
 
 #include "ImageExport.h"  // for ImageExport, EXPORT_GR...
 #include "SaveJob.h"      // for SaveJob

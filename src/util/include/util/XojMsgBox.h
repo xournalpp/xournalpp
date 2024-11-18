@@ -86,7 +86,9 @@ public:
 
     /**
      * @brief Calls writeToFile(file) if either file is not already present in the filesystem, or is the user answers
-     * "Overwrite" to a popup dialog.
+     * "Overwrite" to a popup dialog. Alternatively, calls selectNewFile(file).
+     * @param writeToFile is called if the user answers "Overwrite"
+     * @param selectNewFile is called if the user answers "Select another name"
      */
     static void replaceFileQuestion(
             GtkWindow* win, fs::path file, xoj::util::move_only_function<void(const fs::path&)> writeToFile,
