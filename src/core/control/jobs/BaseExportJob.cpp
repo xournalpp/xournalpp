@@ -11,6 +11,7 @@
 #include "gui/dialog/XojSaveDlg.h"
 #include "model/Document.h"          // for Document, Document::PDF
 #include "util/FileDialogWrapper.h"  // for FileDialogWrapper
+#include "util/MimeTypes.h"    // for MimeType
 #include "util/PathUtil.h"           // for toGFilename, clearExtensions
 #include "util/XojMsgBox.h"          // for XojMsgBox
 #include "util/glib_casts.h"         // for wrap_for_g_callback_v
