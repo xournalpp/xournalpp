@@ -16,10 +16,12 @@
 
 #include <gtk/gtk.h>  // for GtkWidget
 
-#include "util/MimeTypes.h"
-
 #include "BlockingJob.h"  // for BlockingJob
 #include "filesystem.h"   // for path
+
+namespace xoj {
+struct MimeType;
+}
 
 /**
  *  @brief List of types for the export of background components.
