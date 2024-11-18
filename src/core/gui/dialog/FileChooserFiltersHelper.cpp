@@ -1,6 +1,7 @@
 #include "FileChooserFiltersHelper.h"
 
 #include "control/jobs/BaseExportJob.h"
+#include "util/MimeTypes.h"
 #include "util/i18n.h"
 
 namespace xoj {
@@ -21,22 +22,16 @@ void addFilterAllFiles(GtkFileChooser* fc) {
 }
 
 void addFilterSupported(GtkFileChooser* fc) {
-    const char* desktop_env = g_getenv("XDG_CURRENT_DESKTOP");
-    const char* portal = g_getenv("GTK_USE_PORTAL");
+    GtkFileFilter* filterSupported = gtk_file_filter_new();
+    gtk_file_filter_set_name(filterSupported, _("Supported files"));
 
-    // KDE dolphin automatically adds Supported files
-    if (!desktop_env || g_strcmp0(desktop_env, "KDE") != 0 || !portal || g_strcmp0(portal, "1") != 0) {
-        GtkFileFilter* filterSupported = gtk_file_filter_new();
-        gtk_file_filter_set_name(filterSupported, _("Supported files"));
+    xoj::Mime::XOJ.addToFilter(filterSupported);
+    xoj::Mime::XOPP.addToFilter(filterSupported);
+    xoj::Mime::XOPT.addToFilter(filterSupported);
+    xoj::Mime::PDF.addToFilter(filterSupported);
 
-        xoj::Mime::XOJ.addToFilter(filterSupported);
-        xoj::Mime::XOPP.addToFilter(filterSupported);
-        xoj::Mime::XOPT.addToFilter(filterSupported);
-        xoj::Mime::PDF.addToFilter(filterSupported);
-
-        gtk_file_filter_add_pattern(filterSupported, "*.moj");  // MrWriter
-        gtk_file_chooser_add_filter(fc, filterSupported);
-    }
+    gtk_file_filter_add_pattern(filterSupported, "*.moj");  // MrWriter
+    gtk_file_chooser_add_filter(fc, filterSupported);
 }
 
 void addFilterPdf(GtkFileChooser* fc) { addMimeTypeFilter(fc, _("PDF files"), xoj::Mime::PDF); }
