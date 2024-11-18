@@ -17,10 +17,9 @@
 
 namespace xoj {
 
-class MimeType {
-public:
-    const char* extension;
-    const char* mimeType;
+struct MimeType {
+    const char* const extension;
+    const char* const mimeType;
 
     constexpr MimeType(const char* ext, const char* mime): extension(ext), mimeType(mime) {}
 
