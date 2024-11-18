@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Base class for MimeTypes
+ * Structure for MimeTypes
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
