@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-11-06 19:28\n"
+"PO-Revision-Date: 2024-11-18 08:38\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -1937,7 +1937,7 @@ msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:5627
 msgid "%."
-msgstr " %."
+msgstr " %"
 
 #: ../ui/settings.glade:565
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2196,7 +2196,7 @@ msgstr "<i>La sensibilitat a la pressió permet dibuixar línies amb diferents a
 
 #: ../ui/settings.glade:4479
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr "<i>Posa un regle a la pantalla i moveu el botó lliscant fins que coincideixin els regles.</i>"
+msgstr "<i>Poseu un regle a la pantalla i moveu el botó lliscant fins que coincideixin les mesures.</i>"
 
 #: ../ui/settings.glade:5570
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
