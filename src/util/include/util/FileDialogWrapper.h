@@ -44,24 +44,7 @@ public:
 
         gtk_native_dialog_show(dialog->getNativeDialog());
 
-        auto* dlg = dialog->getNativeDialog();
-
-        g_signal_connect(dlg, "response",
-                         G_CALLBACK(+[](GtkNativeDialog* dlg, gint response, gpointer data) {
-                             auto* self = static_cast<FileDialogType*>(data);
-                             xoj_assert(dlg == self->getNativeDialog());  // Just to be safe
-                             if (response == GTK_RESPONSE_ACCEPT) {
-                                 if (self->onAccept()) {
-                                     delete self;
-                                 } else {
-                                     gtk_native_dialog_show(dlg);
-                                 }
-                             } else {
-                                 self->onCancel();
-                                 delete self;
-                             }
-                         }),
-                         dialog.release());
+        dialog.release();
     }
 
     FileDialogType* getPopup() const {

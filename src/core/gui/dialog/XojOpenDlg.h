@@ -31,8 +31,8 @@ public:
 
     [[nodiscard]] inline GtkNativeDialog* getNativeDialog() const { return GTK_NATIVE_DIALOG(fileChooserNative.get()); }
 
-    bool onAccept() const;
-    void onCancel() const {}
+    /// Closes the dialog and calls the callback on `path`
+    void close(fs::path path, bool attach);
 
 private:
     util::GObjectSPtr<GtkNativeDialog> fileChooserNative;
