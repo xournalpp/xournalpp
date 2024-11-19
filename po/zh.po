@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"PO-Revision-Date: 2024-11-19 01:29\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -46,7 +46,7 @@ msgstr "%F-笔记-%H-%M"
 
 #: ../src/core/control/settings/Settings.cpp:148
 msgid "%{name}_annotated"
-msgstr "%{name}_已注解"
+msgstr "%{name}_已批注"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:189
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -989,13 +989,14 @@ msgstr "确定"
 #: ../src/core/control/XournalMain.cpp:680
 msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "仅导出 RANGE 指定的图层（例如“2-3,5,7-”）\n"
+"                                 如果没有 -p/--create-pdf 或 -i/--create-img，则无效"
 
 #: ../src/core/control/XournalMain.cpp:676
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "只导出 RANGE 指定的页面 (例如，“2-3,5,7-”)\n"
-"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr "只导出 RANGE 指定的页面 (例如，“2-3,5,7-\")\n"
+"                                 未启用 -p/--create-pdf 或 -i/--create-img 参数时无效"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
@@ -1191,7 +1192,7 @@ msgstr "信笺纸"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 msgid "SVG graphics"
-msgstr "SVG图形"
+msgstr "SVG 矢量图形"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Sample LaTeX file generated successfully."
@@ -1218,7 +1219,7 @@ msgstr "保存文件出错，不能备份：{1}"
 #: ../src/core/control/jobs/CustomExportJob.cpp:125
 #: ../src/core/control/jobs/SaveJob.cpp:131
 msgid "Save file error: {1}"
-msgstr "保存文件错误: {1}"
+msgstr "保存文件错误：{1}"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
@@ -1363,8 +1364,8 @@ msgstr "分割线"
 #: ../src/core/control/XournalMain.cpp:684
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr "设置PNG 导出的DPI ，默认是 300\n"
-"                                 No effect without -i/--create-img=foo.png"
+msgstr "设置 PNG 图片导出时的 DPI，默认值为 300\n"
+"                                 未启用形如 -i/--create-img=foo.png 参数时无效"
 
 #: ../src/core/control/XournalMain.cpp:694
 msgid "Set page height for PNG exports\n"
@@ -1603,15 +1604,15 @@ msgstr "撤销："
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:308
 msgid "Unexpected root tag: {1}"
-msgstr "意外的根标签: {1}"
+msgstr "意外的根标签：{1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:329
 msgid "Unexpected tag in document: \"{1}\""
-msgstr "文档中意外的标签: \"{1}\""
+msgstr "文档中意外的标签：“{1}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:531
 msgid "Unknown background type: {1}"
-msgstr "未知背景类型: {1}"
+msgstr "未知背景类型：{1}"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Unknown color value \"{1}\""
@@ -1619,7 +1620,7 @@ msgstr "未知颜色值 “{1}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:493
 msgid "Unknown domain type: {1}"
-msgstr "未知的域类型: {1}"
+msgstr "未知的域类型：{1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:248
 msgid "Unknown parser error"
@@ -1627,15 +1628,15 @@ msgstr "未知的解析器错误"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:442
 msgid "Unknown pixmap::domain type: {1}"
-msgstr "未知的 pixmap::domain 类型: {1}"
+msgstr "未知的 pixmap::domain 类型：{1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:623
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr "未知笔划端点类型：“{1}“，将假设为圆形"
+msgstr "未知笔划端点类型：“{1}”，将假设为圆形"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:641
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr "未知笔划类型: \"{1}\"，将假设为笔"
+msgstr "未知笔划类型：“{1}”，将假设为笔"
 
 #: ../src/core/control/Control.cpp:2703
 msgid "Unsaved Document"
@@ -1643,7 +1644,7 @@ msgstr "未保存文档"
 
 #: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
-msgstr "不支持的绘图格式: "
+msgstr "不支持的绘图格式： "
 
 #: ../src/core/control/Control.cpp:2450
 msgid "Use proposed PDF"
@@ -1684,11 +1685,11 @@ msgstr "点数 ({1}) 错误"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1050
 msgid "Wrong number of pressure values, got {1}, expected {2}"
-msgstr "点数错误，读取 {1}，预期 {2}"
+msgstr "笔压力值错误，读取 {1}，预期 {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:245
 msgid "XML Parser error: {1}"
-msgstr "XML 解析器错误: {1}"
+msgstr "XML 解析器错误：{1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
@@ -1726,7 +1727,9 @@ msgstr "您没有任何可以选择的 PDF 页面。操作取消。\n"
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select {2} to insert a PDF page."
-msgstr ""
+msgstr "您当前的文档不包含 PDF 页面编号 {1}\n"
+"是否要插入此页面？\n\n"
+"提示：您可以选择 {2} 来插入 PDF 页面。"
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
@@ -2773,12 +2776,13 @@ msgstr "强制使用浅色主题"
 
 #: ../ui/settings.glade:5455
 msgid "Frequency limit (ms)"
-msgstr ""
+msgstr "频率限制（毫秒）"
 
 #: ../ui/settings.glade:5467
 msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "频率限制：点击后在此时间段内发生的点击不会触发特殊操作。\n\n"
+"<i>建议：500 毫秒</i>"
 
 #: ../ui/main.glade:578 ../ui/settings.glade:4010
 msgid "Fullscreen"
@@ -2958,12 +2962,13 @@ msgstr "左利手/右利手"
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "长度限制（毫米）"
 
 #: ../ui/settings.glade:5424
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "长度限制：进一步移动的点击不会触发特殊操作\n\n"
+"<i>建议：1 毫米</i>"
 
 #: ../ui/about.glade:335
 msgid "License"
@@ -3527,12 +3532,13 @@ msgstr "这些设置将用于新页面"
 
 #: ../ui/settings.glade:5392
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "时间限制（毫秒）"
 
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "时间限制：点击持续时间过长不会触发特殊操作\n\n"
+"<i>建议：150 毫秒</i>"
 
 #: ../ui/settings.glade:2400
 msgid "Timeout"
