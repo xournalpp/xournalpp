@@ -58,38 +58,23 @@ static auto makeOpenFileChooserNative(const char* windowTitle) {
 }
 
 xoj::OpenDlg::OpenFileDialog::OpenFileDialog(const char* title, std::function<void(fs::path, bool)> callback):
-        fileChooserNative(makeOpenFileChooserNative(title)), callback(std::move(callback)) {
-    g_signal_connect(
-            getNativeDialog(), "response", G_CALLBACK(+[](GtkNativeDialog* win, int response, gpointer data) {
-                auto* self = static_cast<OpenFileDialog*>(data);
-
-                if (response == GTK_RESPONSE_ACCEPT) {
-                    auto path =
-                            Util::fromGFile(xoj::util::GObjectSPtr<GFile>(
-                                                    gtk_file_chooser_get_file(GTK_FILE_CHOOSER(win)), xoj::util::adopt)
-                                                    .get());
-
-                    bool attach = false;
-                    if (const char* choice = gtk_file_chooser_get_choice(GTK_FILE_CHOOSER(win), ATTACH_CHOICE_ID);
-                        choice) {
-                        attach = std::strcmp(choice, "true") == 0;
-                    }
-
-                    self->close(path, attach);
-                }
-            }),
-            this);
-}
+        fileChooserNative(makeOpenFileChooserNative(title)), callback(std::move(callback)) {}
 
 xoj::OpenDlg::OpenFileDialog::OpenFileDialog(const char* title, std::function<void(fs::path)> callback):
         OpenFileDialog(title, [cb = std::move(callback)](fs::path path, bool) { cb(std::move(path)); }) {}
 
-void xoj::OpenDlg::OpenFileDialog::close(fs::path path, bool attach) {
-    auto cb = std::move(this->callback);
+bool xoj::OpenDlg::OpenFileDialog::onAccept() const {
+    auto* fc = GTK_FILE_CHOOSER(getNativeDialog());
+    auto path = Util::fromGFile(xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
 
-    delete this;
+    bool attach = false;
+    if (const char* choice = gtk_file_chooser_get_choice(fc, ATTACH_CHOICE_ID); choice) {
+        attach = std::strcmp(choice, "true") == 0;
+    }
 
-    cb(std::move(path), attach);
+    callback(std::move(path), attach);
+
+    return true;
 }
 
 void xoj::OpenDlg::showOpenTemplateDialog(GtkWindow* parent, Settings* settings,

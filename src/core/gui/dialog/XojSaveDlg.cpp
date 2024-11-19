@@ -1,5 +1,6 @@
 #include "XojSaveDlg.h"
 
+#include <future>
 #include <optional>
 
 #include "control/settings/Settings.h"
@@ -37,35 +38,27 @@ xoj::SaveDlg::SaveFileDialog::SaveFileDialog(Settings* settings, fs::path sugges
                                              std::function<void(std::optional<fs::path>)> callback):
         fileChooserNative(makeSaveFileChooserNative(settings, std::move(suggestedPath), windowTitle, buttonLabel)),
         callback(std::move(callback)),
-        pathValidation(std::move(pathValidation)) {
-    g_signal_connect(
-            getNativeDialog(), "response", G_CALLBACK(+[](GtkNativeDialog* dialog, int response, gpointer data) {
-                auto* self = static_cast<SaveFileDialog*>(data);
-                auto* fc = GTK_FILE_CHOOSER(dialog);
-                if (response == GTK_RESPONSE_ACCEPT) {
-                    auto file = Util::fromGFile(
-                            xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
+        pathValidation(std::move(pathValidation)) {}
 
-                    if (self->pathValidation(file, gtk_file_filter_get_name(gtk_file_chooser_get_filter(fc)))) {
-                        XojMsgBox::replaceFileQuestion(
-                                nullptr, std::move(file),
-                                [self](auto&& file) { self->close(std::forward<decltype(file)>(file)); },
-                                [dialog](auto&& file) { gtk_native_dialog_show(dialog); });
-                    }
-                } else {
-                    self->close(std::nullopt);
-                }
-            }),
-            this);
+bool xoj::SaveDlg::SaveFileDialog::onAccept() {
+    auto* fc = GTK_FILE_CHOOSER(getNativeDialog());
+    auto file = Util::fromGFile(xoj::util::GObjectSPtr<GFile>(gtk_file_chooser_get_file(fc), xoj::util::adopt).get());
+
+    if (pathValidation(file, gtk_file_filter_get_name(gtk_file_chooser_get_filter(fc)))) {
+        XojMsgBox::replaceFileQuestion(
+                nullptr, std::move(file),
+                [cb = std::move(callback)](auto&& file) {
+                    cb(std::forward<decltype(file)>(file));
+                },
+                [](auto&& file) {
+                    // not implmented should return false
+                });
+    }
+
+    return true;
 }
 
-void xoj::SaveDlg::SaveFileDialog::close(std::optional<fs::path> path) {
-    auto cb = std::move(this->callback);
-
-    delete this;
-
-    cb(std::move(path));
-}
+void xoj::SaveDlg::SaveFileDialog::onCancel() const { callback(std::nullopt); }
 
 static bool xoppPathValidation(fs::path& p, const char*) {
     Util::clearExtensions(p);
