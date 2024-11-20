@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"PO-Revision-Date: 2024-11-20 19:27\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -530,11 +530,11 @@ msgstr "Ошибка аннотации PDF файла «{1}»\n"
 
 #: ../src/util/OutputStream.cpp:70
 msgid "Error code {1}"
-msgstr ""
+msgstr "Код ошибки {1}"
 
 #: ../src/util/OutputStream.cpp:49
 msgid "Error code {1}. Message:"
-msgstr ""
+msgstr "Код ошибки {1}. Ошибка:"
 
 #: ../src/core/gui/GladeGui.cpp:25
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -542,7 +542,7 @@ msgstr "Ошибка загрузки glade файла «{1}» (попробуй
 
 #: ../src/util/OutputStream.cpp:69
 msgid "Error occurred while closing file: \"{1}\""
-msgstr ""
+msgstr "Произошла ошибка при закрытии файла: \"{1}\""
 
 #: ../src/core/control/Control.cpp:2292
 msgid "Error opening file \"{1}\""
@@ -584,7 +584,7 @@ msgstr ""
 
 #: ../src/util/OutputStream.cpp:48
 msgid "Error writing data to file: \"{1}\""
-msgstr ""
+msgstr "Ошибка записи данных в файл: \"{1}\""
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
@@ -1163,7 +1163,7 @@ msgstr "Заменить"
 
 #: ../src/core/undo/MissingPdfUndoAction.cpp:66
 msgid "Replace missing PDF"
-msgstr ""
+msgstr "Замените отсутствующий PDF"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1183
 msgid "Requested temporary file was not found for attachment {1}"
@@ -1257,7 +1257,7 @@ msgstr "Выберите многоуровневый вывод"
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:78
 msgid "Select Multi-Layer Rectangle"
-msgstr ""
+msgstr "Выбрать мультислойный прямоугольник"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:546
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:26
@@ -1414,7 +1414,7 @@ msgstr "К сожалению, Xournal++ может открывать толь�
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:58
 msgid "Spacer"
-msgstr ""
+msgstr "Разделитель"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
