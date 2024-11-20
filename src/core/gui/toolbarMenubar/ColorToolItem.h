@@ -44,7 +44,10 @@ public:
      */
     void updateColor(const Palette& palette);
 
-    xoj::util::WidgetSPtr createItem(bool horizontal) override;
+    Widgetry createItem(ToolbarSide side) override;
+
+    xoj::util::GObjectSPtr<GdkPaintable> createPaintable(GdkSurface*) const override;
+
 
 private:
     NamedColor namedColor;

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">10000</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment2">
+    <property name="upper">10000</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkWindow" id="pageFormatDialog">
+    <property name="name">pageFormatDialog</property>
+    <property name="title" translatable="1">Paper Format</property>
+    <property name="resizable">0</property>
+    <property name="modal">1</property>
+    <property name="default-widget">btOk</property>
+    <property name="destroy-with-parent">1</property>
+    <property name="child">
+      <object class="GtkBox" id="dialog-main-box">
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">4</property>
+        <child>
+          <object class="GtkGrid" id="grid1">
+            <property name="column-spacing">2</property>
+            <property name="row-spacing">2</property>
+            <property name="halign">start</property>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="label" translatable="1">Template:</property>
+                <property name="halign">start</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkComboBox" id="cbTemplate">
+                <property name="hexpand">1</property>
+                <property name="name">cbTemplate</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="column-span">2</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label2">
+                <property name="label" translatable="1">&lt;b&gt;Pagesize&lt;/b&gt;</property>
+                <property name="use-markup">1</property>
+                <property name="halign">start</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="column-span">3</property>
+                  <property name="row">1</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label3">
+                <property name="label" translatable="1">Width:</property>
+                <property name="halign">start</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">2</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label4">
+                <property name="label" translatable="1">Height:</property>
+                <property name="halign">start</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">3</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinWidth">
+                <property name="name">spinWidth</property>
+                <property name="focusable">1</property>
+                <property name="text">0.00</property>
+                <property name="adjustment">adjustment1</property>
+                <property name="digits">2</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">2</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinHeight">
+                <property name="name">spinHeight</property>
+                <property name="focusable">1</property>
+                <property name="text">0.00</property>
+                <property name="adjustment">adjustment2</property>
+                <property name="digits">2</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">3</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="cbUnit">
+                <property name="name">cbUnit</property>
+                <layout>
+                  <property name="column">2</property>
+                  <property name="row">3</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="halign">start</property>
+                <property name="spacing">4</property>
+                <child>
+                  <object class="GtkToggleButton" id="btPortrait">
+                    <property name="css-classes">orientation</property>
+                    <property name="focusable">1</property>
+                    <property name="icon-name">xopp-orientation-portrait</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="btLandscape">
+                    <property name="css-classes">orientation</property>
+                    <property name="focusable">1</property>
+                    <property name="icon-name">xopp-orientation-landscape</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">4</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="valign">center</property>
+            <property name="halign">end</property>
+            <property name="spacing">4</property>
+            <property name="homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="btReset">
+                <property name="label" translatable="1">Reset</property>
+                <property name="name">btReset</property>
+                <property name="focusable">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btCancel">
+                <property name="label" translatable="1">Cancel</property>
+                <property name="name">btCancel</property>
+                <property name="focusable">1</property>
+                <child>
+                  <object class='GtkShortcutController'>
+                    <property name='scope'>managed</property>
+                    <child>
+                      <object class='GtkShortcut'>
+                        <property name='trigger'>Escape</property>
+                        <property name='action'>activate</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btOk">
+                <property name="label" translatable="1">Ok</property>
+                <property name="name">btOk</property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>

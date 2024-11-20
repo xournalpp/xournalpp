@@ -7,7 +7,7 @@ env:
   GITHUB_TOKEN: ENCRYPTED[efdc1b6215eedf2fceee15dbcf3bfd7919329028e8878dfa5df8a21d16e0ee3bdb7e6d96f30591cc8154573644c90d63]
 
 # Define a template that is reused for both binary blob task & build task.
-binary_blob_cache_template: &BINARY_BLOB_CACHE_TEMPLATE
+binary_gtk4_blob_cache_template: &BINARY_BLOB_CACHE_TEMPLATE
   folder: blobdir
   fingerprint_script: |
     echo "$CIRRUS_OS"
@@ -20,7 +20,7 @@ uninstall_homebrew_template: &UNINSTALL_HOMEBREW
     sudo rm -rf /opt/homebrew
 
 
-build_binary_blob_for_macos_arm_task:
+build_gtk4_blob_for_macos_arm_task:
   << : *UNINSTALL_HOMEBREW
   create_devroot_script: |
     sudo mkdir -p /opt/devroot && sudo chown "$USER":admin /opt/devroot
@@ -38,7 +38,7 @@ build_binary_blob_for_macos_arm_task:
 build_xournalpp_for_macos_arm_task:
   << : *UNINSTALL_HOMEBREW
   depends_on:
-    - build_binary_blob_for_macos_arm
+    - build_gtk4_blob_for_macos_arm
   env:
     PATH: "/opt/devroot/.local/bin:/opt/devroot/gtk/inst/bin:${PATH}"
     # Based on $PKG_CONFIG_PATH in the jhbuild shell

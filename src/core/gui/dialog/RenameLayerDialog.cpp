@@ -13,7 +13,7 @@
 class GladeSearchpath;
 class Layer;
 
-constexpr auto UI_FILE = "renameLayerDialog.glade";
+constexpr auto UI_FILE = "renameLayerDialog.ui";
 constexpr auto UI_DIALOG_NAME = "renameLayerDialog";
 
 RenameLayerDialog::RenameLayerDialog(GladeSearchpath* gladeSearchPath, UndoRedoHandler* undo, LayerController* lc,
@@ -23,11 +23,11 @@ RenameLayerDialog::RenameLayerDialog(GladeSearchpath* gladeSearchPath, UndoRedoH
     window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
     layerNameEntry = GTK_ENTRY(builder.get("layerNameEntry"));
 
-    gtk_entry_set_text(layerNameEntry, lc->getCurrentLayerName().c_str());
+    gtk_editable_set_text(GTK_EDITABLE(layerNameEntry), lc->getCurrentLayerName().c_str());
 
     g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
     g_signal_connect_swapped(builder.get("btOk"), "clicked", G_CALLBACK(+[](RenameLayerDialog* self) {
-                                 std::string newName = gtk_entry_get_text(self->layerNameEntry);
+                                 std::string newName = gtk_editable_get_text(GTK_EDITABLE(self->layerNameEntry));
 
                                  self->undo->addUndoAction(std::make_unique<LayerRenameUndoAction>(
                                          self->lc, self->l, newName, self->lc->getCurrentLayerName()));

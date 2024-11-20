@@ -13,9 +13,8 @@
 #include "model/PageRef.h"                                      // for PageRef
 #include "util/Assert.h"                                        // for xoj_assert
 #include "util/Util.h"                                          // for npos
-#include "util/gtk4_helper.h"
-#include "util/i18n.h"        // for _
-#include "util/safe_casts.h"  // for as_signed
+#include "util/i18n.h"                                          // for _
+#include "util/safe_casts.h"                                    // for as_signed
 
 #include "SidebarPreviewPageEntry.h"  // for Sideb...
 
@@ -25,7 +24,9 @@ constexpr auto TOOLBAR_ID = "PreviewPagesToolbar";
 SidebarPreviewPages::SidebarPreviewPages(Control* control):
         SidebarPreviewBase(control, MENU_ID, TOOLBAR_ID), iconNameHelper(control->getSettings()) {}
 
-SidebarPreviewPages::~SidebarPreviewPages() = default;
+SidebarPreviewPages::~SidebarPreviewPages() {
+    gtk_widget_unparent(GTK_WIDGET(contextMenu.get()));  // Prevents a warning...
+}
 
 void SidebarPreviewPages::enableSidebar() {
     SidebarPreviewBase::enableSidebar();
@@ -51,6 +52,7 @@ void SidebarPreviewPages::updatePreviews() {
     doc->unlock();
 
     layout();
+    ensureVisibleAreRendered();
 }
 
 void SidebarPreviewPages::pageSizeChanged(size_t page) {
@@ -138,4 +140,9 @@ void SidebarPreviewPages::updateIndices() {
     for (auto& preview: this->previews) {
         dynamic_cast<SidebarPreviewPageEntry*>(preview.get())->setIndex(index++);
     }
+}
+
+void SidebarPreviewPages::updatePageNumberingStyle() {
+    updatePreviews();
+    pageSelected(selectedEntry);
 }

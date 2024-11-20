@@ -13,8 +13,8 @@ env:
   GCC_VERSION: 10
 
 jobs:
-  ubuntu-20_04:
-    runs-on: ubuntu-20.04
+  ubuntu-22_04:
+    runs-on: ubuntu-22.04
     name: 'Test Xournal++ on Ubuntu 20.04'
     steps:
       - uses: actions/checkout@v4

@@ -266,9 +266,9 @@ auto Control::checkChangedDocument(Control* control) -> bool {
 void Control::saveSettings() {
     this->toolHandler->saveSettings();
 
-    gint width = 0;
-    gint height = 0;
-    gtk_window_get_size(getGtkWindow(), &width, &height);
+    int width = 0;
+    int height = 0;
+    gtk_window_get_default_size(getGtkWindow(), &width, &height);
 
     if (!this->win->isMaximized()) {
         this->settings->setMainWndSize(width, height);
@@ -665,7 +665,9 @@ void Control::addDefaultPage(const std::optional<std::string>& pageTemplate, Doc
         this->doc->addPage(std::move(page));
         this->doc->unlock();
     } else {
+        this->doc->lock();
         doc->addPage(std::move(page));
+        this->doc->unlock();
     }
 }
 
@@ -1419,7 +1421,7 @@ void Control::showSettings() {
                 ctrl->zoom->setZoom100Value(settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
 
                 if (settingsBeforeDialog.sidebarStyle != settings->getSidebarNumberingStyle()) {
-                    ctrl->getSidebar()->layout();
+                    ctrl->getSidebar()->updatePageNumberingStyle();
                 }
 
                 xournal->getHandRecognition()->reload();
@@ -1488,7 +1490,7 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
     fs::path filepath = doc->getFilepath();
 
     this->doc->lock();
-    *this->doc = *doc;
+    *this->doc = *doc;  // This calls fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE). No need to fire it again
     this->doc->unlock();
 
     // Set folder as last save path, so the next save will be at the current document location
@@ -1498,7 +1500,6 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
         settings->setLastSavePath(filepath.parent_path());
     }
 
-    fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
     fileLoaded(scrollToPage);
 }
 
@@ -2106,7 +2107,7 @@ void Control::clipboardPasteEnabled(bool enabled) { this->actionDB->enableAction
 
 void Control::clipboardPasteText(string text) {
     auto t = std::make_unique<Text>();
-    t->setText(text);
+    t->setText(std::move(text));
     t->setFont(settings->getFont());
     t->setColor(toolHandler->getTool(TOOL_TEXT).getColor());
 

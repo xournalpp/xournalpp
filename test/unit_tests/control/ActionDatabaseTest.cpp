@@ -29,7 +29,7 @@
  * action target value has the same type as set in control/actions/ActionProperties.h
  */
 
-constexpr auto MENU_XML_FILE = "mainmenubar.xml";
+constexpr auto MENU_XML_FILE = "mainmenubar.ui";
 constexpr auto MENU_ID = "menubar";
 
 namespace {

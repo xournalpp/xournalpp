@@ -26,7 +26,7 @@ public:
 
 private:
     static void buttonCloseSearchClicked(GtkButton* button, SearchBar* searchBar);
-    static void searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar);
+    static void searchTextChangedCallback(GtkSearchEntry* entry, SearchBar* searchBar);
 
     static void buttonNextSearchClicked(GtkButton* button, SearchBar* searchBar);
     static void buttonPreviousSearchClicked(GtkButton* button, SearchBar* searchBar);
