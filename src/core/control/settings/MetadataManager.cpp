@@ -33,6 +33,12 @@ static void migrateMetadataDirectory() {
 
     // move all files to the new directory
     auto newDir = getMetadataDirectory();
+
+    if (fs::equivalent(legacyDir, newDir)) {  // Happens on Windows by default
+        // nothing to do
+        return;
+    }
+
     for (auto const& e: fs::directory_iterator(legacyDir)) {
         auto newPath = newDir / e.path().filename();
         Util::safeRenameFile(e, newPath);
