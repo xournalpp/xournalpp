@@ -366,8 +366,8 @@
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_REDO" swapped="no"/>
+                            <accelerator key="z" signal="activate" modifiers="GDK_CONTROL_MASK | GDK_SHIFT_MASK"/>
                             <accelerator key="y" signal="activate" modifiers="GDK_CONTROL_MASK"/>
-                            <accelerator key="z" signal="activate" modifiers="GDK_CONTROL_MASK|GDK_SHIFT_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1016,6 +1016,7 @@
                             <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no"/>
                             <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="equal" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
