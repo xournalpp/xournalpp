@@ -382,6 +382,11 @@ struct ActionProperties<Action::SHOW_MENUBAR> {
  */
 template <>
 struct ActionProperties<Action::ZOOM_IN> {
+#ifdef __APPLE__
+    static constexpr const char* accelerators[] = {"<Meta>plus", "<Meta>KP_Add", "<Meta>equal", nullptr};
+#else
+    static constexpr const char* accelerators[] = {"<Ctrl>plus", "<Ctrl>KP_Add", "<Ctrl>equal", nullptr};
+#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         Util::execInUiThread([zoom = ctrl->getZoomControl()]() { zoom->zoomOneStep(ZOOM_IN); });
     }
@@ -389,6 +394,11 @@ struct ActionProperties<Action::ZOOM_IN> {
 
 template <>
 struct ActionProperties<Action::ZOOM_OUT> {
+#ifdef __APPLE__
+    static constexpr const char* accelerators[] = {"<Meta>minus", "<Meta>KP_Subtract", nullptr};
+#else
+    static constexpr const char* accelerators[] = {"<Ctrl>minus", "<Ctrl>KP_Subtract", nullptr};
+#endif
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         Util::execInUiThread([zoom = ctrl->getZoomControl()]() { zoom->zoomOneStep(ZOOM_OUT); });
     }
