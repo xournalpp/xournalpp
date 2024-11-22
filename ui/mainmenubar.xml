@@ -31,7 +31,6 @@
      <attribute name="label" translatable="yes">Save As</attribute>
      <attribute name="action">win.save-as</attribute>
      <attribute name="accel">&lt;Ctrl&gt;&lt;Shift&gt;s</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;u</attribute>
     </item>
    </section>
    <section>
@@ -355,12 +354,12 @@
     <item>
      <attribute name="label" translatable="yes">Zoom In</attribute>
      <attribute name="action">win.zoom-in</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;plus</attribute>
+     <!-- Zoom accelerators are defined in control/actions/ActionProperties.h -->
     </item>
     <item>
      <attribute name="label" translatable="yes">Zoom Out</attribute>
      <attribute name="action">win.zoom-out</attribute>
-     <attribute name="accel">&lt;Ctrl&gt;minus</attribute>
+     <!-- Zoom accelerators are defined in control/actions/ActionProperties.h -->
     </item>
     <item>
      <attribute name="label" translatable="yes">Normal Size</attribute>
