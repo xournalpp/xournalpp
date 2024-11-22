@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"PO-Revision-Date: 2024-11-22 21:13\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -2908,7 +2908,7 @@ msgstr "Lewo / Prawo-Ręczny"
 
 #: ../ui/settings.glade:5444
 msgid "Length limit (mm)"
-msgstr ""
+msgstr "Ograniczenie długości (mm)"
 
 #: ../ui/settings.glade:5424
 msgid "Length limit: taps moving further away will not trigger a special action\n\n"
@@ -3477,7 +3477,7 @@ msgstr "Te ustawienia będą używane dla nowych stron"
 
 #: ../ui/settings.glade:5392
 msgid "Time limit (ms)"
-msgstr ""
+msgstr "Limit czasu (ms)"
 
 #: ../ui/settings.glade:5404
 msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
