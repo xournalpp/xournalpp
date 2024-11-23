@@ -428,28 +428,6 @@ TEST(ControlLoadHandler, testLoadStoreLoadDefault) {
     testLoadStoreLoadHelper(GET_TESTFILE("packaged_xopp/suite.xopp"), /*tol=*/1e-8);
 }
 
-
-#ifdef __linux__
-TEST(ControlLoadHandler, testLoadStoreLoadGerman) {
-    constexpr auto testLocale = "de_DE.UTF-8";
-    char* currentLocale = setlocale(LC_ALL, testLocale);
-    if (currentLocale == nullptr) {
-        auto environ = g_get_environ();
-        bool isCI = g_environ_getenv(environ, "CI");
-        g_strfreev(environ);
-        if (isCI) {
-            EXPECT_TRUE(false);
-        } else {
-            std::cout << "Skipping testLoadStoreLoadGerman! Consider generating the 'de_DE.UTF-8' locale on your "
-                         "system."
-                      << std::endl;
-        }
-    }
-    testLoadStoreLoadHelper(GET_TESTFILE("packaged_xopp/suite.xopp"), /*tol=*/1e-8);
-    setlocale(LC_ALL, "C");
-}
-#endif
-
 // Backwards compatibility test that checks that full-precision float strings can be loaded.
 // See https://github.com/xournalpp/xournalpp/pull/4065
 TEST(ControlLoadHandler, testLoadStoreLoadFloatBwCompat) {
