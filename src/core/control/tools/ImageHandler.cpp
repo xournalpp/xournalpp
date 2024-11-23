@@ -59,15 +59,19 @@ auto ImageHandler::createImage(GFile* file, double x, double y) -> std::tuple<Im
     }
 
     // Render the image.
-    // FIXME: this is horrible. We need an ImageView class...
-    (void)img->getImage();
+    if (auto opt = img->renderBuffer(); opt.has_value()) {
+        // An error occurred
+        delete img;
+        XojMsgBox::showErrorToUser(this->control->getGtkWindow(), opt.value());
+        return std::make_tuple(nullptr, 0, 0);
+    }
 
     const auto imgSize = img->getImageSize();
     auto [width, height] = imgSize;
     if (imgSize == Image::NOSIZE) {
         delete img;
-        XojMsgBox::showErrorToUser(this->control->getGtkWindow(),
-                                   _("Failed to load image, could not determine image size!"));
+        XojMsgBox::showErrorToUser(this->control->getGtkWindow(), std::string(_("Failed to load image")) + "\n" +
+                                                                          _("Could not determine image size!"));
         return std::make_tuple(nullptr, 0, 0);
     }
 
