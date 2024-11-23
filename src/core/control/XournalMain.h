@@ -16,4 +16,5 @@
 
 namespace XournalMain {
 auto run(int argc, char** argv) -> int;
+void initLocalisation();
 }

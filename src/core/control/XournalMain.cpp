@@ -83,37 +83,6 @@ void initCAndCoutLocales() {
     std::cout.imbue(std::locale());
 }
 
-void initLocalisation() {
-#ifdef ENABLE_NLS
-    fs::path localeDir = Util::getGettextFilepath(Util::getLocalePath());
-
-#ifdef _WIN32
-    wbindtextdomain(GETTEXT_PACKAGE, localeDir.wstring().c_str());
-#else
-    bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
-#endif
-
-    textdomain(GETTEXT_PACKAGE);
-
-#ifdef _WIN32
-    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-#endif
-
-#endif  // ENABLE_NLS
-
-    // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
-    try {
-        std::locale::global(std::locale(""));  // "" - system default locale
-    } catch (const std::runtime_error& e) {
-        g_warning("XournalMain: System default locale could not be set.\n - Caused by: %s\n - Note that it is not "
-                  "supported to set the locale using mingw-w64 on windows.\n - This could be solved by compiling "
-                  "xournalpp with msvc",
-                  e.what());
-    }
-
-    initCAndCoutLocales();
-}
-
 auto migrateSettings() -> MigrateResult {
     const fs::path newConfigPath = Util::getConfigFolder();
 
@@ -474,7 +443,7 @@ void on_open_files(GApplication* application, GFile** files, gint numFiles, gcha
 }
 
 void on_startup(GApplication* application, XMPtr app_data) {
-    initLocalisation();
+    XournalMain::initLocalisation();
     ensure_input_model_compatibility();
     const MigrateResult migrateResult = migrateSettings();
 
@@ -620,6 +589,38 @@ void on_shutdown(GApplication*, XMPtr app_data) {
 }
 
 }  // namespace
+
+
+void XournalMain::initLocalisation() {
+#ifdef ENABLE_NLS
+    fs::path localeDir = Util::getGettextFilepath(Util::getLocalePath());
+
+#ifdef _WIN32
+    wbindtextdomain(GETTEXT_PACKAGE, localeDir.wstring().c_str());
+#else
+    bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
+#endif
+
+    textdomain(GETTEXT_PACKAGE);
+
+#ifdef _WIN32
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+#endif
+
+#endif  // ENABLE_NLS
+
+    // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
+    try {
+        std::locale::global(std::locale(""));  // "" - system default locale
+    } catch (const std::runtime_error& e) {
+        g_warning("XournalMain: System default locale could not be set.\n - Caused by: %s\n - Note that it is not "
+                  "supported to set the locale using mingw-w64 on windows.\n - This could be solved by compiling "
+                  "xournalpp with msvc",
+                  e.what());
+    }
+
+    initCAndCoutLocales();
+}
 
 auto XournalMain::run(int argc, char** argv) -> int {
 
