@@ -7,10 +7,16 @@
 #include "util/GtkUtil.h"                       // for setToggleButtonUnreleasable
 #include "util/gtk4_helper.h"                   // for gtk_button_set_child
 
-ColorToolItem::ColorToolItem(NamedColor namedColor):
+ColorToolItem::ColorToolItem(NamedColor namedColor, const std::optional<Recolor>& recolor):
         AbstractToolItem(std::string("COLOR(") + std::to_string(namedColor.getIndex()) + ")", Category::COLORS),
         namedColor(std::move(namedColor)),
-        target(xoj::util::makeGVariantSPtr(namedColor.getColor())) {}
+        target(xoj::util::makeGVariantSPtr(namedColor.getColor())) {
+    if (recolor) {
+        secondaryColor = std::make_optional(recolor->convertColor(namedColor.getColor()));
+    } else {
+        secondaryColor = std::nullopt;
+    }
+}
 
 ColorToolItem::~ColorToolItem() = default;
 
@@ -57,7 +63,15 @@ auto ColorToolItem::createItem(bool) -> xoj::util::WidgetSPtr {
 auto ColorToolItem::getToolDisplayName() const -> std::string { return this->namedColor.getName(); }
 
 auto ColorToolItem::getNewToolIcon() const -> GtkWidget* {
-    return ColorIcon::newGtkImage(this->namedColor.getColor(), 16, true);
+    return ColorIcon::newGtkImage(this->namedColor.getColor(), 16, true, this->secondaryColor);
 }
 
 void ColorToolItem::updateColor(const Palette& palette) { namedColor = palette.getColorAt(namedColor.getIndex()); }
+
+void ColorToolItem::updateSecondaryColor(const std::optional<Recolor>& recolor) {
+    if (recolor) {
+        secondaryColor = std::make_optional(recolor->convertColor(namedColor.getColor()));
+    } else {
+        secondaryColor = std::nullopt;
+    }
+}

@@ -5,6 +5,7 @@
 #include <glib-object.h>  // for G_CALLBACK
 
 #include "control/Control.h"                           // for Control
+#include "control/settings/Settings.h"                 // for Settings
 #include "gui/MainWindow.h"                            // for MainWindow
 #include "gui/ToolitemDragDrop.h"                      // for ToolItemDragDr...
 #include "gui/toolbarMenubar/AbstractToolItem.h"       // for AbstractToolItem
@@ -277,8 +278,11 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         int newId = tb->insertItem(name, id, pos);
         ToolitemDragDrop::attachMetadata(it.get(), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
+        const auto& r = adapter->window->getControl()->getSettings()->getRecolorParameters();
+        auto recolor = r.recolorizeMainView ? std::make_optional(r.recolor) : std::nullopt;
+
         auto namedColor = adapter->palette.getColorAt(d->paletteColorIndex);
-        auto item = std::make_unique<ColorToolItem>(namedColor);
+        auto item = std::make_unique<ColorToolItem>(namedColor, recolor);
 
         auto it = item->createToolItem(horizontal);
 

@@ -290,6 +290,14 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
         cairo_restore(cr);
     }
 
+    std::optional<Recolor> recolor = settings->getRecolorParameters().recolorizeMainView ?
+                                             std::make_optional(settings->getRecolorParameters().recolor) :
+                                             std::nullopt;
+
+    if (recolor) {
+        recolor->recolorCurrentCairoRegion(cr);
+    }
+
     return true;
 }
 

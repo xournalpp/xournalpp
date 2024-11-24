@@ -501,6 +501,16 @@ void SettingsDialog::load() {
     color = Util::rgb_to_GdkRGBA(settings->getActiveSelectionColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(builder.get("colorSelectionActive")), &color);
 
+    {
+        const auto& recolor = settings->getRecolorParameters();
+        loadCheckbox("cbRecolorDrawingArea", recolor.recolorizeMainView);
+        loadCheckbox("cbRecolorPreviewSidebar", recolor.recolorizeSidebarMiniatures);
+        color = Util::argb_to_GdkRGBA(recolor.recolor.getLight());
+        gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(builder.get("recolorLight")), &color);
+        color = Util::argb_to_GdkRGBA(recolor.recolor.getDark());
+        gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(builder.get("recolorDark")), &color);
+    }
+
     loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
     color = Util::argb_to_GdkRGBA(settings->getCursorHighlightColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(builder.get("cursorHighlightColor")), &color);
@@ -773,6 +783,15 @@ void SettingsDialog::save() {
 
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(builder.get("colorSelectionActive")), &color);
     settings->setActiveSelectionColor(Util::GdkRGBA_to_argb(color));
+
+    {
+        GdkRGBA color2;
+        gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(builder.get("recolorLight")), &color);
+        gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(builder.get("recolorDark")), &color2);
+
+        settings->setRecolorParameters({getCheckbox("cbRecolorDrawingArea"), getCheckbox("cbRecolorPreviewSidebar"),
+                                        Recolor(Util::GdkRGBA_to_argb(color), Util::GdkRGBA_to_argb(color2))});
+    }
 
     settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(builder.get("cursorHighlightColor")), &color);

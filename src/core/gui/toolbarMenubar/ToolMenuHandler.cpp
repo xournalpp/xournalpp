@@ -98,6 +98,9 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
     int count = 0;
     const auto palette = this->control->getPalette();
 
+    const auto& recolorParams = control->getSettings()->getRecolorParameters();
+    auto recolor = recolorParams.recolorizeMainView ? std::make_optional(recolorParams.recolor) : std::nullopt;
+
     for (const ToolbarEntry& e: d->contents) {
         if (e.getName() == toolbarName) {
             for (const ToolbarItem& dataItem: e.getItems()) {
@@ -143,7 +146,8 @@ void ToolMenuHandler::load(const ToolbarData* d, GtkWidget* toolbar, const char*
 
                     count++;
                     const NamedColor& namedColor = palette.getColorAt(paletteIndex);
-                    auto& item = this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor));
+                    auto& item =
+                            this->toolbarColorItems.emplace_back(std::make_unique<ColorToolItem>(namedColor, recolor));
 
                     auto it = item->createToolItem(horizontal);
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it.get()), -1);
@@ -511,6 +515,12 @@ auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNam
 void ToolMenuHandler::updateColorToolItems(const Palette& palette) {
     for (const auto& it: this->toolbarColorItems) {
         it->updateColor(palette);
+    }
+}
+
+void ToolMenuHandler::updateColorToolItemsRecoloring(const std::optional<Recolor>& recolor) {
+    for (const auto& it: this->toolbarColorItems) {
+        it->updateSecondaryColor(recolor);
     }
 }
 

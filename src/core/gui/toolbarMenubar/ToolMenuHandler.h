@@ -46,6 +46,7 @@ class PageTypeSelectionPopover;
 class PageType;
 struct Palette;
 class StylePopoverFactory;
+class Recolor;
 
 class ToolMenuHandler {
 public:
@@ -75,6 +76,13 @@ public:
      * @param palette
      */
     void updateColorToolItems(const Palette& palette);
+
+    /**
+     * @brief Update all ColorToolItems based on recolor settings
+     *
+     * @param recolor
+     */
+    void updateColorToolItemsRecoloring(const std::optional<Recolor>& recolor);
 
     void initToolItems();
     void addPluginItem(ToolbarButtonEntry* t);

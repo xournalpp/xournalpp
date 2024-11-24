@@ -83,6 +83,7 @@
 #include "model/XojPage.h"                                       // for XojPage
 #include "pdf/base/XojPdfPage.h"                                 // for XojP...
 #include "plugin/PluginController.h"                             // for Plug...
+#include "settings/RecolorParameters.h"                          // for RecolorParameters
 #include "undo/AddUndoAction.h"                                  // for AddU...
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
@@ -1331,6 +1332,7 @@ void Control::showSettings() {
         bool highlightPosition;
         SidebarNumberingStyle sidebarStyle;
         std::optional<std::filesystem::path> colorPaletteSetting;
+        RecolorParameters recolorParameters;
     } settingsBeforeDialog = {
             settings->getBorderColor(),
             settings->getAddVerticalSpace(),
@@ -1344,6 +1346,7 @@ void Control::showSettings() {
             settings->isHighlightPosition(),
             settings->getSidebarNumberingStyle(),
             settings->getColorPaletteSetting(),
+            settings->getRecolorParameters(),
     };
 
     auto dlg = xoj::popup::PopupWindowWrapper<SettingsDialog>(
@@ -1405,10 +1408,24 @@ void Control::showSettings() {
                     ctrl->getCursor()->updateCursor();
                 }
 
+
+                bool reloadToolbars = false;
                 if (settingsBeforeDialog.colorPaletteSetting.has_value() &&
                     settingsBeforeDialog.colorPaletteSetting.value() != settings->getColorPaletteSetting()) {
                     ctrl->loadPaletteFromSettings();
                     ctrl->getWindow()->getToolMenuHandler()->updateColorToolItems(ctrl->getPalette());
+                    reloadToolbars = true;
+                }
+
+                if (settingsBeforeDialog.recolorParameters != settings->getRecolorParameters()) {
+                    ctrl->getWindow()->getToolMenuHandler()->updateColorToolItemsRecoloring(
+                            settings->getRecolorParameters().recolorizeMainView ?
+                                    std::make_optional(settings->getRecolorParameters().recolor) :
+                                    std::nullopt);
+                    reloadToolbars = true;
+                }
+
+                if (reloadToolbars) {
                     ctrl->getWindow()->reloadToolbars();
                 }
 
