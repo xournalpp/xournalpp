@@ -23,10 +23,15 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
 
     if (event.type == BUTTON_PRESS_EVENT) {
+        if (invalidActive.find(event.sequence) != invalidActive.end()) {
+            g_warning("Missed touch end/cancel event. Resetting touch input handler.");
+            invalidActive.clear();
+        }
         if (invalidActive.empty() && event.sequence != primarySequence && event.sequence != secondarySequence) {
             // All touches are previously valid and we did not miss an end/cancel event for the current touch
             if (primarySequence && secondarySequence) {
                 // All touches become invalid
+                g_debug("All touches become invalid");
                 invalidActive.insert({primarySequence, secondarySequence, event.sequence});
                 primarySequence = secondarySequence = nullptr;
             } else {
@@ -42,6 +47,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             }
         } else {
             invalidActive.insert(event.sequence);
+            g_debug("Add touch as invalid. %d touches are invalid now.", invalidActive.size());
         }
         return true;
     }
@@ -83,6 +89,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             secondarySequence = nullptr;
         } else {
             invalidActive.erase(event.sequence);
+            g_debug("Removing sequence from invalid list, %d inputs remain invalid.", invalidActive.size());
         }
         return true;
     }
