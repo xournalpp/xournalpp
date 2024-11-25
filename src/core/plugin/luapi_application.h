@@ -53,6 +53,8 @@ extern "C" {
 #include <lauxlib.h>  // for luaL_Reg, luaL_newstate, luaL_requiref
 #include <lua.h>      // for lua_getglobal, lua_getfield, lua_setf...
 #include <lualib.h>   // for luaL_openlibs
+
+#include "undo/PageSizeChangeUndoAction.h"
 }
 
 /*
@@ -1740,8 +1742,11 @@ static int applib_setPageSize(lua_State* L) {
 
     if (width > 0 && height > 0) {
         doc->lock();
+        double oldW = page->getWidth();
+        double oldH = page->getHeight();
         Document::setPageSize(page, width, height);
         doc->unlock();
+        control->getUndoRedoHandler()->addUndoAction(std::make_unique<PageSizeChangeUndoAction>(page, oldW, oldH));
     }
 
     size_t pageNo = doc->indexOf(page);
