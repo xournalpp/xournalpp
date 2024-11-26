@@ -6,7 +6,6 @@
 #include <cstddef>
 #include <cstdlib>
 #include <ctime>  // for size_t, localtime, strf...
-#include <cuchar>
 #include <cwchar>
 #include <filesystem>
 #include <iomanip>
