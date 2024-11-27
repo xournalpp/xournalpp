@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Devam etmek istiyor musunuz?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -66,7 +66,7 @@ msgstr "<span foreground='red' size='x-large'>Gerekli kullanıcı arayüzü dosy
 "  Çalışma Dizininde değil\n"
 "  {2} içinde değil"
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr "Eksik sayfa ekle"
 
@@ -161,7 +161,7 @@ msgstr "En Öne Getir"
 msgid "Built on"
 msgstr "Üzerine inşa"
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -287,7 +287,7 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "\"{1}\" yeniden yapılamadı\n"
 "Bir şeyler ters gitti… Lütfen hata raporu yazın…"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Eski otomatik kayıt dosyası \"{1}\" kaldırılamadı: {2}"
 
@@ -386,7 +386,7 @@ msgstr "Bu sayfayı sil"
 msgid "Disable audio for this session"
 msgstr "Bu oturum için sesi devre dışı bırak"
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "Gözden Çıkar"
 
@@ -394,7 +394,7 @@ msgstr "Gözden Çıkar"
 msgid "Display advanced export options"
 msgstr "Gelişmiş dışa aktarma seçeneklerini görüntüle"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -406,7 +406,7 @@ msgstr "Otomatik Kaydetme dosyalarını açmayın. Bunların üzerine yazılabil
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Arka plan PDF'sinin üzerine yazmayın! Bu hatalara neden olur!"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr "Belge dosyası kaldırıldı."
 
@@ -522,7 +522,7 @@ msgstr "Kontur sil"
 msgid "Eraser"
 msgstr "Silgi"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "\"{1}\" PDF dosyasına açıklama eklenirken hata oluştu\n"
@@ -544,7 +544,7 @@ msgstr "\"{1}\" glade dosyası yüklenirken hata oluştu (\"{2}\" yüklemeyi den
 msgid "Error occurred while closing file: \"{1}\""
 msgstr "Dosya kapatılırken sorun oluştu: \"{1}\""
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr "\"{1}\" dosyası açılırken hata oluştu"
 
@@ -705,7 +705,7 @@ msgstr "Dosya açılamadı. Elle yapmalısınız:\n"
 msgid "File {1} does not exist."
 msgstr "{1} dosyası yok."
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "Dosya sistemi hatası: {1}"
 
@@ -910,7 +910,7 @@ msgstr "Katman {1}"
 msgid "Layerstack Preview"
 msgstr "Katman Birleşimi Önizlemesi"
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -969,7 +969,7 @@ msgstr "Aygıt yok"
 msgid "No pages to export!"
 msgstr "Dışarıya aktarılacak sayfalar bulunamadı!"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Eklemeye uygun pdf sayfası yok. Dosyayı tekrar baştan açmanız gerekebilir."
 
@@ -1068,6 +1068,10 @@ msgstr "Sayfa eklendi"
 msgid "Page number"
 msgstr "Sayfa numarası"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr "Sayfa biçimi formatı PageTypeFormat::Copy - dosyanın bozulmasını engellemek için PageTypeFormat::Plain biçimine dönüşürüldü"
@@ -1128,7 +1132,7 @@ msgstr "Yazdır"
 msgid "Record Audio / Stop Recording"
 msgstr "Ses Kaydet / Kaydı Durdur"
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr "Kaydedici başlatılamadı."
 
@@ -1141,7 +1145,7 @@ msgstr "Yinele"
 msgid "Redo: "
 msgstr "Yinele: "
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr "PDF Arka Planını Kaldır"
 
@@ -1197,16 +1201,16 @@ msgstr "SVG grafikleri"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Örnek LaTeX dosyası başarıyla oluşturuldu."
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "Farklı kaydet..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Dosyayı Kaydet"
@@ -1224,7 +1228,7 @@ msgstr "Dosya kaydetme hatası: {1}"
 msgid "Scale"
 msgstr "Ölçek"
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr "{1}. sayfaya kaydırın"
 
@@ -1308,7 +1312,7 @@ msgstr "Bölge Seç"
 msgid "Select Text from pdf"
 msgstr "PDF'den metin seç"
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "Başka bir PDF seç"
 
@@ -1482,11 +1486,11 @@ msgstr "Metin bulunumadı"
 msgid "Text not found, searched on all pages"
 msgstr "Metin bulunamadı, tüm sayfalarda arandı"
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "\"{1}\" Araç Çubuğu yapılandırması önceden tanımlandı, düzenlemek için bir kopya oluşturur musunuz?"
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Eklenmiş arka plan dosyası bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir."
 
@@ -1494,7 +1498,7 @@ msgstr "Eklenmiş arka plan dosyası bulunamadı. Taşınmış, yeniden adlandı
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Arka plan dosyası \"{1}\" bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir."
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Arka plan dosyası {1} bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir.\n"
@@ -1504,7 +1508,7 @@ msgstr "Arka plan dosyası {1} bulunamadı. Taşınmış, yeniden adlandırılm�
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Arka plan üzerine yazma kontrolü şu şekilde başarısız oldu:\n"
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Açılmakta olan dosya şu anki Xournal++ sürümünden daha yeni bir sürüme sahip, bu nedenle düzgün yüklenmeyebilir. Yine de aç?"
 
@@ -1548,7 +1552,7 @@ msgstr "Yardım görüntülenirken bir hata oluştu: {1}"
 msgid "Thick"
 msgstr "Kalın"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr "Bu belge henüz kaydedilmemiş."
 
@@ -1588,7 +1592,7 @@ msgstr "{1} konumundaki genel şablon dosyası açılamıyor. Dosya mevcut mu?"
 msgid "Unable to play audio recording {1}"
 msgstr "Ses kaydı oynatılamıyor {1}"
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr "Pdf sayfası alınamadı."
 
@@ -1637,7 +1641,7 @@ msgstr "Bilinmeyen kontur başığı türü: \"{1}\", yuvarlak varsayılıyor"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Bilinmeyen kontur türü: \"{1}\", kalem varsayarak"
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr "Kaydedilmemiş Belge"
 
@@ -1645,7 +1649,7 @@ msgstr "Kaydedilmemiş Belge"
 msgid "Unsupported graphics format: "
 msgstr "Desteklenmeyen grafik biçimi: "
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr "Önerilen PDF'yi kullan"
 
@@ -1702,7 +1706,7 @@ msgstr "Xournal dosyaları"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ son kez çöktü. Son düzenlenen dosyayı geri yüklemek ister misiniz?"
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ dosyaları"
@@ -1712,7 +1716,7 @@ msgstr "Xournal++ dosyaları"
 msgid "Xournal++ template"
 msgstr "Xournal++ şablonu"
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Aktif araç çubuğunu sildiniz. Varsayılan araç çubuğuna geri dönülüyor."
 
@@ -1748,7 +1752,7 @@ msgstr "Uzaklaştır"
 msgid "Zoom to 100%"
 msgstr "100% Yakınlaştır"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1765,7 +1769,7 @@ msgstr "_Journal"
 msgid "_Open"
 msgstr "_Aç"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1811,7 +1815,7 @@ msgstr "öğeler"
 msgid "eraser"
 msgstr "silgi"
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr "dosya: {1}"
 
@@ -2280,7 +2284,7 @@ msgstr "Ses Aygıtları"
 msgid "Audio Recording"
 msgstr "Ses Kaydı"
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr "Yazar: "
 
@@ -3112,7 +3116,7 @@ msgid "Partially based on Xournal\n"
 msgstr "Kısmen Denis Auroux tarafından\n"
 "Xournal'e dayanıyor"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr "Yol: "
 
@@ -3144,7 +3148,7 @@ msgstr "Eklenti Yöneticisi"
 msgid "Plugin _Manager"
 msgstr "Eklenti Yö_neticisi"
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr "Eklenti değişiklikleri yalnızca Xournal++ yeniden başlatıldıktan sonra uygulanır"
 
@@ -3550,7 +3554,7 @@ msgstr "Genellikle 0 veya 1"
 msgid "Velocity based Gaussian weights"
 msgstr "Gauss ağırlıklandırma temelli hızlanma"
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr "Sürüm: "
 
@@ -3872,7 +3876,7 @@ msgstr "devre dışı"
 msgid "dpi"
 msgstr "DPI"
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr "etkin,"
 
