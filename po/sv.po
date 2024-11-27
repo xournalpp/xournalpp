@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Vill du fortsätta?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
@@ -65,7 +65,7 @@ msgstr "<span foreground='red' size='x-large'>Saknar den nödvändiga användarg
 "  Inte i arbetssökvägen\n"
 "  Inte i {2}"
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr "Lägg längst fram"
 msgid "Built on"
 msgstr "Byggdes"
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -282,7 +282,7 @@ msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
@@ -381,7 +381,7 @@ msgstr "Ta bort denna sida"
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "Släng"
 
@@ -389,7 +389,7 @@ msgstr "Släng"
 msgid "Display advanced export options"
 msgstr "Visa avancerade exportalternativ"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -399,7 +399,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr ""
 
@@ -515,7 +515,7 @@ msgstr "Sudda streck"
 msgid "Eraser"
 msgstr "Radergummi"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Fel vid annotering av PDF-fil \"{1}\"\n"
@@ -537,7 +537,7 @@ msgstr ""
 msgid "Error occurred while closing file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr "Fel vid öppning av fil \"{1}\""
 
@@ -685,7 +685,7 @@ msgstr ""
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr ""
 
@@ -888,7 +888,7 @@ msgstr "Lager {1}"
 msgid "Layerstack Preview"
 msgstr "Förhandsgranska lagerstacken"
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -947,7 +947,7 @@ msgstr "Ingen enhet"
 msgid "No pages to export!"
 msgstr "Inga sidor att exportera!"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
@@ -1045,6 +1045,10 @@ msgstr "Sidan infogad"
 msgid "Page number"
 msgstr "Sidnummer"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr "Sidtypsformat är PageTypeFormat::Kopiera - konverterad till PageTypeFormat::Enklare för att undvika skadad fil"
@@ -1105,7 +1109,7 @@ msgstr "Skriv ut"
 msgid "Record Audio / Stop Recording"
 msgstr "Spela in ljud / stoppa inspelning"
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr "Inspelaren kunde inte startas."
 
@@ -1118,7 +1122,7 @@ msgstr "Gör om"
 msgid "Redo: "
 msgstr "Gör om: "
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr "Ta bort PDF-bakgrund"
 
@@ -1174,16 +1178,16 @@ msgstr "SVG-grafik"
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Spara"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "Spara som..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Spara fil"
@@ -1201,7 +1205,7 @@ msgstr "Fel vid sparande av fil: {1}"
 msgid "Scale"
 msgstr "Skala"
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr ""
 
@@ -1285,7 +1289,7 @@ msgstr "Markera region"
 msgid "Select Text from pdf"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "Välj en annan PDF"
 
@@ -1454,11 +1458,11 @@ msgstr "Text hittades inte"
 msgid "Text not found, searched on all pages"
 msgstr "Text hittades inte, sökte på alla sidor"
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
@@ -1466,7 +1470,7 @@ msgstr ""
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
@@ -1475,7 +1479,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1519,7 +1523,7 @@ msgstr "Det gick inte att visa hjälp: {1}"
 msgid "Thick"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr "Detta dokument har inte sparats ännu."
 
@@ -1559,7 +1563,7 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr "Det gick inte att spela upp ljudinspelningen {1}"
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr "Det gick inte att hämta PDF-sidan."
 
@@ -1608,7 +1612,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr "Osparat dokument"
 
@@ -1616,7 +1620,7 @@ msgstr "Osparat dokument"
 msgid "Unsupported graphics format: "
 msgstr "Grafikformatet stöds inte: "
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr ""
 
@@ -1673,7 +1677,7 @@ msgstr "Xournal-filer"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++-filer"
@@ -1683,7 +1687,7 @@ msgstr "Xournal++-filer"
 msgid "Xournal++ template"
 msgstr "Xournal++-mall"
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
@@ -1718,7 +1722,7 @@ msgstr "Zooma ut"
 msgid "Zoom to 100%"
 msgstr "Zooma till 100%"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1735,7 +1739,7 @@ msgstr ""
 msgid "_Open"
 msgstr "_Öppna"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1781,7 +1785,7 @@ msgstr ""
 msgid "eraser"
 msgstr "suddgummi"
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr "fil: {1}"
 
@@ -2249,7 +2253,7 @@ msgstr "Ljudenheter"
 msgid "Audio Recording"
 msgstr "Ljudinspelning"
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr "Skapare: "
 
@@ -3074,7 +3078,7 @@ msgid "Partially based on Xournal\n"
 msgstr "Delvis baserad på Xournal\n"
 "av Denis Auroux"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr ""
 
@@ -3106,7 +3110,7 @@ msgstr ""
 msgid "Plugin _Manager"
 msgstr "Hanterare för insticksprogram"
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr "Ändringar i insticksprogramen tillämpas inte förrän Xournal++ startats om"
 
@@ -3511,7 +3515,7 @@ msgstr ""
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr "Version: "
 
@@ -3832,7 +3836,7 @@ msgstr ""
 msgid "dpi"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr "aktiverad,"
 
