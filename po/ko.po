@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 " 계속하시겠습니까?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -66,7 +66,7 @@ msgstr "<span foreground='red' size='x-large'>다음 필수 UI 파일이 존재�
 "  현재 주소에 없음\n"
 "  {2} 에 없음"
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr "누락된 페이지 추가"
 
@@ -161,7 +161,7 @@ msgstr "맨 앞으로 보내기"
 msgid "Built on"
 msgstr "제작 날짜"
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -287,7 +287,7 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "\"{1}\" 다시 실행 실패\n"
 "문제가 생겼습니다… 버그 리포트를 작성 하십시오…"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "이전 자동저장 파일 \"{1}\"을 삭제할 수 없습니다: {2}"
 
@@ -386,7 +386,7 @@ msgstr "이 페이지 삭제"
 msgid "Disable audio for this session"
 msgstr "현재 세션에서 오디오 비활성화"
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "버리기"
 
@@ -394,7 +394,7 @@ msgstr "버리기"
 msgid "Display advanced export options"
 msgstr "고급 내보내기 옵션 표시"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -406,7 +406,7 @@ msgstr "자동 저장 파일을 열지 마십시오. 덮어쓰기 될 수 있습
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "배경 PDF를 덮어쓰기 하지 마십시오! 에러가 발생하게 됩니다."
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr "문서 파일 삭제됨."
 
@@ -522,7 +522,7 @@ msgstr "획 삭제"
 msgid "Eraser"
 msgstr "지우개"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
@@ -543,7 +543,7 @@ msgstr "글레이드 파일 \"{1}\"을 불러오는 중 오류 발생 (\"{2}\"�
 msgid "Error occurred while closing file: \"{1}\""
 msgstr "\"{1}\"파일을 닫는 중 오류 발생"
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr "\"{1}\" 파일 열기 오류"
 
@@ -700,7 +700,7 @@ msgstr "파일을 열 수 없습니다. 수동으로 직접 파일을 열어야 
 msgid "File {1} does not exist."
 msgstr "{1} 파일이 존재하지 않습니다."
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "파일시스템 오류: {1}"
 
@@ -905,7 +905,7 @@ msgstr "{1} 레이어"
 msgid "Layerstack Preview"
 msgstr "레이어스택 미리보기"
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -964,7 +964,7 @@ msgstr "장치 없음"
 msgid "No pages to export!"
 msgstr "내보내기할 페이지가 없습니다!"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "추가할 PDF 페이지가 없습니다. 우선 문서를 다시 열어야 할 수 있습니다."
 
@@ -1062,6 +1062,10 @@ msgstr "페이지 추가됨"
 msgid "Page number"
 msgstr "페이지 번호"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
@@ -1122,7 +1126,7 @@ msgstr "인쇄"
 msgid "Record Audio / Stop Recording"
 msgstr "오디오 녹음 / 중지"
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr ""
 
@@ -1135,7 +1139,7 @@ msgstr "다시 실행"
 msgid "Redo: "
 msgstr "다시 실행: "
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr "PDF 백그라운드 제거"
 
@@ -1191,16 +1195,16 @@ msgstr "SVG 이미지"
 msgid "Sample LaTeX file generated successfully."
 msgstr "샘플 LaTeX 파일이 성공적으로 생성되었습니다."
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "저장"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "다른 이름으로 저장..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "파일 저장"
@@ -1218,7 +1222,7 @@ msgstr "파일 저장 오류: {1}"
 msgid "Scale"
 msgstr "배율"
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr "페이지로 스크롤 {1}"
 
@@ -1302,7 +1306,7 @@ msgstr "영역 선택"
 msgid "Select Text from pdf"
 msgstr "PDF에서 텍스트 선택"
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "다른 PDF 선택"
 
@@ -1471,11 +1475,11 @@ msgstr "텍스트 없음"
 msgid "Text not found, searched on all pages"
 msgstr "모든 페이지 검색 결과, 텍스트 없음"
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "툴바설정 \"{1}\"은 수정할 수 없습니다. 수정을 위해 이 툴바설정의 복사본을 만들겠습니까?"
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "첨부된 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다."
 
@@ -1483,7 +1487,7 @@ msgstr "첨부된 배경 파일을 찾을 수 없습니다. 파일 이름이 바
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "\"{1}\" 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다."
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "\"{1}\" 배경 파일을 찾을 수 없습니다. 파일 이름이 바뀌었거나 파일이 이동, 삭제되었을 수 있습니다.\n"
@@ -1493,7 +1497,7 @@ msgstr "\"{1}\" 배경 파일을 찾을 수 없습니다. 파일 이름이 바�
 msgid "The check for overwriting the background failed with:\n"
 msgstr "배경을 덮어쓰기하기 위한 검사에 문제가 있습니다:\n"
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "지금 불러오는 파일이 더 최신 버전의 Xournal++ 파일 포맷을 사용하기 때문에, 파일이 정상적으로 열리지 않을 수 있습니다. 그래도 파일을 불러옵니까?"
 
@@ -1537,7 +1541,7 @@ msgstr "도움말을 표시하는데 오류가 발생해습니다: {1}"
 msgid "Thick"
 msgstr "두꺼운"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr "문서가 아직 저장되지 않았습니다"
 
@@ -1577,7 +1581,7 @@ msgstr "{1} 에서 글로벌 템플릿 파일을 열 수 없습니다. 파일이
 msgid "Unable to play audio recording {1}"
 msgstr "오디오 녹음 {1} 을 재생할 수 없습니다."
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr "PDF 페이지를 가져 올 수 없습니다."
 
@@ -1626,7 +1630,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr "저장되지 않은 문서"
 
@@ -1634,7 +1638,7 @@ msgstr "저장되지 않은 문서"
 msgid "Unsupported graphics format: "
 msgstr "지원되지 않는 이미지 형식: "
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr "제안된 PDF를 사용하십시오."
 
@@ -1691,7 +1695,7 @@ msgstr "Xournal 파일"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "마지막 사용 중 Xournal++이 강제 종료 되었습니다. 마지막에 작업 중이던 파일을 복구합니까?"
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ 파일"
@@ -1701,7 +1705,7 @@ msgstr "Xournal++ 파일"
 msgid "Xournal++ template"
 msgstr "Xournal++ 템플릿"
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "현재 활성화된 툴바를 삭제했습니다. 기본 툴바를 사용합니다."
 
@@ -1737,7 +1741,7 @@ msgstr "축소"
 msgid "Zoom to 100%"
 msgstr "확대／축소 100%"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1754,7 +1758,7 @@ msgstr ""
 msgid "_Open"
 msgstr "_불러옴"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1800,7 +1804,7 @@ msgstr "요소"
 msgid "eraser"
 msgstr "지우개"
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr "파일: {1}"
 
@@ -2263,7 +2267,7 @@ msgstr "오디오 장치"
 msgid "Audio Recording"
 msgstr "오디오 녹음"
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr ""
 
@@ -3088,7 +3092,7 @@ msgid "Partially based on Xournal\n"
 msgstr "Denis Auroux에 의해\n"
 "Xournal에 부분적으로 기반함"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr ""
 
@@ -3120,7 +3124,7 @@ msgstr "플러그인 관리"
 msgid "Plugin _Manager"
 msgstr ""
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr ""
 
@@ -3525,7 +3529,7 @@ msgstr ""
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr ""
 
@@ -3845,7 +3849,7 @@ msgstr ""
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr ""
 
