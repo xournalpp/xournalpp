@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-11-18 08:38\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Esteu segur que voleu continuar?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -66,7 +66,7 @@ msgstr "<span foreground='red' size='x-large'>Falta el fitxer d'interfície grà
 "  ni a la ruta de treball,\n"
 "  ni a {2}."
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr "Afegeix la pàgina que falta"
 
@@ -161,7 +161,7 @@ msgstr "Mou a dalt de tot"
 msgid "Built on"
 msgstr "Compilat el"
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -287,7 +287,7 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "«{1}» no s'ha pogut tornar a fer.\n"
 "Alguna cosa ha anat malament... Envieu un informe d'error…"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "El fitxer d'autodesada «{1}» no s'ha pogut esborrar: {2}"
 
@@ -386,7 +386,7 @@ msgstr "Elimina aquesta pàgina"
 msgid "Disable audio for this session"
 msgstr "Desactiva el so durant aquesta sessió"
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "Descarta"
 
@@ -394,7 +394,7 @@ msgstr "Descarta"
 msgid "Display advanced export options"
 msgstr "Mostra les opcions d'exportació avançades"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -406,7 +406,7 @@ msgstr "No obriu els fitxers de desada automàtica. Es poden sobreescriure!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "No sobreescriviu el PDF de fons! Això provocaria errors!"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr "S'ha eliminat el fitxer del document."
 
@@ -522,7 +522,7 @@ msgstr "Esborra traç"
 msgid "Eraser"
 msgstr "Goma d'esborrar"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "S'ha produït un error mentre s'anotava el fitxer PDF «{1}».\n"
@@ -544,7 +544,7 @@ msgstr "Error al carregar el fitxer de glade «{1}» (s'intentarà carregar \"{2
 msgid "Error occurred while closing file: \"{1}\""
 msgstr "S'ha produïut un error mentre es tancava el fitxer «{1}»."
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr "S'ha produït un error a l'obrir el fitxer «{1}»."
 
@@ -705,7 +705,7 @@ msgstr "El fitxer no s'ha pogut obrir. Caldrà que ho feu manualment:\n"
 msgid "File {1} does not exist."
 msgstr "El fitxer {1} no existeix."
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "Error del sistema de fitxers: {1}"
 
@@ -910,7 +910,7 @@ msgstr "Capa {1}"
 msgid "Layerstack Preview"
 msgstr "Previsualització de la pila de capes"
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -969,7 +969,7 @@ msgstr "No hi ha cap dispositiu."
 msgid "No pages to export!"
 msgstr "No hi ha cap pàgina per a exportar!"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "No hi ha pàgines PDF disponibles per a afegir. És possible que primer calgui reobrir el document."
 
@@ -1069,6 +1069,10 @@ msgstr "S'ha afegit una pàgina."
 msgid "Page number"
 msgstr "Número de pàgina"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr "El format del tipus de pàgina és PageTypeFormat::Copy i es converteix a PageTypeFormat::Plain per a evitar que el fitxer creat estigui corromput."
@@ -1129,7 +1133,7 @@ msgstr "Imprimeix"
 msgid "Record Audio / Stop Recording"
 msgstr "Enregistra àudio/Atura l'enregistrament"
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr "La gravadora no s'ha pogut iniciar."
 
@@ -1142,7 +1146,7 @@ msgstr "Torna a fer"
 msgid "Redo: "
 msgstr "Torna a fer: "
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr "Elimina el fons PDF"
 
@@ -1198,16 +1202,16 @@ msgstr "Gràfics SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Fitxer LaTeX d'exemple generat amb èxit."
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Desa"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "Anomena i desa..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Desa el fitxer"
@@ -1225,7 +1229,7 @@ msgstr "S'ha produït un error al desar el fitxer: {1}"
 msgid "Scale"
 msgstr "Escala"
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr "Desplaça fins a la pàgina {1}"
 
@@ -1309,7 +1313,7 @@ msgstr "Selecciona una regió"
 msgid "Select Text from pdf"
 msgstr "Selecciona text d'un pdf"
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "Tria un altre PDF"
 
@@ -1483,11 +1487,11 @@ msgstr "El text no s'ha trobat."
 msgid "Text not found, searched on all pages"
 msgstr "El text no s'ha trobat tot i buscar-lo a totes les pàgines."
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La configuració de barres d'eines predefinida «{1}» no es pot modificar. En voleu fer una còpia i editar-la?"
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "El fitxer de fons adjunt no s'ha pogut trobar. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat."
 
@@ -1495,7 +1499,7 @@ msgstr "El fitxer de fons adjunt no s'ha pogut trobar. Potser s'ha mogut, se li 
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "El fitxer de fons «{1}» no s'ha trobat. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat."
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "El fitxer de fons «1» no s'ha pogut trobar. Potser s'ha mogut, se li ha canviat el nom o s'ha esborrat. L'última ubicació on es va veure és «{2}»."
@@ -1504,7 +1508,7 @@ msgstr "El fitxer de fons «1» no s'ha pogut trobar. Potser s'ha mogut, se li h
 msgid "The check for overwriting the background failed with:\n"
 msgstr "La prova per a sobreescriure el fons ha fallat amb:\n"
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "El fitxer que s'ha carregat té un format de fitxer amb una versió posterior a la que suporta aquesta versió del Xournal++ i potser no es pugui carregar bé. Voleu obrir-lo igualment?"
 
@@ -1548,7 +1552,7 @@ msgstr "S'ha produït un error mentre es mostrava l'ajuda: {1}"
 msgid "Thick"
 msgstr "Gruixut"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr "Aquest document encara no s'ha desat."
 
@@ -1588,7 +1592,7 @@ msgstr "No es pot obrir el fitxer de plantilla global a {1}. Existeix?"
 msgid "Unable to play audio recording {1}"
 msgstr "No es pot reproduir la gravació de so {1}"
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr "La pagina del pdf no es pot recuperar."
 
@@ -1637,7 +1641,7 @@ msgstr "El tipus d'extrem de traç «{1}» és desconegut. Es canvia a rodó."
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "El tipus de traç «{1}» és desconegut. Es canvia a llapis."
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr "Document sense desar"
 
@@ -1645,7 +1649,7 @@ msgstr "Document sense desar"
 msgid "Unsupported graphics format: "
 msgstr "Format de gràfics no suportat: "
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr "Fes servir el PDF proposat"
 
@@ -1702,7 +1706,7 @@ msgstr "Fitxers Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "El Xournal++ es va tancar de sobte l'última vegada que es va executar. Voleu restaurar l'últim fitxer editat?"
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Fitxers Xournal++"
@@ -1712,7 +1716,7 @@ msgstr "Fitxers Xournal++"
 msgid "Xournal++ template"
 msgstr "Plantilla Xournal++"
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Heu esborrat la barra d'eines activa. S'aplica la barra d'eines per defecte."
 
@@ -1750,7 +1754,7 @@ msgstr "Allunya"
 msgid "Zoom to 100%"
 msgstr "Ajusta al 100 %"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1767,7 +1771,7 @@ msgstr "_Quadern"
 msgid "_Open"
 msgstr "_Obre"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1813,7 +1817,7 @@ msgstr "elements"
 msgid "eraser"
 msgstr "goma d'esborrar"
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr "fitxer: {1}"
 
@@ -2331,7 +2335,7 @@ msgstr "Dispositius d'àudio"
 msgid "Audio Recording"
 msgstr "Enregistrament d'àudio"
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr "Autor: "
 
@@ -3165,7 +3169,7 @@ msgid "Partially based on Xournal\n"
 msgstr "Basat en part en el Xournal\n"
 "de Denis Auroux"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr "Camí: "
 
@@ -3197,7 +3201,7 @@ msgstr "Gestor de complements"
 msgid "Plugin _Manager"
 msgstr "Gestor de _complements"
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr "Els canvis dels complements s'apliquen quan es reiniciï el Xournal++."
 
@@ -3604,7 +3608,7 @@ msgstr "Normalment 0 o 1"
 msgid "Velocity based Gaussian weights"
 msgstr "Velocitat basada en pesos gaussians"
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr "Versió: "
 
@@ -3925,7 +3929,7 @@ msgstr "Desactivat"
 msgid "dpi"
 msgstr "ppp"
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr "activat,"
 
