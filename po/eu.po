@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Jarraitu nahi duzu?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -66,7 +66,7 @@ msgstr "<span foreground='red' size='x-large'>UI fitxategia falta da:\n"
 "  Ez dago Lanerako bidean\n"
 "  Ez dago hemen: {2}"
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr "Gehitu falta den orria"
 
@@ -161,7 +161,7 @@ msgstr "Ekarri aurrera"
 msgid "Built on"
 msgstr "Integratua"
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -287,7 +287,7 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "Ezin izan da \"{1}\" berregin\n"
 "Zerbait gaizki joan da… Mesedez, idatzi akatsen berri…"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Ezin izan da \"{1}\" automatikoki gordetzeko fitxategi zaharra kendu: {2}"
 
@@ -386,7 +386,7 @@ msgstr "Ezabatu orri hau"
 msgid "Disable audio for this session"
 msgstr "Desgaitu audioa saio honetarako"
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "Baztertu"
 
@@ -394,7 +394,7 @@ msgstr "Baztertu"
 msgid "Display advanced export options"
 msgstr "Erakutsi esportatzeko aukera aurreratuak"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -406,7 +406,7 @@ msgstr "Ez ireki automatikoki gordetako fitxategiak. Agian gainidatziko dira!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ez gainidatzi atzeko planoko PDFa! Horrek akatsak eragingo ditu!"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr "Dokumentu fitxategia kendu da."
 
@@ -522,7 +522,7 @@ msgstr "Ezabatu trazua"
 msgid "Eraser"
 msgstr "Borragoma"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Errorea PDF oharrak fitxategian \"{1}\"\n"
@@ -544,7 +544,7 @@ msgstr "Errorea \"{1}\" Glade fitxategia kargatzean (saiatu \"{2}\" kargatzen)"
 msgid "Error occurred while closing file: \"{1}\""
 msgstr "Errore bat gertatu da \"{1}\" fitxategia ixtean."
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr "Errorea \"{1}\" fitxategia irekitzean"
 
@@ -705,7 +705,7 @@ msgstr "Ezin da fitxategia ireki. Eskuz egin behar duzu:\n"
 msgid "File {1} does not exist."
 msgstr "{1} fitxategia ez dago."
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "Fitxategi-sistemaren errorea: {1}"
 
@@ -910,7 +910,7 @@ msgstr "Geruza {1}"
 msgid "Layerstack Preview"
 msgstr "Geruza pilaren aurrebista"
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -969,7 +969,7 @@ msgstr "Ez dago gailurik"
 msgid "No pages to export!"
 msgstr "Ez dago orririk esportatzeko!"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Ez dago pdf orririk eransteko. Komeni da aurretik dokumentua berriro irekitzea."
 
@@ -1068,6 +1068,10 @@ msgstr "Orria txertatua"
 msgid "Page number"
 msgstr "Orriaren zenbakia"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr "Orrialde motaren formatua PageTypeFormat::Copy da - PageTypeFormat::Plain bihurtu da fitxategi hondatuta ekiditeko"
@@ -1128,7 +1132,7 @@ msgstr "Inprimatu"
 msgid "Record Audio / Stop Recording"
 msgstr "Grabatu audioa / Gelditu grabazioa"
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr "Ezin izan da grabagailua abiatu."
 
@@ -1141,7 +1145,7 @@ msgstr "Berregin"
 msgid "Redo: "
 msgstr "Berregin: "
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr "Kendu atzeko planoko PDFa"
 
@@ -1197,16 +1201,16 @@ msgstr "SVG irudiak"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Frogako LaTex fitxategia behar bezala sortu da."
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Gorde"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "Gorde honela..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Gorde fitxategia"
@@ -1224,7 +1228,7 @@ msgstr "Errorea fitxategia gordetzean: {1}"
 msgid "Scale"
 msgstr "Jarri eskalan"
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr "Korritu {1} orrialdera"
 
@@ -1308,7 +1312,7 @@ msgstr "Hautatu area"
 msgid "Select Text from pdf"
 msgstr "Hautatu testua pdf-an"
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "Hautatu beste PDF"
 
@@ -1482,11 +1486,11 @@ msgstr "Testua ez da aurkitu"
 msgid "Text not found, searched on all pages"
 msgstr "Testua ez da aurkitu, orri guztietan bilatu ondoren"
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Toolbarconfiguration \"{1}\" lehenetsia dago, nahi duzu kopia bat sortu bera editatzeko?"
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Ezin izan da erantsitako atzeko planoa aurkitu. Baliteke mugitu, izena aldatu edo ezabatu izana."
 
@@ -1494,7 +1498,7 @@ msgstr "Ezin izan da erantsitako atzeko planoa aurkitu. Baliteke mugitu, izena a
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Ezin izan da \"{1}\" atzeko planoa aurkitu. Baliteke mugitu, izena aldatu edo ezabatu izana."
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Ezin izan da atzeko planoaren {1} fitxategia aurkitu. Baliteke mugitu, izena aldatu edo ezabatu izana.\n"
@@ -1504,7 +1508,7 @@ msgstr "Ezin izan da atzeko planoaren {1} fitxategia aurkitu. Baliteke mugitu, i
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Atzeko planoa gainidazteko azterketak huts egin du:\n"
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Kargatuko den fitxategia Xournal++en uneko bertsiok onartzen duena baino bertsio berriago batez sortu da, beraz baliteke behar bezala ez kargatzea. Ireki edonola?"
 
@@ -1548,7 +1552,7 @@ msgstr "Laguntza erakusteak huts egin du: {1}"
 msgid "Thick"
 msgstr "Lodia"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr "Dokumentu hau oraindik ez da gorde."
 
@@ -1588,7 +1592,7 @@ msgstr "Ezin izan da {1}-eko txantiloi fitxategi globala ireki. Ba al dago?"
 msgid "Unable to play audio recording {1}"
 msgstr "Ezin da erreproduzitu audio grabazioa {1}"
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr "Ezin izan da pdf orria berreskuratu."
 
@@ -1637,7 +1641,7 @@ msgstr "Trazu mota ezezaguna: \"{1}\", biribila suposatzen da"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Trazu mota ezezaguna: {1}, arkatza erabiliko da"
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr "Gorde gabeko dokumentua"
 
@@ -1645,7 +1649,7 @@ msgstr "Gorde gabeko dokumentua"
 msgid "Unsupported graphics format: "
 msgstr "Onartu gabeko formatu grafikoa: "
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr "Erabili proposatutako PDFa"
 
@@ -1702,7 +1706,7 @@ msgstr "Xournal fitxategiak"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++-ek huts egin du azkenekoan. Nahi al duzu editatutako azken fitxategia leheneratzea?"
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ fitxategiak"
@@ -1712,7 +1716,7 @@ msgstr "Xournal++ fitxategiak"
 msgid "Xournal++ template"
 msgstr "Xournal++ txantiloia"
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Tresna-barra aktiboa ezabatu duzu. Lehenetsitako tresna-barrara itzultzen."
 
@@ -1748,7 +1752,7 @@ msgstr "Txikiagotu"
 msgid "Zoom to 100%"
 msgstr "%100 eskala"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1765,7 +1769,7 @@ msgstr "_Egunkaria"
 msgid "_Open"
 msgstr "_Ireki"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1811,7 +1815,7 @@ msgstr "elementuak"
 msgid "eraser"
 msgstr "borragoma"
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr "fitxategia: {1}"
 
@@ -2327,7 +2331,7 @@ msgstr "Audio gailuak"
 msgid "Audio Recording"
 msgstr "Audio-grabazioa"
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr "Egilea: "
 
@@ -3159,7 +3163,7 @@ msgid "Partially based on Xournal\n"
 msgstr "Xournal-en partzialki oinarritua\n"
 "Denis Auroux-ek egina"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr "Fitxategi-bidea: "
 
@@ -3191,7 +3195,7 @@ msgstr "Plugin kudeatzailea"
 msgid "Plugin _Manager"
 msgstr "Plugin _kudeatzailea"
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr "Plugin aldaketak Xournal++ berrabiarazi ondoren aplikatzen dira"
 
@@ -3597,7 +3601,7 @@ msgstr "Normalean 0 edo 1"
 msgid "Velocity based Gaussian weights"
 msgstr "Abiaduran oinarritutako presio gaussiarrak"
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr "Bertsioa: "
 
@@ -3918,7 +3922,7 @@ msgstr "desgaitua"
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr "gaituta,"
 
