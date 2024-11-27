@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:36\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Ali želite nadaljevati?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -66,7 +66,7 @@ msgstr "<span foreground='red' size='x-large'>Manjka datoteka uporabniškega vme
 "  Ne v delovni poti\n"
 "  Ne v {2}"
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr "Dodaj manjkajočo stran"
 
@@ -161,7 +161,7 @@ msgstr ""
 msgid "Built on"
 msgstr "Zgrajeno z"
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -287,7 +287,7 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "Ni bilo mogoče ponoviti »{1}«\n"
 "Nekaj je šlo narobe... Prosimo, napišite poročilo o napaki…"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Ni bilko možno odstraniti stare Autosave datoteke \"{1}\": {2}"
 
@@ -386,7 +386,7 @@ msgstr ""
 msgid "Disable audio for this session"
 msgstr "Onemogoči zvok za to sejo"
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "Zavrzi"
 
@@ -394,7 +394,7 @@ msgstr "Zavrzi"
 msgid "Display advanced export options"
 msgstr "Prikaži napredne možnosti izvoza"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -406,7 +406,7 @@ msgstr "Ne odpirajte Autosave datotek. Morda bodo prepisane!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ne prepisujte izvornega PDF! To bo povzročilo napake!"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr "Datoteka dokumenta je bila odstranjena."
 
@@ -522,7 +522,7 @@ msgstr "Izbriši potezo"
 msgid "Eraser"
 msgstr "Radirka"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Napaka komentiranje PDF \"{1}\"\n"
@@ -544,7 +544,7 @@ msgstr "Napaka pri nalaganju datoteke glade »{1}« (poskusite naložiti »{2}«
 msgid "Error occurred while closing file: \"{1}\""
 msgstr "Med zapiranjem datoteke je prišlo do napake: \"{1}\""
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr "napaka pri odpiranju datoteke \"{1}\""
 
@@ -705,7 +705,7 @@ msgstr "Datoteke ni bilo mogoče odpreti. To morate storiti ročno:\n"
 msgid "File {1} does not exist."
 msgstr "Datoteka {1} ne obstaja."
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "Napaka datotečnega sistema:{1}"
 
@@ -910,7 +910,7 @@ msgstr "Sloj {1}"
 msgid "Layerstack Preview"
 msgstr "Predogled sklada slojev"
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -969,7 +969,7 @@ msgstr "Ni naprave"
 msgid "No pages to export!"
 msgstr "Ni strani za izvoz!"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Na voljo ni PDF strani za dodajanje. Morda boste morali znova odpreti dokument."
 
@@ -1068,6 +1068,10 @@ msgstr "Stran vstavljena"
 msgid "Page number"
 msgstr "Številka strani"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
@@ -1128,7 +1132,7 @@ msgstr "Natisni"
 msgid "Record Audio / Stop Recording"
 msgstr "Snemaj zvok / Končaj snemanje"
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr ""
 
@@ -1141,7 +1145,7 @@ msgstr "Ponovi"
 msgid "Redo: "
 msgstr "Ponovi: "
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr "Odstrani ozadje PDF-ja"
 
@@ -1197,16 +1201,16 @@ msgstr "SVG grafika"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Vzorčna datoteka LaTeX je bila uspešno ustvarjena."
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Shrani"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "Shrani kot..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Shrani Datoteko"
@@ -1224,7 +1228,7 @@ msgstr "Napaka pri shranjevanju datoteke: {1}"
 msgid "Scale"
 msgstr "Povečava"
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr "Pomaknite se na stran {1}"
 
@@ -1308,7 +1312,7 @@ msgstr "Izberi področje"
 msgid "Select Text from pdf"
 msgstr "Izberi Besedilo iz pdf"
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "Izberite drug PDF"
 
@@ -1482,11 +1486,11 @@ msgstr "Ne najdem besedila"
 msgid "Text not found, searched on all pages"
 msgstr "Besedilo ni bilo najdeno, iskano na vseh straneh"
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Nastavitev orodne vrstice {1} je določena. Želite narediti kopijo za urejanje?"
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Priložene datoteke ozadja ni bilo mogoče najti. Mogoče je bila premaknjena, preimenovana ali izbrisana."
 
@@ -1494,7 +1498,7 @@ msgstr "Priložene datoteke ozadja ni bilo mogoče najti. Mogoče je bila premak
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Datoteke ozadja\"{1}\" ni bilo mogoče najti. Mogoče je bila premaknjena, preimenovana ali izbrisana."
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Datoteke ozadja \"{1}\" ni bilo mogoče najti. Mogoče je bila premaknjena, preimenovana ali izbrisana.\n"
@@ -1504,7 +1508,7 @@ msgstr "Datoteke ozadja \"{1}\" ni bilo mogoče najti. Mogoče je bila premaknje
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Preverjanje prepisovanja ozadja ni uspelo zaradi:\n"
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Datoteka, ki se nalaga je v formatu, ki je novejši od trenutno podprtega v tej verziji Xournal++ in se morda ne bo naložila pravilno. Jo še vedno odprem?"
 
@@ -1548,7 +1552,7 @@ msgstr "Pri prikazovanju pomoči je prišlo do napake: {1}"
 msgid "Thick"
 msgstr "Debel"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr "Ta dokument še ni shranjen."
 
@@ -1588,7 +1592,7 @@ msgstr "Datoteke globalne predloge na {1} ni mogoče odpreti. Ali obstaja?"
 msgid "Unable to play audio recording {1}"
 msgstr "Ni mogoče predvajati zvočnega posnetka {1}"
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr "Ni možno pridobiti PDF strani."
 
@@ -1637,7 +1641,7 @@ msgstr "Neznana vrsta kapice poteze: \"{1}\", predpostavljam, da je okrogla"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Neznana vrsta poteze: \"{1}\", predpostavljam pero"
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr "Neshranjen dokument"
 
@@ -1645,7 +1649,7 @@ msgstr "Neshranjen dokument"
 msgid "Unsupported graphics format: "
 msgstr "Nepodprt grafični format: "
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr "Uporabi predlagani PDF"
 
@@ -1702,7 +1706,7 @@ msgstr "Xournal datoteke"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ se je sesul. Bi radi obnovili zadnjo odprto datoteko?"
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ datoteke"
@@ -1712,7 +1716,7 @@ msgstr "Xournal++ datoteke"
 msgid "Xournal++ template"
 msgstr "Xournal++ predloga"
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Izbrisali ste aktivno orodno vrstico. Preklapljanje na privzeto vrstico."
 
@@ -1748,7 +1752,7 @@ msgstr "Pomanjšaj"
 msgid "Zoom to 100%"
 msgstr "Povečaj na 100%"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1765,7 +1769,7 @@ msgstr "_Dnevnik"
 msgid "_Open"
 msgstr "_Odprto"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1811,7 +1815,7 @@ msgstr "elementi"
 msgid "eraser"
 msgstr "radirka"
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr "datoteka: {1}"
 
@@ -2324,7 +2328,7 @@ msgstr "Zvočne naprave"
 msgid "Audio Recording"
 msgstr "Zvočni posnetek"
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr "Avtor: "
 
@@ -3156,7 +3160,7 @@ msgid "Partially based on Xournal\n"
 msgstr "Deloma osnovano an Xournal\n"
 "avtorja Denisa Auroxa"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr "Pot: "
 
@@ -3188,7 +3192,7 @@ msgstr "Upravitelj vtičnikov"
 msgid "Plugin _Manager"
 msgstr ""
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr "Spremembe vtičnikov se uporabijo šele po ponovnem zagonu Xournal++"
 
@@ -3594,7 +3598,7 @@ msgstr "Običajno 0 ali 1"
 msgid "Velocity based Gaussian weights"
 msgstr "Gaussova utežitev na podlagi hitrosti"
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr "Različica: "
 
@@ -3915,7 +3919,7 @@ msgstr "onemogočeno"
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr "omogočeno,"
 
