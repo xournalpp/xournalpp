@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:37\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:23\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "क्या आप जारी रखना चाहते हैं?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr ""
@@ -65,7 +65,7 @@ msgstr "<span foreground='red' size='x-large'>ui  की एक महेत्�
 "वर्किंग पाठ मेइन नहीं \n"
 "{2} मैं नहीं"
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr "सबके सामने लाएँ"
 msgid "Built on"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -285,7 +285,7 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "नहीं रह सकता {1}\n"
 "कुछ गलत हो गया... कृपया एक बग रिपोर्ट लिखें..."
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
@@ -383,7 +383,7 @@ msgstr "यह पृष्ठ मिटाएँ"
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "रद्द करें"
 
@@ -391,7 +391,7 @@ msgstr "रद्द करें"
 msgid "Display advanced export options"
 msgstr "उन्नत निर्यात विकल्प प्रदर्शित करें"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -403,7 +403,7 @@ msgstr "Autosave files खुला नहीं. वे अतिव्या�
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "पृष्ठभूमि पीडीएफ को ओवरराइट नहीं करें! इससे त्रुटियां होंगी!"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr "दस्तावेज़ फ़ाइल को हटा दिया गया था।."
 
@@ -519,7 +519,7 @@ msgstr "लिखाई मिटाएँ"
 msgid "Eraser"
 msgstr "मिटाने के लिए"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
@@ -540,7 +540,7 @@ msgstr ""
 msgid "Error occurred while closing file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr ""
 
@@ -688,7 +688,7 @@ msgstr ""
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr ""
 
@@ -891,7 +891,7 @@ msgstr "परत {1}"
 msgid "Layerstack Preview"
 msgstr "परतदार पूर्वावलोकन"
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -950,7 +950,7 @@ msgstr "उपकरण नहीं"
 msgid "No pages to export!"
 msgstr "निर्यात करने के लिए कोई पृष्ठ नहीं"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "संलग्न करने के लिए कोई पीडीएफ पृष्ठ उपलब्ध नहीं है। आपको पहले दस्तावेज़ को फिर से खोलना पड़ सकता है।"
 
@@ -1048,6 +1048,10 @@ msgstr ""
 msgid "Page number"
 msgstr ""
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
@@ -1108,7 +1112,7 @@ msgstr ""
 msgid "Record Audio / Stop Recording"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr ""
 
@@ -1121,7 +1125,7 @@ msgstr ""
 msgid "Redo: "
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr ""
 
@@ -1177,16 +1181,16 @@ msgstr "SVG ग्राफिक्स"
 msgid "Sample LaTeX file generated successfully."
 msgstr "नमूना LaTeX फ़ाइल सफलतापूर्वक उत्पन्न हुई।"
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "सहेजें"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "के रूप में सहेजें..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "फ़ाइल सेव करें"
@@ -1204,7 +1208,7 @@ msgstr "फ़ाइल त्रुटि सहेजें: {1}"
 msgid "Scale"
 msgstr "पैमाना"
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr ""
 
@@ -1288,7 +1292,7 @@ msgstr "क्षेत्र का चयन करें"
 msgid "Select Text from pdf"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "एक और PDF का चयन करें"
 
@@ -1462,11 +1466,11 @@ msgstr ""
 msgid "Text not found, searched on all pages"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
@@ -1474,7 +1478,7 @@ msgstr ""
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
@@ -1483,7 +1487,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1527,7 +1531,7 @@ msgstr ""
 msgid "Thick"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1567,7 +1571,7 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
@@ -1616,7 +1620,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1624,7 +1628,7 @@ msgstr ""
 msgid "Unsupported graphics format: "
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr ""
 
@@ -1681,7 +1685,7 @@ msgstr "Xournal फ़ाइलें"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "पिछले समय Xournal++ दुर्घटनाग्रस्त हो गया। क्या आप पिछले संपादित फ़ाइल को पुनर्स्थापित करना चाहते हैं?"
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ फ़ाइलें"
@@ -1691,7 +1695,7 @@ msgstr "Xournal++ फ़ाइलें"
 msgid "Xournal++ template"
 msgstr "Xournal++ टेम्पलेट"
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
@@ -1727,7 +1731,7 @@ msgstr "छोटा करें"
 msgid "Zoom to 100%"
 msgstr "जूम 100%"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1744,7 +1748,7 @@ msgstr ""
 msgid "_Open"
 msgstr "_खुला"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1790,7 +1794,7 @@ msgstr ""
 msgid "eraser"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr ""
 
@@ -2251,7 +2255,7 @@ msgstr ""
 msgid "Audio Recording"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr ""
 
@@ -3075,7 +3079,7 @@ msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr ""
 
@@ -3107,7 +3111,7 @@ msgstr ""
 msgid "Plugin _Manager"
 msgstr ""
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr ""
 
@@ -3512,7 +3516,7 @@ msgstr ""
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr ""
 
@@ -3832,7 +3836,7 @@ msgstr ""
 msgid "dpi"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr ""
 
