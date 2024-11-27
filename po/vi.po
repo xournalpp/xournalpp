@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-26 17:46+0200\n"
-"PO-Revision-Date: 2024-10-26 17:37\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 " Bạn có muốn tiếp tục không?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -66,7 +66,7 @@ msgstr "<span foreground='red' size='x-large'>Thiếu tệp giao diện người
 "  Không có trong Lộ trình làm việc\n"
 "  Không có trong {2}"
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr "Thêm trang đang thiếu"
 
@@ -160,7 +160,7 @@ msgstr "Đưa ra phía trước"
 msgid "Built on"
 msgstr "Dựa trên"
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
 #: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
@@ -286,7 +286,7 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "Không thể làm lại \"{1}\"\n"
 "Có gì đó không đúng... Vui lòng ghi báo cáo lỗi…"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Không thể xóa tập tin tự động lưu cũ \"{1}\": {2}"
 
@@ -385,7 +385,7 @@ msgstr "Xóa trang này"
 msgid "Disable audio for this session"
 msgstr "Tắt âm thanh cho phiên này"
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "Bỏ"
 
@@ -393,7 +393,7 @@ msgstr "Bỏ"
 msgid "Display advanced export options"
 msgstr "Hiển thị các tùy chọn xuất nâng cao"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -405,7 +405,7 @@ msgstr "Không mở các tệp tin lưu tự động. Chúng sẽ có thể bị
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Không ghi đè lên tệp tin PDF nền! Việc này sẽ gây lỗi!"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr "Tập tin tài liệu đã bị gỡ."
 
@@ -521,7 +521,7 @@ msgstr "Xóa nét"
 msgid "Eraser"
 msgstr "Tẩy"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Lỗi chú thích tệp PDF \"{1}\"\n"
@@ -543,7 +543,7 @@ msgstr "Lỗi khi nạp tệp glade \"{1}\" (thử tải \"{2}\")"
 msgid "Error occurred while closing file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr "Lỗi khi mở tập tin \"{1}\""
 
@@ -704,7 +704,7 @@ msgstr "Không thể mở tệp. Bạn phải làm điều đó theo cách thủ
 msgid "File {1} does not exist."
 msgstr "Tệp tin {1} không tồn tại."
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "Lỗi tập tin hệ thống: {1}"
 
@@ -909,7 +909,7 @@ msgstr "Lớp {1}"
 msgid "Layerstack Preview"
 msgstr "Xem trước Chồng lớp"
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -968,7 +968,7 @@ msgstr "Không có thiết bị"
 msgid "No pages to export!"
 msgstr "Không có trang nào để xuất!"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Không có trang pdf nào hiện sẵn để gắn vào. Bạn có thể cần phải mở lại tài liệu trước."
 
@@ -1067,6 +1067,10 @@ msgstr "Đã chèn Trang"
 msgid "Page number"
 msgstr "Số trang"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
@@ -1127,7 +1131,7 @@ msgstr "In"
 msgid "Record Audio / Stop Recording"
 msgstr "Ghi Âm / Dừng Ghi"
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr "Không thể khởi động máy ghi âm."
 
@@ -1140,7 +1144,7 @@ msgstr "Làm lại"
 msgid "Redo: "
 msgstr "Làm lại: "
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr "Xóa nền PDF"
 
@@ -1196,16 +1200,16 @@ msgstr "Ảnh SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Tệp LaTeX mẫu được tạo thành công."
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Lưu"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "Lưu dưới dạng..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Lưu Tệp tin"
@@ -1223,7 +1227,7 @@ msgstr "Lỗi lưu tệp tin: {1}"
 msgid "Scale"
 msgstr "Tỷ lệ"
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr "Cuộn đến trang {1}"
 
@@ -1307,7 +1311,7 @@ msgstr "Chọn vùng"
 msgid "Select Text from pdf"
 msgstr "Chọn văn bản từ pdf"
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "Chọn tập tin PDF khác"
 
@@ -1481,11 +1485,11 @@ msgstr "Không tìm thấy văn bản"
 msgid "Text not found, searched on all pages"
 msgstr "Không tìm thấy văn bản, đã tìm kiếm trên tất cả các trang"
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Cấu hình thanh công cụ \"{1}\" đã được xác định, bạn có muốn tạo một bản sao để chỉnh sửa?"
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Tệp tin nền đính kèm không thể được tìm thấy. Nó có thể đã bị di chuyển, đổi tên hoặc bị xóa."
 
@@ -1493,7 +1497,7 @@ msgstr "Tệp tin nền đính kèm không thể được tìm thấy. Nó có t
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Tệp tin nền \"{1}\" không thể được tìm thấy. Nó có thể đã bị di chuyển, đổi tên hoặc bị xóa."
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Tệp tin nền \"{1}\" không thể được tìm thấy. Nó có thể đã bị di chuyển, đổi tên hoặc bị xóa.\n"
@@ -1503,7 +1507,7 @@ msgstr "Tệp tin nền \"{1}\" không thể được tìm thấy. Nó có thể
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Kiểm tra ghi đè nền không thành công với:\n"
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Tệp tin đang được tải có định dạng tệp mới hơn định dạng tệp đang được hỗ trợ bởi phiên bản Xournal++ này, vì vậy nó có thể không được tải đúng cách. Vẫn mở?"
 
@@ -1547,7 +1551,7 @@ msgstr ""
 msgid "Thick"
 msgstr "Dày"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr "Tài liệu này chưa được lưu."
 
@@ -1587,7 +1591,7 @@ msgstr "Không thể đọc được tệp mẫu chung tại {1}. Tệp có tồ
 msgid "Unable to play audio recording {1}"
 msgstr "Không thể phát ghi âm {1}"
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr "Không thể truy xuất trang pdf."
 
@@ -1636,7 +1640,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr "Tài liệu chưa được lưu"
 
@@ -1644,7 +1648,7 @@ msgstr "Tài liệu chưa được lưu"
 msgid "Unsupported graphics format: "
 msgstr "Định dạng đồ họa không được hỗ trợ: "
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr "Sử dụng PDF được đề xuất"
 
@@ -1701,7 +1705,7 @@ msgstr "Tập tin xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ lần trước đã bị sự cố. Bạn có muốn khôi phục tệp tin đã được chỉnh sửa lần trước?"
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Tập tin xournal++"
@@ -1711,7 +1715,7 @@ msgstr "Tập tin xournal++"
 msgid "Xournal++ template"
 msgstr "Mẫu Xournal++"
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Bạn đã xóa thanh công cụ đang hoạt động. Trở về thanh công cụ mặc định."
 
@@ -1747,7 +1751,7 @@ msgstr "Thu nhỏ"
 msgid "Zoom to 100%"
 msgstr "Hiện 100%"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1764,7 +1768,7 @@ msgstr ""
 msgid "_Open"
 msgstr "_Mở"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1810,7 +1814,7 @@ msgstr ""
 msgid "eraser"
 msgstr "tẩy"
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr "tệp tin: {1}"
 
@@ -2296,7 +2300,7 @@ msgstr ""
 msgid "Audio Recording"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr "Tác giả: "
 
@@ -3120,7 +3124,7 @@ msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr ""
 
@@ -3152,7 +3156,7 @@ msgstr "Trình quản lý tiện ích mở rộng"
 msgid "Plugin _Manager"
 msgstr ""
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr ""
 
@@ -3557,7 +3561,7 @@ msgstr "Thường là 0 hoặc 1"
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr "Phiên bản: "
 
@@ -3877,7 +3881,7 @@ msgstr ""
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr ""
 
