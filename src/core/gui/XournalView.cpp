@@ -585,7 +585,7 @@ void XournalView::zoomChanged() {
 void XournalView::pageSizeChanged(size_t page) {
     layoutPages();
     if (page != npos && page < this->viewPages.size()) {
-        this->viewPages[page]->rerenderPage();
+        this->viewPages[page]->rerenderPage(/* sizeChanged */ true);
     }
 }
 

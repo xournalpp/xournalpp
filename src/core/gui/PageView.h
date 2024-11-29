@@ -62,7 +62,7 @@ public:
 
 public:
     void addOverlayView(std::unique_ptr<xoj::view::OverlayView>);
-    void rerenderPage() override;
+    void rerenderPage(bool sizeChanged = false) override;
     void rerenderRect(double x, double y, double width, double height) override;
 
     void repaintPage() const override;
@@ -295,6 +295,7 @@ private:
     std::mutex repaintRectMutex;
     std::vector<xoj::util::Rectangle<double>> rerenderRects;
     bool rerenderComplete = false;
+    bool sizeChanged = false;
 
     int dispX{};  // position on display - set in Layout::layoutPages
     int dispY{};

@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>      // for size_t
+#include <optional>     // for optional
 #include <string>       // for string
 #include <string_view>  // for string_view
 #include <utility>      // for pair, make_pair
@@ -51,9 +52,11 @@ public:
     /// FIXME: remove this method. Currently, it is used by Control::clipboardPasteImage.
     [[deprecated]] void setImage(GdkPixbuf* img);
 
+    /// The image is rendered lazily by default; call this method to render it.
+    /// Returns std::nullopt on success, an error message on failure
+    std::optional<std::string> renderBuffer() const;
+
     /// Returns the internal surface that contains the rendered image data.
-    ///
-    /// Note that the image is rendered lazily by default; call this method to render it.
     cairo_surface_t* getImage() const;
 
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;

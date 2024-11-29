@@ -790,8 +790,9 @@ auto XojPageView::onKeyReleaseEvent(const KeyEvent& event) -> bool {
     return false;
 }
 
-void XojPageView::rerenderPage() {
+void XojPageView::rerenderPage(bool sizeChanged) {
     this->rerenderComplete = true;
+    this->sizeChanged = sizeChanged;
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
 

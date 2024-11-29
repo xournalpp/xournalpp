@@ -1,0 +1,35 @@
+{
+  "ubuntu-20": {
+        "displayed_name": "Ubuntu 20.04",
+        "runner": "ubuntu-20.04",
+        "gcc_version": 10,
+        "build_appimage": "true"
+      },
+  "ubuntu-22": {
+        "displayed_name": "Ubuntu 22.04",
+        "runner": "ubuntu-22.04"
+      },
+  "ubuntu-24": {
+        "displayed_name": "Ubuntu 24.04",
+        "runner": "ubuntu-24.04"
+      },
+  "debian": {
+        "displayed_name": "Debian",
+        "runner": "ubuntu-latest",
+        "extra_packages": "build-essential lsb-release",
+        "container_image": "ghcr.io/xournalpp/debian-latest-sudo:master"
+      },
+  "mac-x64": {
+        "displayed_name": "MacOS x64",
+        "runner": "macos-13"
+      },
+  "mac-arm": {
+        "displayed_name": "MacOS ARM",
+        "runner": "macos-14"
+      },
+  "windows": {
+        "displayed_name": "Windows",
+        "runner": "windows-2019",
+        "build_portable": "true"
+      }
+}

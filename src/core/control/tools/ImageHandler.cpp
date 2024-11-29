@@ -73,8 +73,11 @@ auto ImageHandler::createImageFromFile(const fs::path& p) -> std::unique_ptr<Ima
         return nullptr;
     }
     // Render the image.
-    // FIXME: this is horrible. We need an ImageView class...
-    (void)img->getImage();
+    if (auto opt = img->renderBuffer(); opt.has_value()) {
+        // An error occurred
+        XojMsgBox::showErrorToUser(nullptr, opt.value());
+        return nullptr;
+    }
 
     return img;
 }

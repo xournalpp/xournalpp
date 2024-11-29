@@ -63,10 +63,9 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
 void RenderJob::run() {
     this->view->repaintRectMutex.lock();
 
-    bool rerenderComplete = this->view->rerenderComplete;
+    bool rerenderComplete = std::exchange(this->view->rerenderComplete, false);
+    bool sizeChanged = std::exchange(this->view->sizeChanged, false);
     auto rerenderRects = std::move(this->view->rerenderRects);
-
-    this->view->rerenderComplete = false;
 
     this->view->repaintRectMutex.unlock();
 
@@ -80,7 +79,12 @@ void RenderJob::run() {
             std::lock_guard lock(this->view->drawingMutex);
             std::swap(this->view->buffer, newMask);
         }
-        repaintPage();
+        if (sizeChanged) {
+            // We do not have any control on what portion of the widget needs to be redrawn. Redraw it all.
+            Util::execInUiThread([w = view->xournal->getWidget()]() { gtk_widget_queue_draw(w); });
+        } else {
+            repaintPage();
+        }
     } else {
         for (Rectangle<double> const& rect: rerenderRects) {
             rerenderRectangle(rect);

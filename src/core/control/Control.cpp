@@ -87,6 +87,7 @@
 #include "undo/InsertDeletePageUndoAction.h"                     // for Inse...
 #include "undo/InsertUndoAction.h"                               // for Inse...
 #include "undo/MoveSelectionToLayerUndoAction.h"                 // for Move...
+#include "undo/PageSizeChangeUndoAction.h"                       // for PageSizeChangeUndoAction
 #include "undo/SwapUndoAction.h"                                 // for SwapUndoAction
 #include "undo/UndoAction.h"                                     // for Undo...
 #include "util/Assert.h"                                         // for xoj_assert
@@ -947,10 +948,13 @@ void Control::paperFormat() {
             this->gladeSearchPath, settings, page->getWidth(), page->getHeight(),
             [ctrl = this, page](double width, double height) {
                 ctrl->doc->lock();
+                double oldW = page->getWidth();
+                double oldH = page->getHeight();
                 Document::setPageSize(page, width, height);
                 size_t pageNo = ctrl->doc->indexOf(page);
                 size_t pageCount = ctrl->doc->getPageCount();
                 ctrl->doc->unlock();
+                ctrl->undoRedo->addUndoAction(std::make_unique<PageSizeChangeUndoAction>(page, oldW, oldH));
                 if (pageNo != npos && pageNo < pageCount) {
                     ctrl->firePageSizeChanged(pageNo);
                 }
