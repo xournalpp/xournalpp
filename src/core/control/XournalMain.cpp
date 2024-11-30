@@ -602,10 +602,7 @@ void XournalMain::initLocalisation() {
 #endif
 
     textdomain(GETTEXT_PACKAGE);
-
-#ifdef _WIN32
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-#endif
 
 #endif  // ENABLE_NLS
 
