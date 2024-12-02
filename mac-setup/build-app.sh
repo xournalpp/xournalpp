@@ -34,7 +34,7 @@ if [ ! -f "$GTK_MAC_BUNDLER" ]; then
   python3 -m venv "$GTK_MAC_BUNDLER_VENV"
 
   if [ ! -d gtk-mac-bundler ]; then
-    git clone https://gitlab.gnome.org/GNOME/gtk-mac-bundler.git
+    git clone --depth=1 https://gitlab.gnome.org/GNOME/gtk-mac-bundler.git
   fi
   pushd gtk-mac-bundler
   # The install script assumes it will install to some global path
