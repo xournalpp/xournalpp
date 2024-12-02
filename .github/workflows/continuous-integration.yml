@@ -105,7 +105,7 @@ jobs:
       matrix:
         run: ${{fromJSON(needs.prepare.outputs.windows_builds)}}
     runs-on: ${{ matrix.run.runner }}
-    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }})'
+    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
     steps:
       - uses: actions/checkout@v4
       - name: 'Install dependencies'
@@ -131,7 +131,7 @@ jobs:
       matrix:
         run: ${{fromJSON(needs.prepare.outputs.macos_builds)}}
     runs-on: ${{ matrix.run.runner }}
-    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }})'
+    name: 'Test Xournal++ on ${{ matrix.run.displayed_name }}'
     steps:
       - uses: actions/checkout@v4
       - name: 'Install dependencies'
