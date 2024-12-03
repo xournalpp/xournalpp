@@ -27,7 +27,7 @@ public:
      * @brief number of different sizes defined for tools with Size capability
      *
      */
-    static constexpr int toolSizes = 5;
+    static constexpr int toolSizes = 6;
 
     Tool(std::string name, ToolType type, Color color, unsigned int capabilities,
          std::optional<std::array<double, Tool::toolSizes>> thickness);
@@ -46,6 +46,8 @@ public:
     bool hasCapability(ToolCapabilities cap) const;
 
     double getThickness(ToolSize size) const;
+
+    void setCustomThickness(double thickness);
 
     /**
      * @brief Check whether the tool is a Drawing tool.

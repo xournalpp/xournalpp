@@ -1229,6 +1229,7 @@ void Control::highlighterSizeChanged() {
 }
 
 void Control::toolSizeChanged() {
+    // TODO(thickness)
     if (toolHandler->getToolType() == TOOL_PEN) {
         penSizeChanged();
     } else if (toolHandler->getToolType() == TOOL_ERASER) {

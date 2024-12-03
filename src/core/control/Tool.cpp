@@ -31,6 +31,15 @@ auto Tool::hasCapability(ToolCapabilities cap) const -> bool { return (this->cap
 
 auto Tool::getThickness(ToolSize size) const -> double { return this->thickness.value()[size - TOOL_SIZE_VERY_FINE]; }
 
+void Tool::setCustomThickness(double thickness) {
+    if (this->thickness) {
+        this->thickness.value()[TOOL_SIZE_CUSTOM - TOOL_SIZE_VERY_FINE] = thickness;
+        return;
+    }
+
+    g_warning("Trying to set size of \"%s\"", getName().c_str());
+}
+
 auto Tool::isDrawingTool() const -> bool {
     return this->type == TOOL_PEN || this->type == TOOL_HIGHLIGHTER || this->type == TOOL_ERASER;
 }

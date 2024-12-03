@@ -680,6 +680,11 @@
        <attribute name="action">win.tool-pen-size</attribute>
        <attribute name="target" type="t">4</attribute> <!-- TOOL_SIZE_VERY_THICK -->
       </item>
+      <item>
+       <attribute name="label" translatable="yes">custom</attribute>
+       <attribute name="action">win.tool-pen-size</attribute>
+       <attribute name="target" type="t">5</attribute> <!-- TOOL_SIZE_CUSTOM -->
+      </item>
      </section>
      <section>
       <item>
@@ -741,7 +746,12 @@
              <attribute name="label" translatable="yes">ver_y thick</attribute>
              <attribute name="action">win.tool-eraser-size</attribute>
              <attribute name="target" type="t">4</attribute> <!-- TOOL_SIZE_VERY_THICK -->
-      </item>
+          </item>
+          <item>
+               <attribute name="label" translatable="yes">custom</attribute>
+               <attribute name="action">win.tool-pen-size</attribute>
+               <attribute name="target" type="t">5</attribute> <!-- TOOL_SIZE_CUSTOM -->
+          </item>
      </section>
      <section>
       <item>
@@ -789,6 +799,11 @@
              <attribute name="action">win.tool-highlighter-size</attribute>
              <attribute name="target" type="t">4</attribute> <!-- TOOL_SIZE_VERY_THICK -->
         </item>
+          <item>
+               <attribute name="label" translatable="yes">custom</attribute>
+               <attribute name="action">win.tool-pen-size</attribute>
+               <attribute name="target" type="t">5</attribute> <!-- TOOL_SIZE_CUSTOM -->
+          </item>
      </section>
      <section>
          <item>

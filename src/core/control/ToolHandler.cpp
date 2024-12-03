@@ -53,6 +53,7 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_MEDIUM] = 1.41;
     thickness[TOOL_SIZE_THICK] = 2.26;
     thickness[TOOL_SIZE_VERY_THICK] = 5.67;
+    thickness[TOOL_SIZE_CUSTOM] = 1.41;
     tools[TOOL_PEN - TOOL_PEN] = std::make_unique<Tool>(
             "pen", TOOL_PEN, Colors::xopp_royalblue,
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
@@ -65,6 +66,7 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_MEDIUM] = 8.50;
     thickness[TOOL_SIZE_THICK] = 12;
     thickness[TOOL_SIZE_VERY_THICK] = 18;
+    thickness[TOOL_SIZE_CUSTOM] = 8.50;
     tools[TOOL_ERASER - TOOL_PEN] =
             std::make_unique<Tool>("eraser", TOOL_ERASER, Colors::black, TOOL_CAP_SIZE, thickness);
 
@@ -74,6 +76,7 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_MEDIUM] = 8.50;
     thickness[TOOL_SIZE_THICK] = 19.84;
     thickness[TOOL_SIZE_VERY_THICK] = 30;
+    thickness[TOOL_SIZE_CUSTOM] = 8.50;
     tools[TOOL_HIGHLIGHTER - TOOL_PEN] = std::make_unique<Tool>(
             "highlighter", TOOL_HIGHLIGHTER, Colors::yellow,
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
@@ -226,6 +229,10 @@ auto ToolHandler::getSize(SelectedTool selectedTool) const -> ToolSize {
     return tool->getSize();
 }
 
+void ToolHandler::setCustomThickness(double thickness, ToolType toolType) {
+    this->tools[toolType - TOOL_PEN]->setCustomThickness(thickness);
+}
+
 auto ToolHandler::getPenSize() const -> ToolSize { return tools[TOOL_PEN - TOOL_PEN]->getSize(); }
 
 auto ToolHandler::getEraserSize() const -> ToolSize { return tools[TOOL_ERASER - TOOL_PEN]->getSize(); }
@@ -311,6 +318,7 @@ auto ToolHandler::getSelectPDFTextMarkerOpacity() const -> int {
 auto ToolHandler::getThickness() const -> double {
     Tool* tool = this->activeTool;
     if (tool->thickness) {
+        // TODO(thickness)
         return tool->thickness.value()[tool->getSize()];
     }
 
@@ -319,7 +327,7 @@ auto ToolHandler::getThickness() const -> double {
 }
 
 void ToolHandler::setSize(ToolSize size) {
-    ToolSize clippedSize = std::clamp(size, TOOL_SIZE_VERY_FINE, TOOL_SIZE_VERY_THICK);
+    ToolSize clippedSize = std::clamp(size, TOOL_SIZE_VERY_FINE, TOOL_SIZE_CUSTOM);
     if (clippedSize != size)
         g_warning("ToolHandler::setSize: Invalid size! %i", size);
 
@@ -329,7 +337,7 @@ void ToolHandler::setSize(ToolSize size) {
 }
 
 void ToolHandler::setButtonSize(ToolSize size, Button button) {
-    ToolSize clippedSize = std::clamp(size, TOOL_SIZE_VERY_FINE, TOOL_SIZE_VERY_THICK);
+    ToolSize clippedSize = std::clamp(size, TOOL_SIZE_VERY_FINE, TOOL_SIZE_CUSTOM);
     if (clippedSize != size)
         g_warning("ToolHandler::setSize: Invalid size! %i", size);
 
@@ -448,6 +456,8 @@ void ToolHandler::saveSettings() const {
                 case TOOL_SIZE_VERY_THICK:
                     value = "VERY_BIG";
                     break;
+                case TOOL_SIZE_CUSTOM:
+                    value = "CUSTOM";
                 default:
                     value = "";
             }
@@ -527,6 +537,8 @@ void ToolHandler::loadSettings() {
                     tool->setSize(TOOL_SIZE_THICK);
                 } else if (value == "VERY_BIG") {
                     tool->setSize(TOOL_SIZE_VERY_THICK);
+                } else if (value == "CUSTOM") {
+                    tool->setSize(TOOL_SIZE_CUSTOM);
                 } else {
                     g_warning("Settings::Unknown tool size: %s\n", value.c_str());
                 }

@@ -203,6 +203,13 @@ public:
     ToolSize getPenSize() const;
     ToolSize getEraserSize() const;
     ToolSize getHighlighterSize() const;
+
+    /**
+     * @brief Set the thickness of the custom thickness option.
+     *
+     * @param thickness Thickness to be used
+     */
+    void setCustomThickness(double thickness, ToolType toolType);
     void setPenSize(ToolSize size);
     void setEraserSize(ToolSize size);
     void setHighlighterSize(ToolSize size);

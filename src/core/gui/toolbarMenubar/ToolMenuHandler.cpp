@@ -486,6 +486,8 @@ void ToolMenuHandler::initToolItems() {
     emplaceCustomItemWithTarget("THICK", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_THICK, "thickness-thick", _("Thick"));
     emplaceCustomItemWithTarget("VERY_THICK", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_VERY_THICK, "thickness-thicker",
                                 _("Very Thick"));
+    emplaceCustomItemWithTarget("CUSTOM", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_CUSTOM, "thickness-custom",
+                                _("Custom"));
 }
 
 void ToolMenuHandler::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage) {
