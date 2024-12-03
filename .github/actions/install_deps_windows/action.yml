@@ -24,3 +24,24 @@ runs:
           mingw-w64-x86_64-lua
           mingw-w64-x86_64-gtksourceview4
           mingw-w64-x86_64-imagemagick
+    - shell: msys2 {0}
+      # Apply https://gitlab.freedesktop.org/cairo/cairo/-/merge_requests/595 to cairo-1.18.2-1 to fix #6014
+      # Can be removed if either msys' packages include that fix by hand or cairo-1.18.3 is released.
+      run: |
+        cairo_version=$(pacman -Qi mingw-w64-x86_64-cairo | sed -e '/Version/!d' -e 's/^[^:]*: //')
+        echo "cairo_version=$cairo_version"
+        if [ "$cairo_version" = "1.18.2-1" ]; then
+          C:/Program\ Files/Git/bin/git.exe clone --depth=1 "https://github.com/msys2/MINGW-packages"
+          cd MINGW-packages/mingw-w64-cairo
+          sed -i 's/pkgrel=1/pkgrel=666/g' PKGBUILD
+          makepkg-mingw -so --noconfirm # Install build deps and pull sources - no build
+          cd src/cairo-1.18.2/
+          curl -O https://gitlab.freedesktop.org/cairo/cairo/-/merge_requests/595.patch
+          patch -p1 -i 595.patch
+          sed -i 's/DEFINE_ENUM_FLAG_OPERATORS(DWRITE_GLYPH_IMAGE_FORMATS);//g' src/win32/dw-extra.h  # Fix build
+          cd ../..
+          makepkg-mingw -ei --noconfirm # Build and install
+          pacman -Qi mingw-w64-x86_64-cairo
+        else
+          echo "::warning file=.github/actions/install_deps_windows,line=27,endLine=47,title=Outdated step::This step is possibly outdated. If cairo_version > 1.18.2, then remove this step."
+        fi
