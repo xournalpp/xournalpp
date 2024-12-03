@@ -78,7 +78,8 @@ public:
     fs::path getFilepath() const;
     fs::path getPdfFilepath() const;
     fs::path createSaveFolder(fs::path lastSavePath);
-    fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName, const std::string& defaultPfdName = "");
+    fs::path createSaveFilename(DocumentType type, std::string_view defaultSaveName,
+                                std::string_view defaultPfdName = "");
 
     fs::path getEvMetadataFilename() const;
 
@@ -96,7 +97,9 @@ public:
 
     void lock();
     void unlock();
-    bool tryLock();
+    [[deprecated("Document::tryLock() is incompatible to lock guards use Document::try_lock() instead")]]
+    auto tryLock() -> bool;
+    auto try_lock() -> bool;
 
 private:
     void buildContentsModel();

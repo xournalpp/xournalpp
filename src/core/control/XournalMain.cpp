@@ -78,7 +78,8 @@ void initCAndCoutLocales() {
      * Force numbers to be printed out and parsed by C libraries (cairo) in the "classic" locale.
      * This avoids issue with tags when exporting to PDF, see #3551
      */
-    setlocale(LC_NUMERIC, "C");
+    setlocale(LC_NUMERIC, "C.utf8");
+    setlocale(LC_CTYPE, "C.utf8");  // Enforce utf8 everywhere
 
     std::cout.imbue(std::locale());
 }
@@ -101,7 +102,7 @@ void initLocalisation() {
 
 #endif  // ENABLE_NLS
 
-    // Not working on GNU g++(mingww) forWindows! Only working on Linux/macOS and with msvc
+    // Not working on GNU g++(mingw) forWindows! Only working on Linux/macOS and with msvc
     try {
         std::locale::global(std::locale(""));  // "" - system default locale
     } catch (const std::runtime_error& e) {

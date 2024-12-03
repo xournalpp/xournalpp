@@ -37,8 +37,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 option(INSTALL_GTEST "Enable installation of googletest." OFF)
 
 # Explicit flag to enable gtest download
-option(DOWNLOAD_GTEST "Force download of googletest." OFF)
-
+option(DOWNLOAD_GTEST "Force download of googletest." ON)
+set(DOWNLOAD_GTEST ON CACHE BOOL "Force download of googletest." FORCE)
 if (${DOWNLOAD_GTEST})
   message(STATUS "Downloading gtest...")
   # Download and build GoogleTest

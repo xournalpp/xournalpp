@@ -5,9 +5,13 @@
 #include <cstdio>       // for sscanf, size_t
 #include <cstdlib>      // for atoi
 #include <cstring>      // for strcmp
+#include <cwchar>       // for mbstate_t, mbsrtowcs
 #include <exception>    // for exception
+#include <string>       // for string
+#include <string_view>  // for string_view
 #include <type_traits>  // for add_const<>::type
 #include <utility>      // for pair, move, make_...
+#include <vector>       // for vector
 
 #include <libxml/globals.h>    // for xmlFree, xmlInden...
 #include <libxml/parser.h>     // for xmlKeepBlanksDefault
@@ -29,6 +33,19 @@
 #include "config-dev.h"
 #include "filesystem.h"  // for path, u8path, exists
 
+static auto is_utf8(std::string_view input) {
+    auto data = input.data();
+    std::mbstate_t state{};
+    size_t t = std::mbsrtowcs(nullptr, &data, input.size(), &state);
+    return t != static_cast<size_t>(-1);
+}
+
+static auto forward_if_utf8(std::string_view val, std::string_view default_val = "") -> auto {
+    if (is_utf8(std::string_view{val})) {
+        return val;
+    }
+    return default_val;
+}
 
 using std::string;
 
@@ -393,11 +410,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
         this->selectedToolbar = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastSavePath")) == 0) {
-        this->lastSavePath = fs::u8path(reinterpret_cast<const char*>(value));
+        this->lastSavePath = fs::u8path(forward_if_utf8(reinterpret_cast<const char*>(value), ""));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastOpenPath")) == 0) {
-        this->lastOpenPath = fs::u8path(reinterpret_cast<const char*>(value));
+        this->lastOpenPath = fs::u8path(forward_if_utf8(reinterpret_cast<const char*>(value), ""));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastImagePath")) == 0) {
-        this->lastImagePath = fs::u8path(reinterpret_cast<const char*>(value));
+        this->lastImagePath = fs::u8path(forward_if_utf8(reinterpret_cast<const char*>(value), ""));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanSpeed")) == 0) {
         this->edgePanSpeed = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanMaxMult")) == 0) {
@@ -492,7 +509,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sizeUnit")) == 0) {
         this->sizeUnit = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
-        this->audioFolder = fs::u8path(reinterpret_cast<const char*>(value));
+        this->audioFolder = fs::u8path(forward_if_utf8(reinterpret_cast<const char*>(value), ""));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveEnabled")) == 0) {
         this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
@@ -626,8 +643,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.defaultText")) == 0) {
         this->latexSettings.defaultText = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.globalTemplatePath")) == 0) {
-        std::string v(reinterpret_cast<char*>(value));
-        this->latexSettings.globalTemplatePath = fs::u8path(v);
+        this->latexSettings.globalTemplatePath = fs::u8path(forward_if_utf8(reinterpret_cast<const char*>(value), ""));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
         this->latexSettings.genCmd = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewThemeId")) == 0) {

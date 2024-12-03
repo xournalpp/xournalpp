@@ -1,8 +1,16 @@
 #include "Document.h"
 
+#include <cassert>
+#include <clocale>
 #include <codecvt>  // for codecvt_utf8_utf16
-#include <ctime>    // for size_t, localtime, strf...
+#include <cstddef>
+#include <cstdlib>
+#include <ctime>  // for size_t, localtime, strf...
+#include <cwchar>
+#include <filesystem>
 #include <iomanip>
+#include <ios>
+#include <locale>
 #include <memory>
 #include <sstream>
 #include <string>   // for string
@@ -28,6 +36,83 @@
 #include "LinkDestination.h"  // for XojLinkDest, DOCUMENT_L...
 #include "XojPage.h"          // for XojPage
 #include "filesystem.h"       // for path
+
+// Todo: move out of this file, implement the range interface for this or use boost.text
+/* static auto utf8_to_u32string(std::string_view utf_string) -> std::u32string {
+    setlocale(LC_CTYPE, "C.utf8");
+    std::u32string format;
+    format.resize(utf_string.size());
+
+    static_assert(__STDC_UTF_32__ == 1);
+
+    auto target_iter = format.data();
+    auto begin_iter = utf_string.data();
+    auto end_ptr = utf_string.data() + utf_string.size();
+    std::mbstate_t mb_state{};
+    while (true) {
+        if (begin_iter == end_ptr)
+            break;
+        auto w_len = std::mbrtoc32(target_iter, begin_iter, size_t(end_ptr - begin_iter), &mb_state);
+        if (w_len == 0)
+            break;
+        if (w_len == static_cast<std::size_t>(-2)) {
+            throw std::runtime_error(
+                    "Error converting string to wide string failed, recieved incomplete multibyte sequence");
+            // return {}; // Todo check if function call is secured in any way by try catch or return empty path
+        }
+
+        if (w_len == static_cast<std::size_t>(-1)) {
+            throw std::runtime_error(
+                    "Error converting string to wide string failed, recieved non valid multibyte sequence");
+            // return {}; // Todo check if function call is secured in any way by try catch or return empty path
+        }
+        begin_iter += w_len;
+        ++target_iter;
+        mb_state = std::mbstate_t{};
+    }
+    auto size = size_t(target_iter - format.data());
+    format.resize(size);
+    return format;
+} */
+
+// Todo: move out of this file, implement the range interface for this or use boost.text
+static auto utf8_to_wstring(std::string_view utf_string) -> std::wstring {
+    setlocale(LC_CTYPE, "C.utf8");
+    // print all locales:
+    std::wstring format;
+    format.resize(utf_string.size() + 1);
+
+    static_assert(__STDC_UTF_32__ == 1);
+
+    auto target_iter = format.data();
+    auto begin_iter = utf_string.data();
+    auto end_ptr = utf_string.data() + utf_string.size();
+    std::mbstate_t mb_state{};
+    while (true) {
+        if (begin_iter == end_ptr)
+            break;
+        auto w_len = std::mbrtowc(target_iter, begin_iter, size_t(end_ptr - begin_iter), &mb_state);
+        if (w_len == 0)
+            break;
+        if (w_len == static_cast<std::size_t>(-2)) {
+            throw std::runtime_error(
+                    "Error converting string to wide string failed, recieved incomplete multibyte sequence");
+            // return {}; // Todo check if function call is secured in any way by try catch or return empty path
+        }
+
+        if (w_len == static_cast<std::size_t>(-1)) {
+            throw std::runtime_error(
+                    "Error converting string to wide string failed, recieved non valid multibyte sequence");
+            // return {}; // Todo check if function call is secured in any way by try catch or return empty path
+        }
+        begin_iter += w_len;
+        ++target_iter;
+        mb_state = std::mbstate_t{};
+    }
+    auto size = size_t(target_iter - format.data());
+    format.resize(size);
+    return format;
+}
 
 Document::Document(DocumentHandler* handler): handler(handler) {}
 
@@ -83,7 +168,9 @@ void Document::unlock() {
 /*
 ** Returns true when successfully acquiring lock.
 */
-auto Document::tryLock() -> bool { return this->documentLock.try_lock(); }
+
+auto Document::try_lock() -> bool { return this->documentLock.try_lock(); }
+auto Document::tryLock() -> bool { return try_lock(); }
 
 void Document::clearDocument(bool destroy) {
     if (this->preview) {
@@ -93,7 +180,7 @@ void Document::clearDocument(bool destroy) {
 
     if (!destroy) {
         // release lock
-        bool lastLock = tryLock();
+        bool lastLock = try_lock();
         unlock();
         this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
         if (!lastLock)  // document was locked before
@@ -135,9 +222,12 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
-auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName,
-                                  const std::string& defaultPdfName) -> fs::path {
-    constexpr static std::wstring_view forbiddenChars = {L"\\/:*?\"<>|"};
+auto Document::createSaveFilename(DocumentType type, std::string_view defaultSaveName,
+                                  std::string_view defaultPdfName) -> fs::path {
+    auto cpploc = std::locale();
+    auto clocale = std::setlocale(LC_ALL, nullptr);
+
+    constexpr static std::u32string_view forbiddenChars = {U"\\/:*?\"<>|"};
     std::string wildcardString;
     if (type != Document::PDF) {
         if (!filepath.empty()) {
@@ -157,13 +247,17 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
         wildcardString = SaveNameUtils::parseFilenameFromWildcardString(defaultPdfName, this->filepath.filename());
     }
 
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 
+    auto oldloc = std::locale();
+    auto loc_utf8 = std::locale("C.UTF-8");
+    auto loc = std::locale().combine<std::ctype<char>>(loc_utf8).combine<std::ctype<wchar_t>>(loc_utf8);
+    std::locale::global(loc);
     auto format_str = wildcardString.empty() ? defaultSaveName : wildcardString;
-    auto format = converter.from_bytes(format_str);
+    auto format = utf8_to_wstring(format_str);
 
-    // Todo (cpp20): use <format>
-    std::wostringstream ss;
+    // Todo (cpp20): use <format> or get {fmt} and switch back to utf8.
+    using ou32stringstream = std::basic_ostringstream<wchar_t>;
+    ou32stringstream ss;
     ss.imbue(std::locale());
     time_t curtime = time(nullptr);
     ss << std::put_time(localtime(&curtime), format.c_str());
@@ -176,6 +270,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
     }
     fs::path p = filename;
     Util::clearExtensions(p);
+    std::locale::global(oldloc);
     return p;
 }
 
@@ -451,7 +546,7 @@ auto Document::operator=(const Document& doc) -> Document& {
     buildContentsModel();
     updateIndexPageNumbers();
 
-    bool lastLock = tryLock();
+    bool lastLock = try_lock();
     unlock();
     this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
     if (!lastLock)  // document was locked before
