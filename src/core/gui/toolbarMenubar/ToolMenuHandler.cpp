@@ -488,6 +488,8 @@ void ToolMenuHandler::initToolItems() {
                                 _("Very Thick"));
     emplaceCustomItemWithTarget("CUSTOM", Cat::TOOLS, Action::TOOL_SIZE, TOOL_SIZE_CUSTOM, "thickness-custom",
                                 _("Custom"));
+    emplaceCustomItem("SELECT_CUSTOM_SIZE", Cat::TOOLS, Action::TOOL_SELECT_CUSTOM_SIZE, "select-size",
+                      _("Select custom size"));
 }
 
 void ToolMenuHandler::setPageInfo(size_t currentPage, size_t pageCount, size_t pdfpage) {

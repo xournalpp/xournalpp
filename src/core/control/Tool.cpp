@@ -37,7 +37,16 @@ void Tool::setCustomThickness(double thickness) {
         return;
     }
 
-    g_warning("Trying to set size of \"%s\"", getName().c_str());
+    g_warning("Trying to set custom size of \"%s\"", getName().c_str());
+}
+
+double Tool::getCustomThickness() {
+    if (this->thickness) {
+        return this->thickness.value()[TOOL_SIZE_CUSTOM - TOOL_SIZE_VERY_FINE];
+    }
+
+    g_warning("Trying to get custom size of \"%s\"", getName().c_str());
+    return 0;
 }
 
 auto Tool::isDrawingTool() const -> bool {

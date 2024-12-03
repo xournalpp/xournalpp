@@ -28,6 +28,15 @@ enum ToolSize {
 std::string toolSizeToString(ToolSize size);
 ToolSize toolSizeFromString(const std::string& size);
 
+enum CustomToolSizeFeature {
+    TOOL_SIZE_CUSTOM_NONE,
+    TOOL_SIZE_CUSTOM_PEN,
+    TOOL_SIZE_CUSTOM_HIGHLIGHTER,
+    TOOL_SIZE_CUSTOM_ERASER,
+};
+std::string customToolSizeFeatureToString(CustomToolSizeFeature feature);
+CustomToolSizeFeature customToolSizeFeatureFromString(const std::string& feature);
+
 
 enum DrawingType {
     /**

@@ -1,48 +1,63 @@
 #include "CustomThicknessDialog.h"
 
-#include <cmath>
+#include "gui/Builder.h"
 
-static inline double translateFromScale(double value) { return pow(2, value); }
+constexpr auto UI_FILE = "customThickness.glade";
+constexpr auto UI_DIALOG_NAME = "customThicknessDialog";
 
-static inline double translateToScale(double value) { return log2(value); }
+// static inline void buildLabel(Builder& builder, OpacityFeature opacityFeature) {
+//     // Used to set the label of the dialog in the form of:
+//     // <b>{toolOptionsDesc}</b>\n
+//     // Select opacity for: {opacityFeatureDesc}
+//     std::string toolOptionsDesc;
+//     std::string selectOpacityFor = _("Select opacity for: ");
+//     std::string opacityFeatureDesc;
+//
+//     switch (opacityFeature) {
+//         case OPACITY_FILL_HIGHLIGHTER:
+//             toolOptionsDesc = _("Highlighter Options");
+//             opacityFeatureDesc = _("Fill color");
+//             break;
+//         case OPACITY_FILL_PEN:
+//             toolOptionsDesc = _("Pen Options");
+//             opacityFeatureDesc = _("Fill color");
+//             break;
+//         case OPACITY_SELECT_PDF_TEXT_MARKER:
+//             toolOptionsDesc = _("PDF Text Options");
+//             opacityFeatureDesc = _("PDF Text Marker");
+//             break;
+//         default:
+//             g_warning("No opacityFeature description set for '%s'", opacityFeatureToString(opacityFeature).c_str());
+//             Stacktrace::printStacktrace();
+//             break;
+//     }
+//     gtk_label_set_label(GTK_LABEL(builder.get("label1")),
+//                         FC(_F("<b>{1}</b>\n{2}{3}") % toolOptionsDesc % selectOpacityFor % opacityFeatureDesc));
+// }
 
-CustomThicknessDialog::CustomThicknessDialog(GladeSearchpath* gladeSearchPath, double thickness):
-        GladeGui(gladeSearchPath, "customThickness.glade", "customThicknessDialog") {
-    GtkWidget* scaleThickness = get("scaleThickness");
+xoj::popup::CustomThicknessDialog::CustomThicknessDialog(GladeSearchpath* gladeSearchPath, double thickness,
+                                                         CustomToolSizeFeature feature,
+                                                         std::function<void(double, CustomToolSizeFeature)> callback):
+        customToolSizeFeature(feature), callback(callback) {
+    Builder builder(gladeSearchPath, UI_FILE);
+    this->window.reset(GTK_WINDOW(builder.get(UI_DIALOG_NAME)));
 
-    gtk_scale_add_mark(reinterpret_cast<GtkScale*>(scaleThickness), translateToScale(0.1), GTK_POS_TOP, nullptr);
-    gtk_scale_add_mark(reinterpret_cast<GtkScale*>(scaleThickness), translateToScale(1.0), GTK_POS_TOP, nullptr);
-    gtk_scale_add_mark(reinterpret_cast<GtkScale*>(scaleThickness), translateToScale(10.0), GTK_POS_TOP, nullptr);
-    gtk_scale_add_mark(reinterpret_cast<GtkScale*>(scaleThickness), translateToScale(100.0), GTK_POS_TOP, nullptr);
+    // buildLabel(builder, customToolSizeFeature);
+    sizeRange = GTK_RANGE(builder.get("scaleSize"));
 
-    gtk_range_set_value(GTK_RANGE(scaleThickness), translateToScale(thickness));
+    gtk_range_set_value(sizeRange, thickness);
 
-    g_signal_connect(scaleThickness, "change-value",
-                     G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, CustomThicknessDialog* self) {
-                         gtk_range_set_value(range, value);
+    g_signal_connect_swapped(builder.get("btCancel"), "clicked", G_CALLBACK(gtk_window_close), this->window.get());
+    g_signal_connect(builder.get("btOk"), "clicked", G_CALLBACK(+[](GtkButton*, CustomThicknessDialog* self) {
+                         self->callback(gtk_range_get_value(self->sizeRange), self->customToolSizeFeature);
+                         gtk_window_close(self->window.get());
                      }),
                      this);
 
-    g_signal_connect(scaleThickness, "format-value", G_CALLBACK(+[](GtkScale* scale, gdouble value) {
-                         return g_strdup_printf("%.2f", gtk_scale_get_digits(scale), translateFromScale(value));
-                     }),
-                     this);
+#if GTK_MAJOR_VERSION == 3
+    // Widgets are visible by default in gtk4
+    gtk_widget_show_all(builder.get("dialog-main-box"));
+#endif
 }
 
-CustomThicknessDialog::~CustomThicknessDialog() = default;
-
-double CustomThicknessDialog::getResultThickness() const { return translateFromScale(resultThickness); }
-
-void CustomThicknessDialog::show(GtkWindow* parent) {
-    gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    int result = gtk_dialog_run(GTK_DIALOG(this->window));
-    gtk_widget_hide(this->window);
-
-    // OK Button
-    if (result == 1) {
-        GtkWidget* scaleThickness = get("scaleThickness");
-        resultThickness = gtk_range_get_value(GTK_RANGE(scaleThickness));
-    } else {
-        resultThickness = NAN;
-    }
-}
+xoj::popup::CustomThicknessDialog::~CustomThicknessDialog() = default;

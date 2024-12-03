@@ -48,6 +48,7 @@ public:
     double getThickness(ToolSize size) const;
 
     void setCustomThickness(double thickness);
+    double getCustomThickness();
 
     /**
      * @brief Check whether the tool is a Drawing tool.

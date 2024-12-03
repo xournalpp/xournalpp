@@ -11,20 +11,27 @@
 
 #pragma once
 
-#include <cmath>
+#include <functional>
 
-#include "gui/GladeGui.h"
+#include "control/ToolEnums.h"
+#include "util/raii/GtkWindowUPtr.h"
 
-class CustomThicknessDialog: public GladeGui {
+class GladeSearchpath;
+
+namespace xoj::popup {
+class CustomThicknessDialog {
 public:
-    CustomThicknessDialog(GladeSearchpath* gladeSearchPath, double thickness);
-    virtual ~CustomThicknessDialog();
+    CustomThicknessDialog(GladeSearchpath* gladeSearchPath, double thickness, CustomToolSizeFeature type,
+                          std::function<void(double, CustomToolSizeFeature)> callback);
+    ~CustomThicknessDialog();
 
-public:
-    virtual void show(GtkWindow* parent);
-
-    double getResultThickness() const;
+    inline GtkWindow* getWindow() const { return window.get(); }
 
 private:
-    double resultThickness = NAN;
+    xoj::util::GtkWindowUPtr window;
+    GtkRange* sizeRange;
+
+    CustomToolSizeFeature customToolSizeFeature;
+    std::function<void(double, CustomToolSizeFeature)> callback;
 };
+};  // namespace xoj::popup

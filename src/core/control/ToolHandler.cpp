@@ -229,6 +229,10 @@ auto ToolHandler::getSize(SelectedTool selectedTool) const -> ToolSize {
     return tool->getSize();
 }
 
+double ToolHandler::getCustomThickness(ToolType toolType) {
+    return this->tools[toolType - TOOL_PEN]->getCustomThickness();
+}
+
 void ToolHandler::setCustomThickness(double thickness, ToolType toolType) {
     this->tools[toolType - TOOL_PEN]->setCustomThickness(thickness);
 }

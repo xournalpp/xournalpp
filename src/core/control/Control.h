@@ -326,6 +326,7 @@ public:
     void help();
 
     void selectAlpha(OpacityFeature feature);
+    void selectCustomSize(CustomToolSizeFeature feature);
 
     /**
      * @brief Initialize the all button tools based on the respective ButtonConfigs

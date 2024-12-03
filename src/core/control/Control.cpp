@@ -46,6 +46,7 @@
 #include "gui/XournalView.h"                                     // for Xour...
 #include "gui/XournalppCursor.h"                                 // for Xour...
 #include "gui/dialog/AboutDialog.h"                              // for Abou...
+#include "gui/dialog/CustomThicknessDialog.h"                    // for TODO(thickness)
 #include "gui/dialog/FormatDialog.h"                             // for Form...
 #include "gui/dialog/GotoDialog.h"                               // for Goto...
 #include "gui/dialog/PageTemplateDialog.h"                       // for Page...
@@ -466,6 +467,47 @@ void Control::selectAlpha(OpacityFeature feature) {
                     default:
                         g_warning("Unhandled OpacityFeature for callback of SelectOpacityDialog: %s",
                                   opacityFeatureToString(feature).c_str());
+                        Stacktrace::printStacktrace();
+                        break;
+                }
+            });
+    dlg.show(getGtkWindow());
+}
+
+void Control::selectCustomSize(CustomToolSizeFeature feature) {
+    double size = 0;
+
+    switch (feature) {
+        case TOOL_SIZE_CUSTOM_PEN:
+            size = this->toolHandler->getCustomThickness(TOOL_PEN);
+            break;
+        case TOOL_SIZE_CUSTOM_HIGHLIGHTER:
+            size = this->toolHandler->getCustomThickness(TOOL_HIGHLIGHTER);
+            break;
+        case TOOL_SIZE_CUSTOM_ERASER:
+            size = this->toolHandler->getCustomThickness(TOOL_ERASER);
+            break;
+        default:
+            g_warning("Unhandled CustomToolSizeFeature for selectCustomSize event: %s",
+                      customToolSizeFeatureToString(feature).c_str());
+            Stacktrace::printStacktrace();
+            break;
+    }
+    auto dlg = xoj::popup::PopupWindowWrapper<xoj::popup::CustomThicknessDialog>(
+            gladeSearchPath, size, feature, [&th = *toolHandler](double size, CustomToolSizeFeature feature) {
+                switch (feature) {
+                    case TOOL_SIZE_CUSTOM_PEN:
+                        th.setCustomThickness(size, TOOL_PEN);
+                        break;
+                    case TOOL_SIZE_CUSTOM_HIGHLIGHTER:
+                        th.setCustomThickness(size, TOOL_HIGHLIGHTER);
+                        break;
+                    case TOOL_SIZE_CUSTOM_ERASER:
+                        th.setCustomThickness(size, TOOL_ERASER);
+                        break;
+                    default:
+                        g_warning("Unhandled CustomToolSizeFeature for callback of SelectSizeDialog: %s",
+                                  customToolSizeFeatureToString(feature).c_str());
                         Stacktrace::printStacktrace();
                         break;
                 }
