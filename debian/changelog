@@ -1,3 +1,9 @@
+xournalpp (1.2.6~dev-1) UNRELEASED; urgency=medium
+
+  * 
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 04 Dec 2024 16:17:09 +0100
+
 xournalpp (1.2.5-1) unstable; urgency=medium
 
   * Fixed regressions when exporting to PDF
