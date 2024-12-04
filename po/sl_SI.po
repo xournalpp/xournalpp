@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-18 19:17\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Ali želite nadaljevati?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -66,7 +66,7 @@ msgstr "<span foreground='red' size='x-large'>Manjka datoteka uporabniškega vme
 "  Ne v delovni poti\n"
 "  Ne v {2}"
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr "Dodaj manjkajočo stran"
 
@@ -90,7 +90,7 @@ msgstr "Uporabi za vse strani"
 msgid "Apply to current page"
 msgstr "Uporabi za trenutno stran"
 
-#: ../src/core/control/tools/EditSelection.cpp:401
+#: ../src/core/control/tools/EditSelection.cpp:406
 msgid "Arrange"
 msgstr "Razporedi"
 
@@ -149,11 +149,11 @@ msgstr "Nazaj"
 msgid "Background"
 msgstr "Ozadje"
 
-#: ../src/core/control/tools/EditSelection.cpp:416
+#: ../src/core/control/tools/EditSelection.cpp:421
 msgid "Bring forward"
 msgstr "Postavi naprej"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:411
 msgid "Bring to front"
 msgstr ""
 
@@ -161,9 +161,9 @@ msgstr ""
 msgid "Built on"
 msgstr "Zgrajeno z"
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
-#: ../src/core/gui/sidebar/Sidebar.cpp:96
+#: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -281,13 +281,13 @@ msgstr "Ni bilo mogoče prebrati slike: {1}. Napaka: {2}"
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Ni bilo mogoče prebrati številke strani za klonirano sliko ozadja: {1}."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:143
+#: ../src/core/undo/UndoRedoHandler.cpp:145
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Ni bilo mogoče ponoviti »{1}«\n"
 "Nekaj je šlo narobe... Prosimo, napišite poročilo o napaki…"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Ni bilko možno odstraniti stare Autosave datoteke \"{1}\": {2}"
 
@@ -311,7 +311,7 @@ msgstr "Ni bilo mogoče shraniti datoteke .tex: {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "{1} ni bilo mogoče zagnati: {2} (izhodna koda: {3})"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:114
+#: ../src/core/undo/UndoRedoHandler.cpp:116
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "Ni bilo mogoče razveljaviti »{1}«\n"
@@ -386,7 +386,7 @@ msgstr ""
 msgid "Disable audio for this session"
 msgstr "Onemogoči zvok za to sejo"
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "Zavrzi"
 
@@ -394,7 +394,7 @@ msgstr "Zavrzi"
 msgid "Display advanced export options"
 msgstr "Prikaži napredne možnosti izvoza"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -406,7 +406,7 @@ msgstr "Ne odpirajte Autosave datotek. Morda bodo prepisane!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ne prepisujte izvornega PDF! To bo povzročilo napake!"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr "Datoteka dokumenta je bila odstranjena."
 
@@ -432,6 +432,12 @@ msgstr "Pikčast"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:536
 msgid "Draw Arrow"
 msgstr "Nariši puščico"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
+msgid "Draw Coordinate System"
+msgstr "Nariši koordinatni sistem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
@@ -464,12 +470,6 @@ msgstr "Nariši pravokotnik"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:542
 msgid "Draw Spline"
 msgstr "Nariši črto"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
-msgid "Draw coordinate system"
-msgstr "Nariši koordinatni sistem"
 
 #: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Draw stroke"
@@ -522,7 +522,7 @@ msgstr "Izbriši potezo"
 msgid "Eraser"
 msgstr "Radirka"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Napaka komentiranje PDF \"{1}\"\n"
@@ -544,7 +544,7 @@ msgstr "Napaka pri nalaganju datoteke glade »{1}« (poskusite naložiti »{2}«
 msgid "Error occurred while closing file: \"{1}\""
 msgstr "Med zapiranjem datoteke je prišlo do napake: \"{1}\""
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr "napaka pri odpiranju datoteke \"{1}\""
 
@@ -705,7 +705,7 @@ msgstr "Datoteke ni bilo mogoče odpreti. To morate storiti ročno:\n"
 msgid "File {1} does not exist."
 msgstr "Datoteka {1} ne obstaja."
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "Napaka datotečnega sistema:{1}"
 
@@ -841,11 +841,11 @@ msgstr ""
 msgid "Insert a copy of the current page below"
 msgstr ""
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:97
+#: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
 msgstr "Vstavi za trenutno stranjo"
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:98
+#: ../src/core/gui/sidebar/Sidebar.cpp:107
 msgid "Insert at end"
 msgstr "Vstavi na koncu"
 
@@ -910,7 +910,7 @@ msgstr "Sloj {1}"
 msgid "Layerstack Preview"
 msgstr "Predogled sklada slojev"
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -969,7 +969,7 @@ msgstr "Ni naprave"
 msgid "No pages to export!"
 msgstr "Ni strani za izvoz!"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Na voljo ni PDF strani za dodajanje. Morda boste morali znova odpreti dokument."
 
@@ -987,10 +987,9 @@ msgid "OK"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:680
-msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Pri izvozu izvozite samo plasti, ki jih določa RANGE (npr. \"2-3,5,7-\")\n"
-"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:676
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1069,6 +1068,10 @@ msgstr "Stran vstavljena"
 msgid "Page number"
 msgstr "Številka strani"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
@@ -1076,6 +1079,10 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
 msgstr "Strani s pari"
+
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "Paper B_ackground"
+msgstr "O_zadje papirja"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 #: ../src/core/undo/AddUndoAction.cpp:66
@@ -1125,20 +1132,20 @@ msgstr "Natisni"
 msgid "Record Audio / Stop Recording"
 msgstr "Snemaj zvok / Končaj snemanje"
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
-#: ../src/core/undo/UndoRedoHandler.cpp:194
+#: ../src/core/undo/UndoRedoHandler.cpp:196
 msgid "Redo"
 msgstr "Ponovi"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo: "
 msgstr "Ponovi: "
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr "Odstrani ozadje PDF-ja"
 
@@ -1194,16 +1201,16 @@ msgstr "SVG grafika"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Vzorčna datoteka LaTeX je bila uspešno ustvarjena."
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "Shrani"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "Shrani kot..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Shrani Datoteko"
@@ -1221,7 +1228,7 @@ msgstr "Napaka pri shranjevanju datoteke: {1}"
 msgid "Scale"
 msgstr "Povečava"
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr "Pomaknite se na stran {1}"
 
@@ -1305,7 +1312,7 @@ msgstr "Izberi področje"
 msgid "Select Text from pdf"
 msgstr "Izberi Besedilo iz pdf"
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "Izberite drug PDF"
 
@@ -1345,11 +1352,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:427
+#: ../src/core/control/tools/EditSelection.cpp:432
 msgid "Send backward"
 msgstr "Pomakni nazaj"
 
-#: ../src/core/control/tools/EditSelection.cpp:435
+#: ../src/core/control/tools/EditSelection.cpp:440
 msgid "Send to back"
 msgstr "Pomakni v ozadje"
 
@@ -1383,7 +1390,10 @@ msgstr "Nastavite širino strani za izvoz PNG\n"
 msgid "Setsquare"
 msgstr "Geotrikotnik"
 
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
+#: ../src/core/undo/RecognizerUndoAction.cpp:76
 msgid "Shape Recognizer"
 msgstr "Prepoznavanje oblik"
 
@@ -1417,12 +1427,6 @@ msgstr "Notno črtovje"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:564
 msgid "Stop"
 msgstr "Ustavi"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
-msgid "Stroke recognizer"
-msgstr "Prepoznavanje potez"
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
@@ -1482,11 +1486,11 @@ msgstr "Ne najdem besedila"
 msgid "Text not found, searched on all pages"
 msgstr "Besedilo ni bilo najdeno, iskano na vseh straneh"
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Nastavitev orodne vrstice {1} je določena. Želite narediti kopijo za urejanje?"
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Priložene datoteke ozadja ni bilo mogoče najti. Mogoče je bila premaknjena, preimenovana ali izbrisana."
 
@@ -1494,7 +1498,7 @@ msgstr "Priložene datoteke ozadja ni bilo mogoče najti. Mogoče je bila premak
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Datoteke ozadja\"{1}\" ni bilo mogoče najti. Mogoče je bila premaknjena, preimenovana ali izbrisana."
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Datoteke ozadja \"{1}\" ni bilo mogoče najti. Mogoče je bila premaknjena, preimenovana ali izbrisana.\n"
@@ -1504,7 +1508,7 @@ msgstr "Datoteke ozadja \"{1}\" ni bilo mogoče najti. Mogoče je bila premaknje
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Preverjanje prepisovanja ozadja ni uspelo zaradi:\n"
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Datoteka, ki se nalaga je v formatu, ki je novejši od trenutno podprtega v tej verziji Xournal++ in se morda ne bo naložila pravilno. Jo še vedno odprem?"
 
@@ -1548,7 +1552,7 @@ msgstr "Pri prikazovanju pomoči je prišlo do napake: {1}"
 msgid "Thick"
 msgstr "Debel"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr "Ta dokument še ni shranjen."
 
@@ -1588,16 +1592,16 @@ msgstr "Datoteke globalne predloge na {1} ni mogoče odpreti. Ali obstaja?"
 msgid "Unable to play audio recording {1}"
 msgstr "Ni mogoče predvajati zvočnega posnetka {1}"
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr "Ni možno pridobiti PDF strani."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
-#: ../src/core/undo/UndoRedoHandler.cpp:182
+#: ../src/core/undo/UndoRedoHandler.cpp:184
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo: "
 msgstr "Razveljavi: "
 
@@ -1637,7 +1641,7 @@ msgstr "Neznana vrsta kapice poteze: \"{1}\", predpostavljam, da je okrogla"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Neznana vrsta poteze: \"{1}\", predpostavljam pero"
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr "Neshranjen dokument"
 
@@ -1645,7 +1649,7 @@ msgstr "Neshranjen dokument"
 msgid "Unsupported graphics format: "
 msgstr "Nepodprt grafični format: "
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr "Uporabi predlagani PDF"
 
@@ -1670,6 +1674,7 @@ msgid "Very Thick"
 msgstr "Zelo debel"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/gui/sidebar/Sidebar.cpp:95
 msgid "With PDF background"
 msgstr "S PDF ozadjem"
 
@@ -1701,7 +1706,7 @@ msgstr "Xournal datoteke"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ se je sesul. Bi radi obnovili zadnjo odprto datoteko?"
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ datoteke"
@@ -1711,7 +1716,7 @@ msgstr "Xournal++ datoteke"
 msgid "Xournal++ template"
 msgstr "Xournal++ predloga"
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Izbrisali ste aktivno orodno vrstico. Preklapljanje na privzeto vrstico."
 
@@ -1721,12 +1726,11 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Na voljo ni PDF datotek. Preklic operacije.\n"
 "Prosimo izberite drugačen tip ozadja: Menu \"Journal\" → \"Configure Page Template\"."
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:88
+#: ../src/core/gui/sidebar/Sidebar.cpp:98
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
-"Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr "Vaš trenutni dokument ne vsebuje PDF strani št {1}\n"
-"Bi radi vstavili to stran?"
+"Tip: You can select {2} to insert a PDF page."
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
 msgid "Zoom Slider"
@@ -1748,7 +1752,7 @@ msgstr "Pomanjšaj"
 msgid "Zoom to 100%"
 msgstr "Povečaj na 100%"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1756,12 +1760,16 @@ msgstr "Povečaj na 100%"
 msgid "_Cancel"
 msgstr "_Prekliči"
 
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "_Journal"
+msgstr "_Dnevnik"
+
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 msgid "_Open"
 msgstr "_Odprto"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1807,7 +1815,7 @@ msgstr "elementi"
 msgid "eraser"
 msgstr "radirka"
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr "datoteka: {1}"
 
@@ -1917,10 +1925,6 @@ msgstr "xournalpp-{1}"
 msgid " = Floating Toolbox (experimental) ="
 msgstr " = Plavajoča orodjarna (eksperimentalno) ="
 
-#: ../ui/settings.glade:4392 ../ui/settings.glade:4403
-msgid "%"
-msgstr "%"
-
 #: ../ui/settings.glade:2730
 msgid "% greater than the initial distance between the two touches."
 msgstr "% večja od začetne razdalje med obema dotikoma."
@@ -1933,7 +1937,7 @@ msgstr "%%XPP_TEXT_COLOR%%"
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
-#: ../ui/settings.glade:5628
+#: ../ui/settings.glade:5627
 msgid "%."
 msgstr "%."
 
@@ -2043,12 +2047,6 @@ msgstr "%{name}\tIme izvoženega dokumenta\n"
 msgid "(this may not work, depending on your system theme)"
 msgstr "(morda ne bo delovalo glede na vašo sistemsko temo)"
 
-#: ../ui/settings.glade:5468
-msgid "... AND How much time must have passed since last stroke.\n\n"
-"<i>Recommended: 500ms</i>"
-msgstr "... IN Koliko časa je moralo preteči od zadnje poteze.\n\n"
-"<i>Priporočeno: 500 ms</i>"
-
 #: ../ui/settings.glade:1268
 msgid "0,4"
 msgstr "0,4"
@@ -2057,19 +2055,15 @@ msgstr "0,4"
 msgid "0,50"
 msgstr "0,50"
 
-#: ../ui/settings.glade:5612
+#: ../ui/settings.glade:5611
 msgid "0.00"
 msgstr "0.00"
-
-#: ../ui/settings.glade:5317
-msgid "0.20"
-msgstr "0.20"
 
 #: ../ui/settings.glade:1913
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:6330
+#: ../ui/settings.glade:6329
 msgid "1,00"
 msgstr "1,00"
 
@@ -2113,7 +2107,7 @@ msgstr ""
 msgid "<b>Default Tools</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5805
+#: ../ui/settings.glade:5804
 msgid "<b>Default</b>"
 msgstr "<b>Privzeto</b>"
 
@@ -2146,7 +2140,7 @@ msgstr "<b>Velikost strani</b>"
 msgid "<b>Separators</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5898
+#: ../ui/settings.glade:5897
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -2157,11 +2151,11 @@ msgstr ""
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr "<i>Dodeli razrede naprav za vsako vhodno napravo vašega sistema. Te vrednosti spremenite le, če vaše naprave niso pravilno usklajene. (npr. vaše pisalo je prikazano kot zaslon na dotik)</i>"
 
-#: ../ui/settings.glade:5967
+#: ../ui/settings.glade:5966
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>Zvočni posnetki so trenutno shranjeni v ločeni mapi in nanje se sklicuje dnevnik.</i>"
 
-#: ../ui/settings.glade:6385
+#: ../ui/settings.glade:6384
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>Spremembe obveljajo samo za nove posnetke in predvajanja.</i>"
 
@@ -2202,16 +2196,16 @@ msgstr "<i>Občutljivost na pritisk vam omogoča risanje črt različnih širin,
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Na zaslon postavite ravnilo in premikajte drsnik, dokler se ravnili ne ujemata.</i>"
 
-#: ../ui/settings.glade:5571
+#: ../ui/settings.glade:5570
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6494
+#: ../ui/settings.glade:6493
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>Izberi jezik (potreben je ponovni zagon).</i>"
 
-#: ../ui/settings.glade:5751
+#: ../ui/settings.glade:5750
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Izberite orodje in nastavitve, če pritisnete Privzeti Gumb.</i>"
 
@@ -2223,7 +2217,7 @@ msgstr "<i>Nekatere naprave poročajo o nepričakovano majhnih ali velikih priti
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>Določite ukaze, ki se kličejo, ko se sproži prepoznavanje rok. Ukazi bodo izvedeni v niti uporabniškega vmesnika, poskrbite, da ne blokirajo!</i>"
 
-#: ../ui/settings.glade:6078
+#: ../ui/settings.glade:6077
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Določite zvočne naprave za snemanje in predvajanje zvočnih prilog.\n"
@@ -2275,7 +2269,7 @@ msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 msgid "About Xournal++"
 msgstr "O Xournal++"
 
-#: ../ui/settings.glade:5540
+#: ../ui/settings.glade:5539
 msgid "Action on Tool Tap"
 msgstr "Dejanje ob dotiku orodja"
 
@@ -2299,7 +2293,7 @@ msgstr "Vse"
 msgid "All pages"
 msgstr "Vse strani"
 
-#: ../ui/settings.glade:5505
+#: ../ui/settings.glade:5504
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "Vsi trije pogoji morajo biti izpolnjeni, preden potezo zanemarim.\n"
@@ -2326,15 +2320,15 @@ msgstr "Aritmetična sredina"
 msgid "Artifact workaround"
 msgstr "Rešitev za artefakte"
 
-#: ../ui/settings.glade:6174
+#: ../ui/settings.glade:6173
 msgid "Audio Devices"
 msgstr "Zvočne naprave"
 
-#: ../ui/settings.glade:6417
+#: ../ui/settings.glade:6416
 msgid "Audio Recording"
 msgstr "Zvočni posnetek"
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr "Avtor: "
 
@@ -2523,7 +2517,7 @@ msgstr "Privzeto ime za PDF izvoz"
 msgid "Default Save Name"
 msgstr "Privzeto ime shranjevanja"
 
-#: ../ui/settings.glade:6317
+#: ../ui/settings.glade:6316
 msgid "Default Seek Time (in seconds)"
 msgstr "Privzeti čas iskanja (v sekundah)"
 
@@ -2531,7 +2525,7 @@ msgstr "Privzeti čas iskanja (v sekundah)"
 msgid "Default name: "
 msgstr "Privzeto ime: "
 
-#: ../ui/settings.glade:5845
+#: ../ui/settings.glade:5844
 msgid "Defaults"
 msgstr "Privzeto"
 
@@ -2551,7 +2545,7 @@ msgstr "Naprava"
 msgid "Disable"
 msgstr "Onemogoči"
 
-#: ../ui/settings.glade:5914
+#: ../ui/settings.glade:5913
 msgid "Disable Audio"
 msgstr "Onemogoči zvok"
 
@@ -2579,11 +2573,12 @@ msgstr "Metoda onemogočanja"
 msgid "Display DPI Calibration"
 msgstr "Pokaži DPI kalibracijo"
 
-#: ../ui/settings.glade:5380
+#: ../ui/settings.glade:5379
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Ne riši za kratke vnose in dolžine, razen če pridejo v hitrem zaporedju. Namesto tega prikaži lebdečo orodjarno."
 
 #: ../ui/settings.glade:1255
+msgctxt "Noun: force opposing the movement"
 msgid "Drag"
 msgstr "Povleci"
 
@@ -2611,13 +2606,14 @@ msgstr "Vlečenje LEVO od začetne točke deluje, kot da držite tipko shift.\n"
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr ""
 
-#: ../ui/settings.glade:1254 ../ui/settings.glade:1266
+#: ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Upor: če je vrednost premajhna, se lahko pojavijo neželena nihanja. Če je vrednost previsoka, stabilizacije ne bo."
 
-#: ../ui/main.glade:1540
-msgid "Draw Coordinate System"
-msgstr "Nariši koordinatni sistem"
+#: ../ui/settings.glade:1254
+msgctxt "Drag = Noun: force opposing the movement"
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
+msgstr "Upor: če je vrednost premajhna, se lahko pojavijo neželena nihanja. Če je vrednost previsoka, stabilizacije ne bo."
 
 #: ../ui/main.glade:1551
 msgid "Draw _Line"
@@ -2627,7 +2623,7 @@ msgstr "Nariši _črto"
 msgid "Draw a transparent circle around the cursor"
 msgstr "Nariši prozoren krog okoli kazalca"
 
-#: ../ui/settings.glade:5700
+#: ../ui/settings.glade:5699
 msgid "Drawing Area"
 msgstr "Risalno območje"
 
@@ -2675,7 +2671,8 @@ msgstr "Omogoči sklepanje o tlaku <i>(ugiba tlak glede na hitrost risanja, ko t
 msgid "Enable Pressure Sensitivity"
 msgstr "Omogoči občutljivost na pritisk"
 
-#: ../ui/settings.glade:5375
+#: ../ui/settings.glade:5374
+msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "Omogoči dejanje tapkanja"
 
@@ -2691,7 +2688,7 @@ msgstr "Omogoči risanje zunaj okna <i>(risanje se ne bo ustavilo na robu okna)<
 msgid "Enable internal Hand Recognition"
 msgstr "Omogoči notranje prepoznavanje rok"
 
-#: ../ui/settings.glade:5936
+#: ../ui/settings.glade:5935
 msgid "Enable or Disable Audio"
 msgstr "Omogoči ali onemogoči zvok"
 
@@ -2772,11 +2769,20 @@ msgstr "Vsili temno temo"
 msgid "Force light theme"
 msgstr "Vsili svetlo temo"
 
+#: ../ui/settings.glade:5455
+msgid "Frequency limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5467
+msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
+"<i>Recommended: 500ms</i>"
+msgstr ""
+
 #: ../ui/main.glade:578 ../ui/settings.glade:4010
 msgid "Fullscreen"
 msgstr "Celozaslonski način"
 
-#: ../ui/settings.glade:6219
+#: ../ui/settings.glade:6218
 msgid "Gain"
 msgstr "Jakost"
 
@@ -2852,18 +2858,6 @@ msgstr "Označi izbrano besedilo"
 msgid "Highlighter Opti_ons"
 msgstr "Mož_nosti markerja"
 
-#: ../ui/settings.glade:5425
-msgid "How short (screen mm)  of the stroke  AND...\n\n"
-"<i>Recommended: 1 mm</i>"
-msgstr "Kako kratka (zaslonski mm) je poteza IN...\n\n"
-"<i>Priporočeno: 1 mm</i>"
-
-#: ../ui/settings.glade:5405
-msgid "How short (time)  AND...\n\n"
-"<i>Recommended: 150ms</i>"
-msgstr "Kako kratek (čas) IN...\n\n"
-"<i>Priporočeno: 150 ms</i>"
-
 #: ../ui/about.glade:157
 msgid "Icon Designers"
 msgstr "Oblikovalci ikon"
@@ -2892,10 +2886,6 @@ msgstr "Če je omogočeno, bodo sloji vsake strani dodani drug za drugim. Doblje
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr "Če odprete PDF in obstaja datoteka Xournal z istim imenom, bo odprta datoteka xoj."
 
-#: ../ui/settings.glade:5393
-msgid "Ignore Time (ms)"
-msgstr "Prezri čas (ms)"
-
 #: ../ui/settings.glade:1894
 msgid "Ignore the first"
 msgstr "Ignoriraj prvega"
@@ -2908,7 +2898,7 @@ msgstr "Kvaliteta slike"
 msgid "Inertia"
 msgstr "Vztrajnost"
 
-#: ../ui/settings.glade:6102
+#: ../ui/settings.glade:6101
 msgid "Input Device"
 msgstr "Vhodna naprava"
 
@@ -2940,10 +2930,6 @@ msgstr ""
 msgid "Insert Page Before"
 msgstr ""
 
-#: ../ui/settings.glade:6442
-msgid "LaTeX"
-msgstr "LaTeX"
-
 #: ../ui/latexSettings.glade:354
 msgid "LaTeX executable settings"
 msgstr "Nastavitve izvršljivega programa LaTeX"
@@ -2952,11 +2938,11 @@ msgstr "Nastavitve izvršljivega programa LaTeX"
 msgid "LaTeX generation command"
 msgstr "Ukaz za generiranje LaTeX"
 
-#: ../ui/settings.glade:6531 ../ui/settings.glade:6579
+#: ../ui/settings.glade:6530 ../ui/settings.glade:6578
 msgid "Language"
 msgstr "Jezik"
 
-#: ../ui/settings.glade:6549
+#: ../ui/settings.glade:6548
 msgid "Language Settings"
 msgstr "Jezikovne nastavitve"
 
@@ -2967,6 +2953,15 @@ msgstr "Postavitev"
 #: ../ui/settings.glade:3679
 msgid "Left / Right-Handed"
 msgstr "Levo / Desnoročen"
+
+#: ../ui/settings.glade:5444
+msgid "Length limit (mm)"
+msgstr ""
+
+#: ../ui/settings.glade:5424
+msgid "Length limit: taps moving further away will not trigger a special action\n\n"
+"<i>Recommended: 1 mm</i>"
+msgstr ""
 
 #: ../ui/about.glade:335
 msgid "License"
@@ -2988,25 +2983,23 @@ msgstr "Naloži datoteko"
 msgid "Load from file"
 msgstr "Naloži iz datoteke"
 
-#: ../ui/settings.glade:3193
-msgid "Lucide"
-msgstr "Lucide"
-
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "Upravljaj orodne vrstice"
 
 #: ../ui/settings.glade:1287
+msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
 msgstr "Masa"
 
-#: ../ui/settings.glade:1286 ../ui/settings.glade:1298
+#: ../ui/settings.glade:1298
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "Masa: večja kot je masa, večja je vztrajnost in večja je stabilizacija"
 
-#: ../ui/settings.glade:5445
-msgid "Max Length (mm)"
-msgstr "Največja dolžina (mm)"
+#: ../ui/settings.glade:1286
+msgctxt "Mass = Noun: physics term, related to weight"
+msgid "Mass: the higher the mass, the more inertia and the more stabilization"
+msgstr "Masa: večja kot je masa, večja je vztrajnost in večja je stabilizacija"
 
 #: ../ui/settings.glade:3912
 msgid "Max multiplier"
@@ -3121,7 +3114,7 @@ msgstr "Nastavitve prosojnosti"
 msgid "Options"
 msgstr "Možnosti"
 
-#: ../ui/settings.glade:6125
+#: ../ui/settings.glade:6124
 msgid "Output Device"
 msgstr "Izhodna naprava"
 
@@ -3129,7 +3122,7 @@ msgstr "Izhodna naprava"
 msgid "Output generated by the LaTeX command."
 msgstr "Izhod, ustvarjen z ukazom LaTeX."
 
-#: ../ui/settings.glade:5669
+#: ../ui/settings.glade:5668
 msgid "PDF Cache"
 msgstr "Predpomnilnik PDF"
 
@@ -3149,10 +3142,6 @@ msgstr "Strani:"
 msgid "Paired Pages"
 msgstr "Strani s pari"
 
-#: ../ui/main.glade:1360
-msgid "Paper B_ackground"
-msgstr "O_zadje papirja"
-
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
 msgstr "Oblika papirja"
@@ -3171,7 +3160,7 @@ msgid "Partially based on Xournal\n"
 msgstr "Deloma osnovano an Xournal\n"
 "avtorja Denisa Auroxa"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr "Pot: "
 
@@ -3191,7 +3180,7 @@ msgstr "Učinkovitost delovanja"
 msgid "Pick the Editor's Font"
 msgstr "Izberite pisavo urejevalnika"
 
-#: ../ui/settings.glade:6371
+#: ../ui/settings.glade:6370
 msgid "Playback Settings"
 msgstr "Nastavitve predvajanja"
 
@@ -3203,7 +3192,7 @@ msgstr "Upravitelj vtičnikov"
 msgid "Plugin _Manager"
 msgstr ""
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr "Spremembe vtičnikov se uporabijo šele po ponovnem zagonu Xournal++"
 
@@ -3247,7 +3236,7 @@ msgstr "Polmer"
 msgid "Range"
 msgstr "Razpon"
 
-#: ../ui/settings.glade:5599
+#: ../ui/settings.glade:5598
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "Ponovno upodobi, ko se povečava strani spremeni za več kot "
 
@@ -3259,7 +3248,7 @@ msgstr "Nedavni _Dokumenti"
 msgid "Record / Stop"
 msgstr "Snemaj / Ustavi"
 
-#: ../ui/settings.glade:6284
+#: ../ui/settings.glade:6283
 msgid "Recording Quality"
 msgstr "Kvaliteta snemanja"
 
@@ -3287,7 +3276,7 @@ msgstr "Desni miškin gumb"
 msgid "Rotation snapping tolerance"
 msgstr "Toleranca zaskoka vrtenja"
 
-#: ../ui/settings.glade:6207
+#: ../ui/settings.glade:6206
 msgid "Sample Rate"
 msgstr "Hitrost vzorčenja"
 
@@ -3311,7 +3300,7 @@ msgstr "Drsenje zunaj strani"
 msgid "Select Background Color"
 msgstr "Izberi barvo ozadja"
 
-#: ../ui/settings.glade:6004
+#: ../ui/settings.glade:6003
 msgid "Select Folder"
 msgstr "Izberi mapo"
 
@@ -3363,11 +3352,11 @@ msgstr "Nastavi stolpce"
 msgid "Set Rows"
 msgstr "Nastavi vrstice"
 
-#: ../ui/settings.glade:5508
+#: ../ui/settings.glade:5507
 msgid "Settings:"
 msgstr "Nastavitve:"
 
-#: ../ui/settings.glade:5517
+#: ../ui/settings.glade:5516
 msgid "Show Floating Toolbox"
 msgstr "Pokaži plavajočo orodjarno"
 
@@ -3446,17 +3435,13 @@ msgstr "Običajno"
 msgid "Start zooming after a distance "
 msgstr "Začni povečevati po razdalji "
 
-#: ../ui/settings.glade:5989 ../ui/settings.glade:6047
+#: ../ui/settings.glade:5988 ../ui/settings.glade:6046
 msgid "Storage Folder"
 msgstr "Mapa za shranjevanje"
 
 #: ../ui/main.glade:2839
 msgid "Strikethrough selected text"
 msgstr "Prečrtaj izbrano besedilo"
-
-#: ../ui/settings.glade:5345
-msgid "Stroke Recognizer"
-msgstr "Prepoznavanje potez"
 
 #: ../ui/settings.glade:2227
 msgid "Stylus"
@@ -3469,10 +3454,6 @@ msgstr "Gumbi pisala"
 #: ../ui/settings.glade:2153
 msgid "Stylus-based eraser is visible"
 msgstr "Radirka pisala je vidna"
-
-#: ../ui/settings.glade:5456
-msgid "Successive (ms)"
-msgstr "Zaporedno (ms)"
 
 #: ../ui/latexSettings.glade:461
 msgid "Syntax highlighting"
@@ -3543,6 +3524,15 @@ msgstr "Varijacije teme:"
 msgid "These settings will be used for new pages"
 msgstr "Te nastavitve bodo uporabljene za nove strani"
 
+#: ../ui/settings.glade:5392
+msgid "Time limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5404
+msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
+"<i>Recommended: 150ms</i>"
+msgstr ""
+
 #: ../ui/settings.glade:2400
 msgid "Timeout"
 msgstr "Časovna omejitev"
@@ -3564,11 +3554,11 @@ msgstr "Drsenje z dotikom"
 msgid "Touchscreen"
 msgstr "Zaslon na dotik"
 
-#: ../ui/settings.glade:5485
+#: ../ui/settings.glade:5484
 msgid "Try to select object first."
 msgstr "Najprej poskusi izbrati predmet."
 
-#: ../ui/settings.glade:5490 ../ui/settings.glade:5522
+#: ../ui/settings.glade:5489 ../ui/settings.glade:5521
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Najprej poskusi izbrati predmet; če ni izbrano nič, pokaži plavajočo orodjarno, če je omogočena."
 
@@ -3608,7 +3598,7 @@ msgstr "Običajno 0 ali 1"
 msgid "Velocity based Gaussian weights"
 msgstr "Gaussova utežitev na podlagi hitrosti"
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr "Različica: "
 
@@ -3639,7 +3629,7 @@ msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr "Med dotikanjem"
 
-#: ../ui/settings.glade:5596
+#: ../ui/settings.glade:5595
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "Pri povečavi PDF-ja visoke ločljivosti lahko vsako ponovno upodabljanje traja dolgo. Če to nastavite na veliko vrednost, se ta ponovna upodabljanja redkeje zgodijo.\n\n"
@@ -3809,10 +3799,6 @@ msgstr "_Vodoravno"
 msgid "_Image"
 msgstr "_Slika"
 
-#: ../ui/main.glade:1201
-msgid "_Journal"
-msgstr "_Dnevnik"
-
 #: ../ui/main.glade:1120
 msgid "_Last Page"
 msgstr "_Zadnja stran"
@@ -3933,7 +3919,7 @@ msgstr "onemogočeno"
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr "omogočeno,"
 

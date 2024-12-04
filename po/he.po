@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 20:12+0200\n"
-"PO-Revision-Date: 2024-10-18 19:17\n"
+"POT-Creation-Date: 2024-11-27 22:36+0100\n"
+"PO-Revision-Date: 2024-11-27 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "להמשיך?"
 
-#: ../src/core/control/Control.cpp:2440
+#: ../src/core/control/Control.cpp:2452
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
@@ -66,7 +66,7 @@ msgstr "<span foreground='red' size='x-large'> </span>קובץ ה-UI הבא לא
 "בנתיב העבודה. \n"
 "לא ב{2}"
 
-#: ../src/core/gui/PageView.cpp:935
+#: ../src/core/gui/PageView.cpp:936
 msgid "Add missing page"
 msgstr "הוספת עמוד חסר"
 
@@ -90,7 +90,7 @@ msgstr "יישם לכל הדפים"
 msgid "Apply to current page"
 msgstr "יישם לדף הנוכחי"
 
-#: ../src/core/control/tools/EditSelection.cpp:401
+#: ../src/core/control/tools/EditSelection.cpp:406
 msgid "Arrange"
 msgstr "ארגן"
 
@@ -149,11 +149,11 @@ msgstr "חזרה"
 msgid "Background"
 msgstr "רקע"
 
-#: ../src/core/control/tools/EditSelection.cpp:416
+#: ../src/core/control/tools/EditSelection.cpp:421
 msgid "Bring forward"
 msgstr "הבא שכבה קדימה"
 
-#: ../src/core/control/tools/EditSelection.cpp:406
+#: ../src/core/control/tools/EditSelection.cpp:411
 msgid "Bring to front"
 msgstr "העבר לחזית"
 
@@ -161,9 +161,9 @@ msgstr "העבר לחזית"
 msgid "Built on"
 msgstr "בנוי על"
 
-#: ../src/core/control/Control.cpp:2454 ../src/core/control/Control.cpp:2822
+#: ../src/core/control/Control.cpp:2466 ../src/core/control/Control.cpp:2834
 #: ../src/core/control/XournalMain.cpp:209
-#: ../src/core/gui/sidebar/Sidebar.cpp:96
+#: ../src/core/gui/sidebar/Sidebar.cpp:105
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -281,13 +281,13 @@ msgstr "לא ניתן לקרוא את התמונה: {1}. הודעת שגיאה {
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "קריאת מספר העמוד לא צלחה עבור תמונת הרקע המשוכפלת: {1}."
 
-#: ../src/core/undo/UndoRedoHandler.cpp:143
+#: ../src/core/undo/UndoRedoHandler.cpp:145
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "לא ניתן לבטל פעולה \"{1}\"\n"
 "ישנה בעיה…אנא דווח על באג…"
 
-#: ../src/core/control/Control.cpp:241
+#: ../src/core/control/Control.cpp:242
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr ""
 
@@ -311,7 +311,7 @@ msgstr "לא ניתן לשמור קובץ ‎.tex:‏ {1}"
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "התחלת {1}: {2} לא צלחה (קוד יציאה: {3})"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:114
+#: ../src/core/undo/UndoRedoHandler.cpp:116
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "לא ניתן לבטל פעולה \"{1}\"\n"
@@ -386,7 +386,7 @@ msgstr "מחיקת דף נוכחי"
 msgid "Disable audio for this session"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2819
+#: ../src/core/control/Control.cpp:2831
 msgid "Discard"
 msgstr "התעלמות"
 
@@ -394,7 +394,7 @@ msgstr "התעלמות"
 msgid "Display advanced export options"
 msgstr "הצג הגדרות יצוא מתקדמות"
 
-#: ../src/core/control/Control.cpp:2254
+#: ../src/core/control/Control.cpp:2266
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -404,7 +404,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "Document file was removed."
 msgstr "קובץ המסמך הוסר."
 
@@ -430,6 +430,12 @@ msgstr "מנוקד"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:536
 msgid "Draw Arrow"
 msgstr "צייר חץ"
+
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
+msgid "Draw Coordinate System"
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
@@ -462,12 +468,6 @@ msgstr "צייר מלבן"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:542
 msgid "Draw Spline"
 msgstr ""
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:140
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
-msgid "Draw coordinate system"
-msgstr "ציור מערכת צירים"
 
 #: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Draw stroke"
@@ -520,7 +520,7 @@ msgstr "מחיקת מתאר"
 msgid "Eraser"
 msgstr "מחק"
 
-#: ../src/core/control/Control.cpp:2547
+#: ../src/core/control/Control.cpp:2559
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "שגיאה באנוטציה על קובץ PDF \"{1}\" {2}"
@@ -541,7 +541,7 @@ msgstr ""
 msgid "Error occurred while closing file: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2292
+#: ../src/core/control/Control.cpp:2304
 msgid "Error opening file \"{1}\""
 msgstr "שגיאה בפתיחת קובץ \"{1}\""
 
@@ -689,7 +689,7 @@ msgstr ""
 msgid "File {1} does not exist."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:229
+#: ../src/core/control/Control.cpp:230
 msgid "Filesystem error: {1}"
 msgstr "שגיאת מערכת קבצים: {1}"
 
@@ -823,11 +823,11 @@ msgstr "הוספת עותק של השכבה הנוכחית מתחת"
 msgid "Insert a copy of the current page below"
 msgstr "הכנס העתק של הדף הנוכחי מתחת"
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:97
+#: ../src/core/gui/sidebar/Sidebar.cpp:106
 msgid "Insert after current page"
 msgstr "הוספה אחרי העמוד הנוכחי"
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:98
+#: ../src/core/gui/sidebar/Sidebar.cpp:107
 msgid "Insert at end"
 msgstr ""
 
@@ -892,7 +892,7 @@ msgstr "שכבה {1}"
 msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:876
+#: ../src/core/gui/PageView.cpp:877
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -951,7 +951,7 @@ msgstr "אין התקן"
 msgid "No pages to export!"
 msgstr "אין דפים לייצוא!"
 
-#: ../src/core/control/Control.cpp:1472
+#: ../src/core/control/Control.cpp:1481
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
@@ -969,7 +969,7 @@ msgid "OK"
 msgstr "אישור"
 
 #: ../src/core/control/XournalMain.cpp:680
-msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
@@ -1049,12 +1049,20 @@ msgstr "דף הוכנס"
 msgid "Page number"
 msgstr "מספר דף"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/control/xojfile/SaveHandler.cpp:316
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Paired pages"
+msgstr ""
+
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "Paper B_ackground"
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
@@ -1105,20 +1113,20 @@ msgstr "הדפסה"
 msgid "Record Audio / Stop Recording"
 msgstr "הקלט שמע / עצור הקלטה"
 
-#: ../src/core/control/Control.cpp:991
+#: ../src/core/control/Control.cpp:992
 msgid "Recorder could not be started."
 msgstr "לא ניתן להתחיל הקלטה."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
-#: ../src/core/undo/UndoRedoHandler.cpp:194
+#: ../src/core/undo/UndoRedoHandler.cpp:196
 msgid "Redo"
 msgstr "בצע מחדש"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:189
+#: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo: "
 msgstr "בצע מחדש: "
 
-#: ../src/core/control/Control.cpp:2453
+#: ../src/core/control/Control.cpp:2465
 msgid "Remove PDF Background"
 msgstr "הסר רקע מ-PDF"
 
@@ -1174,16 +1182,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2814 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2826 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Save"
 msgstr "שמירה"
 
-#: ../src/core/control/Control.cpp:2814
+#: ../src/core/control/Control.cpp:2826
 msgid "Save As..."
 msgstr "שמירה בשם..."
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "שמירת קובץ"
@@ -1201,7 +1209,7 @@ msgstr "שגיאה בשמירת קובץ: {1}"
 msgid "Scale"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:933
+#: ../src/core/gui/PageView.cpp:934
 msgid "Scroll to page {1}"
 msgstr ""
 
@@ -1285,7 +1293,7 @@ msgstr "בחר אזור"
 msgid "Select Text from pdf"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2452
+#: ../src/core/control/Control.cpp:2464
 msgid "Select another PDF"
 msgstr "בחר קובץ PDF נוסף"
 
@@ -1325,11 +1333,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr "שלח דיווח על באג"
 
-#: ../src/core/control/tools/EditSelection.cpp:427
+#: ../src/core/control/tools/EditSelection.cpp:432
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:435
+#: ../src/core/control/tools/EditSelection.cpp:440
 msgid "Send to back"
 msgstr ""
 
@@ -1358,7 +1366,10 @@ msgstr ""
 msgid "Setsquare"
 msgstr ""
 
+#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
+#: ../src/core/undo/RecognizerUndoAction.cpp:76
 msgid "Shape Recognizer"
 msgstr "מזהה צורות"
 
@@ -1391,12 +1402,6 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:564
 msgid "Stop"
 msgstr "עצור"
-
-#: ../src/core/gui/dialog/ButtonConfigGui.cpp:142
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
-#: ../src/core/undo/RecognizerUndoAction.cpp:76
-msgid "Stroke recognizer"
-msgstr ""
 
 #: ../src/core/control/CrashHandler.cpp:42
 msgid "Successfully saved document to \"{1}\""
@@ -1456,11 +1461,11 @@ msgstr "טקסט לא נמצא"
 msgid "Text not found, searched on all pages"
 msgstr "טקסט לא נמצא, כל הדפים עברו חיפוש"
 
-#: ../src/core/control/Control.cpp:1262
+#: ../src/core/control/Control.cpp:1271
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2427
+#: ../src/core/control/Control.cpp:2439
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
@@ -1468,7 +1473,7 @@ msgstr ""
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2430
+#: ../src/core/control/Control.cpp:2442
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr ""
@@ -1477,7 +1482,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2300
+#: ../src/core/control/Control.cpp:2312
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1521,7 +1526,7 @@ msgstr ""
 msgid "Thick"
 msgstr "עבה"
 
-#: ../src/core/control/Control.cpp:2813
+#: ../src/core/control/Control.cpp:2825
 msgid "This document is not saved yet."
 msgstr "מסמך זה עדיין לא נשמר."
 
@@ -1561,16 +1566,16 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr "לא ניתן לנגן את הקלטת השמע {1}"
 
-#: ../src/core/control/Control.cpp:1486
+#: ../src/core/control/Control.cpp:1495
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:437
-#: ../src/core/undo/UndoRedoHandler.cpp:182
+#: ../src/core/undo/UndoRedoHandler.cpp:184
 msgid "Undo"
 msgstr "בטל"
 
-#: ../src/core/undo/UndoRedoHandler.cpp:177
+#: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo: "
 msgstr "בטל: "
 
@@ -1610,7 +1615,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2703
+#: ../src/core/control/Control.cpp:2715
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1618,7 +1623,7 @@ msgstr ""
 msgid "Unsupported graphics format: "
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2450
+#: ../src/core/control/Control.cpp:2462
 msgid "Use proposed PDF"
 msgstr "להשתמש ב־pdf המוצע"
 
@@ -1643,6 +1648,7 @@ msgid "Very Thick"
 msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
+#: ../src/core/gui/sidebar/Sidebar.cpp:95
 msgid "With PDF background"
 msgstr ""
 
@@ -1674,7 +1680,7 @@ msgstr ""
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2652
+#: ../src/core/control/Control.cpp:2664
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr ""
@@ -1684,7 +1690,7 @@ msgstr ""
 msgid "Xournal++ template"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1248
+#: ../src/core/control/Control.cpp:1257
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr ""
 
@@ -1693,10 +1699,10 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr ""
 
-#: ../src/core/gui/sidebar/Sidebar.cpp:88
+#: ../src/core/gui/sidebar/Sidebar.cpp:98
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
-"Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
+"Tip: You can select {2} to insert a PDF page."
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:136
@@ -1719,7 +1725,7 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr "תקריב 100%‏"
 
-#: ../src/core/control/Control.cpp:2646
+#: ../src/core/control/Control.cpp:2658
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1727,12 +1733,16 @@ msgstr "תקריב 100%‏"
 msgid "_Cancel"
 msgstr "_ביטול"
 
+#: ../src/core/gui/sidebar/Sidebar.cpp:94
+msgid "_Journal"
+msgstr ""
+
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 msgid "_Open"
 msgstr "_פתח"
 
-#: ../src/core/control/Control.cpp:2647
+#: ../src/core/control/Control.cpp:2659
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1778,7 +1788,7 @@ msgstr "אלמנטים"
 msgid "eraser"
 msgstr "מחק"
 
-#: ../src/core/control/Control.cpp:2268
+#: ../src/core/control/Control.cpp:2280
 msgid "file: {1}"
 msgstr ""
 
@@ -1888,10 +1898,6 @@ msgstr ""
 msgid " = Floating Toolbox (experimental) ="
 msgstr ""
 
-#: ../ui/settings.glade:4392 ../ui/settings.glade:4403
-msgid "%"
-msgstr ""
-
 #: ../ui/settings.glade:2730
 msgid "% greater than the initial distance between the two touches."
 msgstr ""
@@ -1904,7 +1910,7 @@ msgstr ""
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
-#: ../ui/settings.glade:5628
+#: ../ui/settings.glade:5627
 msgid "%."
 msgstr ""
 
@@ -1967,11 +1973,6 @@ msgstr ""
 msgid "(this may not work, depending on your system theme)"
 msgstr ""
 
-#: ../ui/settings.glade:5468
-msgid "... AND How much time must have passed since last stroke.\n\n"
-"<i>Recommended: 500ms</i>"
-msgstr ""
-
 #: ../ui/settings.glade:1268
 msgid "0,4"
 msgstr ""
@@ -1980,19 +1981,15 @@ msgstr ""
 msgid "0,50"
 msgstr ""
 
-#: ../ui/settings.glade:5612
+#: ../ui/settings.glade:5611
 msgid "0.00"
-msgstr ""
-
-#: ../ui/settings.glade:5317
-msgid "0.20"
 msgstr ""
 
 #: ../ui/settings.glade:1913
 msgid "1"
 msgstr ""
 
-#: ../ui/settings.glade:6330
+#: ../ui/settings.glade:6329
 msgid "1,00"
 msgstr ""
 
@@ -2036,7 +2033,7 @@ msgstr "<b>צבע</b>"
 msgid "<b>Default Tools</b>"
 msgstr "<b>כלי בררת מחדל</b>"
 
-#: ../ui/settings.glade:5805
+#: ../ui/settings.glade:5804
 msgid "<b>Default</b>"
 msgstr "<b>בררת מחדל</b>"
 
@@ -2067,7 +2064,7 @@ msgstr "<b>גודל דף</b>"
 msgid "<b>Separators</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5898
+#: ../ui/settings.glade:5897
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required). \n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -2078,11 +2075,11 @@ msgstr ""
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5967
+#: ../ui/settings.glade:5966
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6385
+#: ../ui/settings.glade:6384
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr ""
 
@@ -2123,16 +2120,16 @@ msgstr ""
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5571
+#: ../ui/settings.glade:5570
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6494
+#: ../ui/settings.glade:6493
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>בחירת שפה (דורשת הפעלה מחדש)</i>"
 
-#: ../ui/settings.glade:5751
+#: ../ui/settings.glade:5750
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr ""
 
@@ -2144,7 +2141,7 @@ msgstr ""
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr ""
 
-#: ../ui/settings.glade:6078
+#: ../ui/settings.glade:6077
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
@@ -2194,7 +2191,7 @@ msgstr ""
 msgid "About Xournal++"
 msgstr "על Xournal++‎"
 
-#: ../ui/settings.glade:5540
+#: ../ui/settings.glade:5539
 msgid "Action on Tool Tap"
 msgstr ""
 
@@ -2218,7 +2215,7 @@ msgstr ""
 msgid "All pages"
 msgstr "כל הדפים"
 
-#: ../ui/settings.glade:5505
+#: ../ui/settings.glade:5504
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr ""
@@ -2244,15 +2241,15 @@ msgstr ""
 msgid "Artifact workaround"
 msgstr ""
 
-#: ../ui/settings.glade:6174
+#: ../ui/settings.glade:6173
 msgid "Audio Devices"
 msgstr "התקני שמע"
 
-#: ../ui/settings.glade:6417
+#: ../ui/settings.glade:6416
 msgid "Audio Recording"
 msgstr "הקלטת שמע"
 
-#: ../ui/pluginEntry.glade:57
+#: ../ui/pluginEntry.glade:58
 msgid "Author: "
 msgstr "מחבר: "
 
@@ -2441,7 +2438,7 @@ msgstr ""
 msgid "Default Save Name"
 msgstr "שם ברירת המחדל לשמירה"
 
-#: ../ui/settings.glade:6317
+#: ../ui/settings.glade:6316
 msgid "Default Seek Time (in seconds)"
 msgstr ""
 
@@ -2449,7 +2446,7 @@ msgstr ""
 msgid "Default name: "
 msgstr "שם ברירת מחדל: "
 
-#: ../ui/settings.glade:5845
+#: ../ui/settings.glade:5844
 msgid "Defaults"
 msgstr "ברירות מחדל"
 
@@ -2469,7 +2466,7 @@ msgstr "מכשיר"
 msgid "Disable"
 msgstr "השבתה"
 
-#: ../ui/settings.glade:5914
+#: ../ui/settings.glade:5913
 msgid "Disable Audio"
 msgstr ""
 
@@ -2497,11 +2494,12 @@ msgstr ""
 msgid "Display DPI Calibration"
 msgstr ""
 
-#: ../ui/settings.glade:5380
+#: ../ui/settings.glade:5379
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr ""
 
 #: ../ui/settings.glade:1255
+msgctxt "Noun: force opposing the movement"
 msgid "Drag"
 msgstr ""
 
@@ -2523,12 +2521,13 @@ msgstr ""
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr ""
 
-#: ../ui/settings.glade:1254 ../ui/settings.glade:1266
+#: ../ui/settings.glade:1266
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
-#: ../ui/main.glade:1540
-msgid "Draw Coordinate System"
+#: ../ui/settings.glade:1254
+msgctxt "Drag = Noun: force opposing the movement"
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
 #: ../ui/main.glade:1551
@@ -2539,7 +2538,7 @@ msgstr ""
 msgid "Draw a transparent circle around the cursor"
 msgstr ""
 
-#: ../ui/settings.glade:5700
+#: ../ui/settings.glade:5699
 msgid "Drawing Area"
 msgstr ""
 
@@ -2587,7 +2586,8 @@ msgstr ""
 msgid "Enable Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/settings.glade:5375
+#: ../ui/settings.glade:5374
+msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr ""
 
@@ -2603,7 +2603,7 @@ msgstr ""
 msgid "Enable internal Hand Recognition"
 msgstr ""
 
-#: ../ui/settings.glade:5936
+#: ../ui/settings.glade:5935
 msgid "Enable or Disable Audio"
 msgstr ""
 
@@ -2684,11 +2684,20 @@ msgstr ""
 msgid "Force light theme"
 msgstr ""
 
+#: ../ui/settings.glade:5455
+msgid "Frequency limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5467
+msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
+"<i>Recommended: 500ms</i>"
+msgstr ""
+
 #: ../ui/main.glade:578 ../ui/settings.glade:4010
 msgid "Fullscreen"
 msgstr ""
 
-#: ../ui/settings.glade:6219
+#: ../ui/settings.glade:6218
 msgid "Gain"
 msgstr ""
 
@@ -2764,16 +2773,6 @@ msgstr ""
 msgid "Highlighter Opti_ons"
 msgstr ""
 
-#: ../ui/settings.glade:5425
-msgid "How short (screen mm)  of the stroke  AND...\n\n"
-"<i>Recommended: 1 mm</i>"
-msgstr ""
-
-#: ../ui/settings.glade:5405
-msgid "How short (time)  AND...\n\n"
-"<i>Recommended: 150ms</i>"
-msgstr ""
-
 #: ../ui/about.glade:157
 msgid "Icon Designers"
 msgstr ""
@@ -2802,10 +2801,6 @@ msgstr ""
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr ""
 
-#: ../ui/settings.glade:5393
-msgid "Ignore Time (ms)"
-msgstr "זמן התעלמות (מילי שניות)"
-
 #: ../ui/settings.glade:1894
 msgid "Ignore the first"
 msgstr "התעלם מהראשון"
@@ -2818,7 +2813,7 @@ msgstr ""
 msgid "Inertia"
 msgstr ""
 
-#: ../ui/settings.glade:6102
+#: ../ui/settings.glade:6101
 msgid "Input Device"
 msgstr "מכשיר קלט"
 
@@ -2850,10 +2845,6 @@ msgstr "הכנס דף אחרי"
 msgid "Insert Page Before"
 msgstr "הכנס דף לפני"
 
-#: ../ui/settings.glade:6442
-msgid "LaTeX"
-msgstr ""
-
 #: ../ui/latexSettings.glade:354
 msgid "LaTeX executable settings"
 msgstr ""
@@ -2862,11 +2853,11 @@ msgstr ""
 msgid "LaTeX generation command"
 msgstr ""
 
-#: ../ui/settings.glade:6531 ../ui/settings.glade:6579
+#: ../ui/settings.glade:6530 ../ui/settings.glade:6578
 msgid "Language"
 msgstr "שפה"
 
-#: ../ui/settings.glade:6549
+#: ../ui/settings.glade:6548
 msgid "Language Settings"
 msgstr "הגדרות שפה"
 
@@ -2877,6 +2868,15 @@ msgstr ""
 #: ../ui/settings.glade:3679
 msgid "Left / Right-Handed"
 msgstr "ימני/שמאלי"
+
+#: ../ui/settings.glade:5444
+msgid "Length limit (mm)"
+msgstr ""
+
+#: ../ui/settings.glade:5424
+msgid "Length limit: taps moving further away will not trigger a special action\n\n"
+"<i>Recommended: 1 mm</i>"
+msgstr ""
 
 #: ../ui/about.glade:335
 msgid "License"
@@ -2898,25 +2898,23 @@ msgstr "טען קובץ"
 msgid "Load from file"
 msgstr ""
 
-#: ../ui/settings.glade:3193
-msgid "Lucide"
-msgstr ""
-
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "נהל סרגל כלים"
 
 #: ../ui/settings.glade:1287
+msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
 msgstr "נפח"
 
-#: ../ui/settings.glade:1286 ../ui/settings.glade:1298
+#: ../ui/settings.glade:1298
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "נפח: ככל שהנפח גדול יותר, ככה יש יותר התמדה ויותר יציבות"
 
-#: ../ui/settings.glade:5445
-msgid "Max Length (mm)"
-msgstr "אורך מקסימלי (מילימטרים)"
+#: ../ui/settings.glade:1286
+msgctxt "Mass = Noun: physics term, related to weight"
+msgid "Mass: the higher the mass, the more inertia and the more stabilization"
+msgstr "נפח: ככל שהנפח גדול יותר, ככה יש יותר התמדה ויותר יציבות"
 
 #: ../ui/settings.glade:3912
 msgid "Max multiplier"
@@ -3030,7 +3028,7 @@ msgstr ""
 msgid "Options"
 msgstr "אפשרויות"
 
-#: ../ui/settings.glade:6125
+#: ../ui/settings.glade:6124
 msgid "Output Device"
 msgstr "מכשיר פלט"
 
@@ -3038,7 +3036,7 @@ msgstr "מכשיר פלט"
 msgid "Output generated by the LaTeX command."
 msgstr ""
 
-#: ../ui/settings.glade:5669
+#: ../ui/settings.glade:5668
 msgid "PDF Cache"
 msgstr ""
 
@@ -3058,10 +3056,6 @@ msgstr "דפים:"
 msgid "Paired Pages"
 msgstr "דפים צמודים"
 
-#: ../ui/main.glade:1360
-msgid "Paper B_ackground"
-msgstr ""
-
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
 msgstr "סוג הנייר"
@@ -3079,7 +3073,7 @@ msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:95
 msgid "Path: "
 msgstr ""
 
@@ -3099,7 +3093,7 @@ msgstr "ביצועים"
 msgid "Pick the Editor's Font"
 msgstr ""
 
-#: ../ui/settings.glade:6371
+#: ../ui/settings.glade:6370
 msgid "Playback Settings"
 msgstr "הגדרות ניגון"
 
@@ -3111,7 +3105,7 @@ msgstr ""
 msgid "Plugin _Manager"
 msgstr "מ_נהל תוספים"
 
-#: ../ui/plugin.glade:121
+#: ../ui/plugin.glade:122
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr ""
 
@@ -3155,7 +3149,7 @@ msgstr ""
 msgid "Range"
 msgstr ""
 
-#: ../ui/settings.glade:5599
+#: ../ui/settings.glade:5598
 msgid "Re-render when the page's zoom changes by more than "
 msgstr ""
 
@@ -3167,7 +3161,7 @@ msgstr ""
 msgid "Record / Stop"
 msgstr ""
 
-#: ../ui/settings.glade:6284
+#: ../ui/settings.glade:6283
 msgid "Recording Quality"
 msgstr ""
 
@@ -3195,7 +3189,7 @@ msgstr "כפתור העכבר הימני"
 msgid "Rotation snapping tolerance"
 msgstr ""
 
-#: ../ui/settings.glade:6207
+#: ../ui/settings.glade:6206
 msgid "Sample Rate"
 msgstr "קצב דגימה"
 
@@ -3219,7 +3213,7 @@ msgstr "גלילה אל מחוץ לעמוד"
 msgid "Select Background Color"
 msgstr "בחירת צבע הרקע"
 
-#: ../ui/settings.glade:6004
+#: ../ui/settings.glade:6003
 msgid "Select Folder"
 msgstr "בחירת תיקייה"
 
@@ -3271,11 +3265,11 @@ msgstr ""
 msgid "Set Rows"
 msgstr ""
 
-#: ../ui/settings.glade:5508
+#: ../ui/settings.glade:5507
 msgid "Settings:"
 msgstr "הגדרות:"
 
-#: ../ui/settings.glade:5517
+#: ../ui/settings.glade:5516
 msgid "Show Floating Toolbox"
 msgstr "הצגת סרגל כלים מרחף"
 
@@ -3353,16 +3347,12 @@ msgstr "סטנדרטי"
 msgid "Start zooming after a distance "
 msgstr ""
 
-#: ../ui/settings.glade:5989 ../ui/settings.glade:6047
+#: ../ui/settings.glade:5988 ../ui/settings.glade:6046
 msgid "Storage Folder"
 msgstr "תיקיית אחסון"
 
 #: ../ui/main.glade:2839
 msgid "Strikethrough selected text"
-msgstr ""
-
-#: ../ui/settings.glade:5345
-msgid "Stroke Recognizer"
 msgstr ""
 
 #: ../ui/settings.glade:2227
@@ -3376,10 +3366,6 @@ msgstr "כפתורי עט סטיילוס"
 #: ../ui/settings.glade:2153
 msgid "Stylus-based eraser is visible"
 msgstr ""
-
-#: ../ui/settings.glade:5456
-msgid "Successive (ms)"
-msgstr "רציף (מילישניות)"
 
 #: ../ui/latexSettings.glade:461
 msgid "Syntax highlighting"
@@ -3450,6 +3436,15 @@ msgstr ""
 msgid "These settings will be used for new pages"
 msgstr "יהיה שימוש בהגדרות אלה רק בשביל דפים חדשים"
 
+#: ../ui/settings.glade:5392
+msgid "Time limit (ms)"
+msgstr ""
+
+#: ../ui/settings.glade:5404
+msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
+"<i>Recommended: 150ms</i>"
+msgstr ""
+
 #: ../ui/settings.glade:2400
 msgid "Timeout"
 msgstr ""
@@ -3471,11 +3466,11 @@ msgstr ""
 msgid "Touchscreen"
 msgstr "מסך מגע"
 
-#: ../ui/settings.glade:5485
+#: ../ui/settings.glade:5484
 msgid "Try to select object first."
 msgstr "נסה לבחור אובייקט קודם."
 
-#: ../ui/settings.glade:5490 ../ui/settings.glade:5522
+#: ../ui/settings.glade:5489 ../ui/settings.glade:5521
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr ""
 
@@ -3515,7 +3510,7 @@ msgstr "בד\"כ 0 או 1"
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/pluginEntry.glade:131
+#: ../ui/pluginEntry.glade:132
 msgid "Version: "
 msgstr "גרסה: "
 
@@ -3546,7 +3541,7 @@ msgctxt "eraser is only visible when touching the screen"
 msgid "When touching"
 msgstr ""
 
-#: ../ui/settings.glade:5596
+#: ../ui/settings.glade:5595
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
@@ -3715,10 +3710,6 @@ msgstr ""
 msgid "_Image"
 msgstr ""
 
-#: ../ui/main.glade:1201
-msgid "_Journal"
-msgstr ""
-
 #: ../ui/main.glade:1120
 msgid "_Last Page"
 msgstr "הדף ה_קודם"
@@ -3839,7 +3830,7 @@ msgstr ""
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:167
+#: ../ui/pluginEntry.glade:168
 msgid "enabled,"
 msgstr "מופעל,"
 
