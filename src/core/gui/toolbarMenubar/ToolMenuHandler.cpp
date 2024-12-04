@@ -3,7 +3,8 @@
 #include <algorithm>  // for max
 #include <sstream>    // for istringstream
 
-#include "control/Control.h"                 // for Control
+#include "control/Control.h"                         // for Control
+#include "control/PageBackgroundChangeController.h"  // for PageBackgroundChangeController
 #include "control/ScrollHandler.h"           // for ScrollHandler
 #include "control/actions/ActionDatabase.h"  // for ActionDatabase
 #include "control/settings/Settings.h"       // for Settings
@@ -516,6 +517,7 @@ void ToolMenuHandler::updateColorToolItems(const Palette& palette) {
 
 void ToolMenuHandler::setDefaultNewPageType(const std::optional<PageType>& pt) {
     this->pageTypeSelectionPopup->setSelectedPT(pt);
+    this->control->getPageBackgroundChangeController()->setPageTypeForNewPages(pt);
 }
 void ToolMenuHandler::setDefaultNewPaperSize(const std::optional<PaperSize>& paperSize) {
     this->pageTypeSelectionPopup->setSelectedPaperSize(paperSize);
