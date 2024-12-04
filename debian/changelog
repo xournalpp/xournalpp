@@ -1,4 +1,4 @@
-xournalpp (1.2.5~dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.5-1) unstable; urgency=medium
 
   * Fixed regressions when exporting to PDF
   * Fixed crash when importing some SVG files
@@ -6,7 +6,7 @@ xournalpp (1.2.5~dev-1) UNRELEASED; urgency=medium
   * Fixed issues with Windows installer
   * Fixed missing translations on Windows
 
- -- Benjamin Hennion <benjamin.hennion@wanadoo.fr>  Wed, 04 Dec 2024 15:53:47 +0200
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 04 Dec 2024 16:17:08 +0100
 
 xournalpp (1.2.4-1) unstable; urgency=medium
 
