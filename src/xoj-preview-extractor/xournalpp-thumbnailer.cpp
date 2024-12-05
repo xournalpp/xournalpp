@@ -74,7 +74,7 @@ void logMessage(string msg, bool error) {
 #endif
 }
 
-static const std::string iconName = "com.github.xournalpp.xournalpp";
+static const std::string iconName = u8"com.github.xournalpp.xournalpp";
 
 /**
  * Search for Xournal++ icon based on the freedesktop icon theme specification
@@ -82,28 +82,21 @@ static const std::string iconName = "com.github.xournalpp.xournalpp";
 fs::path findAppIcon() {
     std::vector<fs::path> basedirs;
 #if DEBUG_THUMBNAILER
-    basedirs.emplace_back(fs::u8path("../ui/pixmaps"));
+    basedirs.emplace_back(fs::u8path(u8"../ui/pixmaps"));
 #endif
     // $HOME/.icons
-    basedirs.emplace_back(fs::u8path(g_get_home_dir()) / ".icons");
-    // $XDG_DATA_DIRS/icons
-    if (const char* datadirs = g_getenv("XDG_DATA_DIRS")) {
-        std::string dds = datadirs;
-        std::string::size_type lastp = 0;
-        std::string::size_type p;
-        while ((p = dds.find(":", lastp)) != std::string::npos) {
-            std::string path = dds.substr(lastp, p - lastp);
-            basedirs.emplace_back(fs::u8path(path) / "icons");
-            lastp = p + 1;
-        }
+    basedirs.emplace_back(Util::fromGFilename(g_get_home_dir()) / u8".icons");
+    auto dataDirs = g_get_system_data_dirs();
+    for (auto const* const* data_dir = dataDirs; data_dir != nullptr && *data_dir != nullptr; ++data_dir) {
+        basedirs.emplace_back(Util::fromGFilename(*data_dir));
     }
-    basedirs.emplace_back(fs::u8path("/usr/share/pixmaps"));
+    basedirs.emplace_back(fs::u8path(u8"/usr/share/pixmaps"));
 
-    const auto iconFile = iconName + ".svg";
+    const auto iconFile = iconName + u8".svg";
     // Search through base directories
     for (auto&& d: basedirs) {
         fs::path svgPath;
-        if (fs::exists((svgPath = d / "hicolor/scalable/apps" / iconFile))) {
+        if (fs::exists((svgPath = d / u8"hicolor/scalable/apps" / iconFile))) {
             return svgPath;
         } else if (fs::exists((svgPath = d / iconFile))) {
             return svgPath;

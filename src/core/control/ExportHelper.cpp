@@ -1,6 +1,5 @@
 #include "ExportHelper.h"
 
-#include <algorithm>  // for max
 #include <memory>     // for unique_ptr, allocator
 #include <string>     // for string
 
@@ -13,10 +12,7 @@
 #include "pdf/base/XojPdfExport.h"          // for XojPdfExport
 #include "pdf/base/XojPdfExportFactory.h"   // for XojPdfExportFactory
 #include "util/ElementRange.h"              // for parse, PageRangeVector
-#include "util/i18n.h"                      // for _
-#include "util/raii/GObjectSPtr.h"          // for GObjectSPtr
-
-#include "filesystem.h"  // for operator==, path, u8path
+#include "util/i18n.h"                      // for
 
 namespace ExportHelper {
 
@@ -34,14 +30,12 @@ namespace ExportHelper {
  *
  * @return 0 on success, -3 on export failure
  */
-auto exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
-               int pngHeight, ExportBackgroundType exportBackground) -> int {
-
-    fs::path const path(output);
+auto exportImg(Document* doc, fs::path const& output, const char* range, const char* layerRange, int pngDpi,
+               int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
 
     ExportGraphicsFormat format = EXPORT_GRAPHICS_PNG;
 
-    if (path.extension() == ".svg") {
+    if (output.extension() == ".svg") {
         format = EXPORT_GRAPHICS_SVG;
     }
 
@@ -54,7 +48,7 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
 
     DummyProgressListener progress;
 
-    ImageExport imgExport(doc, path, format, exportBackground, exportRange);
+    ImageExport imgExport(doc, output, format, exportBackground, exportRange);
 
     if (format == EXPORT_GRAPHICS_PNG) {
         if (pngDpi > 0) {
@@ -91,14 +85,11 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
  *
  * @return 0 on success, -3 on export failure
  */
-auto exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
+auto exportPdf(Document* doc, fs::path const& output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode) -> int {
-
-    xoj::util::GObjectSPtr<GFile> file(g_file_new_for_commandline_arg(output), xoj::util::adopt);
 
     std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr);
     pdfe->setExportBackground(exportBackground);
-    auto path = fs::u8path(g_file_peek_path(file.get()));
 
     bool exportSuccess = 0;  // Return of the export job
 
@@ -108,9 +99,9 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
         // Parse the range
         PageRangeVector exportRange = ElementRange::parse(range, doc->getPageCount());
         // Do the export
-        exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
+        exportSuccess = pdfe->createPdf(output, exportRange, progressiveMode);
     } else {
-        exportSuccess = pdfe->createPdf(path, progressiveMode);
+        exportSuccess = pdfe->createPdf(output, progressiveMode);
     }
 
     if (!exportSuccess) {

@@ -14,12 +14,12 @@
 
 #include "filesystem.h"  // for path
 
-const char* TAG_PREVIEW_NAME = "preview";
-const int TAG_PREVIEW_NAME_LEN = strlen(TAG_PREVIEW_NAME);
-const char* TAG_PAGE_NAME = "page";
-const int TAG_PAGE_NAME_LEN = strlen(TAG_PAGE_NAME);
-const char* TAG_PREVIEW_END_NAME = "/preview";
-const int TAG_PREVIEW_END_NAME_LEN = strlen(TAG_PREVIEW_END_NAME);
+constexpr auto* TAG_PREVIEW_NAME = "preview";
+constexpr auto TAG_PREVIEW_NAME_LEN = std::string_view(TAG_PREVIEW_NAME).size();
+constexpr auto* TAG_PAGE_NAME = "page";
+constexpr auto TAG_PAGE_NAME_LEN = std::string_view(TAG_PAGE_NAME).size();
+constexpr auto* TAG_PREVIEW_END_NAME = "/preview";
+constexpr auto TAG_PREVIEW_END_NAME_LEN = std::string_view(TAG_PREVIEW_END_NAME).size();
 // max png size is: (1.02*(3*128+1)*128)+68 approx 50334
 // see https://stackoverflow.com/a/22507715/2907484
 // max base64-overhead is ceil(50334/3)*4 = 67112

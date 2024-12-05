@@ -5,6 +5,7 @@
 
 #include <glib-object.h>  // for g_object_unref
 
+#include "util/PathUtil.h"
 #include "util/Stacktrace.h"  // for Stacktrace
 
 /*
@@ -18,7 +19,7 @@
 
 struct BackgroundImage::Content {
     Content(fs::path path, GError** error):
-            path(std::move(path)), pixbuf(gdk_pixbuf_new_from_file(this->path.u8string().c_str(), error)) {}
+            path(std::move(path)), pixbuf(gdk_pixbuf_new_from_file(Util::toGFilename(this->path).c_str(), error)) {}
 
     Content(GInputStream* stream, fs::path path, GError** error):
             path(std::move(path)), pixbuf(gdk_pixbuf_new_from_stream(stream, nullptr, error)) {}

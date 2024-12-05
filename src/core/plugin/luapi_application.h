@@ -13,6 +13,7 @@
 #include <climits>
 #include <cmath>  // for rounding
 #include <cstring>
+#include <filesystem>
 #include <limits>  // for numeric_limits
 #include <map>
 
@@ -44,6 +45,7 @@
 #include "model/XojPage.h"
 #include "plugin/Plugin.h"
 #include "undo/InsertUndoAction.h"
+#include "util/PathUtil.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"  // for _
@@ -82,8 +84,8 @@ extern "C" {
  */
 static int applib_glib_rename(lua_State* L) {
     GError* err = nullptr;
-    xoj::util::GObjectSPtr<GFile> to(g_file_new_for_path(lua_tostring(L, -1)), xoj::util::adopt);
-    xoj::util::GObjectSPtr<GFile> from(g_file_new_for_path(lua_tostring(L, -2)), xoj::util::adopt);
+    xoj::util::GObjectSPtr<GFile> to(Util::toGFile(fs::u8path(lua_tostring(L, -1))), xoj::util::adopt);
+    xoj::util::GObjectSPtr<GFile> from(Util::toGFile(fs::u8path(lua_tostring(L, -2))), xoj::util::adopt);
 
     g_file_move(from.get(), to.get(), G_FILE_COPY_OVERWRITE, nullptr, nullptr, nullptr, &err);
     if (err) {
@@ -121,17 +123,16 @@ static int applib_saveAs(lua_State* L) {
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native.get()), TRUE);
     // Offer a suggestion for the filename if filename absent
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native.get()),
-                                      filename ? filename : (std::string{_("Untitled")}).c_str());
+                                      filename ? Util::toGFilename(filename).c_str() : (g_filename const*)("Untitled"));
 
     // Wait until user responds to dialog
     res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native.get()));
 
     // Return the filename chosen to lua
     if (res == GTK_RESPONSE_ACCEPT) {
-        char* filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())));
-
-        lua_pushlstring(L, filename, strlen(filename));
-        g_free(static_cast<gchar*>(filename));
+        auto filename =
+                Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())), true).u8string();
+        lua_pushlstring(L, filename.data(), filename.size());
         args_returned = 1;
     }
 
@@ -179,9 +180,9 @@ static int applib_getFilePath(lua_State* L) {
     res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native.get()));
     // Return the filename chosen to lua
     if (res == GTK_RESPONSE_ACCEPT) {
-        filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())));
-        lua_pushlstring(L, filename, strlen(filename));
-        g_free(static_cast<gchar*>(filename));
+        auto filename =
+                Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native.get())), true).u8string();
+        lua_pushlstring(L, filename.data(), filename.size());
         args_returned = 1;
     }
     // Destroy the dialog and free memory
@@ -2102,12 +2103,12 @@ static int applib_addImagesFromFilepath(lua_State* L) {
             aspectRatio = lua_toboolean(L, -1);
         }
 
-        const char* path = luaL_checkstring(L, -7);
+        const auto* path = luaL_checkstring(L, -7);
         if (!path) {
             return luaL_error(L, "no 'path' parameter was provided.");
         }
 
-        xoj::util::GObjectSPtr<GFile> file(g_file_new_for_path(path), xoj::util::adopt);
+        xoj::util::GObjectSPtr<GFile> file(Util::toGFile(fs::u8path(path)), xoj::util::adopt);
         if (!g_file_query_exists(file.get(), NULL)) {
             lua_pop(L, 8);  // pop the params we fetched from the global param-table from the stack
             lua_pushfstring(L, "Error: file '%s' does not exist.", path);  // soft error

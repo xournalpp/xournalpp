@@ -90,7 +90,7 @@ auto migrateSettings() -> MigrateResult {
         const std::array oldPaths = {
                 Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp",
                 Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp.exe",
-                fs::u8path(g_get_home_dir()) /= ".xournalpp",
+                Util::fromGFilename(g_get_home_dir()) /= ".xournalpp",
         };
         for (auto const& oldPath: oldPaths) {
             if (!fs::is_directory(oldPath)) {
@@ -258,7 +258,7 @@ void exitOnMissingPdfFileName(const LoadHandler& loader) {
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
+auto exportImg(fs::path const& input, fs::path const& output, const char* range, const char* layerRange, int pngDpi,
                int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
     LoadHandler loader;
     Document* doc = loader.loadDocument(input);
@@ -285,7 +285,7 @@ auto exportImg(const char* input, const char* output, const char* range, const c
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
+auto exportPdf(fs::path const& input, fs::path const& output, const char* range, const char* layerRange,
                ExportBackgroundType exportBackground, bool progressiveMode) -> int {
     LoadHandler loader;
     Document* doc = loader.loadDocument(input);
@@ -306,14 +306,14 @@ struct XournalMainPrivate {
     auto operator=(XournalMainPrivate const&) -> XournalMainPrivate = delete;
 
     ~XournalMainPrivate() {
-        g_strfreev(optFilename);
+        g_strfreev((gchar**)optFilename);
         g_free(pdfFilename);
         g_free(imgFilename);
     }
 
-    gchar** optFilename{};
-    gchar* pdfFilename{};
-    gchar* imgFilename{};
+    g_filename** optFilename{};
+    g_filename* pdfFilename{};
+    g_filename* imgFilename{};
     gboolean showVersion = false;
     int openAtPageNumber = 0;  // when no --page is used, the document opens at the page specified in the metadata file
     gchar* exportRange{};
@@ -333,11 +333,10 @@ using XMPtr = XournalMainPrivate*;
 
 /// Checks for input method compatibility and ensures it
 void ensure_input_model_compatibility() {
-    const char* imModule = g_getenv("GTK_IM_MODULE");
-    if (imModule != nullptr) {
-        const std::string imModuleString{imModule};
-        if (imModuleString == "xim") {
-            g_warning("Unsupported input method: %s", imModule);
+    std::basic_string_view imModule = g_getenv((g_filename*)("GTK_IM_MODULE"));
+    if (!imModule.empty()) {
+        if (imModule == (g_filename*)"xim") {
+            g_warning("Unsupported input method: %s", (gchar*)(imModule.data()));
         }
     }
 }
@@ -473,7 +472,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     bool opened = false;
     if (app_data->optFilename) {
-        if (g_strv_length(app_data->optFilename) != 1) {
+        if (g_strv_length(((gchar**)app_data->optFilename)) != 1) {
             const std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
                                       "Others are ignored.");
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
@@ -558,7 +557,8 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
     if (app_data->pdfFilename && app_data->optFilename && *app_data->optFilename) {
         return exec_guarded(
                 [&] {
-                    return exportPdf(*app_data->optFilename, app_data->pdfFilename, app_data->exportRange,
+                    return exportPdf(Util::fromGFilename(*app_data->optFilename),
+                                     Util::fromGFilename(app_data->pdfFilename), app_data->exportRange,
                                      app_data->exportLayerRange,
                                      app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
                                      app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
@@ -570,7 +570,8 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
     if (app_data->imgFilename && app_data->optFilename && *app_data->optFilename) {
         return exec_guarded(
                 [&] {
-                    return exportImg(*app_data->optFilename, app_data->imgFilename, app_data->exportRange,
+                    return exportImg(Util::fromGFilename(*app_data->optFilename),
+                                     Util::fromGFilename(app_data->imgFilename), app_data->exportRange,
                                      app_data->exportLayerRange, app_data->exportPngDpi, app_data->exportPngWidth,
                                      app_data->exportPngHeight,
                                      app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :

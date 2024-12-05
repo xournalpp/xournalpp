@@ -3,6 +3,7 @@
 #include <utility>
 
 #include "gui/GladeSearchpath.h"
+#include "util/PathUtil.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 
@@ -41,7 +42,7 @@ PageTypeHandler::~PageTypeHandler() {
 auto PageTypeHandler::parseIni(fs::path const& filepath) -> bool {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
-    if (!g_key_file_load_from_file(config, filepath.u8string().c_str(), G_KEY_FILE_NONE, nullptr)) {
+    if (!g_key_file_load_from_file(config, Util::toGFilename(filepath).c_str(), G_KEY_FILE_NONE, nullptr)) {
         g_key_file_free(config);
         return false;
     }

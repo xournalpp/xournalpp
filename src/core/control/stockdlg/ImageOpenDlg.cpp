@@ -78,7 +78,7 @@ auto ImageOpenDlg::pixbufScaleDownIfNecessary(GdkPixbuf* pixbuf, gint maxSize) -
 }
 
 void ImageOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userData) {
-    gchar* filename = gtk_file_chooser_get_preview_filename(fileChooser);
+    auto* filename = gtk_file_chooser_get_preview_filename(fileChooser);
 
     if (filename) {
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(filename, nullptr);

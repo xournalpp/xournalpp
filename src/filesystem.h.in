@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <@CXX_FILESYSTEM_HEADER@>
+#include <@CXX_FILESYSTEM_HEADER@> // IWYU pragma: export
 
 // enable fs
 namespace fs = @CXX_FILESYSTEM_NAMESPACE@;

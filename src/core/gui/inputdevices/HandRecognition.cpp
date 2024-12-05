@@ -18,12 +18,12 @@ using std::string;
 HandRecognition::HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings):
         inputContext(inputContext), settings(settings) {
 #ifdef X11_ENABLED
-    const char* sessionType = g_getenv("XDG_SESSION_TYPE");
-    if (sessionType != nullptr && strcmp(sessionType, "x11") == 0) {
+    std::basic_string_view sessionType = g_getenv((g_filename const*)("XDG_SESSION_TYPE"));
+
+    if (!sessionType.empty() && sessionType == (g_filename const*)("x11")) {
         x11Session = true;
     }
 #endif
-
     reload();
 }
 

@@ -2,6 +2,7 @@
 
 #include <cstddef>  // for size_t
 
+#include "util/PathUtil.h"
 #include "util/XojMsgBox.h"  // for XojMsgBox
 #include "util/i18n.h"       // for _
 
@@ -44,7 +45,7 @@ void ToolbarModel::add(ToolbarData* data) { this->toolbars.push_back(data); }
 auto ToolbarModel::parse(fs::path const& filepath, bool predefined) -> bool {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
-    if (!g_key_file_load_from_file(config, filepath.u8string().c_str(), G_KEY_FILE_NONE, nullptr)) {
+    if (!g_key_file_load_from_file(config, Util::toGFilename(filepath).c_str(), G_KEY_FILE_NONE, nullptr)) {
         g_key_file_free(config);
         return false;
     }
@@ -158,7 +159,7 @@ void ToolbarModel::save(fs::path const& filepath) {
     config = nullptr;
 
     GError* error = nullptr;
-    if (!g_file_set_contents(filepath.u8string().c_str(), data, len, &error)) {
+    if (!g_file_set_contents(Util::toGFilename(filepath).c_str(), data, len, &error)) {
         XojMsgBox::showErrorToUser(nullptr, error->message);
         g_error_free(error);
     }

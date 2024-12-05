@@ -4,7 +4,6 @@
 #include <fstream>      // for ifstream, char_traits, basic_ist...
 #include <iterator>     // for begin
 #include <string_view>  // for basic_string_view, operator""sv
-#include <type_traits>  // for remove_reference<>::type
 #include <utility>      // for move
 
 #include <config-paths.h>  // for PACKAGE_DATA_DIR
@@ -15,8 +14,11 @@
 #include "util/Util.h"               // for getPid, execInUiThread
 #include "util/XojMsgBox.h"          // for XojMsgBox
 #include "util/i18n.h"               // for FS, _F, FORMAT_STR
+#include "util/raii/GLibGuards.h"
 
 #include "config.h"  // for PROJECT_NAME
+
+using namespace xoj::util;
 
 #ifdef GHC_FILESYSTEM
 // Fix of ghc::filesystem bug (path::operator/=() won't support string_views)
@@ -29,16 +31,17 @@ constexpr auto CONFIG_FOLDER_NAME = "xournalpp"sv;
 #ifdef _WIN32
 #include <windows.h>
 
+
 auto Util::getLongPath(const fs::path& path) -> fs::path {
-    DWORD wLongPathSz = GetLongPathNameW(path.c_str(), nullptr, 0);
+    DWORD wLongPathSz = GetLongPathNameW(path.c_str(), nullptr, 0);  // Includes `\0`
 
     if (wLongPathSz == 0) {
         return path;
     }
 
-    std::wstring wLongPath(wLongPathSz, L'\0');
-    GetLongPathNameW(path.c_str(), wLongPath.data(), static_cast<DWORD>(wLongPath.size()));
-    wLongPath.pop_back();
+    std::wstring wLongPath(wLongPathSz - 1, L'\0');
+    wLongPathSz = GetLongPathNameW(path.c_str(), wLongPath.data(), static_cast<DWORD>(wLongPath.size()));
+    wLongPath.resize(wLongPathSz);  // Does not include "\0"
     return fs::path(std::move(wLongPath));
 }
 #else
@@ -109,28 +112,18 @@ auto Util::fromUri(const std::string& uri) -> std::optional<fs::path> {
         return std::nullopt;
     }
 
-    gchar* filename = g_filename_from_uri(uri.c_str(), nullptr, nullptr);
-    if (filename == nullptr) {
-        return std::nullopt;
-    }
-    auto p = fs::u8path(filename);
-    g_free(filename);
-
-    return {std::move(p)};
+    return Util::fromGFilename(g_filename_from_uri(uri.c_str(), nullptr, nullptr));
 }
 
 auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
-    GError* error{};
-    char* uri = [&] {
-        if (path.is_absolute()) {
-            return g_filename_to_uri(path.u8string().c_str(), nullptr, &error);
-        }
-        return g_filename_to_uri(fs::absolute(path).u8string().c_str(), nullptr, &error);
-    }();
+    using namespace xoj::util;
+    GErrorGuard error{};
+
+    auto uri = OwnedCString::assumeOwnership(
+            g_filename_to_uri(toGFilename(fs::absolute(path)).c_str(), nullptr, out_ptr(error)));
 
     if (error != nullptr) {
         g_warning("Util::toUri: could not parse path to URI, error: %s\n", error->message);
-        g_error_free(error);
         return std::nullopt;
     }
 
@@ -139,19 +132,22 @@ auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
         return std::nullopt;
     }
 
-    std::string uriString(uri);
-    g_free(uri);
-    return {std::move(uriString)};
+    return {uri.get()};
 }
 
-auto Util::fromGFile(GFile* file) -> fs::path {
-    char* p = g_file_get_path(file);
-    auto ret = p ? fs::u8path(p) : fs::path{};
-    g_free(p);
-    return ret;
-}
+auto Util::fromGFile(GFile* file) -> fs::path { return Util::fromGFilename(g_file_get_path(file)); }
 
-auto Util::toGFile(fs::path const& path) -> GFile* { return g_file_new_for_path(path.u8string().c_str()); }
+auto Util::toGFile(fs::path const& path) -> GFile* {
+    // Todo: Return smart pointer
+    auto str = path.u8string();
+    size_t filename_s{};
+    GErrorGuard g;
+    auto filename = BasicOwnedCString<g_filename>::assumeOwnership(
+            g_filename_from_utf8(str.c_str(), as_signed(str.size()), nullptr, &filename_s, xoj::util::out_ptr(g)));
+    if (g || !filename)
+        return nullptr;
+    return g_file_new_for_path(filename.get());
+}
 
 
 void Util::openFileWithDefaultApplication(const fs::path& filename) {
@@ -177,20 +173,32 @@ void Util::openFileWithDefaultApplication(const fs::path& filename) {
 }
 
 auto Util::getGettextFilepath(fs::path const& localeDir) -> fs::path {
-    /// documentation of g_getenv is wrong, its UTF-8, see #5640
-    const char* gettextEnv = g_getenv("TEXTDOMAINDIR");
+    /// documentation of g_getenv is wrong, its UTF-8, see #5640 no its not, only on windows
+    std::basic_string_view gettextEnv = g_getenv((g_filename const*)("TEXTDOMAINDIR"));
+
+    xoj::util::GErrorGuard errorGuard;
+    gsize pSize{0};
+    auto* gettextEnvU8 = g_filename_to_utf8(gettextEnv.data(), as_signed(gettextEnv.size()), nullptr, &pSize,
+                                            xoj::util::out_ptr(errorGuard));
+    if (errorGuard || !gettextEnvU8) {
+        g_warning("Util::getGettextFilepath: Failed to convert g_filename to utf8 with error code: %d\n%s",
+                  errorGuard->code, errorGuard->message);
+        return localeDir;
+    }
+
     // Only consider first path in environment variable
-    std::string_view directories;
-    if (gettextEnv) {
-        directories = gettextEnv;
+    auto dir = [&]() {
+        if (!gettextEnvU8)
+            return localeDir;
+        std::string_view directories{gettextEnvU8, pSize};
         size_t firstDot = directories.find(G_SEARCHPATH_SEPARATOR);
         if (firstDot != std::string::npos) {
-            directories = directories.substr(0, firstDot);
+            return fs::u8path(directories.substr(0, firstDot));
         }
-    }
-    auto dir = (gettextEnv) ? fs::u8path(directories) : localeDir;
-    g_debug("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnv,
-            localeDir.string().c_str(), dir.string().c_str());
+        return fs::u8path(directories);
+    }();
+    g_debug("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnvU8,
+            localeDir.u8string().c_str(), dir.u8string().c_str());
     return dir;
 }
 
@@ -200,10 +208,7 @@ auto Util::getAutosaveFilepath() -> fs::path {
     return p;
 }
 
-auto Util::getConfigFolder() -> fs::path {
-    auto p = fs::u8path(g_get_user_config_dir());
-    return (p /= CONFIG_FOLDER_NAME);
-}
+auto Util::getConfigFolder() -> fs::path { return (fromGFilename(g_get_user_config_dir()) /= CONFIG_FOLDER_NAME); }
 
 auto Util::getConfigSubfolder(const fs::path& subfolder) -> fs::path {
     fs::path p = getConfigFolder();
@@ -213,7 +218,7 @@ auto Util::getConfigSubfolder(const fs::path& subfolder) -> fs::path {
 }
 
 auto Util::getCacheSubfolder(const fs::path& subfolder) -> fs::path {
-    auto p = fs::u8path(g_get_user_cache_dir());
+    auto p = fromGFilename(g_get_user_cache_dir());
     p /= CONFIG_FOLDER_NAME;
     p /= subfolder;
 
@@ -221,7 +226,7 @@ auto Util::getCacheSubfolder(const fs::path& subfolder) -> fs::path {
 }
 
 auto Util::getDataSubfolder(const fs::path& subfolder) -> fs::path {
-    auto p = fs::u8path(g_get_user_data_dir());
+    auto p = fromGFilename(g_get_user_data_dir());
     p /= CONFIG_FOLDER_NAME;
     p /= subfolder;
 
@@ -241,7 +246,7 @@ auto Util::getCacheFile(const fs::path& relativeFileName) -> fs::path {
 }
 
 auto Util::getTmpDirSubfolder(const fs::path& subfolder) -> fs::path {
-    auto p = fs::u8path(g_get_tmp_dir());
+    auto p = fromGFilename(g_get_tmp_dir());
     p /= FS(_F("xournalpp-{1}") % Util::getPid());
     p /= subfolder;
     return Util::ensureFolderExists(p);

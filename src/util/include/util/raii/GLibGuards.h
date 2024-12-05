@@ -12,8 +12,8 @@
 #pragma once
 
 #include <memory>
-#include <type_traits>
 
+#include <glib.h>
 #include <gtk/gtk.h>
 namespace xoj::util {
 inline namespace raii {

@@ -98,11 +98,11 @@ void PageTemplateDialog::saveToFile() {
     }
 
     time_t curtime = time(nullptr);
-    char stime[128];
-    strftime(stime, sizeof(stime), "%F-Template-%H-%M.xopt", localtime(&curtime));
-    std::string saveFilename = stime;
+    std::array<char, 128> stime{};
+    auto size = strftime(stime.data(), stime.size(), "%F-Template-%H-%M.xopt", localtime(&curtime));
 
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
+                                      Util::toGFilename(std::string_view{stime.data(), size}).c_str());
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()));
