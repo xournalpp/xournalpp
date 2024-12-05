@@ -1,0 +1,163 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    # Triggers a nightly release
+  push:
+    # Triggers a release draft whenever we push a new version tag
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  schedule:
+    # Nightly release every night...
+    - cron: "12 1 * * *"  # Once a day, at 1:12 am UTC (arbitrary but avoids CI load picks on round hours)
+
+env:
+  build-targets-json: '.github/available-build-targets.json'
+  build-type: 'RelWithDebInfo'           # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  nightly-build-branch: 'master'
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    name: 'Prepare jobs'
+    outputs:
+      linux_builds: ${{ steps.parse.outputs.linux_builds }}
+      macos_builds: ${{ steps.parse.outputs.macos_builds }}
+      windows_builds: ${{ steps.parse.outputs.windows_builds }}
+      artifact_version_suffix: ${{ steps.parse.outputs.artifact_version_suffix }}
+      should_run: ${{ steps.parse.outputs.should_run }}
+      build_type: ${{ env.build-type }}
+      release_name: ${{ steps.parse.outputs.release-name }}
+      tag: ${{ steps.parse.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:  # Get the build targets
+          sparse-checkout: '${{ env.build-targets-json }}'
+          sparse-checkout-cone-mode: false
+      - name: 'Parse targets list and setup version string'
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const available_targets = require('${{ env.build-targets-json }}')
+
+            core.setOutput('linux_builds', Object.values(available_targets.linux_targets))
+            core.setOutput('macos_builds', Object.values(available_targets.macos_targets))
+            core.setOutput('windows_builds', Object.values(available_targets.windows_targets))
+
+            if ( "${{ github.event_name }}" === 'push' && "${{ github.ref_type }}" === 'tag' ) {
+              // The run was triggered by a tag being pushed
+              core.setOutput('tag', "${{ github.ref_name }}")
+              core.setOutput('should_run', 'true')
+              const release_name = "Xournal++ " + "${{ github.ref_name }}".substring(1)  // Remove the v
+              core.setOutput('release-name', release_name)
+              console.log("Building artifacts for release of " + release_name)
+            } else if ( "${{ github.ref_name }}" === "${{ env.nightly-build-branch }}" ) {
+              // Nightly build - Check that the 'nightly' tag is not on the latest commit already
+              const ref = await github.rest.git.getRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'tags/nightly'
+              })
+              if ( ref.data && ref.data.object ) {
+                if ( ref.data.object.sha != context.sha ) {
+                  // New commits have been pushed since last nightly release
+                  const now = new Date()
+                  const artifact_version_suffix = "-nightly-" + now.toISOString().slice(0,10).replace(/-/g,"")
+                  core.setOutput('artifact_version_suffix', artifact_version_suffix)
+                  core.setOutput('tag', 'nightly')
+                  core.setOutput('should_run', 'true')
+                  core.setOutput('release-name', "Automated nightly build")
+                  console.log("Triggering nightly build")
+                } else {
+                  console.log("No changes since last nightly build")
+                }
+              } else {
+                core.setFailed('Failed to retrieve nightly tag information')
+              }
+            } else {
+              core.setFailed('Run does not match triggering parameters')
+            }
+  run-ci:
+    name: Create installers
+    needs: prepare
+    if: ${{ needs.prepare.outputs.should_run == 'true' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/create-installers.yml
+    with:
+      linux_builds: ${{ needs.prepare.outputs.linux_builds }}
+      macos_builds: ${{ needs.prepare.outputs.macos_builds }}
+      windows_builds: ${{ needs.prepare.outputs.windows_builds }}
+      artifact_version_suffix: ${{ needs.prepare.outputs.artifact_version_suffix }}
+      build_type: ${{ needs.prepare.outputs.build_type }}
+
+  publish-result:
+    name: Publish
+    needs: [run-ci, prepare]
+    if: ${{ needs.prepare.outputs.should_run == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          path: ${{ github.workspace }}/artifacts
+      - name: "Zipping folder artifacts"
+        run: |
+          for D in *; do [ -d "${D}" ] && zip -r "${D}.zip" "${D}" > /dev/null && rm -rf "${D}" && echo "Zipped ${D}"; done
+          ls -lh
+        working-directory: ${{ github.workspace }}/artifacts
+      - name: "Update tag and prepare body (Nightly builds)"
+        if: ${{ needs.prepare.outputs.tag == 'nightly' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.git.updateRef({  // Move the nightly tag forward
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'tags/nightly',
+              sha: context.sha
+            });
+            const commits = await github.rest.repos.listCommits({  // Get the last 15 commits
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 15
+            });
+            var body="Automated nightly build\n\nLast changes:"
+            for (c of commits.data) {
+              body += "\n* " + c.sha.slice(0,10) + " " + c.commit.message.split("\n")[0]
+            }
+            core.exportVariable('body', body)
+      - name: Pull changelog
+        uses: actions/checkout@v4
+        if: ${{ needs.prepare.outputs.tag != 'nightly' }}
+        with:  # Get the changelog
+          sparse-checkout: 'debian/changelog'
+          sparse-checkout-cone-mode: false
+      - name: "Prepare release body (Regular release)"
+        if: ${{ needs.prepare.outputs.tag != 'nightly' }}
+        run: |
+          {
+            echo 'body<<EOF'
+            echo "This is a new minor version of Xournal++ with bug fixes and improvements from the community."
+            sed -n '/^xournalpp ([0-9.-]*).*/,/^ -- .*/{ /^xournalpp .*/! { /^ -- .*/ q;p } }' debian/changelog
+            echo "See https://github.com/xournalpp/xournalpp/blob/${{ needs.prepare.outputs.tag }}/CHANGELOG.md for a more detailled list of changes."
+            echo EOF
+          } >> "$GITHUB_ENV"
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "artifacts/*"
+          prerelease: ${{ needs.prepare.outputs.tag == 'nightly' }}
+          allowUpdates: true
+          draft: true
+          omitDraftDuringUpdate: true
+          generateReleaseNotes: false
+          name: ${{ needs.prepare.outputs.release_name }}
+          body: ${{ env.body }}
+          removeArtifacts: true
+          replacesArtifacts: true
+          updateOnlyUnreleased: true
+          artifactErrorsFailBuild: true
+          tag: ${{ needs.prepare.outputs.tag }}

@@ -25,6 +25,12 @@ on:
       head_sha:         # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
         type: string
         default: ''
+      build_type:
+        type: string
+        default: 'RelWithDebInfo'
+      artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
+        type: string
+        default: ''
     outputs:
       link:
         description: URL of the produced installer
@@ -70,11 +76,24 @@ jobs:
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:
-          build_type: 'RelWithDebInfo'
+          build_type: ${{ inputs.build_type }}
           cmake_flags: >-
             -DCMAKE_INSTALL_PREFIX=/usr
             -DCPACK_GENERATOR="TGZ;DEB"
           cmake_commands: '--target package'
+      - name: 'Rename assets'
+        if: ${{ inputs.artifact_version_suffix != '' }}
+        shell: bash
+        run: |
+          for f in build/packages/xournalpp-*; do
+            # If $artifact_version_suffix is `-foobar`, this transforms:
+            #      * `xournalpp-2.3.4-` into `xournalpp-2.3.4-foobar-`
+            #      * `xournalpp-2.3.4~dev-` into `xournalpp-2.3.4~dev-foobar-`
+            #      * `xournalpp-2.3.4+dev-` into `xournalpp-2.3.4+dev-foobar-`
+            correct_name="$(echo "$f" | sed "s/xournalpp-\(\(\:\?\(\:\?[0-9]\+\.\)\+[0-9]\+\)\(\:\?[+~][^-]\+\)\?\)-/xournalpp-\1${{ inputs.artifact_version_suffix }}-/")"
+            echo "moving from $f to $correct_name"
+            mv "$f" "$correct_name" || exit 1
+          done
       - name: 'Publish packages'
         id: publish-packages
         uses: actions/upload-artifact@v4
@@ -90,7 +109,7 @@ jobs:
           # Build AppImage
           export VERSION=$(cat VERSION | sed '1q;d')
           export ARCH=$(cat VERSION | sed '4q;d')
-          export OUTPUT="xournalpp-$VERSION-$ARCH.AppImage"
+          export OUTPUT="xournalpp-$VERSION${{ inputs.artifact_version_suffix }}-$ARCH.AppImage"
           ../linux-setup/build_appimage.sh
 
           mkdir appimage

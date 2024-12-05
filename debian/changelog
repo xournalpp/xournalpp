@@ -1,8 +1,16 @@
-xournalpp (1.2.4+dev-1) UNRELEASED; urgency=medium
+xournalpp (1.2.5+dev-1) UNRELEASED; urgency=medium
 
-  *
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 04 Dec 2024 16:17:08 +0100
 
- -- Roland Lötscher <roland_loetscher@hotmail.com>  Sun, 20 Oct 2024 08:02:11 +0200
+xournalpp (1.2.5-1) unstable; urgency=medium
+
+  * Fixed regressions when exporting to PDF
+  * Fixed crash when importing some SVG files
+  * Have geometry tools appear in the middle of the view
+  * Fixed issues with Windows installer
+  * Fixed missing translations on Windows
+
+ -- Benjamin Hennion <17818041+bhennion@users.noreply.github.com>  Wed, 04 Dec 2024 16:17:08 +0100
 
 xournalpp (1.2.4-1) unstable; urgency=medium
 

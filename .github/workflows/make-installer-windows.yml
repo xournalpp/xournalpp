@@ -16,6 +16,12 @@ on:
       head_sha:          # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
         type: string
         default: ''
+      build_type:
+        type: string
+        default: 'RelWithDebInfo'
+      artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
+        type: string
+        default: ''
     outputs:
       link:
         description: URL of the produced installer
@@ -41,25 +47,36 @@ jobs:
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:
-          build_type: RelWithDebInfo
+          build_type: ${{ inputs.build_type }}
           shell: msys2 {0}
           cmake_flags: >-
             -DCMAKE_CXX_FLAGS="-Os -s"
       - name: 'Create installer'
+        id: create-installer
         working-directory: ${{github.workspace}}/windows-setup
         shell: msys2 {0}
         run: |
           bash -lc "./package.sh"
+
+          export VERSION=$(cat ../build/VERSION | sed '1q;d')
+          export ARCH=$(cat ../build/VERSION | sed '4q;d')
+          export FULL_VERSION_STRING="$VERSION${{ inputs.artifact_version_suffix }}"
+          export INSTALLER_FILENAME="xournalpp-$FULL_VERSION_STRING-windows-setup-$ARCH.exe"
+
+          mv xournalpp-setup.exe "$INSTALLER_FILENAME"
+          echo "artifact=$INSTALLER_FILENAME" >> $GITHUB_OUTPUT
+
           if [ ${{ inputs.publish_portable_version }} ]; then
             mkdir portable_content/
-            mv dist portable_content/xournal++-portable
+            mv dist "portable_content/xournalpp-$FULL_VERSION_STRING-windows-portable-$ARCH"
           fi
       - name: 'Publish package'
         id: publish
         uses: actions/upload-artifact@v4
         with:
           name: "Windows package"
-          path: "${{github.workspace}}/windows-setup/xournalpp-setup.exe"
+          path: "${{github.workspace}}/windows-setup/${{ steps.create-installer.outputs.artifact }}"
+          compression-level: 0
           if-no-files-found: error
       - name: 'Publish portable version'
         id: publish-portable

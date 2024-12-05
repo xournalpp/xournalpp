@@ -8,6 +8,7 @@
 #include <vector>    // for vector
 
 #include "model/LineStyle.h"  // for LineStyle
+#include "util/serdesstream.h"
 
 namespace {
 
@@ -26,7 +27,7 @@ auto formatStyle(const std::vector<double>& dashes) -> std::string {
     }
 
     // Else generate custom dashes string
-    std::ostringstream custom;
+    auto custom = serdes_stream<std::ostringstream>();
     custom << std::setprecision(2) << std::fixed;
     custom << CUSTOM_KEY;
     std::copy(dashes.begin(), dashes.end(), std::ostream_iterator<double>(custom, " "));
@@ -50,7 +51,7 @@ auto StrokeStyle::parseStyle(const std::string& style) -> LineStyle {
         return LineStyle();
     }
 
-    std::stringstream dashStream(style);
+    auto dashStream = serdes_stream<std::stringstream>(style);
     std::vector<double> dashes;
 
     dashStream.seekg(strlen(CUSTOM_KEY));

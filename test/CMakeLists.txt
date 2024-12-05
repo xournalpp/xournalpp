@@ -1,33 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 cmake_policy(VERSION 3.12)
 
-if(MACOSX)
-    message(STATUS "MACOSX discoverd: Adding ${CMAKE_INSTALL_PREFIX}/lib as @rpath")
-    # This is needed as gtest_discover_tests() results in the test executables
-    # being called during make (right after linking).
-    # If the @rpath is not set at that point this will fail with "dyld: Library not loaded"
-    # or similar.
-    # By default @rpath would only be set with make install.
-    # Hence it needs to be set during build already.
-    # In case this affects installs on MACOSX in a negative way 
-    #
-    #     set(CMAKE_BUILD_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-    #
-    # could also be used instead of the following lines.
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-    set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
-    # The default GDK pixbuf loaders locations may be using relative paths.
-    # These paths are wrong when running tests, so override them.
-    set (TEST_GDK_PIXBUF_LOADER_CACHE "${CMAKE_CURRENT_BINARY_DIR}/loaders.cache")
-    set (TEST_ENV_VARS "${TEST_ENV_VARS}" GDK_PIXBUF_MODULE_FILE="${TEST_GDK_PIXBUF_LOADER_CACHE}")
-    add_custom_target (test-create-gdk-pixbuf-loader-cache
-      COMMAND "${PROJECT_SOURCE_DIR}/mac-setup/setup-gdk-pixbuf.sh" "${TEST_GDK_PIXBUF_LOADER_CACHE}"
-      BYPRODUCTS "${TEST_GDK_PIXBUF_LOADER_CACHE}"
-      COMMENT "Create gdk-pixbuf loader cache for testing")
-    add_test(create-gdk-pixbuf-loader-cache
-      "${CMAKE_COMMAND}" --build "${CMAKE_BINARY_DIR}" --target test-create-gdk-pixbuf-loader-cache)
-endif()
-
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
@@ -60,8 +33,6 @@ else ()
       "to the cmake command."
     )
   endif ()
-
-  add_library(gtest_main ALIAS GTest::Main)
 endif ()
 
 # Load configure file including constants and helper Macros
@@ -78,11 +49,12 @@ configure_file (
 # Get all unit test source files
 file (GLOB_RECURSE test-units-sources
   unit_tests/*.cpp
+  main.cpp
 )
 
 # Define test-units target
 add_executable (test-units EXCLUDE_FROM_ALL ${test-units-sources})
-target_link_libraries (test-units xoj::core xoj::util std::filesystem gtest_main)
+target_link_libraries (test-units xoj::core xoj::util std::filesystem gtest)
 target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/test")
 
 ###############################################################################

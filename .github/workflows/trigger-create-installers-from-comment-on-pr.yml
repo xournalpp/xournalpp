@@ -20,6 +20,7 @@ jobs:
       linux_builds: ${{ steps.parse.outputs.linux_builds }}
       macos_builds: ${{ steps.parse.outputs.macos_builds }}
       windows_builds: ${{ steps.parse.outputs.windows_builds }}
+      artifact_version_suffix: ${{ steps.parse.outputs.artifact_version_suffix }}
       run_details_url: ${{ steps.parse.outputs.run_details_url }}
     permissions:
       checks: write         # To create the check in the PR
@@ -83,25 +84,17 @@ jobs:
             console.log('required targets: ' + JSON.stringify([...targets]))
 
             if (targets.has("all")) {
-              for (const tgt in available_targets) {
-                if (available_targets[tgt].runner.startsWith('ubuntu')) {
-                  linux_builds.push(available_targets[tgt])
-                } else if (available_targets[tgt].runner.startsWith('macos')) {
-                  macos_builds.push(available_targets[tgt])
-                } else if (available_targets[tgt].runner.startsWith('windows')) {
-                  windows_builds.push(available_targets[tgt])
-                }
-              }
+              linux_builds = Object.values(available_targets.linux_targets)
+              macos_builds = Object.values(available_targets.macos_targets)
+              windows_builds = Object.values(available_targets.windows_targets)
             } else {
               for (const tgt of targets) {
-                if (Object.hasOwn(available_targets, tgt)) {
-                  if (available_targets[tgt].runner.startsWith('ubuntu')) {
-                    linux_builds.push(available_targets[tgt])
-                  } else if (available_targets[tgt].runner.startsWith('macos')) {
-                    macos_builds.push(available_targets[tgt])
-                  } else if (available_targets[tgt].runner.startsWith('windows')) {
-                    windows_builds.push(available_targets[tgt])
-                  }
+                if (Object.hasOwn(available_targets.linux_targets, tgt)) {
+                  linux_builds.push(available_targets.linux_targets[tgt])
+                } else if (Object.hasOwn(available_targets.macos_targets, tgt)) {
+                  macos_builds.push(available_targets.macos_targets[tgt])
+                } else if (Object.hasOwn(available_targets.windows_targets, tgt)) {
+                  windows_builds.push(available_targets.windows_targets[tgt])
                 } else {
                   unknown.push(tgt)
                 }
@@ -130,8 +123,10 @@ jobs:
               message = `> [!CAUTION]
               > ${sentence}. Usage is \`\\action create-installers target1 target2...\`
               > Available targets are:`
-              for (const tgt in available_targets) {
-                message += " " + `\`${tgt}\``
+              for (const tgts in available_targets) {
+                for (const tgt in available_targets[tgts]) {
+                  message += " " + `\`${tgt}\``
+                }
               }
               message += " or \`all\`"
               failed = true
@@ -150,6 +145,7 @@ jobs:
               return
             }
 
+            core.setOutput('artifact_version_suffix', '-PR-${{ github.event.issue.number }}-' + "${{ steps.get-sha.outputs.head_sha }}".substring(0, 8))
 
             // Add the CI to the PR's checks, so it appears on the webpage
             const resp = await github.rest.checks.create({
@@ -174,6 +170,7 @@ jobs:
       macos_builds: ${{ needs.ack.outputs.macos_builds }}
       windows_builds: ${{ needs.ack.outputs.windows_builds }}
       head_sha: ${{ needs.ack.outputs.head_sha }}
+      artifact_version_suffix: ${{ needs.ack.outputs.artifact_version_suffix }}
 
   publish-result:
     name: Publish results to PR

@@ -12,6 +12,12 @@ on:
       head_sha:         # SHA of the commit to build. Defaults to the head of the triggering event (cf github doc.)
         type: string
         default: ''
+      build_type:
+        type: string
+        default: 'RelWithDebInfo'
+      artifact_version_suffix:  # Additional version string appended to 1.2.3+dev (for instance) in artifacts names
+        type: string
+        default: ''
     outputs:
       link:
         description: URL of the produced installer
@@ -35,21 +41,29 @@ jobs:
       - name: 'Build Xournal++'
         uses: ./.github/actions/build
         with:
-          build_type: RelWithDebInfo
+          build_type: ${{ inputs.build_type }}
           cmake_flags: >-
             -DCMAKE_INSTALL_PREFIX="$HOME/gtk/inst"
       - name: 'Create installer'
+        id: create-installer
         shell: bash
         run: |
           which pkg-config
           pkg-config --version
           (cd build && cmake --build . --target install)
           (cd mac-setup && ./build-app.sh $HOME/gtk)                    # populates a folder mac-setup/Xournal++.app
-          (cd mac-setup && ./build-dmg.sh Xournal++.app Xournal++.dmg)  # makes an installer out of this folder
+
+          export VERSION=$(cat build/VERSION | sed '1q;d')
+          export OUTPUT="xournalpp-$VERSION${{ inputs.artifact_version_suffix }}-macOS-${{runner.arch}}.dmg"
+
+          (cd mac-setup && ./build-dmg.sh Xournal++.app $OUTPUT)  # makes an installer out of this folder
+
+          echo "artifact=$OUTPUT" >> $GITHUB_OUTPUT
       - name: 'Publish package'
         id: publish
         uses: actions/upload-artifact@v4
         with:
           name: "MacOS package ${{runner.os}}-${{runner.arch}}"
-          path: "${{github.workspace}}/mac-setup/Xournal++.dmg"
+          compression-level: 0
+          path: "${{github.workspace}}/mac-setup/${{ steps.create-installer.outputs.artifact }}"
           if-no-files-found: error
