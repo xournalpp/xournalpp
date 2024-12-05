@@ -109,17 +109,43 @@ jobs:
           for D in *; do [ -d "${D}" ] && zip -r "${D}.zip" "${D}" > /dev/null && rm -rf "${D}" && echo "Zipped ${D}"; done
           ls -lh
         working-directory: ${{ github.workspace }}/artifacts
-      - name: "Move 'nightly' tag to latest commit"
+      - name: "Update tag and prepare body (Nightly builds)"
         if: ${{ needs.prepare.outputs.tag == 'nightly' }}
         uses: actions/github-script@v7
         with:
           script: |
-            github.rest.git.updateRef({
+            github.rest.git.updateRef({  // Move the nightly tag forward
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: 'tags/nightly',
               sha: context.sha
             });
+            const commits = await github.rest.repos.listCommits({  // Get the last 15 commits
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 15
+            });
+            var body="Automated nightly build\n\nLast changes:"
+            for (c of commits.data) {
+              body += "\n* " + c.sha.slice(0,10) + " " + c.commit.message.split("\n")[0]
+            }
+            core.exportVariable('body', body)
+      - name: Pull changelog
+        uses: actions/checkout@v4
+        if: ${{ needs.prepare.outputs.tag != 'nightly' }}
+        with:  # Get the changelog
+          sparse-checkout: 'debian/changelog'
+          sparse-checkout-cone-mode: false
+      - name: "Prepare release body (Regular release)"
+        if: ${{ needs.prepare.outputs.tag != 'nightly' }}
+        run: |
+          {
+            echo 'body<<EOF'
+            echo "This is a new minor version of Xournal++ with bug fixes and improvements from the community."
+            sed -n '/^xournalpp ([0-9.-]*).*/,/^ -- .*/{ /^xournalpp .*/! { /^ -- .*/ q;p } }' debian/changelog
+            echo "See https://github.com/xournalpp/xournalpp/blob/${{ needs.prepare.outputs.tag }}/CHANGELOG.md for a more detailled list of changes."
+            echo EOF
+          } >> "$GITHUB_ENV"
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "artifacts/*"
@@ -127,8 +153,9 @@ jobs:
           allowUpdates: true
           draft: true
           omitDraftDuringUpdate: true
-          generateReleaseNotes: true
+          generateReleaseNotes: false
           name: ${{ needs.prepare.outputs.release_name }}
+          body: ${{ env.body }}
           removeArtifacts: true
           replacesArtifacts: true
           updateOnlyUnreleased: true
