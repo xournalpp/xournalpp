@@ -3275,7 +3275,7 @@ This setting can make it easier to draw with touch. </property>
                                     <property name="row-homogeneous">True</property>
                                     <child>
                                       <object class="GtkCheckButton" id="cbRecolorDrawingArea">
-                                        <property name="label" translatable="yes">Recolor Drawing Area</property>
+                                        <property name="label" translatable="yes">Recolor Drawing Area (might introduce lags when moving selections)</property>
                                         <property name="name">cbRecolorDrawingArea</property>
                                         <property name="visible">True</property>
                                         <property name="can-focus">True</property>
