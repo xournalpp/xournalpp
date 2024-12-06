@@ -30,7 +30,8 @@
 #include "control/xojfile/LoadHandler.h"     // for LoadHandler
 #include "control/xojfile/SaveHandler.h"     // for SaveHandler
 #include "gui/GladeSearchpath.h"             // for GladeSearchpath
-#include "gui/MainWindow.h"                  // for MainWindow
+#include "gui/HomeWindow.h"                  // for MainWindow
+#include "gui/MainWindow.h" // Add this line to include the definition of MainWindow
 #include "gui/XournalView.h"                 // for XournalView
 #include "model/Document.h"                  // for Document
 #include "undo/EmergencySaveRestore.h"       // for EmergencySaveRestore
@@ -377,6 +378,7 @@ struct XournalMainPrivate {
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
+    std::unique_ptr<HomeWindow> homeWin;
 };
 using XMPtr = XournalMainPrivate*;
 
@@ -497,31 +499,29 @@ void on_startup(GApplication* application, XMPtr app_data) {
     app_data->gladePath = std::make_unique<GladeSearchpath>();
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
+    initResourcePath(app_data->gladePath.get(), "ui/homepage.glade", false);
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
-    auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
-    if (globalLatexTemplatePath.empty()) {
-        globalLatexTemplatePath = findResourcePath("resources/") / "default_template.tex";
-        g_message("Using default latex template in %s", globalLatexTemplatePath.string().c_str());
-        app_data->control->getSettings()->save();
-    }
+   // auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
+    //if (globalLatexTemplatePath.empty()) {
+      //  globalLatexTemplatePath = findResourcePath("resources/") / "default_template.tex";
+        //g_message("Using default latex template in %s", globalLatexTemplatePath.string().c_str());
+        //app_data->control->getSettings()->save();
+    //}
 
-    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(),
-                                                 GTK_APPLICATION(application));
-    app_data->control->initWindow(app_data->win.get());
-    app_data->win->populate(app_data->gladePath.get());
+    app_data->homeWin = std::make_unique<HomeWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application));
+    app_data->control->initHomeWindow(app_data->homeWin.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
         Util::execInUiThread(
                 [=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
     }
 
-    gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
     // Do we want stuff in gtk_application_set_app_menu?
 
-    app_data->win->show(nullptr);
-
+    app_data->homeWin->show(nullptr);
+    /*
     fs::path p;
     if (app_data->optFilename) {
         if (g_strv_length(app_data->optFilename) != 1) {
@@ -552,6 +552,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
                 Util::execInUiThread([=]() { ctrl->getWindow()->getXournal()->layoutPages(); });
                 gtk_application_add_window(app, ctrl->getGtkWindow());
             });
+            */
 }
 
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {

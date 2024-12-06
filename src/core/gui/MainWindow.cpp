@@ -58,12 +58,12 @@ using std::string;
 
 static void themeCallback(GObject*, GParamSpec*, gpointer data) { static_cast<MainWindow*>(data)->updateColorscheme(); }
 
-MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* parent):
+MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* app):
         GladeGui(gladeSearchPath, "main.glade", "mainWindow"),
         control(control),
         toolbar(std::make_unique<ToolMenuHandler>(control, this)),
         menubar(std::make_unique<Menubar>()) {
-    gtk_window_set_application(GTK_WINDOW(getWindow()), parent);
+    gtk_window_set_application(GTK_WINDOW(getWindow()), app);
 
     panedContainerWidget.reset(get("panelMainContents"), xoj::util::ref);
     boxContainerWidget.reset(get("mainContentContainer"), xoj::util::ref);

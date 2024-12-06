@@ -58,6 +58,7 @@ class Document;
 class EditSelection;
 class Element;
 class MainWindow;
+class HomeWindow;
 class ObjectInputStream;
 class ScrollHandler;
 class SearchBar;
@@ -86,6 +87,7 @@ public:
     ~Control() override;
 
     void initWindow(MainWindow* win);
+    void initHomeWindow(HomeWindow* homeWin);
 
 public:
     /// Asymchronously closes the current document and replaces it by a new file
@@ -303,6 +305,7 @@ public:
     ZoomControl* getZoomControl() const;
     Document* getDocument() const;
     UndoRedoHandler* getUndoRedoHandler() const;
+    HomeWindow* getHomeWindow() const;
     MainWindow* getWindow() const;
     GtkWindow* getGtkWindow() const;
     ScrollHandler* getScrollHandler() const;
@@ -469,6 +472,7 @@ private:
     Settings* settings = nullptr;
     std::unique_ptr<Palette> palette;
     MainWindow* win = nullptr;
+    HomeWindow* homeWin = nullptr;
 
     Document* doc = nullptr;
 

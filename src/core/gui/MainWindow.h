@@ -54,7 +54,7 @@ public:
 public:
     GMenuModel* getMenuModel() const;
 
-    void show(GtkWindow* parent) override;
+    void show(GtkWindow* app) override;
 
     void toolbarSelected(const std::string& id);
     void toolbarSelected(ToolbarData* d);
