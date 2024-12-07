@@ -53,6 +53,20 @@ string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d.%H%M" UTC)
 include(TargetArch)
 target_architecture(PACKAGE_ARCH)
 
+
+if (UNIX AND NOT APPLE AND NOT CYGWIN)
+    set(INSTALL_DESKTOP_FILES true)
+endif()
+
+## I18n ##
+add_subdirectory(po)
+option (ONLY_CONFIGURE_FOR_TARGET_POT "Only configure the pot target" OFF)
+if (ONLY_CONFIGURE_FOR_TARGET_POT)
+    # We dont need anything else for just generating the .pot file.
+    # This avoids having to install all the dependencies in the CI runs updating the translation files
+    return()
+endif ()
+
 configure_file(cmake/VERSION.in VERSION)
 
 configure_file(
@@ -120,10 +134,6 @@ if (ENABLE_PROFILING)
 endif (ENABLE_PROFILING)
 
 pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
-
-if (UNIX AND NOT APPLE AND NOT CYGWIN)
-    set(INSTALL_DESKTOP_FILES true)
-endif()
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
@@ -205,9 +215,6 @@ configure_file(
         src/filesystem.h.in
         src/filesystem.h
 )
-
-## I18n ##
-add_subdirectory(po)
 
 ## Configuration headers and development options ##
 
