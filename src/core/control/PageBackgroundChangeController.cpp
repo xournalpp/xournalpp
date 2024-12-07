@@ -283,18 +283,17 @@ void PageBackgroundChangeController::askForPdfBackground(std::function<void(size
  * Copy the background from source to target
  */
 void PageBackgroundChangeController::copyBackgroundFromOtherPage(PageRef target, PageRef source) {
-    // Copy page size
-    target->setSize(source->getWidth(), source->getHeight());
-
     // Copy page background type
     PageType bg = source->getBackgroundType();
     target->setBackgroundType(bg);
 
     if (bg.isPdfPage()) {
-        // If PDF: Copy PDF Page
+        // If PDF: Copy PDF Page and its size
+        target->setSize(source->getWidth(), source->getHeight());
         target->setBackgroundPdfPageNr(source->getPdfPageNr());
     } else if (bg.isImagePage()) {
-        // If Image: Copy the Image
+        // If Image: Copy the Image and its size
+        target->setSize(source->getWidth(), source->getHeight());
         target->setBackgroundImage(source->getBackgroundImage());
     } else {
         // Copy the background color
