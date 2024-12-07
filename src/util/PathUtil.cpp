@@ -144,8 +144,9 @@ auto Util::toGFile(fs::path const& path) -> GFile* {
     GErrorGuard g;
     auto filename = BasicOwnedCString<g_filename>::assumeOwnership(
             g_filename_from_utf8(str.c_str(), as_signed(str.size()), nullptr, &filename_s, xoj::util::out_ptr(g)));
-    if (g || !filename)
+    if (g || !filename) {
         return nullptr;
+    }
     return g_file_new_for_path(filename.get());
 }
 
