@@ -25,6 +25,8 @@ public:
     ScrollHandler(Control* control);
     ~ScrollHandler() override;
 
+    enum Direction { LEFT, RIGHT, DOWN, UP };
+
 public:
     void goToPreviousPage();
     void goToNextPage();
@@ -36,6 +38,10 @@ public:
     void scrollToPage(size_t page, XojPdfRectangle rect = {0, 0, -1, -1});
 
     void scrollToAnnotatedPage(bool next);
+
+    void scrollByOnePage(Direction dir);      ///< Move to the next page of the document (in direction dir)
+    void scrollByOneStep(Direction dir);      ///< Move by a small amount (in direction dir)
+    void scrollByVisibleArea(Direction dir);  ///< Move by the height or width of the visible area (- a small overlap)
 
     /**
      * Scroll to a given link's destination, provided the
@@ -52,6 +58,9 @@ public:
 
 public:
     void pageChanged(size_t page) override;
+
+private:
+    void moveWhileInPresentationMode(Direction dir);
 
 private:
     Control* control = nullptr;

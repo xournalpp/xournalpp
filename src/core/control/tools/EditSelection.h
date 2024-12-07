@@ -33,6 +33,8 @@
 #include "CursorSelectionType.h"     // for CursorSelectionType, CURS...
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
 
+struct KeyEvent;
+
 class UndoRedoHandler;
 class Layer;
 class XojPageView;
@@ -162,6 +164,8 @@ public:
     int getYOnViewAbsolute() const;
 
     inline XojPageView* getView() const { return view; }
+
+    bool onKeyPressEvent(const KeyEvent& event);
 
 public:
     /**
