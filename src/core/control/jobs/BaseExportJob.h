@@ -19,6 +19,10 @@
 #include "BlockingJob.h"  // for BlockingJob
 #include "filesystem.h"   // for path
 
+namespace xoj {
+struct MimeType;
+}
+
 /**
  *  @brief List of types for the export of background components.
  *  The order must agree with the corresponding listBackgroundType in ui/exportSettings.glade.
@@ -43,7 +47,7 @@ public:
 
 protected:
     virtual void addFilterToDialog(GtkFileChooser* dialog) = 0;
-    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const std::string& mimetype);
+    static void addFileFilterToDialog(GtkFileChooser* dialog, const std::string& name, const xoj::MimeType& mimetype);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
     virtual bool testAndSetFilepath(const fs::path& file, const char* filterName = nullptr);
 
@@ -55,12 +59,4 @@ protected:
      * Error message to show to the user
      */
     std::string errorMsg;
-
-    class ExportType {
-    public:
-        std::string extension;
-        std::string mimeType;
-
-        ExportType(std::string ext, std::string mime): extension(std::move(ext)), mimeType(std::move(mime)) {}
-    };
 };

@@ -9,15 +9,16 @@
 #include "model/Document.h"                // for Document
 #include "pdf/base/XojPdfExport.h"         // for XojPdfExport
 #include "pdf/base/XojPdfExportFactory.h"  // for XojPdfExportFactory
-#include "util/PathUtil.h"                 // for clearExtensions
-#include "util/i18n.h"                     // for _
+#include "util/MimeTypes.h"
+#include "util/PathUtil.h"  // for clearExtensions
+#include "util/i18n.h"      // for _
 
 PdfExportJob::PdfExportJob(Control* control): BaseExportJob(control, _("PDF Export")) {}
 
 PdfExportJob::~PdfExportJob() = default;
 
 void PdfExportJob::addFilterToDialog(GtkFileChooser* dialog) {
-    addFileFilterToDialog(dialog, _("PDF files"), "application/pdf");
+    addFileFilterToDialog(dialog, _("PDF files"), xoj::Mime::PDF);
 }
 
 auto PdfExportJob::testAndSetFilepath(const fs::path& file, const char* /*filterName*/) -> bool {

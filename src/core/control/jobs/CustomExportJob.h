@@ -83,5 +83,5 @@ private:
 
     std::string chosenFilterName;
 
-    std::map<std::string, ExportType> filters;
+    std::map<std::string, xoj::MimeType> filters;
 };
