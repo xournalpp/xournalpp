@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-21 18:49+0000\n"
-"PO-Revision-Date: 2024-10-21 18:53\n"
+"POT-Creation-Date: 2024-12-07 11:27+0100\n"
+"PO-Revision-Date: 2024-12-07 13:01\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -23,60 +23,76 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "Ses klasörü ayarlanmadı veya geçerli değil! Kayıt çalışmaz!\n"
 "Lütfen kayıt klasörünü \"Tercihler> Ses kaydı\" altında ayarlayın"
 
-#: ../src/core/control/Control.cpp:227
+#: ../src/core/control/Control.cpp:228
+#, c++-format
 msgid "Filesystem error: {1}"
 msgstr "Dosya sistemi hatası: {1}"
 
-#: ../src/core/control/Control.cpp:239
+#: ../src/core/control/Control.cpp:240
+#, c++-format
 msgid "Could not remove old autosave file \"{1}\": {2}"
 msgstr "Eski otomatik kayıt dosyası \"{1}\" kaldırılamadı: {2}"
 
-#: ../src/core/control/Control.cpp:551
+#: ../src/core/control/Control.cpp:560
 msgid "You deleted the active toolbar. Falling back to the default toolbar."
 msgstr "Aktif araç çubuğunu sildiniz. Varsayılan araç çubuğuna geri dönülüyor."
 
-#: ../src/core/control/Control.cpp:571
+#: ../src/core/control/Control.cpp:580
+#, c++-format
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "\"{1}\" Araç Çubuğu yapılandırması önceden tanımlandı, düzenlemek için bir kopya oluşturur musunuz?"
 
-#: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
+#: ../src/core/control/Control.cpp:583 ../src/core/control/Control.cpp:1537
 msgid "Yes"
 msgstr "Evet"
 
-#: ../src/core/control/Control.cpp:574 ../src/core/control/Control.cpp:1516
+#: ../src/core/control/Control.cpp:583 ../src/core/control/Control.cpp:1537
 msgid "No"
 msgstr "Hayır"
 
-#: ../src/core/control/Control.cpp:798 ../src/core/control/Control.cpp:1683
-#: ../src/core/control/Control.cpp:2021 ../src/core/control/XournalMain.cpp:206
+#: ../src/core/control/Control.cpp:813 ../src/core/control/Control.cpp:1704
+#: ../src/core/control/Control.cpp:2042 ../src/core/control/XournalMain.cpp:175
 msgid "Cancel"
 msgstr "İptal"
 
-#: ../src/core/control/Control.cpp:799
+#: ../src/core/control/Control.cpp:814
 msgid "Insert after current page"
 msgstr "Geçerli sayfadan sonra ekle"
 
-#: ../src/core/control/Control.cpp:800
+#: ../src/core/control/Control.cpp:815
 msgid "Insert at end"
 msgstr "Sona ekle"
 
-#: ../src/core/control/Control.cpp:803
+#: ../src/core/control/Control.cpp:818
+msgid "_Journal"
+msgstr "_Journal"
+
+#: ../src/core/control/Control.cpp:818
+msgid "Paper B_ackground"
+msgstr "Kağıt Ark_a Planı"
+
+#: ../src/core/control/Control.cpp:819
+#: ../src/core/control/pagetype/PageTypeHandler.cpp:40
+msgid "With PDF background"
+msgstr "PDF arka planı ile"
+
+#: ../src/core/control/Control.cpp:822
+#, c++-format
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
-"Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr "Mevcut belgenizde PDF Sayfa {1} yok\n"
-"Bu sayfayı eklemek ister misiniz?\n\n"
-"İpucu: Bir PDF sayfası eklemek için Günlük → Kağıt Arka Planı → PDF Arka Planı'nı seçebilirsiniz."
+"Tip: You can select {2} to insert a PDF page."
+msgstr ""
 
-#: ../src/core/control/Control.cpp:847
+#: ../src/core/control/Control.cpp:865
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Eklemeye uygun pdf sayfası yok. Dosyayı tekrar baştan açmanız gerekebilir."
 
-#: ../src/core/control/Control.cpp:861
+#: ../src/core/control/Control.cpp:879
 msgid "Unable to retrieve pdf page."
 msgstr "Pdf sayfası alınamadı."
 
-#: ../src/core/control/Control.cpp:1441
+#: ../src/core/control/Control.cpp:1462
+#, c++-format
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -84,91 +100,96 @@ msgstr "Otomatik Kaydetme dosyalarını açmayın. Bunların üzerine yazılabil
 "Dosyaları başka bir klasöre kopyalayın.\n"
 "{1} Klasöründeki dosyalar açılamıyor."
 
-#: ../src/core/control/Control.cpp:1461
+#: ../src/core/control/Control.cpp:1482
+#, c++-format
 msgid "file: {1}"
 msgstr "dosya: {1}"
 
-#: ../src/core/control/Control.cpp:1493
+#: ../src/core/control/Control.cpp:1514
+#, c++-format
 msgid "Error opening file \"{1}\""
 msgstr "\"{1}\" dosyası açılırken hata oluştu"
 
-#: ../src/core/control/Control.cpp:1518
+#: ../src/core/control/Control.cpp:1539
 msgid "File version mismatch"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1519
+#: ../src/core/control/Control.cpp:1540
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Açılmakta olan dosya şu anki Xournal++ sürümünden daha yeni bir sürüme sahip, bu nedenle düzgün yüklenmeyebilir. Yine de aç?"
 
-#: ../src/core/control/Control.cpp:1542
+#: ../src/core/control/Control.cpp:1563
+#, c++-format
 msgid "Error reading PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1663
+#: ../src/core/control/Control.cpp:1684
 msgid "The attached background file could not be found. It might have been moved, renamed or deleted."
 msgstr "Eklenmiş arka plan dosyası bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir."
 
-#: ../src/core/control/Control.cpp:1666
+#: ../src/core/control/Control.cpp:1687
+#, c++-format
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: \"{2}\""
 msgstr "Arka plan dosyası {1} bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir.\n"
 "En son şurada görüldü: {2}\""
 
-#: ../src/core/control/Control.cpp:1676
+#: ../src/core/control/Control.cpp:1697
+#, c++-format
 msgid "\n"
 "Proposed replacement file: \"{1}\""
 msgstr "\n"
 "Önerilen yedek dosya: \"{1}\""
 
-#: ../src/core/control/Control.cpp:1681
+#: ../src/core/control/Control.cpp:1702
 msgid "Select another PDF"
 msgstr "Başka bir PDF seç"
 
-#: ../src/core/control/Control.cpp:1682
+#: ../src/core/control/Control.cpp:1703
 msgid "Remove PDF Background"
 msgstr "PDF Arka Planını Kaldır"
 
-#: ../src/core/control/Control.cpp:1686
+#: ../src/core/control/Control.cpp:1707
 msgid "Use proposed PDF"
 msgstr "Önerilen PDF'yi kullan"
 
-#: ../src/core/control/Control.cpp:1689
+#: ../src/core/control/Control.cpp:1710
 msgid "Missing PDF background file"
 msgstr "PDF arkaplan dosyası kayıp"
 
-#: ../src/core/control/Control.cpp:1821
+#: ../src/core/control/Control.cpp:1842
 msgid "Select font"
 msgstr "Yazı tipi seç"
 
-#: ../src/core/control/Control.cpp:1840
+#: ../src/core/control/Control.cpp:1861
 #: ../src/core/gui/toolbarMenubar/ColorSelectorToolItem.cpp:57
 msgid "Select color"
 msgstr "Renk seç"
 
-#: ../src/core/control/Control.cpp:1865
+#: ../src/core/control/Control.cpp:1886
 msgid "Unsaved Document"
 msgstr "Kaydedilmemiş Belge"
 
-#: ../src/core/control/Control.cpp:2014
+#: ../src/core/control/Control.cpp:2035
 msgid "Document file was removed."
 msgstr "Belge dosyası kaldırıldı."
 
-#: ../src/core/control/Control.cpp:2014
+#: ../src/core/control/Control.cpp:2035
 msgid "This document is not saved yet."
 msgstr "Bu belge henüz kaydedilmemiş."
 
-#: ../src/core/control/Control.cpp:2016
+#: ../src/core/control/Control.cpp:2037
 msgid "Save As..."
 msgstr "Farklı kaydet..."
 
-#: ../src/core/control/Control.cpp:2016 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2037 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:80
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../src/core/control/Control.cpp:2019
+#: ../src/core/control/Control.cpp:2040
 msgid "Discard"
 msgstr "Gözden Çıkar"
 
@@ -177,12 +198,14 @@ msgid "Trying to emergency save the current open document..."
 msgstr "Acil durum açık belgeyi kaydetmeye çalışıyor..."
 
 #: ../src/core/control/CrashHandler.cpp:40
-#: ../src/core/control/XournalMain.cpp:309
-#: ../src/core/control/XournalMain.cpp:315
+#: ../src/core/control/XournalMain.cpp:278
+#: ../src/core/control/XournalMain.cpp:284
+#, c++-format
 msgid "Error: {1}"
 msgstr "Hata: {1}"
 
 #: ../src/core/control/CrashHandler.cpp:42
+#, c++-format
 msgid "Successfully saved document to \"{1}\""
 msgstr "Belge \"{1}\" klasörüne başarıyla kaydedildi"
 
@@ -243,10 +266,12 @@ msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Genel şablon dosyası düzenli bir dosya degil. Lütfen ayarlarınızı kontrol ediniz. "
 
 #: ../src/core/control/LatexController.cpp:236
+#, c++-format
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Latex oluşturulurken bir hatayla karşılaştı: {1} (çıkış kodu: {2})"
 
 #: ../src/core/control/LatexController.cpp:302
+#, c++-format
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "LaTeX PDF dosyası yüklenemedi: {1}"
 
@@ -254,13 +279,14 @@ msgstr "LaTeX PDF dosyası yüklenemedi: {1}"
 msgid "Could not load LaTeX PDF file"
 msgstr "LaTeX PDF dosyası yüklenemedi"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:93
+#: ../src/core/control/PageBackgroundChangeController.cpp:110
 #: ../src/core/control/xojfile/LoadHandler.cpp:471
 #: ../src/core/control/xojfile/LoadHandler.cpp:487
+#, c++-format
 msgid "Error reading PDF: {1}"
 msgstr "PDF okunurken hata oluştu: {1}"
 
-#: ../src/core/control/PageBackgroundChangeController.cpp:215
+#: ../src/core/control/PageBackgroundChangeController.cpp:271
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "Aralarından seçim yapabileceğiniz PDF sayfanız yok. İşlemi iptal edin.\n"
@@ -271,74 +297,79 @@ msgid "PDF background missing"
 msgstr "PDF arka planı eksik"
 
 #: ../src/core/control/PrintHandler.cpp:121
+#, c++-format
 msgid "Running print operation failed with {1}"
 msgstr "Yazdırma işlemi çalıştırılırken hata: {1}"
 
-#: ../src/core/control/XournalMain.cpp:154
+#: ../src/core/control/XournalMain.cpp:123
+#, c++-format
 msgid "Failed to delete file: {1}"
 msgstr "Bu dosya silinemedi: {1}"
 
-#: ../src/core/control/XournalMain.cpp:156
+#: ../src/core/control/XournalMain.cpp:125
 msgid "Please delete the file manually"
 msgstr "Lütfen dosyayı manuel olarak silin"
 
-#: ../src/core/control/XournalMain.cpp:192
+#: ../src/core/control/XournalMain.cpp:161
 msgid "There is a recent errorlogfile from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Xournal++'dan hata günlüğü dosyası var. Lütfen Hata Raporu gönderin, böylece hata düzeltilebilir."
 
-#: ../src/core/control/XournalMain.cpp:194
+#: ../src/core/control/XournalMain.cpp:163
 msgid "There are recent errorlogfiles from Xournal++. Please file a Bugreport, so the bug may be fixed."
 msgstr "Xournal++'dan hata günlüğü dosyaları var. Lütfen Hata Raporu gönderin, böylece hata düzeltilebilir."
 
-#: ../src/core/control/XournalMain.cpp:197
+#: ../src/core/control/XournalMain.cpp:166
+#, c++-format
 msgid "The most recent log file name: {1}"
 msgstr "En son günlük dosyası adı: {1}"
 
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/XournalMain.cpp:168
 msgid "To prevent this popup from reappearing, simply delete the errorlogfiles."
 msgstr "Bu açılır pencerenin tekrar gözükmesini engellemek için hata kayıt dosyalarını silin."
 
-#: ../src/core/control/XournalMain.cpp:202
+#: ../src/core/control/XournalMain.cpp:171
 msgid "File Bug Report"
 msgstr "Bir Hata Raporlayın"
 
-#: ../src/core/control/XournalMain.cpp:203
+#: ../src/core/control/XournalMain.cpp:172
 msgid "Open Logfile"
 msgstr "Log Dosyası Aç"
 
-#: ../src/core/control/XournalMain.cpp:204
+#: ../src/core/control/XournalMain.cpp:173
 msgid "Open Logfile directory"
 msgstr "Günlük dosyası dizinini aç"
 
-#: ../src/core/control/XournalMain.cpp:205
+#: ../src/core/control/XournalMain.cpp:174
 msgid "Delete Logfile"
 msgstr "Log dosyasını Sil"
 
-#: ../src/core/control/XournalMain.cpp:207
+#: ../src/core/control/XournalMain.cpp:176
 msgid "Crash log"
 msgstr "Çökme günlüğü"
 
-#: ../src/core/control/XournalMain.cpp:229
+#: ../src/core/control/XournalMain.cpp:198
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ son kez çöktü. Son düzenlenen dosyayı geri yüklemek ister misiniz?"
 
-#: ../src/core/control/XournalMain.cpp:233
+#: ../src/core/control/XournalMain.cpp:202
 msgid "Recovery file detected"
 msgstr "Kurtarma dosyası algılandı"
 
-#: ../src/core/control/XournalMain.cpp:234
+#: ../src/core/control/XournalMain.cpp:203
 msgid "Delete file"
 msgstr "Dosyayı sil"
 
-#: ../src/core/control/XournalMain.cpp:234
+#: ../src/core/control/XournalMain.cpp:203
 msgid "Restore file"
 msgstr "Dosyayı geri yükle"
 
-#: ../src/core/control/XournalMain.cpp:254
+#: ../src/core/control/XournalMain.cpp:223
+#, c++-format
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
 msgstr "Arka plan dosyası \"{1}\" bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir."
 
-#: ../src/core/control/XournalMain.cpp:446
+#: ../src/core/control/XournalMain.cpp:415
+#, c++-format
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -352,24 +383,26 @@ msgstr "<span foreground='red' size='x-large'>Gerekli kullanıcı arayüzü dosy
 "  Çalışma Dizininde değil\n"
 "  {2} içinde değil"
 
-#: ../src/core/control/XournalMain.cpp:451
+#: ../src/core/control/XournalMain.cpp:420
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Şimdi bu dosya olmadan çalıştırma denenecek."
 
-#: ../src/core/control/XournalMain.cpp:468
-#: ../src/core/control/XournalMain.cpp:528
+#: ../src/core/control/XournalMain.cpp:437
+#: ../src/core/control/XournalMain.cpp:497
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Üzgünüz, Xournal++ bir kerede yalnızca bir dosyayı açabilir.\n"
 "Diğerleri yok sayılır."
 
-#: ../src/core/control/XournalMain.cpp:479
+#: ../src/core/control/XournalMain.cpp:448
+#, c++-format
 msgid "File {1} does not exist."
 msgstr "{1} dosyası yok."
 
-#: ../src/core/control/XournalMain.cpp:483
+#: ../src/core/control/XournalMain.cpp:452
+#, c++-format
 msgid "Filesystem error: {1}\n"
 "Sorry, Xournal++ cannot open the file: {2}\n"
 "Consider copying the file to a local directory."
@@ -377,33 +410,33 @@ msgstr "Dosya sistemi hatası: {1}\n"
 "Xournal++ dosyayı açamadı: {2}\n"
 "Dosyayı yerel dizine kopyalamayı düşünün."
 
-#: ../src/core/control/XournalMain.cpp:644
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Jump to Page (first Page: 1)"
 msgstr "Sayfaya Git (ilk Sayfa: 1)"
 
-#: ../src/core/control/XournalMain.cpp:648
+#: ../src/core/control/XournalMain.cpp:646
 msgid "Get version of xournalpp"
 msgstr "Xournalpp sürümünü edinin"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:648
 msgid "Disable audio for this session"
 msgstr "Bu oturum için sesi devre dışı bırak"
 
-#: ../src/core/control/XournalMain.cpp:652
+#: ../src/core/control/XournalMain.cpp:650
 msgid "Open PDF in attach mode\n"
 "                                 Ignored if no PDF file is specified."
 msgstr "PDF'yi ekleme modunda aç\n"
 "                                 Herhangi bir PDF dosyası belirtilmemişse yoksay."
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:654
 msgid "Save xopp-file with the background PDF specified as FILE"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:665
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Export FILE as PDF"
 msgstr "Dosyayı PDF Olarak Dışa Aktar"
 
-#: ../src/core/control/XournalMain.cpp:667
+#: ../src/core/control/XournalMain.cpp:665
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -411,7 +444,7 @@ msgstr "Resim/Fotoğraf olarak dışa aktar (sayfa başına)\n"
 "                                 Dosya uzantısından resim/fotoğraf türünü tahmin et.\n"
 "                                 Desteklenen uzantılar: .png, .svg"
 
-#: ../src/core/control/XournalMain.cpp:672
+#: ../src/core/control/XournalMain.cpp:670
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -419,13 +452,13 @@ msgstr "Arka plan olmadan dışa aktar\n"
 "                                 Dışa aktarılan dosyanın arka planı,\n"
 "                                 biçiminin desteklediğine bağlı olarak saydam veya beyazdır\n"
 
-#: ../src/core/control/XournalMain.cpp:677
+#: ../src/core/control/XournalMain.cpp:675
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Çizgiler olmadan dışa aktar\n"
 "                                 Aktarılan dosyada kağıt çizgileri bulunmaz\n"
 
-#: ../src/core/control/XournalMain.cpp:681
+#: ../src/core/control/XournalMain.cpp:679
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -437,25 +470,24 @@ msgstr "Katmanları kademeli olarak dışa aktar\n"
 "                                 sayfayla sonuçlanır ve katman yığınlarınıı kademeli olarak oluşturur.\n"
 "                                 Ortaya çıkan PDF dosyası sunum yapmak için kullanılabilir.\n"
 
-#: ../src/core/control/XournalMain.cpp:688
+#: ../src/core/control/XournalMain.cpp:686
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Yalnızca ARALIK kısmında belirtilen sayfaları dışa aktarın (ör. \"2-3,5,7-\")\n"
 "                                  -p/--create-pdf veya -i/-create-img olmadan etkisi yoktur"
 
-#: ../src/core/control/XournalMain.cpp:692
-msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+#: ../src/core/control/XournalMain.cpp:690
+msgid "Only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "Dışa aktarımda yalnızca ARALIK kısmında belirtilen sayfaları dışa aktarın (ör. \"2-3,5,7-\")\n"
-"                                  -p/--create-pdf veya -i/-create-img kullanılmadan bir etkisi yoktur"
+msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:696
+#: ../src/core/control/XournalMain.cpp:694
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "PNG çıktısı için DPI ayarlayın. Varsayılan olarak 300\n"
 "                                   -i/--create-img=foo.png olmadan etkisi yoktur"
 
-#: ../src/core/control/XournalMain.cpp:700
+#: ../src/core/control/XournalMain.cpp:698
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -463,7 +495,7 @@ msgstr "PNG dışarı aktarmaları için sayfa genişliği belirtin\n"
 "                                 -i/--create-img=foo.png şeklinde ise etkisizdir\n"
 "                                 --export-png-dpi şeklinde ise bu ayar gözardı edilir"
 
-#: ../src/core/control/XournalMain.cpp:706
+#: ../src/core/control/XournalMain.cpp:704
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -471,23 +503,26 @@ msgstr "PNG dışarı aktarmaları için sayfa yüksekliği belirtin\n"
 "                                 -i/--create-img=foo.png şeklinde ise etkisizdir\n"
 "                                 --export-png-dpi yada --export-png-width şeklinde ise bu ayar gözardı edilir"
 
-#: ../src/core/control/XournalMain.cpp:711
+#: ../src/core/control/XournalMain.cpp:709
 msgid "Advanced export options"
 msgstr "Gelişmiş dışa aktarma seçenekleri"
 
-#: ../src/core/control/XournalMain.cpp:712
+#: ../src/core/control/XournalMain.cpp:710
 msgid "Display advanced export options"
 msgstr "Gelişmiş dışa aktarma seçeneklerini görüntüle"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:21
+#, c++-format
 msgid "Error while autosaving: {1}"
 msgstr "Otomatik kaydetme hatası: {1}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:45
+#, c++-format
 msgid "Autosaving to {1}"
 msgstr "{1} 'e otomatik kaydediliyor"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:68
+#, c++-format
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Otomatik kaydetme dosyası \"{1}\" yerine \"{2}\" olarak yeniden adlandırılamadı: {3}"
 
@@ -508,6 +543,7 @@ msgid "Export"
 msgstr "Dışa aktar"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:93
+#, c++-format
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr "Dosya yolu açılırken aşağıdaki hatayla karşılaşıldı:\n"
@@ -539,6 +575,7 @@ msgstr "Xournal (Uyumluluk)"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:133
 #: ../src/core/control/jobs/SaveJob.cpp:138
+#, c++-format
 msgid "Save file error: {1}"
 msgstr "Dosya kaydetme hatası: {1}"
 
@@ -563,18 +600,22 @@ msgid "PDF Export"
 msgstr "Pdf Olarak Dışa Aktar"
 
 #: ../src/core/control/jobs/SaveJob.cpp:124
+#, c++-format
 msgid "Save file error, can't backup: {1}"
 msgstr "Dosya kaydetme hatası, yedekleme yapılamıyor: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:55
+#, c++-format
 msgid "Failed to parse LaTeX generator path: {1}"
 msgstr "LaTex oluşturucu dizini çözümlenemedi: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:65
+#, c++-format
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "LaTeX oluşturucu komutu ayrıştırılamadı: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:71
+#, c++-format
 msgid "Failed to find LaTeX generator program in PATH: {1}\n\n"
 "Since installation is detected within Flatpak, you need to install the Flatpak freedesktop Tex Live extension. For example, by running:\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
@@ -583,18 +624,22 @@ msgstr "PATH değişkeninde LaTeX oluşturma programı bulunamadı: {1}\n\n"
 "$ flatpak install flathub org.freedesktop.Sdk.Extension.texlive"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:76
+#, c++-format
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "KONUM içinde LaTeX oluşturucu programı bulunamadı: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:84
+#, c++-format
 msgid "Could not save .tex file: {1}"
 msgstr ".tex dosyası kaydedilemedi: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:99
+#, c++-format
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Başlatılamadı {1}: {2} (çıkış kodu: {3})"
 
 #: ../src/core/control/layer/LayerController.cpp:348
+#, c++-format
 msgid "Layer {1}"
 msgstr "Katman {1}"
 
@@ -634,12 +679,8 @@ msgstr "İzometrik Noktalı"
 msgid "Isometric Graph"
 msgstr "İzometrik Grafik"
 
-#: ../src/core/control/pagetype/PageTypeHandler.cpp:40
-msgid "With PDF background"
-msgstr "PDF arka planı ile"
-
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:41
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
 msgid "Image"
 msgstr "Resim"
 
@@ -668,6 +709,7 @@ msgid "Send to back"
 msgstr "En arkaya gönder"
 
 #: ../src/core/control/tools/ImageHandler.cpp:41
+#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:169
 msgid "Failed to load image"
 msgstr ""
 
@@ -676,30 +718,37 @@ msgid "Error while opening image file: "
 msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:133
+#, c++-format
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Dosya geçerli bir .xopp dosyası değil (Mime türü eksik): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:141
+#, c++-format
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Dosya geçerli bir .xopp dosyası değil (Mime türü yanlış): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:150
+#, c++-format
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Dosya geçerli bir .xopp dosyası değil (Sürüm eksik): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:163
+#, c++-format
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Dosya geçerli bir .xopp dosyası değil (Sürüm dizesi bozuk): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:172
+#, c++-format
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Zip arşivindeki content.xml dosyası açılamadı: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:180
+#, c++-format
 msgid "Could not open file: \"{1}\""
 msgstr "Dosya açılamadı: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:247
+#, c++-format
 msgid "XML Parser error: {1}"
 msgstr "XML Ayrıştırıcı hatası: {1}"
 
@@ -716,43 +765,53 @@ msgid "Document is corrupted (no pages found in file)"
 msgstr "Belge bozuk (dosyada sayfa bulunamadı)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:310
+#, c++-format
 msgid "Unexpected root tag: {1}"
 msgstr "Beklenmeyen kök etiketi: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:331
+#, c++-format
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Belgede beklenmeyen etiket: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:380
 #: ../src/core/control/xojfile/LoadHandler.cpp:409
+#, c++-format
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Resim okunamadı: {1}. Hata mesajı: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:419
+#, c++-format
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Kopyalanmış arka plan resmi için sayfa numarası okunamadı: {1}."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:427
+#, c++-format
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Bilinmeyen pixmap::alan adı türü: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:478
+#, c++-format
 msgid "Unknown domain type: {1}"
 msgstr "Bilinmeyen alan adı türü: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:516
+#, c++-format
 msgid "Unknown background type: {1}"
 msgstr "Bilinmeyen arka plan türü: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:541
+#, c++-format
 msgid "Error reading width of a stroke: {1}"
 msgstr "Bir konturun genişliğini okuma hatası: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:609
+#, c++-format
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Bilinmeyen kontur başığı türü: \"{1}\", yuvarlak varsayılıyor"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:627
+#, c++-format
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Bilinmeyen kontur türü: \"{1}\", kalem varsayarak"
 
@@ -760,36 +819,44 @@ msgstr "Bilinmeyen kontur türü: \"{1}\", kalem varsayarak"
 #: ../src/core/control/xojfile/LoadHandler.cpp:814
 #: ../src/core/control/xojfile/LoadHandler.cpp:1127
 #: ../src/core/control/xojfile/LoadHandler.cpp:1141
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Ek açılamadı: {1}. Hata mesajı: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:807
 #: ../src/core/control/xojfile/LoadHandler.cpp:1134
 #: ../src/core/control/xojfile/LoadHandler.cpp:1152
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Ek açılamadı: {1}. Hata mesajı: Geçerli bir dosya boyutu sağlanmadı"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:826
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Ek açılamadı: {1}. Hata mesajı: Dosya okunamadı"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:835
+#, c++-format
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Ek açılamadı: {1}. Hata mesajı: Dosya yazılamadı"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1022
+#, c++-format
 msgid "Wrong count of points ({1})"
 msgstr "Yanlış puan sayısı ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1038
+#, c++-format
 msgid "xoj-File: {1}"
 msgstr "xoj-Dosyası: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1039
+#, c++-format
 msgid "Wrong number of pressure values, got {1}, expected {2}"
 msgstr "Yanlış basınç değer sayısı, verilen {1}, beklenen {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1171
+#, c++-format
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "{1} eki için istenen geçici dosya bulunamadı"
 
@@ -798,66 +865,79 @@ msgid "Attribute color not set!"
 msgstr "Öznitelik rengi ayarlanmadı!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
+#, c++-format
 msgid "Unknown color value \"{1}\""
 msgstr "Bilinmeyen renk değeri \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:96
+#, c++-format
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "Renk \"{1}\" bilinmiyor (varsayılan renk listesinde tanımlanmamış)!"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
+#, c++-format
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr "\"{1}\" özniteliği çift olarak ayrıştırılamadı, değer nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
+#, c++-format
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "\"{1}\" özelliği çift olarak ayrıştırılamadı, değer \"{2}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:140
+#, c++-format
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr "\"{1}\" özniteliği int olarak ayrıştırılamadı, değer nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:147
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:166
+#, c++-format
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "\"{1}\" özniteliği int olarak ayrıştırılamadı, değer \"{2}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:178
+#, c++-format
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr "\"{1}\" özelliği size_t olarak ayrıştırılamadı, değer nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:185
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:205
+#, c++-format
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "\"{1}\" özelliği size_t olarak ayrıştırılamadı, değer \"{2}\""
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:251
+#, c++-format
 msgid "Could not write background \"{1}\", {2}"
 msgstr "\"{1}\" arka planı yazılamadı, {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:348
+#, c++-format
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Arka plan \"{1}\" yazılamadı. Yine de devam ediliyor."
 
 #: ../src/core/gui/GladeGui.cpp:25
+#, c++-format
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "\"{1}\" glade dosyası yüklenirken hata oluştu (\"{2}\" yüklemeyi deneyin)"
 
 #: ../src/core/gui/PageView.cpp:388
+#, c++-format
 msgid "Unable to play audio recording {1}"
 msgstr "Ses kaydı oynatılamıyor {1}"
 
-#: ../src/core/gui/PageView.cpp:921
+#: ../src/core/gui/PageView.cpp:922
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:82
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:148
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
-#: ../src/core/gui/PageView.cpp:978
+#: ../src/core/gui/PageView.cpp:979
+#, c++-format
 msgid "Scroll to page {1}"
 msgstr "{1}. sayfaya kaydırın"
 
-#: ../src/core/gui/PageView.cpp:980
+#: ../src/core/gui/PageView.cpp:981
 msgid "Add missing page"
 msgstr "Eksik sayfa ekle"
 
@@ -875,10 +955,12 @@ msgid "Text not found"
 msgstr "Metin bulunumadı"
 
 #: ../src/core/gui/SearchBar.cpp:130
+#, c++-format
 msgid "Text found once on page {1}"
 msgstr "Sayfa {1} üzerinde bir kez metin bulundu"
 
 #: ../src/core/gui/SearchBar.cpp:131
+#, c++-format
 msgid "Text found {1} times on page {2} ({3} of {1})"
 msgstr "Metin {2}. sayfada {1} defa bulundu ({3} / {1})"
 
@@ -919,22 +1001,22 @@ msgid "Tool - don't change"
 msgstr "Araç - değiştirmeyin"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Pen"
 msgstr "Kalem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 msgid "Eraser"
 msgstr "Silgi"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 msgid "Highlighter"
 msgstr "Vurgulayıcı"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Text"
 msgstr "Metin"
 
@@ -964,7 +1046,7 @@ msgid "Select multi layer rect"
 msgstr "Çok katmanlı dikdörtgen seç"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Hand"
 msgstr "El"
 
@@ -990,48 +1072,48 @@ msgstr "Normal çizim"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:39
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw Line"
 msgstr "Çizgi Çiz"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:34
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Draw Rectangle"
 msgstr "Dikdörtgen Çiz"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Draw Ellipse"
 msgstr "Elips Çiz"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Draw Arrow"
 msgstr "Ok Çiz"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:137
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:38
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Draw Double Arrow"
 msgstr "Çift Ok"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:139
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Draw Coordinate System"
 msgstr "Koordinat Sistemi Çiz"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:141
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 #: ../src/core/undo/RecognizerUndoAction.cpp:61
 msgid "Shape Recognizer"
 msgstr "Şekil Tanıyıcı"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:143
 #: ../src/core/gui/toolbarMenubar/DrawingTypeComboToolButton.cpp:42
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Spline"
 msgstr "Eğri Çiz"
 
@@ -1053,7 +1135,7 @@ msgid "Xournal++ files"
 msgstr "Xournal++ dosyaları"
 
 #: ../src/core/gui/dialog/FileChooserFiltersHelper.cpp:34
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:119
 msgid "Xournal++ template"
 msgstr "Xournal++ şablonu"
 
@@ -1061,7 +1143,8 @@ msgstr "Xournal++ şablonu"
 msgid "Image files"
 msgstr ""
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:70
+#: ../src/core/gui/dialog/FormatDialog.cpp:50
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:163
 msgid "Custom"
 msgstr "Özel"
 
@@ -1082,6 +1165,7 @@ msgid "GtkSourceView was disabled when building Xournal++! Some options will not
 msgstr "Xournal++ derlenirken GtkSourceView devre dışıydı! Bazı seçenekler kullanılamayacak."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
+#, c++-format
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "{1} konumundaki genel şablon dosyası açılamıyor. Dosya mevcut mu?"
 
@@ -1090,25 +1174,27 @@ msgid "Sample LaTeX file generated successfully."
 msgstr "Örnek LaTeX dosyası başarıyla oluşturuldu."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:154
+#, c++-format
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Hata: {1}. Lütfen {2} içeriğini kontrol edin"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:166
+#, c++-format
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Hata: {1} normal bir dosya değil. Lütfen LaTeX şablon dosyası ayarlarınızı kontrol edin. "
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:79
 msgid "Save File"
 msgstr "Dosyayı Kaydet"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:112
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:115
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:80
 #: ../src/core/gui/dialog/XojSaveDlg.cpp:19
 msgid "_Cancel"
 msgstr "İ_ptal"
 
-#: ../src/core/gui/dialog/PageTemplateDialog.cpp:113
+#: ../src/core/gui/dialog/PageTemplateDialog.cpp:116
 msgid "_Save"
 msgstr "_Kaydet"
 
@@ -1150,6 +1236,7 @@ msgid "PDF Text Marker"
 msgstr "PDF Metin İşaretleyici"
 
 #: ../src/core/gui/dialog/SelectOpacityDialog.cpp:49
+#, c++-format
 msgid "<b>{1}</b>\n"
 "{2}{3}"
 msgstr "<b>{1}</b>\n"
@@ -1176,6 +1263,7 @@ msgid "User palettes"
 msgstr ""
 
 #: ../src/core/gui/dialog/SettingsDialogPaletteTab.cpp:96
+#, c++-format
 msgid "<i>The palettes shown below are obtained from the <a href=\"file://{1}\">Built-in palettes</a> and <a href=\"file://{2}\">User palettes</a> directories:</i>\n"
 msgstr ""
 
@@ -1226,7 +1314,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:136
 #: ../src/core/gui/dialog/XojOpenDlg.cpp:197
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
 msgid "Open file"
 msgstr "Dosya aç"
 
@@ -1251,6 +1339,7 @@ msgid "Load file"
 msgstr "Dosya yükle"
 
 #: ../src/core/gui/dialog/backgroundSelect/ImagesDialog.cpp:107
+#, c++-format
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "Bu resim yüklenemedi. Hata mesajı: {1}"
 
@@ -1267,22 +1356,27 @@ msgid "Show only not used pages (one unused page)"
 msgstr "Yalnızca kullanılmayan sayfaları göster (kullanılmayan bir sayfa)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:57
+#, c++-format
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Yalnızca kullanılmayan sayfaları göster ({1} kullanılmayan sayfa)"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:161
+#, c++-format
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "{1} araç öğesi {2} Araç Çubuğundan kaldırıldı ID {3}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
+#, c++-format
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "Araç öğesi {1} ID {2} Araç Çubuğundan kaldırıldı"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:167
+#, c++-format
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "{3} konumundaki {1} araç öğesi, {2} Araç Çubuğundan kaldırılamadı"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:172
+#, c++-format
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "{2} konumundaki Araç öğesi {1} Araç Çubuğundan kaldırılamadı"
 
@@ -1340,11 +1434,12 @@ msgid "Plugins"
 msgstr "Eklentiler"
 
 #: ../src/core/gui/menus/menubar/Menubar.cpp:54
+#, c++-format
 msgid "Error loading menubar XML file (try to load \"{1}\")"
 msgstr "Menü çubuğu XML dosyası yüklenirken hata (\"{1}\" yüklemeyi deneyin)"
 
 #: ../src/core/gui/menus/menubar/PageTypeSubmenu.cpp:47
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:176
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:369
 msgid "Apply to all pages"
 msgstr "Tüm sayfalara uygula"
 
@@ -1384,11 +1479,15 @@ msgctxt "This opens a submenu of the recent files list, and clicking on individu
 msgid "Dismiss a single document"
 msgstr ""
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:138
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:165
+msgid "Copy current page"
+msgstr ""
+
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:249
 msgid "Copy current background"
 msgstr "Geçerli arka planı kopyala"
 
-#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:156
+#: ../src/core/gui/menus/popoverMenus/PageTypeSelectionPopover.cpp:303
 msgid "Apply to current page"
 msgstr "Geçerli sayfaya uygula"
 
@@ -1424,280 +1523,282 @@ msgstr "Şekil çizimi araç seti"
 msgid "Font"
 msgstr "Yazı tipi"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:68
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:67
+#, c++-format
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Genel toolbar.ini dosyası ayrıştırılamadı: {1}\n"
 "Hiçbir Araç Çubuğu kullanılamayacak"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:77
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:76
+#, c++-format
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Özel toolbar.ini dosyası ayrıştırılamadı: {1}\n"
 "Araç çubukları kullanılamayacak"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "New Xournal"
 msgstr "Yeni Xournal"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:282
 msgid "Export as PDF"
 msgstr "PDF Olarak Dışa Aktar"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:284
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:283
 msgid "Print"
 msgstr "Yazdır"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:293
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:292
 #: ../src/core/undo/UndoRedoHandler.cpp:179
 msgid "Undo"
 msgstr "Geri al"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:296
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:295
 #: ../src/core/undo/UndoRedoHandler.cpp:191
 msgid "Redo"
 msgstr "Yinele"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:299
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:298
 msgid "Cut"
 msgstr "Kes"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:299
 msgid "Copy"
 msgstr "Kopyala"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:301
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:300
 #: ../src/core/undo/AddUndoAction.cpp:72
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:303
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:302
 msgid "Search"
 msgstr "Ara"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:305
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:304
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Sil"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:307
 msgid "Rotation Snapping"
 msgstr "Dönme Yakalama"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:309
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:308
 msgid "Grid Snapping"
 msgstr "Izgara Yakalama"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:317
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:316
 msgid "Paired pages"
 msgstr "Eşlenen sayfalar"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:318
 msgid "Presentation mode"
 msgstr "Sunum kipi"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:320
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:319
 msgid "Toggle fullscreen"
 msgstr "Tam ekrana geç"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:322
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:321
 msgid "Manage Toolbars"
 msgstr "Araç Çubuklarını Yönet"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:324
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Customize Toolbars"
 msgstr "Araç Çubuklarını Özelleştir"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:325
 msgid "Zoom out"
 msgstr "Uzaklaştır"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "Zoom in"
 msgstr "Yakınlaştır"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Zoom fit to screen"
 msgstr "Ekrana sığdır"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:329
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Zoom to 100%"
 msgstr "100% Yakınlaştır"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:335
 msgid "Go to first page"
 msgstr "İlk sayfaya git"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:446
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:336
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Back"
 msgstr "Geri"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Go to page"
 msgstr "Sayfaya git"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:338
 msgid "Next"
 msgstr "Sonraki"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:340
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:339
 msgid "Go to last page"
 msgstr "Son sayfaya git"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 msgid "Go to previous layer"
 msgstr "Önceki katmana git"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 msgid "Go to next layer"
 msgstr "Sonraki katmana git"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:345
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:344
 msgid "Go to top layer"
 msgstr "Üst katmana git"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:348
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 msgid "Next annotated page"
 msgstr "Sonraki Açıklamalı Sayfa"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:354
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:353
 msgid "Insert page"
 msgstr "Sayfa ekle"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:356
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:355
 msgid "Delete current page"
 msgstr "Geçerli sayfayı sil"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:364
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:363
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:372
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "standard"
 msgstr "standart"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:365
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:383
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "dashed"
 msgstr "kesik çizgili"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:366
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:365
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "dash-/ dotted"
 msgstr "tire-/ noktalı"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:387
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:366
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "dotted"
 msgstr "noktalı"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "whiteout"
 msgstr "Beyazlat"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "delete stroke"
 msgstr "konturu sil"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Add/Edit TeX"
 msgstr "TeX Ekle/Düzenle"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Default Tool"
 msgstr "Varsayılan Araç"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:14
 msgid "Select Linear PDF Text"
 msgstr "Doğrusal PDF Metnini Seç"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Select PDF Text in Rectangle"
 msgstr "Dikdörgendeki PDF Metnini Seç"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:402
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Setsquare"
 msgstr "Kareayarla"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Compass"
 msgstr "Pusula"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:13
 msgid "Select Region"
 msgstr "Bölge Seç"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:12
 msgid "Select Rectangle"
 msgstr "Dikdörtgen Seç"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Select Multi-Layer Region"
 msgstr "Çok-Katmanlı Bölge Seç"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Select Multi-Layer Rectangle"
 msgstr "Çok-Katmanlı Dikdörtgen Seç"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 msgid "Select Object"
 msgstr "Nesne Seç"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Vertical Space"
 msgstr "Dikey Boşluk"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 msgid "Play Object"
 msgstr "Nesne Oynat"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Record Audio / Stop Recording"
 msgstr "Ses Kaydet / Kaydı Durdur"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Pause / Play"
 msgstr "Duraklat / Oynat"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:442
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Stop"
 msgstr "Durdur"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Forward"
 msgstr "İleri"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 msgid "Fill"
 msgstr "Doldur"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Fill Opacity"
 msgstr "Dolgu Opaklığı"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
 msgid "Very Fine"
 msgstr "Çok İnce"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Fine"
 msgstr "İnce"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Medium"
 msgstr "Orta"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Thick"
 msgstr "Kalın"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Very Thick"
 msgstr "Çok Kalın"
 
@@ -1726,15 +1827,18 @@ msgid "Page"
 msgstr "Sayfa"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:82
+#, c++-format
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " / {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:85
+#, c++-format
 msgid "PDF Page {1}"
 msgstr "PDF Sayfası {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:87
+#, c++-format
 msgid "PDF {1}"
 msgstr "PDF {1}"
 
@@ -1818,10 +1922,23 @@ msgctxt "as a noun: a copy of"
 msgid "Copy"
 msgstr "Kopyala"
 
-#: ../src/core/model/Document.cpp:326 ../src/core/model/Document.cpp:335
-#: ../src/core/model/Document.cpp:338
+#: ../src/core/model/Document.cpp:328 ../src/core/model/Document.cpp:337
+#: ../src/core/model/Document.cpp:340
+#, c++-format
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Belge yüklenmedi! ({1}), {2}"
+
+#: ../src/core/model/Image.cpp:165 ../src/core/model/Image.cpp:175
+msgid "Error: "
+msgstr ""
+
+#: ../src/core/model/Image.cpp:169 ../src/core/model/Image.cpp:179
+msgid "Unrecoverable error"
+msgstr ""
+
+#: ../src/core/model/Image.cpp:175 ../src/core/model/Image.cpp:179
+msgid "Failed to close image stream"
+msgstr ""
 
 #: ../src/core/model/XojPage.cpp:170
 msgid "Background"
@@ -1944,6 +2061,10 @@ msgstr "Taşı"
 msgid "Page background changed"
 msgstr "Sayfa arka planı değişti"
 
+#: ../src/core/undo/PageSizeChangeUndoAction.cpp:41
+msgid "Page size changed"
+msgstr ""
+
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
 msgstr "Katmanı sil"
@@ -1973,12 +2094,14 @@ msgid "Edit text"
 msgstr "Metni düzenle"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:114
+#, c++-format
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\" geri alınamadı\n"
 "Bir şeyler ters gitti… Lütfen hata raporu yazın…"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:140
+#, c++-format
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr "\"{1}\" yeniden yapılamadı\n"
@@ -2009,42 +2132,51 @@ msgid "ElementRange::parse(): element indices start with 1"
 msgstr "ElementRange::parse(): öge indeksleri 1 ile başlar"
 
 #: ../src/util/OutputStream.cpp:27
+#, c++-format
 msgid "Error opening file: \"{1}\""
 msgstr "Dosya açılırken hata oluştu: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:48
+#, c++-format
 msgid "Error writing data to file: \"{1}\""
 msgstr "Veri dosyaya yazılırken hata: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:49
+#, c++-format
 msgid "Error code {1}. Message:"
 msgstr "Hata kodu {1}. Mesaj:"
 
 #: ../src/util/OutputStream.cpp:69
+#, c++-format
 msgid "Error occurred while closing file: \"{1}\""
 msgstr "Dosya kapatılırken sorun oluştu: \"{1}\""
 
 #: ../src/util/OutputStream.cpp:70
+#, c++-format
 msgid "Error code {1}"
 msgstr "Hata kodu {1}"
 
 #: ../src/util/PathUtil.cpp:176
+#, c++-format
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Dosya açılamadı. Elle yapmalısınız:\n"
 "URL: {1}"
 
 #: ../src/util/PathUtil.cpp:286
+#, c++-format
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
 #: ../src/util/PathUtil.cpp:296
+#, c++-format
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Klasör oluşturulamadı: {1}\n"
 "İşlem hatasıyla başarısız oldu: {2}"
 
 #: ../src/util/Util.cpp:76
+#, c++-format
 msgid "Error {1} executing system command: {2}"
 msgstr "Sistem komutu yürütülürken {1} hatası: {2}"
 
@@ -2057,6 +2189,7 @@ msgid "Replace"
 msgstr "Değiştir"
 
 #: ../src/util/XojMsgBox.cpp:215
+#, c++-format
 msgid "There was an error displaying help: {1}"
 msgstr "Yardım görüntülenirken bir hata oluştu: {1}"
 
@@ -2065,14 +2198,17 @@ msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr "xoj-preview-extractor: GİRDİ.xoj ÇIKTI.png ile çağırın"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
+#, c++-format
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: \"{1}\" dosyası .xoj dosyası değil"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
+#, c++-format
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr "xoj-preview-extractor: \"{1}\" girdi dosyası açılamadı"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:142
+#, c++-format
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr "xoj-preview-extractor: \"{1}\" dosyası önizleme içermiyor"
 
@@ -2081,10 +2217,12 @@ msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: önizleme ve sayfa bulunamadı, geçersiz bir dosya olabilir mi?"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:187
+#, c++-format
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: \"{1}\" simgesi bulunamadı"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:205
+#, c++-format
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: \"{1}\" çıktı dosyası açılamadı"
 
@@ -2139,8 +2277,8 @@ msgstr "Kapat"
 
 #: ../ui/backgroundSelection.glade:49 ../ui/exportSettings.glade:425
 #: ../ui/goto.glade:108 ../ui/pageFormat.glade:346 ../ui/pageTemplate.glade:278
-#: ../ui/plugin.glade:113 ../ui/renameLayerDialog.glade:71
-#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6288
+#: ../ui/plugin.glade:114 ../ui/renameLayerDialog.glade:71
+#: ../ui/selectOpacity.glade:134 ../ui/settings.glade:6287
 #: ../ui/texdialog.glade:203
 msgid "Ok"
 msgstr "Tamam"
@@ -2443,23 +2581,23 @@ msgstr ""
 msgid "Plugins"
 msgstr "Eklentiler"
 
-#: ../ui/plugin.glade:80
+#: ../ui/plugin.glade:81
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr "Eklenti değişiklikleri yalnızca Xournal++ yeniden başlatıldıktan sonra uygulanır"
 
-#: ../ui/pluginEntry.glade:50
+#: ../ui/pluginEntry.glade:51
 msgid "Author: "
 msgstr "Yazar: "
 
-#: ../ui/pluginEntry.glade:87
+#: ../ui/pluginEntry.glade:88
 msgid "Path: "
 msgstr "Yol: "
 
-#: ../ui/pluginEntry.glade:123
+#: ../ui/pluginEntry.glade:124
 msgid "Version: "
 msgstr "Sürüm: "
 
-#: ../ui/pluginEntry.glade:158
+#: ../ui/pluginEntry.glade:159
 msgid "enabled,"
 msgstr "etkin,"
 
@@ -2687,10 +2825,12 @@ msgid "1,30"
 msgstr "1,30"
 
 #: ../ui/settings.glade:1196 ../ui/settings.glade:1208
+msgctxt "Drag = Noun: force opposing the movement"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Sürüklenme: Bu değer çok küçükse istenmeyen titremeler görünebilir. Değer çok yüksekse, dengeleme olmayacaktır."
 
 #: ../ui/settings.glade:1197
+msgctxt "Noun: force opposing the movement"
 msgid "Drag"
 msgstr "Sürükle"
 
@@ -2699,10 +2839,12 @@ msgid "0,4"
 msgstr "0,4"
 
 #: ../ui/settings.glade:1228 ../ui/settings.glade:1240
+msgctxt "Mass = Noun: physics term, related to weight"
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "Kütle: Kütle ne kadar yüksekse, eylemsizlik o kadar fazla ve stabilizasyon o kadar fazla"
 
 #: ../ui/settings.glade:1229
+msgctxt "Noun: physics term, related to weight"
 msgid "Mass"
 msgstr "Kütle"
 
@@ -3041,10 +3183,6 @@ msgstr "Simge Teması"
 msgid "Color"
 msgstr "Renk"
 
-#: ../ui/settings.glade:3142
-msgid "Lucide"
-msgstr "Lucide"
-
 #: ../ui/settings.glade:3155
 msgid "(requires restart)"
 msgstr "(yeniden başlatma gerektirir)"
@@ -3211,7 +3349,7 @@ msgid "Selection Edge Panning"
 msgstr "Seçim Kenarı Kaydırma"
 
 #: ../ui/settings.glade:3841 ../ui/settings.glade:3915
-#: ../ui/mainmenubar.xml:206
+#: ../ui/mainmenubar.xml:205
 msgid "Show Menubar"
 msgstr "Menü Çubuğunu Göster"
 
@@ -3220,11 +3358,11 @@ msgid "Show Toolbar"
 msgstr "Araç Çubuğunu Göster"
 
 #: ../ui/settings.glade:3871 ../ui/settings.glade:3960
-#: ../ui/mainmenubar.xml:211
+#: ../ui/mainmenubar.xml:210
 msgid "Show Sidebar"
 msgstr "Kenar Çubuğunu Göster"
 
-#: ../ui/settings.glade:3890 ../ui/mainmenubar.xml:194
+#: ../ui/settings.glade:3890 ../ui/mainmenubar.xml:193
 msgid "Fullscreen"
 msgstr "Tam Ekran"
 
@@ -3267,10 +3405,6 @@ msgstr "Ctrl + Kaydırma Hızı"
 #: ../ui/settings.glade:4225
 msgid "Speed for a Zoomstep"
 msgstr "Bir Yakınlaştırma Adımı İçin Hız"
-
-#: ../ui/settings.glade:4252 ../ui/settings.glade:4263
-msgid "%"
-msgstr "%"
 
 #: ../ui/settings.glade:4285
 msgid "Zoom Speed"
@@ -3414,119 +3548,113 @@ msgstr "Yakalama"
 msgid "Minimum Stroke Size"
 msgstr "Asgari Kontur Boyutu"
 
-#: ../ui/settings.glade:5132
-msgid "0.20"
-msgstr "0.20"
-
-#: ../ui/settings.glade:5175
+#: ../ui/settings.glade:5174
+msgctxt "Short taps/clicks will trigger special actions"
 msgid "Enable Tap action"
 msgstr "Dokunma eylemini etkinleştir"
 
-#: ../ui/settings.glade:5180
+#: ../ui/settings.glade:5179
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Kısa süre ve uzunluktaki girişler için art arda gelmedikçe çizim yapma. Bunun yerine, kayan araç kutusunu göster."
 
-#: ../ui/settings.glade:5192
-msgid "Ignore Time (ms)"
-msgstr "Zamanı Yoksay (ms)"
+#: ../ui/settings.glade:5191
+msgid "Time limit (ms)"
+msgstr ""
 
-#: ../ui/settings.glade:5204
-msgid "How short (time)  AND...\n\n"
+#: ../ui/settings.glade:5203
+msgid "Time limit: taps lasting longer will not trigger a special action\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr "Ne kadar kısa (zaman) VE...\n\n"
-"<i>Önerilen: 150ms</i>"
+msgstr ""
 
-#: ../ui/settings.glade:5224
-msgid "How short (screen mm)  of the stroke  AND...\n\n"
+#: ../ui/settings.glade:5223
+msgid "Length limit: taps moving further away will not trigger a special action\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr "Konturun ne kadar kısa (ekran mm) VE...\n\n"
-"<i>Önerilen: 1 mm</i>"
+msgstr ""
 
-#: ../ui/settings.glade:5244
-msgid "Max Length (mm)"
-msgstr "En fazla Uzunluk (mm)"
+#: ../ui/settings.glade:5243
+msgid "Length limit (mm)"
+msgstr ""
 
-#: ../ui/settings.glade:5255
-msgid "Successive (ms)"
-msgstr "Ardışık (ms)"
+#: ../ui/settings.glade:5254
+msgid "Frequency limit (ms)"
+msgstr ""
 
-#: ../ui/settings.glade:5267
-msgid "... AND How much time must have passed since last stroke.\n\n"
+#: ../ui/settings.glade:5266
+msgid "Frequency limit: A tap happening within this time period after a stroke will not trigger a special action.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr "... VE Son vuruştan bu yana ne kadar zaman geçmiş olmalı.\n\n"
-"<i>Önerilen: 500ms</i>"
+msgstr ""
 
-#: ../ui/settings.glade:5284
+#: ../ui/settings.glade:5283
 msgid "Try to select object first."
 msgstr "Önce nesneyi seçmeyi deneyin."
 
-#: ../ui/settings.glade:5289 ../ui/settings.glade:5319
+#: ../ui/settings.glade:5288 ../ui/settings.glade:5318
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Önce nesneyi seçmeyi deneyin; seçili bir şey yoksa, etkinse kayan araç kutusunu gösterir."
 
-#: ../ui/settings.glade:5302
+#: ../ui/settings.glade:5301
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "Vuruş yok sayılmadan önce her üç koşul da yerine getirilmelidir.\n"
 "Zaman ve uzunluk açısından kısa olmalı ve son zamanlarda başka bir vuruşu görmezden gelemeyiz."
 
-#: ../ui/settings.glade:5305
+#: ../ui/settings.glade:5304
 msgid "Settings:"
 msgstr "Ayarlar:"
 
-#: ../ui/settings.glade:5314
+#: ../ui/settings.glade:5313
 msgid "Show Floating Toolbox"
 msgstr "Kayan Araç Kutusunu Göster"
 
-#: ../ui/settings.glade:5333
+#: ../ui/settings.glade:5332
 msgid "Action on Tool Tap"
 msgstr "Araç Dokunma İşlemi"
 
-#: ../ui/settings.glade:5361
+#: ../ui/settings.glade:5360
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality.\n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr "<i>PDF üzerine yazılırken, yakınlaştırma yapıldığında daha kaliteli görüntüler elde etmek için daha sık yenileme yap. \n"
 "<b>Not:</b> Bu, baskı kalitesini etkilemez.</i>"
 
-#: ../ui/settings.glade:5383
+#: ../ui/settings.glade:5382
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "Yüksek çözünürlüklü bir PDF'e yakınlaştırıldığında, her yeniden oluşturma işlemi uzun zaman alabilir. Bunu büyük bir değere ayarlamak, bu yeniden oluşturmaların daha az sıklıkta gerçekleşmesine neden olur.\n\n"
 "Yakınlaştırmada her zaman yeniden işlemek için bunu %0'a ayarlayın."
 
-#: ../ui/settings.glade:5386
+#: ../ui/settings.glade:5385
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "Sayfanın yakınlaştırması belirtilenden fazla değişirse sayfayı yeniden işle "
 
-#: ../ui/settings.glade:5399
+#: ../ui/settings.glade:5398
 msgid "0.00"
 msgstr "0.00"
 
-#: ../ui/settings.glade:5416
+#: ../ui/settings.glade:5415
 msgid "%."
 msgstr "%."
 
-#: ../ui/settings.glade:5437
+#: ../ui/settings.glade:5436
 msgid "PDF Cache"
 msgstr "PDF Önbellek"
 
-#: ../ui/settings.glade:5468
+#: ../ui/settings.glade:5467
 msgid "Drawing Area"
 msgstr "Çizim Alanı"
 
-#: ../ui/settings.glade:5515
+#: ../ui/settings.glade:5514
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Varsayılan Düğmeye basarsanız aracı ve Ayarlar'ı seçin.</i>"
 
-#: ../ui/settings.glade:5567
+#: ../ui/settings.glade:5566
 msgid "<b>Default</b>"
 msgstr "<b>Varsayılan</b>"
 
-#: ../ui/settings.glade:5607
+#: ../ui/settings.glade:5606
 msgid "Defaults"
 msgstr "Varsayılanlar"
 
-#: ../ui/settings.glade:5660
+#: ../ui/settings.glade:5659
 msgid "<i>\n"
 "Using the checkbox the audio system can be disabled or enabled for future sessions (restart required).\n"
 "Disabling audio for a single session can be achieved using the <tt>--disable-audio</tt> flag on the command line.\n"
@@ -3536,93 +3664,89 @@ msgstr "<i>\n"
 "Sesi tek bir oturum için devre dışı bırakmak için komut satırından <tt>--disable-audio</tt> bayrağı kullanılabilir.\n"
 "</i>"
 
-#: ../ui/settings.glade:5676
+#: ../ui/settings.glade:5675
 msgid "Disable Audio"
 msgstr "Sesi Devre Dışı Bırak"
 
-#: ../ui/settings.glade:5698
+#: ../ui/settings.glade:5697
 msgid "Enable or Disable Audio"
 msgstr "Sesi Etkinleştir Ya da Devre Dışı Bırak"
 
-#: ../ui/settings.glade:5725
+#: ../ui/settings.glade:5724
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>Ses kayıtları şu anda ayrı bir klasörde saklanmakta ve günlükten kaynaklanmaktadır.</i>"
 
-#: ../ui/settings.glade:5744 ../ui/settings.glade:5780
+#: ../ui/settings.glade:5743 ../ui/settings.glade:5779
 msgid "Storage Folder"
 msgstr "Depolama Klasörü"
 
-#: ../ui/settings.glade:5759
+#: ../ui/settings.glade:5758
 msgid "Select Folder"
 msgstr "Klasör Seç"
 
-#: ../ui/settings.glade:5807
+#: ../ui/settings.glade:5806
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Ses eklerinin kaydedilmesi ve çalınması için kullanılan ses aygıtlarını belirtin. \n"
 "Varsa, giriş / çıkış aygıtı olarak <small><tt>pulse</tt></small> seçin.</i>"
 
-#: ../ui/settings.glade:5831
+#: ../ui/settings.glade:5830
 msgid "Input Device"
 msgstr "Giriş Aygıtı"
 
-#: ../ui/settings.glade:5853
+#: ../ui/settings.glade:5852
 msgid "Output Device"
 msgstr "Çıktı Aygıtı"
 
-#: ../ui/settings.glade:5884
+#: ../ui/settings.glade:5883
 msgid "Audio Devices"
 msgstr "Ses Aygıtları"
 
-#: ../ui/settings.glade:5913
+#: ../ui/settings.glade:5912
 msgid "Sample Rate"
 msgstr "Örnek Oranı"
 
-#: ../ui/settings.glade:5924
+#: ../ui/settings.glade:5923
 msgid "Gain"
 msgstr "Kazanç"
 
-#: ../ui/settings.glade:5971
+#: ../ui/settings.glade:5970
 msgid "Recording Quality"
 msgstr "Kayıt Kalitesi"
 
-#: ../ui/settings.glade:5997
+#: ../ui/settings.glade:5996
 msgid "Default Seek Time (in seconds)"
 msgstr "Varsayılan Arama Süresi (saniye olarak)"
 
-#: ../ui/settings.glade:6010
+#: ../ui/settings.glade:6009
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:6029
+#: ../ui/settings.glade:6028
 msgid "Playback Settings"
 msgstr "Oynatma Ayarları"
 
-#: ../ui/settings.glade:6043
+#: ../ui/settings.glade:6042
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>Değişiklikler yalnızca yeni kayıtlar ve oynatmalar üzerinde etkili olur.</i>"
 
-#: ../ui/settings.glade:6074
+#: ../ui/settings.glade:6073
 msgid "Audio Recording"
 msgstr "Ses Kaydı"
 
-#: ../ui/settings.glade:6099
-msgid "LaTeX"
-msgstr "LaTeX"
-
-#: ../ui/settings.glade:6147
+#: ../ui/settings.glade:6146
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>Dili seçin (yeniden başlatma gerektirir) </i>"
 
-#: ../ui/settings.glade:6179 ../ui/settings.glade:6225
+#: ../ui/settings.glade:6178 ../ui/settings.glade:6224
 msgid "Language"
 msgstr "Dil"
 
-#: ../ui/settings.glade:6195
+#: ../ui/settings.glade:6194
 msgid "Language Settings"
 msgstr "Dil Ayarları"
 
-#: ../ui/settings.glade:6249
+#: ../ui/settings.glade:6248
 msgid "Palette"
 msgstr ""
 
@@ -3719,456 +3843,448 @@ msgstr "PDF'ye _Açıklama Ekle"
 msgid "Save As"
 msgstr "Farklı Kaydet"
 
-#: ../ui/mainmenubar.xml:39
+#: ../ui/mainmenubar.xml:38
 msgid "_Export as PDF"
 msgstr "PDF Olarak Dışa _Aktar"
 
-#: ../ui/mainmenubar.xml:43
+#: ../ui/mainmenubar.xml:42
 msgid "Export as..."
 msgstr "Dışa Farklı Aktar..."
 
-#: ../ui/mainmenubar.xml:55
+#: ../ui/mainmenubar.xml:54
 msgid "Quit"
 msgstr "Çık"
 
-#: ../ui/mainmenubar.xml:62
+#: ../ui/mainmenubar.xml:61
 msgid "_Edit"
 msgstr "Düz_enle"
 
-#: ../ui/mainmenubar.xml:94
+#: ../ui/mainmenubar.xml:93
 msgid "Select All"
 msgstr "Tümünü Seç"
 
-#: ../ui/mainmenubar.xml:101
+#: ../ui/mainmenubar.xml:100
 msgid "Find"
 msgstr "Bul"
 
-#: ../ui/mainmenubar.xml:115
+#: ../ui/mainmenubar.xml:114
 msgid "Arrange Selection"
 msgstr "Seçimi Düzenle"
 
-#: ../ui/mainmenubar.xml:118
+#: ../ui/mainmenubar.xml:117
 msgid "Bring to Front"
 msgstr "En Öne Getir"
 
-#: ../ui/mainmenubar.xml:123
+#: ../ui/mainmenubar.xml:122
 msgid "Bring Forward"
 msgstr "Öne Getir"
 
-#: ../ui/mainmenubar.xml:128
+#: ../ui/mainmenubar.xml:127
 msgid "Send Backward"
 msgstr "Alta Gönder"
 
-#: ../ui/mainmenubar.xml:133
+#: ../ui/mainmenubar.xml:132
 msgid "Send to Back"
 msgstr "En Alta Gönder"
 
-#: ../ui/mainmenubar.xml:142
+#: ../ui/mainmenubar.xml:141
 msgid "Move Selection Layer Up"
 msgstr "Seçilen Katmanı Yukarı Taşı"
 
-#: ../ui/mainmenubar.xml:146
+#: ../ui/mainmenubar.xml:145
 msgid "Move Selection Layer Down"
 msgstr "Seçilen Katmanı Aşağı Taşı"
 
-#: ../ui/mainmenubar.xml:162
+#: ../ui/mainmenubar.xml:161
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: ../ui/mainmenubar.xml:167
+#: ../ui/mainmenubar.xml:166
 msgid "T_oolbars"
 msgstr "Araç Ç_ubukları"
 
-#: ../ui/mainmenubar.xml:170
+#: ../ui/mainmenubar.xml:169
 msgid "_Manage"
 msgstr "_Yönet"
 
-#: ../ui/mainmenubar.xml:174
+#: ../ui/mainmenubar.xml:173
 msgid "_Customize"
 msgstr "_Özelleştir"
 
-#: ../ui/mainmenubar.xml:182
+#: ../ui/mainmenubar.xml:181
 msgid "_View"
 msgstr "_Görünüm"
 
-#: ../ui/mainmenubar.xml:185
+#: ../ui/mainmenubar.xml:184
 msgid "_Pair Pages"
 msgstr "Sayfaları _Eşle"
 
-#: ../ui/mainmenubar.xml:189
+#: ../ui/mainmenubar.xml:188
 msgid "_Presentation Mode"
 msgstr "_Sunum Kipi"
 
-#: ../ui/mainmenubar.xml:201
+#: ../ui/mainmenubar.xml:200
 msgid "Show Toolbars"
 msgstr "Araç Çubularını Göster"
 
-#: ../ui/mainmenubar.xml:218
+#: ../ui/mainmenubar.xml:217
 msgid "Layout"
 msgstr "Yerleşim"
 
-#: ../ui/mainmenubar.xml:221
+#: ../ui/mainmenubar.xml:220
 msgid "_Horizontal"
 msgstr "_Yatay"
 
-#: ../ui/mainmenubar.xml:226
+#: ../ui/mainmenubar.xml:225
 msgid "_Vertical"
 msgstr "_Dikey"
 
-#: ../ui/mainmenubar.xml:233
+#: ../ui/mainmenubar.xml:232
 msgid "_Left to Right"
 msgstr "_Soldan Sağa"
 
-#: ../ui/mainmenubar.xml:238
+#: ../ui/mainmenubar.xml:237
 msgid "_Right to Left"
 msgstr "_Sağdan Sola"
 
-#: ../ui/mainmenubar.xml:245
+#: ../ui/mainmenubar.xml:244
 msgid "_Top to Bottom"
 msgstr "_Üstten Alta"
 
-#: ../ui/mainmenubar.xml:250
+#: ../ui/mainmenubar.xml:249
 msgid "_Bottom to Top"
 msgstr "_Alttan Üste"
 
-#: ../ui/mainmenubar.xml:257
+#: ../ui/mainmenubar.xml:256
 msgid "_Cols/Rows"
 msgstr "_Sütunlar/Satırlar"
 
-#: ../ui/mainmenubar.xml:260
+#: ../ui/mainmenubar.xml:259
 msgid "Set Columns"
 msgstr "Sütunları Ayarla"
 
-#: ../ui/mainmenubar.xml:264
+#: ../ui/mainmenubar.xml:263
 msgid "_1 Column"
 msgstr "_1 Sütun"
 
-#: ../ui/mainmenubar.xml:269
+#: ../ui/mainmenubar.xml:268
 msgid "_2 Columns"
 msgstr "_2 Sütun"
 
-#: ../ui/mainmenubar.xml:274
+#: ../ui/mainmenubar.xml:273
 msgid "_3 Columns"
 msgstr "_3 Sütun"
 
-#: ../ui/mainmenubar.xml:279
+#: ../ui/mainmenubar.xml:278
 msgid "_4 Columns"
 msgstr "_4 Sütun"
 
-#: ../ui/mainmenubar.xml:284
+#: ../ui/mainmenubar.xml:283
 msgid "_5 Columns"
 msgstr "_5 Sütun"
 
-#: ../ui/mainmenubar.xml:289
+#: ../ui/mainmenubar.xml:288
 msgid "_6 Columns"
 msgstr "_6 Sütun"
 
-#: ../ui/mainmenubar.xml:294
+#: ../ui/mainmenubar.xml:293
 msgid "_7 Columns"
 msgstr "_7 Sütun"
 
-#: ../ui/mainmenubar.xml:299
+#: ../ui/mainmenubar.xml:298
 msgid "_8 Columns"
 msgstr "_8 Sütun"
 
-#: ../ui/mainmenubar.xml:306
+#: ../ui/mainmenubar.xml:305
 msgid "Set Rows"
 msgstr "Satırları Ayarla"
 
-#: ../ui/mainmenubar.xml:310
+#: ../ui/mainmenubar.xml:309
 msgid "_1 Row"
 msgstr "_1 Satır"
 
-#: ../ui/mainmenubar.xml:315
+#: ../ui/mainmenubar.xml:314
 msgid "_2 Rows"
 msgstr "_2 Satır"
 
-#: ../ui/mainmenubar.xml:320
+#: ../ui/mainmenubar.xml:319
 msgid "_3 Rows"
 msgstr "_3 Satır"
 
-#: ../ui/mainmenubar.xml:325
+#: ../ui/mainmenubar.xml:324
 msgid "_4 Rows"
 msgstr "_4 Satır"
 
-#: ../ui/mainmenubar.xml:330
+#: ../ui/mainmenubar.xml:329
 msgid "_5 Rows"
 msgstr "_5 Satır"
 
-#: ../ui/mainmenubar.xml:335
+#: ../ui/mainmenubar.xml:334
 msgid "_6 Rows"
 msgstr "_6 Satır"
 
-#: ../ui/mainmenubar.xml:340
+#: ../ui/mainmenubar.xml:339
 msgid "_7 Rows"
 msgstr "_7 Satır"
 
-#: ../ui/mainmenubar.xml:345
+#: ../ui/mainmenubar.xml:344
 msgid "_8 Rows"
 msgstr "_8 Satır"
 
-#: ../ui/mainmenubar.xml:356
+#: ../ui/mainmenubar.xml:355
 msgid "Zoom In"
 msgstr "Yakınlaştır"
 
-#: ../ui/mainmenubar.xml:361
+#: ../ui/mainmenubar.xml:360
 msgid "Zoom Out"
 msgstr "Uzaklaştır"
 
-#: ../ui/mainmenubar.xml:366
+#: ../ui/mainmenubar.xml:365
 msgid "Normal Size"
 msgstr "Normal Boyut"
 
-#: ../ui/mainmenubar.xml:370
+#: ../ui/mainmenubar.xml:369
 msgid "Zoom to Fit"
 msgstr "Uyacak Şekilde Yakınlaştır"
 
-#: ../ui/mainmenubar.xml:376
+#: ../ui/mainmenubar.xml:375
 msgid "_Navigation"
 msgstr "Gezi_nme"
 
-#: ../ui/mainmenubar.xml:379
+#: ../ui/mainmenubar.xml:378
 msgid "_First Page"
 msgstr "İl_k Sayfa"
 
-#: ../ui/mainmenubar.xml:384
+#: ../ui/mainmenubar.xml:383
 msgid "_Previous Page"
 msgstr "_Önceki Sayfa"
 
-#: ../ui/mainmenubar.xml:389
+#: ../ui/mainmenubar.xml:388
 msgid "_Goto Page"
 msgstr "Sayfaya _Git"
 
-#: ../ui/mainmenubar.xml:394
+#: ../ui/mainmenubar.xml:393
 msgid "_Next Page"
 msgstr "So_nraki Sayfa"
 
-#: ../ui/mainmenubar.xml:399
+#: ../ui/mainmenubar.xml:398
 msgid "_Last Page"
 msgstr "_Son Sayfa"
 
-#: ../ui/mainmenubar.xml:406
+#: ../ui/mainmenubar.xml:405
 msgid "_Previous Layer"
 msgstr "_Önceki Katman"
 
-#: ../ui/mainmenubar.xml:411
+#: ../ui/mainmenubar.xml:410
 msgid "_Next Layer"
 msgstr "So_nraki Katman"
 
-#: ../ui/mainmenubar.xml:416
+#: ../ui/mainmenubar.xml:415
 msgid "_Top Layer"
 msgstr "_Üst Katman"
 
-#: ../ui/mainmenubar.xml:422
+#: ../ui/mainmenubar.xml:421
 msgid "N_ext Annotated Page"
 msgstr "_Sonraki Açıklamalı Sayfa"
 
-#: ../ui/mainmenubar.xml:427
+#: ../ui/mainmenubar.xml:426
 msgid "P_revious Annotated Page"
 msgstr "_Önceki Açıklamalı Sayfa"
 
-#: ../ui/mainmenubar.xml:434
-msgid "_Journal"
-msgstr "_Journal"
-
-#: ../ui/mainmenubar.xml:437
+#: ../ui/mainmenubar.xml:436
 msgid "New Page _Before"
 msgstr "Ön_cesine Yeni Sayfa"
 
-#: ../ui/mainmenubar.xml:441
+#: ../ui/mainmenubar.xml:440
 msgid "New Page _After"
 msgstr "Sonr_asına Yeni Sayfa"
 
-#: ../ui/mainmenubar.xml:446
+#: ../ui/mainmenubar.xml:445
 msgid "New Page at _End"
 msgstr "Sonun_da Yeni Sayfa"
 
-#: ../ui/mainmenubar.xml:450
+#: ../ui/mainmenubar.xml:449
 msgid "Duplicate Page"
 msgstr "Sayfayı Çoğalt"
 
-#: ../ui/mainmenubar.xml:454
+#: ../ui/mainmenubar.xml:453
 msgid "Append New PDF Pages"
 msgstr "Yeni PDF Sayfaları Ekle"
 
-#: ../ui/mainmenubar.xml:458
+#: ../ui/mainmenubar.xml:457
 msgid "Configure Page Template"
 msgstr "Sayfa Şablonunu Yapılandır"
 
-#: ../ui/mainmenubar.xml:462
+#: ../ui/mainmenubar.xml:461
 msgid "_Delete Page"
 msgstr "Sayfayı _Sil"
 
-#: ../ui/mainmenubar.xml:469
+#: ../ui/mainmenubar.xml:468
 msgid "New _Layer"
 msgstr "Yeni _Katman"
 
-#: ../ui/mainmenubar.xml:474
+#: ../ui/mainmenubar.xml:473
 msgid "Delete Layer"
 msgstr "Katmanı Sil"
 
-#: ../ui/mainmenubar.xml:479
+#: ../ui/mainmenubar.xml:478
 msgid "Merge Layer Down"
 msgstr "Altındaki Katmanla Birleştir"
 
-#: ../ui/mainmenubar.xml:484
+#: ../ui/mainmenubar.xml:483
 msgid "Rename Layer"
 msgstr "Katmanı Yeniden Adlandır"
 
-#: ../ui/mainmenubar.xml:491
+#: ../ui/mainmenubar.xml:490
 msgid "Paper _Format"
 msgstr "Kağıt _Biçimi"
 
-#: ../ui/mainmenubar.xml:495
+#: ../ui/mainmenubar.xml:494
 msgid "Paper _Color"
 msgstr "Kağıt _Rengi"
 
-#: ../ui/mainmenubar.xml:499
-msgid "Paper B_ackground"
-msgstr "Kağıt Ark_a Planı"
-
-#: ../ui/mainmenubar.xml:504
+#: ../ui/mainmenubar.xml:503
 msgid "_Tools"
 msgstr "_Araçlar"
 
-#: ../ui/mainmenubar.xml:507
+#: ../ui/mainmenubar.xml:506
 msgid "_Pen"
 msgstr "_Kalem"
 
-#: ../ui/mainmenubar.xml:513
+#: ../ui/mainmenubar.xml:512
 msgid "_Eraser"
 msgstr "_Silgi"
 
-#: ../ui/mainmenubar.xml:519
+#: ../ui/mainmenubar.xml:518
 msgid "Select Linear Text"
 msgstr "Doğrusal Metin Seç"
 
-#: ../ui/mainmenubar.xml:525
+#: ../ui/mainmenubar.xml:524
 msgid "Select Text In Rectangle"
 msgstr "Dikdörgendeki Metni Seç"
 
-#: ../ui/mainmenubar.xml:531
+#: ../ui/mainmenubar.xml:530
 msgid "_Highlighter"
 msgstr "_Vurgulayıcı"
 
-#: ../ui/mainmenubar.xml:537
+#: ../ui/mainmenubar.xml:536
 msgid "_Text"
 msgstr "_Metin"
 
-#: ../ui/mainmenubar.xml:543
+#: ../ui/mainmenubar.xml:542
 msgid "_Image"
 msgstr "Res_im"
 
-#: ../ui/mainmenubar.xml:549
+#: ../ui/mainmenubar.xml:548
 msgid "_Default Tool"
 msgstr "_Varsayılan Araç"
 
-#: ../ui/mainmenubar.xml:556
+#: ../ui/mainmenubar.xml:555
 msgid "Drawing Type"
 msgstr "Çizim Türü"
 
-#: ../ui/mainmenubar.xml:558
+#: ../ui/mainmenubar.xml:557
 msgid "_Shape Recognizer"
 msgstr "_Şekil Tanıyıcı"
 
-#: ../ui/mainmenubar.xml:588
+#: ../ui/mainmenubar.xml:587
 msgid "Draw _Line"
 msgstr "Çi_zgi Çiz"
 
-#: ../ui/mainmenubar.xml:629
+#: ../ui/mainmenubar.xml:628
 msgid "_Vertical Space"
 msgstr "_Dikey Boşluk"
 
-#: ../ui/mainmenubar.xml:641
+#: ../ui/mainmenubar.xml:640
 msgid "H_and Tool"
 msgstr "El _Aracı"
 
-#: ../ui/mainmenubar.xml:657
+#: ../ui/mainmenubar.xml:656
 msgid "Pen _Options"
 msgstr "Kalem _Seçenekleri"
 
-#: ../ui/mainmenubar.xml:660 ../ui/mainmenubar.xml:722
-#: ../ui/mainmenubar.xml:769
+#: ../ui/mainmenubar.xml:659 ../ui/mainmenubar.xml:721
+#: ../ui/mainmenubar.xml:768
 msgid "_very fine"
 msgstr "_Çok ince"
 
-#: ../ui/mainmenubar.xml:665 ../ui/mainmenubar.xml:727
-#: ../ui/mainmenubar.xml:774
+#: ../ui/mainmenubar.xml:664 ../ui/mainmenubar.xml:726
+#: ../ui/mainmenubar.xml:773
 msgid "_fine"
 msgstr "_İnce"
 
-#: ../ui/mainmenubar.xml:670 ../ui/mainmenubar.xml:732
-#: ../ui/mainmenubar.xml:779
+#: ../ui/mainmenubar.xml:669 ../ui/mainmenubar.xml:731
+#: ../ui/mainmenubar.xml:778
 msgid "_medium"
 msgstr "_Orta"
 
-#: ../ui/mainmenubar.xml:675 ../ui/mainmenubar.xml:737
-#: ../ui/mainmenubar.xml:784
+#: ../ui/mainmenubar.xml:674 ../ui/mainmenubar.xml:736
+#: ../ui/mainmenubar.xml:783
 msgid "_thick"
 msgstr "_Kalın"
 
-#: ../ui/mainmenubar.xml:680 ../ui/mainmenubar.xml:742
-#: ../ui/mainmenubar.xml:789
+#: ../ui/mainmenubar.xml:679 ../ui/mainmenubar.xml:741
+#: ../ui/mainmenubar.xml:788
 msgid "ver_y thick"
 msgstr "_Çok Kalın"
 
-#: ../ui/mainmenubar.xml:709 ../ui/mainmenubar.xml:796
+#: ../ui/mainmenubar.xml:708 ../ui/mainmenubar.xml:795
 msgid "Fi_ll"
 msgstr "Do_ldur"
 
-#: ../ui/mainmenubar.xml:713 ../ui/mainmenubar.xml:800
+#: ../ui/mainmenubar.xml:712 ../ui/mainmenubar.xml:799
 msgid "Fill opacity"
 msgstr "Dolgu matlığı"
 
-#: ../ui/mainmenubar.xml:719
+#: ../ui/mainmenubar.xml:718
 msgid "Eraser Optio_ns"
 msgstr "Silgi _Seçenekleri"
 
-#: ../ui/mainmenubar.xml:749
+#: ../ui/mainmenubar.xml:748
 msgid "_standard"
 msgstr "_Standart"
 
-#: ../ui/mainmenubar.xml:754
+#: ../ui/mainmenubar.xml:753
 msgid "_whiteout"
 msgstr "_Beyazlat"
 
-#: ../ui/mainmenubar.xml:759
+#: ../ui/mainmenubar.xml:758
 msgid "_delete strokes"
 msgstr "_Çizgiyi sil"
 
-#: ../ui/mainmenubar.xml:766
+#: ../ui/mainmenubar.xml:765
 msgid "Highlighter Opti_ons"
 msgstr "Vurgulayıcı Seçenek_leri"
 
-#: ../ui/mainmenubar.xml:806
+#: ../ui/mainmenubar.xml:805
 msgid "Select PDF Text Options"
 msgstr "PDF Metin Seçeneklerini Seç"
 
-#: ../ui/mainmenubar.xml:809
+#: ../ui/mainmenubar.xml:808
 msgid "Marker Opacity"
 msgstr "İşaretçi Matlığı"
 
-#: ../ui/mainmenubar.xml:815
+#: ../ui/mainmenubar.xml:814
 msgid "Text Font..."
 msgstr "Metin Yazı Tipi..."
 
-#: ../ui/mainmenubar.xml:820
+#: ../ui/mainmenubar.xml:819
 msgid "Record / Stop"
 msgstr "Kayıt / Dur"
 
-#: ../ui/mainmenubar.xml:825
+#: ../ui/mainmenubar.xml:824
 msgid "Pause"
 msgstr "Duraklat"
 
-#: ../ui/mainmenubar.xml:852
+#: ../ui/mainmenubar.xml:851
 msgid "_Help"
 msgstr "_Yardım"
 
-#: ../ui/mainmenubar.xml:856
+#: ../ui/mainmenubar.xml:855
 msgid "Help"
 msgstr "Yardım"
 
-#: ../ui/mainmenubar.xml:860
+#: ../ui/mainmenubar.xml:859
 msgid "About"
 msgstr "Hakkında"
 
@@ -4224,9 +4340,9 @@ msgstr "Elle yazılmış notlar al"
 msgid "tablet;Wacom;pen input;PDF Annotation;markup"
 msgstr "tablet;Wacom;kalem;girdi;PDF;Açıklama;Notlandırma;işaretleme"
 
-#: ../desktop/com.github.xournalpp.xournalpp.desktop.in:15
-msgid "com.github.xournalpp.xournalpp"
-msgstr "com.github.xournalpp.xournalpp"
+#: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:8
+msgid "Xournalpp Developers"
+msgstr ""
 
 #: ../resources-templates/com.github.xournalpp.xournalpp.appdata.xml.in:10
 msgid "Xournal++ is a hand note-taking software written in C++ with the target of flexibility, functionality and speed. Stroke recognizer and other parts are based on Xournal Code, which you can find at sourceforge. It supports GNU/Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows. Supports pen input from devices such as Wacom Tablets."
