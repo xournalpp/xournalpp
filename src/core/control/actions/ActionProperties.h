@@ -915,6 +915,20 @@ struct ActionProperties<Action::TOOL_FILL_OPACITY> {
 };
 
 template <>
+struct ActionProperties<Action::TOOL_SELECT_CUSTOM_SIZE> {
+    static bool initiallyEnabled(Control* ctrl) { return ctrl->getToolHandler()->hasCapability(TOOL_CAP_SIZE); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
+        if (auto tt = ctrl->getToolHandler()->getToolType(); tt == TOOL_PEN) {
+            ctrl->selectCustomSize(TOOL_SIZE_CUSTOM_PEN);
+        } else if (tt == TOOL_HIGHLIGHTER) {
+            ctrl->selectCustomSize(TOOL_SIZE_CUSTOM_HIGHLIGHTER);
+        } else if (tt == TOOL_ERASER) {
+            ctrl->selectCustomSize(TOOL_SIZE_CUSTOM_ERASER);
+        }
+    }
+};
+
+template <>
 struct ActionProperties<Action::TOOL_COLOR> {
     using state_type = Color;
     using parameter_type = state_type;
