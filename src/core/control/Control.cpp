@@ -417,6 +417,10 @@ auto Control::copy() -> bool {
     if (this->win && this->win->getXournal()->copy()) {
         return true;
     }
+    if (auto* tool = getWindow()->getPdfToolbox(); tool->hasSelection()) {
+        tool->copyTextToClipboard();
+        return true;
+    }
     return this->clipboardHandler->copy();
 }
 

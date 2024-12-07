@@ -5,7 +5,6 @@
 #include <string>   // for std::string()
 #include <utility>  // for move
 
-#include <gdk/gdkkeysyms.h>  // for GDK_KEY_B, GDK_KEY_ISO_Enter, GDK_...
 #include <glib-object.h>     // for g_object_get, g_object_unref, G_CA...
 
 #include "control/AudioController.h"
