@@ -191,6 +191,8 @@ void Settings::loadDefault() {
     this->selectionMarkerColor = Colors::xopp_cornflowerblue;
     this->activeSelectionColor = Colors::lawngreen;
 
+    this->recolorParameters = {false, false, Recolor(ColorU8{198, 208, 245}, ColorU8{48, 52, 70})};
+
     this->backgroundColor = Colors::xopp_gainsboro02;
 
     // clang-format off
@@ -524,6 +526,21 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->selectionMarkerColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("activeSelectionColor")) == 0) {
         this->activeSelectionColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.enabled")) == 0) {
+        this->recolorParameters.recolorizeMainView = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.sidebar")) == 0) {
+        this->recolorParameters.recolorizeSidebarMiniatures =
+                xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.light")) == 0) {
+        this->recolorParameters.recolor =
+                Recolor(ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)),
+                        this->recolorParameters.recolor.getLight());
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("recolor.dark")) == 0) {
+        this->recolorParameters.recolor =
+                Recolor(this->recolorParameters.recolor.getDark(),
+                        ColorU8(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10)));
+
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
         this->backgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
@@ -1075,6 +1092,11 @@ void Settings::save() {
     SAVE_BOOL_PROP(touchDrawing);
     SAVE_BOOL_PROP(gtkTouchInertialScrolling);
     SAVE_BOOL_PROP(pressureGuessing);
+
+    xmlNode = saveProperty("recolor.enabled", recolorParameters.recolorizeMainView ? "true" : "false", root);
+    xmlNode = saveProperty("recolor.sidebar", recolorParameters.recolorizeSidebarMiniatures ? "true" : "false", root);
+    xmlNode = savePropertyUnsigned("recolor.dark", uint32_t(recolorParameters.recolor.getDark()), root);
+    xmlNode = savePropertyUnsigned("recolor.light", uint32_t(recolorParameters.recolor.getLight()), root);
 
     xmlNode = savePropertyUnsigned("selectionBorderColor", uint32_t(selectionBorderColor), root);
     xmlNode = savePropertyUnsigned("backgroundColor", uint32_t(backgroundColor), root);
@@ -2125,6 +2147,16 @@ void Settings::setActiveSelectionColor(Color color) {
         return;
     }
     this->activeSelectionColor = color;
+    save();
+}
+
+auto Settings::getRecolorParameters() const -> const RecolorParameters& { return this->recolorParameters; }
+
+void Settings::setRecolorParameters(RecolorParameters&& recolor) {
+    if (this->recolorParameters == recolor) {
+        return;
+    }
+    this->recolorParameters = recolor;
     save();
 }
 

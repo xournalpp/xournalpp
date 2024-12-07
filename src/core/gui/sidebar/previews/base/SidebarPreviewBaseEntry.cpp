@@ -132,6 +132,18 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
                            round_cast<int>(width), round_cast<int>(height));
     }
 
+    const auto& recolorParams = sidebar->getControl()->getSettings()->getRecolorParameters();
+    auto recolor = recolorParams.recolorizeSidebarMiniatures ? std::make_optional(recolorParams.recolor) : std::nullopt;
+
+    if (recolor) {
+        // encapsulate in save/restore to limit the scope of the clip operation
+        xoj::util::CairoSaveGuard const saveGuard(cr);
+        cairo_rectangle(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
+        // constrain the area which is painted on
+        cairo_clip(cr);
+        recolor->recolorCurrentCairoRegion(cr);
+    }
+
     if (doRepaint) {
         repaint();
     }

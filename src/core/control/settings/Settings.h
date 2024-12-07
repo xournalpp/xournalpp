@@ -29,10 +29,11 @@
 #include "model/Font.h"                          // for XojFont
 #include "util/Color.h"                          // for Color
 
-#include "LatexSettings.h"  // for LatexSettings
-#include "SettingsEnums.h"  // for InputDeviceTypeOption
-#include "ViewModes.h"      // for ViewModes
-#include "filesystem.h"     // for path
+#include "LatexSettings.h"      // for LatexSettings
+#include "RecolorParameters.h"  // for RecolorParameters
+#include "SettingsEnums.h"      // for InputDeviceTypeOption
+#include "ViewModes.h"          // for ViewModes
+#include "filesystem.h"         // for path
 
 struct Palette;
 
@@ -380,6 +381,9 @@ public:
 
     Color getActiveSelectionColor() const;
     void setActiveSelectionColor(Color color);
+
+    const RecolorParameters& getRecolorParameters() const;
+    void setRecolorParameters(RecolorParameters&& recolorParameters);
 
     // Re-render pages if document zoom differs from the last render zoom by the given threshold.
     double getPDFPageRerenderThreshold() const;
@@ -990,6 +994,12 @@ private:
      * The color for Xournal page background
      */
     Color backgroundColor{};
+
+    /**
+     * The parameters for the recoloring logic
+     * Also contains fields whether it is active at all
+     */
+    RecolorParameters recolorParameters{};
 
     /**
      * Page template String
