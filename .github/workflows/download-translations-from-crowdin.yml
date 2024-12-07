@@ -85,7 +85,7 @@ jobs:
           localization-branch: ${{ steps.compute-changes.outputs.localization-branch }}
           commit-message: '[skip ci] Update translation files'
           pr-title: "Update translations for ${{ matrix.branch }} branch"
-          pr-body: 'New translations. When merging this PR, use "Squash and Merge"'
+          pr-body: 'New translations. When merging this PR, use \"Squash and Merge\"'
           GH_TOKEN: ${{ github.token }}
         run: |
           git config --global user.name "Github Action"
