@@ -22,6 +22,7 @@
 #include <glib.h>     // for gboolean
 #include <gtk/gtk.h>  // for GtkWidget, GtkAllocation
 
+#include "control/KeyBindingsGroup.h"
 #include "control/zoom/ZoomListener.h"     // for ZoomListener
 #include "gui/inputdevices/InputEvents.h"  // for KeyEvent
 #include "model/DocumentChangeType.h"      // for DocumentChangeType
@@ -195,6 +196,8 @@ private:
      * Helper class for Touch specific fixes
      */
     std::unique_ptr<HandRecognition> handRecognition;
+
+    static const KeyBindingsGroup<XournalView> keyBindings;
 
     friend class Layout;
 };
