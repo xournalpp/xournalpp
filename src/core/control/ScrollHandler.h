@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstddef>  // for size_t
+#include <ostream>
 
 #include "gui/widgets/SpinPageAdapter.h"  // for SpinPageListener
 #include "model/PageRef.h"                // for PageRef
@@ -65,3 +66,5 @@ private:
 private:
     Control* control = nullptr;
 };
+
+std::ostream& operator<<(std::ostream& stream, ScrollHandler::Direction dir);

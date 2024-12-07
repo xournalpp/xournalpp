@@ -176,3 +176,10 @@ void ScrollHandler::pageChanged(size_t page) {
     }
     scrollToPage(page - 1);
 }
+
+std::ostream& operator<<(std::ostream& stream, ScrollHandler::Direction dir) {
+    return stream << (dir == ScrollHandler::LEFT  ? C_("the direction", "Left") :
+                      dir == ScrollHandler::RIGHT ? C_("the direction", "Right") :
+                      dir == ScrollHandler::UP    ? C_("the direction", "Up") :
+                                                    C_("the direction", "Down"));
+}
