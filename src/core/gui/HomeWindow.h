@@ -27,5 +27,5 @@ private:
 private:
     Control* control;
     GtkWidget* winHome = nullptr;
-    static void on_button_click_me_clicked(GtkButton* button, gpointer user_data);
+    static void on_button_click_me_clicked(); //se quitaron los parametros para prueba
 };
