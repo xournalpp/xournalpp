@@ -463,40 +463,70 @@ struct ActionProperties<Action::ZOOM> {
 
 /** Navigation menu **/
 template <>
-struct ActionProperties<Action::GOTO_FIRST> {
+struct ActionProperties<Action::NAV_GOTO_FIRST> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->scrollToPage(0); }
 };
 template <>
-struct ActionProperties<Action::GOTO_PREVIOUS> {
+struct ActionProperties<Action::NAV_GOTO_PREVIOUS> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->goToPreviousPage(); }
 };
 
 template <>
-struct ActionProperties<Action::GOTO_PAGE> {
+struct ActionProperties<Action::NAV_GOTO_PAGE> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->gotoPage(); }
 };
 template <>
-struct ActionProperties<Action::GOTO_NEXT> {
+struct ActionProperties<Action::NAV_GOTO_NEXT> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->goToNextPage(); }
 };
 template <>
-struct ActionProperties<Action::GOTO_LAST> {
+struct ActionProperties<Action::NAV_GOTO_LAST> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->getScrollHandler()->scrollToPage(ctrl->getDocument()->getPageCount() - 1);
     }
 };
 
 template <>
-struct ActionProperties<Action::GOTO_NEXT_ANNOTATED_PAGE> {
+struct ActionProperties<Action::NAV_GOTO_NEXT_ANNOTATED_PAGE> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->getScrollHandler()->scrollToAnnotatedPage(true);
     }
 };
 
 template <>
-struct ActionProperties<Action::GOTO_PREVIOUS_ANNOTATED_PAGE> {
+struct ActionProperties<Action::NAV_GOTO_PREVIOUS_ANNOTATED_PAGE> {
     static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
         ctrl->getScrollHandler()->scrollToAnnotatedPage(false);
+    }
+};
+
+template <>
+struct ActionProperties<Action::NAV_MOVE_ONE_PAGE> {
+    using parameter_type = ScrollHandler::Direction;
+    static void callback(GSimpleAction*, GVariant* p, Control* ctrl) {
+        ScrollHandler::Direction dir = getGVariantValue<ScrollHandler::Direction>(p);
+        xoj_assert(static_cast<uint64_t>(dir) < 4);
+        ctrl->getScrollHandler()->scrollByOnePage(dir);
+    }
+};
+
+template <>
+struct ActionProperties<Action::NAV_MOVE_ONE_STEP> {
+    using parameter_type = ScrollHandler::Direction;
+    static void callback(GSimpleAction*, GVariant* p, Control* ctrl) {
+        ScrollHandler::Direction dir = getGVariantValue<ScrollHandler::Direction>(p);
+        xoj_assert(static_cast<uint64_t>(dir) < 4);
+        ctrl->getScrollHandler()->scrollByOneStep(dir);
+    }
+};
+
+template <>
+struct ActionProperties<Action::NAV_MOVE_BY_VISIBLE_AREA> {
+    using parameter_type = ScrollHandler::Direction;
+    static void callback(GSimpleAction*, GVariant* p, Control* ctrl) {
+        ScrollHandler::Direction dir = getGVariantValue<ScrollHandler::Direction>(p);
+        xoj_assert(static_cast<uint64_t>(dir) < 4);
+        ctrl->getScrollHandler()->scrollByVisibleArea(dir);
     }
 };
 
