@@ -216,7 +216,7 @@ Control::~Control() {
 
 struct Control::MissingPdfData {
     bool wasPdfAttached;
-    std::string missingFileName;
+    fs::path missingFileName;
 };
 
 void Control::setLastAutosaveFile(fs::path newAutosaveFile) {
@@ -1524,24 +1524,43 @@ void Control::replaceDocument(std::unique_ptr<Document> doc, int scrollToPage) {
 }
 
 void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<void(bool)> callback) {
-    LoadHandler loadHandler;
-    std::unique_ptr<Document> doc(loadHandler.loadDocument(filepath));
+    std::unique_ptr<Document> doc{};
+    std::optional<MissingPdfData> missingPdf{};
+    int fileVersion{};
+    std::string errorMessages{};
 
-    if (!doc) {
-        string msg = FS(_F("Error opening file \"{1}\"") % filepath.u8string()) + "\n" + loadHandler.getLastError();
+    try {
+        LoadHandler loadHandler(&errorMessages);
+        doc = loadHandler.loadDocument(filepath);
+
+        if (!loadHandler.getMissingPdfFilename().empty() || loadHandler.isAttachedPdfMissing()) {
+            missingPdf = {loadHandler.isAttachedPdfMissing(), loadHandler.getMissingPdfFilename()};
+        }
+        fileVersion = loadHandler.getFileVersion();
+    } catch (std::exception& e) {
+        g_warning("LoadHandler failed to load document. Error message: %s", e.what());
+
+        std::string msg = FS(_F("Error opening file \"{1}\".\n\n"
+                                "Error messages:{2}\n{3}") %
+                             filepath.u8string() % errorMessages % e.what());
         XojMsgBox::showErrorToUser(this->getGtkWindow(), msg);
         callback(false);
         return;
     }
 
-    std::optional<MissingPdfData> missingPdf;
-    if (!loadHandler.getMissingPdfFilename().empty() || loadHandler.isAttachedPdfMissing()) {
-        missingPdf = {loadHandler.isAttachedPdfMissing(), loadHandler.getMissingPdfFilename()};
-    }
-
-    auto afterOpen = [ctrl = this, missingPdf = std::move(missingPdf), doc = std::move(doc), filepath,
-                      scrollToPage]() mutable {
+    auto afterOpen = [ctrl = this, missingPdf = std::move(missingPdf), errorMessages = std::move(errorMessages),
+                      doc = std::move(doc), filepath, scrollToPage]() mutable {
         ctrl->replaceDocument(std::move(doc), scrollToPage);
+
+        if (!errorMessages.empty()) {
+            std::string msg =
+                    FS(_F("There were some errors while loading the file. Some information might have been lost. "
+                          "Do not overwrite your old file unless you are sure everything you need was loaded "
+                          "correctly.\n\n"
+                          "Error messages:{1}") %
+                       errorMessages);
+            XojMsgBox::showMessageToUser(ctrl->getGtkWindow(), msg, GTK_MESSAGE_WARNING);
+        }
 
         if (missingPdf && (missingPdf->wasPdfAttached || !missingPdf->missingFileName.empty())) {
             // give the user a second chance to select a new PDF filepath, or to discard the PDF
@@ -1549,7 +1568,7 @@ void Control::openXoppFile(fs::path filepath, int scrollToPage, std::function<vo
         }
     };
 
-    if (loadHandler.getFileVersion() > FILE_FORMAT_VERSION) {
+    if (fileVersion > FILE_FORMAT_VERSION) {
         enum { YES = 1, NO };
         std::vector<XojMsgBox::Button> buttons = {{_("Yes"), YES}, {_("No"), NO}};
         XojMsgBox::askQuestion(
@@ -1674,7 +1693,7 @@ void Control::fileLoaded(int scrollToPage) {
 enum class MissingPdfDialogOptions : gint { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
 
 void Control::promptMissingPdf(Control::MissingPdfData& missingPdf, const fs::path& filepath) {
-    const fs::path missingFilePath = fs::path(missingPdf.missingFileName);
+    const fs::path& missingFilePath = missingPdf.missingFileName;
 
     // create error message
     std::string parentFolderPath;

@@ -154,4 +154,14 @@ fs::path getCustomPaletteDirectoryPath();
  * @return files in directory
  */
 std::vector<fs::path> listFilesSorted(fs::path directory);
+
+// todo(cpp20): use std::hash everywhere. This is a workaround because some
+// c++17 compilers do not have std::filesystem hash support enabled.
+template <class Key>
+struct hash: std::hash<Key> {};
+template <>
+struct hash<fs::path> {
+    size_t operator()(const fs::path& path) const noexcept { return fs::hash_value(path); }
+};
+
 }  // namespace Util
