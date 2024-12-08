@@ -14,6 +14,7 @@
 #include "util/Util.h"               // for getPid, execInUiThread
 #include "util/XojMsgBox.h"          // for XojMsgBox
 #include "util/i18n.h"               // for FS, _F, FORMAT_STR
+#include "util/raii/CStringWrapper.h"
 #include "util/raii/GLibGuards.h"
 
 #include "config.h"  // for PROJECT_NAME
@@ -112,7 +113,7 @@ auto Util::fromUri(const std::string& uri) -> std::optional<fs::path> {
         return std::nullopt;
     }
 
-    return Util::fromGFilename(g_filename_from_uri(uri.c_str(), nullptr, nullptr));
+    return Util::fromGFilename(OwnedGFilename::assumeOwnership(g_filename_from_uri(uri.c_str(), nullptr, nullptr)));
 }
 
 auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
@@ -135,19 +136,16 @@ auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
     return {uri.get()};
 }
 
-auto Util::fromGFile(GFile* file) -> fs::path { return Util::fromGFilename(g_file_get_path(file)); }
+auto Util::fromGFile(GFile* file) -> fs::path {
+    return Util::fromGFilename(OwnedGFilename::assumeOwnership(g_file_get_path(file)));
+}
 
-auto Util::toGFile(fs::path const& path) -> GFile* {
-    // Todo: Return smart pointer
-    auto str = path.u8string();
-    size_t filename_s{};
-    GErrorGuard g;
-    auto filename = BasicOwnedCString<g_filename>::assumeOwnership(
-            g_filename_from_utf8(str.c_str(), as_signed(str.size()), nullptr, &filename_s, xoj::util::out_ptr(g)));
-    if (g || !filename) {
+auto Util::toGFile(fs::path const& path) -> GObjectSPtr<GFile> {
+    auto fn = Util::toGFilename(path);
+    if (!fn) {
         return nullptr;
     }
-    return g_file_new_for_path(filename.get());
+    return GObjectSPtr<GFile>(g_file_new_for_path(fn.get()), Adopt{});
 }
 
 
@@ -179,8 +177,8 @@ auto Util::getGettextFilepath(fs::path const& localeDir) -> fs::path {
 
     xoj::util::GErrorGuard errorGuard;
     gsize pSize{0};
-    auto* gettextEnvU8 = g_filename_to_utf8(gettextEnv.data(), as_signed(gettextEnv.size()), nullptr, &pSize,
-                                            xoj::util::out_ptr(errorGuard));
+    auto gettextEnvU8 = OwnedCString::assumeOwnership(g_filename_to_utf8(
+            gettextEnv.data(), as_signed(gettextEnv.size()), nullptr, &pSize, xoj::util::out_ptr(errorGuard)));
     if (errorGuard || !gettextEnvU8) {
         g_warning("Util::getGettextFilepath: Failed to convert g_filename to utf8 with error code: %d\n%s",
                   errorGuard->code, errorGuard->message);
@@ -189,16 +187,17 @@ auto Util::getGettextFilepath(fs::path const& localeDir) -> fs::path {
 
     // Only consider first path in environment variable
     auto dir = [&]() {
-        if (!gettextEnvU8)
+        if (!gettextEnvU8) {
             return localeDir;
-        std::string_view directories{gettextEnvU8, pSize};
+        }
+        auto directories = std::string_view{gettextEnvU8};
         size_t firstDot = directories.find(G_SEARCHPATH_SEPARATOR);
         if (firstDot != std::string::npos) {
             return fs::u8path(directories.substr(0, firstDot));
         }
         return fs::u8path(directories);
     }();
-    g_debug("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnvU8,
+    g_debug("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnvU8.c_str(),
             localeDir.u8string().c_str(), dir.u8string().c_str());
     return dir;
 }
@@ -209,7 +208,9 @@ auto Util::getAutosaveFilepath() -> fs::path {
     return p;
 }
 
-auto Util::getConfigFolder() -> fs::path { return (fromGFilename(g_get_user_config_dir()) /= CONFIG_FOLDER_NAME); }
+auto Util::getConfigFolder() -> fs::path {
+    return (fromGFilenameUnchecked(g_get_user_config_dir()) /= CONFIG_FOLDER_NAME);
+}
 
 auto Util::getConfigSubfolder(const fs::path& subfolder) -> fs::path {
     fs::path p = getConfigFolder();
@@ -219,7 +220,7 @@ auto Util::getConfigSubfolder(const fs::path& subfolder) -> fs::path {
 }
 
 auto Util::getCacheSubfolder(const fs::path& subfolder) -> fs::path {
-    auto p = fromGFilename(g_get_user_cache_dir());
+    auto p = fromGFilenameUnchecked(g_get_user_cache_dir());
     p /= CONFIG_FOLDER_NAME;
     p /= subfolder;
 
@@ -227,7 +228,7 @@ auto Util::getCacheSubfolder(const fs::path& subfolder) -> fs::path {
 }
 
 auto Util::getDataSubfolder(const fs::path& subfolder) -> fs::path {
-    auto p = fromGFilename(g_get_user_data_dir());
+    auto p = fromGFilenameUnchecked(g_get_user_data_dir());
     p /= CONFIG_FOLDER_NAME;
     p /= subfolder;
 
@@ -247,7 +248,7 @@ auto Util::getCacheFile(const fs::path& relativeFileName) -> fs::path {
 }
 
 auto Util::getTmpDirSubfolder(const fs::path& subfolder) -> fs::path {
-    auto p = fromGFilename(g_get_tmp_dir());
+    auto p = fromGFilenameUnchecked(g_get_tmp_dir());
     p /= FS(_F("xournalpp-{1}") % Util::getPid());
     p /= subfolder;
     return Util::ensureFolderExists(p);

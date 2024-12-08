@@ -18,6 +18,7 @@
 #include "util/Color.h"                        // for GdkRGBA_to_argb, rgb_t...
 #include "util/PathUtil.h"                     // for fromGFilename, readString
 #include "util/i18n.h"                         // for _
+#include "util/serdesstream.h"
 
 #include "FormatDialog.h"  // for FormatDialog
 #include "filesystem.h"    // for path
@@ -111,11 +112,12 @@ void PageTemplateDialog::saveToFile() {
         return;
     }
 
-    auto filepath = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    auto filepath = Util::fromGFilename(
+            Util::OwnedGFilename::assumeOwnership(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog))));
     settings->setLastSavePath(filepath.parent_path());
     gtk_widget_destroy(dialog);
 
-    std::ofstream out{filepath};
+    auto out = serdes_stream<std::ofstream>(filepath);
     out << model.toString();
 }
 

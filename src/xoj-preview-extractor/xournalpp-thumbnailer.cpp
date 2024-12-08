@@ -85,10 +85,10 @@ fs::path findAppIcon() {
     basedirs.emplace_back(fs::u8path(u8"../ui/pixmaps"));
 #endif
     // $HOME/.icons
-    basedirs.emplace_back(Util::fromGFilename(g_get_home_dir()) / u8".icons");
+    basedirs.emplace_back(Util::fromGFilenameUnchecked(g_get_home_dir()) / u8".icons");
     auto dataDirs = g_get_system_data_dirs();
     for (auto const* const* data_dir = dataDirs; data_dir != nullptr && *data_dir != nullptr; ++data_dir) {
-        basedirs.emplace_back(Util::fromGFilename(*data_dir));
+        basedirs.emplace_back(Util::fromGFilenameUnchecked(*data_dir));
     }
     basedirs.emplace_back(fs::u8path(u8"/usr/share/pixmaps"));
 

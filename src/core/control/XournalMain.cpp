@@ -90,7 +90,7 @@ auto migrateSettings() -> MigrateResult {
         const std::array oldPaths = {
                 Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp",
                 Util::getConfigFolder().parent_path() /= "com.github.xournalpp.xournalpp.exe",
-                Util::fromGFilename(g_get_home_dir()) /= ".xournalpp",
+                Util::fromGFilenameUnchecked(g_get_home_dir()) /= ".xournalpp",
         };
         for (auto const& oldPath: oldPaths) {
             if (!fs::is_directory(oldPath)) {
@@ -422,7 +422,7 @@ void on_open_files(GApplication* application, GFile** files, gint numFiles, gcha
         XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
     }
 
-    const fs::path p = Util::fromGFilename(g_file_get_path(files[0]), false);
+    const fs::path p = Util::fromGFile(files[0]);
 
     try {
         if (fs::exists(p)) {
@@ -478,7 +478,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
             XojMsgBox::showErrorToUser(GTK_WINDOW(app_data->win->getWindow()), msg);
         }
 
-        const fs::path p = Util::fromGFilename(app_data->optFilename[0], false);
+        const fs::path p = Util::fromGFilenameUnchecked(app_data->optFilename[0]);
 
         try {
             if (fs::exists(p)) {
@@ -557,8 +557,8 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
     if (app_data->pdfFilename && app_data->optFilename && *app_data->optFilename) {
         return exec_guarded(
                 [&] {
-                    return exportPdf(Util::fromGFilename(*app_data->optFilename),
-                                     Util::fromGFilename(app_data->pdfFilename), app_data->exportRange,
+                    return exportPdf(Util::fromGFilenameUnchecked(*app_data->optFilename),
+                                     Util::fromGFilenameUnchecked(app_data->pdfFilename), app_data->exportRange,
                                      app_data->exportLayerRange,
                                      app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
                                      app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
@@ -570,8 +570,8 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
     if (app_data->imgFilename && app_data->optFilename && *app_data->optFilename) {
         return exec_guarded(
                 [&] {
-                    return exportImg(Util::fromGFilename(*app_data->optFilename),
-                                     Util::fromGFilename(app_data->imgFilename), app_data->exportRange,
+                    return exportImg(Util::fromGFilenameUnchecked(*app_data->optFilename),
+                                     Util::fromGFilenameUnchecked(app_data->imgFilename), app_data->exportRange,
                                      app_data->exportLayerRange, app_data->exportPngDpi, app_data->exportPngWidth,
                                      app_data->exportPngHeight,
                                      app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :

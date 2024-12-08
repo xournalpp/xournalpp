@@ -14,21 +14,31 @@
 #include <cstring>   // for strlen, size_t
 #include <optional>  // for optional
 #include <string>    // for string, allocator, basic_string
+#include <string_view>
 
 #include <gio/gio.h>  // for GFile
 #include <glib.h>     // for g_filename_fro...
 
+#include "util/raii/CLibrariesSPtr.h"
 #include "util/raii/CStringWrapper.h"
 #include "util/raii/GLibGuards.h"
+#include "util/raii/GObjectSPtr.h"
 #include "util/safe_casts.h"  // for as_signed
 
 #include "filesystem.h"  // for path, u8path
 
 
+/// When glib will ever change the type to g_filename, we can just change this typedef
+/// We can also exchange this to a strong alias of gchar aka. `enum g_filename : gchar`
+/// to ensure, that we are not mixing string encodings.
+/// using g_filename = enum : gchar {};
+using g_filename = gchar;
 namespace Util {
-
+/// Util::g_filename should be implicitly convertible to g_filename
 using g_filename = ::g_filename;
+/// c++ string type for g_filename
 using filename = std::basic_string<g_filename>;
+using OwnedGFilename = xoj::util::BasicOwnedCString<g_filename>;
 
 /**
  * Read a file to a string
@@ -71,18 +81,18 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 [[maybe_unused]] [[nodiscard]] std::optional<std::string> toUri(const fs::path& path);
 
 
-[[maybe_unused]] [[nodiscard]] fs::path fromGFile(GFile* file);
-[[maybe_unused]] [[nodiscard]] GFile* toGFile(fs::path const& path);
+[[maybe_unused]] [[nodiscard]] auto fromGFile(GFile* file) -> fs::path;
+[[maybe_unused]] [[nodiscard]] auto toGFile(fs::path const& path) -> xoj::util::GObjectSPtr<GFile>;
 
-[[maybe_unused]] [[nodiscard]] inline fs::path fromGFilename(g_filename const* path) {
+[[maybe_unused]] [[nodiscard]] inline auto fromGFilenameUnchecked(std::basic_string_view<g_filename> path) -> fs::path {
     using namespace xoj::util;
-    if (path == nullptr)
+    if (path.empty())
         return "";
 
     gsize pSize{0};
     GErrorGuard err{};
     auto u8Path = OwnedCString::assumeOwnership(
-            g_filename_to_utf8(path, as_signed(std::strlen((char*)path)), nullptr, &pSize, out_ptr(err)));
+            g_filename_to_utf8(path.data(), as_signed(path.size()), nullptr, &pSize, out_ptr(err)));
     if (err) {
         g_message("Failed to convert g_filename to utf8 with error code: %d\n%s", err->code, err->message);
         return {};
@@ -90,29 +100,22 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
     return fs::u8path(u8Path.get(), u8Path.get() + pSize);
 }
 
-[[maybe_unused]] [[nodiscard]] inline fs::path fromGFilename(g_filename* path, bool owned = true) {
-    using namespace xoj::util;
-    using OwnedCString = BasicOwnedCString<g_filename>;
-    if (path == nullptr)
-        return "";
-    OwnedCString guard = !owned ? OwnedCString() : OwnedCString::assumeOwnership(path);
-    return fromGFilename(&std::as_const(*path));
+[[maybe_unused]] [[nodiscard]] inline auto fromGFilename(OwnedGFilename const& path) -> fs::path {
+    return fromGFilenameUnchecked(std::basic_string_view<g_filename>(path));
 }
 
-[[maybe_unused]] [[nodiscard]] inline filename toGFilename(fs::path const& path) {
+[[maybe_unused]] [[nodiscard]] inline auto toGFilename(fs::path const& path) -> OwnedGFilename {
     using namespace xoj::util;
-    using OwnedCString = BasicOwnedCString<g_filename>;
     auto u8path = path.u8string();
     gsize pSize{0};
     GErrorGuard err{};
-    auto local = OwnedCString::assumeOwnership(
+    auto local = OwnedGFilename::assumeOwnership(
             g_filename_from_utf8(u8path.c_str(), as_signed(u8path.size()), nullptr, &pSize, xoj::util::out_ptr(err)));
     if (err) {
         g_message("Failed to convert g_filename from utf8 with error code: %d\n%s", err->code, err->message);
         return {};
     }
-    auto ret = filename{local.get(), pSize};
-    return ret;
+    return local;
 }
 
 void openFileWithDefaultApplication(const fs::path& filename);

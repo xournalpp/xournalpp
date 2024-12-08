@@ -105,7 +105,8 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_toggle_button_get_active(this->cbAutoDepCheck);
     settings.defaultText = gtk_entry_get_text(GTK_ENTRY(this->get("latexDefaultEntry")));
-    settings.globalTemplatePath = Util::fromGFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
+    settings.globalTemplatePath = Util::fromGFilename(
+            Util::OwnedGFilename::assumeOwnership(gtk_file_chooser_get_filename(this->globalTemplateChooser)));
     settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
 
 #ifdef USE_GTK_SOURCEVIEW

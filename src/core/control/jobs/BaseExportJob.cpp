@@ -83,7 +83,8 @@ auto BaseExportJob::showFilechooser() -> bool {
             gtk_widget_destroy(dialog);
             return false;
         }
-        auto file = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        auto file = Util::fromGFilename(
+                Util::OwnedGFilename::assumeOwnership(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog))));
         Util::clearExtensions(file);
         // Since we add the extension after the OK button, we have to check manually on existing files
         if (testAndSetFilepath(std::move(file)) && control->askToReplace(this->filepath, GTK_WINDOW(dialog))) {
