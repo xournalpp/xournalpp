@@ -5,6 +5,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_fr...
 #include <gdk/gdk.h>                // for gdk_screen_get_de...
 #include <gio/gio.h>                // for g_cancellable_is_...
+#include <glib.h>
+#include <glibconfig.h>
 #include <gtk/gtkcssprovider.h>     // for gtk_css_provider_...
 
 #include "control/AudioController.h"                    // for AudioController
@@ -37,6 +39,7 @@
 #include "util/glib_casts.h"                            // for wrap_for_once_v
 #include "util/i18n.h"                                  // for FS, _F
 #include "util/raii/CStringWrapper.h"                   // for OwnedCString
+#include "util/raii/GLibGuards.h"
 
 #include "GladeSearchpath.h"     // for GladeSearchpath
 #include "ToolbarDefinitions.h"  // for TOOLBAR_DEFINITIO...
@@ -226,10 +229,18 @@ static ThemeProperties getThemeProperties(GtkWidget* w) {
     [[maybe_unused]] bool useEnv = false;
     // Gtk prioritizes GTK_THEME over GtkSettings content
     // cf https://gitlab.gnome.org/GNOME/gtk/blob/90d84a2af8b367bd5a5312b3fa3b67563462c0ef/gtk/gtksettings.c#L1567-L1622
-    if (auto* p = g_getenv("GTK_THEME")) {
-        *(name.contentReplacer()) = g_strdup(p);
-        useEnv = true;
-    } else {
+    if (std::basic_string_view p = g_getenv((g_filename const*)("GTK_THEME")); !p.empty()) {
+        gsize pSize{0};
+        xoj::util::GErrorGuard error;
+        *(name.contentReplacer()) =
+                g_filename_to_utf8(p.data(), as_signed(p.size()), nullptr, &pSize, xoj::util::out_ptr(error));
+        if (error) {
+            g_warning("Failed to convert GTK_THEME to utf8 with error code: %d\n%s", error->code, error->message);
+        } else {
+            useEnv = true;
+        }
+    }
+    if (!useEnv) {
         g_object_get(gtk_widget_get_settings(w), "gtk-theme-name", name.contentReplacer(), nullptr);
     }
 

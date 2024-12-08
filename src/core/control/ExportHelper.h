@@ -35,8 +35,8 @@ namespace ExportHelper {
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-int exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
-              int pngHeight, ExportBackgroundType exportBackground);
+int exportImg(Document* doc, fs::path const& output, const char* range, const char* layerRange, int pngDpi,
+              int pngWidth, int pngHeight, ExportBackgroundType exportBackground);
 
 /**
  * @brief Export the input file as pdf
@@ -52,7 +52,7 @@ int exportImg(Document* doc, const char* output, const char* range, const char* 
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-int exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
+int exportPdf(Document* doc, fs::path const& output, const char* range, const char* layerRange,
               ExportBackgroundType exportBackground, bool progressiveMode);
 
 

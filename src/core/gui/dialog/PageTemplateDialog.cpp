@@ -18,6 +18,7 @@
 #include "util/Color.h"                        // for GdkRGBA_to_argb, rgb_t...
 #include "util/PathUtil.h"                     // for fromGFilename, readString
 #include "util/i18n.h"                         // for _
+#include "util/serdesstream.h"
 
 #include "FormatDialog.h"  // for FormatDialog
 #include "filesystem.h"    // for path
@@ -98,11 +99,11 @@ void PageTemplateDialog::saveToFile() {
     }
 
     time_t curtime = time(nullptr);
-    char stime[128];
-    strftime(stime, sizeof(stime), "%F-Template-%H-%M.xopt", localtime(&curtime));
-    std::string saveFilename = stime;
+    std::array<char, 128> stime{};
+    auto size = strftime(stime.data(), stime.size(), "%F-Template-%H-%M.xopt", localtime(&curtime));
 
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
+                                      Util::toGFilename(std::string_view{stime.data(), size}).c_str());
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()));
@@ -111,11 +112,12 @@ void PageTemplateDialog::saveToFile() {
         return;
     }
 
-    auto filepath = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    auto filepath = Util::fromGFilename(
+            Util::OwnedGFilename::assumeOwnership(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog))));
     settings->setLastSavePath(filepath.parent_path());
     gtk_widget_destroy(dialog);
 
-    std::ofstream out{filepath};
+    auto out = serdes_stream<std::ofstream>(filepath);
     out << model.toString();
 }
 
