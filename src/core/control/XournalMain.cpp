@@ -503,14 +503,15 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get(), app_data->disableAudio);
 
-   // auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
-    //if (globalLatexTemplatePath.empty()) {
-      //  globalLatexTemplatePath = findResourcePath("resources/") / "default_template.tex";
-        //g_message("Using default latex template in %s", globalLatexTemplatePath.string().c_str());
-        //app_data->control->getSettings()->save();
-    //}
-
-    app_data->homeWin = std::make_unique<HomeWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application));
+    auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
+    if (globalLatexTemplatePath.empty()) {
+        globalLatexTemplatePath = findResourcePath("resources/") / "default_template.tex";
+        g_message("Using default latex template in %s", globalLatexTemplatePath.string().c_str());
+        app_data->control->getSettings()->save();
+    }
+    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application));
+    app_data->control->initWindow(app_data->win.get());
+    app_data->homeWin = std::make_unique<HomeWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application), app_data->win.get());
     app_data->control->initHomeWindow(app_data->homeWin.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {

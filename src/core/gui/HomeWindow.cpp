@@ -1,4 +1,5 @@
 #include "HomeWindow.h"
+#include "MainWindow.h"
 
 #include <regex>
 
@@ -49,8 +50,8 @@
 
 #include <iostream>
 
-HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* app)
-    : GladeGui(gladeSearchPath, "homepage.glade", "windowhome"), control(control) {
+HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* app, MainWindow* win)
+    : GladeGui(gladeSearchPath, "homepage.glade", "windowhome"), control(control), win(win) {
    gtk_window_set_application(GTK_WINDOW(getWindow()), app);
    // if (!getWindow()) {
      //   g_error("Failed to initialize HomeWindow: window is null");
@@ -61,7 +62,15 @@ HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     initHomeWidget();
     
     Builder builder(gladeSearchPath, "homepage.glade");
-    g_signal_connect_swapped(GTK_BUTTON(builder.get("start_button")), "clicked", G_CALLBACK(+[](HomeWindow* self){self->on_button_click_me_clicked(); }), this);
+   //g_signal_connect_swapped(GTK_BUTTON(builder.get("start_button")), "clicked", G_CALLBACK(+[](HomeWindow* self ){self->on_button_click_me_clicked(self->control->getWindow()); }), this);
+   // g_signal_connect_swapped(GTK_BUTTON(builder.get("start_button")), "clicked", G_CALLBACK(), this);
+  GtkWidget* button = this -> get("start_button");
+    if (button) {
+        g_signal_connect(button, "clicked", G_CALLBACK(on_button_click_me_clicked), this);
+    } else {
+        g_warning("Button 'start_button' not found in Glade file.");
+    }
+
     std::cout << "HomeWindow created\n";
     //GtkWidget* button = GTK_WIDGET(get("button_click_me"));
     //g_signal_connect(button, "clicked", G_CALLBACK(on_button_click_me_clicked), this);
@@ -96,7 +105,16 @@ void HomeWindow::initHomeWidget() {
 
 void HomeWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
 
-void HomeWindow::on_button_click_me_clicked() { //se quitaron los parametros para prueba
-  std::cout << "Button clicked!\n";
-  g_print("Button clicked!\n");
+//void HomeWindow::on_button_click_me_clicked(MainWindow* win) { //se quitaron los parametros para prueba
+//  win->show(nullptr);
+// std::cout << "Button clicked!\n";
+ // g_print("Button clicked!\n");
+//}
+
+void HomeWindow::on_button_click_me_clicked(GtkButton* button, gpointer user_data) {
+    //HomeWindow* self = static_cast<HomeWindow*>(user_data);
+    //std::cout << "Button clicked!\n";
+
+    HomeWindow* self = static_cast<HomeWindow*>(user_data);
+    self->win->show(nullptr);
 }
