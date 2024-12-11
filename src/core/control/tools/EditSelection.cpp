@@ -1252,19 +1252,19 @@ bool EditSelection::onKeyPressEvent(const KeyEvent& event) {
     constexpr int LARGE_MOVE_AMOUNT = 10;
     // clang-format off
     static const KeyBindingsGroup<EditSelection> selectionKeyBindings(
-            {{KeyBinding::hash(NONE,  GDK_KEY_Left),    moveAndKeepVisible<-REGULAR_MOVE_AMOUNT,                    0>},
-             {KeyBinding::hash(ALT,   GDK_KEY_Left),    moveAndKeepVisible<  -SMALL_MOVE_AMOUNT,                    0>},
-             {KeyBinding::hash(SHIFT, GDK_KEY_Left),    moveAndKeepVisible<  -LARGE_MOVE_AMOUNT,                    0>},
-             {KeyBinding::hash(NONE,  GDK_KEY_Right),   moveAndKeepVisible< REGULAR_MOVE_AMOUNT,                    0>},
-             {KeyBinding::hash(ALT,   GDK_KEY_Right),   moveAndKeepVisible<   SMALL_MOVE_AMOUNT,                    0>},
-             {KeyBinding::hash(SHIFT, GDK_KEY_Right),   moveAndKeepVisible<   LARGE_MOVE_AMOUNT,                    0>},
-             {KeyBinding::hash(NONE,  GDK_KEY_Up),      moveAndKeepVisible<                   0, -REGULAR_MOVE_AMOUNT>},
-             {KeyBinding::hash(ALT,   GDK_KEY_Up),      moveAndKeepVisible<                   0,   -SMALL_MOVE_AMOUNT>},
-             {KeyBinding::hash(SHIFT, GDK_KEY_Up),      moveAndKeepVisible<                   0,   -LARGE_MOVE_AMOUNT>},
-             {KeyBinding::hash(NONE,  GDK_KEY_Down),    moveAndKeepVisible<                   0,  REGULAR_MOVE_AMOUNT>},
-             {KeyBinding::hash(ALT,   GDK_KEY_Down),    moveAndKeepVisible<                   0,    SMALL_MOVE_AMOUNT>},
-             {KeyBinding::hash(SHIFT, GDK_KEY_Down),    moveAndKeepVisible<                   0,    LARGE_MOVE_AMOUNT>},
-             {KeyBinding::hash(NONE,  GDK_KEY_Escape),  clear}});
+            {{{NONE,  GDK_KEY_Left},    moveAndKeepVisible<-REGULAR_MOVE_AMOUNT,                    0>},
+             {{ALT,   GDK_KEY_Left},    moveAndKeepVisible<  -SMALL_MOVE_AMOUNT,                    0>},
+             {{SHIFT, GDK_KEY_Left},    moveAndKeepVisible<  -LARGE_MOVE_AMOUNT,                    0>},
+             {{NONE,  GDK_KEY_Right},   moveAndKeepVisible< REGULAR_MOVE_AMOUNT,                    0>},
+             {{ALT,   GDK_KEY_Right},   moveAndKeepVisible<   SMALL_MOVE_AMOUNT,                    0>},
+             {{SHIFT, GDK_KEY_Right},   moveAndKeepVisible<   LARGE_MOVE_AMOUNT,                    0>},
+             {{NONE,  GDK_KEY_Up},      moveAndKeepVisible<                   0, -REGULAR_MOVE_AMOUNT>},
+             {{ALT,   GDK_KEY_Up},      moveAndKeepVisible<                   0,   -SMALL_MOVE_AMOUNT>},
+             {{SHIFT, GDK_KEY_Up},      moveAndKeepVisible<                   0,   -LARGE_MOVE_AMOUNT>},
+             {{NONE,  GDK_KEY_Down},    moveAndKeepVisible<                   0,  REGULAR_MOVE_AMOUNT>},
+             {{ALT,   GDK_KEY_Down},    moveAndKeepVisible<                   0,    SMALL_MOVE_AMOUNT>},
+             {{SHIFT, GDK_KEY_Down},    moveAndKeepVisible<                   0,    LARGE_MOVE_AMOUNT>},
+             {{NONE,  GDK_KEY_Escape},  clear}});
     // clang-format on
     return selectionKeyBindings.processEvent(this, event);  // May destroy *this - Never do anything after.
 }

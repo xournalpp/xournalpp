@@ -314,7 +314,7 @@ auto TextEditor::onKeyPressEvent(const KeyEvent& event) -> bool {
         return true;
     }
 
-    return keyBindings.processEvent(this, event);
+    return getDefaultKeyBindings().processEvent(this, event);
 }
 
 auto TextEditor::onKeyReleaseEvent(const KeyEvent& event) -> bool {

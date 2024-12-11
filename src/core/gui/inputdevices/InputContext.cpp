@@ -81,7 +81,7 @@ void InputContext::connect(GtkWidget* pWidget) {
     auto* keyCtrl = gtk_event_controller_key_new(widget);
 #else
     auto* keyCtrl = gtk_event_controller_key_new();
-    gtk_widget_add_controller(keyCtrl);
+    gtk_widget_add_controller(widget, keyCtrl);
 #endif
 
     g_signal_connect(keyCtrl, "key-pressed", G_CALLBACK(keyboardCallback<&KeyboardInputHandler::keyPressed>),

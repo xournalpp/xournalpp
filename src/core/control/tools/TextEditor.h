@@ -85,6 +85,8 @@ public:
     void pasteFromClipboard();
     void selectAtCursor(TextEditor::SelectType ty);
 
+    static const KeyBindingsGroup<TextEditor>& getDefaultKeyBindings();
+
 private:
     void toggleOverwrite();
     void toggleBoldFace();
@@ -228,6 +230,4 @@ private:
     static constexpr unsigned int CURSOR_ON_MULTIPLIER = 2;
     static constexpr unsigned int CURSOR_OFF_MULTIPLIER = 1;
     static constexpr unsigned int CURSOR_DIVIDER = CURSOR_ON_MULTIPLIER + CURSOR_OFF_MULTIPLIER;
-
-    static const KeyBindingsGroup<TextEditor> keyBindings;
 };
