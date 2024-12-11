@@ -52,6 +52,7 @@
 #include "model/XojPage.h"  // IWYU pragma: keep for XojPage
 #include "plugin/Plugin.h"
 #include "undo/InsertUndoAction.h"
+#include "util/PathUtil.h"            // for clea...
 #include "util/PopupWindowWrapper.h"  // for PopupWindowWrapper
 #include "util/StringUtils.h"
 #include "util/i18n.h"        // for _
@@ -3052,6 +3053,45 @@ static int applib_getImages(lua_State* L) {
 }
 
 /**
+ * Get the plugin's folder for writing one of
+ * - config files
+ * - data files
+ * - state files
+ * and forces it to exist.
+ *
+ * @param type string "config", "data" or "state"
+ * @return string file path
+ *
+ * Example 1: local configFolder = app.getFolder("config")
+ *
+ * Example 2: local stateFolder = app.getFolder("state")
+ *
+ */
+static int applib_getFolder(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    auto pluginName = plugin->getName();
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    const char* type = luaL_checkstring(L, 1);
+    fs::path p{};
+    if (strcmp(type, "config") == 0) {
+        p = Util::getConfigSubfolder("plugin-settings");
+    } else if (strcmp(type, "state") == 0) {
+        p = Util::getStateSubfolder("plugin-state");
+    } else if (strcmp(type, "data") == 0) {
+        p = Util::getDataSubfolder("plugin-data");
+    } else {
+        return luaL_error(L, "Unsupported folder type '%s'", type);
+    }
+    p /= pluginName;
+    Util::ensureFolderExists(p);
+    lua_pushstring(L, p.string().c_str());
+    return 1;
+}
+
+/**
  * Clears a selection by releasing its elements to the current layer.
  *
  * Example: app.clearSelection()
@@ -3134,6 +3174,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},  // Todo(gtk4) remo
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
                                   {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
                                   {"getToolInfo", applib_getToolInfo},
+                                  {"getFolder", applib_getFolder},
                                   {"getSidebarPageNo", applib_getSidebarPageNo},
                                   {"setSidebarPageNo", applib_setSidebarPageNo},
                                   {"getDocumentStructure", applib_getDocumentStructure},
