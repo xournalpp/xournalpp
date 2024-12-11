@@ -7,6 +7,7 @@
 
 #include "control/Control.h"
 #include "gui/MainWindow.h"
+#include "control/settings/ShortcutConfiguration.h"
 #include "util/GVariantTemplate.h"
 #include "util/safe_casts.h"  // for to_underlying Todo(cpp20) remove
 
@@ -34,7 +35,7 @@ class ActionDatabase::Populator {
     struct ActionNamespace {
         static constexpr auto ACTION_NAMESPACE = "win.";
         static void addToActionMap(ActionDatabase* db) {
-            g_action_map_add_action(G_ACTION_MAP(db->win), G_ACTION(db->gActions[a].get()));
+            g_action_map_add_action(G_ACTION_MAP(db->win), G_ACTION(db->entries[a].action.get()));
         }
     };
     template <Action a>
@@ -43,43 +44,17 @@ class ActionDatabase::Populator {
         static constexpr auto ACTION_NAMESPACE = "app.";
         static void addToActionMap(ActionDatabase* db) {
             g_action_map_add_action(G_ACTION_MAP(gtk_window_get_application(GTK_WINDOW(db->win))),
-                                    G_ACTION(db->gActions[a].get()));
+                                    G_ACTION(db->entries[a].action.get()));
         }
     };
 
-    /**
-     * Accelerators<a>::setup(ctrl); will setup the accelerators listed in ActionProperties<a>::accelerators (if any)
-     */
-    template <Action a, class U = void>
-    struct Accelerators {
-        static inline void setup(Control*) {}
-    };
-    template <Action a>
-    struct Accelerators<a, std::void_t<decltype(&ActionProperties<a>::accelerators)>> {
-        static_assert(std::is_array_v<decltype(ActionProperties<a>::accelerators)>);
-        static_assert(
-                std::is_same_v<std::remove_extent_t<decltype(ActionProperties<a>::accelerators)>, const char* const>);
-        static_assert(
-                ActionProperties<a>::accelerators[std::extent_v<decltype(ActionProperties<a>::accelerators)> - 1] ==
-                        nullptr,
-                "ActionProperties<a>::accelerators must be null terminated");
-
-        static inline void setup(Control* ctrl) {
-            // Todo(cpp20) constexpr this concatenation
-            std::string fullActionName = ActionNamespace<a>::ACTION_NAMESPACE;
-            fullActionName += Action_toString(a);
-            gtk_application_set_accels_for_action(GTK_APPLICATION(gtk_window_get_application(ctrl->getGtkWindow())),
-                                                  fullActionName.c_str(), ActionProperties<a>::accelerators);
-        }
-    };
 
     template <Action a>
     static inline void finishSetup(ActionDatabase* db, const char* signal) {
-        db->signalIds[a] = g_signal_connect(G_OBJECT(db->gActions[a].get()), signal,
+        db->entries[a].signalId = g_signal_connect(G_OBJECT(db->entries[a].action.get()), signal,
                                             G_CALLBACK(ActionProperties<a>::callback), db->control);
         ActionNamespace<a>::addToActionMap(db);
-        // g_action_map_add_action(G_ACTION_MAP(db->win), G_ACTION(db->gActions[a].get()));
-        Accelerators<a>::setup(db->control);
+        db->entries[a].namespacedName = std::string(ActionNamespace<a>::ACTION_NAMESPACE) + Action_toString(a);
         InitiallyEnabled<a>::setup(db, db->control);
     }
 
@@ -89,7 +64,7 @@ class ActionDatabase::Populator {
 
         ACTIONDB_PRINT_DEBUG(START_ROW << " |               |            |");
 
-        db->gActions[a].reset(g_simple_action_new(Action_toString(a), nullptr), xoj::util::adopt);
+        db->entries[a].action.reset(g_simple_action_new(Action_toString(a), nullptr), xoj::util::adopt);
 
         finishSetup<a>(db, "activate");
     }
@@ -102,7 +77,7 @@ class ActionDatabase::Populator {
                                        << (const char*)gVariantType<typename ActionProperties<a>::parameter_type>()
                                        << "\" |");
 
-        db->gActions[a].reset(
+        db->entries[a].action.reset(
                 g_simple_action_new(Action_toString(a), gVariantType<typename ActionProperties<a>::parameter_type>()),
                 xoj::util::adopt);
 
@@ -118,7 +93,7 @@ class ActionDatabase::Populator {
                                        << "\" = " << std::setw(7) << ActionProperties<a>::initialState(db->control)
                                        << " |            |");
 
-        db->gActions[a].reset(g_simple_action_new_stateful(Action_toString(a), nullptr,
+        db->entries[a].action.reset(g_simple_action_new_stateful(Action_toString(a), nullptr,
                                                            makeGVariant<typename ActionProperties<a>::state_type>(
                                                                    ActionProperties<a>::initialState(db->control))),
                               xoj::util::adopt);
@@ -137,7 +112,7 @@ class ActionDatabase::Populator {
                           << "\" = " << std::setw(7) << ActionProperties<a>::initialState(db->control) << " | type = \""
                           << (const char*)gVariantType<typename ActionProperties<a>::state_type>() << "\" |");
 
-        db->gActions[a].reset(g_simple_action_new_stateful(Action_toString(a),
+        db->entries[a].action.reset(g_simple_action_new_stateful(Action_toString(a),
                                                            gVariantType<typename ActionProperties<a>::state_type>(),
                                                            makeGVariant<typename ActionProperties<a>::state_type>(
                                                                    ActionProperties<a>::initialState(db->control))),
@@ -169,33 +144,32 @@ ActionDatabase::ActionDatabase(Control* control):
 }
 
 ActionDatabase::~ActionDatabase() {
-    auto sig = signalIds.begin();
-    for (auto& a: gActions) {
+    for (auto&& e: entries) {
         /**
          * The GAction's might still be referenced elsewhere (e.g. by the GtkApplicationWindow), so we need to
          * disconnect the signals in case a callback is called and the Control instance has been destroyed
          */
-        g_signal_handler_disconnect(a.get(), *sig++);
+        g_signal_handler_disconnect(e.action.get(), e.signalId);
     }
 }
 
 
 void ActionDatabase::enableAction(Action action, bool enable) {
-    xoj_assert(gActions[action]);
-    g_simple_action_set_enabled(gActions[action].get(), enable);
+    xoj_assert(entries[action].action);
+    g_simple_action_set_enabled(entries[action].action.get(), enable);
     ACTIONDB_PRINT_DEBUG((enable ? "Enabling Action \"" : "Disabling Action\"") << Action_toString(action) << "\"");
 }
 
-auto ActionDatabase::getAction(Action a) const -> ActionRef { return gActions[a]; }
+auto ActionDatabase::getAction(Action a) const -> ActionRef { return entries[a].action; }
 
 bool ActionDatabase::isActionEnabled(Action a) const {
-    xoj_assert(gActions[a]);
-    return g_action_get_enabled(G_ACTION(gActions[a].get()));
+    xoj_assert(entries[a].action);
+    return g_action_get_enabled(G_ACTION(entries[a].action.get()));
 }
 
 void ActionDatabase::disableAll() {
-    for (auto&& a: gActions) {
-        g_simple_action_set_enabled(a.get(), false);
+    for (auto&& a: entries) {
+        g_simple_action_set_enabled(a.action.get(), false);
     }
 }
 
@@ -206,4 +180,21 @@ static void resetEnableStatusImpl(std::index_sequence<As...>, ActionDatabase* db
 
 void ActionDatabase::resetEnableStatus() {
     resetEnableStatusImpl(std::make_index_sequence<xoj::to_underlying(Action::ENUMERATOR_COUNT)>(), this, control);
+}
+
+void ActionDatabase::setShortcuts(const ShortcutConfiguration& config) {
+    const auto& shortcuts = config.getActionsShortcuts();
+    for (auto&& a: shortcuts) {
+        GStrvBuilder* builder = g_strv_builder_new();
+        for (auto&& s: a.second) {
+            g_strv_builder_take(builder, gtk_accelerator_name(s.keyval, s.mod.mod));
+        }
+        GStrv accs = g_strv_builder_unref_to_strv(builder);
+        std::string act = this->entries[a.first.action].namespacedName;
+        if (a.first.parameter) {
+            act += "(uint64 " + std::to_string(a.first.parameter.value()) + ")";
+        }
+        gtk_application_set_accels_for_action(GTK_APPLICATION(gtk_window_get_application(control->getGtkWindow())), act.c_str(), accs);
+        g_strfreev(accs);
+    }
 }
