@@ -25,9 +25,7 @@ struct PressedModifier {
     constexpr PressedModifier operator&(PressedModifier o) const {
         return PressedModifier((GdkModifierType)(mod | o.mod));
     }
-    constexpr bool operator==(const PressedModifier& o) const {
-        return mod == o.mod;
-    }
+    constexpr bool operator==(const PressedModifier& o) const { return mod == o.mod; }
 
     GdkModifierType mod;
 };
@@ -51,7 +49,7 @@ struct Shortcut {
     keyval_type keyval;
 };
 
-template<>
+template <>
 struct std::hash<Shortcut> {
     using hash_type = std::size_t;
     static_assert(sizeof(PressedModifier) + sizeof(Shortcut::keyval_type) == sizeof(hash_type));
@@ -84,15 +82,15 @@ private:
 };
 
 namespace KeyBindingsUtil {
-    template <class U>
-    struct parent_class {};
-    template <class M, class T>
-    struct parent_class<M T::*> {
-        using type = T;
-    };
+template <class U>
+struct parent_class {};
+template <class M, class T>
+struct parent_class<M T::*> {
+    using type = T;
+};
 
-    template <auto fun, auto... a>
-    void wrap(typename parent_class<decltype(fun)>::type* te) {
-        (te->*fun)(a...);
-    }
+template <auto fun, auto... a>
+void wrap(typename parent_class<decltype(fun)>::type* te) {
+    (te->*fun)(a...);
 }
+}  // namespace KeyBindingsUtil

@@ -6,8 +6,8 @@
 #include <gobject/gsignal.h>
 
 #include "control/Control.h"
-#include "gui/MainWindow.h"
 #include "control/settings/ShortcutConfiguration.h"
+#include "gui/MainWindow.h"
 #include "util/GVariantTemplate.h"
 #include "util/safe_casts.h"  // for to_underlying Todo(cpp20) remove
 
@@ -52,7 +52,7 @@ class ActionDatabase::Populator {
     template <Action a>
     static inline void finishSetup(ActionDatabase* db, const char* signal) {
         db->entries[a].signalId = g_signal_connect(G_OBJECT(db->entries[a].action.get()), signal,
-                                            G_CALLBACK(ActionProperties<a>::callback), db->control);
+                                                   G_CALLBACK(ActionProperties<a>::callback), db->control);
         ActionNamespace<a>::addToActionMap(db);
         db->entries[a].namespacedName = std::string(ActionNamespace<a>::ACTION_NAMESPACE) + Action_toString(a);
         InitiallyEnabled<a>::setup(db, db->control);
@@ -93,10 +93,11 @@ class ActionDatabase::Populator {
                                        << "\" = " << std::setw(7) << ActionProperties<a>::initialState(db->control)
                                        << " |            |");
 
-        db->entries[a].action.reset(g_simple_action_new_stateful(Action_toString(a), nullptr,
-                                                           makeGVariant<typename ActionProperties<a>::state_type>(
-                                                                   ActionProperties<a>::initialState(db->control))),
-                              xoj::util::adopt);
+        db->entries[a].action.reset(
+                g_simple_action_new_stateful(Action_toString(a), nullptr,
+                                             makeGVariant<typename ActionProperties<a>::state_type>(
+                                                     ActionProperties<a>::initialState(db->control))),
+                xoj::util::adopt);
 
         finishSetup<a>(db, "change-state");
     }
@@ -112,11 +113,12 @@ class ActionDatabase::Populator {
                           << "\" = " << std::setw(7) << ActionProperties<a>::initialState(db->control) << " | type = \""
                           << (const char*)gVariantType<typename ActionProperties<a>::state_type>() << "\" |");
 
-        db->entries[a].action.reset(g_simple_action_new_stateful(Action_toString(a),
-                                                           gVariantType<typename ActionProperties<a>::state_type>(),
-                                                           makeGVariant<typename ActionProperties<a>::state_type>(
-                                                                   ActionProperties<a>::initialState(db->control))),
-                              xoj::util::adopt);
+        db->entries[a].action.reset(
+                g_simple_action_new_stateful(Action_toString(a),
+                                             gVariantType<typename ActionProperties<a>::state_type>(),
+                                             makeGVariant<typename ActionProperties<a>::state_type>(
+                                                     ActionProperties<a>::initialState(db->control))),
+                xoj::util::adopt);
 
         finishSetup<a>(db, "change-state");
     }
@@ -194,7 +196,8 @@ void ActionDatabase::setShortcuts(const ShortcutConfiguration& config) {
         if (a.first.parameter) {
             act += "(uint64 " + std::to_string(a.first.parameter.value()) + ")";
         }
-        gtk_application_set_accels_for_action(GTK_APPLICATION(gtk_window_get_application(control->getGtkWindow())), act.c_str(), accs);
+        gtk_application_set_accels_for_action(GTK_APPLICATION(gtk_window_get_application(control->getGtkWindow())),
+                                              act.c_str(), accs);
         g_strfreev(accs);
     }
 }
