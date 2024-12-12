@@ -35,9 +35,11 @@ public:
      * Updates the menu of recent files
      */
     void updateMenu();
-
+    void updateXoppFile();
     void setDisabled(bool disabled) override;
     void addToMenubar(Menubar& menubar) override;
+    void openFirstFile(RecentDocumentsSubmenu* self);
+    TinyVector<fs::path, RecentManager::MAX_RECENT> xoppFiles;
 
 private:
     static void openFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self);
@@ -45,7 +47,6 @@ private:
 
     gulong recentHandlerId{};
 
-    TinyVector<fs::path, RecentManager::MAX_RECENT> xoppFiles;
     TinyVector<fs::path, RecentManager::MAX_RECENT> pdfFiles;
     Control* control;
 

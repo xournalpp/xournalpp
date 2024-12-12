@@ -26,6 +26,7 @@
 #include "gui/SearchBar.h"                              // for SearchBar
 #include "gui/inputdevices/InputEvents.h"               // for INPUT_DEVICE_TOUC...
 #include "gui/menus/menubar/Menubar.h"                  // for Menubar
+#include "gui/menus/menubar/RecentDocumentsSubmenu.h"   //for gettingrecentdocuments
 #include "gui/menus/menubar/ToolbarSelectionSubmenu.h"  // for ToolbarSelectionSubmenu
 #include "gui/scroll/ScrollHandling.h"                  // for ScrollHandling
 #include "gui/sidebar/Sidebar.h"                        // for Sidebar
@@ -50,6 +51,8 @@
 #include "config-dev.h"          // for TOOLBAR_CONFIG
 #include "filesystem.h"          // for path, exists
 
+std::unique_ptr<RecentDocumentsSubmenu> recent;
+
 HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* app, MainWindow* win):
         GladeGui(gladeSearchPath, "homepage.glade", "windowhome"), control(control), win(win) {
     gtk_window_set_application(GTK_WINDOW(getWindow()), app);
@@ -65,12 +68,12 @@ HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     initHomeWidget();
 
     Builder builder(gladeSearchPath, "homepage.glade");
-    
+
     GtkWidget* buttonNewDocument = this->get("newDocument_button");
-	GtkWidget* buttonOpenRecentDocument = this->get("openRecentDocument_button");
+    GtkWidget* buttonOpenRecentDocument = this->get("openRecentDocument_button");
     if (buttonNewDocument && buttonOpenRecentDocument) {
         g_signal_connect(buttonNewDocument, "clicked", G_CALLBACK(on_buttonNewDocument_clicked), this);
-		g_signal_connect(buttonOpenRecentDocument, "clicked", G_CALLBACK(on_buttonOpenRecentDocument_clicked), this);
+        g_signal_connect(buttonOpenRecentDocument, "clicked", G_CALLBACK(on_buttonOpenRecentDocument_clicked), this);
     } else {
         g_warning("Buttons not found in Glade file.");
     }
@@ -86,15 +89,39 @@ void HomeWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
 
 void HomeWindow::on_buttonNewDocument_clicked(GtkButton* button, gpointer user_data) {
     // Se espera que se cierre/destruya la ventana de homeWindows quedando la MainWindow.
-	HomeWindow* self = static_cast<HomeWindow*>(user_data);
+    HomeWindow* self = static_cast<HomeWindow*>(user_data);
     gtk_widget_destroy(GTK_WIDGET(self->getWindow()));
-	gtk_widget_show(GTK_WIDGET(self->win->getWindow()));
+    gtk_widget_show(GTK_WIDGET(self->win->getWindow()));
 
-	std::cout << "New Document Button clicked!\n";
+    std::cout << "New Document Button clicked!\n";
+}
+
+auto HomeWindow::getControl() const -> Control* { return control; }
+
+
+void HomeWindow::openFirstXoppFile() {
+    Control* ctrl = this->getControl();
+    if (!ctrl) {
+        std::cerr << "Control is null\n";
+        return;
+    }
+
+
+    auto recent = std::make_unique<RecentDocumentsSubmenu>(ctrl, GTK_APPLICATION_WINDOW(this->getWindow()));
+    recent->updateXoppFile();
+    if (!recent->xoppFiles.empty()) {
+        const auto& path = recent->xoppFiles.front();
+        std::cout << "Attempting to open file: " << path << '\n';
+        ctrl->openFile(path);
+        std::cout << "Opened file: " << path << '\n';
+        gtk_widget_destroy(GTK_WIDGET(this->getWindow()));
+        gtk_widget_show(GTK_WIDGET(this->win->getWindow()));
+    } else {
+        std::cerr << "No xopp files available\n";
+    }
 }
 
 void HomeWindow::on_buttonOpenRecentDocument_clicked(GtkButton* button, gpointer user_data) {
-	// Acciones a realizar cuando se abra algun documento reciente.
-
-	std::cout << "Open Recent Document Button clicked!\n";
+    HomeWindow* self = static_cast<HomeWindow*>(user_data);
+    self->openFirstXoppFile();
 }

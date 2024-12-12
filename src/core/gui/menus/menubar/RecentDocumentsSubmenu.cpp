@@ -145,6 +145,14 @@ RecentDocumentsSubmenu::~RecentDocumentsSubmenu() {
     }
 }
 
+void RecentDocumentsSubmenu::updateXoppFile(){
+    auto fileList = RecentManager::getRecentFiles();
+
+    xoppFiles.clear();
+    std::transform(fileList.recentXoppFiles.begin(), fileList.recentXoppFiles.end(), std::back_inserter(xoppFiles),
+                   [](auto& info) { return Util::fromUri(gtk_recent_info_get_uri(info.get())).value(); });
+}
+
 void RecentDocumentsSubmenu::updateMenu() {
     auto fileList = RecentManager::getRecentFiles();
 
@@ -217,6 +225,13 @@ void RecentDocumentsSubmenu::setDisabled(bool disabled) {
 
 void RecentDocumentsSubmenu::openFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self) {
     auto index = g_variant_get_uint64(parameter);
+    auto& path =
+            index < self->xoppFiles.size() ? self->xoppFiles[index] : self->pdfFiles[index - self->xoppFiles.size()];
+    self->control->openFile(path);
+}
+
+void RecentDocumentsSubmenu::openFirstFile(RecentDocumentsSubmenu* self) {
+    size_t index = 0;
     auto& path =
             index < self->xoppFiles.size() ? self->xoppFiles[index] : self->pdfFiles[index - self->xoppFiles.size()];
     self->control->openFile(path);
