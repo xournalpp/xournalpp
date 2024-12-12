@@ -13,58 +13,58 @@
 				<property name="can_focus">False</property>
 				<property name="orientation">GTK_ORIENTATION_VERTICAL</property>
 				<child>
-					<object class="GtkLabel" id="label1">
-						<property name="name">label1</property>
+					<object class="GtkLabel" id="main_title">						
+						<property name="label" translatable="yes">Xournal++ Home Page</property>
 						<property name="visible">True</property>
 						<property name="can_focus">False</property>
-						<property name="label" translatable="yes">Welcome to the Home Page</property>
+						<property name="use_markup">True</property>
 					</object>
 				</child>
 				<child>
-					<object class="GtkBox" id="newDocument_button_box">
-						<property name="visible">True</property>
-						<property name="can_focus">False</property>
-						<property name="orientation">horizontal</property>
-						<property name="halign">center</property>
+	                <object class="GtkBox" id="searchDocument_box">
+	                    <property name="visible">True</property>
+	                    <property name="can_focus">False</property>
+	                    <property name="orientation">horizontal</property>
+	                    <property name="halign">center</property>
+	                    <property name="margin_top">50</property>
+	                    <property name="margin_bottom">50</property>
+	                    <child>
+	                        <object class="GtkLabel" id="search_label">
+	                            <property name="label" translatable="yes">Search: </property>
+	                            <property name="visible">True</property>
+	                            <property name="can_focus">False</property>
+								<property name="use_markup">True</property>
+	                        </object>
+	                    </child>
 						<child>
-							<object class="GtkButton" id="newDocument_button">
-								<property name="label" translatable="yes">New Document</property>
-								<property name="width_request">40</property>
-								<property name="height_request">30</property>
-								<property name="visible">True</property>
-								<property name="can_focus">True</property>
-								<property name="can_default">True</property>
-								<property name="has_default">True</property>
-								<property name="receives_default">True</property>
-								<property name="margin-top">50</property>
-								<accelerator key="Enter" signal="clicked"/>
-							</object>
-						</child>
-					</object>
+	                        <object class="GtkEntry" id="searchDocument_entry">
+	                            <property name="visible">True</property>
+	                            <property name="can_focus">True</property>
+	                            <property name="hexpand">True</property>
+	                            <property name="halign">center</property>
+	                            <property name="placeholder_text" translatable="yes">Search Document...</property>
+	                        </object>
+	                    </child>
+	                </object>
 				</child>
 				<child>
-					<object class="GtkBox" id="openRecentDocument_button_box">
-						<property name="visible">True</property>
-						<property name="can_focus">False</property>
-						<property name="orientation">horizontal</property>
-						<property name="halign">center</property>
-						<child>
-							<object class="GtkButton" id="openRecentDocument_button">
-								<property name="label" translatable="yes">Open Recent Document</property>
-								<property name="width_request">40</property>
-								<property name="height_request">30</property>
-								<property name="visible">True</property>
-								<property name="can_focus">True</property>
-								<property name="can_default">True</property>
-								<property name="has_default">True</property>
-								<property name="receives_default">True</property>
-								<property name="margin-top">50</property>
-								<accelerator key="Escape" signal="clicked"/>
-							</object>
-						</child>
-					</object>
-				</child>
-			</object>
-		</child>
-	</object>
+                    <object class="GtkScrolledWindow" id="RDscrolledwindow">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="hexpand">True</property>
+                        <child>
+                            <object class="GtkGrid" id="recentDocumentsGrid">
+                                <property name="visible">True</property>
+                                <property name="column-homogeneous">True</property>
+                                <property name="row-homogeneous">True</property>
+                                <property name="vexpand">True</property>
+                                <property name="hexpand">True</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </object>
 </interface>

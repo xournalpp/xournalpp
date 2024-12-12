@@ -55,6 +55,12 @@ std::unique_ptr<RecentDocumentsSubmenu> recent;
 
 HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* app, MainWindow* win):
         GladeGui(gladeSearchPath, "homepage.glade", "windowhome"), control(control), win(win) {
+
+    getWindow();
+    initHomeWidget();
+
+    Builder builder(gladeSearchPath, "homepage.glade");
+
     gtk_window_set_application(GTK_WINDOW(getWindow()), app);
 
     // Set window to maximized
@@ -63,22 +69,52 @@ HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     // Set window position to center
     gtk_window_set_position(GTK_WINDOW(getWindow()), GTK_WIN_POS_CENTER);
 
-    // Connect the button signals
-    getWindow();
-    initHomeWidget();
+    // Set the label text with markup
+    GtkLabel* mainTitle = GTK_LABEL(this->get("main_title"));
+    GtkLabel* searchTitle = GTK_LABEL(this->get("search_label"));
+    gtk_label_set_markup(mainTitle, "<b><span size='xx-large'>Xournal++ Home Page</span></b>");
+    gtk_label_set_markup(searchTitle, "<b><span size='xx-large'>Search: </span></b>");
 
-    Builder builder(gladeSearchPath, "homepage.glade");
-
-    GtkWidget* buttonNewDocument = this->get("newDocument_button");
-    GtkWidget* buttonOpenRecentDocument = this->get("openRecentDocument_button");
-    if (buttonNewDocument && buttonOpenRecentDocument) {
-        g_signal_connect(buttonNewDocument, "clicked", G_CALLBACK(on_buttonNewDocument_clicked), this);
-        g_signal_connect(buttonOpenRecentDocument, "clicked", G_CALLBACK(on_buttonOpenRecentDocument_clicked), this);
+	// Connect the search entry to the searchDocumentEntry_activate callback
+    GtkWidget* searchDocumentEntry = this->get("searchDocument_entry");
+    if (searchDocumentEntry) {
+        g_signal_connect(searchDocumentEntry, "activate", G_CALLBACK(on_searchDocumentEntry_activate), this);
     } else {
         g_warning("Buttons not found in Glade file.");
     }
 
+    // Set the width of the search entry to 90% of the window width
+    gint window_width;
+    gtk_window_get_size(GTK_WINDOW(getWindow()), &window_width, nullptr);
+    gtk_widget_set_size_request(searchDocumentEntry, static_cast<gint>(window_width * 0.9), -1);
+
+    // Getting GtkGrid from homepage.glade
+    this->recentDocumentsGrid = this->get("recentDocumentsGrid");
+
+	// Setting button configs in the grid
+    gtk_widget_get_allocation(this->window, &allocation);
+    int button_width = static_cast<gint>(allocation.width * 0.25);
+    int button_height = 450;
+
+	// Including New Document button in the grid and connect the signal handler
+    GtkWidget* buttonNewDocument = gtk_button_new_with_label("New Document");
+    gtk_widget_set_size_request(buttonNewDocument, button_width, button_height);
+    g_signal_connect(buttonNewDocument, "clicked", G_CALLBACK(on_buttonNewDocument_clicked), this);
+
+    gtk_grid_attach(GTK_GRID(this->recentDocumentsGrid), buttonNewDocument, 0, 0, 1, 1);
+
+	// Calling for the recent documents buttons
+    createRecentDocumentButtons(button_width, button_height);
+
     std::cout << "HomeWindow created\n";
+}
+
+std::vector<std::string> HomeWindow::getRecentDocuments() {
+    // Placeholder for actual logic to get recent documents
+    // This should be replaced with actual logic to fetch recent documents
+    return {"/path/to/recent/document1.txt", "/path/to/recent/document2.txt", "/path/to/recent/document3.txt",
+            "/path/to/recent/document4.txt", "/path/to/recent/document5.txt", "/path/to/recent/document6.txt",
+            "/path/to/recent/document7.txt", "/path/to/recent/document8.txt", "/path/to/recent/document9.txt"};
 }
 
 HomeWindow::~HomeWindow() = default;
@@ -121,7 +157,35 @@ void HomeWindow::openFirstXoppFile() {
     }
 }
 
-void HomeWindow::on_buttonOpenRecentDocument_clicked(GtkButton* button, gpointer user_data) {
-    HomeWindow* self = static_cast<HomeWindow*>(user_data);
-    self->openFirstXoppFile();
+void HomeWindow::createRecentDocumentButtons(int button_width, int button_height) {
+    std::vector<std::string> recentDocuments = getRecentDocuments();
+    int row = 0, col = 1;
+
+    for (const auto& doc: recentDocuments) {
+        GtkWidget* button = gtk_button_new_with_label(std::filesystem::path(doc).filename().c_str());
+        gtk_widget_set_size_request(button, button_width, button_height);
+        g_signal_connect(button, "clicked", G_CALLBACK(on_recentDocument_button_clicked), (gpointer)doc.c_str());
+
+        gtk_grid_attach(GTK_GRID(this->recentDocumentsGrid), button, col, row, 1, 1);
+        col++;
+        if (col == 4) {
+            col = 0;
+            row++;
+        }
+    }
+
+    gtk_widget_show_all(this->recentDocumentsGrid);
+}
+
+void HomeWindow::on_recentDocument_button_clicked(GtkButton* button, gpointer user_data) {
+    const char* doc_path = static_cast<const char*>(user_data);
+    std::cout << "Opening document: " << doc_path << std::endl;
+    // Logic to open the document
+}
+
+void HomeWindow::on_searchDocumentEntry_activate(GtkEntry* entry, gpointer user_data) {
+    // Search logic for opening files
+    const gchar* text = gtk_entry_get_text(entry);
+
+    std::cout << "Search Document: " << text << std::endl;
 }
