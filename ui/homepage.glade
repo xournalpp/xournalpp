@@ -21,14 +21,14 @@
           </object>
         </child>
         <child>
-          <object class="GtkBox" id="button_box">
+          <object class="GtkBox" id="newDocument_button_box">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">horizontal</property>
             <property name="halign">center</property>
             <child>
-              <object class="GtkButton" id="start_button">
-                <property name="label" translatable="yes">Start</property>
+              <object class="GtkButton" id="newDocument_button">
+                <property name="label" translatable="yes">New Document</property>
                 <property name="width_request">40</property>
                 <property name="height_request">30</property>
                 <property name="visible">True</property>
@@ -38,6 +38,28 @@
                 <property name="receives_default">True</property>
                 <property name="margin-top">50</property>
                 <accelerator key="Enter" signal="clicked"/>
+              </object>
+            </child>
+          </object>
+        </child>
+		<child>
+          <object class="GtkBox" id="openRecentDocument_button_box">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">horizontal</property>
+            <property name="halign">center</property>
+			<child>
+              <object class="GtkButton" id="openRecentDocument_button">
+                <property name="label" translatable="yes">Open Recent Document</property>
+                <property name="width_request">40</property>
+                <property name="height_request">30</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
+                <property name="receives_default">True</property>
+                <property name="margin-top">50</property>
+                <accelerator key="Escape" signal="clicked"/>
               </object>
             </child>
           </object>
