@@ -1,6 +1,6 @@
 #include "HomeWindow.h"
-#include "MainWindow.h"
 
+#include <iostream>
 #include <regex>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_fr...
@@ -8,16 +8,18 @@
 #include <gio/gio.h>                // for g_cancellable_is_...
 #include <gtk/gtkcssprovider.h>     // for gtk_css_provider_...
 
-#include "control/AudioController.h"                    // for AudioController
-#include "control/Control.h"                            // for Control
-#include "control/DeviceListHelper.h"                   // for getSourceMapping
-#include "control/ScrollHandler.h"                      // for ScrollHandler
-#include "control/actions/ActionDatabase.h"             // for ActionDatabase
-#include "control/jobs/XournalScheduler.h"              // for XournalScheduler
-#include "control/layer/LayerController.h"              // for LayerController
-#include "control/settings/Settings.h"                  // for Settings
-#include "control/settings/SettingsEnums.h"             // for SCROLLBAR_HIDE_HO...
-#include "control/zoom/ZoomControl.h"                   // for ZoomControl
+#include "control/AudioController.h"         // for AudioController
+#include "control/Control.h"                 // for Control
+#include "control/DeviceListHelper.h"        // for getSourceMapping
+#include "control/ScrollHandler.h"           // for ScrollHandler
+#include "control/XournalMain.h"             // for XournalMain
+#include "control/actions/ActionDatabase.h"  // for ActionDatabase
+#include "control/jobs/XournalScheduler.h"   // for XournalScheduler
+#include "control/layer/LayerController.h"   // for LayerController
+#include "control/settings/Settings.h"       // for Settings
+#include "control/settings/SettingsEnums.h"  // for SCROLLBAR_HIDE_HO...
+#include "control/zoom/ZoomControl.h"        // for ZoomControl
+#include "gui/Builder.h"
 #include "gui/FloatingToolbox.h"                        // for FloatingToolbox
 #include "gui/GladeGui.h"                               // for GladeGui
 #include "gui/PdfFloatingToolbox.h"                     // for PdfFloatingToolbox
@@ -40,81 +42,58 @@
 #include "util/gtk4_helper.h"                           // for gtk_widget_get_width
 #include "util/i18n.h"                                  // for FS, _F
 #include "util/raii/CStringWrapper.h"                   // for OwnedCString
-#include "gui/Builder.h"
 
-#include "GladeSearchpath.h"     // for GladeSearchpath
+#include "GladeSearchpath.h"  // for GladeSearchpath
+#include "MainWindow.h"
 #include "ToolbarDefinitions.h"  // for TOOLBAR_DEFINITIO...
 #include "XournalView.h"         // for XournalView
 #include "config-dev.h"          // for TOOLBAR_CONFIG
-#include "filesystem.h"          // for path, exists                            // for GladeGui
+#include "filesystem.h"          // for path, exists
 
-#include <iostream>
+HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* app, MainWindow* win):
+        GladeGui(gladeSearchPath, "homepage.glade", "windowhome"), control(control), win(win) {
+    gtk_window_set_application(GTK_WINDOW(getWindow()), app);
 
-HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkApplication* app, MainWindow* win)
-    : GladeGui(gladeSearchPath, "homepage.glade", "windowhome"), control(control), win(win) {
-   gtk_window_set_application(GTK_WINDOW(getWindow()), app);
-   // if (!getWindow()) {
-     //   g_error("Failed to initialize HomeWindow: window is null");
-    //}
+    // Set window to maximized
+    gtk_window_maximize(GTK_WINDOW(getWindow()));
+
+    // Set window position to center
+    gtk_window_set_position(GTK_WINDOW(getWindow()), GTK_WIN_POS_CENTER);
 
     // Connect the button signals
     getWindow();
     initHomeWidget();
-    
+
     Builder builder(gladeSearchPath, "homepage.glade");
-   //g_signal_connect_swapped(GTK_BUTTON(builder.get("start_button")), "clicked", G_CALLBACK(+[](HomeWindow* self ){self->on_button_click_me_clicked(self->control->getWindow()); }), this);
-   // g_signal_connect_swapped(GTK_BUTTON(builder.get("start_button")), "clicked", G_CALLBACK(), this);
-  GtkWidget* button = this -> get("start_button");
-    if (button) {
-        g_signal_connect(button, "clicked", G_CALLBACK(on_button_click_me_clicked), this);
+    
+    GtkWidget* buttonNewDocument = this->get("newDocument_button");
+	GtkWidget* buttonOpenRecentDocument = this->get("openRecentDocument_button");
+    if (buttonNewDocument && buttonOpenRecentDocument) {
+        g_signal_connect(buttonNewDocument, "clicked", G_CALLBACK(on_buttonNewDocument_clicked), this);
+		g_signal_connect(buttonOpenRecentDocument, "clicked", G_CALLBACK(on_buttonOpenRecentDocument_clicked), this);
     } else {
-        g_warning("Button 'start_button' not found in Glade file.");
+        g_warning("Buttons not found in Glade file.");
     }
 
     std::cout << "HomeWindow created\n";
-    //GtkWidget* button = GTK_WIDGET(get("button_click_me"));
-    //g_signal_connect(button, "clicked", G_CALLBACK(on_button_click_me_clicked), this);
 }
-
 
 HomeWindow::~HomeWindow() = default;
 
-void HomeWindow::initHomeWidget() {
-
-    //no hace ningun efecto dado que parece no tener efecto en el .glade
-    /* gtk_window_set_title(GTK_WINDOW(winHome), "Home");
-    gtk_window_set_default_size(GTK_WINDOW(winHome), 1600, 800); */
-
-    winHome = gtk_window_new(GTK_WINDOW_TOPLEVEL); // no hay forma de verificar si funciona
-    gtk_window_set_position(GTK_WINDOW(winHome), GTK_WIN_POS_CENTER); // parece que no funciona
-
-    //GtkWidget* vpMain = gtk_viewport_new(nullptr, nullptr);
-
-
-   // GtkWidget* vpMain = gtk_viewport_new(nullptr, nullptr);
-
-//    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(winHome), vpMain);
-
-  //  scrollHandling = std::make_unique<ScrollHandling>(GTK_SCROLLABLE(vpMain));
-
-    //this->home = std::make_unique<HomeView>(vpMain, control, scrollHandling.get());
-
-    //control->getZoomControl()->initZoomHandler(this->window, winHome, home.get(), control);
-
-}
+void HomeWindow::initHomeWidget() {}
 
 void HomeWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
 
-//void HomeWindow::on_button_click_me_clicked(MainWindow* win) { //se quitaron los parametros para prueba
-//  win->show(nullptr);
-// std::cout << "Button clicked!\n";
- // g_print("Button clicked!\n");
-//}
+void HomeWindow::on_buttonNewDocument_clicked(GtkButton* button, gpointer user_data) {
+    // Se espera que se cierre/destruya la ventana de homeWindows quedando la MainWindow.
+	HomeWindow* self = static_cast<HomeWindow*>(user_data);
+    gtk_widget_destroy(GTK_WIDGET(self->getWindow()));
 
-void HomeWindow::on_button_click_me_clicked(GtkButton* button, gpointer user_data) {
-    //HomeWindow* self = static_cast<HomeWindow*>(user_data);
-    //std::cout << "Button clicked!\n";
+	std::cout << "New Document Button clicked!\n";
+}
 
-    HomeWindow* self = static_cast<HomeWindow*>(user_data);
-    self->win->show(nullptr);
+void HomeWindow::on_buttonOpenRecentDocument_clicked(GtkButton* button, gpointer user_data) {
+	// Acciones a realizar cuando se abra algun documento reciente.
+
+	std::cout << "Open Recent Document Button clicked!\n";
 }
