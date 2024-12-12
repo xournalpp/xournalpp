@@ -509,20 +509,28 @@ void on_startup(GApplication* application, XMPtr app_data) {
         g_message("Using default latex template in %s", globalLatexTemplatePath.string().c_str());
         app_data->control->getSettings()->save();
     }
-    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application));
+
+	app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application));
     app_data->control->initWindow(app_data->win.get());
-    app_data->homeWin = std::make_unique<HomeWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application), app_data->win.get());
-    app_data->control->initHomeWindow(app_data->homeWin.get());
+    app_data->win->populate(app_data->gladePath.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
         Util::execInUiThread(
-                [=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
+			[=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
     }
 
-    // Do we want stuff in gtk_application_set_app_menu?
+    gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
+
+    app_data->win->show(nullptr);
+	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// Se estan mostrando ambos ventanas. Luego en el manejador de homewindows al realizar
+	// click en el boton de New Document se destruira la ventana homewindow.
+	app_data->homeWin = std::make_unique<HomeWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application), app_data->win.get());
+    app_data->control->initHomeWindow(app_data->homeWin.get());
 
     app_data->homeWin->show(nullptr);
-    /*
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
     fs::path p;
     if (app_data->optFilename) {
         if (g_strv_length(app_data->optFilename) != 1) {
@@ -553,7 +561,6 @@ void on_startup(GApplication* application, XMPtr app_data) {
                 Util::execInUiThread([=]() { ctrl->getWindow()->getXournal()->layoutPages(); });
                 gtk_application_add_window(app, ctrl->getGtkWindow());
             });
-            */
 }
 
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
