@@ -13,12 +13,39 @@
 				<property name="can_focus">False</property>
 				<property name="orientation">GTK_ORIENTATION_VERTICAL</property>
 				<child>
-					<object class="GtkLabel" id="label1">
-						<property name="name">label1</property>
+					<object class="GtkLabel" id="main_title">						
+						<property name="label" translatable="yes">Xournal++ Home Page</property>
 						<property name="visible">True</property>
 						<property name="can_focus">False</property>
-						<property name="label" translatable="yes">Welcome to the Home Page</property>
+						<property name="use_markup">True</property>
 					</object>
+				</child>
+				<child>
+	                <object class="GtkBox" id="searchDocument_box">
+	                    <property name="visible">True</property>
+	                    <property name="can_focus">False</property>
+	                    <property name="orientation">horizontal</property>
+	                    <property name="halign">center</property>
+	                    <property name="margin_top">50</property>
+	                    <property name="margin_bottom">50</property>
+	                    <child>
+	                        <object class="GtkLabel" id="search_label">
+	                            <property name="label" translatable="yes">Search: </property>
+	                            <property name="visible">True</property>
+	                            <property name="can_focus">False</property>
+								<property name="use_markup">True</property>
+	                        </object>
+	                    </child>
+						<child>
+	                        <object class="GtkEntry" id="searchDocument_entry">
+	                            <property name="visible">True</property>
+	                            <property name="can_focus">True</property>
+	                            <property name="hexpand">True</property>
+	                            <property name="halign">center</property>
+	                            <property name="placeholder_text" translatable="yes">Search Document...</property>
+	                        </object>
+	                    </child>
+	                </object>
 				</child>
 				<child>
                     <object class="GtkScrolledWindow" id="RDscrolledwindow">
