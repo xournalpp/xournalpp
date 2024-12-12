@@ -65,17 +65,40 @@ HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     initHomeWidget();
 
     Builder builder(gladeSearchPath, "homepage.glade");
-    
-    GtkWidget* buttonNewDocument = this->get("newDocument_button");
-	GtkWidget* buttonOpenRecentDocument = this->get("openRecentDocument_button");
+
+    /* GtkWidget* buttonNewDocument = this->get("newDocument_button");
+    GtkWidget* buttonOpenRecentDocument = this->get("openRecentDocument_button");
     if (buttonNewDocument && buttonOpenRecentDocument) {
         g_signal_connect(buttonNewDocument, "clicked", G_CALLBACK(on_buttonNewDocument_clicked), this);
-		g_signal_connect(buttonOpenRecentDocument, "clicked", G_CALLBACK(on_buttonOpenRecentDocument_clicked), this);
+        g_signal_connect(buttonOpenRecentDocument, "clicked", G_CALLBACK(on_buttonOpenRecentDocument_clicked), this);
     } else {
         g_warning("Buttons not found in Glade file.");
-    }
+    } */
+
+    // Getting GtkGrid from homepage.glade
+    this->recentDocumentsGrid = this->get("recentDocumentsGrid");
+
+    gtk_widget_get_allocation(this->window, &allocation);
+    int button_width = static_cast<gint>(allocation.width * 0.25);
+    int button_height = 400;
+
+    GtkWidget* buttonNewDocument = gtk_button_new_with_label("New Document");
+    gtk_widget_set_size_request(buttonNewDocument, button_width, button_height);
+    g_signal_connect(buttonNewDocument, "clicked", G_CALLBACK(on_buttonNewDocument_clicked), this);
+
+    gtk_grid_attach(GTK_GRID(this->recentDocumentsGrid), buttonNewDocument, 0, 0, 1, 1);
+    
+    createRecentDocumentButtons(button_width, button_height);
 
     std::cout << "HomeWindow created\n";
+}
+
+std::vector<std::string> HomeWindow::getRecentDocuments() {
+    // Placeholder for actual logic to get recent documents
+    // This should be replaced with actual logic to fetch recent documents
+    return {"/path/to/recent/document1.txt", "/path/to/recent/document2.txt", "/path/to/recent/document3.txt",
+            "/path/to/recent/document4.txt", "/path/to/recent/document5.txt", "/path/to/recent/document6.txt",
+            "/path/to/recent/document7.txt", "/path/to/recent/document8.txt", "/path/to/recent/document9.txt"};
 }
 
 HomeWindow::~HomeWindow() = default;
@@ -86,15 +109,35 @@ void HomeWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
 
 void HomeWindow::on_buttonNewDocument_clicked(GtkButton* button, gpointer user_data) {
     // Se espera que se cierre/destruya la ventana de homeWindows quedando la MainWindow.
-	HomeWindow* self = static_cast<HomeWindow*>(user_data);
+    HomeWindow* self = static_cast<HomeWindow*>(user_data);
     gtk_widget_destroy(GTK_WIDGET(self->getWindow()));
-	gtk_widget_show(GTK_WIDGET(self->win->getWindow()));
+    gtk_widget_show(GTK_WIDGET(self->win->getWindow()));
 
-	std::cout << "New Document Button clicked!\n";
+    std::cout << "New Document Button clicked!\n";
 }
 
-void HomeWindow::on_buttonOpenRecentDocument_clicked(GtkButton* button, gpointer user_data) {
-	// Acciones a realizar cuando se abra algun documento reciente.
+void HomeWindow::createRecentDocumentButtons(int button_width, int button_height) {
+    std::vector<std::string> recentDocuments = getRecentDocuments();
+    int row = 0, col = 1;
 
-	std::cout << "Open Recent Document Button clicked!\n";
+    for (const auto& doc : recentDocuments) {
+        GtkWidget* button = gtk_button_new_with_label(std::filesystem::path(doc).filename().c_str());
+        gtk_widget_set_size_request(button, button_width, button_height);
+        g_signal_connect(button, "clicked", G_CALLBACK(on_recent_document_button_clicked), (gpointer)doc.c_str());
+
+        gtk_grid_attach(GTK_GRID(this->recentDocumentsGrid), button, col, row, 1, 1);
+        col++;
+        if (col == 4) {
+            col = 0;
+            row++;
+        }
+    }
+
+    gtk_widget_show_all(this->recentDocumentsGrid);
+}
+
+void HomeWindow::on_recent_document_button_clicked(GtkButton* button, gpointer user_data) {
+    const char* doc_path = static_cast<const char*>(user_data);
+    std::cout << "Opening document: " << doc_path << std::endl;
+    // Logic to open the document
 }
