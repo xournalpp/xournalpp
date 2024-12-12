@@ -88,6 +88,7 @@ void HomeWindow::on_buttonNewDocument_clicked(GtkButton* button, gpointer user_d
     // Se espera que se cierre/destruya la ventana de homeWindows quedando la MainWindow.
 	HomeWindow* self = static_cast<HomeWindow*>(user_data);
     gtk_widget_destroy(GTK_WIDGET(self->getWindow()));
+	gtk_widget_show(GTK_WIDGET(self->win->getWindow()));
 
 	std::cout << "New Document Button clicked!\n";
 }

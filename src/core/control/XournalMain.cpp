@@ -31,7 +31,7 @@
 #include "control/xojfile/SaveHandler.h"     // for SaveHandler
 #include "gui/GladeSearchpath.h"             // for GladeSearchpath
 #include "gui/HomeWindow.h"                  // for MainWindow
-#include "gui/MainWindow.h" // Add this line to include the definition of MainWindow
+#include "gui/MainWindow.h"                  // Add this line to include the definition of MainWindow
 #include "gui/XournalView.h"                 // for XournalView
 #include "model/Document.h"                  // for Document
 #include "undo/EmergencySaveRestore.h"       // for EmergencySaveRestore
@@ -510,22 +510,24 @@ void on_startup(GApplication* application, XMPtr app_data) {
         app_data->control->getSettings()->save();
     }
 
-	app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application));
+    app_data->win = std::make_unique<MainWindow>(app_data->gladePath.get(), app_data->control.get(),
+                                                 GTK_APPLICATION(application));
     app_data->control->initWindow(app_data->win.get());
     app_data->win->populate(app_data->gladePath.get());
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
         Util::execInUiThread(
-			[=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
+                [=]() { XojMsgBox::showErrorToUser(app_data->control->getGtkWindow(), migrateResult.message); });
     }
 
     gtk_application_set_menubar(GTK_APPLICATION(application), app_data->win->getMenuModel());
 
-    app_data->win->show(nullptr);
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// Se estan mostrando ambos ventanas. Luego en el manejador de homewindows al realizar
-	// click en el boton de New Document se destruira la ventana homewindow.
-	app_data->homeWin = std::make_unique<HomeWindow>(app_data->gladePath.get(), app_data->control.get(), GTK_APPLICATION(application), app_data->win.get());
+    // app_data->win->show(nullptr);
+    //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //  Se estan mostrando ambos ventanas. Luego en el manejador de homewindows al realizar
+    //  click en el boton de New Document se destruira la ventana homewindow.
+    app_data->homeWin = std::make_unique<HomeWindow>(app_data->gladePath.get(), app_data->control.get(),
+                                                     GTK_APPLICATION(application), app_data->win.get());
     app_data->control->initHomeWindow(app_data->homeWin.get());
 
     app_data->homeWin->show(nullptr);
