@@ -41,7 +41,7 @@ private:
     GtkAllocation allocation;
 
     std::vector<std::string> getRecentDocuments();
-    void createRecentDocumentButtons(int button_width, int button_height);
+    void createRecentDocumentButtons(int button_width, int button_height, const gchar* search_text = "");
 
     static void on_searchDocumentEntry_activate(GtkEntry* entry, gpointer user_data); // Search for a recent document
     static void on_recentDocument_button_clicked(GtkButton* button, gpointer user_data); // Open a recent document

@@ -153,9 +153,21 @@ void HomeWindow::on_buttonNewDocument_clicked(GtkButton* button, gpointer user_d
 
 auto HomeWindow::getControl() const -> Control* { return control; }
 
-void HomeWindow::createRecentDocumentButtons(int button_width, int button_height) {
+void HomeWindow::createRecentDocumentButtons(int button_width, int button_height, const gchar* search_text) {
     std::vector<std::string> recentDocuments = getRecentDocuments();
     int row = 0, col = 1;
+    
+    // If search search_text is not empty, filter the recent documents
+    if (g_strcmp0(search_text, "") != 0) {
+        std::cout << "Search text: " << search_text << std::endl;
+        std::vector<std::string> filteredDocuments;
+        std::copy_if(recentDocuments.begin(), recentDocuments.end(), std::back_inserter(filteredDocuments),
+                    [&search_text](const std::string& document) {
+                        return document.find(search_text) != std::string::npos;
+                    });
+
+        recentDocuments = std::move(filteredDocuments);
+    }
 
     for (const auto& doc: recentDocuments) {
         GtkWidget* button = gtk_button_new_with_label(std::filesystem::path(doc).filename().c_str());
@@ -196,6 +208,27 @@ void HomeWindow::on_recentDocument_button_clicked(GtkButton* button, gpointer us
 void HomeWindow::on_searchDocumentEntry_activate(GtkEntry* entry, gpointer user_data) {
     // Search logic for opening files
     const gchar* text = gtk_entry_get_text(entry);
-
+    HomeWindow* self = static_cast<HomeWindow*>(user_data);
     std::cout << "Search Document: " << text << std::endl;
+    
+    // Delating buttons to clear the grid
+    GList* children = gtk_container_get_children(GTK_CONTAINER(self->recentDocumentsGrid));
+    for (GList* iter = children; iter != nullptr; iter = iter->next) {
+        GtkWidget* button = GTK_WIDGET(iter->data);
+        const gchar* button_label = gtk_button_get_label(GTK_BUTTON(button));
+        
+        if (g_strcmp0(button_label, "New Document") == 0) {
+            continue;
+        }
+
+        gtk_widget_destroy(GTK_WIDGET(iter->data));
+    }
+    g_list_free(children);
+
+    // Settings sizes for new buttons, according to search
+    gtk_widget_get_allocation(self->window, &self->allocation);
+    int button_width = static_cast<gint>(self->allocation.width * 0.25);
+    int button_height = 450;
+
+    self->createRecentDocumentButtons(button_width, button_height, text);
 }
