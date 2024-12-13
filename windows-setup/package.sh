@@ -69,6 +69,17 @@ cp /mingw64/bin/gspawn-win64-helper-console.exe "$setup_dir"/bin
 echo "copy gdbus"
 cp /mingw64/bin/gdbus.exe "$setup_dir"/bin
 
+echo "copy lua-lgi and dependencies"
+cp /mingw64/bin/libgirepository-1.0-1.dll "$setup_dir"/bin
+mkdir -p "$setup_dir"/lib/lua/5.4/lgi
+cp /mingw64/lib/lua/5.4/lgi/corelgilua51.dll "$setup_dir"/lib/lua/5.4/lgi
+cp /mingw64/lib/libgirepository-1.0.dll.a "$setup_dir"/lib
+mkdir "$setup_dir"/lib/girepository-1.0
+cp /mingw64/lib/girepository-1.0/*.typelib "$setup_dir"/lib/girepository-1.0
+mkdir -p "$setup_dir"/share/lua/5.4
+cp /mingw64/share/lua/5.4/lgi.lua "$setup_dir"/share/lua/5.4
+cp -r /mingw64/share/lua/5.4/lgi/ "$setup_dir"/share/lua/5.4
+
 echo "create installer"
 bash make_version_nsh.sh
 "/c/Program Files (x86)/NSIS/Bin/makensis.exe" xournalpp.nsi
