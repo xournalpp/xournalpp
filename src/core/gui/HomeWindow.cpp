@@ -75,7 +75,7 @@ HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     gtk_label_set_markup(mainTitle, "<b><span size='xx-large'>Xournal++ Home Page</span></b>");
     gtk_label_set_markup(searchTitle, "<b><span size='xx-large'>Search: </span></b>");
 
-	// Connect the search entry to the searchDocumentEntry_activate callback
+    // Connect the search entry to the searchDocumentEntry_activate callback
     GtkWidget* searchDocumentEntry = this->get("searchDocument_entry");
     if (searchDocumentEntry) {
         g_signal_connect(searchDocumentEntry, "activate", G_CALLBACK(on_searchDocumentEntry_activate), this);
@@ -91,19 +91,19 @@ HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
     // Getting GtkGrid from homepage.glade
     this->recentDocumentsGrid = this->get("recentDocumentsGrid");
 
-	// Setting button configs in the grid
+    // Setting button configs in the grid
     gtk_widget_get_allocation(this->window, &allocation);
     int button_width = static_cast<gint>(allocation.width * 0.25);
     int button_height = 450;
 
-	// Including New Document button in the grid and connect the signal handler
+    // Including New Document button in the grid and connect the signal handler
     GtkWidget* buttonNewDocument = gtk_button_new_with_label("New Document");
     gtk_widget_set_size_request(buttonNewDocument, button_width, button_height);
     g_signal_connect(buttonNewDocument, "clicked", G_CALLBACK(on_buttonNewDocument_clicked), this);
 
     gtk_grid_attach(GTK_GRID(this->recentDocumentsGrid), buttonNewDocument, 0, 0, 1, 1);
 
-	// Calling for the recent documents buttons
+    // Calling for the recent documents buttons
     createRecentDocumentButtons(button_width, button_height);
 
     std::cout << "HomeWindow created\n";
@@ -112,9 +112,21 @@ HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 std::vector<std::string> HomeWindow::getRecentDocuments() {
     // Placeholder for actual logic to get recent documents
     // This should be replaced with actual logic to fetch recent documents
-    return {"/path/to/recent/document1.txt", "/path/to/recent/document2.txt", "/path/to/recent/document3.txt",
-            "/path/to/recent/document4.txt", "/path/to/recent/document5.txt", "/path/to/recent/document6.txt",
-            "/path/to/recent/document7.txt", "/path/to/recent/document8.txt", "/path/to/recent/document9.txt"};
+    std::vector<std::string> recentDocuments;
+    Control* ctrl = this->getControl();
+    if (!ctrl) {
+        std::cerr << "Control is null\n";
+        return recentDocuments;  // Return an empty vector
+    }
+
+    auto recent = std::make_unique<RecentDocumentsSubmenu>(ctrl, GTK_APPLICATION_WINDOW(this->getWindow()));
+    recent->updateXoppFile();
+
+    for (const auto& path: recent->xoppFiles) {
+        recentDocuments.push_back(path.string());
+    }
+
+    return recentDocuments;
 }
 
 HomeWindow::~HomeWindow() = default;
@@ -164,7 +176,8 @@ void HomeWindow::createRecentDocumentButtons(int button_width, int button_height
     for (const auto& doc: recentDocuments) {
         GtkWidget* button = gtk_button_new_with_label(std::filesystem::path(doc).filename().c_str());
         gtk_widget_set_size_request(button, button_width, button_height);
-        g_signal_connect(button, "clicked", G_CALLBACK(on_recentDocument_button_clicked), (gpointer)doc.c_str());
+        g_object_set_data(G_OBJECT(button), "home_window", this);
+        g_signal_connect(button, "clicked", G_CALLBACK(on_recentDocument_button_clicked), g_strdup(doc.c_str()));
 
         gtk_grid_attach(GTK_GRID(this->recentDocumentsGrid), button, col, row, 1, 1);
         col++;
@@ -178,9 +191,22 @@ void HomeWindow::createRecentDocumentButtons(int button_width, int button_height
 }
 
 void HomeWindow::on_recentDocument_button_clicked(GtkButton* button, gpointer user_data) {
-    const char* doc_path = static_cast<const char*>(user_data);
+    HomeWindow* self = static_cast<HomeWindow*>(g_object_get_data(G_OBJECT(button), "home_window"));
+    std::string doc_path = static_cast<const char*>(user_data);
     std::cout << "Opening document: " << doc_path << std::endl;
     // Logic to open the document
+    Control* ctrl = self->getControl();
+    if (!ctrl) {
+        std::cerr << "Control is null\n";
+        return;
+    }
+    std::cout << "Attempting to open file: " << doc_path << '\n';
+    ctrl->openFile(doc_path);
+    std::cout << "Opened file: " << doc_path << '\n';
+    gtk_widget_destroy(GTK_WIDGET(self->getWindow()));
+    gtk_widget_show(GTK_WIDGET(self->win->getWindow()));
+
+    g_free(user_data);
 }
 
 void HomeWindow::on_searchDocumentEntry_activate(GtkEntry* entry, gpointer user_data) {

@@ -24,6 +24,7 @@ public:
     void initHomeWidget();
     void show(GtkWindow* app) override;
     void openFirstXoppFile();
+    Control* getControl() const;
 
 private:
     Control* control;
