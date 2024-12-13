@@ -230,13 +230,6 @@ void RecentDocumentsSubmenu::openFileCallback(GSimpleAction* ga, GVariant* param
     self->control->openFile(path);
 }
 
-void RecentDocumentsSubmenu::openFirstFile(RecentDocumentsSubmenu* self) {
-    size_t index = 0;
-    auto& path =
-            index < self->xoppFiles.size() ? self->xoppFiles[index] : self->pdfFiles[index - self->xoppFiles.size()];
-    self->control->openFile(path);
-}
-
 void RecentDocumentsSubmenu::removeFileCallback(GSimpleAction* ga, GVariant* parameter, RecentDocumentsSubmenu* self) {
     auto index = g_variant_get_uint64(parameter);
     auto& path =

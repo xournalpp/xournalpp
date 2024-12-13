@@ -39,8 +39,8 @@
 #include "control/tools/TextEditor.h"                            // for Text...
 #include "control/xojfile/LoadHandler.h"                         // for Load...
 #include "control/zoom/ZoomControl.h"                            // for Zoom...
+#include "gui/HomeWindow.h"                                      // for new Home page
 #include "gui/MainWindow.h"                                      // for Main...
-#include "gui/HomeWindow.h"
 #include "gui/PageView.h"                                        // for XojP...
 #include "gui/PdfFloatingToolbox.h"                              // for PdfF...
 #include "gui/SearchBar.h"                                       // for Sear...
@@ -279,12 +279,12 @@ void Control::saveSettings() {
     this->sidebar->saveSize();
 }
 
-void Control::initHomeWindow(HomeWindow* homeWin){
-    this->homeWin = homeWin;
-
-  //  XojMsgBox::setDefaultWindow(getGtkWindow());
-
-}
+/**
+ * Initializes the new home window for the application.
+ *
+ * @param homeWin A pointer to the HomeWindow instance to be initialized.
+ */
+void Control::initHomeWindow(HomeWindow* homeWin) { this->homeWin = homeWin; }
 
 void Control::initWindow(MainWindow* win) {
     this->win = win;

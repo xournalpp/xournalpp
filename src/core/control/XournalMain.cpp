@@ -524,8 +524,8 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     // app_data->win->show(nullptr);
     //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    //  Se estan mostrando ambos ventanas. Luego en el manejador de homewindows al realizar
-    //  click en el boton de New Document se destruira la ventana homewindow.
+    //  Both windows are being displayed. Then, in the HomeWindow handler, when clicking the New Document button,
+    // the HomeWindow will be destroyed.
     app_data->homeWin = std::make_unique<HomeWindow>(app_data->gladePath.get(), app_data->control.get(),
                                                      GTK_APPLICATION(application), app_data->win.get());
     app_data->control->initHomeWindow(app_data->homeWin.get());

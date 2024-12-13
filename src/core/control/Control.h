@@ -87,7 +87,7 @@ public:
     ~Control() override;
 
     void initWindow(MainWindow* win);
-    void initHomeWindow(HomeWindow* homeWin);
+    void initHomeWindow(HomeWindow* homeWin); //Initializes the new home page
 
 public:
     /// Asymchronously closes the current document and replaces it by a new file

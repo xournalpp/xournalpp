@@ -1,3 +1,11 @@
+/*
+ * HomeWindow.cpp
+ *
+ * This file contains the implementation of the HomeWindow class, which is responsible for managing the home window of
+ * the application. The HomeWindow class provides functionality to initialize and display the home window, handle user
+ * interactions, and manage new and recent documents.
+ */
+
 #include "HomeWindow.h"
 
 #include <iostream>
@@ -44,8 +52,8 @@
 #include "util/i18n.h"                                  // for FS, _F
 #include "util/raii/CStringWrapper.h"                   // for OwnedCString
 
-#include "GladeSearchpath.h"  // for GladeSearchpath
-#include "MainWindow.h"
+#include "GladeSearchpath.h"     // for GladeSearchpath
+#include "MainWindow.h"          // to get the MainWindow
 #include "ToolbarDefinitions.h"  // for TOOLBAR_DEFINITIO...
 #include "XournalView.h"         // for XournalView
 #include "config-dev.h"          // for TOOLBAR_CONFIG
@@ -110,8 +118,7 @@ HomeWindow::HomeWindow(GladeSearchpath* gladeSearchPath, Control* control, GtkAp
 }
 
 std::vector<std::string> HomeWindow::getRecentDocuments() {
-    // Placeholder for actual logic to get recent documents
-    // This should be replaced with actual logic to fetch recent documents
+    // Logic to get recent documents
     std::vector<std::string> recentDocuments;
     Control* ctrl = this->getControl();
     if (!ctrl) {
@@ -145,29 +152,6 @@ void HomeWindow::on_buttonNewDocument_clicked(GtkButton* button, gpointer user_d
 }
 
 auto HomeWindow::getControl() const -> Control* { return control; }
-
-
-void HomeWindow::openFirstXoppFile() {
-    Control* ctrl = this->getControl();
-    if (!ctrl) {
-        std::cerr << "Control is null\n";
-        return;
-    }
-
-
-    auto recent = std::make_unique<RecentDocumentsSubmenu>(ctrl, GTK_APPLICATION_WINDOW(this->getWindow()));
-    recent->updateXoppFile();
-    if (!recent->xoppFiles.empty()) {
-        const auto& path = recent->xoppFiles.front();
-        std::cout << "Attempting to open file: " << path << '\n';
-        ctrl->openFile(path);
-        std::cout << "Opened file: " << path << '\n';
-        gtk_widget_destroy(GTK_WIDGET(this->getWindow()));
-        gtk_widget_show(GTK_WIDGET(this->win->getWindow()));
-    } else {
-        std::cerr << "No xopp files available\n";
-    }
-}
 
 void HomeWindow::createRecentDocumentButtons(int button_width, int button_height) {
     std::vector<std::string> recentDocuments = getRecentDocuments();

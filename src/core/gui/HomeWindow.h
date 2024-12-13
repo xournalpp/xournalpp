@@ -1,4 +1,12 @@
-
+/*
+ * HomeWindow.h
+ *
+ * The new start home page
+ * 
+ *  This file defines the HomeWindow class, which is responsible for managing the new home window of the application.
+ * The HomeWindow class provides functionality to initialize and display the home window, handle user interactions,
+ * and manage recent documents.
+ */
 
 #pragma once
 
@@ -35,7 +43,7 @@ private:
     std::vector<std::string> getRecentDocuments();
     void createRecentDocumentButtons(int button_width, int button_height);
 
-    static void on_searchDocumentEntry_activate(GtkEntry* entry, gpointer user_data);
-    static void on_recentDocument_button_clicked(GtkButton* button, gpointer user_data);
-    static void on_buttonNewDocument_clicked(GtkButton* button, gpointer user_data);
+    static void on_searchDocumentEntry_activate(GtkEntry* entry, gpointer user_data); // Search for a recent document
+    static void on_recentDocument_button_clicked(GtkButton* button, gpointer user_data); // Open a recent document
+    static void on_buttonNewDocument_clicked(GtkButton* button, gpointer user_data); // Create a new document
 };

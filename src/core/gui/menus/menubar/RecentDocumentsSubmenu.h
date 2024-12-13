@@ -38,7 +38,6 @@ public:
     void updateXoppFile();
     void setDisabled(bool disabled) override;
     void addToMenubar(Menubar& menubar) override;
-    void openFirstFile(RecentDocumentsSubmenu* self);
     TinyVector<fs::path, RecentManager::MAX_RECENT> xoppFiles;
 
 private:
