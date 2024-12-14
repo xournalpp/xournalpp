@@ -57,12 +57,6 @@ private:
 
     KeyBindingsGroup<ScrollHandler> scrollShortcuts;
     KeyBindingsGroup<Control> otherShortcuts;
-    // KeyBindingsGroup<TextEditor> textEditorShortcuts;
-    // KeyBindingsGroup<SplineHandler> splineHandlerShortcuts;
-    // KeyBindingsGroup<BaseShapeHandler> shapeHandlerShortcuts;
-    // KeyBindingsGroup<EditSelection> selectionShortcuts;
-    // KeyBindingsGroup<GeometryToolInputHandler> geometryToolsShortcuts;
-    // KeyBindingsGroup<VerticalTool> verticalToolsShortcuts;
 
     /**
      * GTK defines default bindings (arrow keys, Page_Up/Down, Tab and so on). We want to grab those before GTK does.

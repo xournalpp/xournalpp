@@ -77,17 +77,14 @@ enum class Action : size_t {
     ZOOM_FIT,
     ZOOM,  ///< Action whose state is the current zoom value
 
-    // Navigation
-    NAV_GOTO_FIRST,
-    NAV_GOTO_PREVIOUS,
-    NAV_GOTO_PAGE,
-    NAV_GOTO_NEXT,
-    NAV_GOTO_LAST,
-    NAV_GOTO_NEXT_ANNOTATED_PAGE,
-    NAV_GOTO_PREVIOUS_ANNOTATED_PAGE,
-    NAV_MOVE_ONE_PAGE,
-    NAV_MOVE_BY_VISIBLE_AREA,
-    NAV_MOVE_ONE_STEP,
+    // Menu navigation
+    GOTO_FIRST,
+    GOTO_PREVIOUS,
+    GOTO_PAGE,
+    GOTO_NEXT,
+    GOTO_LAST,
+    GOTO_NEXT_ANNOTATED_PAGE,
+    GOTO_PREVIOUS_ANNOTATED_PAGE,
 
     // Menu Journal
     NEW_PAGE_BEFORE,
