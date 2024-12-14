@@ -1,12 +1,31 @@
 #include "ShortcutConfiguration.h"
 
-#include <control/ScrollHandler.h>
+#include <algorithm>
 
+#include "control/Control.h"
+#include "control/ScrollHandler.h"
 #include "control/ToolEnums.h"
 #include "control/actions/ActionDatabase.h"
+#include "gui/MainWindow.h"
+#include "gui/toolbarMenubar/ColorToolItem.h"
+#include "gui/toolbarMenubar/ToolMenuHandler.h"
 
-// clang-format off
-ShortcutConfiguration::ShortcutConfiguration() : actionsShortcuts({
+static auto defaultActionShortcuts() -> std::unordered_map<ActionKey, std::vector<Shortcut>>;
+static auto defaultScrollShortcuts() -> KeyBindingsGroup<ScrollHandler>;
+static auto defaultOtherShortcuts() -> KeyBindingsGroup<Control>;
+
+static auto computeShunt(const std::unordered_map<ActionKey, std::vector<Shortcut>>& actionsShortcuts)
+        -> KeyBindingsGroup<ActionDatabase>;
+
+ShortcutConfiguration::ShortcutConfiguration():
+        actionsShortcuts(defaultActionShortcuts()),
+        scrollShortcuts(defaultScrollShortcuts()),
+        otherShortcuts(defaultOtherShortcuts()),
+        shuntGtkDefaultBindings(computeShunt(actionsShortcuts)) {}
+
+static auto defaultActionShortcuts() -> std::unordered_map<ActionKey, std::vector<Shortcut>> {
+    return std::unordered_map<ActionKey, std::vector<Shortcut>>({
+            // clang-format off
         {Action::QUIT,                                       {{CTRL_OR_META, GDK_KEY_q}}},  // Name: Quit
         {Action::NEW_FILE,                                   {{CTRL_OR_META, GDK_KEY_n}}},  // Name: New
         {Action::OPEN,                                       {{CTRL_OR_META, GDK_KEY_o}}},  // Name: Open
@@ -69,8 +88,10 @@ ShortcutConfiguration::ShortcutConfiguration() : actionsShortcuts({
                                                               {CTRL_OR_META, GDK_KEY_equal}}},  // Name: Zoom in
 
         {Action::NAV_GOTO_PAGE,                              {{CTRL_OR_META, GDK_KEY_g}}},  // Name _Goto Page
-        {Action::NAV_GOTO_NEXT_ANNOTATED_PAGE,               {{CTRL_OR_META & SHIFT, GDK_KEY_Page_Down}}},  // Name N_ext Annotated Page
-        {Action::NAV_GOTO_PREVIOUS_ANNOTATED_PAGE,           {{CTRL_OR_META & SHIFT, GDK_KEY_Page_Up}}},  // Name P_revious Annotated Page
+        {Action::NAV_GOTO_NEXT_ANNOTATED_PAGE,               {{CTRL_OR_META & SHIFT, GDK_KEY_Page_Down},
+                                                              {CTRL_OR_META & SHIFT, GDK_KEY_KP_Page_Down}}},  // Name N_ext Annotated Page
+        {Action::NAV_GOTO_PREVIOUS_ANNOTATED_PAGE,           {{CTRL_OR_META & SHIFT, GDK_KEY_Page_Up},
+                                                              {CTRL_OR_META & SHIFT, GDK_KEY_KP_Page_Up}}},  // Name P_revious Annotated Page
         {Action::NAV_GOTO_NEXT,                              {{CTRL_OR_META, GDK_KEY_Page_Down},
                                                               {CTRL_OR_META, GDK_KEY_KP_Page_Down}}},  // Name _Next Page
         {Action::NAV_GOTO_PREVIOUS,                          {{CTRL_OR_META, GDK_KEY_Page_Up},
@@ -79,17 +100,160 @@ ShortcutConfiguration::ShortcutConfiguration() : actionsShortcuts({
                                                               {NONE, GDK_KEY_KP_End}}},  // Name _Last Page
         {Action::NAV_GOTO_FIRST,                             {{NONE, GDK_KEY_Home},
                                                               {NONE, GDK_KEY_KP_Home}}},  // Name _First Pages
+            // clang-format on
+    });
+}
 
-        // Put those in as well??
-        // {{Action::NAV_MOVE_BY_VISIBLE_AREA, ScrollHandler::DOWN}, {{NONE, GDK_KEY_Page_Down}, {NONE, GDK_KEY_KP_Page_Down}}},
-        // {{Action::NAV_MOVE_BY_VISIBLE_AREA, ScrollHandler::UP}, {{NONE, GDK_KEY_Page_Up}, {NONE, GDK_KEY_KP_Page_Up}}},
-        // {{Action::NAV_MOVE_ONE_PAGE, ScrollHandler::LEFT}, {{SHIFT, GDK_KEY_Left}, {SHIFT, GDK_KEY_KP_Left}}},
-        // {{Action::NAV_MOVE_ONE_PAGE, ScrollHandler::RIGHT}, {{SHIFT, GDK_KEY_Right}, {SHIFT, GDK_KEY_KP_Right}}},
-        // {{Action::NAV_MOVE_ONE_PAGE, ScrollHandler::DOWN}, {{SHIFT, GDK_KEY_Down}, {SHIFT, GDK_KEY_KP_Down}}},
-        // {{Action::NAV_MOVE_ONE_PAGE, ScrollHandler::UP}, {{SHIFT, GDK_KEY_Up}, {SHIFT, GDK_KEY_KP_Up}}},
-        // {{Action::NAV_MOVE_ONE_STEP, ScrollHandler::LEFT}, {{NONE, GDK_KEY_Left}, {NONE, GDK_KEY_KP_Left}}},
-        // {{Action::NAV_MOVE_ONE_STEP, ScrollHandler::RIGHT}, {{NONE, GDK_KEY_Right}, {NONE, GDK_KEY_KP_Right}}},
-        // {{Action::NAV_MOVE_ONE_STEP, ScrollHandler::DOWN}, {{NONE, GDK_KEY_Down}, {NONE, GDK_KEY_KP_Down}}},
-        // {{Action::NAV_MOVE_ONE_STEP, ScrollHandler::UP}, {{NONE, GDK_KEY_Up}, {NONE, GDK_KEY_KP_Up}}},
-}) {}
-// clang-format on
+static auto defaultScrollShortcuts() -> KeyBindingsGroup<ScrollHandler> {
+    /*
+     * TODO
+     * Before this PR: GDK_KEY_KP_Up did ScrollHandler::scrollByOnePage and SHIFT + GDK_KEY_KP_Up did nothing
+     * and similarly for other directions
+     * I changed that to: GDK_KEY_KP_Up does as GDK_KEY_Up and SHIFT + GDK_KEY_KP_Up does ScrollHandler::scrollByOnePage
+     *
+     * This is up for debate
+     */
+
+    using KeyBindingsUtil::wrap;
+
+    // clang-format off
+    return KeyBindingsGroup<ScrollHandler>({
+        // Nb: other scrolling key bindings are defined above, with Action::NAV_...
+        {{NONE, GDK_KEY_Page_Down},    wrap<&ScrollHandler::scrollByVisibleArea, ScrollHandler::DOWN>},
+        {{NONE, GDK_KEY_KP_Page_Down}, wrap<&ScrollHandler::scrollByVisibleArea, ScrollHandler::DOWN>},
+        {{NONE, GDK_KEY_Page_Up},      wrap<&ScrollHandler::scrollByVisibleArea, ScrollHandler::UP>},
+        {{NONE, GDK_KEY_KP_Page_Up},   wrap<&ScrollHandler::scrollByVisibleArea, ScrollHandler::UP>},
+
+        {{SHIFT, GDK_KEY_KP_Up},       wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::UP>},
+        {{SHIFT, GDK_KEY_Up},          wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::UP>},
+        {{SHIFT, GDK_KEY_KP_Down},     wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::DOWN>},
+        {{SHIFT, GDK_KEY_Down},        wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::DOWN>},
+        {{SHIFT, GDK_KEY_KP_Left},     wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::LEFT>},
+        {{SHIFT, GDK_KEY_Left},        wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::LEFT>},
+        {{SHIFT, GDK_KEY_KP_Right},    wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::RIGHT>},
+        {{SHIFT, GDK_KEY_Right},       wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::RIGHT>},
+
+        {{NONE, GDK_KEY_KP_Up},        wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::UP>},
+        {{NONE, GDK_KEY_Up},           wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::UP>},
+        {{NONE, GDK_KEY_KP_Down},      wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::DOWN>},
+        {{NONE, GDK_KEY_Down},         wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::DOWN>},
+        {{NONE, GDK_KEY_KP_Left},      wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::LEFT>},
+        {{NONE, GDK_KEY_Left},         wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::LEFT>},
+        {{NONE, GDK_KEY_KP_Right},     wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::RIGHT>},
+        {{NONE, GDK_KEY_Right},        wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::RIGHT>},
+
+        // vim key bindings - kept for now but to be removed once shortcuts are configurable
+        {{SHIFT, GDK_KEY_k},           wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::UP>},
+        {{SHIFT, GDK_KEY_K},           wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::UP>},
+        {{SHIFT, GDK_KEY_j},           wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::DOWN>},
+        {{SHIFT, GDK_KEY_J},           wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::DOWN>},
+        {{SHIFT, GDK_KEY_h},           wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::LEFT>},
+        {{SHIFT, GDK_KEY_l},           wrap<&ScrollHandler::scrollByOnePage, ScrollHandler::RIGHT>},
+        {{NONE, GDK_KEY_k},            wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::UP>},
+        {{NONE, GDK_KEY_K},            wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::UP>},
+        {{NONE, GDK_KEY_j},            wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::DOWN>},
+        {{NONE, GDK_KEY_J},            wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::DOWN>},
+        {{NONE, GDK_KEY_h},            wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::LEFT>},
+        {{NONE, GDK_KEY_l},            wrap<&ScrollHandler::scrollByOneStep, ScrollHandler::RIGHT>},
+    });
+    // clang-format on
+}
+
+
+template <size_t n>
+static void setColorByNumber(Control* ctrl) {
+    if (auto* db = ctrl->getActionDatabase(); db->isActionEnabled(Action::TOOL_COLOR)) {
+        const auto& colors = ctrl->getWindow()->getToolMenuHandler()->getColorToolItems();
+        if (n < colors.size()) {
+            db->fireChangeActionState(Action::TOOL_COLOR, colors[n]->getColor());
+        }
+    }
+}
+static auto defaultOtherShortcuts() -> KeyBindingsGroup<Control> {
+    return KeyBindingsGroup<Control>({
+            {{NONE, GDK_KEY_1}, setColorByNumber<0>},
+            {{NONE, GDK_KEY_2}, setColorByNumber<1>},
+            {{NONE, GDK_KEY_3}, setColorByNumber<2>},
+            {{NONE, GDK_KEY_4}, setColorByNumber<3>},
+            {{NONE, GDK_KEY_5}, setColorByNumber<4>},
+            {{NONE, GDK_KEY_6}, setColorByNumber<5>},
+            {{NONE, GDK_KEY_7}, setColorByNumber<6>},
+            {{NONE, GDK_KEY_8}, setColorByNumber<7>},
+            {{NONE, GDK_KEY_9}, setColorByNumber<8>},
+            {{NONE, GDK_KEY_0}, setColorByNumber<9>},
+    });
+}
+
+static auto computeShunt(const std::unordered_map<ActionKey, std::vector<Shortcut>>& actionsShortcuts)
+        -> KeyBindingsGroup<ActionDatabase> {
+    static constexpr PressedModifier CTRL(GDK_CONTROL_MASK);  // GTK does not use META on MacOS for those key bindings
+    /// List of key bindings set by GTK in our main widget's ancestors
+    static constexpr std::array<Shortcut, 40> gtkBindings = {{
+            // Key bindings in GtkScrolledWindow
+            {NONE, GDK_KEY_Home},
+            {NONE, GDK_KEY_KP_Home},
+            {NONE, GDK_KEY_End},
+            {NONE, GDK_KEY_KP_End},
+            {CTRL, GDK_KEY_Home},
+            {CTRL, GDK_KEY_KP_Home},
+            {CTRL, GDK_KEY_End},
+            {CTRL, GDK_KEY_KP_End},
+            {NONE, GDK_KEY_Page_Up},
+            {NONE, GDK_KEY_KP_Page_Up},
+            {NONE, GDK_KEY_Page_Down},
+            {NONE, GDK_KEY_KP_Page_Down},
+            {CTRL, GDK_KEY_Page_Up},
+            {CTRL, GDK_KEY_KP_Page_Up},
+            {CTRL, GDK_KEY_Page_Down},
+            {CTRL, GDK_KEY_KP_Page_Down},
+            {CTRL, GDK_KEY_Left},
+            {CTRL, GDK_KEY_KP_Left},
+            {CTRL, GDK_KEY_Right},
+            {CTRL, GDK_KEY_KP_Right},
+            {CTRL, GDK_KEY_Up},
+            {CTRL, GDK_KEY_KP_Up},
+            {CTRL, GDK_KEY_Down},
+            {CTRL, GDK_KEY_KP_Down},
+            {CTRL, GDK_KEY_Tab},
+            {CTRL, GDK_KEY_KP_Tab},
+            {CTRL & SHIFT, GDK_KEY_Tab},
+            {CTRL & SHIFT, GDK_KEY_KP_Tab},
+
+            // Key bindings in GtkPaned not already above
+            {NONE, GDK_KEY_Tab},
+            {NONE, GDK_KEY_KP_Tab},
+            {SHIFT, GDK_KEY_Tab},
+            {SHIFT, GDK_KEY_KP_Tab},
+
+            // Key bindings in GtkWindow not already above
+            {NONE, GDK_KEY_Left},
+            {NONE, GDK_KEY_KP_Left},
+            {NONE, GDK_KEY_Right},
+            {NONE, GDK_KEY_KP_Right},
+            {NONE, GDK_KEY_Up},
+            {NONE, GDK_KEY_KP_Up},
+            {NONE, GDK_KEY_Down},
+            {NONE, GDK_KEY_KP_Down},
+            // There are other more specific bindings on space/return or Ctrl+Shift+D and Ctrl+Shift+I in Gtkwindow
+            // There are other more specific bindings on escape/space/return or (Shift+)F6/F8 in GtkPaned
+            // Include them??
+    }};
+    KeyBindingsGroup<ActionDatabase>::table_type map;
+    auto noop = +[](ActionDatabase*) {};
+    for (auto&& s: gtkBindings) {
+        for (auto&& [a, accels]: actionsShortcuts) {
+            if (std::find(accels.begin(), accels.end(), s) != accels.end()) {
+                if (a.parameter) {
+                    map.emplace(s, [act = a.action, p = a.parameter.value()](ActionDatabase* db) {
+                        db->fireActivateAction(act, p);
+                    });
+                } else {
+                    map.emplace(s, [act = a.action](ActionDatabase* db) { db->fireActivateAction(act); });
+                }
+                break;
+            }
+        }
+        map.try_emplace(s, noop);  // Catch the unused shortcuts anyway, to suppress GTK's default binding
+    }
+    return KeyBindingsGroup<ActionDatabase>(std::move(map));
+}

@@ -437,7 +437,7 @@ struct ActionProperties<Action::ZOOM> {
 /** Navigation menu **/
 template <>
 struct ActionProperties<Action::NAV_GOTO_FIRST> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->scrollToPage(0); }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->goToFirstPage(); }
 };
 template <>
 struct ActionProperties<Action::NAV_GOTO_PREVIOUS> {
@@ -454,9 +454,7 @@ struct ActionProperties<Action::NAV_GOTO_NEXT> {
 };
 template <>
 struct ActionProperties<Action::NAV_GOTO_LAST> {
-    static void callback(GSimpleAction*, GVariant*, Control* ctrl) {
-        ctrl->getScrollHandler()->scrollToPage(ctrl->getDocument()->getPageCount() - 1);
-    }
+    static void callback(GSimpleAction*, GVariant*, Control* ctrl) { ctrl->getScrollHandler()->goToLastPage(); }
 };
 
 template <>

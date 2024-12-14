@@ -285,8 +285,8 @@ void Control::initWindow(MainWindow* win) {
     this->win = win;
 
     this->actionDB = std::make_unique<ActionDatabase>(this);
-    ShortcutConfiguration conf;
-    this->actionDB->setShortcuts(conf);
+    this->shortcuts = std::make_unique<ShortcutConfiguration>();
+    this->actionDB->setShortcuts(*this->shortcuts);
 
     selectTool(toolHandler->getToolType());
     this->sidebar = new Sidebar(win, this);
@@ -2569,6 +2569,8 @@ auto Control::getLayerController() const -> LayerController* { return this->laye
 auto Control::getPluginController() const -> PluginController* { return this->pluginController; }
 
 auto Control::getPalette() const -> const Palette& { return *(this->palette); }
+
+auto Control::getShortcuts() const -> const ShortcutConfiguration& { return *this->shortcuts; }
 
 auto Control::loadPaletteFromSettings() -> void {
     const auto palettePath = this->settings->getColorPaletteSetting();
