@@ -87,18 +87,18 @@ static auto defaultActionShortcuts() -> std::unordered_map<ActionKey, std::vecto
                                                               {CTRL_OR_META, GDK_KEY_KP_Add},
                                                               {CTRL_OR_META, GDK_KEY_equal}}},  // Name: Zoom in
 
-        {Action::NAV_GOTO_PAGE,                              {{CTRL_OR_META, GDK_KEY_g}}},  // Name _Goto Page
-        {Action::NAV_GOTO_NEXT_ANNOTATED_PAGE,               {{CTRL_OR_META & SHIFT, GDK_KEY_Page_Down},
+        {Action::GOTO_PAGE,                                  {{CTRL_OR_META, GDK_KEY_g}}},  // Name _Goto Page
+        {Action::GOTO_NEXT_ANNOTATED_PAGE,                   {{CTRL_OR_META & SHIFT, GDK_KEY_Page_Down},
                                                               {CTRL_OR_META & SHIFT, GDK_KEY_KP_Page_Down}}},  // Name N_ext Annotated Page
-        {Action::NAV_GOTO_PREVIOUS_ANNOTATED_PAGE,           {{CTRL_OR_META & SHIFT, GDK_KEY_Page_Up},
+        {Action::GOTO_PREVIOUS_ANNOTATED_PAGE,               {{CTRL_OR_META & SHIFT, GDK_KEY_Page_Up},
                                                               {CTRL_OR_META & SHIFT, GDK_KEY_KP_Page_Up}}},  // Name P_revious Annotated Page
-        {Action::NAV_GOTO_NEXT,                              {{CTRL_OR_META, GDK_KEY_Page_Down},
+        {Action::GOTO_NEXT,                                  {{CTRL_OR_META, GDK_KEY_Page_Down},
                                                               {CTRL_OR_META, GDK_KEY_KP_Page_Down}}},  // Name _Next Page
-        {Action::NAV_GOTO_PREVIOUS,                          {{CTRL_OR_META, GDK_KEY_Page_Up},
+        {Action::GOTO_PREVIOUS,                              {{CTRL_OR_META, GDK_KEY_Page_Up},
                                                               {CTRL_OR_META, GDK_KEY_KP_Page_Up}}},  // Name _Previous Page
-        {Action::NAV_GOTO_LAST,                              {{NONE, GDK_KEY_End},
+        {Action::GOTO_LAST,                                  {{NONE, GDK_KEY_End},
                                                               {NONE, GDK_KEY_KP_End}}},  // Name _Last Page
-        {Action::NAV_GOTO_FIRST,                             {{NONE, GDK_KEY_Home},
+        {Action::GOTO_FIRST,                                 {{NONE, GDK_KEY_Home},
                                                               {NONE, GDK_KEY_KP_Home}}},  // Name _First Pages
             // clang-format on
     });
@@ -118,7 +118,7 @@ static auto defaultScrollShortcuts() -> KeyBindingsGroup<ScrollHandler> {
 
     // clang-format off
     return KeyBindingsGroup<ScrollHandler>({
-        // Nb: other scrolling key bindings are defined above, with Action::NAV_...
+        // Nb: other scrolling key bindings are defined above, with Action::GOTO_...
         {{NONE, GDK_KEY_Page_Down},    wrap<&ScrollHandler::scrollByVisibleArea, ScrollHandler::DOWN>},
         {{NONE, GDK_KEY_KP_Page_Down}, wrap<&ScrollHandler::scrollByVisibleArea, ScrollHandler::DOWN>},
         {{NONE, GDK_KEY_Page_Up},      wrap<&ScrollHandler::scrollByVisibleArea, ScrollHandler::UP>},

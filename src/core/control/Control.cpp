@@ -362,13 +362,13 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     auto current = getCurrentPageNo();
     auto count = this->doc->getPageCount();
 
-    this->actionDB->enableAction(Action::NAV_GOTO_FIRST, current != 0);
-    this->actionDB->enableAction(Action::NAV_GOTO_PREVIOUS, current != 0);
-    this->actionDB->enableAction(Action::NAV_GOTO_PREVIOUS_ANNOTATED_PAGE, current != 0);
-    this->actionDB->enableAction(Action::NAV_GOTO_PAGE, count > 1);
-    this->actionDB->enableAction(Action::NAV_GOTO_NEXT, current < count - 1);
-    this->actionDB->enableAction(Action::NAV_GOTO_LAST, current < count - 1);
-    this->actionDB->enableAction(Action::NAV_GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
+    this->actionDB->enableAction(Action::GOTO_FIRST, current != 0);
+    this->actionDB->enableAction(Action::GOTO_PREVIOUS, current != 0);
+    this->actionDB->enableAction(Action::GOTO_PREVIOUS_ANNOTATED_PAGE, current != 0);
+    this->actionDB->enableAction(Action::GOTO_PAGE, count > 1);
+    this->actionDB->enableAction(Action::GOTO_NEXT, current < count - 1);
+    this->actionDB->enableAction(Action::GOTO_LAST, current < count - 1);
+    this->actionDB->enableAction(Action::GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
 }
 
 bool Control::toggleCompass() {

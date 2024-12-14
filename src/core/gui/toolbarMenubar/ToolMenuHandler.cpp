@@ -338,18 +338,18 @@ void ToolMenuHandler::initToolItems() {
      * ------------------------------------------------------------------------
      */
 
-    emplaceStockItem("GOTO_FIRST", Cat::NAVIGATION, Action::NAV_GOTO_FIRST, "go-first", _("Go to first page"));
-    emplaceStockItem("GOTO_BACK", Cat::NAVIGATION, Action::NAV_GOTO_PREVIOUS, "go-previous", _("Back"));
-    emplaceCustomItem("GOTO_PAGE", Cat::NAVIGATION, Action::NAV_GOTO_PAGE, "go-to", _("Go to page"));
-    emplaceStockItem("GOTO_NEXT", Cat::NAVIGATION, Action::NAV_GOTO_NEXT, "go-next", _("Next"));
-    emplaceStockItem("GOTO_LAST", Cat::NAVIGATION, Action::NAV_GOTO_LAST, "go-last", _("Go to last page"));
+    emplaceStockItem("GOTO_FIRST", Cat::NAVIGATION, Action::GOTO_FIRST, "go-first", _("Go to first page"));
+    emplaceStockItem("GOTO_BACK", Cat::NAVIGATION, Action::GOTO_PREVIOUS, "go-previous", _("Back"));
+    emplaceCustomItem("GOTO_PAGE", Cat::NAVIGATION, Action::GOTO_PAGE, "go-to", _("Go to page"));
+    emplaceStockItem("GOTO_NEXT", Cat::NAVIGATION, Action::GOTO_NEXT, "go-next", _("Next"));
+    emplaceStockItem("GOTO_LAST", Cat::NAVIGATION, Action::GOTO_LAST, "go-last", _("Go to last page"));
 
     emplaceStockItem("GOTO_PREVIOUS_LAYER", Cat::NAVIGATION, Action::LAYER_GOTO_PREVIOUS, "go-previous",
                      _("Go to previous layer"));
     emplaceStockItem("GOTO_NEXT_LAYER", Cat::NAVIGATION, Action::LAYER_GOTO_NEXT, "go-next", _("Go to next layer"));
     emplaceStockItem("GOTO_TOP_LAYER", Cat::NAVIGATION, Action::LAYER_GOTO_TOP, "go-top", _("Go to top layer"));
 
-    emplaceCustomItem("GOTO_NEXT_ANNOTATED_PAGE", Cat::NAVIGATION, Action::NAV_GOTO_NEXT_ANNOTATED_PAGE,
+    emplaceCustomItem("GOTO_NEXT_ANNOTATED_PAGE", Cat::NAVIGATION, Action::GOTO_NEXT_ANNOTATED_PAGE,
                       "page-annotated-next", _("Next annotated page"));
 
     /* Menu Journal
