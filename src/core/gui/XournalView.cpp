@@ -5,16 +5,17 @@
 #include <memory>     // for unique_ptr, make_unique
 #include <optional>   // for optional
 
-#include <glib-object.h>     // for g_object_ref_sink
+#include <glib-object.h>  // for g_object_ref_sink
 
-#include "control/Control.h"                     // for Control
-#include "control/PdfCache.h"                    // for PdfCache
-#include "control/ScrollHandler.h"               // for ScrollHandler
-#include "control/ToolHandler.h"                 // for ToolHandler
-#include "control/actions/ActionDatabase.h"      // for ActionDatabase
-#include "control/jobs/XournalScheduler.h"       // for XournalScheduler
-#include "control/settings/MetadataManager.h"    // for MetadataManager
-#include "control/settings/Settings.h"           // for Settings
+#include "control/Control.h"                   // for Control
+#include "control/PdfCache.h"                  // for PdfCache
+#include "control/ScrollHandler.h"             // for ScrollHandler
+#include "control/ToolHandler.h"               // for ToolHandler
+#include "control/actions/ActionDatabase.h"    // for ActionDatabase
+#include "control/jobs/XournalScheduler.h"     // for XournalScheduler
+#include "control/settings/MetadataManager.h"  // for MetadataManager
+#include "control/settings/Settings.h"         // for Settings
+#include "control/settings/ShortcutConfiguration.h"
 #include "control/tools/CursorSelectionType.h"   // for CURSOR_SELECTION_NONE
 #include "control/tools/EditSelection.h"         // for EditSelection
 #include "control/zoom/ZoomControl.h"            // for ZoomControl
@@ -39,10 +40,9 @@
 #include "util/glib_casts.h"                     // for wrap_v
 #include "util/safe_casts.h"                     // for round_cast
 
-#include "Layout.h"          // for Layout
-#include "PageView.h"        // for XojPageView
-#include "RepaintHandler.h"  // for RepaintHandler
-#include "XournalViewKeyBindings.h"
+#include "Layout.h"           // for Layout
+#include "PageView.h"         // for XojPageView
+#include "RepaintHandler.h"   // for RepaintHandler
 #include "XournalppCursor.h"  // for XournalppCursor
 
 using xoj::util::Rectangle;
@@ -130,14 +130,17 @@ auto XournalView::onKeyPressEvent(const KeyEvent& event) -> bool {
         return true;
     }
 
-    if (navigationKeyBindings.processEvent(control->getScrollHandler(), event)) {
+    const auto& shortcuts = control->getShortcuts();
+
+    if (shortcuts.getScrollShortcuts().processEvent(control->getScrollHandler(), event)) {
         return true;
     }
 
-    if (colorsKeyBindings.processEvent(control, event)) {
+    if (shortcuts.getOtherShortcuts().processEvent(control, event)) {
         return true;
     }
-    return false;
+
+    return shortcuts.getShunt().processEvent(control->getActionDatabase(), event);
 }
 
 auto XournalView::getRepaintHandler() const -> RepaintHandler* { return this->repaintHandler.get(); }
